@@ -1,7 +1,4 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define([
-    'expect', 'sinon', '../xhr'
-], function(expect, sinon, xhr) {
 
 describe("xhr", function() {
     /* $.ajax returns jqXhr object with deffered interface
@@ -169,6 +166,4 @@ describe("xhr", function() {
         });
 
     });
-});
-
 });

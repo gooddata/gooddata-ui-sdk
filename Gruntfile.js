@@ -15,12 +15,19 @@ module.exports = function(grunt) {
                 src: 'src/*.js',
                 dest: 'build/<%= pkg.name %>.js'
             }
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat', 'uglify']);
+    grunt.registerTask('test', ['karma']);
 }
 
