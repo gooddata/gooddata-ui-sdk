@@ -1,5 +1,4 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-debugger;
 describe('sdk', function() {
     describe('getReportDefinition', function() {
         it('should return report definition payload', function() {
