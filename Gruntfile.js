@@ -20,14 +20,31 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'karma.conf.js'
             }
+        },
+        grizzly: {
+            options: {
+                root: "examples/"
+            }
+        },
+        watch: {
+            options: {
+                interval: 500
+            },
+            js: {
+                files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html'],
+                nospawn: true
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat', 'uglify']);
     grunt.registerTask('test', ['karma']);
+    grunt.registerTask('dev', ['grizzly', 'watch']);
 }
 
