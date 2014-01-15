@@ -147,6 +147,32 @@ describe("xhr", function() {
             d[0].reject({ status: 401}); //first request
             d[1].reject({ status: 401}); //token request
         });
+
+        it('should correctly handle multiple requests with token request in progress', function(done) {
+            var optionsFirst = {
+                url: '/some/url/1'
+            };
+            var optionsSecond = {
+                url: '/some/url/2'
+            };
+
+            $.extend(d[0], optionsFirst);
+            $.extend(d[1], optionsSecond);
+
+            xhr.ajax(optionsFirst);
+            d[0].reject({ status: 401});
+
+            // now, token request should be in progress
+            // so this "failure" should continue after
+            // token request and should correctly fail
+            xhr.ajax(optionsSecond).fail(function(xhr) {
+                expect(xhr.status).to.be(403);
+                done();
+            });
+
+            // simulate token request failed
+            d[1].reject({ status: 403});
+        });
     });
 
     describe('$.ajax polling', function() {
@@ -163,6 +189,21 @@ describe("xhr", function() {
             d[0].resolve(null, '', { status: 202});
             d[1].resolve(null, '', { status: 202});
             d[2].resolve('OK', '', { status: 200});
+        });
+
+        it('should correctly reject after retry 404', function(done) {
+            var options = {
+                url: '/some/url',
+                pollDelay: 0
+            };
+            fakeJqXhr(options, d);
+            xhr.ajax(options).fail(function(xhr) {
+                expect(xhr.status).to.be(404);
+                done();
+            });
+            d[0].resolve(null, '', { status: 202});
+            d[1].resolve(null, '', { status: 202});
+            d[2].reject({ status: 404});
         });
 
     });
