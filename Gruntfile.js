@@ -14,6 +14,10 @@ module.exports = function(grunt) {
             build: {
                 src: 'src/*.js',
                 dest: 'build/<%= pkg.name %>.js'
+            },
+            examples: {
+                src: 'src/*.js',
+                dest: 'examples/<%= pkg.name %>.js'
             }
         },
         karma: {
