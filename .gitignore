@@ -1,3 +1,4 @@
 build/
+coverage/
 examples/gd-sdk-js.js
 node_modules/
