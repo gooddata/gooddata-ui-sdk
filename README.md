@@ -41,6 +41,7 @@ Run tests with:
 ```
 $ grunt test
 ```
+Test coverage report can be found in `coverage/` folder.
 
 ## TODO
 * examples
