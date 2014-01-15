@@ -1,8 +1,4 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define([
-    'expect', 'sinon', '../sdk'
-], function(expect, sinon, sdk) {
-
 describe('sdk', function() {
     describe('getReportDefinition', function() {
         it('should return report definition payload', function() {
@@ -208,4 +204,3 @@ describe('sdk', function() {
     });
 });
 
-});
