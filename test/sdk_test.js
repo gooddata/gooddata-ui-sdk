@@ -102,85 +102,97 @@ describe('sdk', function() {
             });
         });
 
-        describe('getRawData', function() {
-            it('should resolve with CSV', function(done) {
-                this.server.respondWith(
-                    '/gdc/md/myFakeProjectId/obj?createAndGet=true',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({'reportDefinition':{'meta': {'uri': '/foo/bar/baz'}}})]
-                );
-                this.server.respondWith(
-                    /\/gdc\/projects\/(\w+)\/execute\/raw/,
-                    [201, {'Content-Type': 'application/json'}, JSON.stringify({'uri': '/rawResource/uri/1'})]
-                );
-                this.server.respondWith(
-                    /\/rawResource\/uri\/1/,
-                    [200, {'Content-Type': 'text/csv'}, "header1,header2\nvalue1,value2\n"]
-                );
-
-                sdk.getRawData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(function(result) {
-                    expect(result).to.eql("header1,header2\nvalue1,value2\n");
-                    done();
-                }, function(err) {
-                    expect().fail('Should resolve with CSV data');
-                    done();
-                });
+        describe('Data Execution:', function() {
+            beforeEach(function() {
+                this.serverResponseMock = {
+                    executionResult: {
+                        columns: [
+                            {
+                                attributeDisplayForm: {
+                                    meta: {
+                                        identifier: 'attrId',
+                                        uri: 'attrUri',
+                                        title: 'title'
+                                    }
+                                }
+                            },
+                            {
+                                metric: {
+                                    meta: {
+                                        identifier: 'metricId',
+                                        uri: 'metricUri'
+                                    },
+                                    content: {
+                                        format: '#00'
+                                    }
+                                }
+                            }
+                        ],
+                        tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
+                    }
+                }
             });
 
-            it('should resolve with error while reportDefinition creation failed', function(done) {
-                this.server.respondWith(
-                    '/gdc/md/myFakeProjectId/obj?createAndGet=true',
-                    [400, {'Content-Type': 'application/json'}, JSON.stringify({})]
-                );
+            describe('getData', function() {
+                it('should resolve with JSON with correct data', function(done) {
+                    this.server.respondWith(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        [200, {'Content-Type': 'application/json'},
+                        JSON.stringify(this.serverResponseMock)]
+                    );
+                    this.server.respondWith(
+                        /\gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        [201, {'Content-Type': 'application/json'},
+                        JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
+                    );
 
-                var that = this;
-                sdk.getRawData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(function(result) {
-                    expect().fail('Should be rejected with 400');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(400);
-                    done();
+                    sdk.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
+                        expect(result.headers[0].id).to.be('attrId');
+                        expect(result.headers[1].id).to.be('metricId');
+                        expect(result.rawData[0]).to.be('a');
+                        expect(result.rawData[1]).to.be(1);
+                        done();
+                    }, function(err) {
+                        expect().fail('Should resolve with CSV data');
+                        done();
+                    });
                 });
-            });
 
-            it('should reject when execution fails', function(done) {
-                this.server.respondWith(
-                    '/gdc/md/myFakeProjectId/obj?createAndGet=true',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({'reportDefinition':{'meta': {'uri': '/foo/bar/baz'}}})]
-                );
-                this.server.respondWith(
-                    /\/gdc\/projects\/(\w+)\/execute\/raw/,
-                    [400, {'Content-Type': 'application/json'}, JSON.stringify({})]
-                );
 
-                sdk.getRawData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(function(result) {
-                    expect().fail('Should reject with 400');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(400);
-                    done();
+                it('should reject when execution fails', function(done) {
+                    this.server.respondWith(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        [400, {'Content-Type': 'application/json'}, JSON.stringify({'reportDefinition':{'meta': {'uri': '/foo/bar/baz'}}})]
+                    );
+
+                    sdk.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
+                        expect().fail('Should reject with 400');
+                        done();
+                    }, function(err) {
+                        expect(err.status).to.be(400);
+                        done();
+                    });
                 });
-            });
 
-            it('should reject with 400 when data result fails', function(done) {
-                this.server.respondWith(
-                    '/gdc/md/myFakeProjectId/obj?createAndGet=true',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({'reportDefinition':{'meta': {'uri': '/foo/bar/baz'}}})]
-                );
-                this.server.respondWith(
-                    /\/gdc\/projects\/(\w+)\/execute\/raw/,
-                    [201, {'Content-Type': 'application/json'}, JSON.stringify({'uri': '/rawResource/uri/1'})]
-                );
-                this.server.respondWith(
-                    /\/rawResource\/uri\/1/,
-                    [400, {'Content-Type': 'application/json'}, JSON.stringify({})]
-                );
+                it('should reject with 400 when data result fails', function(done) {
+                    this.server.respondWith(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        [200, {'Content-Type': 'application/json'},
+                        JSON.stringify(this.serverResponseMock)]
+                    );
+                    this.server.respondWith(
+                        /\gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        [400, {'Content-Type': 'application/json'},
+                        JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
+                    );
 
-                sdk.getRawData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(function(result) {
-                    expect().fail('Should reject with 400');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(400);
-                    done();
+                    sdk.getData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(function(result) {
+                        expect().fail('Should reject with 400');
+                        done();
+                    }, function(err) {
+                        expect(err.status).to.be(400);
+                        done();
+                    });
                 });
             });
         });
