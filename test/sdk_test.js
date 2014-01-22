@@ -141,7 +141,7 @@ describe('sdk', function() {
                         JSON.stringify(this.serverResponseMock)]
                     );
                     this.server.respondWith(
-                        /\gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         [201, {'Content-Type': 'application/json'},
                         JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
                     );
@@ -181,7 +181,7 @@ describe('sdk', function() {
                         JSON.stringify(this.serverResponseMock)]
                     );
                     this.server.respondWith(
-                        /\gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         [400, {'Content-Type': 'application/json'},
                         JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
                     );
