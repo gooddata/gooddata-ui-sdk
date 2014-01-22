@@ -1,12 +1,12 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 var projectId = 'GoodSalesDemo',
-    user = 'bear@gooddata.com',
-    passwd = 'jindrisska';
+    user = '',
+    passwd = '';
 
-// Report elements from which we execute the GD report
-var metric = '/gdc/md/GoodSalesDemo/obj/1284',
-    attr1 = '/gdc/md/GoodSalesDemo/obj/274',
-    attr2 = '/gdc/md/GoodSalesDemo/obj/1028';
+// Report elements identifiers from which we execute a GD report
+var metric = 'afSEwRwdbMeQ',
+    attr1 = 'closed.aam81lMifn6q',
+    attr2 = 'label.owner.id.name';
 var elements = [metric, attr1, attr2];
 
 // Insert info label
@@ -18,7 +18,7 @@ sdk.login(user, passwd).then(function() {
     $('body').append('<div class="loading">Loading data...</div>');
 
     // Ask for data for the given metric and attributes from the GoodSales project
-    sdk.getTableDataFromSimpleElements(projectId, elements).then(function(dataResult) {
+    sdk.getData(projectId, elements).then(function(dataResult) {
         // Yay, data arrived
 
         // Remove loading labels

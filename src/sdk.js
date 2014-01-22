@@ -116,81 +116,62 @@
         return d.promise();
     };
 
-    // **getRawData** calls executor with reportDefinition of `elements`
-    // it returns `jQuery.Deferred`'s promise object
-    //
-    // (**TODO** separate steps to functions)
-    var getRawData = function(projectId, elements) {
-
-        // create report definition payload from elements
-        var r = getReportDefinition(elements);
-
+    /**
+     * For the given projectId it returns table structure with the given
+     * elements in column headers.
+     * @param projectId
+     * @param elements An array of attribute or metric identifiers.
+     * @return Structure with 'headers' and 'rawData' keys filled with values from execution.
+     */
+    var getData = function(projectId, elements) {
+        // Create request and result structures
+        var request = {
+            execution: {
+                columns: elements
+            }
+        };
+        var executedReport = {
+            isLoaded: false
+        };
         // create empty promise-like Ember.Object
         var d = $.Deferred();
 
-        // Here we create reportDefinition in metadata server
-        xhr.ajax('/gdc/md/'+projectId+'/obj?createAndGet=true', {
+        // Execute request
+        xhr.ajax('/gdc/internal/projects/'+projectId+'/experimental/executions', {
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
-            data: JSON.stringify(r)
-        // with reportDefinition from MD server in `result`
-        // we execute report
-        //
-        // now we send only `reportDefinition` uri which will
-        // be necessary to change after removing persistent reportDefinions
+            data: JSON.stringify(request)
         }, d.reject).then(function(result) {
-            return xhr.ajax('/gdc/projects/'+projectId+'/execute/raw', {
-                type: 'post',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify({"report_req":{"reportDefinition": result.reportDefinition.meta.uri }})
+            // Populate result's header section
+            executedReport.headers = result.executionResult.columns.map(function(col) {
+                if (col.attributeDisplayForm) {
+                    return {
+                        type: 'attrLabel',
+                        id: col.attributeDisplayForm.meta.identifier,
+                        uri: col.attributeDisplayForm.meta.uri,
+                        title: col.attributeDisplayForm.meta.title
+                    };
+                } else {
+                    return {
+                        type: 'metric',
+                        id: col.metric.meta.identifier,
+                        title: col.metric.meta.title,
+                        format: col.metric.content.format
+                    };
+                }
             });
-        // with `dataResult` uri in `result` we
-        // issue request for data.
-        // This request is not resolved immediately on server
-        // and uses polling therefore.
+            // Start polling on url returned in the executionResult for tabularData
+            return xhr.ajax(result.executionResult.tabularDataResult);
         }, d.reject).then(function(result) {
-            return xhr.ajax(result.uri);
-        // here we finally have data in `result` so we just
-        // resolve our promise
-        }, d.reject).then(d.resolve, d.reject);
+            // After the retrieving computed tabularData, resolve the promise
+            executedReport.rawData = result.tabularDataResult.values;
+            executedReport.isLoaded = true;
+            d.resolve(executedReport);
+        }, d.reject);
+
         return d.promise();
     };
-
-
-    // TODO: this should be a top-level wrapper on top of the resource
-    // we'll have. It should provide data in a convenient way for all widgets
-    // in a sanely structured way
-    // TODO: export this function at the bottom of this file
-    var getData = function() {
-
-    };
-
-    var getTableData = function(projectId, elements) {
-        var d = $.Deferred();
-        var rawDataPromise = getRawData(projectId, elements).then(function(result) {
-            $.csv.toArrays(result, {}, function(err, parsed) {
-                var data = {
-                    headers: parsed.shift().map(function(header) {
-                        var element = elements.filter(function(e) {
-                            return e.name === header;
-                        })[0];
-                        return {
-                            title: header,
-                            uri: element.uri
-                        };
-                    }),
-                    rawData: parsed,
-                    isLoaded: true
-                };
-                d.resolve(data);
-            });
-            return d;
-        });
-        return rawDataPromise;
-    };
-
 
     // Get additional information about elements specified by their uris
     // `elementUris` is the array of uris of elements to be look-up
@@ -260,21 +241,6 @@
         return d.promise();
     };
 
-
-    var getTableDataFromSimpleElements = function(projectId, elements) {
-        // enrich elements
-        var d = $.Deferred();
-
-        getElementDetails(elements).then(function(enriched) {
-            getTableData(projectId, enriched).then(function(tableData) {
-                d.resolve(tableData);
-            });
-        });
-
-        // call
-        return d.promise();
-    };
-
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -313,12 +279,9 @@
     return {
         isLoggedIn: isLoggedIn,
         login: login,
-        getTableData: getTableData,
-        getTableDataFromSimpleElements: getTableDataFromSimpleElements,
-        getRawData: getRawData,
+        getData: getData,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
     };
 });
-
