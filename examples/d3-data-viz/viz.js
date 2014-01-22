@@ -1,7 +1,7 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 var projectId = 'GoodSalesDemo',
-    user = 'bear@gooddata.com',
-    passwd = 'jindrisska';
+    user = '',
+    passwd = '';
 
 // Report elements identifiers from which we execute a GD report
 var metric = 'afSEwRwdbMeQ',
