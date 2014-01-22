@@ -257,7 +257,6 @@
                 isLoaded: true,
                 elementItems: result.validElements.items
             });
-            console.log(data);
         });
         return data;
     };
