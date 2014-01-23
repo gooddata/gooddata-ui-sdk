@@ -5,15 +5,15 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
-            build: {
+            dist: {
                 src: 'src/*.js',
-                dest: 'build/<%= pkg.name %>.min.js'
+                dest: 'dist/<%= pkg.name %>.min.js'
             }
         },
         concat: {
-            build: {
+            dist: {
                 src: 'src/*.js',
-                dest: 'build/<%= pkg.name %>.js'
+                dest: 'dist/<%= pkg.name %>.js'
             },
             examples: {
                 src: 'src/*.js',

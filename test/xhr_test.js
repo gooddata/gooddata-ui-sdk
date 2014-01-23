@@ -207,4 +207,44 @@ describe("xhr", function() {
         });
 
     });
+
+    describe('shortcut methods', function() {
+        before(function() {
+            sinon.stub(xhr, 'ajax');
+        })
+
+        after(function() {
+            xhr.ajax.restore();
+        });
+
+        beforeEach(function() {
+            xhr.ajax.reset();
+        });
+
+        it('should call xhr.ajax with get method', function() {
+            xhr.get('url', {
+                contentType: 'text/csv'
+            });
+
+            expect(xhr.ajax.getCall(0).args).to.be.eql(['url', {
+                method: 'GET',
+                contentType: 'text/csv'
+            }]);
+        });
+
+        it('should call xhr.ajax with post method', function() {
+            var data = { message: 'THIS IS SPARTA!' };
+
+            xhr.post('url', {
+                data: data,
+                contentType: 'text/csv'
+            });
+
+            expect(xhr.ajax.getCall(0).args).to.be.eql(['url', {
+                method: 'POST',
+                data: data,
+                contentType: 'text/csv'
+            }]);
+        });
+    });
 });

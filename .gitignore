@@ -1,4 +1,5 @@
-build/
+dist/
 coverage/
 examples/gd-sdk-js.js
 node_modules/
+bower_components/
