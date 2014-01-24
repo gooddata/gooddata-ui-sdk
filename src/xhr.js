@@ -87,6 +87,7 @@
     xhr.ajaxSetup = function(settings) {
         xhrSettings = $.extend({
             contentType: 'application/json',
+            dataType: 'json',
             pollDelay: 1000
         }, settings);
     };
@@ -135,6 +136,19 @@
         });
         return d;
     };
+
+    var xhrMethod = function xhrMethod(method) {
+        return function(url, settings) {
+            var opts = $.extend(true, {
+                method: method
+            }, settings);
+
+            return xhr.ajax(url, opts);
+        }
+    };
+
+    xhr.get = xhrMethod('GET');
+    xhr.post = xhrMethod('POST');
 
     // setup dafault settings
     xhr.ajaxSetup({});
