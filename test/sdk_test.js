@@ -213,6 +213,36 @@ describe('sdk', function() {
                 });
             });
         });
+
+        describe('getAttributes', function() {
+            it('should reject with 400 from backend', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/attributes',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+
+                sdk.getAttributes('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return correct number of entries', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/attributes',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}})]
+                );
+
+                sdk.getAttributes('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
     });
 });
 

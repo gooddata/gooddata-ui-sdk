@@ -234,6 +234,22 @@
         return d.promise();
     };
 
+    /**
+     * Reutrns all attributes in a project specified by projectId param
+     *
+     * @param projectId Porject identifier
+     * @return An array of attribute objects
+     */
+    var getAttributes = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/attributes').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -266,6 +282,7 @@
         isLoggedIn: isLoggedIn,
         login: login,
         getData: getData,
+        getAttributes: getAttributes,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
