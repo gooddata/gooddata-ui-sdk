@@ -250,6 +250,22 @@
         return d.promise();
     };
 
+    /**
+     * Reutrns all dimensions in a project specified by projectId param
+     *
+     * @param projectId Project identifier
+     * @return An array of dimension objects
+     */
+    var getDimensions = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -283,6 +299,7 @@
         login: login,
         getData: getData,
         getAttributes: getAttributes,
+        getDimensions: getDimensions,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
