@@ -102,6 +102,35 @@ describe('sdk', function() {
             });
         });
 
+        describe('getProjects', function() {
+            it('should reject with 400 when resource fails', function(done) {
+                this.server.respondWith(
+                    '/gdc/account/profile/myProfileId/projects',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                sdk.getProjects('myProfileId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+            it('should return an array of projects', function(done) {
+                this.server.respondWith(
+                    '/gdc/account/profile/myProfileId/projects',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({projects: [{project: {meta: {title: 'p1'}}},
+                                               {project: {meta: {title: 'p2'}}}]})]
+                );
+                sdk.getProjects('myProfileId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    expect(result[1].meta.title).to.be('p2');
+                    done();
+                });
+            });
+        });
+
         describe('Data Execution:', function() {
             beforeEach(function() {
                 this.serverResponseMock = {

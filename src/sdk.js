@@ -113,6 +113,24 @@
     };
 
     /**
+     * Fetches projects available for the user represented by the given
+     * proileId
+     * @param profileId User profile identifier
+     * @return Array of projects
+     */
+    var getProjects = function(profileId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/account/profile/'+ profileId +'/projects').then(function(result) {
+            d.resolve(result.projects.map(function(proj) {
+                return proj.project;
+            }));
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
      * For the given projectId it returns table structure with the given
      * elements in column headers.
      * @param projectId
@@ -297,6 +315,7 @@
     return {
         isLoggedIn: isLoggedIn,
         login: login,
+        getProjects: getProjects,
         getData: getData,
         getAttributes: getAttributes,
         getDimensions: getDimensions,
