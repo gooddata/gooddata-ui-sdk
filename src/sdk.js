@@ -113,6 +113,24 @@
     };
 
     /**
+     * Fetches projects available for the user represented by the given
+     * proileId
+     * @param profileId User profile identifier
+     * @return Array of projects
+     */
+    var getProjects = function(profileId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/account/profile/'+ profileId +'/projects').then(function(result) {
+            d.resolve(result.projects.map(function(proj) {
+                return proj.project;
+            }));
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
      * For the given projectId it returns table structure with the given
      * elements in column headers.
      * @param projectId
@@ -234,6 +252,38 @@
         return d.promise();
     };
 
+    /**
+     * Reutrns all attributes in a project specified by projectId param
+     *
+     * @param projectId Porject identifier
+     * @return An array of attribute objects
+     */
+    var getAttributes = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/attributes').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Reutrns all dimensions in a project specified by projectId param
+     *
+     * @param projectId Project identifier
+     * @return An array of dimension objects
+     */
+    var getDimensions = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -265,7 +315,10 @@
     return {
         isLoggedIn: isLoggedIn,
         login: login,
+        getProjects: getProjects,
         getData: getData,
+        getAttributes: getAttributes,
+        getDimensions: getDimensions,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId

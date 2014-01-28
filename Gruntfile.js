@@ -35,7 +35,8 @@ module.exports = function(grunt) {
                 interval: 500
             },
             js: {
-                files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html'],
+                files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gd-sdk-js.js'],
+                tasks: ['concat:examples'],
                 nospawn: true
             }
         }
