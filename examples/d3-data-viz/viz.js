@@ -7,7 +7,7 @@ var projectId = 'GoodSalesDemo',
 var metric = 'afSEwRwdbMeQ',
     attr1 = 'closed.aam81lMifn6q',
     attr2 = 'label.owner.id.name';
-var elements = [metric, attr1, attr2];
+var elements = [attr1, attr2, metric];
 
 // Insert info label
 $('body').append('<div class="login-loader">Logging in...</div>');
@@ -27,7 +27,9 @@ sdk.login(user, passwd).then(function() {
         // Helper for transforming data into the matrix that is consumed
         // by the d3.js Chord chart
         var transformData = function(dataResult) {
-            var headers = dataResult.headers,
+            var headers = dataResult.headers.map(function(h) {
+                    return h.title;
+                }),
                 data = dataResult.rawData,
                 length = data.length,
                 attr1 = headers[0],
