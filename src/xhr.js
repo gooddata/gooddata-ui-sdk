@@ -149,6 +149,7 @@
 
     xhr.get = xhrMethod('GET');
     xhr.post = xhrMethod('POST');
+    xhr.put = xhrMethod('PUT');
 
     // setup dafault settings
     xhr.ajaxSetup({});

@@ -131,6 +131,54 @@ describe('sdk', function() {
             });
         });
 
+        describe('getColorPalette', function() {
+            it('should reject with 400 when resource fails', function(done) {
+                this.server.respondWith(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                sdk.getColorPalette('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+            it('should return an array of color objects in the right order', function(done) {
+                this.server.respondWith(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({styleSettings: {chartPalette: [
+                        {guid: 'guid1', fill: {r:1, b:1, g:1}},
+                        {guid: 'guid2', fill: {r:2, b:2, g:2}}
+                    ]}})]
+                );
+                sdk.getColorPalette('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    expect(result[0].r).to.be(1);
+                    expect(result[1].r).to.be(2);
+                    done();
+                });
+            });
+        });
+
+        describe('setColorPalette', function() {
+            it('should reject with 400 when resource fails', function(done) {
+                this.server.respondWith(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                sdk.setColorPalette('myFakeProjectId', []).then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+        });
+
         describe('Data Execution:', function() {
             beforeEach(function() {
                 this.serverResponseMock = {
