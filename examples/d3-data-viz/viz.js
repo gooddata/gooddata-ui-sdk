@@ -76,37 +76,43 @@ sdk.login(user, passwd).then(function() {
                 matrixIdx++;
             });
 
-            return matrix;
+            return {
+                labels: [].concat(attr1Vals.concat(attr2Vals)),
+                matrix: matrix
+            };
         };
 
+        var fill = d3.scale.category10();
+
         // Use the elper function and transform the data
-        matrix = transformData(dataResult);
+        var data = transformData(dataResult);
 
         // Visualize
         var chord = d3.layout.chord()
             .padding(.05)
             .sortSubgroups(d3.descending)
-            .matrix(matrix);
+            .matrix(data.matrix);
 
         var width = 960,
             height = 500,
+            r1 = height / 2,
             innerRadius = Math.min(width, height) * .41,
-            outerRadius = innerRadius * 1.1;
-
-        var fill = d3.scale.ordinal()
-            .domain(d3.range(5))
-            .range(["#000000", "#FFDD89", "#957244", "#F26223", "#F25893"]);
+            outerRadius = innerRadius * 1.1,
+            outer
 
         var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
+            .attr("width", width+200)
+            .attr("height", height+200)
             .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .attr("transform", "translate(" + (width+200) / 2 + "," + (height+200) / 2 + ")");
 
         svg.append("g").selectAll("path")
             .data(chord.groups)
             .enter().append("path")
-            .style("fill", function(d) { return fill(d.index); })
+            .attr("class", "arc")
+            .style("fill", function(d) {
+                return d.index < 4 ? '#444444' : fill(d.index);
+            })
             .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
             .on("mouseover", fade(.1))
             .on("mouseout", fade(.7));
@@ -120,6 +126,20 @@ sdk.login(user, passwd).then(function() {
             .attr("d", d3.svg.chord().radius(innerRadius))
             .style("fill", function(d) { return fill(d.target.index); })
             .style("opacity", 0.7);
+
+        svg.append("g").selectAll(".arc")
+            .data(chord.groups)
+            .enter().append("svg:text")
+            .attr("dy", ".35em")
+            .attr("text-anchor", function(d) { return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
+            .attr("transform", function(d) {
+              return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
+                  + "translate(" + (r1 - 15) + ")"
+                  + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
+            })
+            .text(function(d) {
+                return data.labels[d.index];
+            });
 
         // Returns an event handler for fading a given chord group.
         function fade(opacity) {
