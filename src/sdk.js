@@ -162,7 +162,6 @@
         var d = $.Deferred();
 
         xhr.get('/gdc/projects/'+ projectId +'/styleSettings').then(function(result) {
-            debugger;
             d.resolve(result.styleSettings.chartPalette.map(function(c) {
                 return {
                     r: c.fill.r,
@@ -172,7 +171,6 @@
             }));
         }, function(err) {
             if (err.status === 200) {
-                debugger;
                 d.resolve(DEFAULT_PALETTE);
             }
             d.reject(err);
