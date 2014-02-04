@@ -151,6 +151,22 @@
     };
 
     /**
+     * Fetches all datasets for the given project
+     *
+     * @param projectId Project identifier
+     * @return An array of objects containing datasets metadata
+     */
+    var getDatasets = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/datasets').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
      * Fetches a chart color palette for a project represented by the given
      * projectId parameter.
      *
@@ -392,6 +408,7 @@
         isLoggedIn: isLoggedIn,
         login: login,
         getProjects: getProjects,
+        getDatasets: getDatasets,
         getColorPalette: getColorPalette,
         setColorPalette: setColorPalette,
         getData: getData,

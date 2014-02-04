@@ -131,6 +131,35 @@ describe('sdk', function() {
             });
         });
 
+        describe('getDatasets', function() {
+            it('should reject with 400 when resource fails', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/datasets',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                sdk.getDatasets('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return an array of dataSets', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/datasets',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({query: {entries: [{}, {}]}})]
+                );
+                sdk.getDatasets('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
+
+
         describe('getColorPalette', function() {
             it('should reject with 400 when resource fails', function(done) {
                 this.server.respondWith(
