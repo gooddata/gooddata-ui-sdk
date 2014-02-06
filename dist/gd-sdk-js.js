@@ -38,6 +38,26 @@
             }
         }
     };
+    var DEFAULT_PALETTE = [
+        {r:0x2b, g:0x6b, b:0xae},
+        {r:0x69, g:0xaa, b:0x51},
+        {r:0xee, g:0xb1, b:0x4c},
+        {r:0xd5, g:0x3c, b:0x38},
+        {r:0x89, g:0x4d, b:0x94},
+        {r:0x73, g:0x73, b:0x73},
+        {r:0x44, g:0xa9, b:0xbe},
+        {r:0x96, g:0xbd, b:0x5f},
+        {r:0xfd, g:0x93, b:0x69},
+        {r:0xe1, g:0x5d, b:0x86},
+        {r:0x7c, g:0x6f, b:0xad},
+        {r:0xa5, g:0xa5, b:0xa5},
+        {r:0x7a, g:0xa6, b:0xd5},
+        {r:0x82, g:0xd0, b:0x8d},
+        {r:0xff, g:0xd2, b:0x89},
+        {r:0xf1, g:0x84, b:0x80},
+        {r:0xbf, g:0x90, b:0xc6},
+        {r:0xbf, g:0xbf, b:0xbf}
+    ];
 
     // Transforms array of elements (metrics and attributes)
     // into structure *executor* accepts
@@ -107,6 +127,79 @@
                     verifyCaptcha: ""
                 }
             })
+        }).then(d.resolve, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Fetches projects available for the user represented by the given
+     * proileId
+     * @param profileId User profile identifier
+     * @return Array of projects
+     */
+    var getProjects = function(profileId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/account/profile/'+ profileId +'/projects').then(function(result) {
+            d.resolve(result.projects.map(function(proj) {
+                return proj.project;
+            }));
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Fetches a chart color palette for a project represented by the given
+     * projectId parameter.
+     *
+     * @param projectId A project identifier
+     * @return An array of objects with r, g, b fields representing a project's
+     * color palette
+     */
+    var getColorPalette = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/projects/'+ projectId +'/styleSettings').then(function(result) {
+            d.resolve(result.styleSettings.chartPalette.map(function(c) {
+                return {
+                    r: c.fill.r,
+                    g: c.fill.g,
+                    b: c.fill.b
+                };
+            }));
+        }, function(err) {
+            if (err.status === 200) {
+                d.resolve(DEFAULT_PALETTE);
+            }
+            d.reject(err);
+        });
+
+        return d.promise();
+    };
+
+    /**
+     * Sets given colors as a color palette for a given project.
+     *
+     * @param projectId Project identifier
+     * @param colors An array of colors that we want to use within the project.
+     * Each color should be an object with r, g, b fields.
+     */
+    var setColorPalette = function(projectId, colors) {
+        var d = $.Deferred();
+
+        xhr.put('/gdc/projects/'+ projectId +'/styleSettings', {
+            data:  {
+                styleSettings: {
+                    chartPalette: colors.map(function(c, idx) {
+                        return {
+                            guid: 'guid'+idx,
+                            fill: c
+                        };
+                    })
+                }
+            }
         }).then(d.resolve, d.reject);
 
         return d.promise();
@@ -234,6 +327,38 @@
         return d.promise();
     };
 
+    /**
+     * Reutrns all attributes in a project specified by projectId param
+     *
+     * @param projectId Porject identifier
+     * @return An array of attribute objects
+     */
+    var getAttributes = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/attributes').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Reutrns all dimensions in a project specified by projectId param
+     *
+     * @param projectId Project identifier
+     * @return An array of dimension objects
+     */
+    var getDimensions = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -263,9 +388,15 @@
     };
 
     return {
+        DEFAULT_PALETTE: DEFAULT_PALETTE,
         isLoggedIn: isLoggedIn,
         login: login,
+        getProjects: getProjects,
+        getColorPalette: getColorPalette,
+        setColorPalette: setColorPalette,
         getData: getData,
+        getAttributes: getAttributes,
+        getDimensions: getDimensions,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
@@ -423,6 +554,7 @@
 
     xhr.get = xhrMethod('GET');
     xhr.post = xhrMethod('POST');
+    xhr.put = xhrMethod('PUT');
 
     // setup dafault settings
     xhr.ajaxSetup({});
