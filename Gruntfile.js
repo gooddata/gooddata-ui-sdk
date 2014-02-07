@@ -30,6 +30,12 @@ module.exports = function(grunt) {
                 root: "examples/"
             }
         },
+        markdox: {
+            doc: {
+                src: 'src/sdk.js',
+                dest: 'docs/sdk.md'
+            }
+        },
         watch: {
             options: {
                 interval: 500
@@ -46,6 +52,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-grizzly');
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-markdox');
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat', 'uglify']);
