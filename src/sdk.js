@@ -360,7 +360,7 @@
     };
 
     /**
-     * Reutrns all dimensions in a project specified by projectId param
+     * Returns all dimensions in a project specified by projectId param
      *
      * @param projectId Project identifier
      * @return An array of dimension objects
@@ -369,6 +369,22 @@
         var d = $.Deferred();
 
         xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Returns all metrics in a project specified by the given projectId
+     *
+     * @param projectId Project identifier
+     * @return An array of metric objects
+     */
+    var getMetrics = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/metrics').then(function(result) {
             d.resolve(result.query.entries);
         }, d.reject);
 
@@ -414,6 +430,7 @@
         getData: getData,
         getAttributes: getAttributes,
         getDimensions: getDimensions,
+        getMetrics: getMetrics,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
