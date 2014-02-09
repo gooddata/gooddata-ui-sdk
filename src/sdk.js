@@ -391,6 +391,23 @@
         return d.promise();
     };
 
+    /**
+     * Validates a given MAQL expression in the context of the project specified
+     * by a given projectId.
+     *
+     * @param {String} maqlExpression - MAQL Expression
+     * @param {String} projectId - GD project identifier
+     */
+    var validateMaql = function(maqlExpression, projectId) {
+        var d = $.Deferred();
+
+        xhr.post('/gdc/md/'+ projectId +'/maqlvalidator').then(function(result) {
+            d.resolve(result);
+        }, d.reject);
+
+        return d.promise();
+    };
+
     var getValidElements = function(element) {
         var data = Em.Object.create({
             isLoaded: false,
@@ -431,6 +448,7 @@
         getAttributes: getAttributes,
         getDimensions: getDimensions,
         getMetrics: getMetrics,
+        validateMaql: validateMaql,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
