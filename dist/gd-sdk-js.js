@@ -1,8 +1,22 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-// # GDC SDK
-// now it can log you in, return execution result
-// from raw resource and return valid elements for
-// attribute
+/**
+ * # JS SDK
+ * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
+ * Before calling any of those functions, you need to authenticate with a valid GoodData
+ * user credentials. After that, every subsequent call in the current session is authenticated.
+ * You can find more about the GD authentication mechanism here.
+ *
+ * ## Conventions and Dependencies
+ * * Depends on [jQuery JavaScript library](http://jquery.com/) javascript library
+ * * Each SDK function returns [jQuery Deffered promise](http://api.jquery.com/deferred.promise/)
+ *
+ * ## GD Authentication Mechansim
+ * In this JS SDK library we provide you with a simple `login(username, passwd)` function
+ * that does the magic for you.
+ * To fully understand the authentication mechansim, please read
+ * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
+ * on [GooData Developer Portal](http://developer.gooddata.com/)
+ */
 (function (name, context, definition) {
       if (typeof module != 'undefined' && module.exports) module.exports = definition()
       else if (typeof define == 'function' && define.amd) define(definition)
@@ -109,10 +123,16 @@
         return $.getJSON('/gdc/account/token');
     };
 
-    // Authenticate to GDC api
-    //
-    // `username` and `password` are you credentials in GDC platform
-    // No remembering or captcha for now
+    /** # Functions */
+
+    /**
+     * This function provides an authentication entry point to the GD API. It is needed to authenticate
+     * by calling this function prior any other API calls. After providing valid credentiols
+     * every subsequent API call in a current session will be authenticated.
+     *
+     * @param {String} username
+     * @param {String} password
+     */
     var login = function(username, password) {
         var d = $.Deferred();
 
@@ -133,10 +153,9 @@
     };
 
     /**
-     * Fetches projects available for the user represented by the given
-     * proileId
-     * @param profileId User profile identifier
-     * @return Array of projects
+     * Fetches projects available for the user represented by the given profileId
+     * @param {String} profileId - User profile identifier
+     * @return {Array} An Array of projects
      */
     var getProjects = function(profileId) {
         var d = $.Deferred();
@@ -151,11 +170,27 @@
     };
 
     /**
+     * Fetches all datasets for the given project
+     *
+     * @param {String} projectId - GD project identifier
+     * @return {Array} An array of objects containing datasets metadata
+     */
+    var getDatasets = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/datasets').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
      * Fetches a chart color palette for a project represented by the given
      * projectId parameter.
      *
-     * @param projectId A project identifier
-     * @return An array of objects with r, g, b fields representing a project's
+     * @param {String} projectId - A project identifier
+     * @return {Array} An array of objects with r, g, b fields representing a project's
      * color palette
      */
     var getColorPalette = function(projectId) {
@@ -182,8 +217,8 @@
     /**
      * Sets given colors as a color palette for a given project.
      *
-     * @param projectId Project identifier
-     * @param colors An array of colors that we want to use within the project.
+     * @param {String} projectId - GD project identifier
+     * @param {Array} colors - An array of colors that we want to use within the project.
      * Each color should be an object with r, g, b fields.
      */
     var setColorPalette = function(projectId, colors) {
@@ -208,9 +243,9 @@
     /**
      * For the given projectId it returns table structure with the given
      * elements in column headers.
-     * @param projectId
-     * @param elements An array of attribute or metric identifiers.
-     * @return Structure with 'headers' and 'rawData' keys filled with values from execution.
+     * @param {String} projectId - GD project identifier
+     * @param {Array} elements - An array of attribute or metric identifiers.
+     * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
      */
     var getData = function(projectId, elements) {
         // Create request and result structures
@@ -331,7 +366,7 @@
      * Reutrns all attributes in a project specified by projectId param
      *
      * @param projectId Porject identifier
-     * @return An array of attribute objects
+     * @return {Array} An array of attribute objects
      */
     var getAttributes = function(projectId) {
         var d = $.Deferred();
@@ -344,16 +379,52 @@
     };
 
     /**
-     * Reutrns all dimensions in a project specified by projectId param
+     * Returns all dimensions in a project specified by projectId param
      *
      * @param projectId Project identifier
-     * @return An array of dimension objects
+     * @return {Array} An array of dimension objects
      */
     var getDimensions = function(projectId) {
         var d = $.Deferred();
 
         xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
             d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Returns all metrics in a project specified by the given projectId
+     *
+     * @param projectId Project identifier
+     * @return {Array} An array of metric objects
+     */
+    var getMetrics = function(projectId) {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/md/'+ projectId +'/query/metrics').then(function(result) {
+            d.resolve(result.query.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Validates a given MAQL expression in the context of the project specified
+     * by a given projectId.
+     *
+     * @param {String} maqlExpression - MAQL Expression
+     * @param {String} projectId - GD project identifier
+     * @return {Object} JSON object with either `maqlOK` or `maqlErr` field based on the
+     * result of the validation. In case of failed validateion you can inspect a cause
+     * of failure under `maqlErr.errors`.
+     */
+    var validateMaql = function(maqlExpression, projectId) {
+        var d = $.Deferred();
+
+        xhr.post('/gdc/md/'+ projectId +'/maqlvalidator').then(function(result) {
+            d.resolve(result);
         }, d.reject);
 
         return d.promise();
@@ -392,11 +463,14 @@
         isLoggedIn: isLoggedIn,
         login: login,
         getProjects: getProjects,
+        getDatasets: getDatasets,
         getColorPalette: getColorPalette,
         setColorPalette: setColorPalette,
         getData: getData,
         getAttributes: getAttributes,
         getDimensions: getDimensions,
+        getMetrics: getMetrics,
+        validateMaql: validateMaql,
         getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
