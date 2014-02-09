@@ -59,5 +59,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['concat', 'uglify']);
     grunt.registerTask('test', ['karma']);
     grunt.registerTask('dev', ['grizzly', 'watch']);
+    grunt.registerTask('doc', ['markdox']);
 }
 

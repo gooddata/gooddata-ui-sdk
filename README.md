@@ -38,6 +38,13 @@ Check the app at [localhost:8443](https://localhost/8443)
 To run some of the examples, just add the name of the example to URL like
 [localhost:8443/d3-data-viz](https://localhost:8443/d3-data-viz)
 
+## Documentation
+Documentation of functions available in SDK can be found in [docs/sdk.md](./docs/sdk.md).  
+It can be generated right from the source code by running:
+```
+$ grunt doc
+```
+
 ## Tests
 Run tests with:
 ```
