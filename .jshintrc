@@ -1,0 +1,39 @@
+{
+    "-W032": true,
+    "-W038": true,
+    "-W041": true,
+    "-W043": true,
+
+    "globals": {
+        "$": false,
+        "sinon": false,
+        "expect": false,
+        "describe": false,
+        "beforeEach": false,
+        "afterEach": false,
+        "before": false,
+        "after": false,
+        "it": false,
+        "require": false,
+        "define": false,
+        "xhr": false,
+        "sdk": false
+    },
+
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "nonstandard": true,
+
+    "boss": true,
+    "eqnull": true,
+    "eqeqeq": false,
+    "latedef": true,
+    "newcap": true,
+    "trailing": true,
+    "sub": true,
+    "laxbreak": true,
+    "loopfunc": true,
+    "newcap": false,
+    "undef": true
+}
