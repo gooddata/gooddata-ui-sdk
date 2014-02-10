@@ -18,9 +18,9 @@
  * on [GooData Developer Portal](http://developer.gooddata.com/)
  */
 (function (name, context, definition) {
-      if (typeof module != 'undefined' && module.exports) module.exports = definition()
-      else if (typeof define == 'function' && define.amd) define(definition)
-      else context[name] = definition()
+      if (typeof module != 'undefined' && module.exports) module.exports = definition();
+      else if (typeof define == 'function' && define.amd) define(definition);
+      else context[name] = definition();
 })('sdk', this, function () {
 
     // `emptyReportDefinition` documents structure of payload our executor accepts
@@ -430,23 +430,6 @@
         return d.promise();
     };
 
-    var getValidElements = function(element) {
-        var data = Em.Object.create({
-            isLoaded: false,
-            elementItems: undefined
-        });
-
-        xhr.post(element.uri+'/validElements?order=asc', {
-            data: JSON.stringify({validElementsRequest: {uris: []}})
-        }).then(function(result) {
-            data.setProperties({
-                isLoaded: true,
-                elementItems: result.validElements.items
-            });
-        });
-        return data;
-    };
-
     var getCurrentProjectId = function() {
         var d = $.Deferred();
 
@@ -471,7 +454,6 @@
         getDimensions: getDimensions,
         getMetrics: getMetrics,
         validateMaql: validateMaql,
-        getValidElements: getValidElements,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
     };

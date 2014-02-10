@@ -10,7 +10,7 @@ describe('sdk', function() {
             ]);
             var data = rDef.reportDefinition.content.grid;
             expect(data.columns.length).to.be(1);
-            expect(data.columns[0]['attribute']['uri']).to.be('/uri1');
+            expect(data.columns[0].attribute.uri).to.be('/uri1');
         });
 
         it('should return metricGroup in colums if any metric in elements', function() {
@@ -236,7 +236,7 @@ describe('sdk', function() {
                         ],
                         tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
                     }
-                }
+                };
             });
 
             describe('getData', function() {

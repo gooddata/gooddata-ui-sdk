@@ -22,8 +22,9 @@ describe("xhr", function() {
     });
 
     afterEach(function() {
-        d = [], expects = [];
-        $.ajax.restore && $.ajax.restore();
+        d = [];
+        expects = [];
+        if ($.ajax.restore) $.ajax.restore();
     });
 
     describe('$.ajax request', function() {
@@ -211,7 +212,7 @@ describe("xhr", function() {
     describe('shortcut methods', function() {
         before(function() {
             sinon.stub(xhr, 'ajax');
-        })
+        });
 
         after(function() {
             xhr.ajax.restore();
