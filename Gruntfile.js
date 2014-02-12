@@ -20,6 +20,9 @@ module.exports = function(grunt) {
                 dest: 'examples/<%= pkg.name %>.js'
             }
         },
+        jshint: {
+            all: ['*.js', 'src/*.js', 'test/*.js']
+        },
         karma: {
             unit: {
                 configFile: 'karma.conf.js'
@@ -28,6 +31,12 @@ module.exports = function(grunt) {
         grizzly: {
             options: {
                 root: "examples/"
+            }
+        },
+        markdox: {
+            doc: {
+                src: 'src/sdk.js',
+                dest: 'docs/sdk.md'
             }
         },
         watch: {
@@ -45,11 +54,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-markdox');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['concat', 'uglify']);
-    grunt.registerTask('test', ['karma']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('dev', ['grizzly', 'watch']);
-}
+    grunt.registerTask('doc', ['markdox']);
+};
 

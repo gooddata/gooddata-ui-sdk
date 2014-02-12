@@ -14,7 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/jquery/dist/jquery.js',
+      'lib/jquery/jquery.js',
       'test/lib/expect.js',
       'test/lib/sinon-1.7.3.js',
       'src/*.js',

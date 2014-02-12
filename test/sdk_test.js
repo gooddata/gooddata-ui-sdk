@@ -10,7 +10,7 @@ describe('sdk', function() {
             ]);
             var data = rDef.reportDefinition.content.grid;
             expect(data.columns.length).to.be(1);
-            expect(data.columns[0]['attribute']['uri']).to.be('/uri1');
+            expect(data.columns[0].attribute.uri).to.be('/uri1');
         });
 
         it('should return metricGroup in colums if any metric in elements', function() {
@@ -131,6 +131,35 @@ describe('sdk', function() {
             });
         });
 
+        describe('getDatasets', function() {
+            it('should reject with 400 when resource fails', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/datasets',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                sdk.getDatasets('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return an array of dataSets', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/datasets',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({query: {entries: [{}, {}]}})]
+                );
+                sdk.getDatasets('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
+
+
         describe('getColorPalette', function() {
             it('should reject with 400 when resource fails', function(done) {
                 this.server.respondWith(
@@ -207,7 +236,7 @@ describe('sdk', function() {
                         ],
                         tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
                     }
-                }
+                };
             });
 
             describe('getData', function() {
@@ -345,6 +374,36 @@ describe('sdk', function() {
                 );
 
                 sdk.getDimensions('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
+
+        describe('getMetrics', function() {
+            it('should reject with 400 from backend', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/metrics',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+
+                sdk.getMetrics('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return correct number of entries', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/query/metrics',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}})]
+                );
+
+                sdk.getMetrics('myFakeProjectId').then(function(result) {
                     expect(result.length).to.be(2);
                     done();
                 });
