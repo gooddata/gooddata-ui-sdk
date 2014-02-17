@@ -411,6 +411,50 @@
     };
 
     /**
+     * Returns all metrics that are reachable (with respect to ldm of the project
+     * specified by the given projectId) for given attributes
+     *
+     * @param {String} projectId - Project identifier
+     * @param {Array} attrs - An array of attribute uris for which we want to get
+     * availabale metrics
+     * @return {Array} An array of reachable metrics for the given attrs
+     * @see getAvailableAttributes
+     */
+    var getAvailableMetrics = function(projectId, attrs) {
+        var d = $.Deferred();
+
+        xhr.post('/gdc/md/'+ projectId +'/availablemetrics', {
+            data: JSON.stringify(attrs)
+        }).then(function(result) {
+            d.resolve(result.entries);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Returns all attributes that are reachable (with respect to ldm of the project
+     * specified by the given projectId) for given metrics (also called as drillCrossPath)
+     *
+     * @param {String} projectId - Project identifier
+     * @param {Array} metrics - An array of metric uris for which we want to get
+     * availabale attributes
+     * @return {Array} An array of reachable attributes for the given metrics
+     * @see getAvailableMetrics
+     */
+    var getAvailableAttributes = function(projectId, metrics) {
+        var d = $.Deferred();
+
+        xhr.post('/gdc/md/'+ projectId +'/drillcrosspaths', {
+            data: JSON.stringify(metrics)
+        }).then(function(result) {
+            d.resolve(result.drillcrosspath.links);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
      * Validates a given MAQL expression in the context of the project specified
      * by a given projectId.
      *
@@ -453,6 +497,8 @@
         getAttributes: getAttributes,
         getDimensions: getDimensions,
         getMetrics: getMetrics,
+        getAvailableMetrics: getAvailableMetrics,
+        getAvailableAttributes: getAvailableAttributes,
         validateMaql: validateMaql,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId

@@ -131,6 +131,40 @@ Returns all metrics in a project specified by the given projectId
 
 * **Array** An array of metric objects
 
+## getAvailableMetrics(projectId, attrs)
+
+Returns all metrics that are reachable (with respect to ldm of the project
+specified by the given projectId) for given attributes
+
+See: getAvailableAttributes
+
+### Params: 
+
+* **String** *projectId* - Project identifier
+
+* **Array** *attrs* - An array of attribute uris for which we want to get
+
+### Return:
+
+* **Array** An array of reachable metrics for the given attrs
+
+## getAvailableAttributes(projectId, metrics)
+
+Returns all attributes that are reachable (with respect to ldm of the project
+specified by the given projectId) for given metrics (also called as drillCrossPath)
+
+See: getAvailableMetrics
+
+### Params: 
+
+* **String** *projectId* - Project identifier
+
+* **Array** *metrics* - An array of metric uris for which we want to get
+
+### Return:
+
+* **Array** An array of reachable attributes for the given metrics
+
 ## validateMaql(maqlExpression, projectId)
 
 Validates a given MAQL expression in the context of the project specified

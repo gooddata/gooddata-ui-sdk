@@ -409,6 +409,66 @@ describe('sdk', function() {
                 });
             });
         });
+
+        describe('getAvailableMetrics', function() {
+            it('should reject with 400 from backend', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/availablemetrics',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+
+                sdk.getAvailableMetrics('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return correct number of entries', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/availablemetrics',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({entries: [{link: 'm1'}, {link: 'm2'}]})]
+                );
+
+                sdk.getAvailableMetrics('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
+
+        describe('getAvailableAttributes', function() {
+            it('should reject with 400 from backend', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/drillcrosspaths',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+
+                sdk.getAvailableAttributes('myFakeProjectId').then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+
+            it('should return correct number of entries', function(done) {
+                this.server.respondWith(
+                    '/gdc/md/myFakeProjectId/drillcrosspaths',
+                    [200, {'Content-Type': 'application/json'},
+                    JSON.stringify({drillcrosspath:{links: [{link: 'a1'}, {link: 'a2'}]}})]
+                );
+
+                sdk.getAvailableAttributes('myFakeProjectId').then(function(result) {
+                    expect(result.length).to.be(2);
+                    done();
+                });
+            });
+        });
     });
 });
 
