@@ -441,6 +441,80 @@
         return d.promise();
     };
 
+    var getObjectDetails = function(uri) {
+        var d = $.Deferred();
+
+        xhr.get(uri, {
+            headers: { Accept: 'application/json' },
+            dataType: 'json',
+            contentType: 'application/json'
+        }).then(function(res) {
+            d.resolve(res);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    var getObjectIdentifier = function(uri) {
+        var obj,
+            d = $.Deferred(),
+            idFinder = function(obj) {
+                if (obj.attribute) {
+                    return obj.attribute.content.displayForms[0].meta.identifier;
+                } else if (obj.dimension) {
+                    return obj.dimension.content.attributes.content.displayForms[0].meta.identifier;
+                } else if (obj.metric) {
+                    return obj.metric.meta.identifier;
+                }
+
+                throw "Unknown object!";
+            };
+
+        if (!$.isPlainObject(uri)) {
+            getObjectDetails(uri).then(function(data) { d.resolve(idFinder(data)); }, d.reject);
+        } else {
+            d.resolve(idFinder(obj));
+        }
+
+        return d.promise();
+    };
+
+    var getObjectUri = function(projectId, identifier) {
+        var d = $.Deferred(),
+            uriFinder = function(obj) {
+                var data = (obj.attribute) ? obj.attribute : obj.metric;
+                return data.meta.uri;
+            };
+
+        xhr.ajax('/gdc/md/'+projectId+'/identifiers', {
+            type: 'POST',
+            headers: { Accept: 'application/json' },
+            data: {
+                "identifierToUri": [identifier]
+            }
+        }).then(function(data) {
+            var found = data.identifiers.filter(function(i) {
+                return i.identifier === identifier;
+            });
+
+            if(found[0]) {
+                return getObjectDetails(found[0].uri);
+            }
+
+            d.reject('identifier not found');
+        }, d.reject).then(function(objData) {
+            if (!objData.attributeDisplayForm) {
+                return d.resolve(uriFinder(objData));
+            } else {
+                return getObjectDetails(objData.attributeDisplayForm.content.formOf).then(function(objData) {
+                            d.resolve(uriFinder(objData));
+                        }, d.reject);
+            }
+        }, d.reject);
+
+        return d.promise();
+    };
+
     return {
         DEFAULT_PALETTE: DEFAULT_PALETTE,
         isLoggedIn: isLoggedIn,
@@ -455,6 +529,9 @@
         getMetrics: getMetrics,
         validateMaql: validateMaql,
         getReportDefinition: getReportDefinition,
-        getCurrentProjectId: getCurrentProjectId
+        getCurrentProjectId: getCurrentProjectId,
+        getObjectDetails: getObjectDetails,
+        getObjectIdentifier: getObjectIdentifier,
+        getObjectUri: getObjectUri
     };
 });
