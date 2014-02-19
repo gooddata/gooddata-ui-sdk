@@ -383,6 +383,7 @@
      *
      * @param projectId Project identifier
      * @return {Array} An array of dimension objects
+     * @see getFolders
      */
     var getDimensions = function(projectId) {
         var d = $.Deferred();
@@ -392,6 +393,43 @@
         }, d.reject);
 
         return d.promise();
+    };
+
+    /**
+     * Returns project folders. Folders can be of specific types and you can specify
+     * the type you need by passing and optional `type` parameter
+     *
+     * @param {String} projectId - Project identifier
+     * @param {String} type - Optional, possible values are `metric`, `fact`, `attribute`
+     * @return {Array} An array of dimension objects
+     */
+    var getFolders = function(projectId, type) {
+        var d = $.Deferred();
+
+        var _getFolders = function(projectId, type) {
+            var r = $.Deferred();
+            var typeURL = type ? '?type='+type : '';
+            xhr.get('/gdc/md/'+ projectId +'/query/folders'+typeURL).then(function(result) {
+                r.resolve(result.query.entries);
+            }, r.reject);
+            return r.promise();
+        };
+
+        switch (type) {
+            case 'fact':
+            case 'metric':
+                _getFolders(projectId, type);
+                return d.promise();
+            case 'attribute':
+                return getDimensions(projectId);
+            default:
+                $.when(_getFolders(projectId, 'fact'),
+                       _getFolders(projectId, 'metric'),
+                       getDimensions(projectId)).done(function(facts, metrics, attributes) {
+                    d.resolve({fact: facts, metric: metrics, attribute: attributes});
+                });
+                return d.promise();
+        }
     };
 
     /**
@@ -569,6 +607,7 @@
         setColorPalette: setColorPalette,
         getData: getData,
         getAttributes: getAttributes,
+        getFolders: getFolders,
         getDimensions: getDimensions,
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
