@@ -404,8 +404,6 @@
      * @return {Array} An array of dimension objects
      */
     var getFolders = function(projectId, type) {
-        var d = $.Deferred();
-
         var _getFolders = function(projectId, type) {
             var r = $.Deferred();
             var typeURL = type ? '?type='+type : '';
@@ -418,11 +416,11 @@
         switch (type) {
             case 'fact':
             case 'metric':
-                _getFolders(projectId, type);
-                return d.promise();
+                return _getFolders(projectId, type);
             case 'attribute':
                 return getDimensions(projectId);
             default:
+                var d = $.Deferred();
                 $.when(_getFolders(projectId, 'fact'),
                        _getFolders(projectId, 'metric'),
                        getDimensions(projectId)).done(function(facts, metrics, attributes) {
