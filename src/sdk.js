@@ -17,12 +17,8 @@
  * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
  * on [GooData Developer Portal](http://developer.gooddata.com/)
  */
-(function (name, context, definition) {
-      if (typeof module != 'undefined' && module.exports) module.exports = definition();
-      else if (typeof define == 'function' && define.amd) define(definition);
-      else context[name] = definition();
-})('sdk', this, function () {
-
+define(['./xhr'], function(xhr) {
+    'use strict';
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**

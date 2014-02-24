@@ -25,7 +25,8 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-
+      'src/_start.js',
+      'src/_end.js'
     ],
 
     preprocessors: {

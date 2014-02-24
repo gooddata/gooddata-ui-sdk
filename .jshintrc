@@ -16,8 +16,7 @@
         "it": false,
         "require": false,
         "define": false,
-        "xhr": false,
-        "sdk": false
+        "gooddata": false
     },
 
     "browser": true,
