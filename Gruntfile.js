@@ -15,14 +15,14 @@ module.exports = function(grunt) {
                 dest: 'dist/gooddata.min.js'
             }
         },
-        concat: {
-            examples: {
-                src: 'src/*.js',
-                dest: 'examples/<%= pkg.name %>.js'
-            }
-        },
         jshint: {
             all: ['*.js', 'src/*.js', 'test/*.js', '!src/_start.js', '!src/_end.js']
+        },
+        copy: {
+            examples: {
+                src: 'dist/gooddata.js',
+                dest: 'examples/gooddata.js'
+            }
         },
         karma: {
             unit: {
@@ -45,8 +45,8 @@ module.exports = function(grunt) {
                 interval: 500
             },
             js: {
-                files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gdc.js', '!examples/gd-sdk-js.js'],
-                tasks: ['concat:examples'],
+                files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gooddata.js'],
+                tasks: ['requirejs:compile', 'copy:examples'],
                 nospawn: true
             }
         },
@@ -63,8 +63,9 @@ module.exports = function(grunt) {
                         startFile: 'src/_start.js',
                         endFile: 'src/_end.js'
                     },
-                    include: ['loader', 'gooddata'],
-                    optimize: 'none',
+                    include: ['gooddata'],
+                    deps: ['loader'],
+                    optimize: 'none', // do not uglify
                     preserveLicenseComments: true
                 }
             }
@@ -73,15 +74,15 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-markdox');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['jshint', 'concat', 'requirejs', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'requirejs', 'copy', 'uglify']);
     grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('dev', ['grizzly', 'watch']);
     grunt.registerTask('doc', ['markdox']);

@@ -6,7 +6,7 @@ var projectId = 'GoodSalesDemo',
 // Show login info
 $('body').append('<div class="login-loader">Logging in...</div>');
 
-sdk.login(user, passwd).then(function() {
+gooddata.sdk.login(user, passwd).then(function() {
     // Loged in
     $('div.login-loader').remove();
     $('body').append('<div class="loading">Loading data...</div>');
