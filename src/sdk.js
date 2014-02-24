@@ -431,6 +431,87 @@
     };
 
     /**
+     * Get folders with items.
+     * Returns array of folders, each having a title and items property which is an array of
+     * corresponding items. Each item is either a metric or attribute, keeping its original
+     * verbose structure.
+     *
+     * @param {String} type type of folders to return
+     * @return {Array} Array of folder object, each containing title and
+     * corresponding items.
+     */
+    var getFoldersWithItems = function(projectId, type) {
+        var result = $.Deferred();
+
+        // fetch all folders of given type and process them
+        getFolders(projectId, type).then(function(folders) {
+
+            // Helper function to get details for each metric in the given
+            // array of links to the metadata objects representing the metrics.
+            // @return the array of promises
+            var getMetricItemsDetails = function(array) {
+                var d = $.Deferred();
+                $.when.apply(this, array.map(getObjectDetails)).then(function() {
+                    var metrics = Array.prototype.slice.call(arguments).map(function(item) {
+                        return item.metric;
+                    });
+                    d.resolve(metrics);
+                }, d.reject);
+                return d.promise();
+            };
+
+            // helper mapBy function
+            var mapBy = function(array, key) {
+                return array.map(function(item) {
+                    return item[key];
+                });
+            };
+
+            var foldersLinks = mapBy(folders, 'link');
+            var foldersTitles = mapBy(folders, 'title');
+
+            // fetch details for each folder
+            $.when.apply(this, foldersLinks.map(getObjectDetails)).then(function() {
+                var folderDetails = Array.prototype.slice.call(arguments);
+
+                // if attribute, just parse everything from what we've received
+                // and resolve. For metrics, lookup again each metric to get its
+                // identifier. If passing unsupported type, reject immediately.
+                if (type === 'attribute') {
+                    var structure = folderDetails.map(function(folderDetail) {
+                        return {
+                            title: folderDetail.dimension.meta.title,
+                            items: folderDetail.dimension.content.attributes
+                        };
+                    });
+                    result.resolve(structure);
+                } else if (type === 'metric') {
+                    var entriesLinks = folderDetails.map(function(entry) {
+                        return mapBy(entry.folder.content.entries, 'link');
+                    });
+                    $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
+                        return getMetricItemsDetails(linkArray);
+                    })).then(function() {
+                        // all promises resolved, i.e. details for each metric are available
+                        var tree = Array.prototype.slice.call(arguments);
+                        var structure = tree.map(function(treeItems, idx) {
+                            return {
+                                title: foldersTitles[idx],
+                                items: treeItems
+                            };
+                        });
+                        result.resolve(structure);
+                    }, result.reject);
+                } else {
+                    result.reject();
+                }
+            });
+        }, result.reject);
+
+        return result.promise();
+    };
+
+    /**
      * Returns all metrics in a project specified by the given projectId
      *
      * @param projectId Project identifier
@@ -606,6 +687,7 @@
         getData: getData,
         getAttributes: getAttributes,
         getFolders: getFolders,
+        getFoldersWithItems: getFoldersWithItems,
         getDimensions: getDimensions,
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
