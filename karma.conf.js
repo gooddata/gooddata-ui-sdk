@@ -9,7 +9,7 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'requirejs'],
 
 
     // list of files / patterns to load in the browser
@@ -17,9 +17,11 @@ module.exports = function(config) {
       'lib/jquery/jquery.js',
       'test/lib/expect.js',
       'test/lib/sinon-1.7.3.js',
-      'src/*.js',
+      { pattern: 'src/*.js', included: false, served: true },
       // Tests
-      'test/*_test.js'
+      { pattern: 'test/*_test.js', included: false, served: true },
+      // Test config
+      'test/test-main.js'
     ],
 
 
