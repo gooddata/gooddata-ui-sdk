@@ -1,3 +1,242 @@
+(function(window, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // Browser Global (gooddata is out global library identifier)
+    window.gooddata = factory();
+  }
+}(this, function() {
+
+// Tilde.io's loader shim
+// taken from
+// https://raw2.github.com/tildeio/rsvp.js/master/vendor/loader.js
+var define, require;
+
+(function() {
+  
+  var registry = {}, seen = {};
+
+  define = function(name, deps, callback) {
+    registry[name] = { deps: deps, callback: callback };
+  };
+
+  require = function(name) {
+
+    if (seen[name]) { return seen[name]; }
+    seen[name] = {};
+
+    if (!registry[name]) {
+      throw new Error("Could not find module " + name);
+    }
+
+    var mod = registry[name],
+        deps = mod.deps,
+        callback = mod.callback,
+        reified = [],
+        exports;
+
+    for (var i=0, l=deps.length; i<l; i++) {
+      if (deps[i] === 'exports') {
+        reified.push(exports = {});
+      } else {
+        reified.push(require(resolve(deps[i])));
+      }
+    }
+
+    var value = callback.apply(this, reified);
+    return seen[name] = exports || value;
+
+    function resolve(child) {
+      if (child.charAt(0) !== '.') { return child; }
+      var parts = child.split("/");
+      var parentBase = name.split("/").slice(0, -1);
+
+      for (var i=0, l=parts.length; i<l; i++) {
+        var part = parts[i];
+
+        if (part === '..') { parentBase.pop(); }
+        else if (part === '.') { continue; }
+        else { parentBase.push(part); }
+      }
+
+      return parentBase.join("/");
+    }
+  };
+
+  require.entries = registry;
+})();
+
+define("loader", function(){});
+
+// Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
+define('_jquery',[],function() { 
+    if (typeof $ === 'undefined') {
+        throw new Error('You need to include jQuery to use Gooddata JS');
+    }
+
+    return window.$;
+});
+
+
+// Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
+define('xhr',['_jquery'], function($) { 
+    // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
+    // Inteface is same as original jQuery.ajax.
+
+    // If token is expired, current request is "paused", token is refreshed and request is retried and result.
+    // is transparently returned to original call.
+
+    // Additionally polling is handled. Only final result of polling returned.
+    var tokenRequest,
+        xhrSettings,
+        xhr = {}; // returned module
+
+    var retryAjaxRequest = function(req, deffered) {
+        // still use our extended ajax, because is still possible to fail recoverably in again
+        // e.g. request -> 401 -> token renewal -> retry request -> 202 (polling) -> retry again after delay
+        xhr.ajax(req).done(function(data, textStatus, xhr) {
+            deffered.resolve(data, textStatus, xhr);
+        }).fail(function(xhr, textStatus, err) {
+            deffered.reject(xhr, textStatus, err);
+        });
+    };
+
+    var continueAfterTokenRequest = function(req, deffered) {
+        tokenRequest.done(function() {
+            retryAjaxRequest(req, deffered);
+        }).fail(function(xhr, textStatus, err) {
+            if (xhr.status !== 401) {
+                deffered.reject(xhr, textStatus, err);
+            }
+        });
+    };
+
+    var handleUnauthorized = function(req, deffered) {
+        if (!tokenRequest) {
+            // Create only single token request for any number of waiting request.
+            // If token request exist, just listen for it's end.
+            tokenRequest = $.ajax('/gdc/account/token/').always(function() {
+                tokenRequest = null;
+            }).fail(function(xhr, textStatus, err) {
+                //unauthorized when retrieving token -> not logged
+                if ((xhr.status === 401) && ($.isFunction(req.unauthorized))) {
+                    req.unauthorized(xhr);
+                    return;
+                }
+                // unauthorized handler is not defined or not http 401
+                deffered.reject(xhr, textStatus, err);
+            });
+        }
+        continueAfterTokenRequest(req, deffered);
+    };
+
+    var handlePolling = function(req, deffered) {
+        setTimeout(function() {
+            retryAjaxRequest(req, deffered);
+        }, req.pollDelay);
+    };
+
+    // helper to coverts traditional ajax callbacks to deffered
+    var reattachCallbackOnDeffered = function(settings, property, defferAttach) {
+        var callback = settings[property];
+        delete settings[property];
+        if ($.isFunction(callback)) {
+            defferAttach(callback);
+        }
+        if ($.isArray(callback)) {
+            callback.forEach(function(fn) {
+                if ($.isFunction(callback)) {
+                    defferAttach(fn);
+                }
+            });
+        }
+    };
+
+    // additional ajax configuration specific for xhr module, keys
+    //   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
+    //   pollDelay: int - polling interval in milisecodns, default 1000
+    //
+    // method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
+    //
+    // xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
+    // Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
+    xhr.ajaxSetup = function(settings) {
+        xhrSettings = $.extend({
+            contentType: 'application/json',
+            dataType: 'json',
+            pollDelay: 1000
+        }, settings);
+    };
+
+    // Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
+    // Additionally content type is automatically json, and object in settings.data is converted to string
+    // to be consumed by GDC backend.
+    //
+    // settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+    xhr.ajax = function(url, settings) {
+        if ($.isPlainObject(url)) {
+            settings = url;
+            url = undefined;
+        }
+        // copy settings to not modify passed object
+        // settings can be undefined, doesn't matter, $.extend handle it
+        settings = $.extend({}, xhrSettings, settings);
+        if (url) {
+            settings.url = url;
+        }
+        if ($.isPlainObject(settings.data)) {
+            settings.data = JSON.stringify(settings.data);
+        }
+
+        var d = $.Deferred();
+        reattachCallbackOnDeffered(settings, 'success', d.done);
+        reattachCallbackOnDeffered(settings, 'error', d.fail);
+        reattachCallbackOnDeffered(settings, 'complete', d.always);
+
+        if (tokenRequest) {
+            continueAfterTokenRequest(settings, d);
+            return d;
+        }
+        $.ajax(settings).fail(function(xhr, textStatus, err) {
+            if (xhr.status === 401) {
+                handleUnauthorized(settings, d);
+            } else {
+                d.reject(xhr, textStatus, err);
+            }
+        }).done(function(data, textStatus, xhr) {
+            if (xhr.status === 202) {
+                handlePolling(settings, d);
+            } else {
+                d.resolve(data, textStatus, xhr);
+            }
+        });
+        return d;
+    };
+
+    var xhrMethod = function xhrMethod(method) {
+        return function(url, settings) {
+            var opts = $.extend(true, {
+                method: method
+            }, settings);
+
+            return xhr.ajax(url, opts);
+        };
+    };
+
+    xhr.get = xhrMethod('GET');
+    xhr.post = xhrMethod('POST');
+    xhr.put = xhrMethod('PUT');
+
+    // setup dafault settings
+    xhr.ajaxSetup({});
+    return xhr;
+
+});
+
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 /**
  * # JS SDK
@@ -17,12 +256,8 @@
  * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
  * on [GooData Developer Portal](http://developer.gooddata.com/)
  */
-(function (name, context, definition) {
-      if (typeof module != 'undefined' && module.exports) module.exports = definition();
-      else if (typeof define == 'function' && define.amd) define(definition);
-      else context[name] = definition();
-})('sdk', this, function () {
-
+define('sdk',['./xhr'], function(xhr) {
+    
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**
@@ -383,6 +618,7 @@
      *
      * @param projectId Project identifier
      * @return {Array} An array of dimension objects
+     * @see getFolders
      */
     var getDimensions = function(projectId) {
         var d = $.Deferred();
@@ -392,6 +628,122 @@
         }, d.reject);
 
         return d.promise();
+    };
+
+    /**
+     * Returns project folders. Folders can be of specific types and you can specify
+     * the type you need by passing and optional `type` parameter
+     *
+     * @param {String} projectId - Project identifier
+     * @param {String} type - Optional, possible values are `metric`, `fact`, `attribute`
+     * @return {Array} An array of dimension objects
+     */
+    var getFolders = function(projectId, type) {
+        var _getFolders = function(projectId, type) {
+            var r = $.Deferred();
+            var typeURL = type ? '?type='+type : '';
+            xhr.get('/gdc/md/'+ projectId +'/query/folders'+typeURL).then(function(result) {
+                r.resolve(result.query.entries);
+            }, r.reject);
+            return r.promise();
+        };
+
+        switch (type) {
+            case 'fact':
+            case 'metric':
+                return _getFolders(projectId, type);
+            case 'attribute':
+                return getDimensions(projectId);
+            default:
+                var d = $.Deferred();
+                $.when(_getFolders(projectId, 'fact'),
+                       _getFolders(projectId, 'metric'),
+                       getDimensions(projectId)).done(function(facts, metrics, attributes) {
+                    d.resolve({fact: facts, metric: metrics, attribute: attributes});
+                });
+                return d.promise();
+        }
+    };
+
+    /**
+     * Get folders with items.
+     * Returns array of folders, each having a title and items property which is an array of
+     * corresponding items. Each item is either a metric or attribute, keeping its original
+     * verbose structure.
+     *
+     * @param {String} type type of folders to return
+     * @return {Array} Array of folder object, each containing title and
+     * corresponding items.
+     */
+    var getFoldersWithItems = function(projectId, type) {
+        var result = $.Deferred();
+
+        // fetch all folders of given type and process them
+        getFolders(projectId, type).then(function(folders) {
+
+            // Helper function to get details for each metric in the given
+            // array of links to the metadata objects representing the metrics.
+            // @return the array of promises
+            var getMetricItemsDetails = function(array) {
+                var d = $.Deferred();
+                $.when.apply(this, array.map(getObjectDetails)).then(function() {
+                    var metrics = Array.prototype.slice.call(arguments).map(function(item) {
+                        return item.metric;
+                    });
+                    d.resolve(metrics);
+                }, d.reject);
+                return d.promise();
+            };
+
+            // helper mapBy function
+            var mapBy = function(array, key) {
+                return array.map(function(item) {
+                    return item[key];
+                });
+            };
+
+            var foldersLinks = mapBy(folders, 'link');
+            var foldersTitles = mapBy(folders, 'title');
+
+            // fetch details for each folder
+            $.when.apply(this, foldersLinks.map(getObjectDetails)).then(function() {
+                var folderDetails = Array.prototype.slice.call(arguments);
+
+                // if attribute, just parse everything from what we've received
+                // and resolve. For metrics, lookup again each metric to get its
+                // identifier. If passing unsupported type, reject immediately.
+                if (type === 'attribute') {
+                    var structure = folderDetails.map(function(folderDetail) {
+                        return {
+                            title: folderDetail.dimension.meta.title,
+                            items: folderDetail.dimension.content.attributes
+                        };
+                    });
+                    result.resolve(structure);
+                } else if (type === 'metric') {
+                    var entriesLinks = folderDetails.map(function(entry) {
+                        return mapBy(entry.folder.content.entries, 'link');
+                    });
+                    $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
+                        return getMetricItemsDetails(linkArray);
+                    })).then(function() {
+                        // all promises resolved, i.e. details for each metric are available
+                        var tree = Array.prototype.slice.call(arguments);
+                        var structure = tree.map(function(treeItems, idx) {
+                            return {
+                                title: foldersTitles[idx],
+                                items: treeItems
+                            };
+                        });
+                        result.resolve(structure);
+                    }, result.reject);
+                } else {
+                    result.reject();
+                }
+            });
+        }, result.reject);
+
+        return result.promise();
     };
 
     /**
@@ -485,6 +837,80 @@
         return d.promise();
     };
 
+    var getObjectDetails = function(uri) {
+        var d = $.Deferred();
+
+        xhr.get(uri, {
+            headers: { Accept: 'application/json' },
+            dataType: 'json',
+            contentType: 'application/json'
+        }).then(function(res) {
+            d.resolve(res);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    var getObjectIdentifier = function(uri) {
+        var obj,
+            d = $.Deferred(),
+            idFinder = function(obj) {
+                if (obj.attribute) {
+                    return obj.attribute.content.displayForms[0].meta.identifier;
+                } else if (obj.dimension) {
+                    return obj.dimension.content.attributes.content.displayForms[0].meta.identifier;
+                } else if (obj.metric) {
+                    return obj.metric.meta.identifier;
+                }
+
+                throw "Unknown object!";
+            };
+
+        if (!$.isPlainObject(uri)) {
+            getObjectDetails(uri).then(function(data) { d.resolve(idFinder(data)); }, d.reject);
+        } else {
+            d.resolve(idFinder(obj));
+        }
+
+        return d.promise();
+    };
+
+    var getObjectUri = function(projectId, identifier) {
+        var d = $.Deferred(),
+            uriFinder = function(obj) {
+                var data = (obj.attribute) ? obj.attribute : obj.metric;
+                return data.meta.uri;
+            };
+
+        xhr.ajax('/gdc/md/'+projectId+'/identifiers', {
+            type: 'POST',
+            headers: { Accept: 'application/json' },
+            data: {
+                "identifierToUri": [identifier]
+            }
+        }).then(function(data) {
+            var found = data.identifiers.filter(function(i) {
+                return i.identifier === identifier;
+            });
+
+            if(found[0]) {
+                return getObjectDetails(found[0].uri);
+            }
+
+            d.reject('identifier not found');
+        }, d.reject).then(function(objData) {
+            if (!objData.attributeDisplayForm) {
+                return d.resolve(uriFinder(objData));
+            } else {
+                return getObjectDetails(objData.attributeDisplayForm.content.formOf).then(function(objData) {
+                            d.resolve(uriFinder(objData));
+                        }, d.reject);
+            }
+        }, d.reject);
+
+        return d.promise();
+    };
+
     return {
         DEFAULT_PALETTE: DEFAULT_PALETTE,
         isLoggedIn: isLoggedIn,
@@ -495,171 +921,32 @@
         setColorPalette: setColorPalette,
         getData: getData,
         getAttributes: getAttributes,
+        getFolders: getFolders,
+        getFoldersWithItems: getFoldersWithItems,
         getDimensions: getDimensions,
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
         getAvailableAttributes: getAvailableAttributes,
         validateMaql: validateMaql,
         getReportDefinition: getReportDefinition,
-        getCurrentProjectId: getCurrentProjectId
+        getCurrentProjectId: getCurrentProjectId,
+        getObjectDetails: getObjectDetails,
+        getObjectIdentifier: getObjectIdentifier,
+        getObjectUri: getObjectUri
     };
 });
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-(function (name, context, definition) {
-      if (typeof module != 'undefined' && module.exports) module.exports = definition();
-      else if (typeof define == 'function' && define.amd) define(definition);
-      else context[name] = definition();
-})('xhr', this, function () {
-    // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
-    // Inteface is same as original jQuery.ajax.
-
-    // If token is expired, current request is "paused", token is refreshed and request is retried and result.
-    // is transparently returned to original call.
-
-    // Additionally polling is handled. Only final result of polling returned.
-    var tokenRequest,
-        xhrSettings,
-        xhr = {}; // returned module
-
-    var retryAjaxRequest = function(req, deffered) {
-        // still use our extended ajax, because is still possible to fail recoverably in again
-        // e.g. request -> 401 -> token renewal -> retry request -> 202 (polling) -> retry again after delay
-        xhr.ajax(req).done(function(data, textStatus, xhr) {
-            deffered.resolve(data, textStatus, xhr);
-        }).fail(function(xhr, textStatus, err) {
-            deffered.reject(xhr, textStatus, err);
-        });
+define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
+    
+    return {
+        xhr: xhr,
+        sdk: sdk
     };
-
-    var continueAfterTokenRequest = function(req, deffered) {
-        tokenRequest.done(function() {
-            retryAjaxRequest(req, deffered);
-        }).fail(function(xhr, textStatus, err) {
-            if (xhr.status !== 401) {
-                deffered.reject(xhr, textStatus, err);
-            }
-        });
-    };
-
-    var handleUnauthorized = function(req, deffered) {
-        if (!tokenRequest) {
-            // Create only single token request for any number of waiting request.
-            // If token request exist, just listen for it's end.
-            tokenRequest = $.ajax('/gdc/account/token/').always(function() {
-                tokenRequest = null;
-            }).fail(function(xhr, textStatus, err) {
-                //unauthorized when retrieving token -> not logged
-                if ((xhr.status === 401) && ($.isFunction(req.unauthorized))) {
-                    req.unauthorized(xhr);
-                    return;
-                }
-                // unauthorized handler is not defined or not http 401
-                deffered.reject(xhr, textStatus, err);
-            });
-        }
-        continueAfterTokenRequest(req, deffered);
-    };
-
-    var handlePolling = function(req, deffered) {
-        setTimeout(function() {
-            retryAjaxRequest(req, deffered);
-        }, req.pollDelay);
-    };
-
-    // helper to coverts traditional ajax callbacks to deffered
-    var reattachCallbackOnDeffered = function(settings, property, defferAttach) {
-        var callback = settings[property];
-        delete settings[property];
-        if ($.isFunction(callback)) {
-            defferAttach(callback);
-        }
-        if ($.isArray(callback)) {
-            callback.forEach(function(fn) {
-                if ($.isFunction(callback)) {
-                    defferAttach(fn);
-                }
-            });
-        }
-    };
-
-    // additional ajax configuration specific for xhr module, keys
-    //   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
-    //   pollDelay: int - polling interval in milisecodns, default 1000
-    //
-    // method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
-    //
-    // xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
-    // Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
-    xhr.ajaxSetup = function(settings) {
-        xhrSettings = $.extend({
-            contentType: 'application/json',
-            dataType: 'json',
-            pollDelay: 1000
-        }, settings);
-    };
-
-    // Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
-    // Additionally content type is automatically json, and object in settings.data is converted to string
-    // to be consumed by GDC backend.
-    //
-    // settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
-    xhr.ajax = function(url, settings) {
-        if ($.isPlainObject(url)) {
-            settings = url;
-            url = undefined;
-        }
-        // copy settings to not modify passed object
-        // settings can be undefined, doesn't matter, $.extend handle it
-        settings = $.extend({}, xhrSettings, settings);
-        if (url) {
-            settings.url = url;
-        }
-        if ($.isPlainObject(settings.data)) {
-            settings.data = JSON.stringify(settings.data);
-        }
-
-        var d = $.Deferred();
-        reattachCallbackOnDeffered(settings, 'success', d.done);
-        reattachCallbackOnDeffered(settings, 'error', d.fail);
-        reattachCallbackOnDeffered(settings, 'complete', d.always);
-
-        if (tokenRequest) {
-            continueAfterTokenRequest(settings, d);
-            return d;
-        }
-        $.ajax(settings).fail(function(xhr, textStatus, err) {
-            if (xhr.status === 401) {
-                handleUnauthorized(settings, d);
-            } else {
-                d.reject(xhr, textStatus, err);
-            }
-        }).done(function(data, textStatus, xhr) {
-            if (xhr.status === 202) {
-                handlePolling(settings, d);
-            } else {
-                d.resolve(data, textStatus, xhr);
-            }
-        });
-        return d;
-    };
-
-    var xhrMethod = function xhrMethod(method) {
-        return function(url, settings) {
-            var opts = $.extend(true, {
-                method: method
-            }, settings);
-
-            return xhr.ajax(url, opts);
-        };
-    };
-
-    xhr.get = xhrMethod('GET');
-    xhr.post = xhrMethod('POST');
-    xhr.put = xhrMethod('PUT');
-
-    // setup dafault settings
-    xhr.ajaxSetup({});
-    return xhr;
-
 });
+
+  // Ask loader to synchronously require the
+  // module value for 'gooddata' here and return it as the
+  // value to use for the public API for the built file.
+  return require('gooddata');
+}));
