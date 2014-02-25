@@ -103,6 +103,56 @@ define(['gooddata', 'jquery'], function(sdk, $) {
                 });
             });
 
+            describe('loggedOut', function() {
+                it('should resolve when user is not logged in', function(done) {
+                    this.server.respondWith(
+                        'GET', '/gdc/account/token',
+                        [401, {'Content-Type': 'application/json'}, JSON.stringify({})]
+                    );
+
+                    sdk.logout().then(function(result) {
+                        done();
+                    }, function(err) {
+                        expect().fail("Promise should be resolved with empty object");
+                        done();
+                    });
+                });
+
+                it('should log out user', function(done) {
+                    var userId = 'USER_ID';
+
+                    this.server.respondWith(
+                        'GET', '/gdc/account/token',
+                        [200, {'Content-Type': 'application/json'}, JSON.stringify({})]
+                    );
+
+                    this.server.respondWith(
+                        'GET', '/gdc/app/account/bootstrap',
+                        [200, {'Content-Type': 'application/json'}, JSON.stringify({
+                            bootstrapResource: {
+                                accountSetting: {
+                                    links: {
+                                        self: "/gdc/account/profile/" + userId
+                                    }
+                                }
+                            }
+                        })]
+                    );
+
+                    this.server.respondWith(
+                        'DELETE', '/gdc/account/login/' + userId,
+                        [204, {'Content-Type': 'application/json'}, '']
+                    );
+
+                    sdk.logout().then(function(result) {
+                        done();
+                    }, function(err) {
+                        expect().fail("Promise should be resolved with empty object");
+                        done();
+                    });
+                });
+            });
+
             describe('getProjects', function() {
                 it('should reject with 400 when resource fails', function(done) {
                     this.server.respondWith(
