@@ -1,9 +1,6 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define(['gooddata', 'jquery'], function(gd, $) {
+define(['gooddata', 'jquery'], function(sdk, $) {
     describe('sdk', function() {
-        before(function() {
-            sdk = gd.sdk;
-        });
         describe('getReportDefinition', function() {
             it('should return report definition payload', function() {
                 var rDef = sdk.getReportDefinition([

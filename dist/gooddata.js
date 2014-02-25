@@ -939,10 +939,9 @@ define('sdk',['./xhr'], function(xhr) {
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
     
-    return {
-        xhr: xhr,
-        sdk: sdk
-    };
+    sdk.xhr = xhr;
+
+    return sdk;
 });
 
   // Ask loader to synchronously require the
