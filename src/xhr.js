@@ -1,9 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-(function (name, context, definition) {
-      if (typeof module != 'undefined' && module.exports) module.exports = definition();
-      else if (typeof define == 'function' && define.amd) define(definition);
-      else context[name] = definition();
-})('xhr', this, function () {
+define(['_jquery'], function($) { 'use strict';
     // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
     // Inteface is same as original jQuery.ajax.
 

@@ -1,5 +1,5 @@
 dist/
 coverage/
-examples/gd-sdk-js.js
+examples/gooddata.js
 node_modules/
 lib/
