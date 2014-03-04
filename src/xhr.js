@@ -11,27 +11,27 @@ define(['_jquery'], function($) { 'use strict';
         xhrSettings,
         xhr = {}; // returned module
 
-    var retryAjaxRequest = function(req, deffered) {
+    var retryAjaxRequest = function(req, deferred) {
         // still use our extended ajax, because is still possible to fail recoverably in again
         // e.g. request -> 401 -> token renewal -> retry request -> 202 (polling) -> retry again after delay
         xhr.ajax(req).done(function(data, textStatus, xhr) {
-            deffered.resolve(data, textStatus, xhr);
+            deferred.resolve(data, textStatus, xhr);
         }).fail(function(xhr, textStatus, err) {
-            deffered.reject(xhr, textStatus, err);
+            deferred.reject(xhr, textStatus, err);
         });
     };
 
-    var continueAfterTokenRequest = function(req, deffered) {
+    var continueAfterTokenRequest = function(req, deferred) {
         tokenRequest.done(function() {
-            retryAjaxRequest(req, deffered);
+            retryAjaxRequest(req, deferred);
         }).fail(function(xhr, textStatus, err) {
             if (xhr.status !== 401) {
-                deffered.reject(xhr, textStatus, err);
+                deferred.reject(xhr, textStatus, err);
             }
         });
     };
 
-    var handleUnauthorized = function(req, deffered) {
+    var handleUnauthorized = function(req, deferred) {
         if (!tokenRequest) {
             // Create only single token request for any number of waiting request.
             // If token request exist, just listen for it's end.
@@ -44,20 +44,20 @@ define(['_jquery'], function($) { 'use strict';
                     return;
                 }
                 // unauthorized handler is not defined or not http 401
-                deffered.reject(xhr, textStatus, err);
+                deferred.reject(xhr, textStatus, err);
             });
         }
-        continueAfterTokenRequest(req, deffered);
+        continueAfterTokenRequest(req, deferred);
     };
 
-    var handlePolling = function(req, deffered) {
+    var handlePolling = function(req, deferred) {
         setTimeout(function() {
-            retryAjaxRequest(req, deffered);
+            retryAjaxRequest(req, deferred);
         }, req.pollDelay);
     };
 
-    // helper to coverts traditional ajax callbacks to deffered
-    var reattachCallbackOnDeffered = function(settings, property, defferAttach) {
+    // helper to coverts traditional ajax callbacks to deferred
+    var reattachCallbackOnDeferred = function(settings, property, defferAttach) {
         var callback = settings[property];
         delete settings[property];
         if ($.isFunction(callback)) {
@@ -109,9 +109,9 @@ define(['_jquery'], function($) { 'use strict';
         }
 
         var d = $.Deferred();
-        reattachCallbackOnDeffered(settings, 'success', d.done);
-        reattachCallbackOnDeffered(settings, 'error', d.fail);
-        reattachCallbackOnDeffered(settings, 'complete', d.always);
+        reattachCallbackOnDeferred(settings, 'success', d.done);
+        reattachCallbackOnDeferred(settings, 'error', d.fail);
+        reattachCallbackOnDeferred(settings, 'complete', d.always);
 
         if (tokenRequest) {
             continueAfterTokenRequest(settings, d);
