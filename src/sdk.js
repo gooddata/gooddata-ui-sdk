@@ -383,7 +383,7 @@ define(['./xhr'], function(xhr) {
     /**
      * Reutrns all attributes in a project specified by projectId param
      *
-     * @param projectId Porject identifier
+     * @param projectId Project identifier
      * @return {Array} An array of attribute objects
      */
     var getAttributes = function(projectId) {
