@@ -95,13 +95,13 @@ elements in column headers.
 
 * **Object** Structure with `headers` and `rawData` keys filled with values from execution.
 
-## getAttributes(Porject)
+## getAttributes(Project)
 
 Reutrns all attributes in a project specified by projectId param
 
 ### Params: 
 
-* **projectId** *Porject* identifier
+* **projectId** *Project* identifier
 
 ### Return:
 
