@@ -8,7 +8,7 @@
  *
  * ## Conventions and Dependencies
  * * Depends on [jQuery JavaScript library](http://jquery.com/) javascript library
- * * Each SDK function returns [jQuery Deffered promise](http://api.jquery.com/deferred.promise/)
+ * * Each SDK function returns [jQuery Deferred promise](http://api.jquery.com/deferred.promise/)
  *
  * ## GD Authentication Mechansim
  * In this JS SDK library we provide you with a simple `login(username, passwd)` function
@@ -123,7 +123,7 @@ define(['./xhr'], function(xhr) {
 
     /**
      * This function provides an authentication entry point to the GD API. It is needed to authenticate
-     * by calling this function prior any other API calls. After providing valid credentiols
+     * by calling this function prior any other API calls. After providing valid credentials
      * every subsequent API call in a current session will be authenticated.
      *
      * @param {String} username
@@ -143,6 +143,28 @@ define(['./xhr'], function(xhr) {
                     verifyCaptcha: ""
                 }
             })
+        }).then(d.resolve, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Logs out current user
+     */
+    var logout = function() {
+        var d = $.Deferred();
+
+        isLoggedIn().then(function() {
+            return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
+                var userUri = result.bootstrapResource.accountSetting.links.self;
+                var userId = userUri.match(/([^\/]+)\/?$/)[1];
+
+                return userId;
+            }, d.reject);
+        }, d.resolve).then(function(userId) {
+            return xhr.ajax('/gdc/account/login/' + userId, {
+                method: 'delete'
+            });
         }).then(d.resolve, d.reject);
 
         return d.promise();
@@ -676,6 +698,7 @@ define(['./xhr'], function(xhr) {
         DEFAULT_PALETTE: DEFAULT_PALETTE,
         isLoggedIn: isLoggedIn,
         login: login,
+        logout: logout,
         getProjects: getProjects,
         getDatasets: getDatasets,
         getColorPalette: getColorPalette,

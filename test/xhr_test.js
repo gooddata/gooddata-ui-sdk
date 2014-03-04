@@ -4,7 +4,7 @@ define(['gooddata', 'jquery'], function(gd, $) {
         before(function() {
             xhr = gd.xhr;
         });
-        /* $.ajax returns jqXhr object with deffered interface
+        /* $.ajax returns jqXhr object with deferred interface
             this add jqXhr properties according to options to simulate jqXhr
         */
         function fakeJqXhr(options, d) {

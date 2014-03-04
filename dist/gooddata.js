@@ -17,7 +17,7 @@
 var define, require;
 
 (function() {
-  
+
   var registry = {}, seen = {};
 
   define = function(name, deps, callback) {
@@ -73,7 +73,7 @@ var define, require;
 define("loader", function(){});
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define('_jquery',[],function() { 
+define('_jquery',[],function() {
     if (typeof $ === 'undefined') {
         throw new Error('You need to include jQuery to use Gooddata JS');
     }
@@ -83,7 +83,7 @@ define('_jquery',[],function() {
 
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define('xhr',['_jquery'], function($) { 
+define('xhr',['_jquery'], function($) {
     // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
     // Inteface is same as original jQuery.ajax.
 
@@ -95,27 +95,27 @@ define('xhr',['_jquery'], function($) {
         xhrSettings,
         xhr = {}; // returned module
 
-    var retryAjaxRequest = function(req, deffered) {
+    var retryAjaxRequest = function(req, deferred) {
         // still use our extended ajax, because is still possible to fail recoverably in again
         // e.g. request -> 401 -> token renewal -> retry request -> 202 (polling) -> retry again after delay
         xhr.ajax(req).done(function(data, textStatus, xhr) {
-            deffered.resolve(data, textStatus, xhr);
+            deferred.resolve(data, textStatus, xhr);
         }).fail(function(xhr, textStatus, err) {
-            deffered.reject(xhr, textStatus, err);
+            deferred.reject(xhr, textStatus, err);
         });
     };
 
-    var continueAfterTokenRequest = function(req, deffered) {
+    var continueAfterTokenRequest = function(req, deferred) {
         tokenRequest.done(function() {
-            retryAjaxRequest(req, deffered);
+            retryAjaxRequest(req, deferred);
         }).fail(function(xhr, textStatus, err) {
             if (xhr.status !== 401) {
-                deffered.reject(xhr, textStatus, err);
+                deferred.reject(xhr, textStatus, err);
             }
         });
     };
 
-    var handleUnauthorized = function(req, deffered) {
+    var handleUnauthorized = function(req, deferred) {
         if (!tokenRequest) {
             // Create only single token request for any number of waiting request.
             // If token request exist, just listen for it's end.
@@ -128,20 +128,20 @@ define('xhr',['_jquery'], function($) {
                     return;
                 }
                 // unauthorized handler is not defined or not http 401
-                deffered.reject(xhr, textStatus, err);
+                deferred.reject(xhr, textStatus, err);
             });
         }
-        continueAfterTokenRequest(req, deffered);
+        continueAfterTokenRequest(req, deferred);
     };
 
-    var handlePolling = function(req, deffered) {
+    var handlePolling = function(req, deferred) {
         setTimeout(function() {
-            retryAjaxRequest(req, deffered);
+            retryAjaxRequest(req, deferred);
         }, req.pollDelay);
     };
 
-    // helper to coverts traditional ajax callbacks to deffered
-    var reattachCallbackOnDeffered = function(settings, property, defferAttach) {
+    // helper to coverts traditional ajax callbacks to deferred
+    var reattachCallbackOnDeferred = function(settings, property, defferAttach) {
         var callback = settings[property];
         delete settings[property];
         if ($.isFunction(callback)) {
@@ -193,9 +193,9 @@ define('xhr',['_jquery'], function($) {
         }
 
         var d = $.Deferred();
-        reattachCallbackOnDeffered(settings, 'success', d.done);
-        reattachCallbackOnDeffered(settings, 'error', d.fail);
-        reattachCallbackOnDeffered(settings, 'complete', d.always);
+        reattachCallbackOnDeferred(settings, 'success', d.done);
+        reattachCallbackOnDeferred(settings, 'error', d.fail);
+        reattachCallbackOnDeferred(settings, 'complete', d.always);
 
         if (tokenRequest) {
             continueAfterTokenRequest(settings, d);
@@ -247,7 +247,7 @@ define('xhr',['_jquery'], function($) {
  *
  * ## Conventions and Dependencies
  * * Depends on [jQuery JavaScript library](http://jquery.com/) javascript library
- * * Each SDK function returns [jQuery Deffered promise](http://api.jquery.com/deferred.promise/)
+ * * Each SDK function returns [jQuery Deferred promise](http://api.jquery.com/deferred.promise/)
  *
  * ## GD Authentication Mechansim
  * In this JS SDK library we provide you with a simple `login(username, passwd)` function
@@ -257,7 +257,7 @@ define('xhr',['_jquery'], function($) {
  * on [GooData Developer Portal](http://developer.gooddata.com/)
  */
 define('sdk',['./xhr'], function(xhr) {
-    
+
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**
@@ -938,7 +938,7 @@ define('sdk',['./xhr'], function(xhr) {
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
-    
+
     sdk.xhr = xhr;
 
     return sdk;
