@@ -526,6 +526,27 @@ define(['./xhr'], function(xhr) {
                                 title: "Unsorted",
                                 items: unsortedAttributes
                             });
+                            // sort
+                            structure.forEach(function(folder) {
+                                folder.items.sort(function(a, b) {
+                                    if(a.meta.title < b.meta.title) {
+                                        return -1;
+                                    } else if(a.meta.title > b.meta.title) {
+                                        return 1;
+                                    }
+
+                                    return 0;
+                                });
+                            });
+                            structure.sort(function(a, b) {
+                                if(a.title < b.title) {
+                                    return -1;
+                                } else if(a.title > b.title) {
+                                    return 1;
+                                }
+
+                                return 0;
+                            });
                             result.resolve(structure);
                         });
                     });
@@ -563,6 +584,28 @@ define(['./xhr'], function(xhr) {
                                     title: (foldersTitles[idx] || "Unsorted"),
                                     items: treeItems
                                 };
+                            });
+
+                            // sort
+                            structure.forEach(function(folder) {
+                                folder.items.sort(function(a, b) {
+                                    if(a.meta.title < b.meta.title) {
+                                        return -1;
+                                    } else if(a.meta.title > b.meta.title) {
+                                        return 1;
+                                    }
+
+                                    return 0;
+                                });
+                            });
+                            structure.sort(function(a, b) {
+                                if(a.title < b.title) {
+                                    return -1;
+                                } else if(a.title > b.title) {
+                                    return 1;
+                                }
+
+                                return 0;
                             });
                             result.resolve(structure);
                         }, result.reject);
