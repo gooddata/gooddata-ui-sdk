@@ -496,17 +496,44 @@ define(['./xhr'], function(xhr) {
                 // and resolve. For metrics, lookup again each metric to get its
                 // identifier. If passing unsupported type, reject immediately.
                 if (type === 'attribute') {
-                    var structure = folderDetails.map(function(folderDetail) {
-                        return {
-                            title: folderDetail.dimension.meta.title,
-                            items: folderDetail.dimension.content.attributes
-                        };
+                    // get all attributes, subtract what we have and add rest in unsorted folder
+                    getAttributes(projectId).then(function(attributes) {
+                        // get uris of attributes which are in some dimension folders
+                        var attributesInFolders = [];
+                        folderDetails.forEach(function(fd) {
+                            fd.dimension.content.attributes.forEach(function(attr) {
+                                attributesInFolders.push(attr.meta.uri);
+                            });
+                        });
+                        // unsortedUris now contains uris of all attributes which aren't in a folder
+                        var unsortedUris =
+                            attributes
+                                .filter(function(item) { return attributesInFolders.indexOf(item.link) === -1; })
+                                .map(function(item) { return item.link; });
+                        // now get details of attributes in no folders
+                        $.when.apply(this, unsortedUris.map(getObjectDetails)).then(function() {
+                            // get unsorted attribute objects
+                            var unsortedAttributes = Array.prototype.slice.call(arguments).map(function(attr) { return attr.attribute; });
+                            // create structure of folders with attributes
+                            var structure = folderDetails.map(function(folderDetail) {
+                                return {
+                                    title: folderDetail.dimension.meta.title,
+                                    items: folderDetail.dimension.content.attributes
+                                };
+                            });
+                            // and append "Unsorted" folder with attributes to the structure
+                            structure.push({
+                                title: "Unsorted",
+                                items: unsortedAttributes
+                            });
+                            result.resolve(structure);
+                        });
                     });
-                    result.resolve(structure);
                 } else if (type === 'metric') {
                     var entriesLinks = folderDetails.map(function(entry) {
                         return mapBy(entry.folder.content.entries, 'link');
                     });
+                    // TODO: get all metrics, subtract what we have and add rest in unsorted folder
                     $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
                         return getMetricItemsDetails(linkArray);
                     })).then(function() {
