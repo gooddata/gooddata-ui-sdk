@@ -17,7 +17,7 @@
 var define, require;
 
 (function() {
-
+  
   var registry = {}, seen = {};
 
   define = function(name, deps, callback) {
@@ -73,7 +73,7 @@ var define, require;
 define("loader", function(){});
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define('_jquery',[],function() {
+define('_jquery',[],function() { 
     if (typeof $ === 'undefined') {
         throw new Error('You need to include jQuery to use Gooddata JS');
     }
@@ -83,7 +83,7 @@ define('_jquery',[],function() {
 
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define('xhr',['_jquery'], function($) {
+define('xhr',['_jquery'], function($) { 
     // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
     // Inteface is same as original jQuery.ajax.
 
@@ -257,7 +257,7 @@ define('xhr',['_jquery'], function($) {
  * on [GooData Developer Portal](http://developer.gooddata.com/)
  */
 define('sdk',['./xhr'], function(xhr) {
-
+    
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**
@@ -362,7 +362,7 @@ define('sdk',['./xhr'], function(xhr) {
 
     /**
      * This function provides an authentication entry point to the GD API. It is needed to authenticate
-     * by calling this function prior any other API calls. After providing valid credentiols
+     * by calling this function prior any other API calls. After providing valid credentials
      * every subsequent API call in a current session will be authenticated.
      *
      * @param {String} username
@@ -382,6 +382,28 @@ define('sdk',['./xhr'], function(xhr) {
                     verifyCaptcha: ""
                 }
             })
+        }).then(d.resolve, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Logs out current user
+     */
+    var logout = function() {
+        var d = $.Deferred();
+
+        isLoggedIn().then(function() {
+            return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
+                var userUri = result.bootstrapResource.accountSetting.links.self;
+                var userId = userUri.match(/([^\/]+)\/?$/)[1];
+
+                return userId;
+            }, d.reject);
+        }, d.resolve).then(function(userId) {
+            return xhr.ajax('/gdc/account/login/' + userId, {
+                method: 'delete'
+            });
         }).then(d.resolve, d.reject);
 
         return d.promise();
@@ -713,30 +735,77 @@ define('sdk',['./xhr'], function(xhr) {
                 // and resolve. For metrics, lookup again each metric to get its
                 // identifier. If passing unsupported type, reject immediately.
                 if (type === 'attribute') {
-                    var structure = folderDetails.map(function(folderDetail) {
-                        return {
-                            title: folderDetail.dimension.meta.title,
-                            items: folderDetail.dimension.content.attributes
-                        };
+                    // get all attributes, subtract what we have and add rest in unsorted folder
+                    getAttributes(projectId).then(function(attributes) {
+                        // get uris of attributes which are in some dimension folders
+                        var attributesInFolders = [];
+                        folderDetails.forEach(function(fd) {
+                            fd.dimension.content.attributes.forEach(function(attr) {
+                                attributesInFolders.push(attr.meta.uri);
+                            });
+                        });
+                        // unsortedUris now contains uris of all attributes which aren't in a folder
+                        var unsortedUris =
+                            attributes
+                                .filter(function(item) { return attributesInFolders.indexOf(item.link) === -1; })
+                                .map(function(item) { return item.link; });
+                        // now get details of attributes in no folders
+                        $.when.apply(this, unsortedUris.map(getObjectDetails)).then(function() {
+                            // get unsorted attribute objects
+                            var unsortedAttributes = Array.prototype.slice.call(arguments).map(function(attr) { return attr.attribute; });
+                            // create structure of folders with attributes
+                            var structure = folderDetails.map(function(folderDetail) {
+                                return {
+                                    title: folderDetail.dimension.meta.title,
+                                    items: folderDetail.dimension.content.attributes
+                                };
+                            });
+                            // and append "Unsorted" folder with attributes to the structure
+                            structure.push({
+                                title: "Unsorted",
+                                items: unsortedAttributes
+                            });
+                            result.resolve(structure);
+                        });
                     });
-                    result.resolve(structure);
                 } else if (type === 'metric') {
                     var entriesLinks = folderDetails.map(function(entry) {
                         return mapBy(entry.folder.content.entries, 'link');
                     });
-                    $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
-                        return getMetricItemsDetails(linkArray);
-                    })).then(function() {
-                        // all promises resolved, i.e. details for each metric are available
-                        var tree = Array.prototype.slice.call(arguments);
-                        var structure = tree.map(function(treeItems, idx) {
-                            return {
-                                title: foldersTitles[idx],
-                                items: treeItems
-                            };
+                    // get all metrics, subtract what we have and add rest in unsorted folder
+                    getMetrics(projectId).then(function(metrics) {
+                        // get uris of metrics which are in some dimension folders
+                        var metricsInFolders = [];
+                        folderDetails.forEach(function(fd) {
+                            fd.folder.content.entries.forEach(function(metric) {
+                                metricsInFolders.push(metric.link);
+                            });
                         });
-                        result.resolve(structure);
-                    }, result.reject);
+                        // unsortedUris now contains uris of all metrics which aren't in a folder
+                        var unsortedUris =
+                            metrics
+                                .filter(function(item) { return metricsInFolders.indexOf(item.link) === -1; })
+                                .map(function(item) { return item.link; });
+
+                        // sadly order of parameters of concat matters! (we want unsorted last)
+                        entriesLinks.push([unsortedUris]);
+
+                        // now get details of all metrics
+                        $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
+                            return getMetricItemsDetails(linkArray);
+                        })).then(function() {
+                            // all promises resolved, i.e. details for each metric are available
+                            var tree = Array.prototype.slice.call(arguments);
+                            var structure = tree.map(function(treeItems, idx) {
+                                // if idx is not in foldes list than metric is in "Unsorted" folder
+                                return {
+                                    title: (foldersTitles[idx] || "Unsorted"),
+                                    items: treeItems
+                                };
+                            });
+                            result.resolve(structure);
+                        }, result.reject);
+                    });
                 } else {
                     result.reject();
                 }
@@ -915,6 +984,7 @@ define('sdk',['./xhr'], function(xhr) {
         DEFAULT_PALETTE: DEFAULT_PALETTE,
         isLoggedIn: isLoggedIn,
         login: login,
+        logout: logout,
         getProjects: getProjects,
         getDatasets: getDatasets,
         getColorPalette: getColorPalette,
@@ -938,7 +1008,7 @@ define('sdk',['./xhr'], function(xhr) {
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
-
+    
     sdk.xhr = xhr;
 
     return sdk;
