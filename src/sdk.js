@@ -533,20 +533,40 @@ define(['./xhr'], function(xhr) {
                     var entriesLinks = folderDetails.map(function(entry) {
                         return mapBy(entry.folder.content.entries, 'link');
                     });
-                    // TODO: get all metrics, subtract what we have and add rest in unsorted folder
-                    $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
-                        return getMetricItemsDetails(linkArray);
-                    })).then(function() {
-                        // all promises resolved, i.e. details for each metric are available
-                        var tree = Array.prototype.slice.call(arguments);
-                        var structure = tree.map(function(treeItems, idx) {
-                            return {
-                                title: foldersTitles[idx],
-                                items: treeItems
-                            };
+                    // get all metrics, subtract what we have and add rest in unsorted folder
+                    getMetrics(projectId).then(function(metrics) {
+                        // get uris of metrics which are in some dimension folders
+                        var metricsInFolders = [];
+                        folderDetails.forEach(function(fd) {
+                            fd.folder.content.entries.forEach(function(metric) {
+                                metricsInFolders.push(metric.link);
+                            });
                         });
-                        result.resolve(structure);
-                    }, result.reject);
+                        // unsortedUris now contains uris of all metrics which aren't in a folder
+                        var unsortedUris =
+                            metrics
+                                .filter(function(item) { return metricsInFolders.indexOf(item.link) === -1; })
+                                .map(function(item) { return item.link; });
+
+                        // sadly order of parameters of concat matters! (we want unsorted last)
+                        entriesLinks.push([unsortedUris]);
+
+                        // now get details of all metrics
+                        $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
+                            return getMetricItemsDetails(linkArray);
+                        })).then(function() {
+                            // all promises resolved, i.e. details for each metric are available
+                            var tree = Array.prototype.slice.call(arguments);
+                            var structure = tree.map(function(treeItems, idx) {
+                                // if idx is not in foldes list than metric is in "Unsorted" folder
+                                return {
+                                    title: (foldersTitles[idx] || "Unsorted"),
+                                    items: treeItems
+                                };
+                            });
+                            result.resolve(structure);
+                        }, result.reject);
+                    });
                 } else {
                     result.reject();
                 }
