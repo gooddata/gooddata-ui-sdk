@@ -809,7 +809,7 @@ define('sdk',['./xhr'], function(xhr) {
                                 .map(function(item) { return item.link; });
 
                         // sadly order of parameters of concat matters! (we want unsorted last)
-                        entriesLinks.push([unsortedUris]);
+                        entriesLinks.push(unsortedUris);
 
                         // now get details of all metrics
                         $.when.apply(this, entriesLinks.map(function(linkArray, idx) {
