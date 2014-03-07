@@ -4,8 +4,14 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+        gitInfo: '',
+
+        licence: grunt.file.read('tools/licence.tmpl'),
+
         uglify: {
             options: {
+                banner: '<%= licence %>',
                 mangle: {
                     except: ['window'] // because of _start.js uses it to bind on window
                 }
@@ -16,7 +22,7 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            all: ['*.js', 'src/*.js', 'test/*.js', '!src/_start.js', '!src/_end.js']
+            all: ['Gruntfile.js', '*.js', 'src/*.js', 'test/*.js', '!src/_start.js', '!src/_end.js']
         },
         copy: {
             examples: {
@@ -26,7 +32,7 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js'
+                configFile: 'tools/karma.conf.js'
             }
         },
         grizzly: {
@@ -55,7 +61,7 @@ module.exports = function(grunt) {
                 options: {
                     baseUrl: 'src',
                     name: 'sdk',
-                    out: 'dist/gooddata.js',
+                    out: 'dist/gooddata-tmp.js',
                     paths: {
                         loader: '../lib/tildeio/loader'
                     },
@@ -69,22 +75,62 @@ module.exports = function(grunt) {
                     preserveLicenseComments: true
                 }
             }
+        },
+        concat: {
+            js: {
+                options: {
+                    separator: "\n\n",
+                    banner: '<%= licence %>'
+                },
+                src:  'dist/gooddata-tmp.js',
+                dest: 'dist/gooddata.js'
+            }
         }
+    });
+
+    grunt.registerTask('getGitInfo', 'Get latest commit hash', function() {
+        var done = this.async();
+
+        var child = grunt.util.spawn({
+            cmd: 'git',
+            args: ['log', '-1', '--format="%h"']
+        }, function callback(err, result, code) {
+            grunt.config.set('gitInfo', result.stdout);
+            done(!code);
+        });
+
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+    });
+
+    grunt.registerTask('clean', 'Clean dist', function() {
+        grunt.file['delete']('dist/gooddata-tmp.js');
     });
 
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-markdox');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['jshint', 'requirejs', 'copy', 'uglify']);
+    grunt.registerTask('default', [
+        'getGitInfo',
+        'jshint',
+        'requirejs',
+        'copy',
+        'concat',
+        'uglify',
+        'clean'
+    ]);
+
     grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('dev', ['grizzly', 'watch']);
     grunt.registerTask('doc', ['markdox']);
+    grunt.registerTask('validate', ['jshint']);
 };
 

@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: '../',
 
 
     // frameworks to use
@@ -35,15 +35,19 @@ module.exports = function(config) {
         'src/*.js': ['coverage']
     },
 
-    coverateReporter: {
-        type: 'html',
+    coverageReporter: {
+        type: 'cobertura',
         dir: 'coverage/'
     },
 
+    junitReporter: {
+        suite: 'GoodData-js Unit',
+        outputFile: 'test/test-results.xml'
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'junit', 'coverage'],
 
 
     // web server port
@@ -60,7 +64,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
 
     // Start these browsers, currently available:
@@ -80,6 +84,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: true
   });
 };
