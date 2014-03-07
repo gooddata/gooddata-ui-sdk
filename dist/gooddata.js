@@ -1,7 +1,7 @@
 /* Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved. */
-/* gd-sdk-js - v0.0.1 */
-/* 2014-03-07 10:59:39 */
-/* Latest git commit: "0907a8c" */
+/* gooddata - v0.0.12 */
+/* 2014-03-07 15:51:01 */
+/* Latest git commit: "2d383d9" */
 
 (function(window, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -15,6 +15,7 @@
     window.gooddata = factory();
   }
 }(this, function() {
+
 // Tilde.io's loader shim
 // taken from
 // https://raw2.github.com/tildeio/rsvp.js/master/vendor/loader.js
@@ -1060,7 +1061,6 @@ define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
 
     return sdk;
 });
-
 
   // Ask loader to synchronously require the
   // module value for 'gooddata' here and return it as the
