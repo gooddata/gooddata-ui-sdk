@@ -18,7 +18,7 @@ first and then run:
 $ brew install git
 $ brew install node
 ```
-Now, clone this repo with `$ git clone git@github.com:gooddata/gd-sdk-js.git`
+Now, clone this repo with `$ git clone git@github.com:gooddata/gooddata-js.git`
 and get the library dependecies with
 ```
 $ npm install -g grunt-cli
