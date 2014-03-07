@@ -1,12 +1,12 @@
 {
-  "name": "gd-sdk-js",
+  "name": "gooddata",
   "version": "0.0.12",
-  "homepage": "https://github.com/gooddata/gd-sdk-js",
+  "homepage": "https://github.com/gooddata/gooddata-js",
   "authors": [
     "GoodData A-players <da@gooddata.com>"
   ],
   "description": "GoodData JS SDK",
-  "main": "dist/gd-sdk-js.min.js",
+  "main": "dist/gooddata-js.min.js",
   "license": "GoodLicense",
   "private": true,
   "dependencies": {

@@ -1,6 +1,6 @@
 {
-  "name": "gd-sdk-js",
-  "version": "0.0.1",
+  "name": "gooddata",
+  "version": "0.0.12",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "devDependencies": {
