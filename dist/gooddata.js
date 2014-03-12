@@ -1,7 +1,7 @@
 /* Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved. */
 /* gooddata - v0.0.12 */
-/* 2014-03-07 15:51:01 */
-/* Latest git commit: "2d383d9" */
+/* 2014-03-12 07:45:32 */
+/* Latest git commit: "030afd3" */
 
 (function(window, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -15,7 +15,6 @@
     window.gooddata = factory();
   }
 }(this, function() {
-
 // Tilde.io's loader shim
 // taken from
 // https://raw2.github.com/tildeio/rsvp.js/master/vendor/loader.js
@@ -729,6 +728,31 @@ define('sdk',['./xhr'], function(xhr) {
                 });
             };
 
+            // helper for sorting folder tree structure
+            // sadly @returns void (sorting == mutating array in js)
+            var sortFolderTree = function(structure) {
+                structure.forEach(function(folder) {
+                    folder.items.sort(function(a, b) {
+                        if(a.meta.title < b.meta.title) {
+                            return -1;
+                        } else if(a.meta.title > b.meta.title) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                });
+                structure.sort(function(a, b) {
+                    if(a.title < b.title) {
+                        return -1;
+                    } else if(a.title > b.title) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
+            };
+
             var foldersLinks = mapBy(folders, 'link');
             var foldersTitles = mapBy(folders, 'title');
 
@@ -770,27 +794,7 @@ define('sdk',['./xhr'], function(xhr) {
                                 title: "Unsorted",
                                 items: unsortedAttributes
                             });
-                            // sort
-                            structure.forEach(function(folder) {
-                                folder.items.sort(function(a, b) {
-                                    if(a.meta.title < b.meta.title) {
-                                        return -1;
-                                    } else if(a.meta.title > b.meta.title) {
-                                        return 1;
-                                    }
-
-                                    return 0;
-                                });
-                            });
-                            structure.sort(function(a, b) {
-                                if(a.title < b.title) {
-                                    return -1;
-                                } else if(a.title > b.title) {
-                                    return 1;
-                                }
-
-                                return 0;
-                            });
+                            sortFolderTree(structure);
                             result.resolve(structure);
                         });
                     });
@@ -829,28 +833,7 @@ define('sdk',['./xhr'], function(xhr) {
                                     items: treeItems
                                 };
                             });
-
-                            // sort
-                            structure.forEach(function(folder) {
-                                folder.items.sort(function(a, b) {
-                                    if(a.meta.title < b.meta.title) {
-                                        return -1;
-                                    } else if(a.meta.title > b.meta.title) {
-                                        return 1;
-                                    }
-
-                                    return 0;
-                                });
-                            });
-                            structure.sort(function(a, b) {
-                                if(a.title < b.title) {
-                                    return -1;
-                                } else if(a.title > b.title) {
-                                    return 1;
-                                }
-
-                                return 0;
-                            });
+                            sortFolderTree(structure);
                             result.resolve(structure);
                         }, result.reject);
                     });
@@ -1061,6 +1044,7 @@ define('gooddata',['xhr', 'sdk'], function(xhr, sdk) {
 
     return sdk;
 });
+
 
   // Ask loader to synchronously require the
   // module value for 'gooddata' here and return it as the
