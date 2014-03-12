@@ -485,6 +485,31 @@ define(['./xhr'], function(xhr) {
                 });
             };
 
+            // helper for sorting folder tree structure
+            // sadly @returns void (sorting == mutating array in js)
+            var sortFolderTree = function(structure) {
+                structure.forEach(function(folder) {
+                    folder.items.sort(function(a, b) {
+                        if(a.meta.title < b.meta.title) {
+                            return -1;
+                        } else if(a.meta.title > b.meta.title) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                });
+                structure.sort(function(a, b) {
+                    if(a.title < b.title) {
+                        return -1;
+                    } else if(a.title > b.title) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
+            };
+
             var foldersLinks = mapBy(folders, 'link');
             var foldersTitles = mapBy(folders, 'title');
 
@@ -526,27 +551,7 @@ define(['./xhr'], function(xhr) {
                                 title: "Unsorted",
                                 items: unsortedAttributes
                             });
-                            // sort
-                            structure.forEach(function(folder) {
-                                folder.items.sort(function(a, b) {
-                                    if(a.meta.title < b.meta.title) {
-                                        return -1;
-                                    } else if(a.meta.title > b.meta.title) {
-                                        return 1;
-                                    }
-
-                                    return 0;
-                                });
-                            });
-                            structure.sort(function(a, b) {
-                                if(a.title < b.title) {
-                                    return -1;
-                                } else if(a.title > b.title) {
-                                    return 1;
-                                }
-
-                                return 0;
-                            });
+                            sortFolderTree(structure);
                             result.resolve(structure);
                         });
                     });
@@ -585,28 +590,7 @@ define(['./xhr'], function(xhr) {
                                     items: treeItems
                                 };
                             });
-
-                            // sort
-                            structure.forEach(function(folder) {
-                                folder.items.sort(function(a, b) {
-                                    if(a.meta.title < b.meta.title) {
-                                        return -1;
-                                    } else if(a.meta.title > b.meta.title) {
-                                        return 1;
-                                    }
-
-                                    return 0;
-                                });
-                            });
-                            structure.sort(function(a, b) {
-                                if(a.title < b.title) {
-                                    return -1;
-                                } else if(a.title > b.title) {
-                                    return 1;
-                                }
-
-                                return 0;
-                            });
+                            sortFolderTree(structure);
                             result.resolve(structure);
                         }, result.reject);
                     });
