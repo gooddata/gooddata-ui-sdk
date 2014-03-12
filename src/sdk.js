@@ -112,6 +112,39 @@ define(['./xhr'], function(xhr) {
         return reportDef;
     };
 
+    /**
+     * Poor man's get path
+     *
+     * @private
+     */
+    var getPath = function(obj, path) {
+        var paths = path.split('.'),
+            found = obj,
+            i;
+
+        for (i = 0; i < paths.length; ++i) {
+            if (found[paths[i]] === undefined) {
+                return undefined;
+            } else {
+                found = found[paths[i]];
+            }
+        }
+        return found;
+    };
+
+    /**
+     * Create getter function for accessing nested objects
+     *
+     * @param {String} path Target path to nested object
+     *
+     * @private
+     */
+    var getIn = function(path) {
+        return function(object) {
+            return getPath(object, path);
+        };
+    };
+
     // Returns a promise which either:
     //  * **resolves** - which means user is logged in or
     //  * **rejects** - meaning is not logged in
@@ -176,15 +209,9 @@ define(['./xhr'], function(xhr) {
      * @return {Array} An Array of projects
      */
     var getProjects = function(profileId) {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/account/profile/'+ profileId +'/projects').then(function(result) {
-            d.resolve(result.projects.map(function(proj) {
-                return proj.project;
-            }));
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/account/profile/' + profileId + '/projects').then(function(result) {
+            return result.projects.map(function(p) { return p.project; });
+        });
     };
 
     /**
@@ -194,13 +221,7 @@ define(['./xhr'], function(xhr) {
      * @return {Array} An array of objects containing datasets metadata
      */
     var getDatasets = function(projectId) {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/md/'+ projectId +'/query/datasets').then(function(result) {
-            d.resolve(result.query.entries);
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/md/' + projectId + '/query/datasets').then(getIn('query.entries'));
     };
 
     /**
@@ -387,13 +408,7 @@ define(['./xhr'], function(xhr) {
      * @return {Array} An array of attribute objects
      */
     var getAttributes = function(projectId) {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/md/'+ projectId +'/query/attributes').then(function(result) {
-            d.resolve(result.query.entries);
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/md/' + projectId + '/query/attributes').then(getIn('query.entries'));
     };
 
     /**
@@ -404,13 +419,7 @@ define(['./xhr'], function(xhr) {
      * @see getFolders
      */
     var getDimensions = function(projectId) {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/md/'+ projectId +'/query/dimensions').then(function(result) {
-            d.resolve(result.query.entries);
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/md/' + projectId + '/query/dimensions').then(getIn('query.entries'));
     };
 
     /**
@@ -423,12 +432,9 @@ define(['./xhr'], function(xhr) {
      */
     var getFolders = function(projectId, type) {
         var _getFolders = function(projectId, type) {
-            var r = $.Deferred();
             var typeURL = type ? '?type='+type : '';
-            xhr.get('/gdc/md/'+ projectId +'/query/folders'+typeURL).then(function(result) {
-                r.resolve(result.query.entries);
-            }, r.reject);
-            return r.promise();
+
+            return xhr.get('/gdc/md/' + projectId + '/query/folders' + typeURL).then(getIn('query.entries'));
         };
 
         switch (type) {
@@ -610,13 +616,7 @@ define(['./xhr'], function(xhr) {
      * @return {Array} An array of metric objects
      */
     var getMetrics = function(projectId) {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/md/'+ projectId +'/query/metrics').then(function(result) {
-            d.resolve(result.query.entries);
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/md/' + projectId + '/query/metrics').then(getIn('query.entries'));
     };
 
     /**
@@ -664,16 +664,12 @@ define(['./xhr'], function(xhr) {
     };
 
     var getCurrentProjectId = function() {
-        var d = $.Deferred();
-
-        xhr.get('/gdc/app/account/bootstrap').then(function(result) {
-            var uri = result.bootstrapResource.current.project.links.self;
-            d.resolve(uri.split('/').pop());
-        }, d.reject);
-
-        return d.promise();
+        return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
+            return result.bootstrapResource.current.project.links.self.split('/').pop();
+        });
     };
 
+    // TODO this should be fixed on backend
     var getObjectDetails = function(uri) {
         var d = $.Deferred();
 
@@ -712,6 +708,7 @@ define(['./xhr'], function(xhr) {
         return d.promise();
     };
 
+    // TODO this should fixed on backend
     var getObjectUri = function(projectId, identifier) {
         var d = $.Deferred(),
             uriFinder = function(obj) {
