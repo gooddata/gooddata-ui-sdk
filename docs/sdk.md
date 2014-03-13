@@ -24,7 +24,7 @@ on [GooData Developer Portal](http://developer.gooddata.com/)
 ## login(username, password)
 
 This function provides an authentication entry point to the GD API. It is needed to authenticate
-by calling this function prior any other API calls. After providing valid credentiols
+by calling this function prior any other API calls. After providing valid credentials
 every subsequent API call in a current session will be authenticated.
 
 ### Params: 
@@ -32,6 +32,10 @@ every subsequent API call in a current session will be authenticated.
 * **String** *username* 
 
 * **String** *password* 
+
+## logout()
+
+Logs out current user
 
 ## getProjects(profileId)
 
@@ -111,6 +115,8 @@ Reutrns all attributes in a project specified by projectId param
 
 Returns all dimensions in a project specified by projectId param
 
+See: getFolders
+
 ### Params: 
 
 * **projectId** *Project* identifier
@@ -118,6 +124,36 @@ Returns all dimensions in a project specified by projectId param
 ### Return:
 
 * **Array** An array of dimension objects
+
+## getFolders(projectId, type)
+
+Returns project folders. Folders can be of specific types and you can specify
+the type you need by passing and optional `type` parameter
+
+### Params: 
+
+* **String** *projectId* - Project identifier
+
+* **String** *type* - Optional, possible values are `metric`, `fact`, `attribute`
+
+### Return:
+
+* **Array** An array of dimension objects
+
+## getFoldersWithItems(type)
+
+Get folders with items.
+Returns array of folders, each having a title and items property which is an array of
+corresponding items. Each item is either a metric or attribute, keeping its original
+verbose structure.
+
+### Params: 
+
+* **String** *type* type of folders to return
+
+### Return:
+
+* **Array** Array of folder object, each containing title and
 
 ## getMetrics(Project)
 
@@ -164,21 +200,6 @@ See: getAvailableMetrics
 ### Return:
 
 * **Array** An array of reachable attributes for the given metrics
-
-## validateMaql(maqlExpression, projectId)
-
-Validates a given MAQL expression in the context of the project specified
-by a given projectId.
-
-### Params: 
-
-* **String** *maqlExpression* - MAQL Expression
-
-* **String** *projectId* - GD project identifier
-
-### Return:
-
-* **Object** JSON object with either `maqlOK` or `maqlErr` field based on the
 
 <!-- End src/sdk.js -->
 

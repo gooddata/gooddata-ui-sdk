@@ -663,26 +663,6 @@ define(['./xhr'], function(xhr) {
         return d.promise();
     };
 
-    /**
-     * Validates a given MAQL expression in the context of the project specified
-     * by a given projectId.
-     *
-     * @param {String} maqlExpression - MAQL Expression
-     * @param {String} projectId - GD project identifier
-     * @return {Object} JSON object with either `maqlOK` or `maqlErr` field based on the
-     * result of the validation. In case of failed validateion you can inspect a cause
-     * of failure under `maqlErr.errors`.
-     */
-    var validateMaql = function(maqlExpression, projectId) {
-        var d = $.Deferred();
-
-        xhr.post('/gdc/md/'+ projectId +'/maqlvalidator').then(function(result) {
-            d.resolve(result);
-        }, d.reject);
-
-        return d.promise();
-    };
-
     var getCurrentProjectId = function() {
         var d = $.Deferred();
 
@@ -785,7 +765,6 @@ define(['./xhr'], function(xhr) {
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
         getAvailableAttributes: getAvailableAttributes,
-        validateMaql: validateMaql,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId,
         getObjectDetails: getObjectDetails,
