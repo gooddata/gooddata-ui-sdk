@@ -2,17 +2,17 @@
 define(['_jquery'], function($) { 'use strict';
 
     /**
+     * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
+     * Inteface is same as original jQuery.ajax.
+
+     * If token is expired, current request is "paused", token is refreshed and request is retried and result.
+     * is transparently returned to original call.
+
+     * Additionally polling is handled. Only final result of polling returned.
      * @module xhr
-     * @main sdk
+     * @class xhr
      */
 
-    // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
-    // Inteface is same as original jQuery.ajax.
-
-    // If token is expired, current request is "paused", token is refreshed and request is retried and result.
-    // is transparently returned to original call.
-
-    // Additionally polling is handled. Only final result of polling returned.
     var tokenRequest,
         xhrSettings,
         xhr = {}; // returned module
@@ -78,14 +78,17 @@ define(['_jquery'], function($) { 'use strict';
         }
     };
 
-    // additional ajax configuration specific for xhr module, keys
-    //   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
-    //   pollDelay: int - polling interval in milisecodns, default 1000
-    //
-    // method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
-    //
-    // xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
-    // Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
+    /**
+     * additional ajax configuration specific for xhr module, keys
+     *   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
+     *   pollDelay: int - polling interval in milisecodns, default 1000
+
+     * method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
+
+     * xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
+     * Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
+     * @method ajaxSetup
+     */
     xhr.ajaxSetup = function(settings) {
         xhrSettings = $.extend({
             contentType: 'application/json',
@@ -94,11 +97,16 @@ define(['_jquery'], function($) { 'use strict';
         }, settings);
     };
 
-    // Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
-    // Additionally content type is automatically json, and object in settings.data is converted to string
-    // to be consumed by GDC backend.
-    //
-    // settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+    /**
+     * Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
+     * Additionally content type is automatically json, and object in settings.data is converted to string
+     * to be consumed by GDC backend.
+
+     * settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+     * @method ajax
+     * @param url request url
+     * @param settings settings object
+     */
     xhr.ajax = function(url, settings) {
         if ($.isPlainObject(url)) {
             settings = url;
@@ -149,8 +157,23 @@ define(['_jquery'], function($) { 'use strict';
         };
     };
 
+    /**
+     * Wrapper for xhr.ajax method GET
+     * @method get
+     */
     xhr.get = xhrMethod('GET');
+
+    /**
+     * Wrapper for xhr.ajax method POST
+     * @method post
+     */
+
     xhr.post = xhrMethod('POST');
+
+    /**
+     * Wrapper for xhr.ajax method PUT
+     * @method put
+     */
     xhr.put = xhrMethod('PUT');
 
     // setup dafault settings
