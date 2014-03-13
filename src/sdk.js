@@ -18,7 +18,7 @@ define(['./xhr'], function(xhr) {
      * that does the magic for you.
      * To fully understand the authentication mechansim, please read
      * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
-     * on [GooData Developer Portal](http://developer.gooddata.com/)
+     * on [GoodData Developer Portal](http://developer.gooddata.com/)
      *
      * @module sdk
      * @class sdk
