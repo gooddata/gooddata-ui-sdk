@@ -1,7 +1,7 @@
 /* Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved. */
 /* gooddata - v0.0.12 */
-/* 2014-03-12 07:45:32 */
-/* Latest git commit: "030afd3" */
+/* 2014-03-13 09:09:16 */
+/* Latest git commit: "9a3af2c" */
 
 (function(window, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -906,26 +906,6 @@ define('sdk',['./xhr'], function(xhr) {
         return d.promise();
     };
 
-    /**
-     * Validates a given MAQL expression in the context of the project specified
-     * by a given projectId.
-     *
-     * @param {String} maqlExpression - MAQL Expression
-     * @param {String} projectId - GD project identifier
-     * @return {Object} JSON object with either `maqlOK` or `maqlErr` field based on the
-     * result of the validation. In case of failed validateion you can inspect a cause
-     * of failure under `maqlErr.errors`.
-     */
-    var validateMaql = function(maqlExpression, projectId) {
-        var d = $.Deferred();
-
-        xhr.post('/gdc/md/'+ projectId +'/maqlvalidator').then(function(result) {
-            d.resolve(result);
-        }, d.reject);
-
-        return d.promise();
-    };
-
     var getCurrentProjectId = function() {
         var d = $.Deferred();
 
@@ -1028,7 +1008,6 @@ define('sdk',['./xhr'], function(xhr) {
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
         getAvailableAttributes: getAvailableAttributes,
-        validateMaql: validateMaql,
         getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId,
         getObjectDetails: getObjectDetails,
