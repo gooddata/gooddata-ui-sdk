@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
+// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 
 module.exports = function(grunt) {
 
@@ -91,6 +91,17 @@ module.exports = function(grunt) {
                     themedir: 'tools/yuidoc/theme/',
                     outdir: 'docs/'
                 }
+        },
+        bump: {
+            options: {
+                files: ['package.json', 'bower.json'],
+                updateConfigs: ['pkg'], // for a proper banner in disted file
+                commit: true,
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: ['package.json', 'bower.json'],
+                createTag: true,
+                tagName: 'v%VERSION%',
+                push: false
             }
         }
     });
@@ -121,10 +132,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
+    grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
-    grunt.registerTask('default', [
+    grunt.registerTask('default', ['build']);
+    grunt.registerTask('build', [
         'getGitInfo',
         'jshint',
         'requirejs',
@@ -132,6 +145,17 @@ module.exports = function(grunt) {
         'concat',
         'uglify',
         'clean'
+    ]);
+
+    grunt.registerTask('release-bower-component', 'Tag, commit and push dist files to bower component repo.', function() {
+        grunt.log.writeln("This would release bower component");
+    });
+
+    grunt.registerTask('release', [
+        'test',
+        'bump',
+        'build',
+        'release-bower-component'
     ]);
 
     grunt.registerTask('test', ['jshint', 'karma']);
