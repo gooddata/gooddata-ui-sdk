@@ -1,7 +1,7 @@
 /* Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved. */
 /* gooddata - v0.0.12 */
-/* 2014-03-13 13:56:22 */
-/* Latest git commit: "82a54fa" */
+/* 2014-03-13 15:37:57 */
+/* Latest git commit: "99129eb" */
 
 (function(window, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -88,13 +88,19 @@ define('_jquery',[],function() {
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 define('xhr',['_jquery'], function($) { 
-    // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
-    // Inteface is same as original jQuery.ajax.
 
-    // If token is expired, current request is "paused", token is refreshed and request is retried and result.
-    // is transparently returned to original call.
+    /**
+     * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
+     * Inteface is same as original jQuery.ajax.
 
-    // Additionally polling is handled. Only final result of polling returned.
+     * If token is expired, current request is "paused", token is refreshed and request is retried and result.
+     * is transparently returned to original call.
+
+     * Additionally polling is handled. Only final result of polling returned.
+     * @module xhr
+     * @class xhr
+     */
+
     var tokenRequest,
         xhrSettings,
         xhr = {}; // returned module
@@ -160,14 +166,17 @@ define('xhr',['_jquery'], function($) {
         }
     };
 
-    // additional ajax configuration specific for xhr module, keys
-    //   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
-    //   pollDelay: int - polling interval in milisecodns, default 1000
-    //
-    // method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
-    //
-    // xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
-    // Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
+    /**
+     * additional ajax configuration specific for xhr module, keys
+     *   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
+     *   pollDelay: int - polling interval in milisecodns, default 1000
+
+     * method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
+
+     * xhrSetup behave similar tp $.ajaxSetup, each call replaces settings completely.
+     * Options can be also passed to particular xhr.ajax calls (same as optios for $.ajax and $.ajaxSetup)
+     * @method ajaxSetup
+     */
     xhr.ajaxSetup = function(settings) {
         xhrSettings = $.extend({
             contentType: 'application/json',
@@ -176,11 +185,16 @@ define('xhr',['_jquery'], function($) {
         }, settings);
     };
 
-    // Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
-    // Additionally content type is automatically json, and object in settings.data is converted to string
-    // to be consumed by GDC backend.
-    //
-    // settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+    /**
+     * Same api as jQuery.ajax - arguments (url, settings) or (settings) with url inside
+     * Additionally content type is automatically json, and object in settings.data is converted to string
+     * to be consumed by GDC backend.
+
+     * settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+     * @method ajax
+     * @param url request url
+     * @param settings settings object
+     */
     xhr.ajax = function(url, settings) {
         if ($.isPlainObject(url)) {
             settings = url;
@@ -231,8 +245,23 @@ define('xhr',['_jquery'], function($) {
         };
     };
 
+    /**
+     * Wrapper for xhr.ajax method GET
+     * @method get
+     */
     xhr.get = xhrMethod('GET');
+
+    /**
+     * Wrapper for xhr.ajax method POST
+     * @method post
+     */
+
     xhr.post = xhrMethod('POST');
+
+    /**
+     * Wrapper for xhr.ajax method PUT
+     * @method put
+     */
     xhr.put = xhrMethod('PUT');
 
     // setup dafault settings
@@ -242,26 +271,31 @@ define('xhr',['_jquery'], function($) {
 });
 
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-/**
- * # JS SDK
- * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
- * Before calling any of those functions, you need to authenticate with a valid GoodData
- * user credentials. After that, every subsequent call in the current session is authenticated.
- * You can find more about the GD authentication mechanism here.
- *
- * ## Conventions and Dependencies
- * * Depends on [jQuery JavaScript library](http://jquery.com/) javascript library
- * * Each SDK function returns [jQuery Deferred promise](http://api.jquery.com/deferred.promise/)
- *
- * ## GD Authentication Mechansim
- * In this JS SDK library we provide you with a simple `login(username, passwd)` function
- * that does the magic for you.
- * To fully understand the authentication mechansim, please read
- * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
- * on [GooData Developer Portal](http://developer.gooddata.com/)
- */
 define('sdk',['./xhr'], function(xhr) {
     
+
+    /**
+     * # JS SDK
+     * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
+     * Before calling any of those functions, you need to authenticate with a valid GoodData
+     * user credentials. After that, every subsequent call in the current session is authenticated.
+     * You can find more about the GD authentication mechanism here.
+     *
+     * ## Conventions and Dependencies
+     * * Depends on [jQuery JavaScript library](http://jquery.com/) javascript library
+     * * Each SDK function returns [jQuery Deferred promise](http://api.jquery.com/deferred.promise/)
+     *
+     * ## GD Authentication Mechansim
+     * In this JS SDK library we provide you with a simple `login(username, passwd)` function
+     * that does the magic for you.
+     * To fully understand the authentication mechansim, please read
+     * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
+     * on [GooData Developer Portal](http://developer.gooddata.com/)
+     *
+     * @module sdk
+     * @class sdk
+     */
+
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**
@@ -312,13 +346,19 @@ define('sdk',['./xhr'], function(xhr) {
         {r:0xbf, g:0xbf, b:0xbf}
     ];
 
-    // Transforms array of elements (metrics and attributes)
-    // into structure *executor* accepts
-    //
-    // basically what we construct here is `reportDefinition` of
-    // grid which has everything in columns
-    //
-    // **BEWARE** - it will change
+    /**
+     *
+     * Transforms array of elements (metrics and attributes)
+     * into structure *executor* accepts
+
+     * basically what we construct here is `reportDefinition` of
+     * grid which has everything in columns
+
+     * **BEWARE** - it will change
+     * @method getReportDefinition
+     * @param {Array} Array of elements
+     * @return {Object} Report definition filled-in with supplied elements
+     */
     var getReportDefinition = function(elements) {
         var currentMetrics = elements.filter(function(element) {
             return element.type === 'metric';
@@ -356,9 +396,13 @@ define('sdk',['./xhr'], function(xhr) {
     };
 
     /**
-     * Poor man's get path
+     * Simple get path helper method
      *
      * @private
+     * @method getPath
+     * @param {Object} obj object to start getting path from
+     * @param {String} path path identifier
+     * @return object at given path
      */
     var getPath = function(obj, path) {
         var paths = path.split('.'),
@@ -379,7 +423,7 @@ define('sdk',['./xhr'], function(xhr) {
      * Create getter function for accessing nested objects
      *
      * @param {String} path Target path to nested object
-     *
+     * @method getIn
      * @private
      */
     var getIn = function(path) {
@@ -388,20 +432,25 @@ define('sdk',['./xhr'], function(xhr) {
         };
     };
 
-    // Returns a promise which either:
-    //  * **resolves** - which means user is logged in or
-    //  * **rejects** - meaning is not logged in
+    /**
+     * Find out whether a user is logged in
+     *
+     * Returns a promise which either:
+     * **resolves** - which means user is logged in or
+     * **rejects** - meaning is not logged in
+     * @method isLoggedIn
+     */
     var isLoggedIn = function() {
         return $.getJSON('/gdc/account/token');
     };
 
-    /** # Functions */
 
     /**
      * This function provides an authentication entry point to the GD API. It is needed to authenticate
      * by calling this function prior any other API calls. After providing valid credentials
      * every subsequent API call in a current session will be authenticated.
      *
+     * @method login
      * @param {String} username
      * @param {String} password
      */
@@ -426,6 +475,7 @@ define('sdk',['./xhr'], function(xhr) {
 
     /**
      * Logs out current user
+     * @method logout
      */
     var logout = function() {
         var d = $.Deferred();
@@ -448,6 +498,8 @@ define('sdk',['./xhr'], function(xhr) {
 
     /**
      * Fetches projects available for the user represented by the given profileId
+     *
+     * @method getProjects
      * @param {String} profileId - User profile identifier
      * @return {Array} An Array of projects
      */
@@ -460,6 +512,7 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * Fetches all datasets for the given project
      *
+     * @method getDatasets
      * @param {String} projectId - GD project identifier
      * @return {Array} An array of objects containing datasets metadata
      */
@@ -471,6 +524,7 @@ define('sdk',['./xhr'], function(xhr) {
      * Fetches a chart color palette for a project represented by the given
      * projectId parameter.
      *
+     * @method getColorPalette
      * @param {String} projectId - A project identifier
      * @return {Array} An array of objects with r, g, b fields representing a project's
      * color palette
@@ -499,6 +553,7 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * Sets given colors as a color palette for a given project.
      *
+     * @method setColorPalette
      * @param {String} projectId - GD project identifier
      * @param {Array} colors - An array of colors that we want to use within the project.
      * Each color should be an object with r, g, b fields.
@@ -525,6 +580,8 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * For the given projectId it returns table structure with the given
      * elements in column headers.
+     *
+     * @method getData
      * @param {String} projectId - GD project identifier
      * @param {Array} elements - An array of attribute or metric identifiers.
      * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
@@ -576,10 +633,15 @@ define('sdk',['./xhr'], function(xhr) {
         return d.promise();
     };
 
-    // Get additional information about elements specified by their uris
-    // `elementUris` is the array of uris of elements to be look-up
-    // Currently makes a request for each object, should be encapsulated
-    // to one call
+    /**
+     * Get additional information about elements specified by their uris
+     * `elementUris` is the array of uris of elements to be look-up
+     * Currently makes a request for each object, should be encapsulated
+     * to one call
+     *
+     * @method getElementDetails
+     * @param {Array} array of element uri strings
+     */
     var getElementDetails = function(elementUris) {
         var d = $.Deferred();
 
@@ -647,6 +709,7 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * Reutrns all attributes in a project specified by projectId param
      *
+     * @method getAttributes
      * @param projectId Project identifier
      * @return {Array} An array of attribute objects
      */
@@ -657,6 +720,7 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * Returns all dimensions in a project specified by projectId param
      *
+     * @method getDimensions
      * @param projectId Project identifier
      * @return {Array} An array of dimension objects
      * @see getFolders
@@ -669,6 +733,7 @@ define('sdk',['./xhr'], function(xhr) {
      * Returns project folders. Folders can be of specific types and you can specify
      * the type you need by passing and optional `type` parameter
      *
+     * @method getFolders
      * @param {String} projectId - Project identifier
      * @param {String} type - Optional, possible values are `metric`, `fact`, `attribute`
      * @return {Array} An array of dimension objects
@@ -703,6 +768,7 @@ define('sdk',['./xhr'], function(xhr) {
      * corresponding items. Each item is either a metric or attribute, keeping its original
      * verbose structure.
      *
+     * @method getFoldersWithItems
      * @param {String} type type of folders to return
      * @return {Array} Array of folder object, each containing title and
      * corresponding items.
@@ -855,6 +921,7 @@ define('sdk',['./xhr'], function(xhr) {
     /**
      * Returns all metrics in a project specified by the given projectId
      *
+     * @method getMetrics
      * @param projectId Project identifier
      * @return {Array} An array of metric objects
      */
@@ -866,6 +933,7 @@ define('sdk',['./xhr'], function(xhr) {
      * Returns all metrics that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given attributes
      *
+     * @method getAvailableMetrics
      * @param {String} projectId - Project identifier
      * @param {Array} attrs - An array of attribute uris for which we want to get
      * availabale metrics
@@ -888,6 +956,7 @@ define('sdk',['./xhr'], function(xhr) {
      * Returns all attributes that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given metrics (also called as drillCrossPath)
      *
+     * @method getAvailableAttributes
      * @param {String} projectId - Project identifier
      * @param {Array} metrics - An array of metric uris for which we want to get
      * availabale attributes
@@ -906,13 +975,25 @@ define('sdk',['./xhr'], function(xhr) {
         return d.promise();
     };
 
+    /**
+     * Get current project id
+     *
+     * @method getCurrentProjectId
+     * @return {String} current project identifier
+     */
     var getCurrentProjectId = function() {
         return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
             return result.bootstrapResource.current.project.links.self.split('/').pop();
         });
     };
 
-    // TODO this should be fixed on backend
+    /**
+     * Get details of a metadata object specified by its uri
+     *
+     * @method getObjectDetails
+     * @param uri uri of the metadata object for which details are to be retrieved
+     * @return {Object} object details
+     */
     var getObjectDetails = function(uri) {
         var d = $.Deferred();
 
@@ -927,6 +1008,13 @@ define('sdk',['./xhr'], function(xhr) {
         return d.promise();
     };
 
+    /**
+     * Get identifier of a metadata object identified by its uri
+     *
+     * @method getObjectIdentifier
+     * @param uri uri of the metadata object for which the identifier is to be retrieved
+     * @return {String} object identifier
+     */
     var getObjectIdentifier = function(uri) {
         var obj,
             d = $.Deferred(),
@@ -951,7 +1039,14 @@ define('sdk',['./xhr'], function(xhr) {
         return d.promise();
     };
 
-    // TODO this should fixed on backend
+    /**
+     * Get uri of an metadata object, specified by its identifier and project id it belongs to
+     *
+     * @method getObjectUri
+     * @param projectId id of the project
+     * @param identifier identifier of the metadata object
+     * @return {String} uri of the metadata object
+     */
     var getObjectUri = function(projectId, identifier) {
         var d = $.Deferred(),
             uriFinder = function(obj) {
