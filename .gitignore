@@ -4,5 +4,6 @@ examples/gooddata.js
 node_modules/
 lib/
 test/test-results.xml
+docs/
 
 .DS_Store

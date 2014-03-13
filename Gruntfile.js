@@ -40,12 +40,6 @@ module.exports = function(grunt) {
                 root: "examples/"
             }
         },
-        markdox: {
-            doc: {
-                src: 'src/sdk.js',
-                dest: 'docs/sdk.md'
-            }
-        },
         watch: {
             options: {
                 interval: 500
@@ -85,6 +79,19 @@ module.exports = function(grunt) {
                 src:  'dist/gooddata-tmp.js',
                 dest: 'dist/gooddata.js'
             }
+        },
+        yuidoc: {
+            compile: {
+                name: '<%= pkg.name %>',
+                description: '<%= pkg.description %>',
+                version: '<%= pkg.version %>',
+                url: '<%= pkg.homepage %>',
+                options: {
+                    paths: 'src/',
+                    themedir: 'tools/yuidoc/theme/',
+                    outdir: 'docs/'
+                }
+            }
         }
     });
 
@@ -115,8 +122,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-markdox');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
     grunt.registerTask('default', [
         'getGitInfo',
@@ -130,7 +137,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('dev', ['grizzly', 'watch']);
-    grunt.registerTask('doc', ['markdox']);
+    grunt.registerTask('doc', ['yuidoc']);
     grunt.registerTask('validate', ['jshint']);
 };
 

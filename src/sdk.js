@@ -19,6 +19,12 @@
  */
 define(['./xhr'], function(xhr) {
     'use strict';
+
+    /**
+     * @module sdk
+     * @main sdk
+     */
+
     // `emptyReportDefinition` documents structure of payload our executor accepts
     // so for now, we have to mangle data into this form
     // This empty object serves as a template which is **cloned**

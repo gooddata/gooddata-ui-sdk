@@ -1,5 +1,11 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 define(['_jquery'], function($) { 'use strict';
+
+    /**
+     * @module xhr
+     * @main sdk
+     */
+
     // Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
     // Inteface is same as original jQuery.ajax.
 
