@@ -59,11 +59,18 @@ $ grunt test
 ```
 Test coverage report can be found in `coverage/` folder.
 
-## TODO
-* examples
-* starter template for custom app
-* modules using ES6?
-* profit
+## Releasing
+New version of library can be released with `grunt release:[major|minor|patch]` task. For all options
+see [grunt-bump task][vjBump].
 
+Task is meant to be run from `master` branch of this repository.
+
+Flow of release is:
+
+* bump version to version+1 in `bower.json` and `package.json`
+* create version commit & tag and push these to your *origin* remote (so watch your remote naming)
+* create version commit & tag and push product of build (`dist/*`) to `gooddata/bower-gooddata-js` repository
 
 [d3ex]: examples/d3-data-viz/viz.js
+[vjBump]: https://github.com/vojtajina/grunt-bump
+
