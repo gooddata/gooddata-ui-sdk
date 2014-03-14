@@ -5,6 +5,10 @@
   "authors": [
     "GoodData A-players <da@gooddata.com>"
   ],
+  "repository": {
+      "type": "git",
+      "url": "git@github.com:gooddata/bower-gooddata-js.git"
+  },
   "description": "GoodData JS SDK",
   "main": "dist/gooddata-js.min.js",
   "license": "GoodLicense",
