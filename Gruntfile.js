@@ -91,6 +91,7 @@ module.exports = function(grunt) {
                     themedir: 'tools/yuidoc/theme/',
                     outdir: 'docs/'
                 }
+            }
         },
         bump: {
             options: {
@@ -101,7 +102,7 @@ module.exports = function(grunt) {
                 commitFiles: ['package.json', 'bower.json'],
                 createTag: true,
                 tagName: 'v%VERSION%',
-                push: false
+                push: false // TODO push
             }
         }
     });
@@ -136,8 +137,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
-    grunt.registerTask('default', ['build']);
-    grunt.registerTask('build', [
+    grunt.registerTask('default', ['dist']);
+    grunt.registerTask('dist', [
         'getGitInfo',
         'jshint',
         'requirejs',
@@ -148,7 +149,46 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('release-bower-component', 'Tag, commit and push dist files to bower component repo.', function() {
-        grunt.log.writeln("This would release bower component");
+        var exec = require('child_process').exec,
+            done = this.async();
+        exec('cd dist && git init && '+
+             'git remote add bower git@github.com:gooddata/bower-gooddata-js.git && '+
+             'git fetch bower && git add .', function(err, stdout, stderr) {
+            if(err) {
+                grunt.fatal('could not init bower repository');
+                grunt.log.errorlns(stderr);
+            }
+            grunt.log.writeln("Inited bower repository in ./dist");
+            var version = grunt.config.get('pkg.version'),
+                commitMsg = grunt.config.get('bump.options.commitMessage').replace("%VERSION%", version),
+                tagName = grunt.config.get('bump.options.tagName').replace("%VERSION%", version);
+
+            exec('cd dist && git commit -m "' + commitMsg + '"', function(err, stdout, stderr) {
+                if(err) {
+                    grunt.fatal('Could not commit');
+                    grunt.log.errorlns(stderr);
+                }
+
+                grunt.log.writeln('Commiting bower release ' + version);
+                exec('cd dist && git tag "' + tagName + '"', function(err, stdout, stderr) {
+                    if(err) {
+                        grunt.fatal('Could not tag');
+                        grunt.log.errorlns(stderr);
+                    }
+
+                    grunt.log.writeln('Tagging bower release ' + version);
+                    // TODO push
+
+                    exec('cd dist && rm -rf .git', function(err, stdout, stderr) {
+                        if(err) {
+                            grunt.fatal('Could not remove dist/.git files');
+                            grunt.log.errorlns(stderr);
+                        }
+                        done();
+                    });
+                });
+            });
+        });
     });
 
     grunt.registerTask('release', [
