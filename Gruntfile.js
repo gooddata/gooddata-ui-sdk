@@ -153,7 +153,7 @@ module.exports = function(grunt) {
         var exec = require('child_process').exec,
             gitUri = grunt.file.readJSON('bower.json').repository.url,
             done = this.async();
-        exec('cd dist && rm -rf ./* && git init && '+
+        exec('mkdir -p dist && cd dist && rm -rf ./* && git init && '+
             'git remote add bower ' + gitUri + ' && '+
             'git pull bower master', function(err, stdout, stderr) {
             if(err) {
