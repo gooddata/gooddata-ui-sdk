@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define(['./xhr', './user'], function(xhr, user) {
+define(['./xhr', './util', './user'], function(xhr, util, user) {
     'use strict';
 
     /**
@@ -122,44 +122,7 @@ define(['./xhr', './user'], function(xhr, user) {
 
         return reportDef;
     };
-
-    /**
-     * Simple get path helper method
-     *
-     * @private
-     * @method getPath
-     * @param {Object} obj object to start getting path from
-     * @param {String} path path identifier
-     * @return object at given path
-     */
-    var getPath = function(obj, path) {
-        var paths = path.split('.'),
-            found = obj,
-            i;
-
-        for (i = 0; i < paths.length; ++i) {
-            if (found[paths[i]] === undefined) {
-                return undefined;
-            } else {
-                found = found[paths[i]];
-            }
-        }
-        return found;
-    };
-
-    /**
-     * Create getter function for accessing nested objects
-     *
-     * @param {String} path Target path to nested object
-     * @method getIn
-     * @private
-     */
-    var getIn = function(path) {
-        return function(object) {
-            return getPath(object, path);
-        };
-    };
-    /**
+   /**
      * Fetches projects available for the user represented by the given profileId
      *
      * @method getProjects
@@ -180,7 +143,7 @@ define(['./xhr', './user'], function(xhr, user) {
      * @return {Array} An array of objects containing datasets metadata
      */
     var getDatasets = function(projectId) {
-        return xhr.get('/gdc/md/' + projectId + '/query/datasets').then(getIn('query.entries'));
+        return xhr.get('/gdc/md/' + projectId + '/query/datasets').then(util.getIn('query.entries'));
     };
 
     /**
@@ -377,7 +340,7 @@ define(['./xhr', './user'], function(xhr, user) {
      * @return {Array} An array of attribute objects
      */
     var getAttributes = function(projectId) {
-        return xhr.get('/gdc/md/' + projectId + '/query/attributes').then(getIn('query.entries'));
+        return xhr.get('/gdc/md/' + projectId + '/query/attributes').then(util.getIn('query.entries'));
     };
 
     /**
@@ -389,7 +352,7 @@ define(['./xhr', './user'], function(xhr, user) {
      * @see getFolders
      */
     var getDimensions = function(projectId) {
-        return xhr.get('/gdc/md/' + projectId + '/query/dimensions').then(getIn('query.entries'));
+        return xhr.get('/gdc/md/' + projectId + '/query/dimensions').then(util.getIn('query.entries'));
     };
 
     /**
@@ -405,7 +368,7 @@ define(['./xhr', './user'], function(xhr, user) {
         var _getFolders = function(projectId, type) {
             var typeURL = type ? '?type='+type : '';
 
-            return xhr.get('/gdc/md/' + projectId + '/query/folders' + typeURL).then(getIn('query.entries'));
+            return xhr.get('/gdc/md/' + projectId + '/query/folders' + typeURL).then(util.getIn('query.entries'));
         };
 
         switch (type) {
@@ -589,7 +552,7 @@ define(['./xhr', './user'], function(xhr, user) {
      * @return {Array} An array of metric objects
      */
     var getMetrics = function(projectId) {
-        return xhr.get('/gdc/md/' + projectId + '/query/metrics').then(getIn('query.entries'));
+        return xhr.get('/gdc/md/' + projectId + '/query/metrics').then(util.getIn('query.entries'));
     };
 
     /**
