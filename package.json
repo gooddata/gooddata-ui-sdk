@@ -1,6 +1,6 @@
 {
   "name": "gooddata",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "devDependencies": {
