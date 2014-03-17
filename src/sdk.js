@@ -3,12 +3,14 @@ define([
     './xhr',
     './util',
     './user',
-    './metadata'
+    './metadata',
+    './execution'
 ], function(
     xhr,
     util,
     user,
-    metadata
+    metadata,
+    execution
 ) {
     'use strict';
 
@@ -34,35 +36,6 @@ define([
      * @class sdk
      */
 
-    // `emptyReportDefinition` documents structure of payload our executor accepts
-    // so for now, we have to mangle data into this form
-    // This empty object serves as a template which is **cloned**
-    // and filled with element data as needed
-    var emptyReportDefinition = {
-        "reportDefinition":{
-            "content":{
-                "filters":[],
-                "format":"grid",
-                "grid":{
-                    "rows":[],
-                    "columns":[],
-                    "sort":{
-                    "columns":[],
-                    "rows":[]
-                    },
-                    "columnWidths":[],
-                    "metrics":[]
-                }
-            },
-            "meta":{
-                "title":"Test",
-                "summary":"",
-                "tags":"",
-                "deprecated":0,
-                "category":"reportDefinition"
-            }
-        }
-    };
     var DEFAULT_PALETTE = [
         {r:0x2b, g:0x6b, b:0xae},
         {r:0x69, g:0xaa, b:0x51},
@@ -84,54 +57,6 @@ define([
         {r:0xbf, g:0xbf, b:0xbf}
     ];
 
-    /**
-     *
-     * Transforms array of elements (metrics and attributes)
-     * into structure *executor* accepts
-
-     * basically what we construct here is `reportDefinition` of
-     * grid which has everything in columns
-
-     * **BEWARE** - it will change
-     * @method getReportDefinition
-     * @param {Array} Array of elements
-     * @return {Object} Report definition filled-in with supplied elements
-     */
-    var getReportDefinition = function(elements) {
-        var currentMetrics = elements.filter(function(element) {
-            return element.type === 'metric';
-        });
-
-        var currentAttributes = elements.filter(function(element) {
-            return element.type === 'attribute';
-        });
-
-        // Deep clone `emptyReportDefinition` to fill with data
-        var reportDef = $.extend(true, {}, emptyReportDefinition);
-
-        var grid = reportDef.reportDefinition.content.grid;
-
-        grid.metrics = currentMetrics.map(function(metric) {
-            return {
-                uri: metric.uri,
-                alias: ''
-            };
-        });
-
-        // everything is in columns
-        grid.columns = currentAttributes.map(function(attribute) {
-            return {
-                attribute: {
-                    alias: '',
-                    totals:[[],[]],
-                    uri: attribute.uri
-                }
-            };
-        // if we have any metrics, we need to include `"metricGroup"` property
-        }).concat(currentMetrics.length ? ["metricGroup"] : []);
-
-        return reportDef;
-    };
    /**
      * Fetches projects available for the user represented by the given profileId
      *
@@ -214,62 +139,6 @@ define([
     };
 
     /**
-     * For the given projectId it returns table structure with the given
-     * elements in column headers.
-     *
-     * @method getData
-     * @param {String} projectId - GD project identifier
-     * @param {Array} elements - An array of attribute or metric identifiers.
-     * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
-     */
-    var getData = function(projectId, elements) {
-        // Create request and result structures
-        var request = {
-            execution: {
-                columns: elements
-            }
-        };
-        var executedReport = {
-            isLoaded: false
-        };
-        // create empty promise-like Ember.Object
-        var d = $.Deferred();
-
-        // Execute request
-        xhr.post('/gdc/internal/projects/'+projectId+'/experimental/executions', {
-            data: JSON.stringify(request)
-        }, d.reject).then(function(result) {
-            // Populate result's header section
-            executedReport.headers = result.executionResult.columns.map(function(col) {
-                if (col.attributeDisplayForm) {
-                    return {
-                        type: 'attrLabel',
-                        id: col.attributeDisplayForm.meta.identifier,
-                        uri: col.attributeDisplayForm.meta.uri,
-                        title: col.attributeDisplayForm.meta.title
-                    };
-                } else {
-                    return {
-                        type: 'metric',
-                        id: col.metric.meta.identifier,
-                        title: col.metric.meta.title,
-                        format: col.metric.content.format
-                    };
-                }
-            });
-            // Start polling on url returned in the executionResult for tabularData
-            return xhr.ajax(result.executionResult.tabularDataResult);
-        }, d.reject).then(function(result) {
-            // After the retrieving computed tabularData, resolve the promise
-            executedReport.rawData = result.tabularDataResult.values;
-            executedReport.isLoaded = true;
-            d.resolve(executedReport);
-        }, d.reject);
-
-        return d.promise();
-    };
-
-    /**
      * Get current project id
      *
      * @method getCurrentProjectId
@@ -284,12 +153,11 @@ define([
         DEFAULT_PALETTE: DEFAULT_PALETTE,
         user: user,
         md: metadata,
+        execution: execution,
         getProjects: getProjects,
         getDatasets: getDatasets,
         getColorPalette: getColorPalette,
         setColorPalette: setColorPalette,
-        getData: getData,
-        getReportDefinition: getReportDefinition,
         getCurrentProjectId: getCurrentProjectId
     };
 });
