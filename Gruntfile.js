@@ -54,7 +54,7 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     baseUrl: 'src',
-                    name: 'sdk',
+                    name: 'gooddata',
                     out: 'dist/gooddata-tmp.js',
                     paths: {
                         loader: '../lib/tildeio/loader'
