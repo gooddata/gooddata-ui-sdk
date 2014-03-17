@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define(['./xhr'], function(xhr) {
+define(['./xhr', './user'], function(xhr, user) {
     'use strict';
 
     /**
@@ -159,71 +159,6 @@ define(['./xhr'], function(xhr) {
             return getPath(object, path);
         };
     };
-
-    /**
-     * Find out whether a user is logged in
-     *
-     * Returns a promise which either:
-     * **resolves** - which means user is logged in or
-     * **rejects** - meaning is not logged in
-     * @method isLoggedIn
-     */
-    var isLoggedIn = function() {
-        return $.getJSON('/gdc/account/token');
-    };
-
-
-    /**
-     * This function provides an authentication entry point to the GD API. It is needed to authenticate
-     * by calling this function prior any other API calls. After providing valid credentials
-     * every subsequent API call in a current session will be authenticated.
-     *
-     * @method login
-     * @param {String} username
-     * @param {String} password
-     */
-    var login = function(username, password) {
-        var d = $.Deferred();
-
-        // for local development, use login+password to staging
-        xhr.post("/gdc/account/login", {
-            data: JSON.stringify({
-                postUserLogin: {
-                    login: username,
-                    password: password,
-                    remember: 1,
-                    captcha: "",
-                    verifyCaptcha: ""
-                }
-            })
-        }).then(d.resolve, d.reject);
-
-        return d.promise();
-    };
-
-    /**
-     * Logs out current user
-     * @method logout
-     */
-    var logout = function() {
-        var d = $.Deferred();
-
-        isLoggedIn().then(function() {
-            return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
-                var userUri = result.bootstrapResource.accountSetting.links.self;
-                var userId = userUri.match(/([^\/]+)\/?$/)[1];
-
-                return userId;
-            }, d.reject);
-        }, d.resolve).then(function(userId) {
-            return xhr.ajax('/gdc/account/login/' + userId, {
-                method: 'delete'
-            });
-        }).then(d.resolve, d.reject);
-
-        return d.promise();
-    };
-
     /**
      * Fetches projects available for the user represented by the given profileId
      *
@@ -813,9 +748,7 @@ define(['./xhr'], function(xhr) {
 
     return {
         DEFAULT_PALETTE: DEFAULT_PALETTE,
-        isLoggedIn: isLoggedIn,
-        login: login,
-        logout: logout,
+        user: user,
         getProjects: getProjects,
         getDatasets: getDatasets,
         getColorPalette: getColorPalette,
