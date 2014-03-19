@@ -168,6 +168,8 @@ module.exports = function(grunt) {
         'clean'
     ]);
 
+    grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
+
     grunt.registerTask('init-bower-repo', 'Initializes repository in ./dist', function() {
         var exec = require('child_process').exec,
             gitUri = grunt.file.readJSON('bower.json').repository.url,
