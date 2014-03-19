@@ -6,4 +6,9 @@ lib/
 test/test-results.xml
 docs/
 
+# for gh-pages harness
+pages/api/
+pages/_site/
+.grunt/
+
 .DS_Store

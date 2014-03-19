@@ -105,6 +105,13 @@ module.exports = function(grunt) {
                 push: true,
                 pushTo: 'origin'
             }
+        },
+        'gh-pages': {
+            options: {
+                base: 'pages',
+                message: 'DOC: Updated gh-pages'
+            },
+            src: '**/*'
         }
     });
 
@@ -137,6 +144,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-gh-pages');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [

@@ -20,6 +20,7 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-yuidoc": "~0.5.1",
     "grunt-bump": "0.0.13",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "grunt-gh-pages": "~0.9.1"
   }
 }
