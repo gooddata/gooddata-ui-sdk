@@ -91,6 +91,17 @@ module.exports = function(grunt) {
                     themedir: 'tools/yuidoc/theme/',
                     outdir: 'docs/'
                 }
+            },
+            gh_pages: {
+                name: '<%= pkg.name %>',
+                description: '<%= pkg.description %>',
+                version: '<%= pkg.version %>',
+                url: '<%= pkg.homepage %>',
+                options: {
+                    paths: 'src/',
+                    themedir: 'tools/yuidoc/theme-gh-pages/',
+                    outdir: 'pages/api/'
+                }
             }
         },
         bump: {
