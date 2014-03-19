@@ -1,0 +1,5 @@
+name: GoodData Javascript SDK
+pygments: true
+safe: true
+url: "http://sdk.gooddata.com/gooddata-js"
+permalink: /:categories/:title

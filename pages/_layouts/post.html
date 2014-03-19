@@ -1,0 +1,42 @@
+---
+layout: default
+---
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div style="margin-left: 100px;">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="{{ site.url }}">
+      <img src="{{ site.url }}/images/header-logo.png" alt="GoodData Labs" width="24" height="24">
+      GoodData<span style="color: #FCAF28;">JS
+</a>
+      <div class="nav-collapse collapse container">
+        <ul class="nav">
+          <li class="">
+            <a href="{{ site.url }}/">Home</a>
+          </li>
+          <li class="">
+            <a href="{{ site.url }}/getting-started">Get started</a>
+          </li>
+          <li class="active">
+            <a href="{{ site.url }}/tutorials">Tutorials</a>
+          </li>
+		<li class="">
+            <a href="https://developer.gooddata.com/forum" target="_blank">Forum</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-narrow" style="margin-top: 40px;">
+  <h2>{{ page.title }}</h2>
+  {{ content }}
+  
+  {% include section-nav.html %}
+
+</div>
