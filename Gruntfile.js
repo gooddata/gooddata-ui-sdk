@@ -193,11 +193,11 @@ module.exports = function(grunt) {
             version = grunt.config.get('pkg.version');
 
         var copyPackageDescriptionStep = function(callback) {
-            exec('cp bower.json dist', function(err, stdout, stderr) {
+            exec('cp bower.json LICENSE.txt dist', function(err, stdout, stderr) {
                 if(err) {
-                    callback("Could not copy bower.json to dist\n" + stderr);
+                    callback("Could not copy bower.json or LICENSE.txt to dist\n" + stderr);
                 }
-                grunt.log.writeln('Copied bower.json to dist');
+                grunt.log.writeln('Copied bower.json and LICENSE.txt to dist');
                 callback(null);
             });
         };

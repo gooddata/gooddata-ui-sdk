@@ -3,6 +3,7 @@
   "version": "0.0.13",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
+  "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.1.0",
