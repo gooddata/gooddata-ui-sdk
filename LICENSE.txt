@@ -1,8 +1,8 @@
-GooData JS SDK 
+GoodData JS SDK
 
 BSD License
 
-Copyright (c) 2013, GoodData Corporation. All rights reserved.
+Copyright (c) 2013, 2014 GoodData Corporation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided
 that the following conditions are met:

@@ -1,0 +1,96 @@
+---
+navigation:
+- text: Home
+  url:
+- text: Get Started
+  url: /getting-started
+- text: API
+  url: /api
+- text: Tutorials
+  url: /tutorials
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GoodData Javascript SDK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://developer.gooddata.com/favicon.ico" rel="shortcut icon">
+    <!-- Le styles -->
+    <link href="{{ site.url }}/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ site.url }}/css/syntax.css" rel="stylesheet">
+    <link href="{{ site.url }}/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="{{ site.url }}/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.14.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="{{ site.url }}/api/assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="{{ site.url }}/api/assets/css/main.css" id="site_styles">
+    <style type="text/css">
+        .navbar {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+            color: #333333;
+        }
+    </style>
+    <script src="http://yui.yahooapis.com/combo?3.14.1/build/yui/yui-min.js"></script>
+
+</head>
+<body class="yui3-skin-sam">
+    <div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div style="margin-left: 100px;">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="{{ site.url }}">
+                <img src="{{ site.url }}/images/header-logo.png" alt="GoodData JS SDK" width="24" height="24">
+            GoodData<span style="color: #F0E040;">JS
+            </a>
+            <div class="nav-collapse collapse container">
+                <ul class="nav">
+                    {% assign url = page.url|remove:'/index.html' %}
+                    {% for link in page.navigation %}
+                    <li{% if url == link.url %} class="active"{% endif %}>
+                        <a href="{{ site.url }}/{{ link.url}}">{{ link.text }}</a>
+                    </li>
+                    {% endfor %}
+                    <li>
+                        <a href="https://developer.gooddata.com/forum" target="_blank">Forum</a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        </div>
+        {{ content }}
+        <hr />
+        <div class="footer" style="text-align: center; font-size: 80%;">
+            <p>&copy; GoodData 2014</p>
+            <p>Pictograms used on this page are from <a href="http://www.defaulticon.com/">http://www.defaulticon.com/</a> created by <a href="http://www.interactivemania.com/">http://www.interactivemania.com/</a></p>
+        </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://developer.gooddata.com/themes/site_themes/developer2012/js/jquery.js?v=1"></script>
+    <script src="{{ site.url }}/js/bootstrap.min.js"></script>
+    <script src="{{ site.url }}/api/assets/vendor/store.min.js"></script>
+    <script src="{{ site.url }}/api/assets/vendor/prettify/prettify-min.js"></script>
+    <script>prettyPrint();</script>
+    <script src="{{ site.url }}/api/assets/js/yui-prettify.js"></script>
+    <script src="{{ site.url }}/api/assets/../api.js"></script>
+    <script src="{{ site.url }}/api/assets/js/api-filter.js"></script>
+    <script src="{{ site.url }}/api/assets/js/api-search.js"></script>
+    <script src="{{ site.url }}/api/assets/js/api-list.js"></script>
+    <script src="{{ site.url }}/api/assets/js/apidocs.js"></script>
+
+  </body>
+</html>
+

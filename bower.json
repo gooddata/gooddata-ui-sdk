@@ -2,6 +2,7 @@
   "name": "gooddata",
   "version": "0.0.13",
   "homepage": "https://github.com/gooddata/gooddata-js",
+  "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
   "authors": [
     "GoodData A-players <da@gooddata.com>"
   ],
@@ -11,7 +12,6 @@
   },
   "description": "GoodData JS SDK",
   "main": "dist/gooddata-js.min.js",
-  "license": "GoodLicense",
   "private": true,
   "dependencies": {
     "jquery": "~2.0.3"

@@ -54,7 +54,7 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     baseUrl: 'src',
-                    name: 'sdk',
+                    name: 'gooddata',
                     out: 'dist/gooddata-tmp.js',
                     paths: {
                         loader: '../lib/tildeio/loader'
@@ -91,6 +91,17 @@ module.exports = function(grunt) {
                     themedir: 'tools/yuidoc/theme/',
                     outdir: 'docs/'
                 }
+            },
+            gh_pages: {
+                name: '<%= pkg.name %>',
+                description: '<%= pkg.description %>',
+                version: '<%= pkg.version %>',
+                url: '<%= pkg.homepage %>',
+                options: {
+                    paths: 'src/',
+                    themedir: 'tools/yuidoc/theme-gh-pages/',
+                    outdir: 'pages/api/'
+                }
             }
         },
         bump: {
@@ -105,6 +116,13 @@ module.exports = function(grunt) {
                 push: true,
                 pushTo: 'origin'
             }
+        },
+        'gh-pages': {
+            options: {
+                base: 'pages',
+                message: 'DOC: Updated gh-pages'
+            },
+            src: '**/*'
         }
     });
 
@@ -137,6 +155,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-gh-pages');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
@@ -148,6 +167,8 @@ module.exports = function(grunt) {
         'uglify',
         'clean'
     ]);
+
+    grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
 
     grunt.registerTask('init-bower-repo', 'Initializes repository in ./dist', function() {
         var exec = require('child_process').exec,
@@ -172,11 +193,11 @@ module.exports = function(grunt) {
             version = grunt.config.get('pkg.version');
 
         var copyPackageDescriptionStep = function(callback) {
-            exec('cp bower.json dist', function(err, stdout, stderr) {
+            exec('cp bower.json LICENSE.txt dist', function(err, stdout, stderr) {
                 if(err) {
-                    callback("Could not copy bower.json to dist\n" + stderr);
+                    callback("Could not copy bower.json or LICENSE.txt to dist\n" + stderr);
                 }
-                grunt.log.writeln('Copied bower.json to dist');
+                grunt.log.writeln('Copied bower.json and LICENSE.txt to dist');
                 callback(null);
             });
         };
