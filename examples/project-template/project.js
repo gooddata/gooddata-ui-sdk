@@ -6,10 +6,10 @@ var projectId = 'GoodSalesDemo',
 // Show login info
 $('body').append('<div class="login-loader">Logging in...</div>');
 
-gooddata.login(user, passwd).then(function() {
+gooddata.user.login(user, passwd).then(function() {
     // Loged in
     $('div.login-loader').remove();
-    $('body').append('<div class="loading">Loading data...</div>');
+    $('body').append('<div class="loading">Logged in...ready to your next command</div>');
 
     // Do your stuff here
     // ...
