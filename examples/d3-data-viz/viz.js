@@ -12,13 +12,13 @@ var elements = [attr1, attr2, metric];
 // Insert info label
 $('body').append('<div class="login-loader">Logging in...</div>');
 
-gooddata.login(user, passwd).then(function() {
+gooddata.user.login(user, passwd).then(function() {
 
     $('div.login-loader').remove();
     $('body').append('<div class="loading">Loading data...</div>');
 
     // Ask for data for the given metric and attributes from the GoodSales project
-    gooddata.getData(projectId, elements).then(function(dataResult) {
+    gooddata.execution.getData(projectId, elements).then(function(dataResult) {
         // Yay, data arrived
 
         // Remove loading labels

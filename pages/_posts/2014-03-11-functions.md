@@ -3,7 +3,6 @@ layout: post
 title:  "Available Functions"
 date:   2014-03-11 11:00:00
 categories: recipe
-next_section: recipe/d3-viz
 pygments: true
 perex: Let's learn more about available functions in Javascript SDK.
 ---
