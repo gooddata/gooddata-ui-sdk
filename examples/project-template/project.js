@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-var projectId = 'GoodSalesDemo',
+var projectId = 'la84vcyhrq8jwbu4wpipw66q2sqeb923', // GoodSales Demo
     user = '',
     passwd = '';
 
