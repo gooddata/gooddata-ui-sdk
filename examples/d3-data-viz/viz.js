@@ -1,12 +1,12 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-var projectId = 'GoodSalesDemo',
+var projectId = 'la84vcyhrq8jwbu4wpipw66q2sqeb923', // GoodSales Demo
     user = '',
     passwd = '';
 
 // Report elements identifiers from which we execute a GD report
 var metric = 'afSEwRwdbMeQ',
-    attr1 = 'closed.aam81lMifn6q',
-    attr2 = 'label.owner.id.name';
+    attr1 = 'oppclose.aam81lMifn6q',
+    attr2 = 'label.opp_owner.id.name';
 var elements = [attr1, attr2, metric];
 
 // Insert info label

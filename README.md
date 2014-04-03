@@ -41,9 +41,13 @@ $ grunt dev
 ```
 Which starts proxy that allows your script to communicate with [secure.gooddata.com](https://secure.gooddata.com)
 (backend can be changed with `$ grunt dev --backend=some-other-backend.na.getgooddata.com`).
-Check the app at [localhost:8443](https://localhost/8443)
-To run some of the examples, just add the name of the example to URL like
-[localhost:8443/d3-data-viz](https://localhost:8443/d3-data-viz)
+
+To run some of the examples, first you need to update credentials in the related js file.
+In case of d3-data-viz example you need to edit
+[viz.js](https://github.com/gooddata/gooddata-js/blob/develop/examples/d3-data-viz/viz.js)
+file and update `user` and `passwd` variables. Then just add the name of the example to URL like
+[localhost:8443/d3-data-viz](https://localhost:8443/d3-data-viz) and you should get a nice chord
+chart rendered in a while.
 
 ## Documentation
 Documentation of functions available in SDK can be found in [docs/sdk.md](./docs/sdk.md).

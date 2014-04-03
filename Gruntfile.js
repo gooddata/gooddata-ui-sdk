@@ -162,8 +162,8 @@ module.exports = function(grunt) {
         'getGitInfo',
         'jshint',
         'requirejs',
-        'copy',
         'concat',
+        'copy',
         'uglify',
         'clean'
     ]);
