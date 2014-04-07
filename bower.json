@@ -11,7 +11,7 @@
       "url": "git@github.com:gooddata/bower-gooddata-js.git"
   },
   "description": "GoodData JS SDK",
-  "main": "dist/gooddata-js.min.js",
+  "main": "gooddata.min.js",
   "private": true,
   "dependencies": {
     "jquery": "~2.0.3"
