@@ -18,6 +18,12 @@ define(['xhr', 'util'], function(xhr, util) {
      */
     var getCurrentProjectId = function() {
         return xhr.get('/gdc/app/account/bootstrap').then(function(result) {
+            var currentProject = result.bootstrapResource.current.project;
+            // handle situation in which current project is missing (e.g. new user)
+            if (!currentProject) {
+                return null;
+            }
+
             return result.bootstrapResource.current.project.links.self.split('/').pop();
         });
     };
