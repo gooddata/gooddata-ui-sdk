@@ -139,6 +139,11 @@ define(['_jquery'], function($) { 'use strict';
             }
         }).done(function(data, textStatus, xhr) {
             if (xhr.status === 202) {
+                // if the response is 202 and Location header is not empty, let's poll on the new Location
+                var location = xhr.getResponseHeader('Location');
+                if (location){
+                    settings.url = location;
+                }
                 handlePolling(settings, d);
             } else {
                 d.resolve(data, textStatus, xhr);
