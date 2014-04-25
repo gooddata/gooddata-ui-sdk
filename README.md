@@ -50,7 +50,7 @@ file and update `user` and `passwd` variables. Then just add the name of the exa
 chart rendered in a while.
 
 ## Documentation
-Documentation of functions available in SDK can be found in [docs/sdk.md](./docs/sdk.md).
+Documentation of functions available in SDK can be found at [sdk.gooddata.com/gooddata-js/api](http://sdk.gooddata.com/gooddata-js/api).
 It can be generated right from the source code by running:
 ```
 $ grunt doc

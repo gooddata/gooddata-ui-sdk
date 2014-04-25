@@ -134,6 +134,22 @@ define(['project', 'jquery'], function(project, $) {
                         done();
                     });
                 });
+
+                it('should resolve with null if current project not set', function(done) {
+                    this.server.respondWith(
+                        'GET', '',
+                        [200, {'Content-Type': 'application/json'}, JSON.stringify({bootstrapResource: {current: {project: null}}})]
+                    );
+
+                    project.getCurrentProjectId().then(function(result) {
+                        expect(result).to.be(null);
+                        done();
+                    }, function() {
+                        expect().fail('Should resolve with project hash');
+                        done();
+                    });
+                });
+
             });
          });
     });
