@@ -121,6 +121,42 @@ define(['user', 'jquery'], function(user, $) {
                     });
                 });
             });
+
+            describe('Account info', function() {
+                it('should return info about account', function() {
+                    var login = 'LOGIN';
+                    var loginMD5 = 'LOGIN_MD5';
+                    var firstName = 'FIRST_NAME';
+                    var lastName = 'LAST_NAME';
+                    var organizationName = 'ORG_NAME';
+                    this.server.respondWith(
+                        'GET','/gdc/app/account/bootstrap',
+                        [200, {'Content-Type': 'application/json'}, JSON.stringify({
+                            bootstrapResource: {
+                                accountSetting: {
+                                    login: login,
+                                    firstName: firstName,
+                                    lastName: lastName
+                                },
+                                current: {
+                                    loginMD5: loginMD5
+                                },
+                                settings: {
+                                    organizationName: organizationName
+                                }
+                            }
+                        })]
+                    );
+
+                    user.getAccountInfo().then(function(accountInfo) {
+                        expect(accountInfo.login).to.eql(login);
+                        expect(accountInfo.loginMD5).to.eql(loginMD5);
+                        expect(accountInfo.firstName).to.eql(firstName);
+                        expect(accountInfo.lastName).to.eql(lastName);
+                        expect(accountInfo.organizationName).to.eql(organizationName);
+                    });
+                });
+            });
         });
 
     });

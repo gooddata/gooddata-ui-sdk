@@ -66,11 +66,30 @@ define(['xhr'], function(xhr) {
         return d.promise();
     };
 
+    var getAccountInfo = function() {
+        var d = $.Deferred();
+
+        xhr.get('/gdc/app/account/bootstrap').then(function(result) {
+            var br = result.bootstrapResource;
+            var accountInfo = {
+                login: br.accountSetting.login,
+                loginMD5: br.current.loginMD5,
+                firstName: br.accountSetting.firstName,
+                lastName: br.accountSetting.lastName,
+                organizationName: br.settings.organizationName
+            };
+
+            d.resolve(accountInfo);
+        }, d.reject);
+
+        return d.promise();
+    };
+
 
     return {
         isLoggedIn: isLoggedIn,
         login: login,
-        logout: logout
+        logout: logout,
+        getAccountInfo: getAccountInfo
     };
-
 });
