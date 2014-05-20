@@ -66,6 +66,10 @@ define(['xhr'], function(xhr) {
         return d.promise();
     };
 
+    /**
+     * Returns info about currently logged in user from bootstrap resource
+     * @method getAccountInfo
+     */
     var getAccountInfo = function() {
         var d = $.Deferred();
 
