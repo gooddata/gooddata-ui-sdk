@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define(['_jquery'], function($) { 'use strict';
+define(['_jquery', 'config'], function($, config) { 'use strict';
 
     /**
      * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -16,6 +16,19 @@ define(['_jquery'], function($) { 'use strict';
     var tokenRequest,
         xhrSettings,
         xhr = {}; // returned module
+
+    xhr.enrichSettingWithCustomDomain = function(settings, domain) {
+        if (domain) {
+            // protect url to be prepended with domain on retry
+            if (settings.url.indexOf(domain) === -1) {
+                settings.url = domain + settings.url;
+            }
+            settings.xhrFields = settings.xhrFields || {};
+            settings.xhrFields.withCredentials = true;
+        }
+
+        return settings;
+    };
 
     var retryAjaxRequest = function(req, deferred) {
         // still use our extended ajax, because is still possible to fail recoverably in again
@@ -41,7 +54,7 @@ define(['_jquery'], function($) { 'use strict';
         if (!tokenRequest) {
             // Create only single token request for any number of waiting request.
             // If token request exist, just listen for it's end.
-            tokenRequest = $.ajax('/gdc/account/token/').always(function() {
+            tokenRequest = $.ajax(xhr.enrichSettingWithCustomDomain({ url: '/gdc/account/token/' }, config.domain)).always(function() {
                 tokenRequest = null;
             }).fail(function(xhr, textStatus, err) {
                 //unauthorized when retrieving token -> not logged
@@ -118,6 +131,7 @@ define(['_jquery'], function($) { 'use strict';
         if (url) {
             settings.url = url;
         }
+
         if ($.isPlainObject(settings.data)) {
             settings.data = JSON.stringify(settings.data);
         }
@@ -131,7 +145,8 @@ define(['_jquery'], function($) { 'use strict';
             continueAfterTokenRequest(settings, d);
             return d;
         }
-        $.ajax(settings).fail(function(xhr, textStatus, err) {
+
+        $.ajax(xhr.enrichSettingWithCustomDomain(settings, config.domain)).fail(function(xhr, textStatus, err) {
             if (xhr.status === 401) {
                 handleUnauthorized(settings, d);
             } else {
@@ -181,7 +196,7 @@ define(['_jquery'], function($) { 'use strict';
      */
     xhr.put = xhrMethod('PUT');
 
-    // setup dafault settings
+    // setup default settings
     xhr.ajaxSetup({});
     return xhr;
 

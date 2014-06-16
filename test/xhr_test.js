@@ -132,7 +132,7 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 d[2].resolve('Hello', '', mockResponse(200)); //request retry
             });
 
-            it('should fail if token renewail fails and unathorize handler is not set', function(done) {
+            it('should fail if token renewal fails and unathorize handler is not set', function(done) {
                 var options = { url: '/some/url'};
                 xhr.ajax(options).fail(function(xhr) {
                     expect(xhr.status).to.be(401);
@@ -310,6 +310,27 @@ define(['gooddata', 'jquery'], function(gd, $) {
                     data: data,
                     contentType: 'text/csv'
                 }]);
+            });
+        });
+
+        describe('enrichSettingWithCustomDomain', function() {
+            it('should not touch settings if no domain set', function() {
+                var settings = { url: '/test1' },
+                    res = xhr.enrichSettingWithCustomDomain(settings, undefined);
+                expect(res.url).to.be('/test1');
+                expect(res.xhrFields).to.be(undefined);
+            });
+            it('should add domain before url', function() {
+                var settings = { url: '/test1' },
+                    res = xhr.enrichSettingWithCustomDomain(settings, 'https://domain.tld');
+                expect(res.url).to.be('https://domain.tld/test1');
+                expect(res.xhrFields).to.eql({ withCredentials: true });
+            });
+            it('should not double domain in settings url', function() {
+                var settings = { url: 'https://domain.tld/test1' },
+                    res = xhr.enrichSettingWithCustomDomain(settings, 'https://domain.tld');
+                expect(res.url).to.be('https://domain.tld/test1');
+                expect(res.xhrFields).to.eql({ withCredentials: true });
             });
         });
     });
