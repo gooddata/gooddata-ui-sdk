@@ -5,14 +5,16 @@ define([
     'user',
     'metadata',
     'execution',
-    'project'
+    'project',
+    'config'
 ], function(
     xhr,
     util,
     user,
     metadata,
     execution,
-    project
+    project,
+    config
 ) {
     'use strict';
 
@@ -38,6 +40,7 @@ define([
      * @class sdk
      */
     return {
+        config: config,
         xhr: xhr,
         user: user,
         md: metadata,
