@@ -105,6 +105,44 @@ define(['execution', 'jquery'], function(ex, $) {
                         });
                     });
                 });
+
+                describe('getData with execution context filters', function() {
+                    it('should propagate execution context filters to the server call', function() {
+                        // prepare filters and then use them with getData
+                        var filters = [{
+                            "uri": "/gdc/md/myFakeProjectId/obj/1",
+                            "constraint": {
+                                "type": "list",
+                                "elements": ["/gdc/md/myFakeProjectId/obj/1/elements?id=1"]
+                            }
+                        }];
+                        var data = ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
+                            filters: filters
+                        });
+
+                        var request = this.server.requests[0];
+                        var requestBody = JSON.parse(request.requestBody);
+
+                        expect(requestBody.execution.filters).to.eql(filters);
+                    });
+                });
+
+                describe('getData with query language filters', function() {
+                    it('should propagate filters to the server call', function() {
+                        // prepare filters and then use them with getData
+                        var where = {
+                            'label.attr.city': { '$eq' : 1 }
+                        };
+                        var data = ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
+                            where: where
+                        });
+
+                        var request = this.server.requests[0];
+                        var requestBody = JSON.parse(request.requestBody);
+
+                        expect(requestBody.execution.where).to.eql(where);
+                    });
+                });
             });
 
         });
