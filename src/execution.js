@@ -70,7 +70,7 @@ define(['xhr'], function(xhr) {
             return xhr.ajax(result.executionResult.tabularDataResult);
         }, d.reject).then(function(result) {
             // After the retrieving computed tabularData, resolve the promise
-            executedReport.rawData = result.tabularDataResult.values;
+            executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
             executedReport.isLoaded = true;
             d.resolve(executedReport);
         }, d.reject);

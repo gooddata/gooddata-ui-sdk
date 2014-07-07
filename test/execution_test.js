@@ -68,6 +68,25 @@ define(['execution', 'jquery'], function(ex, $) {
                         });
                     });
 
+                    it('should not fail if tabular data result is missing', function(done) {
+                        this.server.respondWith(
+                            '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                            [200, {'Content-Type': 'application/json'},
+                            JSON.stringify(this.serverResponseMock)]
+                        );
+                        this.server.respondWith(
+                            /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                            [204, {'Content-Type': 'application/json'}, ""]
+                        );
+
+                        ex.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
+                            expect(result.rawData).to.eql([]);
+                            done();
+                        }, function(err) {
+                            expect().fail('Should resolve with empty data');
+                            done();
+                        });
+                    });
 
                     it('should reject when execution fails', function(done) {
                         this.server.respondWith(
