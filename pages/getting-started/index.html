@@ -1,30 +1,32 @@
 ---
 layout: default
-next_section: tutorials
+next_section: build-visualization
 title: Getting Started | GoodData Javascript SDK
 ---
 <div class="container-narrow">
 
-<h1>Get Started</h1>
+<h1>Set Up Your Local Dev Environment</h1>
+
+<p><a href="http://github.com/gooddata/gooddata-js">The Visualization SDK</a> makes it easy to write small Javascript apps on the top of GoodData APIs. The SDK also provides GoodData Platform visual extensibility - the ability to create custom data visualization widgets for your dashboards.</p>
+
+<p>You can use Bower to manage this library. The result of the build is
+in <code>dist/gooddata[.min].js</code>. Result of the build is <a href="https://github.com/umdjs/umd">UMD</a> compatible, you can use it both globally and as UMD module.</p> 
+
 <p>
-You've just downloaded GoodData Javascript SDK and want to start building something. You are in the right place!
+Follow the instructions below to set up your environment. Next, we recommend that you review the getting started tutorial, which shows you the whole process of creating the a custom visualization from scratch. After that you can modify and explore <a href="">our examples</a>.
 </p>
 
-<p>GoodData javascript sdk library mainly provides a thin javascript abstraction
-over the <strong>GoodData REST API</strong>. It is created to makes it easy to use the GD platform
-and write small javascript apps relying on GD APIs.</p>
+<br />
 
-<h2>Usage</h2>
+<h4>Prerequisites</h4>
 
-<p>GoodData javascript sdk can be used as bower component. The result of the build is
-in <code>dist/gooddata[.min].js</code>. Result of the build <a href="https://github.com/umdjs/umd">UMD</a> - compatible -
-you can use it both globally and as AMD module. Note that you need to provide
-jQuery before trying to load the SDK.</p>
+<ul>
+<li>Download jQuery before trying to load the SDK</li>
+<li>Install <a href="http://nodejs.org/">Node.js</a></li>
+<li>Install and set up <a href="http://git-scm.com/book/en/Getting-Started-Installing-Git">Git</a></li>
+</ul>
 
-<h2>Quick start</h2>
-
-<p>To build the sdk you need to have <a href="http://git-scm.com" target="_blank">git</a> and <a href="http://nodejs.org">Node.js</a>
-installed. MacOS users should install <a target="_blank" href="http://mxcl.github.com/homebrew/">Homebrew</a>
+<p><strong>NOTE:</strong> MacOS users can install <a target="_blank" href="http://mxcl.github.com/homebrew/">Homebrew</a>
 first and then run:</p>
 
 <pre>
@@ -32,45 +34,54 @@ $ brew install git
 $ brew install node
 </pre>
 
-<p>Now, clone this repo with <code>$ git clone https://github.com/gooddata/gooddata-js.git</code>
- (if you encounter any kind of problems while cloning the repository please refer to Github's
-<a href="https://help.github.com/articles/https-cloning-errors">HTTPS cloning errors</a> manual page)
-and get the library dependencies with</p>
+<br />
 
+<h4>Steps:</h4>
+
+<ol>
+<li>Clone your GoodData SDK repository with: 
+<p>
+	<code>$ git clone https://github.com/gooddata/gooddata-js.git</code>
+</p>
+</li>
+<li>
+Get the library dependencies with the following commands:
+<p>
 <pre>
 $ npm install -g grunt-cli
 $ npm install -g bower
 $ npm install
 $ bower install
 </pre>
-
-<h2>Build</h2>
-
-<p>In the repository run:</p>
-
+</p>
+</li>
+<li>
+Go to the repository folder and run:
+<p>
 <pre>
 $ grunt
 </pre>
-
-<p>and the built library is ready for you at <code>dist/gooddata.min.js</code></p>
-
-<h2>Develop</h2>
-
-<p>It is easy to start your own project with this repository or modify and explore
-examples depicting some of the sdk usages. To start with examples run:</p>
-
+the built library is created at <code>dist/gooddata.min.js</code>
+</p>
+</li>
+<li>
+Run the following command to set up local server:
+<p>
 <pre>
 $ grunt dev
 </pre>
+This command starts the proxy that allows your script to communicate with <code>https://secure.gooddata.com</code>
+</p>
+<p>
+<strong>NOTE:</strong> For white-labeled organizations, you can set up your proxy to call a different backend server with <code>$ grunt dev --backend={your-gooddata-server-url}</code>
+</p>
+</li>
+<li>
+Go to <a href="https://localhost:8443">localhost:8443</a> to verify the environment is ready.
+</li>
+</ol>
 
-<p>Which starts proxy that allows your script to communicate with <code>https://secure.gooddata.com</code>
-(backend can be changed with</p>
-<pre>
-$ grunt dev --backend=some-other-backend.na.getgooddata.com
-</pre>
-
-<p>Check the app at <a href="https://localhost:8443">localhost:8443</a> To run some of the examples, just add the name of the example to URL like
-<a href="https://localhost:8443/d3-data-viz" target="_blank>">localhost:8443/d3-data-viz</a>.
+<p>Congratulations! You are ready to build your first visualization. Learn how to do it with <a href="http://sdk.gooddata.com/gooddata-js/build-visualization">this tutorial</a>.</p>
 
 {% include section-nav.html %}
 
