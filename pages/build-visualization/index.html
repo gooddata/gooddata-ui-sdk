@@ -1,0 +1,66 @@
+---
+layout: default
+title: GoodData Javascript SDK - Building My First Visualization
+---
+
+<div class="container-narrow">
+
+<h1>How to Build a Visualization</h1>
+
+<p>Let's learn how to create a custom visualization with our Visualization SDK and embed it to your dashboard. You can also go directly to the examples folder in your downloaded library/repository to check all available prebuilt examples.</p>   
+
+<h4>Steps:</h4>
+
+<ol>
+<li>Get the data.</li>
+<li>Set up a visualization.</li>
+<li>Embed the visualization.</li>
+</ol>
+
+<p>Sometimes when the data visualization library requires more complex input, you must transform your data:</p>
+
+<img src="/images/posts/viz-process.png" alt="Viz Process" width="650" />
+
+<a name="get-data"></a>
+<h3>Get the data from the GoodData Platform</h3>
+
+<p>Getting the data from the GoodData Platform is a critical part. Because this step will be the same for every data visualization you must know the structure of the data that is extracted from GoodData.</p>
+
+<a style="font-size: 13pt;" href="/tutorial/get-the-data-from-gooddata-platform">Learn the details >></a>
+
+<a name="set-up-viz"></a>
+<h3>Set Up the Visualization</h3>
+
+<p>Set up for a visualization always unique and depends on which visualization library you are using.</p>
+
+<p>The best way to learn how to set up an individual Visualization is to explore our <a href="#example-library">example library</a> below. Or definitely read other related Google Charts, <a href="https://github.com/mbostock/d3/wiki/Gallery">D3.js</a> or <a href="http://dc-js.github.io/dc.js/docs/stock.html">dc.js</a> tutorials. </p>
+
+<a style="font-size: 13pt;" href="/tutorial/setting-up-d3">Learn how to setup visualization (D3.js) >></a>
+
+<a name="embed-to-dashboard"></a>
+<h3>Embed the Visualization in a Dashboard</h3>
+
+<p>You can embed the custom visualization the same way as any other html content. However, since visualizations are javascript running outside of the GoodData Platform, several limitations exist. We strongly recommend you to go through <a href="/tutorial/embedding-custom-visualization-into-dashboard">these details</a>.</p>
+
+<a style="font-size: 13pt;" href="/tutorial/embedding-custom-visualization-into-dashboard">Learn how to embed the visualization >></a>
+
+<a name="examples"></a>
+<h5>That's it!</h5>
+
+<p>Check out all examples we have prepared for you. You can play around with them and create new examples and share them with others.</p>
+
+<h3>Explore More Examples</h3>
+<div class="explore">
+<div class="mask-top">&nbsp;</div>
+    {% for post in site.posts %}
+      {% if post.categories contains 'example' %}
+        <div>
+          <a href="{{ site.url }}{{ post.url }}"><h4>{{ post.title }}</h4></a>
+          <div>{{ post.perex }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+<div style="height: 20px; background: #FFFFFF;">&nbsp;</div>
+<div class="mask-bottom">&nbsp;</div>
+</div>
+</div>

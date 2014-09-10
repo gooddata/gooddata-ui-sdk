@@ -4,10 +4,11 @@ navigation:
   url:
 - text: Get Started
   url: /getting-started
+- text: Build Visualization
+  url: /build-visualization
 - text: API
   url: /api
-- text: Tutorials
-  url: /tutorials
+
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -23,12 +24,15 @@ navigation:
     <link href="{{ site.url }}/css/syntax.css" rel="stylesheet">
     <link href="{{ site.url }}/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="{{ site.url }}/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ site.url }}/css/default.css">
+	<script src="{{ site.url }}/js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 
 <style>
 body {
     padding-top: 20px;
     padding-bottom: 40px;
-    background: url(http://sdk.gooddata.com/gooddata-js/images/background.png) fixed left top no-repeat;
+    background: url(http://sdk.gooddata.com/gooddata-js/images/background.png) left top no-repeat;
     background-size: 111px 245px;
 
   }
@@ -46,7 +50,7 @@ a.topics {margin-top: 7px; font-size: 16px;}
 
   /* Main marketing message and sign up button */
   .jumbotron {
-    padding: 60px 0;
+    padding: 70px 0;
     text-align: center;
   }
   .jumbotron h1 {
@@ -87,7 +91,7 @@ a.topics {margin-top: 7px; font-size: 16px;}
                 <span class="icon-bar"></span>
             </button>
             <a class="brand" href="{{ site.url }}">
-                <img src="{{ site.url }}/images/header-logo.png" alt="GoodData JS SDK" width="24" height="24">
+                <img src="/images/header-logo.png" alt="GoodData JS SDK" width="24" height="24" style="margin-bottom: 5px;" />
             GoodData<span style="color: #F0E040;">JS
             </a>
             <div class="nav-collapse collapse container">
@@ -110,9 +114,8 @@ a.topics {margin-top: 7px; font-size: 16px;}
 
       <hr>
 
-<div class="footer" style="text-align: center; font-size: 80%;">
+<div class="footer" style="text-align: center;">
 <p>&copy; GoodData 2014</p>
-<p>Pictograms used on this page are from <a href="http://www.defaulticon.com/">http://www.defaulticon.com/</a> created by <a href="http://www.interactivemania.com/">http://www.interactivemania.com/</a></p>
       </div>
 
     </div> <!-- /container -->
