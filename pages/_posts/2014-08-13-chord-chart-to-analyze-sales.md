@@ -6,33 +6,33 @@ categories: example
 highlighter: true
 prev_section: example/building-parallel-coordinates
 next_section: example/using-dc-js-with-gooddata
-perex: Learn how to pull data from GoodData and visualize them in D3.js Chord chart 
+perex: Learn how to pull data from GoodData and visualize them in D3.js Chord chart
 ---
 
 Let's learn how to build [chord chart](http://bl.ocks.org/mbostock/4062006#index.html) that shows you how each sales person contributed to the quarter sales results:
 
-<img src="/images/posts/chord-chart.png" width="650px" alt="Chord Chart"/>
+<img src="{{ site.url }}/images/posts/chord-chart.png" width="650px" alt="Chord Chart"/>
 
 More info about [setting up D3.js Chord chart](http://www.gghh.name/dibtp/?p=234). You also [find complete example](https://github.com/gooddata/gooddata-js/tree/develop/examples/d3-data-viz).
 
 ### 1) Get the data
 
-First of all select metric and attributes that you want to use in your visualization. 
+First of all select metric and attributes that you want to use in your visualization.
 
-Remember that you must specify an object identifier. The example can be `label.opp_owner.id.name` for attribute (Opportunity Owner) or `afSEwRwdbMeQ` for fact (Sales Amount). 
+Remember that you must specify an object identifier. The example can be `label.opp_owner.id.name` for attribute (Opportunity Owner) or `afSEwRwdbMeQ` for fact (Sales Amount).
 
-See the example output below. The data is exported in a raw format. Data is not cross-tabulated. Let's see how it looks in Javascript. 
+See the example output below. The data is exported in a raw format. Data is not cross-tabulated. Let's see how it looks in Javascript.
 
 {% highlight js %}
-var projectId = 'PROJECT-ID',  
-    user = 'USERNAME',  
-    passwd = 'PASSWORD';    
+var projectId = 'PROJECT-ID',
+    user = 'USERNAME',
+    passwd = 'PASSWORD';
 
 // Report elements identifiers from which we execute a GD report
 var metric = 'METRIC-IDENTIFIER', // sales
     attr1 = 'oppclose.aam81lMifn6q', // opportunity close quarter
     attr2 = 'label.opp_owner.id.name'; // opportunity owner
-    
+
 var elements = [attr1, attr2, metric];
 
 // Insert info label
@@ -50,28 +50,28 @@ gooddata.user.login(user, passwd).then(function() {
  // Remove loading labels
         $('div.loading').remove();
 
-// ... ... REST OF CODE - see below ... ...  
+// ... ... REST OF CODE - see below ... ...
 
 });
 {% endhighlight %}
 
-The key part is the `getData()` method that calls the GoodData APIs and gives you data result for specified elements. 
+The key part is the `getData()` method that calls the GoodData APIs and gives you data result for specified elements.
 
 ### 2. Transform data
 
 In our [first tutorial](/tutorial/Your-First-Visualization), we didn't need any kind of data transformation because the data was ready to send to the D3. We need to do this now. This part always depends on what data you are extracting and what type of visualization you want to create. It is a fully custom javascript code.
 
-![Workflow](/images/posts/transform-data.png)
+![Workflow]({{ site.url }}/images/posts/transform-data.png)
 
 We basically transform the data to fit the D3.js data input definition. Sometimes this can be quite complex task to solve. In our example we must transform the raw data output that looks as follows:
 
-![Raw Output](/images/posts/raw-data.png)
+![Raw Output]({{ site.url }}/images/posts/raw-data.png)
 
 to the matrix that is being consumed by D3 visualization. Check out the resulting matrix:
- 
-![Chord Chart Matrix](/images/posts/chord-chart-matrix.png)
 
-What you can see from the matrix above is contribution of each salesperson to the Quarter Revenue. You can see that **Andrew Seals** brings in **8083016** revenue in the Q1 and **9389679** revenue in Q2. This is what D3 Chord chart needs as the input. If you go row by row, you can see that there is zero value between each quarters and each sales person. It is correct because they are not contributing to each other.  
+![Chord Chart Matrix]({{ site.url }}/images/posts/chord-chart-matrix.png)
+
+What you can see from the matrix above is contribution of each salesperson to the Quarter Revenue. You can see that **Andrew Seals** brings in **8083016** revenue in the Q1 and **9389679** revenue in Q2. This is what D3 Chord chart needs as the input. If you go row by row, you can see that there is zero value between each quarters and each sales person. It is correct because they are not contributing to each other.
 
 The complexity here is to transform the data we receive from GoodData to this format. This is done by the transformData function.
 
@@ -133,9 +133,9 @@ var transformData = function(dataResult) {
         };
 {% endhighlight %}
 
-3. Setup the D3 Visualization 
+3. Setup the D3 Visualization
 
-This part really depends on the visualization type you use. We are using chord chart 
+This part really depends on the visualization type you use. We are using chord chart
 
 {% highlight javascript %}
         var fill = d3.scale.category10();
@@ -208,5 +208,5 @@ This part really depends on the visualization type you use. We are using chord c
     });
 {% endhighlight %}
 
-That's it. You are ready to embed your new visualization to the GoodData Dashboard. If you are not sure how to do it read the [embedding tutorial](/tutorial/embedding-custom-visualization-into-dashboard). 
+That's it. You are ready to embed your new visualization to the GoodData Dashboard. If you are not sure how to do it read the [embedding tutorial](/tutorial/embedding-custom-visualization-into-dashboard).
 

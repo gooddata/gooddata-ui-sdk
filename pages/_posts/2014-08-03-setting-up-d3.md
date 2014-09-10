@@ -13,18 +13,18 @@ It's time to start building the visualization itself. If you are an expert in bu
 
 If you have the visualization already prepared, you can skip this and continue with [embedding](/tutorial/embedding-custom-visualization-into-dashboard).
 
-We will use [Google Charts](https://google-developers.appspot.com/chart/). You can also use any Javascript framework like [D3.js](http://d3js.org/), find out the [the documentation](https://github.com/mbostock/d3/wiki). 
+We will use [Google Charts](https://google-developers.appspot.com/chart/). You can also use any Javascript framework like [D3.js](http://d3js.org/), find out the [the documentation](https://github.com/mbostock/d3/wiki).
 
 _You can also check out our [end to end examples](/build-visualization/#examples)._
 
 ### What we already know
 
-See the code below to recap how we can log in to the GoodData and extract data from your project. 
+See the code below to recap how we can log in to the GoodData and extract data from your project.
 
 {% highlight js %}
 google.load("visualization", "1", {packages:["corechart"]});
 
-var projectId = 'project-id', 
+var projectId = 'project-id',
 	user = 'username@company.com',
 	passwd = 'password';
 
@@ -32,7 +32,7 @@ var projectId = 'project-id',
 var open = 'aiAY9GSReqiT',
 	close = 'aHZY9nzNeg3f',
 	year = 'date.aag81lMifn6q';
-    
+
 var elements = [year, open, close];
 
 // Insert info label
@@ -45,7 +45,7 @@ gooddata.user.login(user, passwd).then(function() {
 
     // Ask for data for the given metric and attributes from the GoodSales project
     gooddata.execution.getData(projectId, elements).then(function(dataResult) {
-        // Yay, data arrived  
+        // Yay, data arrived
 
 {% endhighlight %}
 
@@ -53,7 +53,7 @@ We have a data, let's build a line chart.
 
 ### Visualization Set Up
 
-<img src="/images/posts/google-line-chart.png" width="650" />
+<img src="{{ site.url }}/images/posts/google-line-chart.png" width="650" />
 
 {% highlight js %}
 
@@ -61,23 +61,23 @@ We have a data, let's build a line chart.
         var headers = dataResult.headers.map(function(h) {
                     return h.title;
                 });
-        
+
         // extract raw data matrix
         var data = dataResult.rawData;
-		
+
 		// we need to convert metrics to integer because google chart needs numbers
        	for(var i = 0; i < data.length; i++) {
 				for(var j = 1; j < data[i].length; j++) {
 				data[i][j] = parseInt(data[i][j]);
 			  }
-			}    
+			}
         // Remove loading labels
-        $('div.loading').remove();  
-        
+        $('div.loading').remove();
+
         // call function back to draw the chart after document is ready
         google.setOnLoadCallback(drawChart(data, headers));
-		
-		// function to draw line chart with our data 
+
+		// function to draw line chart with our data
 		function drawChart(data, headers) {
 
             var data = google.visualization.arrayToDataTable(dataResult.rawData);
@@ -87,7 +87,7 @@ We have a data, let's build a line chart.
 		    		data3.addColumn('number', headers[2]);
 		    		data3.addRows(data);
 		    		console.log(data);
-		    
+
             var options = {
               title: 'Nasdaq',
               hAxis: {title: headers[0],  titleTextStyle: {color: '#333'}},
@@ -113,9 +113,9 @@ The last part is complete html code. See below:
   <body>
     <div id="chart_div" style="width: 900px; height: 500px;"></div>
   </body>
-    <script type="text/javascript" src="linechart.js"></script>    
+    <script type="text/javascript" src="linechart.js"></script>
 </html>
 {% endhighlight %}
 
 
-You can find out complete example as a part of the [library you cloned](https://github.com/gooddata/gooddata-js) from Github. Try it yourself. 
+You can find out complete example as a part of the [library you cloned](https://github.com/gooddata/gooddata-js) from Github. Try it yourself.
