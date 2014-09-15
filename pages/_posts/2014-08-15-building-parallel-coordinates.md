@@ -17,7 +17,7 @@ What we are going to build is the visualization that is called Parallel Coordina
 
 The result might looks like this:
 
-![Parallel Coordinates graph](/images/posts/parallel-coordinates.png)
+![Parallel Coordinates graph](http://sdk.gooddata.com/gooddata-js/images/posts/parallel-coordinates.png)
 
 Remember that each line shows individual sales rep and each axis shows one metric that is used to measure sales representatives. We have a use case, so let's build it!
 

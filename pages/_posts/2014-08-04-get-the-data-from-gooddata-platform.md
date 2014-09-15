@@ -17,7 +17,7 @@ navigate to your metric, open it and locate its identifier key and copy its valu
 
 ### GoodData Project
 
-_If you don't have a GoodData project, you can create one using this one page project creation template - [Ruby SDK Script](link-to-script)_
+_If you don't have a GoodData project, you can create one using our [Ruby SDK](http://sdk.gooddata.com/gooddata-ruby/get-started/)._
 
 We want to see open and close quote of Nasdaq during the time. Let's use following metrics:
 
@@ -29,6 +29,8 @@ Select the sales rep attribute identifier from the project:
 **Year (Date)**: date.aag81lMifn6q  
 
 The first lines of the code specify the project id, user credentials and report elements. By report elements we mean metrics and attributes.
+
+**NOTE:** Credentials are just for your **local developer environment**. If you want to embed custom visualization to your dashboard, you don't need them. Learn more about embedding custom visualization.
 
 <pre>
 <code class="js">
@@ -76,7 +78,7 @@ You have successfully extracted the data from GoodData Platform and now have all
 
 The rawData array returns the data in in the same column order as you specified in the element variable on the top of your script. 
 
-![Data Object Structure](/images/posts/data-object.png)
+![Data Object Structure](http://sdk.gooddata.com/gooddata-js/images/posts/data-object.png)
 
-Perfect. Your data is extracted from the GoodData Platform with the SDK, and now it's up to you how you transform it. We have created [multiple examples](/build-visualization/#examples) to inspire you.
+Perfect. Your data is extracted from the GoodData Platform with the SDK, and now it's up to you how you transform it. We have created [multiple examples](http://sdk.gooddata.com/gooddata-js/build-visualization/#examples) to inspire you.
 
