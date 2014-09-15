@@ -15,7 +15,7 @@ If you have the visualization already prepared, you can skip this and continue w
 
 We will use [Google Charts](https://google-developers.appspot.com/chart/). You can also use any Javascript framework like [D3.js](http://d3js.org/), find out the [the documentation](https://github.com/mbostock/d3/wiki).
 
-_You can also check out our [end to end examples](/build-visualization/#examples)._
+_You can also check out our [end to end examples](http://sdk.gooddata.com/gooddata-js/build-visualization/#examples)._
 
 ### What we already know
 
