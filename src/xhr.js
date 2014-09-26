@@ -59,7 +59,7 @@ define(['_jquery', 'config'], function($, config) { 'use strict';
             }).fail(function(xhr, textStatus, err) {
                 //unauthorized when retrieving token -> not logged
                 if ((xhr.status === 401) && ($.isFunction(req.unauthorized))) {
-                    req.unauthorized(xhr);
+                    req.unauthorized(xhr, textStatus, err, deferred);
                     return;
                 }
                 // unauthorized handler is not defined or not http 401
