@@ -106,7 +106,10 @@ define(['_jquery', 'config'], function($, config) { 'use strict';
         xhrSettings = $.extend({
             contentType: 'application/json',
             dataType: 'json',
-            pollDelay: 1000
+            pollDelay: 1000,
+            headers : {
+                'Accept' : 'application/json; charset=utf-8'
+            }
         }, settings);
     };
 
