@@ -19,6 +19,9 @@ define(['xhr'], function(xhr) {
      * @param {Object} executionConfiguration - Execution configuration - can contain for example
      *                 property "filters" containing execution context filters
      *                 property "where" containing query-like filters
+     *                 property "orderBy" contains array of sorted properties to order in form
+     *                      [{column: 'identifier', direction: 'asc|desc'}]
+     *
      * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
      */
     var getData = function(projectId, elements, executionConfiguration) {
@@ -32,7 +35,7 @@ define(['xhr'], function(xhr) {
         // enrich configuration with supported properties such as
         // where clause with query-like filters or execution context filters
         executionConfiguration = executionConfiguration || {};
-        ['filters', 'where'].forEach(function(property) {
+        ['filters', 'where', 'orderBy'].forEach(function(property) {
             if (executionConfiguration[property]) {
                 request.execution[property] = executionConfiguration[property];
             }
