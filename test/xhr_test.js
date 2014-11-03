@@ -116,7 +116,7 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 d[0].reject(mockResponse(404));
             });
 
-            it.only('should have accept header set on application/json', function() {
+            it('should have accept header set on application/json', function() {
                 xhr.ajax({ url: '/some/url'}).done(function(data, textStatus, xhr) {
                     expect(expects[0].calledOnce).to.be.ok();
                     expect(xhr.status).to.be(200);
