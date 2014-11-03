@@ -146,6 +146,28 @@ define(['execution', 'jquery'], function(ex, $) {
                     });
                 });
 
+                describe('getData with order', function() {
+                    it('should propagate orderBy to server call', function() {
+                        var orderBy = [
+                            {
+                                column: 'column1',
+                                direction: 'asc'
+                            },
+                            {
+                                column: 'column2',
+                                direction: 'desc'
+                            }
+                        ];
+                        ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
+                            orderBy: orderBy
+                        });
+
+                        var request = this.server.requests[0];
+                        var requestBody = JSON.parse(request.requestBody);
+                        expect(requestBody.execution.orderBy).to.eql(orderBy);
+                    });
+                });
+
                 describe('getData with query language filters', function() {
                     it('should propagate filters to the server call', function() {
                         // prepare filters and then use them with getData
