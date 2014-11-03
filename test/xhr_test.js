@@ -115,6 +115,16 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 }});
                 d[0].reject(mockResponse(404));
             });
+
+            it('should have accept header set on application/json', function() {
+                xhr.ajax({ url: '/some/url'}).done(function(data, textStatus, xhr) {
+                    expect(expects[0].calledOnce).to.be.ok();
+                    expect(xhr.status).to.be(200);
+                    done();
+                });
+                var settings = expects[0].lastCall.args[0];
+                expect(settings.headers.Accept).to.be("application/json; charset=utf-8");
+            });
         });
 
         describe('$.ajax unathorized handling', function() {
