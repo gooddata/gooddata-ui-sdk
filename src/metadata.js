@@ -435,14 +435,14 @@ define(['xhr', 'util'], function(xhr, util) {
                 return getObjectDetails(found[0].uri);
             }
 
-            d.reject('identifier not found');
+            return $.Deferred().reject('identifier not found');
         }, d.reject).then(function(objData) {
             if (!objData.attributeDisplayForm) {
                 return d.resolve(uriFinder(objData));
             } else {
                 return getObjectDetails(objData.attributeDisplayForm.content.formOf).then(function(objData) {
-                            d.resolve(uriFinder(objData));
-                        }, d.reject);
+                    d.resolve(uriFinder(objData));
+                }, d.reject);
             }
         }, d.reject);
 
