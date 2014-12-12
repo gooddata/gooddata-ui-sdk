@@ -168,6 +168,28 @@ define(['execution', 'jquery'], function(ex, $) {
                     });
                 });
 
+                describe('getData with definitions', function() {
+                    it('should propagate orderBy to server call', function() {
+                        var definitions = [
+                            {
+                                metricDefinition:{
+                                    "title":"Closed Pipeline - previous year",
+                                    "expression":"SELECT (SELECT {adyRSiRTdnMD}) FOR PREVIOUS ({date.year})",
+                                    "format":"#,,.00M",
+                                    "identifier":"adyRSiRTdnMD.generated.pop.1fac4f897bbb5994a257cd2c9f0a81a4"
+                                }
+                            }
+                        ];
+                        ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
+                            definitions: definitions
+                        });
+
+                        var request = this.server.requests[0];
+                        var requestBody = JSON.parse(request.requestBody);
+                        expect(requestBody.execution.definitions).to.eql(definitions);
+                    });
+                });
+
                 describe('getData with query language filters', function() {
                     it('should propagate filters to the server call', function() {
                         // prepare filters and then use them with getData
