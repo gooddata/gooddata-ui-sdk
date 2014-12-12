@@ -35,7 +35,7 @@ define(['xhr'], function(xhr) {
         // enrich configuration with supported properties such as
         // where clause with query-like filters or execution context filters
         executionConfiguration = executionConfiguration || {};
-        ['filters', 'where', 'orderBy'].forEach(function(property) {
+        ['filters', 'where', 'orderBy', 'definitions'].forEach(function(property) {
             if (executionConfiguration[property]) {
                 request.execution[property] = executionConfiguration[property];
             }
