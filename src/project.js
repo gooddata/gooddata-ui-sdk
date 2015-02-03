@@ -130,12 +130,54 @@ define(['xhr', 'util'], function(xhr, util) {
         return d.promise();
     };
 
+    /**
+     * Gets current timezone and its offset. Example output:
+     *
+     *     {
+     *         id: 'Europe/Prague',
+     *         displayName: 'Central European Time',
+     *         currentOffsetMs: 3600000
+     *     }
+     *
+     * @method getTimezone
+     * @param {String} projectId - GD project identifier
+     */
+    var getTimezone = function(projectId) {
+        var d = $.Deferred(),
+            bootstrapUrl = '/gdc/app/account/bootstrap?projectId=' + projectId;
+
+        xhr.get(bootstrapUrl).then(function(result) {
+            var timezone = result.bootstrapResource.current.timezone;
+            d.resolve(timezone);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    var setTimezone = function(projectId, timezone) {
+        var d = $.Deferred(),
+            timezoneServiceUrl = '/gdc/md/' + projectId + '/service/timezone',
+            data = {
+                service: { timezone: timezone }
+            };
+
+        xhr.ajax(timezoneServiceUrl, {
+            type: 'POST',
+            headers: { Accept: 'application/json' },
+            data: data
+        }).then(d.resolve, d.reject);
+
+        return d.promise();
+    };
+
     return {
         getCurrentProjectId: getCurrentProjectId,
         getProjects: getProjects,
         getDatasets: getDatasets,
         getColorPalette: getColorPalette,
         setColorPalette: setColorPalette,
+        getTimezone: getTimezone,
+        setTimezone: setTimezone,
         DEFAULT_PALETTE: DEFAULT_PALETTE
     };
 });

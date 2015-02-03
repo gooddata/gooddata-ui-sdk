@@ -118,7 +118,6 @@ define(['project', 'jquery'], function(project, $) {
                 });
             });
 
-
             describe('getCurrentProjectId', function() {
                 it('should resolve with project id', function(done) {
                     this.server.respondWith(
@@ -149,9 +148,63 @@ define(['project', 'jquery'], function(project, $) {
                         done();
                     });
                 });
-
             });
-         });
+
+            describe('getTimezone', function() {
+                it('should return timezone using bootstrap', function(done) {
+                    var bootstrapUrl = '/gdc/app/account/bootstrap?projectId=prjId';
+                    var timezoneMock = {
+                        id: 'Europe/Prague',
+                        displayName: 'Central European Time',
+                        currentOffsetMs: 3600000
+                    };
+                    var bootstrap = {
+                        bootstrapResource: {
+                            current: {
+                                timezone: timezoneMock
+                            }
+                        }
+                    };
+
+                    this.server.respondWith('GET', bootstrapUrl, [
+                        200,
+                        { 'Content-Type': 'application/json' },
+                        JSON.stringify(bootstrap)
+                    ]);
+
+                    project.getTimezone('prjId').then(function(timezone)  {
+                        expect(timezone).to.eql(timezoneMock);
+                        done();
+                    }, function() {
+                        expect().fail('Should resolve with current timezone');
+                        done();
+                    });
+                });
+            });
+
+            describe('setTimezone', function() {
+                it('should save project timezone', function(done) {
+                    var timezoneUrl = '/gdc/md/prjId/service/timezone';
+                    var responseJSON = {
+                        service: { timezone: 'Europe/Prague' }
+                    };
+
+                    this.server.respondWith('POST', timezoneUrl, [
+                        200,
+                        { 'Content-Type': 'application/json' },
+                        JSON.stringify(responseJSON)
+                    ]);
+
+                    project.setTimezone('prjId', 'Europe/Prague').then(function(response)  {
+                        expect(response).to.eql(responseJSON);
+                        done();
+                    }, function() {
+                        expect().fail('Should resolve with current timezone');
+                        done();
+                    });
+                });
+            });
+        });
     });
 });
 
