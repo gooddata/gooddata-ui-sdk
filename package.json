@@ -1,6 +1,6 @@
 {
   "name": "gooddata",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
