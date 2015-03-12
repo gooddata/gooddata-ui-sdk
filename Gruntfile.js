@@ -1,4 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+var webpack = require("webpack");
 
 module.exports = function(grunt) {
 
@@ -12,9 +13,6 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 banner: '<%= licence %>',
-                mangle: {
-                    except: ['window'] // because of _start.js uses it to bind on window
-                }
             },
             dist: {
                 src: 'dist/gooddata.js',
@@ -22,7 +20,7 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            all: ['Gruntfile.js', '*.js', 'src/*.js', 'test/*.js', '!src/_start.js', '!src/_end.js']
+            all: ['Gruntfile.js', '*.js', 'src/*.js', 'test/*.js']
         },
         copy: {
             examples: {
@@ -46,38 +44,28 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gooddata.js'],
-                tasks: ['requirejs:compile', 'copy:examples'],
+                tasks: ['webpack:compile', 'copy:examples'],
                 nospawn: true
             }
         },
-        requirejs: {
+        webpack: {
             compile: {
-                options: {
-                    baseUrl: 'src',
-                    name: 'gooddata',
-                    out: 'dist/gooddata-tmp.js',
-                    paths: {
-                        loader: '../lib/tildeio/loader'
-                    },
-                    wrap: {
-                        startFile: 'src/_start.js',
-                        endFile: 'src/_end.js'
-                    },
-                    include: ['gooddata'],
-                    deps: ['loader'],
-                    optimize: 'none', // do not uglify
-                    preserveLicenseComments: true
-                }
-            }
-        },
-        concat: {
-            js: {
-                options: {
-                    separator: "\n\n",
-                    banner: '<%= licence %>'
+                entry: './src/gooddata.js',
+                output: {
+                    filename: './dist/gooddata.js',
+                    // export itself to a global var
+                    libraryTarget: "umd",
+                    // name of the global var
+                    library: "gooddata"
                 },
-                src:  'dist/gooddata-tmp.js',
-                dest: 'dist/gooddata.js'
+                plugins: [
+                    new webpack.BannerPlugin('<%= licence %>', {raw: true})
+                ],
+                externals: {
+                    // require("jquery") is external and available
+                    //  on the global var jQuery
+                    "jquery": "jQuery"
+                }
             }
         },
         yuidoc: {
@@ -145,11 +133,10 @@ module.exports = function(grunt) {
         grunt.file['delete']('dist/gooddata-tmp.js');
     });
 
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-bump');
@@ -161,8 +148,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', [
         'getGitInfo',
         'jshint',
-        'requirejs',
-        'concat',
+        'webpack:compile',
         'copy',
         'uglify',
         'clean'

@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-define(['_jquery', 'config'], function($, config) { 'use strict';
+define(['jquery', './config'], function($, config) { 'use strict';
 
     /**
      * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.

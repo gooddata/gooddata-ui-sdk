@@ -1,12 +1,12 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 define([
-    'xhr',
-    'util',
-    'user',
-    'metadata',
-    'execution',
-    'project',
-    'config'
+    './xhr',
+    './util',
+    './user',
+    './metadata',
+    './execution',
+    './project',
+    './config'
 ], function(
     xhr,
     util,
