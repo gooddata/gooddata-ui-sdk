@@ -45,6 +45,7 @@ gooddata.user.login(user, passwd).then(function() {
                     key2 = row[headers.indexOf(attr2)],
                     metricVal = parseFloat(row[headers.indexOf(metric)]);
 
+                if (!key1 || !key2) return;
                 if (!attr1Keys[key1]) attr1Keys[key1] = [];
                 if (!attr2Keys[key2]) attr2Keys[key2] = [];
                 attr1Keys[key1].push(metricVal);
