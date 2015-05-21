@@ -297,6 +297,17 @@ define(['./xhr', './util'], function(xhr, util) {
     };
 
     /**
+     * Returns all facts in a project specified by the given projectId
+     *
+     * @method getFacts
+     * @param projectId Project identifier
+     * @return {Array} An array of fact objects
+     */
+    var getFacts = function(projectId) {
+        return xhr.get('/gdc/md/' + projectId + '/query/facts').then(util.getIn('query.entries'));
+    };
+
+    /**
      * Returns all metrics in a project specified by the given projectId
      *
      * @method getMetrics
@@ -455,6 +466,7 @@ define(['./xhr', './util'], function(xhr, util) {
         getDimensions: getDimensions,
         getFolders: getFolders,
         getFoldersWithItems: getFoldersWithItems,
+        getFacts: getFacts,
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
         getAvailableAttributes: getAvailableAttributes,
