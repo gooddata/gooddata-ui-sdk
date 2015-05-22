@@ -328,11 +328,12 @@ define(['./xhr', './util'], function(xhr, util) {
      * availabale metrics
      * @return {Array} An array of reachable metrics for the given attrs
      * @see getAvailableAttributes
+     * @see getAvailableFacts
      */
     var getAvailableMetrics = function(projectId, attrs) {
         var d = $.Deferred();
 
-        xhr.post('/gdc/md/'+ projectId +'/availablemetrics', {
+        xhr.post('/gdc/md/' + projectId + '/availablemetrics', {
             data: JSON.stringify(attrs)
         }).then(function(result) {
             d.resolve(result.entries);
@@ -351,14 +352,39 @@ define(['./xhr', './util'], function(xhr, util) {
      * availabale attributes
      * @return {Array} An array of reachable attributes for the given metrics
      * @see getAvailableMetrics
+     * @see getAvailableFacts
      */
     var getAvailableAttributes = function(projectId, metrics) {
         var d = $.Deferred();
 
-        xhr.post('/gdc/md/'+ projectId +'/drillcrosspaths', {
+        xhr.post('/gdc/md/' + projectId + '/drillcrosspaths', {
             data: JSON.stringify(metrics)
         }).then(function(result) {
             d.resolve(result.drillcrosspath.links);
+        }, d.reject);
+
+        return d.promise();
+    };
+
+    /**
+     * Returns all attributes that are reachable (with respect to ldm of the project
+     * specified by the given projectId) for given metrics (also called as drillCrossPath)
+     *
+     * @method getAvailableFacts
+     * @param {String} projectId - Project identifier
+     * @param {Array} items - An array of metric or attribute uris for which we want to get
+     * availabale facts
+     * @return {Array} An array of reachable facts for the given items
+     * @see getAvailableAttributes
+     * @see getAvailableMetrics
+     */
+    var getAvailableFacts = function(projectId, items) {
+        var d = $.Deferred();
+
+        xhr.post('/gdc/md/' + projectId + '/availablefacts', {
+            data: JSON.stringify(items)
+        }).then(function(result) {
+            d.resolve(result.entries);
         }, d.reject);
 
         return d.promise();
@@ -435,7 +461,7 @@ define(['./xhr', './util'], function(xhr, util) {
             type: 'POST',
             headers: { Accept: 'application/json' },
             data: {
-                "identifierToUri": [identifier]
+                identifierToUri: [identifier]
             }
         }).then(function(data) {
             var found = data.identifiers.filter(function(i) {
@@ -470,6 +496,7 @@ define(['./xhr', './util'], function(xhr, util) {
         getMetrics: getMetrics,
         getAvailableMetrics: getAvailableMetrics,
         getAvailableAttributes: getAvailableAttributes,
+        getAvailableFacts: getAvailableFacts,
         getObjectDetails: getObjectDetails,
         getObjectIdentifier: getObjectIdentifier,
         getObjectUri: getObjectUri

@@ -192,6 +192,36 @@ define(['metadata', 'jquery'], function(md, $) {
                 });
             });
 
+            describe('getAvailableFacts', function() {
+                it('should reject with 400 from backend', function(done) {
+                    this.server.respondWith(
+                        '/gdc/md/myFakeProjectId/availablefacts',
+                        [400, {'Content-Type': 'application/json'}, '']
+                    );
+
+                    md.getAvailableFacts('myFakeProjectId').then(function() {
+                        expect().fail('Should reject with 400');
+                        done();
+                    }, function(err) {
+                        expect(err.status).to.be(400);
+                        done();
+                    });
+                });
+
+                it('should return correct number of entries', function(done) {
+                    this.server.respondWith(
+                        '/gdc/md/myFakeProjectId/availablefacts',
+                        [200, {'Content-Type': 'application/json'},
+                        JSON.stringify({entries: [{link: 'm1'}, {link: 'm2'}]})]
+                    );
+
+                    md.getAvailableFacts('myFakeProjectId').then(function(result) {
+                        expect(result.length).to.be(2);
+                        done();
+                    });
+                });
+            });
+
             describe('getObjectUri', function() {
                 it('should return uri when identifier exists', function(done) {
                     this.server.respondWith(
