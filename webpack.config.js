@@ -15,7 +15,12 @@ module.exports = {
     externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
-        "jquery": "jQuery"
+        "jquery": {
+            root: "jQuery",
+            commonjs: "jquery",
+            commonjs2: "jquery",
+            amd: "jquery"
+        }
     }
 };
 
