@@ -8,7 +8,8 @@ and write small javascript apps relying on GD APIs.
 GoodData javascript sdk can be used as bower component. The result of the build is
 in `dist/gooddata[.min].js`. Result of the build [UMD](https://github.com/umdjs/umd)-compatible -
 you can use it both globally (see [D3 example][d3ex]) and as AMD module. Note that you need to provide
-jQuery before trying to load sdk.
+jQuery before trying to load sdk. In both AMD and CommonJS environment we expect jQuery library module
+to be named `jquery`.
 
 ## Quick start
 To build the sdk you need to have [git](http://git-scm.com) and [Node.js](http://nodejs.org)

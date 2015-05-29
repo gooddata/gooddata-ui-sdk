@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['metadata', 'jquery'], function(md, $) {
+define(['metadata'], function(md) {
     describe('metadata', function() {
         describe('with fake server', function() {
             beforeEach(function() {

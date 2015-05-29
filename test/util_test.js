@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['util', 'jquery'], function(util, $) {
+define(['util'], function(util) {
     describe('util', function() {
         before(function() {
             this.testObj = {

@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['user', 'jquery'], function(user, $) {
+define(['user'], function(user) {
     describe('user', function() {
         describe('with fake server', function() {
             beforeEach(function() {

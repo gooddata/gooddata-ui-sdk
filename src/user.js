@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['./xhr'], function(xhr) {
+define(['jquery', './xhr'], function($, xhr) {
     'use strict';
 
     /**
