@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['project', 'jquery'], function(project, $) {
+define(['project'], function(project) {
     describe('project', function() {
         describe('with fake server', function() {
             beforeEach(function() {
