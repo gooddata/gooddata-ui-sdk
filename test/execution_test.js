@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-define(['execution', 'jquery'], function(ex, $) {
+define(['execution'], function(ex) {
     describe('execution', function() {
         describe('with fake server', function() {
             beforeEach(function() {

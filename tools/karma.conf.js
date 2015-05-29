@@ -7,33 +7,38 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '../',
 
-
     // frameworks to use
-    frameworks: ['mocha', 'requirejs'],
+    frameworks: ['mocha', 'expect', 'sinon'],
 
+    preprocessors: {
+        'test/*_test.js': ['webpack'],
+        'src/*.js': ['coverage']
+    },
+
+    webpack: {
+        resolve: require('../webpack.test.config.js'),
+        devtool: 'inline-source-map'
+    },
+
+    webpackMiddleware: {
+        noInfo: true
+    },
+
+    plugins: [
+        require('karma-webpack'),
+        require('karma-mocha'),
+        require('karma-mocha-reporter'),
+        require('karma-junit-reporter'),
+        require('karma-coverage'),
+        require('karma-phantomjs-launcher'),
+        require('karma-expect'),
+        require('karma-sinon')
+    ],
 
     // list of files / patterns to load in the browser
     files: [
-      'lib/jquery/jquery.js',
-      'test/lib/expect.js',
-      'test/lib/sinon-1.7.3.js',
-      { pattern: 'src/*.js', included: false, served: true },
-      // Tests
-      { pattern: 'test/*_test.js', included: false, served: true },
-      // Test config
-      'test/test-main.js'
+      'test/*_test.js'
     ],
-
-
-    // list of files to exclude
-    exclude: [
-      'src/_start.js',
-      'src/_end.js'
-    ],
-
-    preprocessors: {
-        'src/*.js': ['coverage']
-    },
 
     coverageReporter: {
         type: 'cobertura',
