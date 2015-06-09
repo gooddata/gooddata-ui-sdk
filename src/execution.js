@@ -64,6 +64,7 @@ define(['jquery', './xhr'], function($, xhr) {
                     return {
                         type: 'metric',
                         id: col.metric.meta.identifier,
+                        uri: col.metric.meta.uri,
                         title: col.metric.meta.title,
                         format: col.metric.content.format
                     };
