@@ -59,6 +59,7 @@ define(['execution'], function(ex) {
                         ex.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
                             expect(result.headers[0].id).to.be('attrId');
                             expect(result.headers[1].id).to.be('metricId');
+                            expect(result.headers[1].uri).to.be('metricUri');
                             expect(result.rawData[0]).to.be('a');
                             expect(result.rawData[1]).to.be(1);
                             done();
