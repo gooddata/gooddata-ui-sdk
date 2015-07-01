@@ -1,5 +1,4 @@
 // Karma configuration
-// Generated on Tue Jan 14 2014 14:55:10 GMT+0100 (CET)
 
 module.exports = function(config) {
   config.set({
@@ -11,14 +10,10 @@ module.exports = function(config) {
     frameworks: ['mocha', 'expect', 'sinon'],
 
     preprocessors: {
-        'test/*_test.js': ['webpack'],
-        'src/*.js': ['coverage']
+        'karma.unit.js': ['webpack', 'sourcemap']
     },
 
-    webpack: {
-        resolve: require('../webpack.test.config.js'),
-        devtool: 'inline-source-map'
-    },
+    webpack: require('../webpack.test.config.js'),
 
     webpackMiddleware: {
         noInfo: true
@@ -31,28 +26,33 @@ module.exports = function(config) {
         require('karma-junit-reporter'),
         require('karma-coverage'),
         require('karma-phantomjs-launcher'),
+        require('karma-chrome-launcher'),
         require('karma-expect'),
-        require('karma-sinon')
+        require('karma-sinon'),
+        require('karma-sourcemap-loader')
     ],
 
     // list of files / patterns to load in the browser
     files: [
-      'test/*_test.js'
+        'karma.unit.js'
     ],
 
     coverageReporter: {
-        type: 'cobertura',
-        dir: 'coverage/'
+        reporters: [
+            { type: 'cobertura', dir: 'ci/results/coverage', file: 'coverage.xml' },
+            { type: 'lcov', dir: 'ci/results/coverage/unit' },
+            { type: 'text-summary' }
+        ]
     },
 
     junitReporter: {
         suite: 'GoodData-js Unit',
-        outputFile: 'test/test-results.xml'
+        outputFile: 'ci/results/test-results.xml'
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'junit', 'coverage'],
+    reporters: ['mocha', 'junit', 'coverage'],
 
 
     // web server port
@@ -89,6 +89,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true
+    singleRun: false
   });
 };

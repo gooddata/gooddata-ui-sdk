@@ -22,7 +22,8 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'tools/karma.conf.js'
+                configFile: 'tools/karma.conf.js',
+                singleRun: grunt.option('ci')
             }
         },
         grizzly: {
