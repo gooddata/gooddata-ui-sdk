@@ -80,7 +80,8 @@ define(['jquery', './xhr'], function($, xhr) {
                 loginMD5: br.current.loginMD5,
                 firstName: br.accountSetting.firstName,
                 lastName: br.accountSetting.lastName,
-                organizationName: br.settings.organizationName
+                organizationName: br.settings.organizationName,
+                profileUri: br.accountSetting.links.self
             };
 
             d.resolve(accountInfo);

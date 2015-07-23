@@ -123,12 +123,14 @@ define(['user'], function(user) {
             });
 
             describe('Account info', function() {
-                it('should return info about account', function() {
+                it('should return info about account', function(done) {
                     var login = 'LOGIN';
                     var loginMD5 = 'LOGIN_MD5';
                     var firstName = 'FIRST_NAME';
                     var lastName = 'LAST_NAME';
                     var organizationName = 'ORG_NAME';
+                    var profileUri = 'PROFILE_URI';
+
                     this.server.respondWith(
                         'GET','/gdc/app/account/bootstrap',
                         [200, {'Content-Type': 'application/json'}, JSON.stringify({
@@ -136,7 +138,10 @@ define(['user'], function(user) {
                                 accountSetting: {
                                     login: login,
                                     firstName: firstName,
-                                    lastName: lastName
+                                    lastName: lastName,
+                                    links: {
+                                        self: profileUri
+                                    }
                                 },
                                 current: {
                                     loginMD5: loginMD5
@@ -154,6 +159,9 @@ define(['user'], function(user) {
                         expect(accountInfo.firstName).to.eql(firstName);
                         expect(accountInfo.lastName).to.eql(lastName);
                         expect(accountInfo.organizationName).to.eql(organizationName);
+                        expect(accountInfo.profileUri).to.eql(profileUri);
+
+                        done();
                     });
                 });
             });
