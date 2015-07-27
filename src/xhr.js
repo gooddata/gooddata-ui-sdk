@@ -162,6 +162,7 @@ define(['jquery', './config'], function($, config) { 'use strict';
                 if (location){
                     settings.url = location;
                 }
+                settings.method = "GET";
                 handlePolling(settings, d);
             } else {
                 d.resolve(data, textStatus, xhr);

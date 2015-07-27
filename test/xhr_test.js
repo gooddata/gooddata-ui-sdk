@@ -207,6 +207,9 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 fakeJqXhr(options, d);
                 xhr.ajax(options).done(function(data) {
                     expect(data).to.be('OK');
+                    expect(expects[0].lastCall.args[0].method).to.be('GET');
+                    expect(expects[1].lastCall.args[0].method).to.be('GET');
+                    expect(expects[2].lastCall.args[0].method).to.be('GET');
                     done();
                 });
                 d[0].resolve(null, '', mockResponse(202));
@@ -240,6 +243,9 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 fakeJqXhr(options, d);
                 xhr.ajax(options).done(function(data) {
                     expect(data).to.be('OK');
+                    expect(expects[0].lastCall.args[0].method).to.be('GET');
+                    expect(expects[1].lastCall.args[0].method).to.be('GET');
+                    expect(expects[2].lastCall.args[0].method).to.be('GET');
                     expect(expects[2].lastCall.args[0].url).to.be('/other/url');
 
                     done();
@@ -258,7 +264,6 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 xhr.ajax(options).done(function(data) {
                     expect(data).to.be('OK');
                     expect(expects[2].lastCall.args[0].url).to.be('/other/url2');
-
                     done();
                 });
                 d[0].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
