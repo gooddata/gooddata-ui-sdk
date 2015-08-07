@@ -217,6 +217,27 @@ define(['gooddata', 'jquery'], function(gd, $) {
                 d[2].resolve('OK', '', mockResponse(200));
             });
 
+            it('should not poll if client forbids it', function(done) {
+                var options = {
+                    url: '/some/url',
+                    pollDelay: 0,
+                    dontPollOnResult: true
+                };
+
+                fakeJqXhr(options, d);
+                xhr.ajax(options).done(function(data) {
+                    expect(data).to.be('FIRST_RESPONSE');
+                    expect(expects[0].calledOnce).to.be.ok();
+                    expect(expects[1].notCalled).to.be.ok();
+                    expect(expects[2].notCalled).to.be.ok();
+                    expect(expects[0].lastCall.args[0].method).to.be(undefined);
+                    done();
+                });
+                d[0].resolve('FIRST_RESPONSE', '', mockResponse(202));
+                d[1].resolve('SECOND_RESPONSE', '', mockResponse(202));
+                d[2].resolve('THIRD_RESPONSE', '', mockResponse(200));
+            });
+
             it('should correctly reject after retry 404', function(done) {
                 var options = {
                     url: '/some/url',
