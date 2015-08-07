@@ -156,7 +156,7 @@ define(['jquery', './config'], function($, config) { 'use strict';
                 d.reject(xhr, textStatus, err);
             }
         }).done(function(data, textStatus, xhr) {
-            if (xhr.status === 202) {
+            if (xhr.status === 202 && !settings.dontPollOnResult) {
                 // if the response is 202 and Location header is not empty, let's poll on the new Location
                 var location = xhr.getResponseHeader('Location');
                 if (location){
