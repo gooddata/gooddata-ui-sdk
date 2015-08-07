@@ -22,7 +22,7 @@ define(['execution'], function(ex) {
                                         meta: {
                                             identifier: 'attrId',
                                             uri: 'attrUri',
-                                            title: 'title'
+                                            title: 'Df Title'
                                         }
                                     }
                                 },
@@ -30,7 +30,8 @@ define(['execution'], function(ex) {
                                     metric: {
                                         meta: {
                                             identifier: 'metricId',
-                                            uri: 'metricUri'
+                                            uri: 'metricUri',
+                                            title: 'Metric Title'
                                         },
                                         content: {
                                             format: '#00'
@@ -44,7 +45,7 @@ define(['execution'], function(ex) {
                 });
 
                 describe('getData', function() {
-                    it('should resolve with JSON with correct data', function(done) {
+                    it('should resolve with JSON with correct data without headers', function(done) {
                         this.server.respondWith(
                             '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                             [200, {'Content-Type': 'application/json'},
@@ -58,8 +59,60 @@ define(['execution'], function(ex) {
 
                         ex.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
                             expect(result.headers[0].id).to.be('attrId');
+                            expect(result.headers[0].uri).to.be('attrUri');
+                            expect(result.headers[0].type).to.be('attrLabel');
+                            expect(result.headers[0].title).to.be('Df Title');
                             expect(result.headers[1].id).to.be('metricId');
                             expect(result.headers[1].uri).to.be('metricUri');
+                            expect(result.headers[1].type).to.be('metric');
+                            expect(result.headers[1].title).to.be('Metric Title');
+                            expect(result.rawData[0]).to.be('a');
+                            expect(result.rawData[1]).to.be(1);
+                            done();
+                        }, function(err) {
+                            expect().fail('Should resolve with CSV data');
+                            done();
+                        });
+                    });
+
+                    it('should resolve with JSON with correct data including headers', function(done) {
+                        var responseMock = JSON.parse(JSON.stringify(this.serverResponseMock));
+
+                        responseMock.executionResult.headers = [
+                            {
+                                id: 'attrId',
+                                title: 'Atribute Title',
+                                type: 'attrLabel',
+                                uri: 'attrUri'
+                            },
+                            {
+                                id: 'metricId',
+                                title: 'Metric Title',
+                                type: 'metric',
+                                uri: 'metricUri'
+                            }
+                        ];
+
+                        this.server.respondWith(
+                            '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                            [200, {'Content-Type': 'application/json'},
+                            JSON.stringify(responseMock)]
+                        );
+                        this.server.respondWith(
+                            /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                            [201, {'Content-Type': 'application/json'},
+                            JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
+                        );
+
+                        ex.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
+                            expect(result.headers[0].id).to.be('attrId');
+                            expect(result.headers[0].uri).to.be('attrUri');
+                            expect(result.headers[0].type).to.be('attrLabel');
+                            expect(result.headers[0].title).to.be('Atribute Title');
+                            expect(result.headers[1].id).to.be('metricId');
+                            expect(result.headers[1].uri).to.be('metricUri');
+                            expect(result.headers[1].type).to.be('metric');
+                            expect(result.headers[1].title).to.be('Metric Title');
                             expect(result.rawData[0]).to.be('a');
                             expect(result.rawData[1]).to.be(1);
                             done();
