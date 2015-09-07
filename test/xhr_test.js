@@ -202,12 +202,14 @@ define(['gooddata', 'jquery'], function(gd, $) {
             it('should retry request after delay', function(done) {
                 var options = {
                     url: '/some/url',
+                    data: {a: 'b'},
                     pollDelay: 0
                 };
                 fakeJqXhr(options, d);
                 xhr.ajax(options).done(function(data) {
                     expect(data).to.be('OK');
                     expect(expects[0].lastCall.args[0].method).to.be('GET');
+                    expect(expects[0].lastCall.args[0].data).to.be(undefined);
                     expect(expects[1].lastCall.args[0].method).to.be('GET');
                     expect(expects[2].lastCall.args[0].method).to.be('GET');
                     done();
