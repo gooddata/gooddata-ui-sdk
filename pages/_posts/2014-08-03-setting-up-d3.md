@@ -11,7 +11,7 @@ perex: Setting up Google Graph viz with our data from GoodData Platform.
 
 It's time to start building the visualization itself. If you are an expert in building the custom visualization, this article will be super easy for you! We are going to draw the **line chart** using Google Charts library.
 
-If you have the visualization already prepared, you can skip this and continue with [embedding](/tutorial/embedding-custom-visualization-into-dashboard).
+If you have the visualization already prepared, you can skip this and continue with [embedding]({{ site.url }}{% post_url 2014-08-02-embedding-custom-visualization-into-dashboard %}).
 
 We will use [Google Charts](https://google-developers.appspot.com/chart/). You can also use any Javascript framework like [D3.js](http://d3js.org/), find out the [the documentation](https://github.com/mbostock/d3/wiki).
 

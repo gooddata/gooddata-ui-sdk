@@ -10,7 +10,7 @@ title: Getting Started | GoodData Javascript SDK
 <p><a href="http://github.com/gooddata/gooddata-js">The Visualization SDK</a> makes it easy to write small Javascript apps on the top of GoodData APIs. The SDK also provides GoodData Platform visual extensibility - the ability to create custom data visualization widgets for your dashboards.</p>
 
 <p>You can use Bower to manage this library. The result of the build is
-in <code>dist/gooddata[.min].js</code>. Result of the build is <a href="https://github.com/umdjs/umd">UMD</a> compatible, you can use it both globally and as UMD module.</p> 
+in <code>dist/gooddata[.min].js</code>. Result of the build is <a href="https://github.com/umdjs/umd">UMD</a> compatible, you can use it both globally and as UMD module.</p>
 
 <p>
 Follow the instructions below to set up your environment. Next, we recommend that you review the getting started tutorial, which shows you the whole process of creating the a custom visualization from scratch. After that you can modify and explore <a href="">our examples</a>.
@@ -39,7 +39,7 @@ $ brew install node
 <h4>Steps:</h4>
 
 <ol>
-<li>Clone your GoodData SDK repository with: 
+<li>Clone your GoodData SDK repository with:
 <p>
 	<code>$ git clone https://github.com/gooddata/gooddata-js.git</code>
 </p>
@@ -73,7 +73,7 @@ $ grunt dev
 This command starts the proxy that allows your script to communicate with <code>https://secure.gooddata.com</code>
 </p>
 <p>
-<strong>NOTE:</strong> For white-labeled organizations, you can set up your proxy to call a different backend server with <code>$ grunt dev --backend={your-gooddata-server-url}</code>
+<strong>NOTE:</strong> For white-labeled organizations, you can set up your proxy to call a different backend server with <code>$ grunt dev --backend={your-gooddata-server-url}</code> (use url without protocol prefix e.g. <code>mybi.company.com</code>, not <code>https://mybi.company.com</code>).
 </p>
 </li>
 <li>
