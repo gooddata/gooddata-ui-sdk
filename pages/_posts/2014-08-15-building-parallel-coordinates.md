@@ -9,7 +9,7 @@ next_section: example/chord-chart-to-analyze-sales/
 perex: The right place to start building amazing custom data visualizations.
 ---
 {% comment %}you cant use post_url helper to generate uri in FrontMatter, so use generated uri{% endcomment %}
-Let's learn how to create a custom visualization with our Javascript Visualization SDK and embed it to your dashboard. The tutorial is divided into several logical parts based on steps that you have to accomplish. You can also <a href="https://github.com/gooddata/gooddata-js/tree/develop/examples/parallel-coordinates">explore the complete example</a> that is also available in your forked repository (_examples_ folder)
+Let's learn how to create a custom visualization with our Javascript Visualization SDK and embed it to your dashboard. The tutorial is divided into several logical parts based on steps that you have to accomplish. You can also <a href="https://github.com/gooddata/gooddata-js/tree/master/examples/parallel-coordinates">explore the complete example</a> that is also available in your forked repository (_examples_ folder)
 
 What we are going to build is the visualization that is called Parallel Coordinates. It shows one attribute measured by multiple metrics. Imagine a following use case:
 
@@ -223,5 +223,5 @@ Finalize the dragging and transition effects.
 
 {% endhighlight %}
 
-That's all. [Download the full example](https://github.com/gooddata/gooddata-js/tree/develop/examples/parallel-coordinates) to try it out easily.
+That's all. [Download the full example](https://github.com/gooddata/gooddata-js/tree/master/examples/parallel-coordinates) to try it out easily.
 

@@ -93,5 +93,5 @@ gooddata.user.login(user, passwd).then(function() {
 
 The rest of the script is basically the same as in the original example so that you can read the details. Only change is the name on keys in the objects because the Javascript SDK returns you numeric keys so the names are different.
 
-[Download the full example](https://github.com/gooddata/gooddata-js/tree/develop/examples/dc-js) to start playing around! You can also find it directly in your repository (_example_ folder).
+[Download the full example](https://github.com/gooddata/gooddata-js/tree/master/examples/dc-js) to start playing around! You can also find it directly in your repository (_example_ folder).
 
