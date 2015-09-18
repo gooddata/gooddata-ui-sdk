@@ -4,10 +4,10 @@ title:  "Dynamic dc.js Visualization"
 date:   2014-08-14 11:00:00
 categories: example
 highlighter: true
-prev_section: /example/chord-chart-to-analyze-sales
+next_section: example/chord-chart-to-analyze-sales/
 perex: Learn how to pull data from GoodData and visualize it in D3.js Chord chart
 ---
-
+{% comment %}you cant use post_url helper to generate uri in FrontMatter, so use generated uri{% endcomment %}
 Talking about visualization frameworks and libraries the [dc.js](http://dc-js.github.io/dc.js/) together with [Crossfilter](https://github.com/square/crossfilter/wiki/API-Reference) is great combo on the top of D3.js framework. There is a solid amount of examples around the internet so that you can start playing around immediately.
 
 We took the example from the dc.js homepage which looks pretty cool and is [greatly and fully described](http://dc-js.github.io/dc.js/docs/stock.html) and try to bring it to the next level. What we did? The original example is based on static CSV file. What is really cool? You can quite easily connect it to the GoodData Platform, get the data from your Project and use the visualization embedded to your dashboard. This is what we called **Visualization Extensibility**.
@@ -93,5 +93,5 @@ gooddata.user.login(user, passwd).then(function() {
 
 The rest of the script is basically the same as in the original example so that you can read the details. Only change is the name on keys in the objects because the Javascript SDK returns you numeric keys so the names are different.
 
-[Download the full example](https://github.com/gooddata/gooddata-js/tree/develop/examples/dc-js) to start playing around! You can also find it directly in your repository (_example_ folder).
+[Download the full example](https://github.com/gooddata/gooddata-js/tree/master/examples/dc-js) to start playing around! You can also find it directly in your repository (_example_ folder).
 

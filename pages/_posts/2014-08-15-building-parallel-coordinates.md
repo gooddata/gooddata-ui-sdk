@@ -5,11 +5,11 @@ date:   2014-08-15 11:00:00
 categories: example
 highlighter: true
 prev_section: build-visualization/
-next_section: example/chord-chart-to-analyze-sales
+next_section: example/chord-chart-to-analyze-sales/
 perex: The right place to start building amazing custom data visualizations.
 ---
-
-Let's learn how to create a custom visualization with our Javascript Visualization SDK and embed it to your dashboard. The tutorial is divided into several logical parts based on steps that you have to accomplish. You can also <a href="https://github.com/gooddata/gooddata-js/tree/develop/examples/parallel-coordinates">explore the complete example</a> that is also available in your forked repository (_examples_ folder)   
+{% comment %}you cant use post_url helper to generate uri in FrontMatter, so use generated uri{% endcomment %}
+Let's learn how to create a custom visualization with our Javascript Visualization SDK and embed it to your dashboard. The tutorial is divided into several logical parts based on steps that you have to accomplish. You can also <a href="https://github.com/gooddata/gooddata-js/tree/master/examples/parallel-coordinates">explore the complete example</a> that is also available in your forked repository (_examples_ folder)
 
 What we are going to build is the visualization that is called Parallel Coordinates. It shows one attribute measured by multiple metrics. Imagine a following use case:
 
@@ -17,26 +17,26 @@ What we are going to build is the visualization that is called Parallel Coordina
 
 The result might looks like this:
 
-![Parallel Coordinates graph](http://sdk.gooddata.com/gooddata-js/images/posts/parallel-coordinates.png)
+![Parallel Coordinates graph]({{ site.url}}/images/posts/parallel-coordinates.png)
 
 Remember that each line shows individual sales rep and each axis shows one metric that is used to measure sales representatives. We have a use case, so let's build it!
 
 We need following metrics (remember to check identifiers in your project):
 
-**Won Amount**: atX3I1GYg85J  
-**# Activities** : acKjadJIgZUN  
-**# Opportunities**: afdV48ABh8CN  
-**# Won Opportunities**: abf0d42yaIkL  
+**Won Amount**: atX3I1GYg85J
+**# Activities** : acKjadJIgZUN
+**# Opportunities**: afdV48ABh8CN
+**# Won Opportunities**: abf0d42yaIkL
 
 Select the sales rep attribute identifier from the project:
 
-**Opportunity Owner**: label.opp_owner.id.name  
+**Opportunity Owner**: label.opp_owner.id.name
 
 Let's log in and download the data. I already have those metrics ready in the GoodData. Now I need to select them and use them in the visualization.
 
 {% highlight js %}
 
-var projectId = 'project-id', 
+var projectId = 'project-id',
     user = 'username@company.com',
 	passwd = 'password';
 
@@ -46,7 +46,7 @@ var metric1 = 'atX3I1GYg85J',
     metric3 = 'afdV48ABh8CN',
     metric4 = 'abf0d42yaIkL',
     attr1 = 'label.opp_owner.id.name';
-    
+
 var elements = [attr1, metric1, metric2, metric3, metric4];
 
 // Insert info label
@@ -66,7 +66,7 @@ gooddata.user.login(user, passwd).then(function() {
 
 {% endhighlight %}
 
-Now, it's time to start building the D3 visualization itself. If you are an expert in building the D3 custom visualization, this article will be super easy for you! We are going to draw the Parallel Coordinates chart to compare one attribute across four different metrics. 
+Now, it's time to start building the D3 visualization itself. If you are an expert in building the D3 custom visualization, this article will be super easy for you! We are going to draw the Parallel Coordinates chart to compare one attribute across four different metrics.
 
 {% highlight js %}
 
@@ -97,15 +97,15 @@ The main method that draw the visualization.
 // the main method that extract data and draw the visualization
 var parallel = function(dataResult) {
 
-		// extract header titles for axis description    
+		// extract header titles for axis description
         var headers = dataResult.headers.map(function(h) {
                 return h.title;
             });
-    		    
+
     		    // delete the attribute (first in returned array) description from header array - you need just metrics description
                 headers.splice(0,1);
-        
-    	// Extract the list of dimensions and create a scale for each.  
+
+    	// Extract the list of dimensions and create a scale for each.
     	x.domain(dimensions = d3.keys(dataResult.rawData[0]).filter(function(d) {
     	 	return d != "0" && (y[d] = d3.scale.linear()
     	 .domain(d3.extent(dataResult.rawData, function(p) { return +p[d]; }))
@@ -119,7 +119,7 @@ var parallel = function(dataResult) {
     	      .data(dataResult.rawData)
     	    .enter().append("svg:path")
     	      .attr("d", path);
-    	 
+
     	  // Add blue foreground lines for focus.
     	  foreground = svg.append("svg:g")
     	      .attr("class", "foreground")
@@ -127,7 +127,7 @@ var parallel = function(dataResult) {
     	      .data(dataResult.rawData)
     	    .enter().append("svg:path")
     	      .attr("d", path);
-    	 
+
     	  // Add a group element for each dimension.
     	  var g = svg.selectAll(".dimension")
     	      .data(dimensions)
@@ -159,7 +159,7 @@ var parallel = function(dataResult) {
     	              .duration(0)
     	              .attr("visibility", null);
     	        }));
-    	 
+
     	  // Add an axis and title.
     	  g.append("svg:g")
     	      .attr("class", "axis")
@@ -169,7 +169,7 @@ var parallel = function(dataResult) {
     	      .attr("text-anchor", "middle")
     	      .attr("y", -9)
     	      .text(String);
-    	 
+
     	  // Add and store a brush for each axis.
     	  g.append("svg:g")
     	      .attr("class", "brush")
@@ -178,18 +178,18 @@ var parallel = function(dataResult) {
     	      .attr("x", -8)
     	      .attr("width", 16);
     };
-{% endhighlight %}		
+{% endhighlight %}
 
 Call the main method that draw the visualization.
 
 {% highlight js %}
 
 		// calling the main method
-		parallel(dataResult);   
+		parallel(dataResult);
 
-{% endhighlight %}		
+{% endhighlight %}
 
-Finalize the dragging and transition effects. 
+Finalize the dragging and transition effects.
 
 {% highlight js %}
 
@@ -197,16 +197,16 @@ Finalize the dragging and transition effects.
 			var v = dragging[d];
 			return v == null ? x(d) : v;
 			}
- 
+
 			function transition(g) {
 				return g.transition().duration(500);
 			}
- 
+
 			// Returns the path for a given data point.
 			function path(d) {
 			  return line(dimensions.map(function(p) { return [position(p), y[p](d[p])]; }));
 			}
-			
+
 			// Handles a brush event, toggling the display of foreground lines.
 			function brush() {
 			  var actives = dimensions.filter(function(p) { return !y[p].brush.empty(); }),
@@ -223,5 +223,5 @@ Finalize the dragging and transition effects.
 
 {% endhighlight %}
 
-That's all. [Download the full example](https://github.com/gooddata/gooddata-js/tree/develop/examples/parallel-coordinates) to try it out easily.
+That's all. [Download the full example](https://github.com/gooddata/gooddata-js/tree/master/examples/parallel-coordinates) to try it out easily.
 
