@@ -31,7 +31,8 @@ module.exports = function(grunt) {
         karma: {
             unit: {
                 configFile: 'tools/karma.conf.js',
-                singleRun: grunt.option('ci')
+                singleRun: grunt.option('ci'),
+                autoWatch: !grunt.option('ci')
             }
         },
         grizzly: {
