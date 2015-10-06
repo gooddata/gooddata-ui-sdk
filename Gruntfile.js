@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
         gitInfo: '',
 
-        licence: grunt.file.read('tools/licence.tmpl'),
+        license: grunt.file.read('tools/license.tmpl'),
 
         eslint: {
             options: {

@@ -20,7 +20,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.BannerPlugin('<%= licence %>', {raw: true})
+        new webpack.BannerPlugin('<%= license %>', {raw: true})
     ],
     externals: {
         // require('jquery') is external and available
