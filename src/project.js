@@ -1,7 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import * as xhr from './xhr';
-import * as util from './util';
+import { ajax, get, put } from './xhr';
+import { getIn } from './util';
 
 /**
  * Functions for working with projects
@@ -18,7 +18,7 @@ import * as util from './util';
  * @return {String} current project identifier
  */
 export function getCurrentProjectId() {
-    return xhr.get('/gdc/app/account/bootstrap').then(function resolveBootstrap(result) {
+    return get('/gdc/app/account/bootstrap').then(function resolveBootstrap(result) {
         const currentProject = result.bootstrapResource.current.project;
         // handle situation in which current project is missing (e.g. new user)
         if (!currentProject) {
@@ -37,7 +37,7 @@ export function getCurrentProjectId() {
  * @return {Array} An Array of projects
  */
 export function getProjects(profileId) {
-    return xhr.get('/gdc/account/profile/' + profileId + '/projects').then(function resolveProjects(result) {
+    return get('/gdc/account/profile/' + profileId + '/projects').then(function resolveProjects(result) {
         return result.projects.map(function getProject(p) { return p.project; });
     });
 }
@@ -50,7 +50,7 @@ export function getProjects(profileId) {
  * @return {Array} An array of objects containing datasets metadata
  */
 export function getDatasets(projectId) {
-    return xhr.get('/gdc/md/' + projectId + '/query/datasets').then(util.getIn('query.entries'));
+    return get('/gdc/md/' + projectId + '/query/datasets').then(getIn('query.entries'));
 }
 
 const DEFAULT_PALETTE = [
@@ -88,7 +88,7 @@ export function getColorPalette(projectId) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.get('/gdc/projects/' + projectId + '/styleSettings').then(function resolveStyleSetting(result) {
+    get('/gdc/projects/' + projectId + '/styleSettings').then(function resolveStyleSetting(result) {
         d.resolve(result.styleSettings.chartPalette.map(function mapColorToObject(c) {
             return {
                 r: c.fill.r,
@@ -119,7 +119,7 @@ export function setColorPalette(projectId, colors) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.put('/gdc/projects/' + projectId + '/styleSettings', {
+    put('/gdc/projects/' + projectId + '/styleSettings', {
         data: {
             styleSettings: {
                 chartPalette: colors.map(function mapColorToObject(c, idx) {
@@ -153,7 +153,7 @@ export function getTimezone(projectId) {
     /*eslint-enable new-cap*/
     const bootstrapUrl = '/gdc/app/account/bootstrap?projectId=' + projectId;
 
-    xhr.get(bootstrapUrl).then(function resolveGetTimezone(result) {
+    get(bootstrapUrl).then(function resolveGetTimezone(result) {
         const timezone = result.bootstrapResource.current.timezone;
         d.resolve(timezone);
     }, d.reject);
@@ -170,7 +170,7 @@ export function setTimezone(projectId, timezone) {
         service: { timezone: timezone }
     };
 
-    xhr.ajax(timezoneServiceUrl, {
+    ajax(timezoneServiceUrl, {
         type: 'POST',
         headers: { Accept: 'application/json' },
         data: data

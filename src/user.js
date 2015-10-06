@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import * as xhr from './xhr';
+import { ajax, get, post } from './xhr';
 
 /**
  * @module user
@@ -30,7 +30,7 @@ export function isLoggedIn() {
  * @param {String} password
  */
 export function login(username, password) {
-    return xhr.post('/gdc/account/login', {
+    return post('/gdc/account/login', {
         data: JSON.stringify({
             postUserLogin: {
                 login: username,
@@ -52,14 +52,14 @@ export function logout() {
     const d = $.Deferred();
 
     isLoggedIn().then(function resolve() {
-        return xhr.get('/gdc/app/account/bootstrap').then(function resolveGet(result) {
+        return get('/gdc/app/account/bootstrap').then(function resolveGet(result) {
             const userUri = result.bootstrapResource.accountSetting.links.self;
             const userId = userUri.match(/([^\/]+)\/?$/)[1];
 
             return userId;
         }, d.reject);
     }, d.resolve).then(function resolveAll(userId) {
-        return xhr.ajax('/gdc/account/login/' + userId, {
+        return ajax('/gdc/account/login/' + userId, {
             method: 'delete'
         });
     }).then(d.resolve, d.reject);
@@ -75,7 +75,7 @@ export function getAccountInfo() {
     /* eslint new-cap: 0 */
     const d = $.Deferred();
 
-    xhr.get('/gdc/app/account/bootstrap').then(function resolveBootstrap(result) {
+    get('/gdc/app/account/bootstrap').then(function resolveBootstrap(result) {
         const br = result.bootstrapResource;
         const accountInfo = {
             login: br.accountSetting.login,

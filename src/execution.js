@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import * as xhr from './xhr';
+import { ajax, post } from './xhr';
 /**
  * Module for execution on experimental execution resource
  *
@@ -48,7 +48,7 @@ export function getData(projectId, elements, executionConfiguration) {
     /*eslint-enable new-cap*/
 
     // Execute request
-    xhr.post('/gdc/internal/projects/' + projectId + '/experimental/executions', {
+    post('/gdc/internal/projects/' + projectId + '/experimental/executions', {
         data: JSON.stringify(request)
     }, d.reject).then(function resolveSimpleExecution(result) {
         // TODO: when executionResult.headers will be globaly available columns map code should be removed
@@ -75,7 +75,7 @@ export function getData(projectId, elements, executionConfiguration) {
             });
         }
         // Start polling on url returned in the executionResult for tabularData
-        return xhr.ajax(result.executionResult.tabularDataResult);
+        return ajax(result.executionResult.tabularDataResult);
     }, d.reject).then(function resolveDataResultPolling(result) {
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];

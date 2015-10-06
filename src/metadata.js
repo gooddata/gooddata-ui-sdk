@@ -1,7 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import * as xhr from './xhr';
-import * as util from './util';
+import { ajax, get, post } from './xhr';
+import { getIn } from './util';
 
 /**
  * Functions for working with metadata objects
@@ -27,7 +27,7 @@ export function getElementDetails(elementUris) {
     /*eslint-enable new-cap*/
 
     const fns = elementUris.map(function mapUrisToRequests(uri) {
-        return xhr.ajax(uri);
+        return ajax(uri);
     });
 
     $.when.apply(this, fns).done(function requestsDone() {
@@ -60,7 +60,7 @@ export function getElementDetails(elementUris) {
 
         enriched.forEach(function loopEnrichedObjects(el, idx) {
             if (el.formOf) {
-                formOfFns.push(xhr.ajax(el.formOf));
+                formOfFns.push(ajax(el.formOf));
                 ids[el.uri] = idx;
                 indi[i++] = idx;
             }
@@ -93,7 +93,7 @@ export function getElementDetails(elementUris) {
 * @return {Array} An array of attribute objects
 */
 export function getAttributes(projectId) {
-    return xhr.get('/gdc/md/' + projectId + '/query/attributes').then(util.getIn('query.entries'));
+    return get('/gdc/md/' + projectId + '/query/attributes').then(getIn('query.entries'));
 }
 
 /**
@@ -105,7 +105,7 @@ export function getAttributes(projectId) {
  * @see getFolders
  */
 export function getDimensions(projectId) {
-    return xhr.get('/gdc/md/' + projectId + '/query/dimensions').then(util.getIn('query.entries'));
+    return get('/gdc/md/' + projectId + '/query/dimensions').then(getIn('query.entries'));
 }
 
 /**
@@ -121,7 +121,7 @@ export function getFolders(projectId, type) {
     function _getFolders(pId, t) {
         const typeURL = t ? '?type=' + t : '';
 
-        return xhr.get('/gdc/md/' + pId + '/query/folders' + typeURL).then(util.getIn('query.entries'));
+        return get('/gdc/md/' + pId + '/query/folders' + typeURL).then(getIn('query.entries'));
     }
 
     switch (type) {
@@ -314,7 +314,7 @@ export function getFoldersWithItems(projectId, type) {
  * @return {Array} An array of fact objects
  */
 export function getFacts(projectId) {
-    return xhr.get('/gdc/md/' + projectId + '/query/facts').then(util.getIn('query.entries'));
+    return get('/gdc/md/' + projectId + '/query/facts').then(getIn('query.entries'));
 }
 
 /**
@@ -325,7 +325,7 @@ export function getFacts(projectId) {
  * @return {Array} An array of metric objects
  */
 export function getMetrics(projectId) {
-    return xhr.get('/gdc/md/' + projectId + '/query/metrics').then(util.getIn('query.entries'));
+    return get('/gdc/md/' + projectId + '/query/metrics').then(getIn('query.entries'));
 }
 
 /**
@@ -345,7 +345,7 @@ export function getAvailableMetrics(projectId, attrs) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.post('/gdc/md/' + projectId + '/availablemetrics', {
+    post('/gdc/md/' + projectId + '/availablemetrics', {
         data: JSON.stringify(attrs)
     }).then(function resolveAvailableMetrics(result) {
         d.resolve(result.entries);
@@ -371,7 +371,7 @@ export function getAvailableAttributes(projectId, metrics) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.post('/gdc/md/' + projectId + '/drillcrosspaths', {
+    post('/gdc/md/' + projectId + '/drillcrosspaths', {
         data: JSON.stringify(metrics)
     }).then(function resolveAvailableAttributes(result) {
         d.resolve(result.drillcrosspath.links);
@@ -397,7 +397,7 @@ export function getAvailableFacts(projectId, items) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.post('/gdc/md/' + projectId + '/availablefacts', {
+    post('/gdc/md/' + projectId + '/availablefacts', {
         data: JSON.stringify(items)
     }).then(function resolveAvailableFacts(result) {
         d.resolve(result.entries);
@@ -418,7 +418,7 @@ export function getObjectDetails(uri) {
     const d = $.Deferred();
     /*eslint-enable new-cap*/
 
-    xhr.get(uri, {
+    get(uri, {
         headers: { Accept: 'application/json' },
         dataType: 'json',
         contentType: 'application/json'
@@ -478,7 +478,7 @@ export function getObjectUri(projectId, identifier) {
         return data.meta.uri;
     }
 
-    xhr.ajax('/gdc/md/' + projectId + '/identifiers', {
+    ajax('/gdc/md/' + projectId + '/identifiers', {
         type: 'POST',
         headers: { Accept: 'application/json' },
         data: {
