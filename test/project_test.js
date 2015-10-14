@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names: 0*/
 import * as project from '../src/project';
+
 describe('project', () => {
     let server;
     describe('with fake server', () => {
@@ -63,7 +64,7 @@ describe('project', () => {
                     [200, {'Content-Type': 'application/json'},
                     JSON.stringify({query: {entries: [{}, {}]}})]
                 );
-                project.getDatasets('myFakeProjectId').then(function(result) {
+                project.getDatasets('myFakeProjectId').then(function resolve(result) {
                     expect(result.length).to.be(2);
                     done();
                 });

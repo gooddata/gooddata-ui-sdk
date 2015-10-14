@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names: 0 */
-import * as util from '../src/util';
+import { getIn } from '../src/util';
+import $ from 'jquery';
 
 describe('util', () => {
     let testObj;
@@ -10,24 +11,22 @@ describe('util', () => {
             'b': { 'c': { 'd': 2 } }
         };
     });
-    describe('getPath', () => {
-        it('should return value for 1 step', () => {
-            expect(util.getPath(testObj, 'a')).to.be(1);
-        });
-        it('should return value for nested path', () => {
-            expect(util.getPath(testObj, 'b.c.d')).to.be(2);
-        });
-        it('should return undefined for non-existant key', () => {
-            expect(util.getPath(testObj, 'e')).to.be(undefined);
-        });
-        it('should return undefined for non-existant key in nested path', () => {
-            expect(util.getPath(testObj, 'ab.cd.ef')).to.be(undefined);
-        });
-    });
 
     describe('getIn', () => {
-        it('should return partially applied getPath', () => {
-            expect(util.getIn('b.c.d')(testObj)).to.be(2);
+        it('should return partially applied get', () => {
+            expect(getIn('b.c.d')(testObj)).to.be(2);
+        });
+
+        it('should work as resolve function of promise', done => {
+            /* eslint-disable new-cap */
+            const d = $.Deferred();
+            /* eslint-enable new-cap */
+            d.then(getIn('b.c')).then(function resolve(result) {
+                expect(result).to.eql({d: 2});
+                done();
+            });
+
+            d.resolve(testObj, {}, {});
         });
     });
 });

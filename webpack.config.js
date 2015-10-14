@@ -19,6 +19,13 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        // Allow to omit extensions when requiring these files
+        extensions: ['', '.js'],
+        modulesDirectories: [
+            'node_modules'
+        ]
+    },
     plugins: [
         new webpack.BannerPlugin('<%= license %>', {raw: true})
     ],

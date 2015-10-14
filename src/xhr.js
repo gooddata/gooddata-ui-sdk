@@ -2,6 +2,10 @@
 /*eslint no-use-before-define: [2, "nofunc"]*/
 import $ from 'jquery';
 import * as config from './config';
+import isPlainObject from 'lodash/lang/isPlainObject';
+import isFunction from 'lodash/lang/isFunction';
+import isArray from 'lodash/lang/isArray';
+import merge from 'lodash/object/merge';
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -60,7 +64,7 @@ function handleUnauthorized(req, deferred) {
             tokenRequest = null;
         }).fail(function failTokenRequest(xhrObj, textStatus, err) {
             // unauthorized when retrieving token -> not logged
-            if ((xhrObj.status === 401) && ($.isFunction(req.unauthorized))) {
+            if ((xhrObj.status === 401) && (isFunction(req.unauthorized))) {
                 req.unauthorized(xhrObj, textStatus, err, deferred);
                 return;
             }
@@ -81,12 +85,12 @@ function handlePolling(req, deferred) {
 function reattachCallbackOnDeferred(settings, property, defferAttach) {
     const callback = settings[property];
     delete settings[property];
-    if ($.isFunction(callback)) {
+    if (isFunction(callback)) {
         defferAttach(callback);
     }
-    if ($.isArray(callback)) {
+    if (isArray(callback)) {
         callback.forEach(function loopCallbacks(fn) {
-            if ($.isFunction(callback)) {
+            if (isFunction(callback)) {
                 defferAttach(fn);
             }
         });
@@ -105,7 +109,7 @@ function reattachCallbackOnDeferred(settings, property, defferAttach) {
  * @method ajaxSetup
  */
 export function ajaxSetup(settings) {
-    xhrSettings = $.extend({
+    xhrSettings = merge({
         contentType: 'application/json',
         dataType: 'json',
         pollDelay: 1000,
@@ -128,7 +132,7 @@ export function ajaxSetup(settings) {
 export function ajax(url, settings) {
     let finalSettings;
     let finalUrl;
-    if ($.isPlainObject(url)) {
+    if (isPlainObject(url)) {
         finalSettings = url;
         finalUrl = undefined;
     } else {
@@ -137,12 +141,12 @@ export function ajax(url, settings) {
     }
     // copy settings to not modify passed object
     // settings can be undefined, doesn't matter, $.extend handle it
-    finalSettings = $.extend({}, xhrSettings, finalSettings);
+    finalSettings = merge({}, xhrSettings, finalSettings);
     if (finalUrl) {
         finalSettings.url = finalUrl;
     }
 
-    if ($.isPlainObject(finalSettings.data)) {
+    if (isPlainObject(finalSettings.data)) {
         finalSettings.data = JSON.stringify(finalSettings.data);
     }
 
@@ -183,7 +187,7 @@ export function ajax(url, settings) {
 
 function xhrMethod(method) {
     return function methodFn(url, settings) {
-        const opts = $.extend(true, { method }, settings);
+        const opts = merge({ method }, settings);
 
         return ajax(url, opts);
     };

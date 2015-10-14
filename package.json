@@ -40,5 +40,8 @@
     "node-libs-browser": "0.5.0",
     "sinon": "1.14.1",
     "webpack": "1.9.7"
+  },
+  "dependencies": {
+    "lodash": "3.10.1"
   }
 }
