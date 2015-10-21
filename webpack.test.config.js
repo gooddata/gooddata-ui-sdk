@@ -1,6 +1,7 @@
 // separate file so we can refer to it from webpack.config.js and karma.conf.js
 
 module.exports = {
+    devtool: 'cheap-inline-source-map',
     resolve: {
         root: __dirname,
 
@@ -8,7 +9,7 @@ module.exports = {
             'jquery': 'lib/jquery/dist/jquery'
         },
 
-        modulesDirectories: ['src']
+        modulesDirectories: ['src', 'node_modules']
     },
 
     module: {
