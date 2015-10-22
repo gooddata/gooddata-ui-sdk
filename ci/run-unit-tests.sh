@@ -4,7 +4,6 @@ echo "Running phantomjs processes:"
 ps -elf | grep [p]hantomjs
 
 . $(dirname $0)/lib.sh
-setupGrunt
 
 echo "Running tests with Karma..."
 

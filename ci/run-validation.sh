@@ -1,6 +1,7 @@
 #!/bin/bash
 
+echo "Validating source code..."
+
 . $(dirname $0)/lib.sh
-setupGrunt
 
 grunt validate
