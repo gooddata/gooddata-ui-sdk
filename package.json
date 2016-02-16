@@ -40,7 +40,8 @@
     "karma-webpack": "1.7.0",
     "node-libs-browser": "0.5.3",
     "sinon": "1.17.2",
-    "webpack": "1.12.2"
+    "webpack": "1.12.2",
+    "webpack-dev-server": "1.12.1"
   },
   "dependencies": {
     "lodash": "3.10.1"
