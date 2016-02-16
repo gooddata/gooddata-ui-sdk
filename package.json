@@ -38,6 +38,7 @@
     "karma-sinon": "1.0.4",
     "karma-sourcemap-loader": "0.3.6",
     "karma-webpack": "1.7.0",
+    "mocha": "2.3.3",
     "node-libs-browser": "0.5.3",
     "phantomjs": "1.9.18",
     "sinon": "1.17.2",
