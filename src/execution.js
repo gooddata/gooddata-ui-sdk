@@ -76,10 +76,11 @@ export function getData(projectId, elements, executionConfiguration) {
         }
         // Start polling on url returned in the executionResult for tabularData
         return ajax(result.executionResult.tabularDataResult);
-    }, d.reject).then(function resolveDataResultPolling(result) {
+    }, d.reject).then(function resolveDataResultPolling(result, message, response) {
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
         executedReport.isLoaded = true;
+        executedReport.isEmpty = (response.status === 204);
         d.resolve(executedReport);
     }, d.reject);
 
