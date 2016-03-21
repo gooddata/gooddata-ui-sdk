@@ -33,26 +33,25 @@ const notEmpty = negate(isEmpty);
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
-export function getData(projectId, elements, executionConfiguration) {
+export function getData(projectId, elements, executionConfiguration = {}) {
+    const executedReport = {
+        isLoaded: false
+    };
+
     // Create request and result structures
     const request = {
         execution: {
             columns: elements
         }
     };
-    const executedReport = {
-        isLoaded: false
-    };
-
     // enrich configuration with supported properties such as
     // where clause with query-like filters or execution context filters
-    const config = executionConfiguration || {};
-    ['filters', 'where', 'orderBy', 'definitions'].forEach(function assignProperties(property) {
-        if (config[property]) {
-            request.execution[property] = config[property];
+    ['filters', 'where', 'orderBy', 'definitions'].forEach(property => {
+        if (executionConfiguration[property]) {
+            request.execution[property] = executionConfiguration[property];
         }
     });
-    // create empty promise-like Ember.Object
+
     /*eslint-disable new-cap*/
     const d = $.Deferred();
     /*eslint-enable new-cap*/
@@ -188,6 +187,8 @@ export const mdToExecutionConfiguration = (mdObj) => {
 };
 
 export const getDataForVis = (projectId, mdObj) => {
-    console.log(projectId, mdObj.a);
+    const { execution } = mdToExecutionConfiguration(get(mdObj, 'buckets'));
+    const { columns, ...executionConfiguration } = execution;
+    return getData(projectId, columns, executionConfiguration);
 };
 
