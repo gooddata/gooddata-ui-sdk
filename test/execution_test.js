@@ -296,6 +296,11 @@ describe('execution', () => {
                                     }
                                 }
                             ]
+                        },
+                        {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            'metricAttributeFilters': []
                         }
                     ],
                     'categories': [

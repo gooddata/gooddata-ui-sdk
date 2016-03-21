@@ -164,15 +164,17 @@ const attributeFilterToWhere = f => {
         { [dfUri]: { '$in': elementsForQuery } };
 };
 
+const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
+
 export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
     const factMetrics = map(filter(measures, m => m.type === 'fact'), factMetricToDefinition);
+    const metrics = map(filter(measures, m => m.type === 'metric'), metricToDefinition);
     const attributes = map(filter(categories, c => c.collection = 'attribute'), categoryToElement);
     const attributeFilters = map(filters, attributeFilterToWhere);
 
     const columns = [];
     const definitions = [];
-    attributes.forEach(({element}) => columns.push(element));
     factMetrics.forEach(({element, definition}) => {
         columns.push(element);
         definitions.push(definition);
