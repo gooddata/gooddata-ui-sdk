@@ -139,7 +139,9 @@ const factMetricToDefinition = factMetric => {
     const definition = {
         metricDefinition: {
             identifier: getFactMetricIdentifier(factMetric),
-            expression: getFactMetricExpression(factMetric)
+            expression: getFactMetricExpression(factMetric),
+            title: get(factMetric, 'title'),
+            format: get(factMetric, 'format')
         }
     };
 

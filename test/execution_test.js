@@ -281,6 +281,8 @@ describe('execution', () => {
                             'type': 'fact',
                             'aggregation': 'sum',
                             'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            'title': 'Sum of Amount',
+                            'format': '#,##0.00',
                             'metricAttributeFilters': [
                                 {
                                     'listAttributeFilter': {
@@ -300,6 +302,8 @@ describe('execution', () => {
                         {
                             'type': 'metric',
                             'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            'title': 'Probability BOP',
+                            'format': '#,##0.00',
                             'metricAttributeFilters': []
                         }
                     ],
@@ -360,7 +364,9 @@ describe('execution', () => {
                             {
                                 'metricDefinition': {
                                     'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
-                                    'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282])'
+                                    'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282])',
+                                    'title': 'Sum of Amount',
+                                    'format': '#,##0.00'
                                 }
                             }
                         ]
