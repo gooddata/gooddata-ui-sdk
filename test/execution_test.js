@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
 import * as ex from '../src/execution';
+import cloneDeep from 'lodash/lang/cloneDeep';
 
 describe('execution', () => {
     describe('with fake server', () => {
@@ -268,6 +269,147 @@ describe('execution', () => {
                     /*eslint-enable vars-on-top*/
 
                     expect(requestBody.execution.where).to.eql(where);
+                });
+            });
+        });
+
+        describe('Execution with MD object', () => {
+            let mdObj;
+            beforeEach(() => {
+                mdObj = {
+                    'measures': [
+                        {
+                            'type': 'fact',
+                            'aggregation': 'sum',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            'title': 'Sum of Amount',
+                            'format': '#,##0.00',
+                            'metricAttributeFilters': [
+                                {
+                                    'listAttributeFilter': {
+                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
+                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
+                                        'default': {
+                                            'negativeSelection': false,
+                                            'attributeElements': [
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            'title': 'Probability BOP',
+                            'format': '#,##0.00',
+                            'metricAttributeFilters': []
+                        }
+                    ],
+                    'categories': [
+                        {
+                            'type': 'attribute',
+                            'collection': 'attribute',
+                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                        }
+                    ],
+                    'filters': [
+                        {
+                            'listAttributeFilter': {
+                                'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
+                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                'default': {
+                                    'negativeSelection': false,
+                                    'attributeElements': [
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1243',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1242',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1241',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1240',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1239',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1238',
+                                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1236'
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    'stacks': []
+                };
+            });
+
+            it('creates proper configuration for execution', () => {
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObj);
+                expect(executionConfiguration).to.eql({
+                    'execution': {
+                        'columns': [
+                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                        ],
+                        'where': {
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
+                                '$in': [
+                                    { 'id': 1243 },
+                                    { 'id': 1242 },
+                                    { 'id': 1241 },
+                                    { 'id': 1240 },
+                                    { 'id': 1239 },
+                                    { 'id': 1238 },
+                                    { 'id': 1236 }
+                                ]
+                            }
+                        },
+                        'definitions': [
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
+                                    'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282])',
+                                    'title': 'Sum of Amount',
+                                    'format': '#,##0.00'
+                                }
+                            }
+                        ]
+                    }
+                });
+            });
+
+            it('handles empty filters', () => {
+                const mdObjWithoutFilters = cloneDeep(mdObj);
+                mdObjWithoutFilters.measures[0].metricAttributeFilters[0].listAttributeFilter.default.attributeElements = [];
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObjWithoutFilters);
+                expect(executionConfiguration).to.eql({
+                    'execution': {
+                        'columns': [
+                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                        ],
+                        'where': {
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
+                                '$in': [
+                                    { 'id': 1243 },
+                                    { 'id': 1242 },
+                                    { 'id': 1241 },
+                                    { 'id': 1240 },
+                                    { 'id': 1239 },
+                                    { 'id': 1238 },
+                                    { 'id': 1236 }
+                                ]
+                            }
+                        },
+                        'definitions': [
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
+                                    'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
+                                    'title': 'Sum of Amount',
+                                    'format': '#,##0.00'
+                                }
+                            }
+                        ]
+                    }
                 });
             });
         });
