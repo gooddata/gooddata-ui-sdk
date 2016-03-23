@@ -172,7 +172,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
     const factMetrics = map(filter(measures, m => m.type === 'fact'), factMetricToDefinition);
     const metrics = map(filter(measures, m => m.type === 'metric'), metricToDefinition);
-    const attributes = map(filter(categories, c => c.collection = 'attribute'), categoryToElement);
+    const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
     const attributeFilters = map(filters, attributeFilterToWhere);
 
     const columns = [];
