@@ -166,14 +166,22 @@ const attributeFilterToWhere = f => {
         { [dfUri]: { '$in': elementsForQuery } };
 };
 
+const dateFilterToWhere = f => {
+    const dimensionUri = get(f, 'dateFilterSettings.dimension');
+    const granularity = get(f, 'dateFilterSettings.granularity');
+    const between = [get(f, 'dateFilterSettings.from'), get(f, 'dateFilterSettings.to')];
+    return { [dimensionUri]: { '$between': between, '$granularity': granularity } };
+};
+
 const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
 
 export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
     const factMetrics = map(filter(measures, m => m.type === 'fact'), factMetricToDefinition);
     const metrics = map(filter(measures, m => m.type === 'metric'), metricToDefinition);
-    const attributes = map(filter(categories, c => c.collection = 'attribute'), categoryToElement);
-    const attributeFilters = map(filters, attributeFilterToWhere);
+    const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
+    const attributeFilters = map(filter(filters, ({listAttributeFilter}) => listAttributeFilter !== undefined), attributeFilterToWhere);
+    const dateFilters = map(filter(filters, ({dateFilterSettings}) => dateFilterSettings !== undefined), dateFilterToWhere);
 
     const columns = [];
     const definitions = [];
@@ -183,7 +191,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     });
     metrics.forEach(({element}) => columns.push(element));
     attributes.forEach(({element}) => columns.push(element));
-    const where = attributeFilters.reduce((acc, f) => {
+    const where = [].concat(attributeFilters, dateFilters).reduce((acc, f) => {
         return assign(acc, f);
     }, {});
     return { 'execution': { columns, where, definitions } };

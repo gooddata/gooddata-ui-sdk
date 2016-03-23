@@ -333,6 +333,13 @@ describe('execution', () => {
                                     ]
                                 }
                             }
+                        }, {
+                            'dateFilterSettings': {
+                                'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
+                                'granularity': 'GDC.time.week',
+                                'from': -3,
+                                'to': 0
+                            }
                         }
                     ],
                     'stacks': []
@@ -359,7 +366,12 @@ describe('execution', () => {
                                     { 'id': 1238 },
                                     { 'id': 1236 }
                                 ]
+                            },
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
+                                '$between': [-3, 0],
+                                '$granularity': 'GDC.time.week'
                             }
+
                         },
                         'definitions': [
                             {
@@ -397,6 +409,10 @@ describe('execution', () => {
                                     { 'id': 1238 },
                                     { 'id': 1236 }
                                 ]
+                            },
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
+                                '$between': [-3, 0],
+                                '$granularity': 'GDC.time.week'
                             }
                         },
                         'definitions': [
