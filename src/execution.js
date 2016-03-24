@@ -108,41 +108,42 @@ const getFilterExpression = listAttributeFilter => {
     return `[${attributeUri}] ${negative}IN (${elementsForQuery.join(',')})`;
 };
 
-const getFactMetricExpression = factMetric => {
-    const aggregation = get(factMetric, 'aggregation', '').toUpperCase();
-    const objectUri = get(factMetric, 'objectUri');
-    const where = filter(map(get(factMetric, 'metricAttributeFilters'), getFilterExpression), e => !!e);
+const getGeneratedMetricExpression = item => {
+    const aggregation = get(item, 'aggregation', '').toUpperCase();
+    const objectUri = get(item, 'objectUri');
+    const where = filter(map(get(item, 'metricAttributeFilters'), getFilterExpression), e => !!e);
 
     return 'SELECT ' + (aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`) +
         (notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : '');
 };
 
-const getFactMetricHash = expression => md5(expression);
+const getGeneratedMetricHash = expression => md5(expression);
 
-const getFactMetricIdentifier = factMetric => {
-    const aggregation = get(factMetric, 'aggregation', 'base');
-    const [, , , prjId, , id] = get(factMetric, 'objectUri').split('/');
+const getGeneratedMetricIdentifier = item => {
+    const aggregation = get(item, 'aggregation', 'base');
+    const [, , , prjId, , id] = get(item, 'objectUri').split('/');
     const identifier = `${prjId}_${id}`;
-    const hash = getFactMetricHash(getFactMetricExpression(factMetric));
-    const hasNoFilters = isEmpty(get(factMetric, 'metricAttributeFilters', []));
+    const hash = getGeneratedMetricHash(getGeneratedMetricExpression(item));
+    const hasNoFilters = isEmpty(get(item, 'metricAttributeFilters', []));
     const allFiltersEmpty = every(map(
-        get(factMetric, 'metricAttributeFilters', []),
+        get(item, 'metricAttributeFilters', []),
         f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
     ));
+    const type = get(item, 'type');
 
     const prefix = (hasNoFilters || allFiltersEmpty) ? '' : 'filtered_';
 
-    return `fact_${identifier}.generated.${prefix}${aggregation.toLowerCase()}.${hash}`;
+    return `${type}_${identifier}.generated.${prefix}${aggregation.toLowerCase()}.${hash}`;
 };
 
-const factMetricToDefinition = factMetric => {
-    const element = getFactMetricIdentifier(factMetric);
+const generatedMetricDefinition = item => {
+    const element = getGeneratedMetricIdentifier(item);
     const definition = {
         metricDefinition: {
-            identifier: getFactMetricIdentifier(factMetric),
-            expression: getFactMetricExpression(factMetric),
-            title: get(factMetric, 'title'),
-            format: get(factMetric, 'format')
+            identifier: getGeneratedMetricIdentifier(item),
+            expression: getGeneratedMetricExpression(item),
+            title: get(item, 'title'),
+            format: get(item, 'format')
         }
     };
 
@@ -177,8 +178,9 @@ const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
 
 export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
-    const factMetrics = map(filter(measures, m => m.type === 'fact'), factMetricToDefinition);
+    const factMetrics = map(filter(measures, m => m.type === 'fact'), generatedMetricDefinition);
     const metrics = map(filter(measures, m => m.type === 'metric'), metricToDefinition);
+    const attributeMetrics = map(filter(measures, m => m.type === 'attribute'), generatedMetricDefinition);
     const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
     const attributeFilters = map(filter(filters, ({listAttributeFilter}) => listAttributeFilter !== undefined), attributeFilterToWhere);
     const dateFilters = map(filter(filters, ({dateFilterSettings}) => dateFilterSettings !== undefined), dateFilterToWhere);
@@ -186,6 +188,10 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const columns = [];
     const definitions = [];
     factMetrics.forEach(({element, definition}) => {
+        columns.push(element);
+        definitions.push(definition);
+    });
+    attributeMetrics.forEach(({element, definition}) => {
         columns.push(element);
         definitions.push(definition);
     });
