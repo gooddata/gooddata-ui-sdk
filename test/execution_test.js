@@ -301,6 +301,14 @@ describe('execution', () => {
                             ]
                         },
                         {
+                            'type': 'attribute',
+                            'aggregation': 'count',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
+                            'title': 'Count of Activity',
+                            'format': '#,##0.00',
+                            'metricAttributeFilters': []
+                        },
+                        {
                             'type': 'metric',
                             'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
                             'title': 'Probability BOP',
@@ -352,6 +360,7 @@ describe('execution', () => {
                     'execution': {
                         'columns': [
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
+                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
                         ],
@@ -381,6 +390,14 @@ describe('execution', () => {
                                     'title': 'Sum of Amount',
                                     'format': '#,##0.00'
                                 }
+                            },
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                                    'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
+                                    'title': 'Count of Activity',
+                                    'format': '#,##0.00'
+                                }
                             }
                         ]
                     }
@@ -395,6 +412,7 @@ describe('execution', () => {
                     'execution': {
                         'columns': [
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
+                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
                         ],
@@ -421,6 +439,14 @@ describe('execution', () => {
                                     'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
                                     'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
                                     'title': 'Sum of Amount',
+                                    'format': '#,##0.00'
+                                }
+                            },
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                                    'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
+                                    'title': 'Count of Activity',
                                     'format': '#,##0.00'
                                 }
                             }
