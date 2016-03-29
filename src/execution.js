@@ -187,6 +187,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
 
     const columns = [];
     const definitions = [];
+    attributes.forEach(({element}) => columns.push(element));
     factMetrics.forEach(({element, definition}) => {
         columns.push(element);
         definitions.push(definition);
@@ -196,7 +197,6 @@ export const mdToExecutionConfiguration = (mdObj) => {
         definitions.push(definition);
     });
     metrics.forEach(({element}) => columns.push(element));
-    attributes.forEach(({element}) => columns.push(element));
     const where = [].concat(attributeFilters, dateFilters).reduce((acc, f) => {
         return assign(acc, f);
     }, {});

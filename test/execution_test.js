@@ -359,10 +359,10 @@ describe('execution', () => {
                 expect(executionConfiguration).to.eql({
                     'execution': {
                         'columns': [
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
                             'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
@@ -411,10 +411,10 @@ describe('execution', () => {
                 expect(executionConfiguration).to.eql({
                     'execution': {
                         'columns': [
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
                             'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
