@@ -314,6 +314,30 @@ describe('execution', () => {
                             'title': 'Probability BOP',
                             'format': '#,##0.00',
                             'metricAttributeFilters': []
+                        },
+                        {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                            'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                            'format': '#,##0',
+                            'metricAttributeFilters': [
+                                {
+                                    'listAttributeFilter': {
+                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
+                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/970',
+                                        'default': {
+                                            'negativeSelection': false,
+                                            'attributeElements': [
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046'
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ],
                     'categories': [
@@ -362,7 +386,8 @@ describe('execution', () => {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
                             'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556'
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
@@ -398,6 +423,14 @@ describe('execution', () => {
                                     'title': 'Count of Activity',
                                     'format': '#,##0.00'
                                 }
+                            },
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1',
+                                    'expression': 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
+                                    'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                                    'format': '#,##0'
+                                }
                             }
                         ]
                     }
@@ -414,7 +447,8 @@ describe('execution', () => {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
                             'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
                             'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
-                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556'
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
@@ -448,6 +482,14 @@ describe('execution', () => {
                                     'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
                                     'title': 'Count of Activity',
                                     'format': '#,##0.00'
+                                }
+                            },
+                            {
+                                'metricDefinition': {
+                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1',
+                                    'expression': 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
+                                    'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                                    'format': '#,##0'
                                 }
                             }
                         ]

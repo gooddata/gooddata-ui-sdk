@@ -120,7 +120,7 @@ const getGeneratedMetricExpression = item => {
 const getGeneratedMetricHash = expression => md5(expression);
 
 const getGeneratedMetricIdentifier = item => {
-    const aggregation = get(item, 'aggregation', 'base');
+    const aggregation = get(item, 'aggregation', 'base').toLowerCase();
     const [, , , prjId, , id] = get(item, 'objectUri').split('/');
     const identifier = `${prjId}_${id}`;
     const hash = getGeneratedMetricHash(getGeneratedMetricExpression(item));
@@ -133,7 +133,7 @@ const getGeneratedMetricIdentifier = item => {
 
     const prefix = (hasNoFilters || allFiltersEmpty) ? '' : 'filtered_';
 
-    return `${type}_${identifier}.generated.${prefix}${aggregation.toLowerCase()}.${hash}`;
+    return `${type}_${identifier}.generated.${prefix}${aggregation}.${hash}`;
 };
 
 const generatedMetricDefinition = item => {
@@ -179,7 +179,13 @@ const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
 export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
     const factMetrics = map(filter(measures, m => m.type === 'fact'), generatedMetricDefinition);
-    const metrics = map(filter(measures, m => m.type === 'metric'), metricToDefinition);
+    const metrics = map(filter(measures, m => m.type === 'metric'), metric => {
+        if (isEmpty(metric.metricAttributeFilters)) {
+            return metricToDefinition(metric);
+        }
+
+        return generatedMetricDefinition(metric);
+    });
     const attributeMetrics = map(filter(measures, m => m.type === 'attribute'), generatedMetricDefinition);
     const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
     const attributeFilters = map(filter(filters, ({listAttributeFilter}) => listAttributeFilter !== undefined), attributeFilterToWhere);
@@ -196,7 +202,12 @@ export const mdToExecutionConfiguration = (mdObj) => {
         columns.push(element);
         definitions.push(definition);
     });
-    metrics.forEach(({element}) => columns.push(element));
+    metrics.forEach(({element, definition}) => {
+        columns.push(element);
+        if (definition) {
+            definitions.push(definition);
+        }
+    });
     const where = [].concat(attributeFilters, dateFilters).reduce((acc, f) => {
         return assign(acc, f);
     }, {});
