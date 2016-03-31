@@ -384,10 +384,10 @@ describe('execution', () => {
                     'execution': {
                         'columns': [
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
-                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.b9f95d95adbeac03870b764f8b2c3402',
+                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1'
+                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
@@ -410,7 +410,7 @@ describe('execution', () => {
                         'definitions': [
                             {
                                 'metricDefinition': {
-                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.469572f0e43df209235a82bb42c00129',
+                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.b9f95d95adbeac03870b764f8b2c3402',
                                     'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282])',
                                     'title': 'Sum of Amount',
                                     'format': '#,##0.00'
@@ -418,7 +418,7 @@ describe('execution', () => {
                             },
                             {
                                 'metricDefinition': {
-                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
                                     'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
                                     'title': 'Count of Activity',
                                     'format': '#,##0.00'
@@ -426,7 +426,7 @@ describe('execution', () => {
                             },
                             {
                                 'metricDefinition': {
-                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1',
+                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac',
                                     'expression': 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
                                     'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
                                     'format': '#,##0'
@@ -445,10 +445,10 @@ describe('execution', () => {
                     'execution': {
                         'columns': [
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
-                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                            'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600',
+                            'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1'
+                            'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac'
                         ],
                         'where': {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
@@ -470,7 +470,7 @@ describe('execution', () => {
                         'definitions': [
                             {
                                 'metricDefinition': {
-                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.1e157fec15ec162b3c6da2e404b7d4b3',
+                                    'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600',
                                     'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
                                     'title': 'Sum of Amount',
                                     'format': '#,##0.00'
@@ -478,7 +478,7 @@ describe('execution', () => {
                             },
                             {
                                 'metricDefinition': {
-                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.e707d76008b1b07d61b089716927666b',
+                                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
                                     'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
                                     'title': 'Count of Activity',
                                     'format': '#,##0.00'
@@ -486,7 +486,7 @@ describe('execution', () => {
                             },
                             {
                                 'metricDefinition': {
-                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.c2e6b16614a03d85b4626320de695ac1',
+                                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac',
                                     'expression': 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
                                     'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
                                     'format': '#,##0'
@@ -495,6 +495,102 @@ describe('execution', () => {
                         ]
                     }
                 });
+            });
+        });
+
+        describe('generating contribution metric', () => {
+            let mdObjContribution;
+            beforeEach(() => {
+                mdObjContribution = {
+                    'measures': [
+                        {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                            'title': '% # of Opportunities',
+                            'format': '#,##0',
+                            'metricAttributeFilters': [],
+                            'showInPercent': true,
+                            'showPoP': false
+                        }
+                    ],
+                    'categories': [
+                        {
+                            'type': 'attribute',
+                            'collection': 'attribute',
+                            'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027',
+                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                        }
+                    ],
+                    'filters': [],
+                    'stacks': []
+                };
+            });
+
+            it('for calculated measure', () => {
+                const execConfig = ex.mdToExecutionConfiguration(mdObjContribution);
+                expect(execConfig).to.eql(
+                    {
+                        'execution': {
+                            'columns': [
+                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.5d1c685225728a6445ddfc8bc8ccaad7'
+                            ],
+                            'where': {},
+                            'definitions': [
+                                {
+                                    'metricDefinition': {
+                                        'title': '% # of Opportunities',
+                                        'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.5d1c685225728a6445ddfc8bc8ccaad7',
+                                        'expression': 'SELECT (SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825]) / (SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027])',
+                                        'format': '#,##0%'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                );
+            });
+
+            it('for generated measure', () => {
+                mdObjContribution.measures = [
+                    {
+                        'type': 'fact',
+                        'aggregation': 'sum',
+                        'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                        'title': 'Sum of Amount',
+                        'format': '#,##0.00',
+                        'showInPercent': true
+                    }
+                ];
+                const execConfig = ex.mdToExecutionConfiguration(mdObjContribution);
+                expect(execConfig).to.eql(
+                    {
+                        'execution': {
+                            'columns': [
+                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.7abc1f3bf5c8130d11493f0cc5780ae2'
+                            ],
+                            'where': {},
+                            'definitions': [
+                                {
+                                    'metricDefinition': {
+                                        'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600',
+                                        'expression': 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
+                                        'title': 'Sum of Amount',
+                                        'format': '#,##0.00'
+                                    }
+                                }, {
+                                    'metricDefinition': {
+                                        'title': '% Sum of Amount',
+                                        'identifier': 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.7abc1f3bf5c8130d11493f0cc5780ae2',
+                                        'expression': 'SELECT (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600}) / (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600} BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027])',
+                                        'format': '#,##0.00%'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                );
             });
         });
     });
