@@ -10,6 +10,11 @@ import isEmpty from 'lodash/lang/isEmpty';
 import negate from 'lodash/function/negate';
 import last from 'lodash/array/last';
 import assign from 'lodash/object/assign';
+import find from 'lodash/collection/find';
+import partial from 'lodash/function/partial';
+import pluck from 'lodash/collection/pluck';
+import identity from 'lodash/utility/identity';
+import flatten from 'lodash/array/flatten';
 const notEmpty = negate(isEmpty);
 /**
  * Module for execution on experimental execution resource
@@ -117,13 +122,22 @@ const getGeneratedMetricExpression = item => {
         (notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : '');
 };
 
-const getGeneratedMetricHash = expression => md5(expression);
+const getPercentMetricExpression = (attribute, metricId) => {
+    const attributeUri = get(attribute, 'attribute');
 
-const getGeneratedMetricIdentifier = item => {
-    const aggregation = get(item, 'aggregation', 'base').toLowerCase();
+    return `SELECT (SELECT ${metricId}) / (SELECT ${metricId} BY ALL [${attributeUri}])`;
+};
+
+const getGeneratedMetricHash = (title, format, expression) => md5(`${expression}#${title}#${format}`);
+
+const getGeneratedMetricIdentifier = (item, useBasicAggregation = true, expressionCreator, hasher) => {
+    let aggregation = get(item, 'aggregation', 'base').toLowerCase();
+    if (get(item, 'showInPercent') && !useBasicAggregation) {
+        aggregation = 'percent';
+    }
     const [, , , prjId, , id] = get(item, 'objectUri').split('/');
     const identifier = `${prjId}_${id}`;
-    const hash = getGeneratedMetricHash(getGeneratedMetricExpression(item));
+    const hash = hasher(expressionCreator(item));
     const hasNoFilters = isEmpty(get(item, 'metricAttributeFilters', []));
     const allFiltersEmpty = every(map(
         get(item, 'metricAttributeFilters', []),
@@ -137,10 +151,11 @@ const getGeneratedMetricIdentifier = item => {
 };
 
 const generatedMetricDefinition = item => {
-    const element = getGeneratedMetricIdentifier(item);
+    const hasher = partial(getGeneratedMetricHash, get(item, 'title'), get(item, 'format'));
+    const element = getGeneratedMetricIdentifier(item, true, getGeneratedMetricExpression, hasher);
     const definition = {
         metricDefinition: {
-            identifier: getGeneratedMetricIdentifier(item),
+            identifier: getGeneratedMetricIdentifier(item, true, getGeneratedMetricExpression, hasher),
             expression: getGeneratedMetricExpression(item),
             title: get(item, 'title'),
             format: get(item, 'format')
@@ -148,6 +163,36 @@ const generatedMetricDefinition = item => {
     };
 
     return { element, definition };
+};
+
+const contributionMetricDefinition = (attribute, item) => {
+    const type = get(item, 'type');
+    let generated;
+    let getMetricExpression = partial(getPercentMetricExpression, attribute, `[${get(item, 'objectUri')}]`);
+    if (type === 'fact' || type === 'attribute') {
+        generated = generatedMetricDefinition(item);
+        getMetricExpression = partial(getPercentMetricExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
+    }
+    const title = `% ${get(item, 'title')}`.replace(/^(% )+/, '% ');
+    const format = `${get(item, 'format')}%`.replace(/%+$/, '%');
+    const hasher = partial(getGeneratedMetricHash, title, format);
+    const result = [{
+        element: getGeneratedMetricIdentifier(item, false, getMetricExpression, hasher),
+        definition: {
+            metricDefinition: {
+                identifier: getGeneratedMetricIdentifier(item, false, getMetricExpression, hasher),
+                expression: getMetricExpression(item),
+                title,
+                format
+            }
+        }
+    }];
+
+    if (generated) {
+        result.unshift({ definition: generated.definition });
+    }
+
+    return result;
 };
 
 const categoryToElement = c => {
@@ -178,40 +223,40 @@ const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
 
 export const mdToExecutionConfiguration = (mdObj) => {
     const { measures, categories, filters } = mdObj;
-    const factMetrics = map(filter(measures, m => m.type === 'fact'), generatedMetricDefinition);
-    const metrics = map(filter(measures, m => m.type === 'metric'), metric => {
+    const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
+    const contributionMetrics = map(
+        filter(measures, m => m.showInPercent),
+        partial(contributionMetricDefinition, find(categories, c => c.collection === 'attribute'))
+    );
+    const factMetrics = map(filter(measures, m => m.type === 'fact' && !m.showInPercent), generatedMetricDefinition);
+    const metrics = map(filter(measures, m => m.type === 'metric' && !m.showInPercent), metric => {
         if (isEmpty(metric.metricAttributeFilters)) {
             return metricToDefinition(metric);
         }
 
         return generatedMetricDefinition(metric);
     });
-    const attributeMetrics = map(filter(measures, m => m.type === 'attribute'), generatedMetricDefinition);
-    const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
+    const attributeMetrics = map(filter(measures, m => m.type === 'attribute' && !m.showInPercent), generatedMetricDefinition);
     const attributeFilters = map(filter(filters, ({listAttributeFilter}) => listAttributeFilter !== undefined), attributeFilterToWhere);
     const dateFilters = map(filter(filters, ({dateFilterSettings}) => dateFilterSettings !== undefined), dateFilterToWhere);
 
-    const columns = [];
-    const definitions = [];
-    attributes.forEach(({element}) => columns.push(element));
-    factMetrics.forEach(({element, definition}) => {
-        columns.push(element);
-        definitions.push(definition);
-    });
-    attributeMetrics.forEach(({element, definition}) => {
-        columns.push(element);
-        definitions.push(definition);
-    });
-    metrics.forEach(({element, definition}) => {
-        columns.push(element);
-        if (definition) {
-            definitions.push(definition);
-        }
-    });
+    const allMetrics = [].concat(
+        attributes,
+        factMetrics,
+        attributeMetrics,
+        metrics,
+        flatten(contributionMetrics)
+    );
+
     const where = [].concat(attributeFilters, dateFilters).reduce((acc, f) => {
         return assign(acc, f);
     }, {});
-    return { 'execution': { columns, where, definitions } };
+
+    return { 'execution': {
+        columns: filter(pluck(allMetrics, 'element'), identity),
+        where,
+        definitions: filter(pluck(allMetrics, 'definition'), identity)
+    } };
 };
 
 export const getDataForVis = (projectId, mdObj) => {
