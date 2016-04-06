@@ -130,6 +130,11 @@ const getPercentMetricExpression = (attribute, metricId) => {
 
 const getGeneratedMetricHash = (title, format, expression) => md5(`${expression}#${title}#${format}`);
 
+const allFiltersEmpty = item => every(map(
+    get(item, 'metricAttributeFilters', []),
+    f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
+));
+
 const getGeneratedMetricIdentifier = (item, useBasicAggregation = true, expressionCreator, hasher) => {
     let aggregation = get(item, 'aggregation', 'base').toLowerCase();
     if (get(item, 'showInPercent') && !useBasicAggregation) {
@@ -139,13 +144,9 @@ const getGeneratedMetricIdentifier = (item, useBasicAggregation = true, expressi
     const identifier = `${prjId}_${id}`;
     const hash = hasher(expressionCreator(item));
     const hasNoFilters = isEmpty(get(item, 'metricAttributeFilters', []));
-    const allFiltersEmpty = every(map(
-        get(item, 'metricAttributeFilters', []),
-        f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
-    ));
     const type = get(item, 'type');
 
-    const prefix = (hasNoFilters || allFiltersEmpty) ? '' : 'filtered_';
+    const prefix = (hasNoFilters || allFiltersEmpty(item)) ? '' : 'filtered_';
 
     return `${type}_${identifier}.generated.${prefix}${aggregation}.${hash}`;
 };
@@ -169,7 +170,7 @@ const contributionMetricDefinition = (attribute, item) => {
     const type = get(item, 'type');
     let generated;
     let getMetricExpression = partial(getPercentMetricExpression, attribute, `[${get(item, 'objectUri')}]`);
-    if (type === 'fact' || type === 'attribute') {
+    if (type === 'fact' || type === 'attribute' || !allFiltersEmpty(item)) {
         generated = generatedMetricDefinition(item);
         getMetricExpression = partial(getPercentMetricExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
