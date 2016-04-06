@@ -533,16 +533,16 @@ describe('execution', () => {
                         'execution': {
                             'columns': [
                                 '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                                'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.5d1c685225728a6445ddfc8bc8ccaad7'
+                                'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.0eb685df0742b4e27091746615e06193'
                             ],
                             'where': {},
                             'definitions': [
                                 {
                                     'metricDefinition': {
                                         'title': '% # of Opportunities',
-                                        'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.5d1c685225728a6445ddfc8bc8ccaad7',
+                                        'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.percent.0eb685df0742b4e27091746615e06193',
                                         'expression': 'SELECT (SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825]) / (SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027])',
-                                        'format': '#,##0%'
+                                        'format': '#,##0.00%'
                                     }
                                 }
                             ]
@@ -595,4 +595,3 @@ describe('execution', () => {
         });
     });
 });
-

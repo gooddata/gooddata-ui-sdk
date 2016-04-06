@@ -174,7 +174,7 @@ const contributionMetricDefinition = (attribute, item) => {
         getMetricExpression = partial(getPercentMetricExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
     const title = `% ${get(item, 'title')}`.replace(/^(% )+/, '% ');
-    const format = `${get(item, 'format')}%`.replace(/%+$/, '%');
+    const format = '#,##0.00%';
     const hasher = partial(getGeneratedMetricHash, title, format);
     const result = [{
         element: getGeneratedMetricIdentifier(item, false, getMetricExpression, hasher),
@@ -264,4 +264,3 @@ export const getDataForVis = (projectId, mdObj) => {
     const { columns, ...executionConfiguration } = execution;
     return getData(projectId, columns, executionConfiguration);
 };
-
