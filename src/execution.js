@@ -223,8 +223,10 @@ const dateFilterToWhere = f => {
 const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
 
 export const mdToExecutionConfiguration = (mdObj) => {
-    const { measures, categories, filters } = mdObj;
-    const attributes = map(filter(categories, c => c.collection === 'attribute'), categoryToElement);
+    const { filters } = mdObj;
+    const measures = map(mdObj.measures, ({measure}) => measure);
+    const categories = map(mdObj.categories, ({category}) => category);
+    const attributes = map(categories, categoryToElement);
     const contributionMetrics = map(
         filter(measures, m => m.showInPercent),
         partial(contributionMetricDefinition, find(categories, c => c.collection === 'attribute'))
