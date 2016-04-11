@@ -279,72 +279,82 @@ describe('execution', () => {
                 mdObj = {
                     'measures': [
                         {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            'title': 'Sum of Amount',
-                            'format': '#,##0.00',
-                            'metricAttributeFilters': [
-                                {
-                                    'listAttributeFilter': {
-                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
-                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
-                                        'default': {
-                                            'negativeSelection': false,
-                                            'attributeElements': [
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
-                                            ]
+                            'measure': {
+                                'type': 'fact',
+                                'aggregation': 'sum',
+                                'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                                'title': 'Sum of Amount',
+                                'format': '#,##0.00',
+                                'metricAttributeFilters': [
+                                    {
+                                        'listAttributeFilter': {
+                                            'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
+                                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
+                                            'default': {
+                                                'negativeSelection': false,
+                                                'attributeElements': [
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
+                                                ]
+                                            }
                                         }
                                     }
-                                }
-                            ]
+                                ]
+                            }
                         },
                         {
-                            'type': 'attribute',
-                            'aggregation': 'count',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
-                            'title': 'Count of Activity',
-                            'format': '#,##0.00',
-                            'metricAttributeFilters': []
+                            'measure': {
+                                'type': 'attribute',
+                                'aggregation': 'count',
+                                'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
+                                'title': 'Count of Activity',
+                                'format': '#,##0.00',
+                                'metricAttributeFilters': []
+                            }
                         },
                         {
-                            'type': 'metric',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            'title': 'Probability BOP',
-                            'format': '#,##0.00',
-                            'metricAttributeFilters': []
+                            'measure': {
+                                'type': 'metric',
+                                'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                                'title': 'Probability BOP',
+                                'format': '#,##0.00',
+                                'metricAttributeFilters': []
+                            }
                         },
                         {
-                            'type': 'metric',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
-                            'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
-                            'format': '#,##0',
-                            'metricAttributeFilters': [
-                                {
-                                    'listAttributeFilter': {
-                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
-                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/970',
-                                        'default': {
-                                            'negativeSelection': false,
-                                            'attributeElements': [
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042',
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038',
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079',
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044',
-                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046'
-                                            ]
+                            'measure': {
+                                'type': 'metric',
+                                'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                                'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                                'format': '#,##0',
+                                'metricAttributeFilters': [
+                                    {
+                                        'listAttributeFilter': {
+                                            'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
+                                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/970',
+                                            'default': {
+                                                'negativeSelection': false,
+                                                'attributeElements': [
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042',
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038',
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079',
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044',
+                                                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046'
+                                                ]
+                                            }
                                         }
                                     }
-                                }
-                            ]
+                                ]
+                            }
                         }
                     ],
                     'categories': [
                         {
-                            'type': 'attribute',
-                            'collection': 'attribute',
-                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            'category': {
+                                'type': 'attribute',
+                                'collection': 'attribute',
+                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            }
                         }
                     ],
                     'filters': [
@@ -439,7 +449,7 @@ describe('execution', () => {
 
             it('handles empty filters', () => {
                 const mdObjWithoutFilters = cloneDeep(mdObj);
-                mdObjWithoutFilters.measures[0].metricAttributeFilters[0].listAttributeFilter.default.attributeElements = [];
+                mdObjWithoutFilters.measures[0].measure.metricAttributeFilters[0].listAttributeFilter.default.attributeElements = [];
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjWithoutFilters);
                 expect(executionConfiguration).to.eql({
                     'execution': {
@@ -504,21 +514,25 @@ describe('execution', () => {
                 mdObjContribution = {
                     'measures': [
                         {
-                            'type': 'metric',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
-                            'title': '% # of Opportunities',
-                            'format': '#,##0',
-                            'metricAttributeFilters': [],
-                            'showInPercent': true,
-                            'showPoP': false
+                            'measure': {
+                                'type': 'metric',
+                                'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                                'title': '% # of Opportunities',
+                                'format': '#,##0',
+                                'metricAttributeFilters': [],
+                                'showInPercent': true,
+                                'showPoP': false
+                            }
                         }
                     ],
                     'categories': [
                         {
-                            'type': 'attribute',
-                            'collection': 'attribute',
-                            'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027',
-                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            'category': {
+                                'type': 'attribute',
+                                'collection': 'attribute',
+                                'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027',
+                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                            }
                         }
                     ],
                     'filters': [],
@@ -554,12 +568,14 @@ describe('execution', () => {
             it('for generated measure', () => {
                 mdObjContribution.measures = [
                     {
-                        'type': 'fact',
-                        'aggregation': 'sum',
-                        'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                        'title': 'Sum of Amount',
-                        'format': '#,##0.00',
-                        'showInPercent': true
+                        'measure': {
+                            'type': 'fact',
+                            'aggregation': 'sum',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            'title': 'Sum of Amount',
+                            'format': '#,##0.00',
+                            'showInPercent': true
+                        }
                     }
                 ];
                 const execConfig = ex.mdToExecutionConfiguration(mdObjContribution);
