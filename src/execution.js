@@ -16,6 +16,7 @@ import pluck from 'lodash/collection/pluck';
 import identity from 'lodash/utility/identity';
 import flatten from 'lodash/array/flatten';
 const notEmpty = negate(isEmpty);
+
 /**
  * Module for execution on experimental execution resource
  *
@@ -101,6 +102,8 @@ export function getData(projectId, elements, executionConfiguration = {}) {
     return d.promise();
 }
 
+const CONTRIBUTION_METRIC_FORMAT = '#,##0.00%';
+
 const getFilterExpression = listAttributeFilter => {
     const attributeUri = get(listAttributeFilter, 'listAttributeFilter.attribute');
     const elements = get(listAttributeFilter, 'listAttributeFilter.default.attributeElements', []);
@@ -128,6 +131,12 @@ const getPercentMetricExpression = (attribute, metricId) => {
     return `SELECT (SELECT ${metricId}) / (SELECT ${metricId} BY ALL [${attributeUri}])`;
 };
 
+const getPoPExpression = (attribute, metricId) => {
+    const attributeUri = get(attribute, 'attribute');
+
+    return `SELECT (SELECT ${metricId}) FOR PREVIOUS ([${attributeUri}])`;
+};
+
 const getGeneratedMetricHash = (title, format, expression) => md5(`${expression}#${title}#${format}`);
 
 const allFiltersEmpty = item => every(map(
@@ -135,11 +144,7 @@ const allFiltersEmpty = item => every(map(
     f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
 ));
 
-const getGeneratedMetricIdentifier = (item, useBasicAggregation = true, expressionCreator, hasher) => {
-    let aggregation = get(item, 'aggregation', 'base').toLowerCase();
-    if (get(item, 'showInPercent') && !useBasicAggregation) {
-        aggregation = 'percent';
-    }
+const getGeneratedMetricIdentifier = (item, aggregation, expressionCreator, hasher) => {
     const [, , , prjId, , id] = get(item, 'objectUri').split('/');
     const identifier = `${prjId}_${id}`;
     const hash = hasher(expressionCreator(item));
@@ -152,39 +157,45 @@ const getGeneratedMetricIdentifier = (item, useBasicAggregation = true, expressi
 };
 
 const generatedMetricDefinition = item => {
-    const hasher = partial(getGeneratedMetricHash, get(item, 'title'), get(item, 'format'));
-    const element = getGeneratedMetricIdentifier(item, true, getGeneratedMetricExpression, hasher);
+    const { title, format } = item;
+
+    const hasher = partial(getGeneratedMetricHash, title, format);
+    const aggregation = get(item, 'aggregation', 'base').toLowerCase();
+    const element = getGeneratedMetricIdentifier(item, aggregation, getGeneratedMetricExpression, hasher);
     const definition = {
         metricDefinition: {
-            identifier: getGeneratedMetricIdentifier(item, true, getGeneratedMetricExpression, hasher),
+            identifier: element,
             expression: getGeneratedMetricExpression(item),
-            title: get(item, 'title'),
-            format: get(item, 'format')
+            title,
+            format
         }
     };
 
     return { element, definition };
 };
 
-const contributionMetricDefinition = (attribute, item) => {
+const isDerivedMetric = (item) => {
     const type = get(item, 'type');
+    return (type === 'fact' || type === 'attribute' || !allFiltersEmpty(item));
+};
+
+const contributionMetricDefinition = (attribute, item) => {
     let generated;
     let getMetricExpression = partial(getPercentMetricExpression, attribute, `[${get(item, 'objectUri')}]`);
-    if (type === 'fact' || type === 'attribute' || !allFiltersEmpty(item)) {
+    if (isDerivedMetric(item)) {
         generated = generatedMetricDefinition(item);
         getMetricExpression = partial(getPercentMetricExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
     const title = `% ${get(item, 'title')}`.replace(/^(% )+/, '% ');
-    const format = '#,##0.00%';
-    const hasher = partial(getGeneratedMetricHash, title, format);
+    const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
     const result = [{
-        element: getGeneratedMetricIdentifier(item, false, getMetricExpression, hasher),
+        element: getGeneratedMetricIdentifier(item, 'percent', getMetricExpression, hasher),
         definition: {
             metricDefinition: {
-                identifier: getGeneratedMetricIdentifier(item, false, getMetricExpression, hasher),
+                identifier: getGeneratedMetricIdentifier(item, 'percent', getMetricExpression, hasher),
                 expression: getMetricExpression(item),
                 title,
-                format
+                format: CONTRIBUTION_METRIC_FORMAT
             }
         }
     }];
@@ -196,9 +207,69 @@ const contributionMetricDefinition = (attribute, item) => {
     return result;
 };
 
-const categoryToElement = c => {
-    return { element: get(c, 'displayForm') };
+const popMetricDefinition = (attribute, item) => {
+    const title = `${get(item, 'title')} - previous year`;
+    const format = get(item, 'format');
+    const hasher = partial(getGeneratedMetricHash, title, format);
+
+    let generated;
+    let getMetricExpression = partial(getPoPExpression, attribute, `[${get(item, 'objectUri')}]`);
+
+    if (isDerivedMetric(item)) {
+        generated = generatedMetricDefinition(item);
+        getMetricExpression = partial(getPoPExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
+    }
+
+    const identifier = getGeneratedMetricIdentifier(item, 'pop', getMetricExpression, hasher);
+
+    const result = [{
+        element: identifier,
+        definition: {
+            metricDefinition: {
+                identifier,
+                expression: getMetricExpression(),
+                title,
+                format
+            }
+        }
+    }];
+
+    if (generated) {
+        result.push(generated);
+    }
+
+    return result;
 };
+
+const contributionPoPMetricDefinition = (date, attribute, item) => {
+    const generated = contributionMetricDefinition(attribute ? attribute : date, item);
+
+    const title = `% ${get(item, 'title')} - previous year`.replace(/^(% )+/, '% ');
+    const format = CONTRIBUTION_METRIC_FORMAT;
+    const hasher = partial(getGeneratedMetricHash, title, format);
+
+    const getMetricExpression = partial(getPoPExpression, get(date, 'dateFilterSettings', date), `{${last(generated).element}}`);
+
+    const identifier = getGeneratedMetricIdentifier(item, 'pop', getMetricExpression, hasher);
+
+    const result = [{
+        element: identifier,
+        definition: {
+            metricDefinition: {
+                identifier,
+                expression: getMetricExpression(),
+                title,
+                format
+            }
+        }
+    }];
+
+    result.push(generated);
+
+    return flatten(result);
+};
+
+const categoryToElement = c => ({ element: get(c, 'displayForm') });
 
 const attributeFilterToWhere = f => {
     const dfUri = get(f, 'listAttributeFilter.displayForm');
@@ -220,7 +291,7 @@ const dateFilterToWhere = f => {
     return { [dimensionUri]: { '$between': between, '$granularity': granularity } };
 };
 
-const metricToDefinition = metric => ({ element: get(metric, 'objectUri')});
+const metricToDefinition = metric => ({ element: get(metric, 'objectUri') });
 
 export const mdToExecutionConfiguration = (mdObj) => {
     const { filters } = mdObj;
@@ -228,10 +299,21 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const categories = map(mdObj.categories, ({category}) => category);
     const attributes = map(categories, categoryToElement);
     const contributionMetrics = map(
-        filter(measures, m => m.showInPercent),
-        partial(contributionMetricDefinition, find(categories, c => c.collection === 'attribute'))
+        filter(measures, m => m.showInPercent && !m.showPoP),
+        partial(contributionMetricDefinition, find(categories, c => c.type === 'attribute' || c.type === 'date'))
     );
-    const factMetrics = map(filter(measures, m => m.type === 'fact' && !m.showInPercent), generatedMetricDefinition);
+
+    const date = find([].concat(categories, filters), c => (c.type === 'date' || c.dateFilterSettings));
+
+    const popMetrics = map(
+        filter(measures, m => m.showPoP && !m.showInPercent),
+        partial(popMetricDefinition, date)
+    );
+    const contributionPoPMetrics = map(
+        filter(measures, m => m.showPoP && m.showInPercent),
+        partial(contributionPoPMetricDefinition, date, find(categories, c => c.type === 'attribute' || c.type === 'date'))
+    );
+    const factMetrics = map(filter(measures, m => m.type === 'fact' && !m.showInPercent && !m.showPoP), generatedMetricDefinition);
     const metrics = map(filter(measures, m => m.type === 'metric' && !m.showInPercent), metric => {
         if (isEmpty(metric.metricAttributeFilters)) {
             return metricToDefinition(metric);
@@ -239,23 +321,23 @@ export const mdToExecutionConfiguration = (mdObj) => {
 
         return generatedMetricDefinition(metric);
     });
-    const attributeMetrics = map(filter(measures, m => m.type === 'attribute' && !m.showInPercent), generatedMetricDefinition);
-    const attributeFilters = map(filter(filters, ({listAttributeFilter}) => listAttributeFilter !== undefined), attributeFilterToWhere);
-    const dateFilters = map(filter(filters, ({dateFilterSettings}) => dateFilterSettings !== undefined), dateFilterToWhere);
+    const attributeMetrics = map(filter(measures, m => m.type === 'attribute' && !m.showInPercent && !m.showPoP), generatedMetricDefinition);
+    const attributeFilters = map(filter(filters, ({ listAttributeFilter }) => listAttributeFilter !== undefined), attributeFilterToWhere);
+    const dateFilters = map(filter(filters, ({ dateFilterSettings }) => dateFilterSettings !== undefined), dateFilterToWhere);
 
     const allMetrics = [].concat(
         attributes,
         factMetrics,
         attributeMetrics,
+        flatten(popMetrics),
         metrics,
-        flatten(contributionMetrics)
+        flatten(contributionMetrics),
+        flatten(contributionPoPMetrics)
     );
 
-    const where = [].concat(attributeFilters, dateFilters).reduce((acc, f) => {
-        return assign(acc, f);
-    }, {});
+    const where = [].concat(attributeFilters, dateFilters).reduce(assign, {});
 
-    return { 'execution': {
+    return { execution: {
         columns: filter(pluck(allMetrics, 'element'), identity),
         where,
         definitions: filter(pluck(allMetrics, 'definition'), identity)
