@@ -207,17 +207,21 @@ const contributionMetricDefinition = (attribute, item) => {
     return result;
 };
 
+const getDate = date => get(date, 'dateFilterSettings', date);
+
 const popMetricDefinition = (attribute, item) => {
     const title = `${get(item, 'title')} - previous year`;
     const format = get(item, 'format');
     const hasher = partial(getGeneratedMetricHash, title, format);
 
+    const date = getDate(attribute);
+
     let generated;
-    let getMetricExpression = partial(getPoPExpression, attribute, `[${get(item, 'objectUri')}]`);
+    let getMetricExpression = partial(getPoPExpression, date, `[${get(item, 'objectUri')}]`);
 
     if (isDerivedMetric(item)) {
         generated = generatedMetricDefinition(item);
-        getMetricExpression = partial(getPoPExpression, attribute, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
+        getMetricExpression = partial(getPoPExpression, date, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
 
     const identifier = getGeneratedMetricIdentifier(item, 'pop', getMetricExpression, hasher);
@@ -248,7 +252,7 @@ const contributionPoPMetricDefinition = (date, attribute, item) => {
     const format = CONTRIBUTION_METRIC_FORMAT;
     const hasher = partial(getGeneratedMetricHash, title, format);
 
-    const getMetricExpression = partial(getPoPExpression, get(date, 'dateFilterSettings', date), `{${last(generated).element}}`);
+    const getMetricExpression = partial(getPoPExpression, getDate(date), `{${last(generated).element}}`);
 
     const identifier = getGeneratedMetricIdentifier(item, 'pop', getMetricExpression, hasher);
 
