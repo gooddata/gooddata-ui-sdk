@@ -46,6 +46,8 @@
     "webpack-dev-server": "1.12.1"
   },
   "dependencies": {
+    "fast-levenshtein": "^1.1.3",
+    "js-object-pretty-print": "^0.2.0",
     "lodash": "3.10.1",
     "md5": "2.1.0"
   }
