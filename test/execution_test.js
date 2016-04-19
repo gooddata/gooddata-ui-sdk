@@ -1,7 +1,8 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
+import { cloneDeep } from 'lodash';
+
 import * as ex from '../src/execution';
-import cloneDeep from 'lodash/lang/cloneDeep';
 import { expectColumns, expectMetricDefinition, expectWhereCondition } from './helpers/execution';
 
 describe('execution', () => {

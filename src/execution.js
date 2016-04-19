@@ -1,20 +1,27 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import { ajax, post } from './xhr';
 import md5 from 'md5';
-import filter from 'lodash/collection/filter';
-import map from 'lodash/collection/map';
-import every from 'lodash/collection/every';
-import get from 'lodash/object/get';
-import isEmpty from 'lodash/lang/isEmpty';
-import negate from 'lodash/function/negate';
-import last from 'lodash/array/last';
-import assign from 'lodash/object/assign';
-import find from 'lodash/collection/find';
-import partial from 'lodash/function/partial';
-import pluck from 'lodash/collection/pluck';
-import identity from 'lodash/utility/identity';
-import flatten from 'lodash/array/flatten';
+
+import {
+    ajax,
+    post
+} from './xhr';
+
+import {
+    filter,
+    map,
+    every,
+    get,
+    isEmpty,
+    negate,
+    last,
+    assign,
+    find,
+    partial,
+    identity,
+    flatten
+} from 'lodash';
+
 const notEmpty = negate(isEmpty);
 
 /**
@@ -342,9 +349,9 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const where = [].concat(attributeFilters, dateFilters).reduce(assign, {});
 
     return { execution: {
-        columns: filter(pluck(allMetrics, 'element'), identity),
+        columns: filter(map(allMetrics, 'element'), identity),
         where,
-        definitions: filter(pluck(allMetrics, 'definition'), identity)
+        definitions: filter(map(allMetrics, 'definition'), identity)
     } };
 };
 

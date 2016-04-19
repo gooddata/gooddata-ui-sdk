@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 
-import get from 'lodash/object/get';
+import { get } from 'lodash';
 
 /**
  * Utility methods. Mostly private

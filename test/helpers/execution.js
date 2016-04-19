@@ -1,9 +1,12 @@
-import get from 'lodash/object/get';
-import find from 'lodash/collection/find';
+import {
+    get,
+    find,
+    includes,
+    sortBy,
+    first
+} from 'lodash';
+
 import { pretty } from 'js-object-pretty-print';
-import includes from 'lodash/collection/includes';
-import sortBy from 'lodash/collection/sortBy';
-import first from 'lodash/array/first';
 import levenshtein from 'fast-levenshtein';
 
 function fail(message) {

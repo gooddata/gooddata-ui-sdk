@@ -2,10 +2,12 @@
 /*eslint no-use-before-define: [2, "nofunc"]*/
 import $ from 'jquery';
 import * as config from './config';
-import isPlainObject from 'lodash/lang/isPlainObject';
-import isFunction from 'lodash/lang/isFunction';
-import isArray from 'lodash/lang/isArray';
-import merge from 'lodash/object/merge';
+import {
+    isPlainObject,
+    isFunction,
+    isArray,
+    merge
+} from 'lodash';
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
