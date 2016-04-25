@@ -5,6 +5,7 @@ import * as md from './metadata';
 import * as execution from './execution';
 import * as project from './project';
 import * as config from './config';
+import * as catalogue from './catalogue';
 
 /**
  * # JS SDK
@@ -27,5 +28,5 @@ import * as config from './config';
  * @module sdk
  * @class sdk
  */
-export default { config, xhr, user, md, execution, project };
+export default { config, xhr, user, md, execution, project, catalogue };
 
