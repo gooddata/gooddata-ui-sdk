@@ -493,6 +493,36 @@ describe('execution', () => {
                     }
                 }, execConfig);
             });
+
+            it('does not execute all-time date filter', () => {
+                const mdWithAllTime = cloneDeep(mdObj);
+                mdWithAllTime.filters = [{
+                    'dateFilterSettings': {
+                        'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
+                        'granularity': 'GDC.time.year'
+                    }
+                }];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdWithAllTime);
+                expect(executionConfiguration.where).to.be(undefined);
+            });
+
+            it('does not execute attribute filter with all selected', () => {
+                const mdWithSelectAll = cloneDeep(mdObj);
+                mdWithSelectAll.filters = [{
+                    'listAttributeFilter': {
+                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
+                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                        'default': {
+                            'negativeSelection': true,
+                            'attributeElements': []
+                        }
+                    }
+                }];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdWithSelectAll);
+                expect(executionConfiguration.where).to.be(undefined);
+            });
         });
 
         describe('generating contribution metric', () => {
