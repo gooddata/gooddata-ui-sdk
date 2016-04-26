@@ -287,7 +287,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
                                 'title': 'Sum of Amount',
                                 'format': '#,##0.00',
-                                'metricAttributeFilters': [
+                                'measureFilters': [
                                     {
                                         'listAttributeFilter': {
                                             'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
@@ -311,7 +311,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
                                 'title': 'Count of Activity',
                                 'format': '#,##0.00',
-                                'metricAttributeFilters': []
+                                'measureFilters': []
                             }
                         },
                         {
@@ -320,7 +320,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
                                 'title': 'Probability BOP',
                                 'format': '#,##0.00',
-                                'metricAttributeFilters': []
+                                'measureFilters': []
                             }
                         },
                         {
@@ -329,7 +329,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
                                 'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
                                 'format': '#,##0',
-                                'metricAttributeFilters': [
+                                'measureFilters': [
                                     {
                                         'listAttributeFilter': {
                                             'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
@@ -378,7 +378,7 @@ describe('execution', () => {
                                 }
                             }
                         }, {
-                            'dateFilterSettings': {
+                            'dateFilter': {
                                 'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
                                 'granularity': 'GDC.time.week',
                                 'from': -3,
@@ -443,7 +443,7 @@ describe('execution', () => {
 
             it('handles empty filters', () => {
                 const mdObjWithoutFilters = cloneDeep(mdObj);
-                mdObjWithoutFilters.measures[0].measure.metricAttributeFilters[0].listAttributeFilter.default.attributeElements = [];
+                mdObjWithoutFilters.measures[0].measure.measureFilters[0].listAttributeFilter.default.attributeElements = [];
                 const execConfig = ex.mdToExecutionConfiguration(mdObjWithoutFilters);
 
                 expectColumns([
@@ -497,7 +497,7 @@ describe('execution', () => {
             it('does not execute all-time date filter', () => {
                 const mdWithAllTime = cloneDeep(mdObj);
                 mdWithAllTime.filters = [{
-                    'dateFilterSettings': {
+                    'dateFilter': {
                         'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
                         'granularity': 'GDC.time.year'
                     }
@@ -536,7 +536,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
                                 'title': '% # of Opportunities',
                                 'format': '#,##0',
-                                'metricAttributeFilters': [],
+                                'measureFilters': [],
                                 'showInPercent': true,
                                 'showPoP': false
                             }
@@ -621,7 +621,7 @@ describe('execution', () => {
                                 'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
                                 'title': '# of Opportunities',
                                 'format': '#,##0',
-                                'metricAttributeFilters': [],
+                                'measureFilters': [],
                                 'showInPercent': false,
                                 'showPoP': true
                             }

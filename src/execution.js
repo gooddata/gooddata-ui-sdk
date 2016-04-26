@@ -126,7 +126,7 @@ const getFilterExpression = listAttributeFilter => {
 const getGeneratedMetricExpression = item => {
     const aggregation = get(item, 'aggregation', '').toUpperCase();
     const objectUri = get(item, 'objectUri');
-    const where = filter(map(get(item, 'metricAttributeFilters'), getFilterExpression), e => !!e);
+    const where = filter(map(get(item, 'measureFilters'), getFilterExpression), e => !!e);
 
     return 'SELECT ' + (aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`) +
         (notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : '');
@@ -147,7 +147,7 @@ const getPoPExpression = (attribute, metricId) => {
 const getGeneratedMetricHash = (title, format, expression) => md5(`${expression}#${title}#${format}`);
 
 const allFiltersEmpty = item => every(map(
-    get(item, 'metricAttributeFilters', []),
+    get(item, 'measureFilters', []),
     f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
 ));
 
@@ -155,7 +155,7 @@ const getGeneratedMetricIdentifier = (item, aggregation, expressionCreator, hash
     const [, , , prjId, , id] = get(item, 'objectUri').split('/');
     const identifier = `${prjId}_${id}`;
     const hash = hasher(expressionCreator(item));
-    const hasNoFilters = isEmpty(get(item, 'metricAttributeFilters', []));
+    const hasNoFilters = isEmpty(get(item, 'measureFilters', []));
     const type = get(item, 'type');
 
     const prefix = (hasNoFilters || allFiltersEmpty(item)) ? '' : 'filtered_';
@@ -214,7 +214,7 @@ const contributionMetricDefinition = (attribute, item) => {
     return result;
 };
 
-const getDate = date => get(date, 'dateFilterSettings', date);
+const getDate = date => get(date, 'dateFilter', date);
 
 const popMetricDefinition = (attribute, item) => {
     const title = `${get(item, 'title')} - previous year`;
@@ -296,16 +296,16 @@ const attributeFilterToWhere = f => {
 };
 
 const dateFilterToWhere = f => {
-    const dimensionUri = get(f, 'dateFilterSettings.dimension');
-    const granularity = get(f, 'dateFilterSettings.granularity');
-    const between = [get(f, 'dateFilterSettings.from'), get(f, 'dateFilterSettings.to')];
+    const dimensionUri = get(f, 'dateFilter.dimension');
+    const granularity = get(f, 'dateFilter.granularity');
+    const between = [get(f, 'dateFilter.from'), get(f, 'dateFilter.to')];
     return { [dimensionUri]: { '$between': between, '$granularity': granularity } };
 };
 
 const metricToDefinition = metric => ({ element: get(metric, 'objectUri') });
-const isDateFilterExecutable = dateFilterSettings =>
-    get(dateFilterSettings, 'from') !== undefined &&
-    get(dateFilterSettings, 'to') !== undefined;
+const isDateFilterExecutable = dateFilter =>
+    get(dateFilter, 'from') !== undefined &&
+    get(dateFilter, 'to') !== undefined;
 
 const isAttributeFilterExecutable = listAttributeFilter =>
     notEmpty(get(listAttributeFilter, ['default', 'attributeElements']));
@@ -320,7 +320,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
         partial(contributionMetricDefinition, find(categories, c => c.type === 'attribute' || c.type === 'date'))
     );
 
-    const date = find([].concat(categories, filters), c => (c.type === 'date' || c.dateFilterSettings));
+    const date = find([].concat(categories, filters), c => (c.type === 'date' || c.dateFilter));
 
     const popMetrics = map(
         filter(measures, m => m.showPoP && !m.showInPercent),
@@ -332,7 +332,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     );
     const factMetrics = map(filter(measures, m => m.type === 'fact' && !m.showInPercent && !m.showPoP), generatedMetricDefinition);
     const metrics = map(filter(measures, m => m.type === 'metric' && !m.showInPercent), metric => {
-        if (isEmpty(metric.metricAttributeFilters)) {
+        if (isEmpty(metric.measureFilters)) {
             return metricToDefinition(metric);
         }
 
@@ -340,7 +340,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     });
     const attributeMetrics = map(filter(measures, m => m.type === 'attribute' && !m.showInPercent && !m.showPoP), generatedMetricDefinition);
     const attributeFilters = map(filter(filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter)), attributeFilterToWhere);
-    const dateFilters = map(filter(filters, ({ dateFilterSettings }) => isDateFilterExecutable(dateFilterSettings)), dateFilterToWhere);
+    const dateFilters = map(filter(filters, ({ dateFilter }) => isDateFilterExecutable(dateFilter)), dateFilterToWhere);
 
     const allMetrics = [].concat(
         attributes,
