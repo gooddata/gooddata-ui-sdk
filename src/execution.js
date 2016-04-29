@@ -168,7 +168,7 @@ const getGeneratedMetricIdentifier = (item, aggregation, expressionCreator, hash
 };
 
 const generatedMetricDefinition = item => {
-    const { title, format } = item;
+    const { title, format, sort } = item;
 
     const hasher = partial(getGeneratedMetricHash, title, format);
     const aggregation = get(item, 'aggregation', 'base').toLowerCase();
@@ -182,7 +182,7 @@ const generatedMetricDefinition = item => {
         }
     };
 
-    return { element, hash: hashItem(item), definition };
+    return { element, hash: hashItem(item), definition, sort };
 };
 
 const isDerivedMetric = (item) => {
@@ -248,7 +248,8 @@ const popMetricDefinition = (attribute, item) => {
                 title,
                 format
             }
-        }
+        },
+        sort: get(item, 'sort')
     }];
 
     if (generated) {
@@ -287,7 +288,7 @@ const contributionPoPMetricDefinition = (date, attribute, item) => {
     return flatten(result);
 };
 
-const categoryToElement = c => ({ element: get(c, 'displayForm'), hash: hashItem(c) });
+const categoryToElement = c => ({ element: get(c, 'displayForm'), hash: hashItem(c), sort: get(c, 'sort') });
 
 const attributeFilterToWhere = f => {
     const dfUri = get(f, 'listAttributeFilter.displayForm');
@@ -309,7 +310,12 @@ const dateFilterToWhere = f => {
     return { [dimensionUri]: { '$between': between, '$granularity': granularity } };
 };
 
-const metricToDefinition = metric => ({ element: get(metric, 'objectUri'), hash: hashItem(metric) });
+const metricToDefinition = metric => ({
+    element: get(metric, 'objectUri'),
+    hash: hashItem(metric),
+    sort: !metric.showPoP ? get(metric, 'sort') : null
+});
+
 const isDateFilterExecutable = dateFilter =>
     get(dateFilter, 'from') !== undefined &&
     get(dateFilter, 'to') !== undefined;
@@ -317,11 +323,13 @@ const isDateFilterExecutable = dateFilter =>
 const isAttributeFilterExecutable = listAttributeFilter =>
     notEmpty(get(listAttributeFilter, ['default', 'attributeElements']));
 
+const sortToOrderBy = item => ({ column: get(item, 'element'), direction: get(item, 'sort') });
+
 export const mdToExecutionConfiguration = (mdObj) => {
     const { filters } = mdObj;
-    const measures = map(mdObj.measures, ({measure}) => measure);
+    const measures = map(mdObj.measures, ({ measure }) => measure);
     const measureSort = map(measures, hashItem);
-    const categories = map(mdObj.categories, ({category}) => category);
+    const categories = map(mdObj.categories, ({ category }) => category);
     const attributes = map(categories, categoryToElement);
     const contributionMetrics = map(
         filter(measures, m => m.showInPercent && !m.showPoP),
@@ -370,10 +378,12 @@ export const mdToExecutionConfiguration = (mdObj) => {
         flatten(allMetricsSorted)
     );
 
+    const orderBy = map(filter(allItems, item => !!item.sort), sortToOrderBy);
     const where = [].concat(attributeFilters, dateFilters).reduce(assign, {});
 
     return { execution: {
         columns: filter(map(allItems, 'element'), identity),
+        orderBy,
         where,
         definitions: filter(map(allItems, 'definition'), identity)
     } };

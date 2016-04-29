@@ -73,6 +73,12 @@ export function expectMetricDefinition(expected, reportDefinition) {
     }
 }
 
+export function expectOrderBy(expected, reportDefinition) {
+    const actualOrderBy = get(reportDefinition, 'execution.orderBy');
+
+    expect(expected).to.eql(actualOrderBy);
+}
+
 export function expectWhereCondition(expected, reportDefinition) {
     const actualWhereCondition = get(reportDefinition, 'execution.where');
 
