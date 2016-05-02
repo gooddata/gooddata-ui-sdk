@@ -3,7 +3,7 @@
 import { cloneDeep } from 'lodash';
 
 import * as ex from '../src/execution';
-import { expectColumns, expectMetricDefinition, expectWhereCondition } from './helpers/execution';
+import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from './helpers/execution';
 
 describe('execution', () => {
     describe('with fake server', () => {
@@ -301,7 +301,8 @@ describe('execution', () => {
                                             }
                                         }
                                     }
-                                ]
+                                ],
+                                'sort': 'desc'
                             }
                         },
                         {
@@ -355,7 +356,8 @@ describe('execution', () => {
                             'category': {
                                 'type': 'attribute',
                                 'collection': 'attribute',
-                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                'sort': 'asc'
                             }
                         }
                     ],
@@ -385,8 +387,7 @@ describe('execution', () => {
                                 'to': 0
                             }
                         }
-                    ],
-                    'stacks': []
+                    ]
                 };
             });
 
@@ -523,6 +524,21 @@ describe('execution', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithSelectAll);
                 expect(executionConfiguration.where).to.be(undefined);
             });
+
+            it('propagates sort data from mertics and categories', () => {
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObj);
+                expectOrderBy(
+                    [{
+                        column: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                        direction: 'asc'
+                    },
+                    {
+                        column: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.b9f95d95adbeac03870b764f8b2c3402',
+                        direction: 'desc'
+                    }],
+                    executionConfiguration
+                );
+            });
         });
 
         describe('generating contribution metric', () => {
@@ -552,8 +568,7 @@ describe('execution', () => {
                             }
                         }
                     ],
-                    'filters': [],
-                    'stacks': []
+                    'filters': []
                 };
             });
 
@@ -637,8 +652,7 @@ describe('execution', () => {
                             }
                         }
                     ],
-                    'filters': [],
-                    'stacks': []
+                    'filters': []
                 };
             });
 
