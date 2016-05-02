@@ -209,7 +209,8 @@ const contributionMetricDefinition = (attribute, item) => {
                 title,
                 format: CONTRIBUTION_METRIC_FORMAT
             }
-        }
+        },
+        sort: get(item, 'sort')
     }];
 
     if (generated) {
@@ -280,7 +281,8 @@ const contributionPoPMetricDefinition = (date, attribute, item) => {
                 title,
                 format
             }
-        }
+        },
+        sort: get(item, 'sort')
     }];
 
     result.push(generated);
