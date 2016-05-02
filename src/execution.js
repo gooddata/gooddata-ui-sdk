@@ -19,7 +19,9 @@ import {
     find,
     partial,
     identity,
-    flatten
+    flatten,
+    values,
+    isString
 } from 'lodash';
 
 const notEmpty = negate(isEmpty);
@@ -111,6 +113,8 @@ export function getData(projectId, elements, executionConfiguration = {}) {
 
 const CONTRIBUTION_METRIC_FORMAT = '#,##0.00%';
 
+const hashItem = item => md5(`${filter(values(item), isString).join('#')}`);
+
 const getFilterExpression = listAttributeFilter => {
     const attributeUri = get(listAttributeFilter, 'listAttributeFilter.attribute');
     const elements = get(listAttributeFilter, 'listAttributeFilter.default.attributeElements', []);
@@ -178,7 +182,7 @@ const generatedMetricDefinition = item => {
         }
     };
 
-    return { element, definition };
+    return { element, hash: hashItem(item), definition };
 };
 
 const isDerivedMetric = (item) => {
@@ -197,6 +201,7 @@ const contributionMetricDefinition = (attribute, item) => {
     const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
     const result = [{
         element: getGeneratedMetricIdentifier(item, 'percent', getMetricExpression, hasher),
+        hash: hashItem(item),
         definition: {
             metricDefinition: {
                 identifier: getGeneratedMetricIdentifier(item, 'percent', getMetricExpression, hasher),
@@ -208,7 +213,7 @@ const contributionMetricDefinition = (attribute, item) => {
     }];
 
     if (generated) {
-        result.unshift({ definition: generated.definition });
+        result.unshift({ hash: hashItem(item), definition: generated.definition });
     }
 
     return result;
@@ -235,6 +240,7 @@ const popMetricDefinition = (attribute, item) => {
 
     const result = [{
         element: identifier,
+        hash: hashItem(item),
         definition: {
             metricDefinition: {
                 identifier,
@@ -265,6 +271,7 @@ const contributionPoPMetricDefinition = (date, attribute, item) => {
 
     const result = [{
         element: identifier,
+        hash: hashItem(item),
         definition: {
             metricDefinition: {
                 identifier,
@@ -280,7 +287,7 @@ const contributionPoPMetricDefinition = (date, attribute, item) => {
     return flatten(result);
 };
 
-const categoryToElement = c => ({ element: get(c, 'displayForm') });
+const categoryToElement = c => ({ element: get(c, 'displayForm'), hash: hashItem(c) });
 
 const attributeFilterToWhere = f => {
     const dfUri = get(f, 'listAttributeFilter.displayForm');
@@ -302,7 +309,7 @@ const dateFilterToWhere = f => {
     return { [dimensionUri]: { '$between': between, '$granularity': granularity } };
 };
 
-const metricToDefinition = metric => ({ element: get(metric, 'objectUri') });
+const metricToDefinition = metric => ({ element: get(metric, 'objectUri'), hash: hashItem(metric) });
 const isDateFilterExecutable = dateFilter =>
     get(dateFilter, 'from') !== undefined &&
     get(dateFilter, 'to') !== undefined;
@@ -313,6 +320,7 @@ const isAttributeFilterExecutable = listAttributeFilter =>
 export const mdToExecutionConfiguration = (mdObj) => {
     const { filters } = mdObj;
     const measures = map(mdObj.measures, ({measure}) => measure);
+    const measureSort = map(measures, hashItem);
     const categories = map(mdObj.categories, ({category}) => category);
     const attributes = map(categories, categoryToElement);
     const contributionMetrics = map(
@@ -343,21 +351,31 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const dateFilters = map(filter(filters, ({ dateFilter }) => isDateFilterExecutable(dateFilter)), dateFilterToWhere);
 
     const allMetrics = [].concat(
-        attributes,
         factMetrics,
         attributeMetrics,
-        flatten(popMetrics),
+        popMetrics,
         metrics,
-        flatten(contributionMetrics),
-        flatten(contributionPoPMetrics)
+        contributionMetrics,
+        contributionPoPMetrics
+    );
+
+    const allMetricsSorted = map(measureSort, (hash) => {
+        return filter(flatten(allMetrics), metric => {
+            return metric.hash === hash;
+        });
+    });
+
+    const allItems = [].concat(
+        attributes,
+        flatten(allMetricsSorted)
     );
 
     const where = [].concat(attributeFilters, dateFilters).reduce(assign, {});
 
     return { execution: {
-        columns: filter(map(allMetrics, 'element'), identity),
+        columns: filter(map(allItems, 'element'), identity),
         where,
-        definitions: filter(map(allMetrics, 'definition'), identity)
+        definitions: filter(map(allItems, 'definition'), identity)
     } };
 };
 
