@@ -539,6 +539,23 @@ describe('execution', () => {
                     executionConfiguration
                 );
             });
+
+            it('doesn\'t set sort data on generated PoP column', () => {
+                mdObj.measures[0].measure.showPoP = true;
+                mdObj.measures = mdObj.measures.slice(1);
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObj);
+
+                expectOrderBy(
+                    [
+                        {
+                            column: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                            direction: 'asc'
+                        }
+                    ],
+                    executionConfiguration
+                );
+            });
         });
 
         describe('generating contribution metric', () => {
