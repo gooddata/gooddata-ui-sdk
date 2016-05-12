@@ -48,6 +48,7 @@
     "webpack-dev-server": "1.12.1"
   },
   "dependencies": {
+    "invariant": "2.2.1",
     "lodash": "4.11.0",
     "md5": "2.1.0"
   }
