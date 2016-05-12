@@ -1,6 +1,6 @@
 {
   "name": "gooddata",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "homepage": "https://github.com/gooddata/gooddata-js",
   "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
   "authors": [
