@@ -194,7 +194,7 @@ const getDate = mdObj => (getDateCategory(mdObj) || getDateFilter(mdObj));
 
 const createPureMetric = measure => ({
     element: get(measure, 'objectUri'),
-    sort: !measure.showPoP ? get(measure, 'sort') : null
+    sort: get(measure, 'sort')
 });
 
 const createDerivedMetric = measure => {
@@ -272,8 +272,7 @@ const createPoPMetric = (measure, mdObj) => {
                 title,
                 format
             }
-        },
-        sort: get(measure, 'sort')
+        }
     }];
 
     if (generated) {
@@ -307,8 +306,7 @@ const createContributionPoPMetric = (measure, mdObj) => {
                 title,
                 format
             }
-        },
-        sort: get(measure, 'sort')
+        }
     }];
 
     result.push(generated);
