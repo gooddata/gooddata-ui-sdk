@@ -163,7 +163,7 @@ export const requestForMeasureWithFilterAndCategory = {
             'limit': 100
         },
         'bucketItems': [
-            '/gdc/md/FoodMartDemo/obj/117',
+            '/gdc/md/FoodMartDemo/obj/54',
             'SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) WHERE [/gdc/md/FoodMartDemo/obj/58] IN ([/gdc/md/FoodMartDemo/obj/58/elements?id=1000])'
         ]
     }
@@ -236,7 +236,7 @@ export const requestForMeasureWithShowInPercent = {
             'limit': 100
         },
         'bucketItems': [
-            '/gdc/md/FoodMartDemo/obj/117',
+            '/gdc/md/FoodMartDemo/obj/54',
             'SELECT (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) WHERE [/gdc/md/FoodMartDemo/obj/58] IN ([/gdc/md/FoodMartDemo/obj/58/elements?id=1000])) / (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) WHERE [/gdc/md/FoodMartDemo/obj/58] IN ([/gdc/md/FoodMartDemo/obj/58/elements?id=1000]) BY ALL [/gdc/md/FoodMartDemo/obj/54])'
         ]
     }

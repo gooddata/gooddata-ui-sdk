@@ -10,13 +10,31 @@ const REQUEST_DEFAULTS = {
     }
 };
 
+const parseCategories = (bucketItems) => (
+    get(bucketItems, 'categories').map(({ category }) => ({
+            category: {
+                ...category,
+                displayForm: get(category, 'attribute')
+            }
+        })
+    )
+);
+
 function bucketItemsToExecConfig(bucketItems) {
-    const executionConfig = mdToExecutionConfiguration(bucketItems);
+    const categories = parseCategories(bucketItems);
+    const executionConfig = mdToExecutionConfiguration({
+        ...bucketItems,
+        categories
+    });
     const definitions = get(executionConfig, 'execution.definitions');
-    const idToExpr = fromPairs(definitions.map(({ metricDefinition }) => [metricDefinition.identifier, metricDefinition.expression] ));
+    const idToExpr = fromPairs(definitions.map(
+        ({ metricDefinition }) =>
+            [metricDefinition.identifier, metricDefinition.expression] ));
 
     return get(executionConfig, 'execution.columns').map(column => {
-        const definition = find(definitions, ({ metricDefinition }) => get(metricDefinition, 'identifier') === column);
+        const definition = find(definitions, ({ metricDefinition }) =>
+            get(metricDefinition, 'identifier') === column
+        );
         const maql = get(definition, 'metricDefinition.expression');
 
         if (maql) {
