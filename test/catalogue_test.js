@@ -95,5 +95,16 @@ describe('Catalogue', () => {
                 done();
             });
         });
+
+        it('should not override bucketItems prop', (done) => {
+            const dummyUri = '__dummy_uri__';
+            catalogue.loadItems(projectId, { bucketItems: [dummyUri] });
+            setTimeout(() => {
+                const ajaxCall = ajax.getCall(0);
+                const { bucketItems } = ajaxCall.args[1].data.catalogRequest;
+                expect(bucketItems).to.be.eql([dummyUri]);
+                done();
+            }, 0);
+        });
     });
 });

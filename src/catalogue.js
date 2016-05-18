@@ -42,7 +42,15 @@ export function loadItems(projectId, options = {}) {
 
     if (bucketItems) {
         bucketItems = bucketItemsToExecConfig(bucketItems);
+        return loadCatalog(
+            projectId,
+            {
+                ...REQUEST_DEFAULTS,
+                ...options,
+                bucketItems
+            }
+        );
     }
 
-    return loadCatalog(projectId, { ...REQUEST_DEFAULTS, ...options, bucketItems });
+    return loadCatalog(projectId, { ...REQUEST_DEFAULTS, ...options });
 }
