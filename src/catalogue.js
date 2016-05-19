@@ -1,4 +1,4 @@
-import { get, fromPairs, trim, find } from 'lodash';
+import { get, fromPairs, trim, find, omit } from 'lodash';
 import * as xhr from './xhr';
 import { mdToExecutionConfiguration } from './execution';
 
@@ -8,6 +8,10 @@ const REQUEST_DEFAULTS = {
     paging: {
         offset: 0
     }
+};
+const LOAD_DATE_DATASET_DEFAULTS = {
+    includeUnavailableDateDataSetsCount: true,
+    includeAvailableDateAttributes: true
 };
 
 const parseCategories = (bucketItems) => (
@@ -71,4 +75,30 @@ export function loadItems(projectId, options = {}) {
     }
 
     return loadCatalog(projectId, { ...REQUEST_DEFAULTS, ...options });
+}
+
+function requestDateDataSets(projectId, request) {
+    const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
+
+    return xhr.ajax(uri, {
+        type: 'POST',
+        data: { dateDataSetsRequest: request }
+    });
+}
+
+export function loadDateDataSets(projectId, options) {
+    let bucketItems = get(options, 'bucketItems.buckets');
+
+    if (bucketItems) {
+        bucketItems = bucketItemsToExecConfig(bucketItems);
+    }
+
+    const request = omit({
+        ...LOAD_DATE_DATASET_DEFAULTS,
+        ...REQUEST_DEFAULTS,
+        ...options,
+        bucketItems
+    }, ['filter', 'types', 'paging', 'dataSetIdentifier']);
+
+    return requestDateDataSets(projectId, request);
 }
