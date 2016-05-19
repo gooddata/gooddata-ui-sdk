@@ -1,6 +1,7 @@
 import * as fixtures from './fixtures/catalogue';
 import * as xhr from '../src/xhr';
 import * as catalogue from '../src/catalogue';
+import { get } from 'lodash';
 
 import Promise from 'bluebird';
 
@@ -36,9 +37,11 @@ describe('Catalogue', () => {
 
             setTimeout(() => {
                 const ajaxCall = ajax.getCall(0);
-
-                expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
-
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
+                expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
+                    get(options, 'bucketItems.buckets.categories[0].category.attribute')
+                );
                 done();
             });
         });
@@ -62,9 +65,11 @@ describe('Catalogue', () => {
 
             setTimeout(() => {
                 const ajaxCall = ajax.getCall(0);
-
-                expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
-
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
+                expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
+                    get(options, 'bucketItems.buckets.categories[0].category.attribute')
+                );
                 done();
             });
         });
@@ -94,6 +99,17 @@ describe('Catalogue', () => {
 
                 done();
             });
+        });
+
+        it('should not override bucketItems prop', (done) => {
+            const dummyUri = '__dummy_uri__';
+            catalogue.loadItems(projectId, { bucketItems: [dummyUri] });
+            setTimeout(() => {
+                const ajaxCall = ajax.getCall(0);
+                const { bucketItems } = ajaxCall.args[1].data.catalogRequest;
+                expect(bucketItems).to.be.eql([dummyUri]);
+                done();
+            }, 0);
         });
     });
 });
