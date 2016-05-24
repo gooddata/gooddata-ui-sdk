@@ -8,6 +8,7 @@ import {
 } from './xhr';
 
 import Rules from './utils/rules';
+import { sortDefinitions } from './utils/definitions';
 
 import invariant from 'invariant';
 import {
@@ -403,7 +404,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     return { execution: {
         columns: compact(map(allItems, 'element')),
         orderBy: map(filter(allItems, item => item.sort), sortToOrderBy),
-        definitions: compact(map(metrics, 'definition')),
+        definitions: sortDefinitions(compact(map(metrics, 'definition'))),
         where: getWhere(mdObj)
     } };
 };
