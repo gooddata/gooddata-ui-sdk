@@ -582,3 +582,207 @@ export const loadCatalogResponse = {
         }
    ]
 };
+
+export const loadDateDataSetsResponse = {
+    'dateDataSetsResponse': {
+        'unavailableDateDataSetsCount': 1,
+        'dateDataSets': [
+            {
+                'relevance': 0,
+                'availableDateAttributes': [
+                    {
+                        'attributeMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2003',
+                            'tags': 'date year',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.year',
+                            'summary': 'Year',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attribute',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Year (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        },
+                        'type': 'GDC.time.year',
+                        'defaultDisplayFormMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2005',
+                            'tags': '',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.aag81lMifn6q',
+                            'summary': 'DisplayForm Year.',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attributeDisplayForm',
+                            'updated': '2016-06-01 11:08:54',
+                            'title': 'Year (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        }
+                    },
+                    {
+                        'attributeMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2043',
+                            'tags': 'date eu week',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.euweek',
+                            'summary': 'Week/Year based on EU Weeks (Mon-Sun). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \'Continuous\' show both weeks (W53/2009 - W1/2010).',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attribute',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Week (Mon-Sun)/Year (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        },
+                        'type': 'GDC.time.week',
+                        'defaultDisplayFormMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2053',
+                            'tags': '',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.aa281lMifn6q',
+                            'summary': 'DisplayForm Week #/Year (W1/2010).',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attributeDisplayForm',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Week #/Year (W1/2010) (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        }
+                    },
+                    {
+                        'attributeMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2129',
+                            'tags': 'date quarter',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.quarter',
+                            'summary': 'Quarter and Year (Q1/2010)',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attribute',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Quarter/Year (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        },
+                        'type': 'GDC.time.quarter',
+                        'defaultDisplayFormMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2131',
+                            'tags': '',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.aci81lMifn6q',
+                            'summary': 'DisplayForm US Short.',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attributeDisplayForm',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'US Short (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        }
+                    },
+                    {
+                        'attributeMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2140',
+                            'tags': 'date month',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.month',
+                            'summary': 'Month and Year',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attribute',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Month/Year (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        },
+                        'type': 'GDC.time.month',
+                        'defaultDisplayFormMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2142',
+                            'tags': '',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.act81lMifn6q',
+                            'summary': 'DisplayForm Short (Jan 2010).',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attributeDisplayForm',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'Short (Jan 2010) (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        }
+                    },
+                    {
+                        'attributeMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2167',
+                            'tags': 'date',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.date',
+                            'summary': 'Date',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attribute',
+                            'updated': '2016-06-01 11:08:56',
+                            'title': 'Date (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        },
+                        'type': 'GDC.time.date',
+                        'defaultDisplayFormMeta': {
+                            'locked': 0,
+                            'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                            'uri': '/gdc/md/FoodMartDemo/obj/2173',
+                            'tags': '',
+                            'created': '2010-08-02 08:13:42',
+                            'deprecated': '0',
+                            'identifier': 'paydate.date.mmddyyyy',
+                            'summary': 'DisplayForm mm/dd/yyyy.',
+                            'isProduction': 0,
+                            'unlisted': 0,
+                            'category': 'attributeDisplayForm',
+                            'updated': '2016-06-01 11:08:55',
+                            'title': 'mm/dd/yyyy (Paydate)',
+                            'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                        }
+                    }
+                ],
+                'meta': {
+                    'locked': 0,
+                    'author': '/gdc/account/profile/2901168e72fbedfead70f65da539c160',
+                    'uri': '/gdc/md/FoodMartDemo/obj/2180',
+                    'tags': '',
+                    'created': '2010-08-02 08:13:42',
+                    'deprecated': '0',
+                    'identifier': 'paydate.dataset.dt',
+                    'summary': 'DataSet Date',
+                    'isProduction': 0,
+                    'unlisted': 0,
+                    'category': 'dataSet',
+                    'updated': '2016-06-01 11:08:55',
+                    'title': 'Date (Paydate)',
+                    'contributor': '/gdc/account/profile/2901168e72fbedfead70f65da539c160'
+                }
+            }
+        ]
+    }
+};

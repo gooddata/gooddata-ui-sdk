@@ -93,10 +93,17 @@ export function loadDateDataSets(projectId, options) {
         bucketItems = bucketItemsToExecConfig(bucketItems);
     }
 
+    // /loadDateDataSets has different parameter for dataSet loading then /loadCatalog
+    // see https://github.com/gooddata/gdc-bear/blob/develop/resources/specification/internal/date_data_sets.res
+    const requestSpecificOptions = {
+        csvDataSetIdentifier: get(options, 'dataSetIdentifier')
+    };
+
     const request = omit({
         ...LOAD_DATE_DATASET_DEFAULTS,
         ...REQUEST_DEFAULTS,
         ...options,
+        ...requestSpecificOptions,
         bucketItems
     }, ['filter', 'types', 'paging', 'dataSetIdentifier']);
 
