@@ -114,6 +114,23 @@ export function getData(projectId, elements, executionConfiguration = {}) {
     return d.promise();
 }
 
+const MAX_TITLE_LENGTH = 255;
+const getMetricTitle = (suffix, title) => {
+    const maxLength = MAX_TITLE_LENGTH - suffix.length;
+    if (title && title.length > maxLength) {
+        if (title[title.length - 1] === ')') {
+            return `${title.substring(0, maxLength - 2)}…)${suffix}`;
+        }
+        return `${title.substring(0, maxLength - 1)}…${suffix}`;
+    }
+    return `${title}${suffix}`;
+};
+
+const getBaseMetricTitle = partial(getMetricTitle, '');
+
+const POP_SUFFIX = ' - previous year';
+const getPoPMetricTitle = partial(getMetricTitle, POP_SUFFIX);
+
 const CONTRIBUTION_METRIC_FORMAT = '#,##0.00%';
 
 const getFilterExpression = listAttributeFilter => {
@@ -199,7 +216,8 @@ const createPureMetric = measure => ({
 });
 
 const createDerivedMetric = measure => {
-    const { title, format, sort } = measure;
+    const { format, sort } = measure;
+    const title = getBaseMetricTitle(measure.title);
 
     const hasher = partial(getGeneratedMetricHash, title, format);
     const aggregation = get(measure, 'aggregation', 'base').toLowerCase();
@@ -225,7 +243,7 @@ const createContributionMetric = (measure, mdObj) => {
         generated = createDerivedMetric(measure);
         getMetricExpression = partial(getPercentMetricExpression, category, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
-    const title = `% ${get(measure, 'title')}`.replace(/^(% )+/, '% ');
+    const title = getBaseMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
     const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
     const result = [{
         element: getGeneratedMetricIdentifier(measure, 'percent', getMetricExpression, hasher),
@@ -248,7 +266,7 @@ const createContributionMetric = (measure, mdObj) => {
 };
 
 const createPoPMetric = (measure, mdObj) => {
-    const title = `${get(measure, 'title')} - previous year`;
+    const title = getPoPMetricTitle(get(measure, 'title'));
     const format = get(measure, 'format');
     const hasher = partial(getGeneratedMetricHash, title, format);
 
@@ -289,8 +307,8 @@ const createContributionPoPMetric = (measure, mdObj) => {
     const date = getDate(mdObj);
 
     const generated = createContributionMetric(measure, mdObj);
+    const title = getPoPMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
 
-    const title = `% ${get(measure, 'title')} - previous year`.replace(/^(% )+/, '% ');
     const format = CONTRIBUTION_METRIC_FORMAT;
     const hasher = partial(getGeneratedMetricHash, title, format);
 
