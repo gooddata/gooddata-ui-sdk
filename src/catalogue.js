@@ -27,8 +27,10 @@ const parseCategories = (bucketItems) => (
 function bucketItemsToExecConfig(bucketItems) {
     const categories = parseCategories(bucketItems);
     const executionConfig = mdToExecutionConfiguration({
-        ...bucketItems,
-        categories
+        buckets: {
+            ...bucketItems,
+            categories
+        }
     });
     const definitions = get(executionConfig, 'execution.definitions');
     const idToExpr = fromPairs(definitions.map(

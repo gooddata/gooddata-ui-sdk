@@ -394,23 +394,34 @@ function getWhere({ filters }) {
 
 const sortToOrderBy = item => ({ column: get(item, 'element'), direction: get(item, 'sort') });
 
-export const mdToExecutionConfiguration = (mdObj) => {
-    const measures = map(mdObj.measures, ({ measure }) => measure);
-    const metrics = flatten(map(measures, measure => getMetricFactory(measure)(measure, mdObj)));
+const getOrderBy = (metrics, categories, type) => {
+    // For bar chart we always override sorting to sort by values (first metric)
+    if (type === 'bar' && notEmpty(metrics)) {
+        return [{
+            column: first(compact(map(metrics, 'element'))),
+            direction: 'desc'
+        }];
+    }
 
-    const categories = map(getCategories(mdObj), categoryToElement);
-    const allItems = [...categories, ...metrics];
+    return map(filter([...categories, ...metrics], item => item.sort), sortToOrderBy);
+};
+
+export const mdToExecutionConfiguration = (mdObj) => {
+    const buckets = get(mdObj, 'buckets');
+    const measures = map(buckets.measures, ({ measure }) => measure);
+    const metrics = flatten(map(measures, measure => getMetricFactory(measure)(measure, buckets)));
+    const categories = map(getCategories(buckets), categoryToElement);
 
     return { execution: {
-        columns: compact(map(allItems, 'element')),
-        orderBy: map(filter(allItems, item => item.sort), sortToOrderBy),
+        columns: compact(map([...categories, ...metrics], 'element')),
+        orderBy: getOrderBy(metrics, categories, get(mdObj, 'type')),
         definitions: sortDefinitions(compact(map(metrics, 'definition'))),
-        where: getWhere(mdObj)
+        where: getWhere(buckets)
     } };
 };
 
 export const getDataForVis = (projectId, mdObj) => {
-    const { execution } = mdToExecutionConfiguration(get(mdObj, 'buckets'));
+    const { execution } = mdToExecutionConfiguration(mdObj);
     const { columns, ...executionConfiguration } = execution;
     return getData(projectId, columns, executionConfiguration);
 };
