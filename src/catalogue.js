@@ -9,6 +9,10 @@ const REQUEST_DEFAULTS = {
         offset: 0
     }
 };
+
+const ID_REGEXP = /\{[^}]+\}/g;
+const WHERE_REGEXP = /\s+WHERE\s+\[[^\]]+\]\s+(NOT\s+)*IN\s+\([^)]+\)/g;
+
 const LOAD_DATE_DATASET_DEFAULTS = {
     includeUnavailableDateDataSetsCount: true,
     includeAvailableDateAttributes: true
@@ -44,9 +48,9 @@ function bucketItemsToExecConfig(bucketItems) {
         const maql = get(definition, 'metricDefinition.expression');
 
         if (maql) {
-            return maql.replace(/{[^}]+}/g, (match) => {
+            return maql.replace(ID_REGEXP, match => {
                 const expression = idToExpr[trim(match, '{}')];
-                return expression.substr(SELECT_LENGTH);
+                return expression.substr(SELECT_LENGTH).replace(WHERE_REGEXP, '');
             });
         }
         return column;

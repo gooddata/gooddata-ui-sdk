@@ -1,7 +1,7 @@
 import * as fixtures from './fixtures/catalogue';
 import * as xhr from '../src/xhr';
 import * as catalogue from '../src/catalogue';
-import { get } from 'lodash';
+import { get, set } from 'lodash';
 
 import Promise from 'bluebird';
 
@@ -103,6 +103,27 @@ describe('Catalogue', () => {
                     expect(bucketItems).to.be.eql([dummyUri]);
                     done();
                 }, 0);
+            });
+
+            it('should correctly resolve items with nested maql expressions', () => {
+                const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
+
+                catalogue.loadItems(projectId, options);
+
+                const ajaxCall = ajax.getCall(0);
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
+            });
+
+            it('should correctly resolve items with nested maql expressions and negative filter element selection', () => {
+                const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
+                set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
+
+                catalogue.loadItems(projectId, options);
+
+                const ajaxCall = ajax.getCall(0);
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
             });
         });
     });
