@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
-import { cloneDeep } from 'lodash';
+import { cloneDeep, range } from 'lodash';
 
 import * as ex from '../src/execution';
 import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from './helpers/execution';
@@ -602,6 +602,28 @@ describe('execution', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObj);
 
                 expectOrderBy([], executionConfiguration);
+            });
+
+            it('ensures measure title length does not exceed 255 chars', () => {
+                mdObj.buckets.measures = [
+                    {
+                        'measure': {
+                            'type': 'fact',
+                            'aggregation': 'sum',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            'title': `Sum of Amount (${range(0, 300).map(() => 'element')})`,
+                            'format': '#,##0.00',
+                            'showPoP': true,
+                            'showInPercent': true
+                        }
+                    }
+                ];
+
+                const execConfig = ex.mdToExecutionConfiguration(mdObj);
+
+                execConfig.execution.definitions.forEach(definition => {
+                    expect(definition.metricDefinition.title).to.have.length(255);
+                });
             });
         });
 
