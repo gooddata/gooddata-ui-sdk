@@ -169,6 +169,79 @@ export const requestForMeasureWithFilterAndCategory = {
     }
 };
 
+export const optionsForMeasureWithFilterAndCategoryShowInPercent = {
+  'types': [
+    'metric',
+    'attribute',
+    'fact'
+  ],
+  'paging': {
+    'offset': 0,
+    'limit': 100
+  },
+  'bucketItems': {
+    'type': 'column',
+    'buckets': {
+      'measures': [
+        {
+          'measure': {
+            'type': 'fact',
+            'aggregation': 'sum',
+            'objectUri': '/gdc/md/FoodMartDemo/obj/1',
+            'title': 'Sum of Accounting Amount',
+            'format': '#,##0.00',
+            'measureFilters': [
+              {
+                'listAttributeFilter': {
+                  'attribute': '/gdc/md/FoodMartDemo/obj/58',
+                  'displayForm': '/gdc/md/FoodMartDemo/obj/124',
+                  'default': {
+                    'negativeSelection': false,
+                    'attributeElements': [
+                      '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                    ]
+                  }
+                }
+              }
+            ],
+            'showInPercent': true,
+            'showPoP': false
+          }
+        }
+      ],
+      'categories': [
+        {
+          'category': {
+            'type': 'attribute',
+            'collection': 'view',
+            'attribute': '/gdc/md/FoodMartDemo/obj/54',
+            'displayForm': '/gdc/md/FoodMartDemo/obj/117'
+          }
+        }
+      ],
+      'filters': []
+    }
+  }
+};
+
+export const requestForMeasureWithFilterAndCategoryShowInPercent = {
+    catalogRequest: {
+        'types': [
+            'metric',
+            'attribute',
+            'fact'
+        ],
+        'paging': {
+            'offset': 0,
+            'limit': 100
+        },
+        'bucketItems': [
+            '/gdc/md/FoodMartDemo/obj/54',
+            'SELECT (SELECT SUM([/gdc/md/FoodMartDemo/obj/1])) / (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) BY ALL [/gdc/md/FoodMartDemo/obj/54])'
+        ]
+    }
+};
+
 export const optionsForMeasureWithShowInPercent = {
     'types': [
         'metric',
@@ -237,7 +310,7 @@ export const requestForMeasureWithShowInPercent = {
         },
         'bucketItems': [
             '/gdc/md/FoodMartDemo/obj/54',
-            'SELECT (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) WHERE [/gdc/md/FoodMartDemo/obj/58] IN ([/gdc/md/FoodMartDemo/obj/58/elements?id=1000])) / (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) WHERE [/gdc/md/FoodMartDemo/obj/58] IN ([/gdc/md/FoodMartDemo/obj/58/elements?id=1000]) BY ALL [/gdc/md/FoodMartDemo/obj/54])'
+            'SELECT (SELECT SUM([/gdc/md/FoodMartDemo/obj/1])) / (SELECT SUM([/gdc/md/FoodMartDemo/obj/1]) BY ALL [/gdc/md/FoodMartDemo/obj/54])'
         ]
     }
 };
