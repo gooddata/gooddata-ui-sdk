@@ -155,11 +155,37 @@ describe('Catalogue', () => {
         });
 
         it('should send convert dataSetIdentifier to csvDataSetIdentifier', () => {
-            const dataSetIdentifier = 'my_identidier';
+            const dataSetIdentifier = 'my_identifier';
             return catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
                 const ajaxCall = ajax.getCall(0);
                 const { csvDataSetIdentifier } = ajaxCall.args[1].data.dateDataSetsRequest;
                 expect(csvDataSetIdentifier).to.be(dataSetIdentifier);
+            });
+        });
+
+        it('should send empty columns if only date buckets are in the request', () => {
+            const mockPayload = {
+                bucketItems: {
+                    buckets: {
+                        categories: [{
+                            category: {
+                                type: 'date',
+                                attribute: '/attr1'
+                            }
+                        }],
+                        filters: [{
+                            dateFilter: {
+                                type: 'relative', // does not matter
+                                attribute: '/attr1'
+                            }
+                        }]
+                    }
+                }
+            };
+            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
+                const call = ajax.getCall(0);
+                const items = call.args[1].data.dateDataSetsRequest.bucketItems;
+                expect(items).to.have.length(0);
             });
         });
     });

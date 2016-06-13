@@ -1,4 +1,4 @@
-import { get, fromPairs, trim, find, omit } from 'lodash';
+import { get, fromPairs, trim, find, omit, every, flatten, values, cloneDeep } from 'lodash';
 import * as xhr from './xhr';
 import { mdToExecutionConfiguration } from './execution';
 
@@ -66,7 +66,7 @@ function loadCatalog(projectId, request) {
 }
 
 export function loadItems(projectId, options = {}) {
-    let bucketItems = get(options, 'bucketItems.buckets');
+    let bucketItems = get(cloneDeep(options), 'bucketItems.buckets');
 
     if (bucketItems) {
         bucketItems = bucketItemsToExecConfig(bucketItems);
@@ -92,10 +92,17 @@ function requestDateDataSets(projectId, request) {
     });
 }
 
-export function loadDateDataSets(projectId, options) {
-    let bucketItems = get(options, 'bucketItems.buckets');
+const hasOnlyDateBucketItems = buckets => every(
+    flatten(values(buckets)),
+    item => (get(values(item)[0], 'type', '') === 'date' || item.dateFilter)
+);
 
-    if (bucketItems) {
+export function loadDateDataSets(projectId, options) {
+    let bucketItems = get(cloneDeep(options), 'bucketItems.buckets');
+
+    if (bucketItems && hasOnlyDateBucketItems(bucketItems)) {
+        bucketItems = [];
+    } else if (bucketItems) {
         bucketItems = bucketItemsToExecConfig(bucketItems);
     }
 
