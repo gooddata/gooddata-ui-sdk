@@ -429,12 +429,13 @@ export const mdToExecutionConfiguration = (mdObj) => {
     const measures = map(buckets.measures, ({ measure }) => measure);
     const metrics = flatten(map(measures, measure => getMetricFactory(measure)(measure, buckets)));
     const categories = map(getCategories(buckets), categoryToElement);
+    const columns = compact(map([...categories, ...metrics], 'element'));
 
     return { execution: {
-        columns: compact(map([...categories, ...metrics], 'element')),
+        columns,
         orderBy: getOrderBy(metrics, categories, get(mdObj, 'type')),
         definitions: sortDefinitions(compact(map(metrics, 'definition'))),
-        where: getWhere(buckets)
+        where: columns.length ? getWhere(buckets) : {}
     } };
 };
 
