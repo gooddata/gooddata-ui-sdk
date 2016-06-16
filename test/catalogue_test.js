@@ -149,17 +149,33 @@ describe('Catalogue', () => {
                     includeUnavailableDateDataSetsCount: true,
                     includeAvailableDateAttributes: true,
                     bucketItems: undefined,
-                    csvDataSetIdentifier: undefined
+                    requiredDataSets: {
+                        type: 'PRODUCTION'
+                    }
                 });
             });
         });
 
-        it('should send convert dataSetIdentifier to csvDataSetIdentifier', () => {
+        it('should send convert dataSetIdentifier to customIdentifiers', () => {
             const dataSetIdentifier = 'my_identifier';
             return catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
                 const ajaxCall = ajax.getCall(0);
-                const { csvDataSetIdentifier } = ajaxCall.args[1].data.dateDataSetsRequest;
-                expect(csvDataSetIdentifier).to.be(dataSetIdentifier);
+                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+                expect(requiredDataSets).to.eql({
+                    type: 'CUSTOM',
+                    customIdentifiers: [ dataSetIdentifier ]
+                });
+            });
+        });
+
+        it('should send type ALL when sending returnAllDateDataSets', () => {
+            const returnAllDateDataSets = true;
+            return catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
+                const ajaxCall = ajax.getCall(0);
+                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+                expect(requiredDataSets).to.eql({
+                    type: 'ALL'
+                });
             });
         });
 

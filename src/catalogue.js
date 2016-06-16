@@ -108,17 +108,29 @@ export function loadDateDataSets(projectId, options) {
 
     // /loadDateDataSets has different parameter for dataSet loading then /loadCatalog
     // see https://github.com/gooddata/gdc-bear/blob/develop/resources/specification/internal/date_data_sets.res
-    const requestSpecificOptions = {
-        csvDataSetIdentifier: get(options, 'dataSetIdentifier')
-    };
+    let requiredDataSets;
+    if (get(options, 'returnAllDateDataSets')) {
+        requiredDataSets = {
+            type: 'ALL'
+        };
+    } else if (get(options, 'dataSetIdentifier')) {
+        requiredDataSets = {
+            type: 'CUSTOM',
+            customIdentifiers: [ get(options, 'dataSetIdentifier') ]
+        };
+    } else {
+        requiredDataSets = {
+            type: 'PRODUCTION'
+        };
+    }
 
     const request = omit({
         ...LOAD_DATE_DATASET_DEFAULTS,
         ...REQUEST_DEFAULTS,
         ...options,
-        ...requestSpecificOptions,
+        requiredDataSets,
         bucketItems
-    }, ['filter', 'types', 'paging', 'dataSetIdentifier']);
+    }, ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets']);
 
     return requestDateDataSets(projectId, request);
 }
