@@ -133,6 +133,24 @@ describe('user', () => {
             });
         });
 
+        describe('updateProfileSettings', () => {
+            it('should update user\'s settings', done => {
+                const userId = 'USER_ID';
+
+                server.respondWith(
+                    '/gdc/account/profile/' + userId + '/settings',
+                    [400, {'Content-Type': 'application/json'}, '']
+                );
+                user.updateProfileSettings(userId, []).then(function() {
+                    expect().fail('Should reject with 400');
+                    done();
+                }, function(err) {
+                    expect(err.status).to.be(400);
+                    done();
+                });
+            });
+        });
+
         describe('Account info', () => {
             it('should return info about account', done => {
                 const login = 'LOGIN';
@@ -179,4 +197,3 @@ describe('user', () => {
         });
     });
 });
-

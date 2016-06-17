@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
-import { ajax, get, post } from './xhr';
+import { ajax, get, post, put } from './xhr';
 
 /**
  * @module user
@@ -68,6 +68,24 @@ export function logout() {
 }
 
 /**
+ * Updates user's profile settings
+ * @method updateProfileSettings
+ * @param {String} profileId - User profile identifier
+ * @param {Object} profileSetting
+*/
+export function updateProfileSettings(profileId, profileSetting) {
+    /*eslint-disable new-cap*/
+    const d = $.Deferred();
+    /*eslint-enable new-cap*/
+
+    put('/gdc/account/profile/' + profileId + '/settings', {
+        data: profileSetting
+    }).then(d.resolve, d.reject);
+
+    return d.promise();
+}
+
+/**
  * Returns info about currently logged in user from bootstrap resource
  * @method getAccountInfo
  */
@@ -91,4 +109,3 @@ export function getAccountInfo() {
 
     return d.promise();
 }
-
