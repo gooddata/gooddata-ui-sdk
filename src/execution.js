@@ -20,6 +20,7 @@ import {
     every,
     get,
     isEmpty,
+    isString,
     negate,
     last,
     assign,
@@ -28,6 +29,23 @@ import {
 } from 'lodash';
 
 const notEmpty = negate(isEmpty);
+
+const findHeaderForMappingFn = (mapping, header) =>
+    ((mapping.element === header.id || mapping.element === header.uri) && header.measureIndex === undefined);
+
+
+const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
+    if (metricMappings) {
+        metricMappings.forEach((mapping) => {
+            const header = find(headers, partial(findHeaderForMappingFn, mapping));
+            if (header) {
+                header.measureIndex = mapping.measureIndex;
+                header.isPoP = mapping.isPoP;
+            }
+        });
+    }
+    return headers;
+};
 
 /**
  * Module for execution on experimental execution resource
@@ -42,7 +60,7 @@ const notEmpty = negate(isEmpty);
  *
  * @method getData
  * @param {String} projectId - GD project identifier
- * @param {Array} elements - An array of attribute or metric identifiers.
+ * @param {Array} columns - An array of attribute or metric identifiers.
  * @param {Object} executionConfiguration - Execution configuration - can contain for example
  *                 property "filters" containing execution context filters
  *                 property "where" containing query-like filters
@@ -51,16 +69,14 @@ const notEmpty = negate(isEmpty);
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
-export function getData(projectId, elements, executionConfiguration = {}) {
+export function getData(projectId, columns, executionConfiguration = {}) {
     const executedReport = {
         isLoaded: false
     };
 
     // Create request and result structures
     const request = {
-        execution: {
-            columns: elements
-        }
+        execution: { columns }
     };
     // enrich configuration with supported properties such as
     // where clause with query-like filters or execution context filters
@@ -75,35 +91,15 @@ export function getData(projectId, elements, executionConfiguration = {}) {
     /*eslint-enable new-cap*/
 
     // Execute request
-    post('/gdc/internal/projects/' + projectId + '/experimental/executions', {
+    post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
         data: JSON.stringify(request)
-    }, d.reject).then(function resolveSimpleExecution(result) {
-        // TODO: when executionResult.headers will be globaly available columns map code should be removed
-        if (result.executionResult.headers) {
-            executedReport.headers = result.executionResult.headers;
-        } else {
-            // Populate result's header section if is not available
-            executedReport.headers = result.executionResult.columns.map(function mapColsToHeaders(col) {
-                if (col.attributeDisplayForm) {
-                    return {
-                        type: 'attrLabel',
-                        id: col.attributeDisplayForm.meta.identifier,
-                        uri: col.attributeDisplayForm.meta.uri,
-                        title: col.attributeDisplayForm.meta.title
-                    };
-                }
-                return {
-                    type: 'metric',
-                    id: col.metric.meta.identifier,
-                    uri: col.metric.meta.uri,
-                    title: col.metric.meta.title,
-                    format: col.metric.content.format
-                };
-            });
-        }
+    }, d.reject).then((result) => {
+        executedReport.headers = wrapMeasureIndexesFromMappings(
+            get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
+
         // Start polling on url returned in the executionResult for tabularData
         return ajax(result.executionResult.tabularDataResult);
-    }, d.reject).then(function resolveDataResultPolling(result, message, response) {
+    }, d.reject).then((result, message, response) => {
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
         executedReport.isLoaded = true;
@@ -210,12 +206,26 @@ const getDateFilter = mdObj => {
 
 const getDate = mdObj => (getDateCategory(mdObj) || getDateFilter(mdObj));
 
-const createPureMetric = measure => ({
+const getMetricSort = (sort, isPoPMetric) => {
+    if (isString(sort)) {
+        // TODO: backward compatibility, remove when not used plain "sort: asc | desc" in measures
+        return sort;
+    }
+
+    const sortByPoP = get(sort, 'sortByPoP');
+    if ((isPoPMetric && sortByPoP) || (!isPoPMetric && !sortByPoP)) {
+        return get(sort, 'direction');
+    }
+    return null;
+};
+
+const createPureMetric = (measure, mdObj, measureIndex) => ({
     element: get(measure, 'objectUri'),
-    sort: get(measure, 'sort')
+    sort: getMetricSort(get(measure, 'sort')),
+    meta: { measureIndex }
 });
 
-const createDerivedMetric = measure => {
+const createDerivedMetric = (measure, mdObj, measureIndex) => {
     const { format, sort } = measure;
     const title = getBaseMetricTitle(measure.title);
 
@@ -231,16 +241,23 @@ const createDerivedMetric = measure => {
         }
     };
 
-    return { element, definition, sort };
+    return {
+        element,
+        definition,
+        sort: getMetricSort(sort),
+        meta: {
+            measureIndex
+        }
+    };
 };
 
-const createContributionMetric = (measure, mdObj) => {
+const createContributionMetric = (measure, mdObj, measureIndex) => {
     const category = first(getCategories(mdObj));
 
     let generated;
     let getMetricExpression = partial(getPercentMetricExpression, category, `[${get(measure, 'objectUri')}]`);
     if (isDerived(measure)) {
-        generated = createDerivedMetric(measure);
+        generated = createDerivedMetric(measure, mdObj, measureIndex);
         getMetricExpression = partial(getPercentMetricExpression, category, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
     const title = getBaseMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
@@ -255,7 +272,10 @@ const createContributionMetric = (measure, mdObj) => {
                 format: CONTRIBUTION_METRIC_FORMAT
             }
         },
-        sort: get(measure, 'sort')
+        sort: getMetricSort(get(measure, 'sort')),
+        meta: {
+            measureIndex
+        }
     }];
 
     if (generated) {
@@ -265,7 +285,7 @@ const createContributionMetric = (measure, mdObj) => {
     return result;
 };
 
-const createPoPMetric = (measure, mdObj) => {
+const createPoPMetric = (measure, mdObj, measureIndex) => {
     const title = getPoPMetricTitle(get(measure, 'title'));
     const format = get(measure, 'format');
     const hasher = partial(getGeneratedMetricHash, title, format);
@@ -276,7 +296,7 @@ const createPoPMetric = (measure, mdObj) => {
     let getMetricExpression = partial(getPoPExpression, date, `[${get(measure, 'objectUri')}]`);
 
     if (isDerived(measure)) {
-        generated = createDerivedMetric(measure);
+        generated = createDerivedMetric(measure, mdObj, measureIndex);
         getMetricExpression = partial(getPoPExpression, date, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
 
@@ -291,22 +311,27 @@ const createPoPMetric = (measure, mdObj) => {
                 title,
                 format
             }
+        },
+        sort: getMetricSort(get(measure, 'sort'), true),
+        meta: {
+            measureIndex,
+            isPoP: true
         }
     }];
 
     if (generated) {
         result.push(generated);
     } else {
-        result.push(createPureMetric(measure));
+        result.push(createPureMetric(measure, mdObj, measureIndex));
     }
 
     return result;
 };
 
-const createContributionPoPMetric = (measure, mdObj) => {
+const createContributionPoPMetric = (measure, mdObj, measureIndex) => {
     const date = getDate(mdObj);
 
-    const generated = createContributionMetric(measure, mdObj);
+    const generated = createContributionMetric(measure, mdObj, measureIndex);
     const title = getPoPMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
 
     const format = CONTRIBUTION_METRIC_FORMAT;
@@ -325,6 +350,11 @@ const createContributionPoPMetric = (measure, mdObj) => {
                 title,
                 format
             }
+        },
+        sort: getMetricSort(get(measure, 'sort'), true),
+        meta: {
+            measureIndex,
+            isPoP: true
         }
     }];
 
@@ -427,20 +457,20 @@ const getOrderBy = (metrics, categories, type) => {
 export const mdToExecutionConfiguration = (mdObj) => {
     const buckets = get(mdObj, 'buckets');
     const measures = map(buckets.measures, ({ measure }) => measure);
-    const metrics = flatten(map(measures, measure => getMetricFactory(measure)(measure, buckets)));
+    const metrics = flatten(map(measures, (measure, index) => getMetricFactory(measure)(measure, buckets, index)));
     const categories = map(getCategories(buckets), categoryToElement);
     const columns = compact(map([...categories, ...metrics], 'element'));
 
-    return { execution: {
+    return {
         columns,
         orderBy: getOrderBy(metrics, categories, get(mdObj, 'type')),
         definitions: sortDefinitions(compact(map(metrics, 'definition'))),
-        where: columns.length ? getWhere(buckets) : {}
-    } };
+        where: columns.length ? getWhere(buckets) : {},
+        metricMappings: map(metrics, m => ({ element: m.element, ...m.meta }))
+    };
 };
 
 export const getDataForVis = (projectId, mdObj) => {
-    const { execution } = mdToExecutionConfiguration(mdObj);
-    const { columns, ...executionConfiguration } = execution;
+    const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
     return getData(projectId, columns, executionConfiguration);
 };

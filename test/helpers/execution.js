@@ -50,7 +50,7 @@ function getClosestMetricDefinition(definition, candidates) {
 }
 
 export function expectColumns(expected, reportDefinition) {
-    const actualColumns = get(reportDefinition, 'execution.columns');
+    const actualColumns = get(reportDefinition, 'columns');
 
     expected.forEach(expectedColumn => {
         if (!includes(actualColumns, expectedColumn)) {
@@ -62,7 +62,7 @@ export function expectColumns(expected, reportDefinition) {
 }
 
 export function expectMetricDefinition(expected, reportDefinition) {
-    const actualMetricDefinitions = get(reportDefinition, 'execution.definitions')
+    const actualMetricDefinitions = get(reportDefinition, 'definitions')
         .map(definition => get(definition, 'metricDefinition'));
 
     const defFound = find(actualMetricDefinitions, expected);
@@ -74,13 +74,13 @@ export function expectMetricDefinition(expected, reportDefinition) {
 }
 
 export function expectOrderBy(expected, reportDefinition) {
-    const actualOrderBy = get(reportDefinition, 'execution.orderBy');
+    const actualOrderBy = get(reportDefinition, 'orderBy');
 
     expect(expected).to.eql(actualOrderBy);
 }
 
 export function expectWhereCondition(expected, reportDefinition) {
-    const actualWhereCondition = get(reportDefinition, 'execution.where');
+    const actualWhereCondition = get(reportDefinition, 'where');
 
     expect(expected).to.eql(actualWhereCondition);
 }

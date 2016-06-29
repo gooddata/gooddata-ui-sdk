@@ -36,12 +36,12 @@ function bucketItemsToExecConfig(bucketItems) {
             categories
         }
     });
-    const definitions = get(executionConfig, 'execution.definitions');
+    const definitions = get(executionConfig, 'definitions');
     const idToExpr = fromPairs(definitions.map(
         ({ metricDefinition }) =>
             [metricDefinition.identifier, metricDefinition.expression] ));
 
-    return get(executionConfig, 'execution.columns').map(column => {
+    return get(executionConfig, 'columns').map(column => {
         const definition = find(definitions, ({ metricDefinition }) =>
             get(metricDefinition, 'identifier') === column
         );

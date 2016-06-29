@@ -46,59 +46,28 @@ describe('execution', () => {
                                 }
                             }
                         ],
+                        headers: [
+                            {
+                                id: 'attrId',
+                                title: 'Atribute Title',
+                                type: 'attrLabel',
+                                uri: 'attrUri'
+                            },
+                            {
+                                id: 'metricId',
+                                title: 'Metric Title',
+                                type: 'metric',
+                                uri: 'metricUri'
+                            }
+                        ],
                         tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
                     }
                 };
             });
 
             describe('getData', () => {
-                it('should resolve with JSON with correct data without headers', done => {
-                    server.respondWith(
-                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
-                        [200, {'Content-Type': 'application/json'},
-                        JSON.stringify(serverResponseMock)]
-                    );
-                    server.respondWith(
-                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
-                        [201, {'Content-Type': 'application/json'},
-                        JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
-                    );
-
-                    ex.getData('myFakeProjectId', ['attrId', 'metricId']).then(function(result) {
-                        expect(result.headers[0].id).to.be('attrId');
-                        expect(result.headers[0].uri).to.be('attrUri');
-                        expect(result.headers[0].type).to.be('attrLabel');
-                        expect(result.headers[0].title).to.be('Df Title');
-                        expect(result.headers[1].id).to.be('metricId');
-                        expect(result.headers[1].uri).to.be('metricUri');
-                        expect(result.headers[1].type).to.be('metric');
-                        expect(result.headers[1].title).to.be('Metric Title');
-                        expect(result.rawData[0]).to.be('a');
-                        expect(result.rawData[1]).to.be(1);
-                        done();
-                    }, function() {
-                        expect().fail('Should resolve with CSV data');
-                        done();
-                    });
-                });
-
                 it('should resolve with JSON with correct data including headers', done => {
                     const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
-
-                    responseMock.executionResult.headers = [
-                        {
-                            id: 'attrId',
-                            title: 'Atribute Title',
-                            type: 'attrLabel',
-                            uri: 'attrUri'
-                        },
-                        {
-                            id: 'metricId',
-                            title: 'Metric Title',
-                            type: 'metric',
-                            uri: 'metricUri'
-                        }
-                    ];
 
                     server.respondWith(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
@@ -183,6 +152,39 @@ describe('execution', () => {
                     }, function(err) {
                         expect(err.status).to.be(400);
                         done();
+                    });
+                });
+
+                it('should wrap response headers with metric mappings', () => {
+                    server.respondWith(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        [200, {'Content-Type': 'application/json'},
+                            JSON.stringify(serverResponseMock)]
+                    );
+                    server.respondWith(
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        [204, {'Content-Type': 'application/json'}, '']
+                    );
+
+                    return ex.getData(
+                        'myFakeProjectId',
+                        [{type: 'metric', uri: '/metric/uri'}],
+                        {
+                            metricMappings: [
+                                { element: 'metricUri', measureIndex: 0 }
+                            ]
+                        }
+                    ).then(function(result) {
+                        expect(result.headers[1]).to.eql({
+                            id: 'metricId',
+                            title: 'Metric Title',
+                            type: 'metric',
+                            uri: 'metricUri',
+                            measureIndex: 0,
+                            isPoP: undefined
+                        });
+                    }, function() {
+                        expect().fail('Should not fail when processing mappings');
                     });
                 });
             });
@@ -499,7 +501,7 @@ describe('execution', () => {
 
             it('does not execute all-time date filter', () => {
                 const mdWithAllTime = cloneDeep(mdObj);
-                mdWithAllTime.filters = [{
+                mdWithAllTime.buckets.filters = [{
                     'dateFilter': {
                         'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
                         'granularity': 'GDC.time.year'
@@ -507,12 +509,12 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithAllTime);
-                expect(executionConfiguration.where).to.be(undefined);
+                expect(executionConfiguration.where).to.eql({});
             });
 
             it('does not execute attribute filter with all selected', () => {
                 const mdWithSelectAll = cloneDeep(mdObj);
-                mdWithSelectAll.filters = [{
+                mdWithSelectAll.buckets.filters = [{
                     'listAttributeFilter': {
                         'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
                         'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
@@ -524,10 +526,97 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithSelectAll);
-                expect(executionConfiguration.where).to.be(undefined);
+                expect(executionConfiguration.where).to.eql({});
             });
 
-            it('propagates sort data from mertics and categories', () => {
+            it('generates right metricMappings', () => {
+                const mdObjCloned = cloneDeep(mdObj);
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObjCloned);
+                expect(executionConfiguration.metricMappings).to.eql([
+                    {
+                        element: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.filtered_sum.b9f95d95adbeac03870b764f8b2c3402',
+                        measureIndex: 0
+                    }, {
+                        element: 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
+                        measureIndex: 1
+                    }, {
+                        element: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        measureIndex: 2
+                    }, {
+                        element: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac',
+                        measureIndex: 3
+                    }
+                ]);
+            });
+
+            it('generates right metricMappings for PoP metric', () => {
+                const mdObjPoP = cloneDeep(mdObj);
+                mdObjPoP.buckets.measures = [{
+                    measure: {
+                        type: 'metric',
+                        objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        title: 'Probability BOP',
+                        format: '#,##0.00',
+                        measureFilters: [],
+                        showPoP: true,
+                        sort: {
+                            direction: 'asc',
+                            sortByPoP: true
+                        }
+                    }
+                }];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
+                expect(executionConfiguration.metricMappings).to.eql([
+                    {
+                        element: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1556.generated.pop.79eb21e7d5161a174a84acdd10371e2d',
+                        measureIndex: 0,
+                        isPoP: true
+                    },
+                    {
+                        element: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        measureIndex: 0
+                    }
+                ]);
+            });
+
+
+            it('generates metricMappings for two identical metrics', () => {
+                const mdObjPoP = cloneDeep(mdObj);
+                mdObjPoP.buckets.measures = [{
+                        measure: {
+                            type: 'metric',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            title: 'Probability BOP #1',
+                            format: '#,##0.00',
+                            measureFilters: []
+                        }
+                    },
+                    {
+                        measure: {
+                            type: 'metric',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                            title: 'Probability BOP #2',
+                            format: '#,##0.00',
+                            measureFilters: []
+                        }
+                    }
+                ];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
+                expect(executionConfiguration.metricMappings).to.eql([
+                    {
+                        element: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        measureIndex: 0
+                    },
+                    {
+                        element: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        measureIndex: 1
+                    }
+                ]);
+            });
+
+            it('propagates sort data from metrics and categories', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObj);
                 expectOrderBy(
                     [{
@@ -621,7 +710,7 @@ describe('execution', () => {
 
                 const execConfig = ex.mdToExecutionConfiguration(mdObj);
 
-                execConfig.execution.definitions.forEach(definition => {
+                execConfig.definitions.forEach(definition => {
                     expect(definition.metricDefinition.title).to.have.length(255);
                 });
             });
