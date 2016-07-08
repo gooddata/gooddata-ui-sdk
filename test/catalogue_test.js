@@ -1,7 +1,7 @@
 import * as fixtures from './fixtures/catalogue';
 import * as xhr from '../src/xhr';
 import * as catalogue from '../src/catalogue';
-import { get, set } from 'lodash';
+import { cloneDeep, get, set } from 'lodash';
 
 import Promise from 'bluebird';
 
@@ -124,6 +124,32 @@ describe('Catalogue', () => {
                 const ajaxCall = ajax.getCall(0);
                 const data = get(ajaxCall.args[1], 'data');
                 expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
+            });
+
+            it('should send from ALL dataSets type when passing returnAllDateDataSets param', () => {
+                const options = cloneDeep(fixtures.optionsForEmptySelection);
+                options.returnAllDateDataSets = true;
+
+                catalogue.loadItems(projectId, options);
+
+                const ajaxCall = ajax.getCall(0);
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data.catalogRequest.requiredDataSets).to.be.eql({ type: 'ALL' });
+            });
+
+            it('should send CUSTOM requiredDataSets structure for dataSetIdentifier param', () => {
+                const options = cloneDeep(fixtures.optionsForEmptySelection);
+
+                options.dataSetIdentifier = 'identifier';
+
+                catalogue.loadItems(projectId, options);
+
+                const ajaxCall = ajax.getCall(0);
+                const data = get(ajaxCall.args[1], 'data');
+                expect(data.catalogRequest.requiredDataSets).to.be.eql({
+                    type: 'CUSTOM',
+                    customIdentifiers: [options.dataSetIdentifier]
+                });
             });
         });
     });
