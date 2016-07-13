@@ -66,10 +66,11 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
+ * @param {Object} settings - AJAX settings
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
-export function getData(projectId, columns, executionConfiguration = {}) {
+export function getData(projectId, columns, executionConfiguration = {}, settings = {}) {
     const executedReport = {
         isLoaded: false
     };
@@ -92,13 +93,14 @@ export function getData(projectId, columns, executionConfiguration = {}) {
 
     // Execute request
     post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
+        ...settings,
         data: JSON.stringify(request)
     }, d.reject).then((result) => {
         executedReport.headers = wrapMeasureIndexesFromMappings(
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
-        return ajax(result.executionResult.tabularDataResult);
+        return ajax(result.executionResult.tabularDataResult, settings);
     }, d.reject).then((result, message, response) => {
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
@@ -470,7 +472,7 @@ export const mdToExecutionConfiguration = (mdObj) => {
     };
 };
 
-export const getDataForVis = (projectId, mdObj) => {
+export const getDataForVis = (projectId, mdObj, settings) => {
     const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
-    return getData(projectId, columns, executionConfiguration);
+    return getData(projectId, columns, executionConfiguration, settings);
 };

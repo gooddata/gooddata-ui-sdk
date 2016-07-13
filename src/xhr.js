@@ -6,7 +6,8 @@ import {
     isPlainObject,
     isFunction,
     isArray,
-    merge
+    merge,
+    result
 } from 'lodash';
 
 /**
@@ -78,9 +79,11 @@ function handleUnauthorized(req, deferred) {
 }
 
 function handlePolling(req, deferred) {
+    const pollingDelay = result(req, 'pollDelay');
+
     setTimeout(function poller() {
         retryAjaxRequest(req, deferred);
-    }, req.pollDelay);
+    }, pollingDelay);
 }
 
 // helper to coverts traditional ajax callbacks to deferred
@@ -101,8 +104,8 @@ function reattachCallbackOnDeferred(settings, property, defferAttach) {
 
 /**
  * additional ajax configuration specific for xhr module, keys
- *   unauthorized: function(xhr) - called when user is unathorized and token renewal failed
- *   pollDelay: int - polling interval in milisecodns, default 1000
+ *   unauthorized: function(xhr) - called when user is unauthorized and token renewal failed
+ *   pollDelay: int - polling interval in milliseconds, default 1000 - or generator function
 
  * method also accepts any option from original $.ajaxSetup. Options will be applied to all call of xhr.ajax().
 
@@ -126,7 +129,7 @@ export function ajaxSetup(settings) {
  * Additionally content type is automatically json, and object in settings.data is converted to string
  * to be consumed by GDC backend.
 
- * settings additionally accepts keys: unathorized, pollDelay  (see xhrSetup for more details)
+ * settings additionally accepts keys: unauthorized, pollDelay (see xhrSetup for more details)
  * @method ajax
  * @param url request url
  * @param settings settings object
