@@ -262,7 +262,7 @@ const createContributionMetric = (measure, mdObj, measureIndex) => {
         generated = createDerivedMetric(measure, mdObj, measureIndex);
         getMetricExpression = partial(getPercentMetricExpression, category, `{${get(generated, 'definition.metricDefinition.identifier')}}`);
     }
-    const title = getBaseMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
+    const title = getBaseMetricTitle(get(measure, 'title'));
     const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
     const result = [{
         element: getGeneratedMetricIdentifier(measure, 'percent', getMetricExpression, hasher),
@@ -334,7 +334,7 @@ const createContributionPoPMetric = (measure, mdObj, measureIndex) => {
     const date = getDate(mdObj);
 
     const generated = createContributionMetric(measure, mdObj, measureIndex);
-    const title = getPoPMetricTitle(`% ${get(measure, 'title')}`.replace(/^(% )+/, '% '));
+    const title = getPoPMetricTitle(get(measure, 'title'));
 
     const format = CONTRIBUTION_METRIC_FORMAT;
     const hasher = partial(getGeneratedMetricHash, title, format);
