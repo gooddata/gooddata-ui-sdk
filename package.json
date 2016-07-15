@@ -4,6 +4,7 @@
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
+  "main": "src/gooddata.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:gooddata/gooddata-js.git"
