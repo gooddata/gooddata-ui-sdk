@@ -435,7 +435,7 @@ const isAttributeFilterExecutable = listAttributeFilter =>
     notEmpty(get(listAttributeFilter, ['default', 'attributeElements']));
 
 
-function getWhere({ filters }) {
+function getWhere(filters) {
     const attributeFilters = map(filter(filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter)), attributeFilterToWhere);
     const dateFilters = map(filter(filters, ({ dateFilter }) => isDateFilterExecutable(dateFilter)), dateFilterToWhere);
 
@@ -456,18 +456,26 @@ const getOrderBy = (metrics, categories, type) => {
     return map(filter([...categories, ...metrics], item => item.sort), sortToOrderBy);
 };
 
-export const mdToExecutionConfiguration = (mdObj) => {
+export const mdToExecutionConfiguration = (mdObj, options = {}) => {
     const buckets = get(mdObj, 'buckets');
     const measures = map(buckets.measures, ({ measure }) => measure);
     const metrics = flatten(map(measures, (measure, index) => getMetricFactory(measure)(measure, buckets, index)));
-    const categories = map(getCategories(buckets), categoryToElement);
+
+    let categories = getCategories(buckets);
+    let filters = getFilters(buckets);
+    if (options.removeDateItems) {
+        categories = filter(categories, ({ category }) => category.type !== 'date');
+        filters = filter(filters, item => !item.dateFilter);
+    }
+    categories = map(categories, categoryToElement);
+
     const columns = compact(map([...categories, ...metrics], 'element'));
 
     return {
         columns,
         orderBy: getOrderBy(metrics, categories, get(mdObj, 'type')),
         definitions: sortDefinitions(compact(map(metrics, 'definition'))),
-        where: columns.length ? getWhere(buckets) : {},
+        where: columns.length ? getWhere(filters) : {},
         metricMappings: map(metrics, m => ({ element: m.element, ...m.meta }))
     };
 };

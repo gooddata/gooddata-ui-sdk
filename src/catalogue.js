@@ -28,14 +28,14 @@ const parseCategories = (bucketItems) => (
     )
 );
 
-function bucketItemsToExecConfig(bucketItems) {
+function bucketItemsToExecConfig(bucketItems, options = {}) {
     const categories = parseCategories(bucketItems);
     const executionConfig = mdToExecutionConfiguration({
         buckets: {
             ...bucketItems,
             categories
         }
-    });
+    }, options);
     const definitions = get(executionConfig, 'definitions');
     const idToExpr = fromPairs(definitions.map(
         ({ metricDefinition }) =>
@@ -124,18 +124,13 @@ function requestDateDataSets(projectId, request) {
     });
 }
 
-const removeDateBucketItems = bucketItems => ({
-    ...bucketItems,
-    categories: bucketItems.categories.filter(({ category }) => category.type !== 'date'),
-    filters: bucketItems.filters.filter(item => !item.dateFilter)
-});
-
 export function loadDateDataSets(projectId, options) {
     let bucketItems = get(cloneDeep(options), 'bucketItems.buckets');
 
     if (bucketItems) {
-        bucketItems = bucketItemsToExecConfig(removeDateBucketItems(bucketItems));
+        bucketItems = bucketItemsToExecConfig(bucketItems, { removeDateItems: true });
     }
+
     const requiredDataSets = getRequiredDataSets(options);
 
     const request = omit({
