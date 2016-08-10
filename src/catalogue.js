@@ -28,6 +28,14 @@ const parseCategories = (bucketItems) => (
     )
 );
 
+function recursiveReplace(text, regexp, replaceFn) {
+    const replacedText = text.replace(regexp, replaceFn);
+    if (text === replacedText) {
+        return text;
+    }
+    return recursiveReplace(replacedText, regexp, replaceFn);
+}
+
 function bucketItemsToExecConfig(bucketItems, options = {}) {
     const categories = parseCategories(bucketItems);
     const executionConfig = mdToExecutionConfiguration({
@@ -48,7 +56,7 @@ function bucketItemsToExecConfig(bucketItems, options = {}) {
         const maql = get(definition, 'metricDefinition.expression');
 
         if (maql) {
-            return maql.replace(ID_REGEXP, match => {
+            return recursiveReplace(maql, ID_REGEXP, match => {
                 const expression = idToExpr[trim(match, '{}')];
                 return expression.substr(SELECT_LENGTH).replace(WHERE_REGEXP, '');
             });
