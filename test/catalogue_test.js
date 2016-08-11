@@ -230,5 +230,96 @@ describe('Catalogue', () => {
                 expect(items).to.have.length(0);
             });
         });
+
+        it('should replace identifiers with pure MAQL', () => {
+            const mockPayload = {
+                bucketItems: {
+                    buckets: {
+                        measures: [
+                            {
+                                measure: {
+                                    measureFilters: [
+                                        {
+                                            listAttributeFilter: {
+                                                attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266',
+                                                displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2267',
+                                                'default': {
+                                                    negativeSelection: true,
+                                                    attributeElements: [
+                                                        '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706'
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    showInPercent: true,
+                                    objectUri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276',
+                                    aggregation: 'sum',
+                                    format: '#,##0.00',
+                                    showPoP: true,
+                                    title: 'Measure title',
+                                    type: 'fact'
+                                }
+                            }
+                        ],
+                        filters: [
+                            {
+                                listAttributeFilter: {
+                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
+                                    displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275',
+                                    'default': {
+                                        negativeSelection: true,
+                                        attributeElements: []
+                                    }
+                                }
+                            },
+                            {
+                                dateFilter: {
+                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167',
+                                    to: '2016-09-30',
+                                    granularity: 'GDC.time.date',
+                                    from: '2000-07-01',
+                                    dataset: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2180',
+                                    type: 'absolute'
+                                }
+                            }
+                        ],
+                        categories: [
+                            {
+                                category: {
+                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
+                                    type: 'attribute',
+                                    displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275',
+                                    collection: 'trend'
+                                }
+                            }
+                        ]
+                    },
+                    type: 'line'
+                }
+            };
+
+            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
+                const call = ajax.getCall(0);
+                const items = call.args[1].data.dateDataSetsRequest.bucketItems;
+                expect(items).to.have.eql([
+                    '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
+                    'SELECT (' +
+                            'SELECT (' +
+                                'SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276])' +
+                            ') / (' +
+                                'SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) ' +
+                                    'BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274])' +
+                        ') ' +
+                        'FOR PREVIOUS ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167])',
+                    'SELECT (' +
+                            'SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276])' +
+                        ') / (' +
+                            'SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) ' +
+                                'BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274]' +
+                        ')'
+                ]);
+            });
+        });
     });
 });
