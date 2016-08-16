@@ -73,16 +73,15 @@ Task is meant to be run from `master` branch of this repository.
 Flow of release is:
 
 * bump version to version+1 in `bower.json` and `package.json`
-* create version commit & tag and push these to your *origin* remote (so watch your remote naming)
+* create version commit & tag and push these to your *upstream* remote (so watch your remote naming)
 * create version commit & tag and push product of build (`dist/*`) to `gooddata/bower-gooddata-js` repository
 
 Steps to publish a release:
 
-* you should have `gooddata/gooddata-js` as `origin` since all tasks publish to origin remote
+* you should have `gooddata/gooddata-js` as `upstream` since all tasks publish to upstream remote
 * run `grunt release:{version-type}` in `master`
 * run `grunt bump-gh-pages` in `master`
 * you're done
 
 [d3ex]: examples/d3-data-viz/viz.js
 [vjBump]: https://github.com/vojtajina/grunt-bump
-

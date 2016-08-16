@@ -96,7 +96,7 @@ module.exports = function(grunt) {
                 createTag: true,
                 tagName: 'v%VERSION%',
                 push: true,
-                pushTo: 'origin'
+                pushTo: 'upstream'
             }
         },
         'gh-pages': {
@@ -244,4 +244,3 @@ module.exports = function(grunt) {
     grunt.registerTask('doc', ['yuidoc']);
     grunt.registerTask('validate', ['eslint']);
 };
-
