@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import { ajax, get, post } from './xhr';
 import { getIn } from './util';
+import { get as _get, chunk, flatten } from 'lodash';
 
 /**
  * Functions for working with metadata objects
@@ -10,6 +11,66 @@ import { getIn } from './util';
  * @module metadata
  */
 
+/**
+ * Load all objects with given uris
+ * (use bulk loading instead of getting objects one by one)
+ *
+ * @method getObjects
+ * @param {String} projectId id of the project
+ * @param {Array} objectUris array of uris for objects to be loaded
+ * @return {Array} array of loaded elements
+ */
+export function getObjects(projectId, objectUris) {
+    const LIMIT = 50;
+    const uri = `/gdc/md/${projectId}/objects/get`;
+
+    const objectsUrisChunks = chunk(objectUris, LIMIT);
+
+    const promises = objectsUrisChunks.map(objectUrisChunk => {
+        const data = {
+            get: {
+                items: objectUrisChunk
+            }
+        };
+
+        return post(uri, {
+            data: JSON.stringify(data)
+        }).then(result => _get(result, ['objects', 'items']));
+    });
+
+    return $.when.apply(this, promises).then((...resultingEntries) => {
+        return flatten(resultingEntries);
+    });
+}
+
+/**
+ * Get MD objects from using2 resource. Include only objects of given types
+ * and take care about fetching only nearest objects if requested.
+ *
+ * @method getObjectUsing
+ * @param {String} projectId id of the project
+ * @param {String} uri uri of the object for which dependencies are to be found
+ * @param {Object} options objects with options:
+ *        - types {Array} array of strings with object types to be included
+ *        - nearest {Boolean} whether to include only nearest dependencies
+ * @return {Array} entries returned by using2 resource
+ */
+export function getObjectUsing(projectId, uri, options = {}) {
+    const { types = [], nearest = false } = options;
+    const resourceUri = `/gdc/md/${projectId}/using2`;
+
+    const data = {
+        inUse: {
+            uri,
+            types,
+            nearest: nearest ? 1 : 0
+        }
+    };
+
+    return post(resourceUri, {
+        data: JSON.stringify(data)
+    }).then(result => result.entries);
+}
 
 /**
  * Get additional information about elements specified by their uris
