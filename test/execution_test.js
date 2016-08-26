@@ -569,7 +569,7 @@ describe('execution', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
                 expect(executionConfiguration.metricMappings).to.eql([
                     {
-                        element: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1556.generated.pop.79eb21e7d5161a174a84acdd10371e2d',
+                        element: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1556.generated.pop.742c298cb16e36869e5d70e87840ffa1',
                         measureIndex: 0,
                         isPoP: true
                     },
@@ -783,20 +783,65 @@ describe('execution', () => {
 
                 expectColumns([
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.1c5d6840112a259758f9b58520ac6099'
+                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.3124707f49557fe26b7eecfa3f61b021'
                 ], execConfig);
 
                 expectMetricDefinition({
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1',
-                    expression: 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
                     title: '% Sum of Amount',
-                    format: '#,##0.00'
+                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.3124707f49557fe26b7eecfa3f61b021',
+                    expression: 'SELECT (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])) / (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027])',
+                    format: '#,##0.00%'
                 }, execConfig);
+            });
+
+            it('for generated measure with attribute filters', () => {
+                mdObjContribution.buckets.measures = [
+                    {
+                        'measure': {
+                            'type': 'fact',
+                            'aggregation': 'sum',
+                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1',
+                            'title': '% Sum of Amount',
+                            'format': '#,##0.00',
+                            'showInPercent': true,
+                            'measureFilters': [
+                                {
+                                    'listAttributeFilter': {
+                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42',
+                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/43',
+                                        'default': {
+                                            'negativeSelection': false,
+                                            'attributeElements': [
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42/elements?id=61527'
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ];
+
+                const execConfig = ex.mdToExecutionConfiguration(mdObjContribution);
+
+                expectColumns([
+                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.filtered_percent.08fe4920a4353ed70cdb0cb255489611'
+                ], execConfig);
 
                 expectMetricDefinition({
                     title: '% Sum of Amount',
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.1c5d6840112a259758f9b58520ac6099',
-                    expression: 'SELECT (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1}) / (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1} BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027])',
+                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1.generated.filtered_percent.08fe4920a4353ed70cdb0cb255489611',
+                    expression: 'SELECT (' +
+                        'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1]) ' +
+                        'WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42] ' +
+                        'IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42/elements?id=61527])' +
+                    ') / (' +
+                        'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1]) ' +
+                        'BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027] ' +
+                        'WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42] ' +
+                        'IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42/elements?id=61527])' +
+                    ')',
                     format: '#,##0.00%'
                 }, execConfig);
             });
@@ -837,17 +882,16 @@ describe('execution', () => {
 
             it('for calculated metric', () => {
                 const execConfig = ex.mdToExecutionConfiguration(mdObj);
-
                 expectColumns([
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1234',
-                    'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.pop.c6186e1467d5ffd0785b021fa9ff6490',
+                    'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.pop.0e380388838e2d867a3d11ea64e22573',
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825'
                 ], execConfig);
 
                 expectMetricDefinition({
                     title: '# of Opportunities - previous year',
-                    identifier: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.pop.c6186e1467d5ffd0785b021fa9ff6490',
-                    expression: 'SELECT (SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825]) FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
+                    identifier: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.pop.0e380388838e2d867a3d11ea64e22573',
+                    expression: 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
                     format: '#,##0'
                 }, execConfig);
             });
@@ -870,13 +914,13 @@ describe('execution', () => {
 
                 expectColumns([
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1234',
-                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.cecff15ef30ca1306bfe1bdee0534bf2',
+                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.00d7d51e0e86780bebfe65b025ed8f14',
                     'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600'
                 ], execConfig);
 
                 expectMetricDefinition({
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.cecff15ef30ca1306bfe1bdee0534bf2',
-                    expression: 'SELECT (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.7537800b1daf7582198e84ca6205d600}) FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
+                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.00d7d51e0e86780bebfe65b025ed8f14',
+                    expression: 'SELECT (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])) FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
                     title: 'Sum of Amount - previous year',
                     format: '#,##0.00'
                 }, execConfig);
@@ -908,28 +952,21 @@ describe('execution', () => {
 
                 expectColumns([
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1234',
-                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.9f1fce0b5e6f8bfee1276b6c7a48b453',
-                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.1763550e1b33503352eaaab3961fd11a'
+                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.985ea06c284684b6feb0b05a6d796034',
+                    'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.93434aa1d9e8d4fe653757ba8c891025'
                 ], execConfig);
 
                 expectMetricDefinition({
                     title: '% Sum of Amount - previous year',
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.9f1fce0b5e6f8bfee1276b6c7a48b453',
-                    expression: 'SELECT (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.1763550e1b33503352eaaab3961fd11a}) FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
+                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.pop.985ea06c284684b6feb0b05a6d796034',
+                    expression: 'SELECT (SELECT (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])) / (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])) FOR PREVIOUS ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
                     format: '#,##0.00%'
                 }, execConfig);
 
                 expectMetricDefinition({
                     title: '% Sum of Amount',
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1',
-                    expression: 'SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])',
-                    format: '#,##0.00'
-                }, execConfig);
-
-                expectMetricDefinition({
-                    title: '% Sum of Amount',
-                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.1763550e1b33503352eaaab3961fd11a',
-                    expression: 'SELECT (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1}) / (SELECT {fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.sum.bda055d15f863eb0b9dcb1a672706ca1} BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
+                    identifier: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.percent.93434aa1d9e8d4fe653757ba8c891025',
+                    expression: 'SELECT (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144])) / (SELECT SUM([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144]) BY ALL [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233])',
                     format: '#,##0.00%'
                 }, execConfig);
             });
