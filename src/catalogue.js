@@ -55,24 +55,28 @@ function bucketItemsToExecConfig(bucketItems, options = {}) {
  * <ul>
  * <li>dataSetIdentifier - in value is string identifier of dataSet - this leads to CUSTOM type
  * <li>returnAllDateDataSets - true value means to return ALL values without dataSet differentiation
+ * <li>returnAllRelatedDateDataSets - only related date dataSets are loaded across all dataSets
  * <li>by default we get PRODUCTION dataSets
  * </ul>
  * @returns {Object} "requiredDataSets" object hash.
  */
 const getRequiredDataSets = options => {
+    if (get(options, 'returnAllRelatedDateDataSets')) {
+        return {};
+    }
+
     if (get(options, 'returnAllDateDataSets')) {
-        return {
-            type: 'ALL'
-        };
-    } else if (get(options, 'dataSetIdentifier')) {
-        return {
+        return { requiredDataSets: { type: 'ALL' } };
+    }
+
+    if (get(options, 'dataSetIdentifier')) {
+        return { requiredDataSets: {
             type: 'CUSTOM',
             customIdentifiers: [ get(options, 'dataSetIdentifier') ]
-        };
+        } };
     }
-    return {
-        type: 'PRODUCTION'
-    };
+
+    return { requiredDataSets: { type: 'PRODUCTION' } };
 };
 
 function loadCatalog(projectId, request) {
@@ -87,7 +91,7 @@ export function loadItems(projectId, options = {}) {
     const request = omit({
         ...REQUEST_DEFAULTS,
         ...options,
-        requiredDataSets: getRequiredDataSets(options)
+        ...getRequiredDataSets(options)
     }, ['dataSetIdentifier', 'returnAllDateDataSets']);
 
     let bucketItems = get(cloneDeep(options), 'bucketItems.buckets');
@@ -121,15 +125,13 @@ export function loadDateDataSets(projectId, options) {
         bucketItems = bucketItemsToExecConfig(bucketItems, { removeDateItems: true });
     }
 
-    const requiredDataSets = getRequiredDataSets(options);
-
     const request = omit({
         ...LOAD_DATE_DATASET_DEFAULTS,
         ...REQUEST_DEFAULTS,
         ...options,
-        requiredDataSets,
+        ...getRequiredDataSets(options),
         bucketItems
-    }, ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets']);
+    }, ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets', 'returnAllRelatedDateDataSets']);
 
     return requestDateDataSets(projectId, request);
 }

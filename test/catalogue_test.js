@@ -205,6 +205,15 @@ describe('Catalogue', () => {
             });
         });
 
+        it('should omit requiredDataSets parameter when sending returnAllRelatedDateDataSets', () => {
+            const returnAllRelatedDateDataSets = true;
+            return catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
+                const ajaxCall = ajax.getCall(0);
+                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+                expect(requiredDataSets).to.be(undefined);
+            });
+        });
+
         it('should send empty columns if only date buckets are in the request', () => {
             const mockPayload = {
                 bucketItems: {
