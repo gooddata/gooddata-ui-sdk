@@ -3,11 +3,24 @@
 setupGrunt () {
     echo "Installing Grunt and dependencies..."
 
-    # this should really be a dependency of the client
-    npm install grunt-cli
+    export MODULES_HASH="$(echo -n "$(cat npm-shrinkwrap.json) $(node --version) $(npm --version)" | md5sum | awk '{ print $1 }')"
+    export MODULES_FILE="/tmp/node-modules-cache.${MODULES_HASH}.tar.gz"
+
+    if [ -f ${MODULES_FILE} ]; then
+        tar xzf ${MODULES_FILE} ./
+    else
+        npm install
+        tar czf ${MODULES_FILE} ./node_modules/
+        if [ $? -ne 0 ]; then
+            rm ${MODULES_FILE}
+        fi
+    fi
+
 
     # install dependencies
-    npm install && bower install
+    bower install
+
+    npm-shrinkwrap-check --v3 --dev
 
     export SETUP="1"
 }
