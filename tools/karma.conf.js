@@ -47,7 +47,9 @@ module.exports = function(config) {
 
     junitReporter: {
         suite: 'GoodData-js Unit',
-        outputFile: 'ci/results/test-results.xml'
+        useBrowserName: false,
+        outputDir: 'ci/results',
+        outputFile: 'test-results.xml'
     },
 
     // test results reporter to use
