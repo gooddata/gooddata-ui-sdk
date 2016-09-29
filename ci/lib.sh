@@ -3,7 +3,7 @@
 setupGrunt () {
     echo "Installing Grunt and dependencies..."
 
-    export MODULES_HASH="$(echo -n "$(cat npm-shrinkwrap.json) $(node --version) $(npm --version)" | md5sum | awk '{ print $1 }')"
+    export MODULES_HASH="$(echo -n "$(cat package.json) $(node --version) $(npm --version)" | md5sum | awk '{ print $1 }')"
     export MODULES_FILE="/tmp/node-modules-cache.${MODULES_HASH}.tar.gz"
 
     if [ -f ${MODULES_FILE} ]; then
@@ -16,11 +16,8 @@ setupGrunt () {
         fi
     fi
 
-
     # install dependencies
     bower install
-
-    npm-shrinkwrap-check --v3 --dev
 
     export SETUP="1"
 }
