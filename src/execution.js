@@ -1,10 +1,11 @@
-// Copyright (C) 2007-2016, GoodData(R) Corporation. All rights reserved.
+// Copyright (C) 2008-2016, GoodData(R) Corporation. All rights reserved.
 import $ from 'jquery';
 import md5 from 'md5';
 
 import {
     ajax,
-    post
+    post,
+    get as xhrGet
 } from './xhr';
 
 import Rules from './utils/rules';
@@ -477,7 +478,31 @@ export const mdToExecutionConfiguration = (mdObj, options = {}) => {
     };
 };
 
+const getOriginalMetricFormats = (mdObj) => {
+    // for metrics with showPoP or measureFilters.length > 0 roundtrip for original metric format
+    return $.when.apply(undefined, map(
+        map(get(mdObj, 'buckets.measures'), ({ measure }) => measure),
+        (measure) => {
+            if (measure.showPoP === true || measure.measureFilters.length > 0) {
+                return xhrGet(measure.objectUri).then((obj) => {
+                    return {
+                        ...measure,
+                        format: get(obj, 'metric.content.format', measure.format)
+                    };
+                });
+            }
+
+            /* eslint-disable new-cap */
+            return $.Deferred().resolve(measure);
+            /* eslint-enable new-cap */
+        }
+    ));
+};
+
 export const getDataForVis = (projectId, mdObj, settings) => {
-    const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
-    return getData(projectId, columns, executionConfiguration, settings);
+    return getOriginalMetricFormats(mdObj).then((...measures) => {
+        mdObj.buckets.measures = map([...measures], (measure) => ({ measure }));
+        const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
+        return getData(projectId, columns, executionConfiguration, settings);
+    });
 };

@@ -971,5 +971,142 @@ describe('execution', () => {
                 }, execConfig);
             });
         });
+
+        describe('Update metric format for generated metrics', () => {
+            const mdObj = {
+                buckets: {
+                    categories: [
+                        {
+                            'category': {
+                                'type': 'date',
+                                'collection': 'attribute',
+                                'displayForm': '/gdc/md/myFakeProjectId/obj/1234',
+                                'attribute': '/gdc/md/myFakeProjectId/obj/1233'
+                            }
+                        }
+                    ]
+                }
+            };
+
+            beforeEach(() => {
+                const responseMock = { metric: { content: { format: 'someone changed me' } } };
+                serverResponseMock = {
+                    executionResult: {
+                        columns: [
+                            {
+                                attributeDisplayForm: {
+                                    meta: {
+                                        identifier: 'attrId',
+                                        uri: 'attrUri',
+                                        title: 'Df Title'
+                                    }
+                                }
+                            },
+                            {
+                                metric: {
+                                    meta: {
+                                        identifier: 'metricId',
+                                        uri: 'metricUri',
+                                        title: 'Metric Title'
+                                    },
+                                    content: {
+                                        format: '#00'
+                                    }
+                                }
+                            }
+                        ],
+                        headers: [
+                            {
+                                id: 'attrId',
+                                title: 'Atribute Title',
+                                type: 'attrLabel',
+                                uri: 'attrUri'
+                            },
+                            {
+                                id: 'metricId',
+                                title: 'Metric Title',
+                                type: 'metric',
+                                uri: 'metricUri'
+                            }
+                        ],
+                        tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
+                    }
+                };
+                server.respondWith(
+                    '/gdc/md/myFakeProjectId/obj/1',
+                    [200, {'Content-Type': 'application/json'},
+                        JSON.stringify(responseMock)]
+                );
+
+                server.respondWith(
+                    '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                    [200, {'Content-Type': 'application/json'},
+                        JSON.stringify(serverResponseMock)]
+                );
+                server.respondWith(
+                    /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                    [201, {'Content-Type': 'application/json'},
+                        JSON.stringify({'tabularDataResult': {values: ['a', 1]}})]
+                );
+            });
+
+            afterEach(() => {
+                server.restore();
+            });
+
+            it('when metric is PoP', () => {
+                mdObj.buckets.measures = [
+                    {
+                        'measure': {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/myFakeProjectId/obj/1',
+                            'measureFilters': [],
+                            'title': '% Sum of Amount',
+                            'format': '#,##0.00',
+                            'showPoP': true,
+                            'showInPercent': false
+                        }
+                    }
+                ];
+                return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
+                    const request = JSON.parse(server.requests[1].requestBody);
+                    expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
+                });
+            });
+
+            it('when metric has metricFilter', () => {
+                mdObj.buckets.measures = [
+                    {
+                        'measure': {
+                            'type': 'metric',
+                            'objectUri': '/gdc/md/myFakeProjectId/obj/1',
+                            'measureFilters': [
+                                {
+                                    'listAttributeFilter': {
+                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
+                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
+                                        'default': {
+                                            'negativeSelection': false,
+                                            'attributeElements': [
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
+                                                '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            'title': '% Sum of Amount',
+                            'format': '#,##0.00',
+                            'showPoP': false,
+                            'showInPercent': false
+                        }
+                    }
+                ];
+                return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
+                    const request = JSON.parse(server.requests[1].requestBody);
+                    expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
+                });
+            });
+        });
     });
 });
