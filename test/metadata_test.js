@@ -385,6 +385,98 @@ describe('metadata', () => {
             });
         });
 
+        describe('getObjectUsingMany', () => {
+            let postSpy;
+
+            const projectId = 'myFakeProjectId';
+            const object1 = `/gdc/md/${projectId}/obj/1`;
+            const object2 = `/gdc/md/${projectId}/obj/2`;
+            const objects = [object1, object2];
+            const types = ['firstType', 'secondType'];
+            const using2Uri = `/gdc/md/${projectId}/using2`;
+
+            const response = [{
+                entries: [{
+                    link: 'foo'
+                }],
+                uri: object1
+            }, {
+                entries: [{
+                    link: 'bar'
+                }],
+                uri: object2
+            }];
+
+            beforeEach(() => {
+                postSpy = sinon.spy(xhr, 'post');
+            });
+
+            afterEach(() => {
+                postSpy.restore();
+            });
+
+            it('should load objects dependencies', () => {
+                server.respondWith(
+                    'POST',
+                    using2Uri,
+                    [200, {'Content-Type': 'application/json'},
+                        JSON.stringify({ useMany: response })]
+                );
+
+                return md.getObjectUsingMany(projectId, objects, { types }).then(result => {
+                    expect(postSpy.calledWith(using2Uri, {
+                        data: JSON.stringify({
+                            inUseMany: {
+                                uris: objects,
+                                types,
+                                nearest: 0
+                            }
+                        })
+                    })).to.be(true);
+                    expect(result).to.eql(response);
+                });
+            });
+
+            it('should be properly called with nearest when requested', () => {
+                server.respondWith(
+                    'POST',
+                    using2Uri,
+                    [200, {'Content-Type': 'application/json'},
+                        JSON.stringify({ useMany: response })]
+                );
+
+                const nearest = true;
+
+                return md.getObjectUsingMany(projectId, objects, { types, nearest }).then(() => {
+                    expect(postSpy.calledWith(using2Uri, {
+                        data: JSON.stringify({
+                            inUseMany: {
+                                uris: objects,
+                                types,
+                                nearest: 1
+                            }
+                        })
+                    })).to.be(true);
+                });
+            });
+
+            it('should return rejected promise if 400 returned from backend', done => {
+                server.respondWith(
+                    'POST',
+                    using2Uri,
+                    [400, {'Content-Type': 'application/json'},
+                        JSON.stringify({})]
+                );
+
+                md.getObjectUsingMany(projectId, objects, { types }).then(() => {
+                    expect().fail('Should reject the promise on 400 response');
+                    done();
+                }).fail(() => {
+                    done();
+                });
+            });
+        });
+
         describe('getObjects', () => {
             let postSpy;
 
@@ -493,4 +585,3 @@ describe('metadata', () => {
         });
     });
 });
-
