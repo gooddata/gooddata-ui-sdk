@@ -379,7 +379,10 @@ const attributeFilterToWhere = f => {
 };
 
 const dateFilterToWhere = f => {
-    const dateUri = get(f, 'dateFilter.dimension') || get(f, 'dateFilter.dataset');
+    const dateUri =
+        get(f, 'dateFilter.dimension') ||
+        get(f, 'dateFilter.dataSet') ||
+        get(f, 'dateFilter.dataset'); // dataset with lowercase 's' is deprecated; kept here for backwards compatibility
     const granularity = get(f, 'dateFilter.granularity');
     const between = [get(f, 'dateFilter.from'), get(f, 'dateFilter.to')];
     return { [dateUri]: { '$between': between, '$granularity': granularity } };
