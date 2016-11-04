@@ -428,17 +428,21 @@ describe('execution', () => {
                 }, execConfig);
 
                 expectWhereCondition({
-                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
-                        '$in': [
-                            { 'id': 1243 },
-                            { 'id': 1242 },
-                            { 'id': 1241 },
-                            { 'id': 1240 },
-                            { 'id': 1239 },
-                            { 'id': 1238 },
-                            { 'id': 1236 }
-                        ]
-                    },
+                    $and: [
+                        {
+                            '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
+                                '$in': [
+                                    { 'id': 1243 },
+                                    { 'id': 1242 },
+                                    { 'id': 1241 },
+                                    { 'id': 1240 },
+                                    { 'id': 1239 },
+                                    { 'id': 1238 },
+                                    { 'id': 1236 }
+                                ]
+                            }
+                        }
+                    ],
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
                         '$between': [-3, 0],
                             '$granularity': 'GDC.time.week'
@@ -481,17 +485,19 @@ describe('execution', () => {
                 }, execConfig);
 
                 expectWhereCondition({
-                    '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
-                        '$in': [
-                            { 'id': 1243 },
-                            { 'id': 1242 },
-                            { 'id': 1241 },
-                            { 'id': 1240 },
-                            { 'id': 1239 },
-                            { 'id': 1238 },
-                            { 'id': 1236 }
-                        ]
-                    },
+                    $and: [{
+                        '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
+                            '$in': [
+                                { 'id': 1243 },
+                                { 'id': 1242 },
+                                { 'id': 1241 },
+                                { 'id': 1240 },
+                                { 'id': 1239 },
+                                { 'id': 1238 },
+                                { 'id': 1236 }
+                            ]
+                        }
+                    }],
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
                         '$between': [-3, 0],
                         '$granularity': 'GDC.time.week'
@@ -509,7 +515,7 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithAllTime);
-                expect(executionConfiguration.where).to.eql({});
+                expect(executionConfiguration.where).to.eql({ $and: [] });
             });
 
             it('does not execute attribute filter with all selected', () => {
@@ -526,7 +532,7 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithSelectAll);
-                expect(executionConfiguration.where).to.eql({});
+                expect(executionConfiguration.where).to.eql({ $and: [] });
             });
 
             it('generates right metricMappings', () => {

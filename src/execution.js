@@ -437,10 +437,19 @@ const isAttributeFilterExecutable = listAttributeFilter =>
 
 
 function getWhere(filters) {
-    const attributeFilters = map(filter(filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter)), attributeFilterToWhere);
+    const executableFilters = filter(filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter));
+    const attributeFilters = map(executableFilters, attributeFilterToWhere);
     const dateFilters = map(filter(filters, ({ dateFilter }) => isDateFilterExecutable(dateFilter)), dateFilterToWhere);
 
-    return [...attributeFilters, ...dateFilters].reduce(assign, {});
+    const resultDate = [...dateFilters].reduce(assign, {});
+    const resultAttribute = {
+        $and: attributeFilters
+    };
+
+    return {
+        ...resultDate,
+        ...resultAttribute
+    };
 }
 
 const sortToOrderBy = item => ({ column: get(item, 'element'), direction: get(item, 'sort') });
