@@ -6,6 +6,7 @@ import * as execution from './execution';
 import * as project from './project';
 import * as config from './config';
 import * as catalogue from './catalogue';
+import admin from './admin';
 
 /**
  * # JS SDK
@@ -24,7 +25,7 @@ import * as catalogue from './catalogue';
  * @module sdk
  * @class sdk
  */
-const gooddata = { config, xhr, user, md, execution, project, catalogue };
+const gooddata = { config, xhr, user, md, execution, project, catalogue, admin };
 export default gooddata;
 module.exports = gooddata;
 
