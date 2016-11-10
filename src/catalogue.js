@@ -1,5 +1,5 @@
 import { get, find, omit, cloneDeep } from 'lodash';
-import * as xhr from './xhr';
+import { post, parseJSON } from './xhr';
 import { mdToExecutionConfiguration } from './execution';
 
 const REQUEST_DEFAULTS = {
@@ -79,12 +79,12 @@ const getRequiredDataSets = options => {
     return { requiredDataSets: { type: 'PRODUCTION' } };
 };
 
-function loadCatalog(projectId, request) {
+function loadCatalog(projectId, catalogRequest) {
     const uri = `/gdc/internal/projects/${projectId}/loadCatalog`;
-    return xhr.ajax(uri, {
-        type: 'POST',
-        data: { catalogRequest: request }
-    }).then(data => data.catalogResponse);
+
+    return post(uri, { data: { catalogRequest } })
+        .then(parseJSON)
+        .then(data => data.catalogResponse);
 }
 
 export function loadItems(projectId, options = {}) {
@@ -109,13 +109,12 @@ export function loadItems(projectId, options = {}) {
     return loadCatalog(projectId, request);
 }
 
-function requestDateDataSets(projectId, request) {
+function requestDateDataSets(projectId, dateDataSetsRequest) {
     const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
 
-    return xhr.ajax(uri, {
-        type: 'POST',
-        data: { dateDataSetsRequest: request }
-    });
+    return post(uri, { data: { dateDataSetsRequest } })
+        .then(parseJSON)
+        .then(data => data.dateDataSetsResponse);
 }
 
 export function loadDateDataSets(projectId, options) {

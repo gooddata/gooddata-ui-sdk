@@ -21,12 +21,17 @@ export let domain;
  *
  * RegExp inspired taken from
  * https://github.com/jarib/google-closure-library/blob/master/closure/goog/string/linkify.js
- *
+ * @param {String|null} d valid domain starting with https:// or null for removing
  * @method setCustomDomain
  */
 export function setCustomDomain(d) {
     const sanitizedDomain = d || '';
     const link = sanitizedDomain.match(URL_REGEXP);
+
+    if (d === null) {
+        domain = undefined;
+        return;
+    }
 
     if (!link) {
         throw new Error(d + ' is not a valid url');

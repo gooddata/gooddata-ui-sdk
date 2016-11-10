@@ -12,8 +12,5 @@
   },
   "description": "GoodData JS SDK",
   "main": "gooddata.min.js",
-  "private": true,
-  "dependencies": {
-    "jquery": "~2.1.4"
-  }
+  "private": true
 }

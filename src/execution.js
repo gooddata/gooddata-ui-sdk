@@ -1,11 +1,11 @@
-// Copyright (C) 2008-2016, GoodData(R) Corporation. All rights reserved.
-import $ from 'jquery';
+// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import md5 from 'md5';
 
 import {
     ajax,
     post,
-    get as xhrGet
+    get as xhrGet,
+    parseJSON
 } from './xhr';
 
 import Rules from './utils/rules';
@@ -89,29 +89,39 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         }
     });
 
-    /*eslint-disable new-cap*/
-    const d = $.Deferred();
-    /*eslint-enable new-cap*/
-
     // Execute request
-    post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
-        ...settings,
-        data: JSON.stringify(request)
-    }, d.reject).then((result) => {
+    return post('/gdc/internal/projects/' + projectId + '/experimental/executions', {
+        body: JSON.stringify(request)
+    })
+    .then(parseJSON)
+    .then(function resolveSimpleExecution(result) {
         executedReport.headers = wrapMeasureIndexesFromMappings(
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
         return ajax(result.executionResult.tabularDataResult, settings);
-    }, d.reject).then((result, message, response) => {
+    }).then(r => {
+        if (r.status === 204) {
+            return {
+                status: r.status,
+                result: ''
+            };
+        }
+
+        return r.json().then(result => {
+            return {
+                status: r.status,
+                result
+            };
+        });
+    }).then(r => {
+        const {result, status} = r;
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
         executedReport.isLoaded = true;
-        executedReport.isEmpty = (response.status === 204);
-        d.resolve(executedReport);
-    }, d.reject);
-
-    return d.promise();
+        executedReport.isEmpty = (status === 204);
+        return executedReport;
+    });
 }
 
 const MAX_TITLE_LENGTH = 255;
@@ -492,7 +502,7 @@ export const mdToExecutionConfiguration = (mdObj, options = {}) => {
 
 const getOriginalMetricFormats = (mdObj) => {
     // for metrics with showPoP or measureFilters.length > 0 roundtrip for original metric format
-    return $.when.apply(undefined, map(
+    return Promise.all(map(
         map(get(mdObj, 'buckets.measures'), ({ measure }) => measure),
         (measure) => {
             if (measure.showPoP === true || measure.measureFilters.length > 0) {
@@ -504,16 +514,14 @@ const getOriginalMetricFormats = (mdObj) => {
                 });
             }
 
-            /* eslint-disable new-cap */
-            return $.Deferred().resolve(measure);
-            /* eslint-enable new-cap */
+            return Promise.resolve(measure);
         }
     ));
 };
 
 export const getDataForVis = (projectId, mdObj, settings) => {
-    return getOriginalMetricFormats(mdObj).then((...measures) => {
-        mdObj.buckets.measures = map([...measures], (measure) => ({ measure }));
+    return getOriginalMetricFormats(mdObj).then((measures) => {
+        mdObj.buckets.measures = map(measures, (measure) => ({ measure }));
         const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
         return getData(projectId, columns, executionConfiguration, settings);
     });

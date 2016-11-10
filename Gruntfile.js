@@ -31,8 +31,29 @@ module.exports = function(grunt) {
         karma: {
             unit: {
                 configFile: 'tools/karma.conf.js',
-                singleRun: grunt.option('ci'),
-                autoWatch: !grunt.option('ci')
+                singleRun: false,
+                autoWatch: true,
+                background: false
+            },
+            ci: {
+                configFile: 'tools/karma.conf.js',
+                singleRun: true,
+                autoWatch: false
+            }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    quiet: false,
+                    require: [
+                        'babel-register',
+                        'isomorphic-fetch',
+                        function() { expect = require('expect.js'); },
+                        function() { sinon = require('sinon'); }
+                    ]
+                },
+                src: ['test/*_test.js']
             }
         },
         grizzly: {
@@ -47,6 +68,11 @@ module.exports = function(grunt) {
             js: {
                 files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gooddata.js'],
                 tasks: ['webpack:build-dev', 'copy:examples'],
+                nospawn: true
+            },
+            tests: {
+                files: ['src/*.js', 'test/*_test.js'],
+                tasks: ['mochaTest:test', 'karma:unit:run'],
                 nospawn: true
             }
         },
@@ -135,6 +161,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-gh-pages');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
@@ -232,15 +259,16 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('release', [
-        'test',
+        'test-ci',
         'bump',
         'init-bower-repo',
         'dist',
         'release-bower-component'
     ]);
 
-    grunt.registerTask('test', ['eslint', 'karma']);
-    grunt.registerTask('dev', ['grizzly', 'watch']);
+    grunt.registerTask('test', ['eslint', 'karma:unit:start', 'watch:tests']);
+    grunt.registerTask('test-ci', ['eslint', 'karma:ci', 'mochaTest']);
+    grunt.registerTask('dev', ['grizzly', 'watch:js']);
     grunt.registerTask('doc', ['yuidoc']);
     grunt.registerTask('validate', ['eslint']);
 };

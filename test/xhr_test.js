@@ -1,338 +1,204 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-/*eslint func-names: 0, vars-on-top: 0*/
+import fetchMock from 'fetch-mock';
+
 import * as xhr from '../src/xhr';
-import $ from 'jquery';
 import { setCustomDomain } from '../src/config';
 
-describe('xhr', () => {
-    /* $.ajax returns jqXhr object with deferred interface
-        this add jqXhr properties according to options to simulate jqXhr
-    */
-    function fakeJqXhr(options, d) {
-        let i;
-        for (i = 0; i < d.length; i++) {
-            $.extend(d[i], options);
-        }
-    }
-
-    let d = [];
-    let expects = [];
-
-    beforeEach(function() {
-        const mock = sinon.mock($);
-        let i;
-        /** mock result for first three calls of $.ajax */
-        for (i = 0; i < 3; i++) {
-            /*eslint-disable new-cap*/
-            d.push($.Deferred());
-            /*eslint-enable new-cap*/
-            expects.push(mock.expects('ajax').returns(d[i]));
-        }
+describe('fetch', () => {
+    afterEach(() => {
+        fetchMock.restore();
     });
 
-    afterEach(function() {
-        d = [];
-        expects = [];
-        if ($.ajax.restore) $.ajax.restore();
-    });
-
-    function mockResponse(status, headers) {
-        return {
-            status: status,
-            getResponseHeader: function(header) {
-                return headers ? headers[header] : null;
-            }
-        };
-    }
-
-    describe('$.ajax request', () => {
-        it('should handle successful request', done => {
-            xhr.ajax('/some/url').done(function(data, textStatus, xhrObj) {
-                expect(expects[0].calledOnce).to.be.ok();
-                expect(data).to.be('Hello');
-                expect(xhrObj.status).to.be(200);
-                done();
+    describe('xhr.ajax request', () => {
+        it('should handle successful request', () => {
+            fetchMock.mock('/some/url', { status: 200, body: 'hello'});
+            return xhr.ajax('/some/url').then(response => {
+                expect(response.status).to.be(200);
+                return response.text();
+            }).then(body => {
+                expect(body).to.be('hello');
             });
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('/some/url');
-            expect(settings.contentType).to.be('application/json');
-            d[0].resolve('Hello', '', mockResponse(200));
         });
 
-        it('should stringify JSON data for GDC backend', done => {
+        it('should stringify JSON data for GDC backend', () => {
+            fetchMock.mock('/some/url', { status: 200 });
+            const mockBody = { foo: 'bar' };
             xhr.ajax('/some/url', {
-                type: 'post',
-                data: { foo: 'bar'}
-            }).done(function() {
-                done();
+                body: mockBody // TODO for jQuery compat this should be "data"
             });
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.data).to.be('{"foo":"bar"}');
-            d[0].resolve('Ok', '', mockResponse(200));
+            expect(fetchMock.calls().matched[0][1].body).to.be('{"foo":"bar"}');
         });
 
-        it('should handle unsuccessful request', done => {
-            xhr.ajax('/some/url').fail(function(xhrObj) {
-                expect(expects[0].calledOnce).to.be.ok();
-                expect(xhrObj.status).to.be(404);
-                done();
+        it('should handle unsuccessful request', () => {
+            fetchMock.mock('/some/url', 404);
+            return xhr.ajax('/some/url').then(() => {
+                expect().fail('should be rejected');
+            }, err => {
+                expect(err.response.status).to.be(404);
             });
-            d[0].reject(mockResponse(404));
         });
 
-        it('should support url in settings', done => {
-            xhr.ajax({ url: '/some/url'}).done(function(data, textStatus, xhrObj) {
-                expect(expects[0].calledOnce).to.be.ok();
-                expect(xhrObj.status).to.be(200);
-                done();
-            });
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('/some/url');
-            d[0].resolve('Hello', '', mockResponse(200));
-        });
-
-        it('should work with sucess callback in settings', done => {
-            xhr.ajax({ url: '/some/url', success: function(data, textStatus, xhrObj) {
-                expect(data).to.be('Hello');
-                expect(xhrObj.status).to.be(200);
-                done();
-            }});
-            d[0].resolve('Hello', '', mockResponse(200));
-        });
-
-        it('should work with error callback in settings', done => {
-            xhr.ajax({ url: '/some/url', error: function(xhrObj) {
-                expect(xhrObj.status, 404);
-                done();
-            }});
-            d[0].reject(mockResponse(404));
-        });
-
-        it('should work with complete callback in settings for success', done => {
-            xhr.ajax({ url: '/some/url', complete: function() {
-                done();
-            }});
-            d[0].resolve('Hello', '', { status: 200});
-        });
-
-        it('should work with complete callback in settings for failure', done => {
-            xhr.ajax({ url: '/some/url', complete: function() {
-                done();
-            }});
-            d[0].reject(mockResponse(404));
-        });
-
-        it('should have accept header set on application/json', done => {
-            xhr.ajax({ url: '/some/url'}).done(function(data, textStatus, xhrObj) {
-                expect(expects[0].calledOnce).to.be.ok();
-                expect(xhrObj.status).to.be(200);
-                done();
-            });
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.headers.Accept).to.be('application/json; charset=utf-8');
-            d[0].resolve('Hello', '', mockResponse(200));
+        it('should have accept header set on application/json', () => {
+            fetchMock.mock('/some/url', 200);
+            xhr.ajax('/some/url');
+            expect(fetchMock.calls().matched[0][1].headers.get('accept')).to.be('application/json; charset=utf-8');
         });
     });
 
-    describe('$.ajax unathorized handling', () => {
-        it('should renew token when TT expires', done => {
-            const options = { url: '/some/url'};
-            xhr.ajax(options).done(function(data, textStatus, xhrObj) {
-                expect(expects[2].calledOnce).to.be.ok();
-                expect(xhrObj.status).to.be(200);
-                expect(data).to.be('Hello');
-                done();
-            });
-            fakeJqXhr(options, d);
-            d[0].reject(mockResponse(401)); // first request
-            d[1].resolve({}, '', mockResponse(200)); // token request
-            d[2].resolve('Hello', '', mockResponse(200)); // request retry
-        });
-
-        it(
-            'should fail if token renewal fails and unathorize handler is not set',
-            done => {
-                const options = { url: '/some/url'};
-                xhr.ajax(options).fail(function(xhrObj) {
-                    expect(xhrObj.status).to.be(401);
-                    expect(expects[1].calledOnce).to.be.ok();
-                    expect(expects[2].notCalled).to.be.ok();
-                    done();
-                });
-                fakeJqXhr(options, d);
-                d[0].reject(mockResponse(401)); // first request
-                d[1].reject(mockResponse(401)); // token request
-            }
-        );
-
-        it('should invoke unathorized handler is token request fails', done => {
-            const options = {
-                url: '/some/url',
-                unauthorized: function(xhrObj) {
-                    expect(xhrObj.status).to.be(401);
-                    expect(expects[1].calledOnce).to.be.ok();
-                    expect(expects[2].notCalled).to.be.ok();
-                    done();
+    describe('xhr.ajax unauthorized handling', () => {
+        it('should renew token when TT expires', () => {
+            fetchMock.mock('/some/url', (url) => {
+                // for the first time return 401 - simulate no token
+                if (fetchMock.calls(url).length === 1) {
+                    return 401;
                 }
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options);
-            d[0].reject(mockResponse(401)); // first request
-            d[1].reject(mockResponse(401)); // token request
+
+                return 200;
+            })
+            .mock('/gdc/account/token', 200);
+            return xhr.ajax('/some/url').then(r => {
+                expect(r.status).to.be(200);
+            });
         });
 
-        it(
-            'should correctly handle multiple requests with token request in progress',
-            done => {
-                const optionsFirst = {
-                    url: '/some/url/1'
-                };
-                const optionsSecond = {
-                    url: '/some/url/2'
-                };
+        it('should fail if token renewal fails', () => {
+            fetchMock.mock('/some/url', 401)
+                     .mock('/gdc/account/token', 401);
+            return xhr.ajax('/some/url').then(null, err => {
+                expect(err.response.status).to.be(401);
+            });
+        });
 
-                $.extend(d[0], optionsFirst);
-                $.extend(d[1], optionsSecond);
+        it('should correctly handle multiple requests with token request in progress', () => {
+            const firstFailedMatcher = () => {
+                if (fetchMock.calls('/some/url/1').length === 1) {
+                    return 401;
+                }
 
-                xhr.ajax(optionsFirst);
-                d[0].reject(mockResponse(401));
+                return 200;
+            };
 
-                // now, token request should be in progress
-                // so this "failure" should continue after
-                // token request and should correctly fail
-                xhr.ajax(optionsSecond).fail(function(xhrObj) {
-                    expect(xhrObj.status).to.be(403);
-                    done();
+            fetchMock.mock('/some/url/1', firstFailedMatcher)
+                     .mock('/some/url/2', firstFailedMatcher)
+                     .mock('/gdc/account/token', 200);
+
+            return Promise.all([xhr.ajax('/some/url/1'), xhr.ajax('/some/url/2')]).then(r => {
+                expect(r[0].status).to.be(200);
+                expect(r[1].status).to.be(200);
+            });
+        });
+    });
+
+    describe('xhr.ajax polling', () => {
+        it('should retry request after delay', () => {
+            fetchMock.mock('/some/url', (url) => {
+                if (fetchMock.calls(url).length <= 2) {
+                    return 202;
+                }
+
+                return { status: 200, body: 'Poll result' };
+            });
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+                expect(r.status).to.be(200);
+                expect(fetchMock.calls('/some/url').length).to.be(3);
+
+                return r.text().then(t => {
+                    expect(t).to.be('Poll result');
                 });
-
-                // simulate token request failed
-                d[1].reject(mockResponse(403));
-            }
-        );
-    });
-
-    describe('$.ajax polling', () => {
-        it('should retry request after delay', done => {
-            const options = {
-                url: '/some/url',
-                data: {a: 'b'},
-                pollDelay: 0
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options).done(function(data) {
-                expect(data).to.be('OK');
-                expect(expects[0].lastCall.args[0].method).to.be('GET');
-                expect(expects[0].lastCall.args[0].data).to.be(undefined);
-                expect(expects[1].lastCall.args[0].method).to.be('GET');
-                expect(expects[2].lastCall.args[0].method).to.be('GET');
-                done();
             });
-            d[0].resolve(null, '', mockResponse(202));
-            d[1].resolve(null, '', mockResponse(202));
-            d[2].resolve('OK', '', mockResponse(200));
         });
 
-        it('should not poll if client forbids it', done => {
-            const options = {
-                url: '/some/url',
-                pollDelay: 0,
-                dontPollOnResult: true
-            };
+        it('should not poll if client forbids it', () => {
+            fetchMock.mock('/some/url', (url) => {
+                if (fetchMock.calls(url).length <= 2) {
+                    return 202;
+                }
 
-            fakeJqXhr(options, d);
-            xhr.ajax(options).done(function(data) {
-                expect(data).to.be('FIRST_RESPONSE');
-                expect(expects[0].calledOnce).to.be.ok();
-                expect(expects[1].notCalled).to.be.ok();
-                expect(expects[2].notCalled).to.be.ok();
-                expect(expects[0].lastCall.args[0].method).to.be(undefined);
-                done();
+                return { status: 200, body: 'poll result' };
             });
-            d[0].resolve('FIRST_RESPONSE', '', mockResponse(202));
-            d[1].resolve('SECOND_RESPONSE', '', mockResponse(202));
-            d[2].resolve('THIRD_RESPONSE', '', mockResponse(200));
+
+            return xhr.ajax('/some/url', { pollDelay: 0, dontPollOnResult: true }).then(r => {
+                expect(r.status).to.be(202);
+                expect(fetchMock.calls('/some/url').length).to.be(1);
+            });
         });
 
-        it('should correctly reject after retry 404', done => {
-            const options = {
-                url: '/some/url',
-                pollDelay: 0
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options).fail(function(xhrObj) {
-                expect(xhrObj.status).to.be(404);
-                done();
+        it('should correctly reject after retry is 404', () => {
+            fetchMock.mock('/some/url', (url) => {
+                if (fetchMock.calls(url).length <= 2) {
+                    return 202;
+                }
+
+                return 404;
             });
-            d[0].resolve(null, '', mockResponse(202));
-            d[1].resolve(null, '', mockResponse(202));
-            d[2].reject(mockResponse(404));
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, err => {
+                expect(err.response.status).to.be(404);
+            });
         });
     });
 
-    describe('$.ajax polling with different location', () => {
-        it('should retry request after delay', done => {
-            const options = {
-                url: '/some/url',
-                pollDelay: 0
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options).done(function(data) {
-                expect(data).to.be('OK');
-                expect(expects[0].lastCall.args[0].method).to.be('GET');
-                expect(expects[1].lastCall.args[0].method).to.be('GET');
-                expect(expects[2].lastCall.args[0].method).to.be('GET');
-                expect(expects[2].lastCall.args[0].url).to.be('/other/url');
+    describe('xhr.ajax polling with different location', () => {
+        it('should retry request after delay', () => {
+            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
+            fetchMock.mock('/other/url', (url) => {
+                if (fetchMock.calls(url).length <= 2) {
+                    return 202;
+                }
 
-                done();
+                return { status: 200, body: 'Poll result from other url' };
             });
-            d[0].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
-            d[1].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
-            d[2].resolve('OK', '', mockResponse(200));
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+                expect(r.status).to.be(200);
+                expect(fetchMock.calls('/some/url').length).to.be(1);
+                expect(fetchMock.calls('/other/url').length).to.be(3);
+
+                return r.text().then(t => {
+                    expect(t).to.be('Poll result from other url');
+                });
+            });
         });
 
-        it('should folow multiple redirects', done => {
-            const options = {
-                url: '/some/url',
-                pollDelay: 0
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options).done(function(data) {
-                expect(data).to.be('OK');
-                expect(expects[2].lastCall.args[0].url).to.be('/other/url2');
-                done();
+        it('should folow multiple redirects', () => {
+            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
+            fetchMock.mock('/other/url', { status: 202, headers: { 'Location': '/last/url' } });
+            fetchMock.mock('/last/url', { status: 200, body: 'Poll result with redirects' });
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+                expect(r.status).to.be(200);
+                expect(fetchMock.calls('/some/url').length).to.be(1);
+                expect(fetchMock.calls('/other/url').length).to.be(1);
+                expect(fetchMock.calls('/last/url').length).to.be(1);
+
+                return r.text().then(t => {
+                    expect(t).to.be('Poll result with redirects');
+                });
             });
-            d[0].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
-            d[1].resolve(null, '', mockResponse(202, {'Location': '/other/url2'}));
-            d[2].resolve('OK', '', mockResponse(200));
         });
 
-        it('should correctly reject after retry 404', done => {
-            const options = {
-                url: '/some/url',
-                pollDelay: 0
-            };
-            fakeJqXhr(options, d);
-            xhr.ajax(options).fail(function(xhrObj) {
-                expect(xhrObj.status).to.be(404);
-                done();
+        it('should correctly reject after retry 404', () => {
+            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
+            fetchMock.mock('/other/url', (url) => {
+                if (fetchMock.calls(url).length <= 2) {
+                    return 202;
+                }
+
+                return 404;
             });
-            d[0].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
-            d[1].resolve(null, '', mockResponse(202, {'Location': '/other/url'}));
-            d[2].reject(mockResponse(404));
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, err => {
+                expect(err.response.status).to.be(404);
+                expect(fetchMock.calls('/some/url').length).to.be(1);
+                expect(fetchMock.calls('/other/url').length).to.be(3);
+            });
         });
     });
 
     describe('shortcut methods', () => {
-        before(function() {
-            sinon.stub(xhr, 'ajax');
-        });
-
-        after(function() {
-            xhr.ajax.restore();
-        });
-
-        beforeEach(function() {
-            xhr.ajax.reset();
+        beforeEach(() => {
+            fetchMock.mock('url', 200);
         });
 
         it('should call xhr.ajax with get method', () => {
@@ -340,8 +206,8 @@ describe('xhr', () => {
                 contentType: 'text/csv'
             });
 
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('url');
+            const [url, settings] = fetchMock.lastCall('url');
+            expect(url).to.be('url');
             expect(settings.method).to.be('GET');
             expect(settings.contentType).to.be('text/csv');
         });
@@ -354,38 +220,51 @@ describe('xhr', () => {
                 contentType: 'text/csv'
             });
 
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('url');
+            const [url, settings] = fetchMock.lastCall('url');
+            expect(url).to.be('url');
             expect(settings.method).to.be('POST');
-            expect(settings.data).to.be(JSON.stringify(data));
             expect(settings.contentType).to.be('text/csv');
+            expect(settings.body).to.be(JSON.stringify(data));
         });
     });
 
     describe('enrichSettingWithCustomDomain', () => {
+        after(() => {
+            setCustomDomain(null);
+        });
         it('should not touch settings if no domain set', () => {
-            const opts = { url: '/test1' };
+            fetchMock.mock('/test1', 200);
             expect(setCustomDomain).withArgs(undefined).to.throwError();
-            xhr.ajax(opts);
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('/test1');
-            expect(settings.xhrFields).to.be(undefined);
+
+            xhr.ajax('/test1');
+
+            const [url, settings] = fetchMock.lastCall('/test1');
+            expect(url).to.be('/test1');
+            expect(settings.credentials).to.be('same-origin');
+            expect(settings.mode).to.be('same-origin');
         });
         it('should add domain before url', () => {
-            const opts = { url: '/test1' };
             setCustomDomain('https://domain.tld');
-            xhr.ajax(opts);
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('https://domain.tld/test1');
-            expect(settings.xhrFields).to.eql({ withCredentials: true });
+            fetchMock.mock('https://domain.tld/test1', 200);
+
+            xhr.ajax('https://domain.tld/test1');
+
+            const [url, settings] = fetchMock.lastCall('https://domain.tld/test1');
+            expect(url).to.be('https://domain.tld/test1');
+            expect(settings.credentials).to.be('include');
+            expect(settings.mode).to.be('cors');
         });
         it('should not double domain in settings url', () => {
-            const opts = { url: 'https://domain.tld/test1' };
             setCustomDomain('https://domain.tld');
-            xhr.ajax(opts);
-            const settings = expects[0].lastCall.args[0];
-            expect(settings.url).to.be('https://domain.tld/test1');
-            expect(settings.xhrFields).to.eql({ withCredentials: true });
+            fetchMock.mock('https://domain.tld/test1', 200);
+
+            xhr.ajax('https://domain.tld/test1');
+
+            const [url, settings] = fetchMock.lastCall('https://domain.tld/test1');
+            expect(url).to.be('https://domain.tld/test1');
+            expect(settings.credentials).to.eql('include');
+            expect(settings.mode).to.eql('cors');
         });
     });
 });
+

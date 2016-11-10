@@ -1,14 +1,11 @@
 // separate file so we can refer to it from webpack.config.js and karma.conf.js
+var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     devtool: 'cheap-inline-source-map',
     resolve: {
         root: __dirname,
-
-        alias: {
-            'jquery': 'lib/jquery/dist/jquery'
-        },
-
         modulesDirectories: ['src', 'node_modules']
     },
 

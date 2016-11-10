@@ -1,158 +1,131 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-/* eslint func-names: 0 */
 import * as user from '../src/user';
-describe('user', () => {
-    let server;
-    describe('with fake server', () => {
-        beforeEach(function() {
-            server = sinon.fakeServer.create();
-            server.autoRespond = true;
-        });
+import fetchMock from 'fetch-mock';
 
-        afterEach(function() {
-            server.restore();
+describe('user', () => {
+    describe('with fake server', () => {
+        afterEach(() => {
+            fetchMock.restore();
         });
 
         describe('login', () => {
-            it('resolves with userLogin using valid credential', done => {
-                server.respondWith(
-                    'POST',
+            it('resolves with userLogin using valid credential', () => {
+                fetchMock.mock(
                     '/gdc/account/login',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify(
-                        {'userLogin': {'profile': '/gdc/account/profile/abcd', 'state': '/gdc/account/login/abcd'}}
-                    )]
+                    'POST',
+                    {
+                        status: 200,
+                        body: JSON.stringify(
+                            {'userLogin': {'profile': '/gdc/account/profile/abcd', 'state': '/gdc/account/login/abcd'}}
+                        )
+                    }
                 );
 
-                user.login('login', 'pass').then(function(result) {
+                return user.login('login', 'pass').then((result) => {
                     expect(result).to.eql(
                         {'userLogin': {'profile': '/gdc/account/profile/abcd', 'state': '/gdc/account/login/abcd'}}
                     );
-                    done();
                 });
             });
 
-            it('rejects with bad credentials', done => {
-                server.respondWith(
-                    'POST',
+            it('rejects with bad credentials', () => {
+                fetchMock.mock(
                     '/gdc/account/login',
-                    [400, {'Content-Type': 'application/json'}, '']
+                    'POST',
+                    400
                 );
 
-                user.login('bad', 'creds').then(function() {
-                    expect().fail('Promise should reject with 400 Bad Request error');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(400);
-                    done();
-                });
+                return user.login('bad', 'creds').then(null, (err) => expect(err).to.be.an(Error));
             });
         });
 
         describe('isLoggedIn', () => {
-            it('should resolve if user logged in', done => {
-                server.respondWith(
-                    'GET',
+            it('should resolve if user logged in', () => {
+                fetchMock.mock(
                     '/gdc/account/token',
-                    [200, {'Content-Type': 'text/html'}, JSON.stringify({})]
+                    'GET',
+                    200
                 );
-                user.isLoggedIn().then(function(result) {
-                    expect(result).to.eql({});
-                    done();
-                }, function(err) {
-                    expect().fail('Promise should be resolved with empty object. ' + err);
-                    done();
-                });
+                return user.isLoggedIn().then(r => expect(r).to.be.ok());
             });
-            it('should reject with 401 if user not logged in', done => {
-                server.respondWith(
-                    'GET',
+
+            it('should resolve with false if user not logged in', () => {
+                fetchMock.mock(
                     '/gdc/account/token',
-                    [401, {'Content-Type': 'application/json'}, JSON.stringify({})]
+                    'GET',
+                    401
                 );
-                user.isLoggedIn().then(function() {
-                    expect().fail('Promise should be rejected with 401 Not Authorized');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(401);
-                    done();
+                return user.isLoggedIn().then(r => {
+                    expect(r).not.to.be.ok();
                 });
             });
         });
 
-        describe('loggedOut', () => {
-            it('should resolve when user is not logged in', done => {
-                server.respondWith(
-                    'GET',
+        describe('logout', () => {
+            it('should resolve when user is not logged in', () => {
+                fetchMock.mock(
                     '/gdc/account/token',
-                    [401, {'Content-Type': 'application/json'}, JSON.stringify({})]
+                    'GET',
+                    401
                 );
 
-                user.logout().then(function() {
-                    done();
-                }, function(err) {
-                    expect().fail('Promise should be resolved with empty object. ' + err);
-                    done();
-                });
+                return user.logout().then(null, err => expect(err).fail('Should resolve'));
             });
 
-            it('should log out user', done => {
+            it('should log out user', () => {
                 const userId = 'USER_ID';
 
-                server.respondWith(
-                    'GET',
+                fetchMock.mock(
                     '/gdc/account/token',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({})]
+                    'GET',
+                    200
                 );
 
-                server.respondWith(
-                    'GET',
+                fetchMock.mock(
                     '/gdc/app/account/bootstrap',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({
-                        bootstrapResource: {
-                            accountSetting: {
-                                links: {
-                                    self: '/gdc/account/profile/' + userId
+                    'GET',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            bootstrapResource: {
+                                accountSetting: {
+                                    links: {
+                                        self: '/gdc/account/profile/' + userId
+                                    }
                                 }
                             }
-                        }
-                    })]
+                        })
+                    }
                 );
 
-                server.respondWith(
-                    'DELETE',
+                fetchMock.mock(
                     '/gdc/account/login/' + userId,
-                    [204, {'Content-Type': 'application/json'}, '']
+                    'DELETE',
+                    200 // should be 204, but see https://github.com/wheresrhys/fetch-mock/issues/36
                 );
 
-                user.logout().then(function() {
-                    done();
-                }, function(err) {
-                    expect().fail('Promise should be resolved with empty object. ' + err);
-                    done();
-                });
+                return user.logout().then(r => expect(r.ok).to.be.ok());
             });
         });
 
         describe('updateProfileSettings', () => {
-            it('should update user\'s settings', done => {
+            it('should update user\'s settings', () => {
                 const userId = 'USER_ID';
 
-                server.respondWith(
+                fetchMock.mock(
                     '/gdc/account/profile/' + userId + '/settings',
-                    [400, {'Content-Type': 'application/json'}, '']
+                    { status: 400, body: '' }
                 );
-                user.updateProfileSettings(userId, []).then(function() {
+                return user.updateProfileSettings(userId, []).then(() => {
                     expect().fail('Should reject with 400');
-                    done();
-                }, function(err) {
-                    expect(err.status).to.be(400);
-                    done();
+                }, err => {
+                    expect(err.response.status).to.be(400);
                 });
             });
         });
 
         describe('Account info', () => {
-            it('should return info about account', done => {
+            it('should return info about account', () => {
                 const login = 'LOGIN';
                 const loginMD5 = 'LOGIN_MD5';
                 const firstName = 'FIRST_NAME';
@@ -160,38 +133,39 @@ describe('user', () => {
                 const organizationName = 'ORG_NAME';
                 const profileUri = 'PROFILE_URI';
 
-                server.respondWith(
-                    'GET',
+                fetchMock.mock(
                     '/gdc/app/account/bootstrap',
-                    [200, {'Content-Type': 'application/json'}, JSON.stringify({
-                        bootstrapResource: {
-                            accountSetting: {
-                                login: login,
-                                firstName: firstName,
-                                lastName: lastName,
-                                links: {
-                                    self: profileUri
+                    'GET',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            bootstrapResource: {
+                                accountSetting: {
+                                    login: login,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    links: {
+                                        self: profileUri
+                                    }
+                                },
+                                current: {
+                                    loginMD5: loginMD5
+                                },
+                                settings: {
+                                    organizationName: organizationName
                                 }
-                            },
-                            current: {
-                                loginMD5: loginMD5
-                            },
-                            settings: {
-                                organizationName: organizationName
                             }
-                        }
-                    })]
+                        })
+                    }
                 );
 
-                user.getAccountInfo().then(function(accountInfo) {
+                return user.getAccountInfo().then((accountInfo) => {
                     expect(accountInfo.login).to.eql(login);
                     expect(accountInfo.loginMD5).to.eql(loginMD5);
                     expect(accountInfo.firstName).to.eql(firstName);
                     expect(accountInfo.lastName).to.eql(lastName);
                     expect(accountInfo.organizationName).to.eql(organizationName);
                     expect(accountInfo.profileUri).to.eql(profileUri);
-
-                    done();
                 });
             });
         });

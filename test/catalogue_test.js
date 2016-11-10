@@ -1,177 +1,186 @@
-import * as fixtures from './fixtures/catalogue';
-import * as xhr from '../src/xhr';
-import * as catalogue from '../src/catalogue';
 import { cloneDeep, get, set } from 'lodash';
-
-import Promise from 'bluebird';
+import fetchMock from 'fetch-mock';
+import * as fixtures from './fixtures/catalogue';
+import * as catalogue from '../src/catalogue';
 
 describe('Catalogue', () => {
     const projectId = 'some_id';
-    let ajax;
 
-    describe('loadCatalog', () => {
-        const loadCatalogUri = `/gdc/internal/projects/${projectId}/loadCatalog`;
-
+    describe('#loadItems', () => {
         beforeEach(() => {
-            ajax = sinon.stub(xhr, 'ajax', () => Promise.resolve(fixtures.loadCatalogResponse));
+            fetchMock.mock(`/gdc/internal/projects/${projectId}/loadCatalog`, {
+                status: 200,
+                body: JSON.stringify(fixtures.loadCatalogResponse)
+            });
         });
 
         afterEach(() => {
-            xhr.ajax.restore();
+            fetchMock.restore();
         });
 
-        describe('#loadItems', () => {
-            it('should load items from loadCatalog server end point', (done) => {
-                catalogue.loadItems(projectId, fixtures.optionsForEmptySelection);
+        it('should load items from loadCatalog server end point', (done) => {
+            catalogue.loadItems(projectId, fixtures.optionsForEmptySelection).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    expect(ajaxCall.args[0]).to.be(loadCatalogUri);
-                    expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForEmptySelection);
-                    done();
-                }, 0);
+                expect(data).to.be.eql(fixtures.requestForEmptySelection);
+
+                done();
             });
+        });
 
-            it('should send maql for fact base measures', (done) => {
-                const options = fixtures.optionsForMeasureWithFilterAndCategory;
+        it('should send maql for fact base measures', (done) => {
+            const options = fixtures.optionsForMeasureWithFilterAndCategory;
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    const data = get(ajaxCall.args[1], 'data');
-                    expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
-                    expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
-                        get(options, 'bucketItems.buckets.categories[0].category.attribute')
-                    );
-                    done();
-                });
+                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
+                expect(get(data, 'catalogRequest.bucketItems.0')).to.be(
+                    get(options, 'bucketItems.buckets.categories.0.category.attribute')
+                );
+
+                done();
             });
+        });
 
-            it('should send identifier for attribute base measure', (done) => {
-                const options = fixtures.optionsForTwoMeasuresFactAndAtrribute;
+        it('should send identifier for attribute base measure', (done) => {
+            const options = fixtures.optionsForTwoMeasuresFactAndAtrribute;
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForTwoMeasureFactAndAttribute);
-                    done();
-                }, 0);
+                expect(data).to.be.eql(fixtures.requestForTwoMeasureFactAndAttribute);
+
+                done();
             });
+        });
 
-            it('should send maql with select identifier when visualization contains measure fact and category', (done) => {
-                const options = fixtures.optionsForMeasureWithShowInPercent;
-                catalogue.loadItems(projectId, options);
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    const data = get(ajaxCall.args[1], 'data');
-                    expect(data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
-                    expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
-                        get(options, 'bucketItems.buckets.categories[0].category.attribute')
-                    );
-                    done();
-                });
+        it('should send maql with select identifier when visualization contains measure fact and category', (done) => {
+            const options = fixtures.optionsForMeasureWithShowInPercent;
+
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
+                expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
+                    get(options, 'bucketItems.buckets.categories[0].category.attribute')
+                );
+
+                done();
             });
+        });
 
-            it('should send select for fact base measure with filter', (done) => {
-                const options = fixtures.optionsForMeasureTypeFactWithFilter;
-                catalogue.loadItems(projectId, options);
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForMeasureTypeFactWithFilter);
-                    done();
-                });
+        it('should send select for fact base measure with filter', (done) => {
+            const options = fixtures.optionsForMeasureTypeFactWithFilter;
+
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data).to.be.eql(fixtures.requestForMeasureTypeFactWithFilter);
+
+                done();
             });
+        });
 
-            it('should send identifier for measure type metric', (done) => {
-                const options = fixtures.optionsForMetric;
-                catalogue.loadItems(projectId, options);
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    expect(ajaxCall.args[1].data).to.be.eql(fixtures.requestForMetric);
-                    done();
-                });
+        it('should send identifier for measure type metric', (done) => {
+            const options = fixtures.optionsForMetric;
+
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data).to.be.eql(fixtures.requestForMetric);
+
+                done();
             });
+        });
 
-            it('should not override bucketItems prop', (done) => {
-                const dummyUri = '__dummy_uri__';
-                catalogue.loadItems(projectId, { bucketItems: [dummyUri] });
-                setTimeout(() => {
-                    const ajaxCall = ajax.getCall(0);
-                    const { bucketItems } = ajaxCall.args[1].data.catalogRequest;
-                    expect(bucketItems).to.be.eql([dummyUri]);
-                    done();
-                }, 0);
+        it('should not override bucketItems prop', (done) => {
+            const dummyUri = '__dummy_uri__';
+
+            catalogue.loadItems(projectId, { bucketItems: [dummyUri] }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                const { bucketItems } = data.catalogRequest;
+
+                expect(bucketItems).to.be.eql([dummyUri]);
+
+                done();
             });
+        });
 
-            it('should correctly resolve items with nested maql expressions', () => {
-                const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
+        it('should correctly resolve items with nested maql expressions', (done) => {
+            const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                const ajaxCall = ajax.getCall(0);
-                const data = get(ajaxCall.args[1], 'data');
                 expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
+
+                done();
             });
+        });
 
-            it('should correctly resolve items with nested maql expressions and negative filter element selection', () => {
-                const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
-                set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
+        it('should correctly resolve items with nested maql expressions and negative filter element selection', (done) => {
+            const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
+            set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                const ajaxCall = ajax.getCall(0);
-                const data = get(ajaxCall.args[1], 'data');
                 expect(data).to.be.eql(fixtures.requestForMeasureWithNotInFilterAndCategoryShowInPercent);
+
+                done();
             });
+        });
 
-            it('should send from ALL dataSets type when passing returnAllDateDataSets param', () => {
-                const options = cloneDeep(fixtures.optionsForEmptySelection);
-                options.returnAllDateDataSets = true;
+        it('should send from ALL dataSets type when passing returnAllDateDataSets param', (done) => {
+            const options = cloneDeep(fixtures.optionsForEmptySelection);
+            options.returnAllDateDataSets = true;
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                const ajaxCall = ajax.getCall(0);
-                const data = get(ajaxCall.args[1], 'data');
                 expect(data.catalogRequest.requiredDataSets).to.be.eql({ type: 'ALL' });
+
+                done();
             });
+        });
 
-            it('should send CUSTOM requiredDataSets structure for dataSetIdentifier param', () => {
-                const options = cloneDeep(fixtures.optionsForEmptySelection);
+        it('should send CUSTOM requiredDataSets structure for dataSetIdentifier param', (done) => {
+            const options = cloneDeep(fixtures.optionsForEmptySelection);
 
-                options.dataSetIdentifier = 'identifier';
+            options.dataSetIdentifier = 'identifier';
 
-                catalogue.loadItems(projectId, options);
+            catalogue.loadItems(projectId, options).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                const ajaxCall = ajax.getCall(0);
-                const data = get(ajaxCall.args[1], 'data');
                 expect(data.catalogRequest.requiredDataSets).to.be.eql({
                     type: 'CUSTOM',
                     customIdentifiers: [options.dataSetIdentifier]
                 });
+
+                done();
             });
         });
     });
 
-    describe('loadDateDataSets', () => {
-        const loadDateDataSetsUri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
-
+    describe('#loadDateDataSets', () => {
         beforeEach(() => {
-            ajax = sinon.stub(xhr, 'ajax', () => Promise.resolve(fixtures.loadDateDataSetsResponse));
+            fetchMock.mock(`/gdc/internal/projects/${projectId}/loadDateDataSets`, {
+                status: 200,
+                body: JSON.stringify(fixtures.loadDateDataSetsResponse)
+            });
         });
 
         afterEach(() => {
-            xhr.ajax.restore();
+            fetchMock.restore();
         });
 
-        it('should generate basic request structure', () => {
-            return catalogue.loadDateDataSets(projectId, {}).then(() => {
-                const ajaxCall = ajax.getCall(0);
-                expect(ajaxCall.args[0]).to.be(loadDateDataSetsUri);
+        it('should generate basic request structure', (done) => {
+            catalogue.loadDateDataSets(projectId, {}).then(() => {
+                const { data } = fetchMock.lastOptions();
 
-                const dateDataSetsRequest = ajaxCall.args[1].data.dateDataSetsRequest;
-                expect(dateDataSetsRequest).to.be.eql({
+                expect(data.dateDataSetsRequest).to.be.eql({
                     includeUnavailableDateDataSetsCount: true,
                     includeAvailableDateAttributes: true,
                     bucketItems: undefined,
@@ -179,42 +188,56 @@ describe('Catalogue', () => {
                         type: 'PRODUCTION'
                     }
                 });
+
+                done();
             });
         });
 
-        it('should send convert dataSetIdentifier to customIdentifiers', () => {
+        it('should send convert dataSetIdentifier to customIdentifiers', (done) => {
             const dataSetIdentifier = 'my_identifier';
-            return catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
-                const ajaxCall = ajax.getCall(0);
-                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+
+            catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.eql({
                     type: 'CUSTOM',
                     customIdentifiers: [ dataSetIdentifier ]
                 });
+
+                done();
             });
         });
 
-        it('should send type ALL when sending returnAllDateDataSets', () => {
+        it('should send type ALL when sending returnAllDateDataSets', (done) => {
             const returnAllDateDataSets = true;
-            return catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
-                const ajaxCall = ajax.getCall(0);
-                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+
+            catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.eql({
                     type: 'ALL'
                 });
+
+                done();
             });
         });
 
-        it('should omit requiredDataSets parameter when sending returnAllRelatedDateDataSets', () => {
+        it('should omit requiredDataSets parameter when sending returnAllRelatedDateDataSets', (done) => {
             const returnAllRelatedDateDataSets = true;
-            return catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
-                const ajaxCall = ajax.getCall(0);
-                const { requiredDataSets } = ajaxCall.args[1].data.dateDataSetsRequest;
+
+            catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.be(undefined);
+
+                done();
             });
         });
 
-        it('should send empty columns if only date buckets are in the request', () => {
+        it('should send empty columns if only date buckets are in the request', (done) => {
             const mockPayload = {
                 bucketItems: {
                     buckets: {
@@ -233,10 +256,15 @@ describe('Catalogue', () => {
                     }
                 }
             };
-            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
-                const call = ajax.getCall(0);
-                const items = call.args[1].data.dateDataSetsRequest.bucketItems;
-                expect(items).to.have.length(0);
+
+            catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                const { bucketItems } = data.dateDataSetsRequest;
+
+                expect(bucketItems).to.have.length(0);
+
+                done();
             });
         });
 
@@ -308,14 +336,18 @@ describe('Catalogue', () => {
                 }
             };
 
-            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
-                const call = ajax.getCall(0);
-                const items = call.args[1].data.dateDataSetsRequest.bucketItems;
-                expect(items).to.have.eql([
+            catalogue.loadDateDataSets(projectId, mockPayload).then((done) => {
+                const { data } = fetchMock.loadOptions();
+
+                const { bucketItems } = data.dateDataSetsRequest;
+
+                expect(bucketItems).to.have.eql([
                     '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
                     'SELECT (SELECT (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706])) / (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274] WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706]))) FOR PREVIOUS ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167])',
                     'SELECT (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706])) / (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274] WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706]))'
                 ]);
+
+                done();
             });
         });
     });
