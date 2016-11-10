@@ -258,13 +258,15 @@ module.exports = function(grunt) {
         });
     });
 
-    grunt.registerTask('release', [
-        'test-ci',
-        'bump',
-        'init-bower-repo',
-        'dist',
-        'release-bower-component'
-    ]);
+    grunt.registerTask('release', function(target) {
+        grunt.task.run(
+            'test-ci',
+            `bump:${target}`,
+            'init-bower-repo',
+            'dist',
+            'release-bower-component'
+        );
+    });
 
     grunt.registerTask('test', ['eslint', 'karma:unit:start', 'watch:tests']);
     grunt.registerTask('test-ci', ['eslint', 'karma:ci', 'mochaTest']);
