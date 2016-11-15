@@ -1,16 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import md5 from 'md5';
-
-import {
-    ajax,
-    post,
-    get as xhrGet,
-    parseJSON
-} from './xhr';
-
-import Rules from './utils/rules';
-import { sortDefinitions } from './utils/definitions';
-
 import invariant from 'invariant';
 import {
     compact,
@@ -30,10 +19,21 @@ import {
     omit
 } from 'lodash';
 
+import {
+    ajax,
+    post,
+    get as xhrGet,
+    parseJSON
+} from './xhr';
+
+import Rules from './utils/rules';
+import { sortDefinitions } from './utils/definitions';
+
 const notEmpty = negate(isEmpty);
 
 const findHeaderForMappingFn = (mapping, header) =>
-    ((mapping.element === header.id || mapping.element === header.uri) && header.measureIndex === undefined);
+    ((mapping.element === header.id || mapping.element === header.uri) &&
+        header.measureIndex === undefined);
 
 
 const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
@@ -83,24 +83,25 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
     };
     // enrich configuration with supported properties such as
     // where clause with query-like filters or execution context filters
-    ['filters', 'where', 'orderBy', 'definitions'].forEach(property => {
+    ['filters', 'where', 'orderBy', 'definitions'].forEach((property) => {
         if (executionConfiguration[property]) {
             request.execution[property] = executionConfiguration[property];
         }
     });
 
     // Execute request
-    return post('/gdc/internal/projects/' + projectId + '/experimental/executions', {
+    return post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
         body: JSON.stringify(request)
     })
     .then(parseJSON)
-    .then(function resolveSimpleExecution(result) {
+    .then((result) => {
         executedReport.headers = wrapMeasureIndexesFromMappings(
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
         return ajax(result.executionResult.tabularDataResult, settings);
-    }).then(r => {
+    })
+    .then((r) => {
         if (r.status === 204) {
             return {
                 status: r.status,
@@ -108,16 +109,18 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
             };
         }
 
-        return r.json().then(result => {
+        return r.json().then((result) => {
             return {
                 status: r.status,
                 result
             };
         });
-    }).then(r => {
-        const {result, status} = r;
+    })
+    .then((r) => {
+        const { result, status } = r;
         // After the retrieving computed tabularData, resolve the promise
-        executedReport.rawData = (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
+        executedReport.rawData =
+            (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
         executedReport.isLoaded = true;
         executedReport.isEmpty = (status === 204);
         return executedReport;
@@ -148,12 +151,12 @@ const allFiltersEmpty = item => every(map(
     f => isEmpty(get(f, 'listAttributeFilter.default.attributeElements', []))
 ));
 
-const isDerived = measure => {
+const isDerived = (measure) => {
     const type = get(measure, 'type');
     return (type === 'fact' || type === 'attribute' || !allFiltersEmpty(measure));
 };
 
-const getFilterExpression = listAttributeFilter => {
+const getFilterExpression = (listAttributeFilter) => {
     const attributeUri = get(listAttributeFilter, 'listAttributeFilter.attribute');
     const elements = get(listAttributeFilter, 'listAttributeFilter.default.attributeElements', []);
     if (isEmpty(elements)) {
@@ -165,13 +168,13 @@ const getFilterExpression = listAttributeFilter => {
     return `[${attributeUri}] ${negative}IN (${elementsForQuery.join(',')})`;
 };
 
-const getGeneratedMetricExpression = item => {
+const getGeneratedMetricExpression = (item) => {
     const aggregation = get(item, 'aggregation', '').toUpperCase();
     const objectUri = get(item, 'objectUri');
     const where = filter(map(get(item, 'measureFilters'), getFilterExpression), e => !!e);
 
-    return 'SELECT ' + (aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`) +
-        (notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : '');
+    return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`
+        }${notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : ''}`;
 };
 
 const getPercentMetricExpression = ({ category }, measure) => {
@@ -214,13 +217,13 @@ const isDateFilter = ({ dateFilter }) => dateFilter;
 const getCategories = ({ categories }) => categories;
 const getFilters = ({ filters }) => filters;
 
-const getDateCategory = mdObj => {
+const getDateCategory = (mdObj) => {
     const category = find(getCategories(mdObj), isDateCategory);
 
     return get(category, 'category');
 };
 
-const getDateFilter = mdObj => {
+const getDateFilter = (mdObj) => {
     const dateFilter = find(getFilters(mdObj), isDateFilter);
 
     return get(dateFilter, 'dateFilter');
@@ -376,7 +379,7 @@ const createContributionPoPMetric = (measure, mdObj, measureIndex) => {
 const categoryToElement = ({ category }) =>
     ({ element: get(category, 'displayForm'), sort: get(category, 'sort') });
 
-const attributeFilterToWhere = f => {
+const attributeFilterToWhere = (f) => {
     const elements = get(f, 'listAttributeFilter.default.attributeElements', []);
     const elementsForQuery = map(elements, e => ({ id: last(e.split('=')) }));
 
@@ -384,18 +387,18 @@ const attributeFilterToWhere = f => {
     const negative = get(f, 'listAttributeFilter.default.negativeSelection');
 
     return negative ?
-        { [dfUri]: { '$not': { '$in': elementsForQuery } } } :
-        { [dfUri]: { '$in': elementsForQuery } };
+        { [dfUri]: { $not: { $in: elementsForQuery } } } :
+        { [dfUri]: { $in: elementsForQuery } };
 };
 
-const dateFilterToWhere = f => {
+const dateFilterToWhere = (f) => {
     const dateUri =
         get(f, 'dateFilter.dimension') ||
         get(f, 'dateFilter.dataSet') ||
         get(f, 'dateFilter.dataset'); // dataset with lowercase 's' is deprecated; kept here for backwards compatibility
     const granularity = get(f, 'dateFilter.granularity');
     const between = [get(f, 'dateFilter.from'), get(f, 'dateFilter.to')];
-    return { [dateUri]: { '$between': between, '$granularity': granularity } };
+    return { [dateUri]: { $between: between, $granularity: granularity } };
 };
 
 const isPoP = ({ showPoP }) => showPoP;
@@ -447,7 +450,9 @@ const isAttributeFilterExecutable = listAttributeFilter =>
 
 
 function getWhere(filters) {
-    const executableFilters = filter(filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter));
+    const executableFilters = filter(
+        filters, ({ listAttributeFilter }) => isAttributeFilterExecutable(listAttributeFilter)
+    );
     const attributeFilters = map(executableFilters, attributeFilterToWhere);
     const dateFilters = map(filter(filters, ({ dateFilter }) => isDateFilterExecutable(dateFilter)), dateFilterToWhere);
 
@@ -521,7 +526,8 @@ const getOriginalMetricFormats = (mdObj) => {
 
 export const getDataForVis = (projectId, mdObj, settings) => {
     return getOriginalMetricFormats(mdObj).then((measures) => {
-        mdObj.buckets.measures = map(measures, (measure) => ({ measure }));
+        const metadata = mdObj;
+        metadata.buckets.measures = map(measures, measure => ({ measure }));
         const { columns, ...executionConfiguration } = mdToExecutionConfiguration(mdObj);
         return getData(projectId, columns, executionConfiguration, settings);
     });

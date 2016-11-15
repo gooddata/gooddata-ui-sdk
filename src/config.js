@@ -13,7 +13,8 @@
 
 const URL_REGEXP = '(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*';
 
-export let domain;
+// TODO - fix this
+export let domain; // eslint-disable-line import/no-mutable-exports
 
 /**
  * Sets custom domain. Parameter is url which has always to be https://
@@ -34,14 +35,13 @@ export function setCustomDomain(d) {
     }
 
     if (!link) {
-        throw new Error(d + ' is not a valid url');
+        throw new Error(`${d} is not a valid url`);
     }
 
     // ensure https:// prefix
     // and strip possible trailing /
-    domain = 'https://' + link[0]
+    domain = `https://${link[0]
              .replace(/^https:\/\//, '')
-             .replace(/\/$/, '');
+             .replace(/\/$/, '')}`;
 }
-
 

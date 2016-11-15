@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2015, GoodData(R) Corporation. All rights reserved.
-/*eslint no-var:0 */
-var webpack = require('webpack');
+const webpack = require('webpack');
+
 module.exports = {
     entry: './src/gooddata.js',
     output: {
@@ -27,11 +27,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.BannerPlugin('<%= license %>', {raw: true}),
+        new webpack.BannerPlugin('<%= license %>', { raw: true }),
         new webpack.ProvidePlugin({
-            'Promise': 'imports?this=>global!exports?global.Promise!es6-promise',
-            'fetch': 'imports?this=>global!exports?global.fetch!isomorphic-fetch'
+            Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
+            fetch: 'imports?this=>global!exports?global.fetch!isomorphic-fetch'
         })
     ]
 };
-

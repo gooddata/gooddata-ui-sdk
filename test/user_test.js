@@ -1,6 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import * as user from '../src/user';
 import fetchMock from 'fetch-mock';
+import * as user from '../src/user';
 
 describe('user', () => {
     describe('with fake server', () => {
@@ -16,14 +16,14 @@ describe('user', () => {
                     {
                         status: 200,
                         body: JSON.stringify(
-                            {'userLogin': {'profile': '/gdc/account/profile/abcd', 'state': '/gdc/account/login/abcd'}}
+                            { userLogin: { profile: '/gdc/account/profile/abcd', state: '/gdc/account/login/abcd' } }
                         )
                     }
                 );
 
                 return user.login('login', 'pass').then((result) => {
                     expect(result).to.eql(
-                        {'userLogin': {'profile': '/gdc/account/profile/abcd', 'state': '/gdc/account/login/abcd'}}
+                        { userLogin: { profile: '/gdc/account/profile/abcd', state: '/gdc/account/login/abcd' } }
                     );
                 });
             });
@@ -35,7 +35,7 @@ describe('user', () => {
                     400
                 );
 
-                return user.login('bad', 'creds').then(null, (err) => expect(err).to.be.an(Error));
+                return user.login('bad', 'creds').then(null, err => expect(err).to.be.an(Error));
             });
         });
 
@@ -55,7 +55,7 @@ describe('user', () => {
                     'GET',
                     401
                 );
-                return user.isLoggedIn().then(r => {
+                return user.isLoggedIn().then((r) => {
                     expect(r).not.to.be.ok();
                 });
             });
@@ -90,7 +90,7 @@ describe('user', () => {
                             bootstrapResource: {
                                 accountSetting: {
                                     links: {
-                                        self: '/gdc/account/profile/' + userId
+                                        self: `/gdc/account/profile/${userId}`
                                     }
                                 }
                             }
@@ -99,7 +99,7 @@ describe('user', () => {
                 );
 
                 fetchMock.mock(
-                    '/gdc/account/login/' + userId,
+                    `/gdc/account/login/${userId}`,
                     'DELETE',
                     200 // should be 204, but see https://github.com/wheresrhys/fetch-mock/issues/36
                 );
@@ -113,12 +113,12 @@ describe('user', () => {
                 const userId = 'USER_ID';
 
                 fetchMock.mock(
-                    '/gdc/account/profile/' + userId + '/settings',
+                    `/gdc/account/profile/${userId}/settings`,
                     { status: 400, body: '' }
                 );
                 return user.updateProfileSettings(userId, []).then(() => {
                     expect().fail('Should reject with 400');
-                }, err => {
+                }, (err) => {
                     expect(err.response.status).to.be(400);
                 });
             });
@@ -141,18 +141,18 @@ describe('user', () => {
                         body: JSON.stringify({
                             bootstrapResource: {
                                 accountSetting: {
-                                    login: login,
-                                    firstName: firstName,
-                                    lastName: lastName,
+                                    login,
+                                    firstName,
+                                    lastName,
                                     links: {
                                         self: profileUri
                                     }
                                 },
                                 current: {
-                                    loginMD5: loginMD5
+                                    loginMD5
                                 },
                                 settings: {
-                                    organizationName: organizationName
+                                    organizationName
                                 }
                             }
                         })

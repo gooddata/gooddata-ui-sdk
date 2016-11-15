@@ -18,12 +18,13 @@ function resolvedDependencies(resolved, { dependencies }) {
 }
 
 function scan(resolved, unresolved) {
-    for (let i = 0; i < unresolved.length; i++) {
+    for (let i = 0; i < unresolved.length; i += 1) {
         const tested = unresolved[i];
 
         if (resolvedDependencies(resolved, tested)) {
             resolved.push(tested);
-            unresolved.splice(i--, 1);
+            unresolved.splice(i, 1);
+            i -= 1;
         }
     }
 }

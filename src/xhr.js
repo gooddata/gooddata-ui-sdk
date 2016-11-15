@@ -1,6 +1,4 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
-/*eslint block-scoped-var:0 no-use-before-define: [2, "nofunc"]*/ // TODO enable block-scoped-vars
-import * as config from './config';
 import {
     isPlainObject,
     isFunction,
@@ -8,6 +6,7 @@ import {
     merge
 } from 'lodash';
 import 'isomorphic-fetch';
+import * as config from './config';
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -49,8 +48,9 @@ function simulateBeforeSend(settings) {
     }
 }
 
-function enrichSettingWithCustomDomain(originalUrl, settings, domain) {
+function enrichSettingWithCustomDomain(originalUrl, originalSettings, domain) {
     let url = originalUrl;
+    const settings = originalSettings;
     if (domain) {
         // protect url to be prepended with domain on retry
         if (originalUrl.indexOf(domain) === -1) {
@@ -64,7 +64,7 @@ function enrichSettingWithCustomDomain(originalUrl, settings, domain) {
 }
 
 function continueAfterTokenRequest(url, settings) {
-    return tokenRequest.then(response => {
+    return tokenRequest.then((response) => {
         if (!response.ok) {
             const err = new Error('Unauthorized');
             err.response = response;
@@ -72,11 +72,35 @@ function continueAfterTokenRequest(url, settings) {
         }
         tokenRequest = null;
 
-        return ajax(url, settings);
-    }, reason => {
+        return ajax(url, settings); // eslint-disable-line no-use-before-define
+    }, (reason) => {
         tokenRequest = null;
         return reason;
     });
+}
+
+function createSettings(customSettings) {
+    const headers = new Headers({
+        Accept: 'application/json; charset=utf-8',
+        'Content-Type': 'application/json'
+    });
+
+    const settings = Object.assign({}, commonXhrSettings, customSettings);
+
+    settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
+
+    settings.headers = headers;
+
+    // TODO jquery compat - add to warnings
+    settings.body = (settings.data) ? settings.data : settings.body;
+    settings.mode = 'same-origin';
+    settings.credentials = 'same-origin';
+
+    if (isPlainObject(settings.body)) {
+        settings.body = JSON.stringify(settings.body);
+    }
+
+    return settings;
 }
 
 function handleUnauthorized(originalUrl, originalSettings) {
@@ -85,7 +109,7 @@ function handleUnauthorized(originalUrl, originalSettings) {
         // If token request exist, just listen for it's end.
         const { url, settings } = enrichSettingWithCustomDomain('/gdc/account/token', createSettings({}), config.domain);
 
-        tokenRequest = fetch(url, settings).then(response => {
+        tokenRequest = fetch(url, settings).then((response) => {
             // tokenRequest = null;
             // TODO jquery compat - allow to attach unauthorized callback and call it if attached
             // if ((xhrObj.status === 401) && (isFunction(req.unauthorized))) {
@@ -114,7 +138,7 @@ function isLoginRequest(url) {
  * @param {Response} response
  * @return {Promise} promise which resolves to result JSON ()
  */
-export const parseJSON = (response) => response.json();
+export const parseJSON = response => response.json();
 
 /**
  * @param {Response} response see https://developer.mozilla.org/en-US/docs/Web/API/Response
@@ -134,6 +158,14 @@ const checkStatus = (response) => {
     throw error;
 };
 
+function handlePolling(url, settings) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            ajax(url, settings).then(resolve, reject); // eslint-disable-line no-use-before-define
+        }, settings.pollDelay);
+    });
+}
+
 export function ajax(originalUrl, tempSettings = {}) {
     const firstSettings = createSettings(tempSettings);
     const { url, settings } = enrichSettingWithCustomDomain(originalUrl, firstSettings, config.domain);
@@ -144,7 +176,7 @@ export function ajax(originalUrl, tempSettings = {}) {
         return continueAfterTokenRequest(url, settings);
     }
 
-    return fetch(url, settings).then(response => {
+    return fetch(url, settings).then((response) => {
         // If response.status id 401 and it was a login request there is no need
         // to cycle back for token - login does not need token and this meand you
         // are not authorized
@@ -174,37 +206,6 @@ export function ajax(originalUrl, tempSettings = {}) {
     }).then(checkStatus);
 }
 
-function createSettings(customSettings) {
-    const headers = new Headers({
-        'Accept': 'application/json; charset=utf-8',
-        'Content-Type': 'application/json'
-    });
-
-    const settings = Object.assign({}, commonXhrSettings, customSettings);
-
-    settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
-
-    settings.headers = headers;
-
-    // TODO jquery compat - add to warnings
-    settings.body = (settings.data) ? settings.data : settings.body;
-    settings.mode = 'same-origin';
-    settings.credentials = 'same-origin';
-
-    if (isPlainObject(settings.body)) {
-        settings.body = JSON.stringify(settings.body);
-    }
-
-    return settings;
-}
-
-function handlePolling(url, settings) {
-    return new Promise((resolve, reject) => {
-        setTimeout(function poller() {
-            ajax(url, settings).then(resolve, reject);
-        }, settings.pollDelay);
-    });
-}
 function xhrMethod(method) {
     return function methodFn(url, settings) {
         const opts = merge({ method }, settings);
@@ -234,4 +235,3 @@ export const post = xhrMethod('POST');
  * @method put
  */
 export const put = xhrMethod('PUT');
-

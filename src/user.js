@@ -16,13 +16,13 @@ export function isLoggedIn() {
     return new Promise((resolve, reject) => {
         // cannot use get here directly - we need to access to response
         // not to responses JSON get returns
-        ajax('/gdc/account/token', { method: 'GET' }).then(r => {
+        ajax('/gdc/account/token', { method: 'GET' }).then((r) => {
             if (r.ok) {
                 resolve(true);
             }
 
             resolve(false);
-        }, err => {
+        }, (err) => {
             if (err.response.status === 401) {
                 resolve(false);
             } else {
@@ -47,7 +47,7 @@ export function login(username, password) {
         body: JSON.stringify({
             postUserLogin: {
                 login: username,
-                password: password,
+                password,
                 remember: 1,
                 captcha: '',
                 verifyCaptcha: ''
@@ -67,7 +67,7 @@ export function logout() {
                 const userUri = result.bootstrapResource.accountSetting.links.self;
                 const userId = userUri.match(/([^\/]+)\/?$/)[1];
 
-                return ajax('/gdc/account/login/' + userId, {
+                return ajax(`/gdc/account/login/${userId}`, {
                     method: 'delete'
                 });
             });
@@ -84,7 +84,7 @@ export function logout() {
  * @param {Object} profileSetting
 */
 export function updateProfileSettings(profileId, profileSetting) {
-    return put('/gdc/account/profile/' + profileId + '/settings', {
+    return put(`/gdc/account/profile/${profileId}/settings`, {
         data: profileSetting
     });
 }
@@ -95,7 +95,7 @@ export function updateProfileSettings(profileId, profileSetting) {
  */
 export function getAccountInfo() {
     return get('/gdc/app/account/bootstrap')
-        .then(function resolveBootstrap(result) {
+        .then((result) => {
             const br = result.bootstrapResource;
             const accountInfo = {
                 login: br.accountSetting.login,
