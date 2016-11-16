@@ -1,8 +1,8 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import * as md from '../src/metadata';
-import * as xhr from '../src/xhr';
 import fetchMock from 'fetch-mock';
 import { range, find } from 'lodash';
+import * as md from '../src/metadata';
+import * as xhr from '../src/xhr';
 
 describe('metadata', () => {
     describe('with fake server', () => {
@@ -23,10 +23,10 @@ describe('metadata', () => {
             it('should return correct number of entries', () => {
                 fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/attributes',
-                    { status: 200, body: JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}}) }
+                    { status: 200, body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } }) }
                 );
 
-                return md.getAttributes('myFakeProjectId').then(result => {
+                return md.getAttributes('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -47,11 +47,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/query/dimensions',
                     {
                         status: 200,
-                        body: JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}})
+                        body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } })
                     }
                 );
 
-                return md.getDimensions('myFakeProjectId').then(result => {
+                return md.getDimensions('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -72,11 +72,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/query/facts',
                     {
                         status: 200,
-                        body: JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}})
+                        body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } })
                     }
                 );
 
-                return md.getFacts('myFakeProjectId').then(result => {
+                return md.getFacts('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -97,11 +97,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/query/metrics',
                     {
                         status: 200,
-                        body: JSON.stringify({query: { entries: [{title: 'a1'}, {title: 'a2'}]}})
+                        body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } })
                     }
                 );
 
-                return md.getMetrics('myFakeProjectId').then(result => {
+                return md.getMetrics('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -122,11 +122,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/availablemetrics',
                     {
                         status: 200,
-                        body: JSON.stringify({entries: [{link: 'm1'}, {link: 'm2'}]})
+                        body: JSON.stringify({ entries: [{ link: 'm1' }, { link: 'm2' }] })
                     }
                 );
 
-                return md.getAvailableMetrics('myFakeProjectId').then(result => {
+                return md.getAvailableMetrics('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -147,11 +147,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/drillcrosspaths',
                     {
                         status: 200,
-                        body: JSON.stringify({drillcrosspath: {links: [{link: 'a1'}, {link: 'a2'}]}})
+                        body: JSON.stringify({ drillcrosspath: { links: [{ link: 'a1' }, { link: 'a2' }] } })
                     }
                 );
 
-                return md.getAvailableAttributes('myFakeProjectId').then(result => {
+                return md.getAvailableAttributes('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -172,11 +172,11 @@ describe('metadata', () => {
                     '/gdc/md/myFakeProjectId/availablefacts',
                     {
                         status: 200,
-                        body: JSON.stringify({entries: [{link: 'm1'}, {link: 'm2'}]})
+                        body: JSON.stringify({ entries: [{ link: 'm1' }, { link: 'm2' }] })
                     }
                 );
 
-                return md.getAvailableFacts('myFakeProjectId').then(result => {
+                return md.getAvailableFacts('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
                 });
             });
@@ -203,7 +203,7 @@ describe('metadata', () => {
                     body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
                 });
 
-                return md.getObjectUri('myFakeProjectId', 'attr.foo.bar').then(result => {
+                return md.getObjectUri('myFakeProjectId', 'attr.foo.bar').then((result) => {
                     expect(result).to.be('/foo/bar/attr');
                 });
             });
@@ -214,7 +214,7 @@ describe('metadata', () => {
                     'POST',
                     {
                         status: 200,
-                        body: JSON.stringify({ identifiers: []})
+                        body: JSON.stringify({ identifiers: [] })
                     }
                 );
 
@@ -228,8 +228,8 @@ describe('metadata', () => {
                     {
                         status: 200,
                         body: JSON.stringify({ identifiers: [{
-                                uri: '/foo/bar/label',
-                                identifier: 'label.foo.bar'
+                            uri: '/foo/bar/label',
+                            identifier: 'label.foo.bar'
                         }] })
                     }
                 );
@@ -255,7 +255,7 @@ describe('metadata', () => {
                     body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
                 });
 
-                return md.getObjectUri('myFakeProjectId', 'label.foo.bar').then(result => {
+                return md.getObjectUri('myFakeProjectId', 'label.foo.bar').then((result) => {
                     expect(result).to.be('/foo/bar/attr');
                 });
             });
@@ -288,7 +288,7 @@ describe('metadata', () => {
                     { status: 200, body: JSON.stringify({ entries: respondEntries }) }
                 );
 
-                return md.getObjectUsing(projectId, object, { types }).then(result => {
+                return md.getObjectUsing(projectId, object, { types }).then((result) => {
                     expect(postSpy.calledWith(using2Uri, {
                         data: JSON.stringify({
                             inUse: {
@@ -331,7 +331,7 @@ describe('metadata', () => {
 
                 return md.getObjectUsing(projectId, object, { types }).then(() => {
                     expect().fail('Should reject the promise on 400 response');
-                }).catch(err => {
+                }).catch((err) => {
                     expect(err.response.status).to.be(400);
                 });
             });
@@ -373,7 +373,7 @@ describe('metadata', () => {
                     { status: 200, body: JSON.stringify({ useMany: response }) }
                 );
 
-                return md.getObjectUsingMany(projectId, objects, { types }).then(result => {
+                return md.getObjectUsingMany(projectId, objects, { types }).then((result) => {
                     expect(postSpy.calledWith(using2Uri, {
                         data: JSON.stringify({
                             inUseMany: {
@@ -416,7 +416,7 @@ describe('metadata', () => {
 
                 return md.getObjectUsingMany(projectId, objects, { types }).then(() => {
                     expect().fail('Should reject the promise on 400 response');
-                }).catch(err => {
+                }).catch((err) => {
                     expect(err.response.status).to.be(400);
                 });
             });
@@ -451,10 +451,10 @@ describe('metadata', () => {
 
                 fetchMock.mock(
                     getUri,
-                    { status: 200, body: JSON.stringify({ objects: { items: respondEntries }}) }
+                    { status: 200, body: JSON.stringify({ objects: { items: respondEntries } }) }
                 );
 
-                return md.getObjects(projectId, uris).then(result => {
+                return md.getObjects(projectId, uris).then((result) => {
                     expect(postSpy.calledOnce).to.be(true);
                     expect(postSpy.calledWith(getUri, {
                         data: JSON.stringify({
@@ -481,13 +481,13 @@ describe('metadata', () => {
                     return {
                         body: JSON.stringify({ objects: {
                             items: respondItems
-                        }}),
+                        } }),
                         status: 200,
-                        headers: {'Content-Type': 'application/json'}
+                        headers: { 'Content-Type': 'application/json' }
                     };
                 });
 
-                return md.getObjects(projectId, uris).then(result => {
+                return md.getObjects(projectId, uris).then((result) => {
                     expect(postSpy.calledTwice).to.be(true);
                     expect(postSpy.calledWith(getUri, {
                         data: JSON.stringify({
@@ -517,7 +517,7 @@ describe('metadata', () => {
 
                 return md.getObjects(projectId, uris).then(() => {
                     expect().fail('Should reject the promise on 400 response');
-                }).catch(err => {
+                }).catch((err) => {
                     expect(err.response.status).to.be(400);
                 });
             });

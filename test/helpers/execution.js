@@ -24,7 +24,7 @@ function missingColumn(column, closest) {
 }
 
 function getClosestMatch(candidates, getDistance) {
-    const table = candidates.map(candidate => {
+    const table = candidates.map((candidate) => {
         const distance = getDistance(candidate);
 
         return { distance, candidate };
@@ -36,13 +36,13 @@ function getClosestMatch(candidates, getDistance) {
 }
 
 function getClosestColumn(column, candidates) {
-    return getClosestMatch(candidates, candidate => {
+    return getClosestMatch(candidates, (candidate) => {
         return levenshtein.get(column, candidate);
     });
 }
 
 function getClosestMetricDefinition(definition, candidates) {
-    return getClosestMatch(candidates, candidate => {
+    return getClosestMatch(candidates, (candidate) => {
         return Object.keys(candidate).reduce((sum, prop) => {
             return sum + levenshtein.get(definition[prop], candidate[prop]);
         }, 0);
@@ -52,7 +52,7 @@ function getClosestMetricDefinition(definition, candidates) {
 export function expectColumns(expected, reportDefinition) {
     const actualColumns = get(reportDefinition, 'columns');
 
-    expected.forEach(expectedColumn => {
+    expected.forEach((expectedColumn) => {
         if (!includes(actualColumns, expectedColumn)) {
             missingColumn(expectedColumn, getClosestColumn(expectedColumn, actualColumns));
         }

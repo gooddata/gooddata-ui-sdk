@@ -1,10 +1,10 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
 import { cloneDeep, range } from 'lodash';
+import fetchMock from 'fetch-mock';
 
 import * as ex from '../src/execution';
 import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from './helpers/execution';
-import fetchMock from 'fetch-mock';
 
 describe('execution', () => {
     describe('with fake server', () => {
@@ -70,7 +70,7 @@ describe('execution', () => {
                     );
                     fetchMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
-                        { status: 201, body: JSON.stringify({'tabularDataResult': {values: ['a', 1]}}) }
+                        { status: 201, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId']).then((result) => {
@@ -118,14 +118,14 @@ describe('execution', () => {
                 it('should reject with 400 when data result fails', () => {
                     fetchMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
-                        { status: 200, body: JSON.stringify(serverResponseMock)}
+                        { status: 200, body: JSON.stringify(serverResponseMock) }
                     );
                     fetchMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
-                        { status: 400, body: JSON.stringify({'tabularDataResult': {values: ['a', 1]}}) }
+                        { status: 400, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                     );
 
-                    return ex.getData('myFakeProjectId', [{type: 'metric', uri: '/metric/uri'}]).then(null, (err) => {
+                    return ex.getData('myFakeProjectId', [{ type: 'metric', uri: '/metric/uri' }]).then(null, (err) => {
                         expect(err).to.be.an(Error);
                     });
                 });
@@ -142,13 +142,13 @@ describe('execution', () => {
 
                     return ex.getData(
                         'myFakeProjectId',
-                        [{type: 'metric', uri: '/metric/uri'}],
+                        [{ type: 'metric', uri: '/metric/uri' }],
                         {
                             metricMappings: [
                                 { element: 'metricUri', measureIndex: 0 }
                             ]
                         }
-                    ).then(function(result) {
+                    ).then((result) => {
                         expect(result.headers[1]).to.eql({
                             id: 'metricId',
                             title: 'Metric Title',
@@ -168,10 +168,10 @@ describe('execution', () => {
                     const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';
                     // prepare filters and then use them with getData
                     const filters = [{
-                        'uri': '/gdc/md/myFakeProjectId/obj/1',
-                        'constraint': {
-                            'type': 'list',
-                            'elements': ['/gdc/md/myFakeProjectId/obj/1/elements?id=1']
+                        uri: '/gdc/md/myFakeProjectId/obj/1',
+                        constraint: {
+                            type: 'list',
+                            elements: ['/gdc/md/myFakeProjectId/obj/1/elements?id=1']
                         }
                     }];
 
@@ -183,7 +183,7 @@ describe('execution', () => {
                     );
 
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
-                        filters: filters
+                        filters
                     });
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
@@ -214,7 +214,7 @@ describe('execution', () => {
                     );
 
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
-                        orderBy: orderBy
+                        orderBy
                     });
 
                     const [, settings] = fetchMock.lastCall(matcher);
@@ -229,10 +229,10 @@ describe('execution', () => {
                     const definitions = [
                         {
                             metricDefinition: {
-                                'title': 'Closed Pipeline - previous year',
-                                'expression': 'SELECT (SELECT {adyRSiRTdnMD}) FOR PREVIOUS ({date.year})',
-                                'format': '#,,.00M',
-                                'identifier': 'adyRSiRTdnMD.generated.pop.1fac4f897bbb5994a257cd2c9f0a81a4'
+                                title: 'Closed Pipeline - previous year',
+                                expression: 'SELECT (SELECT {adyRSiRTdnMD}) FOR PREVIOUS ({date.year})',
+                                format: '#,,.00M',
+                                identifier: 'adyRSiRTdnMD.generated.pop.1fac4f897bbb5994a257cd2c9f0a81a4'
                             }
                         }
                     ];
@@ -244,7 +244,7 @@ describe('execution', () => {
                     );
 
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
-                        definitions: definitions
+                        definitions
                     });
 
                     const [, settings] = fetchMock.lastCall(matcher);
@@ -259,10 +259,10 @@ describe('execution', () => {
                     const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';
                     fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
                     const where = {
-                        'label.attr.city': { '$eq': 1 }
+                        'label.attr.city': { $eq: 1 }
                     };
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
-                        where: where
+                        where
                     });
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
@@ -277,22 +277,22 @@ describe('execution', () => {
             beforeEach(() => {
                 mdObj = {
                     buckets: {
-                        'measures': [
+                        measures: [
                             {
-                                'measure': {
-                                    'type': 'fact',
-                                    'aggregation': 'sum',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                                    'title': 'Sum of Amount',
-                                    'format': '#,##0.00',
-                                    'measureFilters': [
+                                measure: {
+                                    type: 'fact',
+                                    aggregation: 'sum',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                                    title: 'Sum of Amount',
+                                    format: '#,##0.00',
+                                    measureFilters: [
                                         {
-                                            'listAttributeFilter': {
-                                                'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
-                                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
-                                                'default': {
-                                                    'negativeSelection': false,
-                                                    'attributeElements': [
+                                            listAttributeFilter: {
+                                                attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
+                                                displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
+                                                default: {
+                                                    negativeSelection: false,
+                                                    attributeElements: [
                                                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
                                                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
                                                     ]
@@ -300,42 +300,42 @@ describe('execution', () => {
                                             }
                                         }
                                     ],
-                                    'sort': 'desc'
+                                    sort: 'desc'
                                 }
                             },
                             {
-                                'measure': {
-                                    'type': 'attribute',
-                                    'aggregation': 'count',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
-                                    'title': 'Count of Activity',
-                                    'format': '#,##0.00',
-                                    'measureFilters': []
+                                measure: {
+                                    type: 'attribute',
+                                    aggregation: 'count',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
+                                    title: 'Count of Activity',
+                                    format: '#,##0.00',
+                                    measureFilters: []
                                 }
                             },
                             {
-                                'measure': {
-                                    'type': 'metric',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                                    'title': 'Probability BOP',
-                                    'format': '#,##0.00',
-                                    'measureFilters': []
+                                measure: {
+                                    type: 'metric',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                                    title: 'Probability BOP',
+                                    format: '#,##0.00',
+                                    measureFilters: []
                                 }
                             },
                             {
-                                'measure': {
-                                    'type': 'metric',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
-                                    'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
-                                    'format': '#,##0',
-                                    'measureFilters': [
+                                measure: {
+                                    type: 'metric',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                                    title: '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                                    format: '#,##0',
+                                    measureFilters: [
                                         {
-                                            'listAttributeFilter': {
-                                                'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
-                                                'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/970',
-                                                'default': {
-                                                    'negativeSelection': false,
-                                                    'attributeElements': [
+                                            listAttributeFilter: {
+                                                attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969',
+                                                displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/970',
+                                                default: {
+                                                    negativeSelection: false,
+                                                    attributeElements: [
                                                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042',
                                                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038',
                                                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079',
@@ -349,24 +349,24 @@ describe('execution', () => {
                                 }
                             }
                         ],
-                        'categories': [
+                        categories: [
                             {
-                                'category': {
-                                    'type': 'attribute',
-                                    'collection': 'attribute',
-                                    'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                                    'sort': 'asc'
+                                category: {
+                                    type: 'attribute',
+                                    collection: 'attribute',
+                                    displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                    sort: 'asc'
                                 }
                             }
                         ],
-                        'filters': [
+                        filters: [
                             {
-                                'listAttributeFilter': {
-                                    'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
-                                    'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                                    'default': {
-                                        'negativeSelection': false,
-                                        'attributeElements': [
+                                listAttributeFilter: {
+                                    attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
+                                    displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                                    default: {
+                                        negativeSelection: false,
+                                        attributeElements: [
                                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1243',
                                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1242',
                                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025/elements?id=1241',
@@ -378,11 +378,11 @@ describe('execution', () => {
                                     }
                                 }
                             }, {
-                                'dateFilter': {
-                                    'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
-                                    'granularity': 'GDC.time.week',
-                                    'from': -3,
-                                    'to': 0
+                                dateFilter: {
+                                    dimension: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
+                                    granularity: 'GDC.time.week',
+                                    from: -3,
+                                    to: 0
                                 }
                             }
                         ]
@@ -409,10 +409,10 @@ describe('execution', () => {
                 }, execConfig);
 
                 expectMetricDefinition({
-                    'identifier': 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
-                    'expression': 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
-                    'title': 'Count of Activity',
-                    'format': '#,##0.00'
+                    identifier: 'attribute_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1244.generated.count.a865b88e507b9390e2175b79e1d6252f',
+                    expression: 'SELECT COUNT([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244])',
+                    title: 'Count of Activity',
+                    format: '#,##0.00'
                 }, execConfig);
 
                 expectMetricDefinition({
@@ -426,28 +426,28 @@ describe('execution', () => {
                     $and: [
                         {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
-                                '$in': [
-                                    { 'id': 1243 },
-                                    { 'id': 1242 },
-                                    { 'id': 1241 },
-                                    { 'id': 1240 },
-                                    { 'id': 1239 },
-                                    { 'id': 1238 },
-                                    { 'id': 1236 }
+                                $in: [
+                                    { id: 1243 },
+                                    { id: 1242 },
+                                    { id: 1241 },
+                                    { id: 1240 },
+                                    { id: 1239 },
+                                    { id: 1238 },
+                                    { id: 1236 }
                                 ]
                             }
                         }
                     ],
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
-                        '$between': [-3, 0],
-                            '$granularity': 'GDC.time.week'
+                        $between: [-3, 0],
+                        $granularity: 'GDC.time.week'
                     }
                 }, execConfig);
             });
 
             it('handles empty filters', () => {
                 const mdObjWithoutFilters = cloneDeep(mdObj);
-                mdObjWithoutFilters.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.attributeElements = [];
+                mdObjWithoutFilters.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.attributeElements = []; // eslint-disable-line max-len
                 const execConfig = ex.mdToExecutionConfiguration(mdObjWithoutFilters);
 
                 expectColumns([
@@ -473,29 +473,29 @@ describe('execution', () => {
                 }, execConfig);
 
                 expectMetricDefinition({
-                    'identifier': 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac',
-                    'expression': 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
-                    'title': '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
-                    'format': '#,##0'
+                    identifier: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_2825.generated.filtered_base.3812d81c1c1609700e47fc800e85bfac',
+                    expression: 'SELECT [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825] WHERE [/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969] IN ([/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961042],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961038],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=958079],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961044],[/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/969/elements?id=961046])',
+                    title: '# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)',
+                    format: '#,##0'
                 }, execConfig);
 
                 expectWhereCondition({
                     $and: [{
                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
-                            '$in': [
-                                { 'id': 1243 },
-                                { 'id': 1242 },
-                                { 'id': 1241 },
-                                { 'id': 1240 },
-                                { 'id': 1239 },
-                                { 'id': 1238 },
-                                { 'id': 1236 }
+                            $in: [
+                                { id: 1243 },
+                                { id: 1242 },
+                                { id: 1241 },
+                                { id: 1240 },
+                                { id: 1239 },
+                                { id: 1238 },
+                                { id: 1236 }
                             ]
                         }
                     }],
                     '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561': {
-                        '$between': [-3, 0],
-                        '$granularity': 'GDC.time.week'
+                        $between: [-3, 0],
+                        $granularity: 'GDC.time.week'
                     }
                 }, execConfig);
             });
@@ -503,9 +503,9 @@ describe('execution', () => {
             it('does not execute all-time date filter', () => {
                 const mdWithAllTime = cloneDeep(mdObj);
                 mdWithAllTime.buckets.filters = [{
-                    'dateFilter': {
-                        'dimension': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
-                        'granularity': 'GDC.time.year'
+                    dateFilter: {
+                        dimension: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/16561',
+                        granularity: 'GDC.time.year'
                     }
                 }];
 
@@ -516,12 +516,12 @@ describe('execution', () => {
             it('does not execute attribute filter with all selected', () => {
                 const mdWithSelectAll = cloneDeep(mdObj);
                 mdWithSelectAll.buckets.filters = [{
-                    'listAttributeFilter': {
-                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
-                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
-                        'default': {
-                            'negativeSelection': true,
-                            'attributeElements': []
+                    listAttributeFilter: {
+                        attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1025',
+                        displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028',
+                        default: {
+                            negativeSelection: true,
+                            attributeElements: []
                         }
                     }
                 }];
@@ -585,23 +585,23 @@ describe('execution', () => {
             it('generates metricMappings for two identical metrics', () => {
                 const mdObjPoP = cloneDeep(mdObj);
                 mdObjPoP.buckets.measures = [{
-                        measure: {
-                            type: 'metric',
-                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            title: 'Probability BOP #1',
-                            format: '#,##0.00',
-                            measureFilters: []
-                        }
-                    },
-                    {
-                        measure: {
-                            type: 'metric',
-                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
-                            title: 'Probability BOP #2',
-                            format: '#,##0.00',
-                            measureFilters: []
-                        }
+                    measure: {
+                        type: 'metric',
+                        objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        title: 'Probability BOP #1',
+                        format: '#,##0.00',
+                        measureFilters: []
                     }
+                },
+                {
+                    measure: {
+                        type: 'metric',
+                        objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
+                        title: 'Probability BOP #2',
+                        format: '#,##0.00',
+                        measureFilters: []
+                    }
+                }
                 ];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
@@ -669,22 +669,22 @@ describe('execution', () => {
                 mdObj.type = 'column';
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'attribute',
-                            'aggregation': 'count',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
-                            'title': 'Count of Activity',
-                            'format': '#,##0.00',
-                            'measureFilters': []
+                        measure: {
+                            type: 'attribute',
+                            aggregation: 'count',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1244',
+                            title: 'Count of Activity',
+                            format: '#,##0.00',
+                            measureFilters: []
                         }
                     }
                 ];
                 mdObj.buckets.categories = [
                     {
-                        'category': {
-                            'type': 'attribute',
-                            'collection': 'attribute',
-                            'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                        category: {
+                            type: 'attribute',
+                            collection: 'attribute',
+                            displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
                         }
                     }
                 ];
@@ -697,21 +697,21 @@ describe('execution', () => {
             it('ensures measure title length does not exceed 255 chars', () => {
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            'title': `Sum of Amount (${range(0, 300).map(() => 'element')})`,
-                            'format': '#,##0.00',
-                            'showPoP': true,
-                            'showInPercent': true
+                        measure: {
+                            type: 'fact',
+                            aggregation: 'sum',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            title: `Sum of Amount (${range(0, 300).map(() => 'element')})`,
+                            format: '#,##0.00',
+                            showPoP: true,
+                            showInPercent: true
                         }
                     }
                 ];
 
                 const execConfig = ex.mdToExecutionConfiguration(mdObj);
 
-                execConfig.definitions.forEach(definition => {
+                execConfig.definitions.forEach((definition) => {
                     expect(definition.metricDefinition.title).to.have.length(255);
                 });
             });
@@ -722,30 +722,30 @@ describe('execution', () => {
             beforeEach(() => {
                 mdObjContribution = {
                     buckets: {
-                        'measures': [
+                        measures: [
                             {
-                                'measure': {
-                                    'type': 'metric',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
-                                    'title': '% # of Opportunities',
-                                    'format': '#,##0',
-                                    'measureFilters': [],
-                                    'showInPercent': true,
-                                    'showPoP': false
+                                measure: {
+                                    type: 'metric',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                                    title: '% # of Opportunities',
+                                    format: '#,##0',
+                                    measureFilters: [],
+                                    showInPercent: true,
+                                    showPoP: false
                                 }
                             }
                         ],
-                        'categories': [
+                        categories: [
                             {
-                                'category': {
-                                    'type': 'attribute',
-                                    'collection': 'attribute',
-                                    'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027',
-                                    'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
+                                category: {
+                                    type: 'attribute',
+                                    collection: 'attribute',
+                                    attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1027',
+                                    displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028'
                                 }
                             }
                         ],
-                        'filters': []
+                        filters: []
                     }
                 };
             });
@@ -769,13 +769,13 @@ describe('execution', () => {
             it('for generated measure', () => {
                 mdObjContribution.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            'title': '% Sum of Amount',
-                            'format': '#,##0.00',
-                            'showInPercent': true
+                        measure: {
+                            type: 'fact',
+                            aggregation: 'sum',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            title: '% Sum of Amount',
+                            format: '#,##0.00',
+                            showInPercent: true
                         }
                     }
                 ];
@@ -798,21 +798,21 @@ describe('execution', () => {
             it('for generated measure with attribute filters', () => {
                 mdObjContribution.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1',
-                            'title': '% Sum of Amount',
-                            'format': '#,##0.00',
-                            'showInPercent': true,
-                            'measureFilters': [
+                        measure: {
+                            type: 'fact',
+                            aggregation: 'sum',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1',
+                            title: '% Sum of Amount',
+                            format: '#,##0.00',
+                            showInPercent: true,
+                            measureFilters: [
                                 {
-                                    'listAttributeFilter': {
-                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42',
-                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/43',
-                                        'default': {
-                                            'negativeSelection': false,
-                                            'attributeElements': [
+                                    listAttributeFilter: {
+                                        attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42',
+                                        displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/43',
+                                        default: {
+                                            negativeSelection: false,
+                                            attributeElements: [
                                                 '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/42/elements?id=61527'
                                             ]
                                         }
@@ -853,30 +853,30 @@ describe('execution', () => {
             beforeEach(() => {
                 mdObj = {
                     buckets: {
-                        'measures': [
+                        measures: [
                             {
-                                'measure': {
-                                    'type': 'metric',
-                                    'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
-                                    'title': '# of Opportunities',
-                                    'format': '#,##0',
-                                    'measureFilters': [],
-                                    'showInPercent': false,
-                                    'showPoP': true
+                                measure: {
+                                    type: 'metric',
+                                    objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/2825',
+                                    title: '# of Opportunities',
+                                    format: '#,##0',
+                                    measureFilters: [],
+                                    showInPercent: false,
+                                    showPoP: true
                                 }
                             }
                         ],
-                        'categories': [
+                        categories: [
                             {
-                                'category': {
-                                    'type': 'date',
-                                    'collection': 'attribute',
-                                    'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1234',
-                                    'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233'
+                                category: {
+                                    type: 'date',
+                                    collection: 'attribute',
+                                    displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1234',
+                                    attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233'
                                 }
                             }
                         ],
-                        'filters': []
+                        filters: []
                     }
                 };
             });
@@ -900,13 +900,13 @@ describe('execution', () => {
             it('for generated measure', () => {
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            'title': 'Sum of Amount',
-                            'format': '#,##0.00',
-                            'showPoP': true
+                        measure: {
+                            type: 'fact',
+                            aggregation: 'sum',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            title: 'Sum of Amount',
+                            format: '#,##0.00',
+                            showPoP: true
                         }
                     }
                 ];
@@ -937,14 +937,14 @@ describe('execution', () => {
             it('for generated measure with contribution', () => {
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'fact',
-                            'aggregation': 'sum',
-                            'objectUri': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            'title': '% Sum of Amount',
-                            'format': '#,##0.00',
-                            'showPoP': true,
-                            'showInPercent': true
+                        measure: {
+                            type: 'fact',
+                            aggregation: 'sum',
+                            objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
+                            title: '% Sum of Amount',
+                            format: '#,##0.00',
+                            showPoP: true,
+                            showInPercent: true
                         }
                     }
                 ];
@@ -978,11 +978,11 @@ describe('execution', () => {
                 buckets: {
                     categories: [
                         {
-                            'category': {
-                                'type': 'date',
-                                'collection': 'attribute',
-                                'displayForm': '/gdc/md/myFakeProjectId/obj/1234',
-                                'attribute': '/gdc/md/myFakeProjectId/obj/1233'
+                            category: {
+                                type: 'date',
+                                collection: 'attribute',
+                                displayForm: '/gdc/md/myFakeProjectId/obj/1234',
+                                attribute: '/gdc/md/myFakeProjectId/obj/1233'
                             }
                         }
                     ]
@@ -1046,21 +1046,21 @@ describe('execution', () => {
 
                 fetchMock.mock(
                      /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
-                    { status: 201, body: JSON.stringify({'tabularDataResult': {values: ['a', 1]}}) }
+                    { status: 201, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                 );
             });
 
             it('when metric is PoP', () => {
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'metric',
-                            'objectUri': '/gdc/md/myFakeProjectId/obj/1',
-                            'measureFilters': [],
-                            'title': '% Sum of Amount',
-                            'format': '#,##0.00',
-                            'showPoP': true,
-                            'showInPercent': false
+                        measure: {
+                            type: 'metric',
+                            objectUri: '/gdc/md/myFakeProjectId/obj/1',
+                            measureFilters: [],
+                            title: '% Sum of Amount',
+                            format: '#,##0.00',
+                            showPoP: true,
+                            showInPercent: false
                         }
                     }
                 ];
@@ -1074,17 +1074,17 @@ describe('execution', () => {
             it('when metric has metricFilter', () => {
                 mdObj.buckets.measures = [
                     {
-                        'measure': {
-                            'type': 'metric',
-                            'objectUri': '/gdc/md/myFakeProjectId/obj/1',
-                            'measureFilters': [
+                        measure: {
+                            type: 'metric',
+                            objectUri: '/gdc/md/myFakeProjectId/obj/1',
+                            measureFilters: [
                                 {
-                                    'listAttributeFilter': {
-                                        'attribute': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
-                                        'displayForm': '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
-                                        'default': {
-                                            'negativeSelection': false,
-                                            'attributeElements': [
+                                    listAttributeFilter: {
+                                        attribute: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949',
+                                        displayForm: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/952',
+                                        default: {
+                                            negativeSelection: false,
+                                            attributeElements: [
                                                 '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168284',
                                                 '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/949/elements?id=168282'
                                             ]
@@ -1092,10 +1092,10 @@ describe('execution', () => {
                                     }
                                 }
                             ],
-                            'title': '% Sum of Amount',
-                            'format': '#,##0.00',
-                            'showPoP': false,
-                            'showInPercent': false
+                            title: '% Sum of Amount',
+                            format: '#,##0.00',
+                            showPoP: false,
+                            showInPercent: false
                         }
                     }
                 ];

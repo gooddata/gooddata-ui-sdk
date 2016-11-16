@@ -1,9 +1,8 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-/*eslint no-var:0 func-names:0 */
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
 
-module.exports = function(grunt) {
+module.exports = (grunt) => {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -49,8 +48,12 @@ module.exports = function(grunt) {
                     require: [
                         'babel-register',
                         'isomorphic-fetch',
-                        function() { expect = require('expect.js'); },
-                        function() { sinon = require('sinon'); }
+                        () => {
+                            global.expect = require('expect.js');
+                        },
+                        () => {
+                            global.sinon = require('sinon');
+                        }
                     ]
                 },
                 src: ['test/*_test.js']
@@ -134,13 +137,14 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('getGitInfo', 'Get latest commit hash', function() {
-        var done = this.async();
+    grunt.registerTask('getGitInfo', 'Get latest commit hash', () => {
+        const currentTask = grunt.task.current;
+        const done = currentTask.async();
 
-        var child = grunt.util.spawn({
+        const child = grunt.util.spawn({
             cmd: 'git',
             args: ['log', '-1', '--format="%h"']
-        }, function callback(err, result, code) {
+        }, (err, result, code) => {
             if (err) {
                 grunt.fail.fatal(err);
             }
@@ -155,13 +159,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-eslint');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('gruntify-eslint');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
@@ -174,13 +178,15 @@ module.exports = function(grunt) {
 
     grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
 
-    grunt.registerTask('init-bower-repo', 'Initializes repository in ./dist', function() {
-        var exec = require('child_process').exec;
-        var gitUri = grunt.file.readJSON('bower.json').repository.url;
-        var done = this.async();
-        exec('mkdir -p dist && cd dist && rm -rf ./* && git init && ' +
-            'git remote add bower ' + gitUri + ' && ' +
-            'git pull bower master', function(err, stdout, stderr) {
+    grunt.registerTask('init-bower-repo', 'Initializes repository in ./dist', () => {
+        const exec = require('child_process').exec;
+
+        const gitUri = grunt.file.readJSON('bower.json').repository.url;
+        const currentTask = grunt.task.current;
+        const done = currentTask.async();
+        exec(`${'mkdir -p dist && cd dist && rm -rf ./* && git init && ' +
+            'git remote add bower '}${gitUri} && ` +
+            'git pull bower master', (err, stdout, stderr) => {
             if (err) {
                 grunt.fatal('could not init bower repository');
                 grunt.log.errorlns(stderr);
@@ -190,55 +196,57 @@ module.exports = function(grunt) {
         });
     });
 
-    grunt.registerTask('release-bower-component', 'Tag, commit and push dist files to bower component repo.', function() {
-        var exec = require('child_process').exec;
-        var async = require('async');
-        var done = this.async();
-        var version = grunt.config.get('pkg.version');
+    grunt.registerTask('release-bower-component', 'Tag, commit and push dist files to bower component repo.', () => {
+        const exec = require('child_process').exec;
+        const async = require('async');
 
-        var copyPackageDescriptionStep = function(callback) {
-            exec('cp bower.json LICENSE.txt dist', function(err, stdout, stderr) {
+        const currentTask = grunt.task.current;
+        const done = currentTask.async();
+        const version = grunt.config.get('pkg.version');
+
+        const copyPackageDescriptionStep = (callback) => {
+            exec('cp bower.json LICENSE.txt dist', (err, stdout, stderr) => {
                 if (err) {
-                    callback('Could not copy bower.json or LICENSE.txt to dist' + stderr);
+                    callback(`Could not copy bower.json or LICENSE.txt to dist${stderr}`);
                 }
                 grunt.log.writeln('Copied bower.json and LICENSE.txt to dist');
                 callback(null);
             });
         };
-        var commitBowerReleaseStep = function(callback) {
-            var commitMsg = grunt.config.get('bump.options.commitMessage').replace('%VERSION%', version);
+        const commitBowerReleaseStep = (callback) => {
+            const commitMsg = grunt.config.get('bump.options.commitMessage').replace('%VERSION%', version);
 
-            exec('cd dist && git add . && git commit -m "' + commitMsg + '"', function(err, stdout, stderr) {
+            exec(`cd dist && git add . && git commit -m "${commitMsg}"`, (err, stdout, stderr) => {
                 if (err) {
-                    callback('Could not commit' + stderr);
+                    callback(`Could not commit${stderr}`);
                 }
-                grunt.log.writeln('Commiting bower release ' + version);
+                grunt.log.writeln(`Commiting bower release ${version}`);
                 callback(null);
             });
         };
-        var tagBowerReleaseStep = function(callback) {
-            var tagName = grunt.config.get('bump.options.tagName').replace('%VERSION%', version);
-            exec('cd dist && git tag "' + tagName + '"', function(err, stdout, stderr) {
+        const tagBowerReleaseStep = (callback) => {
+            const tagName = grunt.config.get('bump.options.tagName').replace('%VERSION%', version);
+            exec(`cd dist && git tag "${tagName}"`, (err, stdout, stderr) => {
                 if (err) {
-                    callback('Could not tag' + stderr);
+                    callback(`Could not tag${stderr}`);
                 }
-                grunt.log.writeln('Tagging bower release ' + version);
+                grunt.log.writeln(`Tagging bower release ${version}`);
                 callback(null);
             });
         };
-        var pushBowerComponentStep = function(callback) {
-            exec('cd dist && git push -u bower master && git push bower --tags', function(err, stdout, stderr) {
+        const pushBowerComponentStep = (callback) => {
+            exec('cd dist && git push -u bower master && git push bower --tags', (err, stdout, stderr) => {
                 if (err) {
-                    callback('Could not push bower commit and tag' + stderr);
+                    callback(`Could not push bower commit and tag${stderr}`);
                 }
-                grunt.log.writeln('Pushed ' + version + ' commit and tag');
+                grunt.log.writeln(`Pushed ${version} commit and tag`);
                 callback(null);
             });
         };
-        var cleanupDistStep = function(callback) {
-            exec('cd dist && rm -rf .git', function(err, stdout, stderr) {
+        const cleanupDistStep = (callback) => {
+            exec('cd dist && rm -rf .git', (err, stdout, stderr) => {
                 if (err) {
-                    callback('Could not remove dist/.git files\n' + stderr);
+                    callback(`Could not remove dist/.git files\n${stderr}`);
                 }
                 callback(null);
             });
@@ -250,7 +258,7 @@ module.exports = function(grunt) {
             tagBowerReleaseStep,
             pushBowerComponentStep,
             cleanupDistStep
-        ], function(err) {
+        ], (err) => {
             if (err) {
                 grunt.fatal(err);
             }
@@ -258,7 +266,7 @@ module.exports = function(grunt) {
         });
     });
 
-    grunt.registerTask('release', function(target) {
+    grunt.registerTask('release', (target) => {
         grunt.task.run(
             'test-ci',
             `bump:${target}`,

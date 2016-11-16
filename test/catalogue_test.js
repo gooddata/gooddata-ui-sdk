@@ -202,7 +202,7 @@ describe('Catalogue', () => {
                 const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.eql({
                     type: 'CUSTOM',
-                    customIdentifiers: [ dataSetIdentifier ]
+                    customIdentifiers: [dataSetIdentifier]
                 });
 
                 done();
@@ -280,7 +280,7 @@ describe('Catalogue', () => {
                                             listAttributeFilter: {
                                                 attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266',
                                                 displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2267',
-                                                'default': {
+                                                default: {
                                                     negativeSelection: true,
                                                     attributeElements: [
                                                         '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706'
@@ -304,7 +304,7 @@ describe('Catalogue', () => {
                                 listAttributeFilter: {
                                     attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
                                     displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275',
-                                    'default': {
+                                    default: {
                                         negativeSelection: true,
                                         attributeElements: []
                                     }

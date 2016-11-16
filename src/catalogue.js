@@ -14,13 +14,13 @@ const LOAD_DATE_DATASET_DEFAULTS = {
     includeAvailableDateAttributes: true
 };
 
-const parseCategories = (bucketItems) => (
+const parseCategories = bucketItems => (
     get(bucketItems, 'categories').map(({ category }) => ({
-            category: {
-                ...category,
-                displayForm: get(category, 'attribute')
-            }
-        })
+        category: {
+            ...category,
+            displayForm: get(category, 'attribute')
+        }
+    })
     )
 );
 
@@ -34,7 +34,7 @@ function bucketItemsToExecConfig(bucketItems, options = {}) {
     }, options);
     const definitions = get(executionConfig, 'definitions');
 
-    return get(executionConfig, 'columns').map(column => {
+    return get(executionConfig, 'columns').map((column) => {
         const definition = find(definitions, ({ metricDefinition }) =>
             get(metricDefinition, 'identifier') === column
         );
@@ -60,7 +60,7 @@ function bucketItemsToExecConfig(bucketItems, options = {}) {
  * </ul>
  * @returns {Object} "requiredDataSets" object hash.
  */
-const getRequiredDataSets = options => {
+const getRequiredDataSets = (options) => {
     if (get(options, 'returnAllRelatedDateDataSets')) {
         return {};
     }
@@ -72,7 +72,7 @@ const getRequiredDataSets = options => {
     if (get(options, 'dataSetIdentifier')) {
         return { requiredDataSets: {
             type: 'CUSTOM',
-            customIdentifiers: [ get(options, 'dataSetIdentifier') ]
+            customIdentifiers: [get(options, 'dataSetIdentifier')]
         } };
     }
 

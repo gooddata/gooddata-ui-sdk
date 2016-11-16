@@ -11,11 +11,11 @@ describe('fetch', () => {
 
     describe('xhr.ajax request', () => {
         it('should handle successful request', () => {
-            fetchMock.mock('/some/url', { status: 200, body: 'hello'});
-            return xhr.ajax('/some/url').then(response => {
+            fetchMock.mock('/some/url', { status: 200, body: 'hello' });
+            return xhr.ajax('/some/url').then((response) => {
                 expect(response.status).to.be(200);
                 return response.text();
-            }).then(body => {
+            }).then((body) => {
                 expect(body).to.be('hello');
             });
         });
@@ -33,7 +33,7 @@ describe('fetch', () => {
             fetchMock.mock('/some/url', 404);
             return xhr.ajax('/some/url').then(() => {
                 expect().fail('should be rejected');
-            }, err => {
+            }, (err) => {
                 expect(err.response.status).to.be(404);
             });
         });
@@ -56,7 +56,7 @@ describe('fetch', () => {
                 return 200;
             })
             .mock('/gdc/account/token', 200);
-            return xhr.ajax('/some/url').then(r => {
+            return xhr.ajax('/some/url').then((r) => {
                 expect(r.status).to.be(200);
             });
         });
@@ -64,7 +64,7 @@ describe('fetch', () => {
         it('should fail if token renewal fails', () => {
             fetchMock.mock('/some/url', 401)
                      .mock('/gdc/account/token', 401);
-            return xhr.ajax('/some/url').then(null, err => {
+            return xhr.ajax('/some/url').then(null, (err) => {
                 expect(err.response.status).to.be(401);
             });
         });
@@ -82,7 +82,7 @@ describe('fetch', () => {
                      .mock('/some/url/2', firstFailedMatcher)
                      .mock('/gdc/account/token', 200);
 
-            return Promise.all([xhr.ajax('/some/url/1'), xhr.ajax('/some/url/2')]).then(r => {
+            return Promise.all([xhr.ajax('/some/url/1'), xhr.ajax('/some/url/2')]).then((r) => {
                 expect(r[0].status).to.be(200);
                 expect(r[1].status).to.be(200);
             });
@@ -99,11 +99,11 @@ describe('fetch', () => {
                 return { status: 200, body: 'Poll result' };
             });
 
-            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
                 expect(r.status).to.be(200);
                 expect(fetchMock.calls('/some/url').length).to.be(3);
 
-                return r.text().then(t => {
+                return r.text().then((t) => {
                     expect(t).to.be('Poll result');
                 });
             });
@@ -118,7 +118,7 @@ describe('fetch', () => {
                 return { status: 200, body: 'poll result' };
             });
 
-            return xhr.ajax('/some/url', { pollDelay: 0, dontPollOnResult: true }).then(r => {
+            return xhr.ajax('/some/url', { pollDelay: 0, dontPollOnResult: true }).then((r) => {
                 expect(r.status).to.be(202);
                 expect(fetchMock.calls('/some/url').length).to.be(1);
             });
@@ -133,7 +133,7 @@ describe('fetch', () => {
                 return 404;
             });
 
-            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, err => {
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, (err) => {
                 expect(err.response.status).to.be(404);
             });
         });
@@ -141,7 +141,7 @@ describe('fetch', () => {
 
     describe('xhr.ajax polling with different location', () => {
         it('should retry request after delay', () => {
-            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
+            fetchMock.mock('/some/url', { status: 202, headers: { Location: '/other/url' } });
             fetchMock.mock('/other/url', (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
@@ -150,36 +150,36 @@ describe('fetch', () => {
                 return { status: 200, body: 'Poll result from other url' };
             });
 
-            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
                 expect(r.status).to.be(200);
                 expect(fetchMock.calls('/some/url').length).to.be(1);
                 expect(fetchMock.calls('/other/url').length).to.be(3);
 
-                return r.text().then(t => {
+                return r.text().then((t) => {
                     expect(t).to.be('Poll result from other url');
                 });
             });
         });
 
         it('should folow multiple redirects', () => {
-            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
-            fetchMock.mock('/other/url', { status: 202, headers: { 'Location': '/last/url' } });
+            fetchMock.mock('/some/url', { status: 202, headers: { Location: '/other/url' } });
+            fetchMock.mock('/other/url', { status: 202, headers: { Location: '/last/url' } });
             fetchMock.mock('/last/url', { status: 200, body: 'Poll result with redirects' });
 
-            return xhr.ajax('/some/url', { pollDelay: 0 }).then(r => {
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
                 expect(r.status).to.be(200);
                 expect(fetchMock.calls('/some/url').length).to.be(1);
                 expect(fetchMock.calls('/other/url').length).to.be(1);
                 expect(fetchMock.calls('/last/url').length).to.be(1);
 
-                return r.text().then(t => {
+                return r.text().then((t) => {
                     expect(t).to.be('Poll result with redirects');
                 });
             });
         });
 
         it('should correctly reject after retry 404', () => {
-            fetchMock.mock('/some/url', { status: 202, headers: { 'Location': '/other/url' } });
+            fetchMock.mock('/some/url', { status: 202, headers: { Location: '/other/url' } });
             fetchMock.mock('/other/url', (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
@@ -188,7 +188,7 @@ describe('fetch', () => {
                 return 404;
             });
 
-            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, err => {
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, (err) => {
                 expect(err.response.status).to.be(404);
                 expect(fetchMock.calls('/some/url').length).to.be(1);
                 expect(fetchMock.calls('/other/url').length).to.be(3);
@@ -216,7 +216,7 @@ describe('fetch', () => {
             const data = { message: 'THIS IS SPARTA!' };
 
             xhr.post('url', {
-                data: data,
+                data,
                 contentType: 'text/csv'
             });
 

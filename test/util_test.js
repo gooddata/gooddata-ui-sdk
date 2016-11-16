@@ -2,13 +2,10 @@
 import { getIn } from '../src/util';
 
 describe('util', () => {
-    let testObj;
-    before(() => {
-        testObj = {
-            'a': 1,
-            'b': { 'c': { 'd': 2 } }
-        };
-    });
+    const testObj = {
+        a: 1,
+        b: { c: { d: 2 } }
+    };
 
     describe('getIn', () => {
         it('should return partially applied get', () => {
@@ -16,11 +13,9 @@ describe('util', () => {
         });
 
         it('should work as resolve function of promise', () => {
-            return Promise.resolve(testObj).then(getIn('b.c')).then(result => {
-                expect(result).to.eql({d: 2});
+            return Promise.resolve(testObj).then(getIn('b.c')).then((result) => {
+                expect(result).to.eql({ d: 2 });
             });
         });
     });
 });
-
-
