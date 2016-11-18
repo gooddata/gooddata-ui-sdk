@@ -239,9 +239,11 @@ export function getFolders(projectId, type) {
         case 'attribute':
             return getDimensions(projectId);
         default:
-            return Promise.all([getFolderEntries(projectId, 'fact'),
-                         getFolderEntries(projectId, 'metric'),
-                         getDimensions(projectId)])
+            return Promise.all([
+                getFolderEntries(projectId, 'fact'),
+                getFolderEntries(projectId, 'metric'),
+                getDimensions(projectId)
+            ])
             .then((facts, metrics, attributes) => {
                 return { fact: facts, metric: metrics, attribute: attributes };
             });

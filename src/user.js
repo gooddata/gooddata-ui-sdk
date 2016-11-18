@@ -65,7 +65,7 @@ export function logout() {
         if (loggedIn) {
             return get('/gdc/app/account/bootstrap').then((result) => {
                 const userUri = result.bootstrapResource.accountSetting.links.self;
-                const userId = userUri.match(/([^\/]+)\/?$/)[1];
+                const userId = userUri.match(/([^\/]+)\/?$/)[1]; // eslint-disable-line no-useless-escape
 
                 return ajax(`/gdc/account/login/${userId}`, {
                     method: 'delete'
