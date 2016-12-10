@@ -68,7 +68,9 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
- * @param {Object} settings - AJAX settings
+ * @param {Object} settings - AJAX settings. Set "extended" to true to retrieve the result
+                              including internal attribute IDs (useful to construct filters
+                              for subsequent report execution requests)
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
@@ -76,6 +78,11 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
     const executedReport = {
         isLoaded: false
     };
+
+    // Extended result exposes internal attribute element IDs which can
+    // be used when constructing executionConfiguration filters for
+    // subsequent report execution requests
+    const resultKey = settings.extended ? 'extendedTabularDataResult' : 'tabularDataResult';
 
     // Create request and result structures
     const request = {
@@ -99,7 +106,7 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
-        return ajax(result.executionResult.tabularDataResult, settings);
+        return ajax(result.executionResult[resultKey], settings);
     })
     .then((r) => {
         if (r.status === 204) {
@@ -120,7 +127,7 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         const { result, status } = r;
         // After the retrieving computed tabularData, resolve the promise
         executedReport.rawData =
-            (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
+            (result && result[resultKey]) ? result[resultKey].values : [];
         executedReport.isLoaded = true;
         executedReport.isEmpty = (status === 204);
         return executedReport;
