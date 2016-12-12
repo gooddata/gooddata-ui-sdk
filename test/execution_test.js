@@ -84,8 +84,27 @@ describe('execution', () => {
                         expect(result.headers[1].title).to.be('Metric Title');
                         expect(result.rawData[0]).to.be('a');
                         expect(result.rawData[1]).to.be(1);
+                        expect(result.warnings).to.eql([]);
                     });
                 });
+
+                it('should resolve with JSON with correct warnings', () => {
+                    const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
+
+                    fetchMock.mock(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        { status: 200, body: JSON.stringify(responseMock) }
+                    );
+                    fetchMock.mock(
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        { status: 201, body: JSON.stringify({ tabularDataResult: { warnings: [1, 2, 3] } }) }
+                    );
+
+                    return ex.getData('myFakeProjectId', ['attrId', 'metricId']).then((result) => {
+                        expect(result.warnings).to.eql([1, 2, 3]);
+                    });
+                });
+
 
                 it('should not fail if tabular data result is missing', () => {
                     fetchMock.mock(
