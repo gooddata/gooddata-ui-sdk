@@ -118,12 +118,13 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
     })
     .then((r) => {
         const { result, status } = r;
-        // After the retrieving computed tabularData, resolve the promise
-        executedReport.rawData =
-            (result && result.tabularDataResult) ? result.tabularDataResult.values : [];
-        executedReport.isLoaded = true;
-        executedReport.isEmpty = (status === 204);
-        return executedReport;
+
+        return Object.assign({}, executedReport, {
+            rawData: get(result, 'tabularDataResult.values', []),
+            warnings: get(result, 'tabularDataResult.warnings', []),
+            isLoaded: true,
+            isEmpty: status === 204
+        });
     });
 }
 
