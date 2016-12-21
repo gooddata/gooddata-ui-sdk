@@ -68,9 +68,11 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
- * @param {Object} settings - AJAX settings. Set "extended" to true to retrieve the result
-                              including internal attribute IDs (useful to construct filters
-                              for subsequent report execution requests)
+ * @param {Object} settings - Set "extended" to true to retrieve the result
+ *                            including internal attribute IDs (useful to construct filters
+ *                            for subsequent report execution requests).
+ *                             Supports additional settings accepted by the underlying
+ *                             xhr.ajax() calls
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
@@ -83,7 +85,6 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
     // be used when constructing executionConfiguration filters for
     // subsequent report execution requests
     const resultKey = settings.extended ? 'extendedTabularDataResult' : 'tabularDataResult';
-
     // Create request and result structures
     const request = {
         execution: { columns }
@@ -127,8 +128,8 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         const { result, status } = r;
 
         return Object.assign({}, executedReport, {
-            rawData: get(result, resultKey + '.values', []),
-            warnings: get(result, resultKey + '.warnings', []),
+            rawData: get(result, `${resultKey}.values`, []),
+            warnings: get(result, `${resultKey}.warnings`, []),
             isLoaded: true,
             isEmpty: status === 204
         });
