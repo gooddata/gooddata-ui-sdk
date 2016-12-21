@@ -55,7 +55,8 @@ describe('execution', () => {
                                 uri: 'metricUri'
                             }
                         ],
-                        tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
+                        tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345',
+                        extendedTabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/23452345'
                     }
                 };
             });
@@ -105,6 +106,33 @@ describe('execution', () => {
                     });
                 });
 
+                it('should retrieve extended results on settings.extended == true', () => {
+                    const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
+
+                    fetchMock.mock(
+                        '/gdc/internal/projects/myFakeProjectId/experimental/executions',
+                        { status: 200, body: JSON.stringify(responseMock) }
+                    );
+
+                    fetchMock.mock(
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/(\w+)/,
+                        {
+                            status: 201,
+                            body: JSON.stringify({
+                                extendedTabularDataResult: {
+                                    paging: { offset: 0, count: 1, total: 1, next: null },
+                                    values: [[{ id: '1', name: 'a' }, '2']]
+                                }
+                            })
+                        }
+                    );
+
+                    return ex.getData('myFakeProjectId', ['attrId', 'metricId'], {}, { extended: true }).then((result) => {
+                        expect(result.rawData[0][0].id).to.be('1');
+                        expect(result.rawData[0][0].name).to.be('a');
+                        expect(result.rawData[0][1]).to.be('2');
+                    });
+                });
 
                 it('should not fail if tabular data result is missing', () => {
                     fetchMock.mock(
