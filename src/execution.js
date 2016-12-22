@@ -68,7 +68,11 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
- * @param {Object} settings - AJAX settings
+ * @param {Object} settings - Set "extended" to true to retrieve the result
+ *                            including internal attribute IDs (useful to construct filters
+ *                            for subsequent report execution requests).
+ *                             Supports additional settings accepted by the underlying
+ *                             xhr.ajax() calls
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
  */
@@ -77,6 +81,10 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         isLoaded: false
     };
 
+    // Extended result exposes internal attribute element IDs which can
+    // be used when constructing executionConfiguration filters for
+    // subsequent report execution requests
+    const resultKey = settings.extended ? 'extendedTabularDataResult' : 'tabularDataResult';
     // Create request and result structures
     const request = {
         execution: { columns }
@@ -99,7 +107,7 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
-        return ajax(result.executionResult.tabularDataResult, settings);
+        return ajax(result.executionResult[resultKey], settings);
     })
     .then((r) => {
         if (r.status === 204) {
@@ -120,8 +128,8 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         const { result, status } = r;
 
         return Object.assign({}, executedReport, {
-            rawData: get(result, 'tabularDataResult.values', []),
-            warnings: get(result, 'tabularDataResult.warnings', []),
+            rawData: get(result, `${resultKey}.values`, []),
+            warnings: get(result, `${resultKey}.warnings`, []),
             isLoaded: true,
             isEmpty: status === 204
         });
