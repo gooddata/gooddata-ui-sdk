@@ -11,6 +11,18 @@ you can use it both globally (see [D3 example][d3ex]) and as AMD module. Note th
 jQuery before trying to load sdk. In both AMD and CommonJS environment we expect jQuery library module
 to be named `jquery`.
 
+### Node JS
+
+You can use the SDK in nodejs, but do not forget to set custom domain URL:
+```js
+const gooddata = require('gooddata');
+
+gooddata.config.setCustomDomain('secure.gooddata.com');
+
+gooddata.user.login('john.doe@example.com', 'your-secret-password')
+    .then(console.log, console.error);
+```
+
 ## Quick start
 To build the sdk you need to have [git](http://git-scm.com) and [Node.js](http://nodejs.org)
 installed. MacOS users should install [Homebrew](http://mxcl.github.com/homebrew/)

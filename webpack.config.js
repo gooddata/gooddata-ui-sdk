@@ -10,6 +10,14 @@ module.exports = {
         // name of the global var
         library: 'gooddata'
     },
+    externals: {
+        'isomorphic-fetch': {
+            root: 'isomorphic-fetch',
+            commonjs2: 'isomorphic-fetch',
+            commonjs: 'isomorphic-fetch',
+            amd: 'isomorphic-fetch'
+        }
+    },
     module: {
         loaders: [
             {
@@ -27,10 +35,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.BannerPlugin('<%= license %>', { raw: true }),
-        new webpack.ProvidePlugin({
-            Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
-            fetch: 'imports?this=>global!exports?global.fetch!isomorphic-fetch'
-        })
+        new webpack.BannerPlugin('<%= license %>', { raw: true })
     ]
 };
