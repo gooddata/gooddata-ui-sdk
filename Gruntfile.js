@@ -131,7 +131,8 @@ module.exports = (grunt) => {
         'gh-pages': {
             options: {
                 base: 'pages',
-                message: 'DOC: Updated gh-pages'
+                message: 'DOC: Updated gh-pages',
+                repo: 'git@github.com:gooddata/gooddata-js.git'
             },
             src: '**/*'
         }
