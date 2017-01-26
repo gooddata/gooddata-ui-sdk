@@ -21,7 +21,7 @@ describe('config', () => {
             expect(config.domain).to.be('https://custom.domain.tld');
         });
         it('should strip trailing whitespace', () => {
-            config.setCustomDomain(`   https://custom.domain.tld/  \n`);
+            config.setCustomDomain('   https://custom.domain.tld/  \n');
             expect(config.domain).to.be('https://custom.domain.tld');
         });
         it('should throw with invalid url', () => {
