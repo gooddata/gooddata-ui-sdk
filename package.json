@@ -4,14 +4,18 @@
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
-  "main": "dist/gooddata.js",
-  "module": "dist/gooddta.js",
+  "browser": "dist/gooddata.js",
+  "main": "lib/gooddata.js",
+  "module": "src/gooddata.js",
   "files": [
-      "dist",
-      "src"
+    "dist",
+    "lib",
+    "src"
   ],
   "scripts": {
-    "build": "rimraf dist && grunt dist",
+    "build": "npm run build:lib && npm run build:dist",
+    "build:lib": "rimraf lib && babel src --out-dir lib",
+    "build:dist": "rimraf dist && grunt dist",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -20,13 +24,15 @@
   },
   "devDependencies": {
     "async": "2.0.1",
+    "babel-cli": "6.22.2",
     "babel-core": "6.14.0",
     "babel-loader": "6.2.5",
+    "babel-plugin-lodash": "3.2.11",
     "babel-preset-es2015": "6.16.0",
     "babel-preset-stage-0": "6.16.0",
     "babel-register": "6.16.3",
     "bower": "1.7.9",
-    "eslint-config-gooddata": "gooddata/gdc-js-style#v0.0.6",
+    "eslint-config-gooddata": "0.0.8",
     "expect.js": "0.3.1",
     "exports-loader": "0.6.2",
     "fast-levenshtein": "2.0.4",
@@ -57,6 +63,7 @@
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
+    "lodash-webpack-plugin": "0.11.0",
     "mocha": "3.0.2",
     "node-libs-browser": "1.0.0",
     "phantomjs-prebuilt": "2.1.7",
@@ -67,8 +74,8 @@
   },
   "dependencies": {
     "es6-promise": "3.0.2",
-    "isomorphic-fetch": "2.2.1",
     "invariant": "2.2.1",
+    "isomorphic-fetch": "2.2.1",
     "lodash": "4.16.1",
     "md5": "2.2.1"
   }

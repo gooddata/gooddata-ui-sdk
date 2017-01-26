@@ -7,8 +7,8 @@
     "GoodData A-players <da@gooddata.com>"
   ],
   "repository": {
-      "type": "git",
-      "url": "git@github.com:gooddata/bower-gooddata-js.git"
+    "type": "git",
+    "url": "git@github.com:gooddata/bower-gooddata-js.git"
   },
   "description": "GoodData JS SDK",
   "main": "gooddata.min.js",
