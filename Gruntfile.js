@@ -16,8 +16,9 @@ module.exports = (grunt) => {
             },
             all: {
                 src: [
-                    'src/**/*.js',
-                    'test/**/*.js'
+                    './*.js',
+                    '@(src|test|tools)/**/*.js',
+                    '!tools/yuidoc/**/*'
                 ]
             }
         },

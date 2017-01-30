@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2015, GoodData(R) Corporation. All rights reserved.
 const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+
 module.exports = {
     entry: './src/gooddata.js',
     output: {
@@ -35,7 +36,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new LodashModuleReplacementPlugin,
+        new LodashModuleReplacementPlugin(),
         new webpack.BannerPlugin('<%= license %>', { raw: true })
     ]
 };
