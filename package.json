@@ -5,7 +5,6 @@
   "description": "GoodData JavaScript SDK",
   "license": "Copyright (c) 2014, GoodData Corporation (BSD License)",
   "main": "lib/gooddata.js",
-  "module": "src/gooddata.js",
   "files": [
     "dist",
     "lib",
