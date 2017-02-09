@@ -36,7 +36,7 @@ and get the library dependecies with
 ```
 $ npm install -g grunt-cli
 $ npm install -g bower
-$ npm install
+$ npm install # or using yarn
 $ bower install
 ```
 ## Build
