@@ -1,23 +1,23 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import fetchMock from 'fetch-mock';
+import * as testMock from '../src/utils/testMock';
 import * as project from '../src/project';
 
 describe('project', () => {
     describe('with fake server', () => {
         afterEach(() => {
-            fetchMock.restore();
+            testMock.restore();
         });
 
         describe('getProjects', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/account/profile/myProfileId/projects',
                     400
                 );
                 return project.getProjects('myProfileId').then(null, err => expect(err).to.be.an(Error));
             });
             it('should return an array of projects', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/account/profile/myProfileId/projects',
                     {
                         status: 200,
@@ -34,7 +34,7 @@ describe('project', () => {
 
         describe('getDatasets', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/md/myFakeProjectId/query/datasets',
                     400
                 );
@@ -42,7 +42,7 @@ describe('project', () => {
             });
 
             it('should return an array of dataSets', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/md/myFakeProjectId/query/datasets',
                     {
                         status: 200,
@@ -58,14 +58,14 @@ describe('project', () => {
 
         describe('getColorPalette', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
                 return project.getColorPalette('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
             });
             it('should return an array of color objects in the right order', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     {
                         status: 200,
@@ -85,7 +85,7 @@ describe('project', () => {
 
         describe('setColorPalette', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
@@ -95,7 +95,7 @@ describe('project', () => {
 
         describe('getCurrentProjectId', () => {
             it('should resolve with project id', () => {
-                fetchMock.mock('/gdc/app/account/bootstrap', 'GET', {
+                testMock.mock('/gdc/app/account/bootstrap', 'GET', {
                     status: 200,
                     body: JSON.stringify({
                         bootstrapResource: {
@@ -114,7 +114,7 @@ describe('project', () => {
             });
 
             it('should resolve with null if current project not set', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/app/account/bootstrap',
                     'GET',
                     { status: 200, body: JSON.stringify({ bootstrapResource: { current: { project: null } } }) }
@@ -142,7 +142,7 @@ describe('project', () => {
                     }
                 };
 
-                fetchMock.mock(bootstrapUrl, 'GET', {
+                testMock.mock(bootstrapUrl, 'GET', {
                     status: 200,
                     body: JSON.stringify(bootstrap)
                 });
@@ -160,7 +160,7 @@ describe('project', () => {
                     service: { timezone: 'Europe/Prague' }
                 };
 
-                fetchMock.mock(
+                testMock.mock(
                     timezoneUrl,
                     'POST',
                     {

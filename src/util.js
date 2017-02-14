@@ -18,3 +18,12 @@ import { get } from 'lodash';
  * @private
  */
 export const getIn = path => object => get(object, path);
+
+/**
+ * Detect if the script is using nodejs
+ *
+ * @method isNode
+ * @public
+ */
+export const isNode = () =>
+    Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]';

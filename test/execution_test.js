@@ -1,7 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
 import { cloneDeep, range } from 'lodash';
-import fetchMock from 'fetch-mock';
+import * as testMock from '../src/utils/testMock';
 
 import * as ex from '../src/execution';
 import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from './helpers/execution';
@@ -11,7 +11,7 @@ describe('execution', () => {
         let serverResponseMock;
 
         afterEach(() => {
-            fetchMock.restore();
+            testMock.restore();
         });
 
         describe('Data Execution:', () => {
@@ -65,11 +65,11 @@ describe('execution', () => {
                 it('should resolve with JSON with correct data including headers', () => {
                     const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
 
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(responseMock) }
                     );
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 201, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                     );
@@ -92,11 +92,11 @@ describe('execution', () => {
                 it('should resolve with JSON with correct warnings', () => {
                     const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
 
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(responseMock) }
                     );
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 201, body: JSON.stringify({ tabularDataResult: { warnings: [1, 2, 3] } }) }
                     );
@@ -109,12 +109,12 @@ describe('execution', () => {
                 it('should retrieve extended results on settings.extended == true', () => {
                     const responseMock = JSON.parse(JSON.stringify(serverResponseMock));
 
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(responseMock) }
                     );
 
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/(\w+)/,
                         {
                             status: 201,
@@ -135,11 +135,11 @@ describe('execution', () => {
                 });
 
                 it('should not fail if tabular data result is missing', () => {
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(serverResponseMock) }
                     );
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 204 }
                     );
@@ -151,7 +151,7 @@ describe('execution', () => {
                 });
 
                 it('should reject when execution fails', () => {
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         400
                     );
@@ -163,11 +163,11 @@ describe('execution', () => {
                 });
 
                 it('should reject with 400 when data result fails', () => {
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(serverResponseMock) }
                     );
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 400, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                     );
@@ -178,11 +178,11 @@ describe('execution', () => {
                 });
 
                 it('should wrap response headers with metric mappings', () => {
-                    fetchMock.mock(
+                    testMock.mock(
                         '/gdc/internal/projects/myFakeProjectId/experimental/executions',
                         { status: 200, body: JSON.stringify(serverResponseMock) }
                     );
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 204 }
                     );
@@ -222,9 +222,9 @@ describe('execution', () => {
                         }
                     }];
 
-                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
+                    testMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
 
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 204 }
                     );
@@ -232,7 +232,7 @@ describe('execution', () => {
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
                         filters
                     });
-                    const [, settings] = fetchMock.lastCall(matcher);
+                    const [, settings] = testMock.getMock().lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
 
                     expect(requestBody.execution.filters).to.eql(filters);
@@ -253,9 +253,9 @@ describe('execution', () => {
                         }
                     ];
 
-                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
+                    testMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
 
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 204 }
                     );
@@ -264,7 +264,7 @@ describe('execution', () => {
                         orderBy
                     });
 
-                    const [, settings] = fetchMock.lastCall(matcher);
+                    const [, settings] = testMock.getMock().lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
                     expect(requestBody.execution.orderBy).to.eql(orderBy);
                 });
@@ -283,9 +283,9 @@ describe('execution', () => {
                             }
                         }
                     ];
-                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
+                    testMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
 
-                    fetchMock.mock(
+                    testMock.mock(
                         /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                         { status: 204 }
                     );
@@ -294,7 +294,7 @@ describe('execution', () => {
                         definitions
                     });
 
-                    const [, settings] = fetchMock.lastCall(matcher);
+                    const [, settings] = testMock.getMock().lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
                     expect(requestBody.execution.definitions).to.eql(definitions);
                 });
@@ -304,14 +304,14 @@ describe('execution', () => {
                 it('should propagate filters to the server call', () => {
                     // prepare filters and then use them with getData
                     const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';
-                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
+                    testMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
                     const where = {
                         'label.attr.city': { $eq: 1 }
                     };
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
                         where
                     });
-                    const [, settings] = fetchMock.lastCall(matcher);
+                    const [, settings] = testMock.getMock().lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
 
                     expect(requestBody.execution.where).to.eql(where);
@@ -1081,17 +1081,17 @@ describe('execution', () => {
                         tabularDataResult: '/gdc/internal/projects/myFakeProjectId/experimental/executions/23452345'
                     }
                 };
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/md/myFakeProjectId/obj/1',
                     { status: 200, body: JSON.stringify(responseMock) }
                 );
 
-                fetchMock.mock(
+                testMock.mock(
                     executionUriMatcher,
                     { status: 200, body: JSON.stringify(serverResponseMock) }
                 );
 
-                fetchMock.mock(
+                testMock.mock(
                      /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
                     { status: 201, body: JSON.stringify({ tabularDataResult: { values: ['a', 1] } }) }
                 );
@@ -1112,7 +1112,7 @@ describe('execution', () => {
                     }
                 ];
                 return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
-                    const [, settings] = fetchMock.lastCall(executionUriMatcher);
+                    const [, settings] = testMock.getMock().lastCall(executionUriMatcher);
                     const request = JSON.parse(settings.body);
                     expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
                 });
@@ -1147,7 +1147,7 @@ describe('execution', () => {
                     }
                 ];
                 return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
-                    const [, settings] = fetchMock.lastCall(executionUriMatcher);
+                    const [, settings] = testMock.getMock().lastCall(executionUriMatcher);
                     const request = JSON.parse(settings.body);
                     expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
                 });
