@@ -1,5 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import { ajax, get, put, parseJSON } from './xhr';
+import Promise from 'bluebird';
+import { post, ajax, get, put, parseJSON } from './xhr';
 import { getIn } from './util';
 
 /**
@@ -152,3 +153,77 @@ export function setTimezone(projectId, timezone) {
     }).then(parseJSON);
 }
 
+const isProjectCreated = (project) => {
+    const projectState = project.content.state;
+
+    return projectState === 'ENABLED' ||
+        projectState === 'DELETED';
+};
+
+
+const pollForProject = (uri, options = {}) => {
+    const {
+        attempts = 0,
+        maxAttempts = 50,
+        pollStep = 5000
+    } = options;
+
+    return get(uri).then((response) => {
+        const { project } = response;
+
+        if (attempts > maxAttempts) {
+            return Promise.reject(new Error(response));
+        }
+
+        return isProjectCreated(project) ?
+            Promise.resolve(response) :
+            Promise.delay(pollStep).then(() => {
+                return pollForProject(uri, {
+                    ...options,
+                    attempts: attempts + 1
+                });
+            });
+    });
+};
+
+/**
+ * Create project
+ * Note: returns a promise which is resolved when the project creation is finished
+ *
+ * @experimental
+ * @method createProject
+ * @param {Object} options for project creation (title, subtitle, authorizationToken, ...)
+ * @return {Object} created project object
+ */
+export const createProject = (options = {}) => {
+    const {
+        title = 'Project',
+        summary = 'Project',
+        projectTemplate = '/projectTemplates/GoodSalesDemo/2',
+        driver = 'Pg',
+        environment = 'TESTING',
+        guidedNavigation = 1,
+        authorizationToken
+    } = options;
+
+    return post('/gdc/projects', {
+        body: JSON.stringify({
+            project: {
+                content: {
+                    guidedNavigation,
+                    driver,
+                    authorizationToken,
+                    environment
+                },
+                meta: {
+                    title,
+                    summary,
+                    projectTemplate
+                }
+            }
+        })
+    })
+    .then(parseJSON)
+    .then(project =>
+        pollForProject(project.uri, options));
+};

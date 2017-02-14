@@ -6,7 +6,7 @@ import {
     flatten,
     pick
 } from 'lodash';
-import { ajax, get, post, parseJSON } from './xhr';
+import { ajax, get, post, del, parseJSON } from './xhr';
 import { getIn } from './util';
 
 /**
@@ -578,4 +578,15 @@ export function getValidElements(projectId, id, options = {}) {
             validElementsRequest: requestBody
         })
     }).then(parseJSON);
+}
+
+/**
+ * Delete object
+ *
+ * @experimental
+ * @method deleteObject
+ * @param {String} uri of the object to be deleted
+ */
+export function deleteObject(uri) {
+    return del(uri);
 }
