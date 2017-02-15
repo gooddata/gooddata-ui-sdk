@@ -522,5 +522,101 @@ describe('metadata', () => {
                 });
             });
         });
+
+        describe('getValidElements', () => {
+            let postSpy;
+            const projectId = 'myFakeProjectId';
+            const attributeId = 'attribute.id';
+            const uri = `/gdc/md/${projectId}/obj/${attributeId}/validElements`;
+
+            beforeEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
+                postSpy = sinon.spy(xhr, 'post');
+            });
+
+            afterEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
+                postSpy.restore();
+            });
+
+            it('should process params from options', () => {
+                const queryString = '?limit=10&offset=5&order=asc&filter=foo&prompt=bar';
+                fetchMock.mock(`${uri}${queryString}`, () => {
+                    return {
+                        body: JSON.stringify({
+                            validElements: {
+                                items: []
+                            }
+                        }),
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                });
+
+                const options = {
+                    limit: 10,
+                    offset: 5,
+                    order: 'asc',
+                    filter: 'foo',
+                    prompt: 'bar',
+                    uris: ['foo', 'bar'],
+                    complement: true,
+                    includeTotalCountWithoutFilters: true,
+                    restrictiveDefinition: 'foo'
+                };
+
+                return md.getValidElements(projectId, attributeId, options)
+                    .then((result) => {
+                        expect(postSpy.calledOnce).to.be(true);
+                        expect(postSpy.calledWith(
+                            `${uri}${queryString}`, {
+                                data: JSON.stringify({
+                                    validElementsRequest: {
+                                        uris: options.uris,
+                                        complement: true,
+                                        includeTotalCountWithoutFilters: true,
+                                        restrictiveDefinition: 'foo'
+                                    }
+                                })
+                            })).to.be(true);
+
+                        expect(result).to.eql({
+                            validElements: {
+                                items: []
+                            }
+                        });
+                    });
+            });
+
+            it('should strip ? if no params defined', () => {
+                fetchMock.mock(uri, () => {
+                    return {
+                        body: JSON.stringify({
+                            validElements: {
+                                items: []
+                            }
+                        }),
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                });
+
+                const options = {};
+
+                return md.getValidElements(projectId, attributeId, options)
+                    .then((result) => {
+                        expect(postSpy.calledOnce).to.be(true);
+                        expect(postSpy.calledWith(uri, {
+                            data: JSON.stringify({
+                                validElementsRequest: {}
+                            })
+                        })).to.be(true);
+
+                        expect(result).to.eql({
+                            validElements: {
+                                items: []
+                            }
+                        });
+                    });
+            });
+        });
     });
 });
