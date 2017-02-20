@@ -1,7 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import Promise from 'bluebird';
 import { post, ajax, get, put, parseJSON } from './xhr';
 import { getIn } from './util';
+import { delay } from './utils/promise';
 
 /**
  * Functions for working with projects
@@ -177,7 +177,7 @@ const pollForProject = (uri, options = {}) => {
 
         return isProjectCreated(project) ?
             Promise.resolve(response) :
-            Promise.delay(pollStep).then(() => {
+            delay(pollStep).then(() => {
                 return pollForProject(uri, {
                     ...options,
                     attempts: attempts + 1
