@@ -28,16 +28,12 @@ To build the sdk you need to have [git](http://git-scm.com) and [Node.js](http:/
 installed. MacOS users should install [Homebrew](http://mxcl.github.com/homebrew/)
 first and then run:
 ```
-$ brew install git
-$ brew install node
+$ brew install git node yarn
 ```
 Now, clone this repo with `$ git clone git@github.com:gooddata/gooddata-js.git`
 and get the library dependecies with
 ```
-$ npm install -g grunt-cli
-$ npm install -g bower
-$ npm install # or using yarn
-$ bower install
+$ yarn install
 ```
 ## Build
 In the repository run:

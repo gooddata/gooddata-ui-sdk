@@ -12,12 +12,14 @@ module.exports = (grunt) => {
 
         eslint: {
             options: {
-                config: '.eslintrc'
+                config: '.eslintrc',
+                format: grunt.option('ci') && 'checkstyle',
+                outputFile: grunt.option('ci') && 'ci/results/eslint-results.xml'
             },
             all: {
                 src: [
                     './*.js',
-                    '@(src|test|tools)/**/*.js',
+                    '{src,test,tools}/**/*.js',
                     '!tools/yuidoc/**/*'
                 ]
             }
