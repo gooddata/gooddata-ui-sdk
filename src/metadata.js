@@ -3,7 +3,8 @@ import {
     isPlainObject,
     get as _get,
     chunk,
-    flatten
+    flatten,
+    pick
 } from 'lodash';
 import { ajax, get, post, parseJSON } from './xhr';
 import { getIn } from './util';
@@ -542,4 +543,39 @@ export function getObjectUri(projectId, identifier) {
             return uriFinder(objectData);
         });
     });
+}
+
+/**
+ * Get valid elements of an attribute, specified by its identifier and project id it belongs to
+ *
+ * @method getValidElements
+ * @param projectId id of the project
+ * @param id display form identifier of the metadata object
+ * @param {Object} options objects with options:
+ *      - limit {Number}
+ *      - offset {Number}
+ *      - order {String} 'asc' or 'desc'
+ *      - filter {String}
+ *      - prompt {String}
+ *      - uris {Array}
+ *      - complement {Boolean}
+ *      - includeTotalCountWithoutFilters {Boolean}
+ *      - restrictiveDefinition {String}
+ * @return {Object} ValidElements response with:
+ *      - items {Array} elements
+ *      - paging {Object}
+ *      - elementsMeta {Object}
+ */
+export function getValidElements(projectId, id, options = {}) {
+    const query = pick(options, ['limit', 'offset', 'order', 'filter', 'prompt']);
+    const queryParams = Object.keys(query)
+        .map(option => `${option}=${encodeURIComponent(query[option])}`)
+        .join('&');
+
+    const requestBody = pick(options, ['uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition']);
+    return post(`/gdc/md/${projectId}/obj/${id}/validElements?${queryParams}`.replace(/\?$/, ''), {
+        data: JSON.stringify({
+            validElementsRequest: requestBody
+        })
+    }).then(parseJSON);
 }
