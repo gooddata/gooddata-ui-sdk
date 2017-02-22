@@ -4,4 +4,4 @@ echo "Validating source code..."
 
 . $(dirname $0)/lib.sh
 
-grunt validate
+grunt validate --ci
