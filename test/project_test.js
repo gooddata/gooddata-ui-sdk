@@ -1,23 +1,23 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import fetchMock from 'fetch-mock';
+import * as testMock from '../src/utils/testMock';
 import * as project from '../src/project';
 
 describe('project', () => {
     describe('with fake server', () => {
         afterEach(() => {
-            fetchMock.restore();
+            testMock.restore();
         });
 
         describe('getProjects', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/account/profile/myProfileId/projects',
                     400
                 );
                 return project.getProjects('myProfileId').then(null, err => expect(err).to.be.an(Error));
             });
             it('should return an array of projects', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/account/profile/myProfileId/projects',
                     {
                         status: 200,
@@ -34,7 +34,7 @@ describe('project', () => {
 
         describe('getDatasets', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/md/myFakeProjectId/query/datasets',
                     400
                 );
@@ -42,7 +42,7 @@ describe('project', () => {
             });
 
             it('should return an array of dataSets', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/md/myFakeProjectId/query/datasets',
                     {
                         status: 200,
@@ -58,14 +58,14 @@ describe('project', () => {
 
         describe('getColorPalette', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
                 return project.getColorPalette('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
             });
             it('should return an array of color objects in the right order', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     {
                         status: 200,
@@ -85,7 +85,7 @@ describe('project', () => {
 
         describe('setColorPalette', () => {
             it('should reject with 400 when resource fails', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
@@ -95,7 +95,7 @@ describe('project', () => {
 
         describe('getCurrentProjectId', () => {
             it('should resolve with project id', () => {
-                fetchMock.mock('/gdc/app/account/bootstrap', 'GET', {
+                testMock.mock('/gdc/app/account/bootstrap', 'GET', {
                     status: 200,
                     body: JSON.stringify({
                         bootstrapResource: {
@@ -114,7 +114,7 @@ describe('project', () => {
             });
 
             it('should resolve with null if current project not set', () => {
-                fetchMock.mock(
+                testMock.mock(
                     '/gdc/app/account/bootstrap',
                     'GET',
                     { status: 200, body: JSON.stringify({ bootstrapResource: { current: { project: null } } }) }
@@ -142,7 +142,7 @@ describe('project', () => {
                     }
                 };
 
-                fetchMock.mock(bootstrapUrl, 'GET', {
+                testMock.mock(bootstrapUrl, 'GET', {
                     status: 200,
                     body: JSON.stringify(bootstrap)
                 });
@@ -160,7 +160,7 @@ describe('project', () => {
                     service: { timezone: 'Europe/Prague' }
                 };
 
-                fetchMock.mock(
+                testMock.mock(
                     timezoneUrl,
                     'POST',
                     {
@@ -171,6 +171,133 @@ describe('project', () => {
 
                 return project.setTimezone('prjId', 'Europe/Prague').then((response) => {
                     expect(response).to.eql(responseJSON);
+                });
+            });
+        });
+
+        describe('createProject', () => {
+            const mockProject = state => ({
+                project: {
+                    content: {
+                        state
+                    }
+                }
+            });
+
+            const createdProject = mockProject('ENABLED');
+            const pendingProject = mockProject('PREPARING');
+            const deletedProject = mockProject('DELETED');
+            const projectUri = '/gdc/projects/1';
+            const createProjectResponse = {
+                uri: projectUri
+            };
+
+            describe('/gdc/projects call successful', () => {
+                beforeEach(() => {
+                    testMock.mock(
+                        '/gdc/projects',
+                        'POST',
+                        {
+                            status: 200,
+                            body: JSON.stringify(createProjectResponse)
+                        }
+                    );
+                });
+
+                it('should not poll for created project when enabled immediately', () => {
+                    testMock.mock(
+                        projectUri,
+                        'GET',
+                        {
+                            status: 200,
+                            body: JSON.stringify(createdProject)
+                        }
+                    );
+
+                    return project.createProject().then((result) => {
+                        expect(result).to.eql(createdProject);
+                    });
+                });
+
+                it('should resolve and stop polling if created project ends in deleted state', () => {
+                    testMock.mock(
+                        projectUri,
+                        'GET',
+                        {
+                            status: 200,
+                            body: JSON.stringify(deletedProject)
+                        }
+                    );
+
+                    return project.createProject().then((result) => {
+                        expect(result).to.eql(deletedProject);
+                    });
+                });
+
+                it('should poll until project status is ENABLED', () => {
+                    let counter = 0;
+
+                    testMock.mock(
+                        projectUri,
+                        'GET',
+                        () => {
+                            counter += 1;
+                            const response = counter > 3 ? createdProject : pendingProject;
+
+                            return {
+                                status: 200,
+                                body: JSON.stringify(response)
+                            };
+                        }
+                    );
+
+                    return project.createProject({ pollStep: 1 }).then((result) => {
+                        expect(result).to.eql(createdProject);
+                    });
+                });
+
+                it('should reject if maximum polling attempts reached', () => {
+                    let counter = 0;
+
+                    testMock.mock(
+                        projectUri,
+                        'GET',
+                        () => {
+                            counter += 1;
+                            const response = counter > 3 ? createdProject : pendingProject;
+
+                            return {
+                                status: 200,
+                                body: JSON.stringify(response)
+                            };
+                        }
+                    );
+
+                    const config = { pollStep: 1, maxAttempts: 1 };
+                    return project.createProject(config).then(() => {
+                        expect().fail('Should reject the promise if create project ended with 400');
+                    }, (err) => {
+                        expect(err).to.be.an(Error);
+                    });
+                });
+            });
+
+            describe('/gdc/projects call not successful', () => {
+                it('should reject if create dashboard call fails', () => {
+                    testMock.mock(
+                        '/gdc/projects',
+                        'POST',
+                        {
+                            status: 400,
+                            body: JSON.stringify({})
+                        }
+                    );
+
+                    return project.createProject().then(() => {
+                        expect().fail('Should reject the promise if create project ended with 400');
+                    }, (err) => {
+                        expect(err).to.be.an(Error);
+                    });
                 });
             });
         });

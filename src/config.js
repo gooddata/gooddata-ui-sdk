@@ -11,6 +11,8 @@
  * @class config
  */
 
+import { isNode } from './util';
+
 const URL_REGEXP = '(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*';
 
 // TODO - fix this
@@ -45,3 +47,26 @@ export function setCustomDomain(d) {
              .replace(/\/$/, '')}`;
 }
 
+// decide if running in nodejs and use appropriate fetch function
+let fetch;
+if (isNode()) {
+    fetch = require('fetch-cookie')(require('node-fetch'));
+} else {
+    fetch = require('isomorphic-fetch');
+}
+
+/**
+ * Get fetch function
+ * @return {function} fetch function
+ */
+export function getFetch() {
+    return fetch;
+}
+
+/**
+ * Set custom fetch function. Primarily used in tests to allow using fetchMock
+ * @param {function} f fetch function
+ */
+export function setFetch(f) {
+    fetch = f;
+}

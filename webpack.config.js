@@ -12,6 +12,12 @@ module.exports = {
         library: 'gooddata'
     },
     externals: {
+        'fetch-cookie': {
+            root: 'fetch-cookie',
+            commonjs2: 'fetch-cookie',
+            commonjs: 'fetch-cookie',
+            amd: 'fetch-cookie'
+        },
         'isomorphic-fetch': {
             root: 'isomorphic-fetch',
             commonjs2: 'isomorphic-fetch',
@@ -21,6 +27,10 @@ module.exports = {
     },
     module: {
         loaders: [
+            {
+                test: /\.json$/,
+                loader: 'json-loader' // needed for fetch-cookie/node-fetch deps
+            },
             {
                 test: /\.js$/,
                 loader: 'babel',
@@ -36,6 +46,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.IgnorePlugin(/\/iconv-loader$/),
         new LodashModuleReplacementPlugin(),
         new webpack.BannerPlugin('<%= license %>', { raw: true })
     ]

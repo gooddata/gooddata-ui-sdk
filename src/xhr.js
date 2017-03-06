@@ -3,9 +3,10 @@ import {
     isPlainObject,
     isFunction,
     has,
+    set,
     merge
 } from 'lodash';
-import 'isomorphic-fetch';
+
 import * as config from './config';
 
 /**
@@ -39,7 +40,7 @@ export function ajaxSetup(settings) {
 function simulateBeforeSend(settings) {
     const xhr = {
         setRequestHeader(key, value) {
-            settings.headers.set(key, value);
+            set(settings, ['headers', key], value);
         }
     };
 
@@ -80,16 +81,14 @@ function continueAfterTokenRequest(url, settings) {
 }
 
 function createSettings(customSettings) {
-    const headers = new Headers({
-        Accept: 'application/json; charset=utf-8',
-        'Content-Type': 'application/json'
-    });
-
     const settings = Object.assign({}, commonXhrSettings, customSettings);
 
-    settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
+    settings.headers = {
+        Accept: 'application/json; charset=utf-8',
+        'Content-Type': 'application/json'
+    };
 
-    settings.headers = headers;
+    settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
 
     // TODO jquery compat - add to warnings
     settings.body = (settings.data) ? settings.data : settings.body;
@@ -109,6 +108,7 @@ function handleUnauthorized(originalUrl, originalSettings) {
         // If token request exist, just listen for it's end.
         const { url, settings } = enrichSettingWithCustomDomain('/gdc/account/token', createSettings({}), config.domain);
 
+        const fetch = config.getFetch();
         tokenRequest = fetch(url, settings).then((response) => {
             // tokenRequest = null;
             // TODO jquery compat - allow to attach unauthorized callback and call it if attached
@@ -176,6 +176,7 @@ export function ajax(originalUrl, tempSettings = {}) {
         return continueAfterTokenRequest(url, settings);
     }
 
+    const fetch = config.getFetch();
     return fetch(url, settings).then((response) => {
         // If response.status id 401 and it was a login request there is no need
         // to cycle back for token - login does not need token and this meand you
@@ -235,3 +236,9 @@ export const post = xhrMethod('POST');
  * @method put
  */
 export const put = xhrMethod('PUT');
+
+/**
+ * Wrapper for xhr.ajax method DELETE
+ * @method delete
+ */
+export const del = xhrMethod('DELETE');
