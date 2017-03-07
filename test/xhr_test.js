@@ -90,6 +90,22 @@ describe('fetch', () => {
     });
 
     describe('xhr.ajax polling', () => {
+        it('should allow for custom setting', () => {
+            const clock = sinon.useFakeTimers();
+
+            const handleRequest = sinon.stub().returns(Promise.resolve());
+
+            const promise = xhr.handlePolling('/some/url', { pollDelay: () => 1000 }, handleRequest);
+
+            clock.tick(1000);
+
+            expect(handleRequest.calledOnce).to.be(true);
+
+            clock.restore();
+
+            return promise;
+        });
+
         it('should retry request after delay', () => {
             testMock.mock('/some/url', (url) => {
                 if (testMock.getMock().calls(url).length <= 2) {
