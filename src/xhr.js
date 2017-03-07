@@ -4,7 +4,8 @@ import {
     isFunction,
     has,
     set,
-    merge
+    merge,
+    result
 } from 'lodash';
 
 import * as config from './config';
@@ -158,11 +159,13 @@ const checkStatus = (response) => {
     throw error;
 };
 
-function handlePolling(url, settings) {
+export function handlePolling(url, settings, sendRequest) {
+    const pollingDelay = result(settings, 'pollDelay');
+
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            ajax(url, settings).then(resolve, reject); // eslint-disable-line no-use-before-define
-        }, settings.pollDelay);
+            sendRequest(url, settings).then(resolve, reject);
+        }, pollingDelay);
     });
 }
 
@@ -201,7 +204,7 @@ export function ajax(originalUrl, tempSettings = {}) {
             finalSettings.method = 'GET';
             delete finalSettings.data;
             delete finalSettings.body;
-            return handlePolling(finalUrl, finalSettings);
+            return handlePolling(finalUrl, finalSettings, ajax);
         }
         return response;
     }).then(checkStatus);
