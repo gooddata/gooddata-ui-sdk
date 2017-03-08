@@ -1,18 +1,18 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import { range, find } from 'lodash';
+import fetchMock from './utils/fetch-mock';
 import * as md from '../src/metadata';
 import * as xhr from '../src/xhr';
-import * as testMock from '../src/utils/testMock';
 
 describe('metadata', () => {
     describe('with fake server', () => {
         afterEach(() => {
-            testMock.restore();
+            fetchMock.restore();
         });
 
         describe('getAttributes', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/attributes',
                     400
                 );
@@ -21,7 +21,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/attributes',
                     { status: 200, body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } }) }
                 );
@@ -34,7 +34,7 @@ describe('metadata', () => {
 
         describe('getDimensions', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/dimensions',
                     400
                 );
@@ -43,7 +43,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/dimensions',
                     {
                         status: 200,
@@ -59,7 +59,7 @@ describe('metadata', () => {
 
         describe('getFacts', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/facts',
                     400
                 );
@@ -68,7 +68,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/facts',
                     {
                         status: 200,
@@ -84,7 +84,7 @@ describe('metadata', () => {
 
         describe('getMetrics', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/metrics',
                     400
                 );
@@ -93,7 +93,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/query/metrics',
                     {
                         status: 200,
@@ -109,7 +109,7 @@ describe('metadata', () => {
 
         describe('getAvailableMetrics', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/availablemetrics',
                     400
                 );
@@ -118,7 +118,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/availablemetrics',
                     {
                         status: 200,
@@ -134,7 +134,7 @@ describe('metadata', () => {
 
         describe('getAvailableAttributes', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/drillcrosspaths',
                     400
                 );
@@ -143,7 +143,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/drillcrosspaths',
                     {
                         status: 200,
@@ -159,7 +159,7 @@ describe('metadata', () => {
 
         describe('getAvailableFacts', () => {
             it('should reject with 400 from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/availablefacts',
                     400
                 );
@@ -168,7 +168,7 @@ describe('metadata', () => {
             });
 
             it('should return correct number of entries', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/availablefacts',
                     {
                         status: 200,
@@ -184,7 +184,7 @@ describe('metadata', () => {
 
         describe('getObjectUri', () => {
             it('should return uri when identifier exists', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/identifiers',
                     'POST',
                     {
@@ -198,7 +198,7 @@ describe('metadata', () => {
                     }
                 );
 
-                testMock.mock('/foo/bar', {
+                fetchMock.mock('/foo/bar', {
                     status: 200,
                     body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
                 });
@@ -209,7 +209,7 @@ describe('metadata', () => {
             });
 
             it('should reject promise when identifier does not exist', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/identifiers',
                     'POST',
                     {
@@ -222,7 +222,7 @@ describe('metadata', () => {
             });
 
             it('should return an attribute uri for a display form identifier', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/md/myFakeProjectId/identifiers',
                     'POST',
                     {
@@ -234,7 +234,7 @@ describe('metadata', () => {
                     }
                 );
 
-                testMock.mock('/foo/bar/label', {
+                fetchMock.mock('/foo/bar/label', {
                     status: 200,
                     body: JSON.stringify({
                         attributeDisplayForm: {
@@ -250,7 +250,7 @@ describe('metadata', () => {
                     })
                 });
 
-                testMock.mock('/foo/bar', {
+                fetchMock.mock('/foo/bar', {
                     status: 200,
                     body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
                 });
@@ -283,7 +283,7 @@ describe('metadata', () => {
             });
 
             it('should load object dependencies', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 200, body: JSON.stringify({ entries: respondEntries }) }
                 );
@@ -303,7 +303,7 @@ describe('metadata', () => {
             });
 
             it('should be properly called with nearest when requested', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 200, body: JSON.stringify({ entries: respondEntries }) }
                 );
@@ -324,7 +324,7 @@ describe('metadata', () => {
             });
 
             it('should return rejected promise if 400 returned from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 400, body: JSON.stringify({}) }
                 );
@@ -368,7 +368,7 @@ describe('metadata', () => {
             });
 
             it('should load objects dependencies', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 200, body: JSON.stringify({ useMany: response }) }
                 );
@@ -388,7 +388,7 @@ describe('metadata', () => {
             });
 
             it('should be properly called with nearest when requested', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 200, body: JSON.stringify({ useMany: response }) }
                 );
@@ -409,7 +409,7 @@ describe('metadata', () => {
             });
 
             it('should return rejected promise if 400 returned from backend', () => {
-                testMock.mock(
+                fetchMock.mock(
                     using2Uri,
                     { status: 400, body: JSON.stringify({}) }
                 );
@@ -449,7 +449,7 @@ describe('metadata', () => {
             it('should load elements', () => {
                 const { uris, respondEntries } = generateUrisAndResponse(projectId, 2);
 
-                testMock.mock(
+                fetchMock.mock(
                     getUri,
                     { status: 200, body: JSON.stringify({ objects: { items: respondEntries } }) }
                 );
@@ -471,7 +471,7 @@ describe('metadata', () => {
             it('should load elements chunked', () => {
                 const { uris, respondEntries } = generateUrisAndResponse(projectId, 80);
 
-                testMock.mock(`/gdc/md/${projectId}/objects/get`, (url, opts) => {
+                fetchMock.mock(`/gdc/md/${projectId}/objects/get`, (url, opts) => {
                     const requestBody = JSON.parse(opts.data);
 
                     // respond with only those items which were requested
@@ -510,7 +510,7 @@ describe('metadata', () => {
 
             it('should return rejected promise if 400 returned from backend', () => {
                 const { uris } = generateUrisAndResponse(projectId, 5);
-                testMock.mock(
+                fetchMock.mock(
                     getUri,
                     { status: 400, body: JSON.stringify({}) }
                 );
@@ -539,7 +539,7 @@ describe('metadata', () => {
 
             it('should process params from options', () => {
                 const queryString = '?limit=10&offset=5&order=asc&filter=foo&prompt=bar';
-                testMock.mock(`${uri}${queryString}`, () => {
+                fetchMock.mock(`${uri}${queryString}`, () => {
                     return {
                         body: JSON.stringify({
                             validElements: {
@@ -587,7 +587,7 @@ describe('metadata', () => {
             });
 
             it('should strip ? if no params defined', () => {
-                testMock.mock(uri, () => {
+                fetchMock.mock(uri, () => {
                     return {
                         body: JSON.stringify({
                             validElements: {

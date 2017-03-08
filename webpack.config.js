@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
-    entry: './src/gooddata.js',
+    entry: './src/gooddata-browser.js',
     output: {
         filename: './dist/gooddata.js',
         // export itself to a global var

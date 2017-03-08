@@ -9,6 +9,7 @@ import {
 } from 'lodash';
 
 import * as config from './config';
+import fetch from './utils/fetch';
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -109,7 +110,6 @@ function handleUnauthorized(originalUrl, originalSettings) {
         // If token request exist, just listen for it's end.
         const { url, settings } = enrichSettingWithCustomDomain('/gdc/account/token', createSettings({}), config.domain);
 
-        const fetch = config.getFetch();
         tokenRequest = fetch(url, settings).then((response) => {
             // tokenRequest = null;
             // TODO jquery compat - allow to attach unauthorized callback and call it if attached
@@ -179,7 +179,6 @@ export function ajax(originalUrl, tempSettings = {}) {
         return continueAfterTokenRequest(url, settings);
     }
 
-    const fetch = config.getFetch();
     return fetch(url, settings).then((response) => {
         // If response.status id 401 and it was a login request there is no need
         // to cycle back for token - login does not need token and this meand you

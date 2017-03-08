@@ -1,16 +1,16 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import * as testMock from '../src/utils/testMock';
+import fetchMock from './utils/fetch-mock';
 import * as user from '../src/user';
 
 describe('user', () => {
     describe('with fake server', () => {
         afterEach(() => {
-            testMock.restore();
+            fetchMock.restore();
         });
 
         describe('login', () => {
             it('resolves with userLogin using valid credential', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/login',
                     'POST',
                     {
@@ -29,7 +29,7 @@ describe('user', () => {
             });
 
             it('rejects with bad credentials', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/login',
                     'POST',
                     400
@@ -41,7 +41,7 @@ describe('user', () => {
 
         describe('isLoggedIn', () => {
             it('should resolve if user logged in', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/token',
                     'GET',
                     200
@@ -50,7 +50,7 @@ describe('user', () => {
             });
 
             it('should resolve with false if user not logged in', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/token',
                     'GET',
                     401
@@ -63,7 +63,7 @@ describe('user', () => {
 
         describe('logout', () => {
             it('should resolve when user is not logged in', () => {
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/token',
                     'GET',
                     401
@@ -75,13 +75,13 @@ describe('user', () => {
             it('should log out user', () => {
                 const userId = 'USER_ID';
 
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/account/token',
                     'GET',
                     200
                 );
 
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/app/account/bootstrap',
                     'GET',
                     {
@@ -98,7 +98,7 @@ describe('user', () => {
                     }
                 );
 
-                testMock.mock(
+                fetchMock.mock(
                     `/gdc/account/login/${userId}`,
                     'DELETE',
                     200 // should be 204, but see https://github.com/wheresrhys/fetch-mock/issues/36
@@ -112,7 +112,7 @@ describe('user', () => {
             it('should update user\'s settings', () => {
                 const userId = 'USER_ID';
 
-                testMock.mock(
+                fetchMock.mock(
                     `/gdc/account/profile/${userId}/settings`,
                     { status: 400, body: '' }
                 );
@@ -133,7 +133,7 @@ describe('user', () => {
                 const organizationName = 'ORG_NAME';
                 const profileUri = 'PROFILE_URI';
 
-                testMock.mock(
+                fetchMock.mock(
                     '/gdc/app/account/bootstrap',
                     'GET',
                     {
