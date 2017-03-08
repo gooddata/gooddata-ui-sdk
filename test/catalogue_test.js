@@ -1,26 +1,26 @@
 import { cloneDeep, get, set } from 'lodash';
+import fetchMock from './utils/fetch-mock';
 import * as fixtures from './fixtures/catalogue';
 import * as catalogue from '../src/catalogue';
-import * as testMock from '../src/utils/testMock';
 
 describe('Catalogue', () => {
     const projectId = 'some_id';
 
     describe('#loadItems', () => {
         beforeEach(() => {
-            testMock.mock(`/gdc/internal/projects/${projectId}/loadCatalog`, {
+            fetchMock.mock(`/gdc/internal/projects/${projectId}/loadCatalog`, {
                 status: 200,
                 body: JSON.stringify(fixtures.loadCatalogResponse)
             });
         });
 
         afterEach(() => {
-            testMock.restore();
+            fetchMock.restore();
         });
 
         it('should load items from loadCatalog server end point', (done) => {
             catalogue.loadItems(projectId, fixtures.optionsForEmptySelection).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForEmptySelection);
 
@@ -32,7 +32,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForMeasureWithFilterAndCategory;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
                 expect(get(data, 'catalogRequest.bucketItems.0')).to.be(
@@ -47,7 +47,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForTwoMeasuresFactAndAtrribute;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForTwoMeasureFactAndAttribute);
 
@@ -59,7 +59,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForMeasureWithShowInPercent;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
                 expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
@@ -74,7 +74,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForMeasureTypeFactWithFilter;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMeasureTypeFactWithFilter);
 
@@ -86,7 +86,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForMetric;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMetric);
 
@@ -98,7 +98,7 @@ describe('Catalogue', () => {
             const dummyUri = '__dummy_uri__';
 
             catalogue.loadItems(projectId, { bucketItems: [dummyUri] }).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.catalogRequest;
 
@@ -112,7 +112,7 @@ describe('Catalogue', () => {
             const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
 
@@ -125,7 +125,7 @@ describe('Catalogue', () => {
             set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data).to.be.eql(fixtures.requestForMeasureWithNotInFilterAndCategoryShowInPercent);
 
@@ -138,7 +138,7 @@ describe('Catalogue', () => {
             options.returnAllDateDataSets = true;
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data.catalogRequest.requiredDataSets).to.be.eql({ type: 'ALL' });
 
@@ -152,7 +152,7 @@ describe('Catalogue', () => {
             options.dataSetIdentifier = 'identifier';
 
             catalogue.loadItems(projectId, options).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data.catalogRequest.requiredDataSets).to.be.eql({
                     type: 'CUSTOM',
@@ -166,19 +166,19 @@ describe('Catalogue', () => {
 
     describe('#loadDateDataSets', () => {
         beforeEach(() => {
-            testMock.mock(`/gdc/internal/projects/${projectId}/loadDateDataSets`, {
+            fetchMock.mock(`/gdc/internal/projects/${projectId}/loadDateDataSets`, {
                 status: 200,
                 body: JSON.stringify(fixtures.loadDateDataSetsResponse)
             });
         });
 
         afterEach(() => {
-            testMock.restore();
+            fetchMock.restore();
         });
 
         it('should generate basic request structure', (done) => {
             catalogue.loadDateDataSets(projectId, {}).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 expect(data.dateDataSetsRequest).to.be.eql({
                     includeUnavailableDateDataSetsCount: true,
@@ -197,7 +197,7 @@ describe('Catalogue', () => {
             const dataSetIdentifier = 'my_identifier';
 
             catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.eql({
@@ -213,7 +213,7 @@ describe('Catalogue', () => {
             const returnAllDateDataSets = true;
 
             catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.eql({
@@ -228,7 +228,7 @@ describe('Catalogue', () => {
             const returnAllRelatedDateDataSets = true;
 
             catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
                 expect(requiredDataSets).to.be(undefined);
@@ -258,7 +258,7 @@ describe('Catalogue', () => {
             };
 
             catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
-                const { data } = testMock.getMock().lastOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.dateDataSetsRequest;
 
@@ -337,7 +337,7 @@ describe('Catalogue', () => {
             };
 
             catalogue.loadDateDataSets(projectId, mockPayload).then((done) => {
-                const { data } = testMock.getMock().loadOptions();
+                const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.dateDataSetsRequest;
 

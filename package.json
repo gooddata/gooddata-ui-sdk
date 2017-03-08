@@ -4,7 +4,8 @@
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "SEE LICENSE IN LICENSE.txt",
-  "main": "lib/gooddata.js",
+  "main": "lib/gooddata-node.js",
+  "browser": "lib/gooddata-browser.js",
   "files": [
     "dist",
     "lib",
