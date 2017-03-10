@@ -15,7 +15,8 @@
     "build": "npm run build:lib && npm run build:dist",
     "build:lib": "rm -rf lib && babel src --out-dir lib",
     "build:dist": "rm -rf dist && grunt dist",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
