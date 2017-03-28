@@ -350,5 +350,43 @@ describe('Catalogue', () => {
                 done();
             });
         });
+
+        it('should use option includeObjectsWithTags if provided', (done) => {
+            const includeObjectsWithTags = ['a', 'b', 'c'];
+
+            catalogue.loadDateDataSets(projectId, { includeObjectsWithTags }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data.dateDataSetsRequest.includeObjectsWithTags).to.eql(['a', 'b', 'c']);
+
+                done();
+            });
+        });
+
+        it('should use option excludeObjectsWithTags if provided', (done) => {
+            const excludeObjectsWithTags = ['a', 'b', 'c'];
+
+            catalogue.loadDateDataSets(projectId, { excludeObjectsWithTags }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data.dateDataSetsRequest.excludeObjectsWithTags).to.eql(['a', 'b', 'c']);
+
+                done();
+            });
+        });
+
+        it('should use option includeObjectsWithTags and omit excludeObjectsWithTags if both provided', (done) => {
+            const includeObjectsWithTags = ['a', 'b', 'c'];
+            const excludeObjectsWithTags = ['d', 'e', 'f'];
+
+            catalogue.loadDateDataSets(projectId, { includeObjectsWithTags, excludeObjectsWithTags }).then(() => {
+                const { data } = fetchMock.lastOptions();
+
+                expect(data.dateDataSetsRequest.includeObjectsWithTags).to.eql(['a', 'b', 'c']);
+                expect(data.dateDataSetsRequest.excludeObjectsWithTags).to.be(undefined);
+
+                done();
+            });
+        });
     });
 });

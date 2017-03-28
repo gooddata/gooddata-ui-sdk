@@ -124,13 +124,20 @@ export function loadDateDataSets(projectId, options) {
         bucketItems = bucketItemsToExecConfig(bucketItems, { removeDateItems: true });
     }
 
+    const omittedOptions = ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets', 'returnAllRelatedDateDataSets'];
+    // includeObjectsWithTags has higher priority than excludeObjectsWithTags,
+    // so when present omit excludeObjectsWithTags
+    if (options.includeObjectsWithTags) {
+        omittedOptions.push('excludeObjectsWithTags');
+    }
+
     const request = omit({
         ...LOAD_DATE_DATASET_DEFAULTS,
         ...REQUEST_DEFAULTS,
         ...options,
         ...getRequiredDataSets(options),
         bucketItems
-    }, ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets', 'returnAllRelatedDateDataSets']);
+    }, omittedOptions);
 
     return requestDateDataSets(projectId, request);
 }
