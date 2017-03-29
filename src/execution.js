@@ -215,9 +215,9 @@ const getGeneratedMetricIdentifier = (item, aggregation, expressionCreator, hash
     const hasNoFilters = isEmpty(get(item, 'measureFilters', []));
     const type = get(item, 'type');
 
-    const prefix = (hasNoFilters || allFiltersEmpty(item)) ? '' : 'filtered_';
+    const prefix = (hasNoFilters || allFiltersEmpty(item)) ? '' : '_filtered';
 
-    return `${type}_${identifier}.generated.${prefix}${aggregation}.${hash}`;
+    return `${type}_${identifier}.generated.${hash}${prefix}_${aggregation}`;
 };
 
 const isDateCategory = ({ category }) => category.type === 'date';
