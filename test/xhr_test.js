@@ -289,5 +289,20 @@ describe('fetch', () => {
             expect(settings.mode).to.eql('cors');
         });
     });
+
+    describe('beforeSend', () => {
+        it('should call beforeSend with settings and url', () => {
+            const url = '/some/url';
+
+            fetchMock.mock(url, { status: 200 });
+            const beforeSendStub = sinon.stub();
+            xhr.ajaxSetup({
+                beforeSend: beforeSendStub
+            });
+
+            xhr.ajax(url);
+            expect(beforeSendStub.getCall(0).args[1]).to.eql(url);
+        });
+    });
 });
 
