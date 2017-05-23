@@ -43,6 +43,13 @@ describe('fetch', () => {
             xhr.ajax('/some/url');
             expect(fetchMock.calls().matched[0][1].headers.Accept).to.be('application/json; charset=utf-8');
         });
+
+        it('should set custom headers', () => {
+            fetchMock.mock('/some/url', 200);
+            xhr.ajax('/some/url', { headers: { 'X-GDC-REQUEST': 'foo' } });
+            expect(fetchMock.calls().matched[0][1].headers.Accept).to.be('application/json; charset=utf-8');
+            expect(fetchMock.calls().matched[0][1].headers['X-GDC-REQUEST']).to.be('foo');
+        });
     });
 
     describe('xhr.ajax unauthorized handling', () => {

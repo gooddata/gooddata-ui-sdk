@@ -83,12 +83,16 @@ function continueAfterTokenRequest(url, settings) {
 }
 
 function createSettings(customSettings) {
-    const settings = Object.assign({}, commonXhrSettings, customSettings);
-
-    settings.headers = {
-        Accept: 'application/json; charset=utf-8',
-        'Content-Type': 'application/json'
-    };
+    const settings = merge(
+        {
+            headers: {
+                Accept: 'application/json; charset=utf-8',
+                'Content-Type': 'application/json'
+            }
+        },
+        commonXhrSettings,
+        customSettings
+    );
 
     settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
 

@@ -208,6 +208,19 @@ describe('execution', () => {
                         expect().fail('Should not fail when processing mappings');
                     });
                 });
+
+                it('should set headers via settings', () => {
+                    const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';
+                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
+                    fetchMock.mock(
+                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/(\w+)/,
+                        { status: 204 }
+                    );
+
+                    ex.getData('myFakeProjectId', ['attrId', 'metricId'], {}, { headers: { 'X-GDC-REQUEST': 'foo' } });
+                    const [, settings] = fetchMock.lastCall(matcher);
+                    expect(settings.headers['X-GDC-REQUEST']).to.eql('foo');
+                });
             });
 
             describe('getData with execution context filters', () => {

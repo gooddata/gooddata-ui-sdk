@@ -99,6 +99,7 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
 
     // Execute request
     return post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
+        ...settings,
         body: JSON.stringify(request)
     })
     .then(parseJSON)
