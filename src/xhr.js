@@ -39,7 +39,7 @@ export function ajaxSetup(settings) {
     commonXhrSettings = Object.assign({}, commonXhrSettings, settings);
 }
 
-function simulateBeforeSend(settings) {
+function simulateBeforeSend(settings, url) {
     const xhr = {
         setRequestHeader(key, value) {
             set(settings, ['headers', key], value);
@@ -47,7 +47,7 @@ function simulateBeforeSend(settings) {
     };
 
     if (isFunction(settings.beforeSend)) {
-        settings.beforeSend(xhr);
+        settings.beforeSend(xhr, url);
     }
 }
 
@@ -177,7 +177,7 @@ export function ajax(originalUrl, tempSettings = {}) {
     const firstSettings = createSettings(tempSettings);
     const { url, settings } = enrichSettingWithCustomDomain(originalUrl, firstSettings, config.domain);
 
-    simulateBeforeSend(settings);
+    simulateBeforeSend(settings, url);
 
     if (tokenRequest) {
         return continueAfterTokenRequest(url, settings);
