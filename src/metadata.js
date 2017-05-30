@@ -546,6 +546,24 @@ export function getObjectUri(projectId, identifier) {
 }
 
 /**
+ * Get uris specified by identifiers
+ *
+ * @method getUrisFromIdentifiers
+ * @param {String} projectId id of the project
+ * @param {Array} identifiers identifiers of the metadata objects
+ * @return {Array} array of identifier + uri pairs
+ */
+export function getUrisFromIdentifiers(projectId, identifiers) {
+    return post(`/gdc/md/${projectId}/identifiers`, {
+        body: {
+            identifierToUri: identifiers
+        }
+    }).then(parseJSON).then((data) => {
+        return data.identifiers;
+    });
+}
+
+/**
  * Get valid elements of an attribute, specified by its identifier and project id it belongs to
  *
  * @method getValidElements
