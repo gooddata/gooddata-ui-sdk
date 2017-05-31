@@ -131,70 +131,6 @@ export function getObjectUsingMany(projectId, uris, options = {}) {
 }
 
 /**
- * Get additional information about elements specified by their uris
- * `elementUris` is the array of uris of elements to be look-up
- * Currently makes a request for each object, should be encapsulated
- * to one call
- *
- * @method getElementDetails
- * @param {Array} array of element uri strings
- * @private
- */
-export function getElementDetails(elementUris) {
-    const fns = elementUris.map(uri => get(uri));
-
-    return Promise.all(fns).then((...args) => {
-        const enriched = args.map((element) => {
-            const root = element[0];
-            if (root.attributeDisplayForm) {
-                return {
-                    type: 'attribute',
-                    uri: root.attributeDisplayForm.meta.uri,
-                    formOf: root.attributeDisplayForm.content.formOf,
-                    name: root.attributeDisplayForm.meta.title
-                };
-            } else if (root.metric) {
-                return {
-                    type: 'metric',
-                    uri: root.metric.meta.uri,
-                    name: root.metric.meta.title
-                };
-            }
-
-            return undefined;
-        });
-
-        // override titles with related attribute title
-        const ids = {};
-        const indi = [];
-        let i = 0;
-        const formOfFns = [];
-
-        enriched.forEach((el, idx) => {
-            if (el.formOf) {
-                formOfFns.push(get(el.formOf));
-                ids[el.uri] = idx;
-                indi[i] = idx;
-                i += 1;
-            }
-        });
-
-        // all formOf are executed
-        return Promise.all(formOfFns).then((...formOfArgs) => {
-            formOfArgs.forEach((arg, idx) => {
-                // get element to owerwrite
-                const which = indi[idx];
-                const update = enriched[which];
-
-                update.name = arg[0].attribute.meta.title;
-            });
-
-            return enriched;
-        });
-    });
-}
-
-/**
 * Reutrns all attributes in a project specified by projectId param
 *
 * @method getAttributes
@@ -245,7 +181,7 @@ export function getFolders(projectId, type) {
                 getFolderEntries(projectId, 'metric'),
                 getDimensions(projectId)
             ])
-            .then((facts, metrics, attributes) => {
+            .then(([facts, metrics, attributes]) => {
                 return { fact: facts, metric: metrics, attribute: attributes };
             });
     }
@@ -357,7 +293,7 @@ export function getFoldersWithItems(projectId, type) {
         // array of links to the metadata objects representing the metrics.
         // @return the array of promises
         function getMetricItemsDetails(array) {
-            return Promise.all(array.map(getObjectDetails)).then((...metricArgs) => {
+            return Promise.all(array.map(getObjectDetails)).then((metricArgs) => {
                 return metricArgs.map(item => item.metric);
             });
         }
@@ -398,13 +334,13 @@ export function getFoldersWithItems(projectId, type) {
         const foldersTitles = mapBy(folders, 'title');
 
         // fetch details for each folder
-        return Promise.all(foldersLinks.map(getObjectDetails)).then((...folderDetails) => {
+        return Promise.all(foldersLinks.map(getObjectDetails)).then((folderDetails) => {
             // if attribute, just parse everything from what we've received
             // and resolve. For metrics, lookup again each metric to get its
             // identifier. If passing unsupported type, reject immediately.
             if (type === 'attribute') {
                 // get all attributes, subtract what we have and add rest in unsorted folder
-                getAttributes(projectId).then((attributes) => {
+                return getAttributes(projectId).then((attributes) => {
                     // get uris of attributes which are in some dimension folders
                     const attributesInFolders = [];
                     folderDetails.forEach((fd) => {
@@ -419,7 +355,7 @@ export function getFoldersWithItems(projectId, type) {
                             .map(item => item.link);
                     // now get details of attributes in no folders
                     return Promise.all(unsortedUris.map(getObjectDetails))
-                        .then((...unsortedAttributeArgs) => { // TODO add map to r.json
+                        .then((unsortedAttributeArgs) => { // TODO add map to r.json
                             // get unsorted attribute objects
                             const unsortedAttributes = unsortedAttributeArgs.map(attr => attr.attribute);
                             // create structure of folders with attributes
@@ -461,7 +397,7 @@ export function getFoldersWithItems(projectId, type) {
 
                     // now get details of all metrics
                     return Promise.all(entriesLinks.map(linkArray => getMetricItemsDetails(linkArray)))
-                        .then((...tree) => { // TODO add map to r.json
+                        .then((tree) => { // TODO add map to r.json
                             // all promises resolved, i.e. details for each metric are available
                             const structure = tree.map((treeItems, idx) => {
                                 // if idx is not in foldes list than metric is in "Unsorted" folder
@@ -474,11 +410,9 @@ export function getFoldersWithItems(projectId, type) {
                             return structure;
                         });
                 });
-            } else {
-                return Promise.reject();
             }
 
-            return undefined;
+            return Promise.reject();
         });
     });
 }
