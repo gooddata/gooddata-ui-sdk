@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "jsx": "react",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "noUnusedLocals": true,
+    "rootDir": "src"
+  }
+}

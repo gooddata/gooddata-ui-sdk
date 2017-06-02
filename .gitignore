@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+.vscode
+.yalc
+ci/results/*
+coverage
+dist
+node_modules
+npm-debug.log
+yalc.lock
+yarn-error.log

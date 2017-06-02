@@ -1,2 +1,1 @@
-# gooddata-component-sdk
-Gooddata Component SDK
+# GoodData React Components
