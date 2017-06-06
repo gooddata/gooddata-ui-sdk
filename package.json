@@ -1,0 +1,68 @@
+{
+  "name": "@gooddata/react-components",
+  "version": "1.0.0",
+  "description": "GoodData React Components",
+  "main": "dist/index.js",
+  "repository": "git@github.com:gooddata/gooddata-component-sdk.git",
+  "author": "GoodData",
+  "license": "UNLICENSED",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/invariant": "2.2.28",
+    "@types/jest": "18.1.1",
+    "@types/lodash": "4.14.61",
+    "@types/node": "7.0.8",
+    "@types/react": "15.0.20",
+    "@types/react-addons-test-utils": "0.14.17",
+    "@types/react-dom": "0.14.23",
+    "enzyme": "2.8.0",
+    "invariant": "2.2.2",
+    "jest": "19.0.2",
+    "jest-junit": "1.3.0",
+    "react": "15.3.2",
+    "react-addons-test-utils": "15.3.2",
+    "react-dom": "15.3.2",
+    "ts-jest": "19.0.14",
+    "tslint": "4.4.2",
+    "typescript": "2.2.2"
+  },
+  "dependencies": {
+    "@gooddata/data-layer": "0.0.20",
+    "@gooddata/indigo-visualizations": "0.2.5",
+    "gooddata": "1.6.0",
+    "lodash": "4.17.4",
+    "numeral": "2.0.6",
+    "react-intl": "2.2.3"
+  },
+  "peerDependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "watchTest": "jest --watch",
+    "dev": "rm -rf dist && tsc -d --outDir dist --watch",
+    "prepublish": "rm -rf dist && tsc -d --outDir dist",
+    "validate": "tsc -p tsconfig.base.json --noEmit && tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+  },
+  "typescript": {
+    "definition": "dist/index.d.ts"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
+    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
