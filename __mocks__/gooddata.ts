@@ -3,7 +3,7 @@ import { ISimpleExecutorResult } from '../src/interfaces/SimpleExecutorResult';
 import { charts } from './fixtures';
 
 const execution = {
-    getData(projectId, columns): Promise<ISimpleExecutorResult> {
+    getData(_projectId, columns): Promise<ISimpleExecutorResult> {
         if (columns.indexOf('too-large-measure') >= 0) {
             return Promise.reject({
                 response: {
@@ -138,7 +138,7 @@ const xhr = {
 };
 
 const md = {
-    getObjects(objects) {
+    getObjects() {
         return Promise.resolve([]);
     }
 };
