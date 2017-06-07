@@ -1,0 +1,72 @@
+{
+    "project": {
+        "title": "Storybook project v1",
+        "identifier": "storybook"
+    },
+    "groups": [
+        {
+            "measures": [
+                {
+                    "identifier": "1",
+                    "title": "Amount"
+                },
+                {
+                    "identifier": "2",
+                    "title": "Bigger Amount"
+                }
+            ],
+            "attributes": [
+                {
+                    "identifier": "3",
+                    "title": "Country",
+                    "elements": ["Czech Republic", "China", "Slovakia"]
+                }
+            ]
+        }
+    ],
+    "visualizations": [
+        {
+            "identifier": "1001",
+            "title": "Table",
+            "type": "table",
+            "categories": [
+                {
+                    "type": "attribute",
+                    "identifier": "3"
+                }
+            ],
+            "measures": [
+                {
+                    "type": "metric",
+                    "identifier": "1",
+                    "title": "Amount"
+                },
+                {
+                    "type": "metric",
+                    "identifier": "1",
+                    "title": "Amount"
+                }
+            ],
+            "filters": []
+        },
+        {
+            "identifier": "1002",
+            "title": "Pie chart",
+            "type": "pie",
+            "categories": [],
+            "measures": [
+                {
+                    "type": "metric",
+                    "identifier": "1",
+                    "title": "Amount"
+                },
+                {
+                    "type": "metric",
+                    "identifier": "2",
+                    "title": "Amount 2"
+                }
+            ],
+            "filters": []
+        }
+    ]
+}

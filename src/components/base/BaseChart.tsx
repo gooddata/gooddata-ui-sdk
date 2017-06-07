@@ -52,6 +52,8 @@ export class BaseChart extends React.Component<IChartProps, IChartState> {
         config: {}
     };
 
+    private isUnmounted = false;
+
     constructor(props) {
         super(props);
 
@@ -67,17 +69,33 @@ export class BaseChart extends React.Component<IChartProps, IChartState> {
     }
 
     public onExecute(data) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ result: data, error: false });
     }
 
     public onError(error) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ error: true });
         this.props.onError(error);
     }
 
     public onLoading(isLoading: boolean) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ isLoading });
         this.props.onLoadingChanged({ isLoading });
+    }
+
+    public componentWillUnmount() {
+        this.isUnmounted = true;
     }
 
     public render() {
