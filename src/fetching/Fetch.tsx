@@ -2,7 +2,7 @@ import * as React from 'react';
 import { xhr, md } from 'gooddata';
 import compact = require('lodash/compact');
 
-import { IVisualizationObject, IEmbeddedDateFilter } from '../legacy/model/VisualizationObject';
+import { IVisualizationObject, IEmbeddedDateFilter } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
 import { getProjectIdByUri } from '../helpers/project';
 
 export interface IFetchProps {
