@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { toAFM, IAttributesMap } from '@gooddata/data-layer/dist/legacy/toAfm';
+import { IVisualizationObject } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
 
 import { BaseChart, IChartConfig, ChartTypes } from './base/BaseChart';
 import { Fetch } from '../fetching/Fetch';
 import { Table } from './Table';
-import { toAFM, IAttributesMap } from '../legacy/toAFM';
-import { IVisualizationObject } from '../legacy/model/VisualizationObject';
 import { IEvents } from '../interfaces/Events';
 import { getProjectIdByUri } from '../helpers/project';
 

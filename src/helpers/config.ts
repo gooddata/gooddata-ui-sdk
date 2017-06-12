@@ -1,6 +1,6 @@
 import { Afm, Transformation } from '@gooddata/data-layer';
-import { toVisObj } from '../legacy/toVisObj';
-import * as VisObj from '../legacy/model/VisualizationObject';
+import { Converters } from '@gooddata/data-layer';
+import * as VisObj from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
 
 export function generateConfig(
     type,
@@ -9,7 +9,7 @@ export function generateConfig(
     config = {},
     headers = []
 ) {
-    const buckets: VisObj.IVisualizationObject = toVisObj(type, afm, transformation, headers);
+    const buckets: VisObj.IVisualizationObject = Converters.toVisObj(type, afm, transformation, headers);
 
     return {
         ...buckets,
