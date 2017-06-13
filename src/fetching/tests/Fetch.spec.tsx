@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 
-import { Fetch } from '../fetch';
+import { Fetch } from '../Fetch';
 
 describe('Fetch', () => {
     it('should fetch data on componentDidMount', async () => {

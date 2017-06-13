@@ -9,3 +9,4 @@ node_modules
 npm-debug.log
 yalc.lock
 yarn-error.log
+junit.xml

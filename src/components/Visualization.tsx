@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { toAFM, IAttributesMap } from '@gooddata/data-layer/dist/legacy/toAfm';
+import { toAFM, IAttributesMap } from '@gooddata/data-layer/dist/legacy/toAFM';
 import { IVisualizationObject } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
 
 import { BaseChart, IChartConfig, ChartTypes } from './base/BaseChart';

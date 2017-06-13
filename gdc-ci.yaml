@@ -1,3 +1,3 @@
 pull-request:
-  - mkdir -p ./ci/results && tslint --config=tslint.json --format=checkstyle --out=./ci/results/tslint-results.xml index.ts src/**/*.ts
+  - mkdir -p ./ci/results && tslint --config tslint.json --format checkstyle --out ./ci/results/tslint-results.xml index.ts src/**/*.ts
   - JEST_SUITE_NAME="GoodData React Components Unit Tests" JEST_JUNIT_OUTPUT="./ci/results/test-results.xml" jest --config=jest.ci.json
