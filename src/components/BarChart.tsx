@@ -5,7 +5,7 @@ export class BarChart extends React.Component<IChartProps, null> {
     public render() {
         return (
             <BaseChart
-                type='bar'
+                type="bar"
                 {...this.props}
             />
         );

@@ -82,7 +82,7 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
     }
 
     private hasPropsChanged(nextProps, propNames) {
-        return propNames.some((propName) => this.isPropChanged(nextProps, propName));
+        return propNames.some(propName => this.isPropChanged(nextProps, propName));
     }
 
     private runExecution(props) {
@@ -109,5 +109,5 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
                 onError({ status: UNKNOWN_ERROR, error });
             })
             .then(() => onLoading(false));
-    };
+    }
 }

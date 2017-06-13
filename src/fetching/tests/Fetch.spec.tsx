@@ -12,7 +12,7 @@ describe('Fetch', () => {
 
         mount(
             <Fetch
-                uri='/my/uri'
+                uri="/my/uri"
                 fetcher={fetcher}
                 onData={onData}
                 onError={onError}
@@ -33,7 +33,7 @@ describe('Fetch', () => {
 
         const wrapper = mount(
             <Fetch
-                uri='/my/uri'
+                uri="/my/uri"
                 fetcher={fetcher}
                 onData={onData}
                 onError={onError}
@@ -56,7 +56,7 @@ describe('Fetch', () => {
 
         const wrapper = mount(
             <Fetch
-                uri='/my/uri'
+                uri="/my/uri"
                 fetcher={fetcher}
                 onData={onData}
                 onError={onError}
@@ -84,7 +84,7 @@ describe('Fetch', () => {
 
         const wrapper = mount(
             <Fetch
-                uri='/my/uri'
+                uri="/my/uri"
                 fetcher={fetcher}
                 onData={onData}
                 onError={onError}
