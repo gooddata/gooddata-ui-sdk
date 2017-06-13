@@ -25,7 +25,8 @@
     "react-addons-test-utils": "15.3.2",
     "react-dom": "15.3.2",
     "ts-jest": "19.0.14",
-    "tslint": "4.4.2",
+    "tslint": "5.4.3",
+    "tslint-config-gooddata": "0.0.2",
     "typescript": "2.2.2"
   },
   "dependencies": {
@@ -45,7 +46,8 @@
     "watchTest": "jest --watch",
     "dev": "rm -rf dist && tsc -d --outDir dist --watch",
     "prepublish": "rm -rf dist && tsc -d --outDir dist",
-    "validate": "tsc -p tsconfig.base.json --noEmit && tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+    "tslint": "tslint --format verbose --config tslint.json 'src/**/*.{ts,tsx}'",
+    "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint"
   },
   "typescript": {
     "definition": "dist/index.d.ts"

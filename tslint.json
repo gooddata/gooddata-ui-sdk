@@ -1,18 +1,3 @@
 {
-  "extends": "tslint:latest",
-  "rules": {
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "never",
-        "singleline": "never"
-      }
-    ],
-    "ordered-imports": false,
-    "object-literal-sort-keys": false
-  }
+  "extends": "tslint-config-gooddata"
 }

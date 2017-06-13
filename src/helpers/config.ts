@@ -1,5 +1,4 @@
-import { Afm, Transformation } from '@gooddata/data-layer';
-import { Converters } from '@gooddata/data-layer';
+import { Afm, Transformation, Converters } from '@gooddata/data-layer';
 import * as VisObj from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
 
 export function generateConfig(
