@@ -32,6 +32,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
         onLoadingChanged: noop
     };
 
+    private isUnmounted = false;
+
     constructor(props) {
         super(props);
 
@@ -49,20 +51,36 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     public onExecute(data) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ result: data, error: false });
     }
 
     public onError(error) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ error: true });
         this.props.onError(error);
     }
 
     public onLoading(isLoading: boolean) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ isLoading });
         this.props.onLoadingChanged({ isLoading });
     }
 
     public onSortChange(change: Sorting.ISortingChange) {
+        if (this.isUnmounted) {
+            return;
+        }
+
         this.setState({ sorting: Sorting.getSorting(change, this.state.sorting) });
     }
 
@@ -93,6 +111,10 @@ export class Table extends React.Component<ITableProps, ITableState> {
         }
 
         return transformation;
+    }
+
+    public componentWillUnmount() {
+        this.isUnmounted = true;
     }
 
     public render() {
