@@ -1,4 +1,4 @@
-GoodData Variable Names
+GoodData React Components
 
 BSD License
 
