@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { toAFM, IAttributesMap } from '@gooddata/data-layer/dist/legacy/toAFM';
-import { IVisualizationObject } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
+import * as sdk from 'gooddata';
+import { noop, get } from 'lodash';
+import { DataSource, MetadataSource, UriMetadataSource, UriAdapter } from '@gooddata/data-layer';
 
-import { BaseChart, IChartConfig, ChartTypes } from './base/BaseChart';
-import { Fetch } from '../fetching/Fetch';
+import { ErrorStates } from '../constants/errorStates';
+import { BaseChart, ChartTypes, IChartConfig } from './base/BaseChart';
 import { Table } from './Table';
 import { IEvents } from '../interfaces/Events';
 import { getProjectIdByUri } from '../helpers/project';
@@ -11,12 +12,14 @@ import { visualizationPropTypes } from '../proptypes/Visualization';
 
 export interface IVisualizationProps extends IEvents {
     uri: string;
+    locale?: string;
     config?: IChartConfig;
 }
 
 export interface IVisualizationState {
-    visObj?: IVisualizationObject;
-    attributesMap?: IAttributesMap;
+    dataSource: DataSource.IDataSource;
+    metadataSource: MetadataSource.IMetadataSource;
+    type: string;
 }
 
 export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
@@ -25,66 +28,72 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     constructor(props) {
         super(props);
 
-        this.state = {};
-        this.onData = this.onData.bind(this);
-        this.onError = this.onError.bind(this);
+        this.state = {
+            dataSource: null,
+            metadataSource: null,
+            type: null
+        };
     }
 
-    public render() {
-        const { uri } = this.props;
-
-        return (
-            <Fetch uri={uri} onData={this.onData} onError={this.onError}>
-                {this.renderVisualization()}
-            </Fetch>
-        );
+    componentDidMount() {
+        this.prepareDatasources(this.props.uri);
     }
 
-    private onData({ visObj, attributesMap }) {
-        this.setState({
-            visObj: (visObj.visualization.content as IVisualizationObject),
-            attributesMap
+    public componentWillReceiveProps(nextProps) {
+        if (this.props.uri !== nextProps.uri) {
+            this.prepareDatasources(nextProps.uri);
+        }
+    }
+
+    private prepareDatasources(uri) {
+        const errorHandler = get(this.props, 'onError', noop);
+
+        const projectId = getProjectIdByUri(uri);
+        new UriAdapter(sdk, projectId).createDataSource({ uri }).then((dataSource) => {
+            const metadataSource = new UriMetadataSource(sdk, uri);
+            metadataSource.getVisualizationMetadata().then(({ metadata }) => {
+                this.setState({
+                    type: metadata.content.type,
+                    dataSource,
+                    metadataSource
+                });
+            });
+        }, () => {
+            errorHandler(ErrorStates.NOT_FOUND);
         });
     }
 
-    private onError(error) {
-        this.props.onError(error);
-    }
+    public render() {
+        const { dataSource, metadataSource, type } = this.state;
+        if (!dataSource || !metadataSource || !type) {
+            return null;
+        }
 
-    private renderVisualization() {
-        if (this.state.visObj) {
-            const { visObj, attributesMap } = this.state;
+        const { onError, onLoadingChanged, locale, config } = this.props;
 
-            const { type, afm, transformation } = toAFM(visObj, attributesMap);
-
-            const projectId = getProjectIdByUri(this.props.uri);
-
-            const { onError, onLoadingChanged } = this.props;
-
-            switch (type) {
-                case 'table':
-                    return (
-                        <Table
-                            projectId={projectId}
-                            afm={afm}
-                            transformation={transformation}
-                            onError={onError}
-                            onLoadingChanged={onLoadingChanged}
-                        />
-                    );
-                default:
-                    return (
-                        <BaseChart
-                            type={type as ChartTypes}
-                            projectId={projectId}
-                            afm={afm}
-                            transformation={transformation}
-                            config={this.props.config}
-                            onError={onError}
-                            onLoadingChanged={onLoadingChanged}
-                        />
-                    );
-            }
+        switch (type) {
+            case 'table':
+                return (
+                    <Table
+                        dataSource={dataSource}
+                        metadataSource={metadataSource}
+                        onError={onError}
+                        onLoadingChanged={onLoadingChanged}
+                        locale={locale}
+                    />
+                );
+            default:
+                return (
+                    <BaseChart
+                        dataSource={dataSource}
+                        metadataSource={metadataSource}
+                        onError={onError}
+                        onLoadingChanged={onLoadingChanged}
+                        type={type as ChartTypes}
+                        locale={locale}
+                        config={config}
+                    />
+                );
         }
     }
 }

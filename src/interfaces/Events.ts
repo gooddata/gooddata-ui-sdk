@@ -1,4 +1,4 @@
 export interface IEvents {
-    onError?: (any);
+    onError?: (error: Object) => void;
     onLoadingChanged?: (any);
 }

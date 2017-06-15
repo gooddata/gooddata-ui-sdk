@@ -4,6 +4,7 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 
 import { Kpi, IKpiProps } from '../Kpi';
+import { postpone } from '../../helpers/test_helpers';
 
 describe('Kpi', () => {
     function createComponent(props: IKpiProps) {
@@ -20,14 +21,10 @@ describe('Kpi', () => {
         });
 
         expect(onLoadingChanged.mock.calls[0]).toEqual([{ isLoading: true }]);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged.mock.calls[1]).toEqual([{ isLoading: false }]);
-                expect(wrapper.find('.gdc-kpi').text()).toEqual('$32,016.00');
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
+        postpone(() => {
+            expect(onLoadingChanged.mock.calls[1]).toEqual([{ isLoading: false }]);
+            expect(wrapper.find('.gdc-kpi').text()).toEqual('$32,016.00');
+            done();
+        });
     });
 });

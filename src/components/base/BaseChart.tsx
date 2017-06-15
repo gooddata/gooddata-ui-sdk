@@ -1,26 +1,27 @@
 import * as React from 'react';
-import noop = require('lodash/noop');
-import { Afm, Transformation } from '@gooddata/data-layer';
-import LineFamilyChartTransformation from '@gooddata/indigo-visualizations/lib/Chart/LineFamilyChartTransformation';
-import PieChartTransformation from '@gooddata/indigo-visualizations/lib/Chart/PieChartTransformation';
+import { noop, bindAll, get } from 'lodash';
+import { injectIntl, intlShape } from 'react-intl';
 
-import { Execute } from '../../execution/Execute';
-import { generateConfig } from '../../helpers/config';
-import { IEvents } from '../../interfaces/Events';
-import { IntlWrapper } from './IntlWrapper';
+import { Visualization } from '@gooddata/indigo-visualizations';
 import {
-    DATA_TOO_LARGE_DISPLAY,
-    NEGATIVE_VALUES
-} from '../../constants/errorStates';
+    DataSource,
+    DataSourceUtils,
+    MetadataSource,
+    VisualizationObject,
+    ExecutorResult
+} from '@gooddata/data-layer';
+import { IntlWrapper } from './IntlWrapper';
+import { IEvents } from '../../interfaces/Events';
+import { ErrorStates } from '../../constants/errorStates';
+import { initChartDataLoading as initDataLoading } from '../../helpers/load';
+import { getConfig, ILegendConfig } from '../../helpers/config';
+import { getCancellable } from '../../helpers/promise';
 
 export type ChartTypes = 'line' | 'bar' | 'column' | 'pie';
 
 export interface IChartConfig {
     colors?: String[];
-    legend?: {
-        enabled?: boolean;
-        position?: 'top' | 'left' | 'right' | 'bottom';
-    };
+    legend?: ILegendConfig;
     limits?: {
         series?: Number,
         categories?: Number
@@ -28,139 +29,210 @@ export interface IChartConfig {
 }
 
 export interface IChartProps extends IEvents {
-    afm: Afm.IAfm;
-    projectId: string;
-    transformation?: Transformation.ITransformation;
+    dataSource: DataSource.IDataSource;
+    metadataSource: MetadataSource.IMetadataSource;
+    type: string;
+    locale?: string;
+    afterRender?;
+    pushData?;
     config?: IChartConfig;
-    type: ChartTypes;
+    height?: number;
+    environment?: string;
+    drillableItems?: boolean;
 }
 
-export interface IChartState {
-    error: boolean;
-    result: any;
+export interface IBaseChartState {
+    error: string;
+    result: ExecutorResult.ISimpleExecutorResult;
+    metadata: VisualizationObject.IVisualizationObjectMetadata;
     isLoading: boolean;
 }
 
 const defaultErrorHandler = (error) => {
-    console.error(error);
+    if (error.status !== ErrorStates.OK) {
+        console.error(error);
+    }
 };
 
-export class BaseChart extends React.Component<IChartProps, IChartState> {
+export interface INumericSymbolsProviderProps {
+    intl: intlShape;
+}
+
+export class NumericSymbolsProvider extends React.Component<INumericSymbolsProviderProps, null> {
+    public render() {
+        return (
+            <div>
+                {React.cloneElement(this.props.children as any, {
+                    numericSymbols: this.getNumericSymbols()
+                })}
+            </div>
+        );
+    }
+
+    private formatMessage(id: string, ...args) {
+        return this.props.intl.formatMessage({ id }, ...args);
+    }
+
+    private getNumericSymbols() {
+        return [
+            `${this.formatMessage('visualization.numericValues.k')}`,
+            `${this.formatMessage('visualization.numericValues.m')}`,
+            `${this.formatMessage('visualization.numericValues.g')}`,
+            `${this.formatMessage('visualization.numericValues.t')}`,
+            `${this.formatMessage('visualization.numericValues.p')}`,
+            `${this.formatMessage('visualization.numericValues.e')}`
+        ];
+    }
+}
+
+const IntlNumericSymbolsProvider = injectIntl(NumericSymbolsProvider);
+
+export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
     public static defaultProps: Partial<IChartProps> = {
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
+        pushData: noop,
+        drillableItems: false,
         config: {}
     };
 
-    private isUnmounted = false;
+    private dataCancellable;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            error: false,
+            error: ErrorStates.OK,
             result: null,
-            isLoading: true
+            metadata: null,
+            isLoading: false
         };
 
-        this.onError = this.onError.bind(this);
-        this.onExecute = this.onExecute.bind(this);
-        this.onLoading = this.onLoading.bind(this);
+        bindAll(this, ['onLoadingChanged', 'onDataTooLarge', 'onError', 'onNegativeValues']);
+        this.dataCancellable = null;
     }
 
-    public onExecute(data) {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        this.setState({ result: data, error: false });
+    public componentDidMount() {
+        const { metadataSource, dataSource } = this.props;
+        this.initDataLoading(metadataSource, dataSource);
     }
 
-    public onError(error) {
-        if (this.isUnmounted) {
-            return;
+    public componentWillReceiveProps(nextProps) {
+        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)) {
+            if (this.dataCancellable) {
+                this.dataCancellable.cancel();
+            }
+            this.initDataLoading(nextProps.metadataSource, nextProps.dataSource);
         }
-
-        this.setState({ error: true });
-        this.props.onError(error);
-    }
-
-    public onLoading(isLoading: boolean) {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        this.setState({ isLoading });
-        this.props.onLoadingChanged({ isLoading });
     }
 
     public componentWillUnmount() {
-        this.isUnmounted = true;
+        if (this.dataCancellable) {
+            this.dataCancellable.cancel();
+        }
+        this.onLoadingChanged = noop;
+        this.onError = noop;
+        this.initDataLoading = noop;
     }
 
     public render() {
-        const {
-            afm,
-            projectId,
-            type,
-            transformation
-        } = this.props;
+        const { result, metadata } = this.state;
 
-        if (this.state.error) {
-            return null;
-        }
+        if (this.canRender()) {
+            const { type, afterRender, height, locale, environment, config } = this.props;
+            const basicConfig = getConfig(metadata, type, environment);
+            const legendConfig = {
+                ...basicConfig.legend,
+                ...config.legend
+            };
+            const finalConfig = {
+                ...basicConfig,
+                ...config,
+                legend: legendConfig
+            };
 
-        return (
-            <Execute
-                className={`gdc-${type}-chart`}
-                afm={afm}
-                transformation={transformation}
-                onError={this.onError}
-                onExecute={this.onExecute}
-                onLoading={this.onLoading}
-                projectId={projectId}
-            >
-                {this.getComponent()}
-            </Execute>
-        );
-    }
-
-    private getChartTransformation() {
-        const { type, afm, config, transformation } = this.props;
-        const { result } = this.state;
-
-        const visConfig = generateConfig(type, afm, transformation, config, result.headers);
-
-        if (type === 'pie') {
             return (
-                <PieChartTransformation
-                    config={visConfig}
-                    data={result}
-                    onDataTooLarge={() => this.onError({ status: DATA_TOO_LARGE_DISPLAY })}
-                    onNegativeValues={() => this.onError({ status: NEGATIVE_VALUES })}
-                />
+                <IntlWrapper locale={locale}>
+                    <IntlNumericSymbolsProvider>
+                        <Visualization
+                            height={height}
+                            config={finalConfig}
+                            data={result}
+                            afterRender={afterRender}
+                            onDataTooLarge={this.onDataTooLarge}
+                            onNegativeValues={this.onNegativeValues}
+                            drillableItems={this.props.drillableItems}
+                        />
+                    </IntlNumericSymbolsProvider>
+                </IntlWrapper>
             );
         }
 
-        return (
-            <LineFamilyChartTransformation
-                config={visConfig}
-                data={result}
-                onDataTooLarge={() => this.onError({ status: DATA_TOO_LARGE_DISPLAY })}
-                limits={config.limits}
-            />
-        );
+        return null;
     }
 
-    private getComponent() {
-        if (this.state.isLoading) {
-            return null;
+    private canRender() {
+        const { result, metadata, isLoading, error } = this.state;
+        return result && metadata && !isLoading && error === ErrorStates.OK;
+    }
+
+    private onLoadingChanged(isLoading) {
+        this.props.onLoadingChanged(isLoading);
+        if (isLoading) {
+            this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
+            this.setState({
+                isLoading,
+                error: ErrorStates.OK // reset local errors
+            });
+        } else {
+            this.setState({
+                isLoading
+            });
         }
-        return (
-            <IntlWrapper>
-                {this.getChartTransformation()}
-            </IntlWrapper>
-        );
     }
 
+    private onError(errorCode, dataSource = this.props.dataSource) {
+        if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+            this.props.onError({ status: errorCode });
+            this.setState({
+                error: errorCode
+            });
+            this.onLoadingChanged(false);
+        }
+    }
+
+    private onNegativeValues() {
+        this.onError(ErrorStates.NEGATIVE_VALUES);
+    }
+
+    private onDataTooLarge() {
+        this.onError(ErrorStates.DATA_TOO_LARGE_DISPLAY);
+    }
+
+    private initDataLoading(metadataSource, dataSource) {
+        this.onLoadingChanged(true);
+        this.setState({ result: null });
+        if (this.dataCancellable) {
+            this.dataCancellable.cancel();
+        }
+
+        this.dataCancellable = getCancellable(initDataLoading(metadataSource, dataSource));
+        this.dataCancellable.promise.then((result) => {
+            if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+                const executionResult = get(result, 'result') as ExecutorResult.ISimpleExecutorResult;
+                const warnings =  get(result, 'result.warnings');
+                const metadata = get(result, 'metadata') as VisualizationObject.IVisualizationObjectMetadata;
+                this.setState({
+                    metadata,
+                    result: executionResult
+                });
+                this.props.pushData({ warnings });
+                this.onLoadingChanged(false);
+            }
+        }, (error) => {
+            if (error !== ErrorStates.PROMISE_CANCELLED) {
+                this.onError(error, dataSource);
+            }
+        });
+    }
 }

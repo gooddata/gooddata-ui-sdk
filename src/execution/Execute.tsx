@@ -2,16 +2,10 @@ import * as React from 'react';
 import * as sdk from 'gooddata';
 import isEqual = require('lodash/isEqual');
 import get = require('lodash/get');
-import { Afm, DataTable, SimpleExecutorAdapter, Transformation } from '@gooddata/data-layer';
+import { Afm, DataTable, SimpleExecutorAdapter, Transformation, ExecutorResult } from '@gooddata/data-layer';
 
 import { IDataTable } from '../interfaces/DataTable';
-import { ISimpleExecutorResult } from '../interfaces/SimpleExecutorResult';
-import {
-    DATA_TOO_LARGE_TO_COMPUTE,
-    BAD_REQUEST,
-    UNKNOWN_ERROR,
-    NO_DATA
-} from '../constants/errorStates';
+import { ErrorStates } from '../constants/errorStates';
 
 export interface IExecuteProps {
     afm: Afm.IAfm;
@@ -92,8 +86,8 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
 
         execute(this.dataTable, afm, transformation)
             .then((data) => {
-                if ((data as ISimpleExecutorResult).isEmpty) {
-                    onError({ status: NO_DATA });
+                if (data && (data as ExecutorResult.ISimpleExecutorResult).isEmpty) {
+                    onError({ status: ErrorStates.NO_DATA });
                 } else {
                     onExecute(data);
                 }
@@ -101,12 +95,12 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
             .catch((error) => {
                 const status = get(error, 'response.status');
                 if (status === 413) {
-                    return onError({ status: DATA_TOO_LARGE_TO_COMPUTE, error });
+                    return onError({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error });
                 }
                 if (status === 400) {
-                    return onError({ status: BAD_REQUEST, error });
+                    return onError({ status: ErrorStates.BAD_REQUEST, error });
                 }
-                onError({ status: UNKNOWN_ERROR, error });
+                onError({ status: ErrorStates.UNKNOWN_ERROR, error });
             })
             .then(() => onLoading(false));
     }
