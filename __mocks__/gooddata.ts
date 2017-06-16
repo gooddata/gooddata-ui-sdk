@@ -49,7 +49,7 @@ const execution = {
         if (columns.indexOf('too-large-for-pie') >= 0) {
             return Promise.resolve({
                 rawData: [
-                    ...range(0, 21).map((i) => [`${i}`])
+                    ...range(0, 21).map(i => [`${i}`])
                 ],
                 isEmpty: false,
                 headers: [{
@@ -127,7 +127,7 @@ const execution = {
 
 const xhr = {
     get(uri) {
-        const chart = charts.find((viz) => viz.visualization.meta.uri === uri);
+        const chart = charts.find(viz => viz.visualization.meta.uri === uri);
 
         if (chart) {
             return Promise.resolve(chart);
@@ -146,5 +146,5 @@ const md = {
 export {
     execution,
     xhr,
-    md,
+    md
 };

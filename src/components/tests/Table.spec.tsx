@@ -16,9 +16,14 @@ describe('Table', () => {
                 id: '1',
                 definition: {
                     baseObject: {
-                        id: '/gd/md/m1'
+                        id: '/gdc/md/project/obj/1'
                     }
                 }
+            }
+        ],
+        attributes: [
+            {
+                id: '/gdc/md/project/obj/2'
             }
         ]
     };

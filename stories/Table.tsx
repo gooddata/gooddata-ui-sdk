@@ -43,4 +43,43 @@ storiesOf('Table')
                 onError={console.error}
             />
         </div>
+    ))
+    .add('two measures, one attribute with identifiers', () => (
+        <div style={{ width: 600, height: 300 }}>
+            <Table
+                projectId="storybook"
+                afm={{
+                    measures: [{
+                        id: 'm1',
+                        definition: {
+                            baseObject: {
+                                id: '1'
+                            }
+                        }
+                    }, {
+                        id: 'm2',
+                        definition: {
+                            baseObject: {
+                                id: '2'
+                            }
+                        }
+                    }],
+                    attributes: [
+                        {
+                            id: '3.df'
+                        }
+                    ]
+                }}
+                transformation={{
+                    measures: [{
+                        id: 'm1',
+                        title: 'My measure'
+                    }, {
+                        id: 'm2',
+                        title: 'My second measure'
+                    }]
+                }}
+                onError={console.error}
+            />
+        </div>
     ));

@@ -95,7 +95,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
             <IntlWrapper>
                 <TableTransformation
                     data={result}
-                    config={generateConfig('table', this.props.afm, this.getTransformation(), result)}
+                    config={generateConfig('table', this.props.afm, this.getTransformation(), {}, result.headers)}
                     onSortChange={this.onSortChange}
                 />
             </IntlWrapper>
