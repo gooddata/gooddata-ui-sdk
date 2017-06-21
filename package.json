@@ -7,7 +7,8 @@
   "author": "GoodData",
   "license": "SEE LICENSE IN LICENSE.txt",
   "files": [
-    "dist"
+    "dist",
+    "styles"
   ],
   "devDependencies": {
     "@gooddata/mock-js": "0.0.18",
