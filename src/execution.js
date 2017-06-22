@@ -137,7 +137,8 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
     });
 }
 
-const MAX_TITLE_LENGTH = 255;
+const MAX_TITLE_LENGTH = 1000;
+
 const getMetricTitle = (suffix, title) => {
     const maxLength = MAX_TITLE_LENGTH - suffix.length;
     if (title && title.length > maxLength) {

@@ -754,14 +754,14 @@ describe('execution', () => {
                 expectOrderBy([], executionConfiguration);
             });
 
-            it('ensures measure title length does not exceed 255 chars', () => {
+            it('ensures measure title length does not exceed 1000 chars', () => {
                 mdObj.buckets.measures = [
                     {
                         measure: {
                             type: 'fact',
                             aggregation: 'sum',
                             objectUri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1144',
-                            title: `Sum of Amount (${range(0, 300).map(() => 'element')})`,
+                            title: `Sum of Amount (${range(0, 1050).map(() => 'element')})`,
                             format: '#,##0.00',
                             showPoP: true,
                             showInPercent: true
@@ -772,7 +772,7 @@ describe('execution', () => {
                 const execConfig = ex.mdToExecutionConfiguration(mdObj);
 
                 execConfig.definitions.forEach((definition) => {
-                    expect(definition.metricDefinition.title).to.have.length(255);
+                    expect(definition.metricDefinition.title).to.have.length(1000);
                 });
             });
         });
