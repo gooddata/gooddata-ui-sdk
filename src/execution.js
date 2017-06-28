@@ -7,6 +7,7 @@ import {
     first,
     find,
     map,
+    merge,
     every,
     get,
     isEmpty,
@@ -49,6 +50,59 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
     return headers;
 };
 
+const emptyResult = {
+    extendedTabularDataResult: {
+        values: [],
+        warnings: []
+    }
+};
+
+function loadExtendedDataResults(uri, settings, prevResult = emptyResult) {
+    return new Promise((resolve, reject) => {
+        ajax(uri, settings)
+            .then((r) => {
+                if (r.status === 204) {
+                    return {
+                        status: r.status,
+                        result: ''
+                    };
+                }
+
+                return r.json().then((result) => {
+                    return {
+                        status: r.status,
+                        result
+                    };
+                });
+            })
+            .then(({ status, result }) => {
+                const values = [
+                    ...get(prevResult, 'extendedTabularDataResult.values', []),
+                    ...get(result, 'extendedTabularDataResult.values', [])
+                ];
+
+                const warnings = [
+                    ...get(prevResult, 'extendedTabularDataResult.warnings', []),
+                    ...get(result, 'extendedTabularDataResult.warnings', [])
+                ];
+
+                const updatedResult = merge({}, prevResult, {
+                    extendedTabularDataResult: {
+                        values,
+                        warnings
+                    }
+                });
+
+                const nextUri = get(result, 'extendedTabularDataResult.paging.next');
+                if (nextUri) {
+                    resolve(loadExtendedDataResults(nextUri, settings, updatedResult));
+                } else {
+                    resolve({ status, result: updatedResult });
+                }
+            }, reject);
+    });
+}
+
 /**
  * Module for execution on experimental execution resource
  *
@@ -68,10 +122,7 @@ const wrapMeasureIndexesFromMappings = (metricMappings, headers) => {
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
- * @param {Object} settings - Set "extended" to true to retrieve the result
- *                            including internal attribute IDs (useful to construct filters
- *                            for subsequent report execution requests).
- *                             Supports additional settings accepted by the underlying
+ * @param {Object} settings - Supports additional settings accepted by the underlying
  *                             xhr.ajax() calls
  *
  * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
@@ -81,10 +132,6 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         isLoaded: false
     };
 
-    // Extended result exposes internal attribute element IDs which can
-    // be used when constructing executionConfiguration filters for
-    // subsequent report execution requests
-    const resultKey = settings.extended ? 'extendedTabularDataResult' : 'tabularDataResult';
     // Create request and result structures
     const request = {
         execution: { columns }
@@ -108,29 +155,14 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
             get(executionConfiguration, 'metricMappings'), result.executionResult.headers);
 
         // Start polling on url returned in the executionResult for tabularData
-        return ajax(result.executionResult[resultKey], settings);
-    })
-    .then((r) => {
-        if (r.status === 204) {
-            return {
-                status: r.status,
-                result: ''
-            };
-        }
-
-        return r.json().then((result) => {
-            return {
-                status: r.status,
-                result
-            };
-        });
+        return loadExtendedDataResults(result.executionResult.extendedTabularDataResult, settings);
     })
     .then((r) => {
         const { result, status } = r;
 
         return Object.assign({}, executedReport, {
-            rawData: get(result, `${resultKey}.values`, []),
-            warnings: get(result, `${resultKey}.warnings`, []),
+            rawData: get(result, 'extendedTabularDataResult.values', []),
+            warnings: get(result, 'extendedTabularDataResult.warnings', []),
             isLoaded: true,
             isEmpty: status === 204
         });
