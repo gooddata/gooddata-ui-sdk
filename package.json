@@ -1,6 +1,6 @@
 {
   "name": "gooddata",
-  "version": "1.7.1",
+  "version": "2.0.0",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "SEE LICENSE IN LICENSE.txt",
