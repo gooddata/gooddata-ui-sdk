@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
 import { ajax, get, post, put, parseJSON } from './xhr';
 
 /**
@@ -54,6 +54,20 @@ export function login(username, password) {
             }
         })
     }).then(parseJSON);
+}
+
+/**
+ * This function provides an authentication entry point to the GD API via SSO
+ * https://help.gooddata.com/display/developer/GoodData+PGP+Single+Sign-On
+ *
+ * @method loginSso
+ * @param {String} sessionId PGP message
+ * @param {String} serverUrl
+ * @param {String} targetUrl
+ */
+export function loginSso(sessionId, serverUrl, targetUrl) {
+    // cannot use xhr.get, server doesn't respond with JSON
+    return ajax(`/gdc/account/customerlogin?sessionId=${sessionId}&serverURL=${serverUrl}&targetURL=${targetUrl}`, { method: 'GET' });
 }
 
 /**
