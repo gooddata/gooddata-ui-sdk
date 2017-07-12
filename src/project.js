@@ -192,18 +192,18 @@ const pollForProject = (uri, options = {}) => {
  *
  * @experimental
  * @method createProject
- * @param {Object} options for project creation (title, subtitle, authorizationToken, ...)
+ * @param {String} title
+ * @param {String} authorizationToken
+ * @param {Object} options for project creation (summary, projectTemplate, ...)
  * @return {Object} created project object
  */
-export const createProject = (options = {}) => {
+export const createProject = (title, authorizationToken, options = {}) => {
     const {
-        title = 'Project',
-        summary = 'Project',
-        projectTemplate = '/projectTemplates/GoodSalesDemo/2',
+        summary,
+        projectTemplate,
         driver = 'Pg',
         environment = 'TESTING',
-        guidedNavigation = 1,
-        authorizationToken
+        guidedNavigation = 1
     } = options;
 
     return post('/gdc/projects', {
