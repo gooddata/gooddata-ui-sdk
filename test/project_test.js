@@ -55,7 +55,6 @@ describe('project', () => {
             });
         });
 
-
         describe('getColorPalette', () => {
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
@@ -193,18 +192,28 @@ describe('project', () => {
             };
 
             describe('/gdc/projects call successful', () => {
-                beforeEach(() => {
+                function mockIntialPost(customCheck = () => {}) {
                     fetchMock.mock(
                         '/gdc/projects',
                         'POST',
-                        {
-                            status: 200,
-                            body: JSON.stringify(createProjectResponse)
+                        (url, options) => {
+                            customCheck(options);
+                            return {
+                                status: 200,
+                                body: JSON.stringify(createProjectResponse)
+                            };
                         }
                     );
-                });
+                }
 
-                it('should not poll for created project when enabled immediately', () => {
+                it('should preset default values', () => {
+                    mockIntialPost((options) => {
+                        const params = JSON.parse(options.body);
+                        expect(params.project.content.guidedNavigation).to.eql(1);
+                        expect(params.project.content.driver).to.eql('Pg');
+                        expect(params.project.content.environment).to.eql('TESTING');
+                    });
+
                     fetchMock.mock(
                         projectUri,
                         'GET',
@@ -214,12 +223,29 @@ describe('project', () => {
                         }
                     );
 
-                    return project.createProject().then((result) => {
+                    return project.createProject('Project', '1234').then((result) => {
+                        expect(result).to.eql(createdProject);
+                    });
+                });
+
+                it('should not poll for created project when enabled immediately', () => {
+                    mockIntialPost();
+                    fetchMock.mock(
+                        projectUri,
+                        'GET',
+                        {
+                            status: 200,
+                            body: JSON.stringify(createdProject)
+                        }
+                    );
+
+                    return project.createProject('Project', '1234').then((result) => {
                         expect(result).to.eql(createdProject);
                     });
                 });
 
                 it('should resolve and stop polling if created project ends in deleted state', () => {
+                    mockIntialPost();
                     fetchMock.mock(
                         projectUri,
                         'GET',
@@ -229,12 +255,13 @@ describe('project', () => {
                         }
                     );
 
-                    return project.createProject().then((result) => {
+                    return project.createProject('Project', '1234').then((result) => {
                         expect(result).to.eql(deletedProject);
                     });
                 });
 
                 it('should poll until project status is ENABLED', () => {
+                    mockIntialPost();
                     let counter = 0;
 
                     fetchMock.mock(
@@ -251,12 +278,13 @@ describe('project', () => {
                         }
                     );
 
-                    return project.createProject({ pollStep: 1 }).then((result) => {
+                    return project.createProject('Project', '1234', { pollStep: 1 }).then((result) => {
                         expect(result).to.eql(createdProject);
                     });
                 });
 
                 it('should reject if maximum polling attempts reached', () => {
+                    mockIntialPost();
                     let counter = 0;
 
                     fetchMock.mock(
@@ -274,7 +302,7 @@ describe('project', () => {
                     );
 
                     const config = { pollStep: 1, maxAttempts: 1 };
-                    return project.createProject(config).then(() => {
+                    return project.createProject('Project', '1234', config).then(() => {
                         expect().fail('Should reject the promise if create project ended with 400');
                     }, (err) => {
                         expect(err).to.be.an(Error);
@@ -293,7 +321,7 @@ describe('project', () => {
                         }
                     );
 
-                    return project.createProject().then(() => {
+                    return project.createProject('Project', '1234').then(() => {
                         expect().fail('Should reject the promise if create project ended with 400');
                     }, (err) => {
                         expect(err).to.be.an(Error);
