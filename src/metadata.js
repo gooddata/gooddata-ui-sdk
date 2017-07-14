@@ -7,7 +7,7 @@ import {
     pick
 } from 'lodash';
 import { ajax, get, post, del, parseJSON } from './xhr';
-import { getIn } from './util';
+import { getIn, handlePolling } from './util';
 
 /**
  * Functions for working with metadata objects
@@ -541,4 +541,76 @@ export function getValidElements(projectId, id, options = {}) {
  */
 export function deleteObject(uri) {
     return del(uri);
+}
+
+/**
+ * Create object
+ *
+ * @experimental
+ * @method createObject
+ * @param {String} projectId
+ * @param {String} obj object definition
+ */
+export function createObject(projectId, obj) {
+    return post(`/gdc/md/${projectId}/obj?createAndGet=true`, {
+        data: JSON.stringify(obj)
+    }).then(parseJSON);
+}
+
+function isTaskFinished(task) {
+    const taskState = task.wTaskStatus.status;
+    return taskState === 'OK' || taskState === 'ERROR';
+}
+
+function checkStatusForError(response) {
+    if (response.wTaskStatus.status === 'ERROR') {
+        return Promise.reject(response);
+    }
+    return response;
+}
+
+/**
+ * LDM manage
+ *
+ * @experimental
+ * @method ldmManage
+ * @param {String} projectId
+ * @param {String} maql
+ * @param {Object} options for polling (maxAttempts, pollStep)
+ */
+export function ldmManage(projectId, maql, options = {}) {
+    return post(`/gdc/md/${projectId}/ldm/manage2`, {
+        data: JSON.stringify({
+            manage: { maql }
+        })
+    })
+    .then(parseJSON)
+    .then((response) => {
+        const manageStatusUri = response.entries[0].link;
+        return handlePolling(manageStatusUri, isTaskFinished, options);
+    })
+    .then(checkStatusForError);
+}
+
+/**
+ * ETL pull
+ *
+ * @experimental
+ * @method etlPull
+ * @param {String} projectId
+ * @param {String} uploadsDir
+ * @param {Object} options for polling (maxAttempts, pollStep)
+ */
+export function etlPull(projectId, uploadsDir, options = {}) {
+    return post(`/gdc/md/${projectId}/etl/pull2`, {
+        data: JSON.stringify({
+            pullIntegration: uploadsDir
+        })
+    })
+    .then(parseJSON)
+    .then((response) => {
+        const etlPullStatusUri = response.pull2Task.links.poll;
+        return handlePolling(etlPullStatusUri, isTaskFinished, options);
+    })
+    .then(checkStatusForError);
 }

@@ -1,7 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import { post, ajax, get, put, parseJSON } from './xhr';
-import { getIn } from './util';
-import { delay } from './utils/promise';
+import { getIn, handlePolling } from './util';
 
 /**
  * Functions for working with projects
@@ -160,32 +159,6 @@ const isProjectCreated = (project) => {
         projectState === 'DELETED';
 };
 
-
-const pollForProject = (uri, options = {}) => {
-    const {
-        attempts = 0,
-        maxAttempts = 50,
-        pollStep = 5000
-    } = options;
-
-    return get(uri).then((response) => {
-        const { project } = response;
-
-        if (attempts > maxAttempts) {
-            return Promise.reject(new Error(response));
-        }
-
-        return isProjectCreated(project) ?
-            Promise.resolve(response) :
-            delay(pollStep).then(() => {
-                return pollForProject(uri, {
-                    ...options,
-                    attempts: attempts + 1
-                });
-            });
-    });
-};
-
 /**
  * Create project
  * Note: returns a promise which is resolved when the project creation is finished
@@ -225,5 +198,7 @@ export const createProject = (title, authorizationToken, options = {}) => {
     })
     .then(parseJSON)
     .then(project =>
-        pollForProject(project.uri, options));
+        handlePolling(project.uri, (response) => {
+            return isProjectCreated(response.project);
+        }, options));
 };

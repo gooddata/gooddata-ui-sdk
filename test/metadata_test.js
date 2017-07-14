@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import { range, find } from 'lodash';
 import fetchMock from './utils/fetch-mock';
+import { mockPollingRequest } from './helpers/polling';
 import * as md from '../src/metadata';
 import * as xhr from '../src/xhr';
 
@@ -28,6 +29,153 @@ describe('metadata', () => {
 
                 return md.getAttributes('myFakeProjectId').then((result) => {
                     expect(result.length).to.be(2);
+                });
+            });
+        });
+
+        describe('createObject', () => {
+            it('should return created object', () => {
+                const newObj = {
+                    metric: {
+                        content: {},
+                        meta: {}
+                    }
+                };
+
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/obj?createAndGet=true',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            ...newObj
+                        })
+                    }
+                );
+
+                return md.createObject('myFakeProjectId', newObj).then((createdObj) => {
+                    expect(createdObj).to.eql(newObj);
+                });
+            });
+        });
+
+        describe('etlPull', () => {
+            const mockTask = status => ({
+                wTaskStatus: {
+                    status
+                }
+            });
+
+            const finishedTask = mockTask('OK');
+            const runningTask = mockTask('RUNNING');
+            const etlUri = '/gdc/md/1/tasks/1/status';
+            const triggerEtlResponse = {
+                pull2Task: {
+                    links: {
+                        poll: etlUri
+                    }
+                }
+            };
+
+            describe('/gdc/md/1/etl/pull2 call successful', () => {
+                function mockIntialPost() {
+                    fetchMock.mock(
+                        '/gdc/md/1/etl/pull2',
+                        'POST',
+                        {
+                            status: 201,
+                            body: JSON.stringify(triggerEtlResponse)
+                        }
+                    );
+                }
+
+                it('should poll until task status is OK', () => {
+                    mockIntialPost();
+
+                    mockPollingRequest(etlUri, runningTask, finishedTask);
+
+                    return md.etlPull('1', '1', { pollStep: 1 }).then((result) => {
+                        expect(result).to.eql(finishedTask);
+                    });
+                });
+            });
+
+            describe('/gdc/md/1/etl/pull2 call not successful', () => {
+                it('should reject if task ends with error', () => {
+                    fetchMock.mock(
+                        '/gdc/md/1/etl/pull2',
+                        'POST',
+                        {
+                            status: 400,
+                            body: JSON.stringify({})
+                        }
+                    );
+
+                    return md.etlPull('1', '1').then(() => {
+                        expect().fail('Should reject the promise if task ends with error');
+                    }, (err) => {
+                        expect(err).to.be.an(Error);
+                    });
+                });
+            });
+        });
+
+        describe('ldmManage', () => {
+            const mockTask = status => ({
+                wTaskStatus: {
+                    status
+                }
+            });
+
+            const finishedTask = mockTask('OK');
+            const runningTask = mockTask('RUNNING');
+            const manageStatusUri = '/gdc/md/1/tasks/1/status';
+            const triggerLdmManageResponse = {
+                entries: [
+                    {
+                        link: manageStatusUri
+                    }
+                ]
+            };
+
+            describe('/gdc/md/1/ldm/manage2 call successful', () => {
+                function mockIntialPost() {
+                    fetchMock.mock(
+                        '/gdc/md/1/ldm/manage2',
+                        'POST',
+                        {
+                            status: 200,
+                            body: JSON.stringify(triggerLdmManageResponse)
+                        }
+                    );
+                }
+
+                it('should poll until task status is OK', () => {
+                    mockIntialPost();
+
+                    mockPollingRequest(manageStatusUri, runningTask, finishedTask);
+
+                    return md.ldmManage('1', '1', { pollStep: 1 }).then((result) => {
+                        expect(result).to.eql(finishedTask);
+                    });
+                });
+            });
+
+            describe('/gdc/md/1/ldm/manage2 call not successful', () => {
+                it('should reject if task ends with error', () => {
+                    fetchMock.mock(
+                        '/gdc/md/1/ldm/manage2',
+                        'POST',
+                        {
+                            status: 400,
+                            body: JSON.stringify({})
+                        }
+                    );
+
+                    return md.ldmManage('1', '1').then(() => {
+                        expect().fail('Should reject the promise if task ends with error');
+                    }, (err) => {
+                        expect(err).to.be.an(Error);
+                    });
                 });
             });
         });
