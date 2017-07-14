@@ -39,6 +39,46 @@ describe('user', () => {
             });
         });
 
+        describe('loginSso', () => {
+            it('should resolve if user logged in', () => {
+                const sessionId = `
+                    -----BEGIN+PGP+MESSAGE-----
+                    1234
+                    -----END+PGP+MESSAGE-----
+                `;
+                const serverUrl = 'foobar';
+                const targetUrl = '/dashboard.html';
+
+                fetchMock.mock(
+                    `/gdc/account/customerlogin?sessionId=${sessionId}&serverURL=${serverUrl}&targetURL=${targetUrl}`,
+                    'GET',
+                    200
+                );
+                return user.loginSso(sessionId, serverUrl, targetUrl).then(r => expect(r).to.be.ok());
+            });
+
+            it('should reject for invalid sessionId', () => {
+                const sessionId = `
+                    -----BEGIN+PGP+MESSAGE-----
+                    wrong sessionId
+                    -----END+PGP+MESSAGE-----
+                `;
+                const serverUrl = 'foobar';
+                const targetUrl = '/dashboard.html';
+
+                fetchMock.mock(
+                    `/gdc/account/customerlogin?sessionId=${sessionId}&serverURL=${serverUrl}&targetURL=${targetUrl}`,
+                    'GET',
+                    400
+                );
+                return user.loginSso(sessionId, serverUrl, targetUrl).then(() => {
+                    expect().fail('Should reject with 400');
+                }, (err) => {
+                    expect(err.response.status).to.be(400);
+                });
+            });
+        });
+
         describe('isLoggedIn', () => {
             it('should resolve if user logged in', () => {
                 fetchMock.mock(
