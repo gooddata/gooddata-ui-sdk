@@ -359,6 +359,10 @@ describe('execution', () => {
         });
 
         describe('Execution with MD object', () => {
+            const getWhereInterval = (where, dimension) => {
+                return where[dimension].$between;
+            };
+
             let mdObj;
             beforeEach(() => {
                 mdObj = {
@@ -584,6 +588,44 @@ describe('execution', () => {
                         $granularity: 'GDC.time.week'
                     }
                 }, execConfig);
+            });
+
+            it('converts string from/to for relative filter to numbers', () => {
+                const mdWithStrings = cloneDeep(mdObj);
+                mdWithStrings.buckets.filters = [{
+                    dateFilter: {
+                        type: 'relative',
+                        dimension: '/gdc/md/dim',
+                        granularity: 'GDC.time.year',
+                        from: '-1',
+                        to: '0'
+                    }
+                }];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdWithStrings);
+                const interval = getWhereInterval(executionConfiguration.where, '/gdc/md/dim');
+
+                expect(interval[0]).to.equal(-1);
+                expect(interval[1]).to.equal(0);
+            });
+
+            it('should not convert absolute date filters', () => {
+                const mdWithStrings = cloneDeep(mdObj);
+                mdWithStrings.buckets.filters = [{
+                    dateFilter: {
+                        type: 'absolute',
+                        dimension: '/gdc/md/dim',
+                        granularity: 'GDC.time.year',
+                        from: '2016-01-01',
+                        to: '2017-01-01'
+                    }
+                }];
+
+                const executionConfiguration = ex.mdToExecutionConfiguration(mdWithStrings);
+                const interval = getWhereInterval(executionConfiguration.where, '/gdc/md/dim');
+
+                expect(interval[0]).to.equal('2016-01-01');
+                expect(interval[1]).to.equal('2017-01-01');
             });
 
             it('does not execute all-time date filter', () => {

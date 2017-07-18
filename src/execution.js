@@ -434,13 +434,25 @@ const attributeFilterToWhere = (f) => {
         { [dfUri]: { $in: elementsForQuery } };
 };
 
+const getFromFilter = (f, property) => get(f, `dateFilter.${property}`);
+const toInteger = value => parseInt(value, 10);
+
 const dateFilterToWhere = (f) => {
     const dateUri =
-        get(f, 'dateFilter.dimension') ||
-        get(f, 'dateFilter.dataSet') ||
-        get(f, 'dateFilter.dataset'); // dataset with lowercase 's' is deprecated; kept here for backwards compatibility
-    const granularity = get(f, 'dateFilter.granularity');
-    const between = [get(f, 'dateFilter.from'), get(f, 'dateFilter.to')];
+        getFromFilter(f, 'dimension') ||
+        getFromFilter(f, 'dataSet') ||
+        getFromFilter(f, 'dataset'); // dataset with lowercase 's' is deprecated; kept here for backwards compatibility
+
+    const granularity = getFromFilter(f, 'granularity');
+    const isRelative = getFromFilter(f, 'type') === 'relative';
+
+    const filterFrom = getFromFilter(f, 'from');
+    const filterTo = getFromFilter(f, 'to');
+
+    const from = isRelative ? toInteger(filterFrom) : filterFrom;
+    const to = isRelative ? toInteger(filterTo) : filterTo;
+
+    const between = [from, to];
     return { [dateUri]: { $between: between, $granularity: granularity } };
 };
 
