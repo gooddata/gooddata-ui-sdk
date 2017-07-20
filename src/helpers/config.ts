@@ -3,7 +3,7 @@ import * as VisObj from '@gooddata/data-layer/dist/legacy/model/VisualizationObj
 import { IHeader } from '@gooddata/data-layer/dist/interfaces/Header';
 
 export function generateConfig(
-    type: string,
+    type: VisObj.VisualizationType,
     afm: Afm.IAfm,
     transformation: Transformation.ITransformation,
     config = {},

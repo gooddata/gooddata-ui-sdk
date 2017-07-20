@@ -39,7 +39,7 @@
     "typescript": "2.2.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "0.0.22",
+    "@gooddata/data-layer": "0.0.24",
     "@gooddata/indigo-visualizations": "0.2.5",
     "gooddata": "1.6.0",
     "lodash": "4.17.4",
@@ -60,9 +60,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook -c .storybook -o dist-storybook"
   },
-  "typescript": {
-    "definition": "dist/index.d.ts"
-  },
+  "typings": "dist/index.d.ts",
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
