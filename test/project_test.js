@@ -1,5 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from './utils/fetch-mock';
+import { mockPollingRequest } from './helpers/polling';
 import * as project from '../src/project';
 
 describe('project', () => {
@@ -262,21 +263,8 @@ describe('project', () => {
 
                 it('should poll until project status is ENABLED', () => {
                     mockIntialPost();
-                    let counter = 0;
 
-                    fetchMock.mock(
-                        projectUri,
-                        'GET',
-                        () => {
-                            counter += 1;
-                            const response = counter > 3 ? createdProject : pendingProject;
-
-                            return {
-                                status: 200,
-                                body: JSON.stringify(response)
-                            };
-                        }
-                    );
+                    mockPollingRequest(projectUri, pendingProject, createdProject);
 
                     return project.createProject('Project', '1234', { pollStep: 1 }).then((result) => {
                         expect(result).to.eql(createdProject);
@@ -285,21 +273,8 @@ describe('project', () => {
 
                 it('should reject if maximum polling attempts reached', () => {
                     mockIntialPost();
-                    let counter = 0;
 
-                    fetchMock.mock(
-                        projectUri,
-                        'GET',
-                        () => {
-                            counter += 1;
-                            const response = counter > 3 ? createdProject : pendingProject;
-
-                            return {
-                                status: 200,
-                                body: JSON.stringify(response)
-                            };
-                        }
-                    );
+                    mockPollingRequest(projectUri, pendingProject, createdProject);
 
                     const config = { pollStep: 1, maxAttempts: 1 };
                     return project.createProject('Project', '1234', config).then(() => {
