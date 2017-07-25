@@ -3,13 +3,15 @@ import { mount } from 'enzyme';
 import { DataTable, DummyAdapter } from '@gooddata/data-layer';
 
 import { Execute } from '../Execute';
+import { IAfm } from '@gooddata/data-layer/dist/interfaces/Afm';
 
 describe('Execute', () => {
     const data = [1, 2, 3];
-    const afm = {
+    const afm: IAfm = {
         attributes: [
             {
-                id: '/attr/uri'
+                id: '/attr/uri',
+                type: 'attribute'
             }
         ]
     };

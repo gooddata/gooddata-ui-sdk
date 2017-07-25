@@ -27,7 +27,10 @@ storiesOf('BarChart')
                         }
                     }],
                     attributes: [
-                        { id: '/gdc/md/storybook/obj/3.df' }
+                        {
+                            id: '/gdc/md/storybook/obj/3.df',
+                            type: 'date'
+                        }
                     ]
                 }}
                 transformation={{
@@ -58,7 +61,10 @@ storiesOf('BarChart')
                         }
                     }],
                     attributes: [
-                        { id: '/gdc/md/storybook/obj/3.df' }
+                        {
+                            id: '/gdc/md/storybook/obj/3.df',
+                            type: 'date'
+                        }
                     ]
                 }}
                 transformation={{
