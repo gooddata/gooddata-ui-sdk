@@ -6,6 +6,7 @@ import { Afm, Filters } from '@gooddata/data-layer';
 
 import { Execute } from '../execution/Execute';
 import { IEvents } from '../interfaces/Events';
+import { kpiPropTypes } from '../proptypes/Kpi';
 
 export type URIString = string;
 
@@ -50,6 +51,8 @@ export class Kpi extends React.Component<IKpiProps, IKpiState> {
         onError: defaultErrorHandler,
         onLoadingChanged: noop
     };
+
+    static propTypes = kpiPropTypes;
 
     constructor(props) {
         super(props);

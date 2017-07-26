@@ -27,7 +27,8 @@ storiesOf('Table')
                     }],
                     attributes: [
                         {
-                            id: '/gdc/md/storybook/obj/3.df'
+                            id: '/gdc/md/storybook/obj/3.df',
+                            type: 'date'
                         }
                     ]
                 }}
@@ -66,7 +67,8 @@ storiesOf('Table')
                     }],
                     attributes: [
                         {
-                            id: '3.df'
+                            id: '3.df',
+                            type: 'date'
                         }
                     ]
                 }}

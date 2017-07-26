@@ -7,6 +7,7 @@ import { Execute } from '../execution/Execute';
 import { IntlWrapper } from './base/IntlWrapper';
 import { generateConfig } from '../helpers/config';
 import { IEvents } from '../interfaces/Events';
+import { tablePropTypes } from '../proptypes/Table';
 
 export interface ITableProps extends IEvents {
     afm: Afm.IAfm;
@@ -31,6 +32,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
         onError: defaultErrorHandler,
         onLoadingChanged: noop
     };
+
+    static propTypes = tablePropTypes;
 
     private isUnmounted = false;
 

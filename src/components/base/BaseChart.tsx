@@ -30,7 +30,7 @@ export interface IChartConfig {
 export interface IChartProps extends IEvents {
     afm: Afm.IAfm;
     projectId: string;
-    transformation: Transformation.ITransformation;
+    transformation?: Transformation.ITransformation;
     config?: IChartConfig;
     type: ChartTypes;
 }

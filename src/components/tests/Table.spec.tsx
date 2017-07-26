@@ -23,7 +23,8 @@ describe('Table', () => {
         ],
         attributes: [
             {
-                id: '/gdc/md/project/obj/2'
+                id: '/gdc/md/project/obj/2',
+                type: 'attribute'
             }
         ]
     };
@@ -71,7 +72,7 @@ describe('Table', () => {
 
         const invalidAfm: Afm.IAfm = {
             invalidObjectKey: ''
-        };
+        } as Afm.IAfm;
 
         createComponent({
             projectId: 'myprojectid',

@@ -55,7 +55,10 @@ storiesOf('PieChart')
                         }
                     }],
                     attributes: [
-                        { id: '/gdc/md/storybook/obj/3.df' }
+                        {
+                            id: '/gdc/md/storybook/obj/3.df',
+                            type: 'date'
+                        }
                     ]
                 }}
                 transformation={{
@@ -83,7 +86,10 @@ storiesOf('PieChart')
                         }
                     }],
                     attributes: [
-                        { id: '/gdc/md/storybook/obj/3.df' }
+                        {
+                            id: '/gdc/md/storybook/obj/3.df',
+                            type: 'date'
+                        }
                     ]
                 }}
                 transformation={{

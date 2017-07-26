@@ -7,6 +7,7 @@ import { Fetch } from '../fetching/Fetch';
 import { Table } from './Table';
 import { IEvents } from '../interfaces/Events';
 import { getProjectIdByUri } from '../helpers/project';
+import { visualizationPropTypes } from '../proptypes/Visualization';
 
 export interface IVisualizationProps extends IEvents {
     uri: string;
@@ -19,6 +20,8 @@ export interface IVisualizationState {
 }
 
 export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
+    static propTypes = visualizationPropTypes;
+
     constructor(props) {
         super(props);
 
