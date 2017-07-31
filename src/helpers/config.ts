@@ -1,18 +1,53 @@
-import { Afm, Transformation, Converters } from '@gooddata/data-layer';
-import * as VisObj from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
-import { IHeader } from '@gooddata/data-layer/dist/interfaces/Header';
+import { get } from 'lodash';
+import { VisualizationObject } from '@gooddata/data-layer';
 
-export function generateConfig(
-    type: VisObj.VisualizationType,
-    afm: Afm.IAfm,
-    transformation: Transformation.ITransformation,
-    config = {},
-    headers: IHeader[] = []
-) {
-    const buckets: VisObj.IVisualizationObject = Converters.toVisObj(type, afm, transformation, headers);
+export interface ILegendConfig {
+    enabled?: boolean;
+    position?: 'top' | 'left' | 'right' | 'bottom';
+    responsive?: boolean;
+}
+
+export interface IVisConfig {
+    type: string;
+    buckets: VisualizationObject.IBuckets;
+    legend: ILegendConfig;
+}
+
+export function getLegendConfig(
+    metadata: VisualizationObject.IVisualizationObjectMetadata,
+    environment: string): ILegendConfig {
+    if (environment === 'dashboards') {
+        return {
+            enabled: true,
+            position: 'right',
+            responsive: true
+        };
+    }
+
+    const categories = get(metadata, 'content.buckets.categories', []);
+    const collections = categories.map(category =>
+        get(category, 'category.collection'));
+
+    const isStackOrSegment = collection =>
+        collection === 'stack' || collection === 'segment';
+
+    const isOnRight = collections.some(isStackOrSegment);
+    const position = isOnRight ? 'right' : 'top';
 
     return {
-        ...buckets,
-        ...config
+        enabled: true,
+        position
+    };
+}
+
+export function getConfig(
+        metadata:  VisualizationObject.IVisualizationObjectMetadata,
+        type: string,
+        environment: string): IVisConfig {
+    const legendConfig = getLegendConfig(metadata, environment);
+    return {
+        type,
+        buckets: get(metadata, 'content.buckets') as VisualizationObject.IBuckets,
+        legend: legendConfig
     };
 }

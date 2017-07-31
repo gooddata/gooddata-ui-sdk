@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { DataTable, DummyAdapter } from '@gooddata/data-layer';
+import { DataTable, DummyAdapter, Afm } from '@gooddata/data-layer';
 
 import { Execute } from '../Execute';
 import { IAfm } from '@gooddata/data-layer/dist/interfaces/Afm';
@@ -14,7 +14,7 @@ describe('Execute', () => {
                 type: 'attribute'
             }
         ]
-    };
+    } as Afm.IAfm;
 
     function dataTableFactory() {
         const adapter = new DummyAdapter(data);
@@ -30,6 +30,7 @@ describe('Execute', () => {
             onLoading: jest.fn(),
             ...props
         };
+
         return mount(<Execute {...defaultProps} />);
     }
 

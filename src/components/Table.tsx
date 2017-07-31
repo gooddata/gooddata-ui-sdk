@@ -1,147 +1,239 @@
 import * as React from 'react';
-import noop = require('lodash/noop');
-import { Afm, Sorting, Transformation } from '@gooddata/data-layer';
-import TableTransformation from '@gooddata/indigo-visualizations/lib/Table/TableTransformation';
+import { noop, bindAll, get } from 'lodash';
+import { ResponsiveTable, TableTransformation } from '@gooddata/indigo-visualizations';
+import {
+    DataSource,
+    DataSourceUtils,
+    ExecutorResult,
+    MetadataSource,
+    VisualizationObject,
+    Transformation
+} from '@gooddata/data-layer';
 
-import { Execute } from '../execution/Execute';
+import { updateSorting } from '../helpers/metadata';
 import { IntlWrapper } from './base/IntlWrapper';
-import { generateConfig } from '../helpers/config';
 import { IEvents } from '../interfaces/Events';
 import { tablePropTypes } from '../proptypes/Table';
+import { getSorting, ISortingChange } from '../helpers/sorting';
+import { getCancellable } from '../helpers/promise';
+import { ErrorStates } from '../constants/errorStates';
+import { initTableDataLoading as initDataLoading } from '../helpers/load';
 
 export interface ITableProps extends IEvents {
-    afm: Afm.IAfm;
-    projectId: string;
-    transformation?: Transformation.ITransformation;
+    dataSource: DataSource.IDataSource;
+    metadataSource: MetadataSource.IMetadataSource;
+    locale?: string;
+    height?: number;
+    environment?: string;
+    stickyHeader?: number;
+    drillableItems?: boolean;
+    afterRender?;
+    pushData?;
 }
 
 export interface ITableState {
-    error: boolean;
-    result: any;
+    error: string;
+    result: ExecutorResult.ISimpleExecutorResult;
+    metadata: VisualizationObject.IVisualizationObjectMetadata;
     isLoading: boolean;
     sorting: Transformation.ISort;
+    page: number;
 }
 
 const defaultErrorHandler = (error) => {
-    console.error(error);
+    if (error.status !== ErrorStates.OK) {
+        console.error(error);
+    }
 };
 
 export class Table extends React.Component<ITableProps, ITableState> {
     public static defaultProps: Partial<ITableProps> = {
-        transformation: {},
         onError: defaultErrorHandler,
-        onLoadingChanged: noop
+        onLoadingChanged: noop,
+        afterRender: noop,
+        pushData: noop,
+        stickyHeader: 0,
+        height: 300,
+        locale: 'en-US',
+        environment: 'none',
+        drillableItems: false
     };
 
     static propTypes = tablePropTypes;
 
-    private isUnmounted = false;
+    private dataCancellable;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            error: false,
+            error: ErrorStates.OK,
             result: null,
-            isLoading: true,
-            sorting: null
+            isLoading: false,
+            sorting: null,
+            metadata: null,
+            page: 1
         };
 
-        this.onError = this.onError.bind(this);
-        this.onExecute = this.onExecute.bind(this);
-        this.onLoading = this.onLoading.bind(this);
-        this.onSortChange = this.onSortChange.bind(this);
+        bindAll(this, ['onSortChange', 'onLoadingChanged', 'onDataTooLarge', 'onError', 'onMore', 'onLess']);
+
+        this.dataCancellable = null;
     }
 
-    public onExecute(data) {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        this.setState({ result: data, error: false });
+    public componentDidMount() {
+        const { metadataSource, dataSource } = this.props;
+        this.initDataLoading(metadataSource, dataSource);
     }
 
-    public onError(error) {
-        if (this.isUnmounted) {
-            return;
+    public componentWillReceiveProps(nextProps) {
+        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)) {
+            const { sorting, metadata } = this.state;
+            const config = (sorting && metadata) ? { sorting, metadata } : null;
+            if (this.dataCancellable) {
+                this.dataCancellable.cancel();
+            }
+            this.initDataLoading(nextProps.metadataSource, nextProps.dataSource, config);
         }
-
-        this.setState({ error: true });
-        this.props.onError(error);
-    }
-
-    public onLoading(isLoading: boolean) {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        this.setState({ isLoading });
-        this.props.onLoadingChanged({ isLoading });
-    }
-
-    public onSortChange(change: Sorting.ISortingChange) {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        this.setState({ sorting: Sorting.getSorting(change, this.state.sorting) });
-    }
-
-    public getComponent() {
-        if (this.state.isLoading) {
-            return null;
-        }
-
-        const { result } = this.state;
-
-        return (
-            <IntlWrapper>
-                <TableTransformation
-                    data={result}
-                    config={generateConfig('table', this.props.afm, this.getTransformation(), {}, result.headers)}
-                    onSortChange={this.onSortChange}
-                />
-            </IntlWrapper>
-        );
-    }
-
-    public getTransformation(): Transformation.ITransformation {
-        const { sorting } = this.state;
-        const { transformation } = this.props;
-
-        if (sorting) {
-            return { ...transformation, sorting: [sorting] };
-        }
-
-        return transformation;
     }
 
     public componentWillUnmount() {
-        this.isUnmounted = true;
+        if (this.dataCancellable) {
+            this.dataCancellable.cancel();
+        }
+        this.onLoadingChanged = noop;
+        this.onError = noop;
+    }
+
+    public onSortChange(change: ISortingChange, index: Number) {
+        const sorting = getSorting(change, this.state.sorting);
+        const metadata = updateSorting(this.state.metadata, { sorting, change, index });
+        this.setState({ sorting, metadata });
+        this.initDataLoading(this.props.metadataSource, this.props.dataSource, { sorting, metadata });
+    }
+
+    public onMore({ page }) {
+        this.setState({
+            page
+        });
+    }
+
+    public onLess() {
+        this.setState({
+            page: 1
+        });
     }
 
     public render() {
-        const {
-            afm,
-            projectId
-        } = this.props;
+        const { result, metadata, page } = this.state;
+        const { afterRender, height, locale } = this.props;
+        if (this.canRender()) {
+            if (this.props.environment === 'dashboards') {
+                const TABLE_PAGE_SIZE = 9;
+                const tableRenderer = props =>
+                    (<ResponsiveTable
+                        {...props}
+                        rowsPerPage={TABLE_PAGE_SIZE}
+                        onSortChange={this.onSortChange}
+                        page={page}
+                        onMore={this.onMore}
+                        onLess={this.onLess}
+                    />);
+                return (
+                    <IntlWrapper locale={locale}>
+                        <TableTransformation
+                            drillableItems={this.props.drillableItems}
+                            tableRenderer={tableRenderer}
+                            afterRender={afterRender}
+                            height={height}
+                            data={result}
+                            onDataTooLarge={this.onDataTooLarge}
+                            config={{
+                                stickyHeader: this.props.stickyHeader,
+                                ...metadata.content
+                            }}
+                        />
+                    </IntlWrapper>
+                );
+            }
 
-        if (this.state.error) {
-            return null;
+            return (
+                <IntlWrapper locale={locale}>
+                    <TableTransformation
+                        drillableItems={this.props.drillableItems}
+                        afterRender={afterRender}
+                        height={height}
+                        data={result}
+                        config={{
+                            stickyHeader: this.props.stickyHeader,
+                            ...metadata.content
+                        }}
+                    />
+                </IntlWrapper>
+            );
         }
 
-        return (
-            <Execute
-                className={`gdc-table-chart`}
-                afm={afm}
-                transformation={this.getTransformation()}
-                onError={this.onError}
-                onExecute={this.onExecute}
-                onLoading={this.onLoading}
-                projectId={projectId}
-            >
-                {this.getComponent()}
-            </Execute>
-        );
+        return null;
+    }
+
+    private canRender() {
+        const { result, metadata, isLoading, error } = this.state;
+        return result && metadata && !isLoading && error === ErrorStates.OK;
+    }
+
+    private onError(errorCode, dataSource = this.props.dataSource) {
+        if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+            this.setState({
+                error: errorCode
+            });
+            this.onLoadingChanged(false);
+            this.props.onError({ status: errorCode });
+        }
+    }
+
+    private onDataTooLarge() {
+        this.onError(ErrorStates.DATA_TOO_LARGE_DISPLAY);
+    }
+
+    private onLoadingChanged(isLoading) {
+        this.props.onLoadingChanged(isLoading);
+        if (isLoading) {
+            this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
+            this.setState({
+                isLoading,
+                error: ErrorStates.OK // reset local errors
+            });
+        } else {
+            this.setState({
+                isLoading
+            });
+        }
+    }
+
+    private initDataLoading(metadataSource, dataSource, currentConfig = null) {
+        this.onLoadingChanged(true);
+
+        if (this.dataCancellable) {
+            this.dataCancellable.cancel();
+        }
+        this.dataCancellable = getCancellable(initDataLoading(metadataSource, dataSource, currentConfig));
+        this.dataCancellable.promise.then((result) => {
+            if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+                const executionResult = get(result, 'result') as ExecutorResult.ISimpleExecutorResult;
+                const sorting = get(result, 'sorting') as Transformation.ISort;
+                const metadata = get(result, 'metadata') as VisualizationObject.IVisualizationObjectMetadata;
+                const warnings = get(result, 'result.warnings');
+                this.setState({
+                    result: executionResult,
+                    sorting,
+                    metadata
+                });
+                this.props.pushData({ warnings });
+                this.onLoadingChanged(false);
+            }
+        }, (error) => {
+            if (error !== ErrorStates.PROMISE_CANCELLED) {
+                this.onError(error, dataSource);
+            }
+        });
     }
 }

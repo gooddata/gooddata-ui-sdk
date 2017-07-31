@@ -1,11 +1,15 @@
 import * as PropTypes from 'prop-types';
-import afm from './Afm';
 import events from './Events';
-import transformation from './Transformation';
+import { dataSourcePropTypes } from './DataSource';
+import { metadataSourcePropTypes } from './MetadataSource';
 
 export const tablePropTypes = {
-    ...afm,
     ...events,
-    ...transformation,
-    projectId: PropTypes.string.isRequired
+    dataSource: dataSourcePropTypes,
+    metadataSource: metadataSourcePropTypes,
+    locale: PropTypes.string,
+    height: PropTypes.number,
+    environment: PropTypes.string,
+    drillableItems: PropTypes.bool,
+    stickyHeader: PropTypes.number
 };

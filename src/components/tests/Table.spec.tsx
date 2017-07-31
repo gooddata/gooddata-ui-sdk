@@ -1,130 +1,158 @@
-jest.mock('gooddata');
-
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { Afm } from '@gooddata/data-layer';
-import TableTransformation from '@gooddata/indigo-visualizations/lib/Table/TableTransformation';
 
-import { Execute } from '../../execution/Execute';
-import { IntlWrapper } from '../base/IntlWrapper';
-import { Table } from '../Table';
+import {
+    VisualizationObject
+} from '@gooddata/data-layer';
+
+import {
+    initTableDataLoading,
+    TableTransformation,
+    ResponsiveTable
+} from '../tests/mocks';
+jest.mock('../../helpers/load', () => ({
+    initTableDataLoading
+}));
+jest.mock('@gooddata/indigo-visualizations', () => ({
+    TableTransformation,
+    ResponsiveTable
+}));
+
+import { Table, ITableProps } from '../Table';
+import { ErrorStates } from '../../constants/errorStates';
+import { postpone } from '../../helpers/test_helpers';
 
 describe('Table', () => {
-    const validAfm: Afm.IAfm = {
-        measures: [
-            {
-                id: '1',
-                definition: {
-                    baseObject: {
-                        id: '/gdc/md/project/obj/1'
-                    }
-                }
-            }
-        ],
-        attributes: [
-            {
-                id: '/gdc/md/project/obj/2',
-                type: 'attribute'
-            }
-        ]
+    const createComponent = (props: ITableProps) => {
+        return mount(<Table {...props} />);
     };
 
-    function createComponent(props) {
-        return mount(<Table {...props} />);
-    }
+    const createProps = (customProps = {}): ITableProps => {
+        return {
+            height: 200,
+            environment: 'dashboards',
+            dataSource: { getData: () => Promise.resolve({}), getFingerprint: () => ('') },
+            metadataSource: {
+                getVisualizationMetadata: () => Promise.resolve({
+                    metadata: {},
+                    measuresMap: {}
+                } as VisualizationObject.IVisualizationMetadataResult)
+            },
+            locale: 'en-US',
+            ...customProps
+        } as ITableProps;
+    };
 
-    it('should render table', (done) => {
-        const onError = jest.fn();
-        const onLoadingChanged = jest.fn();
-
-        const wrapper = createComponent({
-            projectId: 'myprojectid',
-            afm: validAfm,
-            onError,
-            onLoadingChanged
-        });
-
-        expect(onLoadingChanged.mock.calls[0]).toEqual([{ isLoading: true }]);
-
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged.mock.calls[1]).toEqual([{ isLoading: false }]);
-
-                const execute = wrapper.find(Execute);
-                expect(execute.length).toBe(1);
-
-                const intlWrapper = execute.find(IntlWrapper);
-                expect(intlWrapper.length).toBe(1);
-
-                const tableTransformation = wrapper.find(TableTransformation);
-                expect(tableTransformation.length).toBe(1);
-
-                expect(onError).toHaveBeenCalledTimes(0);
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 0);
+    beforeEach(() => {
+        initTableDataLoading.mockClear();
     });
 
-    it('should trigger error in case of given afm is not valid', (done) => {
+    it('should call two times initDataLoading when fingerprint changes', (done) => {
         const onError = jest.fn();
+        const props = createProps({
+            dataSource: { getFingerprint: () => 'fingerprint' }
+        });
+        const wrapper = createComponent(props);
+        wrapper.setProps({ dataSource: { getFingerprint: () => 'differentprint' } });
 
-        const invalidAfm: Afm.IAfm = {
-            invalidObjectKey: ''
-        } as Afm.IAfm;
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(initTableDataLoading).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenCalledTimes(0);
+            done();
+        });
+    });
 
-        createComponent({
-            projectId: 'myprojectid',
-            afm: invalidAfm,
+    it('should not call initDataLoading second time', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            dataSource: { getFingerprint: () => 'fingerprint' }
+        });
+        const wrapper = createComponent(props);
+        wrapper.setProps({ dataSource: { getFingerprint: () => 'fingerprint' } });
+
+        postpone(() => {
+            expect(wrapper.find('.gdc-indigo-responsive-table')).toBeDefined();
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(initTableDataLoading).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
+            done();
+        });
+    });
+
+    it('should render responsive table', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            environment: 'dashboards'
+        });
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find('.gdc-indigo-responsive-table')).toBeDefined();
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(wrapper.find(TableTransformation).prop('tableRenderer')).toBeDefined();
+            expect(initTableDataLoading).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
+            done();
+        });
+    });
+
+    it('should call onError with DATA_TOO_LARGE', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
             onError
         });
+        initTableDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
+        const wrapper = createComponent(props);
 
-        setTimeout(() => {
-            try {
-                expect(onError).toBeCalled();
-            } catch (error) {
-                console.log(error); // tslint:disable-line no-console
-            } finally {
-                done();
-            }
-        }, 0);
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE });
+            done();
+        });
     });
 
-    it('should add sorting into transformation', (done) => {
-        const wrapper = createComponent({
-            projectId: 'myprojectid',
-            afm: validAfm
+    it('should call pushData with execution result', (done) => {
+        const pushData = jest.fn();
+        const props = createProps({
+            pushData
         });
+        const resultMock = {
+            result: {
+                isLoaded: true,
+                headers: [
+                    {
+                        type: 'attrLabel',
+                        id: 'label.csv_test.polozka',
+                        uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/75662',
+                        title: 'Polozka'
+                    }
+                ],
+                rawData: [
+                    [
+                        {
+                            id: '1',
+                            name: 'sesit'
+                        }
+                    ]
+                ],
+                warnings: [],
+                isEmpty: false
+            },
+            sorting: {},
+            metadata: {}
+        };
+        initTableDataLoading.mockImplementationOnce(() => Promise.resolve(resultMock));
+        createComponent(props);
 
-        setTimeout(() => {
-            try {
-                const execute = wrapper.find(Execute);
-                wrapper.setState({ sorting: { column: 'foo', direction: 'asc' } });
-                expect(execute.props().transformation).toHaveProperty('sorting');
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 0);
-    });
-
-    it('should change state onSortChange', (done) => {
-        const wrapper = createComponent({
-            projectId: 'myprojectid',
-            afm: validAfm
+        postpone(() => {
+            expect(pushData).toHaveBeenCalledWith({ warnings: [] });
+            done();
         });
-
-        setTimeout(() => {
-            try {
-                expect(wrapper.state().sorting).toBe(null);
-                wrapper.find('.gd-table-header-title').simulate('click');
-                expect(wrapper.state().sorting).toHaveProperty('column');
-                expect(wrapper.state().sorting).toHaveProperty('direction');
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 0);
     });
 });

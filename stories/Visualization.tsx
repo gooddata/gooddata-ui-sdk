@@ -21,8 +21,7 @@ storiesOf('Visualization')
                 onError={console.error}
             />
         </div>
-    ))
-    .add('chart with custom colors example', () => (
+    )).add('chart with custom colors example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
                 uri={'/gdc/md/myproject/obj/1002'}

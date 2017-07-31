@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { CSSProperties } from '@types/react';
 
 export function Loading() {
     // tslint:disable-next-line
@@ -9,7 +8,7 @@ export function Loading() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%'
-    } as CSSProperties;
+    } as React.CSSProperties;
     return (
         <div style={style}>
             <img src={src} />

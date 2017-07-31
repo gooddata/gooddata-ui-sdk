@@ -1,295 +1,332 @@
-jest.mock('gooddata');
-
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { Afm } from '@gooddata/data-layer';
-import LineFamilyChartTransformation from '@gooddata/indigo-visualizations/lib/Chart/LineFamilyChartTransformation';
-import PieChartTransformation from '@gooddata/indigo-visualizations/lib/Chart/PieChartTransformation';
+import { VisualizationObject } from '@gooddata/data-layer';
+
+import {
+    initChartDataLoading,
+    Visualization
+} from '../../tests/mocks';
+jest.mock('../../../helpers/load', () => ({
+    initChartDataLoading
+}));
+jest.mock('@gooddata/indigo-visualizations', () => ({
+    Visualization
+}));
 
 import { BaseChart, IChartProps } from '../BaseChart';
-import {
-    DATA_TOO_LARGE_DISPLAY,
-    DATA_TOO_LARGE_TO_COMPUTE,
-    NEGATIVE_VALUES,
-    NO_DATA
-} from '../../../constants/errorStates';
+import { ErrorStates } from '../../../constants/errorStates';
+import { postpone } from '../../../helpers/test_helpers';
 
 describe('BaseChart', () => {
     function createComponent(props: IChartProps) {
-        return mount(<BaseChart {...props} />);
+        return mount(
+            <BaseChart {...props} />
+        );
     }
 
-    function createProps(customProps = {}) {
+    const createProps = (customProps = {}) => {
         return {
-            projectId: 'myprojectid',
-            transformation: {},
-            type: 'line',
-            config: {
-                legend: {
-                    enabled: false
-                }
+            height: 200,
+            dataSource: {
+                getData: () => Promise.resolve(),
+                getFingerprint: jest.fn().mockReturnValue('qwer')
             },
+            metadataSource: {
+                getVisualizationMetadata: () => Promise.resolve({
+                    metadata: {
+                        meta: {},
+                        content: {
+                            type: 'column' as VisualizationObject.VisualizationType,
+                            buckets: {
+                                measures: [],
+                                categories: [],
+                                filters: []
+                            }
+                        }
+                    },
+                    measuresMap: {}
+                })
+            },
+            locale: 'en-US',
+            type: 'line',
             ...customProps
         } as IChartProps;
-    }
+    };
+
+    beforeEach(() => {
+        initChartDataLoading.mockClear();
+    });
+
+    it('should render pie chart', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            type: 'pie'
+        });
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find('.gdc-line-chart')).toBeDefined();
+            expect(wrapper.find(Visualization).length).toBe(1);
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
+            expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
 
     it('should render line chart', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: '1',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
-                    }
-                }
-            ]
-        };
-
         const onLoadingChanged = jest.fn();
         const onError = jest.fn();
         const props = createProps({
-            afm,
             onError,
             onLoadingChanged
         });
         const wrapper = createComponent(props);
 
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-line-chart')).toBeDefined();
-                expect(wrapper.find(LineFamilyChartTransformation).length).toBe(1);
-                expect(onError).toHaveBeenCalledTimes(0);
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
-    });
-
-    it('should call onError on 413 entity too large and render nothing', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: 'too-large-measure',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
-                    }
-                }
-            ]
-        };
-
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const props = createProps({
-            afm,
-            onError,
-            onLoadingChanged
+        postpone(() => {
+            expect(wrapper.find('.gdc-line-chart')).toBeDefined();
+            expect(wrapper.find(Visualization).length).toBe(1);
+            done();
         });
-        const wrapper = createComponent(props);
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-line-chart').length).toEqual(0);
-                expect(wrapper.find(LineFamilyChartTransformation).length).toBe(0);
-                expect(onError).toHaveBeenCalledTimes(1);
-                expect(onError).toHaveBeenCalledWith({
-                    status: DATA_TOO_LARGE_TO_COMPUTE,
-                    error: {
-                        response: {
-                            status: 413
-                        }
-                    }
-                });
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
     });
 
-    it('should call onError callback when data too large and render nothing', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: '1',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
-                    }
-                }
-            ]
-        };
-
+    it('should correctly set loading state and call initDataLoading once', (done) => {
         const onLoadingChanged = jest.fn();
         const onError = jest.fn();
         const props = createProps({
-            afm,
             onError,
             onLoadingChanged,
-            config: {
+            type: 'pie'
+        });
+        createComponent(props);
+
+        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
+        expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+
+        postpone(() => {
+            expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
+            expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('should call onError with DATA_TOO_LARGE_TO_COMPUTE', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError
+        });
+        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE });
+            done();
+        });
+    });
+
+    it('should call onError with UNKNOWN_ERROR', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError
+        });
+        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.UNKNOWN_ERROR));
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.UNKNOWN_ERROR });
+            done();
+        });
+    });
+
+
+    it('should call onError with NO_DATA', (done) => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError
+        });
+        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.NO_DATA));
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.NO_DATA });
+            done();
+        });
+    });
+
+    it('should use default onError when is not provided', (done) => {
+        const origin = global.console.error;
+        global.console.error = jest.fn();
+        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.NO_DATA));
+        createComponent(createProps());
+
+        postpone(() => {
+            expect(global.console.error).toHaveBeenCalledWith({ status: ErrorStates.NO_DATA });
+            global.console.error = origin;
+            done();
+        });
+    });
+
+    it('should reload data when dataSource changed', (done) => {
+        const wrapper = createComponent(createProps());
+        wrapper.setProps({
+            dataSource: {
+                getFingerprint: jest.fn().mockReturnValue('asdf')
+            }
+        }, () => {
+            postpone(() => {
+                expect(initChartDataLoading).toHaveBeenCalledTimes(2);
+                done();
+            });
+        });
+    });
+
+    it('should cancel promise when data loading with new dataSources is started', (done) => {
+        const wrapper = createComponent(createProps());
+        expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+        wrapper.node.dataCancellable.cancel = jest.fn();
+        // turn off this function for call from componentWillReceiveProps,
+        // otherwise it would overwrite promise
+        wrapper.node.initDataLoading = jest.fn();
+
+        wrapper.setProps({
+            dataSource: {
+                getFingerprint: () => 'asdf'
+            }
+        }, () => {
+            expect(wrapper.node.dataCancellable.cancel).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('should return config for dashboard', (done) => {
+        const props = createProps({ environment: 'dashboards' });
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            const config = wrapper.find(Visualization).prop('config');
+            expect(config).toEqual({
+                type: 'line',
+                buckets: undefined,
                 legend: {
-                    enabled: false
+                    enabled: true,
+                    position: 'right',
+                    responsive: true
+                }
+            });
+            done();
+        });
+    });
+
+    it('should return config for AD', (done) => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            const config = wrapper.find(Visualization).prop('config');
+            expect(config).toEqual({
+                type: 'line',
+                buckets: undefined,
+                legend: {
+                    enabled: true,
+                    position: 'top'
+                }
+            });
+            done();
+        });
+    });
+
+    it('should detect stacked by category and move legend to right', (done) => {
+        const props = createProps();
+
+        const p = Promise.resolve({
+            result: {},
+            metadata: {
+                content: {
+                    buckets: {
+                        categories: [{
+                            category: {
+                                collection: 'stack'
+                            }
+                        }]
+                    }
+                }
+            }
+        });
+        initChartDataLoading.mockImplementationOnce(() => {
+            return p;
+        });
+
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            const config = wrapper.find(Visualization).prop('config');
+            expect(config).toEqual({
+                type: 'line',
+                buckets: {
+                    categories: [{
+                        category: {
+                            collection: 'stack'
+                        }
+                    }]
                 },
-                limits: {
-                    series: 0,
-                    categories: 0
+                legend: {
+                    enabled: true,
+                    position: 'right'
                 }
-            }
+            });
+            done();
         });
-        const wrapper = createComponent(props);
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-line-chart').length).toEqual(0);
-                expect(wrapper.find(LineFamilyChartTransformation).length).toBe(0);
-                expect(onError).toHaveBeenCalledTimes(1);
-                expect(onError).toHaveBeenCalledWith({ status: DATA_TOO_LARGE_DISPLAY });
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
     });
 
-    it('should call onError callback if pie chart limit is exceeded and render nothing', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: 'too-large-for-pie',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
+    it('should detect segment by category and move legend to right', (done) => {
+        const props = createProps();
+
+        const p = Promise.resolve({
+            result: {},
+            metadata: {
+                content: {
+                    buckets: {
+                        categories: [{
+                            category: {
+                                collection: 'segment'
+                            }
+                        }]
                     }
-                }
-            ]
-        };
-
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const props = createProps({
-            afm,
-            onError,
-            onLoadingChanged,
-            config: {
-                legend: {
-                    enabled: false
-                }
-            },
-            type: 'pie'
-        });
-        const wrapper = createComponent(props);
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-pie-chart').length).toEqual(0);
-                expect(wrapper.find(PieChartTransformation).length).toBe(0);
-                expect(onError).toHaveBeenCalledTimes(1);
-                expect(onError).toHaveBeenCalledWith({ status: DATA_TOO_LARGE_DISPLAY });
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
-    });
-
-    it('should call onError callback for negative data in pie chart and render nothing', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: 'negative-values-measure',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
-                    }
-                }
-            ]
-        };
-
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const props = createProps({
-            afm,
-            onError,
-            onLoadingChanged,
-            config: {
-                legend: {
-                    enabled: false
-                }
-            },
-            type: 'pie'
-        });
-        const wrapper = createComponent(props);
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-pie-chart').length).toEqual(0);
-                expect(wrapper.find(PieChartTransformation).length).toBe(0);
-                expect(onError).toHaveBeenCalledTimes(1);
-                expect(onError).toHaveBeenCalledWith({ status: NEGATIVE_VALUES });
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
-    });
-
-    it('should call onError callback for empty data result and render nothing', (done) => {
-        const afm: Afm.IAfm = {
-            measures: [
-                {
-                    id: 'empty-result',
-                    definition: {
-                        baseObject: {
-                            id: '/gd/md/m1'
-                        }
-                    }
-                }
-            ]
-        };
-
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const props = createProps({
-            afm,
-            onError,
-            onLoadingChanged,
-            config: {
-                legend: {
-                    enabled: false
                 }
             }
         });
+        initChartDataLoading.mockImplementationOnce(() => {
+            return p;
+        });
+
         const wrapper = createComponent(props);
 
-        expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        setTimeout(() => {
-            try {
-                expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-                expect(wrapper.find('.gdc-line-chart').length).toEqual(0);
-                expect(wrapper.find(LineFamilyChartTransformation).length).toBe(0);
-                expect(onError).toHaveBeenCalledTimes(1);
-                expect(onError).toHaveBeenCalledWith({ status: NO_DATA });
-                done();
-            } catch (error) {
-                console.error(error);
-            }
-        }, 1);
+        postpone(() => {
+            const config = wrapper.find(Visualization).prop('config');
+            expect(config).toEqual({
+                type: 'line',
+                buckets: {
+                    categories: [{
+                        category: {
+                            collection: 'segment'
+                        }
+                    }]
+                },
+                legend: {
+                    enabled: true,
+                    position: 'right'
+                }
+            });
+            done();
+        });
     });
 });

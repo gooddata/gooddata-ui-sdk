@@ -1,9 +1,9 @@
 import range = require('lodash/range');
-import { ISimpleExecutorResult } from '../src/interfaces/SimpleExecutorResult';
+import { ExecutorResult } from '@gooddata/data-layer';
 import { charts } from './fixtures';
 
 const execution = {
-    getData(_projectId, columns): Promise<ISimpleExecutorResult> {
+    getData(_projectId, columns): Promise<ExecutorResult.ISimpleExecutorResult> {
         if (columns.indexOf('too-large-measure') >= 0) {
             return Promise.reject({
                 response: {
@@ -112,7 +112,7 @@ const execution = {
         });
     },
 
-    getDataForVis(): Promise<ISimpleExecutorResult>  {
+    getDataForVis(): Promise<ExecutorResult.ISimpleExecutorResult>  {
         return Promise.resolve({
             rawData: [['10000']],
             headers: [{
