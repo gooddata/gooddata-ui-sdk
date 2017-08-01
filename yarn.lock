@@ -36,9 +36,9 @@
     react-responsive "1.2.6"
     react-textarea-autosize "4.0.5"
 
-"@gooddata/indigo-visualizations@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.7.0.tgz#f257ecd97745486906a198823f0970667b242c14"
+"@gooddata/indigo-visualizations@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.7.1.tgz#879d117d05753ec0962770fbe1016f8e5a18af1a"
   dependencies:
     "@gooddata/goodstrap" "42.0.0"
     "@gooddata/js-utils" "0.5.0"
