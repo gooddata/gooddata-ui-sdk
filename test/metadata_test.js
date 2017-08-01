@@ -364,6 +364,40 @@ describe('metadata', () => {
             });
         });
 
+        describe('getIdentifiersFromUris', () => {
+            it('should return array with identifiers and uris', () => {
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/identifiers',
+                    'POST',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            identifiers: [{
+                                uri: '/foo/bar',
+                                identifier: 'attr.foo.bar'
+                            }, {
+                                uri: '/fuzz/buzz',
+                                identifier: 'attr.fuzz.buzz'
+                            }]
+                        })
+                    }
+                );
+
+                return md.getIdentifiersFromUris('myFakeProjectId', ['/foo/bar'])
+                    .then((result) => {
+                        expect(result).to.eql(
+                            [{
+                                uri: '/foo/bar',
+                                identifier: 'attr.foo.bar'
+                            }, {
+                                uri: '/fuzz/buzz',
+                                identifier: 'attr.fuzz.buzz'
+                            }]
+                        );
+                    });
+            });
+        });
+
         describe('getObjectUri', () => {
             it('should return uri when identifier exists', () => {
                 fetchMock.mock(
