@@ -1,24 +1,37 @@
 import * as React from 'react';
-import { noop, bindAll, get } from 'lodash';
-import { injectIntl, intlShape } from 'react-intl';
+import bindAll = require('lodash/bindAll');
+import get = require('lodash/get');
+import noop = require('lodash/noop');
+import merge = require('lodash/merge');
 
 import { Visualization } from '@gooddata/indigo-visualizations';
 import {
-    DataSource,
+    Afm,
     DataSourceUtils,
-    MetadataSource,
+    ExecutorResult,
     VisualizationObject,
-    ExecutorResult
+    Transformation
 } from '@gooddata/data-layer';
-import { IntlWrapper } from './IntlWrapper';
-import { IEvents } from '../../interfaces/Events';
-import { IDrillableItem } from '../../interfaces/DrillableItem';
-import { ErrorStates } from '../../constants/errorStates';
-import { initChartDataLoading as initDataLoading } from '../../helpers/load';
-import { getConfig, ILegendConfig } from '../../helpers/config';
-import { getCancellable } from '../../helpers/promise';
+
+import { IntlWrapper } from '../../core/base/IntlWrapper';
+import { IEvents } from '../../../interfaces/Events';
+import { IDrillableItem } from '../../../interfaces/DrillableItem';
+import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
+import { ErrorStates } from '../../../constants/errorStates';
+import { initChartDataLoading as initDataLoading } from '../../../helpers/load';
+import { getConfig, ILegendConfig } from '../../../helpers/config';
+import { ISorting } from '../../../helpers/metadata';
+import { getCancellable } from '../../../helpers/promise';
+import { IntlTranslationsProvider } from '../../core/base/TranslationsProvider';
+import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
 
 export type ChartTypes = 'line' | 'bar' | 'column' | 'pie';
+
+export interface IExecutorResult {
+    metadata: VisualizationObject.IVisualizationObjectMetadata;
+    result: ExecutorResult.ISimpleExecutorResult;
+    sorting?: ISorting;
+}
 
 export interface IChartConfig {
     colors?: String[];
@@ -29,10 +42,7 @@ export interface IChartConfig {
     };
 }
 
-export interface IChartProps extends IEvents {
-    dataSource: DataSource.IDataSource;
-    metadataSource: MetadataSource.IMetadataSource;
-    type: string;
+export interface ICommonChartProps extends IEvents {
     locale?: string;
     afterRender?;
     pushData?;
@@ -40,6 +50,19 @@ export interface IChartProps extends IEvents {
     height?: number;
     environment?: string;
     drillableItems?: IDrillableItem[];
+    transformation?: Transformation.ITransformation;
+    visualizationProperties?: IVisualizationProperties;
+}
+
+export type IChartProps = ICommonChartProps & ISimpleDataAdapterProviderInjectedProps;
+
+export interface IChartAFMProps extends ICommonChartProps {
+    projectId: string;
+    afm: Afm.IAfm;
+}
+
+export interface IBaseChartProps extends IChartProps {
+    type: ChartTypes;
 }
 
 export interface IBaseChartState {
@@ -55,46 +78,16 @@ const defaultErrorHandler = (error) => {
     }
 };
 
-export interface INumericSymbolsProviderProps {
-    intl: intlShape;
-}
-
-export class NumericSymbolsProvider extends React.Component<INumericSymbolsProviderProps, null> {
-    public render() {
-        return (
-            <span>
-                {React.cloneElement(this.props.children as any, {
-                    numericSymbols: this.getNumericSymbols()
-                })}
-            </span>
-        );
-    }
-
-    private formatMessage(id: string, ...args) {
-        return this.props.intl.formatMessage({ id }, ...args);
-    }
-
-    private getNumericSymbols() {
-        return [
-            `${this.formatMessage('visualization.numericValues.k')}`,
-            `${this.formatMessage('visualization.numericValues.m')}`,
-            `${this.formatMessage('visualization.numericValues.g')}`,
-            `${this.formatMessage('visualization.numericValues.t')}`,
-            `${this.formatMessage('visualization.numericValues.p')}`,
-            `${this.formatMessage('visualization.numericValues.e')}`
-        ];
-    }
-}
-
-const IntlNumericSymbolsProvider = injectIntl(NumericSymbolsProvider);
-
-export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
-    public static defaultProps: Partial<IChartProps> = {
+export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState> {
+    public static defaultProps: Partial<IBaseChartProps> = {
+        metadataSource: null,
+        transformation: {},
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
         pushData: noop,
         drillableItems: [],
-        config: {}
+        config: {},
+        visualizationProperties: null
     };
 
     private dataCancellable;
@@ -114,16 +107,24 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
     }
 
     public componentDidMount() {
-        const { metadataSource, dataSource } = this.props;
-        this.initDataLoading(metadataSource, dataSource);
+        const { metadataSource, dataSource, transformation } = this.props;
+        this.initDataLoading(dataSource, metadataSource, transformation);
     }
 
     public componentWillReceiveProps(nextProps) {
+        if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, nextProps.metadataSource)) {
+            nextProps.metadataSource.getVisualizationMetadata().then(({ metadata }) => {
+                this.setState({ metadata });
+            });
+        }
+
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)) {
             if (this.dataCancellable) {
                 this.dataCancellable.cancel();
             }
-            this.initDataLoading(nextProps.metadataSource, nextProps.dataSource);
+
+            const { metadataSource, dataSource, transformation } = nextProps;
+            this.initDataLoading(dataSource, metadataSource, transformation);
         }
     }
 
@@ -137,35 +138,25 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
     }
 
     public render() {
-        const { result, metadata } = this.state;
+        const { result } = this.state;
 
         if (this.canRender()) {
-            const { type, afterRender, height, locale, environment, config } = this.props;
-            const basicConfig = getConfig(metadata, type, environment);
-            const legendConfig = {
-                ...basicConfig.legend,
-                ...config.legend
-            };
-            const finalConfig = {
-                ...basicConfig,
-                ...config,
-                legend: legendConfig
-            };
+            const { afterRender, height, locale } = this.props;
+            const finalConfig = this.getChartConfig();
 
             return (
                 <IntlWrapper locale={locale}>
-                    <IntlNumericSymbolsProvider>
+                    <IntlTranslationsProvider result={result}>
                         <Visualization
                             afm={this.props.dataSource.getAfm()}
                             height={height}
                             config={finalConfig}
-                            data={result}
                             afterRender={afterRender}
                             onDataTooLarge={this.onDataTooLarge}
                             onNegativeValues={this.onNegativeValues}
                             drillableItems={this.props.drillableItems}
                         />
-                    </IntlNumericSymbolsProvider>
+                    </IntlTranslationsProvider>
                 </IntlWrapper>
             );
         }
@@ -173,9 +164,24 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
         return null;
     }
 
+    private getChartConfig() {
+        const { type, environment, config } = this.props;
+        const { metadata } = this.state;
+
+        const basicConfig = getConfig(metadata, type, environment);
+
+        const legendConfig = merge({}, basicConfig.legend, config.legend);
+
+        return {
+            ...basicConfig,
+            ...config,
+            legend: legendConfig
+        };
+    }
+
     private canRender() {
-        const { result, metadata, isLoading, error } = this.state;
-        return result && metadata && !isLoading && error === ErrorStates.OK;
+        const { result, isLoading, error } = this.state;
+        return result && !isLoading && error === ErrorStates.OK;
     }
 
     private onLoadingChanged(isLoading) {
@@ -208,27 +214,28 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
     }
 
     private onDataTooLarge() {
-        this.onError(ErrorStates.DATA_TOO_LARGE_DISPLAY);
+        this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
     }
 
-    private initDataLoading(metadataSource, dataSource) {
+    private initDataLoading(dataSource, metadataSource, transformation) {
         this.onLoadingChanged(true);
         this.setState({ result: null });
         if (this.dataCancellable) {
             this.dataCancellable.cancel();
         }
 
-        this.dataCancellable = getCancellable(initDataLoading(metadataSource, dataSource));
+        this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation));
         this.dataCancellable.promise.then((result) => {
             if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const executionResult = get(result, 'result') as ExecutorResult.ISimpleExecutorResult;
-                const warnings =  get(result, 'result.warnings');
-                const metadata = get(result, 'metadata') as VisualizationObject.IVisualizationObjectMetadata;
+                const executionResult = get<IExecutorResult, ExecutorResult.ISimpleExecutorResult>(result, 'result');
+                const metadata = get<IExecutorResult,
+                    VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
                 this.setState({
                     metadata,
                     result: executionResult
                 });
-                this.props.pushData({ warnings });
+
+                this.props.pushData({ executionResult });
                 this.onLoadingChanged(false);
             }
         }, (error) => {

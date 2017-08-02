@@ -4,9 +4,9 @@ import get = require('lodash/get');
 import noop = require('lodash/noop');
 import { Afm, Filters } from '@gooddata/data-layer';
 
-import { Execute } from '../execution/Execute';
-import { IEvents } from '../interfaces/Events';
-import { kpiPropTypes } from '../proptypes/Kpi';
+import { Execute } from '../../execution/Execute';
+import { IEvents } from '../../interfaces/Events';
+import { kpiPropTypes } from '../../proptypes/Kpi';
 
 export type URIString = string;
 

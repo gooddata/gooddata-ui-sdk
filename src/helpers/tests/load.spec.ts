@@ -1,9 +1,10 @@
 import {
     Afm,
-    Converters,
     DataSource,
     SimpleMetadataSource,
-    VisualizationObject
+    Transformation,
+    VisualizationObject,
+    ErrorCodes
 } from '@gooddata/data-layer';
 
 import {
@@ -12,7 +13,9 @@ import {
     ITableResult
 } from '../load';
 
-import { ErrorStates, ErrorCodes } from '../../constants/errorStates';
+import { ISorting } from '../../helpers/metadata';
+
+import { ErrorStates, ErrorCodes as ComponentsErrorCodes } from '../../constants/errorStates';
 
 export class MockedDataSource implements DataSource.IDataSource {
     private data;
@@ -44,18 +47,8 @@ class InvalidMetadataSource {
     getVisualizationMetadata() {
         return Promise.reject('error');
     }
-    getFingerprint() {
-        return '';
-    }
+    getFingerprint: () => '{}';
 }
-
-const mockedToAfm = (): Converters.IConvertedAFM => {
-    return {
-        afm: {},
-        transformation: {},
-        type: 'line'
-    };
-};
 
 export function getMdObject(customConfig = {}):VisualizationObject.IVisualizationObject {
     return {
@@ -87,12 +80,22 @@ export function getMdObject(customConfig = {}):VisualizationObject.IVisualizatio
 const measuresMap = {};
 
 describe('initTableDataLoading', () => {
+    const emptyExecutionResult = { isEmpty: true };
+    const executionResult = {
+        headers: [{
+            id: 'id1', type: 'metric', title: 'title'
+        }],
+        rawData: [[1777]],
+        isEmpty: false,
+        isLoaded: true
+    };
+
     it('should fail with unknown reason -- getVisualizationMetadata rejects', () => {
         expect.assertions(1);
         const invalidMDS = new InvalidMetadataSource();
         const mockedDS = new MockedDataSource({});
 
-        return initTableDataLoading(invalidMDS, mockedDS, null)
+        return initTableDataLoading(mockedDS, invalidMDS, {}, null)
             .catch(reason => expect(reason).toEqual(ErrorStates.UNKNOWN_ERROR));
     });
 
@@ -102,17 +105,16 @@ describe('initTableDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource({}, false);
 
-        return initTableDataLoading(mds, ds, null)
+        return initTableDataLoading(ds, mds, {}, null)
             .catch(reason => expect(reason).toEqual(ErrorStates.UNKNOWN_ERROR));
     });
 
     it('should throw is empty error', () => {
-        const executionResult = { isEmpty: true };
         const mdObject = getMdObject();
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
-        const ds = new MockedDataSource(executionResult);
+        const ds = new MockedDataSource(emptyExecutionResult);
 
-        return initTableDataLoading(mds, ds, null)
+        return initTableDataLoading(ds, mds, {}, null)
             .catch(reason => expect(reason).toEqual(ErrorStates.NO_DATA));
     });
 
@@ -122,7 +124,7 @@ describe('initTableDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionError, false);
 
-        return initTableDataLoading(mds, ds, null)
+        return initTableDataLoading(ds, mds, {}, null)
             .catch(reason => expect(reason).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
     });
 
@@ -132,34 +134,293 @@ describe('initTableDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionError, false);
 
-        return initTableDataLoading(mds, ds, null)
+        return initTableDataLoading(ds, mds, {}, null)
             .catch(reason => expect(reason).toEqual(ErrorStates.BAD_REQUEST));
     });
 
     it('should return metadata and sorting from metadata source', async () => {
-        expect.assertions(1);
+        expect.assertions(2);
         const mdObject = getMdObject();
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource({});
 
-        const result = await initTableDataLoading(mds, ds, null) as ITableResult;
-        expect(result.metadata.content.type === 'line' && !result.sorting).toBeTruthy();
+        const result = await initTableDataLoading(ds, mds, {}, null) as ITableResult;
+        expect(result.metadata.content.type).toBe('line');
+        expect(result.sorting).toEqual({
+            sorting: undefined,
+            change: null
+        });
     });
 
     it('should return metadata and sorting from provided config', async () => {
-        expect.assertions(1);
-        const mdObject = getMdObject();
+        expect.assertions(2);
+        const mdObject = getMdObject({ type: 'bar' });
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource({});
-        const currentMdObject = getMdObject({ type: 'bar' });
-        const currentSorting = { column: 'abc', direction: 'asc' };
+        const currentSorting = { column: 'm1', direction: 'asc' };
         const currentConfig = {
-            metadata: { content: currentMdObject },
-            sorting: currentSorting
+            sorting: currentSorting,
+            change: {
+                id: 'm1',
+                title: 'xxx',
+                type: 'metric',
+                uri: '/uri/'
+            }
+
         };
 
-        const result = await initTableDataLoading(mds, ds, currentConfig) as ITableResult;
-        expect(result.metadata.content.type === 'bar' && result.sorting.column === 'abc').toBeTruthy();
+        const result = await initTableDataLoading(ds, mds, {}, currentConfig) as ITableResult;
+        expect(result.metadata.content.type).toBe('bar');
+        expect(result.sorting.sorting.column).toBe('m1');
+    });
+
+    it('should use provided transformation when called without MDS', async () => {
+        expect.assertions(1);
+        const transformation: Transformation.ITransformation = {
+            sorting: [{
+                column: 'id1',
+                direction: 'asc'
+            }],
+            measures: [{
+                id: 'id1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }]
+        };
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+
+        await initTableDataLoading(ds, null, transformation);
+
+        expect(ds.getData).toHaveBeenCalledWith(transformation);
+    });
+
+    it('should merge provided transformation and sorting when called without MDS', async () => {
+        expect.assertions(1);
+        const transformation: Transformation.ITransformation = {
+            sorting: [{
+                column: 'm1',
+                direction: 'asc'
+            }],
+            measures: [{
+                id: 'm1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }]
+        };
+        const sortingInfo: ISorting = {
+            sorting: {
+                column: 'm1',
+                direction: 'desc'
+            },
+            change: {
+                id: 'm1',
+                title: 'title',
+                type: 'metric',
+                uri: 'URI'
+            }
+        };
+
+        const expectedTransformation = {
+            sorting: [{
+                column: 'm1',
+                direction: 'desc'
+            }],
+            measures: [{
+                format: '#,##0.0',
+                id: 'm1',
+                title: 'My measure one'
+            }]
+        };
+
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+
+        await initTableDataLoading(ds, null, transformation, sortingInfo);
+
+        expect(ds.getData).toHaveBeenCalledWith(expectedTransformation);
+    });
+
+    it('should use provided transformation if given sorting has no "change"', async () => {
+        expect.assertions(1);
+        const transformation: Transformation.ITransformation = {
+            sorting: [{
+                column: 'm1',
+                direction: 'asc'
+            }],
+            measures: [{
+                id: 'm1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }]
+        };
+        const sortingInfo: ISorting = {
+            change: null,
+            sorting: {
+                column: 'm1',
+                direction: 'desc'
+            }
+        };
+
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+
+        await initTableDataLoading(ds, null, transformation, sortingInfo);
+
+        expect(ds.getData).toHaveBeenCalledWith(transformation);
+    });
+
+    it('should merge all inputs (sorting has highest prior.) and update MD object and transformation', async () => {
+        expect.assertions(3);
+        const transformation: Transformation.ITransformation = {
+            measures: [{
+                id: 'm1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }],
+            sorting: [{
+                column: 'm1',
+                direction: 'asc'
+            }]
+        };
+        const md: VisualizationObject.IVisualizationObject = {
+            type: 'table',
+            buckets: {
+                measures: [
+                    {
+                        measure: {
+                            type: 'metric',
+                            objectUri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/14636',
+                            title: '# of Activities',
+                            measureFilters: [],
+                            showInPercent: false,
+                            showPoP: false
+                        }
+                    }
+                ],
+                categories: [
+                    {
+                        category: {
+                            type: 'attribute',
+                            collection: 'attribute',
+                            attribute: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/1251',
+                            displayForm: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/1252',
+                            sort: 'desc'
+                        }
+                    }
+                ],
+                filters: []
+            }
+        };
+        const mdObject = getMdObject(md);
+
+        const sorting = {
+            sorting: {
+                column: 'm1',
+                direction: 'desc'
+            },
+            change: {
+                type: 'metric',
+                id: 'm1',
+                title: '# of Activities',
+                format: '#,##0',
+                identifier: '',
+                uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/14636'
+            }
+        };
+
+        const expectedTransformation = {
+            measures: [{
+                format: '#,##0.0',
+                id: 'm1',
+                title: 'My measure one'
+            }],
+            sorting: [{
+                column: 'm1',
+                direction: 'desc'
+            }]
+        };
+
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+        const mds = new SimpleMetadataSource(mdObject, measuresMap);
+
+        const result = await initTableDataLoading(ds, mds, transformation, sorting);
+
+        const expectedMDcontent = Object.assign({}, md);
+        expectedMDcontent.buckets.measures[0].measure.generatedId = 'm1';
+        expectedMDcontent.buckets.measures[0].measure.sort = {
+            direction: 'desc'
+        };
+        expectedMDcontent.buckets.categories[0].category.sort = null;
+        const expectedMD = {
+            content: expectedMDcontent,
+            meta: {}
+        };
+
+        expect(ds.getData).toHaveBeenCalledWith(expectedTransformation);
+        expect(result.metadata).toEqual(expectedMD);
+        expect(result.sorting).toEqual(sorting);
+    });
+
+    it('should discard table sorting when selected column removed and sync sorting with MD', async () => {
+        expect.assertions(2);
+        const mdObject = getMdObject({
+            type: 'bar',
+            buckets: {
+                filters: [],
+                measures: [{
+                    measure: {
+                        type: 'metric',
+                        objectUri: 'someuri',
+                        showInPercent: false,
+                        showPoP: false,
+                        title: 'title',
+                        measureFilters: []
+                    }
+                }],
+                categories: [{
+                    category: {
+                        type: 'attribute',
+                        collection: 'stack',
+                        displayForm: 'df',
+                        sort: 'desc'
+                    }
+                }]
+            }
+        });
+        const mds = new SimpleMetadataSource(mdObject, measuresMap);
+        const ds = new MockedDataSource({});
+        const currentSorting = { column: 'no_more', direction: 'asc' };
+        const currentConfig = {
+            sorting: currentSorting,
+            change: {
+                id: 'no_more',
+                title: 'xxx',
+                type: 'metric',
+                uri: '/uri/'
+            }
+
+        };
+
+        const result = await initTableDataLoading(ds, mds, {}, currentConfig) as ITableResult;
+        expect(result.sorting.sorting).toEqual({
+            column: 'df',
+            direction: 'desc'
+        });
+        expect(result.sorting.change).toBeNull();
     });
 });
 
@@ -169,7 +430,7 @@ describe('initChartDataLoading', () => {
         const invalidMDS = new InvalidMetadataSource();
         const mockedDS = new MockedDataSource({});
 
-        return initChartDataLoading(invalidMDS, mockedDS)
+        return initChartDataLoading(mockedDS, invalidMDS, {})
             .catch(reason => expect(reason).toEqual(ErrorStates.UNKNOWN_ERROR));
     });
 
@@ -179,7 +440,7 @@ describe('initChartDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource({}, false);
 
-        return initChartDataLoading(mds, ds)
+        return initChartDataLoading(ds, mds, {})
             .catch(reason => expect(reason).toEqual(ErrorStates.UNKNOWN_ERROR));
     });
 
@@ -189,7 +450,7 @@ describe('initChartDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionResult);
 
-        return initChartDataLoading(mds, ds)
+        return initChartDataLoading(ds, mds, {})
             .catch(reason => expect(reason).toEqual(ErrorStates.NO_DATA));
     });
 
@@ -199,7 +460,7 @@ describe('initChartDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionError, false);
 
-        return initChartDataLoading(mds, ds)
+        return initChartDataLoading(ds, mds, {})
             .catch(reason => expect(reason).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
     });
 
@@ -209,7 +470,35 @@ describe('initChartDataLoading', () => {
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionError, false);
 
-        return initChartDataLoading(mds, ds)
+        return initChartDataLoading(ds, mds, {})
+            .catch(reason => expect(reason).toEqual(ErrorStates.BAD_REQUEST));
+    });
+
+    it('should throw empty AFM error', () => {
+        const executionError = { response: { status: ComponentsErrorCodes.EMPTY_AFM } };
+        const mdObject = getMdObject();
+        const mds = new SimpleMetadataSource(mdObject, measuresMap);
+        const ds = new MockedDataSource(executionError, false);
+
+        return initChartDataLoading(ds, mds, {})
+            .catch(reason => expect(reason).toEqual(ErrorStates.EMPTY_AFM));
+    });
+
+    it('should throw Invalid buckets error', () => {
+        const executionError = { response: { status: ComponentsErrorCodes.INVALID_BUCKETS } };
+        const mdObject = getMdObject();
+        const mds = new SimpleMetadataSource(mdObject, measuresMap);
+        const ds = new MockedDataSource(executionError, false);
+
+        return initChartDataLoading(ds, mds, {})
+            .catch(reason => expect(reason).toEqual(ErrorStates.INVALID_BUCKETS));
+    });
+
+    it('should handle error even if MDS is undefined', () => {
+        const executionError = { response: { status: ErrorCodes.HTTP_BAD_REQUEST } };
+        const ds = new MockedDataSource(executionError, false);
+
+        return initChartDataLoading(ds, undefined, {})
             .catch(reason => expect(reason).toEqual(ErrorStates.BAD_REQUEST));
     });
 
@@ -229,8 +518,81 @@ describe('initChartDataLoading', () => {
             result: executionResult,
             metadata: { content: mdObject, meta: {} }
         };
-        const result = await initChartDataLoading(mds, ds, { toAFM: mockedToAfm });
+        const result = await initChartDataLoading(ds, mds, {});
 
         expect(result).toEqual(expectedResult);
+    });
+
+    it('should use provided transformation when called without MDS', async () => {
+        expect.assertions(1);
+        const executionResult = {
+            headers: [{
+                id: 'id1', type: 'metric', title: 'title'
+            }],
+            rawData: [[1777]],
+            isEmpty: false,
+            isLoaded: true
+        };
+        const transformation: Transformation.ITransformation = {
+            sorting: [{
+                column: 'id1',
+                direction: 'asc'
+            }],
+            measures: [{
+                id: 'id1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }]
+        };
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+
+        await initChartDataLoading(ds, null, transformation);
+
+        expect(ds.getData).toHaveBeenCalledWith(transformation);
+    });
+
+    it('should merge provided transformation and MD object', async () => {
+        expect.assertions(1);
+        const executionResult = {
+            headers: [{
+                id: 'm1', type: 'metric', title: 'title'
+            }],
+            rawData: [[1777]],
+            isEmpty: false,
+            isLoaded: true
+        };
+        const transformation: Transformation.ITransformation = {
+            measures: [{
+                id: 'm1',
+                title: 'My measure one',
+                format: '#,##0.0'
+            }]
+        };
+        const expectedTransformation = {
+            buckets: [{
+                attributes: [{ id: 'df' }],
+                name: 'stacks'
+            }],
+            measures: [{
+                format: '#,##0.0',
+                id: 'm1',
+                title: 'My measure one'
+            }]
+        };
+        const mdObject = getMdObject();
+        const mds = new SimpleMetadataSource(mdObject, measuresMap);
+        const ds = {
+            getData: jest.fn().mockReturnValue(Promise.resolve(executionResult)),
+            getAfm: jest.fn().mockReturnValue(''),
+            getFingerprint: jest.fn().mockReturnValue('')
+        };
+
+        await initChartDataLoading(ds, mds, transformation);
+
+        expect(ds.getData).toHaveBeenCalledWith(expectedTransformation);
     });
 });

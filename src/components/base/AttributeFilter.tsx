@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as sdk from 'gooddata';
 import pick = require('lodash/pick');
 
-import { IntlWrapper } from './IntlWrapper';
+import { IntlWrapper } from '../core/base/IntlWrapper';
 import { injectIntl } from 'react-intl';
 import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from './AttributeDropdown';
 import { AttributeLoader } from './AttributeLoader';
@@ -43,7 +43,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         uri: PropTypes.string,
         identifier: PropTypes.string,
         projectId: PropTypes.string,
-        
+
         FilterLoading: PropTypes.func,
         FilterError: PropTypes.func,
         locale: PropTypes.string,
@@ -52,7 +52,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             getObjectDetails: PropTypes.func.isRequired
         })
     };
-    
+
     static defaultProps = {
         uri: null,
         identifier: null,
@@ -63,7 +63,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError
     };
-   
+
     renderContent({ isLoading, error, attributeDisplayForm }) {
         if (isLoading) {
             return <this.props.FilterLoading />;

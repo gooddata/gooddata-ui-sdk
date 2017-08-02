@@ -36,7 +36,7 @@
     "typescript": "2.4.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "2.0.0",
+    "@gooddata/data-layer": "2.0.2",
     "@gooddata/goodstrap": "51.0.0",
     "@gooddata/indigo-visualizations": "0.11.1",
     "classnames": "2.2.5",
@@ -56,7 +56,7 @@
     "dev": "rm -rf dist && tsc -d --outDir dist --watch && cp -rf src/translations/ dist/translations/",
     "prepublish": "rm -rf dist && tsc -d --outDir dist && cp -rf src/translations/ dist/translations/ && yarn build-css",
     "tslint": "tslint --format verbose --config tslint.json '{src,stories}/**/*.{ts,tsx}'",
-    "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint",
+    "validate": "rm -rf dist && tsc -p tsconfig.base.json --noEmit && yarn tslint",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook -c .storybook -o dist-storybook"
   },

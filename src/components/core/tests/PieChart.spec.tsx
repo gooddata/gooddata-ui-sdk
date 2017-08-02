@@ -2,14 +2,14 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 
 import { BaseChart } from '../base/BaseChart';
-import { LineChart } from '../LineChart';
+import { PieChart } from '../PieChart';
 
-describe('LineChart', () => {
+describe('PieChart', () => {
     function createComponent(props) {
-        return shallow(<LineChart {...props} />);
+        return shallow(<PieChart {...props} />);
     }
 
-    it('should render line chart', () => {
+    it('should render pie chart', () => {
         const wrapper = createComponent({
             dataSource: {
                 getData: () => Promise.resolve({}),
@@ -17,7 +17,8 @@ describe('LineChart', () => {
                 getFingerprint: () => '{}'
             },
             metadataSource: {
-                getVisualizationMetadata: () => Promise.resolve({})
+                getVisualizationMetadata: () => Promise.resolve({}),
+                getFingerprint: () => '{}'
             }
         });
 

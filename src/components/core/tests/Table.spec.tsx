@@ -9,8 +9,8 @@ import {
     initTableDataLoading,
     TableTransformation,
     ResponsiveTable
-} from '../tests/mocks';
-jest.mock('../../helpers/load', () => ({
+} from '../../tests/mocks';
+jest.mock('../../../helpers/load', () => ({
     initTableDataLoading
 }));
 jest.mock('@gooddata/indigo-visualizations', () => ({
@@ -19,8 +19,8 @@ jest.mock('@gooddata/indigo-visualizations', () => ({
 }));
 
 import { Table, ITableProps } from '../Table';
-import { ErrorStates } from '../../constants/errorStates';
-import { postpone } from '../../helpers/test_helpers';
+import { ErrorStates } from '../../../constants/errorStates';
+import { postpone } from '../../../helpers/test_helpers';
 
 describe('Table', () => {
     const createComponent = (props: ITableProps) => {
@@ -41,7 +41,7 @@ describe('Table', () => {
                     metadata: {},
                     measuresMap: {}
                 } as VisualizationObject.IVisualizationMetadataResult),
-                getFingerprint: () => ''
+                getFingerprint: () => '{}'
             },
             locale: 'en-US',
             ...customProps
@@ -72,6 +72,31 @@ describe('Table', () => {
             expect(wrapper.find(TableTransformation).length).toBe(1);
             expect(initTableDataLoading).toHaveBeenCalledTimes(2);
             expect(onError).toHaveBeenCalledTimes(0);
+            done();
+        });
+    });
+
+    it('should call initDataLoading when sorting changed', (done) => {
+        const props = createProps({
+            transformation: {}
+        });
+        const wrapper = createComponent(props);
+
+        const newProps = createProps({
+            visualizationProperties: { sorting: 'abc' },
+            transformation: {}
+        });
+        wrapper.setProps(newProps);
+
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(initTableDataLoading).toHaveBeenCalledTimes(2);
+            expect(initTableDataLoading).toHaveBeenCalledWith(
+                newProps.dataSource,
+                newProps.metadataSource,
+                newProps.transformation,
+                newProps.visualizationProperties.sorting
+            );
             done();
         });
     });
@@ -119,6 +144,42 @@ describe('Table', () => {
             expect(onError).toHaveBeenCalledTimes(1);
             expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
             done();
+        });
+    });
+
+    it('should not render responsive table when result is not available', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ result: null }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when table is still loading', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ isLoading: true }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when error is set', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ error: ErrorStates.UNKNOWN_ERROR }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
         });
     });
 
@@ -172,7 +233,22 @@ describe('Table', () => {
         createComponent(props);
 
         postpone(() => {
-            expect(pushData).toHaveBeenCalledWith({ warnings: [] });
+            expect(pushData).toHaveBeenCalledWith({ executionResult: resultMock.result });
+            done();
+        });
+    });
+
+    it('should trigger `onLoadingChanged`', (done) => {
+        const loadingHandler = jest.fn();
+
+        const props = createProps({
+            onLoadingChanged: loadingHandler
+        });
+
+        createComponent(props);
+
+        postpone(() => {
+            expect(loadingHandler).toHaveBeenCalled();
             done();
         });
     });

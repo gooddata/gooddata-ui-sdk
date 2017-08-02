@@ -1,5 +1,8 @@
-import { get, cloneDeep } from 'lodash';
-import { VisualizationObject } from '@gooddata/data-layer';
+import get = require('lodash/get');
+import cloneDeep = require('lodash/cloneDeep');
+import { VisualizationObject, Transformation } from '@gooddata/data-layer';
+
+import { ISortingChange } from '../helpers/sorting';
 
 interface IMeasureInfo {
     generatedId: string;
@@ -20,9 +23,20 @@ function getMeasureInfo(id: string): IMeasureInfo {
     };
 }
 
-export function updateSorting(metadata: VisualizationObject.IVisualizationObjectMetadata, { sorting, change, index }):
-    VisualizationObject.IVisualizationObjectMetadata {
+export interface ISorting {
+    sorting: Transformation.ISort;
+    change: ISortingChange;
+}
 
+export interface IUpdateSortingResult {
+    updatedMetadata: VisualizationObject.IVisualizationObjectMetadata;
+    updatedSorting: ISorting;
+}
+
+export function updateSorting(
+    metadata: VisualizationObject.IVisualizationObjectMetadata,
+    sortingInfo: ISorting): IUpdateSortingResult {
+    const { sorting, change } = sortingInfo;
     const updatedMetadata = cloneDeep(metadata);
     const buckets = updatedMetadata.content.buckets;
     const { column, direction } = sorting;
@@ -34,17 +48,28 @@ export function updateSorting(metadata: VisualizationObject.IVisualizationObject
     if (type === 'metric') {
         const { generatedId, isPoP } = getMeasureInfo(column);
         const mex = get(buckets, 'measures', []);
-        const metricIndex = mex
-            .findIndex(item => item.measure.generatedId === generatedId);
+        const measure = mex
+            .find(item => item.measure.generatedId === generatedId);
 
-        bucketItem = get(buckets, `measures.${metricIndex}.measure`);
+        bucketItem = get(measure, 'measure');
         sort = { direction };
         if (isPoP) {
             sort.sortByPoP = true;
         }
     } else {
-        bucketItem = get(buckets, `categories.${index}.category`, {});
+        const categories = get(buckets, 'categories', []);
+        const category = categories
+            .find(item => item.category.displayForm === column);
+
+        bucketItem = get(category, 'category');
         sort = direction; // string instead of object for categories :(
+    }
+    // handle column deletation
+    if (!bucketItem) {
+        return {
+            updatedMetadata: metadata,
+            updatedSorting: null
+        };
     }
 
     buckets.categories = buckets.categories.map((category) => {
@@ -57,5 +82,8 @@ export function updateSorting(metadata: VisualizationObject.IVisualizationObject
     });
     bucketItem.sort = sort;
 
-    return updatedMetadata;
+    return {
+        updatedMetadata,
+        updatedSorting: sortingInfo
+    };
 }

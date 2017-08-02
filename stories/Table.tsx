@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Table } from '../src/components/Table';
+import { Table } from '../src/components/core/Table';
 
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
+import '../styles/scss/charts.scss';
 
-import { DataSourceMock, MetadataSourceMock } from './mocks';
+import { DataSourceMock, MetadataSourceMock, onErrorHandler } from './mocks';
 
 const twoMeasuresAndAttributeData = {
     isLoaded: true,
@@ -187,7 +187,7 @@ storiesOf('Table', module)
             <Table
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
@@ -196,7 +196,24 @@ storiesOf('Table', module)
             <Table
                 dataSource={new DataSourceMock(withIdentifiersData)}
                 metadataSource={new MetadataSourceMock(withIdentifiersMD)}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
-    ));
+    )).add('external transformation', () => (
+        <div style={{ width: 600, height: 300 }}>
+            <Table
+                dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
+                transformation={{
+                    measures: [
+                        {
+                            id: 'm1',
+                            title: 'redefined title',
+                            format: '---#---'
+                        }
+                    ]
+                }}
+                onError={onErrorHandler}
+            />
+        </div>
+    ))
+;

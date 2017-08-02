@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types';
-import { isNumber, isString } from 'lodash';
+import isNumber = require('lodash/isNumber');
+import isString = require('lodash/isString');
 
 function twoNumbersOrTwoStrings(props, propName, componentName) {
     const between = props.between;

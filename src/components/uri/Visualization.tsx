@@ -1,14 +1,16 @@
 import * as React from 'react';
 import * as sdk from 'gooddata';
-import { noop, get, isEqual } from 'lodash';
-import { DataSource, MetadataSource, UriMetadataSource, UriAdapter, Afm } from '@gooddata/data-layer';
+import get = require('lodash/get');
+import noop = require('lodash/noop');
+import isEqual = require('lodash/isEqual');
+import { Afm, DataSource, MetadataSource, UriMetadataSource, UriAdapter } from '@gooddata/data-layer';
 
-import { ErrorStates } from '../constants/errorStates';
-import { BaseChart, ChartTypes, IChartConfig } from './base/BaseChart';
-import { Table } from './Table';
-import { IEvents } from '../interfaces/Events';
-import { getProjectIdByUri } from '../helpers/project';
-import { visualizationPropTypes } from '../proptypes/Visualization';
+import { ErrorStates } from '../../constants/errorStates';
+import { BaseChart, ChartTypes, IChartConfig } from '../core/base/BaseChart';
+import { Table } from '../core/Table';
+import { IEvents } from '../../interfaces/Events';
+import { getProjectIdByUri } from '../../helpers/project';
+import { visualizationPropTypes } from '../../proptypes/Visualization';
 
 function isDateFilter(filter: Afm.IFilter): filter is Afm.IDateFilter {
     return filter.type === 'date';

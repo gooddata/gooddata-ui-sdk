@@ -1,8 +1,8 @@
 import * as React from 'react';
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
+import '../styles/scss/charts.scss';
 import { storiesOf } from '@storybook/react';
-import { PieChart } from '../src/components/PieChart';
-import { DataSourceMock, MetadataSourceMock } from './mocks';
+import { PieChart } from '../src/components/core/PieChart';
+import { DataSourceMock, MetadataSourceMock, onErrorHandler } from './mocks';
 
 const twoMeasuresData = {
     isLoaded: true,
@@ -128,8 +128,7 @@ storiesOf('PieChart', module)
     .add('two measures', () => (
         <div style={{ width: 400, height: 400 }}>
             <PieChart
-                type="pie"
-                onError={console.error}
+                onError={onErrorHandler}
                 dataSource={new DataSourceMock(twoMeasuresData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresMD)}
             />
@@ -138,8 +137,7 @@ storiesOf('PieChart', module)
     .add('measure and attribute', () => (
         <div style={{ width: 400, height: 400 }}>
             <PieChart
-                type="pie"
-                onError={console.error}
+                onError={onErrorHandler}
                 dataSource={new DataSourceMock(measureAndAttributeData)}
                 metadataSource={new MetadataSourceMock(measureAndAttributeMD)}
             />
@@ -148,8 +146,7 @@ storiesOf('PieChart', module)
     .add('legend on the right for dashboards', () => (
         <div style={{ width: 400, height: 400 }}>
             <PieChart
-                type="pie"
-                onError={console.error}
+                onError={onErrorHandler}
                 dataSource={new DataSourceMock(measureAndAttributeData)}
                 metadataSource={new MetadataSourceMock(measureAndAttributeMD)}
                 environment="dashboards"
@@ -159,8 +156,7 @@ storiesOf('PieChart', module)
     .add('legend on the bottom', () => (
         <div style={{ width: 400, height: 400 }}>
             <PieChart
-                type="pie"
-                onError={console.error}
+                onError={onErrorHandler}
                 dataSource={new DataSourceMock(measureAndAttributeData)}
                 metadataSource={new MetadataSourceMock(measureAndAttributeMD)}
                 config={{
