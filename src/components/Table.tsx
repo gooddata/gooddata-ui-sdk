@@ -13,6 +13,7 @@ import {
 import { updateSorting } from '../helpers/metadata';
 import { IntlWrapper } from './base/IntlWrapper';
 import { IEvents } from '../interfaces/Events';
+import { IDrillableItem } from '../interfaces/DrillableItem';
 import { tablePropTypes } from '../proptypes/Table';
 import { getSorting, ISortingChange } from '../helpers/sorting';
 import { getCancellable } from '../helpers/promise';
@@ -26,7 +27,7 @@ export interface ITableProps extends IEvents {
     height?: number;
     environment?: string;
     stickyHeader?: number;
-    drillableItems?: boolean;
+    drillableItems?: IDrillableItem[];
     afterRender?;
     pushData?;
 }
@@ -56,7 +57,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
         height: 300,
         locale: 'en-US',
         environment: 'none',
-        drillableItems: false
+        drillableItems: []
     };
 
     static propTypes = tablePropTypes;
