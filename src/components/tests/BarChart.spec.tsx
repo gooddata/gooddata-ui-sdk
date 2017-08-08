@@ -11,8 +11,14 @@ describe('BarChart', () => {
 
     it('should render bar chart', () => {
         const wrapper = createComponent({
-            dataSource: {},
-            metadataSource: {}
+            dataSource: {
+                getData: () => Promise.resolve({}),
+                getAfm: () => ({}),
+                getFingerprint: () => '{}'
+            },
+            metadataSource: {
+                getVisualizationMetadata: () => Promise.resolve({})
+            }
         });
 
         expect(wrapper.find(BaseChart).length).toBe(1);

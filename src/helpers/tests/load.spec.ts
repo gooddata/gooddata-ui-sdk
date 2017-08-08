@@ -1,4 +1,5 @@
 import {
+    Afm,
     Converters,
     DataSource,
     SimpleMetadataSource,
@@ -30,8 +31,12 @@ export class MockedDataSource implements DataSource.IDataSource {
         return Promise.reject(this.data);
     }
 
+    public getAfm(): Afm.IAfm {
+        return {};
+    }
+
     public getFingerprint(): string {
-        return '';
+        return '{}';
     }
 }
 

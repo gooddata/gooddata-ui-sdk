@@ -11,8 +11,14 @@ describe('ColumnChart', () => {
 
     it('should render column chart', () => {
         const wrapper = createComponent({
-            dataSource: {},
-            metadataSource: {}
+            dataSource: {
+                getData: () => Promise.resolve({}),
+                getAfm: () => ({}),
+                getFingerprint: () => '{}'
+            },
+            metadataSource: {
+                getVisualizationMetadata: () => Promise.resolve({})
+            }
         });
 
         expect(wrapper.find(BaseChart).length).toBe(1);

@@ -155,6 +155,7 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
                 <IntlWrapper locale={locale}>
                     <IntlNumericSymbolsProvider>
                         <Visualization
+                            afm={this.props.dataSource.getAfm()}
                             height={height}
                             config={finalConfig}
                             data={result}

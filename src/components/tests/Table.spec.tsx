@@ -31,7 +31,11 @@ describe('Table', () => {
         return {
             height: 200,
             environment: 'dashboards',
-            dataSource: { getData: () => Promise.resolve({}), getFingerprint: () => ('') },
+            dataSource: {
+                getData: () => Promise.resolve({}),
+                getAfm: () => ({}),
+                getFingerprint: () => ('{}')
+            },
             metadataSource: {
                 getVisualizationMetadata: () => Promise.resolve({
                     metadata: {},
@@ -50,10 +54,18 @@ describe('Table', () => {
     it('should call two times initDataLoading when fingerprint changes', (done) => {
         const onError = jest.fn();
         const props = createProps({
-            dataSource: { getFingerprint: () => 'fingerprint' }
+            dataSource: {
+                getData: () => Promise.resolve({}),
+                getAfm: () => ({}),
+                getFingerprint: () => '{}'
+            }
         });
         const wrapper = createComponent(props);
-        wrapper.setProps({ dataSource: { getFingerprint: () => 'differentprint' } });
+        wrapper.setProps({ dataSource: {
+            getData: () => Promise.resolve({ foo: 'bar' }),
+            getAfm: () => ({}),
+            getFingerprint: () => 'differentprint'
+        }});
 
         postpone(() => {
             expect(wrapper.find(TableTransformation).length).toBe(1);
@@ -67,10 +79,18 @@ describe('Table', () => {
         const onError = jest.fn();
         const props = createProps({
             onError,
-            dataSource: { getFingerprint: () => 'fingerprint' }
+            dataSource: {
+                getData: () => Promise.resolve({}),
+                getAfm: () => ({}),
+                getFingerprint: () => '{}'
+            }
         });
         const wrapper = createComponent(props);
-        wrapper.setProps({ dataSource: { getFingerprint: () => 'fingerprint' } });
+        wrapper.setProps({ dataSource: {
+            getData: () => Promise.resolve({}),
+            getAfm: () => ({}),
+            getFingerprint: () => '{}'
+        }});
 
         postpone(() => {
             expect(wrapper.find('.gdc-indigo-responsive-table')).toBeDefined();

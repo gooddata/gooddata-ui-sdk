@@ -11,8 +11,11 @@ export class DataSourceMock implements DataSource.IDataSource {
     getData() {
         return Promise.resolve(this.returnValue);
     }
+    getAfm() {
+        return {};
+    }
     getFingerprint() {
-        return 'aaa';
+        return '{}';
     }
 }
 

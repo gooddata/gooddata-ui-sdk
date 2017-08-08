@@ -24,12 +24,14 @@ describe('BaseChart', () => {
         );
     }
 
+    const afm = { measures: [] };
     const createProps = (customProps = {}) => {
         return {
             height: 200,
             dataSource: {
                 getData: () => Promise.resolve(),
-                getFingerprint: jest.fn().mockReturnValue('qwer')
+                getAfm: jest.fn().mockReturnValue(afm),
+                getFingerprint: jest.fn().mockReturnValue(JSON.stringify(afm))
             },
             metadataSource: {
                 getVisualizationMetadata: () => Promise.resolve({

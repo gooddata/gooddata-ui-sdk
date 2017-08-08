@@ -132,6 +132,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 const tableRenderer = props =>
                     (<ResponsiveTable
                         {...props}
+                        afm={this.props.dataSource.getAfm()}
                         rowsPerPage={TABLE_PAGE_SIZE}
                         onSortChange={this.onSortChange}
                         page={page}
