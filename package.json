@@ -38,7 +38,7 @@
     "typescript": "2.4.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "1.0.3",
+    "@gooddata/data-layer": "1.0.4",
     "@gooddata/indigo-visualizations": "0.8.3",
     "gooddata": "2.1.0",
     "lodash": "4.17.4",
