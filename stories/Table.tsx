@@ -181,7 +181,7 @@ const withIdentifiersMD = {
     }
 };
 
-storiesOf('Table')
+storiesOf('Table', module)
     .add('two measures, one attribute', () => (
         <div style={{ width: 600, height: 300 }}>
             <Table

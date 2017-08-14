@@ -124,7 +124,7 @@ const measureAndAttributeMD = {
 };
 
 
-storiesOf('PieChart')
+storiesOf('PieChart', module)
     .add('two measures', () => (
         <div style={{ width: 400, height: 400 }}>
             <PieChart
