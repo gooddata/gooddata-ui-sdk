@@ -8,18 +8,15 @@
   dependencies:
     lodash "4.17.4"
 
-"@gooddata/goodstrap@42.0.0":
-  version "42.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-42.0.0.tgz#785e7bd9e5f221ec7cb3003668ccf5c03ce4d0e4"
+"@gooddata/goodstrap@50.0.0":
+  version "50.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-50.0.0.tgz#4627ccb11f2c6cdb38aeae228612d3df92492568"
   dependencies:
-    "@gooddata/js-utils" "0.5.0"
+    "@gooddata/js-utils" "0.7.0"
     classnames "2.2.5"
     custom-event "1.0.1"
-    ember "git+ssh://git@github.com/gooddata/emberjs#1.8.1"
-    ember-legacy "git+ssh://git@github.com/gooddata/emberjs#1.3.2"
     fixed-data-table-2 "0.7.13"
     foundation-sites "5.5.3"
-    gooddata "1.4.0"
     immutable "3.8.1"
     jquery "2.1.4"
     kefir "3.7.1"
@@ -31,17 +28,17 @@
     react-dnd-touch-backend gooddata/react-dnd-touch-backend#v0.0.1
     react-document-title "2.0.3"
     react-intl "2.2.3"
-    react-native-listener "1.0.1"
+    react-native-listener "1.0.2"
     react-portal "3.0.0"
     react-responsive "1.2.6"
     react-textarea-autosize "4.0.5"
 
-"@gooddata/indigo-visualizations@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.8.3.tgz#027cc180e6ade2bee46af0ffa090064f1cac513c"
+"@gooddata/indigo-visualizations@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.9.0.tgz#700bb4e4e4733e5c713e1eae6e4d6b981cecd6b5"
   dependencies:
-    "@gooddata/goodstrap" "42.0.0"
-    "@gooddata/js-utils" "0.5.0"
+    "@gooddata/goodstrap" "50.0.0"
+    "@gooddata/js-utils" "0.7.0"
     "@gooddata/numberjs" "3.0.0"
     classnames "2.2.5"
     fixed-data-table-2 "0.7.13"
@@ -51,10 +48,11 @@
     react-intl "2.2.3"
     react-measure "1.3.1"
 
-"@gooddata/js-utils@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-0.5.0.tgz#96ce88eb01f01a1e723f47870d20d2ba157d5226"
+"@gooddata/js-utils@0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-0.7.0.tgz#1d9134db613eed461d33a5f4657592088b03d685"
   dependencies:
+    js-cookie "2.1.4"
     lodash "4.17.4"
     moment "2.17.1"
     moment-timezone "0.5.11"
@@ -470,10 +468,6 @@ async@^2.1.2, async@^2.1.4, async@^2.1.5:
   resolved "https://registry.yarnpkg.com/async/-/async-2.5.0.tgz#843190fd6b7357a0b9e1c956edddd5ec8462b54d"
   dependencies:
     lodash "^4.14.0"
-
-async@~0.2.6:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/async/-/async-0.2.10.tgz#b6bbe0b0674b9d719708ca38de8c237cb526c3d1"
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -2266,20 +2260,6 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-"ember-legacy@git+ssh://git@github.com/gooddata/emberjs#1.3.2":
-  version "1.3.2"
-  resolved "git+ssh://git@github.com/gooddata/emberjs#9d61112fdd90d0b1038e888c43c3434302236277"
-  dependencies:
-    handlebars ">= 1.0.0 < 2.0"
-    jquery "*"
-
-"ember@git+ssh://git@github.com/gooddata/emberjs#1.8.1":
-  version "1.8.1"
-  resolved "git+ssh://git@github.com/gooddata/emberjs#f9a7b58df44fbf70bf6bba569662660a9808f7c3"
-  dependencies:
-    handlebars ">= 1.0.0 < 2.0.0"
-    jquery ">=1.7.0 < 2.2.0"
-
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -2985,17 +2965,6 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-1.4.0.tgz#c2a955d872a60e2c66f1c2c0443394160c657fb0"
-  dependencies:
-    es6-promise "3.0.2"
-    fetch-cookie "0.4.0"
-    invariant "2.2.2"
-    isomorphic-fetch "2.2.1"
-    lodash "4.17.4"
-    md5 "2.2.1"
-
 gooddata@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-2.1.0.tgz#ad1d36d41162b837fb62321145d798e659cabc7c"
@@ -3014,14 +2983,6 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
-
-"handlebars@>= 1.0.0 < 2.0", "handlebars@>= 1.0.0 < 2.0.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-1.3.0.tgz#9e9b130a93e389491322d975cf3ec1818c37ce34"
-  dependencies:
-    optimist "~0.3"
-  optionalDependencies:
-    uglify-js "~2.3"
 
 handlebars@^4.0.3:
   version "4.0.10"
@@ -3764,13 +3725,17 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
-jquery@*, jquery@2.1.4, "jquery@>=1.7.0 < 2.2.0":
+jquery@2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
+
+js-cookie@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.1.4.tgz#da4ec503866f149d164cf25f579ef31015025d8d"
 
 js-tokens@^3.0.0:
   version "3.0.2"
@@ -4584,12 +4549,6 @@ optimist@^0.6.1, optimist@~0.6.0:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
 
-optimist@~0.3, optimist@~0.3.5:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.3.7.tgz#c90941ad59e4273328923074d2cf2e7cbc6ec0d9"
-  dependencies:
-    wordwrap "~0.0.2"
-
 optionator@^0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.2.tgz#364c5e409d3f4d6301d6c0b4c05bba50180aeb64"
@@ -5239,7 +5198,7 @@ react-day-picker@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-3.1.1.tgz#7fa385dc7b424cee3eb09696e1918e6b18abafdb"
 
-react-dnd-touch-backend@gooddata/react-dnd-touch-backend#v0.0.1:
+"react-dnd-touch-backend@github:gooddata/react-dnd-touch-backend#v0.0.1":
   version "0.0.1"
   resolved "https://codeload.github.com/gooddata/react-dnd-touch-backend/tar.gz/6136545d1255c484739224525cb9beb2736e20e9"
   dependencies:
@@ -5354,9 +5313,9 @@ react-modal@^1.7.7:
     prop-types "^15.5.7"
     react-dom-factories "^1.0.0"
 
-react-native-listener@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-listener/-/react-native-listener-1.0.1.tgz#76ca703783669f75324e52435c402c77577afc94"
+react-native-listener@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-listener/-/react-native-listener-1.0.2.tgz#3e9f8f0492b63280d50674d0be8a93d669705e92"
 
 react-portal@3.0.0:
   version "3.0.0"
@@ -5916,12 +5875,6 @@ source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.0, sour
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
 
-source-map@~0.1.7:
-  version "0.1.43"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
-  dependencies:
-    amdefine ">=0.0.4"
-
 source-map@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.2.0.tgz#dab73fbcfc2ba819b4de03bd6f6eaa48164b3f9d"
@@ -6383,14 +6336,6 @@ uglify-js@^2.6, uglify-js@^2.8.29:
     yargs "~3.10.0"
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
-
-uglify-js@~2.3:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.3.6.tgz#fa0984770b428b7a9b2a8058f46355d14fef211a"
-  dependencies:
-    async "~0.2.6"
-    optimist "~0.3.5"
-    source-map "~0.1.7"
 
 uglify-to-browserify@~1.0.0:
   version "1.0.2"

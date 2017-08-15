@@ -85,7 +85,7 @@ const twoMeasuresAndAttributeMD = {
     }
 };
 
-storiesOf('ColumnChart')
+storiesOf('ColumnChart', module)
     .add('two measures, one attribute', () => (
         <div style={{ width: 800, height: 400 }}>
             <ColumnChart

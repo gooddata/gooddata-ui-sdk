@@ -5,7 +5,7 @@ import { Visualization } from '../src/components/Visualization';
 import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
 import '@gooddata/indigo-visualizations/lib/styles/table.scss';
 
-storiesOf('Visualization')
+storiesOf('Visualization', module)
     .add('table example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
