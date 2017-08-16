@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 
-import enUS from '../../translations/en-US';
-import deDE from '../../translations/de-DE';
-import esES from '../../translations/es-ES';
-import frFR from '../../translations/fr-FR';
-import jaJP from '../../translations/ja-JP';
-import nlNL from '../../translations/nl-NL';
-import ptBR from '../../translations/pt-BR';
-import ptPT from '../../translations/pt-PT';
+import * as enUS from '../../translations/en-US.json';
+import * as deDE from '../../translations/de-DE.json';
+import * as esES from '../../translations/es-ES.json';
+import * as frFR from '../../translations/fr-FR.json';
+import * as jaJP from '../../translations/ja-JP.json';
+import * as nlNL from '../../translations/nl-NL.json';
+import * as ptBR from '../../translations/pt-BR.json';
+import * as ptPT from '../../translations/pt-PT.json';
 
 export const messagesMap = {
     'en-US': enUS,

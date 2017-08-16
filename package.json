@@ -53,8 +53,8 @@
   "scripts": {
     "test": "jest",
     "watchTest": "jest --watch",
-    "dev": "rm -rf dist && tsc -d --outDir dist --watch",
-    "prepublish": "rm -rf dist && tsc -d --outDir dist",
+    "dev": "rm -rf dist && tsc -d --outDir dist --watch && cp -rf src/translations/ dist/translations/",
+    "prepublish": "rm -rf dist && tsc -d --outDir dist && cp -rf src/translations/ dist/translations/",
     "tslint": "tslint --format verbose --config tslint.json '{src,stories}/**/*.{ts,tsx}'",
     "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint",
     "storybook": "start-storybook -p 9001 -c .storybook",
