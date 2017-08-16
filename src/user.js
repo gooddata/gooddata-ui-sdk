@@ -123,3 +123,12 @@ export function getAccountInfo() {
             return accountInfo;
         });
 }
+
+/**
+ * Returns the feature flags valid for the currently logged in user.
+ * @method getFeatureFlags
+ */
+export function getFeatureFlags() {
+    return get('/gdc/app/account/bootstrap')
+        .then(result => result.bootstrapResource.current.featureFlags);
+}
