@@ -18,16 +18,20 @@ export default {
                         PropTypes.shape({ id: PropTypes.string.isRequired }),
                         PropTypes.shape({ lookupId: PropTypes.string.isRequired })
                     ]).isRequired,
-                    filters: PropTypes.oneOfType([
-                        PropTypes.arrayOf(PropTypes.shape({
-                            id: PropTypes.string.isRequired,
-                            in: PropTypes.arrayOf(PropTypes.string).isRequired
-                        })).isRequired,
-                        PropTypes.arrayOf(PropTypes.shape({
-                            id: PropTypes.string.isRequired,
-                            notIn: PropTypes.arrayOf(PropTypes.string).isRequired
-                        }))
-                    ]),
+                    filters: PropTypes.arrayOf(
+                        PropTypes.oneOfType([
+                            PropTypes.shape({
+                                id: PropTypes.string.isRequired,
+                                type: PropTypes.string.isRequired,
+                                in: PropTypes.arrayOf(PropTypes.string).isRequired
+                            }),
+                            PropTypes.shape({
+                                id: PropTypes.string.isRequired,
+                                type: PropTypes.string.isRequired,
+                                notIn: PropTypes.arrayOf(PropTypes.string).isRequired
+                            })
+                        ])
+                    ),
                     aggregation: PropTypes.string,
                     popAttribute: PropTypes.shape({
                         id: PropTypes.string.isRequired
