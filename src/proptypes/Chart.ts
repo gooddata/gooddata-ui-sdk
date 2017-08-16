@@ -3,6 +3,7 @@ import chartConfig from './ChartConfig';
 import events from './Events';
 import { dataSourcePropTypes } from './DataSource';
 import { metadataSourcePropTypes } from './MetadataSource';
+import drillableItem from './DrillableItem';
 
 export const chartPropTypes = {
     ...chartConfig,
@@ -11,6 +12,6 @@ export const chartPropTypes = {
     metadataSource: metadataSourcePropTypes,
     locale: PropTypes.string,
     height: PropTypes.number,
-    drillableItems: PropTypes.bool,
+    drillableItems: PropTypes.arrayOf(PropTypes.shape(drillableItem)),
     environment: PropTypes.string
 };

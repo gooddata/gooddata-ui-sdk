@@ -12,6 +12,7 @@ import {
 } from '@gooddata/data-layer';
 import { IntlWrapper } from './IntlWrapper';
 import { IEvents } from '../../interfaces/Events';
+import { IDrillableItem } from '../../interfaces/DrillableItem';
 import { ErrorStates } from '../../constants/errorStates';
 import { initChartDataLoading as initDataLoading } from '../../helpers/load';
 import { getConfig, ILegendConfig } from '../../helpers/config';
@@ -38,7 +39,7 @@ export interface IChartProps extends IEvents {
     config?: IChartConfig;
     height?: number;
     environment?: string;
-    drillableItems?: boolean;
+    drillableItems?: IDrillableItem[];
 }
 
 export interface IBaseChartState {
@@ -92,7 +93,7 @@ export class BaseChart extends React.Component<IChartProps, IBaseChartState> {
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
         pushData: noop,
-        drillableItems: false,
+        drillableItems: [],
         config: {}
     };
 
