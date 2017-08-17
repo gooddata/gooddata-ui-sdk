@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import { post, ajax, get, put, parseJSON } from './xhr';
+import { post, ajax, del, get, put, parseJSON } from './xhr';
 import { getIn, handlePolling } from './util';
 
 /**
@@ -170,7 +170,7 @@ const isProjectCreated = (project) => {
  * @param {Object} options for project creation (summary, projectTemplate, ...)
  * @return {Object} created project object
  */
-export const createProject = (title, authorizationToken, options = {}) => {
+export function createProject(title, authorizationToken, options = {}) {
     const {
         summary,
         projectTemplate,
@@ -201,4 +201,14 @@ export const createProject = (title, authorizationToken, options = {}) => {
         handlePolling(project.uri, (response) => {
             return isProjectCreated(response.project);
         }, options));
-};
+}
+
+/**
+ * Delete project
+ *
+ * @method deleteProject
+ * @param {String} projectId
+ */
+export function deleteProject(projectId) {
+    return del(`/gdc/projects/${projectId}`);
+}
