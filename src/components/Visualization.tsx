@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as sdk from 'gooddata';
-import { noop, get } from 'lodash';
+import { noop, get, isEqual } from 'lodash';
 import { DataSource, MetadataSource, UriMetadataSource, UriAdapter } from '@gooddata/data-layer';
+import { IFilter, IAttributeFilter, IDateFilter } from '@gooddata/data-layer/src/interfaces/Afm';
 
 import { ErrorStates } from '../constants/errorStates';
 import { BaseChart, ChartTypes, IChartConfig } from './base/BaseChart';
@@ -10,12 +11,20 @@ import { IEvents } from '../interfaces/Events';
 import { getProjectIdByUri } from '../helpers/project';
 import { visualizationPropTypes } from '../proptypes/Visualization';
 
+function isDateFilter(filter: IFilter): filter is IDateFilter {
+    return filter.type === 'date';
+}
+
+function isAttributeFilter(filter: IFilter): filter is IAttributeFilter {
+    return filter.type === 'attribute';
+}
+
 export interface IVisualizationProps extends IEvents {
     uri: string;
     locale?: string;
     config?: IChartConfig;
+    filters?: IFilter[];
 }
-
 export interface IVisualizationState {
     dataSource: DataSource.IDataSource;
     metadataSource: MetadataSource.IMetadataSource;
@@ -36,20 +45,37 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     }
 
     componentDidMount() {
-        this.prepareDatasources(this.props.uri);
+        const { uri, filters } = this.props;
+
+        this.prepareDatasources(uri, filters);
     }
 
     public componentWillReceiveProps(nextProps) {
-        if (this.props.uri !== nextProps.uri) {
-            this.prepareDatasources(nextProps.uri);
+        const { uri, filters } = this.props;
+
+        if (uri !== nextProps.uri || !isEqual(filters, nextProps.filters)) {
+            this.prepareDatasources(nextProps.uri, nextProps.filters);
         }
     }
 
-    private prepareDatasources(uri) {
+    private getDateFilter(filters: IFilter[]): IDateFilter {
+        return filters
+            .filter(isDateFilter)
+            .shift();
+    }
+
+    private getAttributeFilters(filters: IFilter[]): IAttributeFilter[] {
+        return filters.filter(isAttributeFilter);
+    }
+
+    private prepareDatasources(uri, filters = []) {
         const errorHandler = get(this.props, 'onError', noop);
 
         const projectId = getProjectIdByUri(uri);
-        new UriAdapter(sdk, projectId).createDataSource({ uri }).then((dataSource) => {
+        const dateFilter = this.getDateFilter(filters);
+        const attributeFilters = this.getAttributeFilters(filters);
+
+        new UriAdapter(sdk, projectId).createDataSource({ uri, attributeFilters, dateFilter }).then((dataSource) => {
             const metadataSource = new UriMetadataSource(sdk, uri);
             metadataSource.getVisualizationMetadata().then(({ metadata }) => {
                 this.setState({

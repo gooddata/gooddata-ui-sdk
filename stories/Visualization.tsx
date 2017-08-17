@@ -21,7 +21,8 @@ storiesOf('Visualization', module)
                 onError={console.error}
             />
         </div>
-    )).add('chart with custom colors example', () => (
+    ))
+    .add('chart with custom colors example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
                 uri={'/gdc/md/myproject/obj/1002'}
@@ -34,6 +35,20 @@ storiesOf('Visualization', module)
                         'rgba(162, 37, 34, 1)'
                     ]
                 }}
+                onError={console.error}
+            />
+        </div>
+    ))
+    .add('chart with applied filter', () => (
+        <div style={{ width: 800, height: 400 }}>
+            <Visualization
+                uri={'/gdc/md/myproject/obj/1002'}
+                filters={[{
+                    id: '/gdc/md/myproject/obj/123',
+                    type: 'date',
+                    granularity: 'date',
+                    between: ['2017-01-01', '2017-12-31']
+                }]}
                 onError={console.error}
             />
         </div>
