@@ -304,5 +304,19 @@ describe('project', () => {
                 });
             });
         });
+
+        describe('deleteProject', () => {
+            it('should delete project', () => {
+                const projectId = 'myFakeProjectId';
+
+                fetchMock.mock(
+                    `/gdc/projects/${projectId}`,
+                    'DELETE',
+                    200
+                );
+
+                return project.deleteProject(projectId).then(r => expect(r.ok).to.be.ok());
+            });
+        });
     });
 });
