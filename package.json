@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@gooddata/data-layer": "1.0.4",
-    "@gooddata/indigo-visualizations": "0.10.0",
+    "@gooddata/indigo-visualizations": "0.10.1",
     "gooddata": "2.1.0",
     "lodash": "4.17.4",
     "numeral": "2.0.6",
