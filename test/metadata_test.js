@@ -414,13 +414,8 @@ describe('metadata', () => {
                     }
                 );
 
-                fetchMock.mock('/foo/bar', {
-                    status: 200,
-                    body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
-                });
-
                 return md.getObjectUri('myFakeProjectId', 'attr.foo.bar').then((result) => {
-                    expect(result).to.be('/foo/bar/attr');
+                    expect(result).to.be('/foo/bar');
                 });
             });
 
@@ -435,45 +430,6 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUri('myFakeProjectId', 'foo.bar').then(null, err => expect(err).to.be.an(Error));
-            });
-
-            it('should return an attribute uri for a display form identifier', () => {
-                fetchMock.mock(
-                    '/gdc/md/myFakeProjectId/identifiers',
-                    'POST',
-                    {
-                        status: 200,
-                        body: JSON.stringify({ identifiers: [{
-                            uri: '/foo/bar/label',
-                            identifier: 'label.foo.bar'
-                        }] })
-                    }
-                );
-
-                fetchMock.mock('/foo/bar/label', {
-                    status: 200,
-                    body: JSON.stringify({
-                        attributeDisplayForm: {
-                            content: {
-                                formOf: '/foo/bar'
-                            },
-                            meta: {
-                                identifier: 'label.foo.bar',
-                                uri: '/foo/bar/label',
-                                title: 'Foo Bar Label'
-                            }
-                        }
-                    })
-                });
-
-                fetchMock.mock('/foo/bar', {
-                    status: 200,
-                    body: JSON.stringify({ attribute: { meta: { uri: '/foo/bar/attr' } } })
-                });
-
-                return md.getObjectUri('myFakeProjectId', 'label.foo.bar').then((result) => {
-                    expect(result).to.be('/foo/bar/attr');
-                });
             });
         });
 

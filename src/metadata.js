@@ -452,30 +452,19 @@ export function getObjectIdentifier(uri) {
  * @return {String} uri of the metadata object
  */
 export function getObjectUri(projectId, identifier) {
-    function uriFinder(obj) {
-        const data = (obj.attribute) ? obj.attribute : obj.metric;
-        return data.meta.uri;
-    }
-
     return ajax(`/gdc/md/${projectId}/identifiers`, {
         method: 'POST',
         body: {
             identifierToUri: [identifier]
         }
     }).then(parseJSON).then((data) => {
-        const found = data.identifiers.filter(i => i.identifier === identifier);
+        const found = data.identifiers.find(pair => pair.identifier === identifier);
 
-        if (found[0]) {
-            return getObjectDetails(found[0].uri);
+        if (found) {
+            return found.uri;
         }
+
         throw new Error(`Object with identifier ${identifier} not found in project ${projectId}`);
-    }).then((objData) => {
-        if (!objData.attributeDisplayForm) {
-            return uriFinder(objData);
-        }
-        return getObjectDetails(objData.attributeDisplayForm.content.formOf).then((objectData) => {
-            return uriFinder(objectData);
-        });
     });
 }
 
