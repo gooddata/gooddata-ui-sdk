@@ -1926,6 +1926,18 @@ css-mediaquery@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/css-mediaquery/-/css-mediaquery-0.1.2.tgz#6a2c37344928618631c54bd33cedd301da18bea0"
 
+css-node-extract@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/css-node-extract/-/css-node-extract-0.1.0.tgz#8ee622c1556fb87f98643375fd8a9c659c97887e"
+  dependencies:
+    postcss "^5.2.8"
+
+css-node-extract@^0.2.1:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/css-node-extract/-/css-node-extract-0.2.3.tgz#8ef875d30642c11510f384964046300b35540aa6"
+  dependencies:
+    postcss "^6.0.1"
+
 css-select@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -1934,6 +1946,12 @@ css-select@~1.2.0:
     css-what "2.1"
     domutils "1.5.1"
     nth-check "~1.0.1"
+
+css-selector-extract@^2.0.1:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/css-selector-extract/-/css-selector-extract-2.0.6.tgz#2bfc03b787902c6f3d8b1cebe5ddf3ec81ddf810"
+  dependencies:
+    postcss "^6.0.1"
 
 css-selector-tokenizer@^0.7.0:
   version "0.7.0"
@@ -4352,6 +4370,69 @@ node-pre-gyp@^0.6.36:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
+node-sass-filter-importer@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/node-sass-filter-importer/-/node-sass-filter-importer-1.0.1.tgz#875cb640681ab597fc9e0cb515cacb4f282a22ad"
+  dependencies:
+    css-node-extract "^0.1.0"
+    postcss-scss "^0.4.0"
+    unique-concat "^0.2.2"
+
+node-sass-glob-importer@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/node-sass-glob-importer/-/node-sass-glob-importer-3.0.2.tgz#8a8e7f57a76cb33ee5e9f3da4f263f11d65316e7"
+  dependencies:
+    glob "^7.1.1"
+    unique-concat "^0.2.2"
+
+node-sass-magic-importer@4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/node-sass-magic-importer/-/node-sass-magic-importer-4.1.5.tgz#2c648b550a1ff680b3bc4cb7fdf3dcff4a4c619a"
+  dependencies:
+    css-node-extract "^0.2.1"
+    glob "^7.1.1"
+    node-sass-filter-importer "^1.0.1"
+    node-sass-glob-importer "^3.0.2"
+    node-sass-package-importer "^3.0.4"
+    node-sass-selector-importer "^4.2.0"
+    postcss-scss "^0.4.0"
+    unique-concat "^0.2.2"
+
+node-sass-package-importer@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/node-sass-package-importer/-/node-sass-package-importer-3.0.4.tgz#c2887e1c790774fc8a36bf1e766774b982a3f2cb"
+  dependencies:
+    resolve "^1.1.7"
+
+node-sass-selector-importer@^4.2.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/node-sass-selector-importer/-/node-sass-selector-importer-4.2.1.tgz#4298a62403dad4c75b7be0d524455f8dcbf0f502"
+  dependencies:
+    css-selector-extract "^2.0.1"
+    node-sass "^3.13.0"
+    postcss-scss "^0.3.1"
+
+node-sass@^3.13.0:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-3.13.1.tgz#7240fbbff2396304b4223527ed3020589c004fc2"
+  dependencies:
+    async-foreach "^0.1.3"
+    chalk "^1.1.1"
+    cross-spawn "^3.0.0"
+    gaze "^1.0.0"
+    get-stdin "^4.0.1"
+    glob "^7.0.3"
+    in-publish "^2.0.0"
+    lodash.assign "^4.2.0"
+    lodash.clonedeep "^4.3.2"
+    meow "^3.7.0"
+    mkdirp "^0.5.1"
+    nan "^2.3.2"
+    node-gyp "^3.3.1"
+    npmlog "^4.0.0"
+    request "^2.61.0"
+    sass-graph "^2.1.1"
+
 node-sass@^4.5.3:
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.5.3.tgz#d09c9d1179641239d1b97ffc6231fdcec53e1568"
@@ -4950,6 +5031,18 @@ postcss-reduce-transforms@^1.0.3:
     postcss "^5.0.8"
     postcss-value-parser "^3.0.1"
 
+postcss-scss@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/postcss-scss/-/postcss-scss-0.3.1.tgz#65c610d8e2a7ee0e62b1835b71b8870734816e4b"
+  dependencies:
+    postcss "^5.2.4"
+
+postcss-scss@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/postcss-scss/-/postcss-scss-0.4.1.tgz#ad771b81f0f72f5f4845d08aa60f93557653d54c"
+  dependencies:
+    postcss "^5.2.13"
+
 postcss-selector-parser@^2.0.0, postcss-selector-parser@^2.2.2:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-2.2.3.tgz#f9437788606c3c9acee16ffe8d8b16297f27bb90"
@@ -4987,7 +5080,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.16:
+postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.13, postcss@^5.2.16, postcss@^5.2.4, postcss@^5.2.8:
   version "5.2.17"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.17.tgz#cf4f597b864d65c8a492b2eabe9d706c879c388b"
   dependencies:
@@ -5547,7 +5640,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@2, request@^2.79.0, request@^2.81.0:
+request@2, request@^2.61.0, request@^2.79.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -5590,7 +5683,7 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6, resolve@^1.3.2:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.3.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.4.0.tgz#a75be01c53da25d934a98ebd0e4c4a7312f92a86"
   dependencies:
@@ -6342,6 +6435,10 @@ uniqid@^4.0.0:
 uniqs@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/uniqs/-/uniqs-2.0.0.tgz#ffede4b36b25290696e6e165d4a59edb998e6b02"
+
+unique-concat@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/unique-concat/-/unique-concat-0.2.2.tgz#9210f9bdcaacc5e1e3929490d7c019df96f18712"
 
 unique-string@^1.0.0:
   version "1.0.0"
