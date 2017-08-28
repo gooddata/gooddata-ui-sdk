@@ -34,9 +34,9 @@
     react-responsive "1.2.6"
     react-textarea-autosize "4.0.5"
 
-"@gooddata/goodstrap@51.0.0":
-  version "51.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-51.0.0.tgz#88fd475d23d0399efe713a9ea66994fabd775199"
+"@gooddata/goodstrap@52.0.0":
+  version "52.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-52.0.0.tgz#65150c92f26b608973acd5fa6f2c9142bfe72e9d"
   dependencies:
     "@gooddata/js-utils" "0.7.0"
     classnames "2.2.5"
@@ -44,6 +44,7 @@
     fixed-data-table-2 "0.7.13"
     foundation-sites "5.5.3"
     immutable "3.8.1"
+    invariant "2.2.2"
     jquery "2.1.4"
     kefir "3.7.1"
     lodash "4.17.4"
@@ -51,7 +52,6 @@
     moment-timezone "0.5.11"
     react-day-picker "3.1.1"
     react-dnd "2.1.4"
-    react-dnd-touch-backend gooddata/react-dnd-touch-backend#v0.0.1
     react-document-title "2.0.3"
     react-intl "2.2.3"
     react-native-listener "1.0.2"
@@ -103,7 +103,7 @@
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@hypnosphi/fuse.js/-/fuse.js-3.0.9.tgz#ea99f6121b4a8f065b4c71f85595db2714498807"
 
-"@storybook/addon-actions@^3.2.6":
+"@storybook/addon-actions@3.2.6", "@storybook/addon-actions@^3.2.6":
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.2.6.tgz#d8e476188a288f49f36a8482175bc2c1898dfc28"
   dependencies:
@@ -3265,6 +3265,10 @@ hoist-non-react-statics@1.x.x, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
+hoist-non-react-statics@^2.2.1:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.0.tgz#ede16318c2ff1f9fe3a025396ba06fd4c44608bb"
+
 home-or-tmp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-2.0.0.tgz#e36c3f2d2cae7d746a857e38d18d5f32a7882db8"
@@ -4140,7 +4144,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.2.1:
+lodash-es@^4.2.0, lodash-es@^4.2.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
 
@@ -5616,6 +5620,17 @@ react-native-listener@1.0.2:
 react-portal@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.0.0.tgz#9304fce836e8a3216b22588f8dc91b447728f0ae"
+
+react-redux@5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
+  dependencies:
+    hoist-non-react-statics "^2.2.1"
+    invariant "^2.0.0"
+    lodash "^4.2.0"
+    lodash-es "^4.2.0"
+    loose-envify "^1.1.0"
+    prop-types "^15.5.10"
 
 react-responsive@1.2.6:
   version "1.2.6"

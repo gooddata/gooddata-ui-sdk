@@ -29,6 +29,7 @@
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
     "react-dom": "15.3.2",
+    "react-redux": "5.0.6",
     "sass-loader": "6.0.6",
     "ts-jest": "21.0.0",
     "ts-loader": "2.3.3",
@@ -38,7 +39,7 @@
   },
   "dependencies": {
     "@gooddata/data-layer": "3.0.0",
-    "@gooddata/goodstrap": "51.0.0",
+    "@gooddata/goodstrap": "52.0.0",
     "@gooddata/indigo-visualizations": "0.11.1",
     "classnames": "2.2.5",
     "gooddata": "3.0.0",
