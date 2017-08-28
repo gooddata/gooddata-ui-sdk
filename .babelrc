@@ -1,7 +1,14 @@
 {
-    "plugins": ["lodash"],
+    "plugins": [],
     "presets": [
         "es2015",
         "stage-0"
-    ]
+    ],
+    "env": {
+        "production": {
+            "plugins": [
+                "lodash"
+            ]
+        }
+    }
 }

@@ -11,11 +11,11 @@ describe('segments', () => {
 
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId/segments',
+                    '/gdc/admin/contracts/contractId/dataproducts/dataProductId/segments',
                     400
                 );
 
-                return segments.getDataProductSegments('contractId', 'dataProductId').then(null, err => expect(err).to.be.an(Error));
+                return segments.getDataProductSegments('contractId', 'dataProductId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return dataproduct segments', () => {
@@ -53,21 +53,20 @@ describe('segments', () => {
                     }
                 );
                 return segments.getDataProductSegments('contractId', 'dataproductId').then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].domains[0]).to.be('data-admin-test1');
-                    expect(result.items[0].domains[1]).to.be('data-admin-test2');
-                    expect(result.items[1].domains[0]).to.be('data-admin-test1');
-                    expect(result.items[1].domains[1]).to.be('data-admin-test2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].domains[0]).toBe('data-admin-test1');
+                    expect(result.items[0].domains[1]).toBe('data-admin-test2');
+                    expect(result.items[1].domains[0]).toBe('data-admin-test1');
+                    expect(result.items[1].domains[1]).toBe('data-admin-test2');
 
-                    expect(result.items[0].id).to.be('segmentId');
-                    expect(result.items[1].id).to.be('segmentId1');
+                    expect(result.items[0].id).toBe('segmentId');
+                    expect(result.items[1].id).toBe('segmentId1');
                 });
             });
 
             it('should create dataproduct', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/admin/contracts/contractId/dataproducts/dataproductId/segments',
-                    'POST',
                     {
                         status: 201,
                         body: JSON.stringify({
@@ -81,7 +80,7 @@ describe('segments', () => {
                     }
                 );
                 return segments.createSegment('contractId', 'dataproductId', 'data-admin-test1').then((result) => {
-                    expect(result.status).to.be(201);
+                    expect(result.status).toBe(201);
                 });
             });
         });

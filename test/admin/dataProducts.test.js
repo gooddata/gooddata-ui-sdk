@@ -11,11 +11,11 @@ describe('dataProducts', () => {
 
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId?',
+                    '/gdc/admin/contracts/contractId/dataproducts/dataProductId?',
                     400
                 );
 
-                return dataProducts.getDataProduct('contractId', 'dataProductId', '', '', null).then(null, err => expect(err).to.be.an(Error));
+                return dataProducts.getDataProduct('contractId', 'dataProductId', '', '', null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return dataproduct', () => {
@@ -42,11 +42,11 @@ describe('dataProducts', () => {
                     }
                 );
                 return dataProducts.getDataProduct('contractId', 'dataproductId', '', '', null).then((result) => {
-                    expect(result.domains[0].name).to.be('data-admin-test1');
-                    expect(result.domains[0].environment).to.be('TEST');
+                    expect(result.domains[0].name).toBe('data-admin-test1');
+                    expect(result.domains[0].environment).toBe('TEST');
 
-                    expect(result.id).to.be('dataproductId');
-                    expect(result.contractId).to.be('contractId');
+                    expect(result.id).toBe('dataproductId');
+                    expect(result.contractId).toBe('contractId');
                 });
             });
 
@@ -94,24 +94,23 @@ describe('dataProducts', () => {
                 )
                 ;
                 return dataProducts.getDataProducts('contractId', '').then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].domains[0].name).to.be('data-admin-test1');
-                    expect(result.items[0].domains[0].environment).to.be('TEST');
-                    expect(result.items[1].domains[0].name).to.be('data-admin-test2');
-                    expect(result.items[1].domains[0].environment).to.be('TEST');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].domains[0].name).toBe('data-admin-test1');
+                    expect(result.items[0].domains[0].environment).toBe('TEST');
+                    expect(result.items[1].domains[0].name).toBe('data-admin-test2');
+                    expect(result.items[1].domains[0].environment).toBe('TEST');
 
-                    expect(result.items[0].id).to.be('dataproductId');
-                    expect(result.items[1].id).to.be('dataproductId1');
+                    expect(result.items[0].id).toBe('dataproductId');
+                    expect(result.items[1].id).toBe('dataproductId1');
 
-                    expect(result.items[0].contractId).to.be('contractId');
-                    expect(result.items[1].contractId).to.be('contractId');
+                    expect(result.items[0].contractId).toBe('contractId');
+                    expect(result.items[1].contractId).toBe('contractId');
                 });
             });
 
             it('should create dataproduct', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/admin/contracts/contractId/dataproducts',
-                    'POST',
                     {
                         status: 201,
                         body: JSON.stringify({
@@ -126,7 +125,7 @@ describe('dataProducts', () => {
                     }
                 );
                 return dataProducts.createDataProduct('contractId', 'dataproductId', ['data-admin-test1', 'data-admin-test2']).then((result) => {
-                    expect(result.status).to.be(201);
+                    expect(result.status).toBe(201);
                 });
             });
         });

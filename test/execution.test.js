@@ -75,17 +75,17 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId']).then((result) => {
-                        expect(result.headers[0].id).to.be('attrId');
-                        expect(result.headers[0].uri).to.be('attrUri');
-                        expect(result.headers[0].type).to.be('attrLabel');
-                        expect(result.headers[0].title).to.be('Atribute Title');
-                        expect(result.headers[1].id).to.be('metricId');
-                        expect(result.headers[1].uri).to.be('metricUri');
-                        expect(result.headers[1].type).to.be('metric');
-                        expect(result.headers[1].title).to.be('Metric Title');
-                        expect(result.rawData[0]).to.eql({ id: 1, name: 'a' });
-                        expect(result.rawData[1]).to.be(1);
-                        expect(result.warnings).to.eql([]);
+                        expect(result.headers[0].id).toBe('attrId');
+                        expect(result.headers[0].uri).toBe('attrUri');
+                        expect(result.headers[0].type).toBe('attrLabel');
+                        expect(result.headers[0].title).toBe('Atribute Title');
+                        expect(result.headers[1].id).toBe('metricId');
+                        expect(result.headers[1].uri).toBe('metricUri');
+                        expect(result.headers[1].type).toBe('metric');
+                        expect(result.headers[1].title).toBe('Metric Title');
+                        expect(result.rawData[0]).toEqual({ id: 1, name: 'a' });
+                        expect(result.rawData[1]).toBe(1);
+                        expect(result.warnings).toEqual([]);
                     });
                 });
 
@@ -102,7 +102,7 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId']).then((result) => {
-                        expect(result.warnings).to.eql([1, 2, 3]);
+                        expect(result.warnings).toEqual([1, 2, 3]);
                     });
                 });
 
@@ -153,7 +153,7 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId'], {}).then((result) => {
-                        expect(result.rawData).to.eql([
+                        expect(result.rawData).toEqual([
                             [{ id: '1', name: 'a' }, '2'],
                             [{ id: '2', name: 'b' }, '3']
                         ]);
@@ -171,8 +171,8 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId']).then((result) => {
-                        expect(result.rawData).to.eql([]);
-                        expect(result.isEmpty).to.be(true);
+                        expect(result.rawData).toEqual([]);
+                        expect(result.isEmpty).toBe(true);
                     });
                 });
 
@@ -183,8 +183,8 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', ['attrId', 'metricId']).catch((err) => {
-                        expect(err).to.be.an(Error);
-                        expect(err.response.status).to.be(400);
+                        expect(err).toBeInstanceOf(Error);
+                        expect(err.response.status).toBe(400);
                     });
                 });
 
@@ -199,7 +199,7 @@ describe('execution', () => {
                     );
 
                     return ex.getData('myFakeProjectId', [{ type: 'metric', uri: '/metric/uri' }]).then(null, (err) => {
-                        expect(err).to.be.an(Error);
+                        expect(err).toBeInstanceOf(Error);
                     });
                 });
 
@@ -222,7 +222,7 @@ describe('execution', () => {
                             ]
                         }
                     ).then((result) => {
-                        expect(result.headers[1]).to.eql({
+                        expect(result.headers[1]).toEqual({
                             id: 'metricId',
                             title: 'Metric Title',
                             type: 'metric',
@@ -245,7 +245,7 @@ describe('execution', () => {
 
                     ex.getData('myFakeProjectId', ['attrId', 'metricId'], {}, { headers: { 'X-GDC-REQUEST': 'foo' } });
                     const [, settings] = fetchMock.lastCall(matcher);
-                    expect(settings.headers['X-GDC-REQUEST']).to.eql('foo');
+                    expect(settings.headers['X-GDC-REQUEST']).toEqual('foo');
                 });
             });
 
@@ -274,7 +274,7 @@ describe('execution', () => {
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
 
-                    expect(requestBody.execution.filters).to.eql(filters);
+                    expect(requestBody.execution.filters).toEqual(filters);
                 });
             });
 
@@ -305,7 +305,7 @@ describe('execution', () => {
 
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
-                    expect(requestBody.execution.orderBy).to.eql(orderBy);
+                    expect(requestBody.execution.orderBy).toEqual(orderBy);
                 });
             });
 
@@ -335,7 +335,7 @@ describe('execution', () => {
 
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
-                    expect(requestBody.execution.definitions).to.eql(definitions);
+                    expect(requestBody.execution.definitions).toEqual(definitions);
                 });
             });
 
@@ -353,7 +353,7 @@ describe('execution', () => {
                     const [, settings] = fetchMock.lastCall(matcher);
                     const requestBody = JSON.parse(settings.body);
 
-                    expect(requestBody.execution.where).to.eql(where);
+                    expect(requestBody.execution.where).toEqual(where);
                 });
             });
         });
@@ -517,13 +517,13 @@ describe('execution', () => {
                         {
                             '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
                                 $in: [
-                                    { id: 1243 },
-                                    { id: 1242 },
-                                    { id: 1241 },
-                                    { id: 1240 },
-                                    { id: 1239 },
-                                    { id: 1238 },
-                                    { id: 1236 }
+                                    { id: '1243' },
+                                    { id: '1242' },
+                                    { id: '1241' },
+                                    { id: '1240' },
+                                    { id: '1239' },
+                                    { id: '1238' },
+                                    { id: '1236' }
                                 ]
                             }
                         }
@@ -573,13 +573,13 @@ describe('execution', () => {
                     $and: [{
                         '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1028': {
                             $in: [
-                                { id: 1243 },
-                                { id: 1242 },
-                                { id: 1241 },
-                                { id: 1240 },
-                                { id: 1239 },
-                                { id: 1238 },
-                                { id: 1236 }
+                                { id: '1243' },
+                                { id: '1242' },
+                                { id: '1241' },
+                                { id: '1240' },
+                                { id: '1239' },
+                                { id: '1238' },
+                                { id: '1236' }
                             ]
                         }
                     }],
@@ -605,8 +605,8 @@ describe('execution', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithStrings);
                 const interval = getWhereInterval(executionConfiguration.where, '/gdc/md/dim');
 
-                expect(interval[0]).to.equal(-1);
-                expect(interval[1]).to.equal(0);
+                expect(interval[0]).toBe(-1);
+                expect(interval[1]).toBe(0);
             });
 
             it('should not convert absolute date filters', () => {
@@ -624,8 +624,8 @@ describe('execution', () => {
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithStrings);
                 const interval = getWhereInterval(executionConfiguration.where, '/gdc/md/dim');
 
-                expect(interval[0]).to.equal('2016-01-01');
-                expect(interval[1]).to.equal('2017-01-01');
+                expect(interval[0]).toBe('2016-01-01');
+                expect(interval[1]).toBe('2017-01-01');
             });
 
             it('does not execute all-time date filter', () => {
@@ -638,7 +638,7 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithAllTime);
-                expect(executionConfiguration.where).to.eql({ $and: [] });
+                expect(executionConfiguration.where).toEqual({ $and: [] });
             });
 
             it('does not execute attribute filter with all selected', () => {
@@ -655,13 +655,13 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdWithSelectAll);
-                expect(executionConfiguration.where).to.eql({ $and: [] });
+                expect(executionConfiguration.where).toEqual({ $and: [] });
             });
 
             it('generates right metricMappings', () => {
                 const mdObjCloned = cloneDeep(mdObj);
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjCloned);
-                expect(executionConfiguration.metricMappings).to.eql([
+                expect(executionConfiguration.metricMappings).toEqual([
                     {
                         element: 'fact_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1144.generated.b9f95d95adbeac03870b764f8b2c3402_filtered_sum',
                         measureIndex: 0
@@ -696,7 +696,7 @@ describe('execution', () => {
                 }];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
-                expect(executionConfiguration.metricMappings).to.eql([
+                expect(executionConfiguration.metricMappings).toEqual([
                     {
                         element: 'metric_qamfsd9cw85e53mcqs74k8a0mwbf5gc2_1556.generated.742c298cb16e36869e5d70e87840ffa1_pop',
                         measureIndex: 0,
@@ -733,7 +733,7 @@ describe('execution', () => {
                 ];
 
                 const executionConfiguration = ex.mdToExecutionConfiguration(mdObjPoP);
-                expect(executionConfiguration.metricMappings).to.eql([
+                expect(executionConfiguration.metricMappings).toEqual([
                     {
                         element: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1556',
                         measureIndex: 0
@@ -840,7 +840,7 @@ describe('execution', () => {
                 const execConfig = ex.mdToExecutionConfiguration(mdObj);
 
                 execConfig.definitions.forEach((definition) => {
-                    expect(definition.metricDefinition.title).to.have.length(1000);
+                    expect(definition.metricDefinition.title).toHaveLength(1000);
                 });
             });
         });
@@ -1196,7 +1196,7 @@ describe('execution', () => {
                 return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
                     const [, settings] = fetchMock.lastCall(executionUriMatcher);
                     const request = JSON.parse(settings.body);
-                    expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
+                    expect(request.execution.definitions[0].metricDefinition.format).toBe('someone changed me');
                 });
             });
 
@@ -1231,7 +1231,7 @@ describe('execution', () => {
                 return ex.getDataForVis('myFakeProjectId', mdObj, {}).then(() => {
                     const [, settings] = fetchMock.lastCall(executionUriMatcher);
                     const request = JSON.parse(settings.body);
-                    expect(request.execution.definitions[0].metricDefinition.format).to.be('someone changed me');
+                    expect(request.execution.definitions[0].metricDefinition.format).toBe('someone changed me');
                 });
             });
         });

@@ -18,148 +18,126 @@ describe('Catalogue', () => {
             fetchMock.restore();
         });
 
-        it('should load items from loadCatalog server end point', (done) => {
-            catalogue.loadItems(projectId, fixtures.optionsForEmptySelection).then(() => {
+        it('should load items from loadCatalog server end point', () => {
+            return catalogue.loadItems(projectId, fixtures.optionsForEmptySelection).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForEmptySelection);
-
-                done();
+                expect(data).toEqual(fixtures.requestForEmptySelection);
             });
         });
 
-        it('should send maql for fact base measures', (done) => {
+        it('should send maql for fact base measures', () => {
             const options = fixtures.optionsForMeasureWithFilterAndCategory;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategory);
-                expect(get(data, 'catalogRequest.bucketItems.0')).to.be(
+                expect(data).toEqual(fixtures.requestForMeasureWithFilterAndCategory);
+                expect(get(data, 'catalogRequest.bucketItems.0')).toBe(
                     get(options, 'bucketItems.buckets.categories.0.category.attribute')
                 );
-
-                done();
             });
         });
 
-        it('should send identifier for attribute base measure', (done) => {
+        it('should send identifier for attribute base measure', () => {
             const options = fixtures.optionsForTwoMeasuresFactAndAtrribute;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForTwoMeasureFactAndAttribute);
-
-                done();
+                expect(data).toEqual(fixtures.requestForTwoMeasureFactAndAttribute);
             });
         });
 
-        it('should send maql with select identifier when visualization contains measure fact and category', (done) => {
+        it('should send maql with select identifier when visualization contains measure fact and category', () => {
             const options = fixtures.optionsForMeasureWithShowInPercent;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMeasureWithShowInPercent);
-                expect(get(data, 'catalogRequest.bucketItems[0]')).to.be(
+                expect(data).toEqual(fixtures.requestForMeasureWithShowInPercent);
+                expect(get(data, 'catalogRequest.bucketItems[0]')).toBe(
                     get(options, 'bucketItems.buckets.categories[0].category.attribute')
                 );
-
-                done();
             });
         });
 
-        it('should send select for fact base measure with filter', (done) => {
+        it('should send select for fact base measure with filter', () => {
             const options = fixtures.optionsForMeasureTypeFactWithFilter;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMeasureTypeFactWithFilter);
-
-                done();
+                expect(data).toEqual(fixtures.requestForMeasureTypeFactWithFilter);
             });
         });
 
-        it('should send identifier for measure type metric', (done) => {
+        it('should send identifier for measure type metric', () => {
             const options = fixtures.optionsForMetric;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMetric);
-
-                done();
+                expect(data).toEqual(fixtures.requestForMetric);
             });
         });
 
-        it('should not override bucketItems prop', (done) => {
+        it('should not override bucketItems prop', () => {
             const dummyUri = '__dummy_uri__';
 
-            catalogue.loadItems(projectId, { bucketItems: [dummyUri] }).then(() => {
+            return catalogue.loadItems(projectId, { bucketItems: [dummyUri] }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.catalogRequest;
 
-                expect(bucketItems).to.be.eql([dummyUri]);
-
-                done();
+                expect(bucketItems).toEqual([dummyUri]);
             });
         });
 
-        it('should correctly resolve items with nested maql expressions', (done) => {
+        it('should correctly resolve items with nested maql expressions', () => {
             const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
-
-                done();
+                expect(data).toEqual(fixtures.requestForMeasureWithFilterAndCategoryShowInPercent);
             });
         });
 
-        it('should correctly resolve items with nested maql expressions and negative filter element selection', (done) => {
+        it('should correctly resolve items with nested maql expressions and negative filter element selection', () => {
             const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
             set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data).to.be.eql(fixtures.requestForMeasureWithNotInFilterAndCategoryShowInPercent);
-
-                done();
+                expect(data).toEqual(fixtures.requestForMeasureWithNotInFilterAndCategoryShowInPercent);
             });
         });
 
-        it('should send from ALL dataSets type when passing returnAllDateDataSets param', (done) => {
+        it('should send from ALL dataSets type when passing returnAllDateDataSets param', () => {
             const options = cloneDeep(fixtures.optionsForEmptySelection);
             options.returnAllDateDataSets = true;
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.catalogRequest.requiredDataSets).to.be.eql({ type: 'ALL' });
-
-                done();
+                expect(data.catalogRequest.requiredDataSets).toEqual({ type: 'ALL' });
             });
         });
 
-        it('should send CUSTOM requiredDataSets structure for dataSetIdentifier param', (done) => {
+        it('should send CUSTOM requiredDataSets structure for dataSetIdentifier param', () => {
             const options = cloneDeep(fixtures.optionsForEmptySelection);
 
             options.dataSetIdentifier = 'identifier';
 
-            catalogue.loadItems(projectId, options).then(() => {
+            return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.catalogRequest.requiredDataSets).to.be.eql({
+                expect(data.catalogRequest.requiredDataSets).toEqual({
                     type: 'CUSTOM',
                     customIdentifiers: [options.dataSetIdentifier]
                 });
-
-                done();
             });
         });
     });
@@ -176,11 +154,11 @@ describe('Catalogue', () => {
             fetchMock.restore();
         });
 
-        it('should generate basic request structure', (done) => {
-            catalogue.loadDateDataSets(projectId, {}).then(() => {
+        it('should generate basic request structure', () => {
+            return catalogue.loadDateDataSets(projectId, {}).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.dateDataSetsRequest).to.be.eql({
+                expect(data.dateDataSetsRequest).toEqual({
                     includeUnavailableDateDataSetsCount: true,
                     includeAvailableDateAttributes: true,
                     bucketItems: undefined,
@@ -188,56 +166,48 @@ describe('Catalogue', () => {
                         type: 'PRODUCTION'
                     }
                 });
-
-                done();
             });
         });
 
-        it('should send convert dataSetIdentifier to customIdentifiers', (done) => {
+        it('should send convert dataSetIdentifier to customIdentifiers', () => {
             const dataSetIdentifier = 'my_identifier';
 
-            catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
+            return catalogue.loadDateDataSets(projectId, { dataSetIdentifier }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
-                expect(requiredDataSets).to.eql({
+                expect(requiredDataSets).toEqual({
                     type: 'CUSTOM',
                     customIdentifiers: [dataSetIdentifier]
                 });
-
-                done();
             });
         });
 
-        it('should send type ALL when sending returnAllDateDataSets', (done) => {
+        it('should send type ALL when sending returnAllDateDataSets', () => {
             const returnAllDateDataSets = true;
 
-            catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
+            return catalogue.loadDateDataSets(projectId, { returnAllDateDataSets }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
-                expect(requiredDataSets).to.eql({
+                expect(requiredDataSets).toEqual({
                     type: 'ALL'
                 });
-
-                done();
             });
         });
 
-        it('should omit requiredDataSets parameter when sending returnAllRelatedDateDataSets', (done) => {
+        it('should omit requiredDataSets parameter when sending returnAllRelatedDateDataSets', () => {
             const returnAllRelatedDateDataSets = true;
 
-            catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
+            return catalogue.loadDateDataSets(projectId, { returnAllRelatedDateDataSets }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { requiredDataSets } = data.dateDataSetsRequest;
-                expect(requiredDataSets).to.be(undefined);
-
-                done();
+                expect(requiredDataSets).toBe(undefined);
             });
         });
 
-        it('should send empty columns if only date buckets are in the request', (done) => {
+        it('should send empty columns if only date buckets are in the request', () => {
             const mockPayload = {
                 bucketItems: {
                     buckets: {
@@ -257,14 +227,12 @@ describe('Catalogue', () => {
                 }
             };
 
-            catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
+            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.dateDataSetsRequest;
 
-                expect(bucketItems).to.have.length(0);
-
-                done();
+                expect(bucketItems).toHaveLength(0);
             });
         });
 
@@ -336,56 +304,50 @@ describe('Catalogue', () => {
                 }
             };
 
-            catalogue.loadDateDataSets(projectId, mockPayload).then((done) => {
+            return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
                 const { data } = fetchMock.lastOptions();
 
                 const { bucketItems } = data.dateDataSetsRequest;
 
-                expect(bucketItems).to.have.eql([
+                expect(bucketItems).toEqual([
                     '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
                     'SELECT (SELECT (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706])) / (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274] WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706]))) FOR PREVIOUS ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167])',
                     'SELECT (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706])) / (SELECT SUM([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276]) BY ALL [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274] WHERE [/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266] NOT IN ([/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706]))'
                 ]);
-
-                done();
             });
         });
 
-        it('should use option includeObjectsWithTags if provided', (done) => {
+        it('should use option includeObjectsWithTags if provided', () => {
             const includeObjectsWithTags = ['a', 'b', 'c'];
 
-            catalogue.loadDateDataSets(projectId, { includeObjectsWithTags }).then(() => {
+            return catalogue.loadDateDataSets(projectId, { includeObjectsWithTags }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.dateDataSetsRequest.includeObjectsWithTags).to.eql(['a', 'b', 'c']);
-
-                done();
+                expect(data.dateDataSetsRequest.includeObjectsWithTags).toEqual(['a', 'b', 'c']);
             });
         });
 
-        it('should use option excludeObjectsWithTags if provided', (done) => {
+        it('should use option excludeObjectsWithTags if provided', () => {
             const excludeObjectsWithTags = ['a', 'b', 'c'];
 
-            catalogue.loadDateDataSets(projectId, { excludeObjectsWithTags }).then(() => {
+            return catalogue.loadDateDataSets(projectId, { excludeObjectsWithTags }).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.dateDataSetsRequest.excludeObjectsWithTags).to.eql(['a', 'b', 'c']);
-
-                done();
+                expect(data.dateDataSetsRequest.excludeObjectsWithTags).toEqual(['a', 'b', 'c']);
             });
         });
 
-        it('should use option includeObjectsWithTags and omit excludeObjectsWithTags if both provided', (done) => {
+        it('should use option includeObjectsWithTags and omit excludeObjectsWithTags if both provided', () => {
             const includeObjectsWithTags = ['a', 'b', 'c'];
             const excludeObjectsWithTags = ['d', 'e', 'f'];
 
-            catalogue.loadDateDataSets(projectId, { includeObjectsWithTags, excludeObjectsWithTags }).then(() => {
+            const options = { includeObjectsWithTags, excludeObjectsWithTags };
+
+            return catalogue.loadDateDataSets(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
 
-                expect(data.dateDataSetsRequest.includeObjectsWithTags).to.eql(['a', 'b', 'c']);
-                expect(data.dateDataSetsRequest.excludeObjectsWithTags).to.be(undefined);
-
-                done();
+                expect(data.dateDataSetsRequest.includeObjectsWithTags).toEqual(['a', 'b', 'c']);
+                expect(data.dateDataSetsRequest.excludeObjectsWithTags).toBe(undefined);
             });
         });
     });

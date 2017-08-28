@@ -8,41 +8,41 @@ describe('config', () => {
         });
         it('should set url if valid', () => {
             config.setCustomDomain('https://custom.domain.tld/');
-            expect(config.domain).to.be('https://custom.domain.tld');
+            expect(config.domain).toBe('https://custom.domain.tld');
 
             config.setCustomDomain('custom.domain.tld');
-            expect(config.domain).to.be('https://custom.domain.tld');
+            expect(config.domain).toBe('https://custom.domain.tld');
 
             config.setCustomDomain('www.domain.tld');
-            expect(config.domain).to.be('https://www.domain.tld');
+            expect(config.domain).toBe('https://www.domain.tld');
         });
         it('should strip trailing uri', () => {
             config.setCustomDomain('https://custom.domain.tld/');
-            expect(config.domain).to.be('https://custom.domain.tld');
+            expect(config.domain).toBe('https://custom.domain.tld');
         });
         it('should strip trailing whitespace', () => {
             config.setCustomDomain('   https://custom.domain.tld/  \n');
-            expect(config.domain).to.be('https://custom.domain.tld');
+            expect(config.domain).toBe('https://custom.domain.tld');
         });
         it('should throw with invalid url', () => {
             expect(() => {
                 config.setCustomDomain('$');
-            }).to.throwError();
+            }).toThrow();
         });
         it('should unset domain with null argument', () => {
             config.setCustomDomain(null);
-            expect(config.domain).to.be(undefined);
+            expect(config.domain).toBe(undefined);
         });
         it('should unset domain only with null argument', () => {
             expect(() => {
                 config.setCustomDomain(undefined);
-            }).to.throwError();
+            }).toThrow();
             expect(() => {
                 config.setCustomDomain(0);
-            }).to.throwError();
+            }).toThrow();
             expect(() => {
                 config.setCustomDomain(NaN);
-            }).to.throwError();
+            }).toThrow();
         });
     });
 });

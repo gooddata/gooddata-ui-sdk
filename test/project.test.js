@@ -15,7 +15,7 @@ describe('project', () => {
                     '/gdc/account/profile/myProfileId/projects',
                     400
                 );
-                return project.getProjects('myProfileId').then(null, err => expect(err).to.be.an(Error));
+                return project.getProjects('myProfileId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
             it('should return an array of projects', () => {
                 fetchMock.mock(
@@ -27,8 +27,8 @@ describe('project', () => {
                     }
                 );
                 return project.getProjects('myProfileId').then((result) => {
-                    expect(result.length).to.be(2);
-                    expect(result[1].meta.title).to.be('p2');
+                    expect(result.length).toBe(2);
+                    expect(result[1].meta.title).toBe('p2');
                 });
             });
         });
@@ -39,7 +39,7 @@ describe('project', () => {
                     '/gdc/md/myFakeProjectId/query/datasets',
                     400
                 );
-                return project.getDatasets('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return project.getDatasets('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return an array of dataSets', () => {
@@ -51,7 +51,7 @@ describe('project', () => {
                     }
                 );
                 return project.getDatasets('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -62,7 +62,7 @@ describe('project', () => {
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
-                return project.getColorPalette('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return project.getColorPalette('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
             it('should return an array of color objects in the right order', () => {
                 fetchMock.mock(
@@ -76,9 +76,9 @@ describe('project', () => {
                     }
                 );
                 return project.getColorPalette('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
-                    expect(result[0].r).to.be(1);
-                    expect(result[1].r).to.be(2);
+                    expect(result.length).toBe(2);
+                    expect(result[0].r).toBe(1);
+                    expect(result[1].r).toBe(2);
                 });
             });
         });
@@ -89,13 +89,13 @@ describe('project', () => {
                     '/gdc/projects/myFakeProjectId/styleSettings',
                     400
                 );
-                return project.setColorPalette('myFakeProjectId', []).then(null, err => expect(err).to.be.an(Error));
+                return project.setColorPalette('myFakeProjectId', []).then(null, err => expect(err).toBeInstanceOf(Error));
             });
         });
 
         describe('getCurrentProjectId', () => {
             it('should resolve with project id', () => {
-                fetchMock.mock('/gdc/app/account/bootstrap', 'GET', {
+                fetchMock.mock('/gdc/app/account/bootstrap', {
                     status: 200,
                     body: JSON.stringify({
                         bootstrapResource: {
@@ -109,19 +109,18 @@ describe('project', () => {
                 });
 
                 return project.getCurrentProjectId().then((result) => {
-                    expect(result).to.be('project_hash');
+                    expect(result).toBe('project_hash');
                 });
             });
 
             it('should resolve with null if current project not set', () => {
                 fetchMock.mock(
                     '/gdc/app/account/bootstrap',
-                    'GET',
                     { status: 200, body: JSON.stringify({ bootstrapResource: { current: { project: null } } }) }
                 );
 
                 return project.getCurrentProjectId().then((result) => {
-                    expect(result).to.be(null);
+                    expect(result).toBe(null);
                 });
             });
         });
@@ -142,13 +141,13 @@ describe('project', () => {
                     }
                 };
 
-                fetchMock.mock(bootstrapUrl, 'GET', {
+                fetchMock.mock(bootstrapUrl, {
                     status: 200,
                     body: JSON.stringify(bootstrap)
                 });
 
                 return project.getTimezone('prjId').then((timezone) => {
-                    expect(timezone).to.eql(timezoneMock);
+                    expect(timezone).toEqual(timezoneMock);
                 });
             });
         });
@@ -160,9 +159,8 @@ describe('project', () => {
                     service: { timezone: 'Europe/Prague' }
                 };
 
-                fetchMock.mock(
+                fetchMock.post(
                     timezoneUrl,
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify(responseJSON)
@@ -170,7 +168,7 @@ describe('project', () => {
                 );
 
                 return project.setTimezone('prjId', 'Europe/Prague').then((response) => {
-                    expect(response).to.eql(responseJSON);
+                    expect(response).toEqual(responseJSON);
                 });
             });
         });
@@ -194,9 +192,8 @@ describe('project', () => {
 
             describe('/gdc/projects call successful', () => {
                 function mockIntialPost(customCheck = () => {}) {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/projects',
-                        'POST',
                         (url, options) => {
                             customCheck(options);
                             return {
@@ -210,14 +207,13 @@ describe('project', () => {
                 it('should preset default values', () => {
                     mockIntialPost((options) => {
                         const params = JSON.parse(options.body);
-                        expect(params.project.content.guidedNavigation).to.eql(1);
-                        expect(params.project.content.driver).to.eql('Pg');
-                        expect(params.project.content.environment).to.eql('TESTING');
+                        expect(params.project.content.guidedNavigation).toEqual(1);
+                        expect(params.project.content.driver).toEqual('Pg');
+                        expect(params.project.content.environment).toEqual('TESTING');
                     });
 
                     fetchMock.mock(
                         projectUri,
-                        'GET',
                         {
                             status: 200,
                             body: JSON.stringify(createdProject)
@@ -225,7 +221,7 @@ describe('project', () => {
                     );
 
                     return project.createProject('Project', '1234').then((result) => {
-                        expect(result).to.eql(createdProject);
+                        expect(result).toEqual(createdProject);
                     });
                 });
 
@@ -233,7 +229,6 @@ describe('project', () => {
                     mockIntialPost();
                     fetchMock.mock(
                         projectUri,
-                        'GET',
                         {
                             status: 200,
                             body: JSON.stringify(createdProject)
@@ -241,7 +236,7 @@ describe('project', () => {
                     );
 
                     return project.createProject('Project', '1234').then((result) => {
-                        expect(result).to.eql(createdProject);
+                        expect(result).toEqual(createdProject);
                     });
                 });
 
@@ -249,7 +244,6 @@ describe('project', () => {
                     mockIntialPost();
                     fetchMock.mock(
                         projectUri,
-                        'GET',
                         {
                             status: 200,
                             body: JSON.stringify(deletedProject)
@@ -257,7 +251,7 @@ describe('project', () => {
                     );
 
                     return project.createProject('Project', '1234').then((result) => {
-                        expect(result).to.eql(deletedProject);
+                        expect(result).toEqual(deletedProject);
                     });
                 });
 
@@ -267,7 +261,7 @@ describe('project', () => {
                     mockPollingRequest(projectUri, pendingProject, createdProject);
 
                     return project.createProject('Project', '1234', { pollStep: 1 }).then((result) => {
-                        expect(result).to.eql(createdProject);
+                        expect(result).toEqual(createdProject);
                     });
                 });
 
@@ -280,16 +274,15 @@ describe('project', () => {
                     return project.createProject('Project', '1234', config).then(() => {
                         expect().fail('Should reject the promise if create project ended with 400');
                     }, (err) => {
-                        expect(err).to.be.an(Error);
+                        expect(err).toBeInstanceOf(Error);
                     });
                 });
             });
 
             describe('/gdc/projects call not successful', () => {
                 it('should reject if create dashboard call fails', () => {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/projects',
-                        'POST',
                         {
                             status: 400,
                             body: JSON.stringify({})
@@ -299,7 +292,7 @@ describe('project', () => {
                     return project.createProject('Project', '1234').then(() => {
                         expect().fail('Should reject the promise if create project ended with 400');
                     }, (err) => {
-                        expect(err).to.be.an(Error);
+                        expect(err).toBeInstanceOf(Error);
                     });
                 });
             });
@@ -309,13 +302,12 @@ describe('project', () => {
             it('should delete project', () => {
                 const projectId = 'myFakeProjectId';
 
-                fetchMock.mock(
+                fetchMock.delete(
                     `/gdc/projects/${projectId}`,
-                    'DELETE',
                     200
                 );
 
-                return project.deleteProject(projectId).then(r => expect(r.ok).to.be.ok());
+                return project.deleteProject(projectId).then(r => expect(r.ok).toBeTruthy());
             });
         });
     });

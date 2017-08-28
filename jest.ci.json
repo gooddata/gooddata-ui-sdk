@@ -1,0 +1,8 @@
+{
+    "moduleFileExtensions": ["js"],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["src/**/*.js"],
+    "coverageDirectory": "<rootDir>/ci/results/coverage",
+    "coverageReporters": ["json", "cobertura", "lcov"],
+    "testResultsProcessor": "<rootDir>/node_modules/jest-junit"
+}

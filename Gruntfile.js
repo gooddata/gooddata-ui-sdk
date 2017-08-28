@@ -30,36 +30,13 @@ module.exports = (grunt) => {
                 dest: 'examples/gooddata.js'
             }
         },
-        karma: {
-            unit: {
-                configFile: 'tools/karma.conf.js',
-                singleRun: false,
-                autoWatch: true,
-                background: false
-            },
-            ci: {
-                configFile: 'tools/karma.conf.js',
-                singleRun: true,
-                autoWatch: false
-            }
-        },
-        mochaTest: {
-            test: {
-                options: {
-                    reporter: 'spec',
-                    quiet: false,
-                    require: [
-                        'babel-register',
-                        'isomorphic-fetch',
-                        () => {
-                            global.expect = require('expect.js');
-                        },
-                        () => {
-                            global.sinon = require('sinon');
-                        }
-                    ]
-                },
-                src: ['test/*_test.js']
+        run: {
+            jest: {
+                cmd: 'npm',
+                args: [
+                    'run',
+                    'test:ci'
+                ]
             }
         },
         grizzly: {
@@ -165,11 +142,10 @@ module.exports = (grunt) => {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-bump');
-    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-gh-pages');
-    grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('gruntify-eslint');
+    grunt.loadNpmTasks('grunt-run');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
@@ -280,8 +256,8 @@ module.exports = (grunt) => {
         );
     });
 
-    grunt.registerTask('test', ['eslint', 'karma:unit:start', 'watch:tests']);
-    grunt.registerTask('test-ci', ['eslint', 'karma:ci', 'mochaTest']);
+    grunt.registerTask('test', ['eslint', 'run:jest']);
+    grunt.registerTask('test-ci', ['eslint', 'jest:ci']);
     grunt.registerTask('dev', ['grizzly', 'watch:js']);
     grunt.registerTask('doc', ['yuidoc']);
     grunt.registerTask('validate', ['eslint']);

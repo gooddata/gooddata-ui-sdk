@@ -11,11 +11,11 @@ describe('domainDataProducts', () => {
 
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId/domaindataproducts',
+                    '/gdc/admin/contracts/contractId/dataproducts/dataProductId/domaindataproducts',
                     400
                 );
 
-                return domaindataproducts.getDomainDataProducts('contractId', 'dataProductId').then(null, err => expect(err).to.be.an(Error));
+                return domaindataproducts.getDomainDataProducts('contractId', 'dataProductId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domaindataproducts', () => {
@@ -45,11 +45,11 @@ describe('domainDataProducts', () => {
                     }
                 );
                 return domaindataproducts.getDomainDataProducts('contractId', 'dataProductId').then((result) => {
-                    expect(result.items.length).to.be(1);
-                    expect(result.items[0].domain.name).to.be('data-admin-test1');
-                    expect(result.items[0].domain.environment).to.be('TEST');
+                    expect(result.items.length).toBe(1);
+                    expect(result.items[0].domain.name).toBe('data-admin-test1');
+                    expect(result.items[0].domain.environment).toBe('TEST');
 
-                    expect(result.items[0].id).to.be('dataproductId');
+                    expect(result.items[0].id).toBe('dataproductId');
                 });
             });
         });

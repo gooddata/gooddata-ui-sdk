@@ -9,12 +9,12 @@ describe('util', () => {
 
     describe('getIn', () => {
         it('should return partially applied get', () => {
-            expect(getIn('b.c.d')(testObj)).to.be(2);
+            expect(getIn('b.c.d')(testObj)).toBe(2);
         });
 
         it('should work as resolve function of promise', () => {
             return Promise.resolve(testObj).then(getIn('b.c')).then((result) => {
-                expect(result).to.eql({ d: 2 });
+                expect(result).toEqual({ d: 2 });
             });
         });
     });
