@@ -12,17 +12,14 @@
     "styles"
   ],
   "devDependencies": {
-    "@gooddata/mock-js": "0.0.19",
+    "@gooddata/mock-js": "0.0.22",
     "@storybook/react": "^3.1.3",
     "@types/jest": "20.0.4",
     "@types/lodash": "4.14.61",
     "@types/node": "7.0.8",
-    "@types/react": "15.0.39",
+    "@types/react": "16.0.4",
     "@types/react-addons-test-utils": "0.14.17",
-    "@types/react-dom": "15.5.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "@types/react-dom": "15.5.4",
     "enzyme": "2.8.0",
     "jest": "20.0.4",
     "jest-junit": "1.3.0",
@@ -40,8 +37,10 @@
   },
   "dependencies": {
     "@gooddata/data-layer": "1.0.4",
+    "@gooddata/goodstrap": "51.0.0",
     "@gooddata/indigo-visualizations": "0.11.0",
-    "gooddata": "2.1.0",
+    "classnames": "2.2.5",
+    "gooddata": "3.0.0",
     "lodash": "4.17.4",
     "numeral": "2.0.6",
     "react-intl": "2.2.3",
@@ -52,8 +51,7 @@
     "react-dom": "^15.3.2"
   },
   "scripts": {
-    "test": "jest",
-    "watchTest": "jest --watch",
+    "test": "jest --watch",
     "build-css": "node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss",
     "dev": "rm -rf dist && tsc -d --outDir dist --watch && cp -rf src/translations/ dist/translations/",
     "prepublish": "rm -rf dist && tsc -d --outDir dist && cp -rf src/translations/ dist/translations/ && yarn build-css",

@@ -26,7 +26,7 @@ module.exports = {
                     path.join(__dirname, '../stories'),
                     path.join(__dirname, '../src')
                 ],
-                loaders: ['babel-loader', 'ts-loader']
+                loaders: ['ts-loader']
             }
         ]
     }

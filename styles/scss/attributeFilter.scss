@@ -1,0 +1,39 @@
+$gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
+
+@import './_settings.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/_typo-mixins.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/Overlay.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/Spinner.scss';
+@import '~@gooddata/goodstrap/lib/Button/styles/themes/indigo/Button.scss';
+@import '~@gooddata/goodstrap/lib/List/styles/themes/indigo/List.scss';
+
+.gd-attribute-filter {
+    display: inline-block;
+
+    &-overlay {
+        padding: 16px 8px 8px 8px;
+
+        // TODO: Importing Messages doesn't work. Error styles are termporarily hardcoded here
+        .gd-message {
+            position: relative;
+            box-sizing: border-box;
+            display: inline-block;
+            max-width: 100%;
+            padding: 4px 8px 4px 10px;
+            min-height: 1px;
+            border-radius: 3px;
+            font-family: avenir, "Helvetica Neue", arial, sans-serif;
+            font-size: 14px;
+            text-align: left;
+            color: #e54d42;
+            background: rgba(229, 77, 66, 0.15);
+            pointer-events: all;
+        }
+    }
+
+    &-actions {
+        text-align: right;
+        margin-top: 8px;
+    }
+
+}

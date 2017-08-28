@@ -10,5 +10,16 @@
     "visualization.numericValues.g": "G",
     "visualization.numericValues.t": "T",
     "visualization.numericValues.p": "P",
-    "visualization.numericValues.e": "E"
+    "visualization.numericValues.e": "E",
+    "gs.filter.loading": "Loading filter…",
+    "gs.filter.error": "Error loading filter",
+    "gs.list.loading": "Loading list…",
+    "gs.list.clear": "Clear",
+    "gs.list.cancel": "Cancel",
+    "gs.list.apply": "Apply",
+    "gs.list.only": "Only",
+    "gs.list.selectAll": "Select all",
+    "gs.list.limitExceeded": "Sorry, you have exceeded the limit ({limit}).",
+    "gs.list.noItemsFound": "No items found.",
+    "gs.list.error": "Error loading list items"
 }
