@@ -2,6 +2,7 @@ jest.mock('gooddata');
 
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { Afm } from '@gooddata/data-layer';
 
 import { BaseChart } from '../base/BaseChart';
 import { Table } from '../Table';
@@ -90,7 +91,7 @@ describe('Visualization', () => {
                 between: [-51, 0],
                 granularity: 'date'
             }
-        ];
+        ] as Afm.IFilter[];
 
         const wrapper = mount(
             <Visualization
@@ -114,7 +115,7 @@ describe('Visualization', () => {
                 between: [-51, 0],
                 granularity: 'date'
             }
-        ];
+        ] as Afm.IFilter[];
 
         const wrapper = mount(
             <Visualization
@@ -137,7 +138,7 @@ describe('Visualization', () => {
                 type: 'attribute',
                 in: ['11', '22', '33']
             }
-        ];
+        ] as Afm.IFilter[];
 
         const wrapper = mount(
             <Visualization
