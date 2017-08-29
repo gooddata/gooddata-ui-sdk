@@ -10,11 +10,14 @@ import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../constants/errorStates';
 import { postpone } from '../../helpers/test_helpers';
 
+const URI1 = '/gdc/md/myproject/obj/1';
+const URI2 = '/gdc/md/myproject/obj/2';
+
 describe('Visualization', () => {
     it('should render chart', (done) => {
         const wrapper = mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/1'}
+                uri={URI1}
             />
         );
 
@@ -27,7 +30,7 @@ describe('Visualization', () => {
     it('should render table', (done) => {
         const wrapper = mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/2'}
+                uri={URI2}
             />
         );
 
@@ -42,7 +45,7 @@ describe('Visualization', () => {
 
         mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/1'}
+                uri={URI1}
                 onLoadingChanged={loadingHandler}
             />
         );
@@ -58,7 +61,7 @@ describe('Visualization', () => {
 
         mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/2'}
+                uri={URI2}
                 onLoadingChanged={loadingHandler}
             />
         );
@@ -91,11 +94,11 @@ describe('Visualization', () => {
                 between: [-51, 0],
                 granularity: 'date'
             }
-        ] as Afm.IFilter[];
+        ] as Afm.IDateFilter[];
 
         const wrapper = mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/1'}
+                uri={URI1}
                 filters={visFilters}
             />
         );
@@ -115,11 +118,11 @@ describe('Visualization', () => {
                 between: [-51, 0],
                 granularity: 'date'
             }
-        ] as Afm.IFilter[];
+        ] as Afm.IDateFilter[];
 
         const wrapper = mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/1'}
+                uri={URI1}
                 filters={visFilters}
             />
         );
@@ -138,11 +141,11 @@ describe('Visualization', () => {
                 type: 'attribute',
                 in: ['11', '22', '33']
             }
-        ] as Afm.IFilter[];
+        ] as Afm.IAttributeFilter[];
 
         const wrapper = mount(
             <Visualization
-                uri={'/gdc/md/myproject/obj/1'}
+                uri={URI1}
                 filters={visFilters}
             />
         );
@@ -151,6 +154,41 @@ describe('Visualization', () => {
             expect(wrapper.state('dataSource').afm.filters).toHaveLength(2);
             expect(wrapper.state('dataSource').afm.filters[0]).toEqual(visFilters[0]);
             done();
+        });
+    });
+
+    it('should only make new UriAdapter on uri change', (done) => {
+        const visFilters = [
+            {
+                id: '/gdc/md/myproject/obj/925',
+                type: 'attribute',
+                in: ['11', '22', '33']
+            } as Afm.IAttributeFilter
+        ];
+
+        const uriAdapterContructorSpy = jest.spyOn(Visualization.prototype, 'refreshUriAdapter');
+
+        const wrapper = mount(
+            <Visualization
+                uri={URI1}
+                filters={visFilters}
+            />
+        );
+
+        postpone(() => {
+            expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(1);
+            wrapper.setProps({ uri: URI2 });
+
+            postpone(() => {
+                expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);
+                wrapper.setProps({ filters: [] });
+
+                postpone(() => {
+                    expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);
+                    done();
+                });
+            });
+
         });
     });
 });
