@@ -62,11 +62,11 @@ export interface INumericSymbolsProviderProps {
 export class NumericSymbolsProvider extends React.Component<INumericSymbolsProviderProps, null> {
     public render() {
         return (
-            <div>
+            <span>
                 {React.cloneElement(this.props.children as any, {
                     numericSymbols: this.getNumericSymbols()
                 })}
-            </div>
+            </span>
         );
     }
 
