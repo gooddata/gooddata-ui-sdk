@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { DataTable, DummyAdapter, Afm } from '@gooddata/data-layer';
-
 import { Execute } from '../Execute';
-import { IAfm } from '@gooddata/data-layer/dist/interfaces/Afm';
 
 describe('Execute', () => {
     const data = [1, 2, 3];
-    const afm: IAfm = {
+    const afm = {
         attributes: [
             {
                 id: '/attr/uri',

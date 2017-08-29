@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as sdk from 'gooddata';
 import { noop, get, isEqual } from 'lodash';
-import { DataSource, MetadataSource, UriMetadataSource, UriAdapter } from '@gooddata/data-layer';
-import { IFilter, IAttributeFilter, IDateFilter } from '@gooddata/data-layer/src/interfaces/Afm';
+import { DataSource, MetadataSource, UriMetadataSource, UriAdapter, Afm } from '@gooddata/data-layer';
 
 import { ErrorStates } from '../constants/errorStates';
 import { BaseChart, ChartTypes, IChartConfig } from './base/BaseChart';
@@ -11,11 +10,11 @@ import { IEvents } from '../interfaces/Events';
 import { getProjectIdByUri } from '../helpers/project';
 import { visualizationPropTypes } from '../proptypes/Visualization';
 
-function isDateFilter(filter: IFilter): filter is IDateFilter {
+function isDateFilter(filter: Afm.IFilter): filter is Afm.IDateFilter {
     return filter.type === 'date';
 }
 
-function isAttributeFilter(filter: IFilter): filter is IAttributeFilter {
+function isAttributeFilter(filter: Afm.IFilter): filter is Afm.IAttributeFilter {
     return filter.type === 'attribute';
 }
 
@@ -23,8 +22,9 @@ export interface IVisualizationProps extends IEvents {
     uri: string;
     locale?: string;
     config?: IChartConfig;
-    filters?: IFilter[];
+    filters?: Afm.IFilter[];
 }
+
 export interface IVisualizationState {
     dataSource: DataSource.IDataSource;
     metadataSource: MetadataSource.IMetadataSource;
@@ -32,7 +32,12 @@ export interface IVisualizationState {
 }
 
 export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
+    uri: string;
+    uriAdapter: UriAdapter;
     static propTypes = visualizationPropTypes;
+    static defaultProps = {
+        filters: []
+    };
 
     constructor(props) {
         super(props);
@@ -58,24 +63,34 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         }
     }
 
-    private getDateFilter(filters: IFilter[]): IDateFilter {
+    private getDateFilter(filters: Afm.IFilter[]): Afm.IDateFilter {
         return filters
             .filter(isDateFilter)
             .shift();
     }
 
-    private getAttributeFilters(filters: IFilter[]): IAttributeFilter[] {
+    private getAttributeFilters(filters: Afm.IFilter[]): Afm.IAttributeFilter[] {
         return filters.filter(isAttributeFilter);
+    }
+
+    public refreshUriAdapter(uri) {
+        this.uri = uri;
+        const projectId = getProjectIdByUri(uri);
+        this.uriAdapter = new UriAdapter(sdk, projectId);
     }
 
     private prepareDatasources(uri, filters = []) {
         const errorHandler = get(this.props, 'onError', noop);
+        const shouldRefreshUriAdapter = this.uri !== uri || !this.uriAdapter;
 
-        const projectId = getProjectIdByUri(uri);
-        const dateFilter = this.getDateFilter(filters);
+        if (shouldRefreshUriAdapter) {
+            this.refreshUriAdapter(uri);
+        }
+
         const attributeFilters = this.getAttributeFilters(filters);
+        const dateFilter = this.getDateFilter(filters);
 
-        new UriAdapter(sdk, projectId).createDataSource({ uri, attributeFilters, dateFilter }).then((dataSource) => {
+        this.uriAdapter.createDataSource({ uri, attributeFilters, dateFilter }).then((dataSource) => {
             const metadataSource = new UriMetadataSource(sdk, uri);
             metadataSource.getVisualizationMetadata().then(({ metadata }) => {
                 this.setState({

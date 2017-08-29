@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { xhr, md } from 'gooddata';
+import * as gooddata from 'gooddata';
 import compact = require('lodash/compact');
 
 import { IVisualizationObject, IEmbeddedDateFilter } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
@@ -25,14 +25,14 @@ function extractDateAttributes(visObj: IVisualizationObject): string[] {
 }
 
 function fetcher(uri: string): Promise<any> {
-    return xhr.get(uri).then((visObj) => {
+    return gooddata.xhr.get(uri).then((visObj) => {
         const attributes = extractDateAttributes(visObj.visualization.content);
 
         if (!attributes.length) {
             return { attributesMap: {}, visObj };
         }
 
-        return md.getObjects(getProjectIdByUri(uri), attributes).then((items) => {
+        return gooddata.md.getObjects(getProjectIdByUri(uri), attributes).then((items) => {
             const attributesMap = items.reduce((map, item) => ({
                 ...map,
                 [item.attribute.meta.uri]: item.attribute.content.displayForms[0].meta.uri
