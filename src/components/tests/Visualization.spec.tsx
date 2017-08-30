@@ -1,7 +1,7 @@
 jest.mock('gooddata');
 
 import * as React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Afm } from '@gooddata/data-layer';
 
 import { BaseChart } from '../base/BaseChart';
@@ -168,11 +168,12 @@ describe('Visualization', () => {
 
         const uriAdapterContructorSpy = jest.spyOn(Visualization.prototype, 'refreshUriAdapter');
 
-        const wrapper = mount(
+        const wrapper = shallow(
             <Visualization
                 uri={URI1}
                 filters={visFilters}
-            />
+            />,
+            { lifecycleExperimental: true }
         );
 
         postpone(() => {
@@ -181,7 +182,7 @@ describe('Visualization', () => {
 
             postpone(() => {
                 expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);
-                wrapper.setProps({ filters: [] });
+                wrapper.setProps({ uri: URI2, filters: [] });
 
                 postpone(() => {
                     expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);

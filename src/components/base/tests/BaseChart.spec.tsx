@@ -181,7 +181,9 @@ describe('BaseChart', () => {
         const wrapper = createComponent(createProps());
         wrapper.setProps({
             dataSource: {
-                getFingerprint: jest.fn().mockReturnValue('asdf')
+                getFingerprint: jest.fn().mockReturnValue('asdf'),
+                getData: () => Promise.resolve(),
+                getAfm: jest.fn().mockReturnValue(afm)
             }
         }, () => {
             postpone(() => {
