@@ -40,7 +40,8 @@ describe('Table', () => {
                 getVisualizationMetadata: () => Promise.resolve({
                     metadata: {},
                     measuresMap: {}
-                } as VisualizationObject.IVisualizationMetadataResult)
+                } as VisualizationObject.IVisualizationMetadataResult),
+                getFingerprint: () => ''
             },
             locale: 'en-US',
             ...customProps

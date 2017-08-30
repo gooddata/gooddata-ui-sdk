@@ -44,6 +44,9 @@ class InvalidMetadataSource {
     getVisualizationMetadata() {
         return Promise.reject('error');
     }
+    getFingerprint() {
+        return '';
+    }
 }
 
 const mockedToAfm = (): Converters.IConvertedAFM => {

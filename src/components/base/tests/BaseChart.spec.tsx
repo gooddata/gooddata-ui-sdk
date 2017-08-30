@@ -47,7 +47,8 @@ describe('BaseChart', () => {
                         }
                     },
                     measuresMap: {}
-                })
+                }),
+                getFingerprint: () => ''
             },
             locale: 'en-US',
             type: 'line',
