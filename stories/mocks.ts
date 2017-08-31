@@ -30,4 +30,7 @@ export class MetadataSourceMock implements MetadataSource.IMetadataSource{
             measuresMap: {}
         });
     }
+    getFingerprint() {
+        return '';
+    }
 }

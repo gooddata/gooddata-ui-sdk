@@ -100,6 +100,7 @@ storiesOf('Visualization', module)
                 filters={[{
                     id: '/gdc/md/myproject/obj/123',
                     type: 'date',
+                    intervalType: 'absolute',
                     granularity: 'date',
                     between: ['2017-01-01', '2017-12-31']
                 }]}
