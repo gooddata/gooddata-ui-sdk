@@ -249,35 +249,6 @@ describe('execution', () => {
                 });
             });
 
-            describe('getData with execution context filters', () => {
-                it('should propagate execution context filters to the server call', () => {
-                    const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';
-                    // prepare filters and then use them with getData
-                    const filters = [{
-                        uri: '/gdc/md/myFakeProjectId/obj/1',
-                        constraint: {
-                            type: 'list',
-                            elements: ['/gdc/md/myFakeProjectId/obj/1/elements?id=1']
-                        }
-                    }];
-
-                    fetchMock.mock(matcher, { status: 200, body: JSON.stringify(serverResponseMock) });
-
-                    fetchMock.mock(
-                        /\/gdc\/internal\/projects\/myFakeProjectId\/experimental\/executions\/extendedResults\/(\w+)/,
-                        { status: 204 }
-                    );
-
-                    ex.getData('myFakeProjectId', ['attrId', 'metricId'], {
-                        filters
-                    });
-                    const [, settings] = fetchMock.lastCall(matcher);
-                    const requestBody = JSON.parse(settings.body);
-
-                    expect(requestBody.execution.filters).toEqual(filters);
-                });
-            });
-
             describe('getData with order', () => {
                 it('should propagate orderBy to server call', () => {
                     const matcher = '/gdc/internal/projects/myFakeProjectId/experimental/executions';

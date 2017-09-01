@@ -118,7 +118,6 @@ function loadExtendedDataResults(uri, settings, prevResult = emptyResult) {
  * @param {String} projectId - GD project identifier
  * @param {Array} columns - An array of attribute or metric identifiers.
  * @param {Object} executionConfiguration - Execution configuration - can contain for example
- *                 property "filters" containing execution context filters
  *                 property "where" containing query-like filters
  *                 property "orderBy" contains array of sorted properties to order in form
  *                      [{column: 'identifier', direction: 'asc|desc'}]
@@ -137,8 +136,8 @@ export function getData(projectId, columns, executionConfiguration = {}, setting
         execution: { columns }
     };
     // enrich configuration with supported properties such as
-    // where clause with query-like filters or execution context filters
-    ['filters', 'where', 'orderBy', 'definitions'].forEach((property) => {
+    // where clause with query-like filters
+    ['where', 'orderBy', 'definitions'].forEach((property) => {
         if (executionConfiguration[property]) {
             request.execution[property] = executionConfiguration[property];
         }
