@@ -2,10 +2,10 @@ import { sortDefinitions } from '../src/utils/definitions';
 
 describe('sortDefinitions', () => {
     it('returns empty array for no definition', () => {
-        expect(sortDefinitions([])).to.eql([]);
+        expect(sortDefinitions([])).toEqual([]);
     });
 
-    context('derived metric with contribution', () => {
+    describe('derived metric with contribution', () => {
         it('should be sorted correctly', () => {
             const definitions = [
                 {
@@ -45,11 +45,11 @@ describe('sortDefinitions', () => {
                 }
             ];
 
-            expect(sortDefinitions(definitions)).to.eql(expected);
+            expect(sortDefinitions(definitions)).toEqual(expected);
         });
     });
 
-    context('derived metric with contribution and pop', () => {
+    describe('derived metric with contribution and pop', () => {
         it('should be sorted correctly', () => {
             const definitions = [
                 {
@@ -105,12 +105,12 @@ describe('sortDefinitions', () => {
                 }
             ];
 
-            expect(sortDefinitions(definitions)).to.eql(expected);
+            expect(sortDefinitions(definitions)).toEqual(expected);
         });
     });
 
-    context('unresolvable dependencies', () => {
-        it('should be sorted correctly', () => {
+    describe('unresolvable dependencies', () => {
+        it('should throw', () => {
             const definitions = [
                 {
                     metricDefinition: {
@@ -138,7 +138,7 @@ describe('sortDefinitions', () => {
                 }
             ];
 
-            expect(() => sortDefinitions(definitions)).to.throwError();
+            expect(() => sortDefinitions(definitions)).toThrow();
         });
     });
 });

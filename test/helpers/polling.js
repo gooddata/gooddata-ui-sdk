@@ -4,7 +4,6 @@ export function mockPollingRequest(uri, pendingResponse, finalResponse) {
     let counter = 0;
     fetchMock.mock(
         uri,
-        'GET',
         () => {
             counter += 1;
             const response = counter > 3 ? finalResponse : pendingResponse;

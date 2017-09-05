@@ -10,9 +10,8 @@ describe('user', () => {
 
         describe('login', () => {
             it('resolves with userLogin using valid credential', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/account/login',
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify(
@@ -22,20 +21,19 @@ describe('user', () => {
                 );
 
                 return user.login('login', 'pass').then((result) => {
-                    expect(result).to.eql(
+                    expect(result).toEqual(
                         { userLogin: { profile: '/gdc/account/profile/abcd', state: '/gdc/account/login/abcd' } }
                     );
                 });
             });
 
             it('rejects with bad credentials', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/account/login',
-                    'POST',
                     400
                 );
 
-                return user.login('bad', 'creds').then(null, err => expect(err).to.be.an(Error));
+                return user.login('bad', 'creds').then(null, err => expect(err).toBeInstanceOf(Error));
             });
         });
 
@@ -51,10 +49,9 @@ describe('user', () => {
 
                 fetchMock.mock(
                     `/gdc/account/customerlogin?sessionId=${sessionId}&serverURL=${serverUrl}&targetURL=${targetUrl}`,
-                    'GET',
                     200
                 );
-                return user.loginSso(sessionId, serverUrl, targetUrl).then(r => expect(r).to.be.ok());
+                return user.loginSso(sessionId, serverUrl, targetUrl).then(r => expect(r).toBeTruthy());
             });
 
             it('should reject for invalid sessionId', () => {
@@ -68,13 +65,12 @@ describe('user', () => {
 
                 fetchMock.mock(
                     `/gdc/account/customerlogin?sessionId=${sessionId}&serverURL=${serverUrl}&targetURL=${targetUrl}`,
-                    'GET',
                     400
                 );
                 return user.loginSso(sessionId, serverUrl, targetUrl).then(() => {
                     expect().fail('Should reject with 400');
                 }, (err) => {
-                    expect(err.response.status).to.be(400);
+                    expect(err.response.status).toBe(400);
                 });
             });
         });
@@ -83,20 +79,18 @@ describe('user', () => {
             it('should resolve if user logged in', () => {
                 fetchMock.mock(
                     '/gdc/account/token',
-                    'GET',
                     200
                 );
-                return user.isLoggedIn().then(r => expect(r).to.be.ok());
+                return user.isLoggedIn().then(r => expect(r).toBeTruthy());
             });
 
             it('should resolve with false if user not logged in', () => {
                 fetchMock.mock(
                     '/gdc/account/token',
-                    'GET',
                     401
                 );
                 return user.isLoggedIn().then((r) => {
-                    expect(r).not.to.be.ok();
+                    expect(r).not.toBeTruthy();
                 });
             });
         });
@@ -105,7 +99,6 @@ describe('user', () => {
             it('should resolve when user is not logged in', () => {
                 fetchMock.mock(
                     '/gdc/account/token',
-                    'GET',
                     401
                 );
 
@@ -117,13 +110,11 @@ describe('user', () => {
 
                 fetchMock.mock(
                     '/gdc/account/token',
-                    'GET',
                     200
                 );
 
                 fetchMock.mock(
                     '/gdc/app/account/bootstrap',
-                    'GET',
                     {
                         status: 200,
                         body: JSON.stringify({
@@ -138,13 +129,12 @@ describe('user', () => {
                     }
                 );
 
-                fetchMock.mock(
+                fetchMock.delete(
                     `/gdc/account/login/${userId}`,
-                    'DELETE',
                     200 // should be 204, but see https://github.com/wheresrhys/fetch-mock/issues/36
                 );
 
-                return user.logout().then(r => expect(r.ok).to.be.ok());
+                return user.logout().then(r => expect(r.ok).toBeTruthy());
             });
         });
 
@@ -159,7 +149,7 @@ describe('user', () => {
                 return user.updateProfileSettings(userId, []).then(() => {
                     expect().fail('Should reject with 400');
                 }, (err) => {
-                    expect(err.response.status).to.be(400);
+                    expect(err.response.status).toBe(400);
                 });
             });
         });
@@ -175,7 +165,6 @@ describe('user', () => {
 
                 fetchMock.mock(
                     '/gdc/app/account/bootstrap',
-                    'GET',
                     {
                         status: 200,
                         body: JSON.stringify({
@@ -200,12 +189,12 @@ describe('user', () => {
                 );
 
                 return user.getAccountInfo().then((accountInfo) => {
-                    expect(accountInfo.login).to.eql(login);
-                    expect(accountInfo.loginMD5).to.eql(loginMD5);
-                    expect(accountInfo.firstName).to.eql(firstName);
-                    expect(accountInfo.lastName).to.eql(lastName);
-                    expect(accountInfo.organizationName).to.eql(organizationName);
-                    expect(accountInfo.profileUri).to.eql(profileUri);
+                    expect(accountInfo.login).toEqual(login);
+                    expect(accountInfo.loginMD5).toEqual(loginMD5);
+                    expect(accountInfo.firstName).toEqual(firstName);
+                    expect(accountInfo.lastName).toEqual(lastName);
+                    expect(accountInfo.organizationName).toEqual(organizationName);
+                    expect(accountInfo.profileUri).toEqual(profileUri);
                 });
             });
         });

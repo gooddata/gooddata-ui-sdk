@@ -18,7 +18,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAttributes('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getAttributes('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -28,7 +28,7 @@ describe('metadata', () => {
                 );
 
                 return md.getAttributes('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -53,7 +53,7 @@ describe('metadata', () => {
                 );
 
                 return md.createObject('myFakeProjectId', newObj).then((createdObj) => {
-                    expect(createdObj).to.eql(newObj);
+                    expect(createdObj).toEqual(newObj);
                 });
             });
         });
@@ -78,9 +78,8 @@ describe('metadata', () => {
 
             describe('/gdc/md/1/etl/pull2 call successful', () => {
                 function mockIntialPost() {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/md/1/etl/pull2',
-                        'POST',
                         {
                             status: 201,
                             body: JSON.stringify(triggerEtlResponse)
@@ -94,16 +93,15 @@ describe('metadata', () => {
                     mockPollingRequest(etlUri, runningTask, finishedTask);
 
                     return md.etlPull('1', '1', { pollStep: 1 }).then((result) => {
-                        expect(result).to.eql(finishedTask);
+                        expect(result).toEqual(finishedTask);
                     });
                 });
             });
 
             describe('/gdc/md/1/etl/pull2 call not successful', () => {
                 it('should reject if task ends with error', () => {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/md/1/etl/pull2',
-                        'POST',
                         {
                             status: 400,
                             body: JSON.stringify({})
@@ -113,7 +111,7 @@ describe('metadata', () => {
                     return md.etlPull('1', '1').then(() => {
                         expect().fail('Should reject the promise if task ends with error');
                     }, (err) => {
-                        expect(err).to.be.an(Error);
+                        expect(err).toBeInstanceOf(Error);
                     });
                 });
             });
@@ -139,9 +137,8 @@ describe('metadata', () => {
 
             describe('/gdc/md/1/ldm/manage2 call successful', () => {
                 function mockIntialPost() {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/md/1/ldm/manage2',
-                        'POST',
                         {
                             status: 200,
                             body: JSON.stringify(triggerLdmManageResponse)
@@ -155,16 +152,15 @@ describe('metadata', () => {
                     mockPollingRequest(manageStatusUri, runningTask, finishedTask);
 
                     return md.ldmManage('1', '1', { pollStep: 1 }).then((result) => {
-                        expect(result).to.eql(finishedTask);
+                        expect(result).toEqual(finishedTask);
                     });
                 });
             });
 
             describe('/gdc/md/1/ldm/manage2 call not successful', () => {
                 it('should reject if task ends with error', () => {
-                    fetchMock.mock(
+                    fetchMock.post(
                         '/gdc/md/1/ldm/manage2',
-                        'POST',
                         {
                             status: 400,
                             body: JSON.stringify({})
@@ -174,7 +170,7 @@ describe('metadata', () => {
                     return md.ldmManage('1', '1').then(() => {
                         expect().fail('Should reject the promise if task ends with error');
                     }, (err) => {
-                        expect(err).to.be.an(Error);
+                        expect(err).toBeInstanceOf(Error);
                     });
                 });
             });
@@ -187,7 +183,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getDimensions('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getDimensions('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -200,7 +196,7 @@ describe('metadata', () => {
                 );
 
                 return md.getDimensions('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -212,7 +208,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getFacts('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getFacts('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -225,7 +221,7 @@ describe('metadata', () => {
                 );
 
                 return md.getFacts('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -237,7 +233,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getMetrics('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getMetrics('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -250,7 +246,7 @@ describe('metadata', () => {
                 );
 
                 return md.getMetrics('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -262,7 +258,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableMetrics('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getAvailableMetrics('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -275,7 +271,7 @@ describe('metadata', () => {
                 );
 
                 return md.getAvailableMetrics('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -287,7 +283,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableAttributes('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getAvailableAttributes('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -300,7 +296,7 @@ describe('metadata', () => {
                 );
 
                 return md.getAvailableAttributes('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
@@ -312,7 +308,7 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableFacts('myFakeProjectId').then(null, err => expect(err).to.be.an(Error));
+                return md.getAvailableFacts('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return correct number of entries', () => {
@@ -325,16 +321,15 @@ describe('metadata', () => {
                 );
 
                 return md.getAvailableFacts('myFakeProjectId').then((result) => {
-                    expect(result.length).to.be(2);
+                    expect(result.length).toBe(2);
                 });
             });
         });
 
         describe('getUrisFromIdentifiers', () => {
             it('should return array with identifiers and uris', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/md/myFakeProjectId/identifiers',
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify({
@@ -351,24 +346,21 @@ describe('metadata', () => {
 
                 return md.getUrisFromIdentifiers('myFakeProjectId', ['attr.foo.bar'])
                     .then((result) => {
-                        expect(result).to.eql(
-                            [{
-                                uri: '/foo/bar',
-                                identifier: 'attr.foo.bar'
-                            }, {
-                                uri: '/fuzz/buzz',
-                                identifier: 'attr.fuzz.buzz'
-                            }]
-                        );
+                        expect(result).toEqual([{
+                            uri: '/foo/bar',
+                            identifier: 'attr.foo.bar'
+                        }, {
+                            uri: '/fuzz/buzz',
+                            identifier: 'attr.fuzz.buzz'
+                        }]);
                     });
             });
         });
 
         describe('getIdentifiersFromUris', () => {
             it('should return array with identifiers and uris', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/md/myFakeProjectId/identifiers',
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify({
@@ -385,24 +377,21 @@ describe('metadata', () => {
 
                 return md.getIdentifiersFromUris('myFakeProjectId', ['/foo/bar'])
                     .then((result) => {
-                        expect(result).to.eql(
-                            [{
-                                uri: '/foo/bar',
-                                identifier: 'attr.foo.bar'
-                            }, {
-                                uri: '/fuzz/buzz',
-                                identifier: 'attr.fuzz.buzz'
-                            }]
-                        );
+                        expect(result).toEqual([{
+                            uri: '/foo/bar',
+                            identifier: 'attr.foo.bar'
+                        }, {
+                            uri: '/fuzz/buzz',
+                            identifier: 'attr.fuzz.buzz'
+                        }]);
                     });
             });
         });
 
         describe('getObjectUri', () => {
             it('should return uri when identifier exists', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/md/myFakeProjectId/identifiers',
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify({
@@ -415,21 +404,20 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUri('myFakeProjectId', 'attr.foo.bar').then((result) => {
-                    expect(result).to.be('/foo/bar');
+                    expect(result).toBe('/foo/bar');
                 });
             });
 
             it('should reject promise when identifier does not exist', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     '/gdc/md/myFakeProjectId/identifiers',
-                    'POST',
                     {
                         status: 200,
                         body: JSON.stringify({ identifiers: [] })
                     }
                 );
 
-                return md.getObjectUri('myFakeProjectId', 'foo.bar').then(null, err => expect(err).to.be.an(Error));
+                return md.getObjectUri('myFakeProjectId', 'foo.bar').then(null, err => expect(err).toBeInstanceOf(Error));
             });
         });
 
@@ -447,11 +435,11 @@ describe('metadata', () => {
             }];
 
             beforeEach(() => {
-                postSpy = sinon.spy(xhr, 'post');
+                postSpy = jest.spyOn(xhr, 'post');
             });
 
             afterEach(() => {
-                postSpy.restore();
+                postSpy.mockRestore();
             });
 
             it('should load object dependencies', () => {
@@ -461,7 +449,7 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUsing(projectId, object, { types }).then((result) => {
-                    expect(postSpy.calledWith(using2Uri, {
+                    expect(postSpy).toHaveBeenCalledWith(using2Uri, {
                         data: JSON.stringify({
                             inUse: {
                                 uri: object,
@@ -469,8 +457,9 @@ describe('metadata', () => {
                                 nearest: 0
                             }
                         })
-                    })).to.be(true);
-                    expect(result).to.eql(respondEntries);
+                    });
+
+                    expect(result).toEqual(respondEntries);
                 });
             });
 
@@ -483,7 +472,7 @@ describe('metadata', () => {
                 const nearest = true;
 
                 return md.getObjectUsing(projectId, object, { types, nearest }).then(() => {
-                    expect(postSpy.calledWith(using2Uri, {
+                    expect(postSpy).toHaveBeenCalledWith(using2Uri, {
                         data: JSON.stringify({
                             inUse: {
                                 uri: object,
@@ -491,7 +480,7 @@ describe('metadata', () => {
                                 nearest: 1
                             }
                         })
-                    })).to.be(true);
+                    });
                 });
             });
 
@@ -504,7 +493,7 @@ describe('metadata', () => {
                 return md.getObjectUsing(projectId, object, { types }).then(() => {
                     expect().fail('Should reject the promise on 400 response');
                 }).catch((err) => {
-                    expect(err.response.status).to.be(400);
+                    expect(err.response.status).toBe(400);
                 });
             });
         });
@@ -532,11 +521,11 @@ describe('metadata', () => {
             }];
 
             beforeEach(() => {
-                postSpy = sinon.spy(xhr, 'post');
+                postSpy = jest.spyOn(xhr, 'post');
             });
 
             afterEach(() => {
-                postSpy.restore();
+                postSpy.mockRestore();
             });
 
             it('should load objects dependencies', () => {
@@ -546,7 +535,7 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUsingMany(projectId, objects, { types }).then((result) => {
-                    expect(postSpy.calledWith(using2Uri, {
+                    expect(postSpy).toHaveBeenCalledWith(using2Uri, {
                         data: JSON.stringify({
                             inUseMany: {
                                 uris: objects,
@@ -554,8 +543,8 @@ describe('metadata', () => {
                                 nearest: 0
                             }
                         })
-                    })).to.be(true);
-                    expect(result).to.eql(response);
+                    });
+                    expect(result).toEqual(response);
                 });
             });
 
@@ -568,7 +557,7 @@ describe('metadata', () => {
                 const nearest = true;
 
                 return md.getObjectUsingMany(projectId, objects, { types, nearest }).then(() => {
-                    expect(postSpy.calledWith(using2Uri, {
+                    expect(postSpy).toHaveBeenCalledWith(using2Uri, {
                         data: JSON.stringify({
                             inUseMany: {
                                 uris: objects,
@@ -576,7 +565,7 @@ describe('metadata', () => {
                                 nearest: 1
                             }
                         })
-                    })).to.be(true);
+                    });
                 });
             });
 
@@ -589,7 +578,7 @@ describe('metadata', () => {
                 return md.getObjectUsingMany(projectId, objects, { types }).then(() => {
                     expect().fail('Should reject the promise on 400 response');
                 }).catch((err) => {
-                    expect(err.response.status).to.be(400);
+                    expect(err.response.status).toBe(400);
                 });
             });
         });
@@ -611,11 +600,11 @@ describe('metadata', () => {
             const getUri = `/gdc/md/${projectId}/objects/get`;
 
             beforeEach(() => {
-                postSpy = sinon.spy(xhr, 'post');
+                postSpy = jest.spyOn(xhr, 'post');
             });
 
             afterEach(() => {
-                postSpy.restore();
+                postSpy.mockRestore();
             });
 
             it('should load elements', () => {
@@ -627,16 +616,16 @@ describe('metadata', () => {
                 );
 
                 return md.getObjects(projectId, uris).then((result) => {
-                    expect(postSpy.calledOnce).to.be(true);
-                    expect(postSpy.calledWith(getUri, {
+                    expect(postSpy).toHaveBeenCalledTimes(1);
+                    expect(postSpy).toHaveBeenCalledWith(getUri, {
                         data: JSON.stringify({
                             get: {
                                 items: uris
                             }
                         })
-                    })).to.be(true);
+                    });
 
-                    expect(result).to.eql(respondEntries);
+                    expect(result).toEqual(respondEntries);
                 });
             });
 
@@ -660,23 +649,23 @@ describe('metadata', () => {
                 });
 
                 return md.getObjects(projectId, uris).then((result) => {
-                    expect(postSpy.calledTwice).to.be(true);
-                    expect(postSpy.calledWith(getUri, {
+                    expect(postSpy).toHaveBeenCalledTimes(2);
+                    expect(postSpy).toHaveBeenCalledWith(getUri, {
                         data: JSON.stringify({
                             get: {
                                 items: uris.slice(0, 50)
                             }
                         })
-                    })).to.be(true);
-                    expect(postSpy.calledWith(getUri, {
+                    });
+                    expect(postSpy).toHaveBeenCalledWith(getUri, {
                         data: JSON.stringify({
                             get: {
                                 items: uris.slice(50, 80)
                             }
                         })
-                    })).to.be(true);
+                    });
 
-                    expect(result).to.eql(respondEntries);
+                    expect(result).toEqual(respondEntries);
                 });
             });
 
@@ -690,7 +679,7 @@ describe('metadata', () => {
                 return md.getObjects(projectId, uris).then(() => {
                     expect().fail('Should reject the promise on 400 response');
                 }).catch((err) => {
-                    expect(err.response.status).to.be(400);
+                    expect(err.response.status).toBe(400);
                 });
             });
         });
@@ -702,11 +691,11 @@ describe('metadata', () => {
             const uri = `/gdc/md/${projectId}/obj/${attributeId}/validElements`;
 
             beforeEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
-                postSpy = sinon.spy(xhr, 'post');
+                postSpy = jest.spyOn(xhr, 'post');
             });
 
             afterEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
-                postSpy.restore();
+                postSpy.mockRestore();
             });
 
             it('should process params from options', () => {
@@ -737,20 +726,19 @@ describe('metadata', () => {
 
                 return md.getValidElements(projectId, attributeId, options)
                     .then((result) => {
-                        expect(postSpy.calledOnce).to.be(true);
-                        expect(postSpy.calledWith(
-                            `${uri}${queryString}`, {
-                                data: JSON.stringify({
-                                    validElementsRequest: {
-                                        uris: options.uris,
-                                        complement: true,
-                                        includeTotalCountWithoutFilters: true,
-                                        restrictiveDefinition: 'foo'
-                                    }
-                                })
-                            })).to.be(true);
+                        expect(postSpy).toHaveBeenCalledTimes(1);
+                        expect(postSpy).toHaveBeenCalledWith(`${uri}${queryString}`, {
+                            data: JSON.stringify({
+                                validElementsRequest: {
+                                    uris: options.uris,
+                                    complement: true,
+                                    includeTotalCountWithoutFilters: true,
+                                    restrictiveDefinition: 'foo'
+                                }
+                            })
+                        });
 
-                        expect(result).to.eql({
+                        expect(result).toEqual({
                             validElements: {
                                 items: []
                             }
@@ -775,14 +763,14 @@ describe('metadata', () => {
 
                 return md.getValidElements(projectId, attributeId, options)
                     .then((result) => {
-                        expect(postSpy.calledOnce).to.be(true);
-                        expect(postSpy.calledWith(uri, {
+                        expect(postSpy).toHaveBeenCalledTimes(1);
+                        expect(postSpy).toHaveBeenCalledWith(uri, {
                             data: JSON.stringify({
                                 validElementsRequest: {}
                             })
-                        })).to.be(true);
+                        });
 
-                        expect(result).to.eql({
+                        expect(result).toEqual({
                             validElements: {
                                 items: []
                             }

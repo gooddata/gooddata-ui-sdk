@@ -13,10 +13,10 @@ describe('fetch', () => {
         it('should handle successful request', () => {
             fetchMock.mock('/some/url', { status: 200, body: 'hello' });
             return xhr.ajax('/some/url').then((response) => {
-                expect(response.status).to.be(200);
+                expect(response.status).toBe(200);
                 return response.text();
             }).then((body) => {
-                expect(body).to.be('hello');
+                expect(body).toBe('hello');
             });
         });
 
@@ -26,7 +26,7 @@ describe('fetch', () => {
             xhr.ajax('/some/url', {
                 body: mockBody // TODO for jQuery compat this should be "data"
             });
-            expect(fetchMock.calls().matched[0][1].body).to.be('{"foo":"bar"}');
+            expect(fetchMock.calls().matched[0][1].body).toBe('{"foo":"bar"}');
         });
 
         it('should handle unsuccessful request', () => {
@@ -34,21 +34,21 @@ describe('fetch', () => {
             return xhr.ajax('/some/url').then(() => {
                 expect().fail('should be rejected');
             }, (err) => {
-                expect(err.response.status).to.be(404);
+                expect(err.response.status).toBe(404);
             });
         });
 
         it('should have accept header set on application/json', () => {
             fetchMock.mock('/some/url', 200);
             xhr.ajax('/some/url');
-            expect(fetchMock.calls().matched[0][1].headers.Accept).to.be('application/json; charset=utf-8');
+            expect(fetchMock.calls().matched[0][1].headers.Accept).toBe('application/json; charset=utf-8');
         });
 
         it('should set custom headers', () => {
             fetchMock.mock('/some/url', 200);
             xhr.ajax('/some/url', { headers: { 'X-GDC-REQUEST': 'foo' } });
-            expect(fetchMock.calls().matched[0][1].headers.Accept).to.be('application/json; charset=utf-8');
-            expect(fetchMock.calls().matched[0][1].headers['X-GDC-REQUEST']).to.be('foo');
+            expect(fetchMock.calls().matched[0][1].headers.Accept).toBe('application/json; charset=utf-8');
+            expect(fetchMock.calls().matched[0][1].headers['X-GDC-REQUEST']).toBe('foo');
         });
     });
 
@@ -64,7 +64,7 @@ describe('fetch', () => {
             })
             .mock('/gdc/account/token', 200);
             return xhr.ajax('/some/url').then((r) => {
-                expect(r.status).to.be(200);
+                expect(r.status).toBe(200);
             });
         });
 
@@ -72,7 +72,7 @@ describe('fetch', () => {
             fetchMock.mock('/some/url', 401)
                      .mock('/gdc/account/token', 401);
             return xhr.ajax('/some/url').then(null, (err) => {
-                expect(err.response.status).to.be(401);
+                expect(err.response.status).toBe(401);
             });
         });
 
@@ -90,25 +90,27 @@ describe('fetch', () => {
                      .mock('/gdc/account/token', 200);
 
             return Promise.all([xhr.ajax('/some/url/1'), xhr.ajax('/some/url/2')]).then((r) => {
-                expect(r[0].status).to.be(200);
-                expect(r[1].status).to.be(200);
+                expect(r[0].status).toBe(200);
+                expect(r[1].status).toBe(200);
             });
         });
     });
 
     describe('xhr.ajax polling', () => {
-        it('should allow for custom setting', () => {
-            const clock = sinon.useFakeTimers();
+        afterEach(() => {
+            jest.useRealTimers();
+        });
 
-            const handleRequest = sinon.stub().returns(Promise.resolve());
+        it('should allow for custom setting', () => {
+            jest.useFakeTimers();
+
+            const handleRequest = jest.fn(() => Promise.resolve());
 
             const promise = xhr.handlePolling('/some/url', { pollDelay: () => 1000 }, handleRequest);
 
-            clock.tick(1000);
+            jest.runTimersToTime(1000); // ms
 
-            expect(handleRequest.calledOnce).to.be(true);
-
-            clock.restore();
+            expect(handleRequest).toHaveBeenCalledTimes(1);
 
             return promise;
         });
@@ -123,11 +125,11 @@ describe('fetch', () => {
             });
 
             return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
-                expect(r.status).to.be(200);
-                expect(fetchMock.calls('/some/url').length).to.be(3);
+                expect(r.status).toBe(200);
+                expect(fetchMock.calls('/some/url').length).toBe(3);
 
                 return r.text().then((t) => {
-                    expect(t).to.be('Poll result');
+                    expect(t).toBe('Poll result');
                 });
             });
         });
@@ -142,8 +144,8 @@ describe('fetch', () => {
             });
 
             return xhr.ajax('/some/url', { pollDelay: 0, dontPollOnResult: true }).then((r) => {
-                expect(r.status).to.be(202);
-                expect(fetchMock.calls('/some/url').length).to.be(1);
+                expect(r.status).toBe(202);
+                expect(fetchMock.calls('/some/url').length).toBe(1);
             });
         });
 
@@ -157,7 +159,7 @@ describe('fetch', () => {
             });
 
             return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, (err) => {
-                expect(err.response.status).to.be(404);
+                expect(err.response.status).toBe(404);
             });
         });
     });
@@ -174,12 +176,12 @@ describe('fetch', () => {
             });
 
             return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
-                expect(r.status).to.be(200);
-                expect(fetchMock.calls('/some/url').length).to.be(1);
-                expect(fetchMock.calls('/other/url').length).to.be(3);
+                expect(r.status).toBe(200);
+                expect(fetchMock.calls('/some/url').length).toBe(1);
+                expect(fetchMock.calls('/other/url').length).toBe(3);
 
                 return r.text().then((t) => {
-                    expect(t).to.be('Poll result from other url');
+                    expect(t).toBe('Poll result from other url');
                 });
             });
         });
@@ -190,13 +192,13 @@ describe('fetch', () => {
             fetchMock.mock('/last/url', { status: 200, body: 'Poll result with redirects' });
 
             return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
-                expect(r.status).to.be(200);
-                expect(fetchMock.calls('/some/url').length).to.be(1);
-                expect(fetchMock.calls('/other/url').length).to.be(1);
-                expect(fetchMock.calls('/last/url').length).to.be(1);
+                expect(r.status).toBe(200);
+                expect(fetchMock.calls('/some/url').length).toBe(1);
+                expect(fetchMock.calls('/other/url').length).toBe(1);
+                expect(fetchMock.calls('/last/url').length).toBe(1);
 
                 return r.text().then((t) => {
-                    expect(t).to.be('Poll result with redirects');
+                    expect(t).toBe('Poll result with redirects');
                 });
             });
         });
@@ -212,60 +214,62 @@ describe('fetch', () => {
             });
 
             return xhr.ajax('/some/url', { pollDelay: 0 }).then(null, (err) => {
-                expect(err.response.status).to.be(404);
-                expect(fetchMock.calls('/some/url').length).to.be(1);
-                expect(fetchMock.calls('/other/url').length).to.be(3);
+                expect(err.response.status).toBe(404);
+                expect(fetchMock.calls('/some/url').length).toBe(1);
+                expect(fetchMock.calls('/other/url').length).toBe(3);
             });
         });
     });
 
     describe('shortcut methods', () => {
+        const data = { message: 'THIS IS SPARTA!' };
+
         beforeEach(() => {
-            fetchMock.mock('url', 200);
+            fetchMock.mock('url', { status: 200, body: data });
         });
 
         it('should call xhr.ajax with get method', () => {
-            xhr.get('url', {
+            return xhr.get('url', {
                 contentType: 'text/csv'
+            }).then(() => {
+                const [url, settings] = fetchMock.lastCall('url');
+                expect(url).toBe('url');
+                expect(settings.method).toBe('GET');
+                expect(settings.contentType).toBe('text/csv');
             });
-
-            const [url, settings] = fetchMock.lastCall('url');
-            expect(url).to.be('url');
-            expect(settings.method).to.be('GET');
-            expect(settings.contentType).to.be('text/csv');
         });
 
         it('should call xhr.ajax with post method', () => {
-            const data = { message: 'THIS IS SPARTA!' };
-
-            xhr.post('url', {
+            return xhr.post('url', {
                 data,
                 contentType: 'text/csv'
+            }).then(() => {
+                const [url, settings] = fetchMock.lastCall('url');
+                expect(url).toBe('url');
+                expect(settings.method).toBe('POST');
+                expect(settings.contentType).toBe('text/csv');
+                expect(settings.body).toBe(JSON.stringify(data));
             });
-
-            const [url, settings] = fetchMock.lastCall('url');
-            expect(url).to.be('url');
-            expect(settings.method).to.be('POST');
-            expect(settings.contentType).to.be('text/csv');
-            expect(settings.body).to.be(JSON.stringify(data));
         });
     });
 
     describe('enrichSettingWithCustomDomain', () => {
-        after(() => {
+        afterEach(() => {
             setCustomDomain(null);
         });
+
         it('should not touch settings if no domain set', () => {
             fetchMock.mock('/test1', 200);
-            expect(setCustomDomain).withArgs(undefined).to.throwError();
+            expect(() => setCustomDomain()).toThrow();
 
             xhr.ajax('/test1');
 
             const [url, settings] = fetchMock.lastCall('/test1');
-            expect(url).to.be('/test1');
-            expect(settings.credentials).to.be('same-origin');
-            expect(settings.mode).to.be('same-origin');
+            expect(url).toBe('/test1');
+            expect(settings.credentials).toBe('same-origin');
+            expect(settings.mode).toBe('same-origin');
         });
+
         it('should add domain before url', () => {
             setCustomDomain('https://domain.tld');
             fetchMock.mock('https://domain.tld/test1', 200);
@@ -273,10 +277,11 @@ describe('fetch', () => {
             xhr.ajax('https://domain.tld/test1');
 
             const [url, settings] = fetchMock.lastCall('https://domain.tld/test1');
-            expect(url).to.be('https://domain.tld/test1');
-            expect(settings.credentials).to.be('include');
-            expect(settings.mode).to.be('cors');
+            expect(url).toBe('https://domain.tld/test1');
+            expect(settings.credentials).toBe('include');
+            expect(settings.mode).toBe('cors');
         });
+
         it('should not double domain in settings url', () => {
             setCustomDomain('https://domain.tld');
             fetchMock.mock('https://domain.tld/test1', 200);
@@ -284,9 +289,9 @@ describe('fetch', () => {
             xhr.ajax('https://domain.tld/test1');
 
             const [url, settings] = fetchMock.lastCall('https://domain.tld/test1');
-            expect(url).to.be('https://domain.tld/test1');
-            expect(settings.credentials).to.eql('include');
-            expect(settings.mode).to.eql('cors');
+            expect(url).toBe('https://domain.tld/test1');
+            expect(settings.credentials).toEqual('include');
+            expect(settings.mode).toEqual('cors');
         });
     });
 
@@ -295,13 +300,13 @@ describe('fetch', () => {
             const url = '/some/url';
 
             fetchMock.mock(url, { status: 200 });
-            const beforeSendStub = sinon.stub();
+            const beforeSendStub = jest.fn();
             xhr.ajaxSetup({
                 beforeSend: beforeSendStub
             });
 
             xhr.ajax(url);
-            expect(beforeSendStub.getCall(0).args[1]).to.eql(url);
+            expect(beforeSendStub.mock.calls[0][1]).toEqual(url);
         });
     });
 });

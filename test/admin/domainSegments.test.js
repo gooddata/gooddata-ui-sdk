@@ -11,11 +11,11 @@ describe('domainSegments', () => {
 
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId/segments/domainsegments/data-admin-test1?',
+                    '/gdc/admin/contracts/contractId/dataproducts/dataProductId/segments/segmentId/domainsegments/',
                     400
                 );
 
-                return domainSegments.getDomainSegment('contractId', 'dataProductId', 'segmentId', '').then(null, err => expect(err).to.be.an(Error));
+                return domainSegments.getDomainSegment('contractId', 'dataProductId', 'segmentId', '').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domain segment', () => {
@@ -46,12 +46,12 @@ describe('domainSegments', () => {
                     }
                 );
                 return domainSegments.getDomainSegment('contractId', 'dataproductId', 'segmentId', 'data-admin-test1', '').then((result) => {
-                    expect(result.domain).to.be('data-admin-test1');
-                    expect(result.id).to.be('domainSegmentId');
-                    expect(result.masterProject.project.id).to.be('projectId');
-                    expect(result.masterProject.project.title).to.be('master');
-                    expect(result.masterProject.project.projectToken).to.be('projectToken');
-                    expect(result.masterProject.project.links.publicUri).to.be('publicUri');
+                    expect(result.domain).toBe('data-admin-test1');
+                    expect(result.id).toBe('domainSegmentId');
+                    expect(result.masterProject.project.id).toBe('projectId');
+                    expect(result.masterProject.project.title).toBe('master');
+                    expect(result.masterProject.project.projectToken).toBe('projectToken');
+                    expect(result.masterProject.project.links.publicUri).toBe('publicUri');
                 });
             });
 
@@ -106,21 +106,21 @@ describe('domainSegments', () => {
                     }
                 );
                 return domainSegments.getDomainSegments('contractId', 'dataproductId', 'segmentId', '').then((result) => {
-                    expect(result.items.length).to.be(2);
+                    expect(result.items.length).toBe(2);
 
-                    expect(result.items[0].domain).to.be('data-admin-test1');
-                    expect(result.items[0].id).to.be('segmentId');
-                    expect(result.items[0].masterProject.project.id).to.be('projectId');
-                    expect(result.items[0].masterProject.project.title).to.be('master');
-                    expect(result.items[0].masterProject.project.projectToken).to.be('projectToken');
-                    expect(result.items[0].masterProject.project.links.publicUri).to.be('publicUri');
+                    expect(result.items[0].domain).toBe('data-admin-test1');
+                    expect(result.items[0].id).toBe('segmentId');
+                    expect(result.items[0].masterProject.project.id).toBe('projectId');
+                    expect(result.items[0].masterProject.project.title).toBe('master');
+                    expect(result.items[0].masterProject.project.projectToken).toBe('projectToken');
+                    expect(result.items[0].masterProject.project.links.publicUri).toBe('publicUri');
 
-                    expect(result.items[1].domain).to.be('data-admin-test2');
-                    expect(result.items[1].id).to.be('segmentId1');
-                    expect(result.items[1].masterProject.project.id).to.be('projectId1');
-                    expect(result.items[1].masterProject.project.title).to.be('master');
-                    expect(result.items[1].masterProject.project.projectToken).to.be('projectToken');
-                    expect(result.items[1].masterProject.project.links.publicUri).to.be('publicUri');
+                    expect(result.items[1].domain).toBe('data-admin-test2');
+                    expect(result.items[1].id).toBe('segmentId1');
+                    expect(result.items[1].masterProject.project.id).toBe('projectId1');
+                    expect(result.items[1].masterProject.project.title).toBe('master');
+                    expect(result.items[1].masterProject.project.projectToken).toBe('projectToken');
+                    expect(result.items[1].masterProject.project.links.publicUri).toBe('publicUri');
                 });
             });
         });

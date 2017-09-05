@@ -35,9 +35,9 @@ describe('contracts', () => {
                 );
 
                 return contracts.getUserContracts().then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('contractId1');
-                    expect(result.items[1].id).to.be('contractId2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('contractId1');
+                    expect(result.items[1].id).toBe('contractId2');
                 });
             });
         });

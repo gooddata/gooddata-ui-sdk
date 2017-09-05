@@ -35,7 +35,8 @@ describe('project', () => {
                     400
                 );
 
-                return clients.getClientUsers('contractId', 'dataproductId', 'domainId', 'segmentId', 'clientId', null, null).then(null, err => expect(err).to.be.an(Error));
+                return clients.getClientUsers('contractId', 'dataproductId', 'domainId', 'segmentId', 'clientId', null, null)
+                    .then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return client users', () => {
@@ -48,9 +49,9 @@ describe('project', () => {
                 );
 
                 return clients.getClientUsers('contractId', 'dataproductId', 'domainId', 'segmentId', 'clientId', null, null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].fullName).to.be('joe black');
-                    expect(result.items[1].fullName).to.be('noe red');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].fullName).toBe('joe black');
+                    expect(result.items[1].fullName).toBe('noe red');
                 });
             });
 
@@ -65,9 +66,9 @@ describe('project', () => {
 
                 const paging = { next: '/gdc/admin/xxx' };
                 return clients.getClientUsers('contractId', 'dataproductId', 'domainId', 'segmentId', 'clientId', null, paging).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].fullName).to.be('joe black');
-                    expect(result.items[1].fullName).to.be('noe red');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].fullName).toBe('joe black');
+                    expect(result.items[1].fullName).toBe('noe red');
                 });
             });
         });
@@ -79,7 +80,8 @@ describe('project', () => {
                     400
                 );
 
-                return clients.getClient('contractId', 'dataproductId', 'segmentId', 'domainId', 'clientId').then(null, err => expect(err).to.be.an(Error));
+                return clients.getClient('contractId', 'dataproductId', 'segmentId', 'domainId', 'clientId')
+                    .then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return client', () => {
@@ -104,13 +106,13 @@ describe('project', () => {
                 );
 
                 return clients.getClient('contractId', 'dataproductId', 'segmentId', 'domainId', 'clientId').then((result) => {
-                    expect(result.id).to.be('clientId');
-                    expect(result.contractId).to.be('contractId');
-                    expect(result.domainId).to.be('domainId');
-                    expect(result.dataProductId).to.be('dataproductId');
-                    expect(result.segmentId).to.be('segmentId');
+                    expect(result.id).toBe('clientId');
+                    expect(result.contractId).toBe('contractId');
+                    expect(result.domainId).toBe('domainId');
+                    expect(result.dataProductId).toBe('dataproductId');
+                    expect(result.segmentId).toBe('segmentId');
 
-                    expect(result.referencedProject.project.id).to.be('projectId');
+                    expect(result.referencedProject.project.id).toBe('projectId');
                 });
             });
         });
@@ -154,11 +156,12 @@ describe('project', () => {
 
             it('should reject with 400 when clients resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId/segments/segmentId/domainsegments/domainId/clients',
+                    '/gdc/admin/contracts/contractId/dataproducts/dataproductId/segments/segmentId/domainsegments/domainId/clients?stats=user',
                     400
                 );
 
-                return clients.getClients('contractId', 'dataproductId', 'segmentId', 'domainId').then(null, err => expect(err).to.be.an(Error));
+                return clients.getClients('contractId', 'dataproductId', 'segmentId', 'domainId')
+                    .then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return clients', () => {
@@ -171,9 +174,9 @@ describe('project', () => {
                 );
 
                 return clients.getClients('contractId', 'dataproductId', 'segmentId', 'domainId', null, null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('clientId1');
-                    expect(result.items[1].id).to.be('clientId2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('clientId1');
+                    expect(result.items[1].id).toBe('clientId2');
                 });
             });
 
@@ -187,9 +190,9 @@ describe('project', () => {
                 );
 
                 return clients.getClients('contractId', 'dataproductId', 'segmentId', 'domainId', 'somePrefix', null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('clientId1');
-                    expect(result.items[1].id).to.be('clientId2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('clientId1');
+                    expect(result.items[1].id).toBe('clientId2');
                 });
             });
 
@@ -203,9 +206,9 @@ describe('project', () => {
                 );
                 const paging = { next: '/gdc/admin/xxx' };
                 return clients.getClients('contractId', 'dataproductId', 'segmentId', 'domainId', null, paging).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('clientId1');
-                    expect(result.items[1].id).to.be('clientId2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('clientId1');
+                    expect(result.items[1].id).toBe('clientId2');
                 });
             });
         });

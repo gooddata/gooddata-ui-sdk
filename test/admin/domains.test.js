@@ -15,7 +15,7 @@ describe('project', () => {
                     400
                 );
 
-                return domains.getDomain('contractId', 'domainId', null, null).then(null, err => expect(err).to.be.an(Error));
+                return domains.getDomain('contractId', 'domainId', null, null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domain', () => {
@@ -39,9 +39,9 @@ describe('project', () => {
                 );
 
                 return domains.getDomain('contractId', 'domainId', null).then((result) => {
-                    expect(result.name).to.be('domainId');
-                    expect(result.id).to.be('domainId');
-                    expect(result.contractId).to.be('contractId');
+                    expect(result.name).toBe('domainId');
+                    expect(result.id).toBe('domainId');
+                    expect(result.contractId).toBe('contractId');
                 });
             });
         });
@@ -49,11 +49,11 @@ describe('project', () => {
         describe('getDomains', () => {
             it('should reject with 400 when domains resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/admin/contracts/contractId/domains',
+                    '/gdc/admin/contracts/contractId/domains/domainId',
                     400
                 );
 
-                return domains.getDomain('contractId', 'domainId', null, null).then(null, err => expect(err).to.be.an(Error));
+                return domains.getDomain('contractId', 'domainId', null, null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domains', () => {
@@ -95,9 +95,9 @@ describe('project', () => {
                 );
 
                 return domains.getDomains('contractId', null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('data-admin-test1');
-                    expect(result.items[1].id).to.be('data-admin-test2');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('data-admin-test1');
+                    expect(result.items[1].id).toBe('data-admin-test2');
                 });
             });
         });
@@ -109,7 +109,7 @@ describe('project', () => {
                     400
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, null).then(null, err => expect(err).to.be.an(Error));
+                return domains.getDomainProjects('contractId', 'domainId', null, null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domains projects', () => {
@@ -127,8 +127,8 @@ describe('project', () => {
                 );
 
                 return domains.getDomainProjects('contractId', 'domainId', null, null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].title).to.be('project0');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].title).toBe('project0');
                 });
             });
 
@@ -147,7 +147,7 @@ describe('project', () => {
                 );
 
                 return domains.getDomainProjects('contractId', 'domainId', null, { next: null }).then((result) => {
-                    expect(result.items.length).to.be(0);
+                    expect(result.items.length).toBe(0);
                 });
             });
 
@@ -166,8 +166,8 @@ describe('project', () => {
                 );
 
                 return domains.getDomainProjects('contractId', 'domainId', null, { next: '/gdc/admin/contracts/contractId/domains/domainId/projects?limit=10' }).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].title).to.be('project0');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].title).toBe('project0');
                 });
             });
         });
@@ -199,7 +199,7 @@ describe('project', () => {
                     400
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, null).then(null, err => expect(err).to.be.an(Error));
+                return domains.getDomainUsers('contractId', 'domainId', null, null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domain users', () => {
@@ -212,11 +212,11 @@ describe('project', () => {
                 );
 
                 return domains.getDomainUsers('contractId', 'domainId', null, null).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].firstName).to.be('joe');
-                    expect(result.items[0].id).to.be('joe@foo.com');
-                    expect(result.items[0].fullName).to.be('joe black');
-                    expect(result.items[1].fullName).to.be('noe red');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].firstName).toBe('joe');
+                    expect(result.items[0].id).toBe('joe@foo.com');
+                    expect(result.items[0].fullName).toBe('joe black');
+                    expect(result.items[1].fullName).toBe('noe red');
                 });
             });
 
@@ -230,7 +230,7 @@ describe('project', () => {
                 );
 
                 return domains.getDomainUsers('contractId', 'domainId', null, { next: null }).then((result) => {
-                    expect(result.items.length).to.be(0);
+                    expect(result.items.length).toBe(0);
                 });
             });
 
@@ -244,8 +244,8 @@ describe('project', () => {
                 );
 
                 return domains.getDomainUsers('contractId', 'domainId', null, { next: '/gdc/admin/contracts/contractId/domains/domainId/users?limit=10' }).then((result) => {
-                    expect(result.items.length).to.be(2);
-                    expect(result.items[0].id).to.be('joe@foo.com');
+                    expect(result.items.length).toBe(2);
+                    expect(result.items[0].id).toBe('joe@foo.com');
                 });
             });
         });
