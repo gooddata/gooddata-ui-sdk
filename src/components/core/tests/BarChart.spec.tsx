@@ -17,7 +17,8 @@ describe('BarChart', () => {
                 getFingerprint: () => '{}'
             },
             metadataSource: {
-                getVisualizationMetadata: () => Promise.resolve({})
+                getVisualizationMetadata: () => Promise.resolve({}),
+                getFingerprint: () => '{}'
             }
         });
 

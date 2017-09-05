@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { ColumnChart } from '../src/components/ColumnChart';
+import { ColumnChart } from '../src/components/core/ColumnChart';
 
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
+import '../styles/scss/charts.scss';
 
-import { DataSourceMock, MetadataSourceMock } from './mocks';
+import { DataSourceMock, MetadataSourceMock, onErrorHandler } from './mocks';
 
 const twoMeasuresAndAttributeData = {
     isLoaded: true,
@@ -89,20 +89,18 @@ storiesOf('ColumnChart', module)
     .add('two measures, one attribute', () => (
         <div style={{ width: 800, height: 400 }}>
             <ColumnChart
-                type="column"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
     .add('custom colors', () => (
         <div style={{ width: 800, height: 400 }}>
             <ColumnChart
-                type="column"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
                 config={{
                     colors: [
                         'rgba(195, 49, 73, 1)',

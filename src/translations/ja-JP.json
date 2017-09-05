@@ -10,5 +10,6 @@
    "visualization.numericValues.g": "G",
    "visualization.numericValues.t": "T",
    "visualization.numericValues.p": "P",
-   "visualization.numericValues.e": "E"
+   "visualization.numericValues.e": "E",
+   "visualization.emptyValue": "空の値"
 }

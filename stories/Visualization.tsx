@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Visualization } from '../src/components/Visualization';
+import { Visualization } from '../src/components/uri/Visualization';
 
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
-import '@gooddata/indigo-visualizations/lib/styles/table.scss';
+import '../styles/scss/charts.scss';
+import '../styles/scss/table.scss';
+import { onErrorHandler } from './mocks';
 
 class DynamicVisualization extends React.Component<any,any> {
     initialState: Object = {
@@ -64,7 +65,7 @@ storiesOf('Visualization', module)
         <div style={{ width: 800, height: 400 }}>
             <Visualization
                 uri={'/gdc/md/myproject/obj/1001'}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
@@ -72,7 +73,7 @@ storiesOf('Visualization', module)
         <div style={{ width: 800, height: 400 }}>
             <Visualization
                 uri={'/gdc/md/myproject/obj/1002'}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
@@ -89,7 +90,7 @@ storiesOf('Visualization', module)
                         'rgba(162, 37, 34, 1)'
                     ]
                 }}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
@@ -104,7 +105,7 @@ storiesOf('Visualization', module)
                     granularity: 'date',
                     between: ['2017-01-01', '2017-12-31']
                 }]}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))

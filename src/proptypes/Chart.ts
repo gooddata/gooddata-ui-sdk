@@ -8,7 +8,7 @@ import drillableItem from './DrillableItem';
 export const chartPropTypes = {
     ...chartConfig,
     ...events,
-    dataSource: dataSourcePropTypes,
+    dataSource: dataSourcePropTypes.isRequired,
     metadataSource: metadataSourcePropTypes,
     locale: PropTypes.string,
     height: PropTypes.number,

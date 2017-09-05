@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { BarChart } from '../src/components/BarChart';
+import { BarChart } from '../src/components/core/BarChart';
 
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
+import '../styles/scss/charts.scss';
 
-import { DataSourceMock, MetadataSourceMock } from './mocks';
+import { DataSourceMock, MetadataSourceMock, onErrorHandler } from './mocks';
 
 const twoMeasuresAndAttributeData = {
     isLoaded: true,
@@ -89,19 +89,17 @@ storiesOf('BarChart', module)
     .add('two measures, one attribute', () => (
         <div style={{ width: 800, height: 400 }}>
             <BarChart
-                type="bar"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     )).add('custom colors and legend on bottom', () => (
         <div style={{ width: 800, height: 400 }}>
             <BarChart
-                type="bar"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
                 config={{
                     colors: [
                         'rgba(195, 49, 73, 1)',

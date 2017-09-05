@@ -4,7 +4,7 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 
 import { Kpi, IKpiProps } from '../Kpi';
-import { postpone } from '../../helpers/test_helpers';
+import { postpone } from '../../../helpers/test_helpers';
 
 describe('Kpi', () => {
     function createComponent(props: IKpiProps) {

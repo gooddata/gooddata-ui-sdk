@@ -3,6 +3,8 @@ import {
     MetadataSource
 } from '@gooddata/data-layer';
 
+import { ErrorStates } from '../src/constants/errorStates';
+
 export class DataSourceMock implements DataSource.IDataSource {
     private returnValue;
     constructor(returnValue) {
@@ -31,6 +33,12 @@ export class MetadataSourceMock implements MetadataSource.IMetadataSource{
         });
     }
     getFingerprint() {
-        return '';
+        return JSON.stringify(this.returnValue);
+    }
+}
+
+export function onErrorHandler(error) {
+    if (error.status !== ErrorStates.OK) {
+        console.error(error);
     }
 }

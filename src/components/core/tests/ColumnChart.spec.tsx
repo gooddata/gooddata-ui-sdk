@@ -17,7 +17,8 @@ describe('ColumnChart', () => {
                 getFingerprint: () => '{}'
             },
             metadataSource: {
-                getVisualizationMetadata: () => Promise.resolve({})
+                getVisualizationMetadata: () => Promise.resolve({}),
+                getFingerprint: () => '{}'
             }
         });
 

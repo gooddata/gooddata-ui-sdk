@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { LineChart } from '../src/components/LineChart';
+import { LineChart } from '../src/components/core/LineChart';
 
-import '@gooddata/indigo-visualizations/lib/styles/charts.scss';
+import '../styles/scss/charts.scss';
 
-import { DataSourceMock, MetadataSourceMock } from './mocks';
+import { DataSourceMock, MetadataSourceMock, onErrorHandler } from './mocks';
 
 const twoMeasuresAndAttributeData = {
     isLoaded: true,
@@ -61,20 +61,18 @@ storiesOf('LineChart', module)
     .add('two measures, one attribute', () => (
         <div style={{ width: 800, height: 400 }}>
             <LineChart
-                type="line"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
             />
         </div>
     ))
     .add('custom colors', () => (
         <div style={{ width: 800, height: 400 }}>
             <LineChart
-                type="line"
                 dataSource={new DataSourceMock(twoMeasuresAndAttributeData)}
                 metadataSource={new MetadataSourceMock(twoMeasuresAndAttributeMD)}
-                onError={console.error}
+                onError={onErrorHandler}
                 config={{
                     colors: [
                         'rgba(162, 37, 34, 1)',

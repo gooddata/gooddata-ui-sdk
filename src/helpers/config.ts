@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import get = require('lodash/get');
 import { VisualizationObject } from '@gooddata/data-layer';
 
 export interface ILegendConfig {
@@ -47,7 +47,8 @@ export function getConfig(
     const legendConfig = getLegendConfig(metadata, environment);
     return {
         type,
-        buckets: get(metadata, 'content.buckets') as VisualizationObject.IBuckets,
+        buckets: get<VisualizationObject.IVisualizationObjectMetadata,
+            VisualizationObject.IBuckets>(metadata, 'content.buckets'),
         legend: legendConfig
     };
 }

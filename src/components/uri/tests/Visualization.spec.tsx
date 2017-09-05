@@ -4,11 +4,22 @@ import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import { Afm } from '@gooddata/data-layer';
 
-import { BaseChart } from '../base/BaseChart';
-import { Table } from '../Table';
+import {
+    Table,
+    BaseChart
+} from '../../tests/mocks';
+
+jest.mock('../../core/Table', () => ({
+    Table
+}));
+jest.mock('../../core/base/BaseChart', () => ({
+    BaseChart
+}));
+
 import { Visualization } from '../Visualization';
-import { ErrorStates } from '../../constants/errorStates';
-import { postpone } from '../../helpers/test_helpers';
+import { ErrorStates } from '../../../constants/errorStates';
+import { postpone } from '../../../helpers/test_helpers';
+
 
 const URI1 = '/gdc/md/myproject/obj/1';
 const URI2 = '/gdc/md/myproject/obj/2';
@@ -36,38 +47,6 @@ describe('Visualization', () => {
 
         postpone(() => {
             expect(wrapper.find(Table).length).toBe(1);
-            done();
-        });
-    });
-
-    it('should trigger `onLoadingChanged` for visualization', (done) => {
-        const loadingHandler = jest.fn();
-
-        mount(
-            <Visualization
-                uri={URI1}
-                onLoadingChanged={loadingHandler}
-            />
-        );
-
-        postpone(() => {
-            expect(loadingHandler).toHaveBeenCalled();
-            done();
-        });
-    });
-
-    it('should trigger `onLoadingChanged` for table', (done) => {
-        const loadingHandler = jest.fn();
-
-        mount(
-            <Visualization
-                uri={URI2}
-                onLoadingChanged={loadingHandler}
-            />
-        );
-
-        postpone(() => {
-            expect(loadingHandler).toHaveBeenCalled();
             done();
         });
     });

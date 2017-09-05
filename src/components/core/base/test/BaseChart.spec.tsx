@@ -5,20 +5,20 @@ import { VisualizationObject } from '@gooddata/data-layer';
 import {
     initChartDataLoading,
     Visualization
-} from '../../tests/mocks';
-jest.mock('../../../helpers/load', () => ({
+} from '../../../tests/mocks';
+jest.mock('../../../../helpers/load', () => ({
     initChartDataLoading
 }));
 jest.mock('@gooddata/indigo-visualizations', () => ({
     Visualization
 }));
 
-import { BaseChart, IChartProps } from '../BaseChart';
-import { ErrorStates } from '../../../constants/errorStates';
-import { postpone } from '../../../helpers/test_helpers';
+import { BaseChart, IBaseChartProps } from '../BaseChart';
+import { ErrorStates } from '../../../../constants/errorStates';
+import { postpone } from '../../../../helpers/test_helpers';
 
 describe('BaseChart', () => {
-    function createComponent(props: IChartProps) {
+    function createComponent(props: IBaseChartProps) {
         return mount(
             <BaseChart {...props} />
         );
@@ -53,32 +53,14 @@ describe('BaseChart', () => {
             locale: 'en-US',
             type: 'line',
             ...customProps
-        } as IChartProps;
+        } as IBaseChartProps;
     };
 
     beforeEach(() => {
         initChartDataLoading.mockClear();
     });
 
-    it('should render pie chart', (done) => {
-        const onError = jest.fn();
-        const props = createProps({
-            onError,
-            type: 'pie'
-        });
-        const wrapper = createComponent(props);
-
-        postpone(() => {
-            expect(wrapper.find('.gdc-line-chart')).toBeDefined();
-            expect(wrapper.find(Visualization).length).toBe(1);
-            expect(onError).toHaveBeenCalledTimes(1);
-            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
-            expect(initChartDataLoading).toHaveBeenCalledTimes(1);
-            done();
-        });
-    });
-
-    it('should render line chart', (done) => {
+    it('should render a chart', (done) => {
         const onLoadingChanged = jest.fn();
         const onError = jest.fn();
         const props = createProps({
@@ -88,11 +70,48 @@ describe('BaseChart', () => {
         const wrapper = createComponent(props);
 
         postpone(() => {
-            expect(wrapper.find('.gdc-line-chart')).toBeDefined();
             expect(wrapper.find(Visualization).length).toBe(1);
             done();
         });
     });
+
+    it('should not render responsive table when result is not available', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(1);
+            expect(wrapper.find('.gdc-line-chart')).toBeDefined();
+            wrapper.setState({ result: null }, () => {
+                expect(wrapper.find(Visualization).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when table is still loading', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(1);
+            wrapper.setState({ isLoading: true }, () => {
+                expect(wrapper.find(Visualization).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when error is set', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        postpone(() => {
+            expect(wrapper.find(Visualization).length).toBe(1);
+            wrapper.setState({ error: ErrorStates.UNKNOWN_ERROR }, () => {
+                expect(wrapper.find(Visualization).length).toBe(0);
+            });
+        });
+    });
+
 
     it('should correctly set loading state and call initDataLoading once', (done) => {
         const onLoadingChanged = jest.fn();
@@ -112,6 +131,17 @@ describe('BaseChart', () => {
             expect(onError).toHaveBeenCalledTimes(1);
             expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
             expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('should call pushData on execution finish', (done) => {
+        const pushData = jest.fn();
+        const props = createProps({ pushData });
+        createComponent(props);
+
+        postpone(() => {
+            expect(pushData).toHaveBeenCalledTimes(1);
             done();
         });
     });
@@ -331,6 +361,39 @@ describe('BaseChart', () => {
                     position: 'right'
                 }
             });
+            done();
+        });
+    });
+
+    it('should set new metadata when new metadtaSource came', (done) => {
+        const wrapper = createComponent(createProps());
+        const getVisualizationMetadata = jest.fn().mockReturnValue(
+            Promise.resolve({ metadata: 'meta' })
+        );
+        wrapper.setProps({
+            metadataSource: {
+                getFingerprint: jest.fn().mockReturnValue('asdf'),
+                getVisualizationMetadata
+            }
+        }, () => {
+            postpone(() => {
+                expect(getVisualizationMetadata).toHaveBeenCalledTimes(1);
+                done();
+            });
+        });
+    });
+
+    it('should trigger `onLoadingChanged`', (done) => {
+        const loadingHandler = jest.fn();
+
+        const props = createProps({
+            onLoadingChanged: loadingHandler
+        });
+
+        createComponent(props);
+
+        postpone(() => {
+            expect(loadingHandler).toHaveBeenCalled();
             done();
         });
     });

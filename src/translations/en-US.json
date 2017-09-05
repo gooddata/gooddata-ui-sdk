@@ -11,6 +11,7 @@
     "visualization.numericValues.t": "T",
     "visualization.numericValues.p": "P",
     "visualization.numericValues.e": "E",
+    "visualization.emptyValue": "empty value",
     "gs.filter.loading": "Loading filter…",
     "gs.filter.error": "Error loading filter",
     "gs.list.loading": "Loading list…",

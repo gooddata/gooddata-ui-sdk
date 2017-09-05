@@ -30,32 +30,49 @@ describe('updateSorting', () => {
                 direction: 'asc'
             },
             change: {
-                type: 'metric'
-            },
-            index: 0
+                id: 'm1',
+                title: '',
+                type: 'metric',
+                uri: '/uri/'
+            }
         };
         expect(updateSorting(metadata, sortingInfo)).toEqual(
             {
-                content: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                sort: null
-                            }
-                        },
-                        {
-                            category: {
-                                sort: null
-                            }
-                        }],
-                        measures: [{
-                            measure: {
-                                generatedId: 'm1',
-                                sort: {
-                                    direction: 'asc'
+                updatedMetadata:
+                {
+                    content: {
+                        buckets: {
+                            categories: [{
+                                category: {
+                                    sort: null
                                 }
-                            }
-                        }]
+                            },
+                            {
+                                category: {
+                                    sort: null
+                                }
+                            }],
+                            measures: [{
+                                measure: {
+                                    generatedId: 'm1',
+                                    sort: {
+                                        direction: 'asc'
+                                    }
+                                }
+                            }]
+                        }
+                    }
+                },
+                updatedSorting: {
+                    sorting: {
+                        column: 'm1',
+                        direction: 'asc'
+                    },
+                    change: {
+                        id: 'm1',
+                        title: '',
+                        type: 'metric',
+                        uri: '/uri/'
                     }
                 }
             });
@@ -86,39 +103,56 @@ describe('updateSorting', () => {
                 direction: 'desc'
             },
             change: {
-                type: 'metric'
-            },
-            index: 0
+                id: 'm1',
+                title: '',
+                type: 'metric',
+                uri: '/uri/'
+            }
         };
         expect(updateSorting(metadata, sortingInfo)).toEqual(
             {
-                content: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                sort: null
-                            }
-                        },
-                        {
-                            category: {
-                                sort: null
-                            }
-                        }],
-                        measures: [{
-                            measure: {
-                                generatedId: 'm1_pop',
-                                sort: null
-                            }
-                        },
-                        {
-                            measure: {
-                                generatedId: 'm1',
-                                sort: {
-                                    direction: 'desc',
-                                    sortByPoP: true
+                updatedMetadata:
+                {
+                    content: {
+                        buckets: {
+                            categories: [{
+                                category: {
+                                    sort: null
                                 }
-                            }
-                        }]
+                            },
+                            {
+                                category: {
+                                    sort: null
+                                }
+                            }],
+                            measures: [{
+                                measure: {
+                                    generatedId: 'm1_pop',
+                                    sort: null
+                                }
+                            },
+                            {
+                                measure: {
+                                    generatedId: 'm1',
+                                    sort: {
+                                        direction: 'desc',
+                                        sortByPoP: true
+                                    }
+                                }
+                            }]
+                        }
+                    }
+                },
+                updatedSorting: {
+                    sorting: {
+                        column: 'm1_pop',
+                        direction: 'desc'
+                    },
+                    change: {
+                        id: 'm1',
+                        title: '',
+                        type: 'metric',
+                        uri: '/uri/'
                     }
                 }
             });
@@ -137,38 +171,60 @@ describe('updateSorting', () => {
             category: {}
         },
         {
-            category: {}
+            category: {
+                displayForm: '/uri/'
+            }
         }];
 
         const sortingInfo = {
             sorting: {
+                column: '/uri/',
                 direction: 'asc'
             },
             change: {
-                type: 'attrLabel'
-            },
-            index: 1
+                id: 'm1',
+                title: '',
+                type: 'attrLabel',
+                uri: '/uri/'
+            }
         };
         expect(updateSorting(metadata, sortingInfo)).toEqual(
             {
-                content: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                sort: null
-                            }
-                        },
-                        {
-                            category: {
-                                sort: 'asc'
-                            }
-                        }],
-                        measures: [{
-                            measure: {
-                                generatedId: 'm1',
-                                sort: null
-                            }
-                        }]
+                updatedMetadata:
+                {
+                    content: {
+                        buckets: {
+                            categories: [{
+                                category: {
+                                    sort: null
+                                }
+                            },
+                            {
+                                category: {
+                                    displayForm: '/uri/',
+                                    sort: 'asc'
+                                }
+                            }],
+                            measures: [{
+                                measure: {
+                                    generatedId: 'm1',
+                                    sort: null
+                                }
+                            }]
+                        }
+                    }
+                },
+                updatedSorting:
+                {
+                    sorting: {
+                        column: '/uri/',
+                        direction: 'asc'
+                    },
+                    change: {
+                        id: 'm1',
+                        title: '',
+                        type: 'attrLabel',
+                        uri: '/uri/'
                     }
                 }
             });

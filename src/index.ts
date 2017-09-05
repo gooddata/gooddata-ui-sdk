@@ -1,27 +1,24 @@
-import { BarChart } from './components/BarChart';
-import { ColumnChart } from './components/ColumnChart';
-import { LineChart } from './components/LineChart';
-import { Kpi } from './components/Kpi';
-import { PieChart } from './components/PieChart';
-import { Table } from './components/Table';
-import { Visualization } from './components/Visualization';
-import { BaseChart } from './components/base/BaseChart';
-import { ErrorStates } from './constants/errorStates';
+import * as CoreComponents from './components/core/coreComponents';
+import * as AfmComponents from './components/afm/afmComponents';
+import { BaseChart } from './components/core/base/BaseChart';
+import { Kpi } from './components/simple/Kpi';
+import { Visualization } from './components/uri/Visualization';
+import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { IDrillableItem } from './interfaces/DrillableItem';
+import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/base/AttributeFilter';
 import * as promise from './helpers/promise';
 
 export {
     BaseChart,
-    BarChart,
-    ColumnChart,
-    LineChart,
+    CoreComponents,
+    AfmComponents,
     Kpi,
-    PieChart,
-    Table,
     Visualization,
     ErrorStates,
+    ErrorCodes,
     IDrillableItem,
+    IVisualizationProperties,
     promise,
     AttributeFilter
 };
