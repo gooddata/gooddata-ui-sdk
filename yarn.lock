@@ -120,6 +120,12 @@
   dependencies:
     "@storybook/addons" "^3.2.6"
 
+"@storybook/addon-options@3.2.6":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-options/-/addon-options-3.2.6.tgz#8fbcd7858ff4ab8a047ce0ac6e275b866d1bef84"
+  dependencies:
+    "@storybook/addons" "^3.2.6"
+
 "@storybook/addons@^3.2.6":
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.2.6.tgz#c7974db36bd1b969d8ca3776f57fd955447dc7ed"
@@ -5489,7 +5495,7 @@ react-day-picker@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-3.1.1.tgz#7fa385dc7b424cee3eb09696e1918e6b18abafdb"
 
-"react-dnd-touch-backend@github:gooddata/react-dnd-touch-backend#v0.0.1":
+react-dnd-touch-backend@gooddata/react-dnd-touch-backend#v0.0.1:
   version "0.0.1"
   resolved "https://codeload.github.com/gooddata/react-dnd-touch-backend/tar.gz/6136545d1255c484739224525cb9beb2736e20e9"
   dependencies:

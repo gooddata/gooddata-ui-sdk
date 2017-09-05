@@ -13,6 +13,7 @@
   ],
   "devDependencies": {
     "@gooddata/mock-js": "0.0.22",
+    "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
     "@types/jest": "20.0.4",
     "@types/lodash": "4.14.61",
