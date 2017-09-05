@@ -1,4 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
+
+const commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString()
+  .trim();
 
 module.exports = {
     resolve: {
@@ -29,5 +35,11 @@ module.exports = {
                 loaders: ['ts-loader']
             }
         ]
-    }
+    },
+
+    plugins: [
+        new webpack.DefinePlugin({
+          __COMMIT_HASH__: JSON.stringify(commitHash),
+        })
+    ]
 };
