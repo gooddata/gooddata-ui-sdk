@@ -1,16 +1,6 @@
-// Temporary solution, see https://github.com/facebook/jest/issues/3251
-let unhandledRejection;
-process.on('unhandledRejection', (reason, promise) => {
-    unhandledRejection = { reason, promise };
-});
-
-beforeEach(() => {
-    unhandledRejection = null;
-});
-
-afterEach(() => {
-    if (unhandledRejection) {
-        console.error(unhandledRejection.promise);
-        throw new Error(unhandledRejection.reason);
-    }
-});
+// Fail test on console error (react proptypes validation etc.)
+const consoleError = console.error;
+console.error = (err, ...args) => {
+    consoleError(err, ...args);
+    throw new Error(err);
+};
