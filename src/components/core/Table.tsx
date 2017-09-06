@@ -178,6 +178,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                     <IntlWrapper locale={locale}>
                         <IntlTranslationsProvider result={result}>
                             <TableTransformation
+                                data={{}} // will be replaced by IntlTranslationsProvider
                                 drillableItems={drillableItems}
                                 tableRenderer={tableRenderer}
                                 afterRender={afterRender}
@@ -199,6 +200,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 <IntlWrapper locale={locale}>
                     <IntlTranslationsProvider result={result}>
                         <TableTransformation
+                            data={{}} // will be replaced by IntlTranslationsProvider
                             drillableItems={drillableItems}
                             afterRender={afterRender}
                             tableRenderer={tableRenderer}
