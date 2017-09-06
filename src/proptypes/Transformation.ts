@@ -19,7 +19,7 @@ export default {
                 ...object
             })
         ),
-        buckets: PropTypes.arrayOf(
+        dimensions: PropTypes.arrayOf(
             PropTypes.shape({
                 name: PropTypes.string.isRequired,
                 attributes: PropTypes.arrayOf(
