@@ -14,6 +14,8 @@ import {
     Converters
 } from '@gooddata/data-layer';
 
+import { ErrorStates } from '../../constants/errorStates';
+import { getCancellable } from '../../helpers/promise';
 import { ChartTypes } from '../core/base/BaseChart';
 
 export type VisTypes = ChartTypes | 'table';
@@ -47,6 +49,9 @@ export function simpleDataAdapterProvider <T>(
             transformation: {}
         };
 
+        private prepareDataSourceCancellable;
+        private prepareMetadataSourceCancellable;
+
         constructor(props) {
             super(props);
 
@@ -60,59 +65,84 @@ export function simpleDataAdapterProvider <T>(
 
         componentDidMount() {
             const { projectId, afm, transformation } = this.props;
-            this.prepareDataSource(this.prepareAdapter(projectId), afm).then(dataSource =>
-                this.prepareMDSource(dataSource, this.state.type, afm, transformation)
-            );
+            this.prepareDataSource(this.prepareAdapter(projectId), afm).then((dataSource) => {
+                this.prepareMDSource(dataSource, this.state.type, afm, transformation);
+            });
         }
 
         componentWillReceiveProps(nextProps) {
             const { projectId, afm, transformation } = nextProps;
-            if (projectId !== this.props.projectId) {
-                this.prepareDataSource(this.prepareAdapter(projectId), afm).then(dataSource =>
-                    this.prepareMDSource(dataSource, this.state.type, afm, transformation)
-                );
+            if (projectId !== this.props.projectId || !isEqual(afm, this.props.afm)) {
+                this.prepareDataSource(this.prepareAdapter(projectId), afm).then((dataSource) => {
+                    this.prepareMDSource(dataSource, this.state.type, afm, transformation);
+                });
+
                 return;
             }
 
-            if (!isEqual(afm, this.props.afm)) {
-                this.prepareDataSource(this.state.adapter, afm).then(dataSource =>
-                    this.prepareMDSource(dataSource, this.state.type, afm, transformation)
-                );
-                return;
-            }
             if (!isEqual(transformation, this.props.transformation)) {
                 this.prepareMDSource(this.state.dataSource, this.state.type, afm, transformation);
             }
         }
 
+        componentWillUnmount() {
+            if (this.prepareDataSourceCancellable) {
+                this.prepareDataSourceCancellable.cancel();
+            }
+
+            if (this.prepareMetadataSourceCancellable) {
+                this.prepareMetadataSourceCancellable.cancel();
+            }
+        }
+
         prepareAdapter(projectId: string) {
             const adapter = new SimpleExecutorAdapter(sdk, projectId);
-            this.setState(
-                {
-                    adapter
-                }
-            );
+            this.setState({
+                adapter
+            });
             return adapter;
         }
 
+        handleError(error) {
+            if (error !== ErrorStates.PROMISE_CANCELLED) {
+                throw error;
+            }
+        }
+
         prepareDataSource(adapter: SimpleExecutorAdapter, afm: Afm.IAfm) {
-            return adapter.createDataSource(afm);
+            if (this.prepareDataSourceCancellable) {
+                this.prepareDataSourceCancellable.cancel();
+            }
+
+            this.prepareDataSourceCancellable = getCancellable(
+                adapter.createDataSource(afm));
+
+            return this.prepareDataSourceCancellable.promise.catch(this.handleError);
         }
 
         prepareMDSource(dataSource: DataSource.IDataSource,
                         type: VisTypes, afm: Afm.IAfm,
                         transformation: Transformation.ITransformation) {
-            return dataSource.getData(transformation).then((result) => {
+
+            if (this.prepareMetadataSourceCancellable) {
+                this.prepareMetadataSourceCancellable.cancel();
+            }
+
+            this.prepareMetadataSourceCancellable = getCancellable(
+                dataSource.getData(transformation)
+            );
+
+            this.prepareMetadataSourceCancellable.promise.then((result) => {
                 const md = Converters.toVisObj(type, afm, transformation, result.headers);
                 const metadataSource = new SimpleMetadataSource(md, {});
 
-                this.setState(
-                    {
-                        dataSource,
-                        metadataSource
-                    }
-                );
-            });
+                this.setState({
+                    dataSource,
+                    metadataSource
+                });
+            }, this.handleError);
+
+            return this.prepareMetadataSourceCancellable.promise;
         }
 
         render() {

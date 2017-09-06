@@ -52,6 +52,7 @@ export class TranslationsProvider extends React.Component<ITranslationsProviderP
         if (!this.props.result) {
             return null;
         }
+
         return React.cloneElement(this.props.children as any, {
             data: replaceEmptyAttributeValues(this.props.result, this.getEmptyValueString()),
             numericSymbols: this.getNumericSymbols()
