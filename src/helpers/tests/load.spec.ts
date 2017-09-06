@@ -572,8 +572,8 @@ describe('initChartDataLoading', () => {
                 format: '#,##0.0'
             }]
         };
-        const expectedTransformation = {
-            buckets: [{
+        const expectedTransformation: Transformation.ITransformation = {
+            dimensions: [{
                 attributes: [{ id: 'df' }],
                 name: 'stacks'
             }],
