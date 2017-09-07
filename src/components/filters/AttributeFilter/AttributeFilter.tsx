@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as sdk from 'gooddata';
 import pick = require('lodash/pick');
 
-import { IntlWrapper } from '../core/base/IntlWrapper';
+import { IntlWrapper } from '../../core/base/IntlWrapper';
 import { injectIntl } from 'react-intl';
 import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from './AttributeDropdown';
 import { AttributeLoader } from './AttributeLoader';

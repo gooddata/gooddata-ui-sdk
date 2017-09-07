@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { AttributeFilter } from '../src/components/base/AttributeFilter';
+import { AttributeFilter } from '../src/components/filters/AttributeFilter/AttributeFilter';
 
 import '../styles/scss/attributeFilter.scss';
 

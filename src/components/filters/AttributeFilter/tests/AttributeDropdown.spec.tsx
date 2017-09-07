@@ -4,7 +4,7 @@ import * as ReactTestUtils from 'react-addons-test-utils';
 import { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
 
 import { AttributeDropdown, VISIBLE_ITEMS_COUNT, createAfmFilter } from '../AttributeDropdown';
-import { IntlWrapper } from '../../core/base/IntlWrapper';
+import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { createMetadataMock, waitFor } from './utils';
 
 describe('AttributeDropdown', () => {

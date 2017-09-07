@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { AttributeLoader, IAttributeLoaderProps } from '../AttributeLoader';
-import { postpone } from '../../../helpers/test_helpers';
+import { postpone } from '../../../../helpers/test_helpers';
 import {
     createMetadataMock,
     ATTRIBUTE_DISPLAY_FORM_URI,

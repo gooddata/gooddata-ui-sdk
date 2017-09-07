@@ -10,8 +10,7 @@ function loadStories() {
 }
 
 setOptions({
-    name: `React Components v${pkg.version} ${__COMMIT_HASH__}`,
-    downPanelInRight: true
+    name: `React Components v${pkg.version} ${__COMMIT_HASH__}`
 });
 
 configure(loadStories, module);
