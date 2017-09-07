@@ -8,6 +8,7 @@ import { onErrorHandler } from './mocks';
 
 class DynamicVisualization extends React.Component<any,any> {
     initialState: Object = {
+        projectId: 'myproject',
         uri: '/gdc/md/myproject/obj/1001',
         config: {
             colors: [
@@ -48,9 +49,9 @@ class DynamicVisualization extends React.Component<any,any> {
     render() {
         return (<div>
             <div>
-                <button onClick={this.toggle.bind(this, 'uri')} >uri</button>
-                <button onClick={this.toggle.bind(this, 'filters')} >filter</button>
-                <button onClick={this.toggle.bind(this, 'config')} >config</button>
+                <button onClick={this.toggle.bind(this, 'uri')} >toggle uri</button>
+                <button onClick={this.toggle.bind(this, 'filters')} >toggle filter</button>
+                <button onClick={this.toggle.bind(this, 'config')} >toggle config</button>
             </div>
             <Visualization
                 key="dynamic-test-vis"
@@ -64,7 +65,17 @@ storiesOf('Visualization', module)
     .add('table example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
+                projectId="myproject"
                 uri={'/gdc/md/myproject/obj/1001'}
+                onError={onErrorHandler}
+            />
+        </div>
+    ))
+    .add('table example with identifier', () => (
+        <div style={{ width: 800, height: 400 }}>
+            <Visualization
+                projectId="myproject"
+                identifier="1001"
                 onError={onErrorHandler}
             />
         </div>
@@ -72,6 +83,7 @@ storiesOf('Visualization', module)
     .add('chart example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
+                projectId="myproject"
                 uri={'/gdc/md/myproject/obj/1002'}
                 onError={onErrorHandler}
             />
@@ -80,6 +92,7 @@ storiesOf('Visualization', module)
     .add('chart with custom colors example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
+                projectId="myproject"
                 uri={'/gdc/md/myproject/obj/1002'}
                 config={{
                     colors: [
@@ -97,6 +110,7 @@ storiesOf('Visualization', module)
     .add('chart with applied filter', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
+                projectId="myproject"
                 uri={'/gdc/md/myproject/obj/1002'}
                 filters={[{
                     id: '/gdc/md/myproject/obj/123',

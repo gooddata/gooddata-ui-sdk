@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as sdk from 'gooddata';
-import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
+import identity = require('lodash/identity');
 import { Afm, DataSource, MetadataSource, UriMetadataSource, UriAdapter } from '@gooddata/data-layer';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
 
 import { ErrorStates } from '../../constants/errorStates';
 import { BaseChart, ChartTypes, IChartConfig } from '../core/base/BaseChart';
 import { Table } from '../core/Table';
 import { IEvents } from '../../interfaces/Events';
-import { getProjectIdByUri } from '../../helpers/project';
 import { visualizationPropTypes } from '../../proptypes/Visualization';
 
 function isDateFilter(filter: Afm.IFilter): filter is Afm.IDateFilter {
@@ -20,26 +22,57 @@ function isAttributeFilter(filter: Afm.IFilter): filter is Afm.IAttributeFilter 
     return filter.type === 'attribute';
 }
 
+function getDateFilter(filters: Afm.IFilter[]): Afm.IDateFilter {
+    return filters.filter(isDateFilter).shift();
+}
+
+function getAttributeFilters(filters: Afm.IFilter[]): Afm.IAttributeFilter[] {
+    return filters.filter(isAttributeFilter);
+}
+
 export interface IVisualizationProps extends IEvents {
-    uri: string;
+    projectId: string;
+    uri?: string;
+    identifier?: string;
     locale?: string;
     config?: IChartConfig;
     filters?: Afm.IFilter[];
+    uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
 }
 
-export interface IVisualizationState {
+export interface IVisualizationExecInfo {
+    type: string;
     dataSource: DataSource.IDataSource;
     metadataSource: MetadataSource.IMetadataSource;
-    type: string;
+}
+
+export interface IVisualizationState extends IVisualizationExecInfo {
+    uriAdapter: UriAdapter;
+}
+
+function uriResolver(projectId: string, uri?: string, identifier?: string): Promise<string> {
+    if (uri) {
+        return Promise.resolve(uri);
+    }
+
+    if (!identifier) {
+        return Promise.reject('Neither uri or identifier specified');
+    }
+
+    return sdk.md.getObjectUri(projectId, identifier);
 }
 
 export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
-    uri: string;
-    uriAdapter: UriAdapter;
     static propTypes = visualizationPropTypes;
+
     static defaultProps = {
-        filters: []
+        onError: noop,
+        filters: [],
+        uriResolver
     };
+
+    private subscription: Subscription;
+    private subject: Subject<Promise<IVisualizationExecInfo>>;
 
     constructor(props) {
         super(props);
@@ -47,63 +80,74 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.state = {
             dataSource: null,
             metadataSource: null,
+            uriAdapter: null,
             type: null
         };
+
+        const errorHandler = props.onError;
+
+        this.subject = new Subject();
+        this.subscription = this.subject
+            // Unwraps values from promise and ensures that the latest result is returned
+            // Used to be called `flatMapLatest`
+            .switchMap<Promise<IVisualizationExecInfo>, IVisualizationExecInfo>(identity)
+
+            .subscribe(
+                props => this.setState(props),
+                () => errorHandler(ErrorStates.NOT_FOUND)
+            );
     }
 
     componentDidMount() {
-        const { uri, filters } = this.props;
+        const { projectId, uri, identifier, filters } = this.props;
 
-        this.prepareDatasources(uri, filters);
+        this.prepareDatasources(projectId, uri, identifier, filters);
+    }
+
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
+        this.subject.unsubscribe();
+    }
+
+    public hasChangedProps(nextProps): boolean {
+        const { projectId, uri, identifier, filters } = this.props;
+
+        return projectId !== nextProps.identifier ||
+            identifier !== nextProps.identifier ||
+            uri !== nextProps.uri ||
+            !isEqual(filters, nextProps.filters);
     }
 
     public componentWillReceiveProps(nextProps) {
-        const { uri, filters } = this.props;
-
-        if (uri !== nextProps.uri || !isEqual(filters, nextProps.filters)) {
-            this.prepareDatasources(nextProps.uri, nextProps.filters);
+        if (this.hasChangedProps(nextProps)) {
+            this.prepareDatasources(nextProps.projectId, nextProps.uri, nextProps.identifier, nextProps.filters);
         }
     }
 
-    private getDateFilter(filters: Afm.IFilter[]): Afm.IDateFilter {
-        return filters
-            .filter(isDateFilter)
-            .shift();
-    }
+    private prepareDatasources(projectId, uri, identifier, filters = []) {
+        const promise = this.props.uriResolver(projectId, uri, identifier)
+            .then((visualizationUri) => {
+                const uriAdapter = new UriAdapter(sdk, projectId);
 
-    private getAttributeFilters(filters: Afm.IFilter[]): Afm.IAttributeFilter[] {
-        return filters.filter(isAttributeFilter);
-    }
+                const dateFilter = getDateFilter(filters);
+                const attributeFilters = getAttributeFilters(filters);
 
-    public refreshUriAdapter(uri) {
-        this.uri = uri;
-        const projectId = getProjectIdByUri(uri);
-        this.uriAdapter = new UriAdapter(sdk, projectId);
-    }
+                return uriAdapter.createDataSource({ uri: visualizationUri, attributeFilters, dateFilter })
+                    .then((dataSource) => {
+                        const metadataSource = new UriMetadataSource(sdk, visualizationUri);
 
-    private prepareDatasources(uri, filters = []) {
-        const errorHandler = get(this.props, 'onError', noop);
-        const shouldRefreshUriAdapter = this.uri !== uri || !this.uriAdapter;
-
-        if (shouldRefreshUriAdapter) {
-            this.refreshUriAdapter(uri);
-        }
-
-        const attributeFilters = this.getAttributeFilters(filters);
-        const dateFilter = this.getDateFilter(filters);
-
-        this.uriAdapter.createDataSource({ uri, attributeFilters, dateFilter }).then((dataSource) => {
-            const metadataSource = new UriMetadataSource(sdk, uri);
-            metadataSource.getVisualizationMetadata().then(({ metadata }) => {
-                this.setState({
-                    type: metadata.content.type,
-                    dataSource,
-                    metadataSource
-                });
+                        return metadataSource.getVisualizationMetadata()
+                            .then(({ metadata }) => {
+                                return {
+                                    type: metadata.content.type,
+                                    dataSource,
+                                    metadataSource
+                                };
+                            });
+                    });
             });
-        }, () => {
-            errorHandler(ErrorStates.NOT_FOUND);
-        });
+
+        this.subject.next(promise);
     }
 
     public render() {
