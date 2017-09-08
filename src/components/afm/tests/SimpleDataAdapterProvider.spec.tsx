@@ -146,4 +146,20 @@ describe('SimpleDataAdapterProvider', () => {
             });
         });
     });
+
+    it('should cancel promise when unmounting', (done) => {
+        const wrapper = createComponent(Table, 'table');
+        const cancelDS = jest.fn();
+        const cancelMDS = jest.fn();
+
+        wrapper.node.prepareDataSourceCancellable = { cancel: cancelDS };
+        wrapper.node.prepareMetadataSourceCancellable = { cancel: cancelMDS };
+
+        postpone(() => {
+            wrapper.unmount();
+            expect(cancelDS).toHaveBeenCalled();
+            expect(cancelMDS).toHaveBeenCalled();
+            done();
+        });
+    });
 });
