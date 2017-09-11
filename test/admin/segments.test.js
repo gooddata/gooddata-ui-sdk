@@ -73,13 +73,16 @@ describe('segments', () => {
                             segmentCreate: {
                                 id: 'segmentId',
                                 title: 'segmentId',
-                                domain: '/gdc/admin/contracts/contractId/domains/data-admin-test1'
-
+                                domains: [
+                                    '/gdc/admin/contracts/contractId/domains/data-admin-test1',
+                                    '/gdc/admin/contracts/contractId/domains/data-admin-test2'
+                                ]
                             }
                         })
                     }
                 );
-                return segments.createSegment('contractId', 'dataproductId', 'data-admin-test1').then((result) => {
+
+                return segments.createSegment('contractId', 'dataproductId', 'segmentId', ['data-admin-test1', 'data-admin-test2']).then((result) => {
                     expect(result.status).toBe(201);
                 });
             });

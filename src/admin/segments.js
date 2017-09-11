@@ -24,13 +24,13 @@ export const getDataProductSegments = (contractId, dataProductId) =>
         status: data.segments.status
     }));
 
-export const createSegment = (contractId, dataProductId, segmentId, domainId) =>
+export const createSegment = (contractId, dataProductId, segmentId, domainIds) =>
     post(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENTS, { contractId, dataProductId }), {
         data: JSON.stringify({
             segmentCreate: {
                 id: segmentId,
                 title: segmentId,
-                domain: routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId })
+                domains: domainIds.map(domainId => routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId }))
             }
         })
     });
