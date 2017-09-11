@@ -11,5 +11,16 @@
    "visualization.numericValues.t": "T",
    "visualization.numericValues.p": "P",
    "visualization.numericValues.e": "E",
-   "visualization.emptyValue": "leerer Wert"
+   "visualization.emptyValue": "leerer Wert",
+   "gs.filter.loading": "Filter wird geladen…",
+   "gs.filter.error": "Fehler beim Laden des Filters",
+   "gs.list.loading": "Liste wird geladen…",
+   "gs.list.clear": "Löschen",
+   "gs.list.cancel": "Abbrechen",
+   "gs.list.apply": "Übernehmen",
+   "gs.list.only": "Nur",
+   "gs.list.selectAll": "Alle auswählen",
+   "gs.list.limitExceeded": "Leider haben Sie den Grenzwert ({limit}) überschritten.",
+   "gs.list.noItemsFound": "Keine Elemente gefunden.",
+   "gs.list.error": "Fehler beim Laden der Listenobjekte"
 }

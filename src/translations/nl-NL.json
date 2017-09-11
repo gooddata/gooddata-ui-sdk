@@ -11,5 +11,16 @@
    "visualization.numericValues.t": "T",
    "visualization.numericValues.p": "P",
    "visualization.numericValues.e": "E",
-   "visualization.emptyValue": "lege waarde"
+   "visualization.emptyValue": "lege waarde",
+   "gs.filter.loading": "Filter wordt ingelezen...",
+   "gs.filter.error": "Fout bij inlezen filter",
+   "gs.list.loading": "Lijst wordt ingelezen...",
+   "gs.list.clear": "Wissen",
+   "gs.list.cancel": "Annuleren",
+   "gs.list.apply": "Toepassen",
+   "gs.list.only": "Alleen",
+   "gs.list.selectAll": "Selecteer alles",
+   "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
+   "gs.list.noItemsFound": "Geen items gevonden.",
+   "gs.list.error": "Fout bij inlezen lijstitems"
 }
