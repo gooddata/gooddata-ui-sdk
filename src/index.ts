@@ -8,6 +8,7 @@ import { IDrillableItem } from './interfaces/DrillableItem';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import * as promise from './helpers/promise';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
+import PropTypes from './proptypes/index';
 
 export {
     BaseChart,
@@ -20,5 +21,6 @@ export {
     IDrillableItem,
     IVisualizationProperties,
     promise,
-    AttributeFilter
+    AttributeFilter,
+    PropTypes
 };
