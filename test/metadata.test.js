@@ -4,6 +4,7 @@ import fetchMock from './utils/fetch-mock';
 import { mockPollingRequest } from './helpers/polling';
 import * as md from '../src/metadata';
 import * as xhr from '../src/xhr';
+import * as fixtures from './fixtures/metadata';
 
 describe('metadata', () => {
     describe('with fake server', () => {
@@ -384,6 +385,22 @@ describe('metadata', () => {
                             uri: '/fuzz/buzz',
                             identifier: 'attr.fuzz.buzz'
                         }]);
+                    });
+            });
+        });
+
+        describe('translateElementLabelsToUris', () => {
+            it('should return two label uris', () => {
+                fetchMock.post(
+                   '/gdc/md/myFakeProjectId/labels',
+                    {
+                        status: 200,
+                        body: JSON.stringify(fixtures.elementsLabelsResult)
+                    });
+
+                md.translateElementLabelsToUris('myFakeProjectId', '/gdc/md/labelUri', ['2014-01-01', '2016-01-01'])
+                    .then((result) => {
+                        expect(result).toEqual(fixtures.elementsLabelsResult.elementLabelUri);
                     });
             });
         });
