@@ -7,5 +7,8 @@ export const visualizationPropTypes = {
     ...chartConfig,
     ...events,
     ...filters,
-    uri: PropTypes.string.isRequired
+    projectId: PropTypes.string.isRequired,
+    identifier: PropTypes.string,
+    uri: PropTypes.string,
+    uriResolver: PropTypes.func
 };

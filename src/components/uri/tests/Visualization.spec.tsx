@@ -1,7 +1,7 @@
 jest.mock('gooddata');
 
 import * as React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { Afm } from '@gooddata/data-layer';
 
 import {
@@ -20,15 +20,37 @@ import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
 import { postpone } from '../../../helpers/test_helpers';
 
+const projectId = 'myproject';
+const CHART_URI = `/gdc/md/${projectId}/obj/1`;
+const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
 
-const URI1 = '/gdc/md/myproject/obj/1';
-const URI2 = '/gdc/md/myproject/obj/2';
+const SLOW = 100;
+const FAST = 10;
+
+function getResponse(response: string, delay: number): Promise<string> {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(response), delay);
+    });
+}
+
+function uriResolver(_projectId: string, _uri: string, identifier: string): Promise<string> {
+    if (identifier === 'table') {
+        return getResponse(TABLE_URI, FAST);
+    }
+
+    if (identifier === 'chart') {
+        return getResponse(CHART_URI, SLOW);
+    }
+
+    return Promise.reject('Unknown identifier');
+}
 
 describe('Visualization', () => {
     it('should render chart', (done) => {
         const wrapper = mount(
             <Visualization
-                uri={URI1}
+                projectId={projectId}
+                uri={CHART_URI}
             />
         );
 
@@ -41,7 +63,8 @@ describe('Visualization', () => {
     it('should render table', (done) => {
         const wrapper = mount(
             <Visualization
-                uri={URI2}
+                projectId={projectId}
+                uri={TABLE_URI}
             />
         );
 
@@ -59,6 +82,7 @@ describe('Visualization', () => {
 
         mount(
             <Visualization
+                projectId={projectId}
                 uri={'/invalid/url'}
                 onError={errorHandler}
             />
@@ -66,18 +90,20 @@ describe('Visualization', () => {
     });
 
     it('should replace date filter, if it has same id', (done) => {
-        const visFilters = [
+        const visFilters: Afm.IDateFilter[] = [
             {
                 id: '/gdc/md/myproject/obj/921',
+                intervalType: 'relative',
                 type: 'date',
                 between: [-51, 0],
                 granularity: 'date'
             }
-        ] as Afm.IDateFilter[];
+        ];
 
         const wrapper = mount(
             <Visualization
-                uri={URI1}
+                projectId={projectId}
+                uri={CHART_URI}
                 filters={visFilters}
             />
         );
@@ -101,7 +127,8 @@ describe('Visualization', () => {
 
         const wrapper = mount(
             <Visualization
-                uri={URI1}
+                projectId={projectId}
+                uri={CHART_URI}
                 filters={visFilters}
             />
         );
@@ -114,17 +141,18 @@ describe('Visualization', () => {
     });
 
     it('should add attribute filter', (done) => {
-        const visFilters = [
+        const visFilters: Afm.IPositiveAttributeFilter[] = [
             {
                 id: '/gdc/md/myproject/obj/925',
                 type: 'attribute',
                 in: ['11', '22', '33']
             }
-        ] as Afm.IAttributeFilter[];
+        ];
 
         const wrapper = mount(
             <Visualization
-                uri={URI1}
+                projectId={projectId}
+                uri={CHART_URI}
                 filters={visFilters}
             />
         );
@@ -136,39 +164,36 @@ describe('Visualization', () => {
         });
     });
 
-    it('should only make new UriAdapter on uri change', (done) => {
-        const visFilters = [
-            {
-                id: '/gdc/md/myproject/obj/925',
-                type: 'attribute',
-                in: ['11', '22', '33']
-            } as Afm.IAttributeFilter
-        ];
-
-        const uriAdapterContructorSpy = jest.spyOn(Visualization.prototype, 'refreshUriAdapter');
-
-        const wrapper = shallow(
+    it('should handle slow requests', (done) => {
+        // Response from first request comes back later that from the second one
+        const wrapper = mount(
             <Visualization
-                uri={URI1}
-                filters={visFilters}
-            />,
-            { lifecycleExperimental: true }
+                projectId={projectId}
+                identifier={'chart'}
+                uriResolver={uriResolver}
+            />
         );
 
+        wrapper.setProps({ identifier: 'table' });
+
         postpone(() => {
-            expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(1);
-            wrapper.setProps({ uri: URI2 });
+            expect(wrapper.find(Table).length).toBe(1);
+            done();
+        }, 300);
+    });
 
-            postpone(() => {
-                expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);
-                wrapper.setProps({ uri: URI2, filters: [] });
+    it('should handle set state on unmounted component', (done) => {
+        const wrapper = mount(
+            <Visualization
+                projectId={projectId}
+                identifier={'chart'}
+                uriResolver={uriResolver}
+            />
+        );
 
-                postpone(() => {
-                    expect(uriAdapterContructorSpy).toHaveBeenCalledTimes(2);
-                    done();
-                });
-            });
+        // Would throw an error if not handled properly
+        wrapper.unmount();
 
-        });
+        postpone(done, 300);
     });
 });
