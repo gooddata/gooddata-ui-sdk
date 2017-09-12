@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "@gooddata/data-layer": "3.0.0",
-    "@gooddata/goodstrap": "52.0.0",
-    "@gooddata/indigo-visualizations": "0.11.1",
+    "@gooddata/goodstrap": "53.0.1",
+    "@gooddata/indigo-visualizations": "0.11.2",
     "classnames": "2.2.5",
     "gooddata": "3.0.0",
     "lodash": "4.17.4",
