@@ -505,6 +505,29 @@ export function getIdentifiersFromUris(projectId, uris) {
 }
 
 /**
+ * Get attribute elements with their labels and uris.
+ *
+ * @param {String} projectId id of the project
+ * @param {String} labelUri uri of the label (display form)
+ * @param {Array<String>} patterns elements labels/titles (for EXACT mode), or patterns (for WILD mode)
+ * @param {('EXACT'|'WILD')} mode match mode, currently only EXACT supported
+ * @return {Array} array of elementLabelUri objects
+ */
+export function translateElementLabelsToUris(projectId, labelUri, patterns, mode = 'EXACT') {
+    return post(`/gdc/md/${projectId}/labels`, {
+        body: {
+            elementLabelToUri: [
+                {
+                    labelUri,
+                    mode,
+                    patterns
+                }
+            ]
+        }
+    }).then(r => (r.ok ? r.json() : r)).then(r => _get(r, 'elementLabelUri'));
+}
+
+/**
  * Get valid elements of an attribute, specified by its identifier and project id it belongs to
  *
  * @method getValidElements
