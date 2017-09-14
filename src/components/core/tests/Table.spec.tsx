@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import {
     VisualizationObject
 } from '@gooddata/data-layer';
+import { test } from '@gooddata/js-utils';
 
 import {
     initTableDataLoading,
@@ -20,7 +21,8 @@ jest.mock('@gooddata/indigo-visualizations', () => ({
 
 import { Table, ITableProps } from '../Table';
 import { ErrorStates } from '../../../constants/errorStates';
-import { postpone } from '../../../helpers/test_helpers';
+
+const { postpone } = test;
 
 describe('Table', () => {
     const createComponent = (props: ITableProps) => {

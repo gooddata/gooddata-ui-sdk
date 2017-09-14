@@ -1,5 +1,6 @@
 jest.mock('gooddata');
 
+import { test } from '@gooddata/js-utils';
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { Afm } from '@gooddata/data-layer';
@@ -18,8 +19,8 @@ jest.mock('../../core/base/BaseChart', () => ({
 
 import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
-import { postpone } from '../../../helpers/test_helpers';
 
+const { postpone } = test;
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;

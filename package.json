@@ -12,6 +12,7 @@
     "styles"
   ],
   "devDependencies": {
+    "@gooddata/js-utils": "0.8.0",
     "@gooddata/mock-js": "0.0.23",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",

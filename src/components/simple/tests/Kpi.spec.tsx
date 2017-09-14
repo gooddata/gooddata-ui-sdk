@@ -2,9 +2,11 @@ jest.mock('gooddata');
 
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { test } from '@gooddata/js-utils';
 
 import { Kpi, IKpiProps } from '../Kpi';
-import { postpone } from '../../../helpers/test_helpers';
+
+const { postpone } = test;
 
 describe('Kpi', () => {
     function createComponent(props: IKpiProps) {

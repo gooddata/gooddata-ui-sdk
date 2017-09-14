@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { AttributeLoader, IAttributeLoaderProps } from '../AttributeLoader';
-import { postpone } from '../../../../helpers/test_helpers';
+import { test } from '@gooddata/js-utils';
 import {
     createMetadataMock,
     ATTRIBUTE_DISPLAY_FORM_URI,
@@ -9,6 +9,7 @@ import {
     ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2
 } from './utils';
 
+const { postpone } = test;
 
 describe('AttributeLoader', () => {
     function renderComponent(props = {}) {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { VisualizationObject } from '@gooddata/data-layer';
+import { test } from '@gooddata/js-utils';
 
 import {
     initChartDataLoading,
@@ -15,7 +16,8 @@ jest.mock('@gooddata/indigo-visualizations', () => ({
 
 import { BaseChart, IBaseChartProps } from '../BaseChart';
 import { ErrorStates } from '../../../../constants/errorStates';
-import { postpone } from '../../../../helpers/test_helpers';
+
+const { postpone } = test;
 
 describe('BaseChart', () => {
     function createComponent(props: IBaseChartProps) {
