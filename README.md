@@ -93,6 +93,7 @@ Steps to publish a release:
 * you should have `gooddata/gooddata-js` as `upstream` since all tasks publish to upstream remote
 * run `grunt release:{version-type}` in `master`
 * run `grunt bump-gh-pages` in `master`
+* run `npm publish` in `master`
 * you're done
 
 [d3ex]: examples/d3-data-viz/viz.js
