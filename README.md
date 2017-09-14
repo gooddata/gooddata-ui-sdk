@@ -77,8 +77,8 @@ $ grunt test
 Test coverage report can be found in `coverage/` folder.
 
 ## Releasing
-New version of library can be released with `grunt release:[major|minor|patch]` task. For all options
-see [grunt-bump task][vjBump].
+New version of library can be released with `grunt release:[major|minor|patch]` task (major|minor|patch means
+breaking|feature|fix respectively). For all options see [grunt-bump task][vjBump].
 
 Task is meant to be run from `master` branch of this repository.
 
