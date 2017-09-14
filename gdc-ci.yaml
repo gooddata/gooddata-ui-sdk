@@ -1,5 +1,6 @@
+# defaults - https://github.com/gooddata/gdc-ci/blob/develop/components/client/gdc-ci.yaml
 pull-request:
-  - mkdir -p ./ci/results && tsc -p tsconfig.base.json --noEmit && tslint --config tslint.json --format checkstyle --out ./ci/results/tslint-results.xml '{src,stories}/**/*.{ts,tsx}'
+  - yarn validate-ci
   - JEST_SUITE_NAME="GoodData React Components Unit Tests" JEST_JUNIT_OUTPUT="./ci/results/test-results.xml" jest --config=jest.ci.json
 dist:
   - yarn build-storybook

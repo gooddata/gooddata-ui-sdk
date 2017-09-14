@@ -2,8 +2,10 @@ import * as React from 'react';
 import * as gooddata from 'gooddata';
 import compact = require('lodash/compact');
 
-import { IVisualizationObject, IEmbeddedDateFilter } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
+import { VisualizationObject } from '@gooddata/data-layer';
+
 import { getProjectIdByUri } from '../helpers/project';
+import { IAttribute } from '@gooddata/data-layer/dist/afmMap/model/gooddata/Attribute';
 
 export interface IFetchProps {
     uri: string;
@@ -13,10 +15,10 @@ export interface IFetchProps {
     children?: any;
 }
 
-function extractDateAttributes(visObj: IVisualizationObject): string[] {
+function extractDateAttributes(visObj: VisualizationObject.IVisualizationObjectContent): string[] {
     const attributes = visObj.buckets.filters.map((filter) => {
-        if ((filter as IEmbeddedDateFilter).dateFilter) {
-            return (filter as IEmbeddedDateFilter).dateFilter.attribute;
+        if ((filter as VisualizationObject.IEmbeddedDateFilter).dateFilter) {
+            return (filter as VisualizationObject.IEmbeddedDateFilter).dateFilter.attribute;
         }
         return null;
     });
@@ -25,21 +27,22 @@ function extractDateAttributes(visObj: IVisualizationObject): string[] {
 }
 
 function fetcher(uri: string): Promise<any> {
-    return gooddata.xhr.get(uri).then((visObj) => {
-        const attributes = extractDateAttributes(visObj.visualization.content);
+    return gooddata.xhr.get<VisualizationObject.IVisualizationObjectResponse>(uri).then((visualization) => {
+        const attributes = extractDateAttributes(visualization.visualization.content);
 
         if (!attributes.length) {
-            return { attributesMap: {}, visObj };
+            return { attributesMap: {}, visObj: visualization };
         }
 
-        return gooddata.md.getObjects(getProjectIdByUri(uri), attributes).then((items) => {
-            const attributesMap = items.reduce((map, item) => ({
-                ...map,
-                [item.attribute.meta.uri]: item.attribute.content.displayForms[0].meta.uri
-            }), {});
+        return gooddata.md.getObjects(getProjectIdByUri(uri), attributes)
+            .then((items: IAttribute[]) => {
+                const attributesMap = items.reduce((map: IAttribute[], item: IAttribute) => ({
+                    ...map,
+                    [item.attribute.meta.uri]: item.attribute.content.displayForms[0].meta.uri
+                }), {});
 
-            return { attributesMap, visObj };
-        });
+                return { attributesMap, visObj: visualization };
+            });
     });
 }
 
@@ -56,13 +59,13 @@ export class Fetch extends React.Component<IFetchProps, null> {
         this.fetchVisObj(this.props);
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: IFetchProps) {
         if (this.props.uri !== nextProps.uri) {
             this.fetchVisObj(nextProps);
         }
     }
 
-    private fetchVisObj({ uri }) {
+    private fetchVisObj({ uri }: { uri: string }) {
         const { fetcher, onData, onError } = this.props;
 
         fetcher(uri)

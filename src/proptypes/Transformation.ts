@@ -1,12 +1,17 @@
 import * as PropTypes from 'prop-types';
 
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
 const object = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string
 };
 
-export default {
-    transformation: PropTypes.shape({
+export const TransformationPropType =
+    PropTypes.shape({
         sorting: PropTypes.arrayOf(
             PropTypes.shape({
                 column: PropTypes.string.isRequired,
@@ -27,5 +32,4 @@ export default {
                 ).isRequired
             })
         )
-    })
-};
+    });

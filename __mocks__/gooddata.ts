@@ -1,9 +1,14 @@
 import range = require('lodash/range');
-import { ExecutorResult } from '@gooddata/data-layer';
 import { charts } from './fixtures';
+import { ISimpleExecutorResult } from 'gooddata';
+import { Header } from '@gooddata/data-layer';
+import { IVisualizationObject } from '@gooddata/data-layer/dist/legacy/model/VisualizationObject';
+
+export { IVisualizationObject };
 
 const execution = {
-    getData(_projectId, columns): Promise<ExecutorResult.ISimpleExecutorResult> {
+    // tslint:disable-next-line:variable-name
+    getData(_projectId: string, columns: string[]): Promise<ISimpleExecutorResult> {
         if (columns.indexOf('too-large-measure') >= 0) {
             return Promise.reject({
                 response: {
@@ -29,7 +34,7 @@ const execution = {
                     title: 'Attribute',
                     type: 'attrLabel',
                     uri: '/gdc/md/project/obj/1'
-                }]
+                }] as Header.IAttributeHeader[]
             });
         }
 
@@ -42,7 +47,7 @@ const execution = {
                     title: 'Negative values measure',
                     type: 'metric',
                     uri: '/gdc/md/project/obj/1'
-                }]
+                }] as Header.IMetricHeader[]
             });
         }
 
@@ -57,7 +62,7 @@ const execution = {
                     title: 'Attributes',
                     type: 'attrLabel',
                     uri: '/gdc/md/project/obj/1'
-                }]
+                }] as Header.IAttributeHeader[]
             });
         }
 
@@ -82,7 +87,7 @@ const execution = {
                     title: '# Users Opened AD',
                     format: '#,##0'
                 }
-            ],
+            ] as Header.IAttributeHeader[],
             rawData: [
                 [
                     'Q3/2016',
@@ -105,14 +110,12 @@ const execution = {
                     '2072'
                 ]
             ],
-            warnings: [
-
-            ],
+            warnings: [],
             isEmpty: false
         });
     },
 
-    getDataForVis(): Promise<ExecutorResult.ISimpleExecutorResult>  {
+    getDataForVis(): Promise<ISimpleExecutorResult>  {
         return Promise.resolve({
             rawData: [['10000']],
             headers: [{
@@ -120,14 +123,14 @@ const execution = {
                 title: 'Attribute',
                 type: 'attrLabel',
                 uri: '/gdc/md/project/obj/1'
-            }]
+            }] as Header.IAttributeHeader[]
         });
     }
 };
 
 const xhr = {
-    get(uri) {
-        const chart = charts.find(viz => viz.visualization.meta.uri === uri);
+    get(uri: string) {
+        const chart = charts.find(vis => vis.visualization.meta.uri === uri);
 
         if (chart) {
             return Promise.resolve(chart);
@@ -140,6 +143,9 @@ const xhr = {
 const md = {
     getObjects() {
         return Promise.resolve([]);
+    },
+    getObjectDetails() {
+        return Promise.resolve({});
     }
 };
 

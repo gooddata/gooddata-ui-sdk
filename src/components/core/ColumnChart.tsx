@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { BaseChart, IChartProps } from './base/BaseChart';
-import { chartPropTypes } from '../../proptypes/Chart';
+import { ChartPropTypes, Requireable } from '../../proptypes/Chart';
+
+export { Requireable };
 
 export class ColumnChart extends React.Component<IChartProps, null> {
-    static propTypes = chartPropTypes;
+    public static propTypes = ChartPropTypes;
 
     public render() {
         return (

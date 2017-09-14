@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "declaration": true,
     "jsx": "react",
     "lib": [
       "es6",
       "dom"
     ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "rootDir": "src"
-  }
+    "outDir": "dist",
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -10,7 +10,9 @@ import {
 export {
     ISimpleDataAdapterProviderProps
 };
+
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ColumnChart as coreColumnChart } from '../core/ColumnChart';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
-export const ColumnChart = simpleDataAdapterProvider<ICommonChartProps>(coreColumnChart, 'column');
+export const ColumnChart = simpleDataAdapterProvider<ICommonChartProps>(coreColumnChart, VisualizationTypes.COLUMN);

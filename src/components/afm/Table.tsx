@@ -12,5 +12,6 @@ export {
 };
 
 import { Table as coreTable } from '../core/Table';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
-export const Table = simpleDataAdapterProvider(coreTable, 'table');
+export const Table = simpleDataAdapterProvider(coreTable, VisualizationTypes.TABLE);

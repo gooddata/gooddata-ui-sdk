@@ -4,18 +4,13 @@ import { AttributeFilter } from '../AttributeFilter';
 import { createMetadataMock } from './utils';
 
 describe('AttributeFilter', () => {
-    function renderComponent(props:any = {}) {
+    function renderComponent(props: any = {}) {
         const {
             projectId = 'storybook',
-            onApply = f => f,
+            onApply = (f: Function) => f,
             metadata = createMetadataMock()
         } = props;
-        return mount(<AttributeFilter {...{
-            ...props,
-            projectId,
-            onApply,
-            metadata
-        }} />);
+        return mount(<AttributeFilter {...{ ...props, projectId, onApply, metadata }} />);
     }
 
     it('should render loading button after mount', () => {

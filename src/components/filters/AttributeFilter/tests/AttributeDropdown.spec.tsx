@@ -8,20 +8,15 @@ import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { createMetadataMock, waitFor } from './utils';
 
 describe('AttributeDropdown', () => {
-    function renderComponent(props:any = {}) {
+    function renderComponent(props: any = {}) {
         const {
             projectId = 'storybook',
-            onApply = f => f,
+            onApply = (f: Function) => f,
             metadata = createMetadataMock()
         } = props;
         return mount(
             <IntlWrapper locale="en-US">
-                <AttributeDropdown {...{
-                    ...props,
-                    projectId,
-                    onApply,
-                    metadata
-                }} />
+                <AttributeDropdown {...{ ...props, projectId, onApply, metadata }} />
             </IntlWrapper>
         );
     }

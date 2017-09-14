@@ -14,8 +14,9 @@ export interface IVisConfig {
 }
 
 export function getLegendConfig(
-    metadata: VisualizationObject.IVisualizationObjectMetadata,
-    environment: string): ILegendConfig {
+    metadata: VisualizationObject.IVisualizationObject,
+    environment: string
+): ILegendConfig {
     if (environment === 'dashboards') {
         return {
             enabled: true,
@@ -28,8 +29,7 @@ export function getLegendConfig(
     const collections = categories.map(category =>
         get(category, 'category.collection'));
 
-    const isStackOrSegment = collection =>
-        collection === 'stack' || collection === 'segment';
+    const isStackOrSegment = (collection: string) => collection === 'stack' || collection === 'segment';
 
     const isOnRight = collections.some(isStackOrSegment);
     const position = isOnRight ? 'right' : 'top';
@@ -41,13 +41,14 @@ export function getLegendConfig(
 }
 
 export function getConfig(
-        metadata:  VisualizationObject.IVisualizationObjectMetadata,
+        metadata: VisualizationObject.IVisualizationObject,
         type: string,
-        environment: string): IVisConfig {
+        environment: string
+): IVisConfig {
     const legendConfig = getLegendConfig(metadata, environment);
     return {
         type,
-        buckets: get<VisualizationObject.IVisualizationObjectMetadata,
+        buckets: get<VisualizationObject.IVisualizationObject,
             VisualizationObject.IBuckets>(metadata, 'content.buckets'),
         legend: legendConfig
     };

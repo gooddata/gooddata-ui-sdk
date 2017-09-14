@@ -1,8 +1,11 @@
-export const charts = [
+import { VisualizationObject } from '@gooddata/data-layer';
+import { VisualizationTypes } from '../src/constants/visualizationTypes';
+
+export const charts: [{ visualization: VisualizationObject.IVisualizationObject }] = [
     {
         visualization: {
             content: {
-                type: 'column',
+                type: VisualizationTypes.COLUMN,
                 buckets: {
                     measures: [
                         {
@@ -10,9 +13,7 @@ export const charts = [
                                 type: 'metric',
                                 objectUri: '/gdc/md/myproject/obj/3276',
                                 title: '# Logged-in Users',
-                                measureFilters: [
-
-                                ],
+                                measureFilters: [],
                                 showInPercent: false,
                                 showPoP: false
                             }
@@ -22,9 +23,7 @@ export const charts = [
                                 type: 'metric',
                                 objectUri: '/gdc/md/myproject/obj/1995',
                                 title: '# Users Opened AD',
-                                measureFilters: [
-
-                                ],
+                                measureFilters: [],
                                 showInPercent: false,
                                 showPoP: false
                             }
@@ -55,13 +54,13 @@ export const charts = [
                 }
             },
             meta: {
-                isProduction: 1,
+                isProduction: true,
                 summary: '',
-                created: '2017-05-23 09:24:41',
+                created: new Date('2015-05-23T09:24:41Z'),
                 identifier: 'aagAVA3ffizU',
                 author: '/gdc/account/profile/johndoe',
                 uri: '/gdc/md/myproject/obj/1',
-                deprecated: '0',
+                deprecated: false,
                 title: 'Measure over time',
                 tags: '',
                 contributor: '/gdc/account/profile/johndoe',
@@ -110,17 +109,17 @@ export const charts = [
                         }
                     ]
                 },
-                type: 'table'
+                type: VisualizationTypes.TABLE
             },
             meta: {
                 author: '/gdc/account/profile/johndoe',
                 uri: '/gdc/md/myproject/obj/2',
                 tags: '',
-                created: '2017-05-23 09:24:41',
+                created: new Date('2015-05-23T09:24:41Z'),
                 identifier: 'aa5CD0OcfSpg',
-                deprecated: '0',
+                deprecated: false,
                 summary: '',
-                isProduction: 1,
+                isProduction: true,
                 title: 'Measure over time (table)',
                 category: 'visualization',
                 contributor: '/gdc/account/profile/johndoe'

@@ -1,6 +1,5 @@
 jest.mock('gooddata');
 
-import { test } from '@gooddata/js-utils';
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { Afm } from '@gooddata/data-layer';
@@ -19,8 +18,8 @@ jest.mock('../../core/base/BaseChart', () => ({
 
 import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
+import { delay } from '../../tests/utils';
 
-const { postpone } = test;
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
@@ -34,6 +33,7 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
+// tslint:disable-next-line:variable-name
 function uriResolver(_projectId: string, _uri: string, identifier: string): Promise<string> {
     if (identifier === 'table') {
         return getResponse(TABLE_URI, FAST);
@@ -47,7 +47,7 @@ function uriResolver(_projectId: string, _uri: string, identifier: string): Prom
 }
 
 describe('Visualization', () => {
-    it('should render chart', (done) => {
+    it('should render chart', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
@@ -55,13 +55,12 @@ describe('Visualization', () => {
             />
         );
 
-        postpone(() => {
+        return delay().then(() => {
             expect(wrapper.find(BaseChart).length).toBe(1);
-            done();
         });
     });
 
-    it('should render table', (done) => {
+    it('should render table', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
@@ -69,14 +68,13 @@ describe('Visualization', () => {
             />
         );
 
-        postpone(() => {
+        return delay().then(() => {
             expect(wrapper.find(Table).length).toBe(1);
-            done();
         });
     });
 
     it('should trigger error in case of given uri is not valid', (done) => {
-        const errorHandler = (value) => {
+        const errorHandler = (value: string) => {
             expect(value).toEqual(ErrorStates.NOT_FOUND);
             done();
         };
@@ -90,7 +88,7 @@ describe('Visualization', () => {
         );
     });
 
-    it('should replace date filter, if it has same id', (done) => {
+    it('should replace date filter, if it has same id', () => {
         const visFilters: Afm.IDateFilter[] = [
             {
                 id: '/gdc/md/myproject/obj/921',
@@ -109,14 +107,14 @@ describe('Visualization', () => {
             />
         );
 
-        postpone(() => {
-            expect(wrapper.node.dataSource.afm.filters).toHaveLength(1);
-            expect(wrapper.node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
-            done();
+        return delay().then(() => {
+            const node: any = wrapper.getNode();
+            expect(node.dataSource.afm.filters).toHaveLength(1);
+            expect(node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
         });
     });
 
-    it('should add date filter, if it has different id', (done) => {
+    it('should add date filter, if it has different id', () => {
         const visFilters = [
             {
                 id: '/gdc/md/myproject/obj/922',
@@ -135,14 +133,14 @@ describe('Visualization', () => {
             />
         );
 
-        postpone(() => {
-            expect(wrapper.node.dataSource.afm.filters).toHaveLength(2);
-            expect(wrapper.node.dataSource.afm.filters[1]).toEqual(visFilters[0]);
-            done();
+        return delay().then(() => {
+            const node: any = wrapper.getNode();
+            expect(node.dataSource.afm.filters).toHaveLength(2);
+            expect(node.dataSource.afm.filters[1]).toEqual(visFilters[0]);
         });
     });
 
-    it('should add attribute filter', (done) => {
+    it('should add attribute filter', () => {
         const visFilters: Afm.IPositiveAttributeFilter[] = [
             {
                 id: '/gdc/md/myproject/obj/925',
@@ -159,14 +157,14 @@ describe('Visualization', () => {
             />
         );
 
-        postpone(() => {
-            expect(wrapper.node.dataSource.afm.filters).toHaveLength(2);
-            expect(wrapper.node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
-            done();
+        return delay().then(() => {
+            const node: any = wrapper.getNode();
+            expect(node.dataSource.afm.filters).toHaveLength(2);
+            expect(node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
         });
     });
 
-    it('should handle slow requests', (done) => {
+    it('should handle slow requests', () => {
         // Response from first request comes back later that from the second one
         const wrapper = mount(
             <Visualization
@@ -178,14 +176,12 @@ describe('Visualization', () => {
 
         wrapper.setProps({ identifier: 'table' });
 
-        postpone(() => {
+        return delay(300).then(() => {
             expect(wrapper.find(Table).length).toBe(1);
-            done();
-        }, 300);
+        });
     });
 
-    it('should not re-render with same props', (done) => {
-        const spy = jest.spyOn(Visualization.prototype, 'render');
+    it('should not re-render with same props', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
@@ -193,6 +189,7 @@ describe('Visualization', () => {
                 filters={[]}
             />
         );
+        const spy = jest.spyOn(wrapper.instance(), 'render');
 
         wrapper.setProps({
             projectId,
@@ -200,16 +197,14 @@ describe('Visualization', () => {
             filters: []
         });
 
-        postpone(() => {
-            // initial render without datasources & with created datasources
-            expect(spy).toHaveBeenCalledTimes(2);
-
+        return delay(300).then(() => {
+            // initial render without datasources is called during mount
+            expect(spy).toHaveBeenCalledTimes(1);
             spy.mockRestore();
-            done();
-        }, 300);
+        });
     });
 
-    it('should handle set state on unmounted component', (done) => {
+    it('should handle set state on unmounted component', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
@@ -218,9 +213,13 @@ describe('Visualization', () => {
             />
         );
 
+        const spy = jest.spyOn(wrapper.instance(), 'setState');
+
         // Would throw an error if not handled properly
         wrapper.unmount();
-
-        postpone(done, 300);
+        return delay(300).then(() => {
+            expect(spy).not.toHaveBeenCalled();
+            spy.mockRestore();
+        });
     });
 });

@@ -1,17 +1,20 @@
 import { getLegendConfig, getConfig } from '../config';
 import { VisualizationObject } from '@gooddata/data-layer';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
 describe('getLegendConfig', () => {
-    const emptyMetadataObject = {
+    const emptyMetadataObject: VisualizationObject.IVisualizationObject = {
         content: {
-            type: 'bar' as VisualizationObject.VisualizationType,
+            type: VisualizationTypes.BAR as VisualizationObject.VisualizationType,
             buckets: {
                 measures: [],
                 categories: [],
                 filters: []
             }
         },
-        meta: {}
+        meta: {
+            title: 'Title'
+        }
     };
     it('should return static response if environment is dashboards', () => {
         const expected = {
@@ -33,9 +36,9 @@ describe('getLegendConfig', () => {
     });
 
     it('should set legend config on top', () => {
-        const metadata = {
+        const metadata: VisualizationObject.IVisualizationObject = {
             content: {
-                type: 'bar',
+                type: VisualizationTypes.BAR,
                 buckets: {
                     categories: [{
                         category: {
@@ -48,8 +51,10 @@ describe('getLegendConfig', () => {
                     filters: []
                 }
             },
-            meta: {}
-        } as VisualizationObject.IVisualizationObjectMetadata;
+            meta: {
+                title: 'foo'
+            }
+        };
         const expected = {
             enabled: true,
             position: 'top'
@@ -59,9 +64,9 @@ describe('getLegendConfig', () => {
     });
 
     it('should set legend config on right when stack', () => {
-        const metadata = {
+        const metadata: VisualizationObject.IVisualizationObject = {
             content: {
-                type: 'bar',
+                type: VisualizationTypes.BAR,
                 buckets: {
                     categories: [{
                         category: {
@@ -80,8 +85,10 @@ describe('getLegendConfig', () => {
                     filters: []
                 }
             },
-            meta: {}
-        } as VisualizationObject.IVisualizationObjectMetadata;
+            meta: {
+                title: 'foo'
+            }
+        };
         const expected = {
             enabled: true,
             position: 'right'
@@ -91,9 +98,9 @@ describe('getLegendConfig', () => {
     });
 
     it('should set legend config on right when segment', () => {
-        const metadata = {
+        const metadata: VisualizationObject.IVisualizationObject = {
             content: {
-                type: 'bar',
+                type: VisualizationTypes.BAR,
                 buckets: {
                     categories: [{
                         category: {
@@ -106,8 +113,10 @@ describe('getLegendConfig', () => {
                     filters: []
                 }
             },
-            meta: {}
-        } as VisualizationObject.IVisualizationObjectMetadata;
+            meta: {
+                title: 'foo'
+            }
+        };
         const expected = {
             enabled: true,
             position: 'right'
@@ -119,7 +128,7 @@ describe('getLegendConfig', () => {
 
 describe('getConfig', () => {
     it('should return valid config', () => {
-        const buckets = {
+        const buckets: VisualizationObject.IBuckets = {
             categories: [{
                 category: {
                     type: 'attribute',
@@ -130,14 +139,16 @@ describe('getConfig', () => {
             measures: [],
             filters: []
         };
-        const metadata = {
+        const metadata: VisualizationObject.IVisualizationObject = {
             content: {
-                type: 'line',
+                type: VisualizationTypes.LINE,
                 buckets
             },
-            meta: {}
-        } as VisualizationObject.IVisualizationObjectMetadata;
-        const type = 'line';
+            meta: {
+                title: 'foo'
+            }
+        };
+        const type = VisualizationTypes.LINE;
         const environment = 'dashboards';
         const expected = {
             type,

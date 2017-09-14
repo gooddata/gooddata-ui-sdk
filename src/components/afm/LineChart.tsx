@@ -10,7 +10,9 @@ import {
 export {
     ISimpleDataAdapterProviderProps
 };
+
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { LineChart as coreLineChart } from '../core/LineChart';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
-export const LineChart = simpleDataAdapterProvider<ICommonChartProps>(coreLineChart, 'line');
+export const LineChart = simpleDataAdapterProvider<ICommonChartProps>(coreLineChart, VisualizationTypes.LINE);

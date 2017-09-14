@@ -1,12 +1,18 @@
 import * as PropTypes from 'prop-types';
 import isNumber = require('lodash/isNumber');
 import isString = require('lodash/isString');
+import { Afm } from '@gooddata/data-layer';
 
-function twoNumbersOrTwoStrings(props, propName, componentName) {
-    const between = props.between;
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
 
-    const isDate = date => date.match(/^\d{4}-\d{2}-\d{2}$/);
-    const isWholeNumber = num => num % 1 === 0;
+function twoNumbersOrTwoStrings(props: Afm.IDateFilter, propName: string, componentName: string) {
+    const between: any = props.between;
+
+    const isDate = (date: string) => date.match(/^\d{4}-\d{2}-\d{2}$/) !== null;
+    const isWholeNumber = (num: number) => num % 1 === 0;
 
     if (!Array.isArray(between) ||
         between.length !== 2 ||
@@ -29,8 +35,8 @@ const baseAttributeFilter = {
     type: PropTypes.oneOf(['attribute']).isRequired
 };
 
-export default {
-    filters: PropTypes.arrayOf(
+export const FiltersPropType =
+    PropTypes.arrayOf(
         PropTypes.oneOfType([
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
@@ -50,5 +56,4 @@ export default {
                 })
             ]).isRequired
         ])
-    )
-};
+    );

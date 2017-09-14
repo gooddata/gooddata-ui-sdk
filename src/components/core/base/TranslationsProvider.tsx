@@ -1,36 +1,48 @@
 import * as React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 import includes = require('lodash/includes');
 import get = require('lodash/get');
 import isEmpty = require('lodash/isEmpty');
 import isString = require('lodash/isString');
 import merge = require('lodash/merge');
-import { ExecutorResult } from '@gooddata/data-layer';
+import { IAttributeValue, ISimpleExecutorResult } from 'gooddata';
+
+import { Header } from '@gooddata/data-layer';
 
 export interface ITranslationsProviderProps {
-    result: ExecutorResult.ISimpleExecutorResult;
-    intl;
+    result: ISimpleExecutorResult;
+    children: any;
 }
 
-function replaceEmptyAttributeValues(data: ExecutorResult.ISimpleExecutorResult, emptyValueString = '') {
+export interface ITranslationsComponentProps {
+    data: ISimpleExecutorResult;
+    numericSymbols: string[];
+}
+
+function replaceEmptyAttributeValues(data: ISimpleExecutorResult, emptyValueString = '') {
     const headers = get(data, 'headers', null);
     const rawData = get(data, 'rawData', null);
+
     if (!headers || !rawData) {
         return data;
     }
 
-    const attributeIndexes = headers.reduce((arr, header) => {
-        if (header.type === 'attrLabel') {
-            arr.push(data.headers.indexOf(header));
-        }
+    const attributeIndexes = headers
+        .reduce(
+            (arr: number[], header: Header.Header) => {
+                if (header.type === 'attrLabel') {
+                    arr.push(data.headers.indexOf(header));
+                }
 
-        return arr;
-    }, []);
+                return arr;
+            },
+            []
+        );
 
     const sanitizedData = merge({}, data);
 
-    sanitizedData.rawData = rawData.map((row) => {
-        return row.map((value, index) => {
+    sanitizedData.rawData = rawData.map((row: IAttributeValue[]) => {
+        return row.map((value: IAttributeValue, index: number) => {
             if (includes(attributeIndexes, index)) {
 
                 if (isString(value.name) && isEmpty(value.name)) {
@@ -47,7 +59,7 @@ function replaceEmptyAttributeValues(data: ExecutorResult.ISimpleExecutorResult,
     return sanitizedData;
 }
 
-export class TranslationsProvider extends React.Component<ITranslationsProviderProps, null> {
+export class TranslationsProvider extends React.Component<ITranslationsProviderProps & InjectedIntlProps, null> {
     public render() {
         if (!this.props.result) {
             return null;
@@ -59,23 +71,20 @@ export class TranslationsProvider extends React.Component<ITranslationsProviderP
         });
     }
 
-    private formatMessage(id: string, ...args) {
-        return this.props.intl.formatMessage({ id }, ...args);
-    }
-
     private getNumericSymbols() {
         return [
-            `${this.formatMessage('visualization.numericValues.k')}`,
-            `${this.formatMessage('visualization.numericValues.m')}`,
-            `${this.formatMessage('visualization.numericValues.g')}`,
-            `${this.formatMessage('visualization.numericValues.t')}`,
-            `${this.formatMessage('visualization.numericValues.p')}`,
-            `${this.formatMessage('visualization.numericValues.e')}`
-        ];
+            'visualization.numericValues.k',
+            'visualization.numericValues.m',
+            'visualization.numericValues.g',
+            'visualization.numericValues.t',
+            'visualization.numericValues.p',
+            'visualization.numericValues.e'
+        ].map((id: string) => this.props.intl.formatMessage({ id }));
     }
 
     private getEmptyValueString() {
-        return `(${this.formatMessage('visualization.emptyValue')})`;
+        const emptyValueString = this.props.intl.formatMessage({ id: 'visualization.emptyValue' });
+        return `(${emptyValueString})`;
     }
 }
 

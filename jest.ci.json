@@ -1,13 +1,23 @@
 {
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
-    "transform": {
-        ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"],
-    "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
-    "coverageDirectory": "<rootDir>/ci/results/coverage",
-    "coverageReporters": ["json", "cobertura", "lcov"],
-    "testResultsProcessor": "<rootDir>/node_modules/jest-junit"
+  "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
+  "transform": {
+    ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  },
+  "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js"
+  ],
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx}"
+  ],
+  "coverageDirectory": "<rootDir>/ci/results/coverage",
+  "coverageReporters": [
+    "json",
+    "cobertura",
+    "lcov"
+  ],
+  "testResultsProcessor": "<rootDir>/node_modules/jest-junit"
 }

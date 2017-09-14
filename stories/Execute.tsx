@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
+import { ISimpleExecutorResult } from 'gooddata';
 import { Afm } from '@gooddata/data-layer';
 import { Execute } from '../src/execution/Execute';
 
@@ -42,7 +43,7 @@ storiesOf('Execute', module)
                 projectId={'storybook'}
                 onLoadingChanged={action('loadingChanged')}
             >
-                {result => (<pre>{JSON.stringify(result)}</pre>)}
+                {(result: ISimpleExecutorResult) => (<pre>{JSON.stringify(result)}</pre>)}
             </Execute>
         </div>
     ));

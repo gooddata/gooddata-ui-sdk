@@ -1,14 +1,19 @@
 import * as PropTypes from 'prop-types';
-import chartConfig from './ChartConfig';
-import events from './Events';
-import filters from './Filters';
-import drillableItem from './DrillableItem';
+import { ChartConfigPropType } from './ChartConfig';
+import { EventsPropTypes } from './Events';
+import { FiltersPropType } from './Filters';
+import { DrillableItemPropType } from './DrillableItem';
 
-export const visualizationPropTypes = {
-    ...chartConfig,
-    ...events,
-    ...filters,
-    drillableItems: PropTypes.arrayOf(PropTypes.shape(drillableItem)),
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const VisualizationPropType = {
+    config: ChartConfigPropType,
+    ...EventsPropTypes,
+    filters: FiltersPropType,
+    drillableItems: PropTypes.arrayOf(DrillableItemPropType),
     projectId: PropTypes.string.isRequired,
     identifier: PropTypes.string,
     uri: PropTypes.string,

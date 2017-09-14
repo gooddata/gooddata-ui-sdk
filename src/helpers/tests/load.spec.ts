@@ -1,11 +1,14 @@
+import { ISimpleExecutorResult } from 'gooddata';
 import {
     Afm,
     DataSource,
+    Header,
     SimpleMetadataSource,
     Transformation,
     VisualizationObject,
     ErrorCodes
 } from '@gooddata/data-layer';
+import cloneDeep = require('lodash/cloneDeep');
 
 import {
     initChartDataLoading,
@@ -13,15 +16,16 @@ import {
     ITableResult
 } from '../load';
 
-import { ISorting } from '../../helpers/metadata';
+import { ISorting } from '../metadata';
 
 import { ErrorStates, ErrorCodes as ComponentsErrorCodes } from '../../constants/errorStates';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
-export class MockedDataSource implements DataSource.IDataSource {
-    private data;
-    private resolve;
+export class MockedDataSource implements DataSource.IDataSource<ISimpleExecutorResult> {
+    private data: any;
+    private resolve: boolean;
 
-    constructor(data, resolve = true) {
+    constructor(data: any, resolve = true) {
         this.data = data;
         this.resolve = resolve;
     }
@@ -44,15 +48,15 @@ export class MockedDataSource implements DataSource.IDataSource {
 }
 
 class InvalidMetadataSource {
-    getVisualizationMetadata() {
+    public getFingerprint: () => '{}';
+    public getVisualizationMetadata() {
         return Promise.reject('error');
     }
-    getFingerprint: () => '{}';
 }
 
-export function getMdObject(customConfig = {}):VisualizationObject.IVisualizationObject {
+export function getMdObject(customConfig = {}): VisualizationObject.IVisualizationObjectContent {
     return {
-        type: 'line',
+        type: VisualizationTypes.LINE,
         buckets: {
             filters: [],
             measures: [{
@@ -81,11 +85,11 @@ const measuresMap = {};
 
 describe('initTableDataLoading', () => {
     const emptyExecutionResult = { isEmpty: true };
-    const executionResult = {
+    const executionResult: ISimpleExecutorResult = {
         headers: [{
-            id: 'id1', type: 'metric', title: 'title'
+            id: 'id1', type: Header.HeaderType.Metric, title: 'title'
         }],
-        rawData: [[1777]],
+        rawData: [['1777']],
         isEmpty: false,
         isLoaded: true
     };
@@ -145,7 +149,7 @@ describe('initTableDataLoading', () => {
         const ds = new MockedDataSource({});
 
         const result = await initTableDataLoading(ds, mds, {}, null) as ITableResult;
-        expect(result.metadata.content.type).toBe('line');
+        expect(result.metadata.content.type).toBe(VisualizationTypes.LINE);
         expect(result.sorting).toEqual({
             sorting: undefined,
             change: null
@@ -154,7 +158,7 @@ describe('initTableDataLoading', () => {
 
     it('should return metadata and sorting from provided config', async () => {
         expect.assertions(2);
-        const mdObject = getMdObject({ type: 'bar' });
+        const mdObject = getMdObject({ type: VisualizationTypes.BAR });
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource({});
         const currentSorting = { column: 'm1', direction: 'asc' };
@@ -170,7 +174,7 @@ describe('initTableDataLoading', () => {
         };
 
         const result = await initTableDataLoading(ds, mds, {}, currentConfig) as ITableResult;
-        expect(result.metadata.content.type).toBe('bar');
+        expect(result.metadata.content.type).toBe(VisualizationTypes.BAR);
         expect(result.sorting.sorting.column).toBe('m1');
     });
 
@@ -292,8 +296,8 @@ describe('initTableDataLoading', () => {
                 direction: 'asc'
             }]
         };
-        const md: VisualizationObject.IVisualizationObject = {
-            type: 'table',
+        const md: VisualizationObject.IVisualizationObjectContent = {
+            type: VisualizationTypes.TABLE,
             buckets: {
                 measures: [
                     {
@@ -359,7 +363,7 @@ describe('initTableDataLoading', () => {
 
         const result = await initTableDataLoading(ds, mds, transformation, sorting);
 
-        const expectedMDcontent = Object.assign({}, md);
+        const expectedMDcontent: VisualizationObject.IVisualizationObjectContent = cloneDeep(md);
         expectedMDcontent.buckets.measures[0].measure.generatedId = 'm1';
         expectedMDcontent.buckets.measures[0].measure.sort = {
             direction: 'desc'
@@ -367,7 +371,9 @@ describe('initTableDataLoading', () => {
         expectedMDcontent.buckets.categories[0].category.sort = null;
         const expectedMD = {
             content: expectedMDcontent,
-            meta: {}
+            meta: {
+                title: 'Test'
+            }
         };
 
         expect(ds.getData).toHaveBeenCalledWith(expectedTransformation);
@@ -378,7 +384,7 @@ describe('initTableDataLoading', () => {
     it('should discard table sorting when selected column removed and sync sorting with MD', async () => {
         expect.assertions(2);
         const mdObject = getMdObject({
-            type: 'bar',
+            type: VisualizationTypes.BAR,
             buckets: {
                 filters: [],
                 measures: [{
@@ -445,7 +451,7 @@ describe('initChartDataLoading', () => {
     });
 
     it('should throw is empty error', () => {
-        const executionResult = { isEmpty: true };
+        const executionResult: ISimpleExecutorResult = { isEmpty: true };
         const mdObject = getMdObject();
         const mds = new SimpleMetadataSource(mdObject, measuresMap);
         const ds = new MockedDataSource(executionResult);
@@ -503,11 +509,11 @@ describe('initChartDataLoading', () => {
     });
 
     it('should return object with execution result and md object', async () => {
-        const executionResult = {
+        const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'id1', type: 'metric', title: 'title'
+                id: 'id1', type: Header.HeaderType.Metric, title: 'title'
             }],
-            rawData: [[1777]],
+            rawData: [['1777']],
             isEmpty: false,
             isLoaded: true
         };
@@ -516,7 +522,12 @@ describe('initChartDataLoading', () => {
         const ds = new MockedDataSource(executionResult);
         const expectedResult = {
             result: executionResult,
-            metadata: { content: mdObject, meta: {} }
+            metadata: {
+                content: mdObject,
+                meta: {
+                    title: 'Test'
+                }
+            }
         };
         const result = await initChartDataLoading(ds, mds, {});
 
@@ -525,11 +536,11 @@ describe('initChartDataLoading', () => {
 
     it('should use provided transformation when called without MDS', async () => {
         expect.assertions(1);
-        const executionResult = {
+        const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'id1', type: 'metric', title: 'title'
+                id: 'id1', type: Header.HeaderType.Metric, title: 'title'
             }],
-            rawData: [[1777]],
+            rawData: [['1777']],
             isEmpty: false,
             isLoaded: true
         };
@@ -557,11 +568,11 @@ describe('initChartDataLoading', () => {
 
     it('should merge provided transformation and MD object', async () => {
         expect.assertions(1);
-        const executionResult = {
+        const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'm1', type: 'metric', title: 'title'
+                id: 'm1', type: Header.HeaderType.Metric, title: 'title'
             }],
-            rawData: [[1777]],
+            rawData: [['1777']],
             isEmpty: false,
             isLoaded: true
         };
