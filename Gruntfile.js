@@ -248,7 +248,7 @@ module.exports = (grunt) => {
 
     grunt.registerTask('release', (target) => {
         grunt.task.run(
-            'test-ci',
+            'test',
             `bump:${target}`,
             'init-bower-repo',
             'dist',
@@ -257,7 +257,6 @@ module.exports = (grunt) => {
     });
 
     grunt.registerTask('test', ['eslint', 'run:jest']);
-    grunt.registerTask('test-ci', ['eslint', 'jest:ci']);
     grunt.registerTask('dev', ['grizzly', 'watch:js']);
     grunt.registerTask('doc', ['yuidoc']);
     grunt.registerTask('validate', ['eslint']);
