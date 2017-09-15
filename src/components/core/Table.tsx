@@ -13,8 +13,8 @@ import {
     VisualizationObject
 } from '@gooddata/data-layer';
 
-import { IntlWrapper } from '../core/base/IntlWrapper';
-import { IEvents } from '../../interfaces/Events';
+import { IntlWrapper } from './base/IntlWrapper';
+import { IEvents, ILoadingState } from '../../interfaces/Events';
 import { IDrillableItem } from '../../interfaces/DrillableItem';
 import { IVisualizationProperties } from '../../interfaces/VisualizationProperties';
 import { tablePropTypes } from '../../proptypes/Table';
@@ -24,7 +24,7 @@ import { getCancellable } from '../../helpers/promise';
 
 import { ErrorStates } from '../../constants/errorStates';
 import { initTableDataLoading as initDataLoading } from '../../helpers/load';
-import { IntlTranslationsProvider } from '../core/base/TranslationsProvider';
+import { IntlTranslationsProvider } from './base/TranslationsProvider';
 import { IExecutorResult } from './base/BaseChart';
 
 export interface ITableProps extends IEvents {
@@ -228,7 +228,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
             this.setState({
                 error: errorCode
             });
-            this.onLoadingChanged(false);
+            this.onLoadingChanged({ isLoading: false });
             this.props.onError({ status: errorCode });
         }
     }
@@ -237,8 +237,10 @@ export class Table extends React.Component<ITableProps, ITableState> {
         this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
     }
 
-    private onLoadingChanged(isLoading) {
-        this.props.onLoadingChanged(isLoading);
+    private onLoadingChanged(loadingState: ILoadingState) {
+        this.props.onLoadingChanged(loadingState);
+        const isLoading = loadingState.isLoading;
+
         if (isLoading) {
             this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
             this.setState({
@@ -258,7 +260,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 transformation: Transformation.ITransformation,
                 sorting = null
     ) {
-        this.onLoadingChanged(true);
+        this.onLoadingChanged({ isLoading: true });
 
         if (this.dataCancellable) {
             this.dataCancellable.cancel();
@@ -280,7 +282,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                     executionResult
                 });
 
-                this.onLoadingChanged(false);
+                this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {

@@ -13,8 +13,8 @@ import {
     Transformation
 } from '@gooddata/data-layer';
 
-import { IntlWrapper } from '../../core/base/IntlWrapper';
-import { IEvents } from '../../../interfaces/Events';
+import { IntlWrapper } from './IntlWrapper';
+import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillableItem';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { ErrorStates } from '../../../constants/errorStates';
@@ -22,7 +22,7 @@ import { initChartDataLoading as initDataLoading } from '../../../helpers/load';
 import { getConfig, ILegendConfig } from '../../../helpers/config';
 import { ISorting } from '../../../helpers/metadata';
 import { getCancellable } from '../../../helpers/promise';
-import { IntlTranslationsProvider } from '../../core/base/TranslationsProvider';
+import { IntlTranslationsProvider } from './TranslationsProvider';
 import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
 
 export type ChartTypes = 'line' | 'bar' | 'column' | 'pie';
@@ -184,8 +184,10 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         return result && !isLoading && error === ErrorStates.OK;
     }
 
-    private onLoadingChanged(isLoading) {
-        this.props.onLoadingChanged(isLoading);
+    private onLoadingChanged(loadingState: ILoadingState) {
+        this.props.onLoadingChanged(loadingState);
+        const isLoading = loadingState.isLoading;
+
         if (isLoading) {
             this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
             this.setState({
@@ -205,7 +207,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             this.setState({
                 error: errorCode
             });
-            this.onLoadingChanged(false);
+            this.onLoadingChanged({ isLoading: false });
         }
     }
 
@@ -218,7 +220,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     private initDataLoading(dataSource, metadataSource, transformation) {
-        this.onLoadingChanged(true);
+        this.onLoadingChanged({ isLoading: true });
         this.setState({ result: null });
         if (this.dataCancellable) {
             this.dataCancellable.cancel();
@@ -236,7 +238,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
                 });
 
                 this.props.pushData({ executionResult });
-                this.onLoadingChanged(false);
+                this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {

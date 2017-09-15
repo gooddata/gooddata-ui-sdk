@@ -17,12 +17,6 @@ export interface IKpiProps extends IEvents {
     format?: string;
 }
 
-export interface IKpiState {
-    error: boolean;
-    result: any;
-    isLoading: boolean;
-}
-
 function buildAFM(measureUri: string, filters: Afm.IFilter[] = []): Afm.IAfm {
     return {
         measures: [
@@ -44,7 +38,7 @@ const defaultErrorHandler = (error) => {
     console.error(error);
 };
 
-export class Kpi extends React.Component<IKpiProps, IKpiState> {
+export class Kpi extends React.Component<IKpiProps, null> {
     public static defaultProps: Partial<IKpiProps> = {
         format: '$0,0.00',
         filters: [],
@@ -54,57 +48,23 @@ export class Kpi extends React.Component<IKpiProps, IKpiState> {
 
     static propTypes = kpiPropTypes;
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            error: false,
-            result: null,
-            isLoading: true
-        };
-
-        this.onError = this.onError.bind(this);
-        this.onExecute = this.onExecute.bind(this);
-        this.onLoading = this.onLoading.bind(this);
-    }
-
-    public onExecute(data) {
-        const result = get(data, 'rawData.0.0');
-
-        this.setState({ result, error: false });
-    }
-
-    public onError(error) {
-        this.setState({ error: true });
-        this.props.onError(error);
-    }
-
-    public onLoading(isLoading: boolean) {
-        this.setState({ isLoading });
-        this.props.onLoadingChanged({ isLoading });
-    }
-
-    public getFormattedResult(): string {
-        return numeral(this.state.result).format(this.props.format);
+    public getFormattedResult(result): string {
+        return numeral(result).format(this.props.format);
     }
 
     public render() {
-        if (this.state.error) {
-            return null;
-        }
-
         const afm = buildAFM(this.props.measure, this.props.filters);
 
         return (
             <Execute
-                className="gdc-kpi"
                 afm={afm}
-                onError={this.onError}
-                onExecute={this.onExecute}
-                onLoading={this.onLoading}
                 projectId={this.props.projectId}
+                onError={this.props.onError}
+                onLoadingChanged={this.props.onLoadingChanged}
             >
-                {this.state.isLoading || this.getFormattedResult()}
+                {result =>
+                    <span className="gdc-kpi">{this.getFormattedResult(get(result, 'result.rawData.0.0'))}</span>
+                }
             </Execute>
         );
     }

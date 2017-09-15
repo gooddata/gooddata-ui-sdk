@@ -1,25 +1,30 @@
 import * as React from 'react';
 import * as sdk from 'gooddata';
-import isEqual = require('lodash/isEqual');
 import get = require('lodash/get');
+import identity = require('lodash/identity');
+import isEqual = require('lodash/isEqual');
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
 import { Afm, DataTable, SimpleExecutorAdapter, Transformation, ExecutorResult } from '@gooddata/data-layer';
 
 import { IDataTable } from '../interfaces/DataTable';
 import { ErrorStates } from '../constants/errorStates';
+import { IEvents } from '../interfaces/Events';
 
-export interface IExecuteProps {
+export type IDataTableFactory = (projectId: string) => IDataTable;
+
+export interface IExecuteProps extends IEvents {
     afm: Afm.IAfm;
     transformation?: Transformation.ITransformation;
     projectId: string;
-    // TODO: Use proper interface
-    onExecute: (result: Object) => void;
-    onError: (error: Object) => void;
-    onLoading: (state: boolean) => void;
-    dataTableFactory?: IDataTableFactory;
-    className?: string;
+    children?: any;
+    dataTableFactory?: IDataTableFactory; // only for tests
 }
 
-export type IDataTableFactory = (projectId: string) => IDataTable;
+export interface IExecuteState {
+    result: ExecutorResult.ISimpleExecutorResult;
+}
 
 function execute(
     dataTable: IDataTable,
@@ -34,15 +39,53 @@ function dataTableFactory(projectId): IDataTable {
     return new DataTable(adapter);
 }
 
-export class Execute extends React.Component<IExecuteProps, undefined> {
+export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     public static defaultProps: Partial<IExecuteProps> = {
         dataTableFactory
     };
 
     private dataTable: IDataTable;
+    private subscription: Subscription;
+    private subject: Subject<Promise<Object>>;
 
     public constructor(props) {
         super(props);
+
+        this.state = {
+            result: null
+        };
+
+        const { onError, onLoadingChanged } = props;
+
+        this.subject = new Subject();
+        this.subscription = this.subject
+        // Unwraps values from promise and ensures that the latest result is returned
+        // Used to be called `flatMapLatest`
+            .switchMap<Promise<Object>, Object>(identity)
+
+            .subscribe(
+                (result) => {
+                    if (result && (result as ExecutorResult.ISimpleExecutorResult).isEmpty) {
+                        onError({ status: ErrorStates.NO_DATA });
+                    } else {
+                        this.setState({ result });
+                    }
+                    onLoadingChanged({ isLoading: false });
+                },
+                (error) => {
+                    const status = get(error, 'response.status');
+                    if (status === 413) {
+                        onLoadingChanged({ isLoading: false });
+                        return onError({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error });
+                    }
+                    if (status === 400) {
+                        onLoadingChanged({ isLoading: false });
+                        return onError({ status: ErrorStates.BAD_REQUEST, error });
+                    }
+                    onLoadingChanged({ isLoading: false });
+                    onError({ status: ErrorStates.UNKNOWN_ERROR, error });
+                }
+            );
 
         this.dataTable = props.dataTableFactory(props.projectId);
     }
@@ -57,14 +100,22 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
         }
     }
 
-    public shouldComponentUpdate(nextProps) {
-        return this.hasPropsChanged(nextProps, ['afm', 'transformation', 'children']);
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
+        this.subject.unsubscribe();
+    }
+
+    public shouldComponentUpdate(nextProps, nextState) {
+        return !isEqual(this.state.result, nextState.result) ||
+            this.hasPropsChanged(nextProps, ['afm', 'transformation', 'children']);
     }
 
     public render() {
-        return (
-            <span className={this.props.className}>{this.props.children}</span>
-        );
+        const { result } = this.state;
+        if (!result) {
+            return null;
+        }
+        return this.props.children({ result });
     }
 
     private isPropChanged(nextProps, propName) {
@@ -79,29 +130,13 @@ export class Execute extends React.Component<IExecuteProps, undefined> {
         return propNames.some(propName => this.isPropChanged(nextProps, propName));
     }
 
-    private runExecution(props) {
-        const { afm, transformation, onExecute, onError, onLoading } = props;
+    private runExecution(props: IExecuteProps) {
+        const { afm, transformation, onLoadingChanged } = props;
 
-        this.props.onLoading(true);
+        onLoadingChanged({ isLoading: true });
 
-        execute(this.dataTable, afm, transformation)
-            .then((data) => {
-                if (data && (data as ExecutorResult.ISimpleExecutorResult).isEmpty) {
-                    onError({ status: ErrorStates.NO_DATA });
-                } else {
-                    onExecute(data);
-                }
-            })
-            .catch((error) => {
-                const status = get(error, 'response.status');
-                if (status === 413) {
-                    return onError({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error });
-                }
-                if (status === 400) {
-                    return onError({ status: ErrorStates.BAD_REQUEST, error });
-                }
-                onError({ status: ErrorStates.UNKNOWN_ERROR, error });
-            })
-            .then(() => onLoading(false));
+        const promise = execute(this.dataTable, afm, transformation);
+
+        this.subject.next(promise);
     }
 }
