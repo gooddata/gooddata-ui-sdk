@@ -5,7 +5,9 @@ import {
     ISimpleDataAdapterProviderProps
 } from '../SimpleDataAdapterProvider';
 import { Table } from '../../tests/mocks';
-import { postpone } from '../../../helpers/test_helpers';
+import { test } from '@gooddata/js-utils';
+
+const { postpone } = test;
 
 describe('SimpleDataAdapterProvider', () => {
     const defaultProps = {

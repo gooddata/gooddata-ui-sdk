@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { test } from '@gooddata/js-utils';
 import { IntlTranslationsProvider } from '../TranslationsProvider';
 import { Visualization } from '../../../tests/mocks';
-import { postpone } from '../../../../helpers/test_helpers';
 import { IntlWrapper } from '../IntlWrapper';
+
+const { postpone } = test;
 
 class Helper extends React.Component<any, any> {
     public render() {
