@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/react-components",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "GoodData React Components",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-component-sdk.git",
