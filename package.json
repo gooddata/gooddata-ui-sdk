@@ -39,11 +39,11 @@
     "typescript": "2.4.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "3.0.0",
+    "@gooddata/data-layer": "3.1.0",
     "@gooddata/goodstrap": "53.0.1",
     "@gooddata/indigo-visualizations": "0.11.2",
     "classnames": "2.2.5",
-    "gooddata": "3.0.0",
+    "gooddata": "4.0.0",
     "lodash": "4.17.4",
     "numeral": "2.0.6",
     "react-intl": "2.2.3",
