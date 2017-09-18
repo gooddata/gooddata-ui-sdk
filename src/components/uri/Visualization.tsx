@@ -48,8 +48,8 @@ export interface IVisualizationExecInfo {
     metadataSource: MetadataSource.IMetadataSource;
 }
 
-export interface IVisualizationState extends IVisualizationExecInfo {
-    uriAdapter: UriAdapter;
+export interface IVisualizationState {
+    isLoading: boolean;
 }
 
 function uriResolver(projectId: string, uri?: string, identifier?: string): Promise<string> {
@@ -66,12 +66,17 @@ function uriResolver(projectId: string, uri?: string, identifier?: string): Prom
 
 export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
     static propTypes = visualizationPropTypes;
-
     static defaultProps = {
         onError: noop,
         filters: [],
         uriResolver
     };
+
+    private visualizationUri: string;
+    private type: string;
+    private uriAdapter: UriAdapter;
+    private metadataSource: MetadataSource.IMetadataSource;
+    private dataSource: DataSource.IDataSource;
 
     private subscription: Subscription;
     private subject: Subject<Promise<IVisualizationExecInfo>>;
@@ -80,11 +85,10 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         super(props);
 
         this.state = {
-            dataSource: null,
-            metadataSource: null,
-            uriAdapter: null,
-            type: null
+            isLoading: true
         };
+
+        this.visualizationUri = props.uri;
 
         const errorHandler = props.onError;
 
@@ -95,7 +99,12 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             .switchMap<Promise<IVisualizationExecInfo>, IVisualizationExecInfo>(identity)
 
             .subscribe(
-                props => this.setState(props),
+                ({ type, dataSource, metadataSource }) => {
+                    this.type = type;
+                    this.dataSource = dataSource;
+                    this.metadataSource = metadataSource;
+                    this.setState({ isLoading: false });
+                },
                 () => errorHandler(ErrorStates.NOT_FOUND)
             );
     }
@@ -103,7 +112,14 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     componentDidMount() {
         const { projectId, uri, identifier, filters } = this.props;
 
-        this.prepareDatasources(projectId, uri, identifier, filters);
+        this.uriAdapter = new UriAdapter(sdk, projectId);
+        this.visualizationUri = uri;
+
+        this.prepareDataSources({
+            projectId,
+            identifier,
+            filters
+        });
     }
 
     componentWillUnmount() {
@@ -111,39 +127,55 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.subject.unsubscribe();
     }
 
-    public hasChangedProps(nextProps): boolean {
-        const { projectId, uri, identifier, filters } = this.props;
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.hasChangedProps(nextProps) || (this.state.isLoading !== nextState.isLoading);
+    }
 
-        return projectId !== nextProps.identifier ||
-            identifier !== nextProps.identifier ||
-            uri !== nextProps.uri ||
-            !isEqual(filters, nextProps.filters);
+    public hasChangedProps(nextProps, propKeys = Object.keys(visualizationPropTypes)): boolean {
+        return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
     public componentWillReceiveProps(nextProps) {
-        if (this.hasChangedProps(nextProps)) {
-            this.prepareDatasources(nextProps.projectId, nextProps.uri, nextProps.identifier, nextProps.filters);
+        const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
+        const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
+        if (hasInvalidDatasource) {
+            this.setState({
+                isLoading: true
+            });
+            const { projectId, identifier, filters } = nextProps;
+            const options = {
+                projectId,
+                identifier,
+                filters
+            };
+            if (hasInvalidResolvedUri) {
+                this.visualizationUri = nextProps.uri;
+                this.metadataSource = null;
+            }
+            this.prepareDataSources(options);
         }
     }
 
-    private prepareDatasources(projectId, uri, identifier, filters = []) {
-        const promise = this.props.uriResolver(projectId, uri, identifier)
+    private prepareDataSources({
+        projectId,
+        identifier,
+        filters = [] as Afm.IFilter[]
+    }) {
+        const promise = this.props.uriResolver(projectId, this.visualizationUri, identifier)
             .then((visualizationUri) => {
-                const uriAdapter = new UriAdapter(sdk, projectId);
-
+                this.visualizationUri = visualizationUri;
                 const dateFilter = getDateFilter(filters);
                 const attributeFilters = getAttributeFilters(filters);
-
-                return uriAdapter.createDataSource({ uri: visualizationUri, attributeFilters, dateFilter })
+                return this.uriAdapter.createDataSource({ uri: this.visualizationUri, attributeFilters, dateFilter })
                     .then((dataSource) => {
-                        const metadataSource = new UriMetadataSource(sdk, visualizationUri);
+                        this.metadataSource = this.metadataSource || new UriMetadataSource(sdk, visualizationUri);
 
-                        return metadataSource.getVisualizationMetadata()
+                        return this.metadataSource.getVisualizationMetadata()
                             .then(({ metadata }) => {
                                 return {
                                     type: metadata.content.type,
                                     dataSource,
-                                    metadataSource
+                                    metadataSource: this.metadataSource
                                 };
                             });
                     });
@@ -153,7 +185,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     }
 
     public render() {
-        const { dataSource, metadataSource, type } = this.state;
+        const { dataSource, metadataSource, type } = this;
         if (!dataSource || !metadataSource || !type) {
             return null;
         }
