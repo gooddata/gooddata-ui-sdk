@@ -13,6 +13,7 @@ import { BaseChart, ChartTypes, IChartConfig } from '../core/base/BaseChart';
 import { Table } from '../core/Table';
 import { IEvents } from '../../interfaces/Events';
 import { visualizationPropTypes } from '../../proptypes/Visualization';
+import { IDrillableItem } from '../../interfaces/DrillableItem';
 
 function isDateFilter(filter: Afm.IFilter): filter is Afm.IDateFilter {
     return filter.type === 'date';
@@ -37,6 +38,7 @@ export interface IVisualizationProps extends IEvents {
     locale?: string;
     config?: IChartConfig;
     filters?: Afm.IFilter[];
+    drillableItems?: IDrillableItem[];
     uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
 }
 
@@ -156,7 +158,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             return null;
         }
 
-        const { onError, onLoadingChanged, locale, config } = this.props;
+        const { drillableItems, onError, onLoadingChanged, locale, config } = this.props;
 
         switch (type) {
             case 'table':
@@ -164,6 +166,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                     <Table
                         dataSource={dataSource}
                         metadataSource={metadataSource}
+                        drillableItems={drillableItems}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         locale={locale}
@@ -174,6 +177,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                     <BaseChart
                         dataSource={dataSource}
                         metadataSource={metadataSource}
+                        drillableItems={drillableItems}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         type={type as ChartTypes}
