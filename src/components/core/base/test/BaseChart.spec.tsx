@@ -226,12 +226,8 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should cancel promise when data loading with new dataSources is started', (done) => {
+    it('should trigger initDataLoading on props change', (done) => {
         const wrapper = createComponent(createProps());
-        expect(initChartDataLoading).toHaveBeenCalledTimes(1);
-        wrapper.node.dataCancellable.cancel = jest.fn();
-        // turn off this function for call from componentWillReceiveProps,
-        // otherwise it would overwrite promise
         wrapper.node.initDataLoading = jest.fn();
 
         wrapper.setProps({
@@ -239,7 +235,7 @@ describe('BaseChart', () => {
                 getFingerprint: () => 'asdf'
             }
         }, () => {
-            expect(wrapper.node.dataCancellable.cancel).toHaveBeenCalledTimes(1);
+            expect(wrapper.node.initDataLoading).toHaveBeenCalledTimes(1);
             done();
         });
     });
@@ -367,11 +363,13 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should set new metadata when new metadtaSource came', (done) => {
+    it('should init data loading when metadata change', (done) => {
         const wrapper = createComponent(createProps());
         const getVisualizationMetadata = jest.fn().mockReturnValue(
             Promise.resolve({ metadata: 'meta' })
         );
+
+        initChartDataLoading.mockClear();
         wrapper.setProps({
             metadataSource: {
                 getFingerprint: jest.fn().mockReturnValue('asdf'),
@@ -379,7 +377,7 @@ describe('BaseChart', () => {
             }
         }, () => {
             postpone(() => {
-                expect(getVisualizationMetadata).toHaveBeenCalledTimes(1);
+                expect(initChartDataLoading).toHaveBeenCalledTimes(1);
                 done();
             });
         });
