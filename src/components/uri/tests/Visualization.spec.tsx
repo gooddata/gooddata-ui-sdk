@@ -122,7 +122,8 @@ describe('Visualization', () => {
                 id: '/gdc/md/myproject/obj/922',
                 type: 'date',
                 between: [-51, 0],
-                granularity: 'date'
+                granularity: 'date',
+                intervalType: 'relative'
             }
         ] as Afm.IDateFilter[];
 

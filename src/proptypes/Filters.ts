@@ -36,7 +36,8 @@ export default {
                 id: PropTypes.string.isRequired,
                 type: PropTypes.oneOf(['date']).isRequired,
                 between: twoNumbersOrTwoStrings,
-                granularity: PropTypes.string.isRequired
+                granularity: PropTypes.string.isRequired,
+                intervalType: PropTypes.oneOf(['absolute', 'relative']).isRequired
             }),
             PropTypes.oneOfType([
                 PropTypes.shape({
