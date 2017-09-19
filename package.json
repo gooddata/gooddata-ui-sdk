@@ -13,7 +13,7 @@
   ],
   "devDependencies": {
     "@gooddata/js-utils": "0.8.0",
-    "@gooddata/mock-js": "0.0.23",
+    "@gooddata/mock-js": "0.0.26",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
     "@types/jest": "20.0.4",
