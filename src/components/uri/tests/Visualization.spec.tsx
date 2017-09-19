@@ -110,8 +110,8 @@ describe('Visualization', () => {
         );
 
         postpone(() => {
-            expect(wrapper.state('dataSource').afm.filters).toHaveLength(1);
-            expect(wrapper.state('dataSource').afm.filters[0]).toEqual(visFilters[0]);
+            expect(wrapper.node.dataSource.afm.filters).toHaveLength(1);
+            expect(wrapper.node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
             done();
         });
     });
@@ -136,8 +136,8 @@ describe('Visualization', () => {
         );
 
         postpone(() => {
-            expect(wrapper.state('dataSource').afm.filters).toHaveLength(2);
-            expect(wrapper.state('dataSource').afm.filters[1]).toEqual(visFilters[0]);
+            expect(wrapper.node.dataSource.afm.filters).toHaveLength(2);
+            expect(wrapper.node.dataSource.afm.filters[1]).toEqual(visFilters[0]);
             done();
         });
     });
@@ -160,8 +160,8 @@ describe('Visualization', () => {
         );
 
         postpone(() => {
-            expect(wrapper.state('dataSource').afm.filters).toHaveLength(2);
-            expect(wrapper.state('dataSource').afm.filters[0]).toEqual(visFilters[0]);
+            expect(wrapper.node.dataSource.afm.filters).toHaveLength(2);
+            expect(wrapper.node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
             done();
         });
     });
@@ -180,6 +180,31 @@ describe('Visualization', () => {
 
         postpone(() => {
             expect(wrapper.find(Table).length).toBe(1);
+            done();
+        }, 300);
+    });
+
+    it('should not re-render with same props', (done) => {
+        const spy = jest.spyOn(Visualization.prototype, 'render');
+        const wrapper = mount(
+            <Visualization
+                projectId={projectId}
+                uri={CHART_URI}
+                filters={[]}
+            />
+        );
+
+        wrapper.setProps({
+            projectId,
+            uri: CHART_URI,
+            filters: []
+        });
+
+        postpone(() => {
+            // initial render without datasources & with created datasources
+            expect(spy).toHaveBeenCalledTimes(2);
+
+            spy.mockRestore();
             done();
         }, 300);
     });

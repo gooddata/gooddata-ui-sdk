@@ -8,6 +8,7 @@ import { onErrorHandler } from './mocks';
 
 class DynamicVisualization extends React.Component<any,any> {
     initialState: Object = {
+        isLoading: true,
         projectId: 'myproject',
         uri: '/gdc/md/myproject/obj/1001',
         config: {
@@ -33,6 +34,10 @@ class DynamicVisualization extends React.Component<any,any> {
         filters: []
     };
 
+    onLoadingChanged = ({ isLoading }) => {
+        this.setState({ isLoading });
+    }
+
     constructor(nextProps) {
         super(nextProps);
         this.state = this.initialState;
@@ -41,8 +46,8 @@ class DynamicVisualization extends React.Component<any,any> {
     toggle(prop) {
         this.setState({
             [prop]: this.state[prop] === this.initialState[prop] ?
-                this.alternativeState[prop] :
-                this.initialState[prop]
+            this.alternativeState[prop] :
+            this.initialState[prop]
         });
     }
 
@@ -55,8 +60,15 @@ class DynamicVisualization extends React.Component<any,any> {
             </div>
             <Visualization
                 key="dynamic-test-vis"
+                onLoadingChanged={ this.onLoadingChanged }
                 {...this.state}
             />
+            { this.state.isLoading ? <div className="gd-spinner large" style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                margin: '-16px 0 0 -16px'
+            }} ></div> : null }
         </div>);
     }
 }
@@ -124,7 +136,7 @@ storiesOf('Visualization', module)
         </div>
     ))
     .add('dynamic visualization test', () => (
-        <div style={{ width: 800, height: 400 }}>
+        <div style={{ width: 800, height: 400, position: 'relative' }}>
             <DynamicVisualization />
         </div>
     ));
