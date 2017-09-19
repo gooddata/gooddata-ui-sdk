@@ -112,18 +112,15 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public componentWillReceiveProps(nextProps) {
-        if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, nextProps.metadataSource)) {
-            nextProps.metadataSource.getVisualizationMetadata().then(({ metadata }) => {
-                this.setState({ metadata });
-            });
+        const { metadataSource, dataSource, transformation } = nextProps;
+
+        if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, metadataSource)) {
+            this.initDataLoading(dataSource, metadataSource, transformation);
+
+            return;
         }
 
-        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)) {
-            if (this.dataCancellable) {
-                this.dataCancellable.cancel();
-            }
-
-            const { metadataSource, dataSource, transformation } = nextProps;
+        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
             this.initDataLoading(dataSource, metadataSource, transformation);
         }
     }
@@ -222,6 +219,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     private initDataLoading(dataSource, metadataSource, transformation) {
         this.onLoadingChanged({ isLoading: true });
         this.setState({ result: null });
+
         if (this.dataCancellable) {
             this.dataCancellable.cancel();
         }
