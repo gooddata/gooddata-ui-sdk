@@ -1,14 +1,23 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Visualization } from '../src/components/uri/Visualization';
+import { Afm } from '@gooddata/data-layer';
+
+import { Visualization, IVisualizationProps } from '../src/components/uri/Visualization';
 
 import '../styles/scss/charts.scss';
 import '../styles/scss/table.scss';
 import { onErrorHandler } from './mocks';
 
-class DynamicVisualization extends React.Component<any,any> {
-    initialState: Object = {
-        isLoading: true,
+const defaultFilter: Afm.IFilter = {
+    id: '/gdc/md/myproject/obj/123',
+    type: 'date',
+    intervalType: 'absolute',
+    granularity: 'date',
+    between: ['2017-01-01', '2017-12-31']
+};
+
+class DynamicVisualization extends React.Component<any, any> {
+    initialProps: IVisualizationProps = {
         projectId: 'myproject',
         uri: '/gdc/md/myproject/obj/1001',
         config: {
@@ -20,15 +29,11 @@ class DynamicVisualization extends React.Component<any,any> {
                 'rgba(162, 37, 34, 1)'
             ]
         },
-        filters: [{
-            id: '/gdc/md/myproject/obj/123',
-            type: 'date',
-            granularity: 'date',
-            between: ['2017-01-01', '2017-12-31']
-        }]
+        filters: [defaultFilter]
     };
 
-    alternativeState: Object = {
+    alternativeProps: IVisualizationProps = {
+        projectId: 'myproject',
         uri: '/gdc/md/myproject/obj/1002',
         config: {},
         filters: []
@@ -40,36 +45,39 @@ class DynamicVisualization extends React.Component<any,any> {
 
     constructor(nextProps) {
         super(nextProps);
-        this.state = this.initialState;
+        this.state = this.initialProps;
     }
 
     toggle(prop) {
         this.setState({
-            [prop]: this.state[prop] === this.initialState[prop] ?
-            this.alternativeState[prop] :
-            this.initialState[prop]
+            [prop]: this.state[prop] === this.initialProps[prop] ?
+            this.alternativeProps[prop] :
+            this.initialProps[prop]
         });
     }
 
     render() {
-        return (<div>
+        return (
             <div>
-                <button onClick={this.toggle.bind(this, 'uri')} >toggle uri</button>
-                <button onClick={this.toggle.bind(this, 'filters')} >toggle filter</button>
-                <button onClick={this.toggle.bind(this, 'config')} >toggle config</button>
+                <div>
+                    <button onClick={this.toggle.bind(this, 'uri')} >toggle uri</button>
+                    <button onClick={this.toggle.bind(this, 'filters')} >toggle filter</button>
+                    <button onClick={this.toggle.bind(this, 'config')} >toggle config</button>
+                </div>
+                <Visualization
+                    key="dynamic-test-vis"
+                    onLoadingChanged={this.onLoadingChanged}
+                    onError={onErrorHandler}
+                    {...this.state}
+                />
+                { this.state.isLoading ? <div className="gd-spinner large" style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    margin: '-16px 0 0 -16px'
+                }} ></div> : null }
             </div>
-            <Visualization
-                key="dynamic-test-vis"
-                onLoadingChanged={ this.onLoadingChanged }
-                {...this.state}
-            />
-            { this.state.isLoading ? <div className="gd-spinner large" style={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                margin: '-16px 0 0 -16px'
-            }} ></div> : null }
-        </div>);
+        );
     }
 }
 
@@ -119,22 +127,25 @@ storiesOf('Visualization', module)
             />
         </div>
     ))
-    .add('chart with applied filter', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1002'}
-                filters={[{
-                    id: '/gdc/md/myproject/obj/123',
-                    type: 'date',
-                    intervalType: 'absolute',
-                    granularity: 'date',
-                    between: ['2017-01-01', '2017-12-31']
-                }]}
-                onError={onErrorHandler}
-            />
-        </div>
-    ))
+    .add('chart with applied filter', () => {
+        const filter: Afm.IFilter = {
+            id: '/gdc/md/myproject/obj/123',
+            type: 'date',
+            intervalType: 'absolute',
+            granularity: 'date',
+            between: ['2017-01-01', '2017-12-31']
+        };
+        return (
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    filters={[filter]}
+                    onError={onErrorHandler}
+                />
+            </div>
+        );
+    })
     .add('dynamic visualization test', () => (
         <div style={{ width: 800, height: 400, position: 'relative' }}>
             <DynamicVisualization />

@@ -39,7 +39,7 @@
     "typescript": "2.4.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "3.1.1",
+    "@gooddata/data-layer": "3.1.2",
     "@gooddata/goodstrap": "53.0.1",
     "@gooddata/indigo-visualizations": "0.12.0",
     "classnames": "2.2.5",
