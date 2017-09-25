@@ -363,13 +363,12 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should init data loading when metadata change', (done) => {
+    it('should set new metadata when new metadtaSource came', (done) => {
         const wrapper = createComponent(createProps());
         const getVisualizationMetadata = jest.fn().mockReturnValue(
             Promise.resolve({ metadata: 'meta' })
         );
 
-        initChartDataLoading.mockClear();
         wrapper.setProps({
             metadataSource: {
                 getFingerprint: jest.fn().mockReturnValue('asdf'),
@@ -377,7 +376,7 @@ describe('BaseChart', () => {
             }
         }, () => {
             postpone(() => {
-                expect(initChartDataLoading).toHaveBeenCalledTimes(1);
+                expect(getVisualizationMetadata).toHaveBeenCalledTimes(1);
                 done();
             });
         });

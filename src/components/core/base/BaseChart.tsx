@@ -113,11 +113,10 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
 
     public componentWillReceiveProps(nextProps) {
         const { metadataSource, dataSource, transformation } = nextProps;
-
         if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, metadataSource)) {
-            this.initDataLoading(dataSource, metadataSource, transformation);
-
-            return;
+            metadataSource.getVisualizationMetadata().then(({ metadata }) => {
+                this.setState({ metadata });
+            });
         }
 
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
