@@ -235,7 +235,12 @@ describe('Table', () => {
         createComponent(props);
 
         postpone(() => {
-            expect(pushData).toHaveBeenCalledWith({ executionResult: resultMock.result });
+            expect(pushData).toHaveBeenCalledWith({
+                executionResult: resultMock.result,
+                options: {
+                    dateOptionsDisabled: true
+                }
+            });
             done();
         });
     });

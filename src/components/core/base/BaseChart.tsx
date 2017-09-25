@@ -24,6 +24,7 @@ import { ISorting } from '../../../helpers/metadata';
 import { getCancellable } from '../../../helpers/promise';
 import { IntlTranslationsProvider } from './TranslationsProvider';
 import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
+import { getVisualizationOptions } from '../../../helpers/options';
 
 export type ChartTypes = 'line' | 'bar' | 'column' | 'pie';
 
@@ -230,12 +231,13 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
                 const executionResult = get<IExecutorResult, ExecutorResult.ISimpleExecutorResult>(result, 'result');
                 const metadata = get<IExecutorResult,
                     VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
+                const options = getVisualizationOptions(metadata);
+
                 this.setState({
                     metadata,
                     result: executionResult
                 });
-
-                this.props.pushData({ executionResult });
+                this.props.pushData({ executionResult, options });
                 this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
