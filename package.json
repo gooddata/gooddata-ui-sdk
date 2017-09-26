@@ -4,12 +4,13 @@
   "description": "GoodData React Components",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-component-sdk.git",
-  "author": "GoodData",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "author": "GoodData Corporation",
+  "license": "BSD-3-Clause",
   "files": [
     "dist",
     "src",
-    "styles"
+    "styles",
+    "LICENSE"
   ],
   "devDependencies": {
     "@gooddata/js-utils": "0.8.0",
