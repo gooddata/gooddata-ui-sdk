@@ -3,13 +3,14 @@
   "version": "4.0.0",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "BSD-3-Clause",
   "main": "lib/gooddata-node.js",
   "browser": "lib/gooddata-browser.js",
   "files": [
     "dist",
     "lib",
-    "src"
+    "src",
+    "LICENSE"
   ],
   "scripts": {
     "build": "npm run build:lib && npm run build:dist",
