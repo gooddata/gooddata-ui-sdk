@@ -26,6 +26,7 @@ import { ErrorStates } from '../../constants/errorStates';
 import { initTableDataLoading as initDataLoading } from '../../helpers/load';
 import { IntlTranslationsProvider } from './base/TranslationsProvider';
 import { IExecutorResult } from './base/BaseChart';
+import { getVisualizationOptions } from '../../helpers/options';
 
 export interface ITableProps extends IEvents {
     dataSource: DataSource.IDataSource;
@@ -272,16 +273,17 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 const metadata = get<IExecutorResult,
                     VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
                 const sorting = get<IExecutorResult, ISorting>(result, 'sorting');
+                const options = getVisualizationOptions(metadata);
+
                 this.setState({
                     result: executionResult,
                     metadata,
                     sorting
                 });
-
                 this.props.pushData({
-                    executionResult
+                    executionResult,
+                    options
                 });
-
                 this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
