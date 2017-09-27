@@ -18,20 +18,7 @@ export default {
                         PropTypes.shape({ id: PropTypes.string.isRequired }),
                         PropTypes.shape({ lookupId: PropTypes.string.isRequired })
                     ]).isRequired,
-                    filters: PropTypes.arrayOf(
-                        PropTypes.oneOfType([
-                            PropTypes.shape({
-                                id: PropTypes.string.isRequired,
-                                type: PropTypes.string.isRequired,
-                                in: PropTypes.arrayOf(PropTypes.string).isRequired
-                            }),
-                            PropTypes.shape({
-                                id: PropTypes.string.isRequired,
-                                type: PropTypes.string.isRequired,
-                                notIn: PropTypes.arrayOf(PropTypes.string).isRequired
-                            })
-                        ])
-                    ),
+                    ...filters,
                     aggregation: PropTypes.string,
                     popAttribute: PropTypes.shape({
                         id: PropTypes.string.isRequired
