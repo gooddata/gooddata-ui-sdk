@@ -224,13 +224,13 @@ export class Table extends React.Component<ITableProps, ITableState> {
         return result && !isLoading && error === ErrorStates.OK;
     }
 
-    private onError(errorCode, dataSource = this.props.dataSource) {
+    private onError(errorCode, dataSource = this.props.dataSource, options = {}) {
         if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
             this.setState({
                 error: errorCode
             });
             this.onLoadingChanged({ isLoading: false });
-            this.props.onError({ status: errorCode });
+            this.props.onError({ status: errorCode, options });
         }
     }
 
@@ -266,6 +266,9 @@ export class Table extends React.Component<ITableProps, ITableState> {
         if (this.dataCancellable) {
             this.dataCancellable.cancel();
         }
+
+        const visualizationOptions = getVisualizationOptions(dataSource.getAfm());
+
         this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation, sorting));
         this.dataCancellable.promise.then((result) => {
             if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
@@ -273,7 +276,6 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 const metadata = get<IExecutorResult,
                     VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
                 const sorting = get<IExecutorResult, ISorting>(result, 'sorting');
-                const options = getVisualizationOptions(metadata);
 
                 this.setState({
                     result: executionResult,
@@ -282,13 +284,13 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 });
                 this.props.pushData({
                     executionResult,
-                    options
+                    options: visualizationOptions
                 });
                 this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {
-                this.onError(error, dataSource);
+                this.onError(error, dataSource, visualizationOptions);
             }
         });
     }

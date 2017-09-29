@@ -159,7 +159,10 @@ describe('BaseChart', () => {
         postpone(() => {
             expect(wrapper.find(Visualization).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
-            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE });
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                options: expect.any(Object)
+            });
             done();
         });
     });
@@ -175,7 +178,10 @@ describe('BaseChart', () => {
         postpone(() => {
             expect(wrapper.find(Visualization).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
-            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.UNKNOWN_ERROR });
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.UNKNOWN_ERROR,
+                options: expect.any(Object)
+            });
             done();
         });
     });
@@ -192,7 +198,10 @@ describe('BaseChart', () => {
         postpone(() => {
             expect(wrapper.find(Visualization).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
-            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.NO_DATA });
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.NO_DATA,
+                options: expect.any(Object)
+            });
             done();
         });
     });
@@ -204,7 +213,10 @@ describe('BaseChart', () => {
         createComponent(createProps());
 
         postpone(() => {
-            expect(global.console.error).toHaveBeenCalledWith({ status: ErrorStates.NO_DATA });
+            expect(global.console.error).toHaveBeenCalledWith({
+                status: ErrorStates.NO_DATA,
+                options: expect.any(Object)
+            });
             global.console.error = origin;
             done();
         });
