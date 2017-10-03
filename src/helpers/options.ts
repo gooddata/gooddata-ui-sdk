@@ -1,20 +1,20 @@
-import get = require('lodash/get');
 import every = require('lodash/every');
 import some = require('lodash/some');
-import has = require('lodash/has');
-import { VisualizationObject } from '@gooddata/data-layer';
+import isEmpty = require('lodash/isEmpty');
+import { Afm } from '@gooddata/data-layer';
 
 export interface IVisualizationOptions {
     dateOptionsDisabled: boolean;
 }
 
-export function getVisualizationOptions(
-    metadata: VisualizationObject.IVisualizationObjectMetadata): IVisualizationOptions {
+export function getVisualizationOptions(afm: Afm.IAfm): IVisualizationOptions {
+    if (isEmpty(afm.measures)) {
+        return { dateOptionsDisabled: false };
+    }
 
-    const measures = get(metadata, 'content.buckets.measures', []);
-    const dateOptionsDisabled = every(measures,
-            measure => some(get(measure, 'measure.measureFilters'),
-                    filter => has(filter,'dateFilter')));
+    const dateOptionsDisabled = every<Afm.IMeasure>(afm.measures,
+            measure => some<Afm.IMeasureDefinition>(measure.definition.filters,
+                filter => filter.type === 'date'));
 
     return {
         dateOptionsDisabled

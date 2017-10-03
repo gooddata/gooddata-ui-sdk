@@ -198,9 +198,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         }
     }
 
-    private onError(errorCode, dataSource = this.props.dataSource) {
+    private onError(errorCode, dataSource = this.props.dataSource, options = {}) {
         if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-            this.props.onError({ status: errorCode });
+            this.props.onError({ status: errorCode, options });
             this.setState({
                 error: errorCode
             });
@@ -224,24 +224,28 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             this.dataCancellable.cancel();
         }
 
+        const visualizationOptions = getVisualizationOptions(dataSource.getAfm());
+
         this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation));
         this.dataCancellable.promise.then((result) => {
             if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
                 const executionResult = get<IExecutorResult, ExecutorResult.ISimpleExecutorResult>(result, 'result');
                 const metadata = get<IExecutorResult,
                     VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
-                const options = getVisualizationOptions(metadata);
 
                 this.setState({
                     metadata,
                     result: executionResult
                 });
-                this.props.pushData({ executionResult, options });
+                this.props.pushData({
+                    executionResult,
+                    options: visualizationOptions
+                });
                 this.onLoadingChanged({ isLoading: false });
             }
         }, (error) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {
-                this.onError(error, dataSource);
+                this.onError(error, dataSource, visualizationOptions);
             }
         });
     }

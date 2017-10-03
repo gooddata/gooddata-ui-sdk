@@ -196,7 +196,10 @@ describe('Table', () => {
         postpone(() => {
             expect(wrapper.find(TableTransformation).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
-            expect(onError).toHaveBeenLastCalledWith({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE });
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                options: expect.any(Object)
+            });
             done();
         });
     });
@@ -238,7 +241,7 @@ describe('Table', () => {
             expect(pushData).toHaveBeenCalledWith({
                 executionResult: resultMock.result,
                 options: {
-                    dateOptionsDisabled: true
+                    dateOptionsDisabled: false
                 }
             });
             done();
