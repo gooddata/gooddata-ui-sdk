@@ -11,7 +11,7 @@ describe('getColumn', () => {
         };
     }
 
-    function getPrevSorting(column, direction): Transformation.ISort {
+    function getPrevSorting(column: string, direction: string): Transformation.ISort {
         return { column, direction };
     }
 

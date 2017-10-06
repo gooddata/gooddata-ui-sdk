@@ -2,7 +2,7 @@ import { getVisualizationOptions } from '../options';
 import { Afm } from '@gooddata/data-layer';
 
 describe('getVisualizationOptions', () => {
-    function createAfm(measures): Afm.IAfm {
+    function createAfm(measures: Afm.IMeasure[]): Afm.IAfm {
         return  {
             measures
         };
@@ -26,7 +26,7 @@ describe('getVisualizationOptions', () => {
         };
     }
 
-    function createMeasure(filters): Afm.IMeasure {
+    function createMeasure(filters: Afm.IFilter[]): Afm.IMeasure {
         return {
             id: 'foo',
             definition: {

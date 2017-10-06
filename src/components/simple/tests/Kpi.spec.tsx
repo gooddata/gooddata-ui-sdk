@@ -2,18 +2,16 @@ jest.mock('gooddata');
 
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { test } from '@gooddata/js-utils';
 
 import { Kpi, IKpiProps } from '../Kpi';
-
-const { postpone } = test;
+import { delay } from '../../tests/utils';
 
 describe('Kpi', () => {
     function createComponent(props: IKpiProps) {
         return mount(<Kpi {...props} />);
     }
 
-    it('should format kpi result', (done) => {
+    it('should format kpi result', () => {
         const onLoadingChanged = jest.fn();
         const wrapper = createComponent({
             projectId: 'myprojectid',
@@ -23,10 +21,9 @@ describe('Kpi', () => {
         });
 
         expect(onLoadingChanged.mock.calls[0]).toEqual([{ isLoading: true }]);
-        postpone(() => {
+        return delay().then(() => {
             expect(onLoadingChanged.mock.calls[1]).toEqual([{ isLoading: false }]);
             expect(wrapper.find('.gdc-kpi').text()).toEqual('$32,016.00');
-            done();
         });
     });
 });

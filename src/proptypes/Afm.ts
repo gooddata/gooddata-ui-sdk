@@ -1,15 +1,20 @@
 import * as PropTypes from 'prop-types';
-import filters from './Filters';
+import { FiltersPropType } from './Filters';
 
-export default {
-    afm: PropTypes.shape({
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const AfmPropType =
+    PropTypes.shape({
         attributes: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
                 type: PropTypes.oneOf(['date', 'attribute']).isRequired
             })
         ),
-        ...filters,
+        filters: FiltersPropType,
         measures: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
@@ -18,7 +23,7 @@ export default {
                         PropTypes.shape({ id: PropTypes.string.isRequired }),
                         PropTypes.shape({ lookupId: PropTypes.string.isRequired })
                     ]).isRequired,
-                    ...filters,
+                    filters: FiltersPropType,
                     aggregation: PropTypes.string,
                     popAttribute: PropTypes.shape({
                         id: PropTypes.string.isRequired
@@ -27,5 +32,4 @@ export default {
                 })
             })
         )
-    })
-};
+    });

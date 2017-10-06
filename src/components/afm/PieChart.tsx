@@ -10,7 +10,9 @@ import {
 export {
     ISimpleDataAdapterProviderProps
 };
+
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { PieChart as corePieChart } from '../core/PieChart';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
-export const PieChart = simpleDataAdapterProvider<ICommonChartProps>(corePieChart, 'pie');
+export const PieChart = simpleDataAdapterProvider<ICommonChartProps>(corePieChart, VisualizationTypes.PIE);

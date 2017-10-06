@@ -3,11 +3,11 @@ import bindAll = require('lodash/bindAll');
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
+import { ISimpleExecutorResult } from 'gooddata';
 import { ResponsiveTable, Table as IndigoTable, TableTransformation } from '@gooddata/indigo-visualizations';
 import {
     DataSource,
     DataSourceUtils,
-    ExecutorResult,
     MetadataSource,
     Transformation,
     VisualizationObject
@@ -17,43 +17,46 @@ import { IntlWrapper } from './base/IntlWrapper';
 import { IEvents, ILoadingState } from '../../interfaces/Events';
 import { IDrillableItem } from '../../interfaces/DrillableItem';
 import { IVisualizationProperties } from '../../interfaces/VisualizationProperties';
-import { tablePropTypes } from '../../proptypes/Table';
+import { TablePropTypes, Requireable } from '../../proptypes/Table';
 import { ISorting } from '../../helpers/metadata';
 import { getSorting, ISortingChange } from '../../helpers/sorting';
-import { getCancellable } from '../../helpers/promise';
+import { getCancellable, ICancellablePromise } from '../../helpers/promise';
 
 import { ErrorStates } from '../../constants/errorStates';
 import { initTableDataLoading as initDataLoading } from '../../helpers/load';
 import { IntlTranslationsProvider } from './base/TranslationsProvider';
 import { IExecutorResult } from './base/BaseChart';
+import { VisualizationEnvironment } from '../uri/Visualization';
 import { getVisualizationOptions } from '../../helpers/options';
 
+export { Requireable };
+
 export interface ITableProps extends IEvents {
-    dataSource: DataSource.IDataSource;
-    metadataSource?: MetadataSource.IMetadataSource;
+    dataSource: DataSource.IDataSource<ISimpleExecutorResult>;
+    metadataSource: MetadataSource.IMetadataSource;
     transformation?: Transformation.ITransformation;
     locale?: string;
     height?: number;
-    environment?: string;
+    environment?: VisualizationEnvironment;
     stickyHeader?: number;
     drillableItems?: IDrillableItem[];
-    afterRender?;
-    pushData?;
+    afterRender?: Function;
+    pushData?: Function;
     visualizationProperties?: IVisualizationProperties;
 }
 
 export interface ITableState {
     error: string;
-    result: ExecutorResult.ISimpleExecutorResult;
-    metadata: VisualizationObject.IVisualizationObjectMetadata;
+    result: ISimpleExecutorResult;
+    metadata: VisualizationObject.IVisualizationObject;
     isLoading: boolean;
     sorting: ISorting;
     page: number;
 }
 
-const defaultErrorHandler = (error) => {
+const defaultErrorHandler = (error: any) => {
     if (error.status !== ErrorStates.OK) {
-        console.error(error);
+        console.error(error); // tslint:disable-line:no-console
     }
 };
 
@@ -73,11 +76,11 @@ export class Table extends React.Component<ITableProps, ITableState> {
         visualizationProperties: null
     };
 
-    static propTypes = tablePropTypes;
+    public static propTypes = TablePropTypes;
 
-    private dataCancellable;
+    private dataCancellable: ICancellablePromise;
 
-    constructor(props) {
+    constructor(props: ITableProps) {
         super(props);
 
         this.state = {
@@ -99,9 +102,9 @@ export class Table extends React.Component<ITableProps, ITableState> {
         this.initDataLoading(dataSource, metadataSource, transformation);
     }
 
-    public componentWillReceiveProps(nextProps) {
-        const sortingPrev = get(this.props.visualizationProperties, 'sorting');
-        const sortingNext = get(nextProps.visualizationProperties, 'sorting');
+    public componentWillReceiveProps(nextProps: ITableProps) {
+        const sortingPrev: ISorting = get(this.props.visualizationProperties, 'sorting');
+        const sortingNext: ISorting = get(nextProps.visualizationProperties, 'sorting');
         // next sorting needs to be different from previous and also
         // than actual inner sorting to get rid of duplicate execution
         // This handles only UNDO sorting change
@@ -112,7 +115,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 this.dataCancellable.cancel();
             }
 
-            const sorting = sortingChanged ? sortingNext : this.state.sorting;
+            const sorting: ISorting = sortingChanged ? sortingNext : this.state.sorting;
 
             const { metadataSource, dataSource, transformation } = nextProps;
             this.initDataLoading(dataSource, metadataSource, transformation, sorting);
@@ -145,7 +148,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
         this.initDataLoading(dataSource, metadataSource, transformation, sortingInfo);
     }
 
-    public onMore({ page }) {
+    public onMore({ page }: { page: number }) {
         this.setState({
             page
         });
@@ -165,8 +168,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
         if (this.canRender()) {
             if (this.props.environment === 'dashboards') {
                 const TABLE_PAGE_SIZE = 9;
-                const tableRenderer = props =>
-                    (<ResponsiveTable
+                const tableRenderer = (props: ITableProps) => (
+                    <ResponsiveTable
                         {...props}
                         afm={this.props.dataSource.getAfm()}
                         rowsPerPage={TABLE_PAGE_SIZE}
@@ -174,7 +177,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
                         page={page}
                         onMore={this.onMore}
                         onLess={this.onLess}
-                    />);
+                    />
+                );
                 return (
                     <IntlWrapper locale={locale}>
                         <IntlTranslationsProvider result={result}>
@@ -195,7 +199,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                 );
             }
 
-            const tableRenderer = tableProps =>
+            const tableRenderer = (tableProps: ITableProps) =>
                 <IndigoTable {...tableProps} afm={this.props.dataSource.getAfm()} onSortChange={this.onSortChange} />;
             return (
                 <IntlWrapper locale={locale}>
@@ -224,7 +228,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
         return result && !isLoading && error === ErrorStates.OK;
     }
 
-    private onError(errorCode, dataSource = this.props.dataSource, options = {}) {
+    private onError(errorCode: string, dataSource = this.props.dataSource, options = {}) {
         if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
             this.setState({
                 error: errorCode
@@ -256,10 +260,10 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     private initDataLoading(
-                dataSource: DataSource.IDataSource,
-                metadataSource: MetadataSource.IMetadataSource,
-                transformation: Transformation.ITransformation,
-                sorting = null
+        dataSource: DataSource.IDataSource<ISimpleExecutorResult>,
+        metadataSource: MetadataSource.IMetadataSource,
+        transformation: Transformation.ITransformation,
+        sorting: ISorting = null
     ) {
         this.onLoadingChanged({ isLoading: true });
 
@@ -272,9 +276,9 @@ export class Table extends React.Component<ITableProps, ITableState> {
         this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation, sorting));
         this.dataCancellable.promise.then((result) => {
             if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const executionResult = get<IExecutorResult, ExecutorResult.ISimpleExecutorResult>(result, 'result');
+                const executionResult = get<IExecutorResult, ISimpleExecutorResult>(result, 'result');
                 const metadata = get<IExecutorResult,
-                    VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
+                    VisualizationObject.IVisualizationObject>(result, 'metadata');
                 const sorting = get<IExecutorResult, ISorting>(result, 'sorting');
 
                 this.setState({
@@ -282,13 +286,15 @@ export class Table extends React.Component<ITableProps, ITableState> {
                     metadata,
                     sorting
                 });
+
                 this.props.pushData({
                     executionResult,
                     options: visualizationOptions
                 });
+
                 this.onLoadingChanged({ isLoading: false });
             }
-        }, (error) => {
+        }, (error: string) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {
                 this.onError(error, dataSource, visualizationOptions);
             }

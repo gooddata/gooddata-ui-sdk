@@ -1,11 +1,10 @@
-import { Transformation }  from '@gooddata/data-layer';
+import { Transformation } from '@gooddata/data-layer';
 
 export const DESC = 'desc';
 export const ASC = 'asc';
 
 export const COLUMN_TYPE_METRIC = 'metric';
 export const COLUMN_TYPE_ATTRIBUTE = 'attrLabel';
-
 
 export interface ISortingChange {
     id: string;
@@ -18,7 +17,7 @@ function getColumn(change: ISortingChange): string {
     return change.type === COLUMN_TYPE_METRIC ? change.id : change.uri;
 }
 
-function toggleSorting(currentSorting) {
+function toggleSorting(currentSorting: string) {
     return currentSorting === ASC ? DESC : ASC;
 }
 
@@ -32,7 +31,7 @@ function getDirection(change: ISortingChange, prevSorting: Transformation.ISort)
     return toggleSorting(prevSorting.direction);
 }
 
-export function getSorting(change, prevSorting: Transformation.ISort): Transformation.ISort {
+export function getSorting(change: ISortingChange, prevSorting: Transformation.ISort): Transformation.ISort {
     return {
         column: getColumn(change),
         direction: getDirection(change, prevSorting)

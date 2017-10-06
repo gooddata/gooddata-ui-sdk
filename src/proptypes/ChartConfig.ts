@@ -1,7 +1,12 @@
 import * as PropTypes from 'prop-types';
 
-export default {
-    config: PropTypes.shape({
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const ChartConfigPropType =
+    PropTypes.shape({
         colors: PropTypes.arrayOf(PropTypes.string),
         legend: PropTypes.shape({
             enabled: PropTypes.bool,
@@ -11,5 +16,4 @@ export default {
             series: PropTypes.number,
             categories: PropTypes.number
         })
-    })
-};
+    });

@@ -1,18 +1,21 @@
 import * as React from 'react';
-import * as sdk from 'gooddata';
+import * as GoodData from 'gooddata';
 import { IAttributeDisplayForm } from './model';
 
 const { PropTypes } = React;
 
+export interface IAttributeLoaderMetadataProps {
+    getObjectUri: Function;
+    getObjectDetails: Function;
+}
+
 export interface IAttributeLoaderProps {
-    children(props): any;
-    metadata?: {
-        getObjectUri: Function;
-        getObjectDetails: Function;
-    };
+    metadata?: IAttributeLoaderMetadataProps;
     projectId: string;
     uri?: string;
     identifier?: string;
+
+    children(props: IAttributeLoaderChildren): any;
 }
 
 export interface IAttributeLoaderState {
@@ -22,24 +25,33 @@ export interface IAttributeLoaderState {
     error?: any;
 }
 
-function getAttributeUri(metadata, projectId: string, uri: string, identifier: string): Promise<string> {
-    const uriPromise = new Promise<string>((resolve, reject) => {
+export interface IAttributeLoaderChildren {
+    attributeDisplayForm: IAttributeDisplayForm;
+    isLoading: boolean;
+    isUsingIdentifier: boolean;
+}
+
+function getAttributeUri(
+    metadata: IAttributeLoaderMetadataProps,
+    projectId: string,
+    uri: string,
+    identifier: string
+): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         if (uri) {
             return resolve(uri);
         }
         if (!identifier || !projectId) {
             return reject(new Error('Missing either uri, or identifier and projectId in AttributeFilter props'));
         }
-        return metadata.getObjectUri(projectId, identifier).then((uri) => {
+        return metadata.getObjectUri(projectId, identifier).then((uri: string) => {
             resolve(uri);
         }, reject);
     });
-    
-    return uriPromise;
 }
 
-function getAttributeDisplayForm(metadata, uri): Promise<IAttributeDisplayForm> {
-    return metadata.getObjectDetails(uri).then((result) => {
+function getAttributeDisplayForm(metadata: IAttributeLoaderMetadataProps, uri: string): Promise<IAttributeDisplayForm> {
+    return metadata.getObjectDetails(uri).then((result: any) => {
         if (!result || !result.attributeDisplayForm) {
             throw new Error('Invalid data uri. Required data uri must be of type "attributeDisplayForm"');
         }
@@ -48,7 +60,7 @@ function getAttributeDisplayForm(metadata, uri): Promise<IAttributeDisplayForm> 
 }
 
 export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, IAttributeLoaderState> {
-    static propTypes = {
+    public static propTypes = {
         projectId: PropTypes.string.isRequired,
         uri: PropTypes.string,
         identifier: PropTypes.string,
@@ -58,13 +70,13 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
         })
     };
 
-    static defaultProps = {
+    public static defaultProps: Partial<IAttributeLoaderProps> = {
         uri: null,
         identifier: null,
-        metadata: sdk.md
+        metadata: GoodData.md
     };
 
-    constructor(props) {
+    constructor(props: IAttributeLoaderProps) {
         super(props);
 
         this.state = {
@@ -75,11 +87,11 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
         };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         this.getAttributeDisplayForm(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: IAttributeLoaderProps) {
         if (this.props.uri !== nextProps.uri ||
             this.props.identifier !== nextProps.identifier ||
             this.props.projectId !== nextProps.projectId
@@ -92,12 +104,21 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
         }
     }
 
-    getAttributeDisplayForm(props) {
+    public render() {
+        const { attributeDisplayForm, isLoading, isUsingIdentifier } = this.state;
+        return this.props.children({
+            attributeDisplayForm,
+            isLoading,
+            isUsingIdentifier
+        });
+    }
+
+    private getAttributeDisplayForm(props: IAttributeLoaderProps) {
         const { metadata, projectId, uri, identifier } = props;
         getAttributeUri(metadata, projectId, uri, identifier)
-            .then(dfUri => getAttributeDisplayForm(metadata, dfUri))
+            .then((dfUri: string) => getAttributeDisplayForm(metadata, dfUri))
             .then(
-                (attributeDisplayForm) => {
+                (attributeDisplayForm: IAttributeDisplayForm) => {
                     this.setState({
                         attributeDisplayForm,
                         isLoading: false,
@@ -105,7 +126,7 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
                         error: null
                     });
                 },
-                (error) => {
+                (error: any) => {
                     this.setState({
                         attributeDisplayForm: null,
                         isLoading: false,
@@ -113,14 +134,5 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
                     });
                 }
             );
-    }
-   
-    render() {
-        const { attributeDisplayForm, isLoading, isUsingIdentifier } = this.state;
-        return this.props.children({
-            attributeDisplayForm,
-            isLoading,
-            isUsingIdentifier
-        });
     }
 }

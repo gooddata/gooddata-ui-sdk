@@ -1,10 +1,15 @@
 import * as PropTypes from 'prop-types';
-import events from './Events';
-import filters from './Filters';
+import { EventsPropTypes } from './Events';
+import { FiltersPropType } from './Filters';
 
-export const kpiPropTypes = {
-    ...events,
-    ...filters,
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const KpiPropTypes = {
+    ...EventsPropTypes,
+    filters: FiltersPropType,
     format: PropTypes.string,
     measure: PropTypes.string.isRequired,
     projectId: PropTypes.string.isRequired

@@ -6,7 +6,9 @@ import { Afm, Filters } from '@gooddata/data-layer';
 
 import { Execute } from '../../execution/Execute';
 import { IEvents } from '../../interfaces/Events';
-import { kpiPropTypes } from '../../proptypes/Kpi';
+import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
+
+export { Requireable };
 
 export type URIString = string;
 
@@ -34,8 +36,8 @@ function buildAFM(measureUri: string, filters: Afm.IFilter[] = []): Afm.IAfm {
     };
 }
 
-const defaultErrorHandler = (error) => {
-    console.error(error);
+const defaultErrorHandler = (error: Object) => {
+    console.error(error); // tslint:disable-line:no-console
 };
 
 export class Kpi extends React.Component<IKpiProps, null> {
@@ -46,9 +48,9 @@ export class Kpi extends React.Component<IKpiProps, null> {
         onLoadingChanged: noop
     };
 
-    static propTypes = kpiPropTypes;
+    public static propTypes = KpiPropTypes;
 
-    public getFormattedResult(result): string {
+    public getFormattedResult(result: any): string {
         return numeral(result).format(this.props.format);
     }
 
@@ -62,8 +64,9 @@ export class Kpi extends React.Component<IKpiProps, null> {
                 onError={this.props.onError}
                 onLoadingChanged={this.props.onLoadingChanged}
             >
-                {result =>
-                    <span className="gdc-kpi">{this.getFormattedResult(get(result, 'result.rawData.0.0'))}</span>
+                {
+                    (result: any) =>
+                        <span className="gdc-kpi">{this.getFormattedResult(get(result, 'result.rawData.0.0'))}</span>
                 }
             </Execute>
         );

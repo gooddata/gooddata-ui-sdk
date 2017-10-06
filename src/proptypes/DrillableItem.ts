@@ -1,6 +1,11 @@
 import * as PropTypes from 'prop-types';
 
-export default {
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const DrillableItemPropType = PropTypes.shape({
     uri: PropTypes.string,
     identifier: PropTypes.string
-};
+});

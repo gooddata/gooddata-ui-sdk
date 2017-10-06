@@ -1,27 +1,27 @@
-import Afm from './Afm';
-import { chartPropTypes } from './Chart';
-import ChartConfig from './ChartConfig';
-import { dataSourcePropTypes } from './DataSource';
-import DrillableItem from './DrillableItem';
-import Events from './Events';
-import Filters from './Filters';
-import { kpiPropTypes } from './Kpi';
-import { metadataSourcePropTypes } from './MetadataSource';
-import { tablePropTypes } from './Table';
-import Transformation from './Transformation';
-import { visualizationPropTypes } from './Visualization';
+import { AfmPropType } from './Afm';
+import { ChartPropTypes } from './Chart';
+import { ChartConfigPropType } from './ChartConfig';
+import { DataSourcePropType } from './DataSource';
+import { EventsPropTypes } from './Events';
+import { FiltersPropType } from './Filters';
+import { KpiPropTypes } from './Kpi';
+import { MetadataSourcePropType } from './MetadataSource';
+import { TablePropTypes } from './Table';
+import { TransformationPropType } from './Transformation';
+import { VisualizationPropType } from './Visualization';
 
-export default {
-    Afm: Afm.afm,
-    ChartConfig: ChartConfig.config,
-    DrillableItem,
-    Transformation: Transformation.transformation,
-    Events,
-    Filters: Filters.filters,
-    Kpi: kpiPropTypes,
-    Chart: chartPropTypes,
-    DataSource: dataSourcePropTypes,
-    MetadataSource: metadataSourcePropTypes,
-    Table: tablePropTypes,
-    Visualization: visualizationPropTypes
+export {
+    // Objects of propTypes
+    EventsPropTypes,
+    KpiPropTypes,
+    ChartPropTypes,
+    TablePropTypes,
+
+    AfmPropType,
+    ChartConfigPropType,
+    TransformationPropType,
+    FiltersPropType,
+    DataSourcePropType,
+    MetadataSourcePropType,
+    VisualizationPropType
 };

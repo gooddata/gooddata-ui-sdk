@@ -33,7 +33,7 @@ describe('AttributeFilterItem', () => {
 
     it('should dispatch callback on checkbox change', () => {
         const item = createItem();
-        
+
         const wrapper = renderComponent({
             item
         });

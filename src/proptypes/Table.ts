@@ -1,16 +1,21 @@
 import * as PropTypes from 'prop-types';
-import events from './Events';
-import { dataSourcePropTypes } from './DataSource';
-import { metadataSourcePropTypes } from './MetadataSource';
-import drillableItem from './DrillableItem';
+import { EventsPropTypes } from './Events';
+import { DataSourcePropType } from './DataSource';
+import { MetadataSourcePropType } from './MetadataSource';
+import { DrillableItemPropType } from './DrillableItem';
 
-export const tablePropTypes = {
-    ...events,
-    dataSource: dataSourcePropTypes,
-    metadataSource: metadataSourcePropTypes,
+import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+export {
+    Requireable
+};
+
+export const TablePropTypes = {
+    ...EventsPropTypes,
+    dataSource: DataSourcePropType,
+    metadataSource: MetadataSourcePropType,
     locale: PropTypes.string,
     height: PropTypes.number,
     environment: PropTypes.string,
-    drillableItems: PropTypes.arrayOf(PropTypes.shape(drillableItem)),
+    drillableItems: PropTypes.arrayOf(DrillableItemPropType),
     stickyHeader: PropTypes.number
 };

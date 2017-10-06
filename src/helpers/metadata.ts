@@ -2,7 +2,7 @@ import get = require('lodash/get');
 import cloneDeep = require('lodash/cloneDeep');
 import { VisualizationObject, Transformation } from '@gooddata/data-layer';
 
-import { ISortingChange } from '../helpers/sorting';
+import { ISortingChange } from './sorting';
 
 interface IMeasureInfo {
     generatedId: string;
@@ -29,13 +29,14 @@ export interface ISorting {
 }
 
 export interface IUpdateSortingResult {
-    updatedMetadata: VisualizationObject.IVisualizationObjectMetadata;
+    updatedMetadata: VisualizationObject.IVisualizationObject;
     updatedSorting: ISorting;
 }
 
 export function updateSorting(
-    metadata: VisualizationObject.IVisualizationObjectMetadata,
-    sortingInfo: ISorting): IUpdateSortingResult {
+    metadata: VisualizationObject.IVisualizationObject,
+    sortingInfo: ISorting
+): IUpdateSortingResult {
     const { sorting, change } = sortingInfo;
     const updatedMetadata = cloneDeep(metadata);
     const buckets = updatedMetadata.content.buckets;
@@ -43,28 +44,30 @@ export function updateSorting(
     const { type } = change;
 
     let bucketItem;
-    let sort;
+    let sort: VisualizationObject.IMeasureSort | string;
 
     if (type === 'metric') {
         const { generatedId, isPoP } = getMeasureInfo(column);
-        const mex = get(buckets, 'measures', []);
-        const measure = mex
+        const measures = get(buckets, 'measures', []);
+        const measure: VisualizationObject.IMeasure = measures
             .find(item => item.measure.generatedId === generatedId);
 
         bucketItem = get(measure, 'measure');
-        sort = { direction };
+        // Sort direction needs to be fixed in data-layer
+        // tslint:disable-next-line:no-object-literal-type-assertion
+        sort = { direction } as VisualizationObject.IMeasureSort;
         if (isPoP) {
             sort.sortByPoP = true;
         }
     } else {
         const categories = get(buckets, 'categories', []);
-        const category = categories
+        const category: VisualizationObject.ICategory = categories
             .find(item => item.category.displayForm === column);
 
-        bucketItem = get(category, 'category');
+        bucketItem = get(category, 'category') as VisualizationObject.ICategory;
         sort = direction; // string instead of object for categories :(
     }
-    // handle column deletation
+    // handle column deletion
     if (!bucketItem) {
         return {
             updatedMetadata: metadata,

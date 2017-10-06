@@ -13,10 +13,8 @@ export function getVisualizationOptions(afm: Afm.IAfm): IVisualizationOptions {
     }
 
     const dateOptionsDisabled = every<Afm.IMeasure>(afm.measures,
-            measure => some<Afm.IMeasureDefinition>(measure.definition.filters,
+            measure => some<Afm.IFilter>(measure.definition.filters,
                 filter => filter.type === 'date'));
 
-    return {
-        dateOptionsDisabled
-    };
+    return { dateOptionsDisabled };
 }

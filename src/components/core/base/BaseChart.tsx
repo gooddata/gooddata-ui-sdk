@@ -4,11 +4,13 @@ import get = require('lodash/get');
 import noop = require('lodash/noop');
 import merge = require('lodash/merge');
 
+import { ISimpleExecutorResult } from 'gooddata';
 import { Visualization } from '@gooddata/indigo-visualizations';
 import {
     Afm,
+    DataSource,
     DataSourceUtils,
-    ExecutorResult,
+    MetadataSource,
     VisualizationObject,
     Transformation
 } from '@gooddata/data-layer';
@@ -21,16 +23,16 @@ import { ErrorStates } from '../../../constants/errorStates';
 import { initChartDataLoading as initDataLoading } from '../../../helpers/load';
 import { getConfig, ILegendConfig } from '../../../helpers/config';
 import { ISorting } from '../../../helpers/metadata';
-import { getCancellable } from '../../../helpers/promise';
+import { getCancellable, ICancellablePromise } from '../../../helpers/promise';
 import { IntlTranslationsProvider } from './TranslationsProvider';
 import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
 import { getVisualizationOptions } from '../../../helpers/options';
 
-export type ChartTypes = 'line' | 'bar' | 'column' | 'pie';
+export type ChartType = 'line' | 'bar' | 'column' | 'pie';
 
 export interface IExecutorResult {
-    metadata: VisualizationObject.IVisualizationObjectMetadata;
-    result: ExecutorResult.ISimpleExecutorResult;
+    metadata: VisualizationObject.IVisualizationObject;
+    result: ISimpleExecutorResult;
     sorting?: ISorting;
 }
 
@@ -45,8 +47,8 @@ export interface IChartConfig {
 
 export interface ICommonChartProps extends IEvents {
     locale?: string;
-    afterRender?;
-    pushData?;
+    afterRender?: Function;
+    pushData?: Function;
     config?: IChartConfig;
     height?: number;
     environment?: string;
@@ -63,19 +65,19 @@ export interface IChartAFMProps extends ICommonChartProps {
 }
 
 export interface IBaseChartProps extends IChartProps {
-    type: ChartTypes;
+    type: ChartType;
 }
 
 export interface IBaseChartState {
     error: string;
-    result: ExecutorResult.ISimpleExecutorResult;
-    metadata: VisualizationObject.IVisualizationObjectMetadata;
+    result: ISimpleExecutorResult;
+    metadata: VisualizationObject.IVisualizationObject;
     isLoading: boolean;
 }
 
-const defaultErrorHandler = (error) => {
+const defaultErrorHandler = (error: any) => {
     if (error.status !== ErrorStates.OK) {
-        console.error(error);
+        console.error(error); // tslint:disable-line:no-console
     }
 };
 
@@ -91,9 +93,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         visualizationProperties: null
     };
 
-    private dataCancellable;
+    private dataCancellable: ICancellablePromise;
 
-    constructor(props) {
+    constructor(props: IBaseChartProps) {
         super(props);
 
         this.state = {
@@ -112,8 +114,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         this.initDataLoading(dataSource, metadataSource, transformation);
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: IBaseChartProps) {
         const { metadataSource, dataSource, transformation } = nextProps;
+
         if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, metadataSource)) {
             metadataSource.getVisualizationMetadata().then(({ metadata }) => {
                 this.setState({ metadata });
@@ -197,8 +200,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             });
         }
     }
-
-    private onError(errorCode, dataSource = this.props.dataSource, options = {}) {
+    private onError(errorCode: string, dataSource = this.props.dataSource, options = {}) {
         if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
             this.props.onError({ status: errorCode, options });
             this.setState({
@@ -216,7 +218,11 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
     }
 
-    private initDataLoading(dataSource, metadataSource, transformation) {
+    private initDataLoading(
+        dataSource: DataSource.IDataSource<ISimpleExecutorResult>,
+        metadataSource: MetadataSource.IMetadataSource,
+        transformation: Transformation.ITransformation
+    ) {
         this.onLoadingChanged({ isLoading: true });
         this.setState({ result: null });
 
@@ -229,9 +235,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation));
         this.dataCancellable.promise.then((result) => {
             if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const executionResult = get<IExecutorResult, ExecutorResult.ISimpleExecutorResult>(result, 'result');
+                const executionResult = get<IExecutorResult, ISimpleExecutorResult>(result, 'result');
                 const metadata = get<IExecutorResult,
-                    VisualizationObject.IVisualizationObjectMetadata>(result, 'metadata');
+                    VisualizationObject.IVisualizationObject>(result, 'metadata');
 
                 this.setState({
                     metadata,
@@ -243,7 +249,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
                 });
                 this.onLoadingChanged({ isLoading: false });
             }
-        }, (error) => {
+        }, (error: string) => {
             if (error !== ErrorStates.PROMISE_CANCELLED) {
                 this.onError(error, dataSource, visualizationOptions);
             }

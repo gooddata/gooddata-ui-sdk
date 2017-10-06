@@ -18,4 +18,3 @@ export enum ErrorStates {
     EMPTY_AFM = 'EMPTY_AFM',
     INVALID_BUCKETS = 'INVALID_BUCKETS'
 }
-

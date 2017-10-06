@@ -5,7 +5,7 @@ describe('getProjectId', () => {
         expect(getProjectIdByUri('/gdc/md/aadsf234234234324/obj/123')).toBe('aadsf234234234324');
     });
 
-    it('should return undefined if cannot get project id from given uri', () => {
-        expect(getProjectIdByUri('/uri/without/projectid')).toBe(undefined);
+    it('should throw error if cannot get project id from given uri', () => {
+        expect(() => getProjectIdByUri('/uri/without/projectid')).toThrow();
     });
 });

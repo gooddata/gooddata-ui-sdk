@@ -16,11 +16,12 @@ export interface IAttributeElement {
 }
 
 export interface IAttributeFilterItemProps {
+    classname?: string;
     item?: IAttributeElement;
 }
 
 export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps, null> {
-    static propTypes = {
+    public static propTypes = {
         classname: PropTypes.string,
         item: PropTypes.shape({
             selected: PropTypes.bool,
@@ -33,25 +34,14 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
         })
     };
 
-    static defaultProps = {
+    public static defaultProps: Partial<IAttributeFilterItemProps> = {
         item: null,
         classname: ''
     };
 
-    renderLoadingItem() {
-        return (
-            <div className="gd-list-item gd-list-item-not-loaded" />
-        );
-    }
-
-    handleSelect = () => {
+    public render() {
         const { item } = this.props;
-        item.onSelect(item.source);
-    }
 
-    render() {
-        const { item } = this.props;
-        
         if (!item || item.source.empty) {
             return this.renderLoadingItem();
         }
@@ -65,11 +55,22 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
                 <input
                     type="checkbox"
                     className="gd-input-checkbox"
-                    readOnly
+                    readOnly={true}
                     checked={item.selected}
                 />
                 <span>{item.source.title}</span>
             </div>
         );
+    }
+
+    private renderLoadingItem() {
+        return (
+            <div className="gd-list-item gd-list-item-not-loaded" />
+        );
+    }
+
+    private handleSelect = () => {
+        const { item } = this.props;
+        item.onSelect(item.source);
     }
 }
