@@ -276,13 +276,6 @@
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/react-intl/-/react-intl-2.3.2.tgz#a57433871dedf2f12ba8eeca645e5ce5a37d102a"
 
-"@types/react-redux@5.0.9":
-  version "5.0.9"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.9.tgz#9bfe915356aa0b10d1b9211df0121a06aa7ec9af"
-  dependencies:
-    "@types/react" "*"
-    redux "^3.6.0"
-
 "@types/react@*":
   version "16.0.9"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.9.tgz#2ad952abbb22617620927694f9a4bce292d7fb2b"
@@ -3385,10 +3378,6 @@ hoist-non-react-statics@1.x.x, hoist-non-react-statics@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
-hoist-non-react-statics@^2.2.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
-
 home-or-tmp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-2.0.0.tgz#e36c3f2d2cae7d746a857e38d18d5f32a7882db8"
@@ -4284,7 +4273,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.2.0, lodash-es@^4.2.1:
+lodash-es@^4.2.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
 
@@ -5774,17 +5763,6 @@ react-native-listener@1.0.2:
 react-portal@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.0.0.tgz#9304fce836e8a3216b22588f8dc91b447728f0ae"
-
-react-redux@5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
-  dependencies:
-    hoist-non-react-statics "^2.2.1"
-    invariant "^2.0.0"
-    lodash "^4.2.0"
-    lodash-es "^4.2.0"
-    loose-envify "^1.1.0"
-    prop-types "^15.5.10"
 
 react-responsive@1.2.6:
   version "1.2.6"
