@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-3.2.0.tgz#38ec451cee3cac555a2cd94ca90654adf79add3d"
+"@gooddata/data-layer@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-3.2.1.tgz#736cfca0f077e78bdbfc8e3470c56d50e5cc7df7"
   dependencies:
     json-stable-stringify "1.0.1"
     lodash "4.17.4"
@@ -3293,7 +3293,7 @@ hawk@~6.0.2:
     sntp "2.x.x"
 
 highcharts@4.2.5:
-  version v4.2.5
+  version "4.2.5"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-4.2.5.tgz#f18bbda5ca326fdff7d816c94814fe8509cec969"
 
 hmac-drbg@^1.0.0:
