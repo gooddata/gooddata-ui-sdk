@@ -131,10 +131,21 @@ export function getObjectUsingMany(projectId, uris, options = {}) {
 }
 
 /**
-* Reutrns all attributes in a project specified by projectId param
+ * Returns all visualizations metadata in a project specified by projectId param
+ *
+ * @method getVisualizations
+ * @param {string} projectId Project identifier
+ * @return {Array} An array of visualization objects
+ */
+export function getVisualizations(projectId) {
+    return get(`/gdc/md/${projectId}/query/visualizations`).then(r => (r.ok ? r.json() : r)).then(getIn('query.entries'));
+}
+
+/**
+* Returns all attributes in a project specified by projectId param
 *
 * @method getAttributes
-* @param projectId Project identifier
+* @param {string} projectId Project identifier
 * @return {Array} An array of attribute objects
 */
 export function getAttributes(projectId) {
@@ -145,7 +156,7 @@ export function getAttributes(projectId) {
  * Returns all dimensions in a project specified by projectId param
  *
  * @method getDimensions
- * @param projectId Project identifier
+ * @param {string} projectId Project identifier
  * @return {Array} An array of dimension objects
  * @see getFolders
  */
@@ -191,7 +202,7 @@ export function getFolders(projectId, type) {
  * Returns all facts in a project specified by the given projectId
  *
  * @method getFacts
- * @param projectId Project identifier
+ * @param {string} projectId Project identifier
  * @return {Array} An array of fact objects
  */
 export function getFacts(projectId) {
@@ -202,7 +213,7 @@ export function getFacts(projectId) {
  * Returns all metrics in a project specified by the given projectId
  *
  * @method getMetrics
- * @param projectId Project identifier
+ * @param {string} projectId Project identifier
  * @return {Array} An array of metric objects
  */
 export function getMetrics(projectId) {
@@ -447,7 +458,7 @@ export function getObjectIdentifier(uri) {
  * Get uri of an metadata object, specified by its identifier and project id it belongs to
  *
  * @method getObjectUri
- * @param projectId id of the project
+ * @param {string} projectId id of the project
  * @param identifier identifier of the metadata object
  * @return {String} uri of the metadata object
  */
@@ -531,7 +542,7 @@ export function translateElementLabelsToUris(projectId, labelUri, patterns, mode
  * Get valid elements of an attribute, specified by its identifier and project id it belongs to
  *
  * @method getValidElements
- * @param projectId id of the project
+ * @param {string} projectId id of the project
  * @param id display form identifier of the metadata object
  * @param {Object} options objects with options:
  *      - limit {Number}

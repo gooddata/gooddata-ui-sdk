@@ -75,6 +75,8 @@ export module md {
 
     export function getAttribute(projectId: string): Promise<any>;
 
+    export function getVisualizations(projectId: string): Promise<any>;
+
     export function getDimensions(projectId: string): Promise<any>;
 
     export function getFacts(projectId: string): Promise<any>;
