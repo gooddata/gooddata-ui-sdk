@@ -12,6 +12,37 @@ describe('metadata', () => {
             fetchMock.restore();
         });
 
+        describe('getVisualizations', () => {
+            it('should reject with 400 from backend', () => {
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/query/visualizations',
+                    400
+                );
+
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getVisualizations('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
+            });
+
+            it('should return correct number of entries', () => {
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/query/visualizations',
+                    { status: 200, body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } }) }
+                );
+
+                return md.getVisualizations('myFakeProjectId').then((result) => {
+                    expect(result.length).toBe(2);
+                });
+            });
+        });
+
         describe('getAttributes', () => {
             it('should reject with 400 from backend', () => {
                 fetchMock.mock(
@@ -19,7 +50,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAttributes('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getAttributes('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -184,7 +224,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getDimensions('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getDimensions('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -209,7 +258,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getFacts('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getFacts('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -234,7 +292,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getMetrics('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getMetrics('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -259,7 +326,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableMetrics('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getAvailableMetrics('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -284,7 +360,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableAttributes('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getAvailableAttributes('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
@@ -309,7 +394,16 @@ describe('metadata', () => {
                     400
                 );
 
-                return md.getAvailableFacts('myFakeProjectId').then(null, err => expect(err).toBeInstanceOf(Error));
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getAvailableFacts('myFakeProjectId')
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
             });
 
             it('should return correct number of entries', () => {
