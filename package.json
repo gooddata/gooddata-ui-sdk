@@ -44,7 +44,7 @@
     "typescript": "2.5.2"
   },
   "dependencies": {
-    "@gooddata/data-layer": "4.0.0",
+    "@gooddata/data-layer": "4.0.1",
     "@gooddata/goodstrap": "53.0.1",
     "@gooddata/indigo-visualizations": "0.13.0",
     "@gooddata/js-utils": "0.9.0",

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-4.0.0.tgz#698823b63672028d284ce4eacfac5a6e13ae69b4"
+"@gooddata/data-layer@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-4.0.1.tgz#8162adcf48d8cc35c9e98b2c018d9e80ea860549"
   dependencies:
     json-stable-stringify "1.0.1"
     lodash "4.17.4"
