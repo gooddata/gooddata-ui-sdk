@@ -15,7 +15,7 @@ import {
 
 import { IntlWrapper } from './base/IntlWrapper';
 import { IEvents, ILoadingState } from '../../interfaces/Events';
-import { IDrillableItem } from '../../interfaces/DrillableItem';
+import { IDrillableItem } from '../../interfaces/DrillEvents';
 import { IVisualizationProperties } from '../../interfaces/VisualizationProperties';
 import { TablePropTypes, Requireable } from '../../proptypes/Table';
 import { ISorting } from '../../helpers/metadata';
@@ -73,6 +73,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
         locale: 'en-US',
         environment: 'none',
         drillableItems: [],
+        onFiredDrillEvent: noop,
         visualizationProperties: null
     };
 
@@ -163,64 +164,62 @@ export class Table extends React.Component<ITableProps, ITableState> {
     public render() {
         const { result, metadata, page } = this.state;
         const metadataContent = get(metadata, 'content', { buckets: {} });
-        const { afterRender, height, locale, stickyHeader, drillableItems } = this.props;
+        const {
+            afterRender,
+            height,
+            locale,
+            stickyHeader,
+            drillableItems,
+            onFiredDrillEvent,
+            environment,
+            dataSource
+        } = this.props;
 
-        if (this.canRender()) {
-            if (this.props.environment === 'dashboards') {
-                const TABLE_PAGE_SIZE = 9;
-                const tableRenderer = (props: ITableProps) => (
-                    <ResponsiveTable
-                        {...props}
-                        afm={this.props.dataSource.getAfm()}
-                        rowsPerPage={TABLE_PAGE_SIZE}
-                        onSortChange={this.onSortChange}
-                        page={page}
-                        onMore={this.onMore}
-                        onLess={this.onLess}
-                    />
-                );
-                return (
-                    <IntlWrapper locale={locale}>
-                        <IntlTranslationsProvider result={result}>
-                            <TableTransformation
-                                data={{}} // will be replaced by IntlTranslationsProvider
-                                drillableItems={drillableItems}
-                                tableRenderer={tableRenderer}
-                                afterRender={afterRender}
-                                height={height}
-                                onDataTooLarge={this.onDataTooLarge}
-                                config={{
-                                    stickyHeader,
-                                    ...metadataContent
-                                }}
-                            />
-                        </IntlTranslationsProvider>
-                    </IntlWrapper>
-                );
-            }
-
-            const tableRenderer = (tableProps: ITableProps) =>
-                <IndigoTable {...tableProps} afm={this.props.dataSource.getAfm()} onSortChange={this.onSortChange} />;
-            return (
-                <IntlWrapper locale={locale}>
-                    <IntlTranslationsProvider result={result}>
-                        <TableTransformation
-                            data={{}} // will be replaced by IntlTranslationsProvider
-                            drillableItems={drillableItems}
-                            afterRender={afterRender}
-                            tableRenderer={tableRenderer}
-                            height={height}
-                            config={{
-                                stickyHeader,
-                                ...metadataContent
-                            }}
-                        />
-                    </IntlTranslationsProvider>
-                </IntlWrapper>
-            );
+        if (!this.canRender()) {
+            return null;
         }
 
-        return null;
+        const isDashboardsEnvironment = environment === 'dashboards';
+        const onDataTooLarge = isDashboardsEnvironment ? this.onDataTooLarge : noop;
+        const tableRenderer = isDashboardsEnvironment ?
+            (tableProps: ITableProps) => (
+                <ResponsiveTable
+                    {...tableProps}
+                    afm={dataSource.getAfm()}
+                    rowsPerPage={9}
+                    onSortChange={this.onSortChange}
+                    page={page}
+                    onMore={this.onMore}
+                    onLess={this.onLess}
+                />
+            ) :
+            (tableProps: ITableProps) => (
+                <IndigoTable
+                    {...tableProps}
+                    afm={dataSource.getAfm()}
+                    onSortChange={this.onSortChange}
+                />
+            );
+
+        return (
+            <IntlWrapper locale={locale}>
+                <IntlTranslationsProvider result={result}>
+                    <TableTransformation
+                        data={{}} // will be replaced by IntlTranslationsProvider
+                        drillableItems={drillableItems}
+                        onFiredDrillEvent={onFiredDrillEvent}
+                        tableRenderer={tableRenderer}
+                        afterRender={afterRender}
+                        height={height}
+                        onDataTooLarge={onDataTooLarge}
+                        config={{
+                            stickyHeader,
+                            ...metadataContent
+                        }}
+                    />
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
     }
 
     private canRender() {

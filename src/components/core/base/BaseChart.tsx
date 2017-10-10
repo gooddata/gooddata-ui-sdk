@@ -17,9 +17,10 @@ import {
 
 import { IntlWrapper } from './IntlWrapper';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';
-import { IDrillableItem } from '../../../interfaces/DrillableItem';
+import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { ErrorStates } from '../../../constants/errorStates';
+import { ChartType } from '../../../constants/visualizationTypes';
 import { initChartDataLoading as initDataLoading } from '../../../helpers/load';
 import { getConfig, ILegendConfig } from '../../../helpers/config';
 import { ISorting } from '../../../helpers/metadata';
@@ -27,8 +28,6 @@ import { getCancellable, ICancellablePromise } from '../../../helpers/promise';
 import { IntlTranslationsProvider } from './TranslationsProvider';
 import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
 import { getVisualizationOptions } from '../../../helpers/options';
-
-export type ChartType = 'line' | 'bar' | 'column' | 'pie';
 
 export interface IExecutorResult {
     metadata: VisualizationObject.IVisualizationObject;
@@ -89,6 +88,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         onLoadingChanged: noop,
         pushData: noop,
         drillableItems: [],
+        onFiredDrillEvent: noop,
         config: {},
         visualizationProperties: null
     };
@@ -155,6 +155,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
                             onDataTooLarge={this.onDataTooLarge}
                             onNegativeValues={this.onNegativeValues}
                             drillableItems={this.props.drillableItems}
+                            onFiredDrillEvent={this.props.onFiredDrillEvent}
                         />
                     </IntlTranslationsProvider>
                 </IntlWrapper>
