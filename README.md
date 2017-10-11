@@ -16,7 +16,7 @@ $ npm install --save @gooddata/react-components
 ```
 
 ## Documentation
-[Documentation in Confluence](https://confluence.intgdc.com/display/VS/React+Components)
+[Documentation](https://help.gooddata.com/display/bHsp5IhQjuz0e6HS0s76/React+Components)
 
 ## Develop
 
