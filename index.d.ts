@@ -69,6 +69,8 @@ export interface IValidElementsResponse {
 export module md {
     export function getObjects<T>(projectId: string, objectUris: string[]): Promise<T>;
 
+    export function getObjectsByQuery<T>(projectId: string, options: { category?: string, mode?: string, author?: string, limit?: number }): Promise<T>;
+
     export function getObjectUsing<T>(projectId: string, uri: string, options?: { types?: string[], nearest?: boolean }): T;
 
     export function getObjectUsingMany<T>(projectId: string, uris: string[], options?: { types?: string[], nearest?: boolean }): T;
