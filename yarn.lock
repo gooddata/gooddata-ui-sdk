@@ -36,21 +36,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-"@gooddata/indigo-visualizations@0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T11-14-55-230Z":
-  version "0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T11-14-55-230Z"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T11-14-55-230Z.tgz#798e9f3874eb68af4582d06ce8ba3abd08c73be9"
-=======
-"@gooddata/indigo-visualizations@0.13.0-bugsbunny338-jza-bb-257-on-fired-drill-event-2017-10-13T15-33-01-926Z":
-  version "0.13.0-bugsbunny338-jza-bb-257-on-fired-drill-event-2017-10-13T15-33-01-926Z"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.13.0-bugsbunny338-jza-bb-257-on-fired-drill-event-2017-10-13T15-33-01-926Z.tgz#a9009eccf20f8c8e394c8ef7d59abeca050719ab"
->>>>>>> 5b0428f... refactor
-=======
-"@gooddata/indigo-visualizations@0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T12-01-14-915Z":
-  version "0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T12-01-14-915Z"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.13.0-jza-jza-bb-257-on-fired-drill-event-2017-10-12T12-01-14-915Z.tgz#d5c7147fb3fc7fe8538000c15c40645e97d2e4c9"
->>>>>>> 9d957eb... fixup! RELATED: BB-257 onFiredDrillEvent
+"@gooddata/indigo-visualizations@0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.14.0.tgz#3c1523f9f6ab2f47d96291ad64bc17f0a23a88e6"
   dependencies:
     "@gooddata/goodstrap" "53.0.1"
     "@gooddata/js-utils" "0.7.1"
