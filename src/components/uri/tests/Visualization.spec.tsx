@@ -1,21 +1,12 @@
-jest.mock('gooddata');
-
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { Afm } from '@gooddata/data-layer';
-
 import {
     Table,
     BaseChart
 } from '../../tests/mocks';
+import { charts } from '../../../../__mocks__/fixtures';
 
-jest.mock('../../core/Table', () => ({
-    Table
-}));
-jest.mock('../../core/base/BaseChart', () => ({
-    BaseChart
-}));
-
+import { VisualizationObject } from '@gooddata/data-layer';
 import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
 import { delay } from '../../tests/utils';
@@ -23,9 +14,11 @@ import { delay } from '../../tests/utils';
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
+const CHART_IDENTIFIER = 'chart';
+const TABLE_IDENTIFIER = 'table';
 
-const SLOW = 100;
-const FAST = 10;
+const SLOW = 20;
+const FAST = 5;
 
 function getResponse(response: string, delay: number): Promise<string> {
     return new Promise((resolve) => {
@@ -33,13 +26,23 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
+function fetchVisObject(uri: string): Promise<VisualizationObject.IVisualizationObject> {
+    const visObj = charts.find(chart => chart.visualization.meta.uri === uri);
+
+    if (!visObj) {
+        throw new Error(`Unknown uri ${uri}`);
+    }
+
+    return Promise.resolve(visObj.visualization);
+}
+
 // tslint:disable-next-line:variable-name
 function uriResolver(_projectId: string, _uri: string, identifier: string): Promise<string> {
-    if (identifier === 'table') {
+    if (identifier === TABLE_IDENTIFIER) {
         return getResponse(TABLE_URI, FAST);
     }
 
-    if (identifier === 'chart') {
+    if (identifier === CHART_IDENTIFIER) {
         return getResponse(CHART_URI, SLOW);
     }
 
@@ -51,11 +54,14 @@ describe('Visualization', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
-                uri={CHART_URI}
+                identifier={CHART_IDENTIFIER}
+                fetchVisObject={fetchVisObject}
+                uriResolver={uriResolver}
+                BaseChartComponent={BaseChart}
             />
         );
 
-        return delay().then(() => {
+        return delay(SLOW + 1).then(() => {
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
     });
@@ -64,18 +70,21 @@ describe('Visualization', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
-                uri={TABLE_URI}
+                identifier={TABLE_IDENTIFIER}
+                fetchVisObject={fetchVisObject}
+                uriResolver={uriResolver}
+                TableComponent={Table}
             />
         );
 
-        return delay().then(() => {
+        return delay(SLOW).then(() => {
             expect(wrapper.find(Table).length).toBe(1);
         });
     });
 
     it('should trigger error in case of given uri is not valid', (done) => {
-        const errorHandler = (value: string) => {
-            expect(value).toEqual(ErrorStates.NOT_FOUND);
+        const errorHandler = (value: { status: string }) => {
+            expect(value.status).toEqual(ErrorStates.NOT_FOUND);
             done();
         };
 
@@ -88,95 +97,22 @@ describe('Visualization', () => {
         );
     });
 
-    it('should replace date filter, if it has same id', () => {
-        const visFilters: Afm.IDateFilter[] = [
-            {
-                id: '/gdc/md/myproject/obj/921',
-                intervalType: 'relative',
-                type: 'date',
-                between: [-51, 0],
-                granularity: 'date'
-            }
-        ];
-
-        const wrapper = mount(
-            <Visualization
-                projectId={projectId}
-                uri={CHART_URI}
-                filters={visFilters}
-            />
-        );
-
-        return delay().then(() => {
-            const node: any = wrapper.getNode();
-            expect(node.dataSource.afm.filters).toHaveLength(1);
-            expect(node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
-        });
-    });
-
-    it('should add date filter, if it has different id', () => {
-        const visFilters = [
-            {
-                id: '/gdc/md/myproject/obj/922',
-                type: 'date',
-                between: [-51, 0],
-                granularity: 'date',
-                intervalType: 'relative'
-            }
-        ] as Afm.IDateFilter[];
-
-        const wrapper = mount(
-            <Visualization
-                projectId={projectId}
-                uri={CHART_URI}
-                filters={visFilters}
-            />
-        );
-
-        return delay().then(() => {
-            const node: any = wrapper.getNode();
-            expect(node.dataSource.afm.filters).toHaveLength(2);
-            expect(node.dataSource.afm.filters[1]).toEqual(visFilters[0]);
-        });
-    });
-
-    it('should add attribute filter', () => {
-        const visFilters: Afm.IPositiveAttributeFilter[] = [
-            {
-                id: '/gdc/md/myproject/obj/925',
-                type: 'attribute',
-                in: ['11', '22', '33']
-            }
-        ];
-
-        const wrapper = mount(
-            <Visualization
-                projectId={projectId}
-                uri={CHART_URI}
-                filters={visFilters}
-            />
-        );
-
-        return delay().then(() => {
-            const node: any = wrapper.getNode();
-            expect(node.dataSource.afm.filters).toHaveLength(2);
-            expect(node.dataSource.afm.filters[0]).toEqual(visFilters[0]);
-        });
-    });
-
     it('should handle slow requests', () => {
         // Response from first request comes back later that from the second one
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
-                identifier={'chart'}
+                identifier={CHART_IDENTIFIER}
                 uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
             />
         );
 
-        wrapper.setProps({ identifier: 'table' });
+        wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
-        return delay(300).then(() => {
+        return delay(SLOW + 1).then(() => {
             expect(wrapper.find(Table).length).toBe(1);
         });
     });
@@ -187,6 +123,10 @@ describe('Visualization', () => {
                 projectId={projectId}
                 uri={CHART_URI}
                 filters={[]}
+                uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
             />
         );
         const spy = jest.spyOn(wrapper.instance(), 'render');
@@ -197,9 +137,9 @@ describe('Visualization', () => {
             filters: []
         });
 
-        return delay(300).then(() => {
-            // initial render without datasources is called during mount
-            expect(spy).toHaveBeenCalledTimes(1);
+        return delay(SLOW + 1).then(() => {
+            // initial render without datasource is called during mount
+            expect(spy).toHaveBeenCalledTimes(0);
             spy.mockRestore();
         });
     });
@@ -208,8 +148,11 @@ describe('Visualization', () => {
         const wrapper = mount(
             <Visualization
                 projectId={projectId}
-                identifier={'chart'}
+                identifier={TABLE_IDENTIFIER}
                 uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
             />
         );
 
@@ -217,7 +160,7 @@ describe('Visualization', () => {
 
         // Would throw an error if not handled properly
         wrapper.unmount();
-        return delay(300).then(() => {
+        return delay(FAST + 1).then(() => {
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
         });

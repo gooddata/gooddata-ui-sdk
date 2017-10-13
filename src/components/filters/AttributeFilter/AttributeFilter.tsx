@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import * as GoodData from 'gooddata';
 import pick = require('lodash/pick');
 
@@ -7,8 +8,6 @@ import { injectIntl } from 'react-intl';
 import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from './AttributeDropdown';
 import { AttributeLoader } from './AttributeLoader';
 import { IAttributeDisplayForm } from './model';
-
-const { PropTypes } = React;
 
 export interface IAttributeFilterProps {
     uri?: string;

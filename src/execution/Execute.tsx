@@ -1,28 +1,36 @@
 import * as React from 'react';
 import * as GoodData from 'gooddata';
-import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
-import { Afm, DataTable, SimpleExecutorAdapter, Transformation } from '@gooddata/data-layer';
+import { AFM, Execution } from '@gooddata/typings';
+import { DataTable, ExecuteAfmAdapter, ErrorCodes } from '@gooddata/data-layer';
 
 import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
 
-export type IDataTableFactory = (projectId: string) => DataTable<GoodData.ISimpleExecutorResult>;
+export type IDataTableFactory = (projectId: string) => DataTable<Execution.IExecutionResponses>;
 
 export interface IExecuteProps extends IEvents {
-    afm: Afm.IAfm;
-    transformation?: Transformation.ITransformation;
+    afm: AFM.IAfm;
+    resultSpec?: AFM.IResultSpec;
     projectId: string;
     children?: any;
     dataTableFactory?: IDataTableFactory; // only for tests
 }
 
 export interface IExecuteState {
-    result: GoodData.ISimpleExecutorResult;
+    result: Execution.IExecutionResponses;
 }
 
-function dataTableFactory(projectId: string): DataTable<GoodData.ISimpleExecutorResult> {
-    return new DataTable(new SimpleExecutorAdapter(GoodData, projectId));
+function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResponses> {
+    return new DataTable(new ExecuteAfmAdapter(GoodData, projectId));
+}
+
+function isEmptyResult(response: Execution.IExecutionResponses): boolean {
+    return response.executionResult === null;
+}
+
+export interface IExecuteChildrenProps {
+    result: Execution.IExecutionResponses;
 }
 
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
@@ -30,7 +38,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         dataTableFactory
     };
 
-    private dataTable: DataTable<GoodData.ISimpleExecutorResult>;
+    private dataTable: DataTable<Execution.IExecutionResponses>;
 
     public constructor(props: IExecuteProps) {
         super(props);
@@ -42,8 +50,8 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         const { onError, onLoadingChanged } = props;
 
         this.dataTable = props.dataTableFactory(props.projectId);
-        this.dataTable.onData((result) => {
-            if (result && (result as GoodData.ISimpleExecutorResult).isEmpty) {
+        this.dataTable.onData((result: Execution.IExecutionResponses) => {
+            if (isEmptyResult(result)) {
                 onError({ status: ErrorStates.NO_DATA });
             } else {
                 this.setState({ result });
@@ -51,13 +59,13 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             onLoadingChanged({ isLoading: false });
         });
 
-        this.dataTable.onError((error) => {
-            const status = get(error, 'response.status');
-            if (status === 413) {
+        this.dataTable.onError((error: Execution.IError) => {
+            const { status } = error.response;
+            if (status === ErrorCodes.HTTP_TOO_LARGE) {
                 onLoadingChanged({ isLoading: false });
                 return onError({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error });
             }
-            if (status === 400) {
+            if (status === ErrorCodes.HTTP_BAD_REQUEST) {
                 onLoadingChanged({ isLoading: false });
                 return onError({ status: ErrorStates.BAD_REQUEST, error });
             }
@@ -71,14 +79,14 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     public componentWillReceiveProps(nextProps: IExecuteProps) {
-        if (this.hasPropsChanged(nextProps, ['afm', 'transformation'])) {
+        if (this.hasPropsChanged(nextProps, ['afm', 'resultSpec'])) {
             this.runExecution(nextProps);
         }
     }
 
     public shouldComponentUpdate(nextProps: IExecuteProps, nextState: IExecuteState) {
         return !isEqual(this.state.result, nextState.result) ||
-            this.hasPropsChanged(nextProps, ['afm', 'transformation', 'children']);
+            this.hasPropsChanged(nextProps, ['afm', 'resultSpec', 'children']);
     }
 
     public render() {
@@ -102,10 +110,10 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     private runExecution(props: IExecuteProps) {
-        const { afm, transformation, onLoadingChanged } = props;
+        const { afm, resultSpec, onLoadingChanged } = props;
 
         onLoadingChanged({ isLoading: true });
 
-        this.dataTable.getData(afm, transformation);
+        this.dataTable.getData(afm, resultSpec);
     }
 }

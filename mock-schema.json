@@ -5,7 +5,7 @@
   },
   "groups": [
     {
-      "measures": [
+      "metrics": [
         {
           "identifier": "1",
           "title": "Amount"
@@ -13,6 +13,10 @@
         {
           "identifier": "2",
           "title": "Bigger Amount"
+        },
+        {
+          "identifier": "aagV61RmaPTt",
+          "title": "Amount [BOP]"
         }
       ],
       "attributes": [

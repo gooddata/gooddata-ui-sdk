@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { Afm, DataTable, DummyAdapter } from '@gooddata/data-layer';
+import { DataTable, DummyAdapter } from '@gooddata/data-layer';
+import { AFM } from '@gooddata/typings';
 import { Execute, IExecuteProps } from '../Execute';
 import { delay } from '../../components/tests/utils';
 
 describe('Execute', () => {
     const data = [1, 2, 3];
-    const afm: Afm.IAfm = {
+    const afm: AFM.IAfm = {
         attributes: [
             {
-                id: 'slow_execution',
-                type: 'attribute'
+                localIdentifier: 'a1',
+                displayForm: {
+                    identifier: 'slow_execution'
+                }
             }
         ]
     };

@@ -1,17 +1,24 @@
+import { AFM } from '@gooddata/typings';
 import {
-    simpleDataAdapterProvider,
-    ISimpleDataAdapterProviderProps
-} from './SimpleDataAdapterProvider';
+    dataSourceProvider,
+    IDataSourceProviderProps
+} from './DataSourceProvider';
 
-// this reexport is needed to get rid of TS compiler error
-// Exported variable 'BarChart' has or is using name 'ISimpleDataAdapterProviderProps' from external module
-// "/Users/.../gooddata-react-components/src/components/afm/SimpleDataAdapterProvider"
-// but cannot be named.
 export {
-    ISimpleDataAdapterProviderProps
+    IDataSourceProviderProps
 };
 
-import { Table as coreTable } from '../core/Table';
-import { VisualizationTypes } from '../../constants/visualizationTypes';
+import { Table as CoreTable } from '../core/Table';
 
-export const Table = simpleDataAdapterProvider(coreTable, VisualizationTypes.TABLE);
+function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    return [
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        },
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ];
+}
+
+export const Table = dataSourceProvider(CoreTable, generateDefaultDimensions);

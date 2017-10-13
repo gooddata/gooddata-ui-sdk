@@ -1,7 +1,3 @@
 {
-  "extends": "tslint-config-gooddata",
-  "rules": {
-    "no-submodule-imports": false,
-    "no-this-assignment": false
-  }
+  "extends": "tslint-config-gooddata"
 }

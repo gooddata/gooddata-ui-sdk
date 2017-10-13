@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-4.0.2.tgz#048825e55233629cc04ef0df408790cf5dd170d2"
+"@gooddata/data-layer@5.0.0-alpha1":
+  version "5.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-5.0.0-alpha1.tgz#daff86e16496a3393d64c985c9268f6afa7dea6c"
   dependencies:
     json-stable-stringify "1.0.1"
     lodash "4.17.4"
@@ -36,13 +36,14 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-0.16.0.tgz#a90020a39d24754c56ad9d0a7732599e8b26664e"
+"@gooddata/indigo-visualizations@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.0.0.tgz#1cd0763a3f25f6280e776559346794c814fbc6d2"
   dependencies:
     "@gooddata/goodstrap" "53.0.1"
     "@gooddata/js-utils" "0.7.1"
     "@gooddata/numberjs" "3.0.0"
+    "@gooddata/typings" "0.0.3"
     classnames "2.2.5"
     fixed-data-table-2 "0.7.13"
     highcharts "4.2.5"
@@ -70,19 +71,29 @@
     moment "2.17.1"
     moment-timezone "0.5.11"
 
-"@gooddata/mock-js@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.1.0.tgz#485284b2380902791c07f680b6809261dc04b0c5"
+"@gooddata/mock-js@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.0.tgz#2b3912375634020ff0460c904bd1380729f0caa3"
   dependencies:
+    "@gooddata/typings" "0.0.3"
     body-parser "1.17.1"
     es6-promise "4.1.0"
     express "4.15.2"
     express-session "1.15.2"
+    invariant "2.2.2"
     lodash "4.17.4"
 
 "@gooddata/numberjs@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.0.0.tgz#9d646f1f9c05614d18e08ac5024b2ba2f7139396"
+
+"@gooddata/typings@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.3.tgz#e65a1d0f4188d110631f15698a9cda400862b0eb"
+
+"@gooddata/typings@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.4.tgz#cc2a625010a15ee2dbe698caaa35b518dd33f1fd"
 
 "@hypnosphi/fuse.js@^3.0.9":
   version "3.0.9"
@@ -3119,8 +3130,8 @@ get-caller-file@^1.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
 
 get-node-dimensions@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/get-node-dimensions/-/get-node-dimensions-1.2.2.tgz#7a71e8624cf9e1ab74599bb05b7e5116e995e45b"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/get-node-dimensions/-/get-node-dimensions-1.2.0.tgz#95298e32a752a155f29eb710e069557b4a7fe98c"
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -3201,16 +3212,18 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-4.3.1.tgz#d26e399f63c7c266e9be82bc2de6de07ec69c554"
+gooddata@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-4.4.0.tgz#01f380f32262b3588f9dc92973f8fa2e7a0d5db5"
   dependencies:
+    "@gooddata/typings" "0.0.3"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
     isomorphic-fetch "2.2.1"
     lodash "4.17.4"
     md5 "2.2.1"
+    qs "6.5.1"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
@@ -3315,7 +3328,7 @@ hawk@~6.0.2:
     sntp "2.x.x"
 
 highcharts@4.2.5:
-  version v4.2.5
+  version "4.2.5"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-4.2.5.tgz#f18bbda5ca326fdff7d816c94814fe8509cec969"
 
 hmac-drbg@^1.0.0:
@@ -4572,9 +4585,13 @@ moment-timezone@0.5.11:
   dependencies:
     moment ">= 2.6.0"
 
-moment@2.17.1, "moment@>= 2.6.0":
+moment@2.17.1:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
+
+"moment@>= 2.6.0":
+  version "2.19.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
 
 ms@0.7.2:
   version "0.7.2"
@@ -6324,7 +6341,11 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
-"statuses@>= 1.3.1 < 2", statuses@~1.3.1:
+"statuses@>= 1.3.1 < 2":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.4.0.tgz#bb73d446da2796106efcc1b601a253d6c46bd087"
+
+statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
 
@@ -6600,9 +6621,9 @@ tslib@^1.0.0, tslib@^1.7.1:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
 
-tslint-config-gooddata@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/tslint-config-gooddata/-/tslint-config-gooddata-0.0.4.tgz#601ad558dbc2122470bbd87be62e334b9d8060cd"
+tslint-config-gooddata@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/tslint-config-gooddata/-/tslint-config-gooddata-0.0.5.tgz#e936600c2553f66177e2f4546db619e83f939005"
   dependencies:
     tslint "5.7.0"
     tslint-eslint-rules "4.1.1"

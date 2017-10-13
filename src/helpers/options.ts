@@ -1,20 +1,28 @@
 import every = require('lodash/every');
 import some = require('lodash/some');
 import isEmpty = require('lodash/isEmpty');
-import { Afm } from '@gooddata/data-layer';
+import { AFM } from '@gooddata/typings';
+import { AfmUtils } from '@gooddata/data-layer';
 
 export interface IVisualizationOptions {
     dateOptionsDisabled: boolean;
 }
 
-export function getVisualizationOptions(afm: Afm.IAfm): IVisualizationOptions {
-    if (isEmpty(afm.measures)) {
-        return { dateOptionsDisabled: false };
+function isDateFilteredMeasure(measure: AFM.IMeasure) {
+    if (AfmUtils.isPoP(measure)) {
+        return true;
+        // ignore PoP measure in AFM (relevant is its "base measure")
     }
+    const filters = AfmUtils.unwrapSimpleMeasure(measure).filters;
+    return some<AFM.FilterItem>(filters, filter => AfmUtils.isDateFilter(filter));
+}
 
-    const dateOptionsDisabled = every<Afm.IMeasure>(afm.measures,
-            measure => some<Afm.IFilter>(measure.definition.filters,
-                filter => filter.type === 'date'));
+export function getVisualizationOptions(afm: AFM.IAfm): IVisualizationOptions {
+    const dateOptionsDisabled = isEmpty(afm.measures)
+        ? false
+        : every<AFM.IMeasure>(afm.measures, isDateFilteredMeasure);
 
-    return { dateOptionsDisabled };
+    return {
+        dateOptionsDisabled
+    };
 }

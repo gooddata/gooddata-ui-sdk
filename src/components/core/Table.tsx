@@ -1,44 +1,43 @@
 import * as React from 'react';
-import bindAll = require('lodash/bindAll');
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import { ISimpleExecutorResult } from 'gooddata';
-import { ResponsiveTable, Table as IndigoTable, TableTransformation } from '@gooddata/indigo-visualizations';
+import {
+    ResponsiveTable,
+    Table as IndigoTable,
+    TableTransformation
+} from '@gooddata/indigo-visualizations';
 import {
     DataSource,
     DataSourceUtils,
-    MetadataSource,
-    Transformation,
-    VisualizationObject
+    ResultSpecUtils,
+    createSubject
 } from '@gooddata/data-layer';
+import { AFM, Execution } from '@gooddata/typings';
 
 import { IntlWrapper } from './base/IntlWrapper';
+import { IntlTranslationsProvider, ITranslationsComponentProps } from './base/TranslationsProvider';
+import { fixEmptyHeaderItems } from './base/utils/fixEmptyHeaderItems';
 import { IEvents, ILoadingState } from '../../interfaces/Events';
 import { IDrillableItem } from '../../interfaces/DrillEvents';
 import { IVisualizationProperties } from '../../interfaces/VisualizationProperties';
 import { TablePropTypes, Requireable } from '../../proptypes/Table';
-import { ISorting } from '../../helpers/metadata';
-import { getSorting, ISortingChange } from '../../helpers/sorting';
-import { getCancellable, ICancellablePromise } from '../../helpers/promise';
 
 import { ErrorStates } from '../../constants/errorStates';
-import { initTableDataLoading as initDataLoading } from '../../helpers/load';
-import { IntlTranslationsProvider } from './base/TranslationsProvider';
-import { IExecutorResult } from './base/BaseChart';
 import { VisualizationEnvironment } from '../uri/Visualization';
 import { getVisualizationOptions } from '../../helpers/options';
+import { convertErrors, checkEmptyResult } from '../../helpers/errorHandlers';
+import { ISubject } from '../../helpers/async';
 
 export { Requireable };
 
 export interface ITableProps extends IEvents {
-    dataSource: DataSource.IDataSource<ISimpleExecutorResult>;
-    metadataSource: MetadataSource.IMetadataSource;
-    transformation?: Transformation.ITransformation;
+    dataSource: DataSource.IDataSource<Execution.IExecutionResponses>;
+    resultSpec?: AFM.IResultSpec;
     locale?: string;
     height?: number;
     environment?: VisualizationEnvironment;
-    stickyHeader?: number;
+    stickyHeaderOffset?: number;
     drillableItems?: IDrillableItem[];
     afterRender?: Function;
     pushData?: Function;
@@ -47,12 +46,15 @@ export interface ITableProps extends IEvents {
 
 export interface ITableState {
     error: string;
-    result: ISimpleExecutorResult;
-    metadata: VisualizationObject.IVisualizationObject;
+    result: Execution.IExecutionResponses;
     isLoading: boolean;
-    sorting: ISorting;
+    sortItems: AFM.SortItem[];
     page: number;
 }
+
+const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
+
+export type ITableDataPromise = Promise<Execution.IExecutionResponses>;
 
 const defaultErrorHandler = (error: any) => {
     if (error.status !== ErrorStates.OK) {
@@ -62,13 +64,12 @@ const defaultErrorHandler = (error: any) => {
 
 export class Table extends React.Component<ITableProps, ITableState> {
     public static defaultProps: Partial<ITableProps> = {
-        metadataSource: null,
-        transformation: {},
+        resultSpec: {},
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
         afterRender: noop,
         pushData: noop,
-        stickyHeader: 0,
+        stickyHeaderOffset: 0,
         height: 300,
         locale: 'en-US',
         environment: 'none',
@@ -79,7 +80,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
 
     public static propTypes = TablePropTypes;
 
-    private dataCancellable: ICancellablePromise;
+    private subject: ISubject<ITableDataPromise>;
 
     constructor(props: ITableProps) {
         super(props);
@@ -88,65 +89,82 @@ export class Table extends React.Component<ITableProps, ITableState> {
             error: ErrorStates.OK,
             result: null,
             isLoading: false,
-            sorting: null,
-            metadata: null,
+            sortItems: [],
             page: 1
         };
 
-        bindAll(this, ['onSortChange', 'onLoadingChanged', 'onDataTooLarge', 'onError', 'onMore', 'onLess']);
+        this.onSortChange = this.onSortChange.bind(this);
+        this.onLoadingChanged = this.onLoadingChanged.bind(this);
+        this.onDataTooLarge = this.onDataTooLarge.bind(this);
+        this.onError = this.onError.bind(this);
+        this.onMore = this.onMore.bind(this);
+        this.onLess = this.onLess.bind(this);
 
-        this.dataCancellable = null;
+        this.subject = createSubject<Execution.IExecutionResponses>((result) => {
+            this.setState({
+                result
+            });
+            const options = getVisualizationOptions(this.props.dataSource.getAfm());
+            this.props.pushData({
+                result,
+                options
+            });
+            this.onLoadingChanged({ isLoading: false });
+        }, error => this.onError(error));
     }
 
     public componentDidMount() {
-        const { metadataSource, dataSource, transformation } = this.props;
-        this.initDataLoading(dataSource, metadataSource, transformation);
+        const { dataSource, resultSpec } = this.props;
+        this.initDataLoading(dataSource, resultSpec);
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
-        const sortingPrev = get<IVisualizationProperties, ISorting>(this.props.visualizationProperties, 'sorting');
-        const sortingNext = get<IVisualizationProperties, ISorting>(nextProps.visualizationProperties, 'sorting');
+        const sortItemsPrev = get<IVisualizationProperties, AFM.SortItem[]>(
+            this.props.visualizationProperties, 'sortItems'
+        );
+        const sortItemsNext = get<IVisualizationProperties, AFM.SortItem[]>(
+            nextProps.visualizationProperties, 'sortItems'
+        );
+
+        let localSortItems: AFM.SortItem[] = [];
+        if (ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
+            localSortItems = this.state.sortItems;
+        } else {
+            this.setState({
+                sortItems: []
+            });
+        }
         // next sorting needs to be different from previous and also
         // than actual inner sorting to get rid of duplicate execution
         // This handles only UNDO sorting change
-        const sortingChanged = !isEqual(sortingPrev, sortingNext) && !isEqual(this.state.sorting, sortingNext);
+        const sortingChanged = !isEqual(sortItemsPrev, sortItemsNext) && !isEqual(localSortItems, sortItemsNext);
 
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || sortingChanged) {
-            if (this.dataCancellable) {
-                this.dataCancellable.cancel();
-            }
+            const sortItems = sortingChanged ? sortItemsNext : localSortItems;
 
-            const sorting: ISorting = sortingChanged ? sortingNext : this.state.sorting;
-
-            const { metadataSource, dataSource, transformation } = nextProps;
-            this.initDataLoading(dataSource, metadataSource, transformation, sorting);
+            const { dataSource, resultSpec } = nextProps;
+            this.initDataLoading(dataSource, resultSpec, sortItems);
         }
     }
 
     public componentWillUnmount() {
-        if (this.dataCancellable) {
-            this.dataCancellable.cancel();
-        }
+        this.subject.unsubscribe();
         this.onLoadingChanged = noop;
         this.onError = noop;
     }
 
-    public onSortChange(change: ISortingChange) {
-        const sorting = getSorting(change, get<ISorting, Transformation.ISort>(this.state.sorting, 'sorting'));
-        const sortingInfo = {
-            sorting, change
-        };
+    public onSortChange(sortItem: AFM.SortItem) {
         this.setState({
-            sorting: sortingInfo
+            sortItems: [sortItem]
         });
 
-        const { metadataSource, dataSource, transformation } = this.props;
+        const { dataSource, resultSpec } = this.props;
         this.props.pushData({
             properties: {
-                sorting: sortingInfo
+                sortItems: [sortItem]
             }
         });
-        this.initDataLoading(dataSource, metadataSource, transformation, sortingInfo);
+        this.initDataLoading(dataSource, resultSpec, [sortItem]);
     }
 
     public onMore({ page }: { page: number }) {
@@ -162,61 +180,81 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     public render() {
-        const { result, metadata, page } = this.state;
-        const metadataContent = get(metadata, 'content', { buckets: {} });
-        const {
-            afterRender,
-            height,
-            locale,
-            stickyHeader,
-            drillableItems,
-            onFiredDrillEvent,
-            environment,
-            dataSource
-        } = this.props;
-
         if (!this.canRender()) {
             return null;
         }
 
-        const isDashboardsEnvironment = environment === 'dashboards';
-        const onDataTooLarge = isDashboardsEnvironment ? this.onDataTooLarge : noop;
-        const tableRenderer = isDashboardsEnvironment ?
-            (tableProps: ITableProps) => (
+        const tableRenderer = this.getTableRenderer();
+        return this.renderTable(tableRenderer);
+    }
+
+    private getTableRenderer() {
+        const { environment, height } = this.props;
+        const { page } = this.state;
+
+        if (environment === 'dashboards') {
+            return (props: ITableProps) => (
                 <ResponsiveTable
-                    {...tableProps}
-                    afm={dataSource.getAfm()}
-                    rowsPerPage={9}
+                    {...props}
                     onSortChange={this.onSortChange}
+                    rowsPerPage={ROWS_PER_PAGE_IN_RESPONSIVE_TABLE}
                     page={page}
                     onMore={this.onMore}
                     onLess={this.onLess}
                 />
-            ) :
-            (tableProps: ITableProps) => (
-                <IndigoTable
-                    {...tableProps}
-                    afm={dataSource.getAfm()}
-                    onSortChange={this.onSortChange}
-                    containerMaxHeight={height}
-                />
             );
+        }
 
+        return (props: ITableProps) => (
+            <IndigoTable
+                {...props}
+                containerMaxHeight={height}
+                onSortChange={this.onSortChange}
+            />
+        );
+    }
+
+    private renderTable(tableRenderer: Function) {
+        const {
+            afterRender,
+            dataSource,
+            drillableItems,
+            height,
+            locale,
+            stickyHeaderOffset,
+            environment,
+            resultSpec,
+            onFiredDrillEvent
+        } = this.props;
+        const { result, sortItems } = this.state;
+        const {
+            executionResponse,
+            executionResult
+        } = (result as Execution.IExecutionResponses);
+
+        const onDataTooLarge = environment === 'dashboards' ? this.onDataTooLarge : noop;
         return (
             <IntlWrapper locale={locale}>
-                <IntlTranslationsProvider result={result}>
-                    <TableTransformation
-                        data={{}} // will be replaced by IntlTranslationsProvider
-                        drillableItems={drillableItems}
-                        onFiredDrillEvent={onFiredDrillEvent}
-                        tableRenderer={tableRenderer}
-                        afterRender={afterRender}
-                        onDataTooLarge={onDataTooLarge}
-                        config={{
-                            stickyHeader,
-                            ...metadataContent
-                        }}
-                    />
+                <IntlTranslationsProvider>
+                    {(props: ITranslationsComponentProps) => (
+                        <TableTransformation
+                            executionRequest={{
+                                afm: dataSource.getAfm(),
+                                resultSpec: ResultSpecUtils.applySorting(resultSpec, sortItems)
+                            }}
+                            executionResponse={executionResponse.executionResponse}
+                            executionResult={
+                                fixEmptyHeaderItems(executionResult, props.emptyHeaderString).executionResult
+                            }
+                            afterRender={afterRender}
+                            config={{ stickyHeaderOffset }}
+                            drillableItems={drillableItems}
+                            height={height}
+                            onDataTooLarge={onDataTooLarge}
+                            tableRenderer={tableRenderer}
+                            onFiredDrillEvent={onFiredDrillEvent}
+                        />
+                    )}
                 </IntlTranslationsProvider>
             </IntlWrapper>
         );
@@ -259,44 +297,17 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     private initDataLoading(
-        dataSource: DataSource.IDataSource<ISimpleExecutorResult>,
-        metadataSource: MetadataSource.IMetadataSource,
-        transformation: Transformation.ITransformation,
-        sorting: ISorting = null
+        dataSource: DataSource.IDataSource<Execution.IExecutionResponses>,
+        resultSpec: AFM.IResultSpec,
+        sortItems: AFM.SortItem[] = []
     ) {
         this.onLoadingChanged({ isLoading: true });
 
-        if (this.dataCancellable) {
-            this.dataCancellable.cancel();
-        }
+        const sortedResultSpec: AFM.IResultSpec = ResultSpecUtils.applySorting(resultSpec, sortItems);
+        const promise = dataSource.getData(sortedResultSpec)
+            .then(checkEmptyResult)
+            .catch(convertErrors);
 
-        const visualizationOptions = getVisualizationOptions(dataSource.getAfm());
-
-        this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation, sorting));
-        this.dataCancellable.promise.then((result) => {
-            if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const executionResult = get<IExecutorResult, ISimpleExecutorResult>(result, 'result');
-                const metadata = get<IExecutorResult,
-                    VisualizationObject.IVisualizationObject>(result, 'metadata');
-                const sorting = get<IExecutorResult, ISorting>(result, 'sorting');
-
-                this.setState({
-                    result: executionResult,
-                    metadata,
-                    sorting
-                });
-
-                this.props.pushData({
-                    executionResult,
-                    options: visualizationOptions
-                });
-
-                this.onLoadingChanged({ isLoading: false });
-            }
-        }, (error: string) => {
-            if (error !== ErrorStates.PROMISE_CANCELLED) {
-                this.onError(error, dataSource, visualizationOptions);
-            }
-        });
+        this.subject.next(promise);
     }
 }

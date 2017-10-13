@@ -13,7 +13,8 @@
     "LICENSE"
   ],
   "devDependencies": {
-    "@gooddata/mock-js": "0.1.0",
+    "@gooddata/mock-js": "0.2.0",
+    "@gooddata/typings": "0.0.4",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
     "@types/classnames": "2.2.3",
@@ -40,21 +41,20 @@
     "sass-loader": "6.0.6",
     "ts-jest": "21.0.0",
     "ts-loader": "2.3.7",
-    "tslint-config-gooddata": "0.0.4",
+    "tslint-config-gooddata": "0.0.5",
     "typescript": "2.3.3"
   },
   "dependencies": {
-    "@gooddata/data-layer": "4.0.2",
+    "@gooddata/data-layer": "5.0.0-alpha1",
     "@gooddata/goodstrap": "53.0.1",
-    "@gooddata/indigo-visualizations": "0.16.0",
+    "@gooddata/indigo-visualizations": "1.0.0",
     "@gooddata/js-utils": "0.9.0",
     "classnames": "2.2.5",
-    "gooddata": "4.3.1",
+    "gooddata": "4.4.0",
     "lodash": "4.17.4",
     "numeral": "2.0.6",
     "prop-types": "15.6.0",
     "react-intl": "2.2.3",
-    "rxjs": "5.4.3",
     "uuid": "3.0.1"
   },
   "peerDependencies": {
@@ -81,7 +81,8 @@
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
+      "src/**/*.{ts,tsx}",
+      "!**/*.d.ts"
     ],
     "collectCoverage": false,
     "mapCoverage": true,
