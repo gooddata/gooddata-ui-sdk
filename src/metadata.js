@@ -7,7 +7,7 @@ import {
     pick
 } from 'lodash';
 import { ajax, get, post, del, parseJSON } from './xhr';
-import { getIn, handlePolling } from './util';
+import { getIn, handlePolling, queryString } from './util';
 
 /**
  * Functions for working with metadata objects
@@ -53,6 +53,34 @@ export function getObjects(projectId, objectUris) {
 
     return Promise.all(promises).then(flatten);
 }
+
+/**
+ * Loads all objects by query (fetches all pages, one by one)
+ *
+ * @method getObjectsByQuery
+ * @param {String} projectId id of the project
+ * @param {Object} options (see https://developer.gooddata.com/api endpoint: /gdc/md/{project_id}/objects/query)
+ *        - category {String} for example 'dataSets' or 'projectDashboard'
+ *        - mode {String} 'enriched' or 'raw'
+ *        - author {String} the URI of the author of the metadata objects
+ *        - limit {number} default is 50 (also maximum)
+ * @return {Promise<Array>} array of returned objects
+ */
+export function getObjectsByQuery(projectId, options) {
+    function getOnePage(uri, items = []) {
+        return get(uri)
+            .then((r) => {
+                items.push(...r.objects.items);
+                const nextUri = r.objects.paging.next;
+                return nextUri ? getOnePage(nextUri, items) : items;
+            });
+    }
+
+    const uri = `/gdc/md/${projectId}/objects/query`;
+    const query = pick({ limit: 50, ...options }, ['category', 'mode', 'author', 'limit']);
+    return getOnePage(uri + queryString(query));
+}
+
 
 /**
  * Get MD objects from using2 resource. Include only objects of given types
@@ -561,12 +589,10 @@ export function translateElementLabelsToUris(projectId, labelUri, patterns, mode
  */
 export function getValidElements(projectId, id, options = {}) {
     const query = pick(options, ['limit', 'offset', 'order', 'filter', 'prompt']);
-    const queryParams = Object.keys(query)
-        .map(option => `${option}=${encodeURIComponent(query[option])}`)
-        .join('&');
+    const queryParams = queryString(query);
 
     const requestBody = pick(options, ['uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition']);
-    return post(`/gdc/md/${projectId}/obj/${id}/validElements?${queryParams}`.replace(/\?$/, ''), {
+    return post(`/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ''), {
         data: JSON.stringify({
             validElementsRequest: requestBody
         })

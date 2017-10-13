@@ -50,3 +50,21 @@ export const handlePolling = (uri, isPollingDone, options = {}) => {
             });
     });
 };
+
+
+/**
+ * Builds query string from plain object
+ * (Refactored from admin/routes.js)
+ *
+ * @param {Object} query parameters possibly including arrays inside
+ * @returns {string} querystring
+ */
+export function queryString(query) {
+    function getSingleParam(key, value) {
+        return (Array.isArray(value) ?
+            value.map(item => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join('&') :
+            `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    }
+
+    return query ? `?${Object.keys(query).map(k => getSingleParam(k, query[k])).join('&')}` : '';
+}

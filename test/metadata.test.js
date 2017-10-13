@@ -12,6 +12,55 @@ describe('metadata', () => {
             fetchMock.restore();
         });
 
+        describe('getObjectsByQuery', () => {
+            it('should reject with 400 from backend and not use default limit', () => {
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/objects/query?limit=5',
+                    400
+                );
+
+                const okCallback = jest.fn();
+                const errorCallback = jest.fn();
+
+                return md.getObjectsByQuery('myFakeProjectId', { limit: 5 })
+                    .then(okCallback, errorCallback)
+                    .then(() => {
+                        expect(okCallback).not.toHaveBeenCalled();
+                        expect(errorCallback).toHaveBeenCalled();
+                        expect(errorCallback.mock.calls[0][0]).toBeInstanceOf(Error);
+                    });
+            });
+
+            it('should return correct number of entries on two pages', () => {
+                const body1 = JSON.stringify({
+                    objects: {
+                        paging: {
+                            next: '/gdc/md/myFakeProjectId/objects/query?category=dataSet&limit=50&offset=50',
+                            count: 50,
+                            offset: 0
+                        },
+                        items: ['item1.1', 'item1.2']
+                    }
+                });
+                fetchMock.mock('/gdc/md/myFakeProjectId/objects/query?category=dataSet&limit=50', { status: 200, body: body1 });
+
+                const body2 = JSON.stringify({
+                    objects: {
+                        paging: {
+                            count: 50,
+                            offset: 50
+                        },
+                        items: ['item2.1', 'item2.2']
+                    }
+                });
+                fetchMock.mock('/gdc/md/myFakeProjectId/objects/query?category=dataSet&limit=50&offset=50', { status: 200, body: body2 });
+
+                return md.getObjectsByQuery('myFakeProjectId', { category: 'dataSet' }).then((result) => {
+                    expect(result.length).toBe(4);
+                });
+            });
+        });
+
         describe('getVisualizations', () => {
             it('should reject with 400 from backend', () => {
                 fetchMock.mock(

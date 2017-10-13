@@ -1,3 +1,5 @@
+import { queryString } from '../util';
+
 export const ROOT = '/gdc/admin';
 
 export const CONTRACTS = `${ROOT}/contracts`;
@@ -64,17 +66,6 @@ export const parse = (route, template) => {
         return result;
     }, {});
 };
-
-export const getSingleQueryString = (key, value) => (Array.isArray(value) ?
-    value.map(item => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join('&') :
-    `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-
-// creates a query string from a plain js object
-export const queryString = query => (
-    query ?
-        `?${Object.keys(query).map(k => getSingleQueryString(k, query[k])).join('&')}` :
-        ''
-);
 
 // interpolates specified parameters from params into
 // the specified route string and returns the result
