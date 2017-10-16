@@ -11,7 +11,8 @@
   ],
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "src/**/*.{ts,tsx}"
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts"
   ],
   "coverageDirectory": "<rootDir>/ci/results/coverage",
   "coverageReporters": [
