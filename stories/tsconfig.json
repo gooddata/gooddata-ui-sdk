@@ -1,0 +1,9 @@
+{
+  "_note": "This config is used only for storybook/ directory to add typings.d.ts.",
+  "extends": "../tsconfig.base.json",
+  "include": [
+    "../src/typings.d.ts",
+    "./*.ts",
+    "./*.tsx"
+  ]
+}
