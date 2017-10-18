@@ -2,6 +2,7 @@ import * as AfmComponents from './components/afm/afmComponents';
 import * as CoreComponents from './components/core/coreComponents';
 import * as promise from './helpers/promise';
 import * as VisEvents from './interfaces/Events';
+import CatalogHelper from './helpers/CatalogHelper';
 import { BaseChart } from './components/core/base/BaseChart';
 import { Kpi } from './components/simple/Kpi';
 import { Visualization, VisualizationEnvironment } from './components/uri/Visualization';
@@ -17,6 +18,7 @@ export {
     AfmComponents,
     AttributeFilter,
     BaseChart,
+    CatalogHelper,
     ChartType,
     CoreComponents,
     ErrorCodes,
