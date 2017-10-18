@@ -55,8 +55,8 @@ $ yarn validate
 ### Deployment
 ```
 git checkout master && git pull upstream master --tags
-npm version patch -m "Release v%s"
-npm publish --access=restricted
+npm version [major|minor|patch] -m "Release v%s"
+npm publish --access=public
 git push upstream master --tags
 ```
 
