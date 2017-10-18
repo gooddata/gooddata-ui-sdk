@@ -3,12 +3,10 @@ import { mount } from 'enzyme';
 import {
     simpleDataAdapterProvider,
     ISimpleDataAdapterProviderProps,
-    VisType,
     ISimpleDataAdapterProviderInjectedProps
 } from '../SimpleDataAdapterProvider';
 import { Table } from '../../tests/mocks';
-
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
+import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 import { delay } from '../../tests/utils';
 
 describe('SimpleDataAdapterProvider', () => {

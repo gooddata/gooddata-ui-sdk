@@ -1,5 +1,5 @@
 import { VisualizationObject } from '@gooddata/data-layer';
-import { VisType } from '../../src/components/afm/SimpleDataAdapterProvider';
+import { VisType } from '../../src/constants/visualizationTypes';
 
 function getMeasure1(withIdentifiers: boolean): VisualizationObject.IMeasure {
     return {

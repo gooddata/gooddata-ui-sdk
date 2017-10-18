@@ -9,12 +9,12 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 
 import { ErrorStates } from '../../constants/errorStates';
-import { BaseChart, ChartType, IChartConfig } from '../core/base/BaseChart';
+import { BaseChart, IChartConfig } from '../core/base/BaseChart';
 import { Table } from '../core/Table';
 import { IEvents } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
-import { VisualizationTypes } from '../../constants/visualizationTypes';
-import { IDrillableItem } from '../../interfaces/DrillableItem';
+import { VisualizationTypes, ChartType } from '../../constants/visualizationTypes';
+import { IDrillableItem } from '../../interfaces/DrillEvents';
 
 export { Requireable };
 
@@ -168,7 +168,14 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             return null;
         }
 
-        const { drillableItems, onError, onLoadingChanged, locale, config } = this.props;
+        const {
+            drillableItems,
+            onFiredDrillEvent,
+            onError,
+            onLoadingChanged,
+            locale,
+            config
+        } = this.props;
 
         switch (type) {
             case VisualizationTypes.TABLE:
@@ -177,6 +184,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         dataSource={dataSource}
                         metadataSource={metadataSource}
                         drillableItems={drillableItems}
+                        onFiredDrillEvent={onFiredDrillEvent}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         locale={locale}
@@ -188,6 +196,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         dataSource={dataSource}
                         metadataSource={metadataSource}
                         drillableItems={drillableItems}
+                        onFiredDrillEvent={onFiredDrillEvent}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         type={type as ChartType}

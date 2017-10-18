@@ -14,11 +14,9 @@ import {
     Transformation
 } from '@gooddata/data-layer';
 
+import { VisType } from '../../constants/visualizationTypes';
 import { ErrorStates } from '../../constants/errorStates';
 import { getCancellable, ICancellablePromise } from '../../helpers/promise';
-import { ChartType } from '../core/base/BaseChart';
-
-export type VisType = ChartType | 'table';
 
 export interface ISimpleDataAdapterProviderProps {
     afm: Afm.IAfm;

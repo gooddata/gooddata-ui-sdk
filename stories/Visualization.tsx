@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { Afm } from '@gooddata/data-layer';
 
 import { Visualization, IVisualizationProps } from '../src/components/uri/Visualization';
@@ -97,6 +98,17 @@ storiesOf('Visualization', module)
             />
         </div>
     ))
+    .add('table with eventing', () => (
+        <div style={{ width: 800, height: 400 }}>
+            <Visualization
+                projectId="myproject"
+                uri={'/gdc/md/myproject/obj/1001'}
+                drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                onFiredDrillEvent={action('drill-event fired')}
+                onError={onErrorHandler}
+            />
+        </div>
+    ))
     .add('chart example', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
@@ -136,6 +148,17 @@ storiesOf('Visualization', module)
             </div>
         );
     })
+    .add('chart with eventing', () => (
+        <div style={{ width: 800, height: 400 }}>
+            <Visualization
+                projectId="myproject"
+                uri={'/gdc/md/myproject/obj/1002'}
+                drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                onFiredDrillEvent={action('drill-event fired')}
+                onError={onErrorHandler}
+            />
+        </div>
+    ))
     .add('dynamic visualization test', () => (
         <div style={{ width: 800, height: 400, position: 'relative' }}>
             <DynamicVisualization />
