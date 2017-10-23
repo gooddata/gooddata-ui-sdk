@@ -176,15 +176,10 @@ export interface IExecutionConfiguration {
     }
 }
 
-export enum HeaderType {
-    Attribute = 'attrLabel',
-    Metric = 'metric'
-}
-
 export interface IAttributeHeader {
     id: string;
     title: string;
-    type: HeaderType.Attribute;
+    type: 'attrLabel';
     uri: string;
 }
 
@@ -192,7 +187,7 @@ export interface IMetricHeader {
     format?: string;
     id: string;
     title: string;
-    type: HeaderType.Metric;
+    type: 'metric';
     uri?: string;
 }
 
