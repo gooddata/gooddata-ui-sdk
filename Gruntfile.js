@@ -185,11 +185,11 @@ module.exports = (grunt) => {
         const version = grunt.config.get('pkg.version');
 
         const copyPackageDescriptionStep = (callback) => {
-            exec('cp bower.json LICENSE.txt dist', (err, stdout, stderr) => {
+            exec('cp bower.json LICENSE dist', (err, stdout, stderr) => {
                 if (err) {
-                    callback(`Could not copy bower.json or LICENSE.txt to dist${stderr}`);
+                    callback(`Could not copy bower.json or LICENSE to dist${stderr}`);
                 }
-                grunt.log.writeln('Copied bower.json and LICENSE.txt to dist');
+                grunt.log.writeln('Copied bower.json and LICENSE to dist');
                 callback(null);
             });
         };
