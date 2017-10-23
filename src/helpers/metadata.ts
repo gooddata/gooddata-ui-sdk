@@ -52,7 +52,7 @@ export function updateSorting(
         const measure: VisualizationObject.IMeasure = measures
             .find(item => item.measure.generatedId === generatedId);
 
-        bucketItem = get(measure, 'measure');
+        bucketItem = get<typeof measure.measure>(measure, 'measure');
         // Sort direction needs to be fixed in data-layer
         // tslint:disable-next-line:no-object-literal-type-assertion
         sort = { direction } as VisualizationObject.IMeasureSort;
@@ -64,7 +64,7 @@ export function updateSorting(
         const category: VisualizationObject.ICategory = categories
             .find(item => item.category.displayForm === column);
 
-        bucketItem = get(category, 'category') as VisualizationObject.ICategory;
+        bucketItem = get<typeof category.category>(category, 'category');
         sort = direction; // string instead of object for categories :(
     }
     // handle column deletion
@@ -83,7 +83,7 @@ export function updateSorting(
         measure.measure.sort = null;
         return measure;
     });
-    bucketItem.sort = sort;
+    bucketItem.sort = sort as VisualizationObject.IMeasureSort;
 
     return {
         updatedMetadata,

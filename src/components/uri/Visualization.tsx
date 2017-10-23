@@ -26,12 +26,28 @@ function isAttributeFilter(filter: Afm.IFilter): filter is Afm.IAttributeFilter 
     return filter.type === 'attribute';
 }
 
+// BC with TS 2.3
 function getDateFilter(filters: Afm.IFilter[]): Afm.IDateFilter {
-    return filters.filter(isDateFilter).shift();
+    for (const filter of filters) {
+        if (isDateFilter(filter)) {
+            return filter;
+        }
+    }
+
+    return null;
 }
 
+// BC with TS 2.3
 function getAttributeFilters(filters: Afm.IFilter[]): Afm.IAttributeFilter[] {
-    return filters.filter(isAttributeFilter);
+    const attributeFilters: Afm.IAttributeFilter[] = [];
+
+    for (const filter of filters) {
+        if (isAttributeFilter(filter)) {
+            attributeFilters.push(filter);
+        }
+    }
+
+    return attributeFilters;
 }
 
 export type VisualizationEnvironment = 'none' | 'dashboards';

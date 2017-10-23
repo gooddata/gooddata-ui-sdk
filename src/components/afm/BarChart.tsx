@@ -13,6 +13,6 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { BarChart as coreBarChart } from '../core/BarChart';
-import { VisualizationTypes} from '../../constants/visualizationTypes';
+import { VisualizationTypes } from '../../constants/visualizationTypes';
 
 export const BarChart = simpleDataAdapterProvider<ICommonChartProps>(coreBarChart, VisualizationTypes.BAR);

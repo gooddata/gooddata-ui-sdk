@@ -38,9 +38,9 @@ function getDisplayFormFromAttr(
     ): string {
 
     if (!displayFormName) {
-        return get(attrs, [attributeName, 'defaultDisplayForm', property]);
+        return get<IAttrs, string>(attrs, [attributeName, 'defaultDisplayForm', property]);
     }
-    return get(attrs, [attributeName, 'displayForms', displayFormName, property]);
+    return get<IAttrs, string>(attrs, [attributeName, 'displayForms', displayFormName, property]);
 }
 
 /**
@@ -62,27 +62,27 @@ export default class CatalogHelper {
     }
 
     public metric(name: string): string {
-        return get(this, ['metrics', name, 'identifier']);
+        return get<CatalogHelper, string>(this, ['metrics', name, 'identifier']);
     }
 
     public metricTags(name: string): string {
-        return get(this, ['metrics', name, 'tags']);
+        return get<CatalogHelper, string>(this, ['metrics', name, 'tags']);
     }
 
     public visualization(name: string): string {
-        return get(this, ['visualizations', name, 'identifier']);
+        return get<CatalogHelper, string>(this, ['visualizations', name, 'identifier']);
     }
 
     public visualizationTags(name: string): string {
-        return get(this, ['visualizations', name, 'tags']);
+        return get<CatalogHelper, string>(this, ['visualizations', name, 'tags']);
     }
 
     public attribute(attributeName: string): string {
-        return get(this, ['attributes', attributeName, 'identifier']);
+        return get<CatalogHelper, string>(this, ['attributes', attributeName, 'identifier']);
     }
 
     public attributeTags(attributeName: string): string {
-        return get(this, ['attributes', attributeName, 'tags']);
+        return get<CatalogHelper, string>(this, ['attributes', attributeName, 'tags']);
     }
 
     public attributeDisplayForm(attributeName: string, displayFormName?: string): string {
@@ -94,28 +94,28 @@ export default class CatalogHelper {
     }
 
     public dateDataSet(dataSetName: string): string {
-        return get(this, ['dateDataSets', dataSetName, 'identifier']);
+        return get<CatalogHelper, string>(this, ['dateDataSets', dataSetName, 'identifier']);
     }
 
     public dateDataSetTags(dataSetName: string): string {
-        return get(this, ['dateDataSets', dataSetName, 'tags']);
+        return get<CatalogHelper, string>(this, ['dateDataSets', dataSetName, 'tags']);
     }
 
     public dateDataSetAttribute(dataSetName: string, attrName: string): string {
-        return get(this, ['dateDataSets', dataSetName, 'attributes', attrName, 'identifier']);
+        return get<CatalogHelper, string>(this, ['dateDataSets', dataSetName, 'attributes', attrName, 'identifier']);
     }
 
     public dateDataSetAttributeTags(dataSetName: string, attrName: string): string {
-        return get(this, ['dateDataSets', dataSetName, 'attributes', attrName, 'tags']);
+        return get<CatalogHelper, string>(this, ['dateDataSets', dataSetName, 'attributes', attrName, 'tags']);
     }
 
     public dateDataSetDisplayForm(dataSetName: string, attributeName: string, displayFormName?: string): string {
-        const attrs: IAttrs = get(this, ['dateDataSets', dataSetName, 'attributes']);
+        const attrs = get<CatalogHelper, IAttrs>(this, ['dateDataSets', dataSetName, 'attributes']);
         return getDisplayFormFromAttr(attrs, attributeName, displayFormName, 'identifier');
     }
 
     public dateDataSetDisplayFormTags(dataSetName: string, attributeName: string, displayFormName?: string): string {
-        const attrs: IAttrs = get(this, ['dateDataSets', dataSetName, 'attributes']);
+        const attrs = get<CatalogHelper, IAttrs>(this, ['dateDataSets', dataSetName, 'attributes']);
         return getDisplayFormFromAttr(attrs, attributeName, displayFormName, 'tags');
     }
 }

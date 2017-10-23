@@ -2,7 +2,6 @@ import { ISimpleExecutorResult } from 'gooddata';
 import {
     Afm,
     DataSource,
-    Header,
     SimpleMetadataSource,
     Transformation,
     VisualizationObject,
@@ -87,7 +86,7 @@ describe('initTableDataLoading', () => {
     const emptyExecutionResult = { isEmpty: true };
     const executionResult: ISimpleExecutorResult = {
         headers: [{
-            id: 'id1', type: Header.HeaderType.Metric, title: 'title'
+            id: 'id1', type: 'metric', title: 'title'
         }],
         rawData: [['1777']],
         isEmpty: false,
@@ -511,7 +510,7 @@ describe('initChartDataLoading', () => {
     it('should return object with execution result and md object', async () => {
         const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'id1', type: Header.HeaderType.Metric, title: 'title'
+                id: 'id1', type: 'metric', title: 'title'
             }],
             rawData: [['1777']],
             isEmpty: false,
@@ -538,7 +537,7 @@ describe('initChartDataLoading', () => {
         expect.assertions(1);
         const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'id1', type: Header.HeaderType.Metric, title: 'title'
+                id: 'id1', type: 'metric', title: 'title'
             }],
             rawData: [['1777']],
             isEmpty: false,
@@ -570,7 +569,7 @@ describe('initChartDataLoading', () => {
         expect.assertions(1);
         const executionResult: ISimpleExecutorResult = {
             headers: [{
-                id: 'm1', type: Header.HeaderType.Metric, title: 'title'
+                id: 'm1', type: 'metric', title: 'title'
             }],
             rawData: [['1777']],
             isEmpty: false,
