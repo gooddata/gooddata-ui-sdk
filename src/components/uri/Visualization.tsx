@@ -18,6 +18,7 @@ import { IEvents } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
 import { IDrillableItem } from '../../interfaces/DrillEvents';
+import { ITotalItem } from '../../interfaces/Totals';
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 
@@ -57,6 +58,8 @@ export interface IVisualizationProps extends IEvents {
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
     drillableItems?: IDrillableItem[];
+    totals?: ITotalItem[];
+    totalsEditAllowed?: boolean;
     uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     BaseChartComponent?: any;
@@ -184,6 +187,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         const {
             drillableItems,
             onFiredDrillEvent,
+            totals,
+            totalsEditAllowed,
             onError,
             onLoadingChanged,
             locale,
@@ -201,6 +206,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         resultSpec={resultSpec}
                         drillableItems={drillableItems}
                         onFiredDrillEvent={onFiredDrillEvent}
+                        totals={totals}
+                        totalsEditAllowed={totalsEditAllowed}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         locale={locale}

@@ -27,6 +27,7 @@ import { VisualizationEnvironment } from '../uri/Visualization';
 import { getVisualizationOptions } from '../../helpers/options';
 import { convertErrors, checkEmptyResult } from '../../helpers/errorHandlers';
 import { ISubject } from '../../helpers/async';
+import { ITotalItem } from '../../interfaces/Totals';
 
 export { Requireable };
 
@@ -38,6 +39,9 @@ export interface ITableProps extends IEvents {
     environment?: VisualizationEnvironment;
     stickyHeaderOffset?: number;
     drillableItems?: IDrillableItem[];
+    totals?: ITotalItem[];
+    totalsEditAllowed?: boolean;
+    onTotalsEdit?: Function;
     afterRender?: Function;
     pushData?: Function;
     visualizationProperties?: IVisualizationProperties;
@@ -72,6 +76,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         locale: 'en-US',
         environment: 'none',
         drillableItems: [],
+        totals: [],
+        totalsEditAllowed: false,
+        onTotalsEdit: noop,
         onFiredDrillEvent: noop,
         visualizationProperties: null
     };
@@ -96,6 +103,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         this.onError = this.onError.bind(this);
         this.onMore = this.onMore.bind(this);
         this.onLess = this.onLess.bind(this);
+        this.onTotalsEdit = this.onTotalsEdit.bind(this);
 
         this.subject = createSubject<Execution.IExecutionResponses>((result) => {
             this.setState({
@@ -138,6 +146,14 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         });
     }
 
+    public onTotalsEdit(totals: ITotalItem[]) {
+        this.props.pushData({
+            properties: {
+                totals
+            }
+        });
+    }
+
     public onMore({ page }: { page: number }) {
         this.setState({
             page
@@ -160,7 +176,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     private getTableRenderer() {
-        const { environment, height } = this.props;
+        const { environment, height, totals } = this.props;
         const { page } = this.state;
 
         if (environment === 'dashboards') {
@@ -172,6 +188,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                     page={page}
                     onMore={this.onMore}
                     onLess={this.onLess}
+                    totals={totals}
                 />
             );
         }
@@ -195,7 +212,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             stickyHeaderOffset,
             environment,
             resultSpec,
-            onFiredDrillEvent
+            onFiredDrillEvent,
+            totals,
+            totalsEditAllowed
         } = this.props;
         const { result } = this.state;
         const {
@@ -224,6 +243,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                             onDataTooLarge={onDataTooLarge}
                             tableRenderer={tableRenderer}
                             onFiredDrillEvent={onFiredDrillEvent}
+                            totals={totals}
+                            totalsEditAllowed={totalsEditAllowed}
+                            onTotalsEdit={this.onTotalsEdit}
                         />
                     )}
                 </IntlTranslationsProvider>

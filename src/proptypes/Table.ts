@@ -15,5 +15,7 @@ export const TablePropTypes = {
     height: PropTypes.number,
     environment: PropTypes.string,
     drillableItems: PropTypes.arrayOf(DrillableItemPropType),
-    stickyHeader: PropTypes.number
+    stickyHeader: PropTypes.number,
+    totals: PropTypes.array,
+    totalsEditAllowed: PropTypes.bool
 };
