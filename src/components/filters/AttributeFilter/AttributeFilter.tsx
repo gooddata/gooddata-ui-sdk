@@ -84,8 +84,9 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             return <this.props.FilterLoading />;
         }
 
-        const dropdownProps: IAttributeDropdownProps
-            = pick(this.props, Object.keys(AttributeDropdownWrapped.propTypes));
+        const dropdownProps
+            = pick<IAttributeDropdownProps, IAttributeFilterProps>(this.props,
+                Object.keys(AttributeDropdownWrapped.propTypes));
         return (
             <AttributeDropdown
                 attributeDisplayForm={attributeDisplayForm}

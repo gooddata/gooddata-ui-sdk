@@ -2,20 +2,20 @@ import { ISimpleExecutorResult } from 'gooddata';
 import { Header } from '@gooddata/data-layer';
 
 const HEADER_MEASURE_1: Header.IMetricHeader = {
-    type: Header.HeaderType.Metric,
+    type: 'metric',
     id: 'm1',
     title: 'Title m1'
 };
 
 const HEADER_MEASURE_2: Header.IMetricHeader = {
-    type: Header.HeaderType.Metric,
+    type: 'metric',
     id: 'm2',
     title: 'Title m2'
 };
 
 function getHeaderAttribute(withIdentifiers: boolean): Header.IAttributeHeader {
     return {
-        type: Header.HeaderType.Attribute,
+        type: 'attrLabel',
         id: withIdentifiers ? '3.df' : '/gdc/md/storybook/obj/3.df',
         uri: '/gdc/md/storybook/obj/3.df',
         title: withIdentifiers ? 'Title 3.df' : 'Title /gdc/md/storybook/obj/3.df'

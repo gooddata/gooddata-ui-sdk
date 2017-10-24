@@ -2,7 +2,6 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 
 import {
-    Header,
     VisualizationObject
 } from '@gooddata/data-layer';
 import { ISimpleExecutorResult } from 'gooddata';
@@ -229,7 +228,7 @@ describe('Table', () => {
                 isLoaded: true,
                 headers: [
                     {
-                        type: Header.HeaderType.Attribute,
+                        type: 'attrLabel',
                         id: 'label.csv_test.polozka',
                         uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/75662',
                         title: 'Polozka'

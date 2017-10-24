@@ -104,8 +104,8 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
-        const sortingPrev: ISorting = get(this.props.visualizationProperties, 'sorting');
-        const sortingNext: ISorting = get(nextProps.visualizationProperties, 'sorting');
+        const sortingPrev = get<IVisualizationProperties, ISorting>(this.props.visualizationProperties, 'sorting');
+        const sortingNext = get<IVisualizationProperties, ISorting>(nextProps.visualizationProperties, 'sorting');
         // next sorting needs to be different from previous and also
         // than actual inner sorting to get rid of duplicate execution
         // This handles only UNDO sorting change
@@ -132,7 +132,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
     }
 
     public onSortChange(change: ISortingChange) {
-        const sorting = getSorting(change, get(this.state.sorting, 'sorting'));
+        const sorting = getSorting(change, get<ISorting, Transformation.ISort>(this.state.sorting, 'sorting'));
         const sortingInfo = {
             sorting, change
         };

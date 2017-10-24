@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-4.0.1.tgz#8162adcf48d8cc35c9e98b2c018d9e80ea860549"
+"@gooddata/data-layer@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-4.0.2.tgz#048825e55233629cc04ef0df408790cf5dd170d2"
   dependencies:
     json-stable-stringify "1.0.1"
     lodash "4.17.4"
@@ -3223,9 +3223,9 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-4.1.0.tgz#48bb8dc35265d027b7458015503157551132bd76"
+gooddata@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-4.3.1.tgz#d26e399f63c7c266e9be82bc2de6de07ec69c554"
   dependencies:
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
@@ -3337,7 +3337,7 @@ hawk@~6.0.2:
     sntp "2.x.x"
 
 highcharts@4.2.5:
-  version v4.2.5
+  version "4.2.5"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-4.2.5.tgz#f18bbda5ca326fdff7d816c94814fe8509cec969"
 
 hmac-drbg@^1.0.0:
@@ -6706,9 +6706,9 @@ type-is@~1.6.14, type-is@~1.6.15:
     media-typer "0.3.0"
     mime-types "~2.1.15"
 
-typescript@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.2.tgz#038a95f7d9bbb420b1bf35ba31d4c5c1dd3ffe34"
+typescript@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.3.tgz#9639f3c3b40148e8ca97fe08a51dd1891bb6be22"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"

@@ -105,9 +105,13 @@ export function simpleDataAdapterProvider<T>(
 
             const { dataSource, metadataSource } = this.state;
 
+            // `any` is used due to compatibility with TS 2.3
+            const props
+                = omit<any, ISimpleDataAdapterProviderProps>(this.props, ['afm', 'projectId']);
+
             return (
                 <InnerComponent
-                    {...omit(this.props, ['afm', 'projectId'])}
+                    {...props}
                     dataSource={dataSource}
                     metadataSource={metadataSource}
                 />
