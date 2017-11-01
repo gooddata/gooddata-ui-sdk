@@ -198,6 +198,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
                     {...tableProps}
                     afm={dataSource.getAfm()}
                     onSortChange={this.onSortChange}
+                    containerMaxHeight={height}
                 />
             );
 
@@ -210,7 +211,6 @@ export class Table extends React.Component<ITableProps, ITableState> {
                         onFiredDrillEvent={onFiredDrillEvent}
                         tableRenderer={tableRenderer}
                         afterRender={afterRender}
-                        height={height}
                         onDataTooLarge={onDataTooLarge}
                         config={{
                             stickyHeader,
