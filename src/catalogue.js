@@ -1,6 +1,6 @@
 import { get, find, omit, cloneDeep } from 'lodash';
 import { post, parseJSON } from './xhr';
-import { mdToExecutionConfiguration } from './execution';
+import { mdToExecutionConfiguration } from './execution/experimental-executions';
 
 const REQUEST_DEFAULTS = {
     types: ['attribute', 'metric', 'fact'],

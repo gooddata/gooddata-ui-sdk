@@ -69,9 +69,9 @@ export function getObjects(projectId, objectUris) {
 export function getObjectsByQuery(projectId, options) {
     function getOnePage(uri, items = []) {
         return get(uri)
-            .then((r) => {
-                items.push(...r.objects.items);
-                const nextUri = r.objects.paging.next;
+            .then(({ objects }) => {
+                items.push(...objects.items);
+                const nextUri = objects.paging.next;
                 return nextUri ? getOnePage(nextUri, items) : items;
             });
     }
