@@ -172,6 +172,10 @@ export namespace AFM {
     export function isMeasureSortItem(sortItem: AFM.SortItem): sortItem is AFM.IMeasureSortItem {
         return !!(sortItem as AFM.IMeasureSortItem).measureSortItem;
     }
+
+    export function isMeasureLocatorItem(locator: AFM.LocatorItem): locator is AFM.IMeasureLocatorItem {
+        return !!(locator as AFM.IMeasureLocatorItem).measureLocatorItem;
+    }
 }
 
 export namespace Execution {
