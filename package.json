@@ -1,0 +1,34 @@
+{
+  "name": "@gooddata/typings",
+  "version": "0.0.1",
+  "description": "TypeScript definition files for GoodData platform",
+  "typings": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepublish": "rm -rf dist && tsc",
+    "dev": "tsc --watch --noEmit"
+  },
+  "files": [
+    "dist",
+    "index.ts",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gooddata/gooddata-typings.git"
+  },
+  "keywords": [
+    "typescript",
+    "gooddata",
+    "types"
+  ],
+  "author": "GoodData",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/gooddata/gooddata-typings/issues"
+  },
+  "homepage": "https://github.com/gooddata/gooddata-typings#readme",
+  "devDependencies": {
+    "typescript": "2.5.3"
+  }
+}
