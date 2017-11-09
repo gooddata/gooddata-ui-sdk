@@ -245,15 +245,19 @@ export namespace Execution {
         }
     }
 
-    export interface IError {
-        code: number;
-        message?: string;
+    export interface IError extends Error {
+        response: {
+            status: number;
+        };
     }
 
+    /**
+     * Combination of both AFM executions responses
+     *
+     * `null` value as executionResult means empty response (HTTP 204)
+     */
     export interface IExecutionResponses {
         executionResponse: IExecutionResponse;
-        executionResult: IExecutionResult;
+        executionResult: IExecutionResult | null;
     }
-
-    export type AfmExecutionResponse = IExecutionResponses | IError;
 }
