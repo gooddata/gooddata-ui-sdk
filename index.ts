@@ -189,23 +189,16 @@ export namespace Execution {
         }
     }
 
-    export interface IMeasureGroupHeader {
-        measureGroupHeader: {
-            items: IMeasureHeaderItem[];
-            totalItems?: ITotalHeaderItem[];
-        }
-    }
-
     export interface ITotalHeaderItem {
         totalHeaderItem: {
             name: string;
         }
     }
 
-    export interface IAttributeHeaderItem {
-        attributeHeaderItem: {
-            uri: string;
-            name: string;
+    export interface IMeasureGroupHeader {
+        measureGroupHeader: {
+            items: IMeasureHeaderItem[];
+            totalItems?: ITotalHeaderItem[];
         }
     }
 
@@ -219,10 +212,33 @@ export namespace Execution {
         }
     }
 
-    export type Header = IMeasureGroupHeader | IAttributeHeader;
+    export type IHeader = IMeasureGroupHeader | IAttributeHeader;
+
+    export interface IResultAttributeHeaderItem {
+        attributeHeaderItem: {
+            uri: string;
+            name: string;
+        }
+    }
+
+    export interface IResultMeasureHeaderItem {
+        measureHeaderItem: {
+            name: string,
+            order: number
+        }
+    }
+
+    export interface IResultTotalHeaderItem {
+        totalHeaderItem: {
+            name: string,
+            type: string
+        }
+    }
+
+    export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
 
     export interface IResultDimension {
-        headers: Header[];
+        headers: IHeader[];
     }
 
     export interface IExecutionResponse {
@@ -238,7 +254,7 @@ export namespace Execution {
 
     export interface IExecutionResult {
         executionResult: {
-            attributeHeaderItems?: IAttributeHeaderItem[][][];
+            headerItems?: IResultHeaderItem[][][];
             data: DataValue[][] | DataValue[];
             totals?: DataValue[][][];
             paging: {
