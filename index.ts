@@ -28,10 +28,12 @@ export namespace AFM {
 
     export interface IMeasure {
         localIdentifier: Identifier;
-        definition: ISimpleMeasureDefinition | IPopMeasureDefinition;
+        definition: MeasureDefinition;
         alias?: string;
         format?: string;
     }
+    
+    export type MeasureDefinition = ISimpleMeasureDefinition | IPopMeasureDefinition;
 
     export interface ISimpleMeasureDefinition {
         measure: ISimpleMeasure;
@@ -165,6 +167,12 @@ export namespace AFM {
         definition: AFM.ISimpleMeasureDefinition | AFM.IPopMeasureDefinition
     ): definition is AFM.ISimpleMeasureDefinition {
         return !!(definition as AFM.ISimpleMeasureDefinition).measure;
+    }
+    
+    export function isPopMeasureDefinition(
+        definition: AFM.ISimpleMeasureDefinition | AFM.IPopMeasureDefinition
+    ): definition is AFM.IPopMeasureDefinition {
+        return !!(definition as AFM.IPopMeasureDefinition).popMeasure;
     }
 
     export function isAttributeSortItem(sortItem: AFM.SortItem): sortItem is AFM.IAttributeSortItem {
