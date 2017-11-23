@@ -10,8 +10,8 @@ export default class Rules {
         this.rules.push([tests, callback]);
     }
 
-    match(subject) {
-        const [, callback] = find(this.rules, ([tests]) => every(tests, test => test(subject)));
+    match(subject, params) {
+        const [, callback] = find(this.rules, ([tests]) => every(tests, test => test(subject, params)));
 
         invariant(callback, 'Callback not found :-(');
 

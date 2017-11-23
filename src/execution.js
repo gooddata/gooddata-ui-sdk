@@ -1,5 +1,6 @@
 // Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
-import { getData, getDataForVis } from './execution/experimental-executions';
+import { getData } from './execution/experimental-executions';
+import { loadAttributesMap } from './utils/attributesMapLoader';
 import executeAfm from './execution/execute-afm';
 
 /**
@@ -11,6 +12,6 @@ import executeAfm from './execution/execute-afm';
  */
 export default {
     getData,
-    getDataForVis,
+    loadAttributesMap,
     executeAfm
 };
