@@ -1,10 +1,10 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 /* eslint func-names:0 handle-callback-err: 0 */
 import { cloneDeep, range } from 'lodash';
-import fetchMock from './utils/fetch-mock';
+import fetchMock from '../utils/fetch-mock';
 
-import * as ex from '../src/execution';
-import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from './helpers/execution';
+import * as ex from '../../src/execution/experimental-executions';
+import { expectColumns, expectMetricDefinition, expectOrderBy, expectWhereCondition } from '../helpers/execution';
 
 describe('execution', () => {
     describe('with fake server', () => {

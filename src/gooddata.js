@@ -2,7 +2,7 @@
 import * as xhr from './xhr';
 import * as user from './user';
 import * as md from './metadata';
-import * as execution from './execution';
+import execution from './execution';
 import * as project from './project';
 import * as config from './config';
 import * as catalogue from './catalogue';

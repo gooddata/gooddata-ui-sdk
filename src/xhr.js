@@ -185,7 +185,7 @@ export function ajax(originalUrl, tempSettings = {}) {
 
     return fetch(url, settings).then((response) => {
         // If response.status id 401 and it was a login request there is no need
-        // to cycle back for token - login does not need token and this meand you
+        // to cycle back for token - login does not need token and this meant you
         // are not authorized
         if (response.status === 401) {
             if (isLoginRequest(url)) {

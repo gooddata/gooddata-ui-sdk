@@ -1,4 +1,5 @@
 // Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+import { AFM, Execution } from '@gooddata/typings';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -341,6 +342,8 @@ export module execution {
     export function getDataForVis(projectId: string, mdObj: IVisualizationObjectContent, settings: any): Promise<ISimpleExecutorResult>;
 
     export function getData(projectId: string, columns: string[], executionConfiguration: IExecutionConfiguration, settings: any): Promise<ISimpleExecutorResult>;
+
+    export function executeAfm(projectId: string, execution: AFM.IExecution): Promise<Execution.IExecutionResponses>;
 }
 
 export interface IColor {
