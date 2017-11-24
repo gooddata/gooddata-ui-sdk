@@ -219,6 +219,11 @@ export namespace Execution {
             localIdentifier: string;
             name: string;
             totalItems?: ITotalHeaderItem[];
+            formOf: {
+                uri: string;
+                identifier: string;
+                name: string;
+            };
         }
     }
 
