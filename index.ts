@@ -267,6 +267,12 @@ export namespace Execution {
 
     export type DataValue = null | string | number;
 
+    export interface Warning {
+        warningCode: string;
+        message: string;
+        parameters?: any[];
+    }
+
     export interface IExecutionResult {
         executionResult: {
             headerItems?: IResultHeaderItem[][][];
@@ -277,6 +283,7 @@ export namespace Execution {
                 offset: number[];
                 total: number[];
             };
+            warnings?: Warning[];
         }
     }
 
