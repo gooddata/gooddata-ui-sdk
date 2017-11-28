@@ -134,6 +134,7 @@ export namespace AFM {
         attributeSortItem: {
             direction: SortDirection;
             attributeIdentifier: Identifier;
+            aggregation?: 'sum';
         };
     }
 
