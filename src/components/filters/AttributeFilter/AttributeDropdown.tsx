@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import InvertableList from '@gooddata/goodstrap/lib/List/InvertableList';
 import Button from '@gooddata/goodstrap/lib/Button/Button';
 import Dropdown, { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
@@ -14,8 +15,6 @@ import isEqual = require('lodash/isEqual');
 
 import { AttributeFilterItem } from './AttributeFilterItem';
 import { IAttributeDisplayForm, IAttributeElement } from './model';
-
-const { PropTypes } = React;
 
 const ITEM_HEIGHT = 28;
 const LIST_WIDTH = 208;
@@ -49,7 +48,7 @@ export interface IValidElementsItem {
 }
 
 export interface IAttributeMetadata {
-    getValidElements: (projectId: string, objectId: string, options: Object) =>
+    getValidElements: (projectId: string, objectId: string, options: object) =>
         Promise<GoodData.IValidElementsResponse>;
 }
 

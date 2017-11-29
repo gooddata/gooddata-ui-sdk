@@ -1,17 +1,10 @@
-import { ISimpleExecutorResult } from 'gooddata';
-import {
-    DataSource,
-    MetadataSource,
-    VisualizationObject
-} from '@gooddata/data-layer';
+import { Execution } from '@gooddata/typings';
 
 import { ErrorStates } from '../src/constants/errorStates';
+import { IDataSource } from '../src/interfaces/DataSource';
 
-export class DataSourceMock implements DataSource.IDataSource<ISimpleExecutorResult> {
-    private returnValue: ISimpleExecutorResult;
-
-    constructor(returnValue: ISimpleExecutorResult) {
-        this.returnValue = returnValue;
+export class DataSourceMock implements IDataSource {
+    constructor(private returnValue: Execution.IExecutionResponses) {
     }
 
     public getData() {
@@ -24,25 +17,6 @@ export class DataSourceMock implements DataSource.IDataSource<ISimpleExecutorRes
 
     public getFingerprint() {
         return '{}';
-    }
-}
-
-export class MetadataSourceMock implements MetadataSource.IMetadataSource {
-    private visualizationMetadataResult: VisualizationObject.IVisualizationObject;
-
-    constructor(visualizationMetadataResult: VisualizationObject.IVisualizationObject) {
-        this.visualizationMetadataResult = visualizationMetadataResult;
-    }
-
-    public getVisualizationMetadata(): Promise<VisualizationObject.IVisualizationMetadataResult> {
-        return Promise.resolve({
-            metadata: this.visualizationMetadataResult,
-            measuresMap: {}
-        });
-    }
-
-    public getFingerprint(): string {
-        return JSON.stringify(this.visualizationMetadataResult);
     }
 }
 

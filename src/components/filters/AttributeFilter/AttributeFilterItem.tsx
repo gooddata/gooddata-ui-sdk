@@ -1,7 +1,6 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
-
-const PropTypes = React.PropTypes;
 
 export interface ISource {
     title?: string;

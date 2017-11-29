@@ -1,46 +1,39 @@
 import * as React from 'react';
-import bindAll = require('lodash/bindAll');
-import get = require('lodash/get');
 import noop = require('lodash/noop');
-import merge = require('lodash/merge');
-
-import { ISimpleExecutorResult } from 'gooddata';
+import { AFM, Execution } from '@gooddata/typings';
 import { Visualization } from '@gooddata/indigo-visualizations';
+
 import {
-    Afm,
-    DataSource,
     DataSourceUtils,
-    MetadataSource,
-    VisualizationObject,
-    Transformation
+    createSubject
 } from '@gooddata/data-layer';
 
 import { IntlWrapper } from './IntlWrapper';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { IDataSource } from '../../../interfaces/DataSource';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
-import { ErrorStates } from '../../../constants/errorStates';
 import { ChartType } from '../../../constants/visualizationTypes';
-import { initChartDataLoading as initDataLoading } from '../../../helpers/load';
-import { getConfig, ILegendConfig } from '../../../helpers/config';
-import { ISorting } from '../../../helpers/metadata';
-import { getCancellable, ICancellablePromise } from '../../../helpers/promise';
-import { IntlTranslationsProvider } from './TranslationsProvider';
-import { ISimpleDataAdapterProviderInjectedProps } from '../../afm/SimpleDataAdapterProvider';
+import { ErrorStates } from '../../../constants/errorStates';
+import { IntlTranslationsProvider, ITranslationsComponentProps } from './TranslationsProvider';
+import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 import { getVisualizationOptions } from '../../../helpers/options';
+import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
+import { fixEmptyHeaderItems } from './utils/fixEmptyHeaderItems';
+import { ISubject } from '../../../helpers/async';
 
-export interface IExecutorResult {
-    metadata: VisualizationObject.IVisualizationObject;
-    result: ISimpleExecutorResult;
-    sorting?: ISorting;
+export interface ILegendConfig {
+    enabled?: boolean;
+    position?: 'top' | 'left' | 'right' | 'bottom';
+    responsive?: boolean;
 }
 
 export interface IChartConfig {
-    colors?: String[];
+    colors?: string[];
     legend?: ILegendConfig;
     limits?: {
-        series?: Number,
-        categories?: Number
+        series?: number,
+        categories?: number
     };
 }
 
@@ -52,27 +45,29 @@ export interface ICommonChartProps extends IEvents {
     height?: number;
     environment?: string;
     drillableItems?: IDrillableItem[];
-    transformation?: Transformation.ITransformation;
+    resultSpec?: AFM.IResultSpec;
     visualizationProperties?: IVisualizationProperties;
 }
 
-export type IChartProps = ICommonChartProps & ISimpleDataAdapterProviderInjectedProps;
+export type IChartProps = ICommonChartProps & IDataSourceProviderInjectedProps;
 
 export interface IChartAFMProps extends ICommonChartProps {
     projectId: string;
-    afm: Afm.IAfm;
+    afm: AFM.IAfm;
 }
 
 export interface IBaseChartProps extends IChartProps {
     type: ChartType;
+    visualizationComponent?: React.ComponentClass<any>; // for testing
 }
 
 export interface IBaseChartState {
     error: string;
-    result: ISimpleExecutorResult;
-    metadata: VisualizationObject.IVisualizationObject;
+    result: Execution.IExecutionResponses;
     isLoading: boolean;
 }
+
+export type IBaseChartDataPromise = Promise<Execution.IExecutionResponses>;
 
 const defaultErrorHandler = (error: any) => {
     if (error.status !== ErrorStates.OK) {
@@ -82,18 +77,18 @@ const defaultErrorHandler = (error: any) => {
 
 export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState> {
     public static defaultProps: Partial<IBaseChartProps> = {
-        metadataSource: null,
-        transformation: {},
+        resultSpec: {},
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
         pushData: noop,
         drillableItems: [],
         onFiredDrillEvent: noop,
         config: {},
-        visualizationProperties: null
+        visualizationProperties: null,
+        visualizationComponent: Visualization
     };
 
-    private dataCancellable: ICancellablePromise;
+    private subject: ISubject<IBaseChartDataPromise>;
 
     constructor(props: IBaseChartProps) {
         super(props);
@@ -101,37 +96,41 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         this.state = {
             error: ErrorStates.OK,
             result: null,
-            metadata: null,
             isLoading: false
         };
 
-        bindAll(this, ['onLoadingChanged', 'onDataTooLarge', 'onError', 'onNegativeValues']);
-        this.dataCancellable = null;
+        this.onLoadingChanged = this.onLoadingChanged.bind(this);
+        this.onDataTooLarge = this.onDataTooLarge.bind(this);
+        this.onError = this.onError.bind(this);
+        this.onNegativeValues = this.onNegativeValues.bind(this);
+
+        this.subject = createSubject<Execution.IExecutionResponses>((result) => {
+            this.setState({
+                result
+            });
+            const options = getVisualizationOptions(this.props.dataSource.getAfm());
+            this.props.pushData({
+                result,
+                options
+            });
+            this.onLoadingChanged({ isLoading: false });
+        }, error => this.onError(error));
     }
 
     public componentDidMount() {
-        const { metadataSource, dataSource, transformation } = this.props;
-        this.initDataLoading(dataSource, metadataSource, transformation);
+        const { dataSource, resultSpec } = this.props;
+        this.initDataLoading(dataSource, resultSpec);
     }
 
     public componentWillReceiveProps(nextProps: IBaseChartProps) {
-        const { metadataSource, dataSource, transformation } = nextProps;
-
-        if (!DataSourceUtils.dataSourcesMatch(this.props.metadataSource, metadataSource)) {
-            metadataSource.getVisualizationMetadata().then(({ metadata }) => {
-                this.setState({ metadata });
-            });
-        }
-
+        const { dataSource, resultSpec } = nextProps;
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-            this.initDataLoading(dataSource, metadataSource, transformation);
+            this.initDataLoading(dataSource, resultSpec);
         }
     }
 
     public componentWillUnmount() {
-        if (this.dataCancellable) {
-            this.dataCancellable.cancel();
-        }
+        this.subject.unsubscribe();
         this.onLoadingChanged = noop;
         this.onError = noop;
         this.initDataLoading = noop;
@@ -141,43 +140,52 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         const { result } = this.state;
 
         if (this.canRender()) {
-            const { afterRender, height, locale } = this.props;
-            const finalConfig = this.getChartConfig();
+            const {
+                afterRender,
+                height,
+                locale,
+                config,
+                type
+            } = this.props;
+            const {
+                executionResponse,
+                executionResult
+            } = (result as Execution.IExecutionResponses);
 
             return (
                 <IntlWrapper locale={locale}>
-                    <IntlTranslationsProvider result={result}>
-                        <Visualization
-                            afm={this.props.dataSource.getAfm()}
-                            height={height}
-                            config={finalConfig}
-                            afterRender={afterRender}
-                            onDataTooLarge={this.onDataTooLarge}
-                            onNegativeValues={this.onNegativeValues}
-                            drillableItems={this.props.drillableItems}
-                            onFiredDrillEvent={this.props.onFiredDrillEvent}
-                        />
+                    <IntlTranslationsProvider>
+                        {(translationProps: ITranslationsComponentProps) => {
+                            const fixedExecutionResult = fixEmptyHeaderItems(
+                                executionResult,
+                                translationProps.emptyHeaderString
+                            );
+
+                            return (
+                                <this.props.visualizationComponent
+                                    executionRequest={{
+                                        afm: this.props.dataSource.getAfm(),
+                                        resultSpec: this.props.resultSpec
+                                    }}
+                                    executionResponse={executionResponse.executionResponse}
+                                    executionResult={fixedExecutionResult.executionResult}
+                                    height={height}
+                                    config={{ ...config, type }}
+                                    afterRender={afterRender}
+                                    onDataTooLarge={this.onDataTooLarge}
+                                    onNegativeValues={this.onNegativeValues}
+                                    drillableItems={this.props.drillableItems}
+                                    onFiredDrillEvent={this.props.onFiredDrillEvent}
+                                    numericSymbols={translationProps.numericSymbols}
+                                />
+                            );
+                        }}
                     </IntlTranslationsProvider>
                 </IntlWrapper>
             );
         }
 
         return null;
-    }
-
-    private getChartConfig() {
-        const { type, environment, config } = this.props;
-        const { metadata } = this.state;
-
-        const basicConfig = getConfig(metadata, type, environment);
-
-        const legendConfig = merge({}, basicConfig.legend, config.legend);
-
-        return {
-            ...basicConfig,
-            ...config,
-            legend: legendConfig
-        };
     }
 
     private canRender() {
@@ -201,14 +209,16 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             });
         }
     }
-    private onError(errorCode: string, dataSource = this.props.dataSource, options = {}) {
-        if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-            this.props.onError({ status: errorCode, options });
-            this.setState({
-                error: errorCode
-            });
-            this.onLoadingChanged({ isLoading: false });
-        }
+    private onError(errorCode: string) {
+        const options = getVisualizationOptions(this.props.dataSource.getAfm());
+        this.props.onError({
+            status: errorCode,
+            options
+        });
+        this.setState({
+            error: errorCode
+        });
+        this.onLoadingChanged({ isLoading: false });
     }
 
     private onNegativeValues() {
@@ -220,40 +230,16 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     private initDataLoading(
-        dataSource: DataSource.IDataSource<ISimpleExecutorResult>,
-        metadataSource: MetadataSource.IMetadataSource,
-        transformation: Transformation.ITransformation
+        dataSource: IDataSource,
+        resultSpec: AFM.IResultSpec
     ) {
         this.onLoadingChanged({ isLoading: true });
         this.setState({ result: null });
 
-        if (this.dataCancellable) {
-            this.dataCancellable.cancel();
-        }
+        const promise = dataSource.getData(resultSpec)
+            .then(checkEmptyResult)
+            .catch(convertErrors);
 
-        const visualizationOptions = getVisualizationOptions(dataSource.getAfm());
-
-        this.dataCancellable = getCancellable(initDataLoading(dataSource, metadataSource, transformation));
-        this.dataCancellable.promise.then((result) => {
-            if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const executionResult = get<IExecutorResult, ISimpleExecutorResult>(result, 'result');
-                const metadata = get<IExecutorResult,
-                    VisualizationObject.IVisualizationObject>(result, 'metadata');
-
-                this.setState({
-                    metadata,
-                    result: executionResult
-                });
-                this.props.pushData({
-                    executionResult,
-                    options: visualizationOptions
-                });
-                this.onLoadingChanged({ isLoading: false });
-            }
-        }, (error: string) => {
-            if (error !== ErrorStates.PROMISE_CANCELLED) {
-                this.onError(error, dataSource, visualizationOptions);
-            }
-        });
+        this.subject.next(promise);
     }
 }

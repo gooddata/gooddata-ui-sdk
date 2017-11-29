@@ -1,43 +1,51 @@
 import * as React from 'react';
 import * as numeral from 'numeral';
-import get = require('lodash/get');
 import noop = require('lodash/noop');
-import { Afm, Filters } from '@gooddata/data-layer';
+import { AFM, Execution } from '@gooddata/typings';
+import { Filters, Uri } from '@gooddata/data-layer';
 
-import { Execute } from '../../execution/Execute';
+import { Execute, IExecuteChildrenProps } from '../../execution/Execute';
 import { IEvents } from '../../interfaces/Events';
 import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
 
 export { Requireable };
 
-export type URIString = string;
-
 export interface IKpiProps extends IEvents {
-    measure: URIString;
+    measure: string;
     projectId: string;
-    filters?: Afm.IFilter[];
+    filters?: AFM.FilterItem[];
     format?: string;
+    ExecuteComponent?: any;
 }
 
-function buildAFM(measureUri: string, filters: Afm.IFilter[] = []): Afm.IAfm {
+function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
+    const item = Uri.isUri(measure) ? { uri: measure } : { identifier: measure };
+
     return {
         measures: [
             {
-                id: 'm1',
+                localIdentifier: 'm1',
                 definition: {
-                    baseObject: {
-                        id: measureUri
+                    measure: {
+                        item
                     }
                 }
             }
         ],
-
         filters: filters.filter(Filters.isNotEmptyFilter)
     };
 }
 
-const defaultErrorHandler = (error: Object) => {
+const defaultErrorHandler = (error: object) => {
     console.error(error); // tslint:disable-line:no-console
+};
+
+const resultSpec: AFM.IResultSpec = {
+    dimensions: [
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ]
 };
 
 export class Kpi extends React.Component<IKpiProps, null> {
@@ -45,30 +53,39 @@ export class Kpi extends React.Component<IKpiProps, null> {
         format: '$0,0.00',
         filters: [],
         onError: defaultErrorHandler,
-        onLoadingChanged: noop
+        onLoadingChanged: noop,
+        ExecuteComponent: Execute
     };
 
     public static propTypes = KpiPropTypes;
 
-    public getFormattedResult(result: any): string {
+    public render() {
+        const { ExecuteComponent, measure, filters, projectId, onError, onLoadingChanged } = this.props;
+        const afm = buildAFM(measure, filters);
+        return (
+            <ExecuteComponent
+                afm={afm}
+                resultSpec={resultSpec}
+                projectId={projectId}
+                onError={onError}
+                onLoadingChanged={onLoadingChanged}
+            >
+                {(props: IExecuteChildrenProps) =>
+                    <span className="gdc-kpi">
+                        {this.getFormattedResult(
+                            this.extractNumber(props.result)
+                        )}
+                    </span>
+                }
+            </ExecuteComponent>
+        );
+    }
+
+    private getFormattedResult(result: string): string {
         return numeral(result).format(this.props.format);
     }
 
-    public render() {
-        const afm = buildAFM(this.props.measure, this.props.filters);
-
-        return (
-            <Execute
-                afm={afm}
-                projectId={this.props.projectId}
-                onError={this.props.onError}
-                onLoadingChanged={this.props.onLoadingChanged}
-            >
-                {
-                    (result: any) =>
-                        <span className="gdc-kpi">{this.getFormattedResult(get(result, 'result.rawData.0.0'))}</span>
-                }
-            </Execute>
-        );
+    private extractNumber(result: Execution.IExecutionResponses): string {
+        return result.executionResult.executionResult.data[0].toString();
     }
 }

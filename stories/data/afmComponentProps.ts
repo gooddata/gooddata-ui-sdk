@@ -1,55 +1,56 @@
-import { Afm, Transformation } from '@gooddata/data-layer';
+import { AFM } from '@gooddata/typings';
 
-const MEASURE_1: Afm.IMeasure = {
-    id: 'm1',
+const MEASURE_1: AFM.IMeasure = {
+    localIdentifier: 'm1',
     definition: {
-        baseObject: {
-            id: '/gdc/md/storybook/obj/1'
+        measure: {
+            item: {
+                uri: '/gdc/md/storybook/obj/1'
+            }
         }
     }
 };
 
-const MEASURE_2: Afm.IMeasure = {
-    id: 'm2',
+const MEASURE_2: AFM.IMeasure = {
+    localIdentifier: 'm2',
     definition: {
-        baseObject: {
-            id: '/gdc/md/storybook/obj/2'
+        measure: {
+            item: {
+                uri: '/gdc/md/storybook/obj/2'
+            }
         }
     }
 };
 
-const ATTRIBUTE_COLOURS: Afm.IAttribute = {
-    id: '/gdc/md/storybook/obj/4.df',
-    type: 'attribute'
+const ATTRIBUTE_COLOURS: AFM.IAttribute = {
+    localIdentifier: 'a1',
+    displayForm: {
+        uri: '/gdc/md/storybook/obj/4.df'
+    }
 };
 
-export const TRANSFORMATION_ONE_MEASURE: Transformation.ITransformation = {
-    measures: [{
-        id: 'm1',
-        title: 'My first measure'
-    }]
+export const AFM_ONE_MEASURE_ONE_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        MEASURE_1
+    ],
+    attributes: [
+        ATTRIBUTE_COLOURS
+    ]
 };
 
-export const TRANSFORMATION_TWO_MEASURES: Transformation.ITransformation = {
-    measures: [{
-        id: 'm1',
-        title: 'My first measure'
-    }, {
-        id: 'm2',
-        title: 'My second measure'
-    }]
+export const AFM_TWO_MEASURES: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2
+    ]
 };
 
-export const AFM_ONE_MEASURE_ONE_ATTRIBUTE: Afm.IAfm = {
-    measures: [MEASURE_1],
-    attributes: [ATTRIBUTE_COLOURS]
-};
-
-export const AFM_TWO_MEASURES: Afm.IAfm = {
-    measures: [MEASURE_1, MEASURE_2],
-};
-
-export const AFM_TWO_MEASURES_ONE_ATTRIBUTE: Afm.IAfm = {
-    measures: [MEASURE_1, MEASURE_2],
-    attributes: [ATTRIBUTE_COLOURS]
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2
+    ],
+    attributes: [
+        ATTRIBUTE_COLOURS
+    ]
 };

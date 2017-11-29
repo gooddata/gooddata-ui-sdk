@@ -1,43 +1,57 @@
+import { AFM } from '@gooddata/typings';
 import { getVisualizationOptions } from '../options';
-import { Afm } from '@gooddata/data-layer';
 
 describe('getVisualizationOptions', () => {
-    function createAfm(measures: Afm.IMeasure[]): Afm.IAfm {
-        return  {
-            measures
+    function createAfm(measures: AFM.IMeasure[]): AFM.IAfm {
+        return  { measures };
+    }
+
+    function createDateFilter(): AFM.IRelativeDateFilter {
+        return {
+            relativeDateFilter: {
+                dataSet: { identifier: 'foo' },
+                from: -1,
+                to: -1,
+                granularity: 'GDC.time.year'
+            }
         };
     }
 
-    function createDateFilter(): Afm.IDateFilter {
+    function createAttributeFilter(): AFM.IPositiveAttributeFilter {
         return {
-            id: 'foo',
-            type: 'date',
-            intervalType: 'relative',
-            between: [-1, -1],
-            granularity: 'year'
+            positiveAttributeFilter: {
+                displayForm: { identifier: 'foo' },
+                in: []
+            }
         };
     }
 
-    function createAttributeFilter(): Afm.IPositiveAttributeFilter {
+    function createMeasure(filters: AFM.FilterItem[]): AFM.IMeasure {
         return {
-            id: 'foo',
-            type: 'attribute',
-            in: []
-        };
-    }
-
-    function createMeasure(filters: Afm.IFilter[]): Afm.IMeasure {
-        return {
-            id: 'foo',
+            localIdentifier: 'foo',
             definition: {
-                baseObject: { id: 'bar' },
-                filters
+                measure: {
+                    item: { identifier: 'bar' },
+                    filters
+                }
+            }
+        };
+    }
+
+    function createPopMeasure(): AFM.IMeasure {
+        return {
+            localIdentifier: 'popFoo',
+            definition: {
+                popMeasure: {
+                    measureIdentifier: 'foo',
+                    popAttribute: { uri: 'abc' }
+                }
             }
         };
     }
 
     describe('dateOptionsDisabled', () => {
-        it('should return true if all metrics use date filter', () => {
+        it('should be true if all metrics use date filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter()]),
                 createMeasure([createDateFilter()])
@@ -45,7 +59,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', true);
         });
 
-        it('should return true if all metrics use date filter and also attribute filter', () => {
+        it('should be true if all metrics use date filter and also attribute filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter(), createAttributeFilter()]),
                 createMeasure([createDateFilter()])
@@ -53,7 +67,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', true);
         });
 
-        it('should return false if all metrics use attribute filter only', () => {
+        it('should be false if all metrics use attribute filter only', () => {
             const afm = createAfm([
                 createMeasure([createAttributeFilter()]),
                 createMeasure([createAttributeFilter()])
@@ -61,7 +75,21 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should return false if some metrics use attribute filter and some date filter', () => {
+        it('should not be influenced by PoP measure', () => {
+            const afm1 = createAfm([
+                createMeasure([createDateFilter()]),
+                createPopMeasure()
+            ]);
+            expect(getVisualizationOptions(afm1)).toHaveProperty('dateOptionsDisabled', true);
+
+            const afm2 = createAfm([
+                createMeasure([]),
+                createPopMeasure()
+            ]);
+            expect(getVisualizationOptions(afm2)).toHaveProperty('dateOptionsDisabled', false);
+        });
+
+        it('should be false if some metrics use attribute filter and some date filter', () => {
             const afm = createAfm([
                 createMeasure([createAttributeFilter()]),
                 createMeasure([createDateFilter()])
@@ -69,7 +97,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should return false if some metric use date filter, but some does not use any filter', () => {
+        it('should be false if some metric use date filter, but some does not use any filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter()]),
                 createMeasure([])
@@ -77,12 +105,12 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should return false if there are no metrics', () => {
+        it('should be false if there are no metrics', () => {
             const afm = createAfm([]);
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should return false if AFM is empty object', () => {
+        it('should be false if AFM is empty object', () => {
             const afm = {};
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });

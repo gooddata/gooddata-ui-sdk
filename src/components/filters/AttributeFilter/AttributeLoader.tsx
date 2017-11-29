@@ -1,8 +1,7 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import * as GoodData from 'gooddata';
 import { IAttributeDisplayForm } from './model';
-
-const { PropTypes } = React;
 
 export interface IAttributeLoaderMetadataProps {
     getObjectUri: Function;

@@ -1,71 +1,53 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { ISimpleExecutorResult } from 'gooddata';
-import { Afm, VisualizationObject, DataSource } from '@gooddata/data-layer';
+import { noop } from 'lodash';
+import { Execution } from '@gooddata/typings';
 import { delay } from '../../../tests/utils';
-
-import {
-    initChartDataLoading,
-    Visualization
-} from '../../../tests/mocks';
-jest.mock('../../../../helpers/load', () => ({
-    initChartDataLoading
-}));
-jest.mock('@gooddata/indigo-visualizations', () => ({
-    Visualization
-}));
-
+import { IDataSource } from '../../../../interfaces/DataSource';
+import { Visualization } from '../../../tests/mocks';
 import { BaseChart, IBaseChartProps } from '../BaseChart';
 import { ErrorStates } from '../../../../constants/errorStates';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import {
+    oneMeasureResponse,
+    tooLargeResponse,
+    emptyResponse,
+    badRequestResponse
+} from '../../../../execution/fixtures/ExecuteAfm.fixtures';
+
+function createDataSource(result: Execution.IExecutionResponses): IDataSource {
+    return {
+        getData: () => Promise.resolve(result),
+        getAfm: () => ({}),
+        getFingerprint: () => JSON.stringify(result)
+    };
+}
+
+function createRejectingDataSource(error: Execution.IError): IDataSource {
+    return {
+        getData: () => Promise.reject(error),
+        getAfm: () => ({}),
+        getFingerprint: () => JSON.stringify(error)
+    };
+}
 
 describe('BaseChart', () => {
-    function createComponent(props: IBaseChartProps) {
-        return mount(
-            <BaseChart {...props} />
-        );
-    }
-
-    const afm: Afm.IAfm = { measures: [] };
-    const dataSource: DataSource.IDataSource<ISimpleExecutorResult> = {
-        getData: (): Promise<ISimpleExecutorResult> => Promise.resolve({}),
-        getAfm: jest.fn().mockReturnValue(afm),
-        getFingerprint: jest.fn().mockReturnValue(JSON.stringify(afm))
-    };
-
+    const dataSource = createDataSource(oneMeasureResponse);
     const createProps = (customProps = {}) => {
         const props: IBaseChartProps = {
             height: 200,
             dataSource,
-            metadataSource: {
-                getVisualizationMetadata: () => Promise.resolve({
-                    metadata: {
-                        meta: {
-                            title: 'foo'
-                        },
-                        content: {
-                            type: VisualizationTypes.COLUMN as VisualizationObject.VisualizationType,
-                            buckets: {
-                                measures: [],
-                                categories: [],
-                                filters: []
-                            }
-                        }
-                    },
-                    measuresMap: {}
-                }),
-                getFingerprint: () => ''
-            },
             locale: 'en-US',
             type: VisualizationTypes.LINE,
+            visualizationComponent: Visualization,
             ...customProps
         };
         return props;
     };
 
-    beforeEach(() => {
-        initChartDataLoading.mockClear();
-    });
+    function createComponent(props: IBaseChartProps) {
+        return mount(<BaseChart {...props}/>);
+    }
 
     it('should render a chart', () => {
         const onLoadingChanged = jest.fn();
@@ -129,13 +111,11 @@ describe('BaseChart', () => {
         createComponent(props);
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);
-        expect(initChartDataLoading).toHaveBeenCalledTimes(1);
 
         return delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
             expect(onError).toHaveBeenCalledTimes(1);
             expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
-            expect(initChartDataLoading).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -151,10 +131,11 @@ describe('BaseChart', () => {
 
     it('should call onError with DATA_TOO_LARGE_TO_COMPUTE', () => {
         const onError = jest.fn();
+        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse);
         const props = createProps({
-            onError
+            onError,
+            dataSource: tooLargeDataSource
         });
-        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
         const wrapper = createComponent(props);
 
         return delay().then(() => {
@@ -167,19 +148,48 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should call onError with UNKNOWN_ERROR', () => {
+    it('should be able to restore after rejected datasource', () => {
         const onError = jest.fn();
+        const pushData = jest.fn();
+        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse);
         const props = createProps({
-            onError
+            onError,
+            pushData,
+            dataSource: tooLargeDataSource
         });
-        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.UNKNOWN_ERROR));
         const wrapper = createComponent(props);
 
         return delay().then(() => {
             expect(wrapper.find(Visualization).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
             expect(onError).toHaveBeenLastCalledWith({
-                status: ErrorStates.UNKNOWN_ERROR,
+                status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                options: expect.any(Object)
+            });
+
+            wrapper.setProps({
+                dataSource
+            });
+            return delay().then(() => {
+                expect(pushData).toHaveBeenCalledTimes(1);
+            });
+        });
+    });
+
+    it('should call onError with BAD_REQUEST', () => {
+        const onError = jest.fn();
+        const badRequestDataSource = createRejectingDataSource(badRequestResponse);
+        const props = createProps({
+            onError,
+            dataSource: badRequestDataSource
+        });
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(wrapper.find(Visualization).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.BAD_REQUEST,
                 options: expect.any(Object)
             });
         });
@@ -187,10 +197,11 @@ describe('BaseChart', () => {
 
     it('should call onError with NO_DATA', () => {
         const onError = jest.fn();
+        const emptyResultDataSource = createDataSource(emptyResponse);
         const props = createProps({
-            onError
+            onError,
+            dataSource: emptyResultDataSource
         });
-        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.NO_DATA));
         const wrapper = createComponent(props);
 
         return delay().then(() => {
@@ -206,10 +217,13 @@ describe('BaseChart', () => {
     it('should use default onError when is not provided', () => {
         const origin = global.console.error;
         global.console.error = jest.fn();
-        initChartDataLoading.mockImplementationOnce(() => Promise.reject(ErrorStates.NO_DATA));
-        createComponent(createProps());
+
+        const emptyResultDataSource = createDataSource(emptyResponse);
+        const props = createProps({ dataSource: emptyResultDataSource });
+        const wrapper = createComponent(props);
 
         return delay().then(() => {
+            expect(wrapper.find(Visualization).length).toBe(0);
             expect(global.console.error).toHaveBeenCalledWith({
                 status: ErrorStates.NO_DATA,
                 options: expect.any(Object)
@@ -218,168 +232,23 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should reload data when dataSource changed', () => {
-        const wrapper = createComponent(createProps());
-        wrapper.setProps({
-            dataSource: {
-                getFingerprint: jest.fn().mockReturnValue('asdf'),
-                getData: () => Promise.resolve(),
-                getAfm: jest.fn().mockReturnValue(afm)
-            }
-        });
-        return delay().then(() => {
-            expect(initChartDataLoading).toHaveBeenCalledTimes(2);
-        });
-    });
-
-    it('should trigger initDataLoading on props change', (done) => {
-        const wrapper = createComponent(createProps());
-        const node: any = wrapper.getNode();
-        node.initDataLoading = jest.fn();
-
-        wrapper.setProps({
-            dataSource: {
-                getFingerprint: () => 'asdf'
-            }
-        }, () => {
-            expect(node.initDataLoading).toHaveBeenCalledTimes(1);
-            done();
-        });
-    });
-
-    it('should return config for dashboard', () => {
-        const props = createProps({ environment: 'dashboards' });
+    it('should init dataSource and get new result when dataSource change', () => {
+        const dataSource1 = createDataSource(oneMeasureResponse);
+        const dataSource1Init = jest.spyOn(dataSource1, 'getData');
+        const props = createProps({ dataSource: dataSource1, onError: noop });
         const wrapper = createComponent(props);
+        expect(dataSource1Init).toHaveBeenCalledTimes(1);
 
         return delay().then(() => {
-            const config = wrapper.find(Visualization).prop('config');
-            expect(config).toEqual({
-                type: VisualizationTypes.LINE,
-                buckets: undefined,
-                legend: {
-                    enabled: true,
-                    position: 'right',
-                    responsive: true
-                }
+            expect(wrapper.state().result).toEqual(oneMeasureResponse);
+
+            const dataSource2 = createDataSource(emptyResponse);
+            const dataSource2Init = jest.spyOn(dataSource2, 'getData');
+            wrapper.setProps({
+                dataSource: dataSource2
             });
-        });
-    });
-
-    it('should return config for AD', () => {
-        const props = createProps();
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const config = wrapper.find(Visualization).prop('config');
-            expect(config).toEqual({
-                type: VisualizationTypes.LINE,
-                buckets: undefined,
-                legend: {
-                    enabled: true,
-                    position: 'top'
-                }
-            });
-        });
-    });
-
-    it('should detect stacked by category and move legend to right', () => {
-        const props = createProps();
-
-        const p = Promise.resolve({
-            result: {},
-            metadata: {
-                content: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                collection: 'stack'
-                            }
-                        }]
-                    }
-                }
-            }
-        });
-        initChartDataLoading.mockImplementationOnce(() => {
-            return p;
-        });
-
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const config = wrapper.find(Visualization).prop('config');
-            expect(config).toEqual({
-                type: VisualizationTypes.LINE,
-                buckets: {
-                    categories: [{
-                        category: {
-                            collection: 'stack'
-                        }
-                    }]
-                },
-                legend: {
-                    enabled: true,
-                    position: 'right'
-                }
-            });
-        });
-    });
-
-    it('should detect segment by category and move legend to right', () => {
-        const props = createProps();
-
-        const p = Promise.resolve({
-            result: {},
-            metadata: {
-                content: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                collection: 'segment'
-                            }
-                        }]
-                    }
-                }
-            }
-        });
-        initChartDataLoading.mockImplementationOnce(() => {
-            return p;
-        });
-
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const config = wrapper.find(Visualization).prop('config');
-            expect(config).toEqual({
-                type: VisualizationTypes.LINE,
-                buckets: {
-                    categories: [{
-                        category: {
-                            collection: 'segment'
-                        }
-                    }]
-                },
-                legend: {
-                    enabled: true,
-                    position: 'right'
-                }
-            });
-        });
-    });
-
-    it('should set new metadata when new metadtaSource came', () => {
-        const wrapper = createComponent(createProps());
-        const getVisualizationMetadata = jest.fn().mockReturnValue(
-            Promise.resolve({ metadata: 'meta' })
-        );
-
-        wrapper.setProps({
-            metadataSource: {
-                getFingerprint: jest.fn().mockReturnValue('asdf'),
-                getVisualizationMetadata
-            }
-        });
-        return delay().then(() => {
-            expect(getVisualizationMetadata).toHaveBeenCalledTimes(1);
+            expect(wrapper.state().result).toBeNull();
+            expect(dataSource2Init).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -393,7 +262,7 @@ describe('BaseChart', () => {
         createComponent(props);
 
         return delay().then(() => {
-            expect(loadingHandler).toHaveBeenCalled();
+            expect(loadingHandler).toHaveBeenCalledTimes(2);
         });
     });
 });

@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { BarChart } from '../BarChart';
 import { BaseChart, IChartProps } from '../base/BaseChart';
 import { getComponentProps } from './helper';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 describe('BarChart', () => {
     function createComponent(props: IChartProps) {
@@ -12,7 +11,7 @@ describe('BarChart', () => {
     }
 
     it('should render bar chart', () => {
-        const wrapper = createComponent(getComponentProps(VisualizationTypes.BAR));
+        const wrapper = createComponent(getComponentProps());
 
         expect(wrapper.find(BaseChart).length).toBe(1);
     });

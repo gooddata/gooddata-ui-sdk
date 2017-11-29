@@ -1,18 +1,36 @@
+import { AFM } from '@gooddata/typings';
 import {
-    simpleDataAdapterProvider,
-    ISimpleDataAdapterProviderProps
-} from './SimpleDataAdapterProvider';
+    dataSourceProvider,
+    IDataSourceProviderProps
+} from './DataSourceProvider';
 
-// this reexport is needed to get rid of TS compiler error
-// Exported variable 'BarChart' has or is using name 'ISimpleDataAdapterProviderProps' from external module
-// "/Users/.../gooddata-react-components/src/components/afm/SimpleDataAdapterProvider"
-// but cannot be named.
 export {
-    ISimpleDataAdapterProviderProps
+    IDataSourceProviderProps
 };
 
 import { ICommonChartProps } from '../core/base/BaseChart';
-import { PieChart as corePieChart } from '../core/PieChart';
-import { VisualizationTypes } from '../../constants/visualizationTypes';
+import { PieChart as CorePieChart } from '../core/PieChart';
 
-export const PieChart = simpleDataAdapterProvider<ICommonChartProps>(corePieChart, VisualizationTypes.PIE);
+function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    if ((afm.attributes || []).length === 0) {
+        return [
+            {
+                itemIdentifiers: []
+            },
+            {
+                itemIdentifiers: ['measureGroup']
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: ['measureGroup']
+        },
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        }
+    ];
+}
+
+export const PieChart = dataSourceProvider<ICommonChartProps>(CorePieChart, generateDefaultDimensions);

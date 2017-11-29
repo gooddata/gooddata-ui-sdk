@@ -1,30 +1,14 @@
-import { VisualizationObject } from '@gooddata/data-layer';
+import { IChartProps } from '../base/BaseChart';
+import { IDataSource } from '../../../interfaces/DataSource';
+import { emptyResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 
-export function getComponentProps(visualizationType: VisualizationObject.VisualizationType) {
+export function getComponentProps(): IChartProps {
+    const dataSource: IDataSource = {
+        getData: () => Promise.resolve(emptyResponse),
+        getAfm: () => ({}),
+        getFingerprint: () => '{}'
+    };
     return {
-        dataSource: {
-            getData: () => Promise.resolve({}),
-            getAfm: () => ({}),
-            getFingerprint: () => '{}'
-        },
-        metadataSource: {
-            getVisualizationMetadata: () => Promise.resolve({
-                metadata: {
-                    meta: {
-                        title: 'Title'
-                    },
-                    content: {
-                        type: visualizationType,
-                        buckets: {
-                            measures: [],
-                            categories: [],
-                            filters: []
-                        }
-                    }
-                },
-                measuresMap: {}
-            }),
-            getFingerprint: () => '{}'
-        }
+        dataSource
     };
 }

@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { BaseChart, IChartProps } from '../base/BaseChart';
 import { ColumnChart } from '../ColumnChart';
 import { getComponentProps } from './helper';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 describe('ColumnChart', () => {
     function createComponent(props: IChartProps) {
@@ -12,7 +11,7 @@ describe('ColumnChart', () => {
     }
 
     it('should render column chart', () => {
-        const wrapper = createComponent(getComponentProps(VisualizationTypes.COLUMN));
+        const wrapper = createComponent(getComponentProps());
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

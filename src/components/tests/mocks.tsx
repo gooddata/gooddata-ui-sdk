@@ -11,7 +11,7 @@ export const initTableDataLoading = jest.fn(() => Promise.resolve({
     sorting: {}
 }));
 
-export class DummyComponent extends React.Component<null, null> {
+export class DummyComponent extends React.Component<any, any> {
     public render() {
         return <div />;
     }

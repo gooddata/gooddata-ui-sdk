@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { Afm } from '@gooddata/data-layer';
+import { AFM } from '@gooddata/typings';
 
 import { Visualization, IVisualizationProps } from '../src/components/uri/Visualization';
 import { CUSTOM_COLORS } from './data/colors';
@@ -9,12 +9,14 @@ import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 import '../styles/scss/table.scss';
 
-const defaultFilter: Afm.IFilter = {
-    id: '/gdc/md/myproject/obj/123',
-    type: 'date',
-    intervalType: 'absolute',
-    granularity: 'date',
-    between: ['2017-01-01', '2017-12-31']
+const defaultFilter: AFM.IAbsoluteDateFilter = {
+    absoluteDateFilter: {
+        dataSet: {
+            uri: '/gdc/md/myproject/obj/123'
+        },
+        from: '2017-01-01',
+        to: '2017-12-31'
+    }
 };
 
 class DynamicVisualization extends React.Component<any, any> {
@@ -129,12 +131,14 @@ storiesOf('Visualization', module)
         </div>
     ))
     .add('chart with applied filter', () => {
-        const filter: Afm.IFilter = {
-            id: '/gdc/md/myproject/obj/123',
-            type: 'date',
-            intervalType: 'absolute',
-            granularity: 'date',
-            between: ['2017-01-01', '2017-12-31']
+        const filter: AFM.IAbsoluteDateFilter = {
+            absoluteDateFilter: {
+                dataSet: {
+                    uri: '/gdc/md/myproject/obj/123'
+                },
+                from: '2017-01-01',
+                to: '2017-12-31'
+            }
         };
 
         return (

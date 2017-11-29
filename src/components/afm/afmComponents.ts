@@ -3,4 +3,4 @@ export { ColumnChart } from './ColumnChart';
 export { LineChart } from './LineChart';
 export { PieChart } from './PieChart';
 export { Table } from './Table';
-export { simpleDataAdapterProvider } from './SimpleDataAdapterProvider';
+export { dataSourceProvider } from './DataSourceProvider';
