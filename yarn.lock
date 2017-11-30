@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/typings@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.3.tgz#e65a1d0f4188d110631f15698a9cda400862b0eb"
+"@gooddata/typings@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.4.tgz#cc2a625010a15ee2dbe698caaa35b518dd33f1fd"
 
 Base64@~0.2.0:
   version "0.2.1"
