@@ -31,8 +31,6 @@ describe('Execute', () => {
         const defaultProps: IExecuteProps = {
             afm,
             projectId: 'foo',
-            onError: jest.fn(),
-            onLoadingChanged: jest.fn(),
             dataTableFactory,
             ...props
         };

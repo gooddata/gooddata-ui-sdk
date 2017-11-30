@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as GoodData from 'gooddata';
 import isEqual = require('lodash/isEqual');
+import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
 import { DataTable, ExecuteAfmAdapter, ErrorCodes } from '@gooddata/data-layer';
 
 import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
+import { ExecutePropType, Requireable } from '../proptypes/Execute';
+
+export { Requireable };
 
 export type IDataTableFactory = (projectId: string) => DataTable<Execution.IExecutionResponses>;
 
@@ -34,8 +38,11 @@ export interface IExecuteChildrenProps {
 }
 
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
+    public static proptTypes = ExecutePropType;
     public static defaultProps: Partial<IExecuteProps> = {
-        dataTableFactory
+        dataTableFactory,
+        onError: noop,
+        onLoadingChanged: noop
     };
 
     private dataTable: DataTable<Execution.IExecutionResponses>;
