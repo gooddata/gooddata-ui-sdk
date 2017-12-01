@@ -8,7 +8,7 @@ export {
     IDataSourceProviderProps
 };
 
-import { Table as CoreTable } from '../core/Table';
+import { SortableTable } from '../core/SortableTable';
 
 function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     return [
@@ -21,4 +21,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const Table = dataSourceProvider(CoreTable, generateDefaultDimensions);
+export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions);

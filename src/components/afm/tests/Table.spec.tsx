@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 import { delay } from '../../tests/utils';
 import { Table } from '../Table';
-import { Table as CoreTable } from '../../core/Table';
+import { SortableTable } from '../../core/SortableTable';
 import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 import { executionRequest } from './utils/dummyFixture';
 
@@ -18,7 +18,7 @@ describe('Table', () => {
             />));
 
         return delay().then(() => {
-            const dimensions = wrapper.find(CoreTable).props().resultSpec.dimensions;
+            const dimensions = wrapper.find(SortableTable).props().resultSpec.dimensions;
             expect(dimensions).toEqual([
                 { itemIdentifiers: ['departmentAttribute'] },
                 { itemIdentifiers: ['measureGroup'] }
