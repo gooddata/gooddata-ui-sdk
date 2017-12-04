@@ -5,8 +5,8 @@ and write small javascript apps relying on GD APIs.
 
 ## Usage
 
-GoodData javascript sdk can be used as bower component. The result of the build is
-in `dist/gooddata[.min].js`. Result of the build [UMD](https://github.com/umdjs/umd)-compatible -
+The result of the build is in `dist/gooddata[.min].js`.
+Result of the build [UMD](https://github.com/umdjs/umd)-compatible -
 you can use it both globally (see [D3 example][d3ex]) and as AMD module. Note that you need to provide
 jQuery before trying to load sdk. In both AMD and CommonJS environment we expect jQuery library module
 to be named `jquery`.
@@ -77,24 +77,16 @@ $ grunt test
 Test coverage report can be found in `coverage/` folder.
 
 ## Releasing
-New version of library can be released with `grunt release:[major|minor|patch]` task (major|minor|patch means
-breaking|feature|fix respectively). For all options see [grunt-bump task][vjBump].
-
-Task is meant to be run from `master` branch of this repository.
-
 Flow of release is:
 
-* bump version to version+1 in `bower.json` and `package.json`
+* bump version to version+1 in `package.json`
 * create version commit & tag and push these to your *upstream* remote (so watch your remote naming)
-* create version commit & tag and push product of build (`dist/*`) to `gooddata/bower-gooddata-js` repository
 
 Steps to publish a release:
 
-* you should have `gooddata/gooddata-js` as `upstream` since all tasks publish to upstream remote
-* run `grunt release:{version-type}` in `master`
+* run `yarn version` command to select next version
 * run `grunt bump-gh-pages` in `master`
 * run `npm publish` in `master`
 * you're done
 
 [d3ex]: examples/d3-data-viz/viz.js
-[vjBump]: https://github.com/vojtajina/grunt-bump
