@@ -1,5 +1,4 @@
 import * as AfmComponents from './components/afm/afmComponents';
-import * as CoreComponents from './components/core/coreComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
 import { BaseChart, ILegendConfig } from './components/core/base/BaseChart';
@@ -19,7 +18,6 @@ export {
     BaseChart,
     CatalogHelper,
     ChartType,
-    CoreComponents,
     ErrorCodes,
     ErrorStates,
     Execute,
