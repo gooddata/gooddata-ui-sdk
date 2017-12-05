@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { noop } from 'lodash';
-import { Execution } from '@gooddata/typings';
+import { Execution, AFM } from '@gooddata/typings';
 import { delay } from '../../../tests/utils';
 import { IDataSource } from '../../../../interfaces/DataSource';
 import { Visualization } from '../../../tests/mocks';
@@ -232,7 +232,7 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should init dataSource and get new result when dataSource change', () => {
+    it('should load data when dataSource change', () => {
         const dataSource1 = createDataSource(oneMeasureResponse);
         const dataSource1Init = jest.spyOn(dataSource1, 'getData');
         const props = createProps({ dataSource: dataSource1, onError: noop });
@@ -249,6 +249,26 @@ describe('BaseChart', () => {
             });
             expect(wrapper.state().result).toBeNull();
             expect(dataSource2Init).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    it('should load data when result spec change', () => {
+        const dataSource = createDataSource(oneMeasureResponse);
+        const getData = jest.spyOn(dataSource, 'getData');
+        const props = createProps({ dataSource });
+
+        const wrapper = createComponent(props);
+
+        const resultSpec: AFM.IResultSpec = { dimensions: [] };
+
+        wrapper.setProps({
+            resultSpec
+        });
+
+        return delay().then(() => {
+            // Once it should have been called on init
+            // Second time on result spec change
+            expect(getData).toHaveBeenCalledTimes(2);
         });
     });
 
