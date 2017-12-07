@@ -1,5 +1,6 @@
 import * as React from 'react';
 import noop = require('lodash/noop');
+import isEqual = require('lodash/isEqual');
 import { AFM, Execution } from '@gooddata/typings';
 import { Visualization } from '@gooddata/indigo-visualizations';
 
@@ -122,9 +123,14 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         this.initDataLoading(dataSource, resultSpec);
     }
 
+    public isDataReloadRequired(nextProps: IBaseChartProps) {
+        return !DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)
+            || !isEqual(this.props.resultSpec, nextProps.resultSpec);
+    }
+
     public componentWillReceiveProps(nextProps: IBaseChartProps) {
-        const { dataSource, resultSpec } = nextProps;
-        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+        if (this.isDataReloadRequired(nextProps)) {
+            const { dataSource, resultSpec } = nextProps;
             this.initDataLoading(dataSource, resultSpec);
         }
     }
