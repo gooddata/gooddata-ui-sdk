@@ -13,7 +13,7 @@ import { AFM } from '@gooddata/typings';
 
 import { ErrorStates } from '../../constants/errorStates';
 import { BaseChart, IChartConfig } from '../core/base/BaseChart';
-import { Table } from '../core/Table';
+import { SortableTable } from '../core/SortableTable';
 import { IEvents } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
@@ -101,7 +101,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         uriResolver,
         fetchVisObject,
         BaseChartComponent: BaseChart,
-        TableComponent: Table
+        TableComponent: SortableTable
     };
 
     private visualizationUri: string;

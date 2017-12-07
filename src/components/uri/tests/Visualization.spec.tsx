@@ -10,6 +10,7 @@ import { VisualizationObject } from '@gooddata/data-layer';
 import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
 import { delay } from '../../tests/utils';
+import { SortableTable } from '../../core/SortableTable';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -73,12 +74,11 @@ describe('Visualization', () => {
                 identifier={TABLE_IDENTIFIER}
                 fetchVisObject={fetchVisObject}
                 uriResolver={uriResolver}
-                TableComponent={Table}
             />
         );
 
         return delay(SLOW).then(() => {
-            expect(wrapper.find(Table).length).toBe(1);
+            expect(wrapper.find(SortableTable).length).toBe(1);
         });
     });
 
