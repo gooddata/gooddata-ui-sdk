@@ -45,7 +45,7 @@ export const getDomainUsers = (contractId, domainId, query, paging) => {
     }));
 };
 
-export const getDomainProjects = (contractId, domainId, query, paging) => {
+export const getDomainProjects = (contractId, domainId, state, query, paging) => {
     if (paging && !paging.next) {
         return Promise.resolve({ items: [], paging: {} });
     }
@@ -53,7 +53,8 @@ export const getDomainProjects = (contractId, domainId, query, paging) => {
     const uri = paging ?
         paging.next : routes.interpolate(
             routes.CONTRACT_DOMAIN_PROJECTS,
-            { contractId, domainId }, query && { prefixSearch: query }
+            { contractId, domainId }, state || query ?
+            Object.assign(state && { state }, query && { prefixSearch: query }) : null
         );
 
     return get(uri).then(result => ({
