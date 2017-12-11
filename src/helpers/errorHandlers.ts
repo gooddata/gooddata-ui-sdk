@@ -28,9 +28,30 @@ export function convertErrors(error: Execution.IError) {
     }
 }
 
+function isNullExecutionResult(responses: Execution.IExecutionResponses): boolean {
+    return responses.executionResult === null;
+}
+
+function hasEmptyData(responses: Execution.IExecutionResponses): boolean {
+    return responses.executionResult.executionResult.data.length === 0;
+}
+
+function hasMissingHeaderItems(responses: Execution.IExecutionResponses): boolean {
+    return !responses.executionResult.executionResult.headerItems;
+}
+
+function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {
+    return hasEmptyData(responses) && hasMissingHeaderItems(responses);
+}
+
+function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
+    return isNullExecutionResult(responses) || isEmptyDataResult(responses);
+}
+
 export function checkEmptyResult(responses: Execution.IExecutionResponses) {
-    if (responses.executionResult.executionResult.data.length === 0) {
+    if (isEmptyResult(responses)) {
         throw {
+            name: 'EmptyResulError',
             response: {
                 status: 204
             }

@@ -1,8 +1,13 @@
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
 import { Execution } from '@gooddata/typings';
 import { ErrorCodes as DataErrorCodes } from '@gooddata/data-layer';
-import { emptyResponse } from '../../execution/fixtures/ExecuteAfm.fixtures';
+import {
+    emptyResponse,
+    emptyResponseWithNull,
+    attributeOnlyResponse
+} from '../../execution/fixtures/ExecuteAfm.fixtures';
 import { ErrorCodes, ErrorStates } from '../../constants/errorStates';
+import {} from 'jest';
 
 describe('convertErrors', () => {
     it('should throw correct ErrorStates', () => {
@@ -38,5 +43,19 @@ describe('checkEmptyResult', () => {
         } catch (obj) {
             expect(obj.response.status).toEqual(204);
         }
+    });
+
+    it('should throw 204 if executionResult is null', () => {
+        expect.hasAssertions();
+
+        try {
+            checkEmptyResult(emptyResponseWithNull);
+        } catch (obj) {
+            expect(obj.response.status).toEqual(204);
+        }
+    });
+
+    it('should not throw 204 if executionResult does not contain any data, but contain headers', () => {
+        expect(() => checkEmptyResult(attributeOnlyResponse)).not.toThrow();
     });
 });
