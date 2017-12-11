@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { ColumnChart } from '../src/components/afm/ColumnChart';
 import {
@@ -12,21 +13,25 @@ import '../styles/scss/charts.scss';
 
 storiesOf('AFM components - ColumnChart', module)
     .add('two measures, one attribute', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <ColumnChart
-                projectId="storybook"
-                afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <ColumnChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('custom colors', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <ColumnChart
-                projectId="storybook"
-                afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
-                config={{ colors: CUSTOM_COLORS }}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <ColumnChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
+                    config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ));

@@ -6,3 +6,5 @@ dist:
   - yarn build-storybook
 rpm-build:
   - yarn build-storybook
+test-storybook:
+  - yarn test-storybook

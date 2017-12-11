@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { Table } from '../src/components/afm/Table';
 import {
@@ -10,11 +11,13 @@ import '../styles/scss/charts.scss';
 
 storiesOf('AFM components - Table', module)
     .add('two measures, one attribute', () => (
-        <div style={{ width: 600, height: 300 }}>
-            <Table
-                projectId="storybook"
-                afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 600, height: 300 }}>
+                <Table
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ));

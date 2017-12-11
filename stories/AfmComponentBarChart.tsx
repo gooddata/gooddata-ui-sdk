@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { BarChart } from '../src/components/afm/BarChart';
 import {
@@ -11,8 +12,8 @@ import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 
 storiesOf('AFM components - BarChart', module)
-    .add('two measures, one attribute', () => {
-        return (
+    .add('two measures, one attribute', () => (
+        screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <BarChart
                     projectId="storybook"
@@ -20,15 +21,17 @@ storiesOf('AFM components - BarChart', module)
                     onError={onErrorHandler}
                 />
             </div>
-        );
-    })
+        )
+    ))
     .add('custom colors', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <BarChart
-                projectId="storybook"
-                afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
-                config={{ colors: CUSTOM_COLORS }}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <BarChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
+                    config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ));

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { AFM } from '@gooddata/typings';
+import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { Visualization, IVisualizationProps } from '../src/components/uri/Visualization';
 import { CUSTOM_COLORS } from './data/colors';
@@ -83,52 +84,62 @@ class DynamicVisualization extends React.Component<any, any> {
 
 storiesOf('Visualization', module)
     .add('table example', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1001'}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1001'}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('table example with identifier', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                identifier="1001"
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    identifier="1001"
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('table with eventing', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1001'}
-                drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
-                onFiredDrillEvent={action('drill-event fired')}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1001'}
+                    drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                    onFiredDrillEvent={action('drill-event fired')}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('chart example', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1002'}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('chart with custom colors example', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1002'}
-                config={{ colors: CUSTOM_COLORS }}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('chart with applied filter', () => {
         const filter: AFM.IAbsoluteDateFilter = {
@@ -141,7 +152,7 @@ storiesOf('Visualization', module)
             }
         };
 
-        return (
+        return screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
                     projectId="myproject"
@@ -153,18 +164,22 @@ storiesOf('Visualization', module)
         );
     })
     .add('chart with eventing', () => (
-        <div style={{ width: 800, height: 400 }}>
-            <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1002'}
-                drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
-                onFiredDrillEvent={action('drill-event fired')}
-                onError={onErrorHandler}
-            />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                    onFiredDrillEvent={action('drill-event fired')}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('dynamic visualization test', () => (
-        <div style={{ width: 800, height: 400, position: 'relative' }}>
-            <DynamicVisualization />
-        </div>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400, position: 'relative' }}>
+                <DynamicVisualization />
+            </div>
+        )
     ));
