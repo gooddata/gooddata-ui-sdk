@@ -237,7 +237,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                 return this.props.fetchVisObject(visualizationUri);
             })
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
-                const translatedPopSuffix = '- previous year'; // TODO change hardcoded PoP suffix with new visObj
+                const translatedPopSuffix = ' - previous year'; // TODO change hardcoded PoP suffix with new visObj
                 const { afm, resultSpec } = toAfmResultSpec(mdObject.content, translatedPopSuffix);
                 const dateFilter = getDateFilter(filters);
                 const attributeFilters = getAttributeFilters(filters);
