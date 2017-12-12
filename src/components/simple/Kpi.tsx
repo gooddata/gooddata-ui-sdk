@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as numeral from 'numeral';
+import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
 import { Filters, Uri } from '@gooddata/data-layer';
@@ -50,7 +50,7 @@ const resultSpec: AFM.IResultSpec = {
 
 export class Kpi extends React.Component<IKpiProps, null> {
     public static defaultProps: Partial<IKpiProps> = {
-        format: '$0,0.00',
+        format: '[<300][red]$#,#.##;[=300][yellow]$#,#.##;[>300][green]$#,#.##',
         filters: [],
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
@@ -81,8 +81,10 @@ export class Kpi extends React.Component<IKpiProps, null> {
         );
     }
 
-    private getFormattedResult(result: string): string {
-        return numeral(result).format(this.props.format);
+    private getFormattedResult(result: string) {
+        const formattedNumber = numberFormat(parseFloat(result), this.props.format);
+        const { label, color } = colors2Object(formattedNumber);
+        return color ? <span style={{ color }}>{label}</span> : label;
     }
 
     private extractNumber(result: Execution.IExecutionResponses): string {
