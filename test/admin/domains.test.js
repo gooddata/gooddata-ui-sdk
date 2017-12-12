@@ -109,7 +109,7 @@ describe('project', () => {
                     400
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, null).then(null, err => expect(err).toBeInstanceOf(Error));
+                return domains.getDomainProjects('contractId', 'domainId', null, null, null).then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domains projects', () => {
@@ -126,13 +126,13 @@ describe('project', () => {
                     }
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, null).then((result) => {
+                return domains.getDomainProjects('contractId', 'domainId', null, null, null).then((result) => {
                     expect(result.items.length).toBe(2);
                     expect(result.items[0].title).toBe('project0');
                 });
             });
 
-            it('should returns empty domains projects', () => {
+            it('should return empty domains projects', () => {
                 fetchMock.mock(
                     '/gdc/admin/contracts/contractId/domains/domainId/projects',
                     {
@@ -146,7 +146,26 @@ describe('project', () => {
                     }
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, { next: null }).then((result) => {
+                return domains.getDomainProjects('contractId', 'domainId', null, null, { next: null }).then((result) => {
+                    expect(result.items.length).toBe(0);
+                });
+            });
+
+            it('should return disabled domain projects', () => {
+                fetchMock.mock(
+                    '/gdc/admin/contracts/contractId/domains/domainId/projects?state=disabled',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            domainProjects: {
+                                items: [{ project: { title: 'project0' } }, { project: { title: 'project1' } }],
+                                paging: {}
+                            }
+                        })
+                    }
+                );
+
+                return domains.getDomainProjects('contractId', 'domainId', 'disabled', null, { next: null }).then((result) => {
                     expect(result.items.length).toBe(0);
                 });
             });
@@ -165,7 +184,7 @@ describe('project', () => {
                     }
                 );
 
-                return domains.getDomainProjects('contractId', 'domainId', null, { next: '/gdc/admin/contracts/contractId/domains/domainId/projects?limit=10' }).then((result) => {
+                return domains.getDomainProjects('contractId', 'domainId', null, null, { next: '/gdc/admin/contracts/contractId/domains/domainId/projects?limit=10' }).then((result) => {
                     expect(result.items.length).toBe(2);
                     expect(result.items[0].title).toBe('project0');
                 });
