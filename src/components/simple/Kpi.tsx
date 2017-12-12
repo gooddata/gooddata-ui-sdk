@@ -50,7 +50,7 @@ const resultSpec: AFM.IResultSpec = {
 
 export class Kpi extends React.Component<IKpiProps, null> {
     public static defaultProps: Partial<IKpiProps> = {
-        format: '[<300][red]$#,#.##;[=300][yellow]$#,#.##;[>300][green]$#,#.##',
+        format: '#,#.##',
         filters: [],
         onError: defaultErrorHandler,
         onLoadingChanged: noop,

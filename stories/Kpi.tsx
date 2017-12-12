@@ -8,5 +8,6 @@ storiesOf('KPI', module)
         <Kpi
             measure={'/gdc/md/storybook/obj/1'}
             projectId={'storybook'}
+            format="[<300][red]$#,#.##;[=300][yellow]$#,#.##;[>300][green]$#,#.##"
         />
     ));

@@ -29,7 +29,7 @@ describe('Kpi', () => {
     it('should accept no format', () => {
         const wrapper = createComponent();
         return delay().then(() => {
-            expect(wrapper.find('.gdc-kpi').text()).toEqual('$42,470,571.16');
+            expect(wrapper.find('.gdc-kpi').text()).toEqual('42,470,571.16');
         });
     });
 
