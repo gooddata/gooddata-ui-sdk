@@ -14,6 +14,7 @@
   ],
   "devDependencies": {
     "@gooddata/mock-js": "0.2.0",
+    "@gooddata/test-storybook": "1.0.0",
     "@gooddata/typings": "0.0.4",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
@@ -49,7 +50,6 @@
     "@gooddata/indigo-visualizations": "1.0.1",
     "@gooddata/js-utils": "0.9.0",
     "@gooddata/numberjs": "3.1.0",
-    "@gooddata/test-storybook": "1.0.0",
     "classnames": "2.2.5",
     "gooddata": "4.4.0",
     "lodash": "4.17.4",
