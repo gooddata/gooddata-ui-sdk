@@ -52,6 +52,10 @@ To validate using [tslint](https://palantir.github.io/tslint/), run
 $ yarn validate
 ```
 
+#### Storybook visual regression tests
+
+Visual regression testing for Storybook is provided by [@gooddata/test-storybook](https://github.com/gooddata/gdc-client-utils/tree/master/test-storybook) package.
+
 ### Deployment
 ```
 git checkout master && git pull upstream master --tags

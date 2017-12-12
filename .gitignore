@@ -36,3 +36,5 @@ ci/results/coverage
 coverage
 
 junit.xml
+
+test-storybook/
