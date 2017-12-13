@@ -187,6 +187,14 @@ export namespace AFM {
     export function isMeasureLocatorItem(locator: AFM.LocatorItem): locator is AFM.IMeasureLocatorItem {
         return !!(locator as AFM.IMeasureLocatorItem).measureLocatorItem;
     }
+
+    export function isPositiveAttributeFilter(filter: AFM.CompatibilityFilter): filter is AFM.IPositiveAttributeFilter {
+        return !!(filter as AFM.IPositiveAttributeFilter).positiveAttributeFilter;
+    }
+
+    export function isNegativeAttributeFilter(filter: AFM.CompatibilityFilter): filter is AFM.INegativeAttributeFilter {
+        return !!(filter as AFM.INegativeAttributeFilter).negativeAttributeFilter;
+    }
 }
 
 export namespace Execution {
