@@ -31,5 +31,11 @@ export const AfmPropType =
                     showInPercent: PropTypes.bool
                 })
             })
+        ),
+        nativeTotals: PropTypes.arrayOf(
+            PropTypes.shape({
+                measureIdentifier: PropTypes.string.isRequired,
+                attributeIdentifiers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+            })
         )
     });
