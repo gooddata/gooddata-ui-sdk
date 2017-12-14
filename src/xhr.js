@@ -198,15 +198,20 @@ export function ajax(originalUrl, tempSettings = {}) {
         }
 
         if (response.status === 202 && !settings.dontPollOnResult) {
-            // if the response is 202 and Location header is not empty, let's poll on the new Location
-            let finalUrl = url;
+            // poll on new provided url, fallback to the original one
+            // (for example validElements returns 303 first with new url which may then return 202 to poll on)
+            let finalUrl = response.url || url;
+
             const finalSettings = settings;
+
+            // if the response is 202 and Location header is not empty, let's poll on the new Location
             if (response.headers.has('Location')) {
                 finalUrl = response.headers.get('Location');
             }
             finalSettings.method = 'GET';
             delete finalSettings.data;
             delete finalSettings.body;
+
             return handlePolling(finalUrl, finalSettings, ajax);
         }
         return response;
