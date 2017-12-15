@@ -197,4 +197,30 @@ describe('PureTable', () => {
             expect(loadingHandler).toHaveBeenCalledTimes(2);
         });
     });
+
+    it('should call pushData with totals', () => {
+        const onTotalsEdit = jest.fn();
+        const pushData = jest.fn();
+        const props = createProps({
+            pushData,
+            onTotalsEdit
+        });
+        const wrapper = createComponent(props);
+        const totals = 'totals';
+
+        return delay().then(() => {
+            expect(pushData).toHaveBeenCalledTimes(1);
+            expect(wrapper.find(TableTransformation).prop('onTotalsEdit')).toBeDefined();
+
+            const callback: any = wrapper.find(TableTransformation).prop('onTotalsEdit');
+            callback(totals);
+
+            expect(pushData).toHaveBeenCalledTimes(2);
+            expect(pushData).toHaveBeenCalledWith({
+                properties: {
+                    totals
+                }
+            });
+        });
+    });
 });

@@ -9,6 +9,7 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
+import { ITotalItem } from './interfaces/Totals';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import * as PropTypes from './proptypes/index';
@@ -28,6 +29,7 @@ export {
     ErrorStates,
     Execute,
     IDrillableItem,
+    ITotalItem,
     ILegendConfig,
     IVisualizationProperties,
     Kpi,
