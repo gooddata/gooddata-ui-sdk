@@ -134,6 +134,29 @@ describe('fetch', () => {
             });
         });
 
+        it('should poll on provided url', () => {
+            fetchMock.mock('/some/url', () => {
+                return {
+                    status: 202,
+                    __redirectUrl: '/some/url2'
+                };
+            });
+
+            fetchMock.mock('/some/url2', () => {
+                return { status: 200, body: 'Poll result' };
+            });
+
+            return xhr.ajax('/some/url', { pollDelay: 0 }).then((r) => {
+                expect(r.status).toBe(200);
+                expect(fetchMock.calls('/some/url').length).toBe(1);
+                expect(fetchMock.calls('/some/url2').length).toBe(1);
+
+                return r.text().then((t) => {
+                    expect(t).toBe('Poll result');
+                });
+            });
+        });
+
         it('should not poll if client forbids it', () => {
             fetchMock.mock('/some/url', (url) => {
                 if (fetchMock.calls(url).length <= 2) {
