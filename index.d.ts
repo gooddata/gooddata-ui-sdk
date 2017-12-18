@@ -32,15 +32,15 @@ export interface IIdentifierUriPair {
 }
 
 export interface IValidElementsOptions {
-    limit: number;
-    offset: number;
-    order: SortDirection;
-    filter: string;
-    prompt: string;
-    uris: string[];
-    complement: boolean;
-    includeTotalCountWithoutFilters: boolean;
-    restrictiveDefinition: string;
+    limit?: number;
+    offset?: number;
+    order?: SortDirection;
+    filter?: string;
+    prompt?: string;
+    uris?: string[];
+    complement?: boolean;
+    includeTotalCountWithoutFilters?: boolean;
+    restrictiveDefinition?: string;
 }
 
 export interface IElement {
