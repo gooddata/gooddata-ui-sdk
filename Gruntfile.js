@@ -52,11 +52,6 @@ module.exports = (grunt) => {
                 files: ['src/*.js', 'examples/**/*.js', 'examples/**/*.html', '!examples/gooddata.js'],
                 tasks: ['webpack:build-dev', 'copy:examples'],
                 nospawn: true
-            },
-            tests: {
-                files: ['src/*.js', 'test/*_test.js'],
-                tasks: ['mochaTest:test', 'karma:unit:run'],
-                nospawn: true
             }
         },
         webpack: {
@@ -95,19 +90,6 @@ module.exports = (grunt) => {
                 }
             }
         },
-        bump: {
-            options: {
-                files: ['package.json', 'bower.json'],
-                updateConfigs: ['pkg'], // for a proper banner in disted file
-                commit: true,
-                commitMessage: 'Release v%VERSION%',
-                commitFiles: ['package.json', 'bower.json'],
-                createTag: true,
-                tagName: 'v%VERSION%',
-                push: true,
-                pushTo: 'upstream'
-            }
-        },
         'gh-pages': {
             options: {
                 base: 'pages',
@@ -141,7 +123,6 @@ module.exports = (grunt) => {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-grizzly');
-    grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('gruntify-eslint');
@@ -157,104 +138,6 @@ module.exports = (grunt) => {
     ]);
 
     grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
-
-    grunt.registerTask('init-bower-repo', 'Initializes repository in ./dist', () => {
-        const exec = require('child_process').exec;
-
-        const gitUri = grunt.file.readJSON('bower.json').repository.url;
-        const currentTask = grunt.task.current;
-        const done = currentTask.async();
-        exec(`${'mkdir -p dist && cd dist && rm -rf ./* && git init && ' +
-            'git remote add bower '}${gitUri} && ` +
-            'git pull bower master', (err, stdout, stderr) => {
-            if (err) {
-                grunt.fatal('could not init bower repository');
-                grunt.log.errorlns(stderr);
-            }
-            grunt.log.writeln('Inited bower repository in ./dist');
-            done();
-        });
-    });
-
-    grunt.registerTask('release-bower-component', 'Tag, commit and push dist files to bower component repo.', () => {
-        const exec = require('child_process').exec;
-        const async = require('async');
-
-        const currentTask = grunt.task.current;
-        const done = currentTask.async();
-        const version = grunt.config.get('pkg.version');
-
-        const copyPackageDescriptionStep = (callback) => {
-            exec('cp bower.json LICENSE dist', (err, stdout, stderr) => {
-                if (err) {
-                    callback(`Could not copy bower.json or LICENSE to dist${stderr}`);
-                }
-                grunt.log.writeln('Copied bower.json and LICENSE to dist');
-                callback(null);
-            });
-        };
-        const commitBowerReleaseStep = (callback) => {
-            const commitMsg = grunt.config.get('bump.options.commitMessage').replace('%VERSION%', version);
-
-            exec(`cd dist && git add . && git commit -m "${commitMsg}"`, (err, stdout, stderr) => {
-                if (err) {
-                    callback(`Could not commit${stderr}`);
-                }
-                grunt.log.writeln(`Commiting bower release ${version}`);
-                callback(null);
-            });
-        };
-        const tagBowerReleaseStep = (callback) => {
-            const tagName = grunt.config.get('bump.options.tagName').replace('%VERSION%', version);
-            exec(`cd dist && git tag "${tagName}"`, (err, stdout, stderr) => {
-                if (err) {
-                    callback(`Could not tag${stderr}`);
-                }
-                grunt.log.writeln(`Tagging bower release ${version}`);
-                callback(null);
-            });
-        };
-        const pushBowerComponentStep = (callback) => {
-            exec('cd dist && git push -u bower master && git push bower --tags', (err, stdout, stderr) => {
-                if (err) {
-                    callback(`Could not push bower commit and tag${stderr}`);
-                }
-                grunt.log.writeln(`Pushed ${version} commit and tag`);
-                callback(null);
-            });
-        };
-        const cleanupDistStep = (callback) => {
-            exec('cd dist && rm -rf .git', (err, stdout, stderr) => {
-                if (err) {
-                    callback(`Could not remove dist/.git files\n${stderr}`);
-                }
-                callback(null);
-            });
-        };
-
-        async.series([
-            copyPackageDescriptionStep,
-            commitBowerReleaseStep,
-            tagBowerReleaseStep,
-            pushBowerComponentStep,
-            cleanupDistStep
-        ], (err) => {
-            if (err) {
-                grunt.fatal(err);
-            }
-            done();
-        });
-    });
-
-    grunt.registerTask('release', (target) => {
-        grunt.task.run(
-            'test',
-            `bump:${target}`,
-            'init-bower-repo',
-            'dist',
-            'release-bower-component'
-        );
-    });
 
     grunt.registerTask('test', ['eslint', 'run:jest']);
     grunt.registerTask('dev', ['grizzly', 'watch:js']);

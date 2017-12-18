@@ -1067,10 +1067,6 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
-bower@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.0.tgz#55dbebef0ad9155382d9e9d3e497c1372345b44a"
-
 brace-expansion@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.8.tgz#c07b211c7c952ec1f8efd51a77ef0d1d3990a292"
@@ -2622,12 +2618,6 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6,
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
-
-grunt-bump@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/grunt-bump/-/grunt-bump-0.6.0.tgz#596631a2ee7dedd96197cd5855c860cb0b90e8ea"
-  dependencies:
-    semver "^4.3.3"
 
 grunt-cli@1.2.0, grunt-cli@~1.2.0:
   version "1.2.0"
@@ -5062,10 +5052,6 @@ sax@^1.2.1:
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
-
-semver@^4.3.3:
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
 
 send@0.14.2:
   version "0.14.2"
