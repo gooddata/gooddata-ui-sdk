@@ -47,7 +47,7 @@
   "dependencies": {
     "@gooddata/data-layer": "5.0.0-alpha2",
     "@gooddata/goodstrap": "53.0.1",
-    "@gooddata/indigo-visualizations": "1.1.0",
+    "@gooddata/indigo-visualizations": "1.1.1",
     "@gooddata/js-utils": "0.9.0",
     "@gooddata/numberjs": "3.1.0",
     "classnames": "2.2.5",
