@@ -124,9 +124,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
-        const sortingChanged = !isEqual(get(this.props, 'resultSpec.sorts'), get(nextProps, 'resultSpec.sorts'));
+        const resultSpecChanged = !isEqual(get(this.props, 'resultSpec'), get(nextProps, 'resultSpec'));
 
-        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || sortingChanged) {
+        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || resultSpecChanged) {
             const { dataSource, resultSpec } = nextProps;
             this.initDataLoading(dataSource, resultSpec);
         }

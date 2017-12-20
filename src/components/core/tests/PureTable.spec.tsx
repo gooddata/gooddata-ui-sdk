@@ -22,6 +22,7 @@ import {
     oneMeasureAfm,
     tooLargeResponse
 } from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { AFM } from '@gooddata/typings';
 
 const oneMeasureDataSource: IDataSource = {
     getData: () => Promise.resolve(oneMeasureResponse),
@@ -70,6 +71,62 @@ describe('PureTable', () => {
                     }]
                 }
             });
+            wrapper.setProps(newProps);
+            return delay().then(() => {
+                expect(onLoadingChanged).toHaveBeenCalledTimes(4);
+            });
+        });
+    });
+
+    it('should call trigger loading changed when totals changed', () => {
+        const onLoadingChanged = jest.fn();
+
+        const resultSpec: AFM.IResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1'],
+                    totals: [
+                        {
+                            measureIdentifier: 'm1',
+                            type: 'max',
+                            attributeIdentifier: 'a1'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const props = createProps({
+            resultSpec,
+            onLoadingChanged
+        });
+
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+
+            const newResultSpec: AFM.IResultSpec = {
+                dimensions: [
+                    {
+                        itemIdentifiers: ['a1'],
+                        totals: [
+                            {
+                                measureIdentifier: 'm1',
+                                type: 'max',
+                                attributeIdentifier: 'a1'
+                            },
+                            {
+                                measureIdentifier: 'm1',
+                                type: 'min',
+                                attributeIdentifier: 'a1'
+                            }
+                        ]
+                    }
+                ]
+            };
+            const newProps = createProps({resultSpec: newResultSpec});
             wrapper.setProps(newProps);
             return delay().then(() => {
                 expect(onLoadingChanged).toHaveBeenCalledTimes(4);

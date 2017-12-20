@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@5.0.0-alpha2":
-  version "5.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-5.0.0-alpha2.tgz#550d40590ac367eac4825689524adc858af02890"
+"@gooddata/data-layer@5.0.0-alpha3":
+  version "5.0.0-alpha3"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-5.0.0-alpha3.tgz#92c530787827d19f135c22113f5ed46949329d27"
   dependencies:
     json-stable-stringify "1.0.1"
     lodash "4.17.4"
@@ -36,9 +36,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.1.1.tgz#bef1770296d7d54a52f8b3d57b7b32af3310c31d"
+"@gooddata/indigo-visualizations@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.1.2.tgz#3a7d78a24adc67960a777ddd471fbf56a0191d89"
   dependencies:
     "@gooddata/goodstrap" "53.0.1"
     "@gooddata/js-utils" "0.7.1"

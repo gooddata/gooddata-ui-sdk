@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as GoodData from 'gooddata';
 import noop = require('lodash/noop');
+import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
 import {
     AfmUtils,
@@ -11,16 +12,18 @@ import {
 } from '@gooddata/data-layer';
 import { AFM } from '@gooddata/typings';
 
-import { ErrorStates } from '../../constants/errorStates';
 import { BaseChart, IChartConfig } from '../core/base/BaseChart';
 import { SortableTable } from '../core/SortableTable';
 import { IEvents } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
-import { IDrillableItem } from '../../interfaces/DrillEvents';
-import { ITotalItem } from '../../interfaces/Totals';
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
+import {
+    ITotalItem,
+    IDrillableItem,
+    ErrorStates
+} from '../../';
 
 export { Requireable };
 
@@ -58,8 +61,6 @@ export interface IVisualizationProps extends IEvents {
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
     drillableItems?: IDrillableItem[];
-    totals?: ITotalItem[];
-    totalsEditAllowed?: boolean;
     uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     BaseChartComponent?: any;
@@ -70,12 +71,14 @@ export interface IVisualizationState {
     isLoading: boolean;
     resultSpec: AFM.IResultSpec;
     type: VisType;
+    totals: ITotalItem[];
 }
 
 export interface IVisualizationExecInfo {
     dataSource: IDataSource;
     resultSpec: AFM.IResultSpec;
     type: VisType;
+    totals: ITotalItem[];
 }
 
 function uriResolver(projectId: string, uri?: string, identifier?: string): Promise<string> {
@@ -119,7 +122,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.state = {
             isLoading: true,
             type: null,
-            resultSpec: null
+            resultSpec: null,
+            totals: []
         };
 
         this.visualizationUri = props.uri;
@@ -187,8 +191,6 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         const {
             drillableItems,
             onFiredDrillEvent,
-            totals,
-            totalsEditAllowed,
             onError,
             onLoadingChanged,
             locale,
@@ -196,7 +198,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             BaseChartComponent,
             TableComponent
         } = this.props;
-        const { resultSpec, type } = this.state;
+        const { resultSpec, type, totals } = this.state;
 
         switch (type) {
             case VisualizationTypes.TABLE:
@@ -207,7 +209,6 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         drillableItems={drillableItems}
                         onFiredDrillEvent={onFiredDrillEvent}
                         totals={totals}
-                        totalsEditAllowed={totalsEditAllowed}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         locale={locale}
@@ -245,6 +246,11 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             })
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
                 const translatedPopSuffix = ' - previous year'; // TODO change hardcoded PoP suffix with new visObj
+
+                const visObjTotals = mdObject.content.buckets.totals;
+                const totals = !isEmpty(visObjTotals) ?
+                    visObjTotals.map(visObjTotal => visObjTotal.total) : [];
+
                 const { afm, resultSpec } = toAfmResultSpec(mdObject.content, translatedPopSuffix);
                 const dateFilter = getDateFilter(filters);
                 const attributeFilters = getAttributeFilters(filters);
@@ -254,7 +260,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         return {
                             type: mdObject.content.type,
                             dataSource,
-                            resultSpec
+                            resultSpec,
+                            totals
                         };
                     });
                 });
