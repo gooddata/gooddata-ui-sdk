@@ -16,6 +16,7 @@
     "@gooddata/mock-js": "0.2.0",
     "@gooddata/test-storybook": "1.0.0",
     "@gooddata/typings": "0.0.4",
+    "@storybook/addon-actions": "3.2.18",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
     "@types/classnames": "2.2.3",
@@ -41,7 +42,7 @@
     "sass-loader": "6.0.6",
     "ts-jest": "21.2.4",
     "ts-loader": "2.3.7",
-    "tslint-config-gooddata": "0.0.5",
+    "tslint-config-gooddata": "0.0.7",
     "typescript": "2.3.3"
   },
   "dependencies": {
@@ -54,19 +55,24 @@
     "gooddata": "4.4.0",
     "lodash": "4.17.4",
     "prop-types": "15.6.0",
-    "react-intl": "2.2.3"
+    "react-intl": "2.2.3",
+    "rxjs": "5.5.5"
   },
   "peerDependencies": {
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
+  },
+  "config": {
+    "tslint": "./{src,stories}/**/*.{ts,tsx}"
   },
   "scripts": {
     "test": "jest --watch",
     "build-css": "node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss",
     "dev": "rm -rf dist && tsc --watch && cp -rf src/translations/ dist/translations/",
     "prepublish": "rm -rf dist && tsc && cp -rf src/translations/ dist/translations/ && yarn build-css",
-    "tslint": "./node_modules/tslint/bin/tslint --type-check --project tsconfig.base.json --config tslint.json --format verbose './{src,stories}/**/*.{ts,tsx}'",
-    "tslint-ci": "mkdir -p ./ci/results && ./node_modules/tslint/bin/tslint --config tslint.json --format checkstyle --out ./ci/results/tslint-results.xml './{src,stories}/**/*.{ts,tsx}'",
+    "run-tslint": "./node_modules/tslint/bin/tslint -p tsconfig.base.json",
+    "tslint": "yarn run-tslint -- -t verbose '$npm_package_config_tslint'",
+    "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -- -t checkstyle -o ./ci/results/tslint-results.xml '$npm_package_config_tslint'",
     "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint",
     "validate-ci": "tsc -p tsconfig.base.json --noEmit && yarn tslint-ci",
     "storybook": "start-storybook -p 9001 -c .storybook",
