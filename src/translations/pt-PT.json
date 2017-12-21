@@ -35,5 +35,6 @@
    "gs.list.selectAll": "Selecionar tudo",
    "gs.list.limitExceeded": "Lamentamos, excedeu o limite ({limit}).",
    "gs.list.noItemsFound": "Nenhum item encontrado.",
-   "gs.list.error": "Erro ao carregar itens da lista"
+   "gs.list.error": "Erro ao carregar itens da lista",
+   "previous_year": "ano anterior"
 }

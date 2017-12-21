@@ -1,4 +1,5 @@
 import { AFM, Execution } from '@gooddata/typings';
+import { MEASUREGROUP } from '../../constants/dimensions';
 
 const emptyResponseWithNull: Execution.IExecutionResponses = {
     executionResponse: {
@@ -235,6 +236,132 @@ const oneMeasureAfm: AFM.IAfm = {
     ]
 };
 
+const executionObjectWithTotals: AFM.IExecution = {
+    execution: {
+        afm: {
+            measures: [
+                {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measure: {
+                            item: {
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                            }
+                        }
+                    }
+                },
+                {
+                    localIdentifier: 'm2',
+                    definition: {
+                        measure: {
+                            item: {
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                            }
+                        }
+                    }
+                }
+            ],
+            attributes: [
+                {
+                    displayForm: {
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                    },
+                    localIdentifier: 'a1'
+                }
+            ]
+        },
+        resultSpec: {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1'],
+                    totals: [
+                        {
+                            type: 'sum',
+                            measureIdentifier: 'm1',
+                            attributeIdentifier: 'a1'
+                        },
+                        {
+                            type: 'sum',
+                            measureIdentifier: 'm2',
+                            attributeIdentifier: 'a1'
+                        },
+                        {
+                            type: 'avg',
+                            measureIdentifier: 'm1',
+                            attributeIdentifier: 'a1'
+                        }
+                    ]
+                },
+                {
+                    itemIdentifiers: [MEASUREGROUP]
+                }
+            ]
+        }
+    }
+};
+
+const responseWithTotals: Execution.IExecutionResponses = {
+    executionResponse: {
+        executionResponse: {
+            dimensions: [
+                {
+                    headers: []
+                },
+                {
+                    headers: [
+                        {
+                            measureGroupHeader: {
+                                items: [
+                                    {
+                                        measureHeaderItem: {
+                                            name: 'Lost',
+                                            format: '$#,##0.00',
+                                            localIdentifier: '1st_measure_local_identifier',
+                                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                                            identifier: 'af2Ewj9Re2vK'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            links: {
+                // tslint:disable-next-line:max-line-length
+                executionResult: '/gdc/app/projects/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/executionResults/2651138797087227392'
+            }
+        }
+    },
+    executionResult: {
+        executionResult: {
+            data: [
+                [
+                    '42470571.16'
+                ]
+            ],
+            paging: {
+                count: [
+                    1,
+                    1
+                ],
+                offset: [
+                    0,
+                    0
+                ],
+                total: [
+                    1,
+                    1
+                ]
+            },
+            headerItems: [
+                [],
+                []
+            ]
+        }
+    }
+};
+
 const oneMeasureResponse: Execution.IExecutionResponses = {
     executionResponse: {
         executionResponse: {
@@ -304,5 +431,7 @@ export {
     tooLargeResponse,
     oneMeasureResponse,
     oneMeasureAfm,
+    executionObjectWithTotals,
+    responseWithTotals,
     badRequestResponse
 };

@@ -22,14 +22,23 @@ import { ErrorStates } from '../../../constants/errorStates';
 import {
     oneMeasureResponse,
     oneMeasureAfm,
-    tooLargeResponse
+    tooLargeResponse,
+    executionObjectWithTotals,
+    responseWithTotals
 } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { AFM } from '@gooddata/typings';
+import { IIndexedTotalItem } from '../../../interfaces/Totals';
 
 const oneMeasureDataSource: IDataSource = {
     getData: () => Promise.resolve(oneMeasureResponse),
     getAfm: () => oneMeasureAfm,
     getFingerprint: () => JSON.stringify(oneMeasureResponse)
+};
+
+const executionObjectWithTotalsDataSource: IDataSource = {
+    getData: () => Promise.resolve(responseWithTotals),
+    getAfm: () => executionObjectWithTotals.execution.afm,
+    getFingerprint: () => JSON.stringify(responseWithTotals)
 };
 
 const tooLargeDataSource: IDataSource = {
@@ -267,15 +276,38 @@ describe('PureTable', () => {
         });
     });
 
+    it('should provide totals based on resultSpec to the TableTransformation', () => {
+        const props = createProps({
+            dataSource: executionObjectWithTotalsDataSource,
+            resultSpec: executionObjectWithTotals.execution.resultSpec
+        });
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            const totals = wrapper.find(TableTransformation).props().totals;
+            expect(totals).toEqual([{
+                outputMeasureIndexes: [0, 1], type: 'sum'
+            }, {
+                outputMeasureIndexes: [0], type: 'avg'
+            }]);
+        });
+    });
+
     it('should call pushData with totals', () => {
         const onTotalsEdit = jest.fn();
         const pushData = jest.fn();
         const props = createProps({
             pushData,
-            onTotalsEdit
+            onTotalsEdit,
+            dataSource: executionObjectWithTotalsDataSource
         });
         const wrapper = createComponent(props);
-        const totals = 'totals';
+        const totals: IIndexedTotalItem[] = [
+            {
+                type: 'sum',
+                outputMeasureIndexes: [0]
+            }
+        ];
 
         return delay().then(() => {
             expect(pushData).toHaveBeenCalledTimes(1);
@@ -287,7 +319,11 @@ describe('PureTable', () => {
             expect(pushData).toHaveBeenCalledTimes(2);
             expect(pushData).toHaveBeenCalledWith({
                 properties: {
-                    totals
+                    totals: [{
+                        type: 'sum',
+                        measureIdentifier: 'm1',
+                        attributeIdentifier: 'a1'
+                    }]
                 }
             });
         });

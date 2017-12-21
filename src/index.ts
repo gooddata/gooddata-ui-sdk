@@ -10,11 +10,13 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
-import { ITotalItem } from './interfaces/Totals';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
+import { generateDimensions } from './helpers/dimensions';
+import * as BucketNames from './constants/bucketNames';
+import * as PoPHelper from './helpers/popHelper';
 
 const CoreComponents = {
     Table,
@@ -25,18 +27,20 @@ export {
     AfmComponents,
     AttributeFilter,
     AttributeElements,
+    BucketNames,
     CoreComponents,
     CatalogHelper,
     ChartType,
     ErrorCodes,
     ErrorStates,
-    isEmptyResult,
     Execute,
+    generateDimensions,
     IDrillableItem,
-    ITotalItem,
     ILegendConfig,
+    isEmptyResult,
     IVisualizationProperties,
     Kpi,
+    PoPHelper,
     PropTypes,
     VisEvents,
     Visualization,

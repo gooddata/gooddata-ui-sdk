@@ -139,6 +139,18 @@ storiesOf('Visualization', module)
             </div>
         )
     ))
+    .add('chart with PoP measure', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1003'}
+                    onError={onErrorHandler}
+                    locale="de-DE"
+                />
+            </div>
+        )
+    ))
     .add('chart example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

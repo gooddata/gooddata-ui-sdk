@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import get = require('lodash/get');
 
 export interface IIdentifierWithTags {
     identifier: string;

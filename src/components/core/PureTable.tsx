@@ -12,7 +12,7 @@ import {
     DataSourceUtils,
     createSubject
 } from '@gooddata/data-layer';
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 
 import { IntlWrapper } from './base/IntlWrapper';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from './base/TranslationsProvider';
@@ -27,7 +27,8 @@ import { VisualizationEnvironment } from '../uri/Visualization';
 import { getVisualizationOptions } from '../../helpers/options';
 import { convertErrors, checkEmptyResult } from '../../helpers/errorHandlers';
 import { ISubject } from '../../helpers/async';
-import { ITotalItem } from '../../interfaces/Totals';
+import { IIndexedTotalItem } from '../../interfaces/Totals';
+import { convertToIndexedTotals, convertToTotals } from '../../helpers/TotalsConverter';
 
 export { Requireable };
 
@@ -40,7 +41,7 @@ export interface ITableProps extends IEvents {
     environment?: VisualizationEnvironment;
     stickyHeaderOffset?: number;
     drillableItems?: IDrillableItem[];
-    totals?: ITotalItem[];
+    totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
     onTotalsEdit?: Function;
     afterRender?: Function;
@@ -152,8 +153,13 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         });
     }
 
-    public onTotalsEdit(totals: ITotalItem[]) {
-        this.props.pushData({
+    public onTotalsEdit(indexedTotals: IIndexedTotalItem[]) {
+        const { dataSource, pushData } = this.props;
+
+        // Short term solution (See BB-641)
+        const totals = convertToTotals(indexedTotals, dataSource.getAfm());
+
+        pushData({
             properties: {
                 totals
             }
@@ -235,6 +241,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             executionResult
         } = (result as Execution.IExecutionResponses);
 
+        // Short term solution (See BB-641)
+        const indexedTotals = convertToIndexedTotals(totals, dataSource.getAfm(), resultSpec);
+
         const onDataTooLarge = environment === 'dashboards' ? this.onDataTooLarge : noop;
         return (
             <IntlWrapper locale={locale}>
@@ -257,7 +266,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                             onDataTooLarge={onDataTooLarge}
                             tableRenderer={tableRenderer}
                             onFiredDrillEvent={onFiredDrillEvent}
-                            totals={totals}
+                            totals={indexedTotals}
                             totalsEditAllowed={totalsEditAllowed}
                             onTotalsEdit={this.onTotalsEdit}
                         />

@@ -1,5 +1,7 @@
-export interface ITotalItem {
+import { VisualizationObject } from '@gooddata/typings';
+
+export interface IIndexedTotalItem {
     alias?: string;
-    type: string;
+    type: VisualizationObject.TotalType;
     outputMeasureIndexes: number[];
 }

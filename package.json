@@ -13,9 +13,9 @@
     "LICENSE"
   ],
   "devDependencies": {
-    "@gooddata/mock-js": "0.3.1",
+    "@gooddata/mock-js": "1.0.0-alpha1",
     "@gooddata/test-storybook": "1.1.0",
-    "@gooddata/typings": "0.0.6",
+    "@gooddata/typings": "1.0.0",
     "@storybook/addon-actions": "3.2.18",
     "@storybook/addon-options": "3.2.6",
     "@storybook/react": "3.2.6",
@@ -46,13 +46,13 @@
     "typescript": "2.3.3"
   },
   "dependencies": {
-    "@gooddata/data-layer": "^5.0.3",
-    "@gooddata/goodstrap": "^53.0.1",
+    "@gooddata/data-layer": "6.0.0-alpha1",
+    "@gooddata/goodstrap": "54.0.0-alpha1",
     "@gooddata/indigo-visualizations": "^1.1.11",
     "@gooddata/js-utils": "^0.9.0",
     "@gooddata/numberjs": "^3.1.2",
     "classnames": "^2.2.5",
-    "gooddata": "^4.5.1",
+    "gooddata": "5.0.0-alpha1",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.2.3",
