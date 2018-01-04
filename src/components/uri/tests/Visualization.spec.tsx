@@ -11,6 +11,9 @@ import { Visualization } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
 import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
+import {VisualizationTypes} from '../../../constants/visualizationTypes';
+import {AFM} from '@gooddata/typings';
+import {ITotalItem} from '../../../index';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -77,8 +80,45 @@ describe('Visualization', () => {
             />
         );
 
+        const expectedResultSpec: AFM.IResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1'],
+                    totals: [
+                        {
+                            attributeIdentifier: 'a1',
+                            measureIdentifier: 'm1',
+                            type: 'avg'
+                        }
+                    ]
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ],
+            sorts: [
+                {
+                    attributeSortItem: {
+                        attributeIdentifier: 'a1', direction: 'asc'
+                    }
+                }
+            ]
+        };
+
+        const expectedTotals: ITotalItem[] = [
+            {
+                type: 'avg',
+                alias: 'average',
+                outputMeasureIndexes: [0]
+            }
+        ];
+
         return delay(SLOW).then(() => {
             expect(wrapper.find(SortableTable).length).toBe(1);
+            expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
+            expect(wrapper.state('dataSource')).not.toBeNull();
+            expect(wrapper.state('resultSpec')).toEqual(expectedResultSpec);
+            expect(wrapper.state('totals')).toEqual(expectedTotals);
         });
     });
 

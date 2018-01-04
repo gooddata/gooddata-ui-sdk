@@ -129,12 +129,13 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.visualizationUri = props.uri;
 
         this.subject = createSubject<IVisualizationExecInfo>(
-            ({ type, resultSpec, dataSource }) => {
+            ({ type, resultSpec, dataSource, totals }) => {
                 this.dataSource = dataSource;
                 this.setState({
                     type,
                     resultSpec,
-                    isLoading: false
+                    isLoading: false,
+                    totals
                 });
             }, () => props.onError({ status: ErrorStates.NOT_FOUND }));
     }

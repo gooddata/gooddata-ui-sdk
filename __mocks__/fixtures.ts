@@ -107,6 +107,15 @@ export const charts: [{ visualization: VisualizationObject.IVisualizationObject 
                                 type: 'relative'
                             }
                         }
+                    ],
+                    totals: [
+                        {
+                            total: {
+                                type: 'avg',
+                                alias: 'average',
+                                outputMeasureIndexes: [0]
+                            }
+                        }
                     ]
                 },
                 type: VisualizationTypes.TABLE
