@@ -115,7 +115,7 @@ export function loadAttributeElements(
                     offset,
                     limit,
                     items: items.map((item: GoodData.IElement) => pick(item.element, 'uri', 'title')),
-                    totalCount: parseInt(total, 10)
+                    totalCount: total
                 }
             };
         });

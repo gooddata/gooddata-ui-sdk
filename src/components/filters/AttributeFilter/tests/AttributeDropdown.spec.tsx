@@ -5,7 +5,12 @@ import { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
 
 import { AttributeDropdown, VISIBLE_ITEMS_COUNT, createAfmFilter } from '../AttributeDropdown';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
-import { createMetadataMock, waitFor } from './utils';
+import {
+    createMetadataMock,
+    waitFor,
+    ATTRIBUTE_DISPLAY_FORM_URI,
+    ATTRIBUTE_DISPLAY_FORM_IDENTIFIER
+} from './utils';
 
 describe('AttributeDropdown', () => {
     function renderComponent(props: any = {}) {
@@ -32,9 +37,9 @@ describe('AttributeDropdown', () => {
             },
             meta: {
                 category: 'attributeDisplayForm',
-                identifier: '3.df',
+                identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
                 title: 'Country',
-                uri: '/gdc/md/storybook/obj/3.df'
+                uri: ATTRIBUTE_DISPLAY_FORM_URI
             }
         };
     }
@@ -82,7 +87,7 @@ describe('AttributeDropdown', () => {
         const attributeDisplayForm = createADF();
         const onApply = jest.fn((filter) => {
             expect(filter).toEqual({
-                id: '/gdc/md/storybook/obj/3.df',
+                id: ATTRIBUTE_DISPLAY_FORM_URI,
                 type: 'attribute',
                 notIn: ['0']
             });
