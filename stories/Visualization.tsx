@@ -52,6 +52,7 @@ class DynamicVisualization extends React.Component<any, any> {
                     key="dynamic-test-vis"
                     onLoadingChanged={this.onLoadingChanged}
                     onError={onErrorHandler}
+                    projectId={this.state.projectId}
                     {...this.state}
                 />
                 {this.state.isLoading
@@ -129,19 +130,7 @@ storiesOf('Visualization', module)
             </div>
         )
     ))
-    .add('chart with custom colors example', () => (
-        screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
-                <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
-                    config={{ colors: CUSTOM_COLORS }}
-                    onError={onErrorHandler}
-                />
-            </div>
-        )
-    ))
-    .add('chart with applied filter', () => {
+    .add('chart with applied filter and custom colors', () => {
         const filter: AFM.IAbsoluteDateFilter = {
             absoluteDateFilter: {
                 dataSet: {
@@ -158,6 +147,7 @@ storiesOf('Visualization', module)
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1002'}
                     filters={[filter]}
+                    config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
                 />
             </div>
