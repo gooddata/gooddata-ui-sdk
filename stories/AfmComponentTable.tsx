@@ -6,7 +6,8 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { Table } from '../src/components/afm/Table';
 import {
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
-    RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS
+    RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
 } from './data/afmComponentProps';
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
@@ -24,6 +25,17 @@ storiesOf('AFM components - Table', module)
                 <Table
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('renamed measure and renamed attribute', () => (
+        screenshotWrap(
+            <div style={{ width: 600, height: 300 }}>
+                <Table
+                    projectId="storybook"
+                    afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
                 />
             </div>
