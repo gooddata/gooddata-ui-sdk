@@ -1,6 +1,7 @@
 import * as AfmComponents from './components/afm/afmComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
+import { isEmptyResult } from './helpers/errorHandlers';
 import { BaseChart, ILegendConfig } from './components/core/base/BaseChart';
 import { Table } from './components/core/Table';
 import { Kpi } from './components/simple/Kpi';
@@ -27,6 +28,7 @@ export {
     ChartType,
     ErrorCodes,
     ErrorStates,
+    isEmptyResult,
     Execute,
     IDrillableItem,
     ITotalItem,

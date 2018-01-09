@@ -17,6 +17,10 @@
         {
           "identifier": "aagV61RmaPTt",
           "title": "Amount [BOP]"
+        },
+        {
+          "identifier": "9",
+          "title": "Saved null"
         }
       ],
       "attributes": [
@@ -84,6 +88,11 @@
     }
   ],
   "afmExecutions": [
+    {
+      "_description": "KPI / saved execution with no data",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/9"}}}}],"filters":[]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]}]}}},
+      "executionResult": {"executionResult":{"data":[],"paging":{"count":[0],"offset":[0],"total":[0]}}}
+    },
     {
       "_description": "Visualization / dynamic visualization test",
       "execution": {"execution":{"afm":{"attributes":[{"displayForm":{"uri":"/gdc/md/storybook/obj/3.df"},"localIdentifier":"a1"}],"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"Amount"},{"localIdentifier":"m2","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"Amount"}],"filters":[{"absoluteDateFilter":{"dataSet":{"uri":"/gdc/md/myproject/obj/123"},"from":"2017-01-01","to":"2017-12-31"}}],"nativeTotals":[]},"resultSpec":{"dimensions":[{"itemIdentifiers":["a1"]},{"itemIdentifiers":["measureGroup"]}]}}},

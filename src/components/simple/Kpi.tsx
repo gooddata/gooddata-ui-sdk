@@ -7,6 +7,7 @@ import { Filters, Uri } from '@gooddata/data-layer';
 import { Execute, IExecuteChildrenProps } from '../../execution/Execute';
 import { IEvents } from '../../interfaces/Events';
 import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
+import { isEmptyResult } from '../../helpers/errorHandlers';
 
 export { Requireable };
 
@@ -70,24 +71,25 @@ export class Kpi extends React.Component<IKpiProps, null> {
                 onError={onError}
                 onLoadingChanged={onLoadingChanged}
             >
-                {(props: IExecuteChildrenProps) =>
+                {(execProps: IExecuteChildrenProps) =>
                     <span className="gdc-kpi">
-                        {this.getFormattedResult(
-                            this.extractNumber(props.result)
-                        )}
+                        {this.getFormattedResult(this.extractNumber(execProps.result))}
                     </span>
                 }
             </ExecuteComponent>
         );
     }
 
-    private getFormattedResult(result: string) {
-        const formattedNumber = numberFormat(parseFloat(result), this.props.format);
+    private getFormattedResult(num: number | string) {
+        const formattedNumber = numberFormat(num, this.props.format);
         const { label, color } = colors2Object(formattedNumber);
         return color ? <span style={{ color }}>{label}</span> : label;
     }
 
-    private extractNumber(result: Execution.IExecutionResponses): string {
-        return result.executionResult.executionResult.data[0].toString();
+    private extractNumber(result: Execution.IExecutionResponses) {
+        if (isEmptyResult(result)) {
+            return '';
+        }
+        return parseFloat(result.executionResult.executionResult.data[0].toString());
     }
 }
