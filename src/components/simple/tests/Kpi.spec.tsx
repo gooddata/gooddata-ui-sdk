@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 
 import { Kpi, IKpiProps } from '../Kpi';
 import { delay } from '../../tests/utils';
-import { oneMeasureResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { emptyResponse, oneMeasureResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 
 class DummyExecute extends React.Component<any, null> {
     public render() {
@@ -11,12 +11,18 @@ class DummyExecute extends React.Component<any, null> {
     }
 }
 
+class DummyExecuteEmpty extends React.Component<any, null> {
+    public render() {
+        return this.props.children({ result: emptyResponse });
+    }
+}
+
 describe('Kpi', () => {
-    function createComponent(format?: string) {
+    function createComponent(format?: string, ExecuteComponent = DummyExecute) {
         const props: IKpiProps = {
             projectId: 'myprojectid',
             measure: '/gdc/md/myprojectid/obj/123',
-            ExecuteComponent: DummyExecute
+            ExecuteComponent
         };
 
         if (format) {
@@ -65,7 +71,8 @@ describe('Kpi', () => {
     it('should use format with backgroundColor', () => {
         const wrapper = createComponent('[backgroundcolor=CCCCCC][red]$#,#.##');
         return delay().then(() => {
-            expect(wrapper.find('.gdc-kpi').text()).toEqual('$42,470,571.16');
+            expect(wrapper.find('.gdc-kpi').html())
+                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0);">$42,470,571.16</span></span>');
         });
     });
 
@@ -73,6 +80,14 @@ describe('Kpi', () => {
         const wrapper = createComponent('$#,#.##');
         return delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('$42,470,571.16');
+        });
+    });
+
+    it('should render null value', () => {
+        const wrapper = createComponent('[=Null][backgroundcolor=DDDDDD][red]No Value;', DummyExecuteEmpty);
+        return delay().then(() => {
+            expect(wrapper.find('.gdc-kpi').html())
+                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0);">No Value</span></span>');
         });
     });
 });

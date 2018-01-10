@@ -28,6 +28,7 @@ export function convertErrors(error: Execution.IError) {
     }
 }
 
+/** @deprecated */
 function isNullExecutionResult(responses: Execution.IExecutionResponses): boolean {
     return responses.executionResult === null;
 }
@@ -44,7 +45,7 @@ function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {
     return hasEmptyData(responses) && hasMissingHeaderItems(responses);
 }
 
-function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
+export function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
     return isNullExecutionResult(responses) || isEmptyDataResult(responses);
 }
 

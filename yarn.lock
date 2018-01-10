@@ -87,9 +87,9 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.0.0.tgz#9d646f1f9c05614d18e08ac5024b2ba2f7139396"
 
-"@gooddata/numberjs@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.0.tgz#0e200a833296815ff040a073adf015b7699ce8c9"
+"@gooddata/numberjs@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.1.tgz#5a3a70fcbc8d0d58123eeb4992902c1fb420825a"
 
 "@gooddata/test-storybook@1.0.0":
   version "1.0.0"

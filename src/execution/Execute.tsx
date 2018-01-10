@@ -29,10 +29,6 @@ function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResp
     return new DataTable(new ExecuteAfmAdapter(GoodData, projectId));
 }
 
-function isEmptyResult(response: Execution.IExecutionResponses): boolean {
-    return response.executionResult === null;
-}
-
 export interface IExecuteChildrenProps {
     result: Execution.IExecutionResponses;
 }
@@ -58,11 +54,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
         this.dataTable = props.dataTableFactory(props.projectId);
         this.dataTable.onData((result: Execution.IExecutionResponses) => {
-            if (isEmptyResult(result)) {
-                onError({ status: ErrorStates.NO_DATA });
-            } else {
-                this.setState({ result });
-            }
+            this.setState({ result });
             onLoadingChanged({ isLoading: false });
         });
 
