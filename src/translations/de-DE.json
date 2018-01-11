@@ -16,7 +16,7 @@
    "visualizations.totals.funcAlias.avg": "Mittelwert",
    "visualizations.totals.funcAlias.min": "Min",
    "visualizations.totals.funcAlias.max": "Max",
-   "visualizations.totals.funcAlias.nat": "Summe",
+   "visualizations.totals.funcAlias.nat": "Gesamt",
    "visualizations.totals.funcAlias.med": "Medianwert",
    "visualization.numericValues.k": "k",
    "visualization.numericValues.m": "M",
