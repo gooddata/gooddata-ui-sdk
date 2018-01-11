@@ -60,6 +60,7 @@ export interface IChartAFMProps extends ICommonChartProps {
 export interface IBaseChartProps extends IChartProps {
     type: ChartType;
     visualizationComponent?: React.ComponentClass<any>; // for testing
+    forceExecutionResult?: Execution.IExecutionResponses;
 }
 
 export interface IBaseChartState {
@@ -96,7 +97,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
 
         this.state = {
             error: ErrorStates.OK,
-            result: null,
+            result: props.forceExecutionResult || null,
             isLoading: false
         };
 
@@ -119,8 +120,10 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public componentDidMount() {
-        const { dataSource, resultSpec } = this.props;
-        this.initDataLoading(dataSource, resultSpec);
+        if (!this.props.forceExecutionResult) {
+            const { dataSource, resultSpec } = this.props;
+            this.initDataLoading(dataSource, resultSpec);
+        }
     }
 
     public isDataReloadRequired(nextProps: IBaseChartProps) {
@@ -129,6 +132,11 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public componentWillReceiveProps(nextProps: IBaseChartProps) {
+        if (nextProps.forceExecutionResult) {
+            this.setState({ result: nextProps.forceExecutionResult, error: ErrorStates.OK });
+            return;
+        }
+
         if (this.isDataReloadRequired(nextProps)) {
             const { dataSource, resultSpec } = nextProps;
             this.initDataLoading(dataSource, resultSpec);
