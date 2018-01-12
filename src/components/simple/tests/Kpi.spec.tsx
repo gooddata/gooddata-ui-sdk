@@ -72,7 +72,7 @@ describe('Kpi', () => {
         const wrapper = createComponent('[backgroundcolor=CCCCCC][red]$#,#.##');
         return delay().then(() => {
             expect(wrapper.find('.gdc-kpi').html())
-                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0);">$42,470,571.16</span></span>');
+                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0); background-color: rgb(204, 204, 204);">$42,470,571.16</span></span>'); // tslint:disable-line:max-line-length
         });
     });
 
@@ -87,7 +87,7 @@ describe('Kpi', () => {
         const wrapper = createComponent('[=Null][backgroundcolor=DDDDDD][red]No Value;', DummyExecuteEmpty);
         return delay().then(() => {
             expect(wrapper.find('.gdc-kpi').html())
-                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0);">No Value</span></span>');
+                .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0); background-color: rgb(221, 221, 221);">No Value</span></span>'); // tslint:disable-line:max-line-length
         });
     });
 });
