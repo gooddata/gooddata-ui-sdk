@@ -82,8 +82,8 @@ export class Kpi extends React.Component<IKpiProps, null> {
 
     private getFormattedResult(num: number | string) {
         const formattedNumber = numberFormat(num, this.props.format);
-        const { label, color } = colors2Object(formattedNumber);
-        return color ? <span style={{ color }}>{label}</span> : label;
+        const { label, color, backgroundColor } = colors2Object(formattedNumber);
+        return color ? <span style={{ color, backgroundColor }}>{label}</span> : label;
     }
 
     private extractNumber(result: Execution.IExecutionResponses) {
