@@ -54,3 +54,26 @@ export const AFM_TWO_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
         ATTRIBUTE_COLOURS
     ]
 };
+
+export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IResultSpec = {
+    dimensions: [
+        {
+            itemIdentifiers: [ATTRIBUTE_COLOURS.localIdentifier],
+            totals: [
+                {
+                    measureIdentifier: MEASURE_1.localIdentifier,
+                    type: 'sum',
+                    attributeIdentifier: ATTRIBUTE_COLOURS.localIdentifier
+                },
+                {
+                    measureIdentifier: MEASURE_2.localIdentifier,
+                    type: 'avg',
+                    attributeIdentifier: ATTRIBUTE_COLOURS.localIdentifier
+                }
+            ]
+        },
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ]
+};
