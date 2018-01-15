@@ -11,6 +11,11 @@ const MEASURE_1: AFM.IMeasure = {
     }
 };
 
+const MEASURE_1_DUPLICATE: AFM.IMeasure = {
+    ...MEASURE_1,
+    localIdentifier: 'm2'
+};
+
 const MEASURE_2: AFM.IMeasure = {
     localIdentifier: 'm2',
     definition: {
@@ -19,6 +24,13 @@ const MEASURE_2: AFM.IMeasure = {
                 uri: '/gdc/md/storybook/obj/2'
             }
         }
+    }
+};
+
+const ATTRIBUTE_CITIES: AFM.IAttribute = {
+    localIdentifier: 'a1',
+    displayForm: {
+        uri: '/gdc/md/storybook/obj/3.df'
     }
 };
 
@@ -82,6 +94,39 @@ export const AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
         ...ATTRIBUTE,
         alias: 'a'
     }]
+};
+
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_1_DUPLICATE
+    ],
+    attributes: [
+        ATTRIBUTE_CITIES
+    ]
+};
+
+export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS: AFM.IResultSpec = {
+    dimensions: [
+        {
+            itemIdentifiers: [ATTRIBUTE_CITIES.localIdentifier],
+            totals: [
+                {
+                    measureIdentifier: MEASURE_1.localIdentifier,
+                    type: 'sum',
+                    attributeIdentifier: ATTRIBUTE_CITIES.localIdentifier
+                },
+                {
+                    measureIdentifier: MEASURE_1_DUPLICATE.localIdentifier,
+                    type: 'avg',
+                    attributeIdentifier: ATTRIBUTE_CITIES.localIdentifier
+                }
+            ]
+        },
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ]
 };
 
 export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IResultSpec = {

@@ -42,7 +42,7 @@ class DynamicVisualization extends React.Component<any, any> {
 
     public render() {
         return (
-            <div>
+            <div style={{width: '100%', height: '100%', position: 'relative'}}>
                 <div>
                     <button onClick={this.toggle.bind(this, 'uri')}>toggle uri</button>
                     <button onClick={this.toggle.bind(this, 'filters')}>toggle filter</button>
@@ -119,6 +119,26 @@ storiesOf('Visualization', module)
             </div>
         )
     ))
+    .add('table resizable', () => (
+        screenshotWrap(
+            <div
+                style={{
+                    width: 800,
+                    height: 400,
+                    padding: 10,
+                    border: 'solid 1px #000000',
+                    resize: 'both',
+                    overflow: 'auto'
+                }}
+            >
+                <Visualization
+                    projectId="myproject"
+                    identifier="1001"
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
     .add('chart example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -168,7 +188,7 @@ storiesOf('Visualization', module)
     ))
     .add('dynamic visualization test', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400, position: 'relative' }}>
+            <div style={{ width: 800, height: 400 }}>
                 <DynamicVisualization />
             </div>
         )
