@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "@gooddata/mock-js": "0.2.0",
-    "@gooddata/test-storybook": "1.0.0",
+    "@gooddata/test-storybook": "1.0.2",
     "@gooddata/typings": "0.0.4",
     "@storybook/addon-actions": "3.2.18",
     "@storybook/addon-options": "3.2.6",

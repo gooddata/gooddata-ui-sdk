@@ -91,14 +91,14 @@
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/test-storybook@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.0.0.tgz#fe406727773b54fecfe2c3b2cbc74c674d975364"
+"@gooddata/test-storybook@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.0.2.tgz#69d80714ce201b57d38e424229471883ad0c4b2d"
   dependencies:
     acorn "5.1.1"
     acorn-jsx "4.0.1"
     acorn-object-spread "1.0.0"
-    backstopjs "3.0.36"
+    backstopjs "3.0.38"
     commander "2.11.0"
     lodash "4.17.4"
     node-glob "1.2.0"
@@ -1627,13 +1627,13 @@ babylon@~5.8.3:
   version "5.8.38"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-5.8.38.tgz#ec9b120b11bf6ccd4173a18bf217e60b79859ffd"
 
-backstopjs@3.0.36:
-  version "3.0.36"
-  resolved "https://registry.yarnpkg.com/backstopjs/-/backstopjs-3.0.36.tgz#3660a3f5f3480764b5bed7da722bf0b41d94764e"
+backstopjs@3.0.38:
+  version "3.0.38"
+  resolved "https://registry.yarnpkg.com/backstopjs/-/backstopjs-3.0.38.tgz#987b178d9ffc0a6a89811de468e8c324210e556d"
   dependencies:
     casperjs "^1.1.0-beta5"
     chalk "^1.1.3"
-    chromy "0.5.5"
+    chromy "0.5.7"
     fs-extra "^0.30.0"
     junitwriter "~0.3.1"
     lodash "^4.17.4"
@@ -2027,9 +2027,9 @@ chrome-remote-interface@^0.23.2:
     commander "2.1.x"
     ws "2.0.x"
 
-chromy@0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/chromy/-/chromy-0.5.5.tgz#bcf023b228517dda46b3d25956bea7fdf8858e1f"
+chromy@0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/chromy/-/chromy-0.5.7.tgz#b79423a883676249bb4031a91ed5f127ad2a93a5"
   dependencies:
     async-chain-proxy "^0.1.5"
     babel-runtime "^6.26.0"
