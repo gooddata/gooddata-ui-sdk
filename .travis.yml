@@ -7,4 +7,4 @@ before_script:
   - yarn check --integrity
 script:
   - yarn validate-ci
-  - jest --config=./jest.ci.json
+  - jest --config=./jest.ci.json --runInBand
