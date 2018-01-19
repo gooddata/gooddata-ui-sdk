@@ -60,7 +60,7 @@ Visual regression testing for Storybook is provided by [@gooddata/test-storybook
 ```
 git checkout master && git pull upstream master --tags
 npm version [major|minor|patch] -m "Release v%s"
-npm publish --tag alpha
+npm publish
 git push upstream master --tags
 ```
 
