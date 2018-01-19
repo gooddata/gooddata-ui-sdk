@@ -34,6 +34,7 @@ export { Requireable };
 export interface ITableProps extends IEvents {
     dataSource: DataSource.IDataSource<Execution.IExecutionResponses>;
     resultSpec?: AFM.IResultSpec;
+    forceExecutionResult?: Execution.IExecutionResponses;
     locale?: string;
     height?: number;
     environment?: VisualizationEnvironment;
@@ -92,7 +93,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
 
         this.state = {
             error: ErrorStates.OK,
-            result: null,
+            result: props.forceExecutionResult || null,
             isLoading: false,
             page: 1
         };
@@ -119,11 +120,18 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     public componentDidMount() {
-        const { dataSource, resultSpec } = this.props;
-        this.initDataLoading(dataSource, resultSpec);
+        if (!this.props.forceExecutionResult) {
+            const { dataSource, resultSpec } = this.props;
+            this.initDataLoading(dataSource, resultSpec);
+        }
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
+        if (nextProps.forceExecutionResult) {
+            this.setState({ result: nextProps.forceExecutionResult, error: ErrorStates.OK });
+            return;
+        }
+
         const resultSpecChanged = !isEqual(get(this.props, 'resultSpec'), get(nextProps, 'resultSpec'));
 
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || resultSpecChanged) {
