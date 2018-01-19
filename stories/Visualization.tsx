@@ -112,7 +112,7 @@ storiesOf('Visualization', module)
                 <Visualization
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1001'}
-                    drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                    drillableItems={[{ identifier: '1' }, { identifier: '3' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
                 />
@@ -159,7 +159,7 @@ storiesOf('Visualization', module)
                 <Visualization
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1002'}
-                    drillableItems={[{ uri: 'm1' }, { uri: 'm2' }]}
+                    drillableItems={[{ identifier: '1' }, { identifier: '2' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
                 />
