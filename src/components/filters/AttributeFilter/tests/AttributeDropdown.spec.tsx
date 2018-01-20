@@ -1,6 +1,6 @@
 import * as React from 'react';
+import * as ReactTestUtils from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import * as ReactTestUtils from 'react-addons-test-utils';
 import { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
 
 import { AttributeDropdown, VISIBLE_ITEMS_COUNT, createAfmFilter } from '../AttributeDropdown';
@@ -57,7 +57,7 @@ describe('AttributeDropdown', () => {
     it('should render overlay on click and display loading', () => {
         const attributeDisplayForm = createADF();
         const wrapper = renderComponent({ attributeDisplayForm });
-        wrapper.find('.gd-attribute-filter .button-dropdown').simulate('click');
+        wrapper.find('.gd-attribute-filter .button-dropdown .s-country button').simulate('click');
         expect(
             document.querySelectorAll('.gd-attribute-filter-overlay .s-attribute-filter-list-loading')
         ).toHaveLength(1);

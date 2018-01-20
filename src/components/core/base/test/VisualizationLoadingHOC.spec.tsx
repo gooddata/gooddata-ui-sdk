@@ -64,6 +64,7 @@ describe('VisualizationLoadingHOC', () => {
         const wrapper = createComponent(props);
 
         return delay().then(() => {
+            wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
             expect(inner.length).toBe(1);
             expect(inner.props()).toMatchObject(props);
@@ -124,6 +125,7 @@ describe('VisualizationLoadingHOC', () => {
         const wrapper = createComponent();
 
         return delay().then(() => {
+            wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
             expect(inner.length).toBe(1);
             expect(inner.props()).toMatchObject({
@@ -143,6 +145,7 @@ describe('VisualizationLoadingHOC', () => {
         });
 
         return delay().then(() => {
+            wrapper.update();
             const innerWrapped = wrapper.find(TestInnerComponent);
             const innerError = wrapper.find(ErrorComponent);
 
@@ -259,6 +262,7 @@ describe('VisualizationLoadingHOC', () => {
         });
 
         return delay().then(() => {
+            wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
 
             onError.mockReset();
@@ -312,6 +316,7 @@ describe('VisualizationLoadingHOC', () => {
         });
 
         return delay().then(() => {
+            wrapper.update();
             expect(wrapper.find(TestInnerComponent).length).toBe(0);
             expect(onError).toHaveBeenCalledTimes(2);
             expect(onError).toHaveBeenLastCalledWith({
@@ -323,6 +328,7 @@ describe('VisualizationLoadingHOC', () => {
                 dataSource: oneMeasureDataSource
             });
             return delay().then(() => {
+                wrapper.update();
                 expect(pushData).toHaveBeenCalledTimes(1);
                 expect(wrapper.find(TestInnerComponent).length).toBe(1);
             });
@@ -336,6 +342,7 @@ describe('VisualizationLoadingHOC', () => {
         });
 
         return delay().then(() => {
+            wrapper.update();
             const visualization = wrapper.find(TestInnerComponent);
             onError.mockReset();
 

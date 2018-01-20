@@ -35,6 +35,7 @@ describe('AttributeLoader', () => {
 
         expect(wrapper.isEmptyRender()).toEqual(true);
         return delay().then(() => {
+            wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(0);
             expect(metadata.getObjectDetails).toHaveBeenCalledTimes(1);
@@ -54,6 +55,7 @@ describe('AttributeLoader', () => {
 
         expect(wrapper.isEmptyRender()).toEqual(true);
         return delay().then(() => {
+            wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(1);
             expect(metadata.getObjectDetails).toHaveBeenCalledTimes(1);
@@ -73,6 +75,7 @@ describe('AttributeLoader', () => {
 
         expect(wrapper.isEmptyRender()).toEqual(true);
         return delay().then(() => {
+            wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(1);
             expect(metadata.getObjectDetails).toHaveBeenCalledTimes(1);
@@ -85,6 +88,7 @@ describe('AttributeLoader', () => {
             });
 
             return delay().then(() => {
+                wrapper.update();
                 expect(metadata.getObjectUri).toHaveBeenCalledTimes(2);
                 expect(metadata.getObjectDetails).toHaveBeenCalledTimes(2);
                 expect(wrapper.text()).toEqual('Attribute 2');
