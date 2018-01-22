@@ -22,11 +22,18 @@ const MEASURE_2: AFM.IMeasure = {
     }
 };
 
-const ATTRIBUTE_COLOURS: AFM.IAttribute = {
+const ATTRIBUTE: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
         uri: '/gdc/md/storybook/obj/4.df'
     }
+};
+
+export const AFM_ONE_RENAMED_MEASURE: AFM.IAfm = {
+    measures: [{
+        ...MEASURE_1,
+        alias: 'My Alias'
+    }]
 };
 
 export const AFM_ONE_MEASURE_ONE_ATTRIBUTE: AFM.IAfm = {
@@ -34,8 +41,19 @@ export const AFM_ONE_MEASURE_ONE_ATTRIBUTE: AFM.IAfm = {
         MEASURE_1
     ],
     attributes: [
-        ATTRIBUTE_COLOURS
+        ATTRIBUTE
     ]
+};
+
+export const AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
+    measures: [{
+        ...MEASURE_1,
+        alias: 'My Measure Alias'
+    }],
+    attributes: [{
+        ...ATTRIBUTE,
+        alias: 'My Attribute Alias'
+    }]
 };
 
 export const AFM_TWO_MEASURES: AFM.IAfm = {
@@ -51,24 +69,35 @@ export const AFM_TWO_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
         MEASURE_2
     ],
     attributes: [
-        ATTRIBUTE_COLOURS
+        ATTRIBUTE
     ]
+};
+
+export const AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2
+    ],
+    attributes: [{
+        ...ATTRIBUTE,
+        alias: 'a'
+    }]
 };
 
 export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IResultSpec = {
     dimensions: [
         {
-            itemIdentifiers: [ATTRIBUTE_COLOURS.localIdentifier],
+            itemIdentifiers: [ATTRIBUTE.localIdentifier],
             totals: [
                 {
                     measureIdentifier: MEASURE_1.localIdentifier,
                     type: 'sum',
-                    attributeIdentifier: ATTRIBUTE_COLOURS.localIdentifier
+                    attributeIdentifier: ATTRIBUTE.localIdentifier
                 },
                 {
                     measureIdentifier: MEASURE_2.localIdentifier,
                     type: 'avg',
-                    attributeIdentifier: ATTRIBUTE_COLOURS.localIdentifier
+                    attributeIdentifier: ATTRIBUTE.localIdentifier
                 }
             ]
         },

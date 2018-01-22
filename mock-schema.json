@@ -50,6 +50,7 @@
       "categories": [
         {
           "type": "attribute",
+          "collection": "attribute",
           "identifier": "3"
         }
       ],
@@ -88,6 +89,26 @@
     }
   ],
   "afmExecutions": [
+    {
+      "_description": "AFM components - BarChart / custom axis label (renaming, alias)",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"My Alias"}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]},{"itemIdentifiers":[]}]}}},
+      "executionResult": {"executionResult":{"data":[["586"]],"headerItems":[[[{"measureHeaderItem":{"name":"My Alias","order":0}}]],[]],"paging":{"count":[1,1],"offset":[0,0],"total":[1,1]}}}
+    },
+    {
+      "_description": "AFM components - ColumnChart & LineChart / two measures, one renamed attribute",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}}},{"localIdentifier":"m2","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/2"}}}}],"attributes":[{"localIdentifier":"a1","displayForm":{"uri":"/gdc/md/storybook/obj/4.df"},"alias":"a"}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]},{"itemIdentifiers":["a1"]}]}}},
+      "executionResult": {"executionResult":{"data":[["185","66","986","198"],["171","755","918","74"]],"headerItems":[[[{"measureHeaderItem":{"name":"Amount","order":0}},{"measureHeaderItem":{"name":"Bigger Amount","order":1}}]],[[{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=1","name":"Pink"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=2","name":"Red"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=3","name":"Purple"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=4","name":"Salmon"}}]]],"paging":{"count":[2,4],"offset":[0,0],"total":[2,4]}}}
+    },
+    {
+      "_description": "AFM components - PieChart / renamed measure and renamed attribute",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"My Measure Alias"}],"attributes":[{"localIdentifier":"a1","displayForm":{"uri":"/gdc/md/storybook/obj/4.df"},"alias":"My Attribute Alias"}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]},{"itemIdentifiers":["a1"]}]}}},
+      "executionResult": {"executionResult":{"data":[["497","420","330","230"]],"headerItems":[[[{"measureHeaderItem":{"name":"My Measure Alias","order":0}}]],[[{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=1","name":"Pink"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=2","name":"Red"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=3","name":"Purple"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=4","name":"Salmon"}}]]],"paging":{"count":[1,4],"offset":[0,0],"total":[1,4]}}}
+    },
+    {
+      "_description": "AFM components - Table / renamed measure and renamed attribute",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"My Measure Alias"}],"attributes":[{"localIdentifier":"a1","displayForm":{"uri":"/gdc/md/storybook/obj/4.df"},"alias":"My Attribute Alias"}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["a1"]},{"itemIdentifiers":["measureGroup"]}]}}},
+      "executionResult": {"executionResult":{"data":[["174"],["554"],["37"],["364"]],"headerItems":[[[{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=1","name":"Pink"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=2","name":"Red"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=3","name":"Purple"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=4","name":"Salmon"}}]],[[{"measureHeaderItem":{"name":"My Measure Alias","order":0}}]]],"paging":{"count":[4,1],"offset":[0,0],"total":[4,1]}}}
+    },
     {
       "_description": "KPI / saved execution with no data",
       "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/9"}}}}],"filters":[]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]}]}}},

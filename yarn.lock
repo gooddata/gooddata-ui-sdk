@@ -71,17 +71,18 @@
     moment "2.17.1"
     moment-timezone "0.5.11"
 
-"@gooddata/mock-js@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.0.tgz#2b3912375634020ff0460c904bd1380729f0caa3"
+"@gooddata/mock-js@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.3.tgz#b404e1253389bc2ac64126804ad6a2baa3365a74"
   dependencies:
-    "@gooddata/typings" "0.0.3"
+    "@gooddata/typings" "0.0.5"
     body-parser "1.17.1"
     es6-promise "4.1.0"
     express "4.15.2"
     express-session "1.15.2"
     invariant "2.2.2"
     lodash "4.17.4"
+    moment "2.20.0"
 
 "@gooddata/numberjs@3.0.0":
   version "3.0.0"
@@ -103,13 +104,13 @@
     lodash "4.17.4"
     node-glob "1.2.0"
 
-"@gooddata/typings@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.3.tgz#e65a1d0f4188d110631f15698a9cda400862b0eb"
-
 "@gooddata/typings@0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.4.tgz#cc2a625010a15ee2dbe698caaa35b518dd33f1fd"
+
+"@gooddata/typings@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.5.tgz#a9335c2f0abb1e14edaa53705f1d9ef7514dea88"
 
 "@storybook/addon-actions@3.2.18", "@storybook/addon-actions@^3.2.6":
   version "3.2.18"
@@ -4980,6 +4981,10 @@ moment-timezone@0.5.11:
 moment@2.17.1, "moment@>= 2.6.0":
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
+
+moment@2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.0.tgz#53396358994dd3a551e966a66af715ecb6c30ad0"
 
 ms@0.7.2:
   version "0.7.2"
