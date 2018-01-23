@@ -169,6 +169,20 @@ describe('BaseChart', () => {
         });
     });
 
+    it('should NOT call onError when forceExecutionResult', () => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            forceExecutionResult: oneMeasureResponse
+        });
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(wrapper.find(Visualization).length).toBe(1);
+            expect(onError).toHaveBeenCalledTimes(0);
+        });
+    });
+
     it('should be able to restore after rejected datasource', () => {
         const onError = jest.fn();
         const pushData = jest.fn();
