@@ -38,6 +38,15 @@
             "Purple",
             "Salmon"
           ]
+        },
+        {
+          "identifier": "5",
+          "title": "Popularity",
+          "elements": [
+            "low",
+            "medium",
+            "high"
+          ]
         }
       ]
     }
@@ -93,6 +102,11 @@
       "_description": "AFM components - BarChart / custom axis label (renaming, alias)",
       "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}},"alias":"My Alias"}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]},{"itemIdentifiers":[]}]}}},
       "executionResult": {"executionResult":{"data":[["586"]],"headerItems":[[[{"measureHeaderItem":{"name":"My Alias","order":0}}]],[]],"paging":{"count":[1,1],"offset":[0,0],"total":[1,1]}}}
+    },
+    {
+      "_description": "AFM components - BarChart / stacked bar chart",
+      "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/1"}}}}],"attributes":[{"localIdentifier":"a2","displayForm":{"uri":"/gdc/md/storybook/obj/5.df"}},{"localIdentifier":"a1","displayForm":{"uri":"/gdc/md/storybook/obj/4.df"}}]},"resultSpec":{"dimensions":[{"itemIdentifiers":["a1"]},{"itemIdentifiers":["a2","measureGroup"]}]}}},
+      "executionResult": {"executionResult":{"data":[["19","83","17"],["11","8","34"],["48","28","29"],["23","26","32"]],"headerItems":[[[{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=1","name":"Pink"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=2","name":"Red"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=3","name":"Purple"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/4/elements?id=4","name":"Salmon"}}]],[[{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/5/elements?id=1","name":"low"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/5/elements?id=2","name":"medium"}},{"attributeHeaderItem":{"uri":"/gdc/md/storybook/obj/5/elements?id=3","name":"high"}}],[{"measureHeaderItem":{"name":"Amount","order":0}},{"measureHeaderItem":{"name":"Amount","order":0}},{"measureHeaderItem":{"name":"Amount","order":0}}]]],"paging":{"count":[4,3],"offset":[0,0],"total":[4,3]}}}
     },
     {
       "_description": "AFM components - ColumnChart & LineChart / two measures, one renamed attribute",
