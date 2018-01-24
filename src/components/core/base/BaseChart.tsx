@@ -224,6 +224,11 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         }
     }
     private onError(errorCode: string) {
+        // RAIL-552 in ReportVisualization onError is filled with local state and thus rewrites wrong past/futureStates
+        if (this.props.forceExecutionResult) {
+            return;
+        }
+
         const options = getVisualizationOptions(this.props.dataSource.getAfm());
         this.props.onError({
             status: errorCode,
