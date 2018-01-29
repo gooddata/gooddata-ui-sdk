@@ -6,6 +6,8 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { Table } from '../src/components/afm/Table';
 import {
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES,
+    RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
     AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
 } from './data/afmComponentProps';
@@ -62,6 +64,29 @@ storiesOf('AFM components - Table', module)
                     onError={onErrorHandler}
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
+                    pushData={logTotalsChange}
+                />
+            </div>
+        )
+    ))
+    .add('table with resizing', () => (
+        screenshotWrap(
+            <div
+                style={{
+                    width: 800,
+                    height: 400,
+                    padding: 10,
+                    border: 'solid 1px #000000',
+                    resize: 'both',
+                    overflow: 'auto'
+                }}
+            >
+                <Table
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES}
+                    onError={onErrorHandler}
+                    totalsEditAllowed={true}
+                    resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS}
                     pushData={logTotalsChange}
                 />
             </div>

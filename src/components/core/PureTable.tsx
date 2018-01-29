@@ -37,6 +37,7 @@ export interface ITableProps extends IEvents {
     forceExecutionResult?: Execution.IExecutionResponses;
     locale?: string;
     height?: number;
+    maxHeight?: number;
     environment?: VisualizationEnvironment;
     stickyHeaderOffset?: number;
     drillableItems?: IDrillableItem[];
@@ -73,7 +74,8 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         afterRender: noop,
         pushData: noop,
         stickyHeaderOffset: 0,
-        height: 300,
+        height: null,
+        maxHeight: null,
         locale: 'en-US',
         environment: 'none',
         drillableItems: [],
@@ -184,7 +186,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     private getTableRenderer() {
-        const { environment, height, totals } = this.props;
+        const { environment, totals, maxHeight } = this.props;
         const { page } = this.state;
 
         if (environment === 'dashboards') {
@@ -204,7 +206,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         return (props: ITableProps) => (
             <IndigoTable
                 {...props}
-                containerMaxHeight={height}
+                containerMaxHeight={maxHeight}
                 onSortChange={this.onSortChange}
             />
         );
@@ -216,6 +218,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             dataSource,
             drillableItems,
             height,
+            maxHeight,
             locale,
             stickyHeaderOffset,
             environment,
@@ -248,6 +251,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                             config={{ stickyHeaderOffset }}
                             drillableItems={drillableItems}
                             height={height}
+                            maxHeight={maxHeight}
                             onDataTooLarge={onDataTooLarge}
                             tableRenderer={tableRenderer}
                             onFiredDrillEvent={onFiredDrillEvent}
