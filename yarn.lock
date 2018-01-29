@@ -71,9 +71,9 @@
     moment "2.17.1"
     moment-timezone "0.5.11"
 
-"@gooddata/mock-js@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.3.tgz#b404e1253389bc2ac64126804ad6a2baa3365a74"
+"@gooddata/mock-js@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.5.tgz#a9a844a1d5640f84f07444abf4a7c82484067355"
   dependencies:
     "@gooddata/typings" "0.0.5"
     body-parser "1.17.1"
