@@ -60,7 +60,6 @@ export interface IChartAFMProps extends ICommonChartProps {
 export interface IBaseChartProps extends IChartProps {
     type: ChartType;
     visualizationComponent?: React.ComponentClass<any>; // for testing
-    forceExecutionResult?: Execution.IExecutionResponses;
 }
 
 export interface IBaseChartState {
@@ -97,7 +96,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
 
         this.state = {
             error: ErrorStates.OK,
-            result: props.forceExecutionResult || null,
+            result: null,
             isLoading: false
         };
 
@@ -120,10 +119,8 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public componentDidMount() {
-        if (!this.props.forceExecutionResult) {
-            const { dataSource, resultSpec } = this.props;
-            this.initDataLoading(dataSource, resultSpec);
-        }
+        const { dataSource, resultSpec } = this.props;
+        this.initDataLoading(dataSource, resultSpec);
     }
 
     public isDataReloadRequired(nextProps: IBaseChartProps) {
@@ -132,11 +129,6 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public componentWillReceiveProps(nextProps: IBaseChartProps) {
-        if (nextProps.forceExecutionResult) {
-            this.setState({ result: nextProps.forceExecutionResult, error: ErrorStates.OK });
-            return;
-        }
-
         if (this.isDataReloadRequired(nextProps)) {
             const { dataSource, resultSpec } = nextProps;
             this.initDataLoading(dataSource, resultSpec);
@@ -224,11 +216,6 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         }
     }
     private onError(errorCode: string) {
-        // RAIL-552 in ReportVisualization onError is filled with local state and thus rewrites wrong past/futureStates
-        if (this.props.forceExecutionResult) {
-            return;
-        }
-
         const options = getVisualizationOptions(this.props.dataSource.getAfm());
         this.props.onError({
             status: errorCode,

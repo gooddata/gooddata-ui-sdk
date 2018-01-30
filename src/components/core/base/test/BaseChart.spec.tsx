@@ -119,27 +119,6 @@ describe('BaseChart', () => {
         });
     });
 
-    it('should not call initDataLoading when forceExecutionResult', () => {
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const wrapper = createComponent(createProps({
-            onError,
-            onLoadingChanged,
-            type: VisualizationTypes.PIE,
-            forceExecutionResult: oneMeasureResponse
-        }));
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(0);
-        expect(wrapper.state('result')).toEqual(oneMeasureResponse);
-
-        return delay().then(() => {
-            wrapper.setProps({ forceExecutionResult: emptyResponse });
-            expect(onLoadingChanged).toHaveBeenCalledTimes(0);
-            expect(onError).toHaveBeenCalledTimes(0);
-            expect(wrapper.state('result')).toEqual(emptyResponse);
-        });
-    });
-
     it('should call pushData on execution finish', () => {
         const pushData = jest.fn();
         const props = createProps({ pushData });
@@ -166,20 +145,6 @@ describe('BaseChart', () => {
                 status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
                 options: expect.any(Object)
             });
-        });
-    });
-
-    it('should NOT call onError when forceExecutionResult', () => {
-        const onError = jest.fn();
-        const props = createProps({
-            onError,
-            forceExecutionResult: oneMeasureResponse
-        });
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            expect(wrapper.find(Visualization).length).toBe(1);
-            expect(onError).toHaveBeenCalledTimes(0);
         });
     });
 
