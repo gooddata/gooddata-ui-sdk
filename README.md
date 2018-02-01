@@ -44,7 +44,6 @@ To deploy the production version of storybook, run
 $ yarn build-storybook
 ```
 
-
 ### Running the tests
 
 To validate using [tslint](https://palantir.github.io/tslint/), run
@@ -62,6 +61,16 @@ git checkout master && git pull upstream master --tags
 npm version [major|minor|patch] -m "Release v%s"
 npm publish
 git push upstream master --tags
+```
+
+### Examples
+
+For more details see ./examples/README.md
+
+```
+cd examples
+yarn install
+yarn dev
 ```
 
 ## Contributing
