@@ -20,7 +20,7 @@ import { ErrorStates } from '../../../constants/errorStates';
 import {
     oneMeasureResponse,
     oneMeasureAfm,
-    tooLargeResponse, emptyResponse
+    tooLargeResponse
 } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { AFM } from '@gooddata/typings';
 
@@ -150,26 +150,6 @@ describe('PureTable', () => {
             expect(wrapper.find(TableTransformation).length).toBe(1);
             expect(onError).toHaveBeenCalledTimes(1);
             expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
-        });
-    });
-
-    it('should not call initDataLoading when forceExecutionResult', () => {
-        const onLoadingChanged = jest.fn();
-        const onError = jest.fn();
-        const wrapper = createComponent(createProps({
-            onError,
-            onLoadingChanged,
-            forceExecutionResult: oneMeasureResponse
-        }));
-
-        expect(onLoadingChanged).toHaveBeenCalledTimes(0);
-        expect(wrapper.state('result')).toEqual(oneMeasureResponse);
-
-        return delay().then(() => {
-            wrapper.setProps({ forceExecutionResult: emptyResponse });
-            expect(onLoadingChanged).toHaveBeenCalledTimes(0);
-            expect(onError).toHaveBeenCalledTimes(0);
-            expect(wrapper.state('result')).toEqual(emptyResponse);
         });
     });
 
