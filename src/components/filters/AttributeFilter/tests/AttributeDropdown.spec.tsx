@@ -99,6 +99,9 @@ describe('AttributeDropdown', () => {
         wrapper.find(DropdownButton).simulate('click');
 
         const testItems = () => {
+            // If tests fail here, it is probably because of the FLEX_DIMENSIONS_THROTTLE,
+            // that is randomly delaying the display of .s-attribute-filter-list-item
+            // try adjusting the maxDelay or other constants
             const itemElement = document.querySelector('.s-attribute-filter-list-item');
             ReactTestUtils.Simulate.click(itemElement);
             const applyElement = document.querySelector('.s-apply');
@@ -108,9 +111,12 @@ describe('AttributeDropdown', () => {
         };
 
         const delayOffset = 250; // Magic constant inside Goodstrap FLEX_DIMENSIONS_THROTTLE :(
-        const maxDelay = 1000;
-        const increment = 10;
-        const intervalTest = () => (document.querySelectorAll('.s-attribute-filter-list-item').length);
+        const maxDelay = 2000;
+        const increment = 100;
+        const intervalTest = () => {
+            const test = document.querySelectorAll('.s-attribute-filter-list-item').length;
+            return !!test;
+        };
         waitFor(intervalTest, maxDelay, delayOffset, increment).then(testItems, testItems);
     });
 

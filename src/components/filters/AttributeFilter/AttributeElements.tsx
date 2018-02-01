@@ -86,6 +86,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                         to your React components.
                     </p>
                     <button
+                        className="button button-secondary"
                         onClick={loadMore as any}
                         disabled={isLoading || (offset + count === total)}
                     >More

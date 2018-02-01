@@ -13,6 +13,7 @@ import { IDrillableItem } from './interfaces/DrillEvents';
 import { ITotalItem } from './interfaces/Totals';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
+import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
 
 const CoreComponents = {
@@ -23,6 +24,7 @@ const CoreComponents = {
 export {
     AfmComponents,
     AttributeFilter,
+    AttributeElements,
     CoreComponents,
     CatalogHelper,
     ChartType,
