@@ -1,7 +1,6 @@
 // Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
 
 import { get } from 'lodash';
-import { get as xhrGet } from './xhr';
 import { delay } from './utils/promise';
 
 /**
@@ -29,7 +28,7 @@ export const getIn = path => object => get(object, path);
  * @param {Object} options for polling (maxAttempts, pollStep)
  * @private
  */
-export const handlePolling = (uri, isPollingDone, options = {}) => {
+export const handlePolling = (xhrGet, uri, isPollingDone, options = {}) => {
     const {
         attempts = 0,
         maxAttempts = 50,
@@ -43,7 +42,7 @@ export const handlePolling = (uri, isPollingDone, options = {}) => {
         return isPollingDone(response) ?
             Promise.resolve(response) :
             delay(pollStep).then(() => {
-                return handlePolling(uri, isPollingDone, {
+                return handlePolling(xhrGet, uri, isPollingDone, {
                     ...options,
                     attempts: attempts + 1
                 });

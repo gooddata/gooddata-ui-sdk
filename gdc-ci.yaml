@@ -1,4 +1,4 @@
 # defaults - https://github.com/gooddata/gdc-ci/blob/develop/components/client/gdc-ci.yaml
 pull-request:
-  - ci-run-validation
-  - echo "Running unit tests..." && grunt test
+  - yarn validate:ci
+  - grunt test

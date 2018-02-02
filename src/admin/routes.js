@@ -50,8 +50,8 @@ export const DEPLOY_SEGMENT = `${CONTRACT_DOMAIN}/dataProducts/:dataProductId/se
 // returns params as plain object
 export const parse = (route, template) => {
     const parsedRoute = route.startsWith('http') ?
-                            route.match(/^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)([/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/)[5]
-                            : route;
+        route.match(/^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)([/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/)[5]
+        : route;
 
     const values = parsedRoute.split('/');
     const views = template.split('/');

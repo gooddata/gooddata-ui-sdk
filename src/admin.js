@@ -1,13 +1,13 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 
-import * as dataProducts from './admin/dataProducts';
-import * as domainDataProducts from './admin/domainDataProducts';
-import * as domains from './admin/domains';
-import * as domainSegments from './admin/domainSegments';
-import * as clients from './admin/clients';
-import * as segments from './admin/segments';
-import * as logs from './admin/logs';
-import * as contracts from './admin/contracts';
+import { createModule as dataProductsFactory } from './admin/dataProducts';
+import { createModule as domainDataProductsFactory } from './admin/domainDataProducts';
+import { createModule as domainsFactory } from './admin/domains';
+import { createModule as domainSegmentsFactory } from './admin/domainSegments';
+import { createModule as clientsFactory } from './admin/clients';
+import { createModule as segmentsFactory } from './admin/segments';
+import { createModule as logsFactory } from './admin/logs';
+import { createModule as contractsFactory } from './admin/contracts';
 
 /**
  * Network-UI support methods. Mostly private
@@ -16,14 +16,15 @@ import * as contracts from './admin/contracts';
  * @class admin
  *
  */
-
-export default {
-    dataProducts,
-    domainDataProducts,
-    domains,
-    domainSegments,
-    clients,
-    logs,
-    contracts,
-    segments
-};
+export function createModule(xhr) {
+    return {
+        dataProducts: dataProductsFactory(xhr),
+        domainDataProducts: domainDataProductsFactory(xhr),
+        domains: domainsFactory(xhr),
+        domainSegments: domainSegmentsFactory(xhr),
+        clients: clientsFactory(xhr),
+        logs: logsFactory(xhr),
+        contracts: contractsFactory(xhr),
+        segments: segmentsFactory(xhr)
+    };
+}

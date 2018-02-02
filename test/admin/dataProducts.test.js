@@ -1,6 +1,12 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import * as dataProducts from '../../src/admin/dataProducts';
+import { createModule as dataProductsFactory } from '../../src/admin/dataProducts';
+import { createModule as xhrFactory } from '../../src/xhr';
+import { createModule as configFactory } from '../../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const dataProducts = dataProductsFactory(xhr);
 
 describe('dataProducts', () => {
     describe('with fake server', () => {
@@ -91,8 +97,7 @@ describe('dataProducts', () => {
                             }
                         })
                     }
-                )
-                ;
+                );
                 return dataProducts.getDataProducts('contractId', '').then((result) => {
                     expect(result.items.length).toBe(2);
                     expect(result.items[0].domains[0].name).toBe('data-admin-test1');

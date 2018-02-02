@@ -1,6 +1,7 @@
 {
   "extends": ["gooddata"],
   "rules": {
-    "jest/valid-expect": 0
+    "function-paren-newline": 0,
+    "object-curly-newline": 0
   }
 }

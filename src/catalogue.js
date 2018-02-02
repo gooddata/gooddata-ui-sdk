@@ -1,6 +1,4 @@
 import { get, find, omit, cloneDeep } from 'lodash';
-import { post, parseJSON } from './xhr';
-import { mdToExecutionDefinitionsAndColumns } from './execution/experimental-executions';
 
 import { loadAttributesMap } from './utils/attributesMapLoader';
 import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
@@ -18,24 +16,6 @@ const LOAD_DATE_DATASET_DEFAULTS = {
     includeUnavailableDateDataSetsCount: true,
     includeAvailableDateAttributes: true
 };
-
-function bucketItemsToExecConfig(projectId, mdObj, options = {}) {
-    return mdToExecutionDefinitionsAndColumns(projectId, mdObj, options).then((definitionsAndColumns) => {
-        const definitions = get(definitionsAndColumns, 'definitions');
-
-        return get(definitionsAndColumns, 'columns', []).map((column) => {
-            const definition = find(definitions, ({ metricDefinition }) =>
-                get(metricDefinition, 'identifier') === column
-            );
-            const maql = get(definition, 'metricDefinition.expression');
-
-            if (maql) {
-                return maql;
-            }
-            return column;
-        });
-    });
-}
 
 /**
  * Convert specific params in options to "requiredDataSets" structure. For more details look into
@@ -69,70 +49,96 @@ const getRequiredDataSets = (options) => {
     return { requiredDataSets: { type: 'PRODUCTION' } };
 };
 
-function loadCatalog(projectId, catalogRequest) {
-    const uri = `/gdc/internal/projects/${projectId}/loadCatalog`;
+export function createModule(xhr, execution) {
+    function bucketItemsToExecConfig(projectId, mdObj, options = {}) {
+        return execution.mdToExecutionDefinitionsAndColumns(projectId, mdObj, options).then((definitionsAndColumns) => {
+            const definitions = get(definitionsAndColumns, 'definitions');
 
-    return post(uri, { data: { catalogRequest } })
-        .then(parseJSON)
-        .then(data => data.catalogResponse);
-}
+            return get(definitionsAndColumns, 'columns', []).map((column) => {
+                const definition = find(definitions, ({ metricDefinition }) =>
+                    get(metricDefinition, 'identifier') === column
+                );
+                const maql = get(definition, 'metricDefinition.expression');
 
-export function loadItems(projectId, options = {}) {
-    const request = omit({
-        ...REQUEST_DEFAULTS,
-        ...options,
-        ...getRequiredDataSets(options)
-    }, [
-        'dataSetIdentifier',
-        'returnAllDateDataSets',
-        'attributesMap'
-    ]);
-
-    const mdObj = get(cloneDeep(options), 'bucketItems');
-    const attributesMap = get(options, 'attributesMap');
-    const hasBuckets = get(mdObj, 'buckets') !== undefined;
-    if (hasBuckets) {
-        return bucketItemsToExecConfig(projectId, mdObj, { attributesMap }).then(bucketItems =>
-            loadCatalog(projectId, {
-                ...request,
-                bucketItems
-            })
-        );
+                if (maql) {
+                    return maql;
+                }
+                return column;
+            });
+        });
     }
 
-    return loadCatalog(projectId, request);
-}
+    function loadCatalog(projectId, catalogRequest) {
+        const uri = `/gdc/internal/projects/${projectId}/loadCatalog`;
 
-function requestDateDataSets(projectId, dateDataSetsRequest) {
-    const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
+        return xhr.post(uri, { data: { catalogRequest } })
+            .then(xhr.parseJSON)
+            .then(data => data.catalogResponse);
+    }
 
-    return post(uri, { data: { dateDataSetsRequest } })
-        .then(parseJSON)
-        .then(data => data.dateDataSetsResponse);
-}
-
-export function loadDateDataSets(projectId, options) {
-    const mdObj = get(cloneDeep(options), 'bucketItems');
-    const bucketItemsPromise = mdObj ?
-        bucketItemsToExecConfig(projectId, mdObj, { removeDateItems: true, attributesMap: get(options, 'attributesMap') }) :
-        Promise.resolve();
-
-    return bucketItemsPromise.then((bucketItems) => {
-        const omittedOptions = ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets', 'returnAllRelatedDateDataSets', 'attributesMap'];
-        // includeObjectsWithTags has higher priority than excludeObjectsWithTags,
-        // so when present omit excludeObjectsWithTags
-        if (options.includeObjectsWithTags) {
-            omittedOptions.push('excludeObjectsWithTags');
-        }
-
+    function loadItems(projectId, options = {}) {
         const request = omit({
-            ...LOAD_DATE_DATASET_DEFAULTS,
             ...REQUEST_DEFAULTS,
             ...options,
-            ...getRequiredDataSets(options),
-            bucketItems
-        }, omittedOptions);
+            ...getRequiredDataSets(options)
+        }, [
+            'dataSetIdentifier',
+            'returnAllDateDataSets',
+            'attributesMap'
+        ]);
 
-        return requestDateDataSets(projectId, request);
-    });
+        const mdObj = get(cloneDeep(options), 'bucketItems');
+        const attributesMap = get(options, 'attributesMap');
+        const hasBuckets = get(mdObj, 'buckets') !== undefined;
+        if (hasBuckets) {
+            return bucketItemsToExecConfig(projectId, mdObj, { attributesMap }).then(bucketItems =>
+                loadCatalog(projectId, {
+                    ...request,
+                    bucketItems
+                })
+            );
+        }
+
+        return loadCatalog(projectId, request);
+    }
+
+    function requestDateDataSets(projectId, dateDataSetsRequest) {
+        const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
+
+        return xhr.post(uri, { data: { dateDataSetsRequest } })
+            .then(xhr.parseJSON)
+            .then(data => data.dateDataSetsResponse);
+    }
+
+    function loadDateDataSets(projectId, options) {
+        const mdObj = get(cloneDeep(options), 'bucketItems');
+        const bucketItemsPromise = mdObj ?
+            bucketItemsToExecConfig(projectId, mdObj, { removeDateItems: true, attributesMap: get(options, 'attributesMap') }) :
+            Promise.resolve();
+
+        return bucketItemsPromise.then((bucketItems) => {
+            const omittedOptions = ['filter', 'types', 'paging', 'dataSetIdentifier', 'returnAllDateDataSets', 'returnAllRelatedDateDataSets', 'attributesMap'];
+            // includeObjectsWithTags has higher priority than excludeObjectsWithTags,
+            // so when present omit excludeObjectsWithTags
+            if (options.includeObjectsWithTags) {
+                omittedOptions.push('excludeObjectsWithTags');
+            }
+
+            const request = omit({
+                ...LOAD_DATE_DATASET_DEFAULTS,
+                ...REQUEST_DEFAULTS,
+                ...options,
+                ...getRequiredDataSets(options),
+                bucketItems
+            }, omittedOptions);
+
+            return requestDateDataSets(projectId, request);
+        });
+    }
+
+    return {
+        loadItems,
+        loadDateDataSets
+    };
 }
+

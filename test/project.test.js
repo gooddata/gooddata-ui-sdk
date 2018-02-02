@@ -1,7 +1,13 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from './utils/fetch-mock';
 import { mockPollingRequest } from './helpers/polling';
-import * as project from '../src/project';
+import { createModule as projectFactory } from '../src/project';
+import { createModule as xhrFactory } from '../src/xhr';
+import { createModule as configFactory } from '../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const project = projectFactory(xhr);
 
 describe('project', () => {
     describe('with fake server', () => {
@@ -23,7 +29,7 @@ describe('project', () => {
                     {
                         status: 200,
                         body: JSON.stringify({ projects: [{ project: { meta: { title: 'p1' } } },
-                                                { project: { meta: { title: 'p2' } } }] })
+                            { project: { meta: { title: 'p2' } } }] })
                     }
                 );
                 return project.getProjects('myProfileId').then((result) => {
@@ -270,9 +276,9 @@ describe('project', () => {
 
                     mockPollingRequest(projectUri, pendingProject, createdProject);
 
-                    const config = { pollStep: 1, maxAttempts: 1 };
-                    return project.createProject('Project', '1234', config).then(() => {
-                        expect().fail('Should reject the promise if create project ended with 400');
+                    const options = { pollStep: 1, maxAttempts: 1 };
+                    return project.createProject('Project', '1234', options).then(() => {
+                        throw new Error('Should reject the promise if create project ended with 400');
                     }, (err) => {
                         expect(err).toBeInstanceOf(Error);
                     });
@@ -290,7 +296,7 @@ describe('project', () => {
                     );
 
                     return project.createProject('Project', '1234').then(() => {
-                        expect().fail('Should reject the promise if create project ended with 400');
+                        throw new Error('Should reject the promise if create project ended with 400');
                     }, (err) => {
                         expect(err).toBeInstanceOf(Error);
                     });
