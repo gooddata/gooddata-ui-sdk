@@ -73,7 +73,7 @@ export interface IAttributeDropdownStateItem {
 
 export interface IAttributeDropdownState {
     items: IAttributeDropdownStateItem[];
-    totalCount?: number;
+    totalCount?: string;
     selection: IAttributeElement[];
     isListReady: boolean;
     isListInitialising: boolean;
@@ -329,8 +329,8 @@ export class AttributeDropdownWrapped
         return this.renderOverlayWrap(
             <InvertableList
                 items={items}
-                itemsCount={totalCount}
-                filteredItemsCount={totalCount}
+                itemsCount={parseInt(totalCount, 10)}
+                filteredItemsCount={parseInt(totalCount, 10)}
                 selection={selection}
                 isInverted={this.state.isInverted}
                 showSearchField={false}

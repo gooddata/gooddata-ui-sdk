@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types';
 import * as GoodData from 'gooddata';
 import { AFM } from '@gooddata/typings';
 import { get } from 'lodash';
+import { getObjectIdFromUri } from '../../../helpers/utils';
 
 export interface IPaging {
     count: number;
@@ -106,7 +107,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         }
     };
 
-    private identifier?: string = null;
+    private uri?: string = null;
 
     constructor(props: IAttributeElementsProps) {
         super(props);
@@ -130,7 +131,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             this.props.projectId !== nextProps.projectId ||
             get(this.props, 'options.offset') !== get(nextProps, 'options.offset')
         ) {
-            this.identifier = null; // invalidate
+            this.uri = null; // invalidate
             this.setState({
                 isLoading: true,
                 validElements: null // invalidate
@@ -157,33 +158,36 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
     }
 
     public getValidElements(props: IAttributeElementsProps, offset: number) { // IAttributeElementsProps
-        const { projectId, options, uri } = props;
+        const { projectId, options, identifier } = props;
         const optionsWithUpdatedPaging = {
             ...options,
             offset
         };
 
-        const identifierPromise = new Promise((resolve, reject) => {
-            return (props.identifier || this.identifier)
-                ? resolve(props.identifier || this.identifier)
-                : props.metadata.getIdentifiersFromUris(projectId, [uri])
-                .then(
-                    (result) => {
-                        this.identifier = result[0].identifier;
-                        resolve(this.identifier);
-                    },
-                    (error) => {
-                        reject(error);
-                    }
-                );
+        const uriPromise = new Promise((resolve, reject) => {
+            return (props.uri || this.uri)
+                ? resolve(props.uri || this.uri)
+                : props.metadata.getUrisFromIdentifiers(projectId, [identifier])
+                    .then(
+                        (result) => {
+                            this.uri = result[0].uri;
+                            resolve(this.uri);
+                        },
+                        (error) => {
+                            reject(error);
+                        }
+                    );
         });
 
-        identifierPromise
-            .then((identifier: string) => props.metadata.getValidElements(
-                projectId,
-                identifier,
-                optionsWithUpdatedPaging
-            ))
+        uriPromise
+            .then((uri: string) => {
+                const objectId = getObjectIdFromUri(uri);
+                return props.metadata.getValidElements(
+                    projectId,
+                    objectId, // This is misdocumented as identifier, but is in fact objectId
+                    optionsWithUpdatedPaging
+                );
+            })
             .then((response: GoodData.IValidElementsResponse) => {
                 const items = [
                     ...get(this.state, 'validElements.items', []),
@@ -207,7 +211,8 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                     validElements: mergedResponse,
                     isLoading: false
                 });
-            }, error => (
+            })
+            .catch(error => (
                 this.setState({
                     error,
                     isLoading: false

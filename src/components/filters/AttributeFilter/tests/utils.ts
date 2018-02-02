@@ -91,6 +91,16 @@ export function createMetadataMock() {
                 { identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2, uri: ATTRIBUTE_DISPLAY_FORM_URI_2 }
             };
             return Promise.resolve(uris.map(uri => uriMap[uri]));
+        }),
+        // tslint:disable-next-line:variable-name
+        getUrisFromIdentifiers: jest.fn((_projectId, identifiers: string[]) => {
+            const identifierMap = {
+                [ATTRIBUTE_DISPLAY_FORM_IDENTIFIER]:
+                { identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER, uri: ATTRIBUTE_DISPLAY_FORM_URI },
+                [ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2]:
+                { identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2, uri: ATTRIBUTE_DISPLAY_FORM_URI_2 }
+            };
+            return Promise.resolve(identifiers.map(identifier => identifierMap[identifier]));
         })
     };
 }
