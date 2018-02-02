@@ -19,7 +19,7 @@ export class AttributeFilterItem extends Component {
 
     render() {
         const { title, uri } = this.props;
-        return (<label className="gd-list-item s-attribute-filter-list-item" style={{ display: 'inline-block' }} >
+        return (<label className="gd-list-item s-attribute-filter-list-item" style={{ display: 'inline-flex' }} >
             <input type="checkbox" className="gd-input-checkbox" onChange={this.onChange(uri)} />
             <span>{title}</span>
         </label>);
@@ -83,11 +83,6 @@ export class AttributeElementsExample extends Component {
         };
 
         return (<div style={{ minHeight: 500 }}>
-            <div className="gd-message error" style={{ display: 'block' }}>
-                <div className="gd-message-text"><strong>AttributeElements are currently out of order :-(</strong>
-                    <div>There is an outstanding bug reported for this: <a href="https://jira.intgdc.com/browse/RAIL-619" >RAIL-619</a></div>
-                </div>
-            </div>
             <AttributeElements
                 {...attributeElementsProps}
             />
