@@ -36,9 +36,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.1.10.tgz#f0be3aa3f5a228cb8aa9a9ac6d017937528574fe"
+"@gooddata/indigo-visualizations@1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.1.11.tgz#b16c22c479825101bd0971083c96233e488bb6e2"
   dependencies:
     "@gooddata/goodstrap" "53.0.1"
     "@gooddata/js-utils" "0.7.1"
@@ -3643,7 +3643,7 @@ hawk@~6.0.2:
     sntp "2.x.x"
 
 highcharts@4.2.5:
-  version "4.2.5"
+  version v4.2.5
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-4.2.5.tgz#f18bbda5ca326fdff7d816c94814fe8509cec969"
 
 hmac-drbg@^1.0.0:
