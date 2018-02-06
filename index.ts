@@ -297,9 +297,7 @@ export namespace Execution {
     }
 
     export interface IError extends Error {
-        response: {
-            status: number;
-        };
+        response: Response;
     }
 
     /**
