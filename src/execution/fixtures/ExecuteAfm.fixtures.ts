@@ -174,7 +174,24 @@ const tooLargeResponse: Execution.IError = {
     name: 'Error 413',
     message: 'Response is too large',
     response: {
-        status: 413
+        status: 413,
+        body: null as ReadableStream | null, // tslint:disable-line
+        bodyUsed: false,
+        headers: null,
+        ok: true,
+        statusText: '',
+        type: 'error',
+        url: '',
+        json: jest.fn(() => {
+            return Promise.resolve(null);
+        }),
+        text: jest.fn(() => {
+            return Promise.resolve('');
+        }),
+        clone: jest.fn(),
+        arrayBuffer: jest.fn(),
+        blob: jest.fn(),
+        formData: jest.fn()
     }
 };
 
@@ -182,7 +199,24 @@ const badRequestResponse: Execution.IError = {
     name: 'Error 400',
     message: 'Bad request',
     response: {
-        status: 400
+        status: 400,
+        body: null as ReadableStream | null, // tslint:disable-line
+        bodyUsed: false,
+        headers: null,
+        ok: true,
+        statusText: '',
+        type: 'error',
+        url: '',
+        json: jest.fn(() => {
+            return Promise.resolve(null);
+        }),
+        text: jest.fn(() => {
+            return Promise.resolve('');
+        }),
+        clone: jest.fn(),
+        arrayBuffer: jest.fn(),
+        blob: jest.fn(),
+        formData: jest.fn()
     }
 };
 

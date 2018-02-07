@@ -3,29 +3,44 @@ import {
     ErrorCodes as DataErrorCodes
 } from '@gooddata/data-layer';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
+import { get, includes } from 'lodash';
+
+function getJSONFromText(data: string): object {
+    try {
+        return JSON.parse(data);
+    } catch (e) {
+        return null;
+    }
+}
 
 export function convertErrors(error: Execution.IError) {
     const errorCode: number = error.response.status;
+    return error.response.text().then((data) => {
+        switch (errorCode) {
+            case 204:
+                throw ErrorStates.NO_DATA;
 
-    switch (errorCode) {
-        case 204:
-            throw ErrorStates.NO_DATA;
+            case DataErrorCodes.HTTP_TOO_LARGE:
+                throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
 
-        case DataErrorCodes.HTTP_TOO_LARGE:
-            throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
+            case DataErrorCodes.HTTP_BAD_REQUEST:
+                const message = get(getJSONFromText(data), 'error.message', '');
+                if (includes(message, 'Attempt to execute protected report unsafely')) {
+                    throw ErrorStates.PROTECTED_REPORT;
+                } else {
+                    throw ErrorStates.BAD_REQUEST;
+                }
 
-        case DataErrorCodes.HTTP_BAD_REQUEST:
-            throw ErrorStates.BAD_REQUEST;
+            case ErrorCodes.EMPTY_AFM:
+                throw ErrorStates.EMPTY_AFM;
 
-        case ErrorCodes.EMPTY_AFM:
-            throw ErrorStates.EMPTY_AFM;
+            case ErrorCodes.INVALID_BUCKETS:
+                throw ErrorStates.INVALID_BUCKETS;
 
-        case ErrorCodes.INVALID_BUCKETS:
-            throw ErrorStates.INVALID_BUCKETS;
-
-        default:
-            throw ErrorStates.UNKNOWN_ERROR;
-    }
+            default:
+                throw ErrorStates.UNKNOWN_ERROR;
+        }
+    });
 }
 
 /** @deprecated */
@@ -54,7 +69,9 @@ export function checkEmptyResult(responses: Execution.IExecutionResponses) {
         throw {
             name: 'EmptyResulError',
             response: {
-                status: 204
+                status: 204,
+                json: () => Promise.resolve(null),
+                text: () => Promise.resolve(null)
             }
         };
     }

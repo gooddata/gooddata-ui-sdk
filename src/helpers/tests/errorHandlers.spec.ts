@@ -9,28 +9,82 @@ import {
 import { ErrorCodes, ErrorStates } from '../../constants/errorStates';
 import {} from 'jest';
 
-describe('convertErrors', () => {
-    it('should throw correct ErrorStates', () => {
-        const error = new Error() as Execution.IError;
-        error.response = { status: 0 };
+function createMockedError(status: number, body: string = '{}'): Execution.IError {
+    const error = new Error() as Execution.IError;
+    error.response = {
+        status,
+        body: null as ReadableStream | null, // tslint:disable-line
+        bodyUsed: false,
+        headers: null,
+        ok: true,
+        statusText: '',
+        type: 'error',
+        url: '',
+        json: jest.fn(() => {
+            return Promise.resolve(JSON.parse(body));
+        }),
+        text: jest.fn(() => {
+            return Promise.resolve(body);
+        }),
+        clone: jest.fn(),
+        arrayBuffer: jest.fn(),
+        blob: jest.fn(),
+        formData: jest.fn()
+    };
 
-        error.response.status = 204;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.NO_DATA);
+    return error;
+}
 
-        error.response.status = DataErrorCodes.HTTP_TOO_LARGE;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
+describe('convertErrors', async () => {
+    it('should throw correct ErrorStates', async () => {
+        expect.assertions(7);
+        try {
+            await convertErrors(createMockedError(204));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.NO_DATA);
+        }
 
-        error.response.status = DataErrorCodes.HTTP_BAD_REQUEST;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.BAD_REQUEST);
+        try {
+            await convertErrors(createMockedError(DataErrorCodes.HTTP_TOO_LARGE));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
+        }
 
-        error.response.status = ErrorCodes.EMPTY_AFM;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.EMPTY_AFM);
+        try {
+            await convertErrors(createMockedError(DataErrorCodes.HTTP_BAD_REQUEST));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.BAD_REQUEST);
+        }
 
-        error.response.status = ErrorCodes.INVALID_BUCKETS;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.INVALID_BUCKETS);
+        try {
+            const protectedErrorBody = `{
+                "error": {
+                    "message": "Attempt to execute protected report unsafely"
+                }
+            }`;
 
-        error.response.status = 0;
-        expect(() => { convertErrors(error); }).toThrow(ErrorStates.UNKNOWN_ERROR);
+            await convertErrors(createMockedError(DataErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.PROTECTED_REPORT);
+        }
+
+        try {
+            await convertErrors(createMockedError(ErrorCodes.EMPTY_AFM));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.EMPTY_AFM);
+        }
+
+        try {
+            await convertErrors(createMockedError(ErrorCodes.INVALID_BUCKETS));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.INVALID_BUCKETS);
+        }
+
+        try {
+            await convertErrors(createMockedError(0));
+        } catch (e) {
+            expect(e).toEqual(ErrorStates.UNKNOWN_ERROR);
+        }
     });
 });
 
