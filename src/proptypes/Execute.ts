@@ -12,5 +12,7 @@ export const ExecutePropType = {
     projectId: PropTypes.string.isRequired,
     afm: AfmPropTypesShape.isRequired,
     resultSpec: ResultSpecPropTypesShape,
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    LoadingComponent: PropTypes.func,
+    ErrorComponent: PropTypes.func
 };

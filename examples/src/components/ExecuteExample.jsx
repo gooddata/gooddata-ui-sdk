@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Execute } from '@gooddata/react-components';
 
 import { totalSalesIdentifier, projectId } from '../utils/fixtures';
+import { Loading } from './Loading';
+import { Error } from './Error';
 
 export class ExecuteExample extends Component {
     constructor(props) {
@@ -50,6 +52,31 @@ export class ExecuteExample extends Component {
         });
     }
 
+    executeChildrenFunction({ result, isLoading, error }) {
+        if (error) {
+            return <Error error={error} />;
+        }
+        if (isLoading) {
+            return <Loading />;
+        }
+        return (<blockquote>
+            <style jsx>{`
+                .kpi {
+                    height: 60px;
+                    margin: 10px 0;
+                    font-size: 50px;
+                    line-height: 60px;
+                    white-space: nowrap;
+                    vertical-align: bottom;
+                    font-weight: 700;
+                }
+            `}</style>
+            <p className="kpi">{result.executionResult.executionResult.data[0]}</p>
+            <p>Full execution response and result as JSON:</p>
+            <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
+        </blockquote>);
+    }
+
     render() {
         const { error, isLoading, executionNumber, willFail } = this.state;
         const afm = {
@@ -87,24 +114,7 @@ export class ExecuteExample extends Component {
                 projectId={projectId}
                 onLoadingChanged={this.onLoadingChanged}
                 onError={this.onError}
-            >{(executionResult) => {
-                    return error ? <div /> : (<blockquote>
-                        <style jsx>{`
-                            .kpi {
-                                height: 60px;
-                                margin: 10px 0;
-                                font-size: 50px;
-                                line-height: 60px;
-                                white-space: nowrap;
-                                vertical-align: bottom;
-                                font-weight: 700;
-                            }
-                        `}</style>
-                        <p className="kpi">{executionResult.result.executionResult.executionResult.data[0]}</p>
-                        <p>Full execution response and result as JSON:</p>
-                        <pre>{JSON.stringify(executionResult, null, '  ')}</pre>
-                    </blockquote>);
-                }}</Execute>
+            >{ this.executeChildrenFunction }</Execute>
         </div>);
     }
 }

@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import { Execution, AFM } from '@gooddata/typings';
 import { delay } from '../../../tests/utils';
 import { IDataSource } from '../../../../interfaces/DataSource';
-import { Visualization } from '../../../tests/mocks';
+import { Visualization, LoadingComponent, ErrorComponent } from '../../../tests/mocks';
 import { BaseChart, IBaseChartProps } from '../BaseChart';
 import { ErrorStates } from '../../../../constants/errorStates';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
@@ -23,9 +23,12 @@ function createDataSource(result: Execution.IExecutionResponses): IDataSource {
     };
 }
 
-function createRejectingDataSource(error: Execution.IError): IDataSource {
+function createRejectingDataSource(error: Execution.IError, delay: number): IDataSource {
     return {
-        getData: () => Promise.reject(error),
+        // tslint:disable-next-line:variable-name
+        getData: () => delay ? new Promise((_resolve, reject) => {
+            setTimeout(reject(error), delay);
+        }) : Promise.reject(error),
         getAfm: () => ({}),
         getFingerprint: () => JSON.stringify(error)
     };
@@ -131,7 +134,7 @@ describe('BaseChart', () => {
 
     it('should call onError with DATA_TOO_LARGE_TO_COMPUTE', () => {
         const onError = jest.fn();
-        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse);
+        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse, null);
         const props = createProps({
             onError,
             dataSource: tooLargeDataSource
@@ -151,7 +154,7 @@ describe('BaseChart', () => {
     it('should be able to restore after rejected datasource', () => {
         const onError = jest.fn();
         const pushData = jest.fn();
-        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse);
+        const tooLargeDataSource = createRejectingDataSource(tooLargeResponse, null);
         const props = createProps({
             onError,
             pushData,
@@ -178,7 +181,7 @@ describe('BaseChart', () => {
 
     it('should call onError with BAD_REQUEST', () => {
         const onError = jest.fn();
-        const badRequestDataSource = createRejectingDataSource(badRequestResponse);
+        const badRequestDataSource = createRejectingDataSource(badRequestResponse, null);
         const props = createProps({
             onError,
             dataSource: badRequestDataSource
@@ -283,6 +286,53 @@ describe('BaseChart', () => {
 
         return delay().then(() => {
             expect(loadingHandler).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    it('should display LoadingComponent during loading and pass props to it', () => {
+        const responseDelay = 20;
+        const onError = jest.fn();
+        let onLoadingChanged;
+        const startedLoading = new Promise((resolve) => {
+            onLoadingChanged = resolve;
+        });
+        const dataSource = createRejectingDataSource(tooLargeResponse, responseDelay);
+        const props = createProps({
+            onError,
+            onLoadingChanged,
+            dataSource,
+            LoadingComponent
+        });
+        const wrapper = createComponent(props);
+        return startedLoading.then(() => {
+            expect(wrapper.find(LoadingComponent).length).toBe(1);
+            const LoadingElement = wrapper.find(LoadingComponent).get(0);
+            expect(LoadingElement.props.props.dataSource).toEqual(dataSource);
+        });
+    });
+
+    it('should display ErrorComponent on error and pass error and props to it', () => {
+        const responseDelay = 20;
+        let onError;
+        const threwError = new Promise((resolve) => {
+            onError = (error: { status: string }) => {
+                if (error.status !== ErrorStates.OK) {
+                    resolve();
+                }
+            };
+        });
+        const dataSource = createRejectingDataSource(tooLargeResponse, responseDelay);
+        const props = createProps({
+            onError,
+            dataSource,
+            ErrorComponent
+        });
+        const wrapper = createComponent(props);
+        return threwError.then(() => {
+            expect(wrapper.find(ErrorComponent).length).toBe(1);
+            const ErrorElement = wrapper.find(ErrorComponent).get(0);
+            expect(ErrorElement.props.error.status).toBe(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
+            expect(ErrorElement.props.props.dataSource).toEqual(dataSource);
         });
     });
 });

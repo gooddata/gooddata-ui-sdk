@@ -8,7 +8,7 @@ const title = require('./package.json').description;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-module.exports = ({ gdc = 'https://secure.gooddata.com', link = true } = {}) => {
+module.exports = ({ gdc = 'https://secure.gooddata.com', link = false } = {}) => {
     const proxy = {
         '/gdc': {
             changeOrigin: true,

@@ -24,3 +24,5 @@ export class ResponsiveTable extends DummyComponent {}
 export class Visualization extends DummyComponent {}
 export class BaseChart extends DummyComponent {}
 export class Table extends DummyComponent {}
+export class LoadingComponent extends DummyComponent {}
+export class ErrorComponent extends DummyComponent {}

@@ -4,6 +4,8 @@ import isEqual = require('lodash/isEqual');
 import { AFM, Execution } from '@gooddata/typings';
 import { Visualization } from '@gooddata/indigo-visualizations';
 
+import { ILoadingStateProps } from '../../../execution/Execute';
+
 import {
     DataSourceUtils,
     createSubject
@@ -59,11 +61,15 @@ export interface IChartAFMProps extends ICommonChartProps {
 
 export interface IBaseChartProps extends IChartProps {
     type: ChartType;
+    ErrorComponent?: React.ComponentType<ILoadingStateProps>;
+    LoadingComponent?: React.ComponentType<ILoadingStateProps>;
     visualizationComponent?: React.ComponentClass<any>; // for testing
 }
 
 export interface IBaseChartState {
-    error: string;
+    error: {
+        status: string
+    };
     result: Execution.IExecutionResponses;
     isLoading: boolean;
 }
@@ -71,7 +77,7 @@ export interface IBaseChartState {
 export type IBaseChartDataPromise = Promise<Execution.IExecutionResponses>;
 
 const defaultErrorHandler = (error: any) => {
-    if (error.status !== ErrorStates.OK) {
+    if (error && error.status !== ErrorStates.OK) {
         console.error(error); // tslint:disable-line:no-console
     }
 };
@@ -80,6 +86,8 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     public static defaultProps: Partial<IBaseChartProps> = {
         resultSpec: {},
         onError: defaultErrorHandler,
+        ErrorComponent: null,
+        LoadingComponent: null,
         onLoadingChanged: noop,
         pushData: noop,
         drillableItems: [],
@@ -95,7 +103,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         super(props);
 
         this.state = {
-            error: ErrorStates.OK,
+            error: {
+                status: ErrorStates.OK
+            },
             result: null,
             isLoading: false
         };
@@ -143,60 +153,59 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
     }
 
     public render() {
-        const { result } = this.state;
+        const { result, error, isLoading } = this.state;
+        const { ErrorComponent, LoadingComponent } = this.props;
 
-        if (this.canRender()) {
-            const {
-                afterRender,
-                height,
-                locale,
-                config,
-                type
-            } = this.props;
-            const {
-                executionResponse,
-                executionResult
-            } = (result as Execution.IExecutionResponses);
-
-            return (
-                <IntlWrapper locale={locale}>
-                    <IntlTranslationsProvider>
-                        {(translationProps: ITranslationsComponentProps) => {
-                            const fixedExecutionResult = fixEmptyHeaderItems(
-                                executionResult,
-                                translationProps.emptyHeaderString
-                            );
-
-                            return (
-                                <this.props.visualizationComponent
-                                    executionRequest={{
-                                        afm: this.props.dataSource.getAfm(),
-                                        resultSpec: this.props.resultSpec
-                                    }}
-                                    executionResponse={executionResponse.executionResponse}
-                                    executionResult={fixedExecutionResult.executionResult}
-                                    height={height}
-                                    config={{ ...config, type }}
-                                    afterRender={afterRender}
-                                    onDataTooLarge={this.onDataTooLarge}
-                                    onNegativeValues={this.onNegativeValues}
-                                    drillableItems={this.props.drillableItems}
-                                    onFiredDrillEvent={this.props.onFiredDrillEvent}
-                                    numericSymbols={translationProps.numericSymbols}
-                                />
-                            );
-                        }}
-                    </IntlTranslationsProvider>
-                </IntlWrapper>
-            );
+        if (error && error.status !== ErrorStates.OK) {
+            return ErrorComponent ? <ErrorComponent error={error} props={this.props} /> : null;
+        }
+        if (isLoading || !result) {
+            return LoadingComponent ? <LoadingComponent props={this.props} /> : null;
         }
 
-        return null;
-    }
+        const {
+            afterRender,
+            height,
+            locale,
+            config,
+            type
+        } = this.props;
+        const {
+            executionResponse,
+            executionResult
+        } = (result as Execution.IExecutionResponses);
 
-    private canRender() {
-        const { result, isLoading, error } = this.state;
-        return result && !isLoading && error === ErrorStates.OK;
+        return (
+            <IntlWrapper locale={locale}>
+                <IntlTranslationsProvider>
+                    {(translationProps: ITranslationsComponentProps) => {
+                        const fixedExecutionResult = fixEmptyHeaderItems(
+                            executionResult,
+                            translationProps.emptyHeaderString
+                        );
+
+                        return (
+                            <this.props.visualizationComponent
+                                executionRequest={{
+                                    afm: this.props.dataSource.getAfm(),
+                                    resultSpec: this.props.resultSpec
+                                }}
+                                executionResponse={executionResponse.executionResponse}
+                                executionResult={fixedExecutionResult.executionResult}
+                                height={height}
+                                config={{ ...config, type }}
+                                afterRender={afterRender}
+                                onDataTooLarge={this.onDataTooLarge}
+                                onNegativeValues={this.onNegativeValues}
+                                drillableItems={this.props.drillableItems}
+                                onFiredDrillEvent={this.props.onFiredDrillEvent}
+                                numericSymbols={translationProps.numericSymbols}
+                            />
+                        );
+                    }}
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
     }
 
     private onLoadingChanged(loadingState: ILoadingState) {
@@ -207,7 +216,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
             this.setState({
                 isLoading,
-                error: ErrorStates.OK // reset local errors
+                error: {
+                    status: ErrorStates.OK // reset local errors
+                }
             });
         } else {
             this.setState({
@@ -222,7 +233,9 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
             options
         });
         this.setState({
-            error: errorCode
+            error: {
+                status: errorCode
+            }
         });
         this.onLoadingChanged({ isLoading: false });
     }

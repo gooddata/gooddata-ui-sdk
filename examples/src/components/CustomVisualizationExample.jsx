@@ -4,6 +4,8 @@ import { Visualization, CoreComponents } from '@gooddata/react-components';
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { get, unzip, range } from 'lodash';
 
+import { Loading } from './Loading';
+import { Error } from './Error';
 import { projectId, franchiseFeesVisualizationIdentifier } from '../utils/fixtures';
 import { DEFAULT_COLOR_PALETTE } from '../utils/colors';
 
@@ -97,7 +99,12 @@ export class CustomVisualization extends Component {
 
 
 const CustomBaseChart = (props) => {
-    return (<BaseChart {...props} visualizationComponent={visProps => <CustomVisualization {...visProps} />} />);
+    return (<BaseChart
+        {...props}
+        LoadingComponent={Loading}
+        ErrorComponent={Error}
+        visualizationComponent={visProps => <CustomVisualization {...visProps} />}
+    />);
 };
 
 export class CustomVisualizationExample extends Component {

@@ -9,6 +9,8 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
+import { Loading } from './Loading';
+import { Error } from './Error';
 
 
 export class PieChartExample extends Component {
@@ -68,6 +70,8 @@ export class PieChartExample extends Component {
                     afm={afm}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
+                    LoadingComponent={Loading}
+                    ErrorComponent={Error}
                 />
             </div>
         );

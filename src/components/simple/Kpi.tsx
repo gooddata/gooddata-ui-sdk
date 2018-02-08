@@ -4,11 +4,11 @@ import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
 import { Filters, Uri } from '@gooddata/data-layer';
 
-import { Execute, IExecuteChildrenProps } from '../../execution/Execute';
+import { Execute, IExecuteChildrenProps, IExecuteProps, ILoadingStateProps } from '../../execution/Execute';
 import { IEvents } from '../../interfaces/Events';
 import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
 import { isEmptyResult } from '../../helpers/errorHandlers';
-
+import { ErrorStates } from '../../constants/errorStates';
 export { Requireable };
 
 export interface IKpiProps extends IEvents {
@@ -16,7 +16,9 @@ export interface IKpiProps extends IEvents {
     projectId: string;
     filters?: AFM.FilterItem[];
     format?: string;
-    ExecuteComponent?: any;
+    ExecuteComponent?: React.ComponentType<IExecuteProps>;
+    LoadingComponent?: React.ComponentType<ILoadingStateProps>;
+    ErrorComponent?: React.ComponentType<ILoadingStateProps>;
 }
 
 function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
@@ -55,27 +57,33 @@ export class Kpi extends React.Component<IKpiProps, null> {
         filters: [],
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
-        ExecuteComponent: Execute
+        ExecuteComponent: Execute,
+        LoadingComponent: null,
+        ErrorComponent: null
     };
 
     public static propTypes = KpiPropTypes;
 
     public render() {
-        const { ExecuteComponent, measure, filters, projectId, onError, onLoadingChanged } = this.props;
+        const { ExecuteComponent, measure, filters, LoadingComponent, ErrorComponent, ...executeProps } = this.props;
         const afm = buildAFM(measure, filters);
         return (
             <ExecuteComponent
                 afm={afm}
                 resultSpec={resultSpec}
-                projectId={projectId}
-                onError={onError}
-                onLoadingChanged={onLoadingChanged}
+                {...executeProps}
             >
-                {(execProps: IExecuteChildrenProps) =>
-                    <span className="gdc-kpi">
-                        {this.getFormattedResult(this.extractNumber(execProps.result))}
-                    </span>
-                }
+                {({result, error, isLoading}: IExecuteChildrenProps) => {
+                    if (error && error.status !== ErrorStates.OK) {
+                        return ErrorComponent ? <ErrorComponent error={error} props={this.props} /> : null;
+                    }
+                    if (isLoading || !result) {
+                        return LoadingComponent ? <LoadingComponent props={this.props} /> : null;
+                    }
+                    return (<span className="gdc-kpi">
+                        {this.getFormattedResult(this.extractNumber(result))}
+                    </span>);
+                }}
             </ExecuteComponent>
         );
     }
