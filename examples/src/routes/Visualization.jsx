@@ -3,12 +3,12 @@ import React from 'react';
 import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
-import VisualizationColumnChart from '../components/VisualizationColumnChart';
-import VisualizationTable from '../components/VisualizationTable';
+import VisualizationColumnChart from '../components/VisualizationColumnChartExample';
+import VisualizationTable from '../components/VisualizationTableExample';
 import CustomVisualizationExample from '../components/CustomVisualizationExample';
 
-import VisualizationColumnChartSRC from '!raw-loader!../components/VisualizationColumnChart'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationTableSRC from '!raw-loader!../components/VisualizationTable'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationColumnChartSRC from '!raw-loader!../components/VisualizationColumnChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationTableSRC from '!raw-loader!../components/VisualizationTableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import CustomVisualizationExampleSRC from '!raw-loader!../components/CustomVisualizationExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const Visualization = props => (<Layout {...props} >

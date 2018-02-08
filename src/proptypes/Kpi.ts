@@ -12,5 +12,7 @@ export const KpiPropTypes = {
     filters: FiltersPropType,
     format: PropTypes.string,
     measure: PropTypes.string.isRequired,
-    projectId: PropTypes.string.isRequired
+    projectId: PropTypes.string.isRequired,
+    ErrorComponent: PropTypes.func,
+    LoadingComponent: PropTypes.func
 };

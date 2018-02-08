@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import ExecuteExample from '../components/ExecuteExample';
-import ExecuteExampleSRC from '!raw-loader!../components/ExecuteExample';
+import ExecuteExampleSRC from '!raw-loader!../components/ExecuteExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 
 export const Kpi = props => (<Layout {...props} >

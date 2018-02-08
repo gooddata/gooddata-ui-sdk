@@ -46,6 +46,8 @@ export interface ITableProps extends IEvents {
     afterRender?: Function;
     pushData?: Function;
     visualizationProperties?: IVisualizationProperties;
+    ErrorComponent?: React.ComponentClass<any>;
+    LoadingComponent?: React.ComponentClass<any>;
 }
 
 export interface ITableState {
@@ -60,7 +62,7 @@ const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
 export type ITableDataPromise = Promise<Execution.IExecutionResponses>;
 
 const defaultErrorHandler = (error: any) => {
-    if (error.status !== ErrorStates.OK) {
+    if (error && error.status !== ErrorStates.OK) {
         console.error(error); // tslint:disable-line:no-console
     }
 };
@@ -70,6 +72,8 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         resultSpec: {},
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
+        ErrorComponent: null,
+        LoadingComponent: null,
         afterRender: noop,
         pushData: noop,
         stickyHeaderOffset: 0,
@@ -169,8 +173,14 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     public render() {
-        if (!this.canRender()) {
-            return null;
+        const { result, isLoading, error } = this.state;
+        const { ErrorComponent, LoadingComponent } = this.props;
+
+        if (error !== ErrorStates.OK) {
+            return ErrorComponent ? <ErrorComponent error={{ status: error }} props={this.props} /> : null;
+        }
+        if (isLoading || !result) {
+            return LoadingComponent ? <LoadingComponent props={this.props} /> : null;
         }
 
         const tableRenderer = this.getTableRenderer();
@@ -255,11 +265,6 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                 </IntlTranslationsProvider>
             </IntlWrapper>
         );
-    }
-
-    private canRender() {
-        const { result, isLoading, error } = this.state;
-        return result && !isLoading && error === ErrorStates.OK;
     }
 
     private onError(errorCode: string, dataSource = this.props.dataSource, options = {}) {

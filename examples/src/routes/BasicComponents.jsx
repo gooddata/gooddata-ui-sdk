@@ -14,9 +14,9 @@ import LineChartExampleSRC from '!raw-loader!../components/LineChartExample'; //
 import PieChartExampleSRC from '!raw-loader!../components/PieChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const title = 'Chart types';
+export const title = 'Basic Components';
 
-export const ChartTypes = props => (<Layout {...props} >
+export const BasicComponents = props => (<Layout {...props} >
     <h1>{title}</h1>
 
     <h2>Bar chart</h2>
@@ -36,4 +36,4 @@ export const ChartTypes = props => (<Layout {...props} >
 
 </Layout>);
 
-export default ChartTypes;
+export default BasicComponents;

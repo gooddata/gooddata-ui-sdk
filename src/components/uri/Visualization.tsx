@@ -65,6 +65,8 @@ export interface IVisualizationProps extends IEvents {
     fetchVisObject?: (visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     BaseChartComponent?: any;
     TableComponent?: any;
+    ErrorComponent?: React.ComponentClass<any>;
+    LoadingComponent?: React.ComponentClass<any>;
 }
 
 export interface IVisualizationState {
@@ -72,6 +74,9 @@ export interface IVisualizationState {
     resultSpec: AFM.IResultSpec;
     type: VisType;
     totals: ITotalItem[];
+    error: {
+        status: string;
+    };
 }
 
 export interface IVisualizationExecInfo {
@@ -107,7 +112,9 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         uriResolver,
         fetchVisObject,
         BaseChartComponent: BaseChart,
-        TableComponent: SortableTable
+        TableComponent: SortableTable,
+        LoadingComponent: null,
+        ErrorComponent: null
     };
 
     private visualizationUri: string;
@@ -123,7 +130,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             isLoading: true,
             type: null,
             resultSpec: null,
-            totals: []
+            totals: [],
+            error: null
         };
 
         this.visualizationUri = props.uri;
@@ -137,7 +145,13 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                     isLoading: false,
                     totals
                 });
-            }, () => props.onError({ status: ErrorStates.NOT_FOUND }));
+            }, () => {
+                this.setState({
+                    isLoading: false,
+                    error: { status: ErrorStates.NOT_FOUND }
+                });
+                return props.onError({ status: ErrorStates.NOT_FOUND });
+            });
     }
 
     public componentDidMount() {
@@ -185,10 +199,6 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
 
     public render() {
         const { dataSource } = this;
-        if (!dataSource) {
-            return null;
-        }
-
         const {
             drillableItems,
             onFiredDrillEvent,
@@ -197,9 +207,22 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             locale,
             config,
             BaseChartComponent,
-            TableComponent
+            TableComponent,
+            LoadingComponent,
+            ErrorComponent
         } = this.props;
-        const { resultSpec, type, totals } = this.state;
+        const { resultSpec, type, totals, error, isLoading } = this.state;
+
+        if (error !== null && error.status !== ErrorStates.OK) {
+            return ErrorComponent
+                ? <ErrorComponent error={this.state.error} props={this.props} />
+                : null;
+        }
+        if (isLoading || !dataSource) {
+            return LoadingComponent
+                ? <LoadingComponent props={this.props} />
+                : null;
+        }
 
         switch (type) {
             case VisualizationTypes.TABLE:
@@ -212,6 +235,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         totals={totals}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
+                        LoadingComponent={LoadingComponent}
+                        ErrorComponent={ErrorComponent}
                         locale={locale}
                     />
                 );
@@ -224,6 +249,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                         onFiredDrillEvent={onFiredDrillEvent}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
+                        LoadingComponent={LoadingComponent}
+                        ErrorComponent={ErrorComponent}
                         locale={locale}
                         type={type}
                         config={config}

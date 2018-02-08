@@ -4,6 +4,8 @@ import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
+import { Loading } from './Loading';
+import { Error } from './Error';
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from '../utils/fixtures';
 
 const { ColumnChart } = AfmComponents;
@@ -47,12 +49,14 @@ export class ColumnChartExample extends Component {
         };
 
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300, position: 'relative' }} >
                 <ColumnChart
                     projectId={projectId}
                     afm={afm}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
+                    LoadingComponent={Loading}
+                    ErrorComponent={Error}
                 />
             </div>
         );

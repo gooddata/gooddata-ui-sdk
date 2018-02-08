@@ -42,13 +42,14 @@ describe('Execute', () => {
         );
     }
 
-    it('should pass execution result to its child', () => {
+    it('should pass execution result, error and isLoading to its child', () => {
         const child = createStatelessChild();
         createComponent(child);
 
         return delay().then(() => {
-            expect(child).toHaveBeenLastCalledWith({ result: data });
-            expect(child).toHaveBeenCalledTimes(1);
+            expect(child).toHaveBeenCalledWith({ result: null, error: null, isLoading: true });
+            expect(child).toHaveBeenLastCalledWith({ result: data, error: null, isLoading: false });
+            expect(child).toHaveBeenCalledTimes(2);
         });
     });
 
@@ -73,7 +74,8 @@ describe('Execute', () => {
         });
 
         return delay().then(() => {
-            expect(child).toHaveBeenCalledTimes(1);
+            // first render is loading, second result
+            expect(child).toHaveBeenCalledTimes(2);
         });
     });
 });

@@ -17,5 +17,7 @@ export const VisualizationPropType = {
     projectId: PropTypes.string.isRequired,
     identifier: PropTypes.string,
     uri: PropTypes.string,
-    uriResolver: PropTypes.func
+    uriResolver: PropTypes.func,
+    LoadingComponent: PropTypes.func,
+    ErrorComponent: PropTypes.func
 };

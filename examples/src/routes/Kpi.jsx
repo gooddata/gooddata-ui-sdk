@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import KpiExample from '../components/KpiExample';
-import KpiExampleSRC from '!raw-loader!../components/KpiExample.jsx';
+import KpiExampleSRC from '!raw-loader!../components/KpiExample.jsx'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const Kpi = props => (<Layout {...props} >
     <h1>KPI</h1>

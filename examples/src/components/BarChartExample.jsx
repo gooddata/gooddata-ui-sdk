@@ -3,6 +3,8 @@ import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
+import { Loading } from './Loading';
+import { Error } from './Error';
 import { totalSalesIdentifier, locationResortIdentifier, projectId } from '../utils/fixtures';
 
 const { BarChart } = AfmComponents;
@@ -52,6 +54,8 @@ export class BarChartExample extends Component {
                     afm={afm}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
+                    LoadingComponent={Loading}
+                    ErrorComponent={Error}
                 />
             </div>
         );

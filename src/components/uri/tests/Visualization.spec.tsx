@@ -2,7 +2,9 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 import {
     Table,
-    BaseChart
+    BaseChart,
+    LoadingComponent,
+    ErrorComponent
 } from '../../tests/mocks';
 import { charts } from '../../../../__mocks__/fixtures';
 
@@ -41,12 +43,12 @@ function fetchVisObject(uri: string): Promise<VisualizationObject.IVisualization
 }
 
 // tslint:disable-next-line:variable-name
-function uriResolver(_projectId: string, _uri: string, identifier: string): Promise<string> {
-    if (identifier === TABLE_IDENTIFIER) {
+function uriResolver(_projectId: string, uri: string, identifier: string): Promise<string> {
+    if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
     }
 
-    if (identifier === CHART_IDENTIFIER) {
+    if (identifier === CHART_IDENTIFIER || uri === CHART_URI) {
         return getResponse(CHART_URI, SLOW);
     }
 
@@ -122,6 +124,22 @@ describe('Visualization', () => {
         });
     });
 
+    it('should render with uri', () => {
+        const wrapper = mount(
+            <Visualization
+                projectId={projectId}
+                uri={CHART_URI}
+                fetchVisObject={fetchVisObject}
+                uriResolver={uriResolver}
+                BaseChartComponent={BaseChart}
+            />
+        );
+
+        return delay(SLOW + 1).then(() => {
+            expect(wrapper.find(BaseChart).length).toBe(1);
+        });
+    });
+
     it('should trigger error in case of given uri is not valid', (done) => {
         const errorHandler = (value: { status: string }) => {
             expect(value.status).toEqual(ErrorStates.NOT_FOUND);
@@ -157,33 +175,6 @@ describe('Visualization', () => {
         });
     });
 
-    it('should not re-render with same props', () => {
-        const wrapper = mount(
-            <Visualization
-                projectId={projectId}
-                uri={CHART_URI}
-                filters={[]}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-            />
-        );
-        const spy = jest.spyOn(wrapper.instance(), 'render');
-
-        wrapper.setProps({
-            projectId,
-            uri: CHART_URI,
-            filters: []
-        });
-
-        return delay(SLOW + 1).then(() => {
-            // initial render without datasource is called during mount
-            expect(spy).toHaveBeenCalledTimes(0);
-            spy.mockRestore();
-        });
-    });
-
     it('should handle set state on unmounted component', () => {
         const wrapper = mount(
             <Visualization
@@ -203,6 +194,50 @@ describe('Visualization', () => {
         return delay(FAST + 1).then(() => {
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
+        });
+    });
+
+    it('should pass LoadingComponent and ErrorComponent to TableComponent', () => {
+        const wrapper = mount(
+            <Visualization
+                projectId={projectId}
+                identifier={TABLE_IDENTIFIER}
+                uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
+                LoadingComponent={LoadingComponent}
+                ErrorComponent={ErrorComponent}
+            />
+        );
+
+        return delay(SLOW + 1).then(() => {
+            expect(wrapper.find(Table).length).toBe(1);
+            const TableElement = wrapper.find(Table).get(0);
+            expect(TableElement.props.LoadingComponent).toBe(LoadingComponent);
+            expect(TableElement.props.ErrorComponent).toBe(ErrorComponent);
+        });
+    });
+
+    it('should pass LoadingComponent and ErrorComponent to BaseChart', () => {
+        const wrapper = mount(
+            <Visualization
+                projectId={projectId}
+                identifier={CHART_IDENTIFIER}
+                uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
+                LoadingComponent={LoadingComponent}
+                ErrorComponent={ErrorComponent}
+            />
+        );
+
+        return delay(SLOW + 1).then(() => {
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.LoadingComponent).toBe(LoadingComponent);
+            expect(BaseChartElement.props.ErrorComponent).toBe(ErrorComponent);
         });
     });
 });

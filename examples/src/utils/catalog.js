@@ -14,7 +14,8 @@ export const catalog = (() => {
     if (typeof window !== 'undefined') {
         const { hostname } = window.location;
         let key = hostname.split('.')[0];
-        if (key === 'localhost') {
+        const isLocalhost = key === 'localhost' || /127\.0\.0\.1/.test(hostname);
+        if (isLocalhost) {
             const gdc = GDC; // eslint-disable-line no-undef
             const gdcHostname = /https?:\/\/([\w]+)/.exec(gdc)[1];
             if (!(gdcHostname in catalogs)) {

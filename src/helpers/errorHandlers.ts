@@ -15,7 +15,7 @@ function getJSONFromText(data: string): object {
 
 export function convertErrors(error: Execution.IError) {
     const errorCode: number = error.response.status;
-    return error.response.text().then((data) => {
+    return error.response.text().then((data: string) => {
         switch (errorCode) {
             case 204:
                 throw ErrorStates.NO_DATA;

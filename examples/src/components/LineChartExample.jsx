@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
+import { Loading } from './Loading';
+import { Error } from './Error';
 
 import {
     projectId,
@@ -88,6 +90,8 @@ export class LineChartExample extends Component {
                     afm={afm}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
+                    LoadingComponent={Loading}
+                    ErrorComponent={Error}
                 />
             </div>
         );

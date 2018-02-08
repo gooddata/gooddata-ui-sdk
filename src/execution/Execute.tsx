@@ -13,6 +13,11 @@ export { Requireable };
 
 export type IDataTableFactory = (projectId: string) => DataTable<Execution.IExecutionResponses>;
 
+export interface ILoadingStateProps {
+    error?: object;
+    props: object;
+}
+
 export interface IExecuteProps extends IEvents {
     afm: AFM.IAfm;
     resultSpec?: AFM.IResultSpec;
@@ -23,6 +28,11 @@ export interface IExecuteProps extends IEvents {
 
 export interface IExecuteState {
     result: Execution.IExecutionResponses;
+    isLoading: boolean;
+    error: {
+        status: string;
+        response?: object;
+    };
 }
 
 function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResponses> {
@@ -31,6 +41,11 @@ function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResp
 
 export interface IExecuteChildrenProps {
     result: Execution.IExecutionResponses;
+    error: {
+        status: string;
+        response?: object;
+    };
+    isLoading: boolean;
 }
 
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
@@ -47,33 +62,45 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         super(props);
 
         this.state = {
-            result: null
+            result: null,
+            isLoading: true,
+            error: null
         };
 
         const { onError, onLoadingChanged } = props;
 
         this.dataTable = props.dataTableFactory(props.projectId);
         this.dataTable.onData((result: Execution.IExecutionResponses) => {
-            this.setState({ result });
+            this.setState({
+                result,
+                isLoading: false
+            });
             onLoadingChanged({ isLoading: false });
         });
 
         this.dataTable.onError((error: Execution.IError) => {
             const { status } = error.response;
+            const newError = {
+                status: ErrorStates.UNKNOWN_ERROR,
+                error
+            };
             if (status === ErrorCodes.HTTP_TOO_LARGE) {
-                onLoadingChanged({ isLoading: false });
-                return onError({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error });
+                newError.status = ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
+            } else if (status === ErrorCodes.HTTP_BAD_REQUEST) {
+                newError.status = ErrorStates.BAD_REQUEST;
             }
-            if (status === ErrorCodes.HTTP_BAD_REQUEST) {
-                onLoadingChanged({ isLoading: false });
-                return onError({ status: ErrorStates.BAD_REQUEST, error });
-            }
+
+            this.setState({
+                result: null,
+                isLoading: false,
+                error: newError
+            });
             onLoadingChanged({ isLoading: false });
-            onError({ status: ErrorStates.UNKNOWN_ERROR, error });
+            onError(newError);
         });
     }
 
-    public componentDidMount() {
+    public componentWillMount() {
         this.runExecution(this.props);
     }
 
@@ -84,16 +111,13 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     public shouldComponentUpdate(nextProps: IExecuteProps, nextState: IExecuteState) {
-        return !isEqual(this.state.result, nextState.result) ||
+        return !isEqual(this.state, nextState) ||
             this.hasPropsChanged(nextProps, ['afm', 'resultSpec', 'children']);
     }
 
     public render() {
-        const { result } = this.state;
-        if (!result) {
-            return null;
-        }
-        return this.props.children({ result });
+        const { result, isLoading, error } = this.state;
+        return this.props.children({ result, isLoading, error });
     }
 
     private isPropChanged(nextProps: IExecuteProps, propName: string) {
@@ -111,7 +135,15 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     private runExecution(props: IExecuteProps) {
         const { afm, resultSpec, onLoadingChanged } = props;
 
-        onLoadingChanged({ isLoading: true });
+        this.setState({
+            isLoading: true,
+            result: null,
+            error: null
+        });
+
+        onLoadingChanged({
+            isLoading: true
+        });
 
         this.dataTable.getData(afm, resultSpec);
     }
