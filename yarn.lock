@@ -97,11 +97,12 @@
     moment "2.17.1"
     moment-timezone "0.5.11"
 
-"@gooddata/mock-js@0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.2.5.tgz#a9a844a1d5640f84f07444abf4a7c82484067355"
+"@gooddata/mock-js@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-0.3.1.tgz#5ac85e93dce70cc2786e91c08a742381388ad672"
   dependencies:
     "@gooddata/typings" "0.0.5"
+    "@types/seedrandom" "2.4.27"
     body-parser "1.17.1"
     es6-promise "4.1.0"
     express "4.15.2"
@@ -109,6 +110,7 @@
     invariant "2.2.2"
     lodash "4.17.4"
     moment "2.20.0"
+    seedrandom "2.4.3"
 
 "@gooddata/numberjs@3.0.0":
   version "3.0.0"
@@ -376,6 +378,10 @@
 "@types/react@^16.0.18":
   version "16.0.34"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.34.tgz#7a8f795afd8a404a9c4af9539b24c75d3996914e"
+
+"@types/seedrandom@2.4.27":
+  version "2.4.27"
+  resolved "https://registry.yarnpkg.com/@types/seedrandom/-/seedrandom-2.4.27.tgz#9db563937dd86915f69092bc43259d2f48578e41"
 
 "@types/storybook__addon-actions@3.0.1":
   version "3.0.1"
@@ -6692,6 +6698,10 @@ scss-tokenizer@^0.2.3:
   dependencies:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
+
+seedrandom@2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.3.tgz#2438504dad33917314bff18ac4d794f16d6aaecc"
 
 "semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.3.0:
   version "5.4.1"
