@@ -229,7 +229,9 @@ describe('PureTable', () => {
             expect(onError).toHaveBeenCalledTimes(2);
             expect(onError).toHaveBeenLastCalledWith({
                 status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
-                options: expect.any(Object)
+                options: {
+                    dateOptionsDisabled: false
+                }
             });
         });
     });
