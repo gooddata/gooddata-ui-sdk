@@ -267,8 +267,9 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         );
     }
 
-    private onError(errorCode: string, dataSource = this.props.dataSource, options = {}) {
+    private onError(errorCode: string, dataSource = this.props.dataSource) {
         if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+            const options = getVisualizationOptions(this.props.dataSource.getAfm());
             this.setState({
                 error: errorCode
             });
