@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import * as GoodData from 'gooddata';
+import { ISdk, factory as createSdk } from 'gooddata';
 import pick = require('lodash/pick');
 
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -10,6 +10,7 @@ import { AttributeLoader } from './AttributeLoader';
 import { IAttributeDisplayForm } from './model';
 
 export interface IAttributeFilterProps {
+    sdk?: ISdk;
     uri?: string;
     identifier?: string;
     projectId?: string;
@@ -46,11 +47,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
 
         FilterLoading: PropTypes.func,
         FilterError: PropTypes.func,
-        locale: PropTypes.string,
-        metadata: PropTypes.shape({
-            getObjectUri: PropTypes.func.isRequired,
-            getObjectDetails: PropTypes.func.isRequired
-        })
+        locale: PropTypes.string
     };
 
     public static defaultProps: Partial<IAttributeFilterProps> = {
@@ -58,17 +55,31 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         identifier: null,
         projectId: null,
         locale: 'en-US',
-        metadata: GoodData.md,
 
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError
     };
 
+    private sdk: ISdk;
+
+    constructor(props: IAttributeFilterProps) {
+        super(props);
+
+        this.sdk = props.sdk || createSdk();
+    }
+
+    public componentWillReceiveProps(nextProps: IAttributeFilterProps) {
+        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
+            this.sdk = nextProps.sdk;
+        }
+    }
+
     public render() {
-        const { locale, projectId, uri, identifier, metadata } = this.props;
+        const { locale, projectId, uri, identifier } = this.props;
+        const { md } = this.sdk;
         return (
             <IntlWrapper locale={locale}>
-                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={metadata}>
+                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
                     {props => this.renderContent(props)}
                 </AttributeLoader>
             </IntlWrapper>
@@ -89,9 +100,11 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             this.props,
             Object.keys(AttributeDropdownWrapped.propTypes)
         );
+        const { md } = this.sdk;
         return (
             <AttributeDropdown
                 attributeDisplayForm={attributeDisplayForm}
+                metadata={md}
                 {...dropdownProps}
             />
         );
