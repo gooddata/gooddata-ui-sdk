@@ -1,7 +1,7 @@
-const catalogSecure = require('../../catalog-secure.json');
-const catalogStaging2 = require('../../catalog-staging2.json');
-const catalogStaging3 = require('../../catalog-staging3.json');
-const catalogClientDemoBe = require('../../catalog-client-demo-be.json');
+const catalogSecure = require('../../catalogs/catalog-secure.json');
+const catalogStaging2 = require('../../catalogs/catalog-staging2.json');
+const catalogStaging3 = require('../../catalogs/catalog-staging3.json');
+const catalogClientDemoBe = require('../../catalogs/catalog-client-demo-be.json');
 
 const catalogs = {
     secure: catalogSecure,

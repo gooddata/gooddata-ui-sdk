@@ -48,7 +48,7 @@ export class BarChartExample extends Component {
         };
 
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-bar-chart">
                 <BarChart
                     projectId={projectId}
                     afm={afm}

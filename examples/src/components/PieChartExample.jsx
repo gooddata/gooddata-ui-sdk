@@ -64,7 +64,7 @@ export class PieChartExample extends Component {
         };
 
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-pie-chart">
                 <AfmComponents.PieChart
                     projectId={projectId}
                     afm={afm}

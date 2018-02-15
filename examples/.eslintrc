@@ -1,22 +1,19 @@
 {
-    "extends": ["gooddata"],
+  "extends": "gooddata",
 
-    "rules": {
-        "class-methods-use-this": 0,
-        "max-len": [0],
-        "no-underscore-dangle": [0],
-        "mocha/no-hooks-for-single-case": 0,
-        "react/no-find-dom-node": 0,
-        "react/no-multi-comp": 0,
-        "react/no-unused-prop-types": [0, { "skipShapeProps": true }],
-        "react/no-string-refs": 0,
-        "react/forbid-prop-types": 0,
-        "jsx-a11y/img-has-alt": 0,
-        "jsx-a11y/label-has-for": 0,
-        "jsx-a11y/no-static-element-interactions": 0
-    },
+  "rules": {
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "class-methods-use-this": 0,
+    "react/forbid-prop-types": 0,
 
-    "globals": {
-        "jest": false
-    }
+    "react/jsx-curly-spacing": [1, {"when": "never", "children": true}],
+    "newline-per-chained-call": 0,
+    "react/no-multi-comp": 0
+  },
+
+  "globals": {
+    "jest": false,
+    "fixture": false
+  }
 }

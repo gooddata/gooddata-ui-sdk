@@ -49,7 +49,7 @@ export class ColumnChartExample extends Component {
         };
 
         return (
-            <div style={{ height: 300, position: 'relative' }} >
+            <div style={{ height: 300 }} className="s-column-chart">
                 <ColumnChart
                     projectId={projectId}
                     afm={afm}

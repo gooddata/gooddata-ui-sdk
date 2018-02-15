@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { version } from '../../package.json';
 
-import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import KpiExample from '../components/KpiExample';
@@ -14,7 +13,7 @@ import KpiExampleSRC from '!raw-loader!../components/KpiExample'; // eslint-disa
 import VisualizationTableSRC from '!raw-loader!../components/VisualizationTableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ColumnChartExampleSRC from '!raw-loader!../components/ColumnChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const Home = props => (<Layout {...props} >
+export const Home = () => (<div>
     <h1>GoodData examples for React Components v{version}</h1>
 
     <p>You can find <a href="https://github.com/gooddata/gooddata-react-components">GoodData React Component</a> examples here.</p>
@@ -30,6 +29,6 @@ export const Home = props => (<Layout {...props} >
     <ExampleWithSource for={VisualizationTable} source={VisualizationTableSRC} />
     <p><Link to="/visualization">All visualization examples</Link></p>
 
-</Layout>);
+</div>);
 
 export default Home;

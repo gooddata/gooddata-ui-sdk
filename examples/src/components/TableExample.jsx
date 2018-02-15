@@ -117,7 +117,7 @@ export class TableExample extends Component {
         };
 
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-table">
                 <AfmComponents.Table
                     projectId={projectId}
                     afm={afm}

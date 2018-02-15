@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import AttributeFilterExample from '../components/AttributeFilterExample';
@@ -11,7 +9,7 @@ import AttributeFilterExampleSRC from '!raw-loader!../components/AttributeFilter
 import AttributeElementsExampleSRC from '!raw-loader!../components/AttributeElementsExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 
-export const AttributeFilter = props => (<Layout {...props} >
+export const AttributeFilter = () => (<div>
     <h1>Attribute Filter Components</h1>
 
     <p>These examples illustrate usage of Attribute Filter components.</p>
@@ -22,6 +20,6 @@ export const AttributeFilter = props => (<Layout {...props} >
     <h2>Custom Attribute Filter using Attribute Elements component</h2>
     <ExampleWithSource for={AttributeElementsExample} source={AttributeElementsExampleSRC} />
 
-</Layout>);
+</div>);
 
 export default AttributeFilter;

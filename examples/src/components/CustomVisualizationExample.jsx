@@ -73,7 +73,7 @@ export class CustomVisualization extends Component {
             />);
         });
 
-        return (<div>
+        return (<div className="s-visualization-custom" >
             <ResponsiveContainer width="100%" height={height}>
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -85,7 +85,7 @@ export class CustomVisualization extends Component {
             </ResponsiveContainer>
             <div>
                 <p><button className="button button-secondary" onClick={this.toggleDisplayRawData} >Toggle Raw Data</button></p>
-                { displayRawData
+                {displayRawData
                     ? (<div>
                         <pre>{JSON.stringify(executionResult, null, '  ')}</pre>
                         <pre>{JSON.stringify(data, null, '  ')}</pre>
