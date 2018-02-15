@@ -1,6 +1,6 @@
 import { writeFile } from 'fs';
 import { exec } from 'child_process';
-import RCPackageJson from '../../../package.json';
+import RCPackageJson from '../../../package.json'; // eslint-disable-line import/no-unresolved
 import ExamplesPackageJson from '../../package.json';
 
 const { version } = RCPackageJson;

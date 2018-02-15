@@ -8,7 +8,8 @@ const title = require('./package.json').description;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-module.exports = ({ gdc = 'https://secure.gooddata.com', link = false } = {}) => {
+module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath = '' } = {}) => {
+    console.log('gdc', gdc);
     const proxy = {
         '/gdc': {
             target: gdc,
@@ -51,7 +52,8 @@ module.exports = ({ gdc = 'https://secure.gooddata.com', link = false } = {}) =>
                 exclude: /node_modules|dist/
             }),
             new webpack.DefinePlugin({
-                GDC: JSON.stringify(gdc)
+                GDC: JSON.stringify(gdc),
+                BASEPATH: JSON.stringify(basepath)
             })
         ],
         output: {

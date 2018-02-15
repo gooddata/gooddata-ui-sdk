@@ -5,7 +5,7 @@
   "description": "GoodData ReactComponents examples",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "prepare": "cd .. && yarn prepublish && cd examples",
     "dev-storybook": "yarn prepare && NODE_TLS_REJECT_UNAUTHORIZED=0 webpack-dev-server --env.gdc=http://localhost:9001/ --env.link",
     "dev-secure": "yarn prepare && NODE_TLS_REJECT_UNAUTHORIZED=0 webpack-dev-server --https --env.gdc=https://secure.gooddata.com/ --env.link",
@@ -62,6 +62,7 @@
     "@gooddata/goodstrap": "53.1.2",
     "@gooddata/react-components": "3.0.10",
     "gooddata": "4.5.1",
+    "node-sass": "4.7.2",
     "prop-types": "15.6.0",
     "react": "15.3.2",
     "react-code-toggle": "0.1.1",

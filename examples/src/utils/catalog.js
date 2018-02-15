@@ -10,21 +10,15 @@ const catalogs = {
     'client-demo-be': catalogClientDemoBe
 };
 
-export const catalog = (() => {
+export const key = (() => {
     if (typeof window !== 'undefined') {
         const { hostname } = window.location;
-        let key = hostname.split('.')[0];
-        const isLocalhost = key === 'localhost' || /127\.0\.0\.1/.test(hostname);
-        if (isLocalhost) {
-            const gdc = GDC; // eslint-disable-line no-undef
-            const gdcHostname = /https?:\/\/([\w]+)/.exec(gdc)[1];
-            if (!(gdcHostname in catalogs)) {
-                return null;
-            }
-            key = gdcHostname;
-        }
-
-        return catalogs[key];
+        const gdc = typeof GDC !== 'undefined' ? GDC : null; // eslint-disable-line no-undef
+        // get catalog key from GDC uri or from hostname
+        const catalogKey = gdc ? /https?:\/\/([\w]+)/.exec(gdc)[1] : hostname.split('.')[0];
+        return catalogKey;
     }
     return null;
 })();
+
+export const catalog = key in catalogs ? catalogs[key] : null;
