@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import VisualizationColumnChart from '../components/VisualizationColumnChartExample';
@@ -11,7 +10,7 @@ import VisualizationColumnChartSRC from '!raw-loader!../components/Visualization
 import VisualizationTableSRC from '!raw-loader!../components/VisualizationTableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import CustomVisualizationExampleSRC from '!raw-loader!../components/CustomVisualizationExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const Visualization = props => (<Layout {...props} >
+export const Visualization = () => (<div>
     <h1>Visualization</h1>
 
     <p>These are examples of generic Visualization component use cases.</p>
@@ -23,7 +22,8 @@ export const Visualization = props => (<Layout {...props} >
     <ExampleWithSource for={VisualizationTable} source={VisualizationTableSRC} />
 
     <h2>Custom Visualization</h2>
+    <p>Using <a href="https://github.com/recharts/recharts">Recharts library</a></p>
     <ExampleWithSource for={CustomVisualizationExample} source={CustomVisualizationExampleSRC} />
-</Layout>);
+</div>);
 
 export default Visualization;

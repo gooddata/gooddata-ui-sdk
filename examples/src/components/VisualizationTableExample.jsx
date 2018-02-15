@@ -9,7 +9,7 @@ import { Error } from './Error';
 export class VisualizationTable extends Component {
     render() {
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-visualization-table" >
                 <Visualization
                     projectId={projectId}
                     identifier={tableVisualizationIdentifier}

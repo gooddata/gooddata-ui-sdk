@@ -9,7 +9,7 @@ import { Error } from './Error';
 export class VisualizationColumnChart extends Component {
     render() {
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-visualization-chart" >
                 <Visualization
                     projectId={projectId}
                     identifier={columnVisualizationIdentifier}

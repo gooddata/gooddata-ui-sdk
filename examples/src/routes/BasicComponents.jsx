@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../components/Layout';
 import ExampleWithSource from '../utils/ExampleWithSource';
 
 import BarChartExample from '../components/BarChartExample';
@@ -16,7 +15,7 @@ import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-
 
 export const title = 'Basic Components';
 
-export const BasicComponents = props => (<Layout {...props} >
+export const BasicComponents = () => (<div>
     <h1>{title}</h1>
 
     <h2>Bar chart</h2>
@@ -34,6 +33,6 @@ export const BasicComponents = props => (<Layout {...props} >
     <h2>Table</h2>
     <ExampleWithSource for={TableExample} source={TableExampleSRC} />
 
-</Layout>);
+</div>);
 
 export default BasicComponents;

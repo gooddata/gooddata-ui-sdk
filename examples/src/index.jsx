@@ -9,6 +9,8 @@ import {
 
 
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
+import Header from './components/Header';
+import LoginOverlay from './components/LoginOverlay';
 
 import { routes, navigation } from './routes/_list';
 
@@ -16,92 +18,69 @@ export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: null,
+            isLoggedIn: true,
             errorMessage: null
         };
         this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
+        this.onUserLogin = this.onUserLogin.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.isUserLoggedIn();
     }
 
-    isUserLoggedIn() {
+    onUserLogin(isLoggedIn, errorMessage) {
         this.setState({
-            isLoggedIn: null,
-            errorMessage: null
+            isLoggedIn
         });
-        return GD.user.isLoggedIn()
+
+        if (errorMessage) {
+            this.setState({ errorMessage: errorMessage.message });
+        }
+    }
+
+    isUserLoggedIn() {
+        GD.user.isLoggedIn()
             .then((isLoggedIn) => {
                 this.setState({ isLoggedIn, errorMessage: null });
-                if (!isLoggedIn && typeof window !== 'undefined') {
-                    window.location.href = '/account.html';
-                }
             })
             .catch((errorMessage) => {
                 this.setState({ errorMessage });
             });
     }
 
+    logout() {
+        GD.user.logout().then(() => {
+            this.setState({
+                isLoggedIn: false
+            });
+        });
+    }
+
     render() {
-        return (<Router>
-            <div>
-                { this.state.errorMessage !== null
-                    ? <div className="gd-message error">
-                        <style jsx>{`
-                            .gd-message {
-                                margin: 0;
-                                padding: 20px;
-                                display: block;
-                            }
-                        `}</style>
-                        <div className="gd-message-text">
-                            <strong>Error while checking logged in status</strong><br />
-                            {this.state.errorMessage}<br />
-                            If you are having trouble retry, or <a href="/account.html"> log in manually</a>.
-                            &emsp;<button
-                                className="button button-secondary"
-                                onClick={this.isUserLoggedIn}
-                            >Retry</button>
-                        </div>
-                    </div>
-                    : null
-                }
-                { !this.state.isLoggedIn
-                    ? <div className="gd-message progress">
-                        <style jsx>{`
-                            .gd-message {
-                                margin: 0;
-                                padding: 20px;
-                                display: block;
-                            }
-                            .gd-spinner {
-                                float: left;
-                                margin-right: 20px;
-                            }
-                        `}</style>
-                        <div className="gd-message-text">
-                            <div className="gd-spinner large" />
-                            <strong>Checking logged in status…</strong><br />
-                            You should be redirected to GoodData platform login screen, if you are not logged in already. If not, retry, or <a href="/account.html"> log in manually</a>.
-                            &emsp;<button
-                                className="button button-secondary"
-                                onClick={this.isUserLoggedIn}
-                            >Retry</button>
-                        </div>
-                    </div>
-                    : null
-                }
-                { routes.map(({ path, Component, exact }) => (<Route
-                    key={path}
-                    path={path}
-                    render={
-                        props => (<Component navigation={navigation} {...props} />)
-                    }
-                    exact={exact}
-                />)) }
-            </div>
-        </Router>);
+        const { isLoggedIn } = this.state;
+
+        return (
+            <Router>
+                <div>
+                    <Header
+                        navigation={navigation}
+                        isUserLoggedIn={isLoggedIn}
+                        logoutAction={this.logout}
+                    />
+                    <main style={{ padding: 20 }}>
+                        {routes.map(({ path, Component, exact }) => (<Route
+                            key={path}
+                            exact={exact}
+                            path={path}
+                            component={Component}
+                        />))}
+                    </main>
+                    <LoginOverlay onLogin={this.onUserLogin} isLoggedIn={isLoggedIn} />
+                </div>
+            </Router>
+        );
     }
 }
 

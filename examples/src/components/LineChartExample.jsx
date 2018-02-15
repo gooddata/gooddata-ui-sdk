@@ -84,7 +84,7 @@ export class LineChartExample extends Component {
         };
 
         return (
-            <div style={{ height: 300 }} >
+            <div style={{ height: 300 }} className="s-line-chart">
                 <AfmComponents.LineChart
                     projectId={projectId}
                     afm={afm}

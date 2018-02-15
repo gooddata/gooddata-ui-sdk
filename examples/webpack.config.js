@@ -11,43 +11,20 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 module.exports = ({ gdc = 'https://secure.gooddata.com', link = false } = {}) => {
     const proxy = {
         '/gdc': {
-            changeOrigin: true,
-            cookieDomainRewrite: 'localhost',
             target: gdc,
             secure: false,
+            cookieDomainRewrite: '',
             onProxyReq: (proxyReq) => {
-                // Browers may send Origin headers even with same-origin
-                // requests. To prevent CORS issues, we have to change
-                // the Origin to match the target URL.
-                if (proxyReq.getHeader('origin')) {
-                    proxyReq.setHeader('origin', gdc);
+                if (proxyReq.method === 'DELETE' && !proxyReq.getHeader('content-length')) {
+                    // Only set content-length to zero if not already specified
+                    proxyReq.setHeader('content-length', '0');
                 }
+
+                // White labeled resources are based on host header
+                proxyReq.setHeader('host', 'localhost:8999');
+                proxyReq.setHeader('referer', gdc);
+                proxyReq.setHeader('origin', null);
             }
-        },
-        // This is only needed for localhost:####/account.html to work
-        '/packages': {
-            changeOrigin: true,
-            cookieDomainRewrite: 'localhost',
-            target: gdc,
-            secure: false
-        },
-        '/lib': {
-            changeOrigin: true,
-            cookieDomainRewrite: 'localhost',
-            target: gdc,
-            secure: false
-        },
-        '/images': {
-            changeOrigin: true,
-            cookieDomainRewrite: 'localhost',
-            target: gdc,
-            secure: false
-        },
-        '/*.html': {
-            cookieDomainRewrite: 'localhost',
-            changeOrigin: true,
-            secure: false,
-            target: gdc
         }
     };
 
@@ -79,7 +56,8 @@ module.exports = ({ gdc = 'https://secure.gooddata.com', link = false } = {}) =>
         ],
         output: {
             filename: '[name].bundle.js',
-            path: path.resolve(__dirname, 'dist')
+            path: path.resolve(__dirname, 'dist'),
+            publicPath: '/'
         },
         node: {
             __filename: true

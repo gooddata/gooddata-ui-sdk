@@ -10,7 +10,7 @@ export class AttributeFilterItem extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         uri: PropTypes.string.isRequired
-    }
+    };
 
     onChange(uri) {
         // eslint-disable-next-line no-console
@@ -19,74 +19,65 @@ export class AttributeFilterItem extends Component {
 
     render() {
         const { title, uri } = this.props;
-        return (<label className="gd-list-item s-attribute-filter-list-item" style={{ display: 'inline-flex' }} >
-            <input type="checkbox" className="gd-input-checkbox" onChange={this.onChange(uri)} />
-            <span>{title}</span>
-        </label>);
+        return (
+            <label className="gd-list-item s-attribute-filter-list-item" style={{ display: 'inline-flex' }}>
+                <input type="checkbox" className="gd-input-checkbox" onChange={this.onChange(uri)} />
+                <span>{title}</span>
+            </label>
+        );
     }
 }
 
 export class AttributeElementsExample extends Component {
     render() {
-        const attributeElementsProps = {
-            identifier: employeeNameIdentifier,
-            projectId,
-            options: {
-                limit: 20
-            },
-            children: ({
-                validElements,
-                loadMore,
-                isLoading,
-                error
-            }) => {
-                const {
-                    offset = null,
-                    count = null,
-                    total = null
-                } = validElements ? validElements.paging : {};
-                if (error) {
-                    return <div>{error}</div>;
-                }
-                return (
-                    <div>
-                        <p>
-                            Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
-                            to your React components.
-                        </p>
-                        <button
-                            className="button button-secondary"
-                            onClick={loadMore}
-                            disabled={isLoading || (offset + count === total)}
-                        >More</button>
-                        <h2>validElements</h2>
-                        <pre>
-                            isLoading: {isLoading.toString()}<br />
-                            offset: {offset}<br />
-                            count: {count}<br />
-                            total: {total}<br />
-                            nextOffset: {offset + count}
-                        </pre>
-                        <div>
-                            {validElements ? validElements.items.map(item => (
-                                <AttributeFilterItem
-                                    key={item.element.uri}
-                                    uri={item.element.uri}
-                                    title={item.element.title}
-                                />
-                            )) : null}
-                        </div>
-                        {validElements ? <pre>{JSON.stringify(validElements, null, '  ')}</pre> : null}
-                    </div>
-                );
-            }
-        };
-
-        return (<div style={{ minHeight: 500 }}>
-            <AttributeElements
-                {...attributeElementsProps}
-            />
-        </div>);
+        return (
+            <div style={{ minHeight: 500 }}>
+                <AttributeElements identifier={employeeNameIdentifier} projectId={projectId} options={{ limit: 20 }}>
+                    {({ validElements, loadMore, isLoading, error }) => {
+                        const {
+                            offset = null,
+                            count = null,
+                            total = null
+                        } = validElements ? validElements.paging : {};
+                        if (error) {
+                            return <div>{error}</div>;
+                        }
+                        return (
+                            <div>
+                                <p>
+                                    Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
+                                    to your React components.
+                                </p>
+                                <button
+                                    className="button button-secondary s-show-more-filters-button"
+                                    onClick={loadMore}
+                                    disabled={isLoading || (offset + count === total)}
+                                >More
+                                </button>
+                                <h2>validElements</h2>
+                                <pre>
+                                    isLoading: {isLoading.toString()}<br />
+                                    offset: {offset}<br />
+                                    count: {count}<br />
+                                    total: {total}<br />
+                                    nextOffset: {offset + count}
+                                </pre>
+                                <div>
+                                    {validElements ? validElements.items.map(item => (
+                                        <AttributeFilterItem
+                                            key={item.element.uri}
+                                            uri={item.element.uri}
+                                            title={item.element.title}
+                                        />
+                                    )) : null}
+                                </div>
+                                {validElements ? <pre>{JSON.stringify(validElements, null, '  ')}</pre> : null}
+                            </div>
+                        );
+                    }}
+                </AttributeElements>
+            </div>
+        );
     }
 }
 
