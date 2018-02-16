@@ -14,6 +14,8 @@
 
   "globals": {
     "jest": false,
-    "fixture": false
+    "fixture": false,
+    "GDC": false,
+    "BASEPATH": false
   }
 }
