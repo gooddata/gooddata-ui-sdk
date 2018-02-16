@@ -35,5 +35,6 @@
    "gs.list.selectAll": "Selecteer alles",
    "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
    "gs.list.noItemsFound": "Geen items gevonden.",
-   "gs.list.error": "Fout bij inlezen lijstitems"
+   "gs.list.error": "Fout bij inlezen lijstitems",
+   "previous_year": "vorig jaar"
 }

@@ -1,5 +1,23 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
+
+import * as deLocaleData from 'react-intl/locale-data/de';
+import * as esLocaleData from 'react-intl/locale-data/es';
+import * as enLocaleData from 'react-intl/locale-data/en';
+import * as frLocaleData from 'react-intl/locale-data/fr';
+import * as jaLocaleData from 'react-intl/locale-data/ja';
+import * as nlLocaleData from 'react-intl/locale-data/nl';
+import * as ptLocaleData from 'react-intl/locale-data/pt';
+
+addLocaleData([
+    ...deLocaleData,
+    ...esLocaleData,
+    ...enLocaleData,
+    ...frLocaleData,
+    ...jaLocaleData,
+    ...nlLocaleData,
+    ...ptLocaleData
+]);
 
 import * as enUS from '../../../translations/en-US.json';
 import * as deDE from '../../../translations/de-DE.json';

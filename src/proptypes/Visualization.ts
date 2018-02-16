@@ -18,6 +18,11 @@ export const VisualizationPropType = {
     identifier: PropTypes.string,
     uri: PropTypes.string,
     uriResolver: PropTypes.func,
+    locale: PropTypes.string,
+    fetchVisObject: PropTypes.func,
+    fetchVisualizationClass: PropTypes.func,
+    BaseChartComponent: PropTypes.func,
+    TableComponent: PropTypes.func,
     LoadingComponent: PropTypes.func,
     ErrorComponent: PropTypes.func
 };

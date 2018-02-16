@@ -1,17 +1,17 @@
 import * as React from 'react';
 import * as GoodData from 'gooddata';
 import noop = require('lodash/noop');
-import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
 import {
     AfmUtils,
     ExecuteAfmAdapter,
-    VisualizationObject,
     toAfmResultSpec,
     createSubject
 } from '@gooddata/data-layer';
-import { AFM } from '@gooddata/typings';
+import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
+import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
 
+import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart, IChartConfig } from '../core/base/BaseChart';
 import { SortableTable } from '../core/SortableTable';
 import { IEvents } from '../../interfaces/Events';
@@ -19,10 +19,13 @@ import { VisualizationPropType, Requireable } from '../../proptypes/Visualizatio
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
+import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
+import * as MdObjectHelper from '../../helpers/MdObjectHelper';
+import { fillPoPTitlesAndAliases } from '../../helpers/popHelper';
 import {
-    ITotalItem,
     IDrillableItem,
-    ErrorStates
+    ErrorStates,
+    generateDimensions
 } from '../../';
 
 export { Requireable };
@@ -63,6 +66,7 @@ export interface IVisualizationProps extends IEvents {
     drillableItems?: IDrillableItem[];
     uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
+    fetchVisualizationClass?: (visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
     BaseChartComponent?: any;
     TableComponent?: any;
     ErrorComponent?: React.ComponentClass<any>;
@@ -73,7 +77,7 @@ export interface IVisualizationState {
     isLoading: boolean;
     resultSpec: AFM.IResultSpec;
     type: VisType;
-    totals: ITotalItem[];
+    totals: VisualizationObject.IVisualizationTotal[];
     error: {
         status: string;
     };
@@ -83,7 +87,7 @@ export interface IVisualizationExecInfo {
     dataSource: IDataSource;
     resultSpec: AFM.IResultSpec;
     type: VisType;
-    totals: ITotalItem[];
+    totals: VisualizationObject.IVisualizationTotal[];
 }
 
 function uriResolver(projectId: string, uri?: string, identifier?: string): Promise<string> {
@@ -100,17 +104,27 @@ function uriResolver(projectId: string, uri?: string, identifier?: string): Prom
 
 function fetchVisObject(visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
     return GoodData.xhr.get<VisualizationObject.IVisualizationObjectResponse>(visualizationUri)
-        .then(response => response.visualization);
+        .then(response => response.visualizationObject);
 }
 
-export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
-    public static propTypes = VisualizationPropType;
+function fetchVisualizationClass(visualizationClassUri: string): Promise<VisualizationClass.IVisualizationClass> {
+    return GoodData.xhr.get<VisualizationClass.IVisualizationClassWrapped>(visualizationClassUri)
+        .then(response => response.visualizationClass);
+}
+
+export class VisualizationWrapped
+    extends React.Component<IVisualizationProps & InjectedIntlProps, IVisualizationState> {
+    public static propTypes = {
+        ...VisualizationPropType,
+        intl: intlShape.isRequired
+    };
 
     public static defaultProps: Partial<IVisualizationProps> = {
         onError: noop,
         filters: [],
         uriResolver,
         fetchVisObject,
+        fetchVisualizationClass,
         BaseChartComponent: BaseChart,
         TableComponent: SortableTable,
         LoadingComponent: null,
@@ -123,7 +137,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
 
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
-    constructor(props: IVisualizationProps) {
+    constructor(props: IVisualizationProps & InjectedIntlProps) {
         super(props);
 
         this.state = {
@@ -155,7 +169,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     }
 
     public componentDidMount() {
-        const { projectId, uri, identifier, filters } = this.props;
+        const { projectId, uri, identifier, filters, intl } = this.props;
 
         this.adapter = new ExecuteAfmAdapter(GoodData, projectId);
         this.visualizationUri = uri;
@@ -163,7 +177,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.prepareDataSources(
             projectId,
             identifier,
-            filters
+            filters,
+            intl
         );
     }
 
@@ -179,7 +194,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
-    public componentWillReceiveProps(nextProps: IVisualizationProps) {
+    public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
         if (hasInvalidDatasource) {
@@ -192,7 +207,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             this.prepareDataSources(
                 nextProps.projectId,
                 nextProps.identifier,
-                nextProps.filters
+                nextProps.filters,
+                nextProps.intl
             );
         }
     }
@@ -262,7 +278,8 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
     private prepareDataSources(
         projectId: string,
         identifier: string,
-        filters: AFM.FilterItem[] = []
+        filters: AFM.FilterItem[] = [],
+        intl: InjectedIntl
     ) {
         const promise = this.props.uriResolver(projectId, this.visualizationUri, identifier)
             .then((visualizationUri: string) => {
@@ -273,26 +290,47 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
                 return this.props.fetchVisObject(visualizationUri);
             })
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
-                const translatedPopSuffix = ' - previous year'; // TODO change hardcoded PoP suffix with new visObj
+                const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
+                return this.props.fetchVisualizationClass(visualizationClassUri).then((visualizationClass) => {
+                    const popSuffix = ` - ${intl.formatMessage({ id: 'previous_year' })}`;
 
-                const visObjTotals = mdObject.content.buckets.totals;
-                const totals = !isEmpty(visObjTotals) ?
-                    visObjTotals.map(visObjTotal => visObjTotal.total) : [];
+                    const { afm, resultSpec } = toAfmResultSpec(fillPoPTitlesAndAliases(mdObject.content, popSuffix));
 
-                const { afm, resultSpec } = toAfmResultSpec(mdObject.content, translatedPopSuffix);
-                const dateFilter = getDateFilter(filters);
-                const attributeFilters = getAttributeFilters(filters);
-                const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
-                return this.adapter.createDataSource(afmWithFilters)
-                    .then((dataSource: IDataSource) => {
-                        return {
-                            type: mdObject.content.type,
-                            dataSource,
-                            resultSpec,
-                            totals
-                        };
+                    const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
+
+                    const dateFilter = getDateFilter(filters);
+                    const attributeFilters = getAttributeFilters(filters);
+                    const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
+
+                    const visualizationType: VisType = getVisualizationTypeFromVisualizationClass(visualizationClass);
+                    const resultSpecWithDimensions = {
+                        ...resultSpec,
+                        dimensions: generateDimensions(mdObject.content, visualizationType)
+                    };
+
+                    return this.adapter.createDataSource(afmWithFilters)
+                        .then((dataSource: IDataSource) => {
+                            return {
+                                type: visualizationType,
+                                dataSource,
+                                resultSpec: resultSpecWithDimensions,
+                                totals: mdObjectTotals
+                            };
+                        });
                     });
                 });
         this.subject.next(promise);
+    }
+}
+
+export const IntlVisualization = injectIntl(VisualizationWrapped);
+
+export class Visualization extends React.Component<IVisualizationProps, null> {
+    public render() {
+        return (
+            <IntlWrapper locale={this.props.locale}>
+                <IntlVisualization {...this.props}/>
+            </IntlWrapper>
+        );
     }
 }

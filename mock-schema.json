@@ -48,53 +48,102 @@
             "high"
           ]
         }
-      ]
+      ],
+      "dateDataSets": [{
+        "title": "Activity",
+        "tags": "sales"
+      }, {
+        "title": "Opportunity"
+      }, {
+        "title": "Closed"
+      }]
     }
   ],
-  "visualizations": [
+  "visualizationClasses": [{
+    "title": "Table",
+    "url": "local:table"
+  }, {
+    "title": "Column",
+    "url": "local:column"
+  }, {
+    "title": "Bar",
+    "url": "local:bar"
+  }, {
+    "title": "Line",
+    "url": "local:line"
+  }, {
+    "title": "Pie",
+    "url": "local:pie"
+  }],
+  "visualizationObjects": [
     {
       "identifier": "1001",
       "title": "Table",
-      "type": "table",
-      "categories": [
-        {
-          "type": "attribute",
-          "collection": "attribute",
-          "identifier": "3"
-        }
-      ],
-      "measures": [
-        {
-          "type": "metric",
+      "type": "local:table",
+      "buckets": [{
+        "localIdentifier": "measures",
+        "items": [{
+          "localIdentifier": "1",
           "identifier": "1",
-          "title": "Amount"
-        },
-        {
-          "type": "metric",
+          "alias": "Amount"
+        }, {
+          "localIdentifier": "2",
           "identifier": "1",
-          "title": "Amount"
-        }
-      ],
-      "filters": []
+          "alias": "Amount"
+        }]
+      }, {
+        "localIdentifier": "attribute",
+        "items": [{
+          "localIdentifier": "3",
+          "displayForm": "3.df"
+        }]
+      }]
     },
     {
       "identifier": "1002",
       "title": "Pie chart",
-      "type": "pie",
-      "categories": [],
-      "measures": [
-        {
-          "type": "metric",
+      "type": "local:pie",
+      "buckets": [{
+        "localIdentifier": "measures",
+        "items": [{
+          "localIdentifier": "m1",
           "identifier": "1",
-          "title": "Amount"
-        },
-        {
-          "type": "metric",
+          "alias": "Amount"
+        }, {
+          "localIdentifier": "m2",
           "identifier": "2",
-          "title": "Amount 2"
-        }
-      ],
-      "filters": []
+          "alias": "Amount 2"
+        }]
+      }]
+    },
+    {
+      "title": "Chart with PoP measure",
+      "identifier": "1003",
+      "type": "local:bar",
+      "filters": [],
+      "buckets": [{
+        "localIdentifier": "measures",
+        "items": [{
+          "localIdentifier": "m1_pop",
+          "filters": [],
+          "identifier": "1",
+          "showPoP": "true",
+          "measureIdentifier": "m1",
+          "popAttribute": "attr.closed.year"
+        }, {
+          "localIdentifier": "m1",
+          "filters": [],
+          "identifier": "1",
+          "alias": "Amount"
+        }]
+      }, {
+        "localIdentifier": "view",
+        "items": [{
+          "localIdentifier": "a1",
+          "displayForm": "attr.closed.year.df",
+          "alias": "Date"
+        }]
+      }]
     }
   ]
 }
