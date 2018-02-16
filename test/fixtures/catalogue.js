@@ -9,12 +9,7 @@ export const optionsForEmptySelection = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [],
-            categories: [],
-            filters: []
-        }
+        buckets: []
     }
 };
 
@@ -36,6 +31,17 @@ export const requestForEmptySelection = {
     }
 };
 
+const attributesMapForMeasureTypeFactWithFilter = {
+    '/gdc/md/FoodMartDemo/obj/124': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/58'
+            }
+        }
+    }
+};
+
 export const optionsForMeasureTypeFactWithFilter = {
     types: [
         'metric',
@@ -47,39 +53,43 @@ export const optionsForMeasureTypeFactWithFilter = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
-                {
-                    measure: {
-                        type: 'fact',
-                        aggregation: 'sum',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/1',
-                        title: 'Sum of Accounting Amount',
-                        format: '#,##0.00',
-                        measureFilters: [
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition:
                             {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/FoodMartDemo/obj/58',
-                                    displayForm: '/gdc/md/FoodMartDemo/obj/124',
-                                    default: {
-                                        negativeSelection: false,
-                                        attributeElements: [
-                                            '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
-                                        ]
-                                    }
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/1'
+                                    },
+                                    filters: [
+                                        {
+                                            positiveAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/FoodMartDemo/obj/124'
+                                                },
+                                                in: [
+                                                    '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
-                            }
-                        ],
-                        showInPercent: false,
-                        showPoP: false
+                            },
+                            title: 'Sum of Accounting Amount',
+                            format: '#,##0.00'
+                        }
                     }
-                }
-            ],
-            categories: [],
-            filters: []
-        }
-    }
+                ]
+            }
+        ]
+    },
+    attributesMap: attributesMapForMeasureTypeFactWithFilter
 };
 
 export const requestForMeasureTypeFactWithFilter = {
@@ -102,6 +112,24 @@ export const requestForMeasureTypeFactWithFilter = {
     }
 };
 
+const attributesMapForMeasureWithFilterAndCategory = {
+    '/gdc/md/FoodMartDemo/obj/124': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/58'
+            }
+        }
+    },
+    '/gdc/md/FoodMartDemo/obj/117': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/54'
+            }
+        }
+    }
+};
 export const optionsForMeasureWithFilterAndCategory = {
     types: [
         'metric',
@@ -113,49 +141,55 @@ export const optionsForMeasureWithFilterAndCategory = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
+        buckets: [{
+            localIdentifier: 'measures',
+            items: [
                 {
                     measure: {
-                        type: 'fact',
-                        aggregation: 'sum',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/1',
-                        title: 'Sum of Accounting Amount',
-                        format: '#,##0.00',
-                        measureFilters: [
-                            {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/FoodMartDemo/obj/58',
-                                    displayForm: '/gdc/md/FoodMartDemo/obj/124',
-                                    default: {
-                                        negativeSelection: false,
-                                        attributeElements: [
-                                            '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
-                                        ]
+                        localIdentifier: 'm1',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: '/gdc/md/FoodMartDemo/obj/1'
+                                },
+                                aggregation: 'sum',
+                                filters: [
+                                    {
+                                        positiveAttributeFilter: {
+                                            displayForm: {
+                                                uri: '/gdc/md/FoodMartDemo/obj/124'
+                                            },
+                                            in: [
+                                                '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                            ]
+                                        }
                                     }
-                                }
+                                ]
                             }
-                        ],
-                        showInPercent: false,
-                        showPoP: false
+                        },
+                        title: 'Sum of Accounting Amount',
+                        format: '#,##0.00'
                     }
                 }
-            ],
-            categories: [
+            ]
+        },
+        {
+            localIdentifier: 'view',
+            items: [
                 {
-                    category: {
-                        type: 'attribute',
-                        collection: 'view',
-                        attribute: '/gdc/md/FoodMartDemo/obj/54',
-                        displayForm: '/gdc/md/FoodMartDemo/obj/117'
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            uri: '/gdc/md/FoodMartDemo/obj/117'
+                        }
                     }
                 }
-            ],
-            filters: []
-        }
-    }
+            ]
+        }]
+    },
+    attributesMap: attributesMapForMeasureWithFilterAndCategory
 };
+
 
 export const requestForMeasureWithFilterAndCategory = {
     catalogRequest: {
@@ -178,6 +212,25 @@ export const requestForMeasureWithFilterAndCategory = {
     }
 };
 
+
+const attributesMapForMeasureWithFilterAndCategoryShowInPercent = {
+    '/gdc/md/FoodMartDemo/obj/124': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/58'
+            }
+        }
+    },
+    '/gdc/md/FoodMartDemo/obj/117': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/54'
+            }
+        }
+    }
+};
 export const optionsForMeasureWithFilterAndCategoryShowInPercent = {
     types: [
         'metric',
@@ -189,48 +242,56 @@ export const optionsForMeasureWithFilterAndCategoryShowInPercent = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
-                {
-                    measure: {
-                        type: 'fact',
-                        aggregation: 'sum',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/1',
-                        title: 'Sum of Accounting Amount',
-                        format: '#,##0.00',
-                        measureFilters: [
-                            {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/FoodMartDemo/obj/58',
-                                    displayForm: '/gdc/md/FoodMartDemo/obj/124',
-                                    default: {
-                                        negativeSelection: false,
-                                        attributeElements: [
-                                            '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
-                                        ]
-                                    }
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/1'
+                                    },
+                                    filters: [
+                                        {
+                                            positiveAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/FoodMartDemo/obj/124'
+                                                },
+                                                in: [
+                                                    '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    computeRatio: true
                                 }
+                            },
+                            title: 'Sum of Accounting Amount',
+                            format: '#,##0.00'
+                        }
+                    }
+                ]
+            },
+            {
+                localIdentifier: 'view',
+                items: [
+                    {
+                        visualizationAttribute: {
+                            localIdentifier: 'a1',
+                            displayForm: {
+                                uri: '/gdc/md/FoodMartDemo/obj/117'
                             }
-                        ],
-                        showInPercent: true,
-                        showPoP: false
+                        }
                     }
-                }
-            ],
-            categories: [
-                {
-                    category: {
-                        type: 'attribute',
-                        collection: 'view',
-                        attribute: '/gdc/md/FoodMartDemo/obj/54',
-                        displayForm: '/gdc/md/FoodMartDemo/obj/117'
-                    }
-                }
-            ],
-            filters: []
-        }
-    }
+                ]
+            }
+        ]
+    },
+    attributesMap: attributesMapForMeasureWithFilterAndCategoryShowInPercent
 };
 
 export const requestForMeasureWithFilterAndCategoryShowInPercent = {
@@ -254,6 +315,69 @@ export const requestForMeasureWithFilterAndCategoryShowInPercent = {
     }
 };
 
+export const optionsForMeasureWithNotInFilterAndCategoryShowInPercent = {
+    types: [
+        'metric',
+        'attribute',
+        'fact'
+    ],
+    paging: {
+        offset: 0,
+        limit: 100
+    },
+    bucketItems: {
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/1'
+                                    },
+                                    filters: [
+                                        {
+                                            negativeAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/FoodMartDemo/obj/124'
+                                                },
+                                                notIn: [
+                                                    '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    computeRatio: true
+                                }
+                            },
+                            title: 'Sum of Accounting Amount',
+                            format: '#,##0.00'
+                        }
+                    }
+                ]
+            },
+            {
+                localIdentifier: 'view',
+                items: [
+                    {
+                        visualizationAttribute: {
+                            localIdentifier: 'a1',
+                            displayForm: {
+                                uri: '/gdc/md/FoodMartDemo/obj/117'
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    attributesMap: attributesMapForMeasureWithFilterAndCategoryShowInPercent
+};
+
 export const requestForMeasureWithNotInFilterAndCategoryShowInPercent = {
     catalogRequest: {
         types: [
@@ -275,6 +399,24 @@ export const requestForMeasureWithNotInFilterAndCategoryShowInPercent = {
     }
 };
 
+const attributesMapForMeasureWithShowInPercent = {
+    '/gdc/md/FoodMartDemo/obj/124': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/58'
+            }
+        }
+    },
+    '/gdc/md/FoodMartDemo/obj/117': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/54'
+            }
+        }
+    }
+};
 export const optionsForMeasureWithShowInPercent = {
     types: [
         'metric',
@@ -286,48 +428,54 @@ export const optionsForMeasureWithShowInPercent = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
-                {
-                    measure: {
-                        type: 'fact',
-                        aggregation: 'sum',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/1',
-                        title: '% Sum of Accounting Amount',
-                        format: '#,##0.00',
-                        measureFilters: [
-                            {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/FoodMartDemo/obj/58',
-                                    displayForm: '/gdc/md/FoodMartDemo/obj/124',
-                                    default: {
-                                        negativeSelection: false,
-                                        attributeElements: [
-                                            '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
-                                        ]
-                                    }
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/1'
+                                    },
+                                    filters: [
+                                        {
+                                            positiveAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/FoodMartDemo/obj/124'
+                                                },
+                                                in: [
+                                                    '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    computeRatio: true
                                 }
+                            },
+                            title: '% Sum of Accounting Amount',
+                            format: '#,##0.00'
+                        }
+                    }
+                ]
+            },
+            {
+                localIdentifier: 'view',
+                items: [
+                    {
+                        visualizationAttribute: {
+                            displayForm: {
+                                uri: '/gdc/md/FoodMartDemo/obj/117'
                             }
-                        ],
-                        showInPercent: true,
-                        showPoP: false
+                        }
                     }
-                }
-            ],
-            categories: [
-                {
-                    category: {
-                        type: 'attribute',
-                        collection: 'view',
-                        attribute: '/gdc/md/FoodMartDemo/obj/54',
-                        displayForm: '/gdc/md/FoodMartDemo/obj/117'
-                    }
-                }
-            ],
-            filters: []
-        }
-    }
+                ]
+            }
+        ]
+    },
+    attributesMap: attributesMapForMeasureWithShowInPercent
 };
 
 export const requestForMeasureWithShowInPercent = {
@@ -352,6 +500,17 @@ export const requestForMeasureWithShowInPercent = {
     }
 };
 
+const attributesMapForTwoMeasuresFactAndAtrribute = {
+    '/gdc/md/FoodMartDemo/obj/124': {
+        attribute: {
+            content: {},
+            meta: {
+                uri: '/gdc/md/FoodMartDemo/obj/58'
+            }
+        }
+    }
+};
+
 export const optionsForTwoMeasuresFactAndAtrribute = {
     types: [
         'metric',
@@ -363,51 +522,57 @@ export const optionsForTwoMeasuresFactAndAtrribute = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
-                {
-                    measure: {
-                        type: 'fact',
-                        aggregation: 'sum',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/1',
-                        title: 'Sum of Accounting Amount',
-                        format: '#,##0.00',
-                        measureFilters: [
-                            {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/FoodMartDemo/obj/58',
-                                    displayForm: '/gdc/md/FoodMartDemo/obj/124',
-                                    default: {
-                                        negativeSelection: false,
-                                        attributeElements: [
-                                            '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
-                                        ]
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/1'
+                                    },
+                                    filters: [
+                                        {
+                                            positiveAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/FoodMartDemo/obj/124'
+                                                },
+                                                in: [
+                                                    '/gdc/md/FoodMartDemo/obj/58/elements?id=1000'
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            title: 'Sum of Accounting Amount',
+                            format: '#,##0.00'
+                        }
+                    },
+                    {
+                        measure: {
+                            localIdentifier: 'm2',
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'count',
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/40'
                                     }
                                 }
-                            }
-                        ],
-                        showInPercent: false,
-                        showPoP: false
+                            },
+                            title: 'Count of Brand',
+                            format: '#,##0.00'
+                        }
                     }
-                },
-                {
-                    measure: {
-                        type: 'attribute',
-                        aggregation: 'count',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/40',
-                        title: 'Count of Brand',
-                        format: '#,##0.00',
-                        measureFilters: [],
-                        showInPercent: false,
-                        showPoP: false
-                    }
-                }
-            ],
-            categories: [],
-            filters: []
-        }
-    }
+                ]
+            }
+        ]
+    },
+    attributesMap: attributesMapForTwoMeasuresFactAndAtrribute
 };
 
 export const requestForTwoMeasureFactAndAttribute = {
@@ -442,24 +607,27 @@ export const optionsForMetric = {
         limit: 100
     },
     bucketItems: {
-        type: 'column',
-        buckets: {
-            measures: [
-                {
-                    measure: {
-                        type: 'metric',
-                        objectUri: '/gdc/md/FoodMartDemo/obj/8349',
-                        title: '+My metric',
-                        format: '#,##0.00',
-                        measureFilters: [],
-                        showInPercent: false,
-                        showPoP: false
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: '/gdc/md/FoodMartDemo/obj/8349'
+                                    }
+                                }
+                            },
+                            title: '+My metric',
+                            format: '#,##0.00'
+                        }
                     }
-                }
-            ],
-            categories: [],
-            filters: []
-        }
+                ]
+            }
+        ]
     }
 };
 
@@ -699,6 +867,7 @@ export const loadCatalogResponse = {
     ]
 };
 
+// for #loadDateDataSets tests
 export const loadDateDataSetsResponse = {
     dateDataSetsResponse: {
         unavailableDateDataSetsCount: 1,
@@ -900,5 +1069,148 @@ export const loadDateDataSetsResponse = {
                 }
             }
         ]
+    }
+};
+
+export const optionsForOnlyDateBuckets = {
+    bucketItems: {
+        buckets: [
+            {
+                localIdentifier: 'attribute',
+                items: [{
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            uri: '/gdc/md/FoodMartDemo/obj/attr1'
+                        }
+                    }
+                }]
+            }
+        ],
+        filters: [{
+            relativeDateFilter: {
+                dataSet: {
+                    uri: '/attr1'
+                },
+                granularity: 'GDC.time.year',
+                from: -1,
+                to: -1
+            }
+        }]
+    },
+    attributesMap: {
+        '/gdc/md/FoodMartDemo/obj/attr1': {
+            attribute: {
+                content: {
+                    type: 'GDC.time.year'
+                },
+                meta: {
+                    uri: '/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233'
+                }
+            }
+        }
+    }
+};
+
+export const optionsForPureMAQL = {
+    bucketItems: {
+        buckets: [
+            {
+                localIdentifier: 'measures',
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: 'm1_pop',
+                            definition: {
+                                popMeasureDefinition: {
+                                    measureIdentifier: 'm1',
+                                    popAttribute: {
+                                        uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        measure: {
+                            localIdentifier: 'm1',
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276'
+                                    },
+                                    filters: [
+                                        {
+                                            negativeAttributeFilter: {
+                                                displayForm: {
+                                                    uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2267'
+                                                },
+                                                notIn: [
+                                                    '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706'
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    computeRatio: true,
+                                    aggregation: 'sum'
+                                }
+                            },
+                            format: '#,##0.00',
+                            title: 'Measure title'
+                        }
+                    }
+                ]
+            },
+            {
+                localIdentifier: 'trend',
+                items: [
+                    {
+                        visualizationAttribute: {
+                            localIdentifier: 'a1',
+                            displayForm: {
+                                uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275'
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        filters: [
+            {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275'
+                    },
+                    notIn: []
+                }
+            },
+            {
+                absoluteDateFilter: {
+                    dataset: {
+                        uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2180'
+                    },
+                    to: '2016-09-30',
+                    from: '2000-07-01'
+                }
+            }
+        ]
+    },
+    attributesMap: {
+        '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2267': {
+            attribute: {
+                content: {},
+                meta: {
+                    uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266'
+                }
+            }
+        },
+        '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275': {
+            attribute: {
+                content: {},
+                meta: {
+                    uri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274'
+                }
+            }
+        }
     }
 };

@@ -1,4 +1,4 @@
-import { cloneDeep, get, set } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import fetchMock from './utils/fetch-mock';
 import * as fixtures from './fixtures/catalogue';
 import * as catalogue from '../src/catalogue';
@@ -33,8 +33,10 @@ describe('Catalogue', () => {
                 const { data } = fetchMock.lastOptions();
 
                 expect(data).toEqual(fixtures.requestForMeasureWithFilterAndCategory);
+
+                const attributeDF = get(options, 'bucketItems.buckets.1.items.0.visualizationAttribute.displayForm.uri');
                 expect(get(data, 'catalogRequest.bucketItems.0')).toBe(
-                    get(options, 'bucketItems.buckets.categories.0.category.attribute')
+                    get(options, ['attributesMap', attributeDF, 'attribute', 'meta', 'uri'])
                 );
             });
         });
@@ -56,8 +58,10 @@ describe('Catalogue', () => {
                 const { data } = fetchMock.lastOptions();
 
                 expect(data).toEqual(fixtures.requestForMeasureWithShowInPercent);
+
+                const attributeDF = get(options, 'bucketItems.buckets.1.items.0.visualizationAttribute.displayForm.uri');
                 expect(get(data, 'catalogRequest.bucketItems[0]')).toBe(
-                    get(options, 'bucketItems.buckets.categories[0].category.attribute')
+                    get(options, ['attributesMap', attributeDF, 'attribute', 'meta', 'uri'])
                 );
             });
         });
@@ -105,8 +109,7 @@ describe('Catalogue', () => {
         });
 
         it('should correctly resolve items with nested maql expressions and negative filter element selection', () => {
-            const options = fixtures.optionsForMeasureWithFilterAndCategoryShowInPercent;
-            set(options, 'bucketItems.buckets.measures[0].measure.measureFilters[0].listAttributeFilter.default.negativeSelection', true);
+            const options = fixtures.optionsForMeasureWithNotInFilterAndCategoryShowInPercent;
 
             return catalogue.loadItems(projectId, options).then(() => {
                 const { data } = fetchMock.lastOptions();
@@ -208,24 +211,7 @@ describe('Catalogue', () => {
         });
 
         it('should send empty columns if only date buckets are in the request', () => {
-            const mockPayload = {
-                bucketItems: {
-                    buckets: {
-                        categories: [{
-                            category: {
-                                type: 'date',
-                                attribute: '/attr1'
-                            }
-                        }],
-                        filters: [{
-                            dateFilter: {
-                                type: 'relative', // does not matter
-                                attribute: '/attr1'
-                            }
-                        }]
-                    }
-                }
-            };
+            const mockPayload = fixtures.optionsForOnlyDateBuckets;
 
             return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
                 const { data } = fetchMock.lastOptions();
@@ -237,72 +223,7 @@ describe('Catalogue', () => {
         });
 
         it('should replace identifiers with pure MAQL', () => {
-            const mockPayload = {
-                bucketItems: {
-                    buckets: {
-                        measures: [
-                            {
-                                measure: {
-                                    measureFilters: [
-                                        {
-                                            listAttributeFilter: {
-                                                attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266',
-                                                displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2267',
-                                                default: {
-                                                    negativeSelection: true,
-                                                    attributeElements: [
-                                                        '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2266/elements?id=706'
-                                                    ]
-                                                }
-                                            }
-                                        }
-                                    ],
-                                    showInPercent: true,
-                                    objectUri: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2276',
-                                    aggregation: 'sum',
-                                    format: '#,##0.00',
-                                    showPoP: true,
-                                    title: 'Measure title',
-                                    type: 'fact'
-                                }
-                            }
-                        ],
-                        filters: [
-                            {
-                                listAttributeFilter: {
-                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
-                                    displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275',
-                                    default: {
-                                        negativeSelection: true,
-                                        attributeElements: []
-                                    }
-                                }
-                            },
-                            {
-                                dateFilter: {
-                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2167',
-                                    to: '2016-09-30',
-                                    granularity: 'GDC.time.date',
-                                    from: '2000-07-01',
-                                    dataset: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2180',
-                                    type: 'absolute'
-                                }
-                            }
-                        ],
-                        categories: [
-                            {
-                                category: {
-                                    attribute: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2274',
-                                    type: 'attribute',
-                                    displayForm: '/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2275',
-                                    collection: 'trend'
-                                }
-                            }
-                        ]
-                    },
-                    type: 'line'
-                }
-            };
+            const mockPayload = fixtures.optionsForPureMAQL;
 
             return catalogue.loadDateDataSets(projectId, mockPayload).then(() => {
                 const { data } = fetchMock.lastOptions();
