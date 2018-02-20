@@ -36,9 +36,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@54.0.0-alpha1":
-  version "54.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-54.0.0-alpha1.tgz#a70f11a9626bc23812f0dfdfe4257448e04128de"
+"@gooddata/goodstrap@54.0.0-alpha2":
+  version "54.0.0-alpha2"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-54.0.0-alpha2.tgz#88fd3d7672b5f00306f2c06a32cf6b44ebd2ab94"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
