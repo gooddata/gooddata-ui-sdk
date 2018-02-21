@@ -1,9 +1,15 @@
 {
-  "presets": ["env", "react"],
+  "presets": [
+    ["env", {
+      "modules": false
+    }],
+    "react"
+  ],
   "plugins": [
     "styled-jsx/babel",
     "transform-object-rest-spread",
     "transform-class-properties",
-    "transform-async-to-generator"
+    "transform-async-to-generator",
+    "lodash"
   ]
 }

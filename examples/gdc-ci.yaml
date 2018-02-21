@@ -3,4 +3,4 @@ before:
 dist:
   - yarn build --env.basepath=/examples
 pull-request:
-  - ./node_modules/eslint/bin/eslint.js src/ --ext .jsx,.js src/ -f checkstyle -o ci/results/eslint-results.xml
+  - eslint src/ --ext .jsx,.js src/ -f checkstyle -o ci/results/eslint-results.xml

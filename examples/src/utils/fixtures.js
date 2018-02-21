@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import { catalog } from './catalog';
 
-export const projectId = catalog.projectId;
+export const { projectId } = catalog;
 
 export const totalSalesIdentifier = get(catalog, 'measures[$ Total Sales].identifier');
 export const franchiseFeesIdentifier = get(catalog, 'measures[$ Franchise Fees].identifier');

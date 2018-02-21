@@ -20,27 +20,29 @@ class Header extends React.Component {
             </li>
         ));
 
-        return (<div className="page">
-            <Helmet>
-                <title>{title}</title>
-                <meta charSet="utf-8" />
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <link rel="shortcut icon" type="image/x-icon" href={favicon} />
-            </Helmet>
-            <div className="gd-header header-6 is-loaded">
-                <Link to="/" className="gd-header-logo gd-header-measure">
-                    <img src="https://secure.gooddata.com/images/header/logo.png" alt={pageTitle} />
-                </Link>
-                <div className="gd-header-stretch gd-header-menu-wrapper">
-                    <div className="gd-header-menu gd-header-menu-horizontal">
-                        <ul className="gd-header-menu-section gd-header-measure">
-                            {navigationElements}
-                        </ul>
+        return (
+            <div className="page">
+                <Helmet>
+                    <title>{title}</title>
+                    <meta charSet="utf-8" />
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                    <link rel="shortcut icon" type="image/x-icon" href={favicon} />
+                </Helmet>
+                <div className="gd-header header-6 is-loaded">
+                    <Link to="/" className="gd-header-logo gd-header-measure">
+                        <img src="https://secure.gooddata.com/images/header/logo.png" alt={pageTitle} />
+                    </Link>
+                    <div className="gd-header-stretch gd-header-menu-wrapper">
+                        <div className="gd-header-menu gd-header-menu-horizontal">
+                            <ul className="gd-header-menu-section gd-header-measure">
+                                {navigationElements}
+                            </ul>
+                        </div>
                     </div>
+                    {this.props.isUserLoggedIn && (<div className="gd-header-account gd-header-measure logout" onClick={this.props.logoutAction}>Logout</div>)}
                 </div>
-                {this.props.isUserLoggedIn && (<div className="gd-header-account gd-header-measure logout" onClick={this.props.logoutAction}>Logout</div>)}
             </div>
-        </div>);
+        );
     }
 }
 
