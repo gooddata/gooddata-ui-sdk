@@ -12,14 +12,16 @@ export class AttributeFilterExample extends Component {
     }
 
     render() {
-        return (<div>
-            <AttributeFilter
-                identifier={employeeNameIdentifier}
-                projectId={projectId}
-                fullscreenOnMobile={false}
-                onApply={this.onApply}
-            />
-        </div>);
+        return (
+            <div>
+                <AttributeFilter
+                    identifier={employeeNameIdentifier}
+                    projectId={projectId}
+                    fullscreenOnMobile={false}
+                    onApply={this.onApply}
+                />
+            </div>
+        );
     }
 }
 

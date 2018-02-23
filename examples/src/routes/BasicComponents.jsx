@@ -15,24 +15,26 @@ import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-
 
 export const title = 'Basic Components';
 
-export const BasicComponents = () => (<div>
-    <h1>{title}</h1>
+export const BasicComponents = () => (
+    <div>
+        <h1>{title}</h1>
 
-    <h2>Bar chart</h2>
-    <ExampleWithSource for={BarChartExample} source={BarChartExampleSRC} />
+        <h2>Bar chart</h2>
+        <ExampleWithSource for={BarChartExample} source={BarChartExampleSRC} />
 
-    <h2>Column chart</h2>
-    <ExampleWithSource for={ColumnChartExample} source={ColumnChartExampleSRC} />
+        <h2>Column chart</h2>
+        <ExampleWithSource for={ColumnChartExample} source={ColumnChartExampleSRC} />
 
-    <h2>Line chart</h2>
-    <ExampleWithSource for={LineChartExample} source={LineChartExampleSRC} />
+        <h2>Line chart</h2>
+        <ExampleWithSource for={LineChartExample} source={LineChartExampleSRC} />
 
-    <h2>Pie chart</h2>
-    <ExampleWithSource for={PieChartExample} source={PieChartExampleSRC} />
+        <h2>Pie chart</h2>
+        <ExampleWithSource for={PieChartExample} source={PieChartExampleSRC} />
 
-    <h2>Table</h2>
-    <ExampleWithSource for={TableExample} source={TableExampleSRC} />
+        <h2>Table</h2>
+        <ExampleWithSource for={TableExample} source={TableExampleSRC} />
 
-</div>);
+    </div>
+);
 
 export default BasicComponents;

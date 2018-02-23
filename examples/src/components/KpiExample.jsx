@@ -10,14 +10,16 @@ export class KpiExample extends Component {
     render() {
         return (
             <div className="kpi">
-                <style jsx>{`
+                <style jsx>
+                    {`
                     height: 60px;
                     margin: 10px 0;
                     font-size: 50px;
                     white-space: nowrap;
                     vertical-align: bottom;
                     font-weight: 700;
-                    `}</style>
+                    `}
+                </style>
                 <span className="kpi-value">
                     <Kpi
                         projectId={projectId}

@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
 
 const title = require('./package.json').description;
@@ -9,7 +11,10 @@ const title = require('./package.json').description;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath = '' } = {}) => {
-    console.log('gdc', gdc);
+    console.log('Backend: ', gdc);
+
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const proxy = {
         '/gdc': {
             target: gdc,
@@ -30,36 +35,80 @@ module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath 
     };
 
     const resolve = {
-        resolve: {
-            extensions: ['.js', '.jsx'],
-            alias: link ? {
-                react: path.resolve(__dirname, '../node_modules/react'),
-                'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
-                '@gooddata/react-components/styles': path.resolve(__dirname, '../styles/'),
-                '@gooddata/react-components': path.resolve(__dirname, '../dist/')
-            } : {}
-        }
+        extensions: ['.js', '.jsx'],
+        alias: link ? {
+            react: path.resolve(__dirname, '../node_modules/react'),
+            'react-dom': path.resolve(__dirname, '../node_modules/react-dom'),
+            '@gooddata/react-components/styles': path.resolve(__dirname, '../styles/'),
+            '@gooddata/react-components': path.resolve(__dirname, '../dist/')
+        } : {}
     };
 
-    return Object.assign({}, resolve, {
+    const plugins = [
+        new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            title
+        }),
+        new CircularDependencyPlugin({
+            exclude: /node_modules|dist/,
+            failOnError: true
+        }),
+        new webpack.DefinePlugin({
+            GDC: JSON.stringify(gdc),
+            BASEPATH: JSON.stringify(basepath),
+            'process.env': {
+                // This has effect on the react lib size
+                NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development')
+            }
+        })
+    ];
+
+    if (process.env.NODE_ENV === 'production') {
+        const uglifyOptions = {
+            mangle: true,
+            compress: {
+                sequences: true,
+                dead_code: true,
+                drop_debugger: true,
+                conditionals: true,
+                booleans: true,
+                unused: true,
+                if_return: true,
+                join_vars: true,
+                warnings: false
+            }
+        };
+
+        plugins.push(
+            new webpack.optimize.OccurrenceOrderPlugin(),
+
+            new webpack.optimize.ModuleConcatenationPlugin(),
+
+            new UglifyJsPlugin({
+                uglifyOptions,
+                parallel: true
+            }),
+            new CompressionPlugin({
+                asset: '[file].gz',
+                algorithm: 'gzip'
+            }),
+            function collectStats() {
+                this.plugin('done', (stats) => {
+                    const filename = path.join(__dirname, 'dist', 'stats.json');
+                    const serializedStats = JSON.stringify(stats.toJson(), null, '\t');
+                    require('fs').writeFileSync(filename, serializedStats);
+                });
+            }
+        );
+    }
+
+    return {
         entry: ['./src/index.jsx'],
-        plugins: [
-            new CleanWebpackPlugin(['dist']),
-            new HtmlWebpackPlugin({
-                title
-            }),
-            new CircularDependencyPlugin({
-                exclude: /node_modules|dist/
-            }),
-            new webpack.DefinePlugin({
-                GDC: JSON.stringify(gdc),
-                BASEPATH: JSON.stringify(basepath)
-            })
-        ],
+        plugins,
         output: {
-            filename: '[name].bundle.js',
+            filename: '[name].[hash].js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/'
+            publicPath: `${basepath}/`
         },
         node: {
             __filename: true
@@ -93,6 +142,7 @@ module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath 
             compress: true,
             port: 8999,
             proxy
-        }
-    });
+        },
+        resolve
+    };
 };

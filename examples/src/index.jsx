@@ -1,3 +1,5 @@
+// FIXME unused this.state.errorMessage
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as GD from 'gooddata';
@@ -62,7 +64,7 @@ export class App extends React.Component {
         const { isLoggedIn } = this.state;
 
         return (
-            <Router>
+            <Router basename={BASEPATH}>
                 <div>
                     <Header
                         navigation={navigation}

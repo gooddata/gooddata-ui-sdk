@@ -59,22 +59,25 @@ export class ExecuteExample extends Component {
         if (isLoading) {
             return <Loading />;
         }
-        return (<blockquote>
-            <style jsx>{`
-                .kpi {
-                    height: 60px;
-                    margin: 10px 0;
-                    font-size: 50px;
-                    line-height: 60px;
-                    white-space: nowrap;
-                    vertical-align: bottom;
-                    font-weight: 700;
-                }
-            `}</style>
-            <p className="kpi s-execute-kpi">{result.executionResult.executionResult.data[0]}</p>
-            <p>Full execution response and result as JSON:</p>
-            <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
-        </blockquote>);
+        return (
+            <blockquote>
+                <style jsx>{`
+                    .kpi {
+                        height: 60px;
+                        margin: 10px 0;
+                        font-size: 50px;
+                        line-height: 60px;
+                        white-space: nowrap;
+                        vertical-align: bottom;
+                        font-weight: 700;
+                    }
+                `}
+                </style>
+                <p className="kpi s-execute-kpi">{result.executionResult.executionResult.data[0]}</p>
+                <p>Full execution response and result as JSON:</p>
+                <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
+            </blockquote>
+        );
     }
 
     render() {
@@ -104,18 +107,27 @@ export class ExecuteExample extends Component {
             status = <div className="gd-message error"><div className="gd-message-text">Oops, simulated error! Retry?</div></div>;
         }
 
-        return (<div>
-            {status}
-            <p><button onClick={this.retry} className="button button-secondary s-retry-button">Retry</button> (fails every second attempt)</p>
-            {/* We need to render the Execute component even in loading otherwise the ongoing request is cancelled */}
-            <Execute
-                key={executionNumber}
-                afm={afm}
-                projectId={projectId}
-                onLoadingChanged={this.onLoadingChanged}
-                onError={this.onError}
-            >{this.executeChildrenFunction}</Execute>
-        </div>);
+        return (
+            <div>
+                {status}
+                <p>
+                    <button onClick={this.retry} className="button button-secondary s-retry-button">Retry</button>
+                    (fails every second attempt)
+                </p>
+                {/*
+                    We need to render the Execute component even in loading
+                    otherwise the ongoing request is cancelled
+                */}
+                <Execute
+                    key={executionNumber}
+                    afm={afm}
+                    projectId={projectId}
+                    onLoadingChanged={this.onLoadingChanged}
+                    onError={this.onError}
+                >{this.executeChildrenFunction}
+                </Execute>
+            </div>
+        );
     }
 }
 

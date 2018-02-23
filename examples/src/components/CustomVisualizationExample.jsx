@@ -64,36 +64,42 @@ export class CustomVisualization extends Component {
         const measures = get(executionResult, 'headerItems[0][0]');
 
         const bars = range(measures.length).map((barIndex) => {
-            return (<Bar
-                key={barIndex}
-                name={measures[barIndex].measureHeaderItem.name}
-                dataKey={barIndex}
-                fill={DEFAULT_COLOR_PALETTE[barIndex]}
-                label={{ position: 'top' }}
-            />);
+            return (
+                <Bar
+                    key={barIndex}
+                    name={measures[barIndex].measureHeaderItem.name}
+                    dataKey={barIndex}
+                    fill={DEFAULT_COLOR_PALETTE[barIndex]}
+                    label={{ position: 'top' }}
+                />
+            );
         });
 
-        return (<div className="s-visualization-custom" >
-            <ResponsiveContainer width="100%" height={height}>
-                <BarChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="label" />
-                    <YAxis domain={[0, dataMax => dataMax * 1.1]} />
-                    <Legend />
-                    {bars}
-                </BarChart>
-            </ResponsiveContainer>
-            <div>
-                <p><button className="button button-secondary" onClick={this.toggleDisplayRawData} >Toggle Raw Data</button></p>
-                {displayRawData
-                    ? (<div>
-                        <pre>{JSON.stringify(executionResult, null, '  ')}</pre>
-                        <pre>{JSON.stringify(data, null, '  ')}</pre>
-                    </div>)
-                    : null
-                }
+        return (
+            <div className="s-visualization-custom" >
+                <ResponsiveContainer width="100%" height={height}>
+                    <BarChart data={data}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="label" />
+                        <YAxis domain={[0, dataMax => dataMax * 1.1]} />
+                        <Legend />
+                        {bars}
+                    </BarChart>
+                </ResponsiveContainer>
+                <div>
+                    <p><button className="button button-secondary" onClick={this.toggleDisplayRawData} >Toggle Raw Data</button></p>
+                    {displayRawData
+                        ? (
+                            <div>
+                                <pre>{JSON.stringify(executionResult, null, '  ')}</pre>
+                                <pre>{JSON.stringify(data, null, '  ')}</pre>
+                            </div>
+                        )
+                        : null
+                    }
+                </div>
             </div>
-        </div>);
+        );
     }
 }
 
