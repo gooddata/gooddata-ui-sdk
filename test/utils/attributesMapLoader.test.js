@@ -1,4 +1,8 @@
-import { loadAttributesMap } from '../../src/utils/attributesMapLoader';
+import {
+    loadAttributesMap,
+    getMissingUrisInAttributesMap
+} from '../../src/utils/attributesMapLoader';
+
 import fetchMock from './fetch-mock';
 import * as fixtures from '../fixtures/attributesMapLoader';
 
@@ -51,7 +55,43 @@ describe('loadAttributesMap', () => {
         setupFetchMock();
 
         return loadAttributesMap(projectId, URIs).then(attributesMap =>
-            expect(attributesMap).toEqual(fixtures.expectedResult)
+            expect(attributesMap).toEqual(fixtures.attributesMap)
         );
+    });
+});
+
+describe('getMissingUrisInAttributesMap', () => {
+    it('should return all uris in displayforms uris', () => {
+        expect(getMissingUrisInAttributesMap(fixtures.displayFormUris, {}))
+            .toEqual(fixtures.displayFormUris);
+    });
+
+    it('should return only one missing uri', () => {
+        const attributesMap = {
+            '/gdc/md/mockProject/obj/1028': {}
+        };
+
+        expect(getMissingUrisInAttributesMap(fixtures.displayFormUris, attributesMap))
+            .toEqual(['/gdc/md/mockProject/obj/43']);
+    });
+
+    it('should return empty array when all uris are present in attributes map', () => {
+        const attributesMap = {
+            '/gdc/md/mockProject/obj/1028': {},
+            '/gdc/md/mockProject/obj/43': {}
+        };
+
+        expect(getMissingUrisInAttributesMap(fixtures.displayFormUris, attributesMap))
+            .toEqual([]);
+    });
+
+    it('should return empty array when displayforms uris are empty', () => {
+        const attributesMap = {
+            '/gdc/md/mockProject/obj/1028': {},
+            '/gdc/md/mockProject/obj/43': {}
+        };
+
+        expect(getMissingUrisInAttributesMap([], attributesMap))
+            .toEqual([]);
     });
 });

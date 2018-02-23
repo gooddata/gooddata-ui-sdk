@@ -25,6 +25,11 @@ function createAttributesMap(displayForms, attributes) {
     {});
 }
 
+export function getMissingUrisInAttributesMap(displayFormsUris, attributesMap) {
+    const uris = displayFormsUris || [];
+    return uris.filter(uri => !attributesMap[uri]);
+}
+
 export function loadAttributesMap(projectId, attributeDisplayFormUris) {
     if (attributeDisplayFormUris.length === 0) {
         return Promise.resolve({});

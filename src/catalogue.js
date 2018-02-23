@@ -2,6 +2,11 @@ import { get, find, omit, cloneDeep } from 'lodash';
 import { post, parseJSON } from './xhr';
 import { mdToExecutionDefinitionsAndColumns } from './execution/experimental-executions';
 
+import { loadAttributesMap } from './utils/attributesMapLoader';
+import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
+
+export { loadAttributesMap, getAttributesDisplayForms };
+
 const REQUEST_DEFAULTS = {
     types: ['attribute', 'metric', 'fact'],
     paging: {
