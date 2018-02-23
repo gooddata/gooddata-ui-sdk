@@ -8,6 +8,7 @@ import {
     ITranslationsComponentProps } from './base/TranslationsProvider';
 import { fixEmptyHeaderItems } from './base/utils/fixEmptyHeaderItems';
 import { HeadlinePropTypes, Requireable } from '../../proptypes/Headline';
+import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
@@ -18,7 +19,9 @@ import { BaseVisualization } from './base/BaseVisualization';
 
 export { Requireable };
 
-export class HeadlineStateless extends BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps, {}> {
+export class HeadlineStateless extends
+    BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, {}> {
+
     public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultprops;
 
     public static propTypes = HeadlinePropTypes;

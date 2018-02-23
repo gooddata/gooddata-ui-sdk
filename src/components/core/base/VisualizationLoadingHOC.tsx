@@ -14,12 +14,11 @@ import { ISubject } from '../../../helpers/async';
 import { getVisualizationOptions } from '../../../helpers/options';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
+import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
 export interface ICommonVisualizationProps extends IEvents {
-    dataSource: DataSource.IDataSource<Execution.IExecutionResponses>;
-    resultSpec?: AFM.IResultSpec;
     locale?: string;
     drillableItems?: IDrillableItem[];
     afterRender?: Function;
@@ -49,7 +48,7 @@ const defaultErrorHandler = (error: any) => {
     }
 };
 
-export const commonDefaultprops: Partial<ICommonVisualizationProps> = {
+export const commonDefaultprops: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
     resultSpec: {},
     onError: defaultErrorHandler,
     onLoadingChanged: noop,
@@ -62,7 +61,7 @@ export const commonDefaultprops: Partial<ICommonVisualizationProps> = {
     onFiredDrillEvent: noop
 };
 
-export function visualizationLoadingHOC<T extends ICommonVisualizationProps>(
+export function visualizationLoadingHOC<T extends ICommonVisualizationProps & IDataSourceProviderInjectedProps>(
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>
 ): React.ComponentClass<T> {
 

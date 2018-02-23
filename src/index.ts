@@ -4,8 +4,8 @@ import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
 import { isEmptyResult } from './helpers/errorHandlers';
 import { BaseChart, ILegendConfig, IBaseChartProps } from './components/core/base/BaseChart';
-import { Table } from './components/core/Table';
-import { Headline } from './components/core/Headline';
+import { Table as CoreTable } from './components/core/Table';
+import { Headline as CoreHeadline } from './components/core/Headline';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { Kpi } from './components/simple/Kpi';
 import { Visualization, VisualizationEnvironment } from './components/uri/Visualization';
@@ -20,34 +20,49 @@ import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
 import * as PoPHelper from './helpers/popHelper';
+import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
+
+import { BarChart } from './components/BarChart';
+import { ColumnChart } from './components/ColumnChart';
+import { LineChart } from './components/LineChart';
+import { PieChart } from './components/PieChart';
+import { Table } from './components/Table';
+import { Headline } from './components/Headline';
 
 const CoreComponents = {
-    Table,
     BaseChart,
-    Headline
+    Headline: CoreHeadline,
+    Table: CoreTable
 };
 
 export {
     AfmComponents,
-    AttributeFilter,
     AttributeElements,
+    AttributeFilter,
+    BarChart,
     BucketNames,
-    CoreComponents,
     CatalogHelper,
     ChartType,
+    ColumnChart,
+    CoreComponents,
     ErrorCodes,
     ErrorStates,
     Execute,
     generateDimensions,
-    IDrillableItem,
-    ILegendConfig,
+    Headline,
     IBaseChartProps,
     ICommonVisualizationProps,
+    IDataSourceProviderInjectedProps,
+    IDrillableItem,
+    ILegendConfig,
     isEmptyResult,
     IVisualizationProperties,
     Kpi,
+    LineChart,
+    PieChart,
     PoPHelper,
     PropTypes,
+    Table,
     VisEvents,
     Visualization,
     VisualizationEnvironment,

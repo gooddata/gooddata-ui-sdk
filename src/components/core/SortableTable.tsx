@@ -5,6 +5,7 @@ import noop = require('lodash/noop');
 import { AFM } from '@gooddata/typings';
 import { ResultSpecUtils } from '@gooddata/data-layer';
 import { PureTable, ITableProps } from './PureTable';
+import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 
 export interface ISortableTableState {
     sortItems: AFM.SortItem[];
@@ -16,12 +17,14 @@ export interface IPushData {
     };
 }
 
-export class SortableTable extends React.Component<ITableProps, ISortableTableState> {
+export class SortableTable
+    extends React.Component<ITableProps & IDataSourceProviderInjectedProps, ISortableTableState> {
+
     public static defaultProps: Partial<ITableProps> = {
         pushData: noop
     };
 
-    constructor(props: ITableProps) {
+    constructor(props: ITableProps & IDataSourceProviderInjectedProps) {
         super(props);
 
         this.state = {
@@ -31,7 +34,7 @@ export class SortableTable extends React.Component<ITableProps, ISortableTableSt
         this.handlePushData = this.handlePushData.bind(this);
     }
 
-    public componentWillReceiveProps(nextProps: ITableProps): void {
+    public componentWillReceiveProps(nextProps: ITableProps & IDataSourceProviderInjectedProps): void {
         if (!ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
             this.setState({ sortItems: [] });
         }
