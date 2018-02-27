@@ -1,14 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import { BarChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
 import { Loading } from './utils/Loading';
 import { Error } from './utils/Error';
 import { totalSalesIdentifier, locationResortIdentifier, projectId } from '../utils/fixtures';
-
-const { BarChart } = AfmComponents;
 
 export class BarChartExample extends Component {
     onLoadingChanged(...params) {
@@ -22,36 +20,37 @@ export class BarChartExample extends Component {
     }
 
     render() {
-        const afm = {
-            measures: [
-                {
-                    localIdentifier: 'amount',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: totalSalesIdentifier
-                            }
-                        }
-                    },
-                    alias: '$ Total Sales',
-                    format: '#,##0'
-                }
-            ],
-            attributes: [
-                {
-                    displayForm: {
-                        identifier: locationResortIdentifier
-                    },
-                    localIdentifier: 'location_resort'
-                }
-            ]
+        const amount = {
+            measure: {
+                localIdentifier: 'amount',
+                definition: {
+                    measureDefinition: {
+                        item: {
+                            identifier: totalSalesIdentifier
+                        },
+                        aggregation: 'sum'
+                    }
+                },
+                alias: '$ Total Sales',
+                format: '#,##0'
+            }
+        };
+
+        const locationResort = {
+            visualizationAttribute: {
+                displayForm: {
+                    identifier: locationResortIdentifier
+                },
+                localIdentifier: 'location_resort'
+            }
         };
 
         return (
             <div style={{ height: 300 }} className="s-bar-chart">
                 <BarChart
                     projectId={projectId}
-                    afm={afm}
+                    measures={[amount]}
+                    viewBy={locationResort}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     LoadingComponent={Loading}

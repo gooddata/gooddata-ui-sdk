@@ -7,7 +7,7 @@ import { projectId, tableVisualizationIdentifier } from '../utils/fixtures';
 import { Loading } from './utils/Loading';
 import { Error } from './utils/Error';
 
-export class VisualizationTableExample extends Component {
+export class VisualizationTable extends Component {
     render() {
         return (
             <div style={{ height: 300 }} className="s-visualization-table">
@@ -22,4 +22,4 @@ export class VisualizationTableExample extends Component {
     }
 }
 
-export default VisualizationTableExample;
+export default VisualizationTable;

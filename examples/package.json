@@ -5,9 +5,10 @@
   "description": "GoodData ReactComponents examples",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
+    "build": "yarn prepare && NODE_ENV=production webpack",
     "dist": "yarn build",
-    "prepare-dev": "cd .. && yarn prepublish && cd examples",
+    "prepare": "cd .. && yarn prepublish && cd examples",
+    "prepare-dev": "cd .. && yarn prepublish-dev && cd examples",
     "dev-storybook": "yarn prepare-dev && NODE_TLS_REJECT_UNAUTHORIZED=0 webpack-dev-server --env.gdc=http://localhost:9001/ --env.link",
     "dev-secure": "yarn prepare-dev && NODE_TLS_REJECT_UNAUTHORIZED=0 webpack-dev-server --https --env.gdc=https://secure.gooddata.com/ --env.link",
     "dev-staging2": "yarn prepare-dev && NODE_TLS_REJECT_UNAUTHORIZED=0 webpack-dev-server --https --env.gdc=https://staging2.intgdc.com/ --env.link",

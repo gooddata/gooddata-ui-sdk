@@ -27,12 +27,12 @@ export function Table(props: ITableProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: 'measures',
-            items: props.measures || [],
-            totals: props.totals || []
+            items: props.measures || []
         },
         {
             localIdentifier: 'attributes',
-            items: props.attributes || []
+            items: props.attributes || [],
+            totals: props.totals || []
         }
     ];
 

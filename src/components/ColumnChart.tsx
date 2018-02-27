@@ -68,7 +68,7 @@ export function ColumnChart(props: IColumnChartProps): JSX.Element {
         <AfmColumnChart
             {...newProps}
             projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets)}
+            afm={convertBucketsToAFM(buckets, props.filters)}
             resultSpec={getStackingResultSpec(buckets)}
         />
     );

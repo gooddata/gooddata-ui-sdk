@@ -71,8 +71,9 @@
   "scripts": {
     "test": "jest --watch",
     "build-css": "node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss",
-    "dev": "rm -rf dist && tsc --watch && cp -rf src/translations/ dist/translations/",
+    "dev": "rm -rf dist && tsc --watch -p tsconfig.dev.json && cp -rf src/translations/ dist/translations/",
     "prepublish": "rm -rf dist && tsc && cp -rf src/translations/ dist/translations/ && yarn build-css",
+    "prepublish-dev": "rm -rf dist && tsc -p tsconfig.dev.json && cp -rf src/translations/ dist/translations/ && yarn build-css",
     "run-tslint": "tslint -p tsconfig.base.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",

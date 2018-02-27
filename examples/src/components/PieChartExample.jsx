@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import { PieChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -26,34 +26,38 @@ export class PieChartExample extends Component {
     }
 
     render() {
-        const afm = {
-            measures: [
-                {
+        const measures = [
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesAdRoyaltyIdentifier
                             }
                         }
                     },
                     format: '#,##0'
-                },
-                {
+                }
+            },
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesInitialFranchiseFeeIdentifier
                             }
                         }
                     },
                     format: '#,##0'
-                },
-                {
+                }
+            },
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesIdentifierOngoingRoyalty
                             }
@@ -61,14 +65,14 @@ export class PieChartExample extends Component {
                     },
                     format: '#,##0'
                 }
-            ]
-        };
+            }
+        ];
 
         return (
             <div style={{ height: 300 }} className="s-pie-chart">
-                <AfmComponents.PieChart
+                <PieChart
                     projectId={projectId}
-                    afm={afm}
+                    measures={measures}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     LoadingComponent={Loading}

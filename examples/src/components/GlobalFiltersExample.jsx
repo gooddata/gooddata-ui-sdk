@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from 'react';
 import { PropTypes } from 'prop-types';
-import { AttributeElements, AfmComponents, Kpi } from '@gooddata/react-components';
+import { AttributeElements, Kpi, BarChart, PieChart } from '@gooddata/react-components';
 import { SidebarItem } from '../components/utils/SidebarItem';
 import { EmployeeCard } from '../components/GlobalFiltersComponents/EmployeeCard';
 import { KpiMetricBox } from '../components/GlobalFiltersComponents/KpiMetricBox';
@@ -17,8 +17,6 @@ import {
 import { Layout } from '../components/utils/Layout';
 import { Loading } from '../components/utils/Loading';
 import { Error } from '../components/utils/Error';
-
-const { BarChart, PieChart } = AfmComponents;
 
 export class EmployeeProfile extends React.Component {
     static propTypes = {
@@ -91,12 +89,13 @@ export class EmployeeProfile extends React.Component {
                 in: [selectedEmployeeUri]
             }
         };
-        const chartAfm = {
-            measures: [
-                {
+
+        const measures = [
+            {
+                measure: {
                     localIdentifier: 'm1',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: averageDailyTotalSales
                             }
@@ -104,9 +103,26 @@ export class EmployeeProfile extends React.Component {
                     },
                     alias: '$ Avg Daily Total Sales'
                 }
-            ],
-            filters: [employeeFilter]
+            }
+        ];
+        const menuCategoryAttribute = {
+            visualizationAttribute: {
+                localIdentifier: 'a1',
+                displayForm: {
+                    identifier: menuCategoryAttributeDFIdentifier
+                }
+            }
         };
+        const menuItemNameAttribute = {
+            visualizationAttribute: {
+                localIdentifier: 'a1',
+                displayForm: {
+                    identifier: menuItemNameAttributeDFIdentifier
+                },
+                alias: 'Menu Item name'
+            }
+        };
+
         const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri).element;
         const employeeName = selectedEmployee.title;
 
@@ -187,17 +203,9 @@ export class EmployeeProfile extends React.Component {
                                 <h2>Average daily total sales by menu category</h2>
                                 <div className="pie-chart">
                                     <PieChart
-                                        afm={{
-                                            ...chartAfm,
-                                            attributes: [
-                                                {
-                                                    localIdentifier: 'a1',
-                                                    displayForm: {
-                                                        identifier: menuCategoryAttributeDFIdentifier
-                                                    }
-                                                }
-                                            ]
-                                        }}
+                                        measures={measures}
+                                        viewBy={menuCategoryAttribute}
+                                        filters={[employeeFilter]}
                                         projectId={projectId}
                                         LoadingComponent={Loading}
                                         ErrorComponent={Error}
@@ -209,18 +217,9 @@ export class EmployeeProfile extends React.Component {
                                 <h2>Average daily total sales by menu item</h2>
                                 <div className="bar-chart">
                                     <BarChart
-                                        afm={{
-                                            ...chartAfm,
-                                            attributes: [
-                                                {
-                                                    localIdentifier: 'a1',
-                                                    displayForm: {
-                                                        identifier: menuItemNameAttributeDFIdentifier
-                                                    },
-                                                    alias: 'Employee name'
-                                                }
-                                            ]
-                                        }}
+                                        measures={measures}
+                                        viewBy={menuItemNameAttribute}
+                                        filters={[employeeFilter]}
                                         projectId={projectId}
                                         LoadingComponent={Loading}
                                         ErrorComponent={Error}
