@@ -21,6 +21,11 @@ export const displayForms = [
     }
 ];
 
+export const displayFormUris = [
+    '/gdc/md/mockProject/obj/1028',
+    '/gdc/md/mockProject/obj/43'
+];
+
 export const attributeObjects = [
     {
         attribute: {
@@ -40,7 +45,7 @@ export const attributeObjects = [
     }
 ];
 
-export const expectedResult = {
+export const attributesMap = {
     '/gdc/md/mockProject/obj/1028': {
         attribute: {
             content: {},

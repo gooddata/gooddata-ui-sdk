@@ -26,7 +26,18 @@ import {
 
 import Rules from '../utils/rules';
 import { sortDefinitions } from '../utils/definitions';
-import { loadAttributesMap } from '../utils/attributesMapLoader';
+import {
+    loadAttributesMap,
+    getMissingUrisInAttributesMap
+} from '../utils/attributesMapLoader';
+import {
+    getAttributes,
+    getMeasures,
+    getMeasureFilters,
+    getDefinition,
+    isAttributeMeasureFilter,
+    getAttributesDisplayForms
+} from '../utils/visualizationObjectHelper';
 
 const notEmpty = negate(isEmpty);
 
@@ -183,16 +194,8 @@ const getBaseMetricTitle = partial(getMetricTitle, '');
 
 const CONTRIBUTION_METRIC_FORMAT = '#,##0.00%';
 
-function getDefinition(measure) {
-    return get(measure, ['definition', 'measureDefinition'], {});
-}
-
 function getPoPDefinition(measure) {
     return get(measure, ['definition', 'popMeasureDefinition'], {});
-}
-
-function getMeasureFilters(measure) {
-    return get(getDefinition(measure), 'filters', []);
 }
 
 function getAggregation(measure) {
@@ -223,21 +226,12 @@ function isDerived(measure) {
     return (aggregation !== '' || !allFiltersEmpty(measure));
 }
 
-function isAttrMeasureFilter(measureFilter) {
-    return (get(measureFilter, 'positiveAttributeFilter') || get(measureFilter, 'negativeAttributeFilter')) !== undefined;
-}
-
 function getAttrTypeFromMap(dfUri, attributesMap) {
     return get(get(attributesMap, [dfUri], {}), ['attribute', 'content', 'type']);
 }
 
 function getAttrUriFromMap(dfUri, attributesMap) {
     return get(get(attributesMap, [dfUri], {}), ['attribute', 'meta', 'uri']);
-}
-
-function getAttrMeasureFilterDf(measureFilter) {
-    return get(measureFilter, ['positiveAttributeFilter', 'displayForm', 'uri']) ||
-        get(measureFilter, ['negativeAttributeFilter', 'displayForm', 'uri']);
 }
 
 function isAttrFilterNegative(attributeFilter) {
@@ -270,7 +264,7 @@ function getDateFilterExpression() {
 }
 
 function getFilterExpression(attributesMap, measureFilter) {
-    if (isAttrMeasureFilter(measureFilter)) {
+    if (isAttributeMeasureFilter(measureFilter)) {
         return getAttrFilterExpression(measureFilter, attributesMap);
     }
     return getDateFilterExpression(measureFilter);
@@ -329,48 +323,8 @@ function getGeneratedMetricIdentifier(item, aggregation, expressionCreator, hash
     return `${type}_${identifier}.generated.${hash}${prefix}_${aggregation}`;
 }
 
-function isMeasure(bucketItem) {
-    return get(bucketItem, 'measure') !== undefined;
-}
-function isCategory(bucketItem) {
-    return get(bucketItem, 'visualizationAttribute') !== undefined;
-}
-
-function getBuckets(mdObj) {
-    return get(mdObj, 'buckets', []);
-}
-
-function getMeasuresInBucket(bucket) {
-    return get(bucket, 'items').reduce((list, bucketItem) => {
-        if (isMeasure(bucketItem)) {
-            list.push(get(bucketItem, 'measure'));
-        }
-
-        return list;
-    }, []);
-}
-
-function getMeasures(buckets) {
-    return buckets.reduce((measuresList, bucket) =>
-        measuresList.concat(getMeasuresInBucket(bucket)), []);
-}
-
-function getCategoriesInBucket(bucket) {
-    return get(bucket, 'items').reduce((list, bucketItem) => {
-        if (isCategory(bucketItem)) {
-            list.push(get(bucketItem, 'visualizationAttribute'));
-        }
-        return list;
-    }, []);
-}
-
-function getCategories(buckets) {
-    return buckets.reduce((categoriesList, bucket) =>
-        categoriesList.concat(getCategoriesInBucket(bucket)), []);
-}
-
-function isDateCategory(category, attributesMap = {}) {
-    return getAttrTypeFromMap(get(category, ['displayForm', 'uri']), attributesMap) !== undefined;
+function isDateAttribute(attribute, attributesMap = {}) {
+    return getAttrTypeFromMap(get(attribute, ['displayForm', 'uri']), attributesMap) !== undefined;
 }
 
 function getMeasureSorting(measure, mdObj) {
@@ -445,8 +399,8 @@ function createDerivedMetric(measure, mdObj, measureIndex, attributesMap) {
 }
 
 function createContributionMetric(measure, mdObj, measureIndex, attributesMap) {
-    const category = first(getCategories(getBuckets(mdObj)));
-    const getMetricExpression = partial(getPercentMetricExpression, category, attributesMap);
+    const attribute = first(getAttributes(mdObj));
+    const getMetricExpression = partial(getPercentMetricExpression, attribute, attributesMap);
     const title = getBaseMetricTitle(get(measure, 'title'));
     const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
     const identifier = getGeneratedMetricIdentifier(measure, 'percent', getMetricExpression, hasher, attributesMap);
@@ -468,7 +422,7 @@ function createContributionMetric(measure, mdObj, measureIndex, attributesMap) {
 }
 
 function getOriginalMeasureForPoP(popMeasure, mdObj) {
-    return getMeasures(getBuckets(mdObj)).find(measure =>
+    return getMeasures(mdObj).find(measure =>
         get(measure, 'localIdentifier') === get(getPoPDefinition(popMeasure), ['measureIdentifier'])
     );
 }
@@ -605,26 +559,30 @@ function getMetricFactory(measure, mdObj) {
 }
 
 function getAttributesMap(options, displayFormUris, projectId) {
-    if (options.attributesMap) {
-        return Promise.resolve(options.attributesMap);
-    }
-    return loadAttributesMap(projectId, displayFormUris);
+    const attributesMap = get(options, 'attributesMap', {});
+
+    const missingUris = getMissingUrisInAttributesMap(displayFormUris, attributesMap);
+    return loadAttributesMap(projectId, missingUris).then((result) => {
+        return {
+            ...attributesMap,
+            ...result
+        };
+    });
 }
 
 function getExecutionDefinitionsAndColumns(mdObj, options, attributesMap) {
-    const buckets = getBuckets(mdObj);
-    const measures = getMeasures(buckets);
-    let categories = getCategories(buckets);
+    const measures = getMeasures(mdObj);
+    let attributes = getAttributes(mdObj);
 
     const metrics = flatten(map(measures, (measure, index) =>
         getMetricFactory(measure, mdObj)(measure, mdObj, index, attributesMap))
     );
     if (options.removeDateItems) {
-        categories = filter(categories, category => !isDateCategory(category, attributesMap));
+        attributes = filter(attributes, attribute => !isDateAttribute(attribute, attributesMap));
     }
-    categories = map(categories, partial(categoryToElement, attributesMap, mdObj));
+    attributes = map(attributes, partial(categoryToElement, attributesMap, mdObj));
 
-    const columns = compact(map([...categories, ...metrics], 'element'));
+    const columns = compact(map([...attributes, ...metrics], 'element'));
     return {
         columns,
         definitions: sortDefinitions(compact(map(metrics, 'definition')))
@@ -632,15 +590,8 @@ function getExecutionDefinitionsAndColumns(mdObj, options, attributesMap) {
 }
 
 export const mdToExecutionDefinitionsAndColumns = (projectId, mdObj, options = {}) => {
-    const buckets = getBuckets(mdObj);
-    const measures = getMeasures(buckets);
-    const categories = getCategories(buckets);
-    const attrMeasureFilters = filter(measures.reduce((filters, measure) =>
-        filters.concat(getMeasureFilters(measure)),
-    []), isAttrMeasureFilter);
-    const attrMeasureFiltersDfs = attrMeasureFilters.map(getAttrMeasureFilterDf);
-    const categoryDfs = categories.map(category => get(category, ['displayForm', 'uri']));
-    const attributesMapPromise = getAttributesMap(options, [...categoryDfs, ...attrMeasureFiltersDfs], projectId);
+    const allDfUris = getAttributesDisplayForms(mdObj);
+    const attributesMapPromise = getAttributesMap(options, allDfUris, projectId);
 
     return attributesMapPromise.then((attributesMap) => {
         return getExecutionDefinitionsAndColumns(mdObj, options, attributesMap);
