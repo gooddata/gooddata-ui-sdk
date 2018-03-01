@@ -87,11 +87,11 @@
     },
     "$ Franchise Fees": {
       "identifier": "aaEGaXAEgB7U",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ad Royalty)": {
       "identifier": "aabHeqImaK0d",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Initial Fee) Last Quarter Timeline": {
       "identifier": "aayHf60BfkfS",
@@ -99,11 +99,11 @@
     },
     "$ Franchise Fees (Initial Franchise Fee)": {
       "identifier": "aaDHcv6wevkl",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ongoing Royalty)": {
       "identifier": "aaWGcgnsfxIg",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ongoing Royalty) Last Quarter Timeline": {
       "identifier": "aaeHf3Mofjir",
@@ -565,6 +565,10 @@
     },
     "Franchise Fees": {
       "identifier": "aahnVeLugyFj",
+      "tags": ""
+    },
+    "Franchise Fees 2017": {
+      "identifier": "aaZWa46oh9cJ",
       "tags": ""
     }
   },

@@ -10,8 +10,10 @@ const title = require('./package.json').description;
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath = '' } = {}) => {
-    console.log('Backend: ', gdc);
+const defaultBackend = process.env.CLIENT_DEMO_BACKEND || 'https://staging3.intgdc.com';
+
+module.exports = ({ gdc = defaultBackend, link = false, basepath = '' } = {}) => {
+    console.log('Backend: ', gdc); // eslint-disable-line no-console
 
     const isProduction = process.env.NODE_ENV === 'production';
 
@@ -125,7 +127,7 @@ module.exports = ({ gdc = 'https://staging3.intgdc.com', link = false, basepath 
                 },
                 {
                     test: /\.jsx?$/,
-                    exclude: /node_modules/,
+                    exclude: /node_modules|update-dependencies/,
                     use: {
                         loader: 'babel-loader'
                     }

@@ -9,8 +9,8 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
-import { Loading } from './Loading';
-import { Error } from './Error';
+import { Loading } from './utils/Loading';
+import { Error } from './utils/Error';
 
 
 export class PieChartExample extends Component {

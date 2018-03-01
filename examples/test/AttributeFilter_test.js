@@ -3,8 +3,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Attribute filter components')
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/attribute-filter-components`))
-    .page(`${config.hostname}/attribute-filter-components`);
+    .page(config.hostname)
+    .beforeEach(loginUsingGreyPages(`${config.hostname}/attribute-filter-components`));
 
 test('Dropdown filter opens, clears, selects all and applies', async (t) => {
     const dropdownButton = Selector('.button.s-employee_name');

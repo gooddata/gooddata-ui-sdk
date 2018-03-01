@@ -44,10 +44,6 @@ export class AttributeElementsExample extends Component {
                         }
                         return (
                             <div>
-                                <p>
-                                    Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
-                                    to your React components.
-                                </p>
                                 <button
                                     className="button button-secondary s-show-more-filters-button"
                                     onClick={loadMore}

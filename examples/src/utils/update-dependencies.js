@@ -1,7 +1,7 @@
-import { writeFile } from 'fs';
-import { exec } from 'child_process';
-import RCPackageJson from '../../../package.json'; // eslint-disable-line import/no-unresolved
-import ExamplesPackageJson from '../../package.json';
+const { writeFile } = require('fs');
+const { exec } = require('child_process');
+const RCPackageJson = require('../../../package.json'); // eslint-disable-line import/no-unresolved
+const ExamplesPackageJson = require('../../package.json');
 
 const { version } = RCPackageJson;
 
@@ -17,7 +17,7 @@ writeFile('package.json', JSON.stringify(newPackageJson, null, '  '), (err) => {
     }
 
     console.log('package.json version updated'); // eslint-disable-line no-console
-    console.log('Updating @gooddata/react-components@'); // eslint-disable-line no-console
+    console.log(`Updating @gooddata/react-components@${version}`); // eslint-disable-line no-console
 
     return exec(`yarn upgrade @gooddata/react-components@${version}`, (error, stdout, stderr) => {
         if (error) {
