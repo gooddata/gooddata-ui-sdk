@@ -44,7 +44,7 @@
     "babel-preset-es2015": "6.22.0",
     "babel-preset-stage-0": "6.22.0",
     "babel-register": "6.23.0",
-    "eslint-config-gooddata": "0.0.16",
+    "eslint-config-gooddata": "0.0.17",
     "exports-loader": "0.6.3",
     "fast-levenshtein": "2.0.6",
     "fetch-mock": "5.12.2",

@@ -1,7 +1,3 @@
 {
-  "extends": ["gooddata"],
-  "rules": {
-    "function-paren-newline": 0,
-    "object-curly-newline": 0
-  }
+  "extends": ["gooddata"]
 }

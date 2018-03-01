@@ -1821,9 +1821,9 @@ eslint-config-airbnb@16.1.0:
   dependencies:
     eslint-config-airbnb-base "^12.1.0"
 
-eslint-config-gooddata@0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/eslint-config-gooddata/-/eslint-config-gooddata-0.0.16.tgz#d5512692a27cb41ffe36167a6e706f7102ea4697"
+eslint-config-gooddata@0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/eslint-config-gooddata/-/eslint-config-gooddata-0.0.17.tgz#2ea738729ed78ff3ef0ecaba6bf21fbd162bee16"
   dependencies:
     babel-eslint "8.2.1"
     eslint "4.16.0"
