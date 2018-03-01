@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-export const Error = ({ error }) => (
+export const Error = ({ error, height }) => (
     <div
         className="s-error"
         style={{
@@ -13,7 +13,9 @@ export const Error = ({ error }) => (
             flexDirection: 'column',
             alignContent: 'center',
             justifyContent: 'center',
-            height: '100%'
+            whiteSpace: 'normal',
+            lineHeight: 'normal',
+            height
         }}
     >
         <div
@@ -34,7 +36,11 @@ Error.propTypes = {
     error: PropTypes.shape({
         status: PropTypes.string.isRequired,
         message: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    height: PropTypes.any
+};
+Error.defaultProps = {
+    height: undefined
 };
 
 export default Error;

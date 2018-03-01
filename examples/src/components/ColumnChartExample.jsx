@@ -4,8 +4,8 @@ import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-import { Loading } from './Loading';
-import { Error } from './Error';
+import { Loading } from './utils/Loading';
+import { Error } from './utils/Error';
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from '../utils/fixtures';
 
 const { ColumnChart } = AfmComponents;
@@ -30,8 +30,7 @@ export class ColumnChartExample extends Component {
                         measure: {
                             item: {
                                 identifier: totalSalesIdentifier
-                            },
-                            aggregation: 'sum'
+                            }
                         }
                     },
                     alias: '$ Total Sales',

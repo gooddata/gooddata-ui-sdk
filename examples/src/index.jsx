@@ -1,5 +1,4 @@
-// FIXME unused this.state.errorMessage
-/* eslint-disable react/no-unused-state */
+/* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as GD from 'gooddata';
@@ -11,10 +10,11 @@ import {
 
 
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
-import Header from './components/Header';
-import LoginOverlay from './components/LoginOverlay';
+import Header from './components/utils/Header';
+import LoginOverlay from './components/utils/LoginOverlay';
+import { Error } from './components/utils/Error';
 
-import { routes, navigation } from './routes/_list';
+import { routes, mainRoutes } from './routes/_list';
 
 export class App extends React.Component {
     constructor(props) {
@@ -61,22 +61,58 @@ export class App extends React.Component {
     }
 
     render() {
-        const { isLoggedIn } = this.state;
+        const { isLoggedIn, errorMessage } = this.state;
 
         return (
             <Router basename={BASEPATH}>
-                <div>
+                <div className="main-wrapper">
+                    {/* language=CSS */}
+                    <style jsx>{`
+                        :global(html),
+                        :global(body),
+                        :global(.root) {
+                            height: 100%;
+                        }
+
+                        :global(hr.separator) {
+                            border: 1px solid #EEE;
+                            border-width: 1px 0 0 0;
+                            margin: 20px 0;
+                        }
+
+                        :global(.main-wrapper) {
+                            display: flex;
+                            height: 100%;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: stretch;
+                        }
+
+                        main {
+                            flex: 1;
+                            overflow: auto;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: stretch;
+                        }
+                    `}</style>
                     <Header
-                        navigation={navigation}
+                        mainRoutes={mainRoutes}
+                        routes={routes}
                         isUserLoggedIn={isLoggedIn}
                         logoutAction={this.logout}
                     />
+                    {errorMessage
+                        ? <Error error={{ status: '403', message: errorMessage }} />
+                        : null
+                    }
                     <main style={{ padding: 20 }}>
-                        {routes.map(({ path, Component, exact }) => (<Route
+                        {routes.map(({ title, path, Component, redirectTo, ...routeProps }) => (<Route
                             key={path}
-                            exact={exact}
                             path={path}
                             component={Component}
+                            {...routeProps}
                         />))}
                     </main>
                     <LoginOverlay onLogin={this.onUserLogin} isLoggedIn={isLoggedIn} />
@@ -87,5 +123,6 @@ export class App extends React.Component {
 }
 
 const root = document.createElement('div');
+root.className = 'root';
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);

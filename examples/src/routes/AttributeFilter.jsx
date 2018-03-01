@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExampleWithSource from '../utils/ExampleWithSource';
+import ExampleWithSource from '../components/utils/ExampleWithSource';
 
 import AttributeFilterExample from '../components/AttributeFilterExample';
 import AttributeElementsExample from '../components/AttributeElementsExample';
@@ -13,14 +13,30 @@ export const AttributeFilter = () => (
     <div>
         <h1>Attribute Filter Components</h1>
 
-        <p>These examples illustrate usage of Attribute Filter components.</p>
+        <p>These examples show how to use the Attribute Filter components.</p>
+
+        <hr className="separator" />
 
         <h2>Attribute Filter</h2>
+        <p>You can render a styled dropdown with selectable attribute values using this Attribute Filter component.</p>
+        <p>
+            Pass a custom onApply function to this component
+            to handle what happens when the user clicks the Apply button.
+        </p>
         <ExampleWithSource for={AttributeFilterExample} source={AttributeFilterExampleSRC} />
 
-        <h2>Custom Attribute Filter using Attribute Elements component</h2>
-        <ExampleWithSource for={AttributeElementsExample} source={AttributeElementsExampleSRC} />
+        <hr className="separator" />
 
+        <h2>Custom Attribute Filter using Attribute Elements component</h2>
+        <p>
+            Pass a custom children function to this component to render
+            the returned data using your custom components.
+        </p>
+        <p>
+            The children function will receive isLoading state,
+            possible error state, attribute metadata, paging, attribute values and a loadMore function.
+        </p>
+        <ExampleWithSource for={AttributeElementsExample} source={AttributeElementsExampleSRC} />
     </div>
 );
 

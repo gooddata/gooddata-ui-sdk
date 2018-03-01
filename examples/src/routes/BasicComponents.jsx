@@ -1,5 +1,5 @@
 import React from 'react';
-import ExampleWithSource from '../utils/ExampleWithSource';
+import ExampleWithSource from '../components/utils/ExampleWithSource';
 
 import BarChartExample from '../components/BarChartExample';
 import ColumnChartExample from '../components/ColumnChartExample';
@@ -19,19 +19,31 @@ export const BasicComponents = () => (
     <div>
         <h1>{title}</h1>
 
-        <h2>Bar chart</h2>
+        <p>These components ingest AFM, execute it and render data as a chart or table.</p>
+
+        <hr className="separator" />
+
+        <h2 id="bar-chart">Bar chart</h2>
         <ExampleWithSource for={BarChartExample} source={BarChartExampleSRC} />
 
-        <h2>Column chart</h2>
+        <hr className="separator" />
+
+        <h2 id="column-chart">Column chart</h2>
         <ExampleWithSource for={ColumnChartExample} source={ColumnChartExampleSRC} />
 
-        <h2>Line chart</h2>
+        <hr className="separator" />
+
+        <h2 id="line-chart">Line chart with custom colors</h2>
         <ExampleWithSource for={LineChartExample} source={LineChartExampleSRC} />
 
-        <h2>Pie chart</h2>
+        <hr className="separator" />
+
+        <h2 id="pie-chart">Pie chart</h2>
         <ExampleWithSource for={PieChartExample} source={PieChartExampleSRC} />
 
-        <h2>Table</h2>
+        <hr className="separator" />
+
+        <h2 id="table">Table</h2>
         <ExampleWithSource for={TableExample} source={TableExampleSRC} />
 
     </div>

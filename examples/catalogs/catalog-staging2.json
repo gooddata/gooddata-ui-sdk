@@ -1,5 +1,5 @@
 {
-  "projectId": "kytra720hke4d84e8ozohoz7uycn53mi",
+  "projectId": "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg",
   "measures": {
     "_Filter Last 4 Quarter": {
       "identifier": "aaIHiWZjfWNA",
@@ -87,11 +87,11 @@
     },
     "$ Franchise Fees": {
       "identifier": "aaEGaXAEgB7U",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ad Royalty)": {
       "identifier": "aabHeqImaK0d",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Initial Fee) Last Quarter Timeline": {
       "identifier": "aayHf60BfkfS",
@@ -99,11 +99,11 @@
     },
     "$ Franchise Fees (Initial Franchise Fee)": {
       "identifier": "aaDHcv6wevkl",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ongoing Royalty)": {
       "identifier": "aaWGcgnsfxIg",
-      "tags": ""
+      "tags": "franchise_fees"
     },
     "$ Franchise Fees (Ongoing Royalty) Last Quarter Timeline": {
       "identifier": "aaeHf3Mofjir",
@@ -143,7 +143,7 @@
     },
     "$ Total Costs": {
       "identifier": "aaQHncjzfrtR",
-      "tags": "show"
+      "tags": "show total_costs"
     },
     "$ Total Costs - COGs": {
       "identifier": "aafHpxx0f3gL",

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
-import { Loading } from './Loading';
-import { Error } from './Error';
+import { Loading } from './utils/Loading';
+import { Error } from './utils/Error';
 
 import {
     projectId,
@@ -13,6 +13,72 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
+
+const { LineChart } = AfmComponents;
+
+const afm = {
+    measures: [
+        {
+            localIdentifier: 'franchiseFeesIdentifier',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: franchiseFeesIdentifier
+                    }
+                }
+            },
+            format: '#,##0'
+        },
+        {
+            localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: franchiseFeesAdRoyaltyIdentifier
+                    }
+                }
+            },
+            format: '#,##0'
+        },
+        {
+            localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: franchiseFeesInitialFranchiseFeeIdentifier
+                    }
+                }
+            },
+            format: '#,##0'
+        },
+        {
+            localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: franchiseFeesIdentifierOngoingRoyalty
+                    }
+                }
+            },
+            format: '#,##0'
+        }
+    ],
+    attributes: [
+        {
+            displayForm: {
+                identifier: monthDateIdentifier
+            },
+            localIdentifier: 'month'
+        }
+    ]
+};
+
+export const CUSTOM_COLORS = [
+    'rgba(195, 49, 73, 1)',
+    'rgba(168, 194, 86, 1)',
+    'rgba(243, 217, 177, 1)',
+    'rgba(194, 153, 121, 1)'
+];
 
 export class LineChartExample extends Component {
     onLoadingChanged(...params) {
@@ -26,70 +92,14 @@ export class LineChartExample extends Component {
     }
 
     render() {
-        const afm = {
-            measures: [
-                {
-                    localIdentifier: 'franchiseFeesIdentifier',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: franchiseFeesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                },
-                {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                },
-                {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                },
-                {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            ],
-            attributes: [
-                {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            ]
-        };
-
         return (
             <div style={{ height: 300 }} className="s-line-chart">
-                <AfmComponents.LineChart
+                <LineChart
                     projectId={projectId}
                     afm={afm}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
+                    config={{ colors: CUSTOM_COLORS }}
                     LoadingComponent={Loading}
                     ErrorComponent={Error}
                 />
