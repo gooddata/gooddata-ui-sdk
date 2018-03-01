@@ -373,4 +373,59 @@ describe('PureTable', () => {
             expect(ErrorElement.props.props.dataSource).toEqual(dataSource);
         });
     });
+
+    describe('lastAddedTotalType', () => {
+        const defaultProps = createProps({
+            totals: [{
+                type: 'sum',
+                measureIdentifier: '',
+                attributeIdentifier: ''
+            }, {
+                type: 'avg',
+                measureIdentifier: '',
+                attributeIdentifier: ''
+            }]
+        });
+
+        it('should initialize \'lastAddedTotalType\' as empty string when component is mounted', () => {
+            const wrapper = createComponent(defaultProps);
+
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('');
+        });
+
+        it('should set correct \'lastAddedTotalType\' when component receives new props', () => {
+            const wrapper = createComponent(defaultProps);
+
+            wrapper.setProps({
+                totals: [{
+                    type: 'nat',
+                    measureIdentifier: '',
+                    attributeIdentifier: ''
+                }]
+            });
+
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('nat');
+        });
+
+        it('should set \'lastAddedTotalType\' as empty string when \'resetLastAddedTotalType\' is called', () => {
+            const wrapper = createComponent(defaultProps);
+
+            wrapper.setProps({
+                totals: [{
+                    type: 'nat',
+                    measureIdentifier: '',
+                    attributeIdentifier: ''
+                }]
+            });
+
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('nat');
+
+            const instance = wrapper.instance() as PureTable;
+            instance.resetLastAddedTotalType();
+
+            wrapper.setState({ isLoading: false }, () => {
+                expect(wrapper.instance().state.lastAddedTotalType).toEqual('');
+            });
+        });
+    });
 });

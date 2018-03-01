@@ -62,9 +62,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.1.11.tgz#b16c22c479825101bd0971083c96233e488bb6e2"
+"@gooddata/indigo-visualizations@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-1.3.0.tgz#fbb29c3f28d18d376640685021bccbdbe2e63d25"
   dependencies:
     "@gooddata/goodstrap" "53.0.1"
     "@gooddata/js-utils" "0.7.1"
@@ -77,6 +77,7 @@
     nodelist-foreach-polyfill "1.2.0"
     react-intl "2.2.3"
     react-measure "1.3.1"
+    react-textfit "1.1.0"
     rxjs "5.4.3"
 
 "@gooddata/js-utils@0.7.1":
@@ -6493,7 +6494,7 @@ process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
-process@^0.11.10:
+process@^0.11.10, process@^0.11.9:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
@@ -6821,6 +6822,13 @@ react-style-proptype@^3.0.0:
 react-textarea-autosize@4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.0.5.tgz#55379f6a6fa575fc87d1b8de2756e57e3b6c995d"
+
+react-textfit@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-textfit/-/react-textfit-1.1.0.tgz#088855580f2e7aad269efc81b734bf636877d0e1"
+  dependencies:
+    process "^0.11.9"
+    prop-types "^15.5.10"
 
 react-transition-group@^1.1.2:
   version "1.2.1"

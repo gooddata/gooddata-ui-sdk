@@ -2,6 +2,9 @@ import * as React from 'react';
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
+import difference = require('lodash/difference');
+import uniq = require('lodash/uniq');
+
 import {
     ResponsiveTable,
     Table as IndigoTable,
@@ -56,6 +59,7 @@ export interface ITableState {
     result: Execution.IExecutionResponses;
     isLoading: boolean;
     page: number;
+    lastAddedTotalType: string;
 }
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
@@ -101,7 +105,8 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             error: ErrorStates.OK,
             result: null,
             isLoading: false,
-            page: 1
+            page: 1,
+            lastAddedTotalType: ''
         };
 
         this.onSortChange = this.onSortChange.bind(this);
@@ -111,6 +116,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         this.onMore = this.onMore.bind(this);
         this.onLess = this.onLess.bind(this);
         this.onTotalsEdit = this.onTotalsEdit.bind(this);
+        this.resetLastAddedTotalType = this.resetLastAddedTotalType.bind(this);
 
         this.subject = createSubject<Execution.IExecutionResponses>((result) => {
             this.setState({
@@ -131,12 +137,23 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
+        if (this.props.totals.length !== nextProps.totals.length) {
+            const totalsTypes = uniq(this.props.totals.map(total => total.type));
+            const nextTotalsTypes = uniq(nextProps.totals.map(total => total.type));
+
+            this.setState({ lastAddedTotalType: difference(nextTotalsTypes, totalsTypes)[0] });
+        }
+
         const resultSpecChanged = !isEqual(get(this.props, 'resultSpec'), get(nextProps, 'resultSpec'));
 
         if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || resultSpecChanged) {
             const { dataSource, resultSpec } = nextProps;
             this.initDataLoading(dataSource, resultSpec);
         }
+    }
+
+    public resetLastAddedTotalType() {
+        this.setState({ lastAddedTotalType: '' });
     }
 
     public componentWillUnmount() {
@@ -269,6 +286,8 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
                             totals={indexedTotals}
                             totalsEditAllowed={totalsEditAllowed}
                             onTotalsEdit={this.onTotalsEdit}
+                            lastAddedTotalType={this.state.lastAddedTotalType}
+                            onLastAddedTotalRowHighlightPeriodEnd={this.resetLastAddedTotalType}
                         />
                     )}
                 </IntlTranslationsProvider>
