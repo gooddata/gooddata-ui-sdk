@@ -1,4 +1,4 @@
-import * as GoodData from 'gooddata';
+import { ISdk } from 'gooddata';
 import { DataSource, ExecuteAfmAdapter } from '@gooddata/data-layer';
 import { AFM, Execution } from '@gooddata/typings';
 import IDataSource = DataSource.IDataSource;
@@ -18,6 +18,6 @@ export class DummyExecuteAfmAdapter extends ExecuteAfmAdapter {
     }
 }
 
-export function dummyExecuteAfmAdapterFactory(sdk: typeof GoodData, projectId: string) {
+export function dummyExecuteAfmAdapterFactory(sdk: ISdk, projectId: string) {
     return new DummyExecuteAfmAdapter(sdk, projectId);
 }
