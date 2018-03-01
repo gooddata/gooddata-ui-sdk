@@ -1,10 +1,14 @@
-import {
-    loadAttributesMap,
-    getMissingUrisInAttributesMap
-} from '../../src/utils/attributesMapLoader';
-
 import fetchMock from './fetch-mock';
+import { createModule as attributesMapLoaderFactory, getMissingUrisInAttributesMap } from '../../src/utils/attributesMapLoader';
+import { createModule as xhrFactory } from '../../src/xhr';
+import { createModule as mdFactory } from '../../src/metadata';
+import { createModule as configFactory } from '../../src/config';
 import * as fixtures from '../fixtures/attributesMapLoader';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const md = mdFactory(xhr);
+const loadAttributesMap = attributesMapLoaderFactory(md);
 
 describe('loadAttributesMap', () => {
     const projectId = 'mockProject';

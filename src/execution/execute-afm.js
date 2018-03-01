@@ -2,7 +2,6 @@
 import { get, clone } from 'lodash';
 import invariant from 'invariant';
 import qs from 'qs';
-import { ajax, post, parseJSON } from '../xhr';
 
 const PAGE_SIZE = 500;
 const DEFAULT_DIMENSION_COUNT = 2;
@@ -16,22 +15,6 @@ function getDimensionality(execution) {
 
 function getLimit(offset) {
     return Array(offset.length).fill(PAGE_SIZE);
-}
-
-function fetchExecutionResult(pollingUri, offset) {
-    const [uriPart, queryPart] = pollingUri.split(/\?(.+)/);
-    const query = {
-        ...qs.parse(queryPart),
-        limit: getLimit(offset).join(','),
-        offset: offset.join(',')
-    };
-    const finalPollingUri = uriPart + qs.stringify(query, { addQueryPrefix: true });
-    return ajax(finalPollingUri, { method: 'GET' }).then((r) => {
-        if (r.status === 204) {
-            return null;
-        }
-        return r.json();
-    });
 }
 
 // works only for one or two dimensions
@@ -79,45 +62,65 @@ export function nextPageOffset({ offset, total }) {
     return false;
 }
 
-function getOnePage(pollingUri, offset, prevResult = null) {
-    return fetchExecutionResult(pollingUri, offset).then((executionResult) => {
-        if (executionResult === null) {
-            return null;
-        }
-
-        const newResult = prevResult ? mergePageData(prevResult, executionResult) : executionResult;
-
-        const nextOffset = nextPageOffset(executionResult.executionResult.paging);
-        return nextOffset
-            ? getOnePage(pollingUri, nextOffset, newResult)
-            : newResult;
-    });
-}
-
-/**
- * Execute AFM and fetch data results
- *
- * @method executeAfm
- * @param {String} projectId - GD project identifier
- * @param {Object} execution - See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L4
- *
- * @return {Object} Structure with `executionResult` and `executionResponse` -
- *  See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L294
- */
-export default function executeAfm(projectId, execution) {
-    const dimensionality = getDimensionality(execution);
-    invariant(dimensionality <= 2, 'executeAfm does not support more than 2 dimensions');
-
-    return post(`/gdc/app/projects/${projectId}/executeAfm`, { body: JSON.stringify(execution) })
-        .then(parseJSON)
-        .then((executionResponse) => {
-            const offset = Array(dimensionality).fill(0); // offset holds information on dimensionality
-            const pollingUri = executionResponse.executionResponse.links.executionResult;
-            return getOnePage(pollingUri, offset).then((executionResult) => {
-                return {
-                    executionResponse,
-                    executionResult
-                };
-            });
+export function createModule(xhr) {
+    function fetchExecutionResult(pollingUri, offset) {
+        const [uriPart, queryPart] = pollingUri.split(/\?(.+)/);
+        const query = {
+            ...qs.parse(queryPart),
+            limit: getLimit(offset).join(','),
+            offset: offset.join(',')
+        };
+        const finalPollingUri = uriPart + qs.stringify(query, { addQueryPrefix: true });
+        return xhr.ajax(finalPollingUri, { method: 'GET' }).then((r) => {
+            if (r.status === 204) {
+                return null;
+            }
+            return r.json();
         });
+    }
+
+    function getOnePage(pollingUri, offset, prevResult = null) {
+        return fetchExecutionResult(pollingUri, offset).then((executionResult) => {
+            if (executionResult === null) {
+                return null;
+            }
+
+            const newResult = prevResult ? mergePageData(prevResult, executionResult) : executionResult;
+
+            const nextOffset = nextPageOffset(executionResult.executionResult.paging);
+            return nextOffset
+                ? getOnePage(pollingUri, nextOffset, newResult)
+                : newResult;
+        });
+    }
+
+    /**
+     * Execute AFM and fetch data results
+     *
+     * @method executeAfm
+     * @param {String} projectId - GD project identifier
+     * @param {Object} execution - See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L4
+     *
+     * @return {Object} Structure with `executionResult` and `executionResponse` -
+     *  See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L294
+     */
+    function executeAfm(projectId, execution) {
+        const dimensionality = getDimensionality(execution);
+        invariant(dimensionality <= 2, 'executeAfm does not support more than 2 dimensions');
+
+        return xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: JSON.stringify(execution) })
+            .then(xhr.parseJSON)
+            .then((executionResponse) => {
+                const offset = Array(dimensionality).fill(0); // offset holds information on dimensionality
+                const pollingUri = executionResponse.executionResponse.links.executionResult;
+                return getOnePage(pollingUri, offset).then((executionResult) => {
+                    return {
+                        executionResponse,
+                        executionResult
+                    };
+                });
+            });
+    }
+
+    return executeAfm;
 }

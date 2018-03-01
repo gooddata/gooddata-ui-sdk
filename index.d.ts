@@ -12,18 +12,18 @@ export interface IAccountInfo {
     profileUri: string;
 }
 
-export module user {
-    export function isLoggedIn(): Promise<boolean>;
+export interface IUser {
+    isLoggedIn(): Promise<boolean>;
 
-    export function login(username: string, password: string): Promise<any>;
+    login(username: string, password: string): Promise<any>;
 
-    export function logout(): Promise<void>;
+    logout(): Promise<void>;
 
-    export function updateProfileSettings(profileId: string, profileSettings: any): Promise<any>;
+    updateProfileSettings(profileId: string, profileSettings: any): Promise<any>;
 
-    export function getAccountInfo(): Promise<IAccountInfo>;
+    getAccountInfo(): Promise<IAccountInfo>;
 
-    export function getFeatureFlags(): Promise<any>;
+    getFeatureFlags(): Promise<any>;
 }
 
 export interface IIdentifierUriPair {
@@ -67,60 +67,60 @@ export interface IValidElementsResponse {
     }
 }
 
-export module md {
-    export function getObjects<T>(projectId: string, objectUris: string[]): Promise<T>;
+export interface IMetadata {
+    getObjects<T>(projectId: string, objectUris: string[]): Promise<T>;
 
-    export function getObjectsByQuery<T>(projectId: string, options: { category?: string, mode?: string, author?: string, limit?: number }): Promise<T>;
+    getObjectsByQuery<T>(projectId: string, options: { category?: string, mode?: string, author?: string, limit?: number }): Promise<T>;
 
-    export function getObjectUsing<T>(projectId: string, uri: string, options?: { types?: string[], nearest?: boolean }): T;
+    getObjectUsing<T>(projectId: string, uri: string, options?: { types?: string[], nearest?: boolean }): T;
 
-    export function getObjectUsingMany<T>(projectId: string, uris: string[], options?: { types?: string[], nearest?: boolean }): T;
+    getObjectUsingMany<T>(projectId: string, uris: string[], options?: { types?: string[], nearest?: boolean }): T;
 
-    export function getAttribute(projectId: string): Promise<any>;
+    getAttribute(projectId: string): Promise<any>;
 
-    export function getVisualizations(projectId: string): Promise<any>;
+    getVisualizations(projectId: string): Promise<any>;
 
-    export function getDimensions(projectId: string): Promise<any>;
+    getDimensions(projectId: string): Promise<any>;
 
-    export function getFacts(projectId: string): Promise<any>;
+    getFacts(projectId: string): Promise<any>;
 
-    export function getMetrics(projectId: string): Promise<any>;
+    getMetrics(projectId: string): Promise<any>;
 
-    export function getFolders(projectId: string, type: string): Promise<any>;
+    getFolders(projectId: string, type: string): Promise<any>;
 
-    export function getAvailableMetrics(projectId: string, attributes: string[]): Promise<any>;
+    getAvailableMetrics(projectId: string, attributes: string[]): Promise<any>;
 
-    export function getAvailableAttributes(projectId: string, metrics: string[]): Promise<any>;
+    getAvailableAttributes(projectId: string, metrics: string[]): Promise<any>;
 
-    export function getAvailableFacts(projectId: string, items: string[]): Promise<any>;
+    getAvailableFacts(projectId: string, items: string[]): Promise<any>;
 
-    export function getObjectDetails<T>(uri: string): Promise<T>;
+    getObjectDetails<T>(uri: string): Promise<T>;
 
-    export function getFoldersWithItems(projectId: string, type: string): Promise<any>;
+    getFoldersWithItems(projectId: string, type: string): Promise<any>;
 
-    export function getObjectIdentifier(uri: string): Promise<string>;
+    getObjectIdentifier(uri: string): Promise<string>;
 
-    export function getObjectUri(projectId: string, identifier: string): Promise<string>;
+    getObjectUri(projectId: string, identifier: string): Promise<string>;
 
-    export function getUrisFromIdentifiers(projectId: string, identifiers: string[]): Promise<IIdentifierUriPair[]>;
+    getUrisFromIdentifiers(projectId: string, identifiers: string[]): Promise<IIdentifierUriPair[]>;
 
-    export function getIdentifiersFromUris(projectId: string, uris: string[]): Promise<IIdentifierUriPair[]>;
+    getIdentifiersFromUris(projectId: string, uris: string[]): Promise<IIdentifierUriPair[]>;
 
-    export function translateElementLabelsToUris(projectId: string, labelUri: string, patterns: string[], mode: 'EXACT' | 'WILD'): Promise<any>
+    translateElementLabelsToUris(projectId: string, labelUri: string, patterns: string[], mode: 'EXACT' | 'WILD'): Promise<any>
 
-    export function getValidElements(projectId: string, id: string, options: IValidElementsOptions): Promise<IValidElementsResponse>;
+    getValidElements(projectId: string, id: string, options: IValidElementsOptions): Promise<IValidElementsResponse>;
 
-    export function deleteObject(uri: string): Promise<any>;
+    deleteObject(uri: string): Promise<any>;
 
-    export function createObject<T>(projectId: string, obj: T): Promise<T>;
+    createObject<T>(projectId: string, obj: T): Promise<T>;
 
-    export function ldmManage(projectId: string, maql: string, options: { maxAttempts?: number, pollStep?: number }): Promise<any>;
+    ldmManage(projectId: string, maql: string, options: { maxAttempts?: number, pollStep?: number }): Promise<any>;
 
-    export function etlPull(projectId: string, uploadsDir: string, options: { maxAttempts?: number, pollStep?: number }): Promise<any>;
+    etlPull(projectId: string, uploadsDir: string, options: { maxAttempts?: number, pollStep?: number }): Promise<any>;
 }
 
-export module config {
-    export function setCustomDomain(d: string): void;
+export interface IConfig {
+    setCustomDomain(d: string): void;
 }
 
 export interface ILoadCatalogOptions {
@@ -146,10 +146,10 @@ export interface ILoadDateDataSetOptions {
     returnAllRelatedDateDataSets?: boolean;
 }
 
-export module catalogue {
-    export function loadItems(projectId: string, options: ILoadCatalogOptions): Promise<any>;
+export interface ICatalogue {
+    loadItems(projectId: string, options: ILoadCatalogOptions): Promise<any>;
 
-    export function loadDateDataSets(projectId: string, options: ILoadDateDataSetOptions): Promise<any>;
+    loadDateDataSets(projectId: string, options: ILoadDateDataSetOptions): Promise<any>;
 }
 
 export interface ISort {
@@ -338,12 +338,12 @@ export interface IVisualizationObject {
     }
 }
 
-export module execution {
-    export function getDataForVis(projectId: string, mdObj: IVisualizationObjectContent, settings: any): Promise<ISimpleExecutorResult>;
+export interface IExecution {
+    getDataForVis(projectId: string, mdObj: IVisualizationObjectContent, settings: any): Promise<ISimpleExecutorResult>;
 
-    export function getData(projectId: string, columns: string[], executionConfiguration: IExecutionConfiguration, settings: any): Promise<ISimpleExecutorResult>;
+    getData(projectId: string, columns: string[], executionConfiguration: IExecutionConfiguration, settings: any): Promise<ISimpleExecutorResult>;
 
-    export function executeAfm(projectId: string, execution: AFM.IExecution): Promise<Execution.IExecutionResponses>;
+    executeAfm(projectId: string, execution: AFM.IExecution): Promise<Execution.IExecutionResponses>;
 }
 
 export interface IColor {
@@ -352,24 +352,24 @@ export interface IColor {
     b: number;
 }
 
-export module project {
-    export function getCurrentProjectId(): Promise<string>;
+export interface IProject {
+    getCurrentProjectId(): Promise<string>;
 
-    export function getProjects(profileId: string): Promise<string>;
+    getProjects(profileId: string): Promise<string>;
 
-    export function getDatasets(projectId: string): Promise<any>;
+    getDatasets(projectId: string): Promise<any>;
 
-    export function getColorPalette(projectId: string): Promise<IColor[]>;
+    getColorPalette(projectId: string): Promise<IColor[]>;
 
-    export function setColorPalette(projectId: string, colors: IColor[]): Promise<void>;
+    setColorPalette(projectId: string, colors: IColor[]): Promise<void>;
 
-    export function getTimezone(projectId: string): Promise<string>;
+    getTimezone(projectId: string): Promise<string>;
 
-    export function setTimezone(projectId: string, timezone: string): Promise<void>;
+    setTimezone(projectId: string, timezone: string): Promise<void>;
 
-    export function createProject(title: string, authorizationToken: string, options?: object): Promise<any>;
+    createProject(title: string, authorizationToken: string, options?: object): Promise<any>;
 
-    export function deleteProject(projectId: string): Promise<void>;
+    deleteProject(projectId: string): Promise<void>;
 }
 
 export interface IXhrSettings {
@@ -377,9 +377,25 @@ export interface IXhrSettings {
     data?: any;
 }
 
-export module xhr {
-    export function get<T>(uri: string, settings?: IXhrSettings): Promise<T>;
-    export function post<T>(uri: string, settings?: IXhrSettings): Promise<T>;
-    export function put<T>(uri: string, settings?: IXhrSettings): Promise<T>;
-    export function ajax<T>(uri: string, settings?: IXhrSettings): Promise<T>;
+export interface IXhr {
+    get<T>(uri: string, settings?: IXhrSettings): Promise<T>;
+    post<T>(uri: string, settings?: IXhrSettings): Promise<T>;
+    put<T>(uri: string, settings?: IXhrSettings): Promise<T>;
+    ajax<T>(uri: string, settings?: IXhrSettings): Promise<T>;
 }
+
+export interface ISdk {
+    xhr: IXhr;
+    project: IProject;
+    execution: IExecution;
+    catalogue: ICatalogue;
+    config: IConfig;
+    md: IMetadata;
+    user: IUser;
+}
+
+export interface ISdkOptions {
+    domain?: string;
+}
+
+export declare function factory(options?: ISdkOptions): ISdk;

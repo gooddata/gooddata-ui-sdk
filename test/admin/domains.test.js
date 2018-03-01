@@ -1,6 +1,12 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import * as domains from '../../src/admin/domains';
+import { createModule as domainsFactory } from '../../src/admin/domains';
+import { createModule as xhrFactory } from '../../src/xhr';
+import { createModule as configFactory } from '../../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const domains = domainsFactory(xhr);
 
 describe('project', () => {
     describe('with fake server', () => {

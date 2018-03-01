@@ -10,20 +10,6 @@ module.exports = (grunt) => {
 
         license: grunt.file.read('tools/license.tmpl'),
 
-        eslint: {
-            options: {
-                config: '.eslintrc',
-                format: grunt.option('ci') && 'checkstyle',
-                outputFile: grunt.option('ci') && 'ci/results/eslint-results.xml'
-            },
-            all: {
-                src: [
-                    './*.js',
-                    '{src,test,tools}/**/*.js',
-                    '!tools/yuidoc/**/*'
-                ]
-            }
-        },
         copy: {
             examples: {
                 src: 'dist/gooddata.js',
@@ -36,6 +22,24 @@ module.exports = (grunt) => {
                 args: [
                     'run',
                     'test:ci'
+                ]
+            },
+            eslint: {
+                cmd: 'yarn',
+                args: [
+                    'validate'
+                ]
+            },
+            eslintCi: {
+                cmd: 'yarn',
+                args: [
+                    'validate:ci'
+                ]
+            },
+            typings: {
+                cmd: 'yarn',
+                args: [
+                    'test:typings'
                 ]
             }
         },
@@ -125,13 +129,12 @@ module.exports = (grunt) => {
     grunt.loadNpmTasks('grunt-grizzly');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-gh-pages');
-    grunt.loadNpmTasks('gruntify-eslint');
     grunt.loadNpmTasks('grunt-run');
 
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
         'getGitInfo',
-        'eslint',
+        'run:eslint',
         'webpack:build-dev',
         'webpack:build',
         'copy'
@@ -139,8 +142,11 @@ module.exports = (grunt) => {
 
     grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
 
-    grunt.registerTask('test', ['eslint', 'run:jest']);
+    grunt.registerTask('test', [
+        'run:eslintCi',
+        'run:jest',
+        'run:typings'
+    ]);
     grunt.registerTask('dev', ['grizzly', 'watch:js']);
     grunt.registerTask('doc', ['yuidoc']);
-    grunt.registerTask('validate', ['eslint']);
 };
