@@ -120,13 +120,19 @@ export const AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
     }]
 };
 
-export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES: AFM.IAfm = {
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS: AFM.IAfm = {
     measures: [
         MEASURE_1,
         MEASURE_1_DUPLICATE
     ],
     attributes: [
         ATTRIBUTE_CITIES
+    ],
+    nativeTotals: [
+        {
+            measureIdentifier: MEASURE_1_DUPLICATE.localIdentifier,
+            attributeIdentifiers: []
+        }
     ]
 };
 
@@ -142,13 +148,29 @@ export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS: AFM.IResultSp
                 },
                 {
                     measureIdentifier: MEASURE_1_DUPLICATE.localIdentifier,
-                    type: 'avg',
+                    type: 'nat',
                     attributeIdentifier: ATTRIBUTE_CITIES.localIdentifier
                 }
             ]
         },
         {
             itemIdentifiers: ['measureGroup']
+        }
+    ]
+};
+
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2
+    ],
+    attributes: [
+        ATTRIBUTE
+    ],
+    nativeTotals: [
+        {
+            measureIdentifier: MEASURE_2.localIdentifier,
+            attributeIdentifiers: []
         }
     ]
 };
@@ -165,7 +187,7 @@ export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IResultSpec = {
                 },
                 {
                     measureIdentifier: MEASURE_2.localIdentifier,
-                    type: 'avg',
+                    type: 'nat',
                     attributeIdentifier: ATTRIBUTE.localIdentifier
                 }
             ]

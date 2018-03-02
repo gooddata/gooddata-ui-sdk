@@ -6,9 +6,10 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { Table } from '../src/components/afm/Table';
 import {
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
-    AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES,
-    RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
+    RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
     AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
 } from './data/afmComponentProps';
 import { onErrorHandler } from './mocks';
@@ -48,7 +49,7 @@ storiesOf('AFM components - Table', module)
             <div style={{ width: 600, height: 300 }}>
                 <Table
                     projectId="storybook"
-                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
                     onError={onErrorHandler}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
                 />
@@ -60,7 +61,7 @@ storiesOf('AFM components - Table', module)
             <div style={{ width: 600, height: 300 }}>
                 <Table
                     projectId="storybook"
-                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
                     onError={onErrorHandler}
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
@@ -83,7 +84,7 @@ storiesOf('AFM components - Table', module)
             >
                 <Table
                     projectId="storybook"
-                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES}
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS}
                     onError={onErrorHandler}
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS}
