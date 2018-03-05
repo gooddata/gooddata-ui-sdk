@@ -8,6 +8,8 @@ import { createModule as configFactory } from './config';
 import { createModule as catalogueFactory } from './catalogue';
 import { createModule as adminFactory } from './admin';
 
+import { createModule as loadAttributesMapFactory } from './utils/attributesMapLoader';
+import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
 /**
  * # JS SDK
  * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
@@ -42,7 +44,11 @@ function factory(options = {}) {
         execution,
         project: projectFactory(xhr),
         catalogue: catalogueFactory(xhr, execution),
-        admin: adminFactory(xhr)
+        admin: adminFactory(xhr),
+        utils: {
+            loadAttributesMap: loadAttributesMapFactory(md),
+            getAttributesDisplayForms
+        }
     };
 }
 

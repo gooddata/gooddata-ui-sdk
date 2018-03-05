@@ -8,7 +8,8 @@ const modules = [
     'md',
     'project',
     'user',
-    'xhr'
+    'xhr',
+    'utils'
 ];
 
 describe('factory', () => {

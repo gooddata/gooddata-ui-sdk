@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@gooddata/typings@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-1.0.0.tgz#3fb9abcfbefc15745d6a0236c924d0d93e490e14"
+"@gooddata/typings@2.0.0-alpha0":
+  version "2.0.0-alpha0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.0.0-alpha0.tgz#5717165681e1c1b3ec6561d5c8fd80a141398953"
 
 Base64@~0.2.0:
   version "0.2.1"
@@ -1821,9 +1821,9 @@ eslint-config-airbnb@16.1.0:
   dependencies:
     eslint-config-airbnb-base "^12.1.0"
 
-eslint-config-gooddata@0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/eslint-config-gooddata/-/eslint-config-gooddata-0.0.17.tgz#2ea738729ed78ff3ef0ecaba6bf21fbd162bee16"
+eslint-config-gooddata@0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/eslint-config-gooddata/-/eslint-config-gooddata-0.0.18.tgz#c9164c36f7042c9060582da9030da578f7537a26"
   dependencies:
     babel-eslint "8.2.1"
     eslint "4.16.0"

@@ -1,10 +1,5 @@
 import { get, find, omit, cloneDeep } from 'lodash';
 
-import { loadAttributesMap } from './utils/attributesMapLoader';
-import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
-
-export { loadAttributesMap, getAttributesDisplayForms };
-
 const REQUEST_DEFAULTS = {
     types: ['attribute', 'metric', 'fact'],
     paging: {
