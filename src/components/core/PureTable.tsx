@@ -1,7 +1,5 @@
 import * as React from 'react';
-import get = require('lodash/get');
 import noop = require('lodash/noop');
-import isEqual = require('lodash/isEqual');
 import difference = require('lodash/difference');
 import uniq = require('lodash/uniq');
 
@@ -10,130 +8,73 @@ import {
     Table as IndigoTable,
     TableTransformation
 } from '@gooddata/indigo-visualizations';
-import {
-    DataSource,
-    DataSourceUtils,
-    createSubject
-} from '@gooddata/data-layer';
-import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
+import { AFM, VisualizationObject } from '@gooddata/typings';
 
 import { IntlWrapper } from './base/IntlWrapper';
-import { IntlTranslationsProvider, ITranslationsComponentProps } from './base/TranslationsProvider';
+import {
+    IntlTranslationsProvider,
+    ITranslationsComponentProps
+} from './base/TranslationsProvider';
 import { fixEmptyHeaderItems } from './base/utils/fixEmptyHeaderItems';
-import { IEvents, ILoadingState } from '../../interfaces/Events';
-import { IDrillableItem } from '../../interfaces/DrillEvents';
-import { IVisualizationProperties } from '../../interfaces/VisualizationProperties';
-import { TablePropTypes, Requireable } from '../../proptypes/Table';
-
-import { ErrorStates } from '../../constants/errorStates';
+import { TablePropTypes } from '../../proptypes/Table';
 import { VisualizationEnvironment } from '../uri/Visualization';
-import { getVisualizationOptions } from '../../helpers/options';
-import { convertErrors, checkEmptyResult } from '../../helpers/errorHandlers';
-import { ISubject } from '../../helpers/async';
 import { IIndexedTotalItem } from '../../interfaces/Totals';
 import { convertToIndexedTotals, convertToTotals } from '../../helpers/TotalsConverter';
 
-export { Requireable };
+import {
+    ICommonVisualizationProps,
+    visualizationLoadingHOC,
+    ILoadingInjectedProps,
+    commonDefaultprops
+} from './base/VisualizationLoadingHOC';
 
-export interface ITableProps extends IEvents {
-    dataSource: DataSource.IDataSource<Execution.IExecutionResponses>;
-    resultSpec?: AFM.IResultSpec;
-    locale?: string;
+export interface ITableProps extends ICommonVisualizationProps {
     height?: number;
     maxHeight?: number;
     environment?: VisualizationEnvironment;
     stickyHeaderOffset?: number;
-    drillableItems?: IDrillableItem[];
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
     onTotalsEdit?: Function;
-    afterRender?: Function;
-    pushData?: Function;
-    visualizationProperties?: IVisualizationProperties;
-    ErrorComponent?: React.ComponentClass<any>;
-    LoadingComponent?: React.ComponentClass<any>;
 }
 
 export interface ITableState {
-    error: string;
-    result: Execution.IExecutionResponses;
-    isLoading: boolean;
     page: number;
     lastAddedTotalType: string;
 }
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
 
-export type ITableDataPromise = Promise<Execution.IExecutionResponses>;
-
-const defaultErrorHandler = (error: any) => {
-    if (error && error.status !== ErrorStates.OK) {
-        console.error(error); // tslint:disable-line:no-console
-    }
-};
-
-export class PureTable extends React.Component<ITableProps, ITableState> {
-    public static defaultProps: Partial<ITableProps> = {
-        resultSpec: {},
-        onError: defaultErrorHandler,
-        onLoadingChanged: noop,
-        ErrorComponent: null,
-        LoadingComponent: null,
-        afterRender: noop,
-        pushData: noop,
+class SimpleTable extends React.Component<ITableProps & ILoadingInjectedProps, ITableState> {
+    public static defaultProps: Partial<ITableProps & ILoadingInjectedProps> = {
+        ...commonDefaultprops,
         stickyHeaderOffset: 0,
         height: null,
         maxHeight: null,
-        locale: 'en-US',
         environment: 'none',
-        drillableItems: [],
         totals: [],
         totalsEditAllowed: false,
         onTotalsEdit: noop,
-        onFiredDrillEvent: noop,
-        visualizationProperties: null
+        visualizationProperties: null,
+        onDataTooLarge: noop
     };
 
     public static propTypes = TablePropTypes;
 
-    private subject: ISubject<ITableDataPromise>;
-
-    constructor(props: ITableProps) {
+    constructor(props: ITableProps & ILoadingInjectedProps) {
         super(props);
 
         this.state = {
-            error: ErrorStates.OK,
-            result: null,
-            isLoading: false,
             page: 1,
             lastAddedTotalType: ''
         };
 
         this.onSortChange = this.onSortChange.bind(this);
-        this.onLoadingChanged = this.onLoadingChanged.bind(this);
-        this.onDataTooLarge = this.onDataTooLarge.bind(this);
-        this.onError = this.onError.bind(this);
         this.onMore = this.onMore.bind(this);
         this.onLess = this.onLess.bind(this);
         this.onTotalsEdit = this.onTotalsEdit.bind(this);
         this.resetLastAddedTotalType = this.resetLastAddedTotalType.bind(this);
 
-        this.subject = createSubject<Execution.IExecutionResponses>((result) => {
-            this.setState({
-                result
-            });
-            const options = getVisualizationOptions(this.props.dataSource.getAfm());
-            this.props.pushData({
-                result,
-                options
-            });
-            this.onLoadingChanged({ isLoading: false });
-        }, error => this.onError(error));
-    }
-
-    public componentDidMount() {
-        const { dataSource, resultSpec } = this.props;
-        this.initDataLoading(dataSource, resultSpec);
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {
@@ -143,23 +84,10 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
 
             this.setState({ lastAddedTotalType: difference(nextTotalsTypes, totalsTypes)[0] });
         }
-
-        const resultSpecChanged = !isEqual(get(this.props, 'resultSpec'), get(nextProps, 'resultSpec'));
-
-        if (!DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource) || resultSpecChanged) {
-            const { dataSource, resultSpec } = nextProps;
-            this.initDataLoading(dataSource, resultSpec);
-        }
     }
 
     public resetLastAddedTotalType() {
         this.setState({ lastAddedTotalType: '' });
-    }
-
-    public componentWillUnmount() {
-        this.subject.unsubscribe();
-        this.onLoadingChanged = noop;
-        this.onError = noop;
     }
 
     public onSortChange(sortItem: AFM.SortItem) {
@@ -173,7 +101,6 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
     public onTotalsEdit(indexedTotals: IIndexedTotalItem[]) {
         const { dataSource, pushData } = this.props;
 
-        // Short term solution (See BB-641)
         const totals = convertToTotals(indexedTotals, dataSource.getAfm());
 
         pushData({
@@ -195,17 +122,7 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
         });
     }
 
-    public render() {
-        const { result, isLoading, error } = this.state;
-        const { ErrorComponent, LoadingComponent } = this.props;
-
-        if (error !== ErrorStates.OK) {
-            return ErrorComponent ? <ErrorComponent error={{ status: error }} props={this.props} /> : null;
-        }
-        if (isLoading || !result) {
-            return LoadingComponent ? <LoadingComponent props={this.props} /> : null;
-        }
-
+    public render(): JSX.Element {
         const tableRenderer = this.getTableRenderer();
         return this.renderTable(tableRenderer);
     }
@@ -250,18 +167,15 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             resultSpec,
             onFiredDrillEvent,
             totals,
-            totalsEditAllowed
-        } = this.props;
-        const { result } = this.state;
-        const {
+            totalsEditAllowed,
             executionResponse,
             executionResult
-        } = (result as Execution.IExecutionResponses);
+        } = this.props;
 
         // Short term solution (See BB-641)
         const indexedTotals = convertToIndexedTotals(totals, dataSource.getAfm(), resultSpec);
 
-        const onDataTooLarge = environment === 'dashboards' ? this.onDataTooLarge : noop;
+        const onDataTooLarge = environment === 'dashboards' ? this.props.onDataTooLarge : noop;
         return (
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
@@ -294,49 +208,6 @@ export class PureTable extends React.Component<ITableProps, ITableState> {
             </IntlWrapper>
         );
     }
-
-    private onError(errorCode: string, dataSource = this.props.dataSource) {
-        if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-            const options = getVisualizationOptions(this.props.dataSource.getAfm());
-            this.setState({
-                error: errorCode
-            });
-            this.onLoadingChanged({ isLoading: false });
-            this.props.onError({ status: errorCode, options });
-        }
-    }
-
-    private onDataTooLarge() {
-        this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
-    }
-
-    private onLoadingChanged(loadingState: ILoadingState) {
-        this.props.onLoadingChanged(loadingState);
-        const isLoading = loadingState.isLoading;
-
-        if (isLoading) {
-            this.props.onError({ status: ErrorStates.OK }); // reset all errors in parent on loading start
-            this.setState({
-                isLoading,
-                error: ErrorStates.OK // reset local errors
-            });
-        } else {
-            this.setState({
-                isLoading
-            });
-        }
-    }
-
-    private initDataLoading(
-        dataSource: DataSource.IDataSource<Execution.IExecutionResponses>,
-        resultSpec: AFM.IResultSpec
-    ) {
-        this.onLoadingChanged({ isLoading: true });
-
-        const promise = dataSource.getData(resultSpec)
-            .then(checkEmptyResult)
-            .catch(convertErrors);
-
-        this.subject.next(promise);
-    }
 }
+
+export const PureTable = visualizationLoadingHOC(SimpleTable);
