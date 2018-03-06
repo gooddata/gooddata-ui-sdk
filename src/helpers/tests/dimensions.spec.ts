@@ -4,7 +4,7 @@ import update = require('lodash/update');
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import { generateDimensions } from '../dimensions';
-import {charts} from '../../../__mocks__/fixtures';
+import { charts } from '../../../__mocks__/fixtures';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
     const uri = `/gdc/md/myproject/obj/${name}`;

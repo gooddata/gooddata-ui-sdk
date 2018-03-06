@@ -145,7 +145,7 @@ describe('PureTable', () => {
                     }
                 ]
             };
-            const newProps = createProps({resultSpec: newResultSpec});
+            const newProps = createProps({ resultSpec: newResultSpec });
             wrapper.setProps(newProps);
             return delay().then(() => {
                 expect(onLoadingChanged).toHaveBeenCalledTimes(4);

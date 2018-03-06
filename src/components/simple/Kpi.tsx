@@ -75,7 +75,7 @@ export class Kpi extends React.Component<IKpiProps, null> {
                 resultSpec={resultSpec}
                 {...executeProps}
             >
-                {({result, error, isLoading}: IExecuteChildrenProps) => {
+                {({ result, error, isLoading }: IExecuteChildrenProps) => {
                     if (error && error.status !== ErrorStates.OK) {
                         return ErrorComponent ? <ErrorComponent error={error} props={this.props} /> : null;
                     }

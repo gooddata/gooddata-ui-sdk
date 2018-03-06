@@ -42,7 +42,7 @@ class DynamicVisualization extends React.Component<any, any> {
 
     public render() {
         return (
-            <div style={{width: '100%', height: '100%', position: 'relative'}}>
+            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                 <div>
                     <button onClick={this.toggle.bind(this, 'uri')}>toggle uri</button>
                     <button onClick={this.toggle.bind(this, 'filters')}>toggle filter</button>

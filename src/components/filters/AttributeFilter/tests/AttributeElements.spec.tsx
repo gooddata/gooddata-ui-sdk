@@ -23,9 +23,10 @@ describe('AttributeElements', () => {
             ...customProps
         };
     }
+
     function renderComponent(props: IAttributeElementsProps) {
         const children = (params: IAttributeElementsChildren) => {
-          return props.children(params);
+            return props.children(params);
         };
         return mount(
             <AttributeElements
@@ -48,10 +49,12 @@ describe('AttributeElements', () => {
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
                     items: [
-                        { element: {
-                            title: 'Afghanistan',
-                            uri: '/gdc/md/projectId/object/foo?id=0'
-                        }}
+                        {
+                            element: {
+                                title: 'Afghanistan',
+                                uri: '/gdc/md/projectId/object/foo?id=0'
+                            }
+                        }
                     ],
                     paging: { count: 1, offset: 0, total: 198 }
                 }
@@ -77,7 +80,7 @@ describe('AttributeElements', () => {
             expect(props.children).toHaveBeenCalledTimes(2);
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
-                    items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' }} ],
+                    items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' } }],
                     paging: { count: 1, offset: 0, total: 198 }
                 }
             );
@@ -112,7 +115,7 @@ describe('AttributeElements', () => {
         return delay().then(() => {
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
-                    items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' }} ],
+                    items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' } }],
                     paging: { count: 1, offset: 0, total: 198 }
                 }
             );
@@ -129,8 +132,8 @@ describe('AttributeElements', () => {
                 expect(props.children.mock.calls[3][0].validElements).toEqual(
                     {
                         items: [
-                            { element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' }},
-                            { element: { title: 'Albania', uri: '/gdc/md/projectId/object/foo?id=1' }}
+                            { element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' } },
+                            { element: { title: 'Albania', uri: '/gdc/md/projectId/object/foo?id=1' } }
                         ],
                         paging: { count: 2, offset: 0, total: 198 }
                     }
@@ -150,7 +153,7 @@ describe('AttributeElements', () => {
             expect(props.sdk.md.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
             expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children.mock.calls[1][0].validElements).toEqual({
-                items: [{element: {title: 'Abundant Ammunition', uri: '/gdc/md/projectId/object/baz?id=0'}}],
+                items: [{ element: { title: 'Abundant Ammunition', uri: '/gdc/md/projectId/object/baz?id=0' } }],
                 paging: { count: 1, offset: 0, total: 167 }
             });
             expect(props.children.mock.calls[1][0].isLoading).toBe(false);
@@ -169,7 +172,7 @@ describe('AttributeElements', () => {
                 expect(props.children.mock.calls[3][0].isLoading).toBe(false);
                 expect(props.children.mock.calls[3][0].validElements).toEqual(
                     {
-                        items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' }} ],
+                        items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' } }],
                         paging: { count: 1, offset: 0, total: 198 }
                     }
                 );

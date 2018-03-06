@@ -35,7 +35,7 @@ class DummyExecuteError extends React.Component<any, null> {
 }
 
 describe('Kpi', () => {
-    function createComponent({ ExecuteComponent = DummyExecute, ...otherProps}: any = {}) {
+    function createComponent({ ExecuteComponent = DummyExecute, ...otherProps }: any = {}) {
         const props: IKpiProps = {
             ...otherProps,
             projectId: 'myprojectid',

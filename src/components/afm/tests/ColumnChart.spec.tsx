@@ -10,7 +10,7 @@ describe('ColumnChart', () => {
         attributes: [
             {
                 localIdentifier: 'a1',
-                displayForm: {uri: 'abc'}
+                displayForm: { uri: 'abc' }
             }
         ]
     };
@@ -26,7 +26,7 @@ describe('ColumnChart', () => {
 
         return delay().then(() => {
             const dimensions = wrapper.find(CoreColumnChart).props().resultSpec.dimensions;
-            expect(dimensions).toEqual([{itemIdentifiers: ['measureGroup']}, {itemIdentifiers: ['a1']}]);
+            expect(dimensions).toEqual([{ itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: ['a1'] }]);
         });
     });
 
