@@ -59,9 +59,10 @@
     "webpack-dev-server": "2.11.1"
   },
   "dependencies": {
+    "@gooddata/data-layer": "7.0.0-alpha0",
     "@gooddata/goodstrap": "53.1.2",
     "@gooddata/react-components": "4.0.0-alpha3",
-    "gooddata": "4.5.1",
+    "gooddata": "6.0.0-alpha0",
     "moment": "2.20.1",
     "prop-types": "15.6.0",
     "react": "15.3.2",

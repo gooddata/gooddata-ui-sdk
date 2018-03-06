@@ -62,6 +62,14 @@
     lodash "^4.17.4"
     rxjs "^5.5.6"
 
+"@gooddata/data-layer@7.0.0-alpha0":
+  version "7.0.0-alpha0"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha0.tgz#d9ac06c4cc37eca6210e59016031a7a10ae4ec33"
+  dependencies:
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.4"
+    rxjs "^5.5.6"
+
 "@gooddata/goodstrap@53.0.1":
   version "53.0.1"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-53.0.1.tgz#ec63334c3005d16ff2b29ea17beac74f54bdafe4"
@@ -199,10 +207,6 @@
     prop-types "^15.6.0"
     react-intl "^2.2.3"
     rxjs "^5.5.6"
-
-"@gooddata/typings@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-0.0.4.tgz#cc2a625010a15ee2dbe698caaa35b518dd33f1fd"
 
 "@gooddata/typings@1.0.0":
   version "1.0.0"
@@ -3569,11 +3573,11 @@ gooddata@4.3.0:
     lodash "4.17.4"
     md5 "2.2.1"
 
-gooddata@4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-4.5.1.tgz#3cb018496e1d6e2d9f613680822471cd679030b4"
+gooddata@5.0.0-alpha1:
+  version "5.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0-alpha1.tgz#6b1799b363e221cf35bef736ed9263392f93a586"
   dependencies:
-    "@gooddata/typings" "0.0.4"
+    "@gooddata/typings" "1.0.0"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
@@ -3582,9 +3586,9 @@ gooddata@4.5.1:
     md5 "2.2.1"
     qs "6.5.1"
 
-gooddata@5.0.0-alpha1:
-  version "5.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0-alpha1.tgz#6b1799b363e221cf35bef736ed9263392f93a586"
+gooddata@6.0.0-alpha0:
+  version "6.0.0-alpha0"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha0.tgz#40131f0bc6b4452aa8f8f585245e29bdafed8816"
   dependencies:
     "@gooddata/typings" "1.0.0"
     es6-promise "3.0.2"
