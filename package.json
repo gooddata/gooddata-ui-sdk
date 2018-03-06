@@ -42,7 +42,7 @@
     "sass-loader": "6.0.6",
     "ts-jest": "21.2.4",
     "ts-loader": "2.3.7",
-    "tslint-config-gooddata": "0.0.7",
+    "tslint-config-gooddata": "0.0.8",
     "typescript": "2.3.3"
   },
   "dependencies": {

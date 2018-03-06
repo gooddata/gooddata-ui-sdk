@@ -3,20 +3,20 @@ import CatalogHelper from '../CatalogHelper';
 describe('CatalogHelper', () => {
     const catalogJson = {
         metrics: {
-            Revenue: {identifier: 'abl9B8GhatNR', tags: 'ab'}
+            Revenue: { identifier: 'abl9B8GhatNR', tags: 'ab' }
         },
         attributes: {
             Region: {
                 identifier: 'attr.country.region',
                 tags: 'attr-tag',
-                defaultDisplayForm: {identifier: 'label.country.region', tags: 'cd'},
+                defaultDisplayForm: { identifier: 'label.country.region', tags: 'cd' },
                 displayForms: {
-                    Region: {identifier: 'label.country.region', tags: 'cd'}
+                    Region: { identifier: 'label.country.region', tags: 'cd' }
                 }
             }
         },
         visualizations: {
-            'PVA Pie chart': {identifier: 'abd9M0gPgpVt', tags: 'efgh'}
+            'PVA Pie chart': { identifier: 'abd9M0gPgpVt', tags: 'efgh' }
         },
         dateDataSets: {
             Date: {
@@ -26,10 +26,10 @@ describe('CatalogHelper', () => {
                     Quarter: {
                         identifier: 'date.quarter.in.year',
                         tags: 'dateattr-q-tags',
-                        defaultDisplayForm: {identifier: 'date.aam81lMifn6q', tags: 'long,quarter'},
+                        defaultDisplayForm: { identifier: 'date.aam81lMifn6q', tags: 'long,quarter' },
                         displayForms: {
-                            QQQQ: {identifier: 'date.aam81lMifn6q', tags: 'long,quarter'},
-                            QQ: {identifier: 'date.aaqf5qq', tags: 'short,quarter'}
+                            QQQQ: { identifier: 'date.aam81lMifn6q', tags: 'long,quarter' },
+                            QQ: { identifier: 'date.aaqf5qq', tags: 'short,quarter' }
                         }
                     }
                 }

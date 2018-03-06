@@ -50,7 +50,7 @@ const attributeElementsProps: IAttributeElementsProps = {
               </p>
               <div>
                   {validElements ? validElements.items.map((item: any) => (
-                      <span key={item.element.uri} style={{float: 'left'}}><AttributeFilterItem
+                      <span key={item.element.uri} style={{ float: 'left' }}><AttributeFilterItem
                           item={{
                               selected: false,
                               onSelect: action('select'),
