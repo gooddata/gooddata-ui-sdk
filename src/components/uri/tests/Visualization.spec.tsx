@@ -15,7 +15,7 @@ import { ErrorStates } from '../../../constants/errorStates';
 import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
 import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
-import {VisualizationTypes} from '../../../constants/visualizationTypes';
+import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
