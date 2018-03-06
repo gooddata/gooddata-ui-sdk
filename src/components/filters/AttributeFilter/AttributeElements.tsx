@@ -1,12 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import {
-    ISdk,
-    factory as createSdk,
-    IValidElementsOptions,
-    IValidElementsResponse,
-    IElement
-} from 'gooddata';
+import * as GoodData from 'gooddata';
 import { AFM } from '@gooddata/typings';
 import { get } from 'lodash';
 import { getObjectIdFromUri } from '../../../helpers/utils';
@@ -18,17 +12,17 @@ export interface IPaging {
 }
 
 export interface IAttributeElementsProps {
-    sdk?: ISdk;
+    metadata?: typeof GoodData.md;
     projectId: string;
     uri?: string;
     identifier?: string;
-    options?: IValidElementsOptions;
+    options?: GoodData.IValidElementsOptions;
 
     children?(props: IAttributeElementsChildren): any;
 }
 
 export interface IValidElements {
-    items: IElement[];
+    items: GoodData.IElement[];
     paging: IPaging;
     elementsMeta: {
         attribute: string;
@@ -51,68 +45,69 @@ export interface IAttributeElementsChildren {
     error: any;
 }
 
-const defaultChildren = ({
-    validElements,
-    loadMore,
-    isLoading,
-    error
-}: IAttributeElementsChildren) => {
-    const paging: Partial<IPaging> = validElements ? validElements.paging : {};
-    const {
-        offset = 0,
-        count = null,
-        total = null
-    } = paging;
-    const nextOffset = count + offset;
-    if (error) {
-        return <div>{error}</div>;
-    }
-    return (
-        <div>
-            <p>
-                Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
-                to your React components.
-            </p>
-            <button
-                className="button button-secondary"
-                onClick={loadMore as any}
-                disabled={isLoading || (offset + count === total)}
-            >More
-            </button>
-            <h2>validElements</h2>
-            <pre>
-                isLoading: {isLoading.toString()}
-                offset: {offset}
-                count: {count}
-                total: {total}
-                nextOffset: {nextOffset}
-                validElements:
-                {JSON.stringify(validElements, null, '\t')}
-            </pre>
-        </div>
-    );
-};
-
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
 
     public static propTypes = {
         projectId: PropTypes.string.isRequired,
         uri: PropTypes.string,
         identifier: PropTypes.string,
-        options: PropTypes.object
+        options: PropTypes.object,
+        metadata: PropTypes.shape({
+            getObjectDetails: PropTypes.func.isRequired,
+            getObjectUri: PropTypes.func.isRequired
+        })
     };
 
     public static defaultProps: Partial<IAttributeElementsProps> = {
+        metadata: GoodData.md,
         projectId: null,
         uri: null,
         identifier: null,
         options: null,
-        children: defaultChildren
+        children: ({
+            validElements,
+            loadMore,
+            isLoading,
+            error
+        }) => {
+            const paging: Partial<IPaging> = validElements ? validElements.paging : {};
+            const {
+                offset = 0,
+                count = null,
+                total = null
+            } = paging;
+            const nextOffset = count + offset;
+            if (error) {
+                return <div>{error}</div>;
+            }
+            return (
+                <div>
+                    <p>
+                        Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
+                        to your React components.
+                    </p>
+                    <button
+                        className="button button-secondary"
+                        onClick={loadMore as any}
+                        disabled={isLoading || (offset + count === total)}
+                    >More
+                    </button>
+                    <h2>validElements</h2>
+                    <pre>
+                        isLoading: {isLoading.toString()}
+                        offset: {offset}
+                        count: {count}
+                        total: {total}
+                        nextOffset: {nextOffset}
+                        validElements:
+                        {JSON.stringify(validElements, null, '\t')}
+                    </pre>
+                </div>
+            );
+        }
     };
 
     private uri?: string = null;
-
-    private sdk: ISdk;
 
     constructor(props: IAttributeElementsProps) {
         super(props);
@@ -123,8 +118,6 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             error: null
         };
 
-        this.sdk = props.sdk || createSdk();
-
         this.loadMore = this.loadMore.bind(this);
     }
 
@@ -133,10 +126,6 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
     }
 
     public componentWillReceiveProps(nextProps: IAttributeElementsProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
-        }
-
         if (this.props.uri !== nextProps.uri ||
             this.props.identifier !== nextProps.identifier ||
             this.props.projectId !== nextProps.projectId ||
@@ -178,7 +167,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         const uriPromise = new Promise((resolve, reject) => {
             return (props.uri || this.uri)
                 ? resolve(props.uri || this.uri)
-                : this.sdk.md.getUrisFromIdentifiers(projectId, [identifier])
+                : props.metadata.getUrisFromIdentifiers(projectId, [identifier])
                     .then(
                         (result) => {
                             this.uri = result[0].uri;
@@ -193,13 +182,13 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         uriPromise
             .then((uri: string) => {
                 const objectId = getObjectIdFromUri(uri);
-                return this.sdk.md.getValidElements(
+                return props.metadata.getValidElements(
                     projectId,
                     objectId, // This is misdocumented as identifier, but is in fact objectId
                     optionsWithUpdatedPaging
                 );
             })
-            .then((response: IValidElementsResponse) => {
+            .then((response: GoodData.IValidElementsResponse) => {
                 const items = [
                     ...get(this.state, 'validElements.items', []),
                     ...response.validElements.items

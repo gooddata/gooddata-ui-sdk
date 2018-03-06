@@ -6,10 +6,7 @@ import Dropdown, { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropd
 import { string as stringUtils } from '@gooddata/js-utils';
 import DataSource from '@gooddata/goodstrap/lib/DataSource/DataSource';
 import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
-import {
-    IValidElementsResponse,
-    IElement
-} from 'gooddata';
+import * as GoodData from 'gooddata';
 import * as classNames from 'classnames';
 import last = require('lodash/last');
 import pick = require('lodash/pick');
@@ -52,7 +49,7 @@ export interface IValidElementsItem {
 
 export interface IAttributeMetadata {
     getValidElements: (projectId: string, objectId: string, options: object) =>
-        Promise<IValidElementsResponse>;
+        Promise<GoodData.IValidElementsResponse>;
 }
 
 export interface IAttributeDropdownProps {
@@ -61,7 +58,7 @@ export interface IAttributeDropdownProps {
     onApply: Function;
     fullscreenOnMobile?: boolean;
     isUsingIdentifier: boolean;
-    metadata: IAttributeMetadata;
+    metadata?: IAttributeMetadata;
     getListItem?: Function;
     getListLoading?: Function;
     getListError?: Function;
@@ -111,13 +108,13 @@ export function loadAttributeElements(
     };
 
     return metadata.getValidElements(projectId, objectId, options)
-        .then((res: IValidElementsResponse) => {
+        .then((res: GoodData.IValidElementsResponse) => {
             const { items, paging: { total } } = res.validElements;
             return {
                 data: {
                     offset,
                     limit,
-                    items: items.map((item: IElement) => pick(item.element, 'uri', 'title')),
+                    items: items.map((item: GoodData.IElement) => pick(item.element, 'uri', 'title')),
                     totalCount: total
                 }
             };
@@ -154,13 +151,14 @@ export class AttributeDropdownWrapped
 
         metadata: PropTypes.shape({
             getValidElements: PropTypes.func.isRequired
-        }).isRequired
+        })
     };
 
     public static defaultProps = {
         fullscreenOnMobile: false,
         isUsingIdentifier: false,
 
+        metadata: GoodData.md,
         getListItem: () => (<AttributeFilterItem />),
         getListLoading: getDefaultListLoading,
         getListError: getDefaultListError,
