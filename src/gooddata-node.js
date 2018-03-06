@@ -1,4 +1,4 @@
-import defaultInstance, { factory } from './gooddata';
+import gooddata from './gooddata';
 import { setFetch } from './utils/fetch';
 
 // Fetch requests will be sent through the node-fetch wrapped by the fetch-cookie.
@@ -7,7 +7,5 @@ import { setFetch } from './utils/fetch';
 // immediately.
 setFetch(require('fetch-cookie')(require('node-fetch')));
 
-// Backward compatibility
-defaultInstance.factory = factory; // eslint-disable-line import/no-named-as-default-member
-export default defaultInstance;
-module.exports = defaultInstance;
+export default gooddata;
+module.exports = gooddata;

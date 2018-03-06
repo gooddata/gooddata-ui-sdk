@@ -1,14 +1,8 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import { createModule as clientsFactory } from '../../src/admin/clients';
-import { createModule as xhrFactory } from '../../src/xhr';
-import { createModule as configFactory } from '../../src/config';
+import * as clients from '../../src/admin/clients';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
-const clients = clientsFactory(xhr);
-
-describe('clients', () => {
+describe('project', () => {
     describe('with fake server', () => {
         afterEach(() => {
             fetchMock.restore();

@@ -1,3 +1,4 @@
+import { get } from '../xhr';
 import * as routes from './routes';
 
 const transformDomain = (item) => {
@@ -7,6 +8,17 @@ const transformDomain = (item) => {
         contractId,
         ...item.domain
     };
+};
+
+export const getDomain = (contractId, domainId, query) => {
+    const uri = routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId }, query);
+
+    return get(uri).then(transformDomain);
+};
+
+export const getDomains = (contractId, query) => {
+    return get(routes.interpolate(routes.CONTRACT_DOMAINS, { contractId }, query))
+        .then(result => ({ items: result.domains.items.map(transformDomain) })); // TODO: paging?
 };
 
 const transformDomainUser = ({ user }) => {
@@ -19,54 +31,34 @@ const transformDomainUser = ({ user }) => {
     };
 };
 
-export function createModule(xhr) {
-    const getDomain = (contractId, domainId, query) => {
-        const uri = routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId }, query);
+export const getDomainUsers = (contractId, domainId, query, paging) => {
+    if (paging && !paging.next) {
+        return Promise.resolve({ items: [], paging: {} });
+    }
 
-        return xhr.get(uri).then(transformDomain);
-    };
+    const uri = paging ?
+        paging.next : routes.interpolate(routes.CONTRACT_DOMAIN_USERS, { contractId, domainId }, query);
 
-    const getDomains = (contractId, query) => {
-        return xhr.get(routes.interpolate(routes.CONTRACT_DOMAINS, { contractId }, query))
-            .then(result => ({ items: result.domains.items.map(transformDomain) })); // TODO: paging?
-    };
+    return get(uri).then(result => ({
+        ...result.domainUsers,
+        items: result.domainUsers.items.map(transformDomainUser)
+    }));
+};
 
-    const getDomainUsers = (contractId, domainId, query, paging) => {
-        if (paging && !paging.next) {
-            return Promise.resolve({ items: [], paging: {} });
-        }
+export const getDomainProjects = (contractId, domainId, state, query, paging) => {
+    if (paging && !paging.next) {
+        return Promise.resolve({ items: [], paging: {} });
+    }
 
-        const uri = paging ?
-            paging.next : routes.interpolate(routes.CONTRACT_DOMAIN_USERS, { contractId, domainId }, query);
+    const uri = paging ?
+        paging.next : routes.interpolate(
+            routes.CONTRACT_DOMAIN_PROJECTS,
+            { contractId, domainId }, state || query ?
+            Object.assign(state && { state }, query && { prefixSearch: query }) : null
+        );
 
-        return xhr.get(uri).then(result => ({
-            ...result.domainUsers,
-            items: result.domainUsers.items.map(transformDomainUser)
-        }));
-    };
-
-    const getDomainProjects = (contractId, domainId, state, query, paging) => {
-        if (paging && !paging.next) {
-            return Promise.resolve({ items: [], paging: {} });
-        }
-
-        const uri = paging ?
-            paging.next : routes.interpolate(
-                routes.CONTRACT_DOMAIN_PROJECTS,
-                { contractId, domainId }, state || query ?
-                    Object.assign(state && { state }, query && { prefixSearch: query }) : null
-            );
-
-        return xhr.get(uri).then(result => ({
-            ...result.domainProjects,
-            items: result.domainProjects.items.map(item => item.project)
-        }));
-    };
-
-    return {
-        getDomain,
-        getDomains,
-        getDomainUsers,
-        getDomainProjects
-    };
-}
+    return get(uri).then(result => ({
+        ...result.domainProjects,
+        items: result.domainProjects.items.map(item => item.project)
+    }));
+};

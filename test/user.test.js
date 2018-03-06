@@ -1,12 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from './utils/fetch-mock';
-import { createModule as userFactory } from '../src/user';
-import { createModule as xhrFactory } from '../src/xhr';
-import { createModule as configFactory } from '../src/config';
-
-const config = configFactory();
-const xhr = xhrFactory(config);
-const user = userFactory(xhr);
+import * as user from '../src/user';
 
 describe('user', () => {
     describe('with fake server', () => {
@@ -74,7 +68,7 @@ describe('user', () => {
                     400
                 );
                 return user.loginSso(sessionId, serverUrl, targetUrl).then(() => {
-                    throw new Error('Should reject with 400');
+                    expect().fail('Should reject with 400');
                 }, (err) => {
                     expect(err.response.status).toBe(400);
                 });
@@ -153,7 +147,7 @@ describe('user', () => {
                     { status: 400, body: '' }
                 );
                 return user.updateProfileSettings(userId, []).then(() => {
-                    throw new Error('Should reject with 400');
+                    expect().fail('Should reject with 400');
                 }, (err) => {
                     expect(err.response.status).toBe(400);
                 });

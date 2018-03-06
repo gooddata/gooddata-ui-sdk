@@ -1,17 +1,7 @@
 import { cloneDeep, get } from 'lodash';
 import fetchMock from './utils/fetch-mock';
 import * as fixtures from './fixtures/catalogue';
-import { createModule as catalogueFactory } from '../src/catalogue';
-import { createModule as xhrFactory } from '../src/xhr';
-import { createModule as executionFactory } from '../src/execution';
-import { createModule as mdFactory } from '../src/metadata';
-import { createModule as configFactory } from '../src/config';
-
-const config = configFactory();
-const xhr = xhrFactory(config);
-const md = mdFactory(xhr);
-const execution = executionFactory(xhr, md);
-const catalogue = catalogueFactory(xhr, execution);
+import * as catalogue from '../src/catalogue';
 
 describe('Catalogue', () => {
     const projectId = 'some_id';
