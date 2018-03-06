@@ -1,3 +1,6 @@
 {
-  "extends": ["gooddata"]
+  "extends": ["gooddata"],
+  "rules": {
+    "jest/valid-expect": 0
+  }
 }

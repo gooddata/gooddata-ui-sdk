@@ -1,12 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import { createModule as segmentsFactory } from '../../src/admin/segments';
-import { createModule as xhrFactory } from '../../src/xhr';
-import { createModule as configFactory } from '../../src/config';
-
-const config = configFactory();
-const xhr = xhrFactory(config);
-const segments = segmentsFactory(xhr);
+import * as segments from '../../src/admin/segments';
 
 describe('segments', () => {
     describe('with fake server', () => {

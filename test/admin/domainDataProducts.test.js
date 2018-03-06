@@ -1,12 +1,6 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import { createModule as domainDataproductsFactory } from '../../src/admin/domainDataProducts';
-import { createModule as xhrFactory } from '../../src/xhr';
-import { createModule as configFactory } from '../../src/config';
-
-const config = configFactory();
-const xhr = xhrFactory(config);
-const domainDataproducts = domainDataproductsFactory(xhr);
+import * as domaindataproducts from '../../src/admin/domainDataProducts';
 
 describe('domainDataProducts', () => {
     describe('with fake server', () => {
@@ -21,7 +15,7 @@ describe('domainDataProducts', () => {
                     400
                 );
 
-                return domainDataproducts.getDomainDataProducts('contractId', 'dataProductId').then(null, err => expect(err).toBeInstanceOf(Error));
+                return domaindataproducts.getDomainDataProducts('contractId', 'dataProductId').then(null, err => expect(err).toBeInstanceOf(Error));
             });
 
             it('should return domaindataproducts', () => {
@@ -50,7 +44,7 @@ describe('domainDataProducts', () => {
                         })
                     }
                 );
-                return domainDataproducts.getDomainDataProducts('contractId', 'dataProductId').then((result) => {
+                return domaindataproducts.getDomainDataProducts('contractId', 'dataProductId').then((result) => {
                     expect(result.items.length).toBe(1);
                     expect(result.items[0].domain.name).toBe('data-admin-test1');
                     expect(result.items[0].domain.environment).toBe('TEST');

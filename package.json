@@ -20,31 +20,22 @@
     "build:dist": "rm -rf dist && grunt dist",
     "prepublish": "npm run build",
     "test": "jest --watch",
-    "validate": "eslint --ext .js,.jsx src test",
-    "validate:ci": "yarn validate -f checkstyle -o ci/results/eslint-results.xml",
-    "test:typings": "tsc --noEmit index.d.ts",
     "test:ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:gooddata/gooddata-js.git"
   },
-  "jest": {
-    "transform": {
-      ".(js|jsx)": "babel-jest"
-    }
-  },
   "devDependencies": {
     "async": "2.1.5",
     "babel-cli": "6.23.0",
     "babel-core": "6.23.1",
-    "babel-jest": "22.2.2",
     "babel-loader": "6.3.2",
     "babel-plugin-lodash": "3.2.11",
     "babel-preset-es2015": "6.22.0",
     "babel-preset-stage-0": "6.22.0",
     "babel-register": "6.23.0",
-    "eslint-config-gooddata": "0.0.17",
+    "eslint-config-gooddata": "0.0.13",
     "exports-loader": "0.6.3",
     "fast-levenshtein": "2.0.6",
     "fetch-mock": "5.12.2",
@@ -57,6 +48,7 @@
     "grunt-grizzly": "0.12.0",
     "grunt-run": "0.8.0",
     "grunt-webpack": "1.0.14",
+    "gruntify-eslint": "3.1.0",
     "imports-loader": "0.7.0",
     "istanbul-instrumenter-loader": "0.2.0",
     "jest": "21.0.0",
@@ -64,7 +56,6 @@
     "js-object-pretty-print": "0.2.0",
     "json-loader": "0.5.4",
     "lodash-webpack-plugin": "0.11.0",
-    "typescript": "2.7.2",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.1"
   },
