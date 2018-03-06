@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@6.0.0-alpha3":
-  version "6.0.0-alpha3"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-6.0.0-alpha3.tgz#767e284ce8052891263dfbc3e476a22a093d6c83"
+"@gooddata/data-layer@6.0.0-alpha5":
+  version "6.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-6.0.0-alpha5.tgz#c551a96b7bf8719ada8ed795bcce28d131f2c419"
   dependencies:
     json-stable-stringify "^1.0.1"
     lodash "^4.17.4"
@@ -3815,9 +3815,9 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@5.0.0-alpha1:
-  version "5.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0-alpha1.tgz#6b1799b363e221cf35bef736ed9263392f93a586"
+gooddata@5.0.0-alpha4:
+  version "5.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0-alpha4.tgz#a655919f3eaad5a4f5d2be5ca4f3be35fbc2e721"
   dependencies:
     "@gooddata/typings" "1.0.0"
     es6-promise "3.0.2"

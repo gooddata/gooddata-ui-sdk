@@ -46,13 +46,13 @@
     "typescript": "2.3.3"
   },
   "dependencies": {
-    "@gooddata/data-layer": "6.0.0-alpha3",
+    "@gooddata/data-layer": "6.0.0-alpha5",
     "@gooddata/goodstrap": "54.0.0-alpha2",
     "@gooddata/indigo-visualizations": "^1.3.1",
     "@gooddata/js-utils": "^0.9.0",
     "@gooddata/numberjs": "^3.1.2",
     "classnames": "^2.2.5",
-    "gooddata": "5.0.0-alpha1",
+    "gooddata": "5.0.0-alpha4",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.2.3",
