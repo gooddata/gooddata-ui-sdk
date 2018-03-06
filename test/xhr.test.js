@@ -1,8 +1,11 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 import fetchMock from './utils/fetch-mock';
 
-import * as xhr from '../src/xhr';
-import { setCustomDomain } from '../src/config';
+import { createModule as xhrFactory, handlePolling } from '../src/xhr';
+import { createModule as configFactory } from '../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
 
 describe('fetch', () => {
     afterEach(() => {
@@ -32,7 +35,7 @@ describe('fetch', () => {
         it('should handle unsuccessful request', () => {
             fetchMock.mock('/some/url', 404);
             return xhr.ajax('/some/url').then(() => {
-                expect().fail('should be rejected');
+                throw new Error('should be rejected');
             }, (err) => {
                 expect(err.response.status).toBe(404);
             });
@@ -62,7 +65,7 @@ describe('fetch', () => {
 
                 return 200;
             })
-            .mock('/gdc/account/token', 200);
+                .mock('/gdc/account/token', 200);
             return xhr.ajax('/some/url').then((r) => {
                 expect(r.status).toBe(200);
             });
@@ -70,7 +73,7 @@ describe('fetch', () => {
 
         it('should fail if token renewal fails', () => {
             fetchMock.mock('/some/url', 401)
-                     .mock('/gdc/account/token', 401);
+                .mock('/gdc/account/token', 401);
             return xhr.ajax('/some/url').then(null, (err) => {
                 expect(err.response.status).toBe(401);
             });
@@ -86,8 +89,8 @@ describe('fetch', () => {
             };
 
             fetchMock.mock('/some/url/1', firstFailedMatcher)
-                     .mock('/some/url/2', firstFailedMatcher)
-                     .mock('/gdc/account/token', 200);
+                .mock('/some/url/2', firstFailedMatcher)
+                .mock('/gdc/account/token', 200);
 
             return Promise.all([xhr.ajax('/some/url/1'), xhr.ajax('/some/url/2')]).then((r) => {
                 expect(r[0].status).toBe(200);
@@ -106,7 +109,7 @@ describe('fetch', () => {
 
             const handleRequest = jest.fn(() => Promise.resolve());
 
-            const promise = xhr.handlePolling('/some/url', { pollDelay: () => 1000 }, handleRequest);
+            const promise = handlePolling('/some/url', { pollDelay: () => 1000 }, handleRequest);
 
             jest.runTimersToTime(1000); // ms
 
@@ -278,12 +281,12 @@ describe('fetch', () => {
 
     describe('enrichSettingWithCustomDomain', () => {
         afterEach(() => {
-            setCustomDomain(null);
+            config.setCustomDomain(null);
         });
 
         it('should not touch settings if no domain set', () => {
             fetchMock.mock('/test1', 200);
-            expect(() => setCustomDomain()).toThrow();
+            expect(() => config.setCustomDomain()).toThrow();
 
             xhr.ajax('/test1');
 
@@ -294,7 +297,7 @@ describe('fetch', () => {
         });
 
         it('should add domain before url', () => {
-            setCustomDomain('https://domain.tld');
+            config.setCustomDomain('https://domain.tld');
             fetchMock.mock('https://domain.tld/test1', 200);
 
             xhr.ajax('https://domain.tld/test1');
@@ -306,7 +309,7 @@ describe('fetch', () => {
         });
 
         it('should not double domain in settings url', () => {
-            setCustomDomain('https://domain.tld');
+            config.setCustomDomain('https://domain.tld');
             fetchMock.mock('https://domain.tld/test1', 200);
 
             xhr.ajax('https://domain.tld/test1');

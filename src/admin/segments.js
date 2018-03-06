@@ -1,45 +1,60 @@
-import { get, post, del } from '../xhr';
 import * as routes from './routes';
 import * as domainSegments from './domainSegments';
 
-export const transformSegment = (item) => {
-    const { contractId, dataProductId } = routes.parse(item.segment.links.self, routes.CONTRACT_DATA_PRODUCT_SEGMENT);
+export function createModule(xhr) {
+    const transformSegment = (item) => {
+        const { contractId, dataProductId } = routes.parse(
+            item.segment.links.self, routes.CONTRACT_DATA_PRODUCT_SEGMENT
+        );
 
-    const segment = {
-        contractId,
-        dataProductId,
-        ...item.segment
+        const segment = {
+            contractId,
+            dataProductId,
+            ...item.segment
+        };
+
+        if (segment.domainSegments) {
+            segment.domainSegments = segment.domainSegments.map(domainSegments.transformDomainSegment);
+        }
+
+        return segment;
     };
 
-    if (segment.domainSegments) {
-        segment.domainSegments = segment.domainSegments.map(domainSegments.transformDomainSegment);
-    }
+    const getDataProductSegments = (contractId, dataProductId) =>
+        xhr.get(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENTS, { contractId, dataProductId }))
+            .then(data => ({
+                items: data.segments.items.map(transformSegment),
+                status: data.segments.status
+            }));
 
-    return segment;
-};
+    const createSegment = (contractId, dataProductId, segmentId, domainIds) =>
+        xhr.post(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENTS, { contractId, dataProductId }), {
+            data: JSON.stringify({
+                segmentCreate: {
+                    id: segmentId,
+                    title: segmentId,
+                    domains: domainIds.map(
+                        domainId => routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId })
+                    )
+                }
+            })
+        });
 
-export const getDataProductSegments = (contractId, dataProductId) =>
-    get(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENTS, { contractId, dataProductId })).then(data => ({
-        items: data.segments.items.map(transformSegment),
-        status: data.segments.status
-    }));
+    const renameSegment = (contractId, dataProductId, segmentId, newSegmentId) =>
+        xhr.post(
+            routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENT_RENAME, { contractId, dataProductId, segmentId }),
+            { data: JSON.stringify({ segmentRename: { id: newSegmentId } }) }
+        );
 
-export const createSegment = (contractId, dataProductId, segmentId, domainIds) =>
-    post(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENTS, { contractId, dataProductId }), {
-        data: JSON.stringify({
-            segmentCreate: {
-                id: segmentId,
-                title: segmentId,
-                domains: domainIds.map(domainId => routes.interpolate(routes.CONTRACT_DOMAIN, { contractId, domainId }))
-            }
-        })
-    });
+    const deleteSegment = (contractId, dataProductId, segmentId) =>
+        xhr.del(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENT, { contractId, dataProductId, segmentId }));
 
-export const renameSegment = (contractId, dataProductId, segmentId, newSegmentId) =>
-    post(
-        routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENT_RENAME, { contractId, dataProductId, segmentId }),
-        { data: JSON.stringify({ segmentRename: { id: newSegmentId } }) }
-    );
+    return {
+        transformSegment,
+        getDataProductSegments,
+        createSegment,
+        renameSegment,
+        deleteSegment
+    };
+}
 
-export const deleteSegment = (contractId, dataProductId, segmentId) =>
-    del(routes.interpolate(routes.CONTRACT_DATA_PRODUCT_SEGMENT, { contractId, dataProductId, segmentId }));

@@ -2,9 +2,14 @@
 import { range, find } from 'lodash';
 import fetchMock from './utils/fetch-mock';
 import { mockPollingRequest } from './helpers/polling';
-import * as md from '../src/metadata';
-import * as xhr from '../src/xhr';
+import { createModule as mdFactory } from '../src/metadata';
+import { createModule as xhrFactory } from '../src/xhr';
+import { createModule as configFactory } from '../src/config';
 import * as fixtures from './fixtures/metadata';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const md = mdFactory(xhr);
 
 describe('metadata', () => {
     describe('with fake server', () => {
@@ -199,7 +204,7 @@ describe('metadata', () => {
                     );
 
                     return md.etlPull('1', '1').then(() => {
-                        expect().fail('Should reject the promise if task ends with error');
+                        throw new Error('Should reject the promise if task ends with error');
                     }, (err) => {
                         expect(err).toBeInstanceOf(Error);
                     });
@@ -258,7 +263,7 @@ describe('metadata', () => {
                     );
 
                     return md.ldmManage('1', '1').then(() => {
-                        expect().fail('Should reject the promise if task ends with error');
+                        throw new Error('Should reject the promise if task ends with error');
                     }, (err) => {
                         expect(err).toBeInstanceOf(Error);
                     });
@@ -535,7 +540,7 @@ describe('metadata', () => {
         describe('translateElementLabelsToUris', () => {
             it('should return two label uris', () => {
                 fetchMock.post(
-                   '/gdc/md/myFakeProjectId/labels',
+                    '/gdc/md/myFakeProjectId/labels',
                     {
                         status: 200,
                         body: JSON.stringify(fixtures.elementsLabelsResult)
@@ -651,7 +656,7 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUsing(projectId, object, { types }).then(() => {
-                    expect().fail('Should reject the promise on 400 response');
+                    throw new Error('Should reject the promise on 400 response');
                 }).catch((err) => {
                     expect(err.response.status).toBe(400);
                 });
@@ -689,7 +694,7 @@ describe('metadata', () => {
             });
 
             it('should load objects dependencies', () => {
-                fetchMock.mock(
+                fetchMock.post(
                     using2Uri,
                     { status: 200, body: JSON.stringify({ useMany: response }) }
                 );
@@ -736,7 +741,7 @@ describe('metadata', () => {
                 );
 
                 return md.getObjectUsingMany(projectId, objects, { types }).then(() => {
-                    expect().fail('Should reject the promise on 400 response');
+                    throw new Error('Should reject the promise on 400 response');
                 }).catch((err) => {
                     expect(err.response.status).toBe(400);
                 });
@@ -837,7 +842,7 @@ describe('metadata', () => {
                 );
 
                 return md.getObjects(projectId, uris).then(() => {
-                    expect().fail('Should reject the promise on 400 response');
+                    throw new Error('Should reject the promise on 400 response');
                 }).catch((err) => {
                     expect(err.response.status).toBe(400);
                 });
@@ -850,11 +855,11 @@ describe('metadata', () => {
             const attributeId = 'attribute.id';
             const uri = `/gdc/md/${projectId}/obj/${attributeId}/validElements`;
 
-            beforeEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
+            beforeEach(() => {
                 postSpy = jest.spyOn(xhr, 'post');
             });
 
-            afterEach(() => { // eslint-disable-line mocha/no-hooks-for-single-case
+            afterEach(() => {
                 postSpy.mockRestore();
             });
 

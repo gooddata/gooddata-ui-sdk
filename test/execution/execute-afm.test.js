@@ -1,6 +1,12 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import fetchMock from '../utils/fetch-mock';
-import executeAfm, { nextPageOffset, mergePageData } from '../../src/execution/execute-afm';
+import { createModule as executeAfmFactory, nextPageOffset, mergePageData } from '../../src/execution/execute-afm';
+import { createModule as xhrFactory } from '../../src/xhr';
+import { createModule as configFactory } from '../../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const executeAfm = executeAfmFactory(xhr);
 
 describe('nextPageOffset', () => {
     it('should work for 1 dimension', () => {

@@ -3,8 +3,18 @@
 import { cloneDeep, range } from 'lodash';
 import fetchMock from '../utils/fetch-mock';
 
-import * as ex from '../../src/execution/experimental-executions';
 import { expectColumns, expectMetricDefinition } from '../helpers/execution';
+import { createModule as exFactory } from '../../src/execution/experimental-executions';
+import { createModule as attributesMapLoaderFactory } from '../../src/utils/attributesMapLoader';
+import { createModule as xhrFactory } from '../../src/xhr';
+import { createModule as mdFactory } from '../../src/metadata';
+import { createModule as configFactory } from '../../src/config';
+
+const config = configFactory();
+const xhr = xhrFactory(config);
+const md = mdFactory(xhr);
+const attributesMapLoader = attributesMapLoaderFactory(md);
+const ex = exFactory(xhr, attributesMapLoader);
 
 describe('execution', () => {
     describe('with fake server', () => {
@@ -231,7 +241,7 @@ describe('execution', () => {
                             isPoP: undefined
                         });
                     }).catch(() => {
-                        expect().fail('Should not fail when processing mappings');
+                        throw new Error('Should not fail when processing mappings');
                     });
                 });
 

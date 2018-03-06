@@ -18,16 +18,9 @@ import {
     set
 } from 'lodash';
 
-import {
-    ajax,
-    post,
-    parseJSON
-} from '../xhr';
-
 import Rules from '../utils/rules';
 import { sortDefinitions } from '../utils/definitions';
 import {
-    loadAttributesMap,
     getMissingUrisInAttributesMap
 } from '../utils/attributesMapLoader';
 import {
@@ -65,117 +58,6 @@ const emptyResult = {
         warnings: []
     }
 };
-
-function loadExtendedDataResults(uri, settings, prevResult = emptyResult) {
-    return new Promise((resolve, reject) => {
-        ajax(uri, settings)
-            .then((r) => {
-                if (r.status === 204) {
-                    return {
-                        status: r.status,
-                        result: ''
-                    };
-                }
-
-                return r.json().then((result) => {
-                    return {
-                        status: r.status,
-                        result
-                    };
-                });
-            })
-            .then(({ status, result }) => {
-                const values = [
-                    ...get(prevResult, 'extendedTabularDataResult.values', []),
-                    ...get(result, 'extendedTabularDataResult.values', [])
-                ];
-
-                const warnings = [
-                    ...get(prevResult, 'extendedTabularDataResult.warnings', []),
-                    ...get(result, 'extendedTabularDataResult.warnings', [])
-                ];
-
-                const updatedResult = merge({}, prevResult, {
-                    extendedTabularDataResult: {
-                        values,
-                        warnings
-                    }
-                });
-
-                const nextUri = get(result, 'extendedTabularDataResult.paging.next');
-                if (nextUri) {
-                    resolve(loadExtendedDataResults(nextUri, settings, updatedResult));
-                } else {
-                    resolve({ status, result: updatedResult });
-                }
-            }, reject);
-    });
-}
-
-/**
- * Module for execution on experimental execution resource
- *
- * @class execution
- * @module execution
- */
-
-/**
- * For the given projectId it returns table structure with the given
- * elements in column headers.
- *
- * @method getData
- * @param {String} projectId - GD project identifier
- * @param {Array} columns - An array of attribute or metric identifiers.
- * @param {Object} executionConfiguration - Execution configuration - can contain for example
- *                 property "where" containing query-like filters
- *                 property "orderBy" contains array of sorted properties to order in form
- *                      [{column: 'identifier', direction: 'asc|desc'}]
- * @param {Object} settings - Supports additional settings accepted by the underlying
- *                             xhr.ajax() calls
- *
- * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
- */
-export function getData(projectId, columns, executionConfiguration = {}, settings = {}) {
-    const executedReport = {
-        isLoaded: false
-    };
-
-    // Create request and result structures
-    const request = {
-        execution: { columns }
-    };
-    // enrich configuration with supported properties such as
-    // where clause with query-like filters
-    ['where', 'orderBy', 'definitions'].forEach((property) => {
-        if (executionConfiguration[property]) {
-            request.execution[property] = executionConfiguration[property];
-        }
-    });
-
-    // Execute request
-    return post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
-        ...settings,
-        body: JSON.stringify(request)
-    })
-        .then(parseJSON)
-        .then((result) => {
-            executedReport.headers = wrapMeasureIndexesFromMappings(
-                get(executionConfiguration, 'metricMappings'), get(result, ['executionResult', 'headers'], []));
-
-            // Start polling on url returned in the executionResult for tabularData
-            return loadExtendedDataResults(result.executionResult.extendedTabularDataResult, settings);
-        })
-        .then((r) => {
-            const { result, status } = r;
-
-            return Object.assign({}, executedReport, {
-                rawData: get(result, 'extendedTabularDataResult.values', []),
-                warnings: get(result, 'extendedTabularDataResult.warnings', []),
-                isLoaded: true,
-                isEmpty: status === 204
-            });
-        });
-}
 
 const MAX_TITLE_LENGTH = 1000;
 
@@ -558,18 +440,6 @@ function getMetricFactory(measure, mdObj) {
     return factory;
 }
 
-function getAttributesMap(options, displayFormUris, projectId) {
-    const attributesMap = get(options, 'attributesMap', {});
-
-    const missingUris = getMissingUrisInAttributesMap(displayFormUris, attributesMap);
-    return loadAttributesMap(projectId, missingUris).then((result) => {
-        return {
-            ...attributesMap,
-            ...result
-        };
-    });
-}
-
 function getExecutionDefinitionsAndColumns(mdObj, options, attributesMap) {
     const measures = getMeasures(mdObj);
     let attributes = getAttributes(mdObj);
@@ -589,11 +459,141 @@ function getExecutionDefinitionsAndColumns(mdObj, options, attributesMap) {
     };
 }
 
-export const mdToExecutionDefinitionsAndColumns = (projectId, mdObj, options = {}) => {
-    const allDfUris = getAttributesDisplayForms(mdObj);
-    const attributesMapPromise = getAttributesMap(options, allDfUris, projectId);
+export function createModule(xhr, loadAttributesMap) {
+    function getAttributesMap(options, displayFormUris, projectId) {
+        const attributesMap = get(options, 'attributesMap', {});
 
-    return attributesMapPromise.then((attributesMap) => {
-        return getExecutionDefinitionsAndColumns(mdObj, options, attributesMap);
-    });
-};
+        const missingUris = getMissingUrisInAttributesMap(displayFormUris, attributesMap);
+        return loadAttributesMap(projectId, missingUris).then((result) => {
+            return {
+                ...attributesMap,
+                ...result
+            };
+        });
+    }
+
+    function mdToExecutionDefinitionsAndColumns(projectId, mdObj, options = {}) {
+        const allDfUris = getAttributesDisplayForms(mdObj);
+        const attributesMapPromise = getAttributesMap(options, allDfUris, projectId);
+
+        return attributesMapPromise.then((attributesMap) => {
+            return getExecutionDefinitionsAndColumns(mdObj, options, attributesMap);
+        });
+    }
+
+    function loadExtendedDataResults(uri, settings, prevResult = emptyResult) {
+        return new Promise((resolve, reject) => {
+            xhr.ajax(uri, settings)
+                .then((r) => {
+                    if (r.status === 204) {
+                        return {
+                            status: r.status,
+                            result: ''
+                        };
+                    }
+
+                    return r.json().then((result) => {
+                        return {
+                            status: r.status,
+                            result
+                        };
+                    });
+                })
+                .then(({ status, result }) => {
+                    const values = [
+                        ...get(prevResult, 'extendedTabularDataResult.values', []),
+                        ...get(result, 'extendedTabularDataResult.values', [])
+                    ];
+
+                    const warnings = [
+                        ...get(prevResult, 'extendedTabularDataResult.warnings', []),
+                        ...get(result, 'extendedTabularDataResult.warnings', [])
+                    ];
+
+                    const updatedResult = merge({}, prevResult, {
+                        extendedTabularDataResult: {
+                            values,
+                            warnings
+                        }
+                    });
+
+                    const nextUri = get(result, 'extendedTabularDataResult.paging.next');
+                    if (nextUri) {
+                        resolve(loadExtendedDataResults(nextUri, settings, updatedResult));
+                    } else {
+                        resolve({ status, result: updatedResult });
+                    }
+                }, reject);
+        });
+    }
+
+    /**
+     * Module for execution on experimental execution resource
+     *
+     * @class execution
+     * @module execution
+     */
+
+    /**
+     * For the given projectId it returns table structure with the given
+     * elements in column headers.
+     *
+     * @method getData
+     * @param {String} projectId - GD project identifier
+     * @param {Array} columns - An array of attribute or metric identifiers.
+     * @param {Object} executionConfiguration - Execution configuration - can contain for example
+     *                 property "where" containing query-like filters
+     *                 property "orderBy" contains array of sorted properties to order in form
+     *                      [{column: 'identifier', direction: 'asc|desc'}]
+     * @param {Object} settings - Supports additional settings accepted by the underlying
+     *                             xhr.ajax() calls
+     *
+     * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
+     */
+    function getData(projectId, columns, executionConfiguration = {}, settings = {}) {
+        const executedReport = {
+            isLoaded: false
+        };
+
+        // Create request and result structures
+        const request = {
+            execution: { columns }
+        };
+        // enrich configuration with supported properties such as
+        // where clause with query-like filters
+        ['where', 'orderBy', 'definitions'].forEach((property) => {
+            if (executionConfiguration[property]) {
+                request.execution[property] = executionConfiguration[property];
+            }
+        });
+
+        // Execute request
+        return xhr.post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
+            ...settings,
+            body: JSON.stringify(request)
+        })
+            .then(xhr.parseJSON)
+            .then((result) => {
+                executedReport.headers = wrapMeasureIndexesFromMappings(
+                    get(executionConfiguration, 'metricMappings'), get(result, ['executionResult', 'headers'], []));
+
+                // Start polling on url returned in the executionResult for tabularData
+                return loadExtendedDataResults(result.executionResult.extendedTabularDataResult, settings);
+            })
+            .then((r) => {
+                const { result, status } = r;
+
+                return Object.assign({}, executedReport, {
+                    rawData: get(result, 'extendedTabularDataResult.values', []),
+                    warnings: get(result, 'extendedTabularDataResult.warnings', []),
+                    isLoaded: true,
+                    isEmpty: status === 204
+                });
+            });
+    }
+
+    return {
+        getData,
+        mdToExecutionDefinitionsAndColumns
+    };
+}
