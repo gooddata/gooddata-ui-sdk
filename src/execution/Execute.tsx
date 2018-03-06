@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import * as GoodData from 'gooddata';
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
@@ -11,7 +11,7 @@ import { ExecutePropType, Requireable } from '../proptypes/Execute';
 
 export { Requireable };
 
-export type IDataTableFactory = (sdk: ISdk, projectId: string) => DataTable<Execution.IExecutionResponses>;
+export type IDataTableFactory = (projectId: string) => DataTable<Execution.IExecutionResponses>;
 
 export interface ILoadingStateProps {
     error?: object;
@@ -23,7 +23,6 @@ export interface IExecuteProps extends IEvents {
     resultSpec?: AFM.IResultSpec;
     projectId: string;
     children?: any;
-    sdk?: ISdk;
     dataTableFactory?: IDataTableFactory; // only for tests
 }
 
@@ -36,8 +35,8 @@ export interface IExecuteState {
     };
 }
 
-function dataTableFactory(sdk: ISdk, projectId: string): DataTable<Execution.IExecutionResponses> {
-    return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
+function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResponses> {
+    return new DataTable(new ExecuteAfmAdapter(GoodData, projectId));
 }
 
 export interface IExecuteChildrenProps {
@@ -59,8 +58,6 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
     private dataTable: DataTable<Execution.IExecutionResponses>;
 
-    private sdk: ISdk;
-
     public constructor(props: IExecuteProps) {
         super(props);
 
@@ -72,9 +69,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
         const { onError, onLoadingChanged } = props;
 
-        this.sdk = props.sdk || createSdk();
-
-        this.dataTable = props.dataTableFactory(this.sdk, props.projectId);
+        this.dataTable = props.dataTableFactory(props.projectId);
         this.dataTable.onData((result: Execution.IExecutionResponses) => {
             this.setState({
                 result,
@@ -110,9 +105,6 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     public componentWillReceiveProps(nextProps: IExecuteProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
-        }
         if (this.hasPropsChanged(nextProps, ['afm', 'resultSpec'])) {
             this.runExecution(nextProps);
         }

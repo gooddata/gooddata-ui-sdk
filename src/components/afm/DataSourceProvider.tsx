@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import * as GoodData from 'gooddata';
 import * as PropTypes from 'prop-types';
 
 import isEqual = require('lodash/isEqual');
@@ -11,14 +11,13 @@ import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-vi
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 
-export type IAdapterFactory = (sdk: ISdk, projectId: string) => IAdapter<Execution.IExecutionResponses>;
+export type IAdapterFactory = (sdk: typeof GoodData, projectId: string) => IAdapter<Execution.IExecutionResponses>;
 
 export interface IDataSourceProviderProps {
     afm: AFM.IAfm;
     projectId: string;
     resultSpec?: AFM.IResultSpec;
     adapterFactory?: IAdapterFactory;
-    sdk?: ISdk;
 
     [p: string]: any; // other params of inner componnent, just for pass through
 }
@@ -31,7 +30,7 @@ export interface IDataSourceProviderInjectedProps {
 export type IDataSourceInfoPromise = Promise<IDataSource>;
 export type IGenerateDefaultDimensionsFunction = (afm: AFM.IAfm) => AFM.IDimension[];
 
-function defaultAdapterFactory(sdk: ISdk, projectId: string): IAdapter<Execution.IExecutionResponses> {
+function defaultAdapterFactory(sdk: typeof GoodData, projectId: string): IAdapter<Execution.IExecutionResponses> {
     return new ExecuteAfmAdapter(sdk, projectId);
 }
 
@@ -63,7 +62,6 @@ export function dataSourceProvider<T>(
 
         private adapter: IAdapter<Execution.IExecutionResponses>;
         private subject: ISubject<IDataSourceInfoPromise>;
-        private sdk: ISdk;
 
         constructor(props: IDataSourceProviderProps) {
             super(props);
@@ -72,8 +70,6 @@ export function dataSourceProvider<T>(
                 dataSource: null,
                 resultSpec: null
             };
-
-            this.sdk = props.sdk || createSdk();
 
             this.subject = createSubject<IDataSource>((dataSource) => {
                 this.setState({
@@ -89,15 +85,10 @@ export function dataSourceProvider<T>(
         }
 
         public componentWillReceiveProps(nextProps: IDataSourceProviderProps) {
-            const { projectId, afm, resultSpec, sdk } = nextProps;
+            const { projectId, afm, resultSpec } = nextProps;
             if (projectId !== this.props.projectId) {
                 this.createAdapter(projectId);
             }
-
-            if (sdk && sdk !== this.sdk) {
-                this.sdk = sdk;
-            }
-
             if (
                 !isEqual(afm, this.props.afm)
                 || !isEqual(resultSpec, this.props.resultSpec)
@@ -134,7 +125,7 @@ export function dataSourceProvider<T>(
 
         private createAdapter(projectId: string) {
             const adapterFactory = this.props.adapterFactory || defaultAdapterFactory;
-            this.adapter = adapterFactory(this.sdk, projectId);
+            this.adapter = adapterFactory(GoodData, projectId);
         }
 
         private handleError(error: string) {

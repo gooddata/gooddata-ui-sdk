@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ISdk } from 'gooddata';
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
@@ -15,7 +14,6 @@ export { Requireable };
 export interface IKpiProps extends IEvents {
     measure: string;
     projectId: string;
-    sdk?: ISdk;
     filters?: AFM.FilterItem[];
     format?: string;
     ExecuteComponent?: React.ComponentType<IExecuteProps>;

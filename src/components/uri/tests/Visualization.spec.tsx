@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
-import { ISdk } from 'gooddata';
 import {
     Table,
     BaseChart,
@@ -16,7 +15,7 @@ import { ErrorStates } from '../../../constants/errorStates';
 import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
 import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
+import {VisualizationTypes} from '../../../constants/visualizationTypes';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -39,8 +38,7 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
-// tslint:disable-next-line:variable-name
-function fetchVisObject(_sdk: ISdk, uri: string): Promise<VisualizationObject.IVisualizationObject> {
+function fetchVisObject(uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
 
     if (!visObj) {
@@ -50,11 +48,7 @@ function fetchVisObject(_sdk: ISdk, uri: string): Promise<VisualizationObject.IV
     return Promise.resolve(visObj.visualizationObject);
 }
 
-function fetchVisualizationClass(
-    // tslint:disable-next-line:variable-name
-    _sdk: ISdk,
-    visualizationClassUri: string
-): Promise<VisualizationClass.IVisualizationClass> {
+function fetchVisualizationClass(visualizationClassUri: string): Promise<VisualizationClass.IVisualizationClass> {
     const visClass = visualizationClasses.find(vc => vc.visualizationClass.meta.uri === visualizationClassUri);
 
     if (!visClass) {
@@ -65,7 +59,7 @@ function fetchVisualizationClass(
 }
 
 // tslint:disable-next-line:variable-name
-function uriResolver(_sdk: ISdk, _projectId: string, uri: string, identifier: string): Promise<string> {
+function uriResolver(_projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
     }

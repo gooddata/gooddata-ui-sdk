@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import * as GoodData from 'gooddata';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import {
@@ -59,16 +59,15 @@ export type VisualizationEnvironment = 'none' | 'dashboards';
 
 export interface IVisualizationProps extends IEvents {
     projectId: string;
-    sdk?: ISdk;
     uri?: string;
     identifier?: string;
     locale?: string;
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
     drillableItems?: IDrillableItem[];
-    uriResolver?: (sdk: ISdk, projectId: string, uri?: string, identifier?: string) => Promise<string>;
-    fetchVisObject?: (sdk: ISdk, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
-    fetchVisualizationClass?: (sdk: ISdk, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
+    uriResolver?: (projectId: string, uri?: string, identifier?: string) => Promise<string>;
+    fetchVisObject?: (visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
+    fetchVisualizationClass?: (visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
     BaseChartComponent?: any;
     TableComponent?: any;
     HeadlineComponent?: any;
@@ -93,7 +92,7 @@ export interface IVisualizationExecInfo {
     totals: VisualizationObject.IVisualizationTotal[];
 }
 
-function uriResolver(sdk: ISdk, projectId: string, uri?: string, identifier?: string): Promise<string> {
+function uriResolver(projectId: string, uri?: string, identifier?: string): Promise<string> {
     if (uri) {
         return Promise.resolve(uri);
     }
@@ -102,19 +101,16 @@ function uriResolver(sdk: ISdk, projectId: string, uri?: string, identifier?: st
         return Promise.reject('Neither uri or identifier specified');
     }
 
-    return sdk.md.getObjectUri(projectId, identifier);
+    return GoodData.md.getObjectUri(projectId, identifier);
 }
 
-function fetchVisObject(sdk: ISdk, visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
-    return sdk.xhr.get<VisualizationObject.IVisualizationObjectResponse>(visualizationUri)
+function fetchVisObject(visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
+    return GoodData.xhr.get<VisualizationObject.IVisualizationObjectResponse>(visualizationUri)
         .then(response => response.visualizationObject);
 }
 
-function fetchVisualizationClass(
-    sdk: ISdk,
-    visualizationClassUri: string
-): Promise<VisualizationClass.IVisualizationClass> {
-    return sdk.xhr.get<VisualizationClass.IVisualizationClassWrapped>(visualizationClassUri)
+function fetchVisualizationClass(visualizationClassUri: string): Promise<VisualizationClass.IVisualizationClass> {
+    return GoodData.xhr.get<VisualizationClass.IVisualizationClassWrapped>(visualizationClassUri)
         .then(response => response.visualizationClass);
 }
 
@@ -144,8 +140,6 @@ export class VisualizationWrapped
 
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
-    private sdk: ISdk;
-
     constructor(props: IVisualizationProps & InjectedIntlProps) {
         super(props);
 
@@ -157,7 +151,6 @@ export class VisualizationWrapped
             error: null
         };
 
-        this.sdk = props.sdk || createSdk();
         this.visualizationUri = props.uri;
 
         this.subject = createSubject<IVisualizationExecInfo>(
@@ -181,7 +174,7 @@ export class VisualizationWrapped
     public componentDidMount() {
         const { projectId, uri, identifier, filters, intl } = this.props;
 
-        this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
+        this.adapter = new ExecuteAfmAdapter(GoodData, projectId);
         this.visualizationUri = uri;
 
         this.prepareDataSources(
@@ -205,9 +198,6 @@ export class VisualizationWrapped
     }
 
     public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
-        }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
         if (hasInvalidDatasource) {
@@ -309,19 +299,17 @@ export class VisualizationWrapped
         filters: AFM.FilterItem[] = [],
         intl: InjectedIntl
     ) {
-        const promise = this.props.uriResolver(this.sdk, projectId, this.visualizationUri, identifier)
+        const promise = this.props.uriResolver(projectId, this.visualizationUri, identifier)
             .then((visualizationUri: string) => {
                 // Cache uri for next execution
                 return this.visualizationUri = visualizationUri;
             })
             .then((visualizationUri: string) => {
-                return this.props.fetchVisObject(this.sdk, visualizationUri);
+                return this.props.fetchVisObject(visualizationUri);
             })
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
                 const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
-                return this.props.fetchVisualizationClass(
-                    this.sdk, visualizationClassUri
-                ).then((visualizationClass) => {
+                return this.props.fetchVisualizationClass(visualizationClassUri).then((visualizationClass) => {
                     const popSuffix = ` - ${intl.formatMessage({ id: 'previous_year' })}`;
 
                     const { afm, resultSpec } = toAfmResultSpec(fillPoPTitlesAndAliases(mdObject.content, popSuffix));
