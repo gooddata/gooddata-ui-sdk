@@ -29,7 +29,6 @@ storiesOf('AFM components - Table', module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
-                    maxHeight={223}
                 />
             </div>
         )

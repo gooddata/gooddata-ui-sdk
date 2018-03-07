@@ -74,9 +74,6 @@
   }, {
     "title": "Pie",
     "url": "local:pie"
-  }, {
-    "title": "Headline",
-    "url": "local:headline"
   }],
   "visualizationObjects": [
     {
@@ -145,19 +142,6 @@
           "localIdentifier": "a1",
           "displayForm": "attr.closed.year.df",
           "alias": "Date"
-        }]
-      }]
-    },
-    {
-      "identifier": "1004",
-      "title": "Headline",
-      "type": "local:headline",
-      "buckets": [{
-        "localIdentifier": "measures",
-        "items": [{
-          "localIdentifier": "1",
-          "identifier": "1",
-          "alias": "Amount"
         }]
       }]
     }

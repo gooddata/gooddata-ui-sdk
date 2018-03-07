@@ -1,37 +1,59 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
+
 import { delay } from '../../tests/utils';
-import { AFM } from '@gooddata/typings';
+
 import {
     TableTransformation,
     ResponsiveTable,
-    oneMeasureDataSource,
-    executionObjectWithTotalsDataSource,
-    IndigoTable
+    LoadingComponent,
+    ErrorComponent
 } from '../../tests/mocks';
 
 // Replace this with optional prop
 jest.mock('@gooddata/indigo-visualizations', () => ({
     TableTransformation,
-    ResponsiveTable,
-    Table: IndigoTable
+    ResponsiveTable
 }));
 
+import { IDataSource } from '../../../interfaces/DataSource';
 import { PureTable, ITableProps, ITableState } from '../PureTable';
-import { executionObjectWithTotals } from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { ErrorStates } from '../../../constants/errorStates';
+import {
+    oneMeasureResponse,
+    oneMeasureAfm,
+    tooLargeResponse,
+    executionObjectWithTotals,
+    responseWithTotals
+} from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { AFM } from '@gooddata/typings';
+import { IIndexedTotalItem } from '../../../interfaces/Totals';
 
-function getFakeSortItem(): AFM.SortItem {
-    return {
-        measureSortItem: {
-            direction: 'asc',
-            locators: [{
-                measureLocatorItem: {
-                    measureIdentifier: 'id'
-                }
-            }]
-        }
-    };
-}
+const oneMeasureDataSource: IDataSource = {
+    getData: () => Promise.resolve(oneMeasureResponse),
+    getAfm: () => oneMeasureAfm,
+    getFingerprint: () => JSON.stringify(oneMeasureResponse)
+};
+
+const executionObjectWithTotalsDataSource: IDataSource = {
+    getData: () => Promise.resolve(responseWithTotals),
+    getAfm: () => executionObjectWithTotals.execution.afm,
+    getFingerprint: () => JSON.stringify(responseWithTotals)
+};
+
+const tooLargeDataSource: IDataSource = {
+    getData: () => Promise.reject(tooLargeResponse),
+    getAfm: () => ({}),
+    getFingerprint: () => JSON.stringify(tooLargeDataSource)
+};
+const delayedTooLargeDataSource: IDataSource = {
+    // tslint:disable-next-line:variable-name
+    getData: () => (new Promise((_resolve, reject) => {
+        setTimeout(reject(tooLargeResponse), 20);
+    })),
+    getAfm: () => ({}),
+    getFingerprint: () => JSON.stringify(tooLargeDataSource)
+};
 
 describe('PureTable', () => {
     const createComponent = (props: ITableProps) => {
@@ -40,227 +62,221 @@ describe('PureTable', () => {
 
     const createProps = (customProps = {}): ITableProps => {
         return {
-            dataSource: oneMeasureDataSource,
-            resultSpec: {},
-            locale: 'en-US',
-            drillableItems: [],
-            afterRender: jest.fn(),
-            pushData: jest.fn(),
-            visualizationProperties: {},
             height: 200,
-            maxHeight: 400,
-            environment: 'none',
-            stickyHeaderOffset: 20,
-            totals: [],
-            totalsEditAllowed: true,
-            onTotalsEdit: jest.fn(),
-            onFiredDrillEvent: jest.fn(),
+            environment: 'dashboards',
+            dataSource: oneMeasureDataSource,
             ...customProps
         };
     };
 
-    it('should render TableTransformation and pass down given props and props from execution', () => {
+    it('should call trigger loading changed when sorting changed', () => {
+        const onLoadingChanged = jest.fn();
         const props = createProps({
-            environment: 'dashboards'
+            resultSpec: {},
+            onLoadingChanged
         });
         const wrapper = createComponent(props);
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            expect(renderedTableTransformation.props()).toMatchObject({
-                executionRequest: {
-                    afm: props.dataSource.getAfm(),
-                    resultSpec: props.resultSpec
-                },
-                executionResponse: expect.any(Object),
-                executionResult: expect.any(Object),
-                afterRender: props.afterRender,
-                drillableItems: props.drillableItems,
-                config: { stickyHeaderOffset: props.stickyHeaderOffset },
-                height: props.height,
-                maxHeight: props.maxHeight,
-                onFiredDrillEvent: props.onFiredDrillEvent,
-                totals: props.totals,
-                totalsEditAllowed: props.totalsEditAllowed,
-                lastAddedTotalType: ''
+            expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            const newProps = createProps({
+                resultSpec: {
+                    sorts: [{
+                        attributeSortItem: {
+                            direction: 'desc',
+                            attributeIdentifier: 'a1'
+                        }
+                    }]
+                }
+            });
+            wrapper.setProps(newProps);
+            return delay().then(() => {
+                expect(onLoadingChanged).toHaveBeenCalledTimes(4);
             });
         });
     });
 
-    it('should render TableTransformation with renderer ResponsiveTable for environment "dashboards"', () => {
+    it('should call trigger loading changed when totals changed', () => {
+        const onLoadingChanged = jest.fn();
+
+        const resultSpec: AFM.IResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1'],
+                    totals: [
+                        {
+                            measureIdentifier: 'm1',
+                            type: 'max',
+                            attributeIdentifier: 'a1'
+                        }
+                    ]
+                }
+            ]
+        };
+
         const props = createProps({
-            environment: 'dashboards'
+            resultSpec,
+            onLoadingChanged
         });
+
         const wrapper = createComponent(props);
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            expect(renderedTableTransformation.length).toBe(1);
-            expect(renderedTableTransformation.props().tableRenderer().type).toBe(ResponsiveTable);
-            const tableRendererProps = renderedTableTransformation.props().tableRenderer().props;
-            expect(tableRendererProps).toMatchObject({
-                page: 1,
-                rowsPerPage: 9,
-                totals: wrapper.props().totals
+            expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+
+            const newResultSpec: AFM.IResultSpec = {
+                dimensions: [
+                    {
+                        itemIdentifiers: ['a1'],
+                        totals: [
+                            {
+                                measureIdentifier: 'm1',
+                                type: 'max',
+                                attributeIdentifier: 'a1'
+                            },
+                            {
+                                measureIdentifier: 'm1',
+                                type: 'min',
+                                attributeIdentifier: 'a1'
+                            }
+                        ]
+                    }
+                ]
+            };
+            const newProps = createProps({ resultSpec: newResultSpec });
+            wrapper.setProps(newProps);
+            return delay().then(() => {
+                expect(onLoadingChanged).toHaveBeenCalledTimes(4);
             });
         });
     });
 
-    it('should render TableTransformation with renderer Table for default environment', () => {
-        const props = createProps();
+    it('should not call initDataLoading second time', () => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            dataSource: oneMeasureDataSource
+        });
         const wrapper = createComponent(props);
+        wrapper.setProps({
+            dataSource: oneMeasureDataSource
+        });
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            expect(renderedTableTransformation.length).toBe(1);
-            expect(renderedTableTransformation.props().tableRenderer().type).toBe(IndigoTable);
-            const tableRendererProps = renderedTableTransformation.props().tableRenderer().props;
-            expect(tableRendererProps).toMatchObject({
-                containerMaxHeight: wrapper.props().maxHeight
-            });
+            expect(wrapper.find('.gdc-indigo-responsive-table')).toBeDefined();
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
         });
     });
 
-    it('should call on error when TableTransformation fired onDataTooLarge', () => {
+    it('should render responsive table', () => {
         const onError = jest.fn();
         const props = createProps({
             onError,
             environment: 'dashboards'
         });
-
         const wrapper = createComponent(props);
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            onError.mockReset();
+            expect(wrapper.find('.gdc-indigo-responsive-table')).toBeDefined();
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            expect(wrapper.find(TableTransformation).prop('tableRenderer')).toBeDefined();
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith({ status: ErrorStates.OK });
+        });
+    });
 
-            renderedTableTransformation.props().onDataTooLarge();
+    it('should not render responsive table when result is not available', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
 
-            expect(onError).toHaveBeenCalledWith({
+        return delay().then(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ result: null }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when table is still loading', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ isLoading: true }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
+        });
+    });
+
+    it('should not render responsive table when error is set', () => {
+        const props = createProps();
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(1);
+            wrapper.setState({ error: ErrorStates.UNKNOWN_ERROR }, () => {
+                expect(wrapper.find(TableTransformation).length).toBe(0);
+            });
+        });
+    });
+
+    it('should call onError with DATA_TOO_LARGE', () => {
+        const onError = jest.fn();
+        const props = createProps({
+            onError,
+            dataSource: tooLargeDataSource
+        });
+        const wrapper = createComponent(props);
+
+        return delay().then(() => {
+            expect(wrapper.find(TableTransformation).length).toBe(0);
+            expect(onError).toHaveBeenCalledTimes(2);
+            expect(onError).toHaveBeenLastCalledWith({
+                status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
                 options: {
                     dateOptionsDisabled: false
-                },
-                status: 'DATA_TOO_LARGE_TO_DISPLAY'
-            });
-        });
-    });
-
-    it('should call pushData when ResponsiveTable renderer fired onSortChange', () => {
-        const pushDataSpy = jest.fn();
-        const props = createProps({
-            environment: 'dashboards',
-            pushData: pushDataSpy
-        });
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            pushDataSpy.mockReset();
-
-            const fakeSortItem: AFM.SortItem = getFakeSortItem();
-            renderedTableTransformation.props().tableRenderer().props.onSortChange(fakeSortItem);
-
-            expect(pushDataSpy).toHaveBeenCalledWith({
-                properties: {
-                    sortItems: [fakeSortItem]
                 }
             });
-            expect(pushDataSpy.mock.calls.length).toBe(1);
         });
     });
 
-    it('should call pushData when Indigo Table renderer fired onSortChange', () => {
-        const pushDataSpy = jest.fn();
+    it('should call pushData with execution result', () => {
+        const pushData = jest.fn();
         const props = createProps({
-            pushData: pushDataSpy
+            pushData
         });
-        const wrapper = createComponent(props);
+        createComponent(props);
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            pushDataSpy.mockReset();
-
-            const fakeSortItem: AFM.SortItem = getFakeSortItem();
-            renderedTableTransformation.props().tableRenderer().props.onSortChange(fakeSortItem);
-
-            expect(pushDataSpy).toHaveBeenCalledWith({
-                properties: {
-                    sortItems: [fakeSortItem]
+            expect(pushData).toHaveBeenCalledWith({
+                result: oneMeasureResponse,
+                options: {
+                    dateOptionsDisabled: false
                 }
             });
-            expect(pushDataSpy.mock.calls.length).toBe(1);
         });
     });
 
-    it('should call pushData with converted totals when TableTransformation fired onTotalsEdit', () => {
-        const pushDataSpy = jest.fn();
+    it('should trigger `onLoadingChanged`', () => {
+        const loadingHandler = jest.fn();
+
         const props = createProps({
-            pushData: pushDataSpy,
-            dataSource: executionObjectWithTotalsDataSource
+            onLoadingChanged: loadingHandler
         });
-        const wrapper = createComponent(props);
+
+        createComponent(props);
 
         return delay().then(() => {
-            const renderedTableTransformation = wrapper.find(TableTransformation);
-            pushDataSpy.mockReset();
-
-            renderedTableTransformation.props().onTotalsEdit([{
-                alias: 'aaa',
-                type: 'sum',
-                outputMeasureIndexes: [0]
-            }]);
-
-            expect(pushDataSpy).toHaveBeenCalledWith({
-                properties: {
-                    totals: [{
-                        alias: 'aaa',
-                        attributeIdentifier: 'a1',
-                        measureIdentifier: 'm1',
-                        type: 'sum'
-                    }]
-                }
-            });
-            expect(pushDataSpy.mock.calls.length).toBe(1);
+            expect(loadingHandler).toHaveBeenCalledTimes(2);
         });
     });
 
-    it('should rerender ResponsiveTable with new page value when ResponsiveTable renderer fired onMore', () => {
-        const props = createProps({ environment: 'dashboards' });
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const renderer = wrapper.find(TableTransformation).props().tableRenderer();
-            renderer.props.onMore({ page: 12 });
-
-            return delay().then(() => {
-                const renderer = wrapper.find(TableTransformation).props().tableRenderer();
-                expect(renderer.props.page).toBe(12);
-            });
-        });
-    });
-
-    it('should rerender ResponsiveTable with new page value when ResponsiveTable renderer fired onLess', () => {
-        const props = createProps({ environment: 'dashboards' });
-        const wrapper = createComponent(props);
-
-        return delay().then(() => {
-            const renderer = wrapper.find(TableTransformation).props().tableRenderer();
-            renderer.props.onMore({ page: 12 });
-
-            return delay().then(() => {
-                const newRenderer = wrapper.find(TableTransformation).props().tableRenderer();
-                expect(newRenderer.props.page).toBe(12);
-
-                renderer.props.onLess();
-                return delay().then(() => {
-                    const newestRenderer = wrapper.find(TableTransformation).props().tableRenderer();
-                    expect(newestRenderer.props.page).toBe(1);
-                });
-            });
-        });
-    });
-
-    it('should provide converted totals based on resultSpec to the TableTransformation', () => {
+    it('should provide totals based on resultSpec to the TableTransformation', () => {
         const props = createProps({
             dataSource: executionObjectWithTotalsDataSource,
             resultSpec: executionObjectWithTotals.execution.resultSpec
@@ -277,6 +293,87 @@ describe('PureTable', () => {
         });
     });
 
+    it('should call pushData with totals', () => {
+        const onTotalsEdit = jest.fn();
+        const pushData = jest.fn();
+        const props = createProps({
+            pushData,
+            onTotalsEdit,
+            dataSource: executionObjectWithTotalsDataSource
+        });
+        const wrapper = createComponent(props);
+        const totals: IIndexedTotalItem[] = [
+            {
+                type: 'sum',
+                outputMeasureIndexes: [0]
+            }
+        ];
+
+        return delay().then(() => {
+            expect(pushData).toHaveBeenCalledTimes(1);
+            expect(wrapper.find(TableTransformation).prop('onTotalsEdit')).toBeDefined();
+
+            const callback: any = wrapper.find(TableTransformation).prop('onTotalsEdit');
+            callback(totals);
+
+            expect(pushData).toHaveBeenCalledTimes(2);
+            expect(pushData).toHaveBeenCalledWith({
+                properties: {
+                    totals: [{
+                        type: 'sum',
+                        measureIdentifier: 'm1',
+                        attributeIdentifier: 'a1'
+                    }]
+                }
+            });
+        });
+    });
+
+    it('should display LoadingComponent during loading and pass props to it', () => {
+        const onError = jest.fn();
+        let onLoadingChanged;
+        const startedLoading = new Promise((resolve) => {
+            onLoadingChanged = resolve;
+        });
+        const dataSource = delayedTooLargeDataSource;
+        const props = createProps({
+            onError,
+            onLoadingChanged,
+            dataSource,
+            LoadingComponent
+        });
+        const wrapper = createComponent(props);
+        return startedLoading.then(() => {
+            expect(wrapper.find(LoadingComponent).length).toBe(1);
+            const LoadingElement = wrapper.find(LoadingComponent).get(0);
+            expect(LoadingElement.props.props.dataSource).toEqual(dataSource);
+        });
+    });
+
+    it('should display ErrorComponent on error and pass error and props to it', () => {
+        let onError;
+        const threwError = new Promise((resolve) => {
+            onError = (error: { status: string }) => {
+                if (error && error.status !== ErrorStates.OK) {
+                    resolve();
+                }
+            };
+        });
+        const dataSource = delayedTooLargeDataSource;
+        const props = createProps({
+            onError,
+            dataSource,
+            ErrorComponent
+        });
+        const wrapper = createComponent(props);
+        return threwError.then(() => {
+            expect(wrapper.find(ErrorComponent).length).toBe(1);
+            const ErrorElement = wrapper.find(ErrorComponent).get(0);
+            expect(ErrorElement.props.error.status).toBe(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
+            expect(ErrorElement.props.props.dataSource).toEqual(dataSource);
+        });
+    });
+
     describe('lastAddedTotalType', () => {
         const defaultProps = createProps({
             totals: [{
@@ -290,44 +387,44 @@ describe('PureTable', () => {
             }]
         });
 
-        it('should set correct "lastAddedTotalType" when component receives new props', () => {
+        it('should initialize \'lastAddedTotalType\' as empty string when component is mounted', () => {
             const wrapper = createComponent(defaultProps);
 
-            return delay().then(() => {
-                wrapper.setProps({
-                    totals: [{
-                        type: 'nat',
-                        measureIdentifier: '',
-                        attributeIdentifier: ''
-                    }]
-                });
-
-                return delay().then(() => {
-                    const renderedTableTransformation = wrapper.find(TableTransformation);
-                    expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('nat');
-                });
-            });
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('');
         });
 
-        it('should set "lastAddedTotalType" as empty when "onLastAddedTotalRowHighlightPeriodEnd" is called', () => {
+        it('should set correct \'lastAddedTotalType\' when component receives new props', () => {
             const wrapper = createComponent(defaultProps);
 
-            return delay().then(() => {
-                wrapper.setProps({
-                    totals: [{
-                        type: 'nat',
-                        measureIdentifier: '',
-                        attributeIdentifier: ''
-                    }]
-                });
+            wrapper.setProps({
+                totals: [{
+                    type: 'nat',
+                    measureIdentifier: '',
+                    attributeIdentifier: ''
+                }]
+            });
 
-                return delay().then(() => {
-                    const renderedTableTransformation = wrapper.find(TableTransformation);
-                    expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('nat');
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('nat');
+        });
 
-                    renderedTableTransformation.props().onLastAddedTotalRowHighlightPeriodEnd();
-                    expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('');
-                });
+        it('should set \'lastAddedTotalType\' as empty string when \'resetLastAddedTotalType\' is called', () => {
+            const wrapper = createComponent(defaultProps);
+
+            wrapper.setProps({
+                totals: [{
+                    type: 'nat',
+                    measureIdentifier: '',
+                    attributeIdentifier: ''
+                }]
+            });
+
+            expect(wrapper.instance().state.lastAddedTotalType).toEqual('nat');
+
+            const instance = wrapper.instance() as PureTable;
+            instance.resetLastAddedTotalType();
+
+            wrapper.setState({ isLoading: false }, () => {
+                expect(wrapper.instance().state.lastAddedTotalType).toEqual('');
             });
         });
     });
