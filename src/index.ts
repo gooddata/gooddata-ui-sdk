@@ -2,10 +2,8 @@ import * as AfmComponents from './components/afm/afmComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
 import { isEmptyResult } from './helpers/errorHandlers';
-import { BaseChart, ILegendConfig, IBaseChartProps } from './components/core/base/BaseChart';
+import { BaseChart, ILegendConfig } from './components/core/base/BaseChart';
 import { Table } from './components/core/Table';
-import { Headline } from './components/core/Headline';
-import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { Kpi } from './components/simple/Kpi';
 import { Visualization, VisualizationEnvironment } from './components/uri/Visualization';
 import { ErrorStates, ErrorCodes } from './constants/errorStates';
@@ -22,8 +20,7 @@ import * as PoPHelper from './helpers/popHelper';
 
 const CoreComponents = {
     Table,
-    BaseChart,
-    Headline
+    BaseChart
 };
 
 export {
@@ -40,8 +37,6 @@ export {
     generateDimensions,
     IDrillableItem,
     ILegendConfig,
-    IBaseChartProps,
-    ICommonVisualizationProps,
     isEmptyResult,
     IVisualizationProperties,
     Kpi,

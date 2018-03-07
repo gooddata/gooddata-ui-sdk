@@ -14,7 +14,6 @@ import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-in
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart, IChartConfig } from '../core/base/BaseChart';
 import { SortableTable } from '../core/SortableTable';
-import { Headline } from '../core/Headline';
 import { IEvents } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
@@ -70,7 +69,6 @@ export interface IVisualizationProps extends IEvents {
     fetchVisualizationClass?: (visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
     BaseChartComponent?: any;
     TableComponent?: any;
-    HeadlineComponent?: any;
     ErrorComponent?: React.ComponentClass<any>;
     LoadingComponent?: React.ComponentClass<any>;
 }
@@ -129,7 +127,6 @@ export class VisualizationWrapped
         fetchVisualizationClass,
         BaseChartComponent: BaseChart,
         TableComponent: SortableTable,
-        HeadlineComponent: Headline,
         LoadingComponent: null,
         ErrorComponent: null
     };
@@ -227,7 +224,6 @@ export class VisualizationWrapped
             config,
             BaseChartComponent,
             TableComponent,
-            HeadlineComponent,
             LoadingComponent,
             ErrorComponent
         } = this.props;
@@ -253,20 +249,6 @@ export class VisualizationWrapped
                         drillableItems={drillableItems}
                         onFiredDrillEvent={onFiredDrillEvent}
                         totals={totals}
-                        onError={onError}
-                        onLoadingChanged={onLoadingChanged}
-                        LoadingComponent={LoadingComponent}
-                        ErrorComponent={ErrorComponent}
-                        locale={locale}
-                    />
-                );
-            case VisualizationTypes.HEADLINE:
-                return (
-                    <HeadlineComponent
-                        dataSource={dataSource}
-                        resultSpec={resultSpec}
-                        drillableItems={drillableItems}
-                        onFiredDrillEvent={onFiredDrillEvent}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
                         LoadingComponent={LoadingComponent}
