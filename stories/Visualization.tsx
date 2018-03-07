@@ -198,6 +198,17 @@ storiesOf('Visualization', module)
             </div>
         )
     ))
+    .add('Headline', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1004'}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
     .add('dynamic visualization test', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

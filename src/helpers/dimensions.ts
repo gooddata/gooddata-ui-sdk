@@ -144,6 +144,12 @@ function getLineDimensions(mdObject: VisualizationObject.IVisualizationObjectCon
     ];
 }
 
+function getHeadlinesDimensions(): AFM.IDimension[] {
+    return [
+        { itemIdentifiers: ['measureGroup'] }
+    ];
+}
+
 // duplicates logic from pluggable visualizations. Remove once react components support pluggable visualizations
 export function generateDimensions(
     mdObject: VisualizationObject.IVisualizationObjectContent,
@@ -162,6 +168,9 @@ export function generateDimensions(
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
+        }
+        case VisualizationTypes.HEADLINE: {
+            return getHeadlinesDimensions();
         }
     }
     return [];
