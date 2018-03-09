@@ -3,7 +3,8 @@ import { mount } from 'enzyme';
 
 import { delay } from '../../tests/utils';
 import {
-    oneMeasureDataSource
+    oneMeasureOneDimensionDataSource,
+    twoMeasuresOneDimensionDataSource
 } from '../../tests/mocks';
 
 import { Headline } from '../Headline';
@@ -12,33 +13,65 @@ import { HeadlineTransformation } from '@gooddata/indigo-visualizations';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 describe('Headline', () => {
-    const createComponent = () => {
+    function createComponent(props: ICommonVisualizationProps & IDataSourceProviderInjectedProps) {
         return mount<Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps>>((
             <Headline
-                dataSource={oneMeasureDataSource}
+                {...props}
                 afterRender={jest.fn()}
                 drillableItems={[]}
-                resultSpec={{}}
+                resultSpec={{
+                    dimensions: [
+                        { itemIdentifiers: ['measureGroup'] }
+                    ]
+                }}
             />
         ));
-    };
+    }
 
-    it('should render HeadlineTransformation and pass down given props and props from execution', () => {
-        const wrapper = createComponent();
+    describe('one measure', () => {
+        it('should render HeadlineTransformation and pass down given props and props from execution', () => {
+            const wrapper = createComponent({
+                dataSource: oneMeasureOneDimensionDataSource
+            });
 
-        return delay().then(() => {
-            wrapper.update();
-            const renderdHeadlineTrans = wrapper.find(HeadlineTransformation);
-            const wrapperProps = wrapper.props();
-            expect(renderdHeadlineTrans.props()).toMatchObject({
-                executionRequest: {
-                    afm: wrapperProps.dataSource.getAfm(),
-                    resultSpec: wrapperProps.resultSpec
-                },
-                executionResponse: expect.any(Object),
-                executionResult: expect.any(Object),
-                onAfterRender: wrapperProps.afterRender,
-                drillableItems: wrapperProps.drillableItems
+            return delay().then(() => {
+                wrapper.update();
+                const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
+                const wrapperProps = wrapper.props();
+                expect(renderedHeadlineTrans.props()).toMatchObject({
+                    executionRequest: {
+                        afm: wrapperProps.dataSource.getAfm(),
+                        resultSpec: wrapperProps.resultSpec
+                    },
+                    executionResponse: expect.any(Object),
+                    executionResult: expect.any(Object),
+                    onAfterRender: wrapperProps.afterRender,
+                    drillableItems: wrapperProps.drillableItems
+                });
+            });
+        });
+    });
+
+    describe('two measures', () => {
+        it('should render HeadlineTransformation and pass down given props and props from execution', () => {
+            const wrapper = createComponent({
+                dataSource: twoMeasuresOneDimensionDataSource
+            });
+
+            return delay().then(() => {
+                wrapper.update();
+                const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
+                const wrapperProps = wrapper.props();
+                expect(renderedHeadlineTrans.props()).toMatchObject({
+                    executionRequest: {
+                        afm: wrapperProps.dataSource.getAfm(),
+                        resultSpec: wrapperProps.resultSpec
+                    },
+                    executionResponse: expect.any(Object),
+                    executionResult: expect.any(Object),
+                    onAfterRender: wrapperProps.afterRender,
+                    drillableItems: wrapperProps.drillableItems
+                });
             });
         });
     });

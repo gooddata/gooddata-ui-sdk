@@ -237,6 +237,21 @@ const oneMeasureAfm: AFM.IAfm = {
     ]
 };
 
+const twoMeasuresAfm: AFM.IAfm = {
+    measures: [
+        {
+            localIdentifier: '2nd_measure_local_identifier',
+            definition: {
+                measure: {
+                    item: {
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284'
+                    }
+                }
+            }
+        }
+    ]
+};
+
 const executionObjectWithTotals: AFM.IExecution = {
     execution: {
         afm: {
@@ -425,6 +440,120 @@ const oneMeasureResponse: Execution.IExecutionResponses = {
     }
 };
 
+const oneMeasureOneDimensionResponse: Execution.IExecutionResponses = {
+    executionResponse: {
+        executionResponse: {
+            dimensions: [
+                {
+                    headers: [
+                        {
+                            measureGroupHeader: {
+                                items: [
+                                    {
+                                        measureHeaderItem: {
+                                            name: 'Lost',
+                                            format: '$#,##0.00',
+                                            localIdentifier: '1st_measure_local_identifier',
+                                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                                            identifier: 'af2Ewj9Re2vK'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            links: {
+                executionResult: 'foo'
+            }
+        }
+    },
+    executionResult: {
+        executionResult: {
+            data: [
+                '42470571.16'
+            ],
+            paging: {
+                count: [
+                    1
+                ],
+                offset: [
+                    0
+                ],
+                total: [
+                    1
+                ]
+            },
+            headerItems: [
+                []
+            ]
+        }
+    }
+};
+
+const twoMeasuresOneDimensionResponse: Execution.IExecutionResponses = {
+    executionResponse: {
+        executionResponse: {
+            dimensions: [
+                {
+                    headers: [
+                        {
+                            measureGroupHeader: {
+                                items: [
+                                    {
+                                        measureHeaderItem: {
+                                            name: 'Lost',
+                                            format: '$#,##0.00',
+                                            localIdentifier: '1st_measure_local_identifier',
+                                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                                            identifier: 'af2Ewj9Re2vK'
+                                        }
+                                    },
+                                    {
+                                        measureHeaderItem: {
+                                            name: 'Lost',
+                                            format: '$#,##0.00',
+                                            localIdentifier: '2nd_measure_local_identifier',
+                                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
+                                            identifier: 'bgf2Ewj9Re2wL'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            links: {
+                executionResult: 'foo'
+            }
+        }
+    },
+    executionResult: {
+        executionResult: {
+            data: [
+                '42470571.16',
+                '12345678.90'
+            ],
+            paging: {
+                count: [
+                    2
+                ],
+                offset: [
+                    0
+                ],
+                total: [
+                    2
+                ]
+            },
+            headerItems: [
+                []
+            ]
+        }
+    }
+};
+
 export {
     emptyResponse,
     emptyResponseWithNull,
@@ -432,7 +561,10 @@ export {
     tooLargeResponse,
     oneMeasureResponse,
     oneMeasureAfm,
+    twoMeasuresAfm,
     executionObjectWithTotals,
     responseWithTotals,
-    badRequestResponse
+    badRequestResponse,
+    oneMeasureOneDimensionResponse,
+    twoMeasuresOneDimensionResponse
 };

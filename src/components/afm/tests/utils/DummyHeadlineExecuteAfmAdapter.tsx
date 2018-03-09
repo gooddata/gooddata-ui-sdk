@@ -2,9 +2,9 @@
 import { ISdk } from 'gooddata';
 import { DataSource, ExecuteAfmAdapter } from '@gooddata/data-layer';
 import { AFM, Execution } from '@gooddata/typings';
-import { executionResponses } from './dummyFixture';
+import { executionResponses } from './dummyHeadlineFixture';
 
-export class DummyExecuteAfmAdapter extends ExecuteAfmAdapter {
+export class DummyHeadlineExecuteAfmAdapter extends ExecuteAfmAdapter {
     public createDataSource(afm: AFM.IAfm,
                             fingerprint?: string): Promise<DataSource.IDataSource<Execution.IExecutionResponses>> {
         const execFactory = () => {
@@ -19,6 +19,6 @@ export class DummyExecuteAfmAdapter extends ExecuteAfmAdapter {
     }
 }
 
-export function dummyExecuteAfmAdapterFactory(sdk: ISdk, projectId: string) {
-    return new DummyExecuteAfmAdapter(sdk, projectId);
+export function dummyHeadlineExecuteAfmAdapterFactory(sdk: ISdk, projectId: string) {
+    return new DummyHeadlineExecuteAfmAdapter(sdk, projectId);
 }
