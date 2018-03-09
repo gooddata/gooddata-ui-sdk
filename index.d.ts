@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -372,6 +372,12 @@ export interface IProject {
     deleteProject(projectId: string): Promise<void>;
 }
 
+export interface IUtils {
+    loadAttributesMap(projectId: string, attributeDisplayFormUris: string[]): Promise<any>;
+
+    getAttributesDisplayForms(mdObject: VisualizationObject.IVisualizationObject): string[];
+}
+
 export interface IXhrSettings {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
     data?: any;
@@ -392,6 +398,7 @@ export interface ISdk {
     config: IConfig;
     md: IMetadata;
     user: IUser;
+    utils: IUtils;
 }
 
 export interface ISdkOptions {
