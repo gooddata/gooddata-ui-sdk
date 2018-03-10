@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@6.0.0-alpha5":
-  version "6.0.0-alpha5"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-6.0.0-alpha5.tgz#c551a96b7bf8719ada8ed795bcce28d131f2c419"
+"@gooddata/data-layer@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-6.0.0.tgz#239890e646da449356d064e212e5c7e294cd5c60"
   dependencies:
     json-stable-stringify "^1.0.1"
     lodash "^4.17.4"
@@ -36,9 +36,9 @@
     react-textarea-autosize "4.0.5"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@54.0.0-alpha2":
-  version "54.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-54.0.0-alpha2.tgz#88fd3d7672b5f00306f2c06a32cf6b44ebd2ab94"
+"@gooddata/goodstrap@54.0.0":
+  version "54.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-54.0.0.tgz#9c342f568433c25354dcb4f43573e78fe2ae2a3c"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
@@ -98,11 +98,11 @@
     moment "2.17.1"
     moment-timezone "0.5.11"
 
-"@gooddata/mock-js@1.0.0-alpha3":
-  version "1.0.0-alpha3"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.0.0-alpha3.tgz#022ba7f8663475126c00b62f3c1361b63856e1af"
+"@gooddata/mock-js@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.0.0.tgz#859b1ff7511e5ee97824dd9fdd2581eb6f3ed5cd"
   dependencies:
-    "@gooddata/typings" "1.0.0"
+    "@gooddata/typings" "1.0.1"
     "@types/seedrandom" "2.4.27"
     "@types/uuid" "3.4.3"
     body-parser "1.17.1"
@@ -135,9 +135,9 @@
     lodash "4.17.4"
     node-glob "1.2.0"
 
-"@gooddata/typings@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-1.0.0.tgz#3fb9abcfbefc15745d6a0236c924d0d93e490e14"
+"@gooddata/typings@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-1.0.1.tgz#ec39e13bfb5ba28ce0f5b558e1745ed9e566f897"
 
 "@storybook/addon-actions@3.2.18", "@storybook/addon-actions@^3.2.6":
   version "3.2.18"
@@ -3815,11 +3815,11 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@5.0.0-alpha4:
-  version "5.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0-alpha4.tgz#a655919f3eaad5a4f5d2be5ca4f3be35fbc2e721"
+gooddata@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-5.0.0.tgz#45a0e277c2b9867ebac537388c043f07852be8a2"
   dependencies:
-    "@gooddata/typings" "1.0.0"
+    "@gooddata/typings" "1.0.1"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
