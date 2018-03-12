@@ -1,5 +1,6 @@
 dist/
 ci/results/
+coverage/
 
 examples/gooddata.js
 node_modules/

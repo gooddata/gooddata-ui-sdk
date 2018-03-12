@@ -1,15 +1,17 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+import { cloneDeep } from 'lodash';
 import { createModule as xhrFactory } from './xhr';
 import { createModule as userFactory } from './user';
 import { createModule as metadataFactory } from './metadata';
 import { createModule as executionFactory } from './execution';
 import { createModule as projectFactory } from './project';
-import { createModule as configFactory } from './config';
+import { createModule as configFactory, sanitizeConfig } from './config';
 import { createModule as catalogueFactory } from './catalogue';
 import { createModule as adminFactory } from './admin';
 
 import { createModule as loadAttributesMapFactory } from './utils/attributesMapLoader';
 import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
+
 /**
  * # JS SDK
  * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
@@ -27,38 +29,39 @@ import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
  * @module sdk
  * @class sdk
  */
+class SDK {
+    constructor(config = {}) {
+        this.configStorage = sanitizeConfig(config); // must be plain object, SDK modules MUST use this storage
 
-function factory(options = {}) {
-    const config = configFactory();
-    if (options.domain) {
-        config.setCustomDomain(options.domain);
-    }
-    const xhr = xhrFactory(config);
-    const md = metadataFactory(xhr);
-    const execution = executionFactory(xhr, md);
-    return {
-        config,
-        xhr,
-        user: userFactory(xhr),
-        md,
-        execution,
-        project: projectFactory(xhr),
-        catalogue: catalogueFactory(xhr, execution),
-        admin: adminFactory(xhr),
-        utils: {
-            loadAttributesMap: loadAttributesMapFactory(md),
+        this.config = configFactory(this.configStorage);
+        this.xhr = xhrFactory(this.configStorage);
+        this.user = userFactory(this.xhr);
+        this.md = metadataFactory(this.xhr);
+        this.execution = executionFactory(this.xhr, this.md);
+        this.project = projectFactory(this.xhr);
+        this.catalogue = catalogueFactory(this.xhr, this.execution);
+        this.admin = adminFactory(this.xhr);
+        this.utils = {
+            loadAttributesMap: loadAttributesMapFactory(this.md),
             getAttributesDisplayForms
-        }
-    };
+        };
+    }
+
+    clone() {
+        return new SDK(cloneDeep(this.configStorage));
+    }
 }
 
-let defaultInstance; // eslint-disable-line import/no-mutable-exports
-if (!defaultInstance) {
-    defaultInstance = factory();
+/**
+ * # Factory for creating SDK instances
+ *
+ * @param {object|null} config object to be passed to SDK constructor
+ * @method setCustomDomain
+ */
+export function factory(config = {}) {
+    return new SDK(config);
 }
 
-export {
-    factory
-};
+const defaultInstance = factory();
 
 export default defaultInstance;

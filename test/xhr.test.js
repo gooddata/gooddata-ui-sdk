@@ -1,13 +1,32 @@
 // Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
 import fetchMock from './utils/fetch-mock';
 
-import { createModule as xhrFactory, handlePolling } from '../src/xhr';
+import { createModule as xhrFactory, handlePolling, originPackageHeaders } from '../src/xhr';
 import { createModule as configFactory } from '../src/config';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
+describe('originPackageHeaders', () => {
+    it('should get correct headers', () => {
+        const headers = originPackageHeaders({ name: 'package', version: '1.0.0' });
+        expect(headers).toEqual({ 'X-GDC-JS-PKG': 'package', 'X-GDC-JS-PKG-VERSION': '1.0.0' });
+    });
+});
+
+describe('createModule', () => {
+    it('should use configStorage', () => {
+        const configStorage = { xhrSettings: { headers: {} } };
+        const xhr = xhrFactory(configStorage);
+        xhr.ajaxSetup({ someSetting: 'Run, Forrest, run tests!' });
+
+        expect(configStorage).toEqual({ xhrSettings: { headers: {}, someSetting: 'Run, Forrest, run tests!' } });
+    });
+});
+
 
 describe('fetch', () => {
+    const configStorage = {};
+    const config = configFactory(configStorage);
+    const xhr = xhrFactory(configStorage);
+
     afterEach(() => {
         fetchMock.restore();
     });
@@ -53,6 +72,20 @@ describe('fetch', () => {
             expect(fetchMock.calls().matched[0][1].headers.Accept).toBe('application/json; charset=utf-8');
             expect(fetchMock.calls().matched[0][1].headers['X-GDC-REQUEST']).toBe('foo');
         });
+
+        it('should have set package or first set package', () => {
+            fetchMock.mock('/some/url', 200);
+            xhr.ajax('/some/url');
+            expect(fetchMock.calls().matched[0][1].headers['X-GDC-JS-PKG']).toBe('gooddata');
+
+            config.setJsPackage('@goodata/react-components', '2.0.0');
+            config.setJsPackage('@goodata/data-layer', '5.0.0');
+            expect(configStorage).toEqual({ originPackage: { name: '@goodata/react-components', version: '2.0.0' }, xhrSettings: {} });
+
+            xhr.ajax('/some/url');
+            expect(fetchMock.calls().matched[1][1].headers['X-GDC-JS-PKG']).toBe('@goodata/react-components');
+            expect(fetchMock.calls().matched[1][1].headers['X-GDC-JS-PKG-VERSION']).toBe('2.0.0');
+        });
     });
 
     describe('xhr.ajax unauthorized handling', () => {
@@ -62,7 +95,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length === 1) {
                     return 401;
                 }
-
                 return 200;
             })
                 .mock('/gdc/account/token', 200);
@@ -84,7 +116,6 @@ describe('fetch', () => {
                 if (fetchMock.calls('/some/url/1').length === 1) {
                     return 401;
                 }
-
                 return 200;
             };
 
@@ -106,13 +137,10 @@ describe('fetch', () => {
 
         it('should allow for custom setting', () => {
             jest.useFakeTimers();
-
             const handleRequest = jest.fn(() => Promise.resolve());
-
             const promise = handlePolling('/some/url', { pollDelay: () => 1000 }, handleRequest);
 
             jest.runTimersToTime(1000); // ms
-
             expect(handleRequest).toHaveBeenCalledTimes(1);
 
             return promise;
@@ -123,7 +151,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-
                 return { status: 200, body: 'Poll result' };
             });
 
@@ -165,7 +192,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-
                 return { status: 200, body: 'poll result' };
             });
 
@@ -180,7 +206,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-
                 return 404;
             });
 
@@ -197,7 +222,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-
                 return { status: 200, body: 'Poll result from other url' };
             });
 
@@ -235,7 +259,6 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-
                 return 404;
             });
 
@@ -285,9 +308,9 @@ describe('fetch', () => {
         });
 
         it('should not touch settings if no domain set', () => {
-            fetchMock.mock('/test1', 200);
             expect(() => config.setCustomDomain()).toThrow();
 
+            fetchMock.mock('/test1', 200);
             xhr.ajax('/test1');
 
             const [url, settings] = fetchMock.lastCall('/test1');
@@ -325,13 +348,14 @@ describe('fetch', () => {
         it('should call beforeSend with settings and url', () => {
             const url = '/some/url';
 
-            fetchMock.mock(url, { status: 200 });
             const beforeSendStub = jest.fn();
             xhr.ajaxSetup({
                 beforeSend: beforeSendStub
             });
 
+            fetchMock.mock(url, { status: 200 });
             xhr.ajax(url);
+
             expect(beforeSendStub.mock.calls[0][1]).toEqual(url);
         });
     });

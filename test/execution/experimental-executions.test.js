@@ -8,10 +8,9 @@ import { createModule as exFactory } from '../../src/execution/experimental-exec
 import { createModule as attributesMapLoaderFactory } from '../../src/utils/attributesMapLoader';
 import { createModule as xhrFactory } from '../../src/xhr';
 import { createModule as mdFactory } from '../../src/metadata';
-import { createModule as configFactory } from '../../src/config';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
+const configStorage = {};
+const xhr = xhrFactory(configStorage);
 const md = mdFactory(xhr);
 const attributesMapLoader = attributesMapLoaderFactory(md);
 const ex = exFactory(xhr, attributesMapLoader);
