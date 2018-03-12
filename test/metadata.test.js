@@ -4,11 +4,10 @@ import fetchMock from './utils/fetch-mock';
 import { mockPollingRequest } from './helpers/polling';
 import { createModule as mdFactory } from '../src/metadata';
 import { createModule as xhrFactory } from '../src/xhr';
-import { createModule as configFactory } from '../src/config';
 import * as fixtures from './fixtures/metadata';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
+const configStorage = {};
+const xhr = xhrFactory(configStorage);
 const md = mdFactory(xhr);
 
 describe('metadata', () => {

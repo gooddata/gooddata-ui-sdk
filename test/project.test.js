@@ -3,10 +3,9 @@ import fetchMock from './utils/fetch-mock';
 import { mockPollingRequest } from './helpers/polling';
 import { createModule as projectFactory } from '../src/project';
 import { createModule as xhrFactory } from '../src/xhr';
-import { createModule as configFactory } from '../src/config';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
+const configStorage = {};
+const xhr = xhrFactory(configStorage);
 const project = projectFactory(xhr);
 
 describe('project', () => {

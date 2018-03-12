@@ -1,5 +1,5 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-import { getIn, queryString } from '../src/util';
+import { getIn, queryString, thisPackage } from '../src/util';
 
 describe('util', () => {
     const testObj = {
@@ -34,6 +34,14 @@ describe('util', () => {
 
         it('should handle object with arrays', () => {
             expect(queryString({ ar: [1, 2, 'x'], b: false })).toBe('?ar=1&ar=2&ar=x&b=false');
+        });
+    });
+
+    describe('thisPackage', () => {
+        it('should equal to current package name and version', () => {
+            const pkgJson = require('../package.json');
+
+            expect(thisPackage).toEqual({ name: pkgJson.name, version: pkgJson.version });
         });
     });
 });

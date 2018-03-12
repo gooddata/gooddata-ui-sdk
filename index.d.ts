@@ -121,6 +121,16 @@ export interface IMetadata {
 
 export interface IConfig {
     setCustomDomain(d: string): void;
+
+    getCustomDomain(): string;
+
+    setJsPackage(name: string, version: string): void;
+
+    getJsPackage(): { name: string, version: string };
+
+    setRequestHeader(key: string, value: string): void;
+
+    getRequestHeader(key: string): string;
 }
 
 export interface ILoadCatalogOptions {
@@ -378,9 +388,14 @@ export interface IUtils {
     getAttributesDisplayForms(mdObject: VisualizationObject.IVisualizationObject): string[];
 }
 
+export interface IXhrMockInBeforeSend {
+    setRequestHeader(key: string, value: string): void;
+}
+
 export interface IXhrSettings {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
     data?: any;
+    beforeSend?(xhr: IXhrMockInBeforeSend, url: string): void;
 }
 
 export interface IXhr {
@@ -388,9 +403,10 @@ export interface IXhr {
     post<T>(uri: string, settings?: IXhrSettings): Promise<T>;
     put<T>(uri: string, settings?: IXhrSettings): Promise<T>;
     ajax<T>(uri: string, settings?: IXhrSettings): Promise<T>;
+    ajaxSetup(settings: IXhrSettings): void;
 }
 
-export interface ISdk {
+export interface ISdk { // TODO extends Clonable?
     xhr: IXhr;
     project: IProject;
     execution: IExecution;
@@ -398,6 +414,7 @@ export interface ISdk {
     config: IConfig;
     md: IMetadata;
     user: IUser;
+    clone(): ISdk;
     utils: IUtils;
 }
 

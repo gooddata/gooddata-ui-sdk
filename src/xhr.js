@@ -3,11 +3,13 @@ import {
     isPlainObject,
     isFunction,
     has,
-    set,
+    set as _set,
+    defaults,
     merge,
     result
 } from 'lodash';
 
+import { thisPackage } from './util';
 import fetch from './utils/fetch';
 
 /**
@@ -25,14 +27,14 @@ import fetch from './utils/fetch';
 const DEFAULT_POLL_DELAY = 1000;
 
 function simulateBeforeSend(settings, url) {
-    const xhr = {
+    const xhrMockInBeforeSend = {
         setRequestHeader(key, value) {
-            set(settings, ['headers', key], value);
+            _set(settings, ['headers', key], value);
         }
     };
 
     if (isFunction(settings.beforeSend)) {
-        settings.beforeSend(xhr, url);
+        settings.beforeSend(xhrMockInBeforeSend, url);
     }
 }
 
@@ -89,19 +91,26 @@ export function handlePolling(url, settings, sendRequest) {
     });
 }
 
-export function createModule(config) {
-    let commonXhrSettings = {};
-    let tokenRequest;
+export const originPackageHeaders = ({ name, version }) => ({
+    'X-GDC-JS-PKG': name,
+    'X-GDC-JS-PKG-VERSION': version
+});
 
-    function createSettings(customSettings) {
+export function createModule(configStorage) {
+    let tokenRequest; // TODO make app-wide persitent (ie. extract outside of the SDK)
+
+    defaults(configStorage, { xhrSettings: {} });
+
+    function createRequestSettings(customSettings) {
         const settings = merge(
             {
                 headers: {
                     Accept: 'application/json; charset=utf-8',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    ...originPackageHeaders(configStorage.originPackage || thisPackage)
                 }
             },
-            commonXhrSettings,
+            configStorage.xhrSettings,
             customSettings
         );
 
@@ -118,6 +127,7 @@ export function createModule(config) {
 
         return settings;
     }
+
     /**
      * Back compatible method for setting common XHR settings
      *
@@ -126,7 +136,7 @@ export function createModule(config) {
      * @param settings object XHR settings as
      */
     function ajaxSetup(settings) {
-        commonXhrSettings = Object.assign({}, commonXhrSettings, settings);
+        Object.assign(configStorage.xhrSettings, settings);
     }
 
     function continueAfterTokenRequest(url, settings) {
@@ -149,7 +159,7 @@ export function createModule(config) {
         if (!tokenRequest) {
             // Create only single token request for any number of waiting request.
             // If token request exist, just listen for it's end.
-            const { url, settings } = enrichSettingWithCustomDomain('/gdc/account/token', createSettings({}), config.getDomain());
+            const { url, settings } = enrichSettingWithCustomDomain('/gdc/account/token', createRequestSettings({}), configStorage.domain);
 
             tokenRequest = fetch(url, settings).then((response) => {
                 // tokenRequest = null;
@@ -172,11 +182,12 @@ export function createModule(config) {
         return continueAfterTokenRequest(originalUrl, originalSettings);
     }
 
-    function ajax(originalUrl, tempSettings = {}) {
-        const firstSettings = createSettings(tempSettings);
-        const { url, settings } = enrichSettingWithCustomDomain(originalUrl, firstSettings, config.getDomain());
+    function ajax(originalUrl, customSettings = {}) {
+        // TODO refactor to: getRequestParams(originalUrl, customSettings);
+        const firstSettings = createRequestSettings(customSettings);
+        const { url, settings } = enrichSettingWithCustomDomain(originalUrl, firstSettings, configStorage.domain);
 
-        simulateBeforeSend(settings, url);
+        simulateBeforeSend(settings, url); // mutates `settings` param
 
         if (tokenRequest) {
             return continueAfterTokenRequest(url, settings);

@@ -2,10 +2,9 @@
 import fetchMock from '../utils/fetch-mock';
 import { createModule as domainDataproductsFactory } from '../../src/admin/domainDataProducts';
 import { createModule as xhrFactory } from '../../src/xhr';
-import { createModule as configFactory } from '../../src/config';
 
-const config = configFactory();
-const xhr = xhrFactory(config);
+const configStorage = {};
+const xhr = xhrFactory(configStorage);
 const domainDataproducts = domainDataproductsFactory(xhr);
 
 describe('domainDataProducts', () => {

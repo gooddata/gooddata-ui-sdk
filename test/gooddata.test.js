@@ -43,12 +43,24 @@ describe('factory', () => {
         });
     });
 
+    it('should create clone()', () => {
+        const sdk1 = factory();
+        sdk1.config.setCustomDomain('beddata.com');
+
+        const sdk2 = sdk1.clone();
+        expect(sdk2.config.getCustomDomain()).toEqual('https://beddata.com');
+
+        sdk2.config.setCustomDomain('chairdata.com');
+        expect(sdk1.config.getCustomDomain()).toEqual('https://beddata.com');
+        expect(sdk2.config.getCustomDomain()).toEqual('https://chairdata.com');
+    });
+
     it('should create instances with custom domains', () => {
         const sdkStg3 = factory({ domain: 'staging3.intgdc.com' });
         const sdkStg2 = factory({ domain: 'staging2.intgdc.com' });
 
-        expect(sdkStg3.config.getDomain()).toEqual('https://staging3.intgdc.com');
-        expect(sdkStg2.config.getDomain()).toEqual('https://staging2.intgdc.com');
+        expect(sdkStg3.config.getCustomDomain()).toEqual('https://staging3.intgdc.com');
+        expect(sdkStg2.config.getCustomDomain()).toEqual('https://staging2.intgdc.com');
         fetchMock.mock('https://staging3.intgdc.com/some/url', { status: 200, body: 'hello from stg3' });
         fetchMock.mock('https://staging2.intgdc.com/some/url', { status: 200, body: 'hello from stg2' });
 
