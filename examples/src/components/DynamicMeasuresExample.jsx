@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
 import { AfmComponents } from '@gooddata/react-components';
-import * as GD from 'gooddata';
+import sdk from 'gooddata';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -29,7 +29,7 @@ export class DynamicMeasuresExample extends Component {
     }
 
     componentWillMount() {
-        GD.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`).then(
+        sdk.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`).then(
             (response) => {
                 if (!response.entries.length) {
                     return this.setState({

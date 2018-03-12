@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as GD from 'gooddata';
+import sdk from 'gooddata';
 
 import {
     BrowserRouter as Router,
@@ -43,7 +43,7 @@ export class App extends React.Component {
     }
 
     isUserLoggedIn() {
-        GD.user.isLoggedIn()
+        sdk.user.isLoggedIn()
             .then((isLoggedIn) => {
                 this.setState({ isLoggedIn, errorMessage: null });
             })
@@ -53,7 +53,7 @@ export class App extends React.Component {
     }
 
     logout() {
-        GD.user.logout().then(() => {
+        sdk.user.logout().then(() => {
             this.setState({
                 isLoggedIn: false
             });
