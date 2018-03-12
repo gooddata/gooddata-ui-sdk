@@ -1,4 +1,5 @@
-import { getObjectIdFromUri } from '../utils';
+import { getObjectIdFromUri, setTelemetryHeaders } from '../utils';
+import { factory as createSdk } from 'gooddata';
 
 describe('getObjectIdFromUri', () => {
     it('should extract object id from uris', () => {
@@ -9,5 +10,20 @@ describe('getObjectIdFromUri', () => {
 
     it('should return null if it cannot find the uri', () => {
         expect(getObjectIdFromUri('/uri/without/objectId')).toBe(null);
+    });
+});
+
+describe('setTelemetryHeaders', () => {
+    it('should set telemetry headers', () => {
+        const sdk = createSdk();
+        setTelemetryHeaders(sdk, 'componentName', { prop: 'value' });
+
+        expect(sdk.config.getJsPackage()).toMatchObject({
+            name: '@gooddata/react-components',
+            version: expect.any(String)
+        });
+
+        expect(sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP')).toEqual('componentName');
+        expect(sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP-PROPS')).toEqual('prop');
     });
 });

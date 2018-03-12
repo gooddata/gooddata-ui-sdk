@@ -12,11 +12,18 @@ import { delay } from '../../../tests/utils';
 
 describe('AttributeElements', () => {
     function createProps(customProps = {}) {
+        const sdk = {
+            md: createMetadataMock(),
+            clone: () => sdk,
+            config: {
+                setJsPackage: () => false,
+                setRequestHeader: () => false
+            }
+        };
+
         return {
             projectId: '1',
-            sdk: {
-                md: createMetadataMock()
-            },
+            sdk,
             options: { limit: 1 },
             uri: ATTRIBUTE_DISPLAY_FORM_URI,
             children: jest.fn().mockReturnValue(<div />),

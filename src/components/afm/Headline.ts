@@ -16,4 +16,4 @@ function generateDefaultDimensions(): AFM.IDimension[] {
     ];
 }
 
-export const Headline = dataSourceProvider(CoreHeadline, generateDefaultDimensions);
+export const Headline = dataSourceProvider(CoreHeadline, generateDefaultDimensions, 'CoreHeadline');

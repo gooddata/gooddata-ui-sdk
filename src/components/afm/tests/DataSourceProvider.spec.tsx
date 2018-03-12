@@ -23,7 +23,7 @@ describe('DataSourceProvider', () => {
         component: any,
         props: IDataSourceProviderProps = defaultProps
     ) {
-        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions);
+        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, 'DummyNameInMocks');
 
         return mount(
             <WrappedComponent {...props} />
@@ -139,12 +139,38 @@ describe('DataSourceProvider', () => {
 
     it('should provide modified resultSpec to InnerComponent', () => {
         const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
-        const WrappedTable = dataSourceProvider(Table, defaultDimension);
+        const WrappedTable = dataSourceProvider(Table, defaultDimension, 'DummyNameInMocks');
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
         return delay().then(() => {
             wrapper.update();
             expect(wrapper.find(Table).props().resultSpec.dimensions).toEqual(defaultDimension());
         });
+    });
+
+    it('should use componentName in telemetry', () => {
+        const sdk: any = {
+            clone: jest.fn(() => sdk),
+            config: {
+                setJsPackage: jest.fn(),
+                setRequestHeader: jest.fn()
+            }
+        };
+        const defaultProps = {
+            afm: {},
+            projectId: 'projid',
+            resultSpec: {},
+            sdk
+        };
+        const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
+        const WrappedTable = dataSourceProvider(Table, defaultDimension, 'DummyNameInMocks');
+        mount(<WrappedTable {...defaultProps} />);
+
+        expect(sdk.clone).toHaveBeenCalledTimes(2);
+        expect(sdk.config.setJsPackage.mock.calls[0][0]).toEqual('@gooddata/react-components');
+        expect(sdk.config.setJsPackage.mock.calls[1][0]).toEqual('@gooddata/data-layer');
+        expect(sdk.config.setRequestHeader.mock.calls[0]).toEqual(['X-GDC-JS-SDK-COMP', 'DummyNameInMocks']);
+        expect(sdk.config.setRequestHeader.mock.calls[1])
+            .toEqual(['X-GDC-JS-SDK-COMP-PROPS', 'afm,projectId,resultSpec,sdk']);
     });
 });

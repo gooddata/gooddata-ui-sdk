@@ -22,4 +22,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const LineChart = dataSourceProvider<ICommonChartProps>(CoreLineChart, generateDefaultDimensions);
+export const LineChart = dataSourceProvider<ICommonChartProps>(CoreLineChart, generateDefaultDimensions, 'LineChart');
