@@ -34,6 +34,7 @@ describe('DataSourceProvider', () => {
         const wrapper = createComponent(Table);
 
         return delay().then(() => {
+            wrapper.update();
             const table = wrapper.find(Table);
             expect(table.length).toEqual(1);
 
@@ -50,11 +51,14 @@ describe('DataSourceProvider', () => {
             resultSpec: {}
         };
         return delay().then(() => {
+            wrapper.update();
             const table = wrapper.find(Table);
             const tableProps: IDataSourceProviderInjectedProps = table.props();
             const oldDataSource = tableProps.dataSource;
             wrapper.setProps(newProps);
             return delay().then(() => {
+                wrapper.update();
+                const table = wrapper.find(Table);
                 const tableProps = table.props() as IDataSourceProviderInjectedProps;
                 expect(table.length).toEqual(1);
                 expect(tableProps.dataSource).not.toBe(oldDataSource);
@@ -72,11 +76,14 @@ describe('DataSourceProvider', () => {
         };
 
         return delay().then(() => {
+            wrapper.update();
             const table = wrapper.find(Table);
             const tableProps: IDataSourceProviderInjectedProps = table.props();
             const oldDataSource = tableProps.dataSource;
             wrapper.setProps(newProps);
             return delay().then(() => {
+                wrapper.update();
+                const table = wrapper.find(Table);
                 const tableProps: IDataSourceProviderInjectedProps = table.props();
                 expect(table.length).toEqual(1);
                 expect(tableProps.dataSource).not.toBe(oldDataSource);
@@ -106,10 +113,12 @@ describe('DataSourceProvider', () => {
         };
 
         return delay().then(() => {
-            const node: any = wrapper.getNode();
-            const prepareDataSourceSpy = jest.spyOn(node, 'prepareDataSource');
+            wrapper.update();
+            const instance: any = wrapper.instance();
+            const prepareDataSourceSpy = jest.spyOn(instance, 'prepareDataSource');
             wrapper.setProps(newProps);
             return delay().then(() => {
+                wrapper.update();
                 expect(prepareDataSourceSpy).toHaveBeenCalledTimes(1);
             });
         });
@@ -119,8 +128,10 @@ describe('DataSourceProvider', () => {
         const wrapper = createComponent(Table);
 
         return delay().then(() => {
+            wrapper.update();
             wrapper.setState({ dataSource: null });
             return delay().then(() => {
+                wrapper.update();
                 expect(wrapper.find(Table).length).toEqual(0);
             });
         });
@@ -132,6 +143,7 @@ describe('DataSourceProvider', () => {
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
         return delay().then(() => {
+            wrapper.update();
             expect(wrapper.find(Table).props().resultSpec.dimensions).toEqual(defaultDimension());
         });
     });

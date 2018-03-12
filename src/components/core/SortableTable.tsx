@@ -20,8 +20,8 @@ export class SortableTable extends React.Component<ITableProps, ISortableTableSt
         pushData: noop
     };
 
-    constructor() {
-        super();
+    constructor(props: ITableProps) {
+        super(props);
 
         this.state = {
             sortItems: []

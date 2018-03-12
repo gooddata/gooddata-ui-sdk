@@ -38,6 +38,7 @@ describe('BaseChart', () => {
         const wrapper = createComponent(props);
 
         return delay().then(() => {
+            wrapper.update();
             const visualization = wrapper.find(Visualization);
 
             expect(visualization.length).toBe(1);

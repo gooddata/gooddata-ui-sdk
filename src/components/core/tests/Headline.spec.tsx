@@ -26,6 +26,7 @@ describe('Headline', () => {
         const wrapper = createComponent();
 
         return delay().then(() => {
+            wrapper.update();
             const renderdHeadlineTrans = wrapper.find(HeadlineTransformation);
             const wrapperProps = wrapper.props();
             expect(renderdHeadlineTrans.props()).toMatchObject({

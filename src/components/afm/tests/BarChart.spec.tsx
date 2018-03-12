@@ -25,6 +25,7 @@ describe('BarChart', () => {
             />);
 
         return delay().then(() => {
+            wrapper.update();
             const dimensions = wrapper.find(CoreBarChart).props().resultSpec.dimensions;
             expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: ['a1'] } ]);
         });

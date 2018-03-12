@@ -114,6 +114,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
     });
@@ -165,6 +166,7 @@ describe('VisualizationWrapped', () => {
         ];
 
         return delay(SLOW).then(() => {
+            wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
             expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
             expect(wrapper.state('dataSource')).not.toBeNull();
@@ -187,6 +189,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
     });
@@ -225,6 +228,7 @@ describe('VisualizationWrapped', () => {
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
         });
     });
@@ -248,6 +252,7 @@ describe('VisualizationWrapped', () => {
         // Would throw an error if not handled properly
         wrapper.unmount();
         return delay(FAST + 1).then(() => {
+            wrapper.update();
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
         });
@@ -270,6 +275,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
             const TableElement = wrapper.find(Table).get(0);
             expect(TableElement.props.LoadingComponent).toBe(LoadingComponent);
@@ -294,6 +300,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
             const BaseChartElement = wrapper.find(BaseChart).get(0);
             expect(BaseChartElement.props.LoadingComponent).toBe(LoadingComponent);
