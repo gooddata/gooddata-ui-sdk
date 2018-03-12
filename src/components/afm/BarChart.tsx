@@ -25,4 +25,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const BarChart = dataSourceProvider<ICommonChartProps>(CoreBarChart, generateDefaultDimensions);
+export const BarChart = dataSourceProvider<ICommonChartProps>(CoreBarChart, generateDefaultDimensions, 'BarChart');

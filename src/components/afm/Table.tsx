@@ -21,4 +21,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions);
+export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions, 'Table');

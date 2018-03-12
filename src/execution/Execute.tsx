@@ -8,6 +8,7 @@ import { DataTable, ExecuteAfmAdapter, ErrorCodes } from '@gooddata/data-layer';
 import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
 import { ExecutePropType, Requireable } from '../proptypes/Execute';
+import { setTelemetryHeaders } from '../helpers/utils';
 
 export { Requireable };
 
@@ -72,7 +73,9 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
         const { onError, onLoadingChanged } = props;
 
-        this.sdk = props.sdk || createSdk();
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'Execute', props);
 
         this.dataTable = props.dataTableFactory(this.sdk, props.projectId);
         this.dataTable.onData((result: Execution.IExecutionResponses) => {
@@ -111,7 +114,8 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
     public componentWillReceiveProps(nextProps: IExecuteProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'Execute', nextProps);
         }
         if (this.hasPropsChanged(nextProps, ['afm', 'resultSpec'])) {
             this.runExecution(nextProps);

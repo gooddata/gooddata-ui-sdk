@@ -10,6 +10,7 @@ import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-vi
 
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
+import { setTelemetryHeaders } from '../../helpers/utils';
 
 export type IAdapterFactory = (sdk: ISdk, projectId: string) => IAdapter<Execution.IExecutionResponses>;
 
@@ -49,7 +50,8 @@ function addDefaultDimensions(
 
 export function dataSourceProvider<T>(
     InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>,
-    generateDefaultDimensions: IGenerateDefaultDimensionsFunction
+    generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
+    componentName: string
 ): React.ComponentClass<IDataSourceProviderProps> {
 
     return class WrappedComponent
@@ -73,7 +75,9 @@ export function dataSourceProvider<T>(
                 resultSpec: null
             };
 
-            this.sdk = props.sdk || createSdk();
+            const sdk = props.sdk || createSdk();
+            this.sdk = sdk.clone();
+            setTelemetryHeaders(this.sdk, componentName, props);
 
             this.subject = createSubject<IDataSource>((dataSource) => {
                 this.setState({
@@ -95,7 +99,8 @@ export function dataSourceProvider<T>(
             }
 
             if (sdk && sdk !== this.sdk) {
-                this.sdk = sdk;
+                this.sdk = nextProps.sdk.clone();
+                setTelemetryHeaders(this.sdk, componentName, nextProps);
             }
 
             if (

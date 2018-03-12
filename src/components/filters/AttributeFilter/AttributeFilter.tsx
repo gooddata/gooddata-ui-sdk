@@ -8,6 +8,7 @@ import { injectIntl } from 'react-intl';
 import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from './AttributeDropdown';
 import { AttributeLoader } from './AttributeLoader';
 import { IAttributeDisplayForm } from './model';
+import { setTelemetryHeaders } from '../../../helpers/utils';
 
 export interface IAttributeFilterProps {
     sdk?: ISdk;
@@ -65,12 +66,15 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
     constructor(props: IAttributeFilterProps) {
         super(props);
 
-        this.sdk = props.sdk || createSdk();
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'AttributeFilter', props);
     }
 
     public componentWillReceiveProps(nextProps: IAttributeFilterProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'AttributeFilter', nextProps);
         }
     }
 

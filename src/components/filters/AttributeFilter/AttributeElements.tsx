@@ -9,7 +9,7 @@ import {
 } from 'gooddata';
 import { AFM } from '@gooddata/typings';
 import { get } from 'lodash';
-import { getObjectIdFromUri } from '../../../helpers/utils';
+import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';
 
 export interface IPaging {
     count: number;
@@ -123,7 +123,9 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             error: null
         };
 
-        this.sdk = props.sdk || createSdk();
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'AttributeElements', props);
 
         this.loadMore = this.loadMore.bind(this);
     }
@@ -134,7 +136,8 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
 
     public componentWillReceiveProps(nextProps: IAttributeElementsProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'AttributeElements', nextProps);
         }
 
         if (this.props.uri !== nextProps.uri ||

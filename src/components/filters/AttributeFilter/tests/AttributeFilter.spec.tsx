@@ -5,12 +5,19 @@ import { createMetadataMock } from './utils';
 
 describe('AttributeFilter', () => {
     function renderComponent(customProps = {}) {
+        const sdk = {
+            md: createMetadataMock(),
+            clone: () => sdk,
+            config: {
+                setJsPackage: () => false,
+                setRequestHeader: () => false
+            }
+        };
+
         const props = {
             projectId: 'storybook',
             onApply: () => ({}),
-            sdk: {
-                md: createMetadataMock()
-            },
+            sdk,
             ...customProps
         };
         return mount(<AttributeFilter {...props as any} />);

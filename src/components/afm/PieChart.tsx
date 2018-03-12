@@ -33,4 +33,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const PieChart = dataSourceProvider<ICommonChartProps>(CorePieChart, generateDefaultDimensions);
+export const PieChart = dataSourceProvider<ICommonChartProps>(CorePieChart, generateDefaultDimensions, 'PieChart');

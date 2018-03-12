@@ -28,6 +28,7 @@ import {
     ErrorStates,
     generateDimensions
 } from '../../';
+import { setTelemetryHeaders } from '../../helpers/utils';
 
 export { Requireable };
 
@@ -157,7 +158,10 @@ export class VisualizationWrapped
             error: null
         };
 
-        this.sdk = props.sdk || createSdk();
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'Visualization', props);
+
         this.visualizationUri = props.uri;
 
         this.subject = createSubject<IVisualizationExecInfo>(
@@ -206,7 +210,8 @@ export class VisualizationWrapped
 
     public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk;
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
         }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);

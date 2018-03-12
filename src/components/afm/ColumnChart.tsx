@@ -22,4 +22,5 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export const ColumnChart = dataSourceProvider<ICommonChartProps>(CoreColumnChart, generateDefaultDimensions);
+export const ColumnChart = dataSourceProvider<ICommonChartProps>(
+    CoreColumnChart, generateDefaultDimensions, 'ColumnChart');
