@@ -39,11 +39,39 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@2.0.0-alpha6":
-  version "2.0.0-alpha6"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha6.tgz#c74af3dd350ce4abacb786935028e0480cf4ce50"
+"@gooddata/goodstrap@55.0.0-alpha4":
+  version "55.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha4.tgz#8ecff67043cb83ce3946a3b6783f3abd294fbd89"
   dependencies:
-    "@gooddata/goodstrap" "55.0.0-alpha0"
+    "@gooddata/js-utils" "0.7.1"
+    classnames "2.2.5"
+    custom-event "1.0.1"
+    fixed-data-table-2 "0.7.17"
+    foundation-sites "5.5.3"
+    immutable "3.8.1"
+    invariant "2.2.2"
+    jquery "2.1.4"
+    kefir "3.7.1"
+    lodash "4.17.4"
+    moment "2.18.1"
+    moment-timezone "0.5.11"
+    prop-types "15.6.0"
+    react-day-picker "7.0.7"
+    react-dnd "2.5.4"
+    react-document-title "2.0.3"
+    react-intl "2.4.0"
+    react-native-listener "1.0.2"
+    react-portal "3.1.0"
+    react-responsive "3.0.0"
+    react-textarea-autosize "4.2.2"
+    react-transition-group "1.2.1"
+    rxjs "5.4.3"
+
+"@gooddata/indigo-visualizations@2.0.0-alpha7":
+  version "2.0.0-alpha7"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha7.tgz#4677bbbaae89ce8f77b4a0d925c714a41c36f92e"
+  dependencies:
+    "@gooddata/goodstrap" "55.0.0-alpha4"
     "@gooddata/js-utils" "0.7.1"
     "@gooddata/numberjs" "3.0.0"
     classnames "2.2.5"
@@ -5927,6 +5955,12 @@ matchmedia@^0.1.2:
   dependencies:
     css-mediaquery "^0.1.2"
 
+matchmediaquery@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/matchmediaquery/-/matchmediaquery-0.2.1.tgz#223c7005793de03e47ce92b13285a72c44ada2cf"
+  dependencies:
+    css-mediaquery "^0.1.2"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -7713,6 +7747,14 @@ react-responsive@1.2.10:
   dependencies:
     hyphenate-style-name "^1.0.0"
     matchmedia "^0.1.2"
+    prop-types "^15.5.7"
+
+react-responsive@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-responsive/-/react-responsive-3.0.0.tgz#26e895dbdf748d4473c76cf46d29cb9d824e02ec"
+  dependencies:
+    hyphenate-style-name "^1.0.0"
+    matchmediaquery "^0.2.1"
     prop-types "^15.5.7"
 
 react-side-effect@^1.0.2:

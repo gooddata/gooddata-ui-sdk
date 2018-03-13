@@ -36,6 +36,7 @@ export interface IChartConfig {
         series?: number,
         categories?: number
     };
+    stacking?: boolean;
 }
 
 export interface ICommonChartProps extends ICommonVisualizationProps {

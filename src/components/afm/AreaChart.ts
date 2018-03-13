@@ -9,7 +9,7 @@ export {
 };
 
 import { ICommonChartProps } from '../core/base/BaseChart';
-import { BarChart as CoreBarChart } from '../core/BarChart';
+import { AreaChart as CoreAreaChart } from '../core/AreaChart';
 import { generateDefaultDimensions } from './afmHelper';
 
-export const BarChart = dataSourceProvider<ICommonChartProps>(CoreBarChart, generateDefaultDimensions, 'BarChart');
+export const AreaChart = dataSourceProvider<ICommonChartProps>(CoreAreaChart, generateDefaultDimensions, 'AreaChart');
