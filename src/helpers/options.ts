@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import every = require('lodash/every');
 import some = require('lodash/some');
 import isEmpty = require('lodash/isEmpty');

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const { writeFile } = require('fs');
 const { exec } = require('child_process');
 const RCPackageJson = require('../../../package.json'); // eslint-disable-line import/no-unresolved

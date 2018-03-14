@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import cloneDeep = require('lodash/cloneDeep');
 import update = require('lodash/update');

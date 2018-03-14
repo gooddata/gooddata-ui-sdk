@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as AfmComponents from './components/afm/afmComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';

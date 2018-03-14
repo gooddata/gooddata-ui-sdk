@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import AdvancedUseCases from './AdvancedUseCases';
 import AttributeFilter from './AttributeFilter';
 import BasicComponents from './BasicComponents';

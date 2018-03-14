@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { AfmPropType } from './Afm';
 import { ChartPropTypes } from './Chart';
 import { ChartConfigPropType } from './ChartConfig';

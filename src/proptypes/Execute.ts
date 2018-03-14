@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as PropTypes from 'prop-types';
 import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-visualizations';
 import { EventsPropTypes } from './Events';

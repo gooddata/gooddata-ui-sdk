@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import get = require('lodash/get');
 import { VisualizationClass } from '@gooddata/typings';
 import { VisualizationTypes, VisType } from '../constants/visualizationTypes';

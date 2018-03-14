@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
 import { MEASUREGROUP } from '../../constants/dimensions';
 

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as MdObjectHelper from '../MdObjectHelper';
 import { charts } from '../../../__mocks__/fixtures';
 

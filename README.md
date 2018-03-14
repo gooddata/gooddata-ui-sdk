@@ -77,6 +77,6 @@ yarn dev
 Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-react-components/issues).
 
 ## License
-Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+(C) 2007-2018 GoodData Corporation
 
 For more information, please see [LICENSE](https://github.com/gooddata/gooddata-react-components/blob/master/LICENSE)

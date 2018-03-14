@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from 'react';
 import PropTypes from 'prop-types';

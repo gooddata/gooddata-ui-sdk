@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { DataSource } from '@gooddata/data-layer';
 import { Execution } from '@gooddata/typings';
 

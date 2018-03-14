@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 export const DEFAULT_COLOR_PALETTE = [
     'rgb(20,178,226)',
     'rgb(0,193,141)',
