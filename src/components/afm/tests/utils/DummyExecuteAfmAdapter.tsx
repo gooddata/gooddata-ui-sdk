@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { ISdk } from 'gooddata';
 import { DataSource, ExecuteAfmAdapter } from '@gooddata/data-layer';
 import { AFM, Execution } from '@gooddata/typings';

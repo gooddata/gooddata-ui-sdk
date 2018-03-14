@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import { getVisualizationTypeFromVisualizationClass, getVisualizationTypeFromUrl } from '../visualizationType';
 

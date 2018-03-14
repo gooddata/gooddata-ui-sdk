@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { isObject } from 'lodash';
 import { ISdk } from 'gooddata';
 import { name as pkgName, version as pkgVersion } from '../../package.json';

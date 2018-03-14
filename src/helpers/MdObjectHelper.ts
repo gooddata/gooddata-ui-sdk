@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
 import get = require('lodash/get');
 import { ATTRIBUTE } from '../constants/bucketNames';

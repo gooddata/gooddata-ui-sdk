@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { getObjectIdFromUri, setTelemetryHeaders } from '../utils';
 import { factory as createSdk } from 'gooddata';
 

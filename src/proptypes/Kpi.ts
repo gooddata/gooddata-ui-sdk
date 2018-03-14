@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as PropTypes from 'prop-types';
 import { EventsPropTypes } from './Events';
 import { FiltersPropType } from './Filters';

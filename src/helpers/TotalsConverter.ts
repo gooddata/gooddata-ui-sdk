@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { AFM, VisualizationObject } from '@gooddata/typings';
 import find = require('lodash/find');
 import findIndex = require('lodash/findIndex');

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
 import { Execution } from '@gooddata/typings';
 import { ErrorCodes as DataErrorCodes } from '@gooddata/data-layer';

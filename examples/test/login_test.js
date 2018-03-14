@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
 

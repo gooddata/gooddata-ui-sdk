@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { fillPoPTitlesAndAliases } from '../popHelper';
 import { charts } from '../../../__mocks__/fixtures';
 

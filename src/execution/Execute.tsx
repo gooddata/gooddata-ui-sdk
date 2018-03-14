@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { ISdk, factory as createSdk } from 'gooddata';
 import isEqual = require('lodash/isEqual');

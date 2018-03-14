@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { ISdk } from 'gooddata';
 import { colors2Object, numberFormat } from '@gooddata/numberjs';

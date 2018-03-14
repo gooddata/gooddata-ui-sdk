@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
 import cloneDeep = require('lodash/cloneDeep');
 import get = require('lodash/get');

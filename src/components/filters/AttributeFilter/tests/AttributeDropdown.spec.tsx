@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as ReactTestUtils from 'react-dom/test-utils';
 import { mount } from 'enzyme';
