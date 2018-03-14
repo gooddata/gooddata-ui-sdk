@@ -17,5 +17,6 @@ export const ChartPropTypes = {
     locale: PropTypes.string,
     height: PropTypes.number,
     drillableItems: PropTypes.arrayOf(DrillableItemPropType),
-    environment: PropTypes.string
+    environment: PropTypes.string,
+    onLegendReady: PropTypes.func
 };

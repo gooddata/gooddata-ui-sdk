@@ -290,6 +290,21 @@ describe('BaseChart', () => {
         });
     });
 
+    it('should pass "onLegendReady" to visualization', () => {
+        const onLegendReady = jest.fn();
+
+        const props = createProps({
+            onLegendReady
+        });
+
+        const wrapper = createComponent(props);
+        return delay().then(() => {
+            expect(
+                wrapper.find(Visualization).prop('onLegendReady')
+            ).toEqual(onLegendReady);
+        });
+    });
+
     it('should display LoadingComponent during loading and pass props to it', () => {
         const responseDelay = 20;
         const onError = jest.fn();
