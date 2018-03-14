@@ -28,6 +28,7 @@ import {
     ILoadingInjectedProps,
     commonDefaultprops
 } from './base/VisualizationLoadingHOC';
+import { BaseVisualization } from './base/BaseVisualization';
 
 export interface ITableProps extends ICommonVisualizationProps {
     height?: number;
@@ -46,7 +47,7 @@ export interface ITableState {
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
 
-class SimpleTable extends React.Component<ITableProps & ILoadingInjectedProps, ITableState> {
+class SimpleTable extends BaseVisualization<ITableProps & ILoadingInjectedProps, ITableState> {
     public static defaultProps: Partial<ITableProps & ILoadingInjectedProps> = {
         ...commonDefaultprops,
         stickyHeaderOffset: 0,
@@ -123,7 +124,7 @@ class SimpleTable extends React.Component<ITableProps & ILoadingInjectedProps, I
         });
     }
 
-    public render(): JSX.Element {
+    protected renderVisualization(): JSX.Element {
         const tableRenderer = this.getTableRenderer();
         return this.renderTable(tableRenderer);
     }
@@ -169,8 +170,7 @@ class SimpleTable extends React.Component<ITableProps & ILoadingInjectedProps, I
             onFiredDrillEvent,
             totals,
             totalsEditAllowed,
-            executionResponse,
-            executionResult
+            execution
         } = this.props;
 
         // Short term solution (See BB-641)
@@ -186,9 +186,9 @@ class SimpleTable extends React.Component<ITableProps & ILoadingInjectedProps, I
                                 afm: dataSource.getAfm(),
                                 resultSpec
                             }}
-                            executionResponse={executionResponse.executionResponse}
+                            executionResponse={execution.executionResponse.executionResponse}
                             executionResult={
-                                fixEmptyHeaderItems(executionResult, props.emptyHeaderString).executionResult
+                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString).executionResult
                             }
                             afterRender={afterRender}
                             config={{ stickyHeaderOffset }}

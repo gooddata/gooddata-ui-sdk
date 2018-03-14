@@ -18,6 +18,7 @@ import {
 import { delay } from '../../../tests/utils';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDrillableItem } from '../../../../interfaces/DrillEvents';
+import { ErrorStates } from '../../../../constants/errorStates';
 
 export interface ITestInnerComponentProps extends ICommonVisualizationProps {
     customPropFooBar?: number;
@@ -84,58 +85,34 @@ describe('VisualizationLoadingHOC', () => {
 
         return startedLoading.then(() => {
             const innerWrapped = wrapper.find(TestInnerComponent);
-            const innerLoading = wrapper.find(LoadingComponent);
-
-            expect(innerWrapped.length).toBe(0);
-            expect(innerLoading.length).toBe(1);
-
-            expect(innerLoading.props().props).toBe(wrapper.props());
+            expect(innerWrapped.props()).toMatchObject({
+                isLoading: true,
+                error: ErrorStates.OK,
+                execution: null
+            });
         });
     });
 
-    it('should render null when loading if the loading component has not been specified', () => {
-        let onLoadingChanged;
-        const startedLoading = new Promise((resolve) => {
-            onLoadingChanged = resolve;
-        });
-
-        const wrapper = createComponent({ onLoadingChanged });
-
-        return startedLoading.then(() => {
-            expect(wrapper.html()).toBe(null);
-        });
-    });
-
-    it('should call onLoadingChanged when started loading and when obtained result', () => {
+    it('should init loading automatically and pass execution to the inner component when obtained result', () => {
         const onLoadingChanged = jest.fn();
-        createComponent({
+        const wrapper = createComponent({
             onLoadingChanged
         });
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);
 
         return delay().then(() => {
-            expect(onLoadingChanged).toHaveBeenCalledTimes(2);
-            expect(onLoadingChanged.mock.calls[0]).toEqual([{ isLoading: true }]);
-            expect(onLoadingChanged.mock.calls[1]).toEqual([{ isLoading: false }]);
-        });
-    });
-
-    it('should init loading automatically and then pass response and result down to the inner component', () => {
-        const wrapper = createComponent();
-
-        return delay().then(() => {
             wrapper.update();
-            const inner = wrapper.find(TestInnerComponent);
-            expect(inner.length).toBe(1);
-            expect(inner.props()).toMatchObject({
-                executionResponse: oneMeasureResponse.executionResponse,
-                executionResult: oneMeasureResponse.executionResult
+            const innerWrapped = wrapper.find(TestInnerComponent);
+            expect(innerWrapped.props()).toMatchObject({
+                isLoading: false,
+                error: ErrorStates.OK,
+                execution: oneMeasureResponse
             });
         });
     });
 
-    it('should render ErrorComponent on error passing down props and error status', () => {
+    it('should pass down error flag when execution failed', () => {
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
         consoleErrorSpy.mockImplementation(jest.fn());
 
@@ -147,19 +124,17 @@ describe('VisualizationLoadingHOC', () => {
         return delay().then(() => {
             wrapper.update();
             const innerWrapped = wrapper.find(TestInnerComponent);
-            const innerError = wrapper.find(ErrorComponent);
-
-            expect(innerWrapped.length).toBe(0);
-            expect(innerError.length).toBe(1);
-
-            expect(innerError.props().props).toBe(wrapper.props());
-            expect(innerError.props().error).toEqual({ status: 'DATA_TOO_LARGE_TO_COMPUTE' });
+            expect(innerWrapped.props()).toMatchObject({
+                isLoading: false,
+                error: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                execution: null
+            });
 
             consoleErrorSpy.mockRestore();
         });
     });
 
-    it('should call onError with OK status at the beginning and then when error occured', () => {
+    it('should call onError at the beginning and then when error occured', () => {
         const onError = jest.fn();
         createComponent({
             dataSource: tooLargeDataSource,
@@ -176,18 +151,6 @@ describe('VisualizationLoadingHOC', () => {
                 },
                 status: 'DATA_TOO_LARGE_TO_COMPUTE'}]
             );
-        });
-    });
-
-    it('should render null on error when ErrorComponent has not been specified', () => {
-        const consoleErrorSpy = jest.spyOn(global.console, 'error');
-        consoleErrorSpy.mockImplementation(jest.fn());
-
-        const wrapper = createComponent({ dataSource: tooLargeDataSource });
-
-        return delay().then(() => {
-            expect(wrapper.html()).toBe(null);
-            consoleErrorSpy.mockRestore();
         });
     });
 
@@ -255,7 +218,7 @@ describe('VisualizationLoadingHOC', () => {
         });
     });
 
-    it('should call onError when inner component fired Data too larde for display', () => {
+    it('should call onError when inner component fired Data too large for display', () => {
         const onError = jest.fn();
         const wrapper = createComponent({
             onError
@@ -317,20 +280,19 @@ describe('VisualizationLoadingHOC', () => {
 
         return delay().then(() => {
             wrapper.update();
-            expect(wrapper.find(TestInnerComponent).length).toBe(0);
-            expect(onError).toHaveBeenCalledTimes(2);
-            expect(onError).toHaveBeenLastCalledWith({
-                status: 'DATA_TOO_LARGE_TO_COMPUTE',
-                options: expect.any(Object)
-            });
-
             wrapper.setProps({
                 dataSource: oneMeasureDataSource
             });
+
             return delay().then(() => {
                 wrapper.update();
-                expect(pushData).toHaveBeenCalledTimes(1);
-                expect(wrapper.find(TestInnerComponent).length).toBe(1);
+                const innerWrapped = wrapper.find(TestInnerComponent);
+
+                expect(innerWrapped.props()).toMatchObject({
+                    isLoading: false,
+                    error: ErrorStates.OK,
+                    execution: oneMeasureResponse
+                });
             });
         });
     });
