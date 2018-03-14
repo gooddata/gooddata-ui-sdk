@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const catalogSecure = require('../../catalogs/catalog-secure.json');
 const catalogStaging2 = require('../../catalogs/catalog-staging2.json');
 const catalogStaging3 = require('../../catalogs/catalog-staging3.json');

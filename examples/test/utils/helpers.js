@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { t as testController } from 'testcafe';
 import { config } from './config';
 

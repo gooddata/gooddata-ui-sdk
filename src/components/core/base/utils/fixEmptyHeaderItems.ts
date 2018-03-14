@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
 
 export function fixEmptyHeaderItems(

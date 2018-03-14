@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import identity = require('lodash/identity');
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';

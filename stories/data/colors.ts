@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 export const CUSTOM_COLORS: string[] = [
     'rgba(195, 49, 73, 1)',
     'rgba(168, 194, 86, 1)',

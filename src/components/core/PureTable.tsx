@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import get = require('lodash/get');
 import noop = require('lodash/noop');

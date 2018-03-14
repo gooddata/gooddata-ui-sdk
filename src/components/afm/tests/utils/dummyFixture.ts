@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 // from indigo-visualizations/stories/test_data/bar_chart_with_view_by_attribute
 
 import { Execution } from '@gooddata/typings';

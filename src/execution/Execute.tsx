@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as GoodData from 'gooddata';
 import isEqual = require('lodash/isEqual');

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
 import program from 'commander';

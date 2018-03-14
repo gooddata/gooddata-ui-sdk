@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { PureTable, ITableProps } from './PureTable';
 import { SortableTable } from './SortableTable';
