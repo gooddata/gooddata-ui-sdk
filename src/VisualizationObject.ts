@@ -5,7 +5,7 @@ export namespace VisualizationObject {
     export type Identifier = string;
     export type MeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
     export type TotalType = 'sum' | 'avg' | 'max' | 'min' | 'nat' | 'med';
-    export type VisualizationType = 'table' | 'line' | 'column' | 'bar' | 'pie' | 'doughnut' | 'combo';
+    export type VisualizationType = 'table' | 'line' | 'column' | 'bar' | 'pie' | 'doughnut' | 'combo' | 'area';
 
     export type BucketItem = IMeasure | IVisualizationAttribute;
 

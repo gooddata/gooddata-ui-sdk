@@ -136,7 +136,7 @@ export namespace AFM {
         };
     }
 
-    export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar';
+    export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar' | 'area';
     export interface IVisualizationStyle {
         visualizationStyle: {
             type: VisualizationStyleType;
