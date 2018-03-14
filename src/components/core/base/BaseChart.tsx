@@ -18,7 +18,7 @@ import {
     commonDefaultprops
 } from './VisualizationLoadingHOC';
 import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
-
+import { BaseVisualization } from './BaseVisualization';
 export { Requireable };
 
 export interface ILegendConfig {
@@ -49,7 +49,7 @@ export interface IBaseChartProps extends IChartProps {
     visualizationComponent?: React.ComponentClass<any>; // for testing
 }
 
-export class StatelessBaseChart extends React.Component<IBaseChartProps & ILoadingInjectedProps> {
+export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoadingInjectedProps, {}> {
     public static defaultProps: Partial<IBaseChartProps & ILoadingInjectedProps> = {
         ...commonDefaultprops,
         onDataTooLarge: noop,
@@ -60,15 +60,14 @@ export class StatelessBaseChart extends React.Component<IBaseChartProps & ILoadi
 
     public static propTypes = ChartPropTypes;
 
-    public render(): JSX.Element {
+    public renderVisualization(): JSX.Element {
         const {
             afterRender,
             height,
             locale,
             config,
             type,
-            executionResponse,
-            executionResult,
+            execution,
             onDataTooLarge
         } = this.props;
 
@@ -77,7 +76,7 @@ export class StatelessBaseChart extends React.Component<IBaseChartProps & ILoadi
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
                         const fixedExecutionResult = fixEmptyHeaderItems(
-                            executionResult,
+                            execution.executionResult,
                             translationProps.emptyHeaderString
                         );
 
@@ -87,7 +86,7 @@ export class StatelessBaseChart extends React.Component<IBaseChartProps & ILoadi
                                     afm: this.props.dataSource.getAfm(),
                                     resultSpec: this.props.resultSpec
                                 }}
-                                executionResponse={executionResponse.executionResponse}
+                                executionResponse={execution.executionResponse.executionResponse}
                                 executionResult={fixedExecutionResult.executionResult}
                                 height={height}
                                 config={{ ...config, type }}

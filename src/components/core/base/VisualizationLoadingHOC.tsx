@@ -30,10 +30,11 @@ export interface ICommonVisualizationProps extends IEvents {
 }
 
 export interface ILoadingInjectedProps {
-    executionResponse: Execution.IExecutionResponse;
-    executionResult: Execution.IExecutionResult;
+    execution: Execution.IExecutionResponses;
     onDataTooLarge: Function;
     onNegativeValues: Function;
+    error: string;
+    isLoading: boolean;
 }
 
 export interface IVisualizationLoadingState {
@@ -95,26 +96,15 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps>(
 
         public render() {
             const { result, isLoading, error } = this.state;
-            const { ErrorComponent, LoadingComponent } = this.props;
 
-            if (error !== ErrorStates.OK) {
-                return ErrorComponent ? <ErrorComponent error={{ status: error }} props={this.props} /> : null;
-            }
-            if (isLoading || !result) {
-                return LoadingComponent ? <LoadingComponent props={this.props} /> : null;
-            }
-
-            const {
-                executionResponse,
-                executionResult
-            } = (result as Execution.IExecutionResponses);
             return (
                 <InnerComponent
                     {...this.props}
-                    executionResponse={executionResponse}
-                    executionResult={executionResult}
+                    execution={result}
                     onDataTooLarge={this.onDataTooLarge}
                     onNegativeValues={this.onNegativeValues}
+                    error={error}
+                    isLoading={isLoading}
                 />
             );
         }
