@@ -14,23 +14,23 @@ import {
     ILoadingInjectedProps,
     commonDefaultprops
 } from './base/VisualizationLoadingHOC';
+import { BaseVisualization } from './base/BaseVisualization';
 
 export { Requireable };
 
-export class HeadlineStateless extends React.Component<ICommonVisualizationProps & ILoadingInjectedProps> {
+export class HeadlineStateless extends BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps, {}> {
     public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultprops;
 
     public static propTypes = HeadlinePropTypes;
 
-    public render(): JSX.Element {
+    protected renderVisualization(): JSX.Element {
         const {
             afterRender,
             drillableItems,
             locale,
             dataSource,
             resultSpec,
-            executionResponse,
-            executionResult
+            execution
         } = this.props;
 
         return (
@@ -44,9 +44,9 @@ export class HeadlineStateless extends React.Component<ICommonVisualizationProps
                                 afm: dataSource.getAfm(),
                                 resultSpec
                             }}
-                            executionResponse={executionResponse.executionResponse}
+                            executionResponse={execution.executionResponse.executionResponse}
                             executionResult={
-                                fixEmptyHeaderItems(executionResult, props.emptyHeaderString).executionResult
+                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString).executionResult
                             }
                         />
                     )}
