@@ -102,12 +102,5 @@
       "tsx",
       "js"
     ]
-  },
-  "test-storybook": {
-    "AFM components - BarChart": {
-      "two measures, one attribute": {
-        "delay": 1000
-      }
-    }
   }
 }
