@@ -21,6 +21,7 @@ import { TablePropTypes } from '../../proptypes/Table';
 import { VisualizationEnvironment } from '../uri/Visualization';
 import { IIndexedTotalItem } from '../../interfaces/Totals';
 import { convertToIndexedTotals, convertToTotals } from '../../helpers/TotalsConverter';
+import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 
 import {
     ICommonVisualizationProps,
@@ -47,8 +48,10 @@ export interface ITableState {
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
 
-class SimpleTable extends BaseVisualization<ITableProps & ILoadingInjectedProps, ITableState> {
-    public static defaultProps: Partial<ITableProps & ILoadingInjectedProps> = {
+class SimpleTable extends
+    BaseVisualization<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, ITableState> {
+
+    public static defaultProps: Partial<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
         ...commonDefaultprops,
         stickyHeaderOffset: 0,
         height: null,
@@ -63,7 +66,7 @@ class SimpleTable extends BaseVisualization<ITableProps & ILoadingInjectedProps,
 
     public static propTypes = TablePropTypes;
 
-    constructor(props: ITableProps & ILoadingInjectedProps) {
+    constructor(props: ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps) {
         super(props);
 
         this.state = {
@@ -76,7 +79,6 @@ class SimpleTable extends BaseVisualization<ITableProps & ILoadingInjectedProps,
         this.onLess = this.onLess.bind(this);
         this.onTotalsEdit = this.onTotalsEdit.bind(this);
         this.resetLastAddedTotalType = this.resetLastAddedTotalType.bind(this);
-
     }
 
     public componentWillReceiveProps(nextProps: ITableProps) {

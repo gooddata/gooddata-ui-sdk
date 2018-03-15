@@ -9439,6 +9439,10 @@ utila@~0.4:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/utila/-/utila-0.4.0.tgz#8a16a05d445657a3aea5eecc5b12a4fa5379772c"
 
+utility-types@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-1.1.0.tgz#52408b6ed852fdd4076b48b30ed726f139b0f116"
+
 utils-merge@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"

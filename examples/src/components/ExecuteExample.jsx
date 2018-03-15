@@ -112,7 +112,7 @@ export class ExecuteExample extends Component {
                 {status}
                 <p>
                     <button onClick={this.retry} className="button button-secondary s-retry-button">Retry</button>
-                    (fails every second attempt)
+                    &emsp;(fails every second attempt)
                 </p>
                 {/*
                     We need to render the Execute component even in loading

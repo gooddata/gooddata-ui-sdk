@@ -18,7 +18,6 @@ describe('BaseChart', () => {
             drillableItems: [],
             resultSpec: {},
             config: { colors: ['shiny'] },
-            onDataTooLarge: jest.fn(),
             onFiredDrillEvent: jest.fn(),
             ...customProps
         };

@@ -14,11 +14,14 @@ import {
 } from '../../../tests/mocks';
 import { ErrorStates } from '../../../../constants/errorStates';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
+import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
 
 describe('Base visualization child', () => {
     const TestVizInnerComponent = DummyComponent;
 
-    class BaseVisualizationChild extends BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps, {}> {
+    class BaseVisualizationChild extends
+        BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, {}> {
+
         protected renderVisualization() {
             return <TestVizInnerComponent />;
         }

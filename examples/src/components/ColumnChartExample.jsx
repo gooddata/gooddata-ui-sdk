@@ -1,15 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import { ColumnChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
 import { Loading } from './utils/Loading';
 import { Error } from './utils/Error';
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from '../utils/fixtures';
-
-const { ColumnChart } = AfmComponents;
 
 export class ColumnChartExample extends Component {
     onLoadingChanged(...params) {
@@ -23,36 +21,37 @@ export class ColumnChartExample extends Component {
     }
 
     render() {
-        const afm = {
-            measures: [
-                {
-                    localIdentifier: 'totalSales',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: totalSalesIdentifier
-                            }
-                        }
-                    },
-                    alias: '$ Total Sales',
-                    format: '#,##0'
-                }
-            ],
-            attributes: [
-                {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            ]
+        const totalSales = {
+            measure: {
+                localIdentifier: 'totalSales',
+                definition: {
+                    measureDefinition: {
+                        item: {
+                            identifier: totalSalesIdentifier
+                        },
+                        aggregation: 'sum'
+                    }
+                },
+                alias: '$ Total Sales',
+                format: '#,##0'
+            }
+        };
+
+        const month = {
+            visualizationAttribute: {
+                displayForm: {
+                    identifier: monthDateIdentifier
+                },
+                localIdentifier: 'month'
+            }
         };
 
         return (
             <div style={{ height: 300 }} className="s-column-chart">
                 <ColumnChart
                     projectId={projectId}
-                    afm={afm}
+                    measures={[totalSales]}
+                    viewBy={month}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     LoadingComponent={Loading}

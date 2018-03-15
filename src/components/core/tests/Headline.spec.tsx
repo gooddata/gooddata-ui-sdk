@@ -9,10 +9,11 @@ import {
 import { Headline } from '../Headline';
 import { ICommonVisualizationProps } from '../base/VisualizationLoadingHOC';
 import { HeadlineTransformation } from '@gooddata/indigo-visualizations';
+import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 describe('Headline', () => {
     const createComponent = () => {
-        return mount<Partial<ICommonVisualizationProps>>((
+        return mount<Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps>>((
             <Headline
                 dataSource={oneMeasureDataSource}
                 afterRender={jest.fn()}

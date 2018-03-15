@@ -20,6 +20,7 @@ jest.mock('@gooddata/indigo-visualizations', () => ({
 
 import { PureTable, ITableProps, ITableState } from '../PureTable';
 import { executionObjectWithTotals } from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 function getFakeSortItem(): AFM.SortItem {
     return {
@@ -35,11 +36,11 @@ function getFakeSortItem(): AFM.SortItem {
 }
 
 describe('PureTable', () => {
-    const createComponent = (props: ITableProps) => {
-        return mount<ITableProps, ITableState>(<PureTable {...props} />);
+    const createComponent = (props: ITableProps & IDataSourceProviderInjectedProps) => {
+        return mount<ITableProps, ITableState & IDataSourceProviderInjectedProps>(<PureTable {...props} />);
     };
 
-    const createProps = (customProps = {}): ITableProps => {
+    const createProps = (customProps = {}): ITableProps & IDataSourceProviderInjectedProps => {
         return {
             dataSource: oneMeasureDataSource,
             resultSpec: {},

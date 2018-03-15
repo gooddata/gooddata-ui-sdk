@@ -11,6 +11,7 @@ import {
 import { ITableProps, PureTable } from '../PureTable';
 import { SortableTable, ISortableTableState } from '../SortableTable';
 import { delay } from '../../tests/utils';
+import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 const oneMeasureDataSource: IDataSource = {
     getData: () => Promise.resolve(oneMeasureResponse),
@@ -32,13 +33,13 @@ const sortItem: AFM.IAttributeSortItem = {
 };
 
 describe('SortableTable', () => {
-    function createComponent(props: ITableProps) {
-        return shallow<ITableProps, ISortableTableState>(
+    function createComponent(props: ITableProps & IDataSourceProviderInjectedProps) {
+        return shallow<ITableProps & IDataSourceProviderInjectedProps, ISortableTableState>(
             <SortableTable {...props} />
         );
     }
 
-    const createProps = (customProps = {}): ITableProps => {
+    const createProps = (customProps = {}): ITableProps & IDataSourceProviderInjectedProps => {
         return {
             height: 200,
             environment: 'dashboards',
