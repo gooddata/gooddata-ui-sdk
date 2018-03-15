@@ -34,7 +34,7 @@ export interface IHeadlineVisualizationProps {
  */
 export default class Headline extends React.Component<IHeadlineVisualizationProps> {
     public static defaultProps: Partial<IHeadlineVisualizationProps> = {
-        onFiredDrillEvent: noop,
+        onFiredDrillEvent: () => true,
         onAfterRender: noop
     };
 

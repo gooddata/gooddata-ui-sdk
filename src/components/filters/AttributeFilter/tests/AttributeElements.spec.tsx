@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { testUtils } from '@gooddata/js-utils';
 import { AttributeElements, IAttributeElementsProps, IAttributeElementsChildren } from '../AttributeElements';
 import {
     createMetadataMock,
@@ -9,7 +10,6 @@ import {
     ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
     COUNTRIES
 } from './utils';
-import { delay } from '../../../tests/utils';
 
 describe('AttributeElements', () => {
     function createProps(customProps = {}) {
@@ -51,7 +51,7 @@ describe('AttributeElements', () => {
         expect(props.children).toHaveBeenCalledTimes(1);
         expect(props.children.mock.calls[0][0].isLoading).toBe(true);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(props.children).toHaveBeenCalledTimes(2);
             expect(props.sdk.md.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
             expect(props.children.mock.calls[1][0].validElements).toEqual(
@@ -82,7 +82,7 @@ describe('AttributeElements', () => {
         expect(props.children).toHaveBeenCalledTimes(1);
         expect(props.children.mock.calls[0][0].isLoading).toBe(true);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
             expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children).toHaveBeenCalledTimes(2);
@@ -105,7 +105,7 @@ describe('AttributeElements', () => {
         });
         renderComponent(props as any); // because mocked metadata don't match
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
             expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children).toHaveBeenCalledTimes(2);
@@ -120,7 +120,7 @@ describe('AttributeElements', () => {
         });
         renderComponent(props as any); // because mocked metadata don't match
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
                     items: [{ element: { title: 'Afghanistan', uri: '/gdc/md/projectId/object/foo?id=0' } }],
@@ -132,7 +132,7 @@ describe('AttributeElements', () => {
             expect(props.children).toHaveBeenCalledTimes(3);
             expect(props.children.mock.calls[2][0].isLoading).toBe(true);
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 expect(props.children).toHaveBeenCalledTimes(4);
                 expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(2);
                 expect(props.children).toHaveBeenCalledTimes(4);
@@ -156,7 +156,7 @@ describe('AttributeElements', () => {
         });
         const wrapper = renderComponent(props as any); // because mocked metadata don't match
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(props.children).toHaveBeenCalledTimes(2);
             expect(props.sdk.md.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
             expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
@@ -172,7 +172,7 @@ describe('AttributeElements', () => {
             expect(props.children).toHaveBeenCalledTimes(3);
             expect(props.children.mock.calls[2][0].isLoading).toBe(true);
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 expect(props.children).toHaveBeenCalledTimes(4);
                 expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
                 expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(2);

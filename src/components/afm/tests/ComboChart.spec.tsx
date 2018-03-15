@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 import { ComboChart } from '../ComboChart';
 import { ComboChart as CoreComboChart } from '../../core/ComboChart';
 import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
@@ -25,7 +25,7 @@ describe('ComboChart', () => {
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(CoreComboChart).props().resultSpec.dimensions;
             expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: [] } ]);
@@ -41,7 +41,7 @@ describe('ComboChart', () => {
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(CoreComboChart).props().resultSpec.dimensions;
             expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: ['a1'] } ]);

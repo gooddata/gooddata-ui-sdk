@@ -1,6 +1,7 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 
 import { AreaChart } from '../AreaChart';
 import { AreaChart as CoreAreaChart } from '../../core/AreaChart';
@@ -25,7 +26,7 @@ describe('Area chart', () => {
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
 
             const dimensions = wrapper.find(CoreAreaChart).props().resultSpec.dimensions;

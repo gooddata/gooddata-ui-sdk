@@ -4,7 +4,7 @@ import noop = require('lodash/noop');
 import { mount } from 'enzyme';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import Legend, { FLUID_LEGEND_THRESHOLD } from '../Legend';
-import { withIntl } from '../../../common/utils/intlUtils';
+import { withIntl } from '../../../utils/intlUtils';
 
 describe('Legend', () => {
     const series = [
@@ -32,6 +32,7 @@ describe('Legend', () => {
             legendLayout: 'vertical',
             series,
             onItemClick: noop,
+            position: 'top',
             ...userProps
         };
 

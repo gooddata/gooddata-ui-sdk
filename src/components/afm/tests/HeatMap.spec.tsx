@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 
 import { HeatMap } from '../HeatMap';
 import { HeatMap as CoreHeatMap } from '../../core/HeatMap';
@@ -25,7 +25,7 @@ describe('HeatMap', () => {
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
 
             const dimensions = wrapper.find(CoreHeatMap).props().resultSpec.dimensions;

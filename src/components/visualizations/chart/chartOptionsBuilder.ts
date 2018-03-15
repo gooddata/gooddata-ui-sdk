@@ -34,7 +34,7 @@ import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventi
 import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
-import { VisualizationTypes, ChartType } from '../../../constants/visualizationTypes';
+import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
@@ -611,7 +611,7 @@ export function getDrillableSeries(
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: any,
     stackByAttribute: any,
-    type: ChartType,
+    type: VisType,
     afm: AFM.IAfm
 ) {
     const isMultiMeasureWithOnlyMeasures = isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;

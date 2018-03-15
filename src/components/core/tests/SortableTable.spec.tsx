@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 import { AFM } from '@gooddata/typings';
+import { testUtils } from '@gooddata/js-utils';
 import { IDataSource } from '../../../interfaces/DataSource';
 import {
     emptyResponse,
@@ -10,7 +11,6 @@ import {
 } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { ITableProps, PureTable } from '../PureTable';
 import { SortableTable, ISortableTableState } from '../SortableTable';
-import { delay } from '../../tests/utils';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 const oneMeasureDataSource: IDataSource = {
@@ -53,7 +53,7 @@ describe('SortableTable', () => {
         wrapper.setState({
             sortItems: [sortItem]
         });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find(PureTable).prop('resultSpec')).toEqual({
                 sorts: [sortItem]
             });
@@ -87,7 +87,7 @@ describe('SortableTable', () => {
             dataSource: oneMeasureDataSource
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.state('sortItems')).toEqual([]);
             expect(wrapper.find(PureTable)).toHaveLength(1);
         });

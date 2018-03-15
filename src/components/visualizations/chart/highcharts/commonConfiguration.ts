@@ -5,7 +5,7 @@ import get = require('lodash/get');
 import set = require('lodash/set');
 import isEmpty = require('lodash/isEmpty');
 import { chartClick } from '../../utils/drilldownEventing';
-import styleVariables from '../../styles/variables';
+import { styleVariables } from '../../styles/variables';
 
 const isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 

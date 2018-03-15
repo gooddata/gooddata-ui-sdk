@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { IntlProvider } from 'react-intl';
 import { SDK } from '@gooddata/gooddata-js';
+import { testUtils } from '@gooddata/js-utils';
 import {
     Table,
     BaseChart,
@@ -14,11 +14,11 @@ import { charts, visualizationClasses } from '../../../../__mocks__/fixtures';
 import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
 import { Visualization, IntlVisualization, VisualizationWrapped } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
-import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
-import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
+import { IntlWrapper } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
+import { createIntlMock } from '../../visualizations/utils/intlUtils';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -28,12 +28,6 @@ const TABLE_IDENTIFIER = 'table';
 
 const SLOW = 20;
 const FAST = 5;
-
-function createIntlMock() {
-    const intlProvider = new IntlProvider({ locale: 'en-US', messages: messagesMap['en-US'] }, {});
-    const { intl } = intlProvider.getChildContext();
-    return intl;
-}
 
 function getResponse(response: string, delay: number): Promise<string> {
     return new Promise((resolve) => {
@@ -92,7 +86,7 @@ describe('Visualization', () => {
             />
         );
 
-        return delay(FAST + 1).then(() => {
+        return testUtils.delay(FAST + 1).then(() => {
             expect(wrapper.find(IntlWrapper).length).toBe(1);
             expect(wrapper.find(IntlVisualization).length).toBe(1);
         });
@@ -115,7 +109,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
@@ -167,7 +161,7 @@ describe('VisualizationWrapped', () => {
             }
         ];
 
-        return delay(SLOW).then(() => {
+        return testUtils.delay(SLOW).then(() => {
             wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
             expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
@@ -190,7 +184,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
@@ -229,7 +223,7 @@ describe('VisualizationWrapped', () => {
 
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
         });
@@ -253,7 +247,7 @@ describe('VisualizationWrapped', () => {
 
         // Would throw an error if not handled properly
         wrapper.unmount();
-        return delay(FAST + 1).then(() => {
+        return testUtils.delay(FAST + 1).then(() => {
             wrapper.update();
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
@@ -276,7 +270,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
             const TableElement = wrapper.find(Table).get(0);
@@ -301,7 +295,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
             const BaseChartElement = wrapper.find(BaseChart).get(0);

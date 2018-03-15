@@ -17,7 +17,7 @@ import {
     DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_FOR_SECONDARY_ITEM
 } from './fixtures/drill_event_data';
-import { withIntl } from '../../common/utils/intlUtils';
+import { withIntl } from '../../utils/intlUtils';
 import {
     TWO_MEASURES_EXECUTION_RESPONSE,
     TWO_MEASURES_EXECUTION_RESULT,

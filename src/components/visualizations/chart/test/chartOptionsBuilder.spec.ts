@@ -17,7 +17,8 @@ import {
     customEscape,
     generateTooltipFn,
     getChartOptions,
-    generateTooltipHeatMapFn
+    generateTooltipHeatMapFn,
+    IPoint
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 
@@ -33,6 +34,8 @@ import {
     DEFAULT_COLOR_PALETTE
 } from '../../utils/color';
 import { IDrillableItem } from '../../../..';
+
+export { IPoint };
 
 export function generateChartOptions(
     dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,

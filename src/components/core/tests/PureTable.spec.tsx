@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 import { AFM } from '@gooddata/typings';
 import {
     TableTransformation,
@@ -12,10 +12,16 @@ import {
 } from '../../tests/mocks';
 
 // Replace this with optional prop
-jest.mock('@gooddata/indigo-visualizations', () => ({
-    TableTransformation,
-    ResponsiveTable,
+jest.mock('../../visualizations/table/TableTransformation', () => ({
+    TableTransformation
+}));
+
+jest.mock('../../visualizations/table/Table', () => ({
     Table: IndigoTable
+}));
+
+jest.mock('../../visualizations/table/ResponsiveTable', () => ({
+    ResponsiveTable
 }));
 
 import { PureTable, ITableProps, ITableState } from '../PureTable';
@@ -69,13 +75,15 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             expect(renderedTableTransformation.props()).toMatchObject({
                 executionRequest: {
-                    afm: props.dataSource.getAfm(),
-                    resultSpec: props.resultSpec
+                    execution: {
+                        afm: props.dataSource.getAfm(),
+                        resultSpec: props.resultSpec
+                    }
                 },
                 executionResponse: expect.any(Object),
                 executionResult: expect.any(Object),
@@ -87,7 +95,7 @@ describe('PureTable', () => {
                 onFiredDrillEvent: props.onFiredDrillEvent,
                 totals: props.totals,
                 totalsEditAllowed: props.totalsEditAllowed,
-                lastAddedTotalType: ''
+                lastAddedTotalType: null
             });
         });
     });
@@ -98,16 +106,15 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             expect(renderedTableTransformation.length).toBe(1);
-            expect(renderedTableTransformation.props().tableRenderer().type).toBe(ResponsiveTable);
-            const tableRendererProps = renderedTableTransformation.props().tableRenderer().props;
+            expect(renderedTableTransformation.props().tableRenderer({}).type).toBe(ResponsiveTable);
+            const tableRendererProps = renderedTableTransformation.props().tableRenderer({}).props;
             expect(tableRendererProps).toMatchObject({
                 page: 1,
-                rowsPerPage: 9,
-                totals: wrapper.props().totals
+                rowsPerPage: 9
             });
         });
     });
@@ -116,12 +123,12 @@ describe('PureTable', () => {
         const props = createProps();
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             expect(renderedTableTransformation.length).toBe(1);
-            expect(renderedTableTransformation.props().tableRenderer().type).toBe(IndigoTable);
-            const tableRendererProps = renderedTableTransformation.props().tableRenderer().props;
+            expect(renderedTableTransformation.props().tableRenderer({}).type).toBe(IndigoTable);
+            const tableRendererProps = renderedTableTransformation.props().tableRenderer({}).props;
             expect(tableRendererProps).toMatchObject({
                 containerMaxHeight: wrapper.props().maxHeight
             });
@@ -137,7 +144,7 @@ describe('PureTable', () => {
 
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             onError.mockReset();
@@ -156,13 +163,13 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             pushDataSpy.mockReset();
 
             const fakeSortItem: AFM.SortItem = getFakeSortItem();
-            renderedTableTransformation.props().tableRenderer().props.onSortChange(fakeSortItem);
+            renderedTableTransformation.props().tableRenderer({}).props.onSortChange(fakeSortItem);
 
             expect(pushDataSpy).toHaveBeenCalledWith({
                 properties: {
@@ -180,13 +187,13 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             pushDataSpy.mockReset();
 
             const fakeSortItem: AFM.SortItem = getFakeSortItem();
-            renderedTableTransformation.props().tableRenderer().props.onSortChange(fakeSortItem);
+            renderedTableTransformation.props().tableRenderer({}).props.onSortChange(fakeSortItem);
 
             expect(pushDataSpy).toHaveBeenCalledWith({
                 properties: {
@@ -205,7 +212,7 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const renderedTableTransformation = wrapper.find(TableTransformation);
             pushDataSpy.mockReset();
@@ -234,14 +241,14 @@ describe('PureTable', () => {
         const props = createProps({ environment: 'dashboards' });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
-            const renderer = wrapper.find(TableTransformation).props().tableRenderer();
+            const renderer = wrapper.find(TableTransformation).props().tableRenderer({});
             renderer.props.onMore({ page: 12 });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
-                const renderer = wrapper.find(TableTransformation).props().tableRenderer();
+                const renderer = wrapper.find(TableTransformation).props().tableRenderer({});
                 expect(renderer.props.page).toBe(12);
             });
         });
@@ -251,20 +258,20 @@ describe('PureTable', () => {
         const props = createProps({ environment: 'dashboards' });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
-            const renderer = wrapper.find(TableTransformation).props().tableRenderer();
+            const renderer = wrapper.find(TableTransformation).props().tableRenderer({});
             renderer.props.onMore({ page: 12 });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
-                const newRenderer = wrapper.find(TableTransformation).props().tableRenderer();
+                const newRenderer = wrapper.find(TableTransformation).props().tableRenderer({});
                 expect(newRenderer.props.page).toBe(12);
 
                 renderer.props.onLess();
-                return delay().then(() => {
+                return testUtils.delay().then(() => {
                     wrapper.update();
-                    const newestRenderer = wrapper.find(TableTransformation).props().tableRenderer();
+                    const newestRenderer = wrapper.find(TableTransformation).props().tableRenderer({});
                     expect(newestRenderer.props.page).toBe(1);
                 });
             });
@@ -278,7 +285,7 @@ describe('PureTable', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const totals = wrapper.find(TableTransformation).props().totals;
             expect(totals).toEqual([{
@@ -305,7 +312,7 @@ describe('PureTable', () => {
         it('should set correct "lastAddedTotalType" when component receives new props', () => {
             const wrapper = createComponent(defaultProps);
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 wrapper.setProps({
                     totals: [{
@@ -315,7 +322,7 @@ describe('PureTable', () => {
                     }]
                 });
 
-                return delay().then(() => {
+                return testUtils.delay().then(() => {
                     wrapper.update();
                     const renderedTableTransformation = wrapper.find(TableTransformation);
                     expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('nat');
@@ -326,7 +333,7 @@ describe('PureTable', () => {
         it('should set "lastAddedTotalType" as empty when "onLastAddedTotalRowHighlightPeriodEnd" is called', () => {
             const wrapper = createComponent(defaultProps);
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.setProps({
                     totals: [{
                         type: 'nat',
@@ -335,15 +342,15 @@ describe('PureTable', () => {
                     }]
                 });
 
-                return delay().then(() => {
+                return testUtils.delay().then(() => {
                     const renderedTableTransformation = wrapper.find(TableTransformation);
                     expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('nat');
 
                     renderedTableTransformation.props().onLastAddedTotalRowHighlightPeriodEnd();
-                    return delay().then(() => {
+                    return testUtils.delay().then(() => {
                         wrapper.update();
                         const renderedTableTransformation = wrapper.find(TableTransformation);
-                        expect(renderedTableTransformation.props().lastAddedTotalType).toEqual('');
+                        expect(renderedTableTransformation.props().lastAddedTotalType).toEqual(null);
                     });
                 });
             });

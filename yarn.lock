@@ -18,34 +18,6 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@55.0.0-alpha6":
-  version "55.0.0-alpha6"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha6.tgz#f21c6441e0a35c9ae98d450fc81044d867dbf4f7"
-  dependencies:
-    "@gooddata/js-utils" "^2.0.0"
-    classnames "2.2.5"
-    custom-event "1.0.1"
-    fixed-data-table-2 "0.7.17"
-    foundation-sites "5.5.3"
-    immutable "3.8.1"
-    invariant "2.2.2"
-    jquery "2.1.4"
-    kefir "3.7.1"
-    lodash "4.17.4"
-    moment "2.18.1"
-    moment-timezone "0.5.11"
-    prop-types "15.6.0"
-    react-day-picker "7.0.7"
-    react-dnd "2.5.4"
-    react-document-title "2.0.3"
-    react-intl "2.4.0"
-    react-native-listener "1.0.2"
-    react-portal "3.1.0"
-    react-responsive "3.0.0"
-    react-textarea-autosize "4.2.2"
-    react-transition-group "1.2.1"
-    rxjs "5.4.3"
-
 "@gooddata/goodstrap@55.0.0-alpha8":
   version "55.0.0-alpha8"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha8.tgz#942d8efbbe17eeb72ab916d6cf903421ecff0656"
@@ -74,27 +46,9 @@
     react-transition-group "1.2.1"
     rxjs "^5.5.6"
 
-"@gooddata/indigo-visualizations@2.0.0-alpha11":
-  version "2.0.0-alpha11"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha11.tgz#faa6d7c3baff106c316840e7d4c144e7a6f48468"
-  dependencies:
-    "@gooddata/goodstrap" "55.0.0-alpha6"
-    "@gooddata/js-utils" "^2.0.0"
-    "@gooddata/numberjs" "3.0.0"
-    classnames "2.2.5"
-    fixed-data-table-2 "0.7.17"
-    highcharts "4.2.5"
-    invariant "2.2.2"
-    lodash "4.17.4"
-    nodelist-foreach-polyfill "1.2.0"
-    prop-types "15.6.0"
-    react-intl "2.4.0"
-    react-measure "1.4.7"
-    rxjs "5.4.3"
-
-"@gooddata/js-utils@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-2.0.0.tgz#357d795cf5c7a7b58ecb14bd04189338a428559c"
+"@gooddata/js-utils@^2.0.0", "@gooddata/js-utils@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-2.0.1.tgz#46290cba9cb1e5f1c5e97e6860b5b1ef943ee779"
   dependencies:
     js-cookie "^2.1.4"
     lodash "^4.17.4"
@@ -116,17 +70,13 @@
     seedrandom "2.4.3"
     uuid "3.1.0"
 
-"@gooddata/numberjs@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.0.0.tgz#9d646f1f9c05614d18e08ac5024b2ba2f7139396"
-
 "@gooddata/numberjs@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/test-storybook@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.2.0.tgz#1bcca2eeac7f30e68e6a770b3c50a93125a8616c"
+"@gooddata/test-storybook@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.2.1.tgz#091a63a578e7db93e23e9465a0d80637f053f515"
   dependencies:
     acorn "5.1.1"
     acorn-jsx "4.0.1"
@@ -384,6 +334,12 @@
     "@types/cheerio" "*"
     "@types/react" "*"
 
+"@types/fixed-data-table-2@0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@types/fixed-data-table-2/-/fixed-data-table-2-0.8.1.tgz#620cd659593eead4b3a9de39a258270de3f132fa"
+  dependencies:
+    "@types/react" "*"
+
 "@types/geojson@*":
   version "7946.0.2"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.2.tgz#0bd0a01ef04e813c2b7580318da9e37c2eadea9c"
@@ -440,6 +396,12 @@
 "@types/react-measure@0.4.7":
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/@types/react-measure/-/react-measure-0.4.7.tgz#f4dd9f6265b488032a31677af5e5eadee67ac8ce"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-portal@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-portal/-/react-portal-3.0.4.tgz#9756d3cc96e7d9834cf94584957dacf5cc55673b"
   dependencies:
     "@types/react" "*"
 
@@ -6622,7 +6584,7 @@ node-sass@4.7.2:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
-nodelist-foreach-polyfill@1.2.0:
+nodelist-foreach-polyfill@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/nodelist-foreach-polyfill/-/nodelist-foreach-polyfill-1.2.0.tgz#92bca739959af68271734087e48474c2fef5152c"
 
@@ -7873,7 +7835,7 @@ react-intl@2.4.0, react-intl@^2.4.0:
     intl-relativeformat "^2.0.0"
     invariant "^2.1.1"
 
-react-measure@1.4.7, react-measure@^1.4.7:
+react-measure@^1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/react-measure/-/react-measure-1.4.7.tgz#a1d2ca0dcfef04978b7ac263a765dcb6a0936fdb"
   dependencies:
@@ -8477,12 +8439,6 @@ rx-lite-aggregates@^4.0.8:
 rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
-
-rxjs@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.4.3.tgz#0758cddee6033d68e0fd53676f0f3596ce3d483f"
-  dependencies:
-    symbol-observable "^1.0.1"
 
 rxjs@^5.5.6:
   version "5.5.6"

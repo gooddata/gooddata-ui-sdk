@@ -4,7 +4,7 @@ import noop = require('lodash/noop');
 import * as React from 'react';
 import { VisualizationObject } from '@gooddata/typings';
 import { initChartPlugins } from './highcharts/chartPlugins';
-import { ChartType } from '../../../constants/visualizationTypes';
+import { VisType } from '../../../constants/visualizationTypes';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
@@ -34,7 +34,7 @@ export interface IChartLimits {
 
 export interface IChartConfig {
     colors?: string[];
-    type?: ChartType;
+    type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;
     limits?: IChartLimits;

@@ -13,7 +13,7 @@ export function wrap(
     const keyProp: any = key ? { key } : {};
     return (
         <IntlWrapper {...keyProp}>
-            <div style={{ height, width, minHeight, minWidth, border: '1px solid pink', margin: 10 }}>
+            <div style={{ height, width, minHeight, minWidth, border: '1px solid pink' }}>
                 {component}
             </div>
         </IntlWrapper>

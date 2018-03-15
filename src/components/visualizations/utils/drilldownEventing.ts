@@ -8,6 +8,8 @@ import * as Highcharts from '@types/highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
 import { isComboChart } from './common';
+import { OnFiredDrillEvent } from '../../../interfaces/Events';
+import { TableRowForDrilling } from '../../../interfaces/Table';
 
 export interface IDrillableItemLocalId extends IDrillableItem {
     localIdentifier: AFM.Identifier;
@@ -19,9 +21,9 @@ export function isDrillableItemLocalId(item: IDrillableItem | IDrillableItemLoca
 
 export interface IDrillIntersection {
     id: string;
-    title: string;
-    value: Execution.DataValue;
-    name: string;
+    title?: string;
+    value?: Execution.DataValue;
+    name?: string;
     uri: string;
     identifier: AFM.Identifier;
 }
@@ -38,15 +40,13 @@ export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldow
 export interface ICellDrillEvent {
     columnIndex: number;
     rowIndex: number;
-    row: string[];
+    row: TableRowForDrilling;
     intersection: IDrillIntersection[];
 }
 
-export type FiredDrillEventCallback = (data: any) => boolean;
-
 export interface IDrillConfig {
     afm: AFM.IAfm;
-    onFiredDrillEvent: FiredDrillEventCallback;
+    onFiredDrillEvent: OnFiredDrillEvent;
 }
 
 export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
@@ -121,7 +121,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
     }
 }
 
-function fireEvent(onFiredDrillEvent: FiredDrillEventCallback, data: any, target: EventTarget) {
+function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: EventTarget) {
     const returnValue = onFiredDrillEvent(data);
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event

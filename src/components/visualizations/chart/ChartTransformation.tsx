@@ -17,7 +17,7 @@ import HighChartsRenderer, {
     renderChart as chartRenderer
 } from './HighChartsRenderer';
 import { IChartConfig } from './Chart';
-import { OnLegendReady } from '../../../interfaces/Events';
+import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
@@ -40,12 +40,13 @@ export interface IChartTransformationProps {
     executionResult: Execution.IExecutionResult;
     mdObject?: VisualizationObject.IVisualizationObjectContent;
 
+    onFiredDrillEvent: OnFiredDrillEvent;
     onLegendReady: OnLegendReady;
+
     afterRender(): void;
     renderer(arg: IHighChartsRendererProps): JSX.Element;
     onDataTooLarge(chartOptions: any): void;
     onNegativeValues(chartOptions: any): void;
-    onFiredDrillEvent(): void;
 }
 
 export interface IChartTransformationState {
@@ -59,7 +60,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         renderer: renderHighCharts,
         afterRender: noop,
         onNegativeValues: null as any,
-        onFiredDrillEvent: noop,
+        onFiredDrillEvent: () => true,
         onLegendReady: noop,
         height: undefined as number,
         width: undefined as number

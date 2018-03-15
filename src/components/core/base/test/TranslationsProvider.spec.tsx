@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { testUtils } from '@gooddata/js-utils';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from '../TranslationsProvider';
 import { Visualization } from '../../../tests/mocks';
 import { IntlWrapper } from '../IntlWrapper';
-import { delay } from '../../../tests/utils';
 
 class Helper extends React.Component<any, any> {
     public render() {
@@ -30,7 +30,7 @@ describe('TranslationsProvider', () => {
         const wrapper = createComponent();
         const translationsProviderProps = wrapper.find(Visualization).props() as ITranslationsComponentProps;
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(translationsProviderProps.numericSymbols).toEqual(numericSymbols);
         });
     });

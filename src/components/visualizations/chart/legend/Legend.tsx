@@ -11,10 +11,10 @@ import { ChartType } from '../../../../constants/visualizationTypes';
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface ILegendProps {
-    responsive: boolean;
+    responsive?: boolean;
     documentObj?: Document;
-    legendItemsEnabled: any;
-    height: number;
+    legendItemsEnabled?: any[];
+    height?: number;
     position: string;
     chartType: ChartType;
     series: any;

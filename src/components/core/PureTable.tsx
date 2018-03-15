@@ -4,11 +4,6 @@ import noop = require('lodash/noop');
 import difference = require('lodash/difference');
 import uniq = require('lodash/uniq');
 
-import {
-    ResponsiveTable,
-    Table as IndigoTable,
-    TableTransformation
-} from '@gooddata/indigo-visualizations';
 import { AFM, VisualizationObject } from '@gooddata/typings';
 
 import { IntlWrapper } from './base/IntlWrapper';
@@ -30,6 +25,9 @@ import {
     commonDefaultProps
 } from './base/VisualizationLoadingHOC';
 import { BaseVisualization } from './base/BaseVisualization';
+import { Table as IndigoTable, ITableProps as IIndigoTableProps } from '../visualizations/table/Table';
+import { ResponsiveTable } from '../visualizations/table/ResponsiveTable';
+import { TableTransformation } from '../visualizations/table/TableTransformation';
 
 export interface ITableProps extends ICommonVisualizationProps {
     height?: number;
@@ -38,12 +36,12 @@ export interface ITableProps extends ICommonVisualizationProps {
     stickyHeaderOffset?: number;
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
-    onTotalsEdit?: Function;
+    onTotalsEdit?: (indexedTotals: IIndexedTotalItem[]) => void;
 }
 
 export interface ITableState {
     page: number;
-    lastAddedTotalType: string;
+    lastAddedTotalType: AFM.TotalType;
 }
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
@@ -71,7 +69,7 @@ class SimpleTable extends
 
         this.state = {
             page: 1,
-            lastAddedTotalType: ''
+            lastAddedTotalType: null
         };
 
         this.onSortChange = this.onSortChange.bind(this);
@@ -91,7 +89,7 @@ class SimpleTable extends
     }
 
     public resetLastAddedTotalType() {
-        this.setState({ lastAddedTotalType: '' });
+        this.setState({ lastAddedTotalType: null });
     }
 
     public onSortChange(sortItem: AFM.SortItem) {
@@ -132,33 +130,44 @@ class SimpleTable extends
     }
 
     private getTableRenderer() {
-        const { environment, totals, maxHeight } = this.props;
+        const { environment, maxHeight } = this.props;
         const { page } = this.state;
 
         if (environment === 'dashboards') {
-            return (props: ITableProps) => (
+            return (props: IIndigoTableProps) => (
                 <ResponsiveTable
                     {...props}
-                    onSortChange={this.onSortChange}
+                    rows={props.rows || []}
                     rowsPerPage={ROWS_PER_PAGE_IN_RESPONSIVE_TABLE}
                     page={page}
                     onMore={this.onMore}
                     onLess={this.onLess}
-                    totals={totals}
+                    onSortChange={this.onSortChange}
+                    executionRequest={this.getExecutionRequest()}
                 />
             );
         }
 
-        return (props: ITableProps) => (
+        return (props: IIndigoTableProps) => (
             <IndigoTable
                 {...props}
                 containerMaxHeight={maxHeight}
                 onSortChange={this.onSortChange}
+                executionRequest={this.getExecutionRequest()}
             />
         );
     }
 
-    private renderTable(tableRenderer: Function) {
+    private getExecutionRequest() {
+        return {
+            execution: {
+                afm: this.props.dataSource.getAfm(),
+                resultSpec: this.props.resultSpec
+            }
+        };
+    }
+
+    private renderTable(tableRenderer: (props: IIndigoTableProps) => any) {
         const {
             afterRender,
             dataSource,
@@ -184,10 +193,7 @@ class SimpleTable extends
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => (
                         <TableTransformation
-                            executionRequest={{
-                                afm: dataSource.getAfm(),
-                                resultSpec
-                            }}
+                            executionRequest={this.getExecutionRequest()}
                             executionResponse={execution.executionResponse}
                             executionResult={
                                 fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString)

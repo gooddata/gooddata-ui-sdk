@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 import {
     oneMeasureOneDimensionDataSource,
     twoMeasuresOneDimensionDataSource
@@ -33,7 +33,7 @@ describe('Headline', () => {
                 dataSource: oneMeasureOneDimensionDataSource
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
                 const wrapperProps = wrapper.props();
@@ -57,7 +57,7 @@ describe('Headline', () => {
                 dataSource: twoMeasuresOneDimensionDataSource
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
                 const wrapperProps = wrapper.props();

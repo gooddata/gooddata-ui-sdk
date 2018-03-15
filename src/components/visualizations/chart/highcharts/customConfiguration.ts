@@ -10,7 +10,7 @@ import isEmpty = require('lodash/isEmpty');
 import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
-import styleVariables from '../../styles/variables';
+import { styleVariables } from '../../styles/variables';
 import { IAxis } from '../chartOptionsBuilder';
 
 import * as numberJS from '@gooddata/numberjs';

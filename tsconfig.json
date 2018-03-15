@@ -1,7 +1,24 @@
 {
-  "extends": "./tsconfig.base.json",
-  "include": [
-    "src/index.ts",
-    "src/typings.d.ts"
+  "compilerOptions": {
+    "declaration": true,
+    "jsx": "react",
+    "lib": [
+      "es7",
+      "dom"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples/node_modules",
+    "examples/dist"
   ]
 }

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 import { Headline as AfmHeadline } from '../Headline';
 import { Headline } from '../../core/Headline';
 import { dummyHeadlineExecuteAfmAdapterFactory } from './utils/DummyHeadlineExecuteAfmAdapter';
@@ -17,7 +17,7 @@ describe('Headline', () => {
                 adapterFactory={dummyHeadlineExecuteAfmAdapterFactory}
             />));
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(Headline).props().resultSpec.dimensions;
             expect(dimensions).toEqual([

@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { testUtils } from '@gooddata/js-utils';
 
 import {
     LoadingComponent,
     ErrorComponent
 } from '../../tests/mocks';
 import { Kpi, IKpiProps } from '../Kpi';
-import { delay } from '../../tests/utils';
 import { ErrorStates } from '../../../constants/errorStates';
 import { emptyResponse, oneMeasureResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 
@@ -49,21 +49,21 @@ describe('Kpi', () => {
 
     it('should accept no format', () => {
         const wrapper = createComponent();
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('42,470,571.16');
         });
     });
 
     it('should use format #,#', () => {
         const wrapper = createComponent({ format: '#,#' });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('42,470,571');
         });
     });
 
     it('should use format with conditions', () => {
         const wrapper = createComponent({ format: '[>=1000000]#,,.0 M;[>=1000]#,.0 K;[>=0]#,##0' });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('42.5 M');
         });
     });
@@ -72,7 +72,7 @@ describe('Kpi', () => {
         const wrapper = createComponent({
             format: '[<600000][red]$#,#.##;[=600000][yellow]$#,#.##;[>600000][green]$#,#.##'
         });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').html())
                 .toEqual('<span class="gdc-kpi"><span style="color: rgb(0, 170, 0);">$42,470,571.16</span></span>');
         });
@@ -80,14 +80,14 @@ describe('Kpi', () => {
 
     it('should use format with M', () => {
         const wrapper = createComponent({ format: '#,,.0 M' });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('42.5 M');
         });
     });
 
     it('should use format with backgroundColor', () => {
         const wrapper = createComponent({ format: '[backgroundcolor=CCCCCC][red]$#,#.##' });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').html())
                 .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0); background-color: rgb(204, 204, 204);">$42,470,571.16</span></span>'); // tslint:disable-line:max-line-length
         });
@@ -95,7 +95,7 @@ describe('Kpi', () => {
 
     it('should use format with dollar sign', () => {
         const wrapper = createComponent({ format: '$#,#.##' });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('$42,470,571.16');
         });
     });
@@ -105,7 +105,7 @@ describe('Kpi', () => {
             format: '[=Null][backgroundcolor=DDDDDD][red]No Value;',
             ExecuteComponent: DummyExecuteEmpty
         });
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find('.gdc-kpi').html())
                 .toEqual('<span class="gdc-kpi"><span style="color: rgb(255, 0, 0); background-color: rgb(221, 221, 221);">No Value</span></span>'); // tslint:disable-line:max-line-length
         });
@@ -117,7 +117,7 @@ describe('Kpi', () => {
             ExecuteComponent: DummyExecuteLoading
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find(LoadingComponent).length).toBe(1);
         });
     });
@@ -128,7 +128,7 @@ describe('Kpi', () => {
             ExecuteComponent: DummyExecuteError
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(wrapper.find(ErrorComponent).length).toBe(1);
         });
     });

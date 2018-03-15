@@ -33,8 +33,8 @@ export interface ICommonVisualizationProps extends IEvents {
 
 export interface ILoadingInjectedProps {
     execution: Execution.IExecutionResponses;
-    onDataTooLarge: Function;
-    onNegativeValues: Function;
+    onDataTooLarge: any;
+    onNegativeValues: any;
     error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
@@ -60,7 +60,7 @@ export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSource
     pushData: noop,
     locale: 'en-US',
     drillableItems: [],
-    onFiredDrillEvent: noop
+    onFiredDrillEvent: () => true
 };
 
 export function visualizationLoadingHOC<T extends ICommonVisualizationProps & IDataSourceProviderInjectedProps>(

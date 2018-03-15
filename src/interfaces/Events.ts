@@ -8,7 +8,7 @@ export interface ILoadingState {
 
 export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
-export type OnFiredDrillEvent = (param: IDrillEvent) => void | boolean;
+export type OnFiredDrillEvent = (param: IDrillEvent) => boolean | void;
 
 export interface ILegendItem {
     name: string;
