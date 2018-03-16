@@ -70,14 +70,14 @@
     lodash "^4.17.4"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@53.1.2":
-  version "53.1.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-53.1.2.tgz#e4c93f4b82662af1dd7326b14b49c4d1afea2372"
+"@gooddata/goodstrap@55.0.0-alpha0":
+  version "55.0.0-alpha0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha0.tgz#bd9aedd0a1ebf1db4e09711aff7797beb9282472"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
     custom-event "1.0.1"
-    fixed-data-table-2 "0.7.13"
+    fixed-data-table-2 "0.7.17"
     foundation-sites "5.5.3"
     immutable "3.8.1"
     invariant "2.2.2"
@@ -86,19 +86,21 @@
     lodash "4.17.4"
     moment "2.18.1"
     moment-timezone "0.5.11"
-    react-day-picker "6.2.1"
-    react-dnd "2.1.4"
+    prop-types "15.6.0"
+    react-day-picker "7.0.7"
+    react-dnd "2.5.4"
     react-document-title "2.0.3"
-    react-intl "2.2.3"
+    react-intl "2.4.0"
     react-native-listener "1.0.2"
-    react-portal "3.0.0"
-    react-responsive "1.2.6"
-    react-textarea-autosize "4.0.5"
+    react-portal "3.1.0"
+    react-responsive "1.2.10"
+    react-textarea-autosize "4.2.2"
+    react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@55.0.0-alpha0":
-  version "55.0.0-alpha0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha0.tgz#bd9aedd0a1ebf1db4e09711aff7797beb9282472"
+"@gooddata/goodstrap@55.0.0-alpha1":
+  version "55.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha1.tgz#62ed54cce34c698cbcbc03787dee8173b962d81f"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
@@ -2454,7 +2456,7 @@ disposables@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/disposables/-/disposables-1.0.2.tgz#36c6a674475f55a2d6913567a601444e487b4b6e"
 
-dnd-core@^2.0.1, dnd-core@^2.5.4:
+dnd-core@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-2.5.4.tgz#0c70a8dcbb609c0b222e275fcae9fa83e5897397"
   dependencies:
@@ -3225,10 +3227,6 @@ find-up@^2.0.0, find-up@^2.1.0:
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
     locate-path "^2.0.0"
-
-fixed-data-table-2@0.7.13:
-  version "0.7.13"
-  resolved "https://registry.yarnpkg.com/fixed-data-table-2/-/fixed-data-table-2-0.7.13.tgz#093f098da9a6ce69d83634183b7566234d12ac8c"
 
 fixed-data-table-2@0.7.17:
   version "0.7.17"
@@ -4025,31 +4023,15 @@ intl-format-cache@^2.0.5:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-2.1.0.tgz#04a369fecbfad6da6005bae1f14333332dcf9316"
 
-intl-messageformat-parser@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.2.0.tgz#5906b7f953ab7470e0dc8549097b648b991892ff"
-
 intl-messageformat-parser@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
-
-intl-messageformat@1.3.0, intl-messageformat@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-1.3.0.tgz#f7d926aded7a3ab19b2dc601efd54e99a4bd4eae"
-  dependencies:
-    intl-messageformat-parser "1.2.0"
 
 intl-messageformat@^2.0.0, intl-messageformat@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
   dependencies:
     intl-messageformat-parser "1.4.0"
-
-intl-relativeformat@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/intl-relativeformat/-/intl-relativeformat-1.3.0.tgz#893dc7076fccd380cf091a2300c380fa57ace45b"
-  dependencies:
-    intl-messageformat "1.3.0"
 
 intl-relativeformat@^2.0.0:
   version "2.1.0"
@@ -6119,28 +6101,12 @@ react-datepicker@1.1.0:
     react-onclickoutside "^6.7.1"
     react-popper "^0.7.4"
 
-react-day-picker@6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-6.2.1.tgz#fc22b809db792386d1468d3f46d725ad91e04db9"
-  dependencies:
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
-
 react-day-picker@7.0.7:
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.0.7.tgz#4af30404ebb19125ff5f9f2d62e6204b4e68f119"
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react-dnd@2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.1.4.tgz#dd2afeddddd5ff4507d795a5bd44361c84374c0f"
-  dependencies:
-    disposables "^1.0.1"
-    dnd-core "^2.0.1"
-    invariant "^2.1.0"
-    lodash "^4.2.0"
 
 react-dnd@2.5.4:
   version "2.5.4"
@@ -6177,15 +6143,6 @@ react-helmet@5.2.0:
     object-assign "^4.1.1"
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
-
-react-intl@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.2.3.tgz#8eebb03cddc38b337ed22fab78037ab53a594270"
-  dependencies:
-    intl-format-cache "^2.0.5"
-    intl-messageformat "^1.3.0"
-    intl-relativeformat "^1.3.0"
-    invariant "^2.1.1"
 
 react-intl@2.4.0, react-intl@^2.4.0:
   version "2.4.0"
@@ -6227,10 +6184,6 @@ react-popper@^0.7.4:
     popper.js "^1.12.5"
     prop-types "^15.5.10"
 
-react-portal@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.0.0.tgz#9304fce836e8a3216b22588f8dc91b447728f0ae"
-
 react-portal@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.1.0.tgz#865c44fb72a1da106c649206936559ce891ee899"
@@ -6250,13 +6203,6 @@ react-responsive@1.2.10:
     hyphenate-style-name "^1.0.0"
     matchmedia "^0.1.2"
     prop-types "^15.5.7"
-
-react-responsive@1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/react-responsive/-/react-responsive-1.2.6.tgz#0173b3a59ef094011f79464ce618e2e26fe117fc"
-  dependencies:
-    hyphenate-style-name "^1.0.0"
-    matchmedia "^0.1.2"
 
 react-router-dom@4.2.2:
   version "4.2.2"
@@ -6306,10 +6252,6 @@ react-syntax-highlighter@6.1.2:
     lowlight "~1.9.1"
     prismjs "^1.8.4"
     refractor "^2.0.0"
-
-react-textarea-autosize@4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.0.5.tgz#55379f6a6fa575fc87d1b8de2756e57e3b6c995d"
 
 react-textarea-autosize@4.2.2:
   version "4.2.2"
