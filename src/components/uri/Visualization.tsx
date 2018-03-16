@@ -24,6 +24,8 @@ import { ISubject } from '../../helpers/async';
 import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
 import * as MdObjectHelper from '../../helpers/MdObjectHelper';
 import { fillPoPTitlesAndAliases } from '../../helpers/popHelper';
+import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
+import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
     IDrillableItem,
     ErrorStates,
@@ -74,8 +76,8 @@ export interface IVisualizationProps extends IEvents {
     BaseChartComponent?: any;
     TableComponent?: any;
     HeadlineComponent?: any;
-    ErrorComponent?: React.ComponentClass<any>;
-    LoadingComponent?: React.ComponentClass<any>;
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
     onLegendReady?: OnLegendReady;
 }
 
@@ -138,8 +140,8 @@ export class VisualizationWrapped
         BaseChartComponent: BaseChart,
         TableComponent: SortableTable,
         HeadlineComponent: Headline,
-        LoadingComponent: null,
-        ErrorComponent: null
+        ErrorComponent,
+        LoadingComponent
     };
 
     private visualizationUri: string;
@@ -244,6 +246,7 @@ export class VisualizationWrapped
             onLoadingChanged,
             locale,
             config,
+            intl,
             BaseChartComponent,
             TableComponent,
             HeadlineComponent,
@@ -254,12 +257,18 @@ export class VisualizationWrapped
 
         if (error !== null && error.status !== ErrorStates.OK) {
             return ErrorComponent
-                ? <ErrorComponent error={this.state.error} props={this.props} />
+                ? (
+                    <ErrorComponent
+                        code={this.state.error.status}
+                        message={intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' })}
+                        description={intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })}
+                    />
+                )
                 : null;
         }
         if (isLoading || !dataSource) {
             return LoadingComponent
-                ? <LoadingComponent props={this.props} />
+                ? <LoadingComponent />
                 : null;
         }
 

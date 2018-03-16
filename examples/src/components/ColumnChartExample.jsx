@@ -5,8 +5,6 @@ import { ColumnChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from '../utils/fixtures';
 
 export class ColumnChartExample extends Component {
@@ -54,8 +52,6 @@ export class ColumnChartExample extends Component {
                     viewBy={month}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

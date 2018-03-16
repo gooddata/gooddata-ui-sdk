@@ -84,6 +84,13 @@
     "test-storybook": "test-storybook"
   },
   "typings": "dist/index.d.ts",
+  "test-storybook": {
+    "AFM components - PieChart": {
+      "error": {
+        "readySelector": ".s-error"
+      }
+    }
+  },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "transform": {

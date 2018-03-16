@@ -4,8 +4,6 @@ import { BarChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { totalSalesIdentifier, locationResortIdentifier, projectId } from '../utils/fixtures';
 
 export class BarChartExample extends Component {
@@ -53,8 +51,6 @@ export class BarChartExample extends Component {
                     viewBy={locationResort}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

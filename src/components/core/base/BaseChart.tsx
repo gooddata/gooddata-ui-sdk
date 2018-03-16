@@ -16,7 +16,7 @@ import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultprops
+    commonDefaultProps
 } from './VisualizationLoadingHOC';
 import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
 import { BaseVisualization } from './BaseVisualization';
@@ -54,7 +54,7 @@ export interface IBaseChartProps extends IChartProps {
 
 export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoadingInjectedProps, {}> {
     public static defaultProps: Partial<IBaseChartProps & ILoadingInjectedProps> = {
-        ...commonDefaultprops,
+        ...commonDefaultProps,
         onDataTooLarge: noop,
         onLegendReady: noop,
         config: {},

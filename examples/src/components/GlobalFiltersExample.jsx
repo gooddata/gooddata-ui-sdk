@@ -15,8 +15,8 @@ import {
     menuCategoryAttributeDFIdentifier
 } from '../utils/fixtures';
 import { Layout } from '../components/utils/Layout';
-import { Loading } from '../components/utils/Loading';
-import { Error } from '../components/utils/Error';
+import { CustomLoading } from '../components/utils/CustomLoading';
+import { CustomError } from '../components/utils/CustomError';
 
 export class EmployeeProfile extends React.Component {
     static propTypes = {
@@ -180,9 +180,9 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <Loading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline height={20} {...otherProps} />
                                         }
-                                        ErrorComponent={Error}
+                                        ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
 
@@ -193,9 +193,9 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <Loading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline height={20} {...otherProps} />
                                         }
-                                        ErrorComponent={Error}
+                                        ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
                             </div>
@@ -207,8 +207,8 @@ export class EmployeeProfile extends React.Component {
                                         viewBy={menuCategoryAttribute}
                                         filters={[employeeFilter]}
                                         projectId={projectId}
-                                        LoadingComponent={Loading}
-                                        ErrorComponent={Error}
+                                        LoadingComponent={CustomLoading}
+                                        ErrorComponent={CustomError}
                                         config={{ legend: { position: 'bottom' } }}
                                     />
                                 </div>
@@ -221,8 +221,8 @@ export class EmployeeProfile extends React.Component {
                                         viewBy={menuItemNameAttribute}
                                         filters={[employeeFilter]}
                                         projectId={projectId}
-                                        LoadingComponent={Loading}
-                                        ErrorComponent={Error}
+                                        LoadingComponent={CustomLoading}
+                                        ErrorComponent={CustomError}
                                     />
                                 </div>
                             </div>
@@ -238,12 +238,12 @@ export const GlobalFiltersExample = () => (
     <AttributeElements identifier={employeeNameIdentifier} projectId={projectId} options={{ limit: 20 }}>
         {({ validElements, error, isLoading }) => {
             if (error) {
-                return <Error error={{ status: '400', message: error }} />;
+                return <CustomError message="There was an error getting Employee Name attribute values" />;
             }
             if (isLoading) {
                 return (
                     <div style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-                        <Loading speed={2} color="tomato" height="100px" />
+                        <CustomLoading speed={2} color="tomato" imageHeight="100px" />
                     </div>
                 );
             }

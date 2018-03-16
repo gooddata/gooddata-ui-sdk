@@ -5,7 +5,8 @@ import { BaseVisualization } from '../BaseVisualization';
 import { delay } from '../../../tests/utils';
 import {
     ICommonVisualizationProps,
-    ILoadingInjectedProps
+    ILoadingInjectedProps,
+    commonDefaultProps
 } from '../VisualizationLoadingHOC';
 import {
     LoadingComponent,
@@ -14,13 +15,18 @@ import {
 } from '../../../tests/mocks';
 import { ErrorStates } from '../../../../constants/errorStates';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
-import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
+
+const intlMock = {
+    formatMessage: ({ id }: { id: string}) => id
+};
 
 describe('Base visualization child', () => {
     const TestVizInnerComponent = DummyComponent;
 
-    class BaseVisualizationChild extends
-        BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, {}> {
+    class BaseVisualizationChild extends BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps, {}> {
+        public static defaultProps: Partial<ICommonVisualizationProps & ILoadingInjectedProps> = {
+            ...commonDefaultProps
+        };
 
         protected renderVisualization() {
             return <TestVizInnerComponent />;
@@ -28,17 +34,17 @@ describe('Base visualization child', () => {
     }
 
     const createComponent = (customProps: Partial<ICommonVisualizationProps & ILoadingInjectedProps>) => {
-        return mount<Partial<ICommonVisualizationProps>>((
+        return mount<Partial<ICommonVisualizationProps>>(
             <BaseVisualizationChild
-                dataSource={null}
                 error={ErrorStates.OK}
                 execution={null}
                 isLoading={false}
                 onDataTooLarge={jest.fn()}
                 onNegativeValues={jest.fn()}
+                intl={intlMock as any}
                 {...customProps}
             />
-        ));
+        );
     };
 
     it('should render result of "renderVisualization" when correct execution provided', () => {
@@ -54,14 +60,15 @@ describe('Base visualization child', () => {
         });
     });
 
-    it('should render null when loading if the loading component has not been specified', () => {
+    it('should render default LoadingComponent when loading if the loading component has not been specified', () => {
         const wrapper = createComponent({
             isLoading: true,
             error: ErrorStates.OK
         });
 
         return delay().then(() => {
-            expect(wrapper.html()).toBe(null);
+            const loadingComponent = wrapper.find('.s-loading');
+            expect(loadingComponent.length).toBe(1);
         });
     });
 
@@ -73,18 +80,19 @@ describe('Base visualization child', () => {
         });
 
         return delay().then(() => {
-            const loadingComponent = wrapper.find(LoadingComponent);
+            const loadingComponent = wrapper.find('LoadingComponent');
             expect(loadingComponent.length).toBe(1);
         });
     });
 
-    it('should render null on error when ErrorComponent has not been specified', () => {
+    it('should render default ErrorComponent on error when ErrorComponent has not been specified', () => {
         const wrapper = createComponent({
             error: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE
         });
 
         return delay().then(() => {
-            expect(wrapper.html()).toBe(null);
+            const errorComponent = wrapper.find('ErrorComponent');
+            expect(errorComponent.length).toBe(1);
         });
     });
 
@@ -100,21 +108,20 @@ describe('Base visualization child', () => {
 
             const errorComponent = wrapper.find(ErrorComponent);
             expect(errorComponent.length).toBe(1);
-            expect(errorComponent.props().props).toBe(wrapper.props());
-            expect(errorComponent.props().error).toEqual({ status: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE });
+            expect(errorComponent.props().code).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
         });
     });
 
     it('should render LoadingComponent when execution is null', () => {
         const wrapper = createComponent({
             execution: null,
-            LoadingComponent
+            LoadingComponent,
+            isLoading: true
         });
 
         return delay().then(() => {
-            const errorComponent = wrapper.find(LoadingComponent);
-            expect(errorComponent.length).toBe(1);
-            expect(errorComponent.props().props).toBe(wrapper.props());
+            const loadingComponent = wrapper.find(LoadingComponent);
+            expect(loadingComponent.length).toBe(1);
         });
     });
 });

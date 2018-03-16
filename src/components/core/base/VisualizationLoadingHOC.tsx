@@ -15,6 +15,11 @@ import { getVisualizationOptions } from '../../../helpers/options';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
+import { injectIntl, InjectedIntl } from 'react-intl';
+import { IntlWrapper } from '../../core/base/IntlWrapper';
+
+import { LoadingComponent, ILoadingProps } from '../../simple/LoadingComponent';
+import { ErrorComponent, IErrorProps } from '../../simple/ErrorComponent';
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
@@ -23,8 +28,8 @@ export interface ICommonVisualizationProps extends IEvents {
     drillableItems?: IDrillableItem[];
     afterRender?: Function;
     pushData?: Function;
-    ErrorComponent?: React.ComponentClass<any>;
-    LoadingComponent?: React.ComponentClass<any>;
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
     visualizationProperties?: IVisualizationProperties;
 }
 
@@ -34,6 +39,7 @@ export interface ILoadingInjectedProps {
     onNegativeValues: Function;
     error: string;
     isLoading: boolean;
+    intl: InjectedIntl;
 }
 
 export interface IVisualizationLoadingState {
@@ -48,12 +54,12 @@ const defaultErrorHandler = (error: any) => {
     }
 };
 
-export const commonDefaultprops: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
+export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
     resultSpec: {},
     onError: defaultErrorHandler,
     onLoadingChanged: noop,
-    ErrorComponent: null,
-    LoadingComponent: null,
+    ErrorComponent,
+    LoadingComponent,
     afterRender: noop,
     pushData: noop,
     locale: 'en-US',
@@ -64,8 +70,7 @@ export const commonDefaultprops: Partial<ICommonVisualizationProps & IDataSource
 export function visualizationLoadingHOC<T extends ICommonVisualizationProps & IDataSourceProviderInjectedProps>(
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>
 ): React.ComponentClass<T> {
-
-    return class WrappedComponent
+    class LoadingHOCWrapped
         extends React.Component<T & ILoadingInjectedProps, IVisualizationLoadingState> {
 
         public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps;
@@ -95,6 +100,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
         public render() {
             const { result, isLoading, error } = this.state;
+            const { intl } = this.props;
 
             return (
                 <InnerComponent
@@ -104,6 +110,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                     onNegativeValues={this.onNegativeValues}
                     error={error}
                     isLoading={isLoading}
+                    intl={intl}
                 />
             );
         }
@@ -188,6 +195,18 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
         private onNegativeValues() {
             this.onError(ErrorStates.NEGATIVE_VALUES);
+        }
+    }
+
+    const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
+
+    return class LoadingHOC extends React.Component<T & ILoadingInjectedProps, null> {
+        public render() {
+            return (
+                <IntlWrapper locale={this.props.locale}>
+                    <IntlLoadingHOC {...this.props}/>
+                </IntlWrapper>
+            );
         }
     };
 }

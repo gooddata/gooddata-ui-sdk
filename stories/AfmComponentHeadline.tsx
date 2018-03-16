@@ -14,6 +14,8 @@ storiesOf('AFM components - Headline', module)
                 <Headline
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

@@ -31,6 +31,8 @@ storiesOf('Table', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     attributes={[ATTRIBUTE_1]}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -43,6 +45,8 @@ storiesOf('Table', module)
                     measures={[MEASURE_1_WITH_ALIAS]}
                     attributes={[ATTRIBUTE_1_WITH_ALIAS]}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -56,6 +60,8 @@ storiesOf('Table', module)
                     attributes={[ATTRIBUTE_1]}
                     totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -71,6 +77,8 @@ storiesOf('Table', module)
                     totalsEditAllowed={true}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -95,6 +103,8 @@ storiesOf('Table', module)
                     totalsEditAllowed={true}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

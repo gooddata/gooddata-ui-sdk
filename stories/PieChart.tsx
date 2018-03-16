@@ -14,6 +14,8 @@ storiesOf('PieChart', module)
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -26,6 +28,8 @@ storiesOf('PieChart', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -38,6 +42,8 @@ storiesOf('PieChart', module)
                     measures={[MEASURE_1_WITH_ALIAS]}
                     viewBy={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -51,6 +57,8 @@ storiesOf('PieChart', module)
                     viewBy={ATTRIBUTE_1}
                     config={{ legend: { position: 'bottom' } }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

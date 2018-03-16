@@ -13,12 +13,9 @@ import { setTelemetryHeaders } from '../helpers/utils';
 
 export { Requireable };
 
-export type IDataTableFactory = (sdk: ISdk, projectId: string) => DataTable<Execution.IExecutionResponses>;
+const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
-export interface ILoadingStateProps {
-    error?: object;
-    props: object;
-}
+export type IDataTableFactory = (sdk: ISdk, projectId: string) => DataTable<Execution.IExecutionResponses>;
 
 export interface IExecuteProps extends IEvents {
     afm: AFM.IAfm;
@@ -88,16 +85,17 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         });
 
         this.dataTable.onError((error: Execution.IError) => {
-            const { status } = error.response;
+            const statusMap = {
+                [ErrorCodes.HTTP_TOO_LARGE]: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                [ErrorCodes.HTTP_BAD_REQUEST]: ErrorStates.BAD_REQUEST,
+                [UNKNOWN_ERROR]: ErrorStates.UNKNOWN_ERROR
+            };
+            const errorCode = error && error.response && error.response.status || UNKNOWN_ERROR;
+            const status = statusMap[ statusMap.hasOwnProperty(errorCode) ? errorCode : UNKNOWN_ERROR];
             const newError = {
-                status: ErrorStates.UNKNOWN_ERROR,
+                status,
                 error
             };
-            if (status === ErrorCodes.HTTP_TOO_LARGE) {
-                newError.status = ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
-            } else if (status === ErrorCodes.HTTP_BAD_REQUEST) {
-                newError.status = ErrorStates.BAD_REQUEST;
-            }
 
             this.setState({
                 result: null,

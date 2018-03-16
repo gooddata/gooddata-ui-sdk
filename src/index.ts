@@ -7,6 +7,8 @@ import { BaseChart, ILegendConfig, IBaseChartProps } from './components/core/bas
 import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
+import { ErrorComponent } from './components/simple/ErrorComponent';
+import { LoadingComponent } from './components/simple/LoadingComponent';
 import { Kpi } from './components/simple/Kpi';
 import { Visualization, VisualizationEnvironment } from './components/uri/Visualization';
 import { ErrorStates, ErrorCodes } from './constants/errorStates';
@@ -47,6 +49,8 @@ export {
     CoreComponents,
     ErrorCodes,
     ErrorStates,
+    ErrorComponent,
+    LoadingComponent,
     Execute,
     generateDimensions,
     Headline,

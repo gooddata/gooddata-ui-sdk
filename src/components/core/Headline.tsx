@@ -13,7 +13,7 @@ import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultprops
+    commonDefaultProps
 } from './base/VisualizationLoadingHOC';
 import { BaseVisualization } from './base/BaseVisualization';
 
@@ -22,7 +22,7 @@ export { Requireable };
 export class HeadlineStateless extends
     BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, {}> {
 
-    public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultprops;
+    public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultProps;
 
     public static propTypes = HeadlinePropTypes;
 

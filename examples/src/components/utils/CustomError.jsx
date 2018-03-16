@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-export const Error = ({ error, height }) => (
+export const CustomError = ({ message, height }) => (
     <div
         className="s-error"
         style={{
@@ -28,20 +28,17 @@ export const Error = ({ error, height }) => (
             }}
         >
             <div className="gd-message-text">
-                <strong>{JSON.stringify(error)}</strong>
+                <strong>{message}</strong>
             </div>
         </div>
     </div>
 );
-Error.propTypes = {
-    error: PropTypes.shape({
-        status: PropTypes.string.isRequired,
-        message: PropTypes.string
-    }).isRequired,
+CustomError.propTypes = {
+    message: PropTypes.string.isRequired,
     height: PropTypes.any
 };
-Error.defaultProps = {
+CustomError.defaultProps = {
     height: undefined
 };
 
-export default Error;
+export default CustomError;

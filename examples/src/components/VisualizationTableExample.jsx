@@ -4,8 +4,6 @@ import '@gooddata/react-components/styles/css/main.css';
 import { Visualization } from '@gooddata/react-components';
 
 import { projectId, tableVisualizationIdentifier } from '../utils/fixtures';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 export class VisualizationTable extends Component {
     render() {
@@ -14,8 +12,6 @@ export class VisualizationTable extends Component {
                 <Visualization
                     projectId={projectId}
                     identifier={tableVisualizationIdentifier}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

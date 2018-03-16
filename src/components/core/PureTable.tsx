@@ -27,7 +27,7 @@ import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultprops
+    commonDefaultProps
 } from './base/VisualizationLoadingHOC';
 import { BaseVisualization } from './base/BaseVisualization';
 
@@ -52,7 +52,7 @@ class SimpleTable extends
     BaseVisualization<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, ITableState> {
 
     public static defaultProps: Partial<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
-        ...commonDefaultprops,
+        ...commonDefaultProps,
         stickyHeaderOffset: 0,
         height: null,
         maxHeight: null,
