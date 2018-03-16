@@ -13,7 +13,7 @@ import {
 } from '@gooddata/data-layer';
 
 import { IntlWrapper } from './IntlWrapper';
-import { IEvents, ILoadingState } from '../../../interfaces/Events';
+import { IEvents, ILoadingState, OnLegendReady } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { IDataSource } from '../../../interfaces/DataSource';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
@@ -65,6 +65,7 @@ export interface IBaseChartProps extends IChartProps {
     ErrorComponent?: React.ComponentType<ILoadingStateProps>;
     LoadingComponent?: React.ComponentType<ILoadingStateProps>;
     visualizationComponent?: React.ComponentClass<any>; // for testing
+    onLegendReady?: OnLegendReady;
 }
 
 export interface IBaseChartState {
@@ -93,6 +94,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
         pushData: noop,
         drillableItems: [],
         onFiredDrillEvent: noop,
+        onLegendReady: noop,
         config: {},
         visualizationProperties: null,
         visualizationComponent: Visualization
@@ -200,6 +202,7 @@ export class BaseChart extends React.Component<IBaseChartProps, IBaseChartState>
                                 onNegativeValues={this.onNegativeValues}
                                 drillableItems={this.props.drillableItems}
                                 onFiredDrillEvent={this.props.onFiredDrillEvent}
+                                onLegendReady={this.props.onLegendReady}
                                 numericSymbols={translationProps.numericSymbols}
                             />
                         );

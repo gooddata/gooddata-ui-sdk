@@ -15,7 +15,7 @@ import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-in
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart, IChartConfig } from '../core/base/BaseChart';
 import { SortableTable } from '../core/SortableTable';
-import { IEvents } from '../../interfaces/Events';
+import { IEvents, OnLegendReady } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
 import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
 import { IDataSource } from '../../interfaces/DataSource';
@@ -72,6 +72,7 @@ export interface IVisualizationProps extends IEvents {
     TableComponent?: any;
     ErrorComponent?: React.ComponentClass<any>;
     LoadingComponent?: React.ComponentClass<any>;
+    onLegendReady?: OnLegendReady;
 }
 
 export interface IVisualizationState {
@@ -122,6 +123,7 @@ export class VisualizationWrapped
 
     public static defaultProps: Partial<IVisualizationProps> = {
         onError: noop,
+        onLegendReady: noop,
         filters: [],
         uriResolver,
         fetchVisObject,
@@ -219,6 +221,7 @@ export class VisualizationWrapped
         const {
             drillableItems,
             onFiredDrillEvent,
+            onLegendReady,
             onError,
             onLoadingChanged,
             locale,
@@ -266,6 +269,7 @@ export class VisualizationWrapped
                         onFiredDrillEvent={onFiredDrillEvent}
                         onError={onError}
                         onLoadingChanged={onLoadingChanged}
+                        onLegendReady={onLegendReady}
                         LoadingComponent={LoadingComponent}
                         ErrorComponent={ErrorComponent}
                         locale={locale}

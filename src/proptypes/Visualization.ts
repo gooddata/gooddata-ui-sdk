@@ -25,5 +25,6 @@ export const VisualizationPropType = {
     BaseChartComponent: PropTypes.func,
     TableComponent: PropTypes.func,
     LoadingComponent: PropTypes.func,
-    ErrorComponent: PropTypes.func
+    ErrorComponent: PropTypes.func,
+    onLegendReady: PropTypes.func
 };

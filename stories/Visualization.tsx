@@ -163,6 +163,23 @@ storiesOf('Visualization', module)
             </div>
         )
     ))
+    .add('chart example with custom legend', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                    onLegendReady={action('onLegendReady')} // NOTE: onClick is not shown in action logger
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
     .add('chart with applied filter and custom colors', () => {
         const filter: AFM.IAbsoluteDateFilter = {
             absoluteDateFilter: {
