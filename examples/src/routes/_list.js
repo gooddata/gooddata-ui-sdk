@@ -10,12 +10,14 @@ import Execute from './Execute';
 import DatePicker from './DatePicker';
 import ResponsiveChart from './ResponsiveChart';
 import DynamicMeasures from './DynamicMeasures';
+import CustomLegend from './CustomLegend';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
     { path: '/advanced/dynamic-measures', title: 'Dynamic Measures', Component: DynamicMeasures },
     { path: '/advanced/date-picker', title: 'Date Picker', Component: DatePicker },
-    { path: '/advanced/responsive', title: 'Responsive Chart', Component: ResponsiveChart }
+    { path: '/advanced/responsive', title: 'Responsive Chart', Component: ResponsiveChart },
+    { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend }
 ];
 
 const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advancedUseCasesRoutes });

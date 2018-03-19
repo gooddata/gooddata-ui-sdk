@@ -59,4 +59,21 @@ describe('BaseChart', () => {
             });
         });
     });
+
+    it('should pass "onLegendReady" to visualization', () => {
+        const onLegendReady = jest.fn();
+
+        const props = createProps({
+            onLegendReady
+        });
+
+        const wrapper = createComponent(props);
+        return delay().then(() => {
+            wrapper.update();
+
+            expect(
+                wrapper.find(Visualization).prop('onLegendReady')
+            ).toEqual(onLegendReady);
+        });
+    });
 });

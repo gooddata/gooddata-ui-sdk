@@ -20,6 +20,7 @@ import {
 } from './VisualizationLoadingHOC';
 import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
 import { BaseVisualization } from './BaseVisualization';
+import { OnLegendReady } from '../../../interfaces/Events';
 export { Requireable };
 
 export interface ILegendConfig {
@@ -48,12 +49,14 @@ export type IChartProps = ICommonChartProps & IDataSourceProviderInjectedProps;
 export interface IBaseChartProps extends IChartProps {
     type: ChartType;
     visualizationComponent?: React.ComponentClass<any>; // for testing
+    onLegendReady?: OnLegendReady;
 }
 
 export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoadingInjectedProps, {}> {
     public static defaultProps: Partial<IBaseChartProps & ILoadingInjectedProps> = {
         ...commonDefaultprops,
         onDataTooLarge: noop,
+        onLegendReady: noop,
         config: {},
         visualizationProperties: null,
         visualizationComponent: Visualization
@@ -96,6 +99,7 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                                 onNegativeValues={this.props.onNegativeValues}
                                 drillableItems={this.props.drillableItems}
                                 onFiredDrillEvent={this.props.onFiredDrillEvent}
+                                onLegendReady={this.props.onLegendReady}
                                 numericSymbols={translationProps.numericSymbols}
                             />
                         );
