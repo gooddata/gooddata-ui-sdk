@@ -38,9 +38,9 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@2.0.0-alpha4":
-  version "2.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha4.tgz#6f1089d07a3c149efa2818c4410931598d6bf547"
+"@gooddata/indigo-visualizations@2.0.0-alpha5":
+  version "2.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha5.tgz#b1faa9c37d686fb6ab5d44ea6d4147805150ad31"
   dependencies:
     "@gooddata/goodstrap" "55.0.0-alpha0"
     "@gooddata/js-utils" "0.7.1"
@@ -54,7 +54,6 @@
     prop-types "15.6.0"
     react-intl "2.4.0"
     react-measure "1.4.7"
-    react-textfit "1.1.0"
     rxjs "5.4.3"
 
 "@gooddata/js-utils@0.7.1":
@@ -7328,7 +7327,7 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
 
-process@^0.11.1, process@^0.11.10, process@^0.11.9:
+process@^0.11.1, process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
@@ -7749,13 +7748,6 @@ react-textarea-autosize@4.2.2:
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.2.2.tgz#57f0b676a8845afd0d0f9dde42efe8d9c063f62e"
   dependencies:
     prop-types "^15.5.8"
-
-react-textfit@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-textfit/-/react-textfit-1.1.0.tgz#088855580f2e7aad269efc81b734bf636877d0e1"
-  dependencies:
-    process "^0.11.9"
-    prop-types "^15.5.10"
 
 react-toggle-button@^2.1.0:
   version "2.2.0"
