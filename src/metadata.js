@@ -582,6 +582,7 @@ export function translateElementLabelsToUris(projectId, labelUri, patterns, mode
  *      - complement {Boolean}
  *      - includeTotalCountWithoutFilters {Boolean}
  *      - restrictiveDefinition {String}
+ *      - afm {Object}
  * @return {Object} ValidElements response with:
  *      - items {Array} elements
  *      - paging {Object}
@@ -590,13 +591,35 @@ export function translateElementLabelsToUris(projectId, labelUri, patterns, mode
 export function getValidElements(projectId, id, options = {}) {
     const query = pick(options, ['limit', 'offset', 'order', 'filter', 'prompt']);
     const queryParams = queryString(query);
+    const pickedOptions = pick(options, [
+        'uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition'
+    ]);
+    const { afm } = options;
 
-    const requestBody = pick(options, ['uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition']);
-    return post(`/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ''), {
-        data: JSON.stringify({
-            validElementsRequest: requestBody
-        })
-    }).then(parseJSON);
+    const getRequestBodyWithReportDefinition =
+        () => post(
+            `/gdc/app/projects/${projectId}/executeAfm/debug`, {
+                body: {
+                    execution: {
+                        afm
+                    }
+                }
+            }
+        )
+        .then(parseJSON)
+        .then(reportDefinitionResult => ({
+            ...pickedOptions,
+            restrictiveDefinitionContent: reportDefinitionResult.reportDefinition.content
+        }));
+    const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
+
+    return getOptions()
+        .then(requestBody => post(
+            `/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ''), {
+                data: JSON.stringify({ validElementsRequest: requestBody })
+            }
+        )
+        .then(parseJSON));
 }
 
 /**
