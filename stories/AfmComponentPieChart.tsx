@@ -7,7 +7,8 @@ import { PieChart } from '../src/components/afm/PieChart';
 import {
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES,
-    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE
 } from './data/afmComponentProps';
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
@@ -20,6 +21,8 @@ storiesOf('AFM components - PieChart', module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -31,6 +34,8 @@ storiesOf('AFM components - PieChart', module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -42,6 +47,8 @@ storiesOf('AFM components - PieChart', module)
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -54,6 +61,20 @@ storiesOf('AFM components - PieChart', module)
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ legend: { position: 'bottom' } }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('error', () => (
+        screenshotWrap(
+            <div style={{ width: 400, height: 400, display: 'flex', flexDirection: 'column' }}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    config={{ legend: { position: 'bottom' } }}
+                    LoadingComponent={null}
                 />
             </div>
         )

@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { LineChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 import {
     projectId,
@@ -107,8 +105,6 @@ export class LineChartExample extends Component {
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     config={{ colors: CUSTOM_COLORS }}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

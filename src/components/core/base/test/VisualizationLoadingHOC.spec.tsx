@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import {
     oneMeasureDataSource,
     tooLargeDataSource,
@@ -15,7 +15,7 @@ import {
     ICommonVisualizationProps,
     ILoadingInjectedProps,
     visualizationLoadingHOC,
-    commonDefaultprops
+    commonDefaultProps
 } from '../VisualizationLoadingHOC';
 import { delay } from '../../../tests/utils';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
@@ -32,7 +32,7 @@ class TestInnerComponent
 
     public static defaultProps:
         Partial<ITestInnerComponentProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
-            ...commonDefaultprops,
+            ...commonDefaultProps,
             customPropFooBar: 123
         };
 
@@ -79,7 +79,7 @@ describe('VisualizationLoadingHOC', () => {
         });
     });
 
-    it('should init loading automatically and while loading render LoadingComponent passing down props', () => {
+    it('should init loading automatically', () => {
         let onLoadingChanged;
         const startedLoading = new Promise((resolve) => {
             onLoadingChanged = resolve;
@@ -131,11 +131,7 @@ describe('VisualizationLoadingHOC', () => {
         return delay().then(() => {
             wrapper.update();
             const innerWrapped = wrapper.find(TestInnerComponent);
-            expect(innerWrapped.props()).toMatchObject({
-                isLoading: false,
-                error: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
-                execution: null
-            });
+            expect(innerWrapped.props().error).toEqual('DATA_TOO_LARGE_TO_COMPUTE');
 
             consoleErrorSpy.mockRestore();
         });
@@ -253,7 +249,9 @@ describe('VisualizationLoadingHOC', () => {
 
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
         consoleErrorSpy.mockImplementation(jest.fn());
-        wrapper.props().onError({ status: 'test status' });
+        const innerComponent = wrapper.find('LoadingHOCWrapped') as ReactWrapper<ICommonVisualizationProps, any>;
+
+        innerComponent.props().onError({ status: 'test status' });
 
         expect(consoleErrorSpy).toHaveBeenCalledWith({ status: 'test status' });
 

@@ -12,6 +12,8 @@ storiesOf('Headline', module)
                 <Headline
                     projectId="storybook"
                     measure={MEASURE_1_WITH_ALIAS}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

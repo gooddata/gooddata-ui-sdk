@@ -12,8 +12,6 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 export class TableExample extends Component {
     onLoadingChanged(...params) {
@@ -125,8 +123,6 @@ export class TableExample extends Component {
                     totals={totals}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

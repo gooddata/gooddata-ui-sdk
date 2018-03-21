@@ -16,6 +16,8 @@ storiesOf('ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -28,6 +30,8 @@ storiesOf('ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -41,6 +45,8 @@ storiesOf('ColumnChart', module)
                     viewBy={ATTRIBUTE_1}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

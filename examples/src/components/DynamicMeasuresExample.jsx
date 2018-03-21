@@ -1,14 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { LineChart, ColumnChart } from '@gooddata/react-components';
+import { LineChart, ColumnChart, ErrorComponent, LoadingComponent } from '@gooddata/react-components';
 import sdk from 'gooddata';
-
 import '@gooddata/react-components/styles/css/main.css';
 
 import { Layout } from './utils/Layout';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { SidebarItem } from './utils/SidebarItem';
 import {
     monthDateIdentifier,
@@ -34,9 +31,8 @@ export class DynamicMeasuresExample extends Component {
                     return this.setState({
                         measureList: null,
                         error: {
-                            status: '404',
-                            message: `No measures with tag ${franchiseFeesTag}. Please check your project.
-                                Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`
+                            message: `No measures with tag ${franchiseFeesTag}`,
+                            description: `Please check your project. Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`
                         }
                     });
                 }
@@ -48,7 +44,10 @@ export class DynamicMeasuresExample extends Component {
         ).catch((error) => {
             this.setState({
                 measureList: null,
-                error: { status: '400', message: `Error while requesting measures by tag ${franchiseFeesTag}. ${JSON.stringify(error)}` }
+                error: {
+                    message: `There was Error while requesting measures by tag ${franchiseFeesTag}`,
+                    description: JSON.stringify(error)
+                }
             });
         });
     }
@@ -102,7 +101,7 @@ export class DynamicMeasuresExample extends Component {
         const { measureList, error } = this.state;
 
         if (error) {
-            return <Error error={error} />;
+            return <ErrorComponent message={error.message} description={error.description} />;
         }
 
         const loadingBlock = (<div className="loading-block" >
@@ -116,7 +115,7 @@ export class DynamicMeasuresExample extends Component {
                     align-items: center;
                 }
             `}</style>
-            <Loading />
+            <LoadingComponent />
         </div>);
 
         const sidebar = measureList
@@ -185,8 +184,6 @@ export class DynamicMeasuresExample extends Component {
                                 trendBy={attribute}
                                 onLoadingChanged={this.onLoadingChanged}
                                 onError={this.onError}
-                                LoadingComponent={Loading}
-                                ErrorComponent={Error}
                                 config={config}
                             />
                         </div>
@@ -196,15 +193,13 @@ export class DynamicMeasuresExample extends Component {
                                 measures={measures}
                                 onLoadingChanged={this.onLoadingChanged}
                                 onError={this.onError}
-                                LoadingComponent={Loading}
-                                ErrorComponent={Error}
                                 config={config}
                             />
                         </div>
                     </div>
                 );
             } else {
-                content = <Error error={{ status: '400', message: 'Please select at least one measure' }} />;
+                content = <ErrorComponent message="Please select at least one measure" />;
             }
         }
 

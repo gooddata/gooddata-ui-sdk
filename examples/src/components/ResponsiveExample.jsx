@@ -4,8 +4,6 @@ import { AfmComponents } from '@gooddata/react-components';
 import '@gooddata/react-components/styles/css/main.css';
 import Measure from 'react-measure';
 
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { projectId, totalSalesIdentifier, locationResortIdentifier } from '../utils/fixtures';
 
 export class ResponsiveExample extends Component {
@@ -63,8 +61,6 @@ export class ResponsiveExample extends Component {
                                     height={contentRect.bounds.height}
                                     projectId={projectId}
                                     afm={afm}
-                                    LoadingComponent={Loading}
-                                    ErrorComponent={Error}
                                 />
                             </div>
                         )}

@@ -116,6 +116,7 @@ module.exports = ({ gdc = defaultBackend, link = false, basepath = '' } = {}) =>
         node: {
             __filename: true
         },
+        devtool: isProduction ? false : 'cheap-module-eval-source-map',
         module: {
             rules: [
                 {

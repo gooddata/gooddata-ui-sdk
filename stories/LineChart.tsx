@@ -16,6 +16,8 @@ storiesOf('LineChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     trendBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -28,6 +30,8 @@ storiesOf('LineChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     trendBy={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -41,6 +45,8 @@ storiesOf('LineChart', module)
                     trendBy={ATTRIBUTE_1}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

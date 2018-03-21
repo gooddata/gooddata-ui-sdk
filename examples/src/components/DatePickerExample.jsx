@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import { AfmComponents, ErrorComponent } from '@gooddata/react-components';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -9,8 +9,6 @@ import '@gooddata/react-components/styles/css/main.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { totalSalesIdentifier, monthDateIdentifier, dateDatasetIdentifier, projectId } from '../utils/fixtures';
 
 const { ColumnChart } = AfmComponents;
@@ -133,14 +131,12 @@ export class DatePickerExample extends Component {
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-date-picker-chart">
                     {error
-                        ? <Error error={{ status: '400', message: error }} />
+                        ? <ErrorComponent message={error} />
                         : (<ColumnChart
                             projectId={projectId}
                             afm={afm}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}
-                            LoadingComponent={Loading}
-                            ErrorComponent={Error}
                         />)}
                 </div>
                 <hr className="separator" />
