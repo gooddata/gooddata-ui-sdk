@@ -2,10 +2,11 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@7.0.0-alpha3":
-  version "7.0.0-alpha3"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha3.tgz#e10f950c022558f5edae198e3cbd452f24270deb"
+"@gooddata/data-layer@7.0.0-alpha4":
+  version "7.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha4.tgz#40e68e168499be1f179ab15d299a59a1f62e4e6f"
   dependencies:
+    "@gooddata/typings" "2.0.0-alpha0"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.4"
     rxjs "^5.5.6"
