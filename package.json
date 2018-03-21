@@ -49,7 +49,7 @@
     "utility-types": "^1.1.0"
   },
   "dependencies": {
-    "@gooddata/data-layer": "7.0.0-alpha3",
+    "@gooddata/data-layer": "7.0.0-alpha4",
     "@gooddata/goodstrap": "55.0.0-alpha0",
     "@gooddata/indigo-visualizations": "2.0.0-alpha5",
     "@gooddata/js-utils": "^0.9.0",
