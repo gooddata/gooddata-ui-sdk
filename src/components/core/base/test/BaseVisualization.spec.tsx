@@ -67,7 +67,7 @@ describe('Base visualization child', () => {
         });
 
         return delay().then(() => {
-            const loadingComponent = wrapper.find('.s-loading');
+            const loadingComponent = wrapper.find('LoadingComponent');
             expect(loadingComponent.length).toBe(1);
         });
     });

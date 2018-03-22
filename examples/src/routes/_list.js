@@ -11,13 +11,15 @@ import DatePicker from './DatePicker';
 import ResponsiveChart from './ResponsiveChart';
 import DynamicMeasures from './DynamicMeasures';
 import CustomLegend from './CustomLegend';
+import LoadingAndError from './LoadingAndError';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
     { path: '/advanced/dynamic-measures', title: 'Dynamic Measures', Component: DynamicMeasures },
     { path: '/advanced/date-picker', title: 'Date Picker', Component: DatePicker },
     { path: '/advanced/responsive', title: 'Responsive Chart', Component: ResponsiveChart },
-    { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend }
+    { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
+    { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError }
 ];
 
 const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advancedUseCasesRoutes });

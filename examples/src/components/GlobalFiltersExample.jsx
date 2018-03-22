@@ -180,7 +180,7 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <CustomLoading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
                                         }
                                         ErrorComponent={CustomError}
                                     />
@@ -193,7 +193,7 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <CustomLoading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
                                         }
                                         ErrorComponent={CustomError}
                                     />
@@ -243,7 +243,7 @@ export const GlobalFiltersExample = () => (
             if (isLoading) {
                 return (
                     <div style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-                        <CustomLoading speed={2} color="tomato" imageHeight="100px" />
+                        <CustomLoading speed={2} color="tomato" imageHeight={100} />
                     </div>
                 );
             }
