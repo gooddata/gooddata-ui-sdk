@@ -5,6 +5,7 @@ import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-im
 export { Requireable };
 
 export const LoadingPropTypes = {
+    className: PropTypes.string,
     color: PropTypes.string,
     speed: PropTypes.number,
     inline: PropTypes.bool,
@@ -15,6 +16,7 @@ export const LoadingPropTypes = {
 };
 
 export interface ILoadingProps {
+    className?: string;
     color?: string;
     speed?: number;
     inline?: boolean;
@@ -28,6 +30,7 @@ const baseAnimationDuration = 1.4;
 
 export class LoadingComponent extends React.Component<ILoadingProps, null> {
     public static defaultProps: Partial<ILoadingProps> = {
+        className: 's-loading',
         color: '#94a1ad',
         speed: 1,
         inline: false,
@@ -40,79 +43,76 @@ export class LoadingComponent extends React.Component<ILoadingProps, null> {
     public static propTypes = LoadingPropTypes;
 
     public render() {
-        const { inline, width, height, imageWidth, imageHeight, color, speed } = this.props;
+        const { inline, width, height, imageWidth, imageHeight, color, speed, className } = this.props;
         const duration = baseAnimationDuration / speed;
         const delay = duration / -5;
+
+        const dotStyles = {
+            transformOrigin: '4px 4px',
+            animation: `GDC-pop ${duration}s infinite`,
+            animationDelay: `${delay * 2}s`,
+            fill: color
+        };
+
+        const wrapperStyles = {
+            textAlign: 'center',
+            display: inline ? 'inline-flex' : 'flex',
+            verticalAlign: 'middle',
+            flexDirection: 'column',
+            alignContent: 'center',
+            justifyContent: 'center',
+            flex: '1 0 auto',
+            height,
+            width
+        };
+        const svgStyles = {
+            maxHeight: '100%',
+            maxWidth: '100%',
+            flex: '0 1 auto',
+            width: imageWidth,
+            height: imageHeight
+        };
+        const dot1Styles = dotStyles;
+        const dot2Styles = {
+            ...dotStyles,
+            transformOrigin: '18px 4px',
+            animationDelay: `${delay}s`
+        };
+        const dot3Styles = {
+            ...dotStyles,
+            transformOrigin: '32px 4px',
+            animationDelay: 0
+        };
+
         return (
             <div
-                className="s-loading"
-                style={{
-                    textAlign: 'center',
-                    display: inline ? 'inline-flex' : 'flex',
-                    verticalAlign: 'middle',
-                    flexDirection: 'column',
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    flex: '1 0 auto',
-                    height,
-                    width
-                }}
+                className={className}
+                // this is intentional. Typescript complains about exact matching of css string values to enum.
+                style={wrapperStyles as any}
             >
-                <img
-                    alt="loading…"
-                    style={{
-                        maxHeight: '100%',
-                        maxWidth: '100%',
-                        flex: '0 1 auto',
-                        width: imageWidth,
-                        height: imageHeight
-                    }}
-                    src={`
-                        data:image/svg+xml;utf8,<svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            version="1.1"
-                            x="0px"
-                            y="0px"
-                            viewBox="0 0 36 8"
-                            xml:space="preserve"
-                            height="8"
-                            width="36"
-                        >
-                        <style>
-                            .GDC-dot-1,
-                            .GDC-dot-2,
-                            .GDC-dot-3 {
-                                transform-origin: 4px 4px;
-                                animation: GDC-pop ${duration}s infinite;
-                                animation-delay: ${delay * 2}s;
-                                fill: ${color};
+                <svg
+                    style={svgStyles}
+                    version="1.1"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 36 8"
+                >
+                    <style scoped={true}>{`
+                        @keyframes GDC-pop {
+                            0%,
+                            80%,
+                            100% {
+                                transform: scale(0);
                             }
-                            .GDC-dot-2 {
-                                transform-origin: 18px 4px;
-                                animation-delay: ${delay}s;
+                            40% {
+                                transform: scale(1);
                             }
-                            .GDC-dot-3 {
-                                transform-origin: 32px 4px;
-                                animation-delay: 0s;
-                            }
-                            @keyframes GDC-pop {
-                                0%,
-                                80%,
-                                100% {
-                                    transform: scale(0);
-                                }
-
-                                40% {
-                                    transform: scale(1);
-                                }
-                            }
-                        </style>
-                        <g class="GDC-dot-1" ><circle cx="4" cy="4" r="4" /></g>
-                        <g class="GDC-dot-2" ><circle cx="18" cy="4" r="4" /></g>
-                        <g class="GDC-dot-3" ><circle cx="32" cy="4" r="4" /></g>
-                    </svg>`}
-                />
+                        }
+                    `}</style>
+                    <g style={dot1Styles}><circle cx="4" cy="4" r="4" /></g>
+                    <g style={dot2Styles}><circle cx="18" cy="4" r="4" /></g>
+                    <g style={dot3Styles}><circle cx="32" cy="4" r="4" /></g>
+                </svg>
             </div>
         );
     }
