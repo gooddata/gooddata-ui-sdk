@@ -18,6 +18,10 @@ const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
 export type IDataTableFactory = (sdk: SDK, projectId: string) => DataLayer.DataTable<Execution.IExecutionResponses>;
 
+function dataTableFactory(sdk: SDK, projectId: string): DataLayer.DataTable<Execution.IExecutionResponses> {
+    return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
+}
+
 export interface IExecuteProps extends IEvents {
     afm: AFM.IAfm;
     resultSpec?: AFM.IResultSpec;
@@ -34,10 +38,6 @@ export interface IExecuteState {
         status: string;
         response?: object;
     };
-}
-
-function dataTableFactory(sdk: SDK, projectId: string): DataLayer.DataTable<Execution.IExecutionResponses> {
-    return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
 }
 
 export interface IExecuteChildrenProps {
@@ -74,42 +74,10 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             error: null
         };
 
-        const { onError, onLoadingChanged } = props;
-
         const sdk = props.sdk || createSdk();
         this.sdk = sdk.clone();
         setTelemetryHeaders(this.sdk, 'Execute', props);
-
-        this.dataTable = props.dataTableFactory(this.sdk, props.projectId);
-        this.dataTable.onData((result: Execution.IExecutionResponses) => {
-            this.setState({
-                result,
-                isLoading: false
-            });
-            onLoadingChanged({ isLoading: false });
-        });
-
-        this.dataTable.onError((error: Execution.IError) => {
-            const statusMap = {
-                [ErrorCodes.HTTP_TOO_LARGE]: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
-                [ErrorCodes.HTTP_BAD_REQUEST]: ErrorStates.BAD_REQUEST,
-                [UNKNOWN_ERROR]: ErrorStates.UNKNOWN_ERROR
-            };
-            const errorCode = error && error.response && error.response.status || UNKNOWN_ERROR;
-            const status = statusMap[ statusMap.hasOwnProperty(errorCode) ? errorCode : UNKNOWN_ERROR];
-            const newError = {
-                status,
-                error
-            };
-
-            this.setState({
-                result: null,
-                isLoading: false,
-                error: newError
-            });
-            onLoadingChanged({ isLoading: false });
-            onError(newError);
-        });
+        this.initDataTable(props);
     }
 
     public componentWillMount() {
@@ -120,15 +88,17 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, 'Execute', nextProps);
+            this.initDataTable(nextProps);
         }
-        if (this.hasPropsChanged(nextProps, ['afm', 'resultSpec'])) {
+        if (this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec'])) {
+            this.initDataTable(nextProps);
             this.runExecution(nextProps);
         }
     }
 
     public shouldComponentUpdate(nextProps: IExecuteProps, nextState: IExecuteState) {
         return !isEqual(this.state, nextState) ||
-            this.hasPropsChanged(nextProps, ['afm', 'resultSpec', 'children']);
+            this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec', 'children']);
     }
 
     public render() {
@@ -162,5 +132,39 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         });
 
         this.dataTable.getData(afm, resultSpec);
+    }
+
+    private initDataTable(props: IExecuteProps) {
+        const { onError, onLoadingChanged, projectId } = props;
+        this.dataTable = props.dataTableFactory(this.sdk, projectId);
+        this.dataTable.onData((result: Execution.IExecutionResponses) => {
+            this.setState({
+                result,
+                isLoading: false
+            });
+            onLoadingChanged({ isLoading: false });
+        });
+
+        this.dataTable.onError((error: Execution.IError) => {
+            const statusMap = {
+                [ErrorCodes.HTTP_TOO_LARGE]: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
+                [ErrorCodes.HTTP_BAD_REQUEST]: ErrorStates.BAD_REQUEST,
+                [UNKNOWN_ERROR]: ErrorStates.UNKNOWN_ERROR
+            };
+            const errorCode = error && error.response && error.response.status || UNKNOWN_ERROR;
+            const status = statusMap[statusMap.hasOwnProperty(errorCode) ? errorCode : UNKNOWN_ERROR];
+            const newError = {
+                status,
+                error
+            };
+
+            this.setState({
+                result: null,
+                isLoading: false,
+                error: newError
+            });
+            onLoadingChanged({ isLoading: false });
+            onError(newError);
+        });
     }
 }
