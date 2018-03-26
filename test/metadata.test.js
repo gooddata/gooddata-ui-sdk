@@ -68,7 +68,7 @@ describe('metadata', () => {
         describe('getVisualizations', () => {
             it('should reject with 400 from backend', () => {
                 fetchMock.mock(
-                    '/gdc/md/myFakeProjectId/query/visualizations',
+                    '/gdc/md/myFakeProjectId/query/visualizationobjects',
                     400
                 );
 
@@ -86,7 +86,7 @@ describe('metadata', () => {
 
             it('should return correct number of entries', () => {
                 fetchMock.mock(
-                    '/gdc/md/myFakeProjectId/query/visualizations',
+                    '/gdc/md/myFakeProjectId/query/visualizationobjects',
                     { status: 200, body: JSON.stringify({ query: { entries: [{ title: 'a1' }, { title: 'a2' }] } }) }
                 );
 
