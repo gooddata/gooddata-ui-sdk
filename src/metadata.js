@@ -157,14 +157,14 @@ export function createModule(xhr) {
     }
 
     /**
-     * Returns all visualizations metadata in a project specified by projectId param
+     * Returns all visualizationObjects metadata in a project specified by projectId param
      *
      * @method getVisualizations
      * @param {string} projectId Project identifier
-     * @return {Array} An array of visualization objects
+     * @return {Array} An array of visualization objects metadata
      */
     function getVisualizations(projectId) {
-        return xhr.get(`/gdc/md/${projectId}/query/visualizations`).then(r => (r.ok ? r.json() : r)).then(getIn('query.entries'));
+        return xhr.get(`/gdc/md/${projectId}/query/visualizationobjects`).then(r => (r.ok ? r.json() : r)).then(getIn('query.entries'));
     }
 
     /**
