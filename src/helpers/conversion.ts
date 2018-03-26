@@ -1,5 +1,5 @@
 import { AFM, VisualizationObject } from '@gooddata/typings';
-import { toAfmResultSpec } from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 
 export function convertBucketsToAFM(
     buckets: VisualizationObject.IBucket[],
@@ -13,7 +13,7 @@ export function convertBucketsToAFM(
         buckets
     };
 
-    const { afm } = toAfmResultSpec(visualizationObject);
+    const { afm } = DataLayer.toAfmResultSpec(visualizationObject);
     if (filters) {
         afm.filters = filters as AFM.FilterItem[];
     }

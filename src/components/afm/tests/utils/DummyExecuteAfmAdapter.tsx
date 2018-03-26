@@ -1,16 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import { ISdk } from 'gooddata';
-import { DataSource, ExecuteAfmAdapter } from '@gooddata/data-layer';
+import { SDK, DataLayer } from 'gooddata';
 import { AFM, Execution } from '@gooddata/typings';
 import { executionResponses } from './dummyFixture';
 
-export class DummyExecuteAfmAdapter extends ExecuteAfmAdapter {
-    public createDataSource(afm: AFM.IAfm,
-                            fingerprint?: string): Promise<DataSource.IDataSource<Execution.IExecutionResponses>> {
+export class DummyExecuteAfmAdapter extends DataLayer.ExecuteAfmAdapter {
+    public createDataSource(
+        afm: AFM.IAfm,
+        fingerprint?: string
+    ): Promise<DataLayer.DataSource.IDataSource<Execution.IExecutionResponses>> {
         const execFactory = () => {
             return Promise.resolve(executionResponses);
         };
-        const dataSource = new DataSource.DataSource<Execution.IExecutionResponses>(
+        const dataSource = new DataLayer.DataSource.DataSource<Execution.IExecutionResponses>(
             execFactory,
             afm,
             fingerprint
@@ -19,6 +20,6 @@ export class DummyExecuteAfmAdapter extends ExecuteAfmAdapter {
     }
 }
 
-export function dummyExecuteAfmAdapterFactory(sdk: ISdk, projectId: string) {
+export function dummyExecuteAfmAdapterFactory(sdk: SDK, projectId: string) {
     return new DummyExecuteAfmAdapter(sdk, projectId);
 }

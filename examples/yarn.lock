@@ -54,14 +54,6 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@gooddata/data-layer@7.0.0-alpha0":
-  version "7.0.0-alpha0"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha0.tgz#d9ac06c4cc37eca6210e59016031a7a10ae4ec33"
-  dependencies:
-    json-stable-stringify "^1.0.1"
-    lodash "^4.17.4"
-    rxjs "^5.5.6"
-
 "@gooddata/data-layer@7.0.0-alpha4":
   version "7.0.0-alpha4"
   resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha4.tgz#40e68e168499be1f179ab15d299a59a1f62e4e6f"
@@ -99,9 +91,9 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@55.0.0-alpha1":
-  version "55.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha1.tgz#62ed54cce34c698cbcbc03787dee8173b962d81f"
+"@gooddata/goodstrap@^55.0.0-alpha5":
+  version "55.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha5.tgz#5a46a6340beb11586f7ae8443bf4e40ca71600d3"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
@@ -122,7 +114,7 @@
     react-intl "2.4.0"
     react-native-listener "1.0.2"
     react-portal "3.1.0"
-    react-responsive "1.2.10"
+    react-responsive "3.0.0"
     react-textarea-autosize "4.2.2"
     react-transition-group "1.2.1"
     rxjs "5.4.3"
@@ -3565,17 +3557,21 @@ gooddata@6.0.0-alpha2:
     md5 "2.2.1"
     qs "6.5.1"
 
-gooddata@6.0.0-alpha4:
-  version "6.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha4.tgz#b7a22f91c8929849308ae274edb3aadeb9913440"
+gooddata@^6.0.0-alpha5:
+  version "6.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha5.tgz#84199875916ad073ef36c2b229f2c2321aac2137"
   dependencies:
+    "@gooddata/typings" "2.0.0-alpha0"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
     isomorphic-fetch "2.2.1"
+    json-stable-stringify "1.0.1"
     lodash "4.17.4"
     md5 "2.2.1"
+    node-fetch "2.1.1"
     qs "6.5.1"
+    rxjs "^5.5.6"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.11"
@@ -4415,7 +4411,7 @@ json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
 
-json-stable-stringify@^1.0.1:
+json-stable-stringify@1.0.1, json-stable-stringify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
   dependencies:
@@ -4740,6 +4736,12 @@ matchmedia@^0.1.2:
   dependencies:
     css-mediaquery "^0.1.2"
 
+matchmediaquery@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/matchmediaquery/-/matchmediaquery-0.2.1.tgz#223c7005793de03e47ce92b13285a72c44ada2cf"
+  dependencies:
+    css-mediaquery "^0.1.2"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
@@ -5028,6 +5030,10 @@ no-case@^2.2.0:
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"
   dependencies:
     lower-case "^1.1.1"
+
+node-fetch@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.1.tgz#369ca70b82f50c86496104a6c776d274f4e4a2d4"
 
 node-fetch@^1.0.1:
   version "1.7.3"
@@ -6209,6 +6215,14 @@ react-responsive@1.2.10:
     matchmedia "^0.1.2"
     prop-types "^15.5.7"
 
+react-responsive@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-responsive/-/react-responsive-3.0.0.tgz#26e895dbdf748d4473c76cf46d29cb9d824e02ec"
+  dependencies:
+    hyphenate-style-name "^1.0.0"
+    matchmediaquery "^0.2.1"
+    prop-types "^15.5.7"
+
 react-router-dom@4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -6747,8 +6761,8 @@ rxjs@5.4.3:
     symbol-observable "^1.0.1"
 
 rxjs@^5.5.6:
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
+  version "5.5.8"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.8.tgz#b2b0809a57614ad6254c03d7446dea0d83ca3791"
   dependencies:
     symbol-observable "1.0.1"
 
@@ -7626,9 +7640,15 @@ toposort@^1.0.0:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.6.tgz#c31748e55d210effc00fdcdc7d6e68d7d7bb9cec"
 
-tough-cookie@2.3.3, tough-cookie@^2.3.1, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
+tough-cookie@2.3.3, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
+  dependencies:
+    punycode "^1.4.1"
+
+tough-cookie@^2.3.1:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
   dependencies:
     punycode "^1.4.1"
 
@@ -8054,8 +8074,8 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
 
 whatwg-fetch@>=0.10.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whatwg-fetch@^0.9.0:
   version "0.9.0"

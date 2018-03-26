@@ -1,10 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { ISdk } from 'gooddata';
+import { SDK, DataLayer } from 'gooddata';
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
-import { Filters, Uri } from '@gooddata/data-layer';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
 
 import { Execute, IExecuteChildrenProps, IExecuteProps } from '../../execution/Execute';
@@ -22,7 +21,7 @@ export interface IKpiProps extends IEvents {
     measure: string;
     projectId: string;
     locale?: string;
-    sdk?: ISdk;
+    sdk?: SDK;
     filters?: AFM.FilterItem[];
     format?: string;
     ExecuteComponent?: React.ComponentType<IExecuteProps>;
@@ -31,7 +30,7 @@ export interface IKpiProps extends IEvents {
 }
 
 function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
-    const item = Uri.isUri(measure) ? { uri: measure } : { identifier: measure };
+    const item = DataLayer.Uri.isUri(measure) ? { uri: measure } : { identifier: measure };
 
     return {
         measures: [
@@ -44,7 +43,7 @@ function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
                 }
             }
         ],
-        filters: filters.filter(Filters.isNotEmptyFilter)
+        filters: filters.filter(DataLayer.Filters.isNotEmptyFilter)
     };
 }
 

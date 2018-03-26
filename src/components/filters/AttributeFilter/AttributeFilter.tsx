@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { ISdk, factory as createSdk } from 'gooddata';
+import { SDK, factory as createSdk } from 'gooddata';
 import pick = require('lodash/pick');
 
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -12,7 +12,7 @@ import { IAttributeDisplayForm } from './model';
 import { setTelemetryHeaders } from '../../../helpers/utils';
 
 export interface IAttributeFilterProps {
-    sdk?: ISdk;
+    sdk?: SDK;
     uri?: string;
     identifier?: string;
     projectId?: string;
@@ -62,7 +62,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         FilterError: DefaultFilterError
     };
 
-    private sdk: ISdk;
+    private sdk: SDK;
 
     constructor(props: IAttributeFilterProps) {
         super(props);

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { DataTable, DummyAdapter } from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 import { AFM } from '@gooddata/typings';
 import { Execute, IExecuteProps } from '../Execute';
 import { delay } from '../../components/tests/utils';
@@ -20,8 +20,7 @@ describe('Execute', () => {
     };
 
     function dataTableFactory() {
-        const adapter = new DummyAdapter(data);
-        return new DataTable(adapter);
+        return new DataLayer.DataTable(new DataLayer.DummyAdapter(data));
     }
 
     function createStatelessChild() {

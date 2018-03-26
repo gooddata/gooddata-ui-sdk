@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
 import { Execution } from '@gooddata/typings';
-import { ErrorCodes as DataErrorCodes } from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 import {
     emptyResponse,
     emptyResponseWithNull,
@@ -46,13 +46,13 @@ describe('convertErrors', async () => {
         }
 
         try {
-            await convertErrors(createMockedError(DataErrorCodes.HTTP_TOO_LARGE));
+            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_TOO_LARGE));
         } catch (e) {
             expect(e).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
         }
 
         try {
-            await convertErrors(createMockedError(DataErrorCodes.HTTP_BAD_REQUEST));
+            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST));
         } catch (e) {
             expect(e).toEqual(ErrorStates.BAD_REQUEST);
         }
@@ -64,7 +64,7 @@ describe('convertErrors', async () => {
                 }
             }`;
 
-            await convertErrors(createMockedError(DataErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
+            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
         } catch (e) {
             expect(e).toEqual(ErrorStates.PROTECTED_REPORT);
         }

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { isObject } from 'lodash';
-import { ISdk } from 'gooddata';
+import { SDK } from 'gooddata';
 import { name as pkgName, version as pkgVersion } from '../../package.json';
 
-export function setTelemetryHeaders(sdk: ISdk, componentName: string, props: object) {
+export function setTelemetryHeaders(sdk: SDK, componentName: string, props: object) {
     sdk.config.setJsPackage(pkgName, pkgVersion);
 
     sdk.config.setRequestHeader('X-GDC-JS-SDK-COMP', componentName);

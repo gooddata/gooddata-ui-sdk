@@ -2,12 +2,12 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import {
-    ISdk,
+    SDK,
     factory as createSdk,
-    IValidElementsOptions,
     IValidElementsResponse,
     IElement
 } from 'gooddata';
+import { IValidElementsOptions } from 'gooddata/lib/metadata';
 import { AFM } from '@gooddata/typings';
 import { get, isEqual } from 'lodash';
 import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';
@@ -19,7 +19,7 @@ export interface IPaging {
 }
 
 export interface IAttributeElementsProps {
-    sdk?: ISdk;
+    sdk?: SDK;
     projectId: string;
     uri?: string;
     identifier?: string;
@@ -113,7 +113,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
 
     private uri?: string = null;
 
-    private sdk: ISdk;
+    private sdk: SDK;
 
     constructor(props: IAttributeElementsProps) {
         super(props);

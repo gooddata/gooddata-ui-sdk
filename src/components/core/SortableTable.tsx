@@ -3,7 +3,7 @@ import * as React from 'react';
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import { AFM } from '@gooddata/typings';
-import { ResultSpecUtils } from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 import { PureTable, ITableProps } from './PureTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 
@@ -35,7 +35,7 @@ export class SortableTable
     }
 
     public componentWillReceiveProps(nextProps: ITableProps & IDataSourceProviderInjectedProps): void {
-        if (!ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
+        if (!DataLayer.ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
             this.setState({ sortItems: [] });
         }
     }
@@ -62,7 +62,7 @@ export class SortableTable
             <PureTable
                 {...this.props}
                 pushData={this.handlePushData}
-                resultSpec={ResultSpecUtils.applySorting(this.props.resultSpec, this.state.sortItems)}
+                resultSpec={DataLayer.ResultSpecUtils.applySorting(this.props.resultSpec, this.state.sortItems)}
             />
         );
     }

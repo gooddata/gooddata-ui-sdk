@@ -1,11 +1,7 @@
 import * as React from 'react';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import {
-    DataSource,
-    DataSourceUtils,
-    createSubject
-} from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 import { AFM, Execution } from '@gooddata/typings';
 import { ErrorStates } from '../../../constants/errorStates';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';
@@ -116,7 +112,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         public isDataReloadRequired(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            return !DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)
+            return !DataLayer.DataSourceUtils.dataSourcesMatch(this.props.dataSource, nextProps.dataSource)
                 || !isEqual(this.props.resultSpec, nextProps.resultSpec);
         }
 
@@ -134,7 +130,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         private initSubject() {
-            this.subject = createSubject<Execution.IExecutionResponses>((result) => {
+            this.subject = DataLayer.createSubject<Execution.IExecutionResponses>((result) => {
                 this.setState({
                     result
                 });
@@ -165,7 +161,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         private onError(errorCode: string, dataSource = this.props.dataSource) {
-            if (DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
+            if (DataLayer.DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
                 const options = getVisualizationOptions(this.props.dataSource.getAfm());
                 this.setState({
                     error: errorCode
@@ -180,7 +176,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         private initDataLoading(
-            dataSource: DataSource.IDataSource<Execution.IExecutionResponses>,
+            dataSource: DataLayer.DataSource.IDataSource<Execution.IExecutionResponses>,
             resultSpec: AFM.IResultSpec
         ) {
             this.onLoadingChanged({ isLoading: true });

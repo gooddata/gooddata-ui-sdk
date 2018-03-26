@@ -1,14 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import { SDK, factory as createSdk, DataLayer } from 'gooddata';
+import { ApiResponse } from 'gooddata/lib/xhr';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import {
-    AfmUtils,
-    ExecuteAfmAdapter,
-    toAfmResultSpec,
-    createSubject
-} from '@gooddata/data-layer';
 import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
 
@@ -34,6 +29,13 @@ import {
 import { setTelemetryHeaders } from '../../helpers/utils';
 
 export { Requireable };
+
+const {
+    AfmUtils,
+    ExecuteAfmAdapter,
+    toAfmResultSpec,
+    createSubject
+} = DataLayer;
 
 // BC with TS 2.3
 function getDateFilter(filters: AFM.FilterItem[]): AFM.DateFilterItem {
@@ -63,16 +65,16 @@ export type VisualizationEnvironment = 'none' | 'dashboards';
 
 export interface IVisualizationProps extends IEvents {
     projectId: string;
-    sdk?: ISdk;
+    sdk?: SDK;
     uri?: string;
     identifier?: string;
     locale?: string;
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
     drillableItems?: IDrillableItem[];
-    uriResolver?: (sdk: ISdk, projectId: string, uri?: string, identifier?: string) => Promise<string>;
-    fetchVisObject?: (sdk: ISdk, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
-    fetchVisualizationClass?: (sdk: ISdk, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
+    uriResolver?: (sdk: SDK, projectId: string, uri?: string, identifier?: string) => Promise<string>;
+    fetchVisObject?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
+    fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
     BaseChartComponent?: any;
     TableComponent?: any;
     HeadlineComponent?: any;
@@ -98,7 +100,7 @@ export interface IVisualizationExecInfo {
     totals: VisualizationObject.IVisualizationTotal[];
 }
 
-function uriResolver(sdk: ISdk, projectId: string, uri?: string, identifier?: string): Promise<string> {
+function uriResolver(sdk: SDK, projectId: string, uri?: string, identifier?: string): Promise<string> {
     if (uri) {
         return Promise.resolve(uri);
     }
@@ -110,17 +112,17 @@ function uriResolver(sdk: ISdk, projectId: string, uri?: string, identifier?: st
     return sdk.md.getObjectUri(projectId, identifier);
 }
 
-function fetchVisObject(sdk: ISdk, visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
-    return sdk.xhr.get<VisualizationObject.IVisualizationObjectResponse>(visualizationUri)
-        .then(response => response.visualizationObject);
+function fetchVisObject(sdk: SDK, visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
+    return sdk.xhr.get(visualizationUri)
+        .then((response: ApiResponse) => response.data.visualizationObject);
 }
 
 function fetchVisualizationClass(
-    sdk: ISdk,
+    sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
-    return sdk.xhr.get<VisualizationClass.IVisualizationClassWrapped>(visualizationClassUri)
-        .then(response => response.visualizationClass);
+    return sdk.xhr.get(visualizationClassUri)
+        .then((response: ApiResponse) => response.data.visualizationClass);
 }
 
 export class VisualizationWrapped
@@ -145,12 +147,12 @@ export class VisualizationWrapped
     };
 
     private visualizationUri: string;
-    private adapter: ExecuteAfmAdapter;
+    private adapter: DataLayer.ExecuteAfmAdapter;
     private dataSource: IDataSource;
 
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
-    private sdk: ISdk;
+    private sdk: SDK;
 
     constructor(props: IVisualizationProps & InjectedIntlProps) {
         super(props);
