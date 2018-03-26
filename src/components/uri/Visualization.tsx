@@ -8,7 +8,8 @@ import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings'
 import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
 
 import { IntlWrapper } from '../core/base/IntlWrapper';
-import { BaseChart, IChartConfig } from '../core/base/BaseChart';
+import { BaseChart } from '../core/base/BaseChart';
+import { IChartConfig } from '../visualizations/chart/Chart';
 import { SortableTable } from '../core/SortableTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';

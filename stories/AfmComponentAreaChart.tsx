@@ -13,7 +13,7 @@ import { CUSTOM_COLORS } from './data/colors';
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 
-storiesOf('AFM components - Area chart', module)
+storiesOf('AFM components/Area chart', module)
     .add('two measures, one attribute (stacking by default)', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

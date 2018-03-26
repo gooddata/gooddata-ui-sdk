@@ -1,0 +1,56 @@
+// (C) 2007-2018 GoodData Corporation
+@import '~@gooddata/goodstrap/lib/Bubble/styles/themes/indigo/bubble-mixins';
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/variables';
+@import '~@gooddata/goodstrap/lib/core/styles/themes/_mixins';
+@import 'variables';
+
+$font-stack-roman: 'Avenir', 'Helvetica Neue', arial, sans-serif;
+$legend-paging-background: #eee;
+$legend-right-width: 190px;
+$paging-button-small-size: 22px;
+
+.viz-line-family-chart-wrap {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+
+    &.flex-direction-row {
+        flex-direction: row;
+    }
+
+    &.flex-direction-column {
+        flex-direction: column;
+    }
+
+    &.non-responsive-legend {
+        .viz-react-highchart-wrap { // Hack for Safari, so highchart won't overflow
+            min-height: 0;
+        }
+    }
+}
+
+.viz-react-highchart-wrap {
+    height: 100%;
+    min-width: 0; // Hack for FF, so flexbox can shrink
+}
+
+.highcharts-container { // This makes highcharts resizable and shrinkable!
+    // stylelint-disable-next-line declaration-no-important
+    width: 100% !important;
+
+    svg {
+        // stylelint-disable-next-line declaration-no-important
+        width: 100% !important;
+    }
+}
+
+.highcharts-drilldown-axis-label {
+    &:hover {
+        // stylelint-disable-next-line declaration-no-important
+        text-decoration: underline !important; // Override Higharts inline style
+    }
+}
+
+@import './legend.scss';
+@import './tooltip.scss';

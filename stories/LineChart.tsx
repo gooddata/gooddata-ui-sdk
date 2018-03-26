@@ -7,7 +7,7 @@ import { onErrorHandler } from './mocks';
 import { CUSTOM_COLORS } from './data/colors';
 import { ATTRIBUTE_1, ATTRIBUTE_1_WITH_ALIAS, MEASURE_1, MEASURE_2 } from './data/componentProps';
 
-storiesOf('LineChart', module)
+storiesOf('Core components/LineChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

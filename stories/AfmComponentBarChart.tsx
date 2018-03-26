@@ -14,7 +14,7 @@ import { CUSTOM_COLORS } from './data/colors';
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 
-storiesOf('AFM components - BarChart', module)
+storiesOf('AFM components/BarChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

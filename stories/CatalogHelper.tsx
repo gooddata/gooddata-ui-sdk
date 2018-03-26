@@ -10,7 +10,7 @@ import * as catalogJson from './data/catalog.json';
 
 const C = new CatalogHelper(catalogJson as any);
 
-storiesOf('CatalogHelper', module)
+storiesOf('Helper components/CatalogHelper', module)
     .add('KPI', () => (
         <div>
             Usage:

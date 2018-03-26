@@ -8,7 +8,7 @@ import {
 import { Headline } from '../src/components/afm/Headline';
 import '../styles/scss/headline.scss';
 
-storiesOf('AFM components - Headline', module)
+storiesOf('AFM components/Headline', module)
     .add('one measure', () => (
         screenshotWrap(
             <div style={{ width: 600, height: 300 }}>

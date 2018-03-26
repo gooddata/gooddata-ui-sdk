@@ -2,7 +2,8 @@
 import * as React from 'react';
 import noop = require('lodash/noop');
 
-import { Visualization } from '@gooddata/indigo-visualizations';
+import { Visualization } from '../../visualizations/Visualization';
+import { IChartConfig } from '../../visualizations/chart/Chart';
 
 import { IntlWrapper } from './IntlWrapper';
 import { ChartType } from '../../../constants/visualizationTypes';
@@ -22,22 +23,6 @@ import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
 import { BaseVisualization } from './BaseVisualization';
 import { OnLegendReady } from '../../../interfaces/Events';
 export { Requireable };
-
-export interface ILegendConfig {
-    enabled?: boolean;
-    position?: 'top' | 'left' | 'right' | 'bottom';
-    responsive?: boolean;
-}
-
-export interface IChartConfig {
-    colors?: string[];
-    legend?: ILegendConfig;
-    limits?: {
-        series?: number,
-        categories?: number
-    };
-    stacking?: boolean;
-}
 
 export interface ICommonChartProps extends ICommonVisualizationProps {
     config?: IChartConfig;

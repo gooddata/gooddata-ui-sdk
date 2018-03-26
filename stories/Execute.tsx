@@ -36,7 +36,7 @@ const usage = `
     </Execute>
 `;
 
-storiesOf('Execute', module)
+storiesOf('Core components/Execute', module)
     .add('Execute', () => (
         <div>
             <h4>Execute</h4>
