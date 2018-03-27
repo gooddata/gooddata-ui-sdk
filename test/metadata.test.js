@@ -853,6 +853,7 @@ describe('metadata', () => {
             const projectId = 'myFakeProjectId';
             const attributeId = 'attribute.id';
             const uri = `/gdc/md/${projectId}/obj/${attributeId}/validElements`;
+            const convertorUri = `/gdc/app/projects/${projectId}/executeAfm/debug`;
 
             beforeEach(() => {
                 postSpy = jest.spyOn(xhr, 'post');
@@ -931,6 +932,129 @@ describe('metadata', () => {
                         expect(postSpy).toHaveBeenCalledWith(uri, {
                             data: JSON.stringify({
                                 validElementsRequest: {}
+                            })
+                        });
+
+                        expect(result).toEqual({
+                            validElements: {
+                                items: []
+                            }
+                        });
+                    });
+            });
+
+            it('should convert afm to report definition', () => {
+                const reportDefinitionContent = {
+                    chart: {
+                        styles: {
+                            global: {
+                                datalabels: {
+                                    displayValues: 1,
+                                    fontsize: 'auto',
+                                    percent: 0,
+                                    displayBoxed: 0,
+                                    display: 'inline',
+                                    displayTotals: 1
+                                },
+                                colorMapping: []
+                            }
+                        },
+                        buckets: {
+                            detail: [],
+                            y: [
+                                {
+                                    uri: 'metric'
+                                }
+                            ],
+                            color: [],
+                            marker: [],
+                            angle: [],
+                            x: [],
+                            size: []
+                        },
+                        type: 'bar'
+                    },
+                    grid: {
+                        sort: {
+                            columns: [],
+                            rows: []
+                        },
+                        columnWidths: [],
+                        columns: [],
+                        metrics: [
+                            {
+                                format: '#,##0',
+                                alias: '# Employees',
+                                uri: '/gdc/md/k26dtejorcqlqf11crn6imbeevp2q4kg/obj/6983'
+                            }
+                        ],
+                        rows: [
+                            'metricGroup'
+                        ]
+                    },
+                    format: 'chart',
+                    filters: []
+                };
+
+                fetchMock.mock(`${uri}?filter=foo`, {
+                    body: {
+                        validElements: {
+                            items: []
+                        }
+                    },
+                    status: 200
+                });
+
+                fetchMock.mock(convertorUri, {
+                    body: {
+                        reportDefinition: {
+                            content: reportDefinitionContent,
+                            links: {
+                                explain2: '/gdc/md/k26dtejorcqlqf11crn6imbeevp2q4kg/obj/8777/explain2'
+                            },
+                            meta: {
+                                author: '/gdc/account/profile/f1cc15f9557855cad61d913e734c8c93',
+                                uri: '/gdc/md/k26dtejorcqlqf11crn6imbeevp2q4kg/obj/8777',
+                                tags: '',
+                                created: '2018-03-23 09:35:48',
+                                identifier: 'aaTgJkpOcku1',
+                                deprecated: '0',
+                                summary: '',
+                                isProduction: 1,
+                                title: 'Untitled',
+                                category: 'reportDefinition',
+                                updated: '2018-03-23 09:35:48',
+                                contributor: '/gdc/account/profile/f1cc15f9557855cad61d913e734c8c93'
+                            }
+                        }
+                    },
+                    status: 200
+                });
+
+                const options = {
+                    filter: 'foo',
+                    afm: {
+                        measures: [
+                            {
+                                localIdentifier: 'xyz123',
+                                measure: {
+                                    item: {
+                                        identifier: 'sdfljl'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                };
+
+                return md.getValidElements(projectId, attributeId, options)
+                    .then((result) => {
+                        expect(postSpy).toHaveBeenCalledTimes(2);
+                        expect(postSpy).toHaveBeenCalledWith(`${uri}?filter=foo`, {
+                            data: JSON.stringify({
+                                validElementsRequest: {
+                                    restrictiveDefinitionContent: reportDefinitionContent
+                                }
                             })
                         });
 

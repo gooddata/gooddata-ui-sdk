@@ -540,6 +540,7 @@ export function createModule(xhr) {
         });
     }
 
+
     /**
      * Get attribute elements with their labels and uris.
      *
@@ -579,6 +580,7 @@ export function createModule(xhr) {
      *      - complement {Boolean}
      *      - includeTotalCountWithoutFilters {Boolean}
      *      - restrictiveDefinition {String}
+     *      - afm {Object}
      * @return {Object} ValidElements response with:
      *      - items {Array} elements
      *      - paging {Object}
@@ -587,13 +589,35 @@ export function createModule(xhr) {
     function getValidElements(projectId, id, options = {}) {
         const query = pick(options, ['limit', 'offset', 'order', 'filter', 'prompt']);
         const queryParams = queryString(query);
+        const pickedOptions = pick(options, [
+            'uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition'
+        ]);
+        const { afm } = options;
 
-        const requestBody = pick(options, ['uris', 'complement', 'includeTotalCountWithoutFilters', 'restrictiveDefinition']);
-        return xhr.post(`/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ''), {
-            data: JSON.stringify({
-                validElementsRequest: requestBody
-            })
-        }).then(xhr.parseJSON);
+        const getRequestBodyWithReportDefinition =
+            () => xhr
+                .post(`/gdc/app/projects/${projectId}/executeAfm/debug`, {
+                    body: {
+                        execution: {
+                            afm
+                        }
+                    }
+                })
+                .then(xhr.parseJSON)
+                .then(reportDefinitionResult => ({
+                    ...pickedOptions,
+                    restrictiveDefinitionContent: reportDefinitionResult.reportDefinition.content
+                }));
+
+        const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
+
+        return getOptions()
+            .then(requestBody => xhr
+                .post(`/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ''), {
+                    data: JSON.stringify({ validElementsRequest: requestBody })
+                })
+                .then(xhr.parseJSON)
+            );
     }
 
     /**
