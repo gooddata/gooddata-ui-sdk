@@ -56,6 +56,12 @@ const ATTRIBUTE_POPULARITY: AFM.IAttribute = {
     }
 };
 
+export const AFM_ONE_MEASURE: AFM.IAfm = {
+    measures: [{
+        ...MEASURE_1
+    }]
+};
+
 export const AFM_ONE_RENAMED_MEASURE: AFM.IAfm = {
     measures: [{
         ...MEASURE_1,
