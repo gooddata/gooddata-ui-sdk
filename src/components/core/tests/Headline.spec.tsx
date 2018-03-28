@@ -1,15 +1,14 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-
 import { delay } from '../../tests/utils';
 import {
     oneMeasureOneDimensionDataSource,
     twoMeasuresOneDimensionDataSource
 } from '../../tests/mocks';
-
 import { Headline } from '../Headline';
 import { ICommonVisualizationProps } from '../base/VisualizationLoadingHOC';
-import { HeadlineTransformation } from '@gooddata/indigo-visualizations';
+import HeadlineTransformation from '../../visualizations/headline/HeadlineTransformation';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 
 describe('Headline', () => {

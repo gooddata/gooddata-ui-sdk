@@ -1,7 +1,6 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-
-import { HeadlineTransformation } from '@gooddata/indigo-visualizations';
-
+import HeadlineTransformation from '../visualizations/headline/HeadlineTransformation';
 import { IntlWrapper } from './base/IntlWrapper';
 import {
     IntlTranslationsProvider,

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
@@ -22,7 +23,7 @@ export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 export interface ICommonVisualizationProps extends IEvents {
     locale?: string;
     drillableItems?: IDrillableItem[];
-    afterRender?: Function;
+    afterRender?: () => void;
     pushData?: Function;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
