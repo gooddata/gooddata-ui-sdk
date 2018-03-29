@@ -58,8 +58,11 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
             config,
             type,
             execution,
-            onDataTooLarge
+            onDataTooLarge,
+            visualizationProperties
         } = this.props;
+
+        const fullConfig = { ...config, ...visualizationProperties, type };
 
         return (
             <IntlWrapper locale={locale}>
@@ -79,7 +82,7 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                                 executionResponse={execution.executionResponse.executionResponse}
                                 executionResult={fixedExecutionResult.executionResult}
                                 height={height}
-                                config={{ ...config, type }}
+                                config={fullConfig}
                                 afterRender={afterRender}
                                 onDataTooLarge={onDataTooLarge}
                                 onNegativeValues={this.props.onNegativeValues}

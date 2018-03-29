@@ -428,6 +428,20 @@ function getHoverStyles(chartOptions: any, config: any) {
     };
 }
 
+function getGridConfiguration(chartOptions: any) {
+    const gridEnabled = get(chartOptions, 'grid.enabled', true);
+
+    if (!gridEnabled) {
+        return {
+            yAxis: {
+                gridLineWidth: 0
+            }
+        };
+    }
+
+    return {};
+}
+
 export function getCustomizedConfiguration(chartOptions: any) {
     const configurators = [
         getTitleConfiguration,
@@ -436,7 +450,8 @@ export function getCustomizedConfiguration(chartOptions: any) {
         getLabelsConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
-        getHoverStyles
+        getHoverStyles,
+        getGridConfiguration
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

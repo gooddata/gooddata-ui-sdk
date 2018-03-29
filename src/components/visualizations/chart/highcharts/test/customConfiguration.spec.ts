@@ -30,4 +30,9 @@ describe('getCustomizedConfiguration', () => {
         const result = getCustomizedConfiguration(chartOptions);
         expect(result.series[0].data[0].name).toEqual('&lt;b&gt;bbb&lt;/b&gt;');
     });
+
+    it('should set gridline width to zero', () => {
+        const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
+        expect(result.yAxis.gridLineWidth).toEqual(0);
+    });
 });
