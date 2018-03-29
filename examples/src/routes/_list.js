@@ -11,6 +11,7 @@ import DatePicker from './DatePicker';
 import ResponsiveChart from './ResponsiveChart';
 import DynamicMeasures from './DynamicMeasures';
 import CustomLegend from './CustomLegend';
+import ParentFilter from './ParentFilter';
 import LoadingAndError from './LoadingAndError';
 
 export const advancedUseCasesRoutes = [
@@ -19,6 +20,7 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/date-picker', title: 'Date Picker', Component: DatePicker },
     { path: '/advanced/responsive', title: 'Responsive Chart', Component: ResponsiveChart },
     { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
+    { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
     { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError }
 ];
 

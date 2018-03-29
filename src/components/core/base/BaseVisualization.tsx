@@ -28,6 +28,11 @@ extends React.Component<P, S> {
                     message: intl.formatMessage({ id: 'visualization.ErrorMessageDataTooLarge' }),
                     description: intl.formatMessage({ id: 'visualization.ErrorDescriptionDataTooLarge' })
                 },
+                [ErrorStates.NO_DATA]: {
+                    icon: 'icon-filter',
+                    message: intl.formatMessage({ id: 'visualization.ErrorMessageNoData' }),
+                    description: intl.formatMessage({ id: 'visualization.ErrorDescriptionNoData' })
+                },
                 [ErrorStates.UNKNOWN_ERROR]: {
                     message: intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' }),
                     description: intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })

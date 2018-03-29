@@ -7,7 +7,6 @@ export { Requireable };
 export const ErrorPropTypes = {
     icon: PropTypes.string,
     message: PropTypes.string.isRequired,
-    cause: PropTypes.instanceOf(Error),
     className: PropTypes.string,
     style: PropTypes.object,
     width: PropTypes.any,
@@ -19,7 +18,6 @@ export interface IErrorProps {
     icon?: string;
     message: string;
     description?: string;
-    cause?: Error;
     className?: string;
     style?: object;
     width?: any;
@@ -29,7 +27,6 @@ export interface IErrorProps {
 export class ErrorComponent extends React.Component<IErrorProps, null> {
     public static defaultProps: Partial<IErrorProps> = {
         icon: 'icon-warning',
-        cause: null,
         className: 'Error s-error',
         width: undefined,
         height: '100%',

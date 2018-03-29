@@ -62,10 +62,11 @@
     lodash "^4.17.4"
     rxjs "^5.5.6"
 
-"@gooddata/data-layer@7.0.0-alpha2":
-  version "7.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha2.tgz#96cf0818f8618139642e125af76f41299b361be2"
+"@gooddata/data-layer@7.0.0-alpha4":
+  version "7.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha4.tgz#40e68e168499be1f179ab15d299a59a1f62e4e6f"
   dependencies:
+    "@gooddata/typings" "2.0.0-alpha0"
     json-stable-stringify "^1.0.1"
     lodash "^4.17.4"
     rxjs "^5.5.6"
@@ -126,9 +127,9 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@2.0.0-alpha0":
-  version "2.0.0-alpha0"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha0.tgz#72bb516c71df9b808d3aef7b577a439cf9b7ba47"
+"@gooddata/indigo-visualizations@2.0.0-alpha6":
+  version "2.0.0-alpha6"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha6.tgz#c74af3dd350ce4abacb786935028e0480cf4ce50"
   dependencies:
     "@gooddata/goodstrap" "55.0.0-alpha0"
     "@gooddata/js-utils" "0.7.1"
@@ -142,7 +143,6 @@
     prop-types "15.6.0"
     react-intl "2.4.0"
     react-measure "1.4.7"
-    react-textfit "1.1.0"
     rxjs "5.4.3"
 
 "@gooddata/js-utils@0.7.1":
@@ -171,25 +171,25 @@
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/react-components@5.0.0-alpha3":
-  version "5.0.0-alpha3"
-  resolved "https://registry.yarnpkg.com/@gooddata/react-components/-/react-components-5.0.0-alpha3.tgz#6b41fe3504e7183fdb2bcf67d2025076ec407f59"
+"@gooddata/react-components@5.0.0-alpha8":
+  version "5.0.0-alpha8"
+  resolved "https://registry.yarnpkg.com/@gooddata/react-components/-/react-components-5.0.0-alpha8.tgz#29bb0a095adbd9ce2db89a0a0cd0f9fc09295541"
   dependencies:
-    "@gooddata/data-layer" "7.0.0-alpha2"
+    "@gooddata/data-layer" "7.0.0-alpha4"
     "@gooddata/goodstrap" "55.0.0-alpha0"
-    "@gooddata/indigo-visualizations" "2.0.0-alpha0"
+    "@gooddata/indigo-visualizations" "2.0.0-alpha6"
     "@gooddata/js-utils" "^0.9.0"
     "@gooddata/numberjs" "^3.1.2"
     classnames "^2.2.5"
-    gooddata "6.0.0-alpha1"
+    gooddata "6.0.0-alpha2"
     lodash "^4.17.4"
     prop-types "^15.6.0"
     react-intl "^2.4.0"
     rxjs "^5.5.6"
 
-"@gooddata/typings@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-1.0.0.tgz#3fb9abcfbefc15745d6a0236c924d0d93e490e14"
+"@gooddata/typings@2.0.0-alpha0":
+  version "2.0.0-alpha0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.0.0-alpha0.tgz#5717165681e1c1b3ec6561d5c8fd80a141398953"
 
 "@types/chalk@^0.4.31":
   version "0.4.31"
@@ -1711,7 +1711,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@2.2.5, classnames@^2.2.5:
+classnames@2.2.5, classnames@^2.2.4, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -3553,11 +3553,10 @@ gooddata@4.3.0:
     lodash "4.17.4"
     md5 "2.2.1"
 
-gooddata@6.0.0-alpha0:
-  version "6.0.0-alpha0"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha0.tgz#40131f0bc6b4452aa8f8f585245e29bdafed8816"
+gooddata@6.0.0-alpha2:
+  version "6.0.0-alpha2"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha2.tgz#ef76320d6e0772ea3a4d1807229f15cf0842a2b7"
   dependencies:
-    "@gooddata/typings" "1.0.0"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
@@ -3566,9 +3565,9 @@ gooddata@6.0.0-alpha0:
     md5 "2.2.1"
     qs "6.5.1"
 
-gooddata@6.0.0-alpha1:
-  version "6.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha1.tgz#6aeeb68981d27b8b4b879c0a30e198f21c9c1640"
+gooddata@6.0.0-alpha4:
+  version "6.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha4.tgz#b7a22f91c8929849308ae274edb3aadeb9913440"
   dependencies:
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
@@ -5868,7 +5867,7 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
 
-process@^0.11.10, process@^0.11.9:
+process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
@@ -6144,6 +6143,12 @@ react-helmet@5.2.0:
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
 
+react-input-autosize@^2.1.2:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-intl@2.4.0, react-intl@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.4.0.tgz#66c14dc9df9a73b2fbbfbd6021726e80a613eb15"
@@ -6227,6 +6232,14 @@ react-router@^4.2.0:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
+react-select@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.2.1.tgz#a2fe58a569eb14dcaa6543816260b97e538120d1"
+  dependencies:
+    classnames "^2.2.4"
+    prop-types "^15.5.8"
+    react-input-autosize "^2.1.2"
+
 react-side-effect@^1.0.2, react-side-effect@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.3.tgz#512c25abe0dec172834c4001ec5c51e04d41bc5c"
@@ -6258,13 +6271,6 @@ react-textarea-autosize@4.2.2:
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.2.2.tgz#57f0b676a8845afd0d0f9dde42efe8d9c063f62e"
   dependencies:
     prop-types "^15.5.8"
-
-react-textfit@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-textfit/-/react-textfit-1.1.0.tgz#088855580f2e7aad269efc81b734bf636877d0e1"
-  dependencies:
-    process "^0.11.9"
-    prop-types "^15.5.10"
 
 react-transition-group@1.2.1:
   version "1.2.1"

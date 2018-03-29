@@ -30,6 +30,8 @@
     "visualization.ErrorDescriptionGeneric": "Contact your administrator.",
     "visualization.ErrorMessageDataTooLarge": "Too many data points to display",
     "visualization.ErrorDescriptionDataTooLarge": "Try applying filters.",
+    "visualization.ErrorMessageNoData": "No data",
+    "visualization.ErrorDescriptionNoData": "No data for your filter selection.",
     "visualization.ErrorMessageKpi": "Error",
     "gs.filter.loading": "Loading filter…",
     "gs.filter.error": "Error loading filter",
