@@ -17,29 +17,16 @@ module.exports = (grunt) => {
             }
         },
         run: {
-            jest: {
-                cmd: 'npm',
-                args: [
-                    'run',
-                    'test:ci'
-                ]
-            },
-            eslint: {
+            validate: {
                 cmd: 'yarn',
                 args: [
                     'validate'
                 ]
             },
-            eslintCi: {
+            test: {
                 cmd: 'yarn',
                 args: [
-                    'validate:ci'
-                ]
-            },
-            typings: {
-                cmd: 'yarn',
-                args: [
-                    'test:typings'
+                    'test-single-run'
                 ]
             }
         },
@@ -78,6 +65,7 @@ module.exports = (grunt) => {
                 url: '<%= pkg.homepage %>',
                 options: {
                     paths: 'src/',
+                    extension: '.ts',
                     themedir: 'tools/yuidoc/theme/',
                     outdir: 'docs/'
                 }
@@ -134,7 +122,7 @@ module.exports = (grunt) => {
     grunt.registerTask('default', ['dist']);
     grunt.registerTask('dist', [
         'getGitInfo',
-        'run:eslint',
+        'run:validate',
         'webpack:build-dev',
         'webpack:build',
         'copy'
@@ -142,11 +130,6 @@ module.exports = (grunt) => {
 
     grunt.registerTask('bump-gh-pages', ['yuidoc:gh_pages', 'gh-pages-clean', 'gh-pages']);
 
-    grunt.registerTask('test', [
-        'run:eslintCi',
-        'run:jest',
-        'run:typings'
-    ]);
     grunt.registerTask('dev', ['grizzly', 'watch:js']);
     grunt.registerTask('doc', ['yuidoc']);
 };

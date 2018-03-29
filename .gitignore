@@ -17,3 +17,5 @@ pages/_site/
 .idea
 
 npm-debug.log
+yarn-error.log
+.vscode/

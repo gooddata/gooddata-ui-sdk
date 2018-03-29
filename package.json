@@ -6,45 +6,68 @@
   "license": "BSD-3-Clause",
   "main": "lib/gooddata-node.js",
   "browser": "lib/gooddata-browser.js",
-  "typings": "./index.d.ts",
+  "typings": "lib/gooddata-browser.d.ts",
   "files": [
     "dist",
     "lib",
     "src",
-    "LICENSE",
-    "index.d.ts"
+    "LICENSE"
   ],
+  "config": {
+    "tslint": "'./{src,test}/**/*.ts'"
+  },
   "scripts": {
-    "build": "npm run build:lib && npm run build:dist",
-    "build:lib": "rm -rf lib && babel src --out-dir lib",
+    "dev": "tsc --watch",
+    "build": "yarn run build:lib && yarn run build:dist",
+    "build:lib": "rm -rf lib && tsc",
     "build:dist": "rm -rf dist && grunt dist",
-    "prepublish": "npm run build",
+    "prepublishOnly": "yarn run build",
     "test": "jest --watch",
-    "validate": "eslint --ext .js,.jsx src test",
-    "validate:ci": "yarn validate -f checkstyle -o ci/results/eslint-results.xml",
-    "test:typings": "tsc --noEmit index.d.ts",
-    "test:ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json"
+    "test-single-run": "jest",
+    "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+    "run-tslint": "tslint -p tsconfig.base.json",
+    "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
+    "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+    "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint",
+    "validate-ci": "tsc -p tsconfig.base.json --noEmit && yarn tslint-ci"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:gooddata/gooddata-js.git"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "transform": {
-      ".(js|jsx)": "babel-jest"
-    }
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/*.d.ts"
+    ],
+    "collectCoverage": false,
+    "coverageReporters": [
+      "html"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "devDependencies": {
-    "@gooddata/typings": "2.0.0-alpha0",
+    "@types/es6-promise": "3.3.0",
+    "@types/fast-levenshtein": "0.0.1",
+    "@types/fetch-mock": "5.*",
+    "@types/invariant": "2.2.29",
+    "@types/isomorphic-fetch": "0.0.34",
+    "@types/jest": "22.2.0",
+    "@types/json-stable-stringify": "1.0.32",
+    "@types/lodash": "4.14.105",
+    "@types/md5": "2.1.32",
+    "@types/node-fetch": "1.6.7",
+    "@types/qs": "6.5.1",
     "async": "2.1.5",
-    "babel-cli": "6.23.0",
-    "babel-core": "6.23.1",
-    "babel-jest": "22.2.2",
-    "babel-loader": "6.3.2",
-    "babel-plugin-lodash": "3.2.11",
-    "babel-preset-es2015": "6.22.0",
-    "babel-preset-stage-0": "6.22.0",
-    "babel-register": "6.23.0",
     "eslint-config-gooddata": "0.0.18",
     "exports-loader": "0.6.3",
     "fast-levenshtein": "2.0.6",
@@ -60,22 +83,29 @@
     "grunt-webpack": "1.0.14",
     "imports-loader": "0.7.0",
     "istanbul-instrumenter-loader": "0.2.0",
-    "jest": "21.0.0",
+    "jest": "21.2.1",
     "jest-junit": "3.0.0",
     "js-object-pretty-print": "0.2.0",
     "json-loader": "0.5.4",
     "lodash-webpack-plugin": "0.11.0",
-    "typescript": "2.7.2",
+    "ts-jest": "21.2.3",
+    "ts-loader": "3.2.0",
+    "tslint-config-gooddata": "0.0.8",
+    "typescript": "2.8.1",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.1"
   },
   "dependencies": {
+    "@gooddata/typings": "2.0.0-alpha0",
     "es6-promise": "3.0.2",
     "fetch-cookie": "0.4.0",
     "invariant": "2.2.2",
     "isomorphic-fetch": "2.2.1",
+    "json-stable-stringify": "1.0.1",
     "lodash": "4.17.4",
     "md5": "2.2.1",
-    "qs": "6.5.1"
+    "node-fetch": "2.1.1",
+    "qs": "6.5.1",
+    "rxjs": "^5.5.6"
   }
 }
