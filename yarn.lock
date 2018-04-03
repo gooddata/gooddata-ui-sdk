@@ -4267,9 +4267,9 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@6.0.0-alpha2:
-  version "6.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha2.tgz#ef76320d6e0772ea3a4d1807229f15cf0842a2b7"
+gooddata@6.0.0-alpha4:
+  version "6.0.0-alpha4"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha4.tgz#b7a22f91c8929849308ae274edb3aadeb9913440"
   dependencies:
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
@@ -9092,7 +9092,13 @@ toposort@^1.0.0:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.6.tgz#c31748e55d210effc00fdcdc7d6e68d7d7bb9cec"
 
-tough-cookie@^2.3.1, tough-cookie@^2.3.2, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
+tough-cookie@^2.3.1:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
+  dependencies:
+    punycode "^1.4.1"
+
+tough-cookie@^2.3.2, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
   dependencies:

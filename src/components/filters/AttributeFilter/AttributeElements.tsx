@@ -9,7 +9,7 @@ import {
     IElement
 } from 'gooddata';
 import { AFM } from '@gooddata/typings';
-import { get } from 'lodash';
+import { get, isEqual } from 'lodash';
 import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';
 
 export interface IPaging {
@@ -144,7 +144,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         if (this.props.uri !== nextProps.uri ||
             this.props.identifier !== nextProps.identifier ||
             this.props.projectId !== nextProps.projectId ||
-            get(this.props, 'options.offset') !== get(nextProps, 'options.offset')
+            !isEqual(this.props.options, nextProps.options)
         ) {
             this.uri = null; // invalidate
             this.setState({
