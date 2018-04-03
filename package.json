@@ -50,8 +50,8 @@
   },
   "dependencies": {
     "@gooddata/data-layer": "7.0.0-alpha4",
-    "@gooddata/goodstrap": "55.0.0-alpha0",
-    "@gooddata/indigo-visualizations": "2.0.0-alpha6",
+    "@gooddata/goodstrap": "55.0.0-alpha4",
+    "@gooddata/indigo-visualizations": "2.0.0-alpha7",
     "@gooddata/js-utils": "^0.9.0",
     "@gooddata/numberjs": "^3.1.2",
     "classnames": "^2.2.5",

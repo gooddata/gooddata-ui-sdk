@@ -167,6 +167,7 @@ export function generateDimensions(
             return getLineDimensions(mdObject);
         }
         case VisualizationTypes.BAR:
+        case VisualizationTypes.AREA:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
         }

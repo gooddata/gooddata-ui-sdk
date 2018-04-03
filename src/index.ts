@@ -27,6 +27,7 @@ import { IDataSourceProviderInjectedProps } from './components/afm/DataSourcePro
 import { BarChart } from './components/BarChart';
 import { ColumnChart } from './components/ColumnChart';
 import { LineChart } from './components/LineChart';
+import { AreaChart } from './components/AreaChart';
 import { PieChart } from './components/PieChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
@@ -63,6 +64,7 @@ export {
     IVisualizationProperties,
     Kpi,
     LineChart,
+    AreaChart,
     PieChart,
     PoPHelper,
     PropTypes,
