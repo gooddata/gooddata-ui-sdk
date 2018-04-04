@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
-    entry: './src/gooddata-browser.js',
+    entry: './src/gooddata-browser.ts',
     output: {
         filename: './dist/gooddata.js',
         // export itself to a global var
@@ -26,15 +26,15 @@ module.exports = {
                 loader: 'json-loader' // needed for fetch-cookie/node-fetch deps
             },
             {
-                test: /\.js$/,
-                loader: 'babel',
-                exclude: /node_modules|lib|ci|docs|examples|pages|tools/
+                test: /\.ts$/,
+                loader: 'ts-loader?transpileOnly=true',
+                exclude: /node_modules|lib|ci|docs|examples|pages|tools/,
             }
         ]
     },
     resolve: {
         // Allow to omit extensions when requiring these files
-        extensions: ['', '.js'],
+        extensions: ['', '.js', '.ts', '.jsx', '.tsx', '.styl', '.scss', '.json'],
         modulesDirectories: [
             'node_modules'
         ]

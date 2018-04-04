@@ -8,4 +8,4 @@ node_js:
   - "6"
   - "8"
 
-script: grunt test
+script: yarn test-ci
