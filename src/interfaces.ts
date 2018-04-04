@@ -45,6 +45,7 @@ export interface IGetObjectsByQueryOptions {
     mode?: string;
     author?: string;
     limit?: number;
+    deprecated?: boolean;
 }
 
 export interface IGetObjectUsingOptions {
