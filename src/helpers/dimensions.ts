@@ -151,7 +151,15 @@ function getHeadlinesDimensions(): AFM.IDimension[] {
     ];
 }
 
-// duplicates logic from pluggable visualizations. Remove once react components support pluggable visualizations
+/**
+ * generateDimensions
+ * is a function that generates dimensions based on buckets and visualization objects.
+ * WARNING: It duplicates logic from pluggable visualizations.
+ *          Remove once react components support pluggable visualizations.
+ * @param mdObject:VisualizationObject.IVisualizationObjectContent - metadata object with buckets
+ * @param type:VisType - visualization type string
+ * @internal
+ */
 export function generateDimensions(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     type: VisType

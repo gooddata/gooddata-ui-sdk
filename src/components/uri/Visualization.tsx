@@ -376,6 +376,10 @@ export class VisualizationWrapped
 
 export const IntlVisualization = injectIntl(VisualizationWrapped);
 
+/**
+ * [Visualization](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/react_components.html#visualization)
+ * is a component that renders saved visualization based on projectId and either identifier or uri
+ */
 export class Visualization extends React.Component<IVisualizationProps, null> {
     public render() {
         return (

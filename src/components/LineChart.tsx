@@ -49,6 +49,10 @@ function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IRes
     };
 }
 
+/**
+ * [LineChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/line_chart_component.html)
+ * is a component with bucket props measures, trendBy, segmentBy, filters
+ */
 export function LineChart(props: ILineChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {

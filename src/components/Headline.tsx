@@ -19,6 +19,10 @@ export interface IHeadlineProps extends ICommonChartProps, IHeadlineBucketProps 
 
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
 
+/**
+ * Headline
+ * is a component with bucket props primaryMeasure, secondaryMeasure, filters
+ */
 export function Headline(props: IHeadlineProps): JSX.Element {
     const buckets = [
         {

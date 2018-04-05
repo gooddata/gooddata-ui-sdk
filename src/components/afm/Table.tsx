@@ -22,4 +22,9 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
+/**
+ * AFM Table
+ * is an internal component that accepts afm, resultSpec
+ * @internal
+ */
 export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions, 'Table');

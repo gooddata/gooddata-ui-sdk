@@ -24,6 +24,10 @@ export interface IErrorProps {
     height?: any;
 }
 
+/**
+ * [ErrorComponent](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/error_component.html)
+ * is a component that renders a default error message
+ */
 export class ErrorComponent extends React.Component<IErrorProps, null> {
     public static defaultProps: Partial<IErrorProps> = {
         icon: 'icon-warning',

@@ -59,6 +59,13 @@ function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {
     return hasEmptyData(responses) && hasMissingHeaderItems(responses);
 }
 
+/**
+ * isEmptyResult
+ * is a function that returns true if the execution result is empty (no data points) and false otherwise.
+ * @param responses:Execution.IExecutionResponses - object with execution response and result
+ * @return boolean
+ * @internal
+ */
 export function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
     return isNullExecutionResult(responses) || isEmptyDataResult(responses);
 }

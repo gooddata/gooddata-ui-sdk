@@ -48,6 +48,15 @@ function addDefaultDimensions(
     };
 }
 
+/**
+ * dataSourceProvider
+ * is a function that creates a dataSource and passes it to InnerComponent
+ * @param InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>
+ *   a component that will be pased dataSource prop
+ * @param generateDefaultDimensions - a function that returns default dimensions
+ * @param componentName: string - InnerComponent actual name
+ * @internal
+ */
 export function dataSourceProvider<T>(
     InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction,

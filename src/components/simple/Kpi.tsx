@@ -145,6 +145,10 @@ export class KpiWrapped extends React.Component<IKpiProps & InjectedIntlProps, n
 
 export const IntlKpi = injectIntl(KpiWrapped);
 
+/**
+ * [Kpi](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/react_components.html#kpi)
+ * is a component that renders a KPI using bucket props measure, filters
+ */
 export class Kpi extends React.Component<IKpiProps, null> {
     public render() {
         return (
