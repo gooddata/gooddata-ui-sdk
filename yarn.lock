@@ -30,7 +30,7 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@^55.0.0-alpha5":
+"@gooddata/goodstrap@55.0.0-alpha5":
   version "55.0.0-alpha5"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha5.tgz#5a46a6340beb11586f7ae8443bf4e40ca71600d3"
   dependencies:
@@ -4286,7 +4286,7 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@^6.0.0-alpha5:
+gooddata@6.0.0-alpha5:
   version "6.0.0-alpha5"
   resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha5.tgz#84199875916ad073ef36c2b229f2c2321aac2137"
   dependencies:
