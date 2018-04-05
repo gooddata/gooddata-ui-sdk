@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
-import { Execution } from '@gooddata/typings';
-import { DataLayer } from 'gooddata';
+import { DataLayer, ApiResponseError } from 'gooddata';
 import {
     emptyResponse,
     emptyResponseWithNull,
@@ -10,49 +9,33 @@ import {
 import { ErrorCodes, ErrorStates } from '../../constants/errorStates';
 import {} from 'jest';
 
-function createMockedError(status: number, body: string = '{}'): Execution.IError {
-    const error = new Error() as Execution.IError;
-    error.response = {
-        status,
-        body: null as ReadableStream | null, // tslint:disable-line
-        bodyUsed: false,
-        headers: null,
-        ok: true,
-        statusText: '',
-        type: 'error',
-        url: '',
-        json: jest.fn(() => {
-            return Promise.resolve(JSON.parse(body));
-        }),
-        text: jest.fn(() => {
-            return Promise.resolve(body);
-        }),
-        clone: jest.fn(),
-        arrayBuffer: jest.fn(),
-        blob: jest.fn(),
-        formData: jest.fn()
-    };
+async function createMockedError(status: number, body: string = '{}') {
+    const response = new Response(body, { status });
 
-    return error;
+    // In gooddata-js, the response body is always read before the rejectio with ApiResponseError,
+    // see https://github.com/gooddata/gooddata-js/blob/c5c985e9070d20ac359b988244b7bb1155661473/src/xhr.ts#L154-L155
+    const responseBody = await response.text();
+
+    return new ApiResponseError('Response error', response, responseBody);
 }
 
 describe('convertErrors', async () => {
     it('should throw correct ErrorStates', async () => {
         expect.assertions(7);
         try {
-            await convertErrors(createMockedError(204));
+            await convertErrors(await createMockedError(204));
         } catch (e) {
             expect(e).toEqual(ErrorStates.NO_DATA);
         }
 
         try {
-            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_TOO_LARGE));
+            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_TOO_LARGE));
         } catch (e) {
             expect(e).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
         }
 
         try {
-            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST));
+            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST));
         } catch (e) {
             expect(e).toEqual(ErrorStates.BAD_REQUEST);
         }
@@ -64,25 +47,25 @@ describe('convertErrors', async () => {
                 }
             }`;
 
-            await convertErrors(createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
+            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
         } catch (e) {
             expect(e).toEqual(ErrorStates.PROTECTED_REPORT);
         }
 
         try {
-            await convertErrors(createMockedError(ErrorCodes.EMPTY_AFM));
+            await convertErrors(await createMockedError(ErrorCodes.EMPTY_AFM));
         } catch (e) {
             expect(e).toEqual(ErrorStates.EMPTY_AFM);
         }
 
         try {
-            await convertErrors(createMockedError(ErrorCodes.INVALID_BUCKETS));
+            await convertErrors(await createMockedError(ErrorCodes.INVALID_BUCKETS));
         } catch (e) {
             expect(e).toEqual(ErrorStates.INVALID_BUCKETS);
         }
 
         try {
-            await convertErrors(createMockedError(0));
+            await convertErrors(await createMockedError(0));
         } catch (e) {
             expect(e).toEqual(ErrorStates.UNKNOWN_ERROR);
         }

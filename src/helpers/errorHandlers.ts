@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
-import { DataLayer } from 'gooddata';
+import { DataLayer, ApiResponseError } from 'gooddata';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
 
@@ -12,34 +12,33 @@ function getJSONFromText(data: string): object {
     }
 }
 
-export function convertErrors(error: Execution.IError) {
+export function convertErrors(error: ApiResponseError) {
     const errorCode: number = error.response.status;
-    return error.response.text().then((data: string) => {
-        switch (errorCode) {
-            case 204:
-                throw ErrorStates.NO_DATA;
+    switch (errorCode) {
+        case 204:
+            throw ErrorStates.NO_DATA;
 
-            case DataLayer.ErrorCodes.HTTP_TOO_LARGE:
-                throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
+        case DataLayer.ErrorCodes.HTTP_TOO_LARGE:
+            throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
 
-            case DataLayer.ErrorCodes.HTTP_BAD_REQUEST:
-                const message = get(getJSONFromText(data), 'error.message', '');
-                if (includes(message, 'Attempt to execute protected report unsafely')) {
-                    throw ErrorStates.PROTECTED_REPORT;
-                } else {
-                    throw ErrorStates.BAD_REQUEST;
-                }
+        case DataLayer.ErrorCodes.HTTP_BAD_REQUEST:
+            const message = get(getJSONFromText(error.responseBody), 'error.message', '');
 
-            case ErrorCodes.EMPTY_AFM:
-                throw ErrorStates.EMPTY_AFM;
+            if (includes(message, 'Attempt to execute protected report unsafely')) {
+                throw ErrorStates.PROTECTED_REPORT;
+            } else {
+                throw ErrorStates.BAD_REQUEST;
+            }
 
-            case ErrorCodes.INVALID_BUCKETS:
-                throw ErrorStates.INVALID_BUCKETS;
+        case ErrorCodes.EMPTY_AFM:
+            throw ErrorStates.EMPTY_AFM;
 
-            default:
-                throw ErrorStates.UNKNOWN_ERROR;
-        }
-    });
+        case ErrorCodes.INVALID_BUCKETS:
+            throw ErrorStates.INVALID_BUCKETS;
+
+        default:
+            throw ErrorStates.UNKNOWN_ERROR;
+    }
 }
 
 /** @deprecated */
