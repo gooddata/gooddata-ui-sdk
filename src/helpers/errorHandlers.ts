@@ -1,8 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
-import {
-    ErrorCodes as DataErrorCodes
-} from '@gooddata/data-layer';
+import { DataLayer } from 'gooddata';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
 
@@ -21,10 +19,10 @@ export function convertErrors(error: Execution.IError) {
             case 204:
                 throw ErrorStates.NO_DATA;
 
-            case DataErrorCodes.HTTP_TOO_LARGE:
+            case DataLayer.ErrorCodes.HTTP_TOO_LARGE:
                 throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
 
-            case DataErrorCodes.HTTP_BAD_REQUEST:
+            case DataLayer.ErrorCodes.HTTP_BAD_REQUEST:
                 const message = get(getJSONFromText(data), 'error.message', '');
                 if (includes(message, 'Attempt to execute protected report unsafely')) {
                     throw ErrorStates.PROTECTED_REPORT;

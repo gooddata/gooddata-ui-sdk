@@ -27,7 +27,7 @@ export class DynamicMeasuresExample extends Component {
     componentWillMount() {
         sdk.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`).then(
             (response) => {
-                if (!response.entries.length) {
+                if (!response.data.entries.length) {
                     return this.setState({
                         measureList: null,
                         error: {
@@ -37,7 +37,7 @@ export class DynamicMeasuresExample extends Component {
                     });
                 }
                 return this.setState({
-                    measureList: response.entries.map(entry => ({ ...entry, isSelected: true })),
+                    measureList: response.data.entries.map(entry => ({ ...entry, isSelected: true })),
                     error: null
                 });
             }

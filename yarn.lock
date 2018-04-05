@@ -2,18 +2,37 @@
 # yarn lockfile v1
 
 
-"@gooddata/data-layer@7.0.0-alpha4":
-  version "7.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/@gooddata/data-layer/-/data-layer-7.0.0-alpha4.tgz#40e68e168499be1f179ab15d299a59a1f62e4e6f"
-  dependencies:
-    "@gooddata/typings" "2.0.0-alpha0"
-    json-stable-stringify "^1.0.1"
-    lodash "^4.17.4"
-    rxjs "^5.5.6"
-
 "@gooddata/goodstrap@55.0.0-alpha4":
   version "55.0.0-alpha4"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha4.tgz#8ecff67043cb83ce3946a3b6783f3abd294fbd89"
+  dependencies:
+    "@gooddata/js-utils" "0.7.1"
+    classnames "2.2.5"
+    custom-event "1.0.1"
+    fixed-data-table-2 "0.7.17"
+    foundation-sites "5.5.3"
+    immutable "3.8.1"
+    invariant "2.2.2"
+    jquery "2.1.4"
+    kefir "3.7.1"
+    lodash "4.17.4"
+    moment "2.18.1"
+    moment-timezone "0.5.11"
+    prop-types "15.6.0"
+    react-day-picker "7.0.7"
+    react-dnd "2.5.4"
+    react-document-title "2.0.3"
+    react-intl "2.4.0"
+    react-native-listener "1.0.2"
+    react-portal "3.1.0"
+    react-responsive "3.0.0"
+    react-textarea-autosize "4.2.2"
+    react-transition-group "1.2.1"
+    rxjs "5.4.3"
+
+"@gooddata/goodstrap@^55.0.0-alpha5":
+  version "55.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha5.tgz#5a46a6340beb11586f7ae8443bf4e40ca71600d3"
   dependencies:
     "@gooddata/js-utils" "0.7.1"
     classnames "2.2.5"
@@ -4267,17 +4286,21 @@ globule@^1.0.0:
     lodash "~4.17.4"
     minimatch "~3.0.2"
 
-gooddata@6.0.0-alpha4:
-  version "6.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha4.tgz#b7a22f91c8929849308ae274edb3aadeb9913440"
+gooddata@^6.0.0-alpha5:
+  version "6.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha5.tgz#84199875916ad073ef36c2b229f2c2321aac2137"
   dependencies:
+    "@gooddata/typings" "2.0.0-alpha0"
     es6-promise "3.0.2"
     fetch-cookie "0.4.0"
     invariant "2.2.2"
     isomorphic-fetch "2.2.1"
+    json-stable-stringify "1.0.1"
     lodash "4.17.4"
     md5 "2.2.1"
+    node-fetch "2.1.1"
     qs "6.5.1"
+    rxjs "^5.5.6"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
@@ -5531,7 +5554,7 @@ json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
 
-json-stable-stringify@^1.0.1:
+json-stable-stringify@1.0.1, json-stable-stringify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
   dependencies:
@@ -6309,6 +6332,10 @@ node-dir@^0.1.10:
   resolved "https://registry.yarnpkg.com/node-dir/-/node-dir-0.1.17.tgz#5f5665d93351335caabef8f1c554516cf5f1e4e5"
   dependencies:
     minimatch "^3.0.2"
+
+node-fetch@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.1.tgz#369ca70b82f50c86496104a6c776d274f4e4a2d4"
 
 node-fetch@^1.0.1:
   version "1.7.3"

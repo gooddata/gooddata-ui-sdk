@@ -1,26 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import { SDK, factory as createSdk, DataLayer } from 'gooddata';
 import * as PropTypes from 'prop-types';
 
 import isEqual = require('lodash/isEqual');
 import omit = require('lodash/omit');
 import { AFM, Execution } from '@gooddata/typings';
-import { ExecuteAfmAdapter, createSubject, IAdapter } from '@gooddata/data-layer';
 import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-visualizations';
 
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 import { setTelemetryHeaders } from '../../helpers/utils';
 
-export type IAdapterFactory = (sdk: ISdk, projectId: string) => IAdapter<Execution.IExecutionResponses>;
+export type IAdapterFactory = (sdk: SDK, projectId: string) => DataLayer.IAdapter<Execution.IExecutionResponses>;
 
 export interface IDataSourceProviderProps {
     afm: AFM.IAfm;
     projectId: string;
     resultSpec?: AFM.IResultSpec;
     adapterFactory?: IAdapterFactory;
-    sdk?: ISdk;
+    sdk?: SDK;
 
     [p: string]: any; // other params of inner componnent, just for pass through
 }
@@ -33,8 +32,8 @@ export interface IDataSourceProviderInjectedProps {
 export type IDataSourceInfoPromise = Promise<IDataSource>;
 export type IGenerateDefaultDimensionsFunction = (afm: AFM.IAfm) => AFM.IDimension[];
 
-function defaultAdapterFactory(sdk: ISdk, projectId: string): IAdapter<Execution.IExecutionResponses> {
-    return new ExecuteAfmAdapter(sdk, projectId);
+function defaultAdapterFactory(sdk: SDK, projectId: string): DataLayer.IAdapter<Execution.IExecutionResponses> {
+    return new DataLayer.ExecuteAfmAdapter(sdk, projectId);
 }
 
 function addDefaultDimensions(
@@ -64,9 +63,9 @@ export function dataSourceProvider<T>(
             resultSpec: ResultSpecPropTypesShape
         };
 
-        private adapter: IAdapter<Execution.IExecutionResponses>;
+        private adapter: DataLayer.IAdapter<Execution.IExecutionResponses>;
         private subject: ISubject<IDataSourceInfoPromise>;
-        private sdk: ISdk;
+        private sdk: SDK;
 
         constructor(props: IDataSourceProviderProps) {
             super(props);
@@ -80,7 +79,7 @@ export function dataSourceProvider<T>(
             this.sdk = sdk.clone();
             setTelemetryHeaders(this.sdk, componentName, props);
 
-            this.subject = createSubject<IDataSource>((dataSource) => {
+            this.subject = DataLayer.createSubject<IDataSource>((dataSource) => {
                 this.setState({
                     dataSource
                 });

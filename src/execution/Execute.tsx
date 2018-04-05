@@ -1,10 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { ISdk, factory as createSdk } from 'gooddata';
+import { DataLayer, SDK, factory as createSdk } from 'gooddata';
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
-import { DataTable, ExecuteAfmAdapter, ErrorCodes } from '@gooddata/data-layer';
 
 import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
@@ -13,16 +12,18 @@ import { setTelemetryHeaders } from '../helpers/utils';
 
 export { Requireable };
 
+const { DataTable, ExecuteAfmAdapter, ErrorCodes } = DataLayer;
+
 const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
-export type IDataTableFactory = (sdk: ISdk, projectId: string) => DataTable<Execution.IExecutionResponses>;
+export type IDataTableFactory = (sdk: SDK, projectId: string) => DataLayer.DataTable<Execution.IExecutionResponses>;
 
 export interface IExecuteProps extends IEvents {
     afm: AFM.IAfm;
     resultSpec?: AFM.IResultSpec;
     projectId: string;
     children?: any;
-    sdk?: ISdk;
+    sdk?: SDK;
     dataTableFactory?: IDataTableFactory; // only for tests
 }
 
@@ -35,7 +36,7 @@ export interface IExecuteState {
     };
 }
 
-function dataTableFactory(sdk: ISdk, projectId: string): DataTable<Execution.IExecutionResponses> {
+function dataTableFactory(sdk: SDK, projectId: string): DataLayer.DataTable<Execution.IExecutionResponses> {
     return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
 }
 
@@ -56,9 +57,9 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         onLoadingChanged: noop
     };
 
-    private dataTable: DataTable<Execution.IExecutionResponses>;
+    private dataTable: DataLayer.DataTable<Execution.IExecutionResponses>;
 
-    private sdk: ISdk;
+    private sdk: SDK;
 
     public constructor(props: IExecuteProps) {
         super(props);

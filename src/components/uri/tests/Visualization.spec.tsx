@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
-import { ISdk } from 'gooddata';
+import { SDK } from 'gooddata';
 import {
     Table,
     BaseChart,
@@ -41,7 +41,7 @@ function getResponse(response: string, delay: number): Promise<string> {
 }
 
 // tslint:disable-next-line:variable-name
-function fetchVisObject(_sdk: ISdk, uri: string): Promise<VisualizationObject.IVisualizationObject> {
+function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
 
     if (!visObj) {
@@ -53,7 +53,7 @@ function fetchVisObject(_sdk: ISdk, uri: string): Promise<VisualizationObject.IV
 
 function fetchVisualizationClass(
     // tslint:disable-next-line:variable-name
-    _sdk: ISdk,
+    _sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
     const visClass = visualizationClasses.find(vc => vc.visualizationClass.meta.uri === visualizationClassUri);
@@ -66,7 +66,7 @@ function fetchVisualizationClass(
 }
 
 // tslint:disable-next-line:variable-name
-function uriResolver(_sdk: ISdk, _projectId: string, uri: string, identifier: string): Promise<string> {
+function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
     }
