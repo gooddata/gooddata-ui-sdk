@@ -70,6 +70,27 @@ describe('metadata', () => {
                     expect(result.length).toBe(4);
                 });
             });
+
+            it('should create proper url with deprecated parameter', () => {
+                const body = JSON.stringify({
+                    objects: {
+                        paging: {
+                            count: 50,
+                            offset: 50
+                        },
+                        items: []
+                    }
+                });
+
+                fetchMock.mock(
+                    '/gdc/md/myFakeProjectId/objects/query?limit=50&deprecated=1',
+                    { status: 200, body }
+                );
+
+                return createMd().getObjectsByQuery('myFakeProjectId', { deprecated: true }).then((result: any) => {
+                    expect(result.length).toBe(0);
+                });
+            });
         });
 
         describe('getVisualizations', () => {

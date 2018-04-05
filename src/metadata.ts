@@ -83,6 +83,7 @@ export class MetadataModule {
      *        - mode {String} 'enriched' or 'raw'
      *        - author {String} the URI of the author of the metadata objects
      *        - limit {number} default is 50 (also maximum)
+     *        - deprecated {boolean} show also deprecated objects
      * @return {Promise<Array>} array of returned objects
      */
     public getObjectsByQuery(projectId: string, options: IGetObjectsByQueryOptions): Promise<any[]> {
@@ -96,8 +97,10 @@ export class MetadataModule {
                 });
         };
 
+        const deprecated = options.deprecated ? { deprecated: 1 } : {};
         const uri = `/gdc/md/${projectId}/objects/query`;
-        const query = pick({ limit: 50, ...options }, ['category', 'mode', 'author', 'limit']);
+        const query = pick({ limit: 50, ...options, ...deprecated },
+            ['category', 'mode', 'author', 'limit', 'deprecated']);
         return getOnePage(uri + queryString(query));
     }
 
