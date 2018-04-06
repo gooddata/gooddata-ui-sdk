@@ -2,11 +2,11 @@
 # yarn lockfile v1
 
 
-"@gooddata/goodstrap@55.0.0-alpha4":
-  version "55.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha4.tgz#8ecff67043cb83ce3946a3b6783f3abd294fbd89"
+"@gooddata/goodstrap@55.0.0-alpha6":
+  version "55.0.0-alpha6"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha6.tgz#f21c6441e0a35c9ae98d450fc81044d867dbf4f7"
   dependencies:
-    "@gooddata/js-utils" "0.7.1"
+    "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
     custom-event "1.0.1"
     fixed-data-table-2 "0.7.17"
@@ -30,40 +30,12 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@55.0.0-alpha5":
-  version "55.0.0-alpha5"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha5.tgz#5a46a6340beb11586f7ae8443bf4e40ca71600d3"
+"@gooddata/indigo-visualizations@2.0.0-alpha8":
+  version "2.0.0-alpha8"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha8.tgz#11c3308a6dfb9f21c3b0bcba2aae303a5e627ee8"
   dependencies:
-    "@gooddata/js-utils" "0.7.1"
-    classnames "2.2.5"
-    custom-event "1.0.1"
-    fixed-data-table-2 "0.7.17"
-    foundation-sites "5.5.3"
-    immutable "3.8.1"
-    invariant "2.2.2"
-    jquery "2.1.4"
-    kefir "3.7.1"
-    lodash "4.17.4"
-    moment "2.18.1"
-    moment-timezone "0.5.11"
-    prop-types "15.6.0"
-    react-day-picker "7.0.7"
-    react-dnd "2.5.4"
-    react-document-title "2.0.3"
-    react-intl "2.4.0"
-    react-native-listener "1.0.2"
-    react-portal "3.1.0"
-    react-responsive "3.0.0"
-    react-textarea-autosize "4.2.2"
-    react-transition-group "1.2.1"
-    rxjs "5.4.3"
-
-"@gooddata/indigo-visualizations@2.0.0-alpha7":
-  version "2.0.0-alpha7"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha7.tgz#4677bbbaae89ce8f77b4a0d925c714a41c36f92e"
-  dependencies:
-    "@gooddata/goodstrap" "55.0.0-alpha4"
-    "@gooddata/js-utils" "0.7.1"
+    "@gooddata/goodstrap" "55.0.0-alpha6"
+    "@gooddata/js-utils" "^2.0.0"
     "@gooddata/numberjs" "3.0.0"
     classnames "2.2.5"
     fixed-data-table-2 "0.7.17"
@@ -76,23 +48,12 @@
     react-measure "1.4.7"
     rxjs "5.4.3"
 
-"@gooddata/js-utils@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-0.7.1.tgz#5b382dbf37b61b387951b8e58e8580f9f75a28ee"
+"@gooddata/js-utils@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-2.0.0.tgz#357d795cf5c7a7b58ecb14bd04189338a428559c"
   dependencies:
-    js-cookie "2.1.4"
-    lodash "4.17.4"
-    moment "2.17.1"
-    moment-timezone "0.5.11"
-
-"@gooddata/js-utils@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-0.9.0.tgz#ac630fde7d2fad8c3d328519255e31446df6fb34"
-  dependencies:
-    js-cookie "2.1.4"
-    lodash "4.17.4"
-    moment "2.17.1"
-    moment-timezone "0.5.11"
+    js-cookie "^2.1.4"
+    lodash "^4.17.4"
 
 "@gooddata/mock-js@1.0.0-alpha4":
   version "1.0.0-alpha4"
@@ -5480,9 +5441,9 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.1.tgz#e02813181cd53002888e918935467acb2910e596"
 
-js-cookie@2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.1.4.tgz#da4ec503866f149d164cf25f579ef31015025d8d"
+js-cookie@^2.1.4:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -6215,10 +6176,6 @@ moment-timezone@0.5.11:
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.11.tgz#9b76c03d8ef514c7e4249a7bbce649eed39ef29f"
   dependencies:
     moment ">= 2.6.0"
-
-moment@2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
 moment@2.18.1:
   version "2.18.1"
