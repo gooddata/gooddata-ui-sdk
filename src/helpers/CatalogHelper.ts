@@ -28,7 +28,8 @@ export interface IDataSet {
 }
 
 export interface ICatalog {
-    metrics: { [key: string]: IIdentifierWithTags };
+    metrics?: { [key: string]: IIdentifierWithTags };
+    measures?: { [key: string]: IIdentifierWithTags };
     visualizations: { [key: string]: IIdentifierWithTags };
     attributes: IAttrs;
     dateDataSets: { [key: string]: IDataSet };
@@ -50,24 +51,32 @@ function getDisplayFormFromAttr(
  *  const C = new CatalogHelper(catalog);
  */
 export default class CatalogHelper {
-    public metrics: { [key: string]: IIdentifierWithTags };
+    public measures: { [key: string]: IIdentifierWithTags };
     public visualizations: { [key: string]: IIdentifierWithTags };
     public attributes: { [key: string]: IAttrItem };
     public dateDataSets: { [key: string]: IDataSet };
 
     constructor(catalog: ICatalog) {
-        this.metrics = catalog.metrics;
+        this.measures = catalog.metrics || catalog.measures;
         this.visualizations = catalog.visualizations;
         this.attributes = catalog.attributes;
         this.dateDataSets = catalog.dateDataSets;
     }
 
     public metric(name: string): string {
-        return get<CatalogHelper, string>(this, ['metrics', name, 'identifier']);
+        return this.getMeasure(name);
+    }
+
+    public measure(name: string): string {
+        return this.getMeasure(name);
     }
 
     public metricTags(name: string): string {
-        return get<CatalogHelper, string>(this, ['metrics', name, 'tags']);
+        return this.getMeasureTags(name);
+    }
+
+    public measureTags(name: string): string {
+        return this.getMeasureTags(name);
     }
 
     public visualization(name: string): string {
@@ -118,5 +127,13 @@ export default class CatalogHelper {
     public dateDataSetDisplayFormTags(dataSetName: string, attributeName: string, displayFormName?: string): string {
         const attrs = get<CatalogHelper, IAttrs>(this, ['dateDataSets', dataSetName, 'attributes']);
         return getDisplayFormFromAttr(attrs, attributeName, displayFormName, 'tags');
+    }
+
+    private getMeasure(name: string) {
+        return get<CatalogHelper, string>(this, ['measures', name, 'identifier']);
+    }
+
+    private getMeasureTags(name: string) {
+        return get<CatalogHelper, string>(this, ['measures', name, 'tags']);
     }
 }

@@ -52,7 +52,7 @@ describe('getVisualizationOptions', () => {
     }
 
     describe('dateOptionsDisabled', () => {
-        it('should be true if all metrics use date filter', () => {
+        it('should be true if all measures use date filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter()]),
                 createMeasure([createDateFilter()])
@@ -60,7 +60,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', true);
         });
 
-        it('should be true if all metrics use date filter and also attribute filter', () => {
+        it('should be true if all measures use date filter and also attribute filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter(), createAttributeFilter()]),
                 createMeasure([createDateFilter()])
@@ -68,7 +68,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', true);
         });
 
-        it('should be false if all metrics use attribute filter only', () => {
+        it('should be false if all measures use attribute filter only', () => {
             const afm = createAfm([
                 createMeasure([createAttributeFilter()]),
                 createMeasure([createAttributeFilter()])
@@ -90,7 +90,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm2)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should be false if some metrics use attribute filter and some date filter', () => {
+        it('should be false if some measures use attribute filter and some date filter', () => {
             const afm = createAfm([
                 createMeasure([createAttributeFilter()]),
                 createMeasure([createDateFilter()])
@@ -98,7 +98,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should be false if some metric use date filter, but some does not use any filter', () => {
+        it('should be false if some measure use date filter, but some does not use any filter', () => {
             const afm = createAfm([
                 createMeasure([createDateFilter()]),
                 createMeasure([])
@@ -106,7 +106,7 @@ describe('getVisualizationOptions', () => {
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });
 
-        it('should be false if there are no metrics', () => {
+        it('should be false if there are no measures', () => {
             const afm = createAfm([]);
             expect(getVisualizationOptions(afm)).toHaveProperty('dateOptionsDisabled', false);
         });

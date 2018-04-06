@@ -14,11 +14,11 @@ storiesOf('CatalogHelper', module)
     .add('KPI', () => (
         <div>
             Usage:
-            <pre>{'measure={C.metric(\'Amount [BOP]\')}'}</pre>
+            <pre>{'measure={C.measure(\'Amount [BOP]\')}'}</pre>
 
             Result:<br /><br />
             <Kpi
-                measure={C.metric('Amount [BOP]')}
+                measure={C.measure('Amount [BOP]')}
                 projectId={'storybook'}
             />
         </div>

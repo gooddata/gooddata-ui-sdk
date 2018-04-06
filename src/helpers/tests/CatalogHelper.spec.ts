@@ -3,8 +3,8 @@ import CatalogHelper from '../CatalogHelper';
 
 describe('CatalogHelper', () => {
     const catalogJson = {
-        metrics: {
-            Revenue: { identifier: 'abl9B8GhatNR', tags: 'ab' }
+        measures: {
+            Revenue: { identifier: '123', tags: 'abc' }
         },
         attributes: {
             Region: {
@@ -38,13 +38,41 @@ describe('CatalogHelper', () => {
         }
     };
 
-    it('should return a metric', () => {
-        const C = new CatalogHelper(catalogJson);
+    const catalogWithMetricsJson = {
+        metrics: catalogJson.measures,
+        attributes: catalogJson.attributes,
+        visualizations: catalogJson.visualizations,
+        dateDataSets: catalogJson.dateDataSets
+    };
 
-        expect(C.metric('Revenue')).toBe('abl9B8GhatNR');
-        expect(C.metric('non-existent')).toBeUndefined();
-        expect(C.metricTags('Revenue')).toBe('ab');
-        expect(C.metricTags('non-existent')).toBeUndefined();
+    it('should return a measure', () => {
+        const catalogWithMeasures = new CatalogHelper(catalogJson);
+
+        expect(catalogWithMeasures.metric('Revenue')).toBe('123');
+        expect(catalogWithMeasures.metric('non-existent')).toBeUndefined();
+
+        expect(catalogWithMeasures.metricTags('Revenue')).toBe('abc');
+        expect(catalogWithMeasures.metricTags('non-existent')).toBeUndefined();
+
+        expect(catalogWithMeasures.measure('Revenue')).toBe('123');
+        expect(catalogWithMeasures.measure('non-existent')).toBeUndefined();
+
+        expect(catalogWithMeasures.measureTags('Revenue')).toBe('abc');
+        expect(catalogWithMeasures.measureTags('non-existent')).toBeUndefined();
+
+        const catalogWithMetrics = new CatalogHelper(catalogWithMetricsJson);
+
+        expect(catalogWithMetrics.metric('Revenue')).toBe('123');
+        expect(catalogWithMetrics.metric('non-existent')).toBeUndefined();
+
+        expect(catalogWithMetrics.metricTags('Revenue')).toBe('abc');
+        expect(catalogWithMetrics.metricTags('non-existent')).toBeUndefined();
+
+        expect(catalogWithMetrics.measure('Revenue')).toBe('123');
+        expect(catalogWithMetrics.measure('non-existent')).toBeUndefined();
+
+        expect(catalogWithMetrics.measureTags('Revenue')).toBe('abc');
+        expect(catalogWithMetrics.measureTags('non-existent')).toBeUndefined();
     });
 
     it('should return a visualization', () => {
