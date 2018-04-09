@@ -15,7 +15,7 @@ gooddata-react-components/examples $ yarn dev
 ```
 Then visit [https://localhost:8999](https://localhost:8999).
 
-All examples use metrics,attributes and visualizations from the 'RAIL demo project'. 
+All examples use measures, attributes and visualizations from the 'RAIL demo project'. 
 Please make sure you have access to this project. You may find its projectId in [catalogs/catalog-secure.json](catalogs/catalog-secure.json)
 
 
