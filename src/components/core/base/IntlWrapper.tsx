@@ -46,7 +46,7 @@ export interface IIntlWrapperProps {
     locale: string;
 }
 
-export class IntlWrapper extends React.PureComponent<IIntlWrapperProps, null> {
+export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     public static defaultProps: IIntlWrapperProps = {
         locale: DEFAULT_LOCALE
     };

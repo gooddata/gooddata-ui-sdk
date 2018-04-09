@@ -330,7 +330,7 @@ export class VisualizationWrapped
 
 export const IntlVisualization = injectIntl(VisualizationWrapped);
 
-export class Visualization extends React.Component<IVisualizationProps, null> {
+export class Visualization extends React.PureComponent<IVisualizationProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>

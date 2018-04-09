@@ -39,7 +39,7 @@ const DefaultFilterError = injectIntl(({ intl }) => {
     return <div className="gd-message error">{text}</div>;
 });
 
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, null> {
+export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
     public static propTypes = {
         uri: PropTypes.string,
         identifier: PropTypes.string,

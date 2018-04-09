@@ -5,7 +5,7 @@ import { ChartPropTypes, Requireable } from '../../proptypes/Chart';
 
 export { Requireable };
 
-export class LineChart extends React.Component<IChartProps, null> {
+export class LineChart extends React.PureComponent<IChartProps> {
     public static propTypes = ChartPropTypes;
 
     public render() {
