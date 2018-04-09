@@ -17,4 +17,9 @@ function generateDefaultDimensions(): AFM.IDimension[] {
     ];
 }
 
+/**
+ * AFM Headline
+ * is an internal component that accepts afm, resultSpec
+ * @internal
+ */
 export const Headline = dataSourceProvider(CoreHeadline, generateDefaultDimensions, 'CoreHeadline');

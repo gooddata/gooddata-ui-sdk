@@ -32,6 +32,11 @@ import { PieChart } from './components/PieChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 
+/**
+ * CoreComponents
+ * A collection of BaseChart, Headline, Table
+ * @internal
+ */
 const CoreComponents = {
     BaseChart,
     Headline: CoreHeadline,

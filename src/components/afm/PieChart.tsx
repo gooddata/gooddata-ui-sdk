@@ -34,4 +34,9 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
+/**
+ * AFM PieChart
+ * is an internal component that accepts afm, resultSpec
+ * @internal
+ */
 export const PieChart = dataSourceProvider<ICommonChartProps>(CorePieChart, generateDefaultDimensions, 'PieChart');

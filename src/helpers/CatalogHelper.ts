@@ -45,6 +45,8 @@ function getDisplayFormFromAttr(
 }
 
 /**
+ * CatalogHelper
+ * is a tool that exposes API that to look up measures, attributes, visualizations and other metadata elements
  * example usage:
  *  import catalog from './catalog.json';
  *  const C = new CatalogHelper(catalog);

@@ -19,6 +19,10 @@ export interface IPieChartProps extends ICommonChartProps, IPieChartBucketProps 
 
 type IPieChartNonBucketProps = Subtract<IPieChartProps, IPieChartBucketProps>;
 
+/**
+ * [PieChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/pie_chart_component.html)
+ * is a component with bucket props measures, viewBy, filters
+ */
 export function PieChart(props: IPieChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {

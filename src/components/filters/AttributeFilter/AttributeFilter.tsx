@@ -41,6 +41,10 @@ const DefaultFilterError = injectIntl(({ intl }) => {
     return <div className="gd-message error">{text}</div>;
 });
 
+/**
+ * AttributeFilter
+ * is a component that renders a dropdown populated with attribute values
+ */
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, null> {
     public static propTypes = {
         uri: PropTypes.string,

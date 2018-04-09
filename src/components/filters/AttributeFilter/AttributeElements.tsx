@@ -94,6 +94,10 @@ const defaultChildren = ({
     );
 };
 
+/**
+ * AttributeElements
+ * is a component that lists attribute values using a children function
+ */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
 
     public static propTypes = {

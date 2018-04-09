@@ -45,6 +45,10 @@ function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IRes
     };
 }
 
+/**
+ * [BarChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/bar_chart_component.html)
+ * is a component with bucket props measures, viewBy, stackBy, filters
+ */
 export function BarChart(props: IBarChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
