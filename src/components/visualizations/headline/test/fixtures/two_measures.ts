@@ -319,6 +319,42 @@ export const ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionRes
     }
 };
 
+export const SAME_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+    data: [
+        '1234',
+        '1234'
+    ],
+    headerItems: [
+        [
+            [
+                {
+                    measureHeaderItem: {
+                        name: 'Lost',
+                        order: 0
+                    }
+                },
+                {
+                    measureHeaderItem: {
+                        name: 'Found',
+                        order: 1
+                    }
+                }
+            ]
+        ]
+    ],
+    paging: {
+        count: [
+            2
+        ],
+        offset: [
+            0
+        ],
+        total: [
+            2
+        ]
+    }
+};
+
 export const ZERO_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
     data: [
         '0',

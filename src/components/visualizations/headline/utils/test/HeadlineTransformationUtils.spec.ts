@@ -24,7 +24,8 @@ import {
     TWO_MEASURES_WITH_URI_EXECUTION_REQUEST,
     ZERO_FIRST_MEASURE_VALUE_EXECUTION_RESULT,
     ZERO_MEASURE_VALUES_EXECUTION_RESULT,
-    ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT
+    ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT,
+    SAME_MEASURE_VALUES_EXECUTION_RESULT
 } from '../../test/fixtures/two_measures';
 import { createIntlMock } from '../../../common/utils/intlUtils';
 
@@ -245,6 +246,35 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
+                    format: '#,##0%',
+                    title: 'Versus',
+                    isDrillable: false
+                }
+            });
+        });
+
+        it('should set 0 for tertiary value when both primary & secondary are the same values except 0', () => {
+            const intl = createIntlMock();
+
+            const data = getHeadlineData(TWO_MEASURES_EXECUTION_RESPONSE, SAME_MEASURE_VALUES_EXECUTION_RESULT, intl);
+            expect(data).toEqual({
+                primaryItem: {
+                    localIdentifier: 'm1',
+                    title: 'Lost',
+                    value: '1234',
+                    format: '$#,##0.00',
+                    isDrillable: false
+                },
+                secondaryItem: {
+                    localIdentifier: 'm2',
+                    title: 'Found',
+                    value: '1234',
+                    format: '$#,##0.00',
+                    isDrillable: false
+                },
+                tertiaryItem: {
+                    localIdentifier: 'tertiaryIdentifier',
+                    value: '0',
                     format: '#,##0%',
                     title: 'Versus',
                     isDrillable: false
