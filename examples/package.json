@@ -1,7 +1,7 @@
 {
   "name": "react-components-examples",
   "private": true,
-  "version": "4.0.0-alpha3",
+  "version": "5.0.0-alpha13",
   "description": "GoodData ReactComponents examples",
   "main": "index.js",
   "scripts": {
@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@gooddata/goodstrap": "55.0.0-alpha5",
-    "@gooddata/react-components": "5.0.0-alpha8",
+    "@gooddata/react-components": "5.0.0-alpha13",
     "gooddata": "6.0.0-alpha7",
     "moment": "2.20.1",
     "prop-types": "15.6.0",
