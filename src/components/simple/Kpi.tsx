@@ -52,7 +52,7 @@ const resultSpec: AFM.IResultSpec = {
     ]
 };
 
-export class Kpi extends React.Component<IKpiProps, null> {
+export class Kpi extends React.PureComponent<IKpiProps> {
     public static defaultProps: Partial<IKpiProps> = {
         format: '#,#.##',
         filters: [],

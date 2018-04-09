@@ -11,7 +11,7 @@ export interface ITranslationsComponentProps {
     emptyHeaderString: string;
 }
 
-export class TranslationsProvider extends React.Component<ITranslationsProviderProps & InjectedIntlProps, null> {
+export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps & InjectedIntlProps> {
     public render() {
         const props: ITranslationsComponentProps = {
             numericSymbols: this.getNumericSymbols(),
