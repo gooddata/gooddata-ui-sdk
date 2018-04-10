@@ -18,6 +18,7 @@
    "visualizations.totals.row.title.max": "Max",
    "visualizations.totals.row.title.nat": "Summe",
    "visualizations.totals.row.title.med": "Medianwert",
+   "visualizations.headline.tertiary.title": "im Vergleich zu",
    "visualization.numericValues.k": "k",
    "visualization.numericValues.m": "M",
    "visualization.numericValues.g": "G",
