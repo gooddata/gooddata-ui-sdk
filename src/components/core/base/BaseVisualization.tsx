@@ -21,7 +21,7 @@ extends React.Component<P, S> {
         const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
         const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
 
-        if (error !== ErrorStates.OK) {
+        if (error) {
             const errorMap = {
                 [ErrorStates.DATA_TOO_LARGE_TO_DISPLAY]: {
                     icon: 'icon-cloud-rain',

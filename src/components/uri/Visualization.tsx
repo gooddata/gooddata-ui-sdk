@@ -257,7 +257,7 @@ export class VisualizationWrapped
         } = this.props;
         const { resultSpec, type, totals, error, isLoading } = this.state;
 
-        if (error !== null && error.status !== ErrorStates.OK) {
+        if (error) {
             return ErrorComponent
                 ? (
                     <ErrorComponent

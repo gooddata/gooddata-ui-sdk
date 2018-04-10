@@ -7,7 +7,6 @@ export enum ErrorCodes {
 }
 
 export const ErrorStates = {
-    OK: 'OK',
     BAD_REQUEST: 'BAD_REQUEST',
     DATA_TOO_LARGE_TO_DISPLAY: 'DATA_TOO_LARGE_TO_DISPLAY',
     DATA_TOO_LARGE_TO_COMPUTE: 'DATA_TOO_LARGE_TO_COMPUTE',

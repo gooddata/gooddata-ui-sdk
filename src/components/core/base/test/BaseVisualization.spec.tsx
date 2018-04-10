@@ -36,7 +36,6 @@ describe('Base visualization child', () => {
     const createComponent = (customProps: Partial<ICommonVisualizationProps & ILoadingInjectedProps>) => {
         return mount<Partial<ICommonVisualizationProps>>(
             <BaseVisualizationChild
-                error={ErrorStates.OK}
                 execution={null}
                 isLoading={false}
                 onDataTooLarge={jest.fn()}
@@ -50,7 +49,6 @@ describe('Base visualization child', () => {
     it('should render result of "renderVisualization" when correct execution provided', () => {
         const wrapper = createComponent({
             isLoading: false,
-            error: ErrorStates.OK,
             execution: oneMeasureResponse
         });
 
@@ -62,8 +60,7 @@ describe('Base visualization child', () => {
 
     it('should render default LoadingComponent when loading if the loading component has not been specified', () => {
         const wrapper = createComponent({
-            isLoading: true,
-            error: ErrorStates.OK
+            isLoading: true
         });
 
         return delay().then(() => {
@@ -75,8 +72,7 @@ describe('Base visualization child', () => {
     it('should render LoadingComponent when loading if the loading component has been specified', () => {
         const wrapper = createComponent({
             isLoading: true,
-            LoadingComponent,
-            error: ErrorStates.OK
+            LoadingComponent
         });
 
         return delay().then(() => {

@@ -34,21 +34,19 @@ export interface ILoadingInjectedProps {
     execution: Execution.IExecutionResponses;
     onDataTooLarge: Function;
     onNegativeValues: Function;
-    error: string;
+    error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
 }
 
 export interface IVisualizationLoadingState {
-    error: string;
-    result: Execution.IExecutionResponses;
+    error?: string;
+    result?: Execution.IExecutionResponses;
     isLoading: boolean;
 }
 
 const defaultErrorHandler = (error: any) => {
-    if (error && error.status !== ErrorStates.OK) {
-        console.error(error); // tslint:disable-line:no-console
-    }
+    console.error(error); // tslint:disable-line:no-console
 };
 
 export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
@@ -78,8 +76,6 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             super(props);
 
             this.state = {
-                error: ErrorStates.OK,
-                result: null,
                 isLoading: false
             };
 
@@ -149,10 +145,9 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             const isLoading = loadingState.isLoading;
 
             if (isLoading) {
-                this.props.onError({ status: ErrorStates.OK });
                 this.setState({
                     isLoading,
-                    error: ErrorStates.OK
+                    error: null
                 });
             } else {
                 this.setState({
@@ -176,6 +171,10 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
         }
 
+        private onNegativeValues() {
+            this.onError(ErrorStates.NEGATIVE_VALUES);
+        }
+
         private initDataLoading(
             dataSource: DataLayer.DataSource.IDataSource<Execution.IExecutionResponses>,
             resultSpec: AFM.IResultSpec
@@ -188,10 +187,6 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                 .catch(convertErrors);
 
             this.subject.next(promise);
-        }
-
-        private onNegativeValues() {
-            this.onError(ErrorStates.NEGATIVE_VALUES);
         }
     }
 

@@ -9,7 +9,7 @@ import {
     ErrorComponent
 } from '../../../tests/mocks';
 
-import {} from 'jest';
+import 'jest';
 
 import {
     ICommonVisualizationProps,
@@ -20,7 +20,6 @@ import {
 import { delay } from '../../../tests/utils';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDrillableItem } from '../../../../interfaces/DrillEvents';
-import { ErrorStates } from '../../../../constants/errorStates';
 import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
 
 export interface ITestInnerComponentProps extends ICommonVisualizationProps {
@@ -94,7 +93,6 @@ describe('VisualizationLoadingHOC', () => {
             const innerWrapped = wrapper.find(TestInnerComponent);
             expect(innerWrapped.props()).toMatchObject({
                 isLoading: true,
-                error: ErrorStates.OK,
                 execution: null
             });
         });
@@ -113,7 +111,6 @@ describe('VisualizationLoadingHOC', () => {
             const innerWrapped = wrapper.find(TestInnerComponent);
             expect(innerWrapped.props()).toMatchObject({
                 isLoading: false,
-                error: ErrorStates.OK,
                 execution: oneMeasureResponse
             });
         });
@@ -137,23 +134,22 @@ describe('VisualizationLoadingHOC', () => {
         });
     });
 
-    it('should call onError at the beginning and then when error occured', () => {
+    it('should call onError then when error occured', () => {
         const onError = jest.fn();
         createComponent({
             dataSource: tooLargeDataSource,
             onError
         });
 
-        expect(onError).toHaveBeenCalledTimes(1);
-
         return delay().then(() => {
-            expect(onError.mock.calls[0]).toEqual([{ status: 'OK' }]);
-            expect(onError.mock.calls[1]).toEqual([{
+            expect(onError).toHaveBeenCalledTimes(1);
+
+            expect(onError).toHaveBeenCalledWith({
                 options: {
                     dateOptionsDisabled: false
                 },
-                status: 'DATA_TOO_LARGE_TO_COMPUTE'}]
-            );
+                status: 'DATA_TOO_LARGE_TO_COMPUTE'
+            });
         });
     });
 
@@ -295,7 +291,6 @@ describe('VisualizationLoadingHOC', () => {
 
                 expect(innerWrapped.props()).toMatchObject({
                     isLoading: false,
-                    error: ErrorStates.OK,
                     execution: oneMeasureResponse
                 });
             });

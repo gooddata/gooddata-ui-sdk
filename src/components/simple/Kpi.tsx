@@ -12,7 +12,6 @@ import { IErrorProps } from './ErrorComponent';
 import { IEvents } from '../../interfaces/Events';
 import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
 import { isEmptyResult } from '../../helpers/errorHandlers';
-import { ErrorStates } from '../../constants/errorStates';
 import { IntlWrapper } from '../core/base/IntlWrapper';
 
 export { Requireable };
@@ -112,7 +111,7 @@ export class KpiWrapped extends React.Component<IKpiProps & InjectedIntlProps, n
                 {...executeProps}
             >
                 {({ result, error, isLoading }: IExecuteChildrenProps) => {
-                    if (error && error.status !== ErrorStates.OK) {
+                    if (error) {
                         return ErrorComponent ? <ErrorComponent
                             code={error.status}
                             message={intl.formatMessage({ id: 'visualization.ErrorMessageKpi' })}

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/gooddata-js@6.0.0-alpha7":
-  version "6.0.0-alpha7"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.0.0-alpha7.tgz#d6300c855c25c00dda45cd4d992455ea96d9ea76"
+"@gooddata/gooddata-js@6.0.0-alpha8":
+  version "6.0.0-alpha8"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.0.0-alpha8.tgz#ef9b1dbc8258e4d5d1657f95a3856770a85dbd9f"
   dependencies:
     "@gooddata/typings" "2.0.0-alpha0"
     es6-promise "3.0.2"

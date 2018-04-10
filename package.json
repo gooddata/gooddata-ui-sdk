@@ -51,7 +51,7 @@
     "utility-types": "^1.1.0"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "6.0.0-alpha7",
+    "@gooddata/gooddata-js": "6.0.0-alpha8",
     "@gooddata/goodstrap": "55.0.0-alpha6",
     "@gooddata/indigo-visualizations": "2.0.0-alpha11",
     "@gooddata/js-utils": "^2.0.0",
