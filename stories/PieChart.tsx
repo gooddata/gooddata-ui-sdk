@@ -6,7 +6,7 @@ import { PieChart } from '../src';
 import { onErrorHandler } from './mocks';
 import { ATTRIBUTE_1, ATTRIBUTE_1_WITH_ALIAS, MEASURE_1, MEASURE_1_WITH_ALIAS, MEASURE_2 } from './data/componentProps';
 
-storiesOf('PieChart', module)
+storiesOf('Core components/PieChart', module)
     .add('two measures', () => (
         screenshotWrap(
             <div style={{ width: 400, height: 400 }}>

@@ -1,0 +1,58 @@
+{
+    "executionResponse": {
+        "dimensions": [
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "name": "Department",
+                            "localIdentifier": "departmentAttribute",
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
+                            "identifier": "label.owner.department",
+                            "formOf": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026",
+                                "identifier": "department",
+                                "name": "Department"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "name": "Region",
+                            "localIdentifier": "regionAttribute",
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024",
+                            "identifier": "label.owner.region",
+                            "formOf": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1023",
+                                "identifier": "region",
+                                "name": "Region"
+                            }
+                        }
+                    },
+                    {
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Amount",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "amountMetric",
+                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                                        "identifier": "ah1EuQxwaCqs"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "links": {
+            "executionResult": "/gdc/app/projects/x3k4294x4k00lrz5degxnc6nykynhh52/executionResults/4854882640409164800?q=eAGlUbtuwkAQ%2FJXTOaWFHWNAIEURUh6iSYFChVwcvsU43MO6Wys4iH%2FPOigJLmhwt8%2FZ2Zkjd1BZ%0Ah29CA5%2FxlcESFUge8tyqWhvPZ%2BsjF4iu3NQI722X5pZQlNbQlK%2B1Fq6hEiWy9JUSzYt1eiGpFBUy%0Aj7SMDsN9mkzTQ7qPY%2BW%2BRhKKg8nHptk3ZrcbJZHdfET3cZISxkZ4eFagweBqubgBZBjBed0%2FlvKB%0AEH8%2BuuT8981NJIctpEWhWmnWWXYKuQaSJ391tq549puelduSFgLp%2Bl0QBkE8iGNa%2FxdtzihmdsuE%0AUkwCgYbMQSGcVOB92%2FAoCmDWtQHWfnDx0Fzb2iAVzvdv%2BCaZTPmJGDv7ecXoJ6iEw9aNDm9K%2Bpo9%0AIYzeZo%2Bvmd3h3c%2FwMRHtGJ6dvgEeWw%2Fv%0A&c=a599348f8312e8e887b2adc62172b006&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0"
+        }
+    }
+}

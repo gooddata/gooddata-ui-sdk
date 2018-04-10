@@ -7,7 +7,7 @@ import { onErrorHandler } from './mocks';
 import { CUSTOM_COLORS } from './data/colors';
 import { ATTRIBUTE_1, ATTRIBUTE_2, MEASURE_1, MEASURE_1_WITH_ALIAS, MEASURE_2 } from './data/componentProps';
 
-storiesOf('BarChart', module)
+storiesOf('Core components/BarChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

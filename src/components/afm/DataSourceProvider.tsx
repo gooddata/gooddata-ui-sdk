@@ -6,7 +6,7 @@ import * as PropTypes from 'prop-types';
 import isEqual = require('lodash/isEqual');
 import omit = require('lodash/omit');
 import { AFM, Execution } from '@gooddata/typings';
-import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-visualizations';
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from '../visualizations/proptypes/execution';
 
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';

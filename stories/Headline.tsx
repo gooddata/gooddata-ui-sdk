@@ -5,8 +5,8 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { Headline } from '../src';
 import { MEASURE_1_WITH_ALIAS, MEASURE_2 } from './data/componentProps';
 
-storiesOf('Headline', module)
-    .add('one measure', () => (
+storiesOf('Core components/Headline', module)
+    .add('one measure with alias', () => (
         screenshotWrap(
             <div style={{ width: 600, height: 300 }}>
                 <Headline

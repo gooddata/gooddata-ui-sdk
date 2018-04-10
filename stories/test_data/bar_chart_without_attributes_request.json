@@ -1,0 +1,44 @@
+{
+	"execution": {
+		"afm": {
+			"measures": [
+				{
+					"definition": {
+						"measure": {
+							"item": {
+								"uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+							}
+						}
+					},
+					"localIdentifier": "amountMetric",
+					"format": "#,##0.00",
+					"alias": "Amount"
+				},
+				{
+					"definition": {
+						"measure": {
+							"item": {
+								"uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1280"
+							}
+						}
+					},
+					"localIdentifier": "snapshotMetric",
+					"format": "#,##0.00",
+					"alias": "Snapshot"
+				}
+			]
+		},
+		"resultSpec": {
+			"dimensions": [
+                {
+					"itemIdentifiers": []
+				},
+				{
+					"itemIdentifiers": [
+						"measureGroup"
+					]
+				}
+			]
+		}
+	}
+}

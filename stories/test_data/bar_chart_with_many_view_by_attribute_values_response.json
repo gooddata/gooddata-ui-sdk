@@ -1,0 +1,45 @@
+{
+    "executionResponse": {
+        "dimensions": [
+            {
+                "headers": [
+                    {
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Amount",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "amountMetric",
+                                        "uri": "/gdc/md/tyajzbsbk0lk1vpjzyvry6exn1ej8ph7/obj/1279",
+                                        "identifier": "ah1EuQxwaCqs"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "name": "Product Name",
+                            "localIdentifier": "productAttribute",
+                            "uri": "/gdc/md/tyajzbsbk0lk1vpjzyvry6exn1ej8ph7/obj/952",
+                            "identifier": "label.product.id.name",
+                            "formOf": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/951",
+                                "identifier": "product",
+                                "name": "Product"
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "links": {
+            "executionResult": "/gdc/app/projects/tyajzbsbk0lk1vpjzyvry6exn1ej8ph7/executionResults/505203105791246272?q=eAGdkE9vwjAMxb9KFa4VLYiNFWmaOGwTl2mahnZAPaSNKSlJUzkpW0H97nNWxJ8ju9nJ88%2FP78AQ%0AaoPujWtgM7asnHQKBAtZblSjqy8p3May2SoN2VoqB3hs0Hz7imlwKPNXNE3NSGOJxWaH4%2FS1Nu2I%0AYVBzUrAC5XmL1x0Yd4TKGgef3gNp3tGIJndkxjZac2zpjRohba14%2B0KohaCnqBB5pEXkWl7uM5tt%0AY7Ud7epy3%2B6wvYefagTlQ72ZRiYro%2BRuTIiMW3hWoKFyy4%2FFzYxJEkE%2FbZ%2BkeCTgX2xXlk%2FX%2FMPj%0AJPFI47jyyazStKNo%2B6T7qE4xDsLBIB7GMenPGc0DqgOzDrhSgQCihAFCwVEosNZ%2FWMcLCAz6wjV2%0AeHHBXJum8pn3%2B253PxpPE9al3S8O9c5s%0A&c=67bec1e09c5702dbd27568e4db63a209&offset=0%2C0&limit=1000%2C1000&dimensions=2"
+        }
+    }
+}

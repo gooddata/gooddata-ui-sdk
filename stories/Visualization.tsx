@@ -86,7 +86,7 @@ class DynamicVisualization extends React.Component<any, any> {
     }
 }
 
-storiesOf('Visualization', module)
+storiesOf('URI components/Visualization', module)
     .add('table example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

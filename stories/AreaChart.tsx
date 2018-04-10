@@ -8,7 +8,7 @@ import { ATTRIBUTE_1, ATTRIBUTE_2, MEASURE_1, MEASURE_2 } from './data/component
 
 const dimensions = { width: 800, height: 400 };
 
-storiesOf('AreaChart', module)
+storiesOf('Internal/HighCharts/AreaChart', module)
     .add('two measures, one attribute, stack by default', () => (
         screenshotWrap(
             <div style={{ ...dimensions }}>

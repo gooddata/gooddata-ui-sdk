@@ -20,7 +20,7 @@ const attributeFilterWithIdentifier = {
     onApply: action('apply')
 };
 
-storiesOf('AttributeFilter', module)
+storiesOf('Helper components/AttributeFilter', module)
     .add('with uri', () => (
         <div style={{ minHeight: 500 }}>
             <AttributeFilter

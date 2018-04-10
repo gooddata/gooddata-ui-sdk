@@ -69,7 +69,7 @@ const attributeElementsProps: IAttributeElementsProps = {
   }
 };
 
-storiesOf('AttributeElements', module)
+storiesOf('Helper components/AttributeElements', module)
   .add('with uri', () => (
       <div style={{ minHeight: 500 }}>
           <AttributeElements

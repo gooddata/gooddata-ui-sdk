@@ -22,7 +22,7 @@ function logTotalsChange(data: any) {
     }
 }
 
-storiesOf('Table', module)
+storiesOf('Core components/Table', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 600, height: 300 }}>

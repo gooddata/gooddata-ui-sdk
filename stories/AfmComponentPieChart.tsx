@@ -13,7 +13,7 @@ import {
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 
-storiesOf('AFM components - PieChart', module)
+storiesOf('AFM components/PieChart', module)
     .add('two measures', () => (
         screenshotWrap(
             <div style={{ width: 400, height: 400 }}>

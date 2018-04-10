@@ -22,7 +22,7 @@ function logTotalsChange(data: any) {
     }
 }
 
-storiesOf('AFM components - Table', module)
+storiesOf('AFM components/Table', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 600, height: 300 }}>

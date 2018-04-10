@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { LoadingComponent } from '../src/components/simple/LoadingComponent';
 import { ErrorComponent } from '../src/components/simple/ErrorComponent';
 
-storiesOf('Loading and Error', module)
+storiesOf('Core components/Loading and Error', module)
     .add('Loading default', () => (
         <div
             style={{

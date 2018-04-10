@@ -6,7 +6,8 @@ export const VisualizationTypes = {
     PIE: 'pie' as 'pie',
     TABLE: 'table' as 'table',
     HEADLINE: 'headline' as 'headline',
-    AREA: 'area' as 'area'
+    AREA: 'area' as 'area',
+    DOUGHNUT: 'doughnut' as 'doughnut'
 };
 
 export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area';

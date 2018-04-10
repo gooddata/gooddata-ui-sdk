@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 
 import { Kpi } from '../src/components/simple/Kpi';
 
-storiesOf('KPI', module)
+storiesOf('Core components/KPI', module)
     .add('KPI', () => (
         <div>
             Measure 1 with number:
