@@ -3557,9 +3557,9 @@ gooddata@6.0.0-alpha2:
     md5 "2.2.1"
     qs "6.5.1"
 
-gooddata@6.0.0-alpha5:
-  version "6.0.0-alpha5"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha5.tgz#84199875916ad073ef36c2b229f2c2321aac2137"
+gooddata@6.0.0-alpha7:
+  version "6.0.0-alpha7"
+  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha7.tgz#2c95eb6a4ca303bbd286d2e771e3785c1d98a5bc"
   dependencies:
     "@gooddata/typings" "2.0.0-alpha0"
     es6-promise "3.0.2"

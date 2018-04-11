@@ -58,7 +58,7 @@
     "@types/highcharts": "4.2.56",
     "classnames": "^2.2.5",
     "custom-event": "^1.0.1",
-    "gooddata": "6.0.0-alpha5",
+    "gooddata": "6.0.0-alpha7",
     "highcharts": "4.2.5",
     "invariant": "^2.2.2",
     "lodash": "^4.17.4",
