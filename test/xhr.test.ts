@@ -109,13 +109,13 @@ describe('fetch', () => {
                 if (fetchMock.calls(url).length === 1) {
                     return 401;
                 }
-                return 200;
+                return 204;
             });
 
             fetchMock.get('/gdc/account/token', 200);
 
             return createXhr().ajax('/some/url').then((r) => {
-                expect(r.response.status).toBe(200);
+                expect(r.response.status).toBe(204);
             });
         });
 
