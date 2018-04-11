@@ -13,4 +13,4 @@ export const VisualizationTypes = {
 export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area';
 export type VisType = ChartType | 'table' | 'headline';
 export type ChartElementType = 'slice' | 'bar' | 'point';
-export type VisElementType = ChartElementType | 'cell';
+export type VisElementType = ChartElementType | 'cell' | 'primaryValue' | 'secondaryValue';

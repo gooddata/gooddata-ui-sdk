@@ -12,8 +12,9 @@ export interface IDrillEvent {
         columnIndex?: number;
         rowIndex?: number;
         row?: any[];
+        value?: string;
         intersection: IDrillEventIntersectionElement[];
-        points: IDrillEventPoint[];
+        points?: IDrillEventPoint[];
     };
 }
 
@@ -36,3 +37,5 @@ export interface IDrillableItem {
     uri?: string;
     identifier?: string;
 }
+
+export type IDrillEventCallback = (event: IDrillEvent) => boolean;

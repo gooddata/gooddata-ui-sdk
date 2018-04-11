@@ -9,6 +9,10 @@ declare module '*.json' {
     export default value;
 }
 
+declare module 'custom-event' {
+    export = CustomEvent;
+}
+
 // TODO move goodstrap TypeScript declarations into goodstrap repo
 // after exporting from goodstrap root index.js (not /lib/)
 
@@ -36,6 +40,12 @@ declare module '@gooddata/goodstrap/lib/Dropdown/Dropdown' {
 
 declare module '@gooddata/goodstrap/lib/List/InvertableList' {
     export default class InvertableList extends React.Component<any, any> {
+
+    }
+}
+
+declare module '@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText' {
+    export default class ResponsiveText extends React.PureComponent<any> {
 
     }
 }
