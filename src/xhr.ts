@@ -246,7 +246,7 @@ export class XhrModule {
     }
 
     private continueAfterTokenRequest(url: string, settings: any) {
-        return this.tokenRequest.then(async (response: any) => {
+        return this.tokenRequest.then(async (response: Response) => {
             if (!response.ok) {
                 throw new ApiResponseError('Unauthorized', response, null);
             }
@@ -268,7 +268,8 @@ export class XhrModule {
 
         const { url, settings } = enrichSettingWithCustomDomain(
             '/gdc/account/token',
-            this.createRequestSettings({}), this.configStorage.domain
+            this.createRequestSettings({}),
+            this.configStorage.domain
         );
 
         this.tokenRequest = this.fetch(url, settings);
@@ -287,6 +288,6 @@ export class XhrModule {
             throw new ApiResponseError('Unauthorized', response, responseBody);
         }
 
-        return new ApiResponse(response, responseBody);
+        return this.ajax(originalUrl, originalSettings);
     }
 }
