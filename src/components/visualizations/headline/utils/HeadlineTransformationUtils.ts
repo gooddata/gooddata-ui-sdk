@@ -58,7 +58,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
     return {
         localIdentifier: 'tertiaryIdentifier',
         title: tertiaryTitle,
-        value: tertiaryValue ? String(tertiaryValue) : null,
+        value: tertiaryValue !== null ? String(tertiaryValue) : null,
         format: '#,##0%',
         isDrillable: false
     };
