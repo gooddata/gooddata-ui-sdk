@@ -11,6 +11,7 @@ import Chart from './Chart';
 import Legend from './legend/Legend';
 import { isPieChart, isTreemap } from '../utils/common';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
+import { isPieOrDonutChart } from '../utils/common';
 
 export interface IHighChartsRendererProps {
     chartOptions: any;
@@ -160,7 +161,8 @@ export default class HighChartsRenderer
         }
 
         // render chart with disabled visibility based on legendItemsEnabled
-        const itemsPath = isPieChart(config.chart.type) || isTreemap(config.chart.type) ? 'series[0].data' : 'series';
+        const itemsPath = isPieOrDonutChart(config.chart.type) || isTreemap(config.chart.type) ?
+            'series[0].data' : 'series';
         const items: any[] = get(config, itemsPath) as any[];
         set(config, itemsPath, items.map((item: any, itemIndex: any) => {
             const visible = legendItemsEnabled[itemIndex] !== undefined
@@ -182,10 +184,15 @@ export default class HighChartsRenderer
             return false;
         }
 
+        let { type } = chartOptions;
+        if (isPieOrDonutChart(type)) {
+            type = VisualizationTypes.PIE;
+        }
+
         const legendProps = {
             position: legend.position,
             responsive: legend.responsive,
-            chartType: chartOptions.type,
+            chartType: type,
             series: items,
             onItemClick: this.onLegendItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,

@@ -2,7 +2,7 @@
 import pick = require('lodash/pick');
 import set = require('lodash/set');
 import { RIGHT } from './PositionTypes';
-import { isAreaChart, isPieChart, isScatterPlot, isTreemap } from '../../utils/common';
+import { isAreaChart, isPieOrDonutChart, isScatterPlot, isTreemap } from '../../utils/common';
 
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
@@ -17,7 +17,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
     const isStacked = !isAreaChartWithOneSerie && Boolean(stacking);
 
-    const isPieOrTreemapWithMoreThanOneCategory = ((isPieChart(type) || isTreemap(type)) &&
+    const isPieOrTreemapWithMoreThanOneCategory = ((isPieOrDonutChart(type) || isTreemap(type)) &&
         chartOptions.data.series[0].data.length > 1);
 
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
@@ -27,7 +27,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
 
 export function getLegendItems(chartOptions: any) {
     const { type } = chartOptions;
-    const legendDataSource = (isPieChart(type) || isTreemap(type))
+    const legendDataSource = (isPieOrDonutChart(type) || isTreemap(type))
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
 

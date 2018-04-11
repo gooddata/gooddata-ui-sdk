@@ -459,6 +459,7 @@ function getHoverStyles(chartOptions: any, config: any) {
             break;
 
         case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
