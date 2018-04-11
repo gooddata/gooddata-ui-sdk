@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@gooddata/goodstrap": "55.0.0-alpha6",
-    "@gooddata/indigo-visualizations": "2.0.0-alpha10",
+    "@gooddata/indigo-visualizations": "2.0.0-alpha11",
     "@gooddata/js-utils": "^2.0.0",
     "@gooddata/numberjs": "^3.1.2",
     "@types/highcharts": "4.2.56",
