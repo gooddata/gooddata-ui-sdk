@@ -14,6 +14,21 @@ export const MEASURE_1: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_1_POP: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm1_pop',
+        definition: {
+            popMeasureDefinition: {
+                measureIdentifier: 'm1',
+                popAttribute: {
+                    uri: '/gdc/md/storybook/obj/3.df'
+                }
+            }
+        },
+        alias: 'Previous period'
+    }
+};
+
 export const MEASURE_1_WITH_ALIAS: VisualizationObject.IMeasure = {
     measure: {
         ...MEASURE_1.measure,

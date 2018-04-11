@@ -12,6 +12,18 @@ const MEASURE_1: AFM.IMeasure = {
     }
 };
 
+const MEASURE_1_POP: AFM.IMeasure = {
+    localIdentifier: 'm1_pop',
+    definition: {
+        popMeasure: {
+            measureIdentifier: 'm1',
+            popAttribute: {
+                uri: '/gdc/md/storybook/obj/3.df'
+            }
+        }
+    }
+};
+
 const MEASURE_1_DUPLICATE: AFM.IMeasure = {
     ...MEASURE_1,
     localIdentifier: 'm2'
@@ -23,6 +35,18 @@ const MEASURE_2: AFM.IMeasure = {
         measure: {
             item: {
                 uri: '/gdc/md/storybook/obj/2'
+            }
+        }
+    }
+};
+
+const MEASURE_2_POP: AFM.IMeasure = {
+    localIdentifier: 'm2_pop',
+    definition: {
+        popMeasure: {
+            measureIdentifier: 'm2',
+            popAttribute: {
+                uri: '/gdc/md/storybook/obj/3.df'
             }
         }
     }
@@ -110,6 +134,18 @@ export const AFM_TWO_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
     measures: [
         MEASURE_1,
         MEASURE_2
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP: AFM.IAfm = {
+    measures: [
+        MEASURE_1_POP,
+        MEASURE_1,
+        MEASURE_2,
+        MEASURE_2_POP
     ],
     attributes: [
         ATTRIBUTE

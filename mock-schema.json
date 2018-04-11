@@ -120,7 +120,7 @@
       }]
     },
     {
-      "title": "Chart with PoP measure",
+      "title": "Chart with PoP measures",
       "identifier": "1003",
       "type": "local:bar",
       "filters": [],
@@ -138,6 +138,18 @@
           "filters": [],
           "identifier": "1",
           "alias": "Amount"
+        }, {
+            "localIdentifier": "m2",
+            "filters": [],
+            "identifier": "2",
+            "alias": "Value"
+        }, {
+          "localIdentifier": "m2_pop",
+          "filters": [],
+          "identifier": "2",
+          "showPoP": "true",
+          "measureIdentifier": "m2",
+          "popAttribute": "attr.closed.year"
         }]
       }, {
         "localIdentifier": "view",

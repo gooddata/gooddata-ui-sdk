@@ -150,7 +150,7 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
-    .add('chart with PoP measure', () => (
+    .add('chart with PoP measures', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
