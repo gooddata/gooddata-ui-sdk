@@ -30,9 +30,9 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/indigo-visualizations@2.0.0-alpha10":
-  version "2.0.0-alpha10"
-  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha10.tgz#8f799957841efd59b342d9bd202747a00f0be57d"
+"@gooddata/indigo-visualizations@2.0.0-alpha11":
+  version "2.0.0-alpha11"
+  resolved "https://registry.yarnpkg.com/@gooddata/indigo-visualizations/-/indigo-visualizations-2.0.0-alpha11.tgz#faa6d7c3baff106c316840e7d4c144e7a6f48468"
   dependencies:
     "@gooddata/goodstrap" "55.0.0-alpha6"
     "@gooddata/js-utils" "^2.0.0"
