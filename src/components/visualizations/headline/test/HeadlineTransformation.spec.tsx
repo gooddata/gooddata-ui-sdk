@@ -122,8 +122,8 @@ describe('HeadlineTransformation', () => {
             tertiaryItem: {
                 localIdentifier: 'tertiaryIdentifier',
                 title: 'Versus',
-                value: '2.4401165460495564',
-                format: '#,##0%',
+                value: '244.01165460495565',
+                format: null,
                 isDrillable: false
             }
         });
@@ -161,8 +161,8 @@ describe('HeadlineTransformation', () => {
             tertiaryItem: {
                 localIdentifier: 'tertiaryIdentifier',
                 title: 'Versus',
-                value: '2.4401165460495564',
-                format: '#,##0%',
+                value: '244.01165460495565',
+                format: null,
                 isDrillable: false
             }
         });

@@ -270,7 +270,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: '11',
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -306,7 +306,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: '11',
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -346,7 +346,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: '11',
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -389,7 +389,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: '11',
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -420,7 +420,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: '11',
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -453,7 +453,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: null,
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -482,7 +482,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: null,
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -511,7 +511,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: null,
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -540,8 +540,8 @@ describe('Headline', () => {
                     },
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
-                        value: '1.1',
-                        format: '#,##0%',
+                        value: '110',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -570,8 +570,8 @@ describe('Headline', () => {
                     },
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
-                        value: '1.1',
-                        format: '#,##0%',
+                        value: '110',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -601,8 +601,8 @@ describe('Headline', () => {
                     },
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
-                        value: '1.1',
-                        format: '#,##0%',
+                        value: '110',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -640,8 +640,8 @@ describe('Headline', () => {
                     },
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
-                        value: '1.1',
-                        format: '#,##0%',
+                        value: '110',
+                        format: null,
                         title: 'Versus'
                     }
                 }
@@ -671,7 +671,7 @@ describe('Headline', () => {
                     tertiaryItem: {
                         localIdentifier: 'tertiaryIdentifier',
                         value: null,
-                        format: '#,##0%',
+                        format: null,
                         title: 'Versus'
                     }
                 }

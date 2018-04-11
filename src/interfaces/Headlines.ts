@@ -5,13 +5,13 @@ import { CSSProperties } from 'react';
 export interface IHeadlineDataItem  {
     localIdentifier: AFM.Identifier;
     title?: string;
-    value: string | null;
+    value: string;
     format?: string;
     isDrillable?: boolean;
 }
 
 export interface IFormattedHeadlineDataItem {
-    cssStyle: CSSProperties;
+    cssStyle?: CSSProperties;
     value: Execution.DataValue;
     isValueEmpty: boolean;
 }
