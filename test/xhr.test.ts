@@ -91,7 +91,7 @@ describe('fetch', () => {
 
             xhr.ajax('/some/url');
 
-            expect(getHeaderValue(fetchMock.lastOptions(), 'X-GDC-JS-PKG')).toBe('gooddata');
+            expect(getHeaderValue(fetchMock.lastOptions(), 'X-GDC-JS-PKG')).toBe('@gooddata/gooddata-js');
 
             config.setJsPackage('@gooddata/react-components', '2.0.0');
             config.setJsPackage('@gooddata/data-layer', '5.0.0');
