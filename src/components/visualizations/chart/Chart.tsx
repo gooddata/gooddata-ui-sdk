@@ -29,6 +29,7 @@ export interface IChartConfig {
     legend?: ILegendConfig;
     limits?: IChartLimits;
     stacking?: boolean;
+    grid?: any;
 }
 
 export interface IChartProps {

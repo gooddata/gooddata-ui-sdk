@@ -1096,6 +1096,15 @@ describe('chartOptionsBuilder', () => {
             expect(chartOptionsWithCustomOptions.legendLayout).toBe('vertical');
         });
 
+        it('should enable grid', () => {
+            expect(chartOptionsWithCustomOptions.grid.enabled).toBe(true);
+        });
+
+        it('should disable grid', () => {
+            const chartOptions = generateChartOptions(dataSet, { grid: { enabled: false }, type: 'line' });
+            expect(chartOptions.grid.enabled).toEqual(false);
+        });
+
         describe('in usecase of bar chart with 3 metrics', () => {
             const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
 

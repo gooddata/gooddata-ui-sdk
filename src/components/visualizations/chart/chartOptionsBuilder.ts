@@ -551,6 +551,7 @@ export function getChartOptions(
     // if there is only one measure, yLabel is name of this measure, otherwise an empty string
     const yLabel = config.yLabel || (measureGroup.items.length === 1 ? unwrap(measureGroup.items[0]).name : '');
     const yFormat = config.yFormat || unwrap(measureGroup.items[0]).format;
+    const gridEnabled = get(config, 'grid.enabled', true);
 
     return {
         type,
@@ -573,6 +574,9 @@ export function getChartOptions(
         },
         actions: {
             tooltip: generateTooltipFn(viewByAttribute, type)
+        },
+        grid: {
+            enabled: gridEnabled
         }
     };
 }
