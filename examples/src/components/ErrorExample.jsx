@@ -9,7 +9,7 @@ export class ErrorComponentExample extends Component {
                 icon="icon-ghost"
                 className="s-default-Error"
                 message="This is an Custom Error"
-                description="&hellip;with description."
+                description="…with description."
                 height={200}
             />
         );

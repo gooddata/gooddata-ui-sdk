@@ -24,7 +24,7 @@ export const BasicComponents = () => (
     <div>
         <h1>{title}</h1>
 
-        <p>These components ingest AFM, execute it and render data as a chart or table.</p>
+        <p>These components get measures and attributes, execute it and render data as a chart or table.</p>
 
         <hr className="separator" />
 
