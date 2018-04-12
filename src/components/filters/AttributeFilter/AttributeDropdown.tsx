@@ -10,7 +10,7 @@ import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-in
 import {
     IValidElementsResponse,
     IElement
-} from 'gooddata';
+} from '@gooddata/gooddata-js';
 import * as classNames from 'classnames';
 import last = require('lodash/last');
 import pick = require('lodash/pick');

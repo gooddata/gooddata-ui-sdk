@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { SDK, DataLayer } from 'gooddata';
+import { SDK, DataLayer } from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
 import { executionResponses } from './dummyFixture';
 

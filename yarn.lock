@@ -2,6 +2,22 @@
 # yarn lockfile v1
 
 
+"@gooddata/gooddata-js@6.0.0-alpha7":
+  version "6.0.0-alpha7"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.0.0-alpha7.tgz#d6300c855c25c00dda45cd4d992455ea96d9ea76"
+  dependencies:
+    "@gooddata/typings" "2.0.0-alpha0"
+    es6-promise "3.0.2"
+    fetch-cookie "0.4.0"
+    invariant "2.2.2"
+    isomorphic-fetch "2.2.1"
+    json-stable-stringify "1.0.1"
+    lodash "4.17.4"
+    md5 "2.2.1"
+    node-fetch "2.1.1"
+    qs "6.5.1"
+    rxjs "^5.5.6"
+
 "@gooddata/goodstrap@55.0.0-alpha6":
   version "55.0.0-alpha6"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha6.tgz#f21c6441e0a35c9ae98d450fc81044d867dbf4f7"
@@ -4336,22 +4352,6 @@ globule@^1.0.0:
     glob "~7.1.1"
     lodash "~4.17.4"
     minimatch "~3.0.2"
-
-gooddata@6.0.0-alpha7:
-  version "6.0.0-alpha7"
-  resolved "https://registry.yarnpkg.com/gooddata/-/gooddata-6.0.0-alpha7.tgz#2c95eb6a4ca303bbd286d2e771e3785c1d98a5bc"
-  dependencies:
-    "@gooddata/typings" "2.0.0-alpha0"
-    es6-promise "3.0.2"
-    fetch-cookie "0.4.0"
-    invariant "2.2.2"
-    isomorphic-fetch "2.2.1"
-    json-stable-stringify "1.0.1"
-    lodash "4.17.4"
-    md5 "2.2.1"
-    node-fetch "2.1.1"
-    qs "6.5.1"
-    rxjs "^5.5.6"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"

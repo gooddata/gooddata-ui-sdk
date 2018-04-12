@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { SDK, DataLayer } from 'gooddata';
+import { SDK, DataLayer } from '@gooddata/gooddata-js';
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';

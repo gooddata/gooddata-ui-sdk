@@ -1,5 +1,5 @@
 import { AFM, VisualizationObject } from '@gooddata/typings';
-import { DataLayer } from 'gooddata';
+import { DataLayer } from '@gooddata/gooddata-js';
 
 export function convertBucketsToAFM(
     buckets: VisualizationObject.IBucket[],

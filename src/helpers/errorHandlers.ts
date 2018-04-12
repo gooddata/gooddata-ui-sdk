@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
-import { DataLayer, ApiResponseError } from 'gooddata';
+import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
 

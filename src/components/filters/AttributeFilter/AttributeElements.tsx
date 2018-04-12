@@ -6,8 +6,8 @@ import {
     factory as createSdk,
     IValidElementsResponse,
     IElement
-} from 'gooddata';
-import { IValidElementsOptions } from 'gooddata/lib/metadata';
+} from '@gooddata/gooddata-js';
+import { IValidElementsOptions } from '@gooddata/gooddata-js/lib/metadata';
 import { AFM } from '@gooddata/typings';
 import { get, isEqual } from 'lodash';
 import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';

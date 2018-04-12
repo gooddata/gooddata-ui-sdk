@@ -3,7 +3,7 @@ import * as React from 'react';
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import { AFM } from '@gooddata/typings';
-import { DataLayer } from 'gooddata';
+import { DataLayer } from '@gooddata/gooddata-js';
 import { PureTable, ITableProps } from './PureTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 

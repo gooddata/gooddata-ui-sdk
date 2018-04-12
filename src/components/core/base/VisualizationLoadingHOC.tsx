@@ -2,7 +2,7 @@
 import * as React from 'react';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import { DataLayer } from 'gooddata';
+import { DataLayer } from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
 import { ErrorStates } from '../../../constants/errorStates';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';

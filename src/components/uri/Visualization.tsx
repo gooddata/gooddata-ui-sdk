@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { SDK, factory as createSdk, DataLayer } from 'gooddata';
-import { ApiResponse } from 'gooddata/lib/xhr';
+import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';

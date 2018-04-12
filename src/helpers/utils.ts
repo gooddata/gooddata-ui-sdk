@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { isObject } from 'lodash';
-import { SDK } from 'gooddata';
+import { SDK } from '@gooddata/gooddata-js';
 import { name as pkgName, version as pkgVersion } from '../../package.json';
 
 export function setTelemetryHeaders(sdk: SDK, componentName: string, props: object) {

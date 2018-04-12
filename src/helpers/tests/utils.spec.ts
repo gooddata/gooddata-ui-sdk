@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { getObjectIdFromUri, setTelemetryHeaders } from '../utils';
-import { factory as createSdk } from 'gooddata';
+import { factory as createSdk } from '@gooddata/gooddata-js';
 
 describe('getObjectIdFromUri', () => {
     it('should extract object id from uris', () => {

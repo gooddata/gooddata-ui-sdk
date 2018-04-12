@@ -3,7 +3,7 @@ import every = require('lodash/every');
 import some = require('lodash/some');
 import isEmpty = require('lodash/isEmpty');
 import { AFM } from '@gooddata/typings';
-import { DataLayer } from 'gooddata';
+import { DataLayer } from '@gooddata/gooddata-js';
 
 export interface IVisualizationOptions {
     dateOptionsDisabled: boolean;
