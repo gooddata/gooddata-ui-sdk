@@ -13,6 +13,7 @@ import DynamicMeasures from './DynamicMeasures';
 import CustomLegend from './CustomLegend';
 import ParentFilter from './ParentFilter';
 import LoadingAndError from './LoadingAndError';
+import MultipleDomains from './MultipleDomains';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -38,7 +39,8 @@ export const mainRoutes = [
 
 export const routes = [
     ...mainRoutes,
-    ...advancedUseCasesRoutes
+    ...advancedUseCasesRoutes,
+    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains }
 ];
 
 const components = routes.map(r => r.component);
