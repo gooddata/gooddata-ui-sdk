@@ -67,8 +67,8 @@ describe('HeadlineTransformationUtils', () => {
                 },
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
-                    value: '2.4401165460495564',
-                    format: '#,##0%',
+                    value: '244.01165460495565',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -98,7 +98,7 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -128,7 +128,7 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -157,14 +157,14 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
             });
         });
 
-        it('should set -1 for tertiary value when primary value is 0', () => {
+        it('should set -100 for tertiary value when primary value is 0', () => {
             const intl = createIntlMock();
 
             const data = getHeadlineData(TWO_MEASURES_EXECUTION_RESPONSE,
@@ -186,8 +186,8 @@ describe('HeadlineTransformationUtils', () => {
                 },
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
-                    value: '-1',
-                    format: '#,##0%',
+                    value: '-100',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -217,7 +217,7 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -246,7 +246,7 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: null,
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }
@@ -275,7 +275,7 @@ describe('HeadlineTransformationUtils', () => {
                 tertiaryItem: {
                     localIdentifier: 'tertiaryIdentifier',
                     value: '0',
-                    format: '#,##0%',
+                    format: null,
                     title: 'Versus',
                     isDrillable: false
                 }

@@ -52,14 +52,14 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
 
     const isCountableValue = isNumber(primaryValue) && isNumber(secondaryValue);
     const tertiaryValue = (isCountableValue && secondaryValue !== 0)
-        ? ((primaryValue - secondaryValue) / secondaryValue)
+        ? ((primaryValue - secondaryValue) / secondaryValue) * 100
         : null;
 
     return {
         localIdentifier: 'tertiaryIdentifier',
         title: tertiaryTitle,
         value: tertiaryValue !== null ? String(tertiaryValue) : null,
-        format: '#,##0%',
+        format: null,
         isDrillable: false
     };
 }

@@ -1,10 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import isEmpty = require('lodash/isEmpty');
+import isNaN = require('lodash/isNaN');
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from '../../../../interfaces/Headlines';
 
 const DEFAULT_VALUE_WHEN_EMPTY = '–';
 const INVALID_VALUE = 'NaN';
+const PERCENTAGE_VALUE_LIMIT = 999;
 
 function processStringForNumberJs(value: string | null, format: string) {
     return value === null && !isEmpty(format)
@@ -38,7 +40,7 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
  * @param item
  * @returns {{cssStyle: {color, backgroundColor}, value: string, isValueEmpty: boolean}}
  */
-export default function formatItemValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
+export function formatItemValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
     const { label, color, backgroundColor } = formatValueToLabelWithColors(item.value, item.format);
     const isValueEmpty = label === INVALID_VALUE || label === '';
     const value = isValueEmpty
@@ -48,5 +50,43 @@ export default function formatItemValue(item: IHeadlineDataItem): IFormattedHead
         cssStyle: buildCssStyle(color, backgroundColor),
         value,
         isValueEmpty
+    };
+}
+
+/**
+ * The method processes the provided IHeadlineDataItem and returns object with formatted value and isValueEmpty flag.
+ *
+ * Formatted value conditions:
+ *  - value is rounded to Integer
+ *  - shows '>999%' when value is above the limit
+ *  - shows '<-999%' when value is below the limit
+ *  - otherwise shows 'value%'
+ *
+ * @param item
+ * @returns {{value: string, isValueEmpty: boolean}}
+ */
+export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
+    if (!item || item.value === null || isNaN(parseFloat(item.value))) {
+        return {
+            value: DEFAULT_VALUE_WHEN_EMPTY,
+            isValueEmpty: true
+        };
+    }
+
+    const roundedNumber = Math.round(parseFloat(item.value));
+
+    const isOverLimit = roundedNumber > PERCENTAGE_VALUE_LIMIT;
+    const isUnderLimit = roundedNumber < -PERCENTAGE_VALUE_LIMIT;
+
+    let formattedValue = `${roundedNumber}%`;
+    if (isOverLimit) {
+        formattedValue = `>${PERCENTAGE_VALUE_LIMIT}%`;
+    } else if (isUnderLimit) {
+        formattedValue = `<-${PERCENTAGE_VALUE_LIMIT}%`;
+    }
+
+    return {
+        value: formattedValue,
+        isValueEmpty: false
     };
 }

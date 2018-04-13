@@ -31,21 +31,75 @@ storiesOf('Internal/Headline', module)
                     data={{
                         primaryItem: {
                             localIdentifier: 'm1',
-                            value: '42225.01',
+                            value: '40200.01',
                             title: 'Sum of Clicks'
                         },
                         secondaryItem: {
                             localIdentifier: 'm2',
-                            value: '32225.01',
+                            value: '28000.01',
                             title: 'Sum of Taps'
                         },
                         tertiaryItem: {
                             localIdentifier: 'tertiaryIdentifier',
-                            value: '0.9',
+                            value: '43',
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
 
+                    }}
+                    onAfterRender={action('onAfterRender')}
+                />,
+                'auto', 300)
+        )
+    )
+    .add('Above versus limit', () =>
+        screenshotWrap(
+            wrap(
+                <Headline
+                    data={{
+                        primaryItem: {
+                            localIdentifier: 'm1',
+                            value: '1000',
+                            title: 'Sum of Clicks'
+                        },
+                        secondaryItem: {
+                            localIdentifier: 'm2',
+                            value: '10',
+                            title: 'Sum of Taps'
+                        },
+                        tertiaryItem: {
+                            localIdentifier: 'tertiaryIdentifier',
+                            value: '9900',
+                            title: 'Versus',
+                            format: null
+                        }
+                    }}
+                    onAfterRender={action('onAfterRender')}
+                />,
+                'auto', 300)
+        )
+    )
+    .add('Below versus limit', () =>
+        screenshotWrap(
+            wrap(
+                <Headline
+                    data={{
+                        primaryItem: {
+                            localIdentifier: 'm1',
+                            value: '-1000',
+                            title: 'Sum of Clicks'
+                        },
+                        secondaryItem: {
+                            localIdentifier: 'm2',
+                            value: '10',
+                            title: 'Sum of Taps'
+                        },
+                        tertiaryItem: {
+                            localIdentifier: 'tertiaryIdentifier',
+                            value: '-10100',
+                            title: 'Versus',
+                            format: null
+                        }
                     }}
                     onAfterRender={action('onAfterRender')}
                 />,
@@ -72,7 +126,7 @@ storiesOf('Internal/Headline', module)
                             localIdentifier: 'tertiaryIdentifier',
                             value: 'invalid-value',
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
                     }}
                     onAfterRender={action('onAfterRender')}
@@ -101,7 +155,7 @@ storiesOf('Internal/Headline', module)
                             localIdentifier: 'tertiaryIdentifier',
                             value: null,
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
                     }}
                     onAfterRender={action('onAfterRender')}
@@ -116,22 +170,22 @@ storiesOf('Internal/Headline', module)
                     data={{
                         primaryItem: {
                             localIdentifier: 'm1',
-                            value: '666429.405',
+                            value: '40200.405',
                             format: '[color=9c46b5][backgroundColor=d2ccde]$#,##0.00 group',
                             title: 'Yearly Earnings',
                             isDrillable: false
                         },
                         secondaryItem: {
                             localIdentifier: 'm2',
-                            value: '32225.01',
+                            value: '28000.01',
                             title: 'Sum of Taps',
                             format: '[color=9c46b5][backgroundColor=d2ccde]$#,##0.00 group'
                         },
                         tertiaryItem: {
                             localIdentifier: 'tertiaryIdentifier',
-                            value: '0.9',
+                            value: '43',
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
                     }}
                     onAfterRender={action('onAfterRender')}
@@ -179,9 +233,9 @@ storiesOf('Internal/Headline/Drilldown eventing', module)
                         },
                         tertiaryItem: {
                             localIdentifier: 'tertiaryIdentifier',
-                            value: '0.9',
+                            value: '31',
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
 
                     }}
@@ -198,23 +252,23 @@ storiesOf('Internal/Headline/Drilldown eventing', module)
                     data={{
                         primaryItem: {
                             localIdentifier: 'm1',
-                            value: '42225.01',
+                            value: '40200.01',
                             title: 'Sum of Clicks',
                             format: '[color=9c46b5]$#,##0.00 group',
                             isDrillable: true
                         },
                         secondaryItem: {
                             localIdentifier: 'm2',
-                            value: '32225.01',
+                            value: '28000.01',
                             title: 'Sum of Taps',
                             format: '[color=9c46b5]$#,##0.00 group',
                             isDrillable: true
                         },
                         tertiaryItem: {
                             localIdentifier: 'tertiaryIdentifier',
-                            value: '0.9',
+                            value: '43',
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
 
                     }}
@@ -245,7 +299,7 @@ storiesOf('Internal/Headline/Drilldown eventing', module)
                             localIdentifier: 'tertiaryIdentifier',
                             value: null,
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
 
                     }}
@@ -278,7 +332,7 @@ storiesOf('Internal/Headline/Drilldown eventing', module)
                             localIdentifier: 'tertiaryIdentifier',
                             value: null,
                             title: 'Versus',
-                            format: '#,##0%'
+                            format: null
                         }
 
                     }}

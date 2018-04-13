@@ -10,7 +10,7 @@ import {
     IHeadlineData,
     IHeadlineDataItem
 } from '../../../interfaces/Headlines';
-import formatItemValue from './utils/HeadlineDataItemUtils';
+import { formatItemValue, formatPercentageValue } from './utils/HeadlineDataItemUtils';
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: AFM.Identifier;
@@ -127,7 +127,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
 
     private renderTertiaryItem() {
         const { data: { tertiaryItem } } = this.props;
-        const formattedItem = formatItemValue(tertiaryItem);
+        const formattedItem = formatPercentageValue(tertiaryItem);
 
         return (
             <div className="gd-flex-item headline-compare-section-item headline-tertiary-item s-headline-tertiary-item">
