@@ -1,7 +1,15 @@
 # GoodData JS SDK
 GoodData javascript sdk library mainly provides a thin javascript abstraction
-over the GoodData REST API. It is created to makes it easy to use the GD platform
+over the GoodData REST API. It is created to make it easy to use the GD platform
 and write small javascript apps relying on GD APIs.
+
+
+# WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js` 
+
+
+
+----------------
+THIS SECTION IS OLD:
 
 ## Usage
 
@@ -15,7 +23,7 @@ to be named `jquery`.
 
 You can use the SDK in nodejs, but do not forget to set custom domain URL:
 ```js
-const gooddata = require('gooddata');
+const gooddata = require('@gooddata/gooddata-js');
 const getStream = require('get-stream');
 
 gooddata.config.setCustomDomain('secure.gooddata.com');
