@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { DataLayer, factory } from 'gooddata';
+import { DataLayer, factory } from '@gooddata/gooddata-js';
 import { AFM } from '@gooddata/typings';
 import { Execute, IExecuteProps } from '../Execute';
 import { delay } from '../../components/tests/utils';

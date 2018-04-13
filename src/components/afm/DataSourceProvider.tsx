@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { SDK, factory as createSdk, DataLayer } from 'gooddata';
+import { SDK, factory as createSdk, DataLayer } from '@gooddata/gooddata-js';
 import * as PropTypes from 'prop-types';
 
 import isEqual = require('lodash/isEqual');

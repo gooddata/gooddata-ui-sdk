@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
-import { SDK } from 'gooddata';
+import { SDK } from '@gooddata/gooddata-js';
 import {
     Table,
     BaseChart,

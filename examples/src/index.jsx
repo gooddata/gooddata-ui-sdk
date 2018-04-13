@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import sdk from 'gooddata';
+import sdk from '@gooddata/gooddata-js';
 
 import {
     BrowserRouter as Router,

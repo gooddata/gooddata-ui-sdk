@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
-import { DataLayer, ApiResponseError } from 'gooddata';
+import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
 import {
     emptyResponse,
     emptyResponseWithNull,

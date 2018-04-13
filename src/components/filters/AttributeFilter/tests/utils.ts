@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IElement } from 'gooddata';
+import { IElement } from '@gooddata/gooddata-js';
 import { get } from 'lodash';
 
 // tslint:disable-next-line:max-line-length

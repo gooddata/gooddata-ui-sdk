@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { SDK, factory as createSdk } from 'gooddata';
+import { SDK, factory as createSdk } from '@gooddata/gooddata-js';
 import pick = require('lodash/pick');
 
 import { IntlWrapper } from '../../core/base/IntlWrapper';
