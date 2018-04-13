@@ -12,7 +12,7 @@ import {
     locationCityAttributeIdentifier,
     locationCityDisplayFormIdentifier,
     locationIdAttributeIdentifier,
-    locationNameIdentifier,
+    locationNameDisplayFormIdentifier,
     totalSalesIdentifier
 } from '../utils/fixtures';
 
@@ -89,7 +89,7 @@ export class ParentFilterExample extends Component {
         const viewByLocationName = {
             visualizationAttribute: {
                 displayForm: {
-                    identifier: locationNameIdentifier
+                    identifier: locationNameDisplayFormIdentifier
                 },
                 localIdentifier: 'location_name'
             }
