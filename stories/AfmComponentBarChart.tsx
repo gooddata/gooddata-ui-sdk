@@ -8,7 +8,8 @@ import {
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_ONE_RENAMED_MEASURE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
-    AFM_ONE_MEASURE_TWO_ATTRIBUTES
+    AFM_ONE_MEASURE_TWO_ATTRIBUTES,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP
 } from './data/afmComponentProps';
 import { CUSTOM_COLORS } from './data/colors';
 import { onErrorHandler } from './mocks';
@@ -21,6 +22,19 @@ storiesOf('AFM components/BarChart', module)
                 <BarChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('two measures, one attribute, PoP', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <BarChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

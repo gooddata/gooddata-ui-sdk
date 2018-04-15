@@ -364,22 +364,33 @@ describe('chartOptionsBuilder', () => {
                 )
             ).toEqual(DEFAULT_COLOR_PALETTE.slice(0, measureGroup.items.length));
         });
+
         it('should return a palette with a lighter color for each pop measure based on it`s source measure', () => {
             const [measureGroup, viewByAttribute, stackByAttribute] =
                 getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
             const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
             const type = 'column';
 
-            const originalColorLightness = 0;
-            const originalColor = `rgb(${originalColorLightness},${originalColorLightness},${originalColorLightness})`;
-            const lighterModifier = 0.6;
-            const lighterColorLightness = Math.floor((255 - originalColorLightness) * lighterModifier);
-            const lighterColor = `rgb(${lighterColorLightness},${lighterColorLightness},${lighterColorLightness})`;
-
-            const customPalette = [originalColor, originalColor];
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
             const updatedPalette =
                 getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
-            expect(updatedPalette).toEqual([lighterColor, originalColor]);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
+        });
+
+        it('should rotate colors from original palete and generate lighter PoP colors', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const type = 'column';
+
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
+            const updatedPalette =
+                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)',
+                'rgb(100,100,100)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
+                'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)' ]);
         });
     });
 

@@ -83,6 +83,17 @@ export function normalizeColorToRGB(color: string) {
     });
 }
 
+function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number): number {
+    const measureDefinition = afm.measures[measureItemIndex].definition;
+    if (!AFM.isPopMeasureDefinition(measureDefinition)) {
+        return -1;
+    }
+    const sourceMeasureIdentifier = measureDefinition.popMeasure.measureIdentifier;
+    return afm.measures.findIndex(
+        (measure: AFM.IMeasure) => measure.localIdentifier === sourceMeasureIdentifier
+    );
+}
+
 export function getColorPalette(
     colorPalette: string[] = DEFAULT_COLOR_PALETTE,
     measureGroup: any,
@@ -90,43 +101,36 @@ export function getColorPalette(
     stackByAttribute: any,
     afm: AFM.IAfm,
     type: string
-) {
-    let updatedColorPalette: string[] = [];
+): string[] {
     const isAttributePieChart = isPieChart(type) && afm.attributes && afm.attributes.length > 0;
 
     if (stackByAttribute || isAttributePieChart) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
-        updatedColorPalette = range(itemsCount)
-            .map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
-    } else {
-        let linkedPopMeasureCounter = 0;
-        measureGroup.items.forEach((measureItem: Execution.IMeasureHeaderItem, measureItemIndex: number) => {
-            // skip linked popMeasures in color palete
-            const colorIndex = (measureItemIndex - linkedPopMeasureCounter) % colorPalette.length;
-            let color = colorPalette[colorIndex];
-
-            // if this is a pop measure and we found it`s original measure
-            if (isPopMeasure(measureItem, afm)) {
-                // find source measure
-                const measureDefinition = afm.measures[measureItemIndex].definition as AFM.IPopMeasureDefinition;
-                const sourceMeasureIdentifier = measureDefinition.popMeasure.measureIdentifier;
-                const sourceMeasureIndex = afm.measures.findIndex(
-                    (measure: AFM.IMeasure) => measure.localIdentifier === sourceMeasureIdentifier
-                );
-                if (sourceMeasureIndex > -1) {
-                    linkedPopMeasureCounter += 1;
-                    // copy sourceMeasure color and lighten it if it exists, then insert it at pop measure position
-                    const sourceMeasureColorIndex =
-                        (sourceMeasureIndex - linkedPopMeasureCounter) % colorPalette.length;
-                    const sourceMeasureColor = colorPalette[sourceMeasureColorIndex];
-                    const popMeasureColor = getLighterColor(normalizeColorToRGB(sourceMeasureColor), 0.6);
-                    color = popMeasureColor;
-                }
-            }
-            updatedColorPalette.push(color);
-        });
+        return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
     }
-    return updatedColorPalette;
+
+    let parentMeasuresCounter = 0;
+
+    const paletteMeasures = range(0, measureGroup.items.length).map((measureItemIndex) => {
+        if (isPopMeasure(measureGroup.items[measureItemIndex], afm)) {
+            return '';
+        }
+        const colorIndex = parentMeasuresCounter % colorPalette.length;
+        parentMeasuresCounter++;
+        return colorPalette[colorIndex];
+    });
+
+    return paletteMeasures.map((color, measureItemIndex) => {
+        if (!isPopMeasure(measureGroup.items[measureItemIndex], afm)) {
+            return color;
+        }
+        const parentMeasureIndex = findParentMeasureIndex(afm, measureItemIndex);
+        if (parentMeasureIndex > -1) {
+            const sourceMeasureColor = paletteMeasures[parentMeasureIndex];
+            return getLighterColor(normalizeColorToRGB(sourceMeasureColor), 0.6);
+        }
+        return color;
+    });
 }
 
 export interface IPointData {
