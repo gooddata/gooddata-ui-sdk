@@ -5,16 +5,15 @@ import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
 
-import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
 import { ExecutePropType, Requireable } from '../proptypes/Execute';
 import { setTelemetryHeaders } from '../helpers/utils';
+import { convertErrors } from '../helpers/errorHandlers';
+import { RuntimeError } from '../errors/RuntimeError';
 
 export { Requireable };
 
-const { DataTable, ExecuteAfmAdapter, ErrorCodes } = DataLayer;
-
-const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+const { DataTable, ExecuteAfmAdapter } = DataLayer;
 
 export type IDataTableFactory = (sdk: SDK, projectId: string) => DataLayer.DataTable<Execution.IExecutionResponses>;
 
@@ -34,10 +33,7 @@ export interface IExecuteProps extends IEvents {
 export interface IExecuteState {
     result: Execution.IExecutionResponses;
     isLoading: boolean;
-    error: {
-        status: string;
-        response?: object;
-    };
+    error?: RuntimeError;
 }
 
 export interface IExecuteChildrenProps {
@@ -145,26 +141,18 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             onLoadingChanged({ isLoading: false });
         });
 
-        this.dataTable.onError((error: Execution.IError) => {
-            const statusMap = {
-                [ErrorCodes.HTTP_TOO_LARGE]: ErrorStates.DATA_TOO_LARGE_TO_COMPUTE,
-                [ErrorCodes.HTTP_BAD_REQUEST]: ErrorStates.BAD_REQUEST,
-                [UNKNOWN_ERROR]: ErrorStates.UNKNOWN_ERROR
-            };
-            const errorCode = error && error.response && error.response.status || UNKNOWN_ERROR;
-            const status = statusMap[statusMap.hasOwnProperty(errorCode) ? errorCode : UNKNOWN_ERROR];
-            const newError = {
-                status,
-                error
-            };
+        this.dataTable.onError((error) => {
+            const newError = convertErrors(error);
+
+            onError(newError);
+
+            onLoadingChanged({ isLoading: false });
 
             this.setState({
                 result: null,
                 isLoading: false,
                 error: newError
             });
-            onLoadingChanged({ isLoading: false });
-            onError(newError);
         });
     }
 }

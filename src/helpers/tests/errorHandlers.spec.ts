@@ -1,13 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
+import * as HttpStatusCodes from 'http-status-codes';
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
-import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
+import { ApiResponseError } from '@gooddata/gooddata-js';
 import {
     emptyResponse,
     emptyResponseWithNull,
     attributeOnlyResponse
 } from '../../execution/fixtures/ExecuteAfm.fixtures';
 import { ErrorCodes, ErrorStates } from '../../constants/errorStates';
-import {} from 'jest';
+import { RuntimeError } from '../../errors/RuntimeError';
+import 'jest';
 
 async function createMockedError(status: number, body: string = '{}') {
     const response = new Response(body, { status });
@@ -20,55 +22,59 @@ async function createMockedError(status: number, body: string = '{}') {
 }
 
 describe('convertErrors', async () => {
-    it('should throw correct ErrorStates', async () => {
-        expect.assertions(7);
-        try {
-            await convertErrors(await createMockedError(204));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.NO_DATA);
-        }
+    it('should return `NO_DATA` error', async () => {
+        const e = convertErrors(await createMockedError(204));
 
-        try {
-            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_TOO_LARGE));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
-        }
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.NO_DATA);
+    });
 
-        try {
-            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.BAD_REQUEST);
-        }
+    it('should return `DATA_TOO_LARGE_TO_COMPUTE` error', async () => {
+        const e = convertErrors(await createMockedError(HttpStatusCodes.REQUEST_TOO_LONG));
 
-        try {
-            const protectedErrorBody = `{
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE);
+    });
+
+    it('should return `BAD_REQUEST` error', async () => {
+        const e = convertErrors(await createMockedError(HttpStatusCodes.BAD_REQUEST));
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.BAD_REQUEST);
+    });
+
+    it('should return `PROTECTED_REPORT` error', async () => {
+        const protectedErrorBody = `{
                 "error": {
                     "message": "Attempt to execute protected report unsafely"
                 }
             }`;
 
-            await convertErrors(await createMockedError(DataLayer.ErrorCodes.HTTP_BAD_REQUEST, protectedErrorBody));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.PROTECTED_REPORT);
-        }
+        const e = convertErrors(await createMockedError(HttpStatusCodes.BAD_REQUEST, protectedErrorBody));
 
-        try {
-            await convertErrors(await createMockedError(ErrorCodes.EMPTY_AFM));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.EMPTY_AFM);
-        }
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.PROTECTED_REPORT);
+    });
 
-        try {
-            await convertErrors(await createMockedError(ErrorCodes.INVALID_BUCKETS));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.INVALID_BUCKETS);
-        }
+    it('should return `EMPTY_AFM` error', async () => {
+        const e = convertErrors(await createMockedError(ErrorCodes.EMPTY_AFM));
 
-        try {
-            await convertErrors(await createMockedError(0));
-        } catch (e) {
-            expect(e).toEqual(ErrorStates.UNKNOWN_ERROR);
-        }
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.EMPTY_AFM);
+    });
+
+    it('should return `INVALID_BUCKETS` error', async () => {
+        const e = convertErrors(await createMockedError(ErrorCodes.INVALID_BUCKETS));
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.INVALID_BUCKETS);
+    });
+
+    it('should return `UNKNOWN_ERROR` error', async () => {
+        const e = convertErrors(await createMockedError(0));
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.UNKNOWN_ERROR);
     });
 });
 

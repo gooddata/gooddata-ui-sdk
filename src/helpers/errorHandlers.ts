@@ -1,8 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
-import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
+import { ApiResponseError } from '@gooddata/gooddata-js';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
+import * as HttpStatusCodes from 'http-status-codes';
+import { RuntimeError } from '../errors/RuntimeError';
 
 function getJSONFromText(data: string): object {
     try {
@@ -12,32 +14,32 @@ function getJSONFromText(data: string): object {
     }
 }
 
-export function convertErrors(error: ApiResponseError) {
+export function convertErrors(error: ApiResponseError): RuntimeError {
     const errorCode: number = error.response.status;
     switch (errorCode) {
-        case 204:
-            throw ErrorStates.NO_DATA;
+        case HttpStatusCodes.NO_CONTENT:
+            return new RuntimeError(ErrorStates.NO_DATA, error);
 
-        case DataLayer.ErrorCodes.HTTP_TOO_LARGE:
-            throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
+        case HttpStatusCodes.REQUEST_TOO_LONG:
+            return new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error);
 
-        case DataLayer.ErrorCodes.HTTP_BAD_REQUEST:
+        case HttpStatusCodes.BAD_REQUEST:
             const message = get(getJSONFromText(error.responseBody), 'error.message', '');
 
             if (includes(message, 'Attempt to execute protected report unsafely')) {
-                throw ErrorStates.PROTECTED_REPORT;
+                return new RuntimeError(ErrorStates.PROTECTED_REPORT, error);
             } else {
-                throw ErrorStates.BAD_REQUEST;
+                return new RuntimeError(ErrorStates.BAD_REQUEST, error);
             }
 
         case ErrorCodes.EMPTY_AFM:
-            throw ErrorStates.EMPTY_AFM;
+            return new RuntimeError(ErrorStates.EMPTY_AFM);
 
         case ErrorCodes.INVALID_BUCKETS:
-            throw ErrorStates.INVALID_BUCKETS;
+            return new RuntimeError(ErrorStates.INVALID_BUCKETS);
 
         default:
-            throw ErrorStates.UNKNOWN_ERROR;
+            return new RuntimeError(ErrorStates.UNKNOWN_ERROR);
     }
 }
 
@@ -72,9 +74,9 @@ export function isEmptyResult(responses: Execution.IExecutionResponses): boolean
 export function checkEmptyResult(responses: Execution.IExecutionResponses) {
     if (isEmptyResult(responses)) {
         throw {
-            name: 'EmptyResulError',
+            name: 'EmptyResultError',
             response: {
-                status: 204,
+                status: HttpStatusCodes.NO_CONTENT,
                 json: () => Promise.resolve(null),
                 text: () => Promise.resolve(null)
             }

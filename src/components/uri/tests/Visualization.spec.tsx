@@ -18,6 +18,7 @@ import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
 import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
+import { RuntimeError } from '../../../errors/RuntimeError';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -196,8 +197,8 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should trigger error in case of given uri is not valid', (done) => {
-        const errorHandler = (value: { status: string }) => {
-            expect(value.status).toEqual(ErrorStates.NOT_FOUND);
+        const errorHandler = (error: RuntimeError) => {
+            expect(error.getMessage()).toEqual(ErrorStates.NOT_FOUND);
             done();
         };
 

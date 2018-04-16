@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import {
     oneMeasureDataSource,
     tooLargeDataSource,
@@ -21,6 +21,8 @@ import { delay } from '../../../tests/utils';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDrillableItem } from '../../../../interfaces/DrillEvents';
 import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
+import { RuntimeError } from '../../../../errors/RuntimeError';
+import { ErrorStates } from '../../../../constants/errorStates';
 
 export interface ITestInnerComponentProps extends ICommonVisualizationProps {
     customPropFooBar?: number;
@@ -144,12 +146,7 @@ describe('VisualizationLoadingHOC', () => {
         return delay().then(() => {
             expect(onError).toHaveBeenCalledTimes(1);
 
-            expect(onError).toHaveBeenCalledWith({
-                options: {
-                    dateOptionsDisabled: false
-                },
-                status: 'DATA_TOO_LARGE_TO_COMPUTE'
-            });
+            expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
         });
     });
 
@@ -230,13 +227,8 @@ describe('VisualizationLoadingHOC', () => {
             onError.mockReset();
             inner.props().onDataTooLarge();
 
-            expect(onError.mock.calls.length).toBe(1);
-            expect(onError.mock.calls[0]).toEqual([{
-                options: {
-                    dateOptionsDisabled: false
-                },
-                status: 'DATA_TOO_LARGE_TO_DISPLAY'}]
-            );
+            expect(onError).toHaveBeenCalledTimes(1);
+            expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
         });
     });
 
@@ -244,14 +236,20 @@ describe('VisualizationLoadingHOC', () => {
         const wrapper = createComponent();
 
         const consoleErrorSpy = jest.spyOn(global.console, 'error');
+
         consoleErrorSpy.mockImplementation(jest.fn());
-        const innerComponent = wrapper.find('LoadingHOCWrapped') as ReactWrapper<ICommonVisualizationProps, any>;
 
-        innerComponent.props().onError({ status: 'test status' });
+        return delay().then(() => {
+            wrapper.update();
+            const inner = wrapper.find(TestInnerComponent);
 
-        expect(consoleErrorSpy).toHaveBeenCalledWith({ status: 'test status' });
+            inner.props().onDataTooLarge();
 
-        consoleErrorSpy.mockRestore();
+            expect(consoleErrorSpy).toHaveBeenCalled();
+            expect(consoleErrorSpy).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
+
+            consoleErrorSpy.mockRestore();
+        });
     });
 
     it('should call pushData callback with execution result', () => {
@@ -262,10 +260,7 @@ describe('VisualizationLoadingHOC', () => {
 
         return delay().then(() => {
             expect(pushData).toHaveBeenCalledWith({
-                result: oneMeasureResponse,
-                options: {
-                    dateOptionsDisabled: false
-                }
+                result: oneMeasureResponse
             });
         });
     });
@@ -310,12 +305,7 @@ describe('VisualizationLoadingHOC', () => {
 
             visualization.props().onNegativeValues();
 
-            expect(onError).toHaveBeenCalledWith({
-                options: {
-                    dateOptionsDisabled: false
-                },
-                status: 'NEGATIVE_VALUES'
-            });
+            expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.NEGATIVE_VALUES));
         });
     });
 });

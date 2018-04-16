@@ -15,6 +15,7 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
+import { IPushData } from './interfaces/PushData';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
@@ -33,6 +34,7 @@ import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
+import { RuntimeError } from './errors/RuntimeError';
 
 /**
  * CoreComponents
@@ -58,7 +60,6 @@ export {
     ErrorCodes,
     ErrorStates,
     ErrorComponent,
-    LoadingComponent,
     Execute,
     generateDimensions,
     Headline,
@@ -67,14 +68,17 @@ export {
     IDataSourceProviderInjectedProps,
     IDrillableItem,
     ILegendConfig,
+    IPushData,
     isEmptyResult,
     IVisualizationProperties,
     Kpi,
+    LoadingComponent,
     LineChart,
     AreaChart,
     PieChart,
     PoPHelper,
     PropTypes,
+    RuntimeError,
     Table,
     VisEvents,
     Visualization,
