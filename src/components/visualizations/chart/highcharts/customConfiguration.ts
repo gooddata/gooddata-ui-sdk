@@ -183,8 +183,12 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         return false;
     }
 
-    const dataPointEnd = (isLineChart(chartType)
-        || isAreaChart(chartType) || isDualChart(chartType) || isScatterPlot(chartType))
+    const dataPointEnd = (isLineChart(chartType) ||
+        isAreaChart(chartType) ||
+        isDualChart(chartType) ||
+        isScatterPlot(chartType) ||
+        (!this.point.tooltipPos)
+    )
         ? this.point.plotX
         : getDataPointEnd(
             chartType,
@@ -194,8 +198,12 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
             stacking
         );
 
-    const ignorePointHeight = isLineChart(chartType)
-        || isAreaChart(chartType) || isDualChart(chartType) || isScatterPlot(chartType);
+    const ignorePointHeight = isLineChart(chartType) ||
+        isAreaChart(chartType) ||
+        isDualChart(chartType) ||
+        isScatterPlot(chartType) ||
+        (!this.point.shapeArgs);
+
     const dataPointHeight = ignorePointHeight ? 0 : this.point.shapeArgs.height;
 
     const arrowPosition = getArrowHorizontalPosition(
@@ -427,6 +435,26 @@ function getHoverStyles(chartOptions: any, config: any) {
                 return series;
             };
             break;
+
+        case VisualizationTypes.COMBO:
+            seriesMapFn = (seriesOrig) => {
+                const series = cloneDeep(seriesOrig);
+                // TODO duplicates code above - rewrite once merged with others
+                if (seriesOrig.type === 'line') {
+                    if (series.isDrillable) {
+                        set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
+                        set(series, 'cursor', 'pointer');
+                    } else {
+                        set(series, 'states.hover.halo.size', 0);
+                    }
+                } else {
+                    set(series, 'states.hover.brightness', HOVER_BRIGHTNESS);
+                    set(series, 'states.hover.enabled', series.isDrillable);
+                }
+                return series;
+            };
+            break;
+
         case VisualizationTypes.PIE:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);

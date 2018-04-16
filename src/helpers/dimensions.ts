@@ -202,6 +202,7 @@ export function generateDimensions(
         }
         case VisualizationTypes.BAR:
         case VisualizationTypes.AREA:
+        case VisualizationTypes.COMBO:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
         }

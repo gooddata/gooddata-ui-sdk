@@ -1,5 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { range, cloneDeep } from 'lodash';
+import { VisualizationObject } from '@gooddata/typings';
+
 import { immutableSet, repeatItemsNTimes } from '../../src/components/visualizations/utils/common';
 import { STACK_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
 
@@ -140,6 +142,13 @@ export const headlineWithTwoMeasures: any = {
     executionResult: require('../test_data/headline_with_two_measures_result.json').executionResult
 };
 
+export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
+export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
+    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
+    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
+    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets // tslint:disable-line:max-line-length
+};
+
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
     let dataSet: any = immutableSet(
         barChartWith3MetricsAndViewByAttribute,
@@ -234,5 +243,7 @@ export default {
     pieChartWithMetricsOnly,
     barChartWithNegativeAndZeroValues,
     headlineWithOneMeasure,
-    headlineWithTwoMeasures
+    headlineWithTwoMeasures,
+    comboWithTwoMeasuresAndViewByAttribute,
+    comboWithTwoMeasuresAndViewByAttributeMdObject
 };

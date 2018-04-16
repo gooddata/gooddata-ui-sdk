@@ -1324,6 +1324,48 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
+        describe('in usecase of combo chart', () => {
+            it('should assign `line` type to second serie according mbObject', () => {
+                const chartOptions = generateChartOptions(
+                    fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                    {
+                        type: 'combo',
+                        mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject
+                    }
+                );
+
+                expect(chartOptions.data.series[0].type).toBeUndefined();
+                expect(chartOptions.data.series[1].type).toBe('line');
+            });
+
+            it('should handle missing mbObject', () => {
+                const chartOptions = generateChartOptions(
+                    fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                    {
+                        type: 'combo'
+                    }
+                );
+
+                expect(chartOptions.data.series[0].type).toBeUndefined();
+                expect(chartOptions.data.series[1].type).toBeUndefined();
+            });
+
+            it('should assign showInPercent true only if at least one measure`s format includes a "%" sign', () => {
+                const dataSet = fixtures.comboWithTwoMeasuresAndViewByAttribute;
+                const dataSetWithPercentFormat = immutableSet(dataSet,
+                    'executionResponse.dimensions[0]' +
+                    'headers[0].measureGroupHeader.items[0].measureHeaderItem.format',
+                    '0.00 %');
+                const chartOptions = generateChartOptions(
+                    dataSetWithPercentFormat,
+                    {
+                        type: 'combo'
+                    });
+                expect(generateChartOptions(dataSet).showInPercent).toBe(false); // false by default
+                expect(chartOptions.showInPercent).toBe(true); // true if format includes %
+            });
+        });
+
         describe('generate Y axes', () => {
             it('should generate one axis with no label when there are more measures and in bar chart', () => {
                 const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);

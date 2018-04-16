@@ -34,6 +34,7 @@ import { PieChart } from './components/PieChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
+import { ComboChart } from './components/ComboChart';
 import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
@@ -60,6 +61,7 @@ export {
     ChartType,
     ColumnChart,
     ScatterPlot,
+    ComboChart,
     CoreComponents,
     ErrorCodes,
     ErrorStates,

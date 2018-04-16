@@ -20,9 +20,11 @@ import {
     isAreaChart,
     isDualChart,
     isPieChart,
+    isComboChart,
     isChartSupported,
     stringifyChartTypes,
-    isScatterPlot
+    isScatterPlot,
+    unwrap
 } from '../utils/common';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
@@ -33,6 +35,8 @@ import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } fr
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
+import { getComboChartOptions } from './chartOptions/comboChartOptions';
+
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
 };
@@ -41,10 +45,6 @@ export interface IAxis {
     label: string;
     format?: string;
     seriesIndices?: number[];
-}
-
-export function unwrap(wrappedObject: any) {
-    return wrappedObject[Object.keys(wrappedObject)[0]];
 }
 
 export interface ISeriesDataItem {
@@ -801,6 +801,30 @@ export function getChartOptions(
         // categories need to be sorted in exactly the same order as dataPoints
         categories = categories.map(({}, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]]);
         series[0].data = sortedDataPoints;
+    }
+
+    if (isComboChart(type)) {
+        return {
+            type,
+            stacking,
+            colorPalette,
+            xAxes,
+            yAxes,
+            legendLayout: config.legendLayout || 'horizontal',
+            dualAxis: false,
+            actions: {
+                tooltip: generateTooltipFn(viewByAttribute, type)
+            },
+            grid: {
+                enabled: gridEnabled
+            },
+            ...getComboChartOptions(
+                config,
+                measureGroup,
+                series,
+                categories
+            )
+        };
     }
 
     return {
