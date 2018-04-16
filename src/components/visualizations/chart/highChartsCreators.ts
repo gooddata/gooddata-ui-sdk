@@ -23,6 +23,7 @@ import { getScatterConfiguration } from './highcharts/scatterConfiguration';
 import { getComboConfiguration } from './highcharts/comboConfiguration';
 import { getTreemapConfiguration } from './highcharts/treemapConfiguration';
 import { getFunnelConfiguration } from './highcharts/funnelConfiguration';
+import { getHeatMapConfiguration } from './highcharts/heatMapConfiguration';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 const chartConfigurationMap = {
@@ -36,7 +37,8 @@ const chartConfigurationMap = {
     [VisualizationTypes.COMBO]: getComboConfiguration,
     [VisualizationTypes.TREEMAP]: getTreemapConfiguration,
     [VisualizationTypes.DONUT]: getDonutConfiguration,
-    [VisualizationTypes.FUNNEL]: getFunnelConfiguration
+    [VisualizationTypes.FUNNEL]: getFunnelConfiguration,
+    [VisualizationTypes.HEATMAP]: getHeatMapConfiguration
 };
 
 export function getHighchartsOptions(chartOptions: any, drillConfig: any) {

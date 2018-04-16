@@ -8,4 +8,5 @@ export { Table } from './Table';
 export { Headline } from './Headline';
 export { AreaChart } from './AreaChart';
 export { Treemap } from './Treemap';
+export { HeatMap } from './HeatMap';
 export { dataSourceProvider } from './DataSourceProvider';

@@ -808,6 +808,27 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
+    .add('Heat map with one metric and two attributes', () => {
+        const dataSet: any = fixtures.barChartWithStackByAndViewByAttributes;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'heatmap'
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
     .add('Legend positions', () => {
         return screenshotWrap(
             <div>

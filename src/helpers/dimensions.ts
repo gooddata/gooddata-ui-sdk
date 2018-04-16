@@ -176,6 +176,39 @@ function getScatterDimensions(mdObject: VisualizationObject.IVisualizationObject
     ];
 }
 
+function getHeatMapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = mdObject.buckets
+            .find(bucket => bucket.localIdentifier === VIEW);
+
+    const stack: VisualizationObject.IBucket = mdObject.buckets
+        .find(bucket => bucket.localIdentifier === STACK);
+
+    const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+
+    if (hasNoStacks) {
+        return [
+            {
+                itemIdentifiers: (view && view.items || [])
+                    .map(getLocalIdentifierFromAttribute)
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: (view && view.items || [])
+                .map(getLocalIdentifierFromAttribute)
+        },
+        {
+            itemIdentifiers: (stack && stack.items || [])
+                .map(getLocalIdentifierFromAttribute).concat([MEASUREGROUP])
+        }
+    ];
+}
+
 /**
  * generateDimensions
  * is a function that generates dimensions based on buckets and visualization objects.
@@ -214,6 +247,9 @@ export function generateDimensions(
         }
         case VisualizationTypes.SCATTER: {
             return getScatterDimensions(mdObject);
+        }
+        case VisualizationTypes.HEATMAP: {
+            return getHeatMapDimensions(mdObject);
         }
     }
     return [];

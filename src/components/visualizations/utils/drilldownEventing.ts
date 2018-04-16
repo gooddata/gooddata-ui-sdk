@@ -111,6 +111,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
         case VisualizationTypes.FUNNEL:
             return 'slice';
         case VisualizationTypes.TABLE:
+        case VisualizationTypes.HEATMAP:
             return 'cell';
         default:
             invariant(false, `Unknown visualization type: ${type}`);

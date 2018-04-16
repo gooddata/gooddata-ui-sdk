@@ -16,7 +16,8 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    getChartOptions
+    getChartOptions,
+    generateTooltipHeatMapFn
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 
@@ -1566,6 +1567,109 @@ describe('chartOptionsBuilder', () => {
                 }];
 
                 expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+        });
+
+        describe('HeatMap configuration', () => {
+            describe('generateTooltipHeatMapFn', () => {
+                const viewBy = {
+                    formOf: { name: 'viewAttr' },
+                    items: [{ attributeHeaderItem: { name: 'viewHeader' } }]
+                };
+
+                const stackBy = {
+                    formOf: { name: 'stackAttr' },
+                    items: [{ attributeHeaderItem: { name: 'stackHeader' } }]
+                };
+
+                const point = {
+                    value: 300,
+                    x: 0,
+                    y: 0,
+                    series: {
+                        name: 'name',
+                        userOptions: {
+                            dataLabels: {
+                                formatGD: 'abcd'
+                            }
+                        }
+                    }
+                };
+
+                it('should generate correct tooltip', () => {
+                    const tooltipFn = generateTooltipHeatMapFn(viewBy, stackBy);
+                    const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">stackAttr</td>
+                <td class=\"value\">stackHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">viewAttr</td>
+                <td class=\"value\">viewHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">name</td>
+                <td class=\"value\">abcd</td>
+            </tr></table>`;
+
+                    expect(tooltipFn(point)).toEqual(expectedResult);
+                });
+            });
+
+            describe('getChartOptions for heatmap', () => {
+                it('should generate correct series with enabled data labels', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWithStackByAndViewByAttributes,
+                        {
+                            type: 'heatmap',
+                            stacking: false
+                        }
+                    );
+                    const expectedSeries = [{
+                        borderWidth: 1,
+                        data: [
+                            { x: 0, y: 0, value: 21978695.46, drilldown: false },
+                            { x: 1, y: 0, value: 6038400.96, drilldown: false },
+                            { x: 0, y: 1, value: 58427629.5, drilldown: false },
+                            { x: 1, y: 1, value: 30180730.62, drilldown: false }
+                        ],
+                        dataLabels: {
+                            enabled: true,
+                            formatGD: '#,##0.00'
+                        },
+                        legendIndex: 0,
+                        name: 'Amount',
+                        turboThreshold: 0,
+                        yAxis: 0,
+                        isDrillable: false
+                    }];
+
+                    expect(chartOptions.data.series).toEqual(expectedSeries);
+                });
+
+                it('should generate valid categories', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWithStackByAndViewByAttributes,
+                        {
+                            type: 'heatmap',
+                            stacking: false
+                        }
+                    );
+
+                    const expectedCategories = [['Direct Sales', 'Inside Sales'], ['East Coast', 'West Coast']];
+
+                    expect(chartOptions.data.categories).toEqual(expectedCategories);
+                });
+
+                it('should generate categories with empty strings', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWithSingleMeasureAndNoAttributes,
+                        {
+                            type: 'heatmap',
+                            stacking: false
+                        }
+                    );
+                    const expectedCategories = [[''], ['']];
+                    expect(chartOptions.data.categories).toEqual(expectedCategories);
+                });
             });
         });
     });

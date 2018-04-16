@@ -39,6 +39,7 @@ import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
+import { HeatMap } from './components/HeatMap';
 import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
@@ -90,6 +91,7 @@ export {
     PieChart,
     Treemap,
     DonutChart,
+    HeatMap,
     PoPHelper,
     PropTypes,
     RuntimeError,

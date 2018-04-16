@@ -256,6 +256,10 @@ function labelFormatter() {
     return formatLabel(this.y, get(this, 'point.format'));
 }
 
+function labelFormatterHeatMap(options: any) {
+    return formatLabel(this.point.value, options.formatGD);
+}
+
 // check whether series contains only positive values, not consider nulls
 function hasOnlyPositiveValues(series: any, x: any) {
     return every(series, (seriesItem: any) => {
@@ -326,6 +330,11 @@ function getLabelsConfiguration(chartOptions: any) {
                     style,
                     allowOverlap: false
                 }
+            },
+            heatmap: {
+                dataLabels: {
+                    formatter: labelFormatterHeatMap
+                }
             }
         },
         yAxis
@@ -378,10 +387,31 @@ function getSeries(series: any, colorPalette: any = []) {
     });
 }
 
+function getHeatMapDataConfiguration(chartOptions: any) {
+    const data = chartOptions.data || EMPTY_DATA;
+    const series = data.series;
+    const categories = data.categories;
+
+    return {
+        series,
+        xAxis: [{
+            labels: {
+                enabled: !isEmpty(compact(categories))
+            },
+            categories: categories[0] || []
+        }],
+        yAxis: [{
+            labels: {
+                enabled: !isEmpty(compact(categories))
+            },
+            categories: categories[1] || []
+        }]
+    };
+}
+
 function getDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = getSeries(data.series, chartOptions.colorPalette);
-    const categories = map(data.categories, escapeAngleBrackets);
     const { type } = chartOptions;
 
     switch (type) {
@@ -389,7 +419,11 @@ function getDataConfiguration(chartOptions: any) {
             return {
                 series
             };
+        case VisualizationTypes.HEATMAP:
+            return getHeatMapDataConfiguration(chartOptions);
     }
+
+    const categories = map(data.categories, escapeAngleBrackets);
 
     return {
         series,
@@ -430,6 +464,7 @@ function getHoverStyles(chartOptions: any, config: any) {
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.HEATMAP:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
 

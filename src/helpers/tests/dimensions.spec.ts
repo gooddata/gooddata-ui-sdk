@@ -182,6 +182,78 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
+
+    describe('heat map', () => {
+        it('should generate dimensions for one measure', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: []
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ];
+
+            expect(generateDimensions(getVisualization('onemeasure'), VisualizationTypes.HEATMAP))
+                .toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for one measure and view attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['a1']
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, 'view');
+
+            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.HEATMAP))
+                .toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for one measure and stack attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: []
+                },
+                {
+                    itemIdentifiers: ['a1', 'measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithStackAttribute = addAttribute(visualization, 1, 'stack');
+
+            expect(generateDimensions(visualizationWithStackAttribute, VisualizationTypes.HEATMAP))
+                .toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for one measure, view attribute and stack attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['a1']
+                },
+                {
+                    itemIdentifiers: ['a2', 'measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithViewAndStackAttribute = addAttribute(
+                addAttribute(visualization, 1, 'view'),
+                2,
+                'stack'
+            );
+
+            expect(generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.HEATMAP))
+                .toEqual(expectedDimensions);
+        });
+    });
+
     describe('line chart', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [

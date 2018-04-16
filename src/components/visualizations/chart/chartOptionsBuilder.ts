@@ -26,7 +26,8 @@ import {
     stringifyChartTypes,
     isScatterPlot,
     isFunnelChart,
-    unwrap
+    unwrap,
+    isHeatMap
 } from '../utils/common';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
@@ -56,9 +57,10 @@ export interface ISeriesDataItem {
 }
 
 export interface ISeriesItem {
+    name: string;
     data?: ISeriesDataItem[];
     color?: string;
-    name: string;
+    userOptions?: any;
 }
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
@@ -82,7 +84,7 @@ export function validateData(limits: any = {}, chartOptions: any) {
             ? pieChartLimits
             : limits),
         // check pie chart for negative values
-        hasNegativeValue: (isPieOrDonutChart(type) || isFunnelChart(type))
+        hasNegativeValue: (isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type))
             && isNegativeValueIncluded(chartOptions.data.series)
     };
 }
@@ -125,6 +127,9 @@ export function getColorPalette(
         && afm.attributes && afm.attributes.length > 0;
     const isAttributeScatterPlot = isScatterPlot(type) && afm.attributes && afm.attributes.length > 0;
     const isAttributeTreemap = isTreemap(type) && afm.attributes && afm.attributes.length > 0;
+    if (isHeatMap(type)) {
+        return [];
+    }
 
     if (stackByAttribute || isAttributePieChart || isAttributeScatterPlot || isAttributeTreemap) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
@@ -156,6 +161,7 @@ export function getColorPalette(
 }
 
 export interface IPointData {
+    x?: number;
     y: number;
     value?: number;
     format: string;
@@ -170,10 +176,11 @@ export interface IPointData {
 export interface IPoint {
     x?: number;
     y: number;
+    value?: number;
     series: ISeriesItem;
-    category: string;
-    format: string;
-    name: string;
+    category?: string;
+    format?: string;
+    name?: string;
 }
 
 export function getSeriesItemData(
@@ -242,6 +249,35 @@ export interface ISeriesItemConfig {
     xAxis?: number;
 }
 
+export function getHeatMapSeries(
+    executionResultData: any,
+    measureGroup: any,
+    viewByAttribute: any,
+    stackByAttribute: any
+) {
+    const data = [] as any;
+    executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
+        rowItem.forEach((columnItem: any, columnItemIndex: number) => {
+            data.push({ x: columnItemIndex, y: rowItemIndex, value: parseValue(columnItem) });
+        });
+    });
+
+    return[{
+        name: measureGroup.items[0].measureHeaderItem.name,
+        data,
+        turboThreshold: 0,
+        yAxis: 0,
+        dataLabels: {
+            enabled: ((!viewByAttribute || (viewByAttribute.items.length <= 6)) &&
+                        (!stackByAttribute || (stackByAttribute.items.length <= 20))),
+            formatGD: unwrap(measureGroup.items[0]).format
+        },
+        legendIndex: 0,
+        borderWidth: ((!viewByAttribute || (viewByAttribute.items.length <= 30)) &&
+                        (!stackByAttribute || (stackByAttribute.items.length <= 30))) ? 1 : 0
+    }];
+}
+
 export function getSeries(
     executionResultData: any,
     measureGroup: any,
@@ -250,6 +286,9 @@ export function getSeries(
     type: string,
     colorPalette: string[]
 ) {
+    if (isHeatMap(type)) {
+        return getHeatMapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+    }
     return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const seriesItemData = getSeriesItemData(
             seriesItem,
@@ -338,6 +377,41 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
         if (measures[1]) {
             textData.push([customEscape(measures[1].measureHeaderItem.name),
             customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label)]);
+        }
+
+        return `<table class="tt-values">${textData.map(line => (
+            `<tr>
+                <td class="title">${line[0]}</td>
+                <td class="value">${line[1]}</td>
+            </tr>`
+        )).join('\n')}</table>`;
+    };
+}
+
+export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any) {
+    const formatValue = (val: number, format: string) => {
+        return colors2Object(numberFormat(val, format));
+    };
+
+    return (point: IPoint) => {
+        const formattedValue = customEscape(
+            formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label
+        );
+        const textData = [];
+
+        textData.unshift([customEscape(point.series.name), formattedValue]);
+
+        if (viewByAttribute) {
+            textData.unshift([
+                customEscape(viewByAttribute.formOf.name),
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name)
+            ]);
+        }
+        if (stackByAttribute) {
+            textData.unshift([
+                customEscape(stackByAttribute.formOf.name),
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name)
+            ]);
         }
 
         return `<table class="tt-values">${textData.map(line => (
@@ -442,14 +516,17 @@ export function getDrillableSeries(
                 : pointIndex % measureGroup.items.length;
             const measure = unwrap(measureGroup.items[measureIndex]);
 
+            const viewByIndex = isHeatMap(type) ? pointData.x : pointIndex;
+            const stackByIndex = isHeatMap(type) ? pointData.y : seriesIndex;
+
             const viewByItem = viewByAttribute ? {
-                ...unwrap(viewByAttribute.items[pointIndex]),
+                ...unwrap(viewByAttribute.items[viewByIndex]),
                 attribute: viewByAttribute
             } : null;
 
             // stackBy item index is always equal to seriesIndex
             const stackByItem = stackByAttribute ? {
-                ...unwrap(stackByAttribute.items[seriesIndex]),
+                ...unwrap(stackByAttribute.items[stackByIndex]),
                 attribute: stackByAttribute
             } : null;
 
@@ -492,7 +569,14 @@ export function getDrillableSeries(
     });
 }
 
-function getCategories(type: string, viewByAttribute: any, measureGroup: any) {
+function getCategories(type: string, measureGroup: any, viewByAttribute: any, stackByAttribute: any) {
+    if (isHeatMap(type)) {
+        return [
+            viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
+            stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
+        ];
+    }
+
     // Categories make up bar/slice labels in charts. These usually match view by attribute values.
     // Measure only pie or treemap charts get categories from measure names
     if (viewByAttribute) {
@@ -573,7 +657,7 @@ function getXAxes(config: IChartConfig, measureGroup: any, viewByAttribute: any)
     }];
 }
 
-function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
+function getYAxes(config: IChartConfig, measureGroup: any, stackByAttribute: any): IAxis[] {
     const { type, mdObject } = config;
 
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
@@ -618,6 +702,10 @@ function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
                 seriesIndices: range(measureGroupItems.length)
             }];
         }
+    } else if (isHeatMap(type)) {
+        yAxes = [{
+            label: stackByAttribute ? stackByAttribute.name : ''
+        }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
         const nonDualMeasureAxis = hasMoreThanOneMeasure ? {
@@ -694,8 +782,8 @@ export function getChartOptions(
         getColorPalette(config.colors, measureGroup, viewByAttribute, stackByAttribute, afm, type);
     const gridEnabled = get(config, 'grid.enabled', true);
     const stacking = getStackingConfig(stackByAttribute, config);
-    const yAxes = getYAxes(config, measureGroup);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
+    const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
     if (type === VisualizationTypes.SCATTER) {
         const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
@@ -792,7 +880,7 @@ export function getChartOptions(
 
     const series = assignYAxes(drillableSeries, yAxes);
 
-    let categories = getCategories(type, viewByAttribute, measureGroup);
+    let categories = getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order
     if (isPieOrDonutChart(type) || isFunnelChart(type)) {
@@ -837,6 +925,33 @@ export function getChartOptions(
                 series,
                 categories
             )
+        };
+    }
+
+    if (isHeatMap(type)) {
+        return {
+            type,
+            stacking: null as any,
+            legendLayout: 'horizontal',
+            title: {
+                x: (viewByAttribute ? viewByAttribute.name : ''),
+                y: (stackByAttribute ? stackByAttribute.name : ''),
+                format: unwrap(measureGroup.items[0]).format
+            },
+            xAxes,
+            yAxes,
+            showInPercent: false,
+            data: {
+                series,
+                categories
+            },
+            actions: {
+                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute)
+            },
+            grid: {
+                enabled: false
+            },
+            colorPalette: [] as any
         };
     }
 
