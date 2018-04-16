@@ -1091,18 +1091,6 @@ describe('chartOptionsBuilder', () => {
             expect(chartOptions.showInPercent).toBe(true); // true if format includes %
         });
 
-        it('should assign custom xLabel', () => {
-            expect(chartOptionsWithCustomOptions.title.x).toBe('xLabel');
-        });
-
-        it('should assign custom yLabel', () => {
-            expect(chartOptionsWithCustomOptions.title.y).toBe('yLabel');
-        });
-
-        it('should assign custom yFormat', () => {
-            expect(chartOptionsWithCustomOptions.title.yFormat).toBe('yFormat');
-        });
-
         it('should assign custom legend format', () => {
             expect(chartOptionsWithCustomOptions.legendLayout).toBe('vertical');
         });
@@ -1125,19 +1113,6 @@ describe('chartOptionsBuilder', () => {
 
             it('should assign stacking option to null', () => {
                 expect(chartOptions.stacking).toBe(null);
-            });
-
-            it('should assign X axis name by default to view by attribute name instead of attribute display form name',
-                () => {
-                expect(chartOptions.title.x).toEqual('Year created');
-            });
-
-            it('should assign Y axis name to empty string in case of multiple measures', () => {
-                expect(chartOptions.title.y).toBe('');
-            });
-
-            it('should assign Y axis format based on the first measure`s format', () => {
-                expect(chartOptions.title.yFormat).toEqual('#,##0.00');
             });
 
             it('should assign number of series equal to number of measures', () => {
@@ -1177,18 +1152,6 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.stacking).toBe('normal');
             });
 
-            it('should assign X axis name to view by attribute name', () => {
-                expect(chartOptions.title.x).toEqual('Department');
-            });
-
-            it('should assign Y axis name to measure name', () => {
-                expect(chartOptions.title.y).toBe('Amount');
-            });
-
-            it('should assign Y axis format based on the first measure`s format', () => {
-                expect(chartOptions.title.yFormat).toEqual('#,##0.00');
-            });
-
             it('should assign number of series equal to number of stack by attribute values', () => {
                 expect(chartOptions.data.series.length).toBe(2);
             });
@@ -1220,18 +1183,6 @@ describe('chartOptionsBuilder', () => {
 
             it('should assign stacking normal', () => {
                 expect(chartOptions.stacking).toBe(null);
-            });
-
-            it('should assign X axis name to view by attribute name', () => {
-                expect(chartOptions.title.x).toEqual('Department');
-            });
-
-            it('should assign Y axis name to measure name', () => {
-                expect(chartOptions.title.y).toBe('Amount');
-            });
-
-            it('should assign Y axis format based on the first measure`s format', () => {
-                expect(chartOptions.title.yFormat).toEqual('#,##0.00');
             });
 
             it('should always assign 1 series', () => {
@@ -1267,18 +1218,6 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.stacking).toBe(null);
             });
 
-            it('should assign X an empty string', () => {
-                expect(chartOptions.title.x).toEqual('');
-            });
-
-            it('should assign Y an empty string', () => {
-                expect(chartOptions.title.y).toBe('');
-            });
-
-            it('should assign Y axis format based on the first measure`s format', () => {
-                expect(chartOptions.title.yFormat).toEqual('#,##0.00');
-            });
-
             it('should always assign 1 series', () => {
                 expect(chartOptions.data.series.length).toBe(1);
             });
@@ -1309,18 +1248,6 @@ describe('chartOptionsBuilder', () => {
 
             it('should assign stacking normal', () => {
                 expect(chartOptions.stacking).toBe(null);
-            });
-
-            it('should assign X an view by attribute name instead of attribute display form name', () => {
-                expect(chartOptions.title.x).toEqual('Year created');
-            });
-
-            it('should assign Y an empty string', () => {
-                expect(chartOptions.title.y).toBe('');
-            });
-
-            it('should assign Y axis format based on the first measure`s format', () => {
-                expect(chartOptions.title.yFormat).toEqual('$#,##0.00');
             });
 
             it('should always assign number of series equal to number of measures', () => {
@@ -1397,7 +1324,7 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('generate y axes', () => {
+        describe('generate Y axes', () => {
             it('should generate one axis with no label when there are more measures and in bar chart', () => {
                 const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
                 const expectedAxes = [{
@@ -1440,6 +1367,51 @@ describe('chartOptionsBuilder', () => {
                 }];
 
                 expect(chartOptions.yAxes).toEqual(expectedAxes);
+            });
+        });
+
+        describe('generate X axes', () => {
+            it('should generate one axis with attribute label', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+                const expectedAxes = [{
+                    label: 'Year created'
+                }];
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate one axis with no label if primary measures are empty for scatter plot', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                    type: 'scatter',
+                    mdObject: {
+                        buckets: [
+                            { localIdentifier: 'measures', items: [] },
+                            { localIdentifier: 'secondary_measures', items: [{}] }
+                        ]
+                    }
+                });
+                const expectedAxes = [{
+                    label: ''
+                }];
+
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate one axis with label from primary measures for scatter plot', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                    type: 'scatter',
+                    mdObject: {
+                        buckets: [
+                            { localIdentifier: 'measures', items: [{}] },
+                            { localIdentifier: 'secondary_measures', items: [] }
+                        ]
+                    }
+                });
+                const expectedAxes = [{
+                    label: '<button>Lost</button> ...',
+                    format: '#,##0.00'
+                }];
+
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
             });
         });
     });

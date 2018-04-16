@@ -32,9 +32,9 @@ const AREA_TEMPLATE: any = {
             dataLabels: {}
         }
     },
-    xAxis: {
+    xAxis: [{
         categories: []
-    },
+    }],
     yAxis: [{
         stackLabels: {
             enabled: false

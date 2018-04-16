@@ -22,7 +22,8 @@ import {
     isAreaChart,
     isBarChart,
     isDualChart,
-    isColumnChart
+    isColumnChart,
+    isScatterPlot
 } from '../../utils/common';
 
 const {
@@ -45,8 +46,14 @@ const TOOLTIP_VERTICAL_OFFSET = 14;
 const escapeAngleBrackets = (str: any) => str && str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function getTitleConfiguration(chartOptions: any) {
-    const { yAxes = [] }: { yAxes: IAxis[] } = chartOptions;
+    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
     const yAxis = yAxes.map((axis: IAxis) => (axis ? {
+        title: {
+            text: escapeAngleBrackets(get(axis, 'label', ''))
+        }
+    } : {}));
+
+    const xAxis = xAxes.map((axis: IAxis) => (axis ? {
         title: {
             text: escapeAngleBrackets(get(axis, 'label', ''))
         }
@@ -54,11 +61,7 @@ function getTitleConfiguration(chartOptions: any) {
 
     return {
         yAxis,
-        xAxis: {
-            title: {
-                text: escapeAngleBrackets(get(chartOptions, 'title.x', ''))
-            }
-        }
+        xAxis
     };
 }
 
@@ -180,7 +183,8 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         return false;
     }
 
-    const dataPointEnd = (isLineChart(chartType) || isAreaChart(chartType) || isDualChart(chartType))
+    const dataPointEnd = (isLineChart(chartType)
+        || isAreaChart(chartType) || isDualChart(chartType) || isScatterPlot(chartType))
         ? this.point.plotX
         : getDataPointEnd(
             chartType,
@@ -190,7 +194,8 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
             stacking
         );
 
-    const ignorePointHeight = isLineChart(chartType) || isAreaChart(chartType) || isDualChart(chartType);
+    const ignorePointHeight = isLineChart(chartType)
+        || isAreaChart(chartType) || isDualChart(chartType) || isScatterPlot(chartType);
     const dataPointHeight = ignorePointHeight ? 0 : this.point.shapeArgs.height;
 
     const arrowPosition = getArrowHorizontalPosition(
@@ -366,15 +371,23 @@ function getDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = getSeries(data.series, chartOptions.colorPalette);
     const categories = map(data.categories, escapeAngleBrackets);
+    const { type } = chartOptions;
+
+    switch (type) {
+        case VisualizationTypes.SCATTER:
+            return {
+                series
+            };
+    }
 
     return {
         series,
-        xAxis: {
+        xAxis: [{
             labels: {
                 enabled: !isEmpty(compact(categories))
             },
             categories
-        }
+        }]
     };
 }
 
@@ -387,6 +400,7 @@ function getHoverStyles(chartOptions: any, config: any) {
 
         case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE:
+        case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
@@ -413,7 +427,6 @@ function getHoverStyles(chartOptions: any, config: any) {
                 return series;
             };
             break;
-
         case VisualizationTypes.PIE:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
@@ -483,6 +496,39 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite
+            };
+        }),
+        xAxis: get(chartOptions, 'xAxes', []).map((axis: any) => {
+            if (!axis) {
+                return {
+                    visible: false
+                };
+            }
+
+            return {
+                lineColor: '#d5d5d5',
+
+                // hide ticks on x axis
+                minorTickLength: 0,
+                tickLength: 0,
+
+                // padding of maximum value
+                maxPadding: 0.05,
+
+                labels: {
+                    style: {
+                        color: styleVariables.gdColorStateBlank,
+                        font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
+                    },
+                    autoRotation: [-90]
+                },
+                title: {
+                    margin: 10,
+                    style: {
+                        color: styleVariables.gdColorLink,
+                        font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
+                    }
+                }
             };
         })
     };

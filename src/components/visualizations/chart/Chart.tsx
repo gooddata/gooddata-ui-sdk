@@ -33,6 +33,8 @@ export interface IChartConfig {
     mdObject?: any;
     yFormat?: string;
     yLabel?: string;
+    xLabel?: string;
+    xFormat?: string;
 }
 
 export interface IChartProps {

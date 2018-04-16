@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import pick = require('lodash/pick');
+import set = require('lodash/set');
 import { RIGHT } from './PositionTypes';
-import { isAreaChart, isPieChart } from '../../utils/common';
+import { isAreaChart, isPieChart, isScatterPlot } from '../../utils/common';
 
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
@@ -19,22 +20,31 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     const isPieChartWithMoreThanOneCategory =
         (isPieChart(type) && chartOptions.data.series[0].data.length > 1);
 
-    return hasMoreThanOneSeries || isPieChartWithMoreThanOneCategory || isStacked;
+    const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
+
+    return hasMoreThanOneSeries || isPieChartWithMoreThanOneCategory || isStacked || isScatterPlotWithAttribute;
 }
 
 export function getLegendItems(chartOptions: any) {
-    const legendDataSource = isPieChart(chartOptions.type)
+    const { type } = chartOptions;
+    const legendDataSource = (isPieChart(type))
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
+
     return legendDataSource.map((legendDataSourceItem: any) =>
         pick(legendDataSourceItem, ['name', 'color', 'legendIndex']));
 }
 
 export default function getLegend(legendConfig: any = {}, chartOptions: any) {
+    if (isScatterPlot(chartOptions.type)) { // TODO: refactor
+        set(legendConfig, 'position', 'right');
+    }
+
     const baseConfig = {
         ...DEFAULT_LEGEND_CONFIG,
         ...legendConfig
     };
+
     return {
         ...baseConfig,
         enabled: baseConfig.enabled && shouldLegendBeEnabled(chartOptions),

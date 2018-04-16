@@ -151,6 +151,31 @@ function getHeadlinesDimensions(): AFM.IDimension[] {
     ];
 }
 
+function getScatterDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const attribute: VisualizationObject.IBucket = mdObject.buckets
+            .find(bucket => bucket.localIdentifier === ATTRIBUTE);
+
+    if (attribute && attribute.items.length) {
+        return [
+            {
+                itemIdentifiers: attribute.items.map(getLocalIdentifierFromAttribute)
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: []
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP]
+        }
+    ];
+}
+
 /**
  * generateDimensions
  * is a function that generates dimensions based on buckets and visualization objects.
@@ -182,6 +207,9 @@ export function generateDimensions(
         }
         case VisualizationTypes.HEADLINE: {
             return getHeadlinesDimensions();
+        }
+        case VisualizationTypes.SCATTER: {
+            return getScatterDimensions(mdObject);
         }
     }
     return [];

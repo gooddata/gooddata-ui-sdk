@@ -6,6 +6,7 @@ import { isEmptyResult } from './helpers/errorHandlers';
 import { BaseChart as CoreBaseChart, IBaseChartProps } from './components/core/base/BaseChart';
 import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
+import { ScatterPlot as CoreScatterPlot } from './components/core/ScatterPlot';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { ErrorComponent } from './components/simple/ErrorComponent';
 import { LoadingComponent } from './components/simple/LoadingComponent';
@@ -32,6 +33,7 @@ import { AreaChart } from './components/AreaChart';
 import { PieChart } from './components/PieChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
+import { ScatterPlot } from './components/ScatterPlot';
 import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
@@ -44,7 +46,8 @@ import { RuntimeError } from './errors/RuntimeError';
 const CoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
-    Table: CoreTable
+    Table: CoreTable,
+    ScatterPlot: CoreScatterPlot
 };
 
 export {
@@ -56,6 +59,7 @@ export {
     CatalogHelper,
     ChartType,
     ColumnChart,
+    ScatterPlot,
     CoreComponents,
     ErrorCodes,
     ErrorStates,

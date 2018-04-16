@@ -21,7 +21,8 @@ import {
     isDualChart,
     isPieChart,
     isChartSupported,
-    stringifyChartTypes
+    stringifyChartTypes,
+    isScatterPlot
 } from '../utils/common';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
@@ -30,6 +31,7 @@ import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
+import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
@@ -46,11 +48,14 @@ export function unwrap(wrappedObject: any) {
 }
 
 export interface ISeriesDataItem {
+    x?: number;
     y: number;
+    name?: string;
 }
 
 export interface ISeriesItem {
     data?: ISeriesDataItem[];
+    color?: string;
     name: string;
 }
 
@@ -113,8 +118,9 @@ export function getColorPalette(
     type: string
 ): string[] {
     const isAttributePieChart = isPieChart(type) && afm.attributes && afm.attributes.length > 0;
+    const isAttributeScatterPlot = isScatterPlot(type) && afm.attributes && afm.attributes.length > 0;
 
-    if (stackByAttribute || isAttributePieChart) {
+    if (stackByAttribute || isAttributePieChart || isAttributeScatterPlot) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
         return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
     }
@@ -155,6 +161,7 @@ export interface IPointData {
 }
 
 export interface IPoint {
+    x?: number;
     y: number;
     series: ISeriesItem;
     category: string;
@@ -214,12 +221,13 @@ export function getSeriesItemData(
     });
 }
 
-interface ISeriesItemConfig {
+export interface ISeriesItemConfig {
     color: string;
     legendIndex: number;
     data?: any;
     name?: string;
     yAxis?: number;
+    xAxis?: number;
 }
 
 export function getSeries(
@@ -240,6 +248,7 @@ export function getSeries(
             type,
             colorPalette
         );
+
         const seriesItemConfig: ISeriesItemConfig = {
             color: colorPalette[seriesIndex],
             legendIndex: seriesIndex,
@@ -286,6 +295,37 @@ export function generateTooltipFn(viewByAttribute: any, type: string) {
         } else if (isPieChart(type)) {
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
             textData[0][0] = customEscape(point.name);
+        }
+
+        return `<table class="tt-values">${textData.map(line => (
+            `<tr>
+                <td class="title">${line[0]}</td>
+                <td class="value">${line[1]}</td>
+            </tr>`
+        )).join('\n')}</table>`;
+    };
+}
+
+export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
+    const formatValue = (val: number, format: string) => {
+        return colors2Object(numberFormat(val, format));
+    };
+
+    return (point: IPoint) => {
+        const textData = [];
+
+        if (stackByAttribute) {
+            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(point.series.name)]);
+        }
+
+        if (measures[0]) {
+            textData.push([customEscape(measures[0].measureHeaderItem.name),
+            customEscape(formatValue(point.x, measures[0].measureHeaderItem.format).label)]);
+        }
+
+        if (measures[1]) {
+            textData.push([customEscape(measures[1].measureHeaderItem.name),
+            customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label)]);
         }
 
         return `<table class="tt-values">${textData.map(line => (
@@ -482,23 +522,56 @@ function isPrimaryMeasuresBucketEmpty(mdObject: VisualizationObject.IVisualizati
     return isEmpty(primaryMeasuresBucketItems);
 }
 
-function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
-    const { type, mdObject } = config;
-    const measureGroupItems = measureGroup.items.map((item: VisualizationObject.IMeasure, index: number) => {
+function preprocessMeasureGroupItems(measureGroup: any, defaultValues: any): any[] {
+    return measureGroup.items.map((item: VisualizationObject.IMeasure, index: number) => {
         const unwrapped = unwrap(item);
         return index ? {
             label: unwrapped.name,
             format: unwrapped.format
         } : {
-            label: config.yLabel || unwrapped.name,
-            format: config.yFormat || unwrapped.format
+            label: defaultValues.label || unwrapped.name,
+            format: defaultValues.format || unwrapped.format
         };
     });
+}
+
+function getXAxes(config: IChartConfig, measureGroup: any, viewByAttribute: any): IAxis[] {
+    const { type, mdObject } = config;
+    const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
+        { label: config.xLabel, format: config.xFormat });
+
+    const firstMeasureGroupItem = measureGroupItems[0];
+    if (isScatterPlot(type)) {
+        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
+        if (noPrimaryMeasures) {
+            return [{
+                label: ''
+            }];
+        } else {
+            return [{
+                ...firstMeasureGroupItem
+            }];
+        }
+    }
+
+    const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : '');
+    return [{
+        label: xLabel
+    }];
+}
+
+function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
+    const { type, mdObject } = config;
+
+    const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
+        { label: config.yLabel, format: config.yFormat });
+
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
 
     let yAxes: IAxis[] = [];
+
     if (isDualChart(type)) {
         const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
         if (firstMeasureGroupItem && noPrimaryMeasures) {
@@ -518,6 +591,19 @@ function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
                 seriesIndices: range(1, measureGroupItems.length)
             } : null;
             yAxes = compact([firstAxis, secondAxis]);
+        }
+    } else if (isScatterPlot(type)) {
+        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
+        if (noPrimaryMeasures) {
+            yAxes = [{
+                ...firstMeasureGroupItem,
+                seriesIndices: range(measureGroupItems.length)
+            }];
+        } else {
+            yAxes = [{
+                ...secondMeasureGroupItem,
+                seriesIndices: range(measureGroupItems.length)
+            }];
         }
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -578,7 +664,7 @@ export function getChartOptions(
     invariant(config && isChartSupported(config.type),
         `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`);
 
-    const { type } = config;
+    const { type, mdObject } = config;
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const viewByAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],
@@ -593,6 +679,84 @@ export function getChartOptions(
 
     const colorPalette =
         getColorPalette(config.colors, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+    const gridEnabled = get(config, 'grid.enabled', true);
+    const stacking = getStackingConfig(stackByAttribute, config);
+    const yAxes = getYAxes(config, measureGroup);
+    const xAxes = getXAxes(config, measureGroup, viewByAttribute);
+
+    if (type === VisualizationTypes.SCATTER) {
+        const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
+            .find(bucket => bucket.localIdentifier === 'measures');
+        const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
+            .find(bucket => bucket.localIdentifier === 'secondary_measures');
+
+        const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
+        const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+
+        const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
+            const values = seriesItem.map((value: string) => {
+                return parseValue(value);
+            });
+
+            return {
+                x: !primaryMeasuresBucketEmpty ? values[0] : 0,
+                y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
+                name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : ''
+            };
+        });
+
+        const measures = [
+            measureGroup.items[0] ? measureGroup.items[0] : null,
+            measureGroup.items[1] ? measureGroup.items[1] : null
+        ];
+
+        const seriesWithoutDrillability: ISeriesItemConfig[] =
+            data.map((dataItem: ISeriesDataItem, dataIndex: number) => {
+            return {
+                name: dataItem.name,
+                color: colorPalette[dataIndex],
+                legendIndex: dataIndex,
+                data: [{
+                    x: dataItem.x,
+                    y: dataItem.y
+                }]
+            };
+        });
+
+        const series = getDrillableSeries(
+            seriesWithoutDrillability,
+            drillableItems,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            type,
+            afm
+        );
+
+        const categories = [''];
+
+        const options = {
+            type,
+            stacking,
+            legendLayout: 'horizontal',
+            colorPalette,
+            yAxes,
+            xAxes,
+            showInPercent: false,
+            data: {
+                series,
+                categories
+            },
+            actions: {
+                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+            },
+            grid: {
+                enabled: gridEnabled
+            }
+        };
+
+        return options;
+    }
 
     const seriesWithoutDrillability = getSeries(
         executionResultData,
@@ -613,11 +777,9 @@ export function getChartOptions(
         afm
     );
 
-    const yAxes = getYAxes(config, measureGroup);
     const series = assignYAxes(drillableSeries, yAxes);
 
     let categories = getCategories(type, viewByAttribute, measureGroup);
-    const stacking = getStackingConfig(stackByAttribute, config);
 
     // Pie charts dataPoints are sorted by default by value in descending order
     if (isPieChart(type)) {
@@ -641,25 +803,13 @@ export function getChartOptions(
         series[0].data = sortedDataPoints;
     }
 
-    // Attribute axis labels come from attribute instead of attribute display form.
-    // They are listed in attribute headers. So we need to find one attribute header and read the attribute name
-    const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : '');
-    // if there is only one measure, yLabel is name of this measure, otherwise an empty string
-    const yLabel = config.yLabel || (measureGroup.items.length === 1 ? unwrap(measureGroup.items[0]).name : '');
-    const yFormat = config.yFormat || unwrap(measureGroup.items[0]).format;
-    const gridEnabled = get(config, 'grid.enabled', true);
-
     return {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
         legendLayout: config.legendLayout || 'horizontal',
         colorPalette,
-        title: {
-            x: xLabel,
-            y: yLabel,
-            yFormat
-        },
+        xAxes,
         yAxes,
         showInPercent: measureGroup.items.some((wrappedMeasure: VisualizationObject.IMeasure) => {
             const measure = wrappedMeasure[Object.keys(wrappedMeasure)[0]];

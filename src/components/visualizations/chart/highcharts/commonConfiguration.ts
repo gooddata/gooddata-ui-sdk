@@ -29,31 +29,6 @@ const BASE_TEMPLATE: any = {
     legend: {
         enabled: false
     },
-    xAxis: {
-        lineColor: '#d5d5d5',
-
-        // hide ticks on x axis
-        minorTickLength: 0,
-        tickLength: 0,
-
-        // padding of maximum value
-        maxPadding: 0.05,
-
-        labels: {
-            style: {
-                color: styleVariables.gdColorStateBlank,
-                font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
-            },
-            autoRotation: [-90]
-        },
-        title: {
-            margin: 10,
-            style: {
-                color: styleVariables.gdColorLink,
-                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        }
-    },
     drilldown: {
         activeDataLabelStyle: {
             textDecoration: 'none'

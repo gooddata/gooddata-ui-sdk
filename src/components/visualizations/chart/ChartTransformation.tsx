@@ -90,6 +90,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         } = this.props;
         const drillConfig = { afm, onFiredDrillEvent };
         const hcOptions = getHighchartsOptions(chartOptions, drillConfig);
+
         return {
             chartOptions,
             hcOptions,

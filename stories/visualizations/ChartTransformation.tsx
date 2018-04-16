@@ -155,6 +155,33 @@ class DynamicChart extends React.Component<any, any> {
 }
 
 storiesOf('Internal/HighCharts/ChartTransformation', module)
+    .add('Scatterplot with two measures and one attribute', () => {
+        const dataSet = {
+            ...fixtures.scatterPlotWith2MetricsAndAttribute
+        };
+        const dataLarge = () => { throw new Error('Data too large'); };
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[]}
+                    config={{
+                        type: 'scatter',
+                        legend: {
+                            enabled: true,
+                            position: 'right'
+                        },
+                        legendLayout: 'horizontal',
+                        colors: fixtures.customPalette,
+                        mdObject: fixtures.scatterPlotWith2MetricsAndAttributeMdObject.mdObject
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={dataLarge}
+                    onNegativeValues={null}
+                />
+            )
+        );
+    })
     .add('Column chart with one measure and no attributes', () => {
         const dataSet = {
             ...fixtures.barChartWithSingleMeasureAndNoAttributes
