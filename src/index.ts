@@ -32,6 +32,7 @@ import { LineChart } from './components/LineChart';
 import { AreaChart } from './components/AreaChart';
 import { PieChart } from './components/PieChart';
 import { Treemap } from './components/Treemap';
+import { DonutChart } from './components/DonutChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
@@ -84,6 +85,7 @@ export {
     AreaChart,
     PieChart,
     Treemap,
+    DonutChart,
     PoPHelper,
     PropTypes,
     RuntimeError,

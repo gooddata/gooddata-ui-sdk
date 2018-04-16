@@ -8,6 +8,7 @@ import LineChartExample from '../components/LineChartExample';
 import AreaChartExample from '../components/AreaChartExample';
 import StackedAreaChartExample from '../components/StackedAreaChartExample';
 import PieChartExample from '../components/PieChartExample';
+import DonutChartExample from '../components/DonutChartExample';
 import TableExample from '../components/TableExample';
 
 import BarChartExampleSRC from '!raw-loader!../components/BarChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -16,6 +17,7 @@ import LineChartExampleSRC from '!raw-loader!../components/LineChartExample'; //
 import AreaChartExampleSRC from '!raw-loader!../components/AreaChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import StackedAreaChartExampleSRC from '!raw-loader!../components/StackedAreaChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import PieChartExampleSRC from '!raw-loader!../components/PieChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import DonutChartExampleSRC from '!raw-loader!../components/DonutChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const title = 'Basic Components';
@@ -51,6 +53,9 @@ export const BasicComponents = () => (
 
         <h2 id="pie-chart">Pie chart</h2>
         <ExampleWithSource for={PieChartExample} source={PieChartExampleSRC} />
+
+        <h2 id="pie-chart">Donut chart</h2>
+        <ExampleWithSource for={DonutChartExample} source={DonutChartExampleSRC} />
 
         <hr className="separator" />
 

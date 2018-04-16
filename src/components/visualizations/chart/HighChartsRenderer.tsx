@@ -9,9 +9,9 @@ import partial = require('lodash/partial');
 import * as cx from 'classnames';
 import Chart from './Chart';
 import Legend from './legend/Legend';
-import { isPieChart, isTreemap } from '../utils/common';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
-import { isPieOrDonutChart } from '../utils/common';
+import { isPieOrDonutChart, isTreemap } from '../utils/common';
+import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 export interface IHighChartsRendererProps {
     chartOptions: any;

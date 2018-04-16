@@ -642,6 +642,87 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
+   .add('Donut chart view viewBy attribute', () => {
+        const dataSet = fixtures.barChartWithViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'donut',
+                        legend: {
+                            enabled: true,
+                            position: 'left'
+                        },
+                        legendLayout: 'horizontal',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Donut chart with measures only', () => {
+        const dataSet = fixtures.pieChartWithMetricsOnly;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResponse.dimensions[VIEW_BY_DIMENSION_INDEX]
+                                .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'donut',
+                        legend: {
+                            enabled: true,
+                            position: 'left'
+                        },
+                        legendLayout: 'horizontal',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Donut chart view viewBy attribute with empty value', () => {
+        const dataSet: any = immutableSet(fixtures.barChartWithViewByAttribute, 'executionResult.data[0][0]', null);
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'donut',
+                        legend: {
+                            enabled: true,
+                            position: 'left'
+                        },
+                        legendLayout: 'horizontal',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
     .add('Legend positions', () => {
         return screenshotWrap(
             <div>

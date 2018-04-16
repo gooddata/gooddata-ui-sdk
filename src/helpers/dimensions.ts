@@ -194,6 +194,7 @@ export function generateDimensions(
             return getTableDimensions(mdObject.buckets);
         }
         case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP: {
             return getPieOrTreemapDimensions(mdObject);
         }

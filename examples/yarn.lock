@@ -168,9 +168,9 @@
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/react-components@5.0.0-alpha20":
-  version "5.0.0-alpha20"
-  resolved "https://registry.yarnpkg.com/@gooddata/react-components/-/react-components-5.0.0-alpha20.tgz#fd25f2bd18a53fb6b7468b41190f069bd6971e79"
+"@gooddata/react-components@5.0.0-naibinh-SD-17-2018-04-16T10-50-05-167Z":
+  version "5.0.0-naibinh-SD-17-2018-04-16T10-50-05-167Z"
+  resolved "https://registry.yarnpkg.com/@gooddata/react-components/-/react-components-5.0.0-naibinh-SD-17-2018-04-16T10-50-05-167Z.tgz#211a5af7bbc33bdcf0b965632ab7c0383befa118"
   dependencies:
     "@gooddata/gooddata-js" "6.0.0-alpha7"
     "@gooddata/goodstrap" "55.0.0-alpha6"

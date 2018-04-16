@@ -62,7 +62,7 @@
   "dependencies": {
     "@gooddata/gooddata-js": "6.0.0-alpha7",
     "@gooddata/goodstrap": "55.0.0-alpha5",
-    "@gooddata/react-components": "5.0.0-alpha20",
+    "@gooddata/react-components": "5.0.0-naibinh-SD-17-2018-04-16T10-50-05-167Z",
     "isomorphic-fetch": "^2.2.1",
     "moment": "2.20.1",
     "prop-types": "15.6.0",
