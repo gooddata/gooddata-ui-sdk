@@ -60,9 +60,9 @@
     "webpack-dev-server": "2.11.1"
   },
   "dependencies": {
+    "@gooddata/gooddata-js": "6.0.0-alpha7",
     "@gooddata/goodstrap": "55.0.0-alpha5",
-    "@gooddata/react-components": "5.0.0-alpha13",
-    "gooddata": "6.0.0-alpha7",
+    "@gooddata/react-components": "5.0.0-alpha20",
     "isomorphic-fetch": "^2.2.1",
     "moment": "2.20.1",
     "prop-types": "15.6.0",
