@@ -3,6 +3,13 @@ GoodData javascript sdk library mainly provides a thin javascript abstraction
 over the GoodData REST API. It is created to makes it easy to use the GD platform
 and write small javascript apps relying on GD APIs.
 
+### WARNING: This package is deprecated
+It has been renamed from `gooddata` to `@gooddata/gooddata-js` in April 2018. \
+See https://www.npmjs.com/package/@gooddata/gooddata-js
+
+
+----------------
+
 ## Usage
 
 The result of the build is in `dist/gooddata[.min].js`.
