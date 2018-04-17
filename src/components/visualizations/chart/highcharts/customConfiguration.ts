@@ -23,7 +23,8 @@ import {
     isBarChart,
     isDualChart,
     isColumnChart,
-    isScatterPlot
+    isScatterPlot,
+    isTreemap
 } from '../../utils/common';
 
 const {
@@ -185,6 +186,7 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
 
     const dataPointEnd = (isLineChart(chartType) ||
         isAreaChart(chartType) ||
+        isTreemap(chartType) ||
         isDualChart(chartType) ||
         isScatterPlot(chartType) ||
         (!this.point.tooltipPos)
@@ -202,6 +204,7 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         isAreaChart(chartType) ||
         isDualChart(chartType) ||
         isScatterPlot(chartType) ||
+        isTreemap(chartType) ||
         (!this.point.shapeArgs);
 
     const dataPointHeight = ignorePointHeight ? 0 : this.point.shapeArgs.height;
@@ -456,6 +459,7 @@ function getHoverStyles(chartOptions: any, config: any) {
             break;
 
         case VisualizationTypes.PIE:
+        case VisualizationTypes.TREEMAP:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
 

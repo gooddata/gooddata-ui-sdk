@@ -33,7 +33,7 @@ const chartOptions = {
     }
 };
 
-const pieChartOptions = {
+const pieChartOrTreemapOptions = {
     type: VisualizationTypes.PIE,
     colorPalette: [
         'rgb(20,178,226)',
@@ -157,7 +157,17 @@ describe('highChartCreators', () => {
     });
 
     describe('Pie chart configuration', () => {
-        const config = getHighchartsOptions(pieChartOptions, {});
+        const config = getHighchartsOptions(pieChartOrTreemapOptions, {});
+
+        it('contains styles for drillable and non-drillable', () => {
+            expect(config).toHaveProperty('series.0.data.0.states.hover.brightness');
+            expect(config).toHaveProperty('series.0.data.0.halo.size', 0);
+            expect(config).not.toHaveProperty('series.0.data.1.halo.size');
+        });
+    });
+
+    describe('Treemap configuration', () => {
+        const config = getHighchartsOptions(pieChartOrTreemapOptions, {});
 
         it('contains styles for drillable and non-drillable', () => {
             expect(config).toHaveProperty('series.0.data.0.states.hover.brightness');

@@ -52,7 +52,7 @@ function getLocalIdentifierFromAttribute(attribute: VisualizationObject.IVisuali
     return attribute.visualizationAttribute.localIdentifier;
 }
 
-function getPieDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+function getPieOrTreemapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
     const view = mdObject.buckets.find(bucket => bucket.localIdentifier === VIEW);
 
     if (view && view.items.length) {
@@ -193,8 +193,9 @@ export function generateDimensions(
         case VisualizationTypes.TABLE: {
             return getTableDimensions(mdObject.buckets);
         }
-        case VisualizationTypes.PIE: {
-            return getPieDimensions(mdObject);
+        case VisualizationTypes.PIE:
+        case VisualizationTypes.TREEMAP: {
+            return getPieOrTreemapDimensions(mdObject);
         }
         case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE: {

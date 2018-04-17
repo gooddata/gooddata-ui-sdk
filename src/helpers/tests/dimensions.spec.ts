@@ -318,6 +318,55 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
+    describe('treemap', () => {
+        it('should generate dimensions for one measure', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: []
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ];
+
+            expect(generateDimensions(getVisualization('onemeasure'), VisualizationTypes.TREEMAP))
+                .toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for one measure and view attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['measureGroup']
+                },
+                {
+                    itemIdentifiers: ['a1']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, 'view');
+
+            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.TREEMAP))
+                .toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for two measures', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: []
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWith2Measures = addMeasure(visualization, 2);
+
+            expect(generateDimensions(visualizationWith2Measures, VisualizationTypes.TREEMAP))
+                .toEqual(expectedDimensions);
+        });
+    });
     describe('table', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [

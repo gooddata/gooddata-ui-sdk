@@ -95,7 +95,7 @@ describe('chartOptionsBuilder', () => {
     const barChartWith3MetricsAndViewByAttributeOptions =
         generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
 
-    const pieChartOptionsWithNegativeValue = generateChartOptions({
+    const pieAndDreemapDataSet = {
         ...fixtures.pieChartWithMetricsOnly,
         executionResult: {
             ...fixtures.pieChartWithMetricsOnly.executionResult,
@@ -107,9 +107,11 @@ describe('chartOptionsBuilder', () => {
                 ]
             ]
         }
-    }, {
-        type: 'pie'
-    });
+    };
+
+    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'pie' });
+
+    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'treemap' });
 
     const pieChartWithMetricsOnlyOptions: any = generateChartOptions({
         ...fixtures.pieChartWithMetricsOnly
@@ -226,6 +228,14 @@ describe('chartOptionsBuilder', () => {
                 hasNegativeValue: true
             });
         });
+        it('should validate with "hasNegativeValue: true" for treemap if its series contains a negative value',
+            () => {
+                const validationResult = validateData({}, treemapOptionsWithNegativeValue);
+                expect(validationResult).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: true
+                });
+            });
     });
 
     describe('isPopMeasure', () => {
@@ -453,7 +463,7 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('in usecase of pie chart with metrics only', () => {
+        describe('in usecase of pie chart and treemap with metrics only', () => {
             const parameters = getSeriesItemDataParameters(fixtures.pieChartWithMetricsOnly, 0);
             const seriesItem = parameters[0];
             const seriesIndex = parameters[1];
@@ -461,7 +471,7 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
-            const seriesItemData = getSeriesItemData(
+            const pieSeriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
                 measureGroup,
@@ -471,9 +481,27 @@ describe('chartOptionsBuilder', () => {
                 DEFAULT_COLOR_PALETTE
             );
 
+            const treemapSeriesItemData = getSeriesItemData(
+                seriesItem,
+                seriesIndex,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                'treemap',
+                DEFAULT_COLOR_PALETTE
+            );
+
             it('should fill correct pointData name', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.name)
+                    pieSeriesItemData.map(pointData => pointData.name)
+                ).toEqual([
+                    'Lost',
+                    'Won',
+                    'Expected'
+                ]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.name)
                 ).toEqual([
                     'Lost',
                     'Won',
@@ -483,7 +511,15 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct pointData color', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.color)
+                    pieSeriesItemData.map(pointData => pointData.color)
+                ).toEqual([
+                    DEFAULT_COLOR_PALETTE[0],
+                    DEFAULT_COLOR_PALETTE[1],
+                    DEFAULT_COLOR_PALETTE[2]
+                ]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
                     DEFAULT_COLOR_PALETTE[0],
                     DEFAULT_COLOR_PALETTE[1],
@@ -493,13 +529,21 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct pointData legendIndex', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.legendIndex)
+                    pieSeriesItemData.map(pointData => pointData.legendIndex)
+                ).toEqual([0, 1, 2]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.legendIndex)
                 ).toEqual([0, 1, 2]);
             });
 
             it('should fill correct pointData format', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.format)
+                    pieSeriesItemData.map(pointData => pointData.format)
+                ).toEqual(['#,##0.00', '#,##0.00', '#,##0.00']);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.format)
                 ).toEqual(['#,##0.00', '#,##0.00', '#,##0.00']);
             });
         });
@@ -512,7 +556,7 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
-            const seriesItemData = getSeriesItemData(
+            const pieSeriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
                 measureGroup,
@@ -522,9 +566,26 @@ describe('chartOptionsBuilder', () => {
                 DEFAULT_COLOR_PALETTE
             );
 
+            const treemapSeriesItemData = getSeriesItemData(
+                seriesItem,
+                seriesIndex,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                'treemap',
+                DEFAULT_COLOR_PALETTE
+            );
+
             it('should fill correct pointData name', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.name)
+                    pieSeriesItemData.map(pointData => pointData.name)
+                ).toEqual([
+                    'Direct Sales',
+                    'Inside Sales'
+                ]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.name)
                 ).toEqual([
                     'Direct Sales',
                     'Inside Sales'
@@ -533,7 +594,14 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct pointData color', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.color)
+                    pieSeriesItemData.map(pointData => pointData.color)
+                ).toEqual([
+                    DEFAULT_COLOR_PALETTE[0],
+                    DEFAULT_COLOR_PALETTE[1]
+                ]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
                     DEFAULT_COLOR_PALETTE[0],
                     DEFAULT_COLOR_PALETTE[1]
@@ -542,13 +610,21 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct pointData legendIndex', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.legendIndex)
+                    pieSeriesItemData.map(pointData => pointData.legendIndex)
+                ).toEqual([0, 1]);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.legendIndex)
                 ).toEqual([0, 1]);
             });
 
             it('should fill correct pointData format', () => {
                 expect(
-                    seriesItemData.map(pointData => pointData.format)
+                    pieSeriesItemData.map(pointData => pointData.format)
+                ).toEqual(['#,##0.00', '#,##0.00']);
+
+                expect(
+                    treemapSeriesItemData.map(pointData => pointData.format)
                 ).toEqual(['#,##0.00', '#,##0.00']);
             });
         });
@@ -1059,6 +1135,18 @@ describe('chartOptionsBuilder', () => {
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['point', ' 1']);
         });
+
+        it('should render correct values in usecase of treemap chart with an attribute', () => {
+            const tooltipFn = generateTooltipFn(viewByAttribute, 'treemap');
+            const tooltip = tooltipFn(pointData);
+            expect(getValues(tooltip)).toEqual(['Department', 'category', 'series', ' 1']);
+        });
+
+        it('should render correct values in usecase of treemap chart with measures', () => {
+            const tooltipFn = generateTooltipFn(null, 'treemap');
+            const tooltip = tooltipFn(pointData);
+            expect(getValues(tooltip)).toEqual(['series', ' 1']);
+        });
     });
 
     describe('getChartOptions', () => {
@@ -1178,19 +1266,29 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('in usecase of pie chart with attribute', () => {
-            const chartOptions = generateChartOptions(fixtures.barChartWithViewByAttribute, { type: 'pie' });
+        describe('in usecase of pie chart and treemap with attribute', () => {
+            const pieChartOptions = generateChartOptions(
+                fixtures.barChartWithViewByAttribute,
+                { type: 'pie' }
+            );
+            const treemapOptions = generateChartOptions(
+                fixtures.barChartWithViewByAttribute,
+                { type: 'treemap' }
+            );
 
             it('should assign stacking normal', () => {
-                expect(chartOptions.stacking).toBe(null);
+                expect(pieChartOptions.stacking).toBe(null);
+                expect(treemapOptions.stacking).toBe(null);
             });
 
             it('should always assign 1 series', () => {
-                expect(chartOptions.data.series.length).toBe(1);
+                expect(pieChartOptions.data.series.length).toBe(1);
+                expect(treemapOptions.data.series.length).toBe(1);
             });
 
             it('should assign categories equal to view by attribute values', () => {
-                expect(chartOptions.data.categories).toEqual(['Direct Sales', 'Inside Sales']);
+                expect(pieChartOptions.data.categories).toEqual(['Direct Sales', 'Inside Sales']);
+                expect(treemapOptions.data.categories).toEqual(['Direct Sales', 'Inside Sales']);
             });
 
             it('should assign correct tooltip function', () => {
@@ -1205,25 +1303,34 @@ describe('chartOptionsBuilder', () => {
                         name: 'series'
                     }
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
+
                 const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
-                expect(tooltip).toBe(expectedTooltip);
+
+                const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
+                expect(pieChartTooltip).toBe(expectedTooltip);
+
+                const treemapTooltip = treemapOptions.actions.tooltip(pointData);
+                expect(treemapTooltip).toBe(expectedTooltip);
             });
         });
 
-        describe('in usecase of pie chart with measures only', () => {
-            const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, { type: 'pie' });
+        describe('in usecase of pie chart and treemap with measures only', () => {
+            const pieChartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, { type: 'pie' });
+            const treemapOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, { type: 'treemap' });
 
             it('should assign stacking normal', () => {
-                expect(chartOptions.stacking).toBe(null);
+                expect(pieChartOptions.stacking).toBe(null);
+                expect(treemapOptions.stacking).toBe(null);
             });
 
             it('should always assign 1 series', () => {
-                expect(chartOptions.data.series.length).toBe(1);
+                expect(pieChartOptions.data.series.length).toBe(1);
+                expect(treemapOptions.data.series.length).toBe(1);
             });
 
             it('should assign categories with names of measures', () => {
-                expect(chartOptions.data.categories).toEqual(['Won', 'Lost', 'Expected']);
+                expect(pieChartOptions.data.categories).toEqual(['Won', 'Lost', 'Expected']);
+                expect(treemapOptions.data.categories).toEqual(['Lost', 'Won', 'Expected']);
             });
 
             it('should assign correct tooltip function', () => {
@@ -1236,9 +1343,14 @@ describe('chartOptionsBuilder', () => {
                         name: 'series'
                     }
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = generateTooltipFn(null, 'pie')(pointData);
-                expect(tooltip).toBe(expectedTooltip);
+
+                const expectedPieChartTooltip = generateTooltipFn(null, 'pie')(pointData);
+                const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
+                expect(pieChartTooltip).toBe(expectedPieChartTooltip);
+
+                const expectedTreemapTooltip = generateTooltipFn(null, 'treemap')(pointData);
+                const treemapTooltip = treemapOptions.actions.tooltip(pointData);
+                expect(treemapTooltip).toBe(expectedTreemapTooltip);
             });
         });
 

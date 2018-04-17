@@ -191,6 +191,7 @@ describe('Drilldown Eventing', () => {
         expect(fn(VisualizationTypes.COLUMN)).toBe('bar');
         expect(fn(VisualizationTypes.BAR)).toBe('bar');
         expect(fn(VisualizationTypes.PIE)).toBe('slice');
+        expect(fn(VisualizationTypes.TREEMAP)).toBe('slice');
         expect(fn(VisualizationTypes.TABLE)).toBe('cell');
         expect(() => {
             fn('headline'); // headline is not defined

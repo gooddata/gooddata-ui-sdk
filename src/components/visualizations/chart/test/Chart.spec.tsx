@@ -16,6 +16,10 @@ jest.mock('highcharts/modules/drilldown', () => {
     return (H: any) => H;
 });
 
+jest.mock('highcharts/modules/treemap', () => {
+    return (H: any) => H;
+});
+
 jest.mock('../highcharts/chartPlugins', () => {
     return {
         initChartPlugins: (H: any) => H

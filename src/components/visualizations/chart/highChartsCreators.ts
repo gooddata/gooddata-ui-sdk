@@ -20,7 +20,7 @@ import { getPieConfiguration } from './highcharts/pieConfiguration';
 import { getAreaConfiguration } from './highcharts/areaConfiguration';
 import { getScatterConfiguration } from './highcharts/scatterConfiguration';
 import { getComboConfiguration } from './highcharts/comboConfiguration';
-
+import { getTreemapConfiguration } from './highcharts/treemapConfiguration';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 const chartConfigurationMap = {
@@ -31,7 +31,8 @@ const chartConfigurationMap = {
     [VisualizationTypes.AREA]: getAreaConfiguration,
     [VisualizationTypes.DUAL]: getLineConfiguration, // dual chart is line/line chart
     [VisualizationTypes.SCATTER]: getScatterConfiguration,
-    [VisualizationTypes.COMBO]: getComboConfiguration
+    [VisualizationTypes.COMBO]: getComboConfiguration,
+    [VisualizationTypes.TREEMAP]: getTreemapConfiguration
 };
 
 export function getHighchartsOptions(chartOptions: any, drillConfig: any) {

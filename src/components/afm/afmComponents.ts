@@ -6,4 +6,5 @@ export { PieChart } from './PieChart';
 export { Table } from './Table';
 export { Headline } from './Headline';
 export { AreaChart } from './AreaChart';
+export { Treemap } from './Treemap';
 export { dataSourceProvider } from './DataSourceProvider';

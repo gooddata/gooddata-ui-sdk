@@ -566,6 +566,66 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
+    .add('Treemap with viewBy attribute', () => {
+        const dataSet = fixtures.barChartWithViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'treemap',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Treemap with measures only', () => {
+        const dataSet = fixtures.pieChartWithMetricsOnly;
+
+        return screenshotWrap(wrap(
+            <ChartTransformation
+                drillableItems={[{
+                    uri: dataSet.executionResponse.dimensions[VIEW_BY_DIMENSION_INDEX]
+                        .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                }]}
+                config={{
+                    type: 'treemap',
+                    colors: fixtures.customPalette
+                }}
+                {...dataSet}
+                onDataTooLarge={identity}
+            />
+            )
+        );
+    })
+    .add('Treemap with viewBy attribute with empty value', () => {
+        const dataSet: any = immutableSet(fixtures.barChartWithViewByAttribute, 'executionResult.data[0][0]', null);
+
+        return screenshotWrap(wrap(
+            <ChartTransformation
+                drillableItems={[{
+                    uri: dataSet.executionResult
+                        .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                }]}
+                config={{
+                    type: 'treemap',
+                    colors: fixtures.customPalette
+                }}
+                {...dataSet}
+                onDataTooLarge={identity}
+            />
+            )
+        );
+    })
     .add('Dual axis line/line chart with one metric on each axis', () => {
         const dataSet: any = fixtures.barChartWith2MetricsAndViewByAttribute;
 

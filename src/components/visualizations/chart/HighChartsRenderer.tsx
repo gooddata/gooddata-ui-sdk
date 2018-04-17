@@ -7,9 +7,9 @@ import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import partial = require('lodash/partial');
 import * as cx from 'classnames';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import Chart from './Chart';
 import Legend from './legend/Legend';
+import { isPieChart, isTreemap } from '../utils/common';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 
 export interface IHighChartsRendererProps {
@@ -160,7 +160,7 @@ export default class HighChartsRenderer
         }
 
         // render chart with disabled visibility based on legendItemsEnabled
-        const itemsPath = config.chart.type === VisualizationTypes.PIE ? 'series[0].data' : 'series';
+        const itemsPath = isPieChart(config.chart.type) || isTreemap(config.chart.type) ? 'series[0].data' : 'series';
         const items: any[] = get(config, itemsPath) as any[];
         set(config, itemsPath, items.map((item: any, itemIndex: any) => {
             const visible = legendItemsEnabled[itemIndex] !== undefined

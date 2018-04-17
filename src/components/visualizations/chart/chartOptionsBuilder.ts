@@ -21,6 +21,7 @@ import {
     isDualChart,
     isPieChart,
     isComboChart,
+    isTreemap,
     isChartSupported,
     stringifyChartTypes,
     isScatterPlot,
@@ -79,8 +80,7 @@ export function validateData(limits: any = {}, chartOptions: any) {
         dataTooLarge: !isDataOfReasonableSize(chartOptions.data, isPieChart(type)
             ? pieChartLimits
             : limits),
-        // check pie chart for negative values
-        hasNegativeValue: isPieChart(type) && isNegativeValueIncluded(chartOptions.data.series)
+        hasNegativeValue: (isPieChart(type) || isTreemap(type)) && isNegativeValueIncluded(chartOptions.data.series)
     };
 }
 
@@ -119,8 +119,9 @@ export function getColorPalette(
 ): string[] {
     const isAttributePieChart = isPieChart(type) && afm.attributes && afm.attributes.length > 0;
     const isAttributeScatterPlot = isScatterPlot(type) && afm.attributes && afm.attributes.length > 0;
+    const isAttributeTreemap = isTreemap(type) && afm.attributes && afm.attributes.length > 0;
 
-    if (stackByAttribute || isAttributePieChart || isAttributeScatterPlot) {
+    if (stackByAttribute || isAttributePieChart || isAttributeScatterPlot || isAttributeTreemap) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
         return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
     }
@@ -151,6 +152,7 @@ export function getColorPalette(
 
 export interface IPointData {
     y: number;
+    value?: number;
     format: string;
     marker: {
         enabled: boolean;
@@ -191,7 +193,7 @@ export function getSeriesItemData(
             viewByIndex = pointIndex;
             // stack bar chart has always just one measure
             measureIndex = 0;
-        } else if (isPieChart(type) && !viewByAttribute) {
+        } else if ((isPieChart(type) || isTreemap(type)) && !viewByAttribute) {
             measureIndex = pointIndex;
         }
 
@@ -205,18 +207,23 @@ export function getSeriesItemData(
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
             pointData.name = unwrap(stackByAttribute.items[seriesIndex]).name;
-        } else if (isPieChart(type) && viewByAttribute) {
+        } else if ((isPieChart(type) || isTreemap(type)) && viewByAttribute) {
             pointData.name = unwrap(viewByAttribute.items[viewByIndex]).name;
         } else {
             pointData.name = unwrap(measureGroup.items[measureIndex]).name;
         }
 
-        if (isPieChart(type)) {
-            // add color to pie chart points from colorPalette
+        if (isPieChart(type) || isTreemap(type)) {
             pointData.color = colorPalette[pointIndex];
-            // Pie charts use pointData viewByIndex as legendIndex if available instead of seriesItem legendIndex
+            // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
+            // instead of seriesItem legendIndex
             pointData.legendIndex = viewByAttribute ? viewByIndex : pointIndex;
         }
+
+        if (isTreemap(type)) {
+            pointData.value = parseValue(pointValue);
+        }
+
         return pointData;
     });
 }
@@ -415,16 +422,16 @@ export function getDrillableSeries(
     type: string,
     afm: AFM.IAfm
 ) {
-    const isMetricPieChart = isPieChart(type) && !viewByAttribute;
+    const isPieOrTreemapWithOnlyMeasures = (isPieChart(type) || isTreemap(type)) && !viewByAttribute;
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
         const data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
             // measureIndex is usually seriesIndex,
-            // except for stack by attribute and metricOnly pie chart it is looped-around pointIndex instead
+            // except for stack by attribute and metricOnly pie or treemap chart it is looped-around pointIndex instead
             // Looping around the end of items array only works when measureGroup is the last header on it's dimension
             // We do not support setups with measureGroup before attributeHeaders
-            const measureIndex = !stackByAttribute && !isMetricPieChart
+            const measureIndex = !stackByAttribute && !isPieOrTreemapWithOnlyMeasures
                 ? seriesIndex
                 : pointIndex % measureGroup.items.length;
             const measure = unwrap(measureGroup.items[measureIndex]);
@@ -481,12 +488,12 @@ export function getDrillableSeries(
 
 function getCategories(type: string, viewByAttribute: any, measureGroup: any) {
     // Categories make up bar/slice labels in charts. These usually match view by attribute values.
-    // Measure only pie charts geet categories from measure names
+    // Measure only pie or treemap charts get categories from measure names
     if (viewByAttribute) {
         return viewByAttribute.items.map(({ attributeHeaderItem }: any) => attributeHeaderItem.name);
     }
-    if (isPieChart(type)) {
-        // Pie chart with measures only (no viewByAttribute) needs to list
+    if (isPieChart(type) || isTreemap(type)) {
+        // Pie or Treemap chart with measures only (no viewByAttribute) needs to list
         return measureGroup.items.map((wrappedMeasure: VisualizationObject.IMeasure) => unwrap(wrappedMeasure).name);
         // Pie chart categories are later sorted by seriesItem pointValue
     }

@@ -31,6 +31,7 @@ import { ColumnChart } from './components/ColumnChart';
 import { LineChart } from './components/LineChart';
 import { AreaChart } from './components/AreaChart';
 import { PieChart } from './components/PieChart';
+import { Treemap } from './components/Treemap';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
@@ -82,6 +83,7 @@ export {
     LineChart,
     AreaChart,
     PieChart,
+    Treemap,
     PoPHelper,
     PropTypes,
     RuntimeError,
