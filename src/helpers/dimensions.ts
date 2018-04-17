@@ -171,6 +171,7 @@ export function generateDimensions(
         case VisualizationTypes.PIE: {
             return getPieDimensions(mdObject);
         }
+        case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE: {
             return getLineDimensions(mdObject);
         }

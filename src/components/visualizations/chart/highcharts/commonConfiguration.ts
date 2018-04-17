@@ -29,22 +29,6 @@ const BASE_TEMPLATE: any = {
     legend: {
         enabled: false
     },
-    yAxis: {
-        gridLineColor: '#ebebeb',
-        labels: {
-            style: {
-                color: styleVariables.gdColorStateBlank,
-                font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        },
-        title: {
-            margin: 15,
-            style: {
-                color: styleVariables.gdColorLink,
-                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        }
-    },
     xAxis: {
         lineColor: '#d5d5d5',
 

@@ -5,16 +5,20 @@ import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 
 import range = require('lodash/range');
 import get = require('lodash/get');
+import includes = require('lodash/includes');
+import isEmpty = require('lodash/isEmpty');
+import compact = require('lodash/compact');
 import without = require('lodash/without');
 import escape = require('lodash/escape');
 import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
-
+import { IChartConfig } from './Chart';
 import {
     parseValue,
     getAttributeElementIdFromAttributeElementUri,
     isLineChart,
     isAreaChart,
+    isDualChart,
     isPieChart,
     isChartSupported,
     stringifyChartTypes
@@ -30,6 +34,12 @@ import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
 };
+
+export interface IAxis {
+    label: string;
+    format?: string;
+    seriesIndices?: number[];
+}
 
 export function unwrap(wrappedObject: any) {
     return wrappedObject[Object.keys(wrappedObject)[0]];
@@ -111,7 +121,7 @@ export function getColorPalette(
 
     let parentMeasuresCounter = 0;
 
-    const paletteMeasures = range(0, measureGroup.items.length).map((measureItemIndex) => {
+    const paletteMeasures = range(measureGroup.items.length).map((measureItemIndex) => {
         if (isPopMeasure(measureGroup.items[measureItemIndex], afm)) {
             return '';
         }
@@ -209,6 +219,7 @@ interface ISeriesItemConfig {
     legendIndex: number;
     data?: any;
     name?: string;
+    yAxis?: number;
 }
 
 export function getSeries(
@@ -234,6 +245,10 @@ export function getSeries(
             legendIndex: seriesIndex,
             data: seriesItemData
         };
+
+        if (isDualChart(type) && seriesIndex > 0) {
+            seriesItemConfig.yAxis = 1;
+        }
 
         if (stackByAttribute) {
             // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
@@ -459,6 +474,80 @@ function getStackingConfig(stackByAttribute: any, options: any) {
     return null;
 }
 
+function isPrimaryMeasuresBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent) {
+    const primaryMeasuresBucket = get(mdObject, 'buckets', [])
+        .find(bucket => bucket.localIdentifier === 'measures');
+
+    const primaryMeasuresBucketItems = get(primaryMeasuresBucket, 'items', []);
+    return isEmpty(primaryMeasuresBucketItems);
+}
+
+function getYAxes(config: IChartConfig, measureGroup: any): IAxis[] {
+    const { type, mdObject } = config;
+    const measureGroupItems = measureGroup.items.map((item: VisualizationObject.IMeasure, index: number) => {
+        const unwrapped = unwrap(item);
+        return index ? {
+            label: unwrapped.name,
+            format: unwrapped.format
+        } : {
+            label: config.yLabel || unwrapped.name,
+            format: config.yFormat || unwrapped.format
+        };
+    });
+    const firstMeasureGroupItem = measureGroupItems[0];
+    const secondMeasureGroupItem = measureGroupItems[1];
+    const hasMoreThanOneMeasure = measureGroupItems.length > 1;
+
+    let yAxes: IAxis[] = [];
+    if (isDualChart(type)) {
+        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
+        if (firstMeasureGroupItem && noPrimaryMeasures) {
+            yAxes = [null, {
+                ...firstMeasureGroupItem,
+                opposite: true,
+                seriesIndices: range(measureGroupItems.length)
+            }];
+        } else {
+            const firstAxis = {
+                ...firstMeasureGroupItem,
+                seriesIndices: [0]
+            };
+            const secondAxis = secondMeasureGroupItem ? {
+                ...secondMeasureGroupItem,
+                opposite: true,
+                seriesIndices: range(1, measureGroupItems.length)
+            } : null;
+            yAxes = compact([firstAxis, secondAxis]);
+        }
+    } else {
+        // if more than one measure and NOT dual, then have empty item name
+        const nonDualMeasureAxis = hasMoreThanOneMeasure ? {
+            label: ''
+        } : {};
+        yAxes = [{
+            ...firstMeasureGroupItem,
+            ...nonDualMeasureAxis,
+            seriesIndices: range(measureGroupItems.length)
+        }];
+    }
+
+    return yAxes;
+}
+
+function assignYAxes(series: any, yAxes: IAxis[]) {
+    series.forEach((seriesItem: any, index: number) => {
+        const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
+            return includes(get(axis, 'seriesIndices', []), index);
+        });
+
+        if (yAxisIndex !== -1) {
+            seriesItem.yAxis = yAxisIndex;
+        }
+    });
+
+    return series;
+}
+
 /**
  * Creates an object providing data for all you need to render a chart except drillability.
  *
@@ -514,7 +603,7 @@ export function getChartOptions(
         colorPalette
     );
 
-    const series = getDrillableSeries(
+    const drillableSeries = getDrillableSeries(
         seriesWithoutDrillability,
         drillableItems,
         measureGroup,
@@ -523,6 +612,9 @@ export function getChartOptions(
         type,
         afm
     );
+
+    const yAxes = getYAxes(config, measureGroup);
+    const series = assignYAxes(drillableSeries, yAxes);
 
     let categories = getCategories(type, viewByAttribute, measureGroup);
     const stacking = getStackingConfig(stackByAttribute, config);
@@ -540,7 +632,7 @@ export function getChartOptions(
             return {
                 // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
                 ...dataPoint,
-                color: dataPoints[dataPoint.legendIndex].color,
+                color: get(dataPoints[dataPoint.legendIndex], 'color'),
                 legendIndex: dataPointIndex
             };
         });
@@ -568,6 +660,7 @@ export function getChartOptions(
             y: yLabel,
             yFormat
         },
+        yAxes,
         showInPercent: measureGroup.items.some((wrappedMeasure: VisualizationObject.IMeasure) => {
             const measure = wrappedMeasure[Object.keys(wrappedMeasure)[0]];
             return measure.format.includes('%');

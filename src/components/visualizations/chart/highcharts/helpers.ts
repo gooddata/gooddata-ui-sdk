@@ -46,7 +46,7 @@ export const isStacked = (chart: any) => {
     return false;
 };
 export const areLabelsStacked = (chart: any) =>
-    (get(chart, 'userOptions.yAxis.stackLabels.enabled', false) && isStacked(chart));
+    (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
 
 export const hasDataLabel = (point: any) => point.dataLabel;
 

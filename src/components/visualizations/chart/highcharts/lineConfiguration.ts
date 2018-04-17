@@ -30,11 +30,11 @@ const LINE_TEMPLATE: any = {
     xAxis: {
         categories: []
     },
-    yAxis: {
+    yAxis: [{
         stackLabels: {
             enabled: false
         }
-    }
+    }]
 };
 
 export function getLineConfiguration() {

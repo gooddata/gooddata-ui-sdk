@@ -4,6 +4,7 @@ import { VisualizationTypes } from '../../../../../constants/visualizationTypes'
 
 const chartOptions = {
     type: VisualizationTypes.LINE,
+    yAxes: [{ title: 'atitle' }],
     data: {
         series: [
             {
@@ -33,6 +34,6 @@ describe('getCustomizedConfiguration', () => {
 
     it('should set gridline width to zero', () => {
         const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
-        expect(result.yAxis.gridLineWidth).toEqual(0);
+        expect(result.yAxis[0].gridLineWidth).toEqual(0);
     });
 });

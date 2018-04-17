@@ -40,6 +40,7 @@ export interface IChartTransformationProps {
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
+    mdObject?: any;
 
     afterRender(): void;
     renderer(arg: IHighChartsRendererProps): JSX.Element;
@@ -56,7 +57,6 @@ export interface IChartTransformationState {
 
 export default class ChartTransformation extends React.Component<IChartTransformationProps, IChartTransformationState> {
     public static defaultProps = {
-        afm: {},
         drillableItems: [] as any,
         renderer: renderHighCharts,
         afterRender: noop,

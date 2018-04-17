@@ -1,0 +1,54 @@
+{
+  "execution": {
+      "afm": {
+          "attributes": [
+              {
+                  "displayForm": {
+                      "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                  },
+                  "localIdentifier": "yearCreatedAttribute"
+              }
+          ],
+          "measures": [
+              {
+                  "alias": "Lost",
+                  "definition": {
+                      "measure": {
+                          "item": {
+                              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"
+                          }
+                      }
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "lostMetric"
+              },
+              {
+                  "alias": "Won",
+                  "definition": {
+                      "measure": {
+                          "item": {
+                              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"
+                          }
+                      }
+                  },
+                  "format": "#,##0.00",
+                  "localIdentifier": "wonMetric"
+              }
+          ]
+      },
+      "resultSpec": {
+          "dimensions": [
+              {
+                  "itemIdentifiers": [
+                      "yearCreatedAttribute"
+                  ]
+              },
+              {
+                  "itemIdentifiers": [
+                      "measureGroup"
+                  ]
+              }
+          ]
+      }
+  }
+}

@@ -23,11 +23,11 @@ const BAR_TEMPLATE = {
             }
         }
     },
-    yAxis: {
+    yAxis: [{
         stackLabels: {
             enabled: false
         }
-    }
+    }]
 };
 
 export function getBarConfiguration() {

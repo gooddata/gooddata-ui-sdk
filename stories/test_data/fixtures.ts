@@ -28,6 +28,17 @@ export const barChartWith3MetricsAndViewByAttribute: any = {
     executionResult: require('../test_data/bar_chart_with_3_metrics_and_view_by_attribute_result.json').executionResult
 };
 
+export const barChartWith2MetricsAndViewByAttribute: any = {
+    executionRequest: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult
+};
+
+export const barChartWith2MetricsAndViewByAttributeMd = {
+    mdObject: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_md.json')
+};
+
 export const areaChartWith3MetricsAndViewByAttribute: any = {
     executionRequest: require('../test_data/area_chart_with_3_metrics_and_view_by_attribute_request.json').execution,
     executionResponse:

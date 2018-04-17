@@ -1396,5 +1396,51 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.stacking).toBeNull();
             });
         });
+
+        describe('generate y axes', () => {
+            it('should generate one axis with no label when there are more measures and in bar chart', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+                const expectedAxes = [{
+                    label: '',
+                    format: '#,##0.00',
+                    seriesIndices: [0, 1, 2]
+                }];
+                expect(chartOptions.yAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate one axis with first measure label when there is one measure and in bar chart', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWithSingleMeasureAndNoAttributes);
+                const expectedAxes = [{
+                    label: 'Amount',
+                    format: '#,##0.00',
+                    seriesIndices: [0]
+                }];
+                expect(chartOptions.yAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate two axes for dual axis chart', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                    type: 'dual',
+                    mdObject: {
+                        buckets: [
+                            { localIdentifier: 'measures', items: [ {} ] },
+                            { localIdentifier: 'secondary', items: [ {} ] }
+                        ]
+                    }
+                });
+                const expectedAxes = [{
+                    label: '<button>Lost</button> ...',
+                    format: '#,##0.00',
+                    seriesIndices: [0]
+                }, {
+                    format: '#,##0.00',
+                    label: 'Won',
+                    opposite: true,
+                    seriesIndices: [1, 2]
+                }];
+
+                expect(chartOptions.yAxes).toEqual(expectedAxes);
+            });
+        });
     });
 });

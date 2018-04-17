@@ -25,7 +25,8 @@ const chartConfigurationMap = {
     [VisualizationTypes.BAR]: getBarConfiguration,
     [VisualizationTypes.COLUMN]: getColumnConfiguration,
     [VisualizationTypes.PIE]: getPieConfiguration,
-    [VisualizationTypes.AREA]: getAreaConfiguration
+    [VisualizationTypes.AREA]: getAreaConfiguration,
+    [VisualizationTypes.DUAL]: getLineConfiguration // dual chart is line/line chart
 };
 
 export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
