@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@gooddata/gooddata-js@6.0.0-alpha7":
-  version "6.0.0-alpha7"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.0.0-alpha7.tgz#d6300c855c25c00dda45cd4d992455ea96d9ea76"
+"@gooddata/gooddata-js@6.0.0-alpha8":
+  version "6.0.0-alpha8"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.0.0-alpha8.tgz#ef9b1dbc8258e4d5d1657f95a3856770a85dbd9f"
   dependencies:
     "@gooddata/typings" "2.0.0-alpha0"
     es6-promise "3.0.2"
@@ -4713,6 +4713,10 @@ http-signature@~1.2.0:
     assert-plus "^1.0.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
+
+http-status-codes@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/http-status-codes/-/http-status-codes-1.3.0.tgz#9cd0e71391773d0671b489d41cbc5094aa4163b6"
 
 https-browserify@^1.0.0:
   version "1.0.0"

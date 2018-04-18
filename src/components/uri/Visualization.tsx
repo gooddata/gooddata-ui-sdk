@@ -24,7 +24,8 @@ import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
     IDrillableItem,
     ErrorStates,
-    generateDimensions
+    generateDimensions,
+    RuntimeError
 } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
 
@@ -185,7 +186,7 @@ export class VisualizationWrapped
                     isLoading: false,
                     error: { status: ErrorStates.NOT_FOUND }
                 });
-                return props.onError({ status: ErrorStates.NOT_FOUND });
+                return props.onError(new RuntimeError(ErrorStates.NOT_FOUND));
             });
     }
 
@@ -257,7 +258,7 @@ export class VisualizationWrapped
         } = this.props;
         const { resultSpec, type, totals, error, isLoading } = this.state;
 
-        if (error !== null && error.status !== ErrorStates.OK) {
+        if (error) {
             return ErrorComponent
                 ? (
                     <ErrorComponent

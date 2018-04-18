@@ -2,13 +2,12 @@
 import * as React from 'react';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import { DataLayer } from '@gooddata/gooddata-js';
+import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
 import { ErrorStates } from '../../../constants/errorStates';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
-import { getVisualizationOptions } from '../../../helpers/options';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
 import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
@@ -17,6 +16,8 @@ import { IntlWrapper } from '../../core/base/IntlWrapper';
 
 import { LoadingComponent, ILoadingProps } from '../../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../../simple/ErrorComponent';
+import { RuntimeError } from '../../../errors/RuntimeError';
+import { IPushData } from '../../../interfaces/PushData';
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
@@ -24,7 +25,7 @@ export interface ICommonVisualizationProps extends IEvents {
     locale?: string;
     drillableItems?: IDrillableItem[];
     afterRender?: () => void;
-    pushData?: Function;
+    pushData?: (data: IPushData) => void;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     visualizationProperties?: IVisualizationProperties;
@@ -34,21 +35,19 @@ export interface ILoadingInjectedProps {
     execution: Execution.IExecutionResponses;
     onDataTooLarge: Function;
     onNegativeValues: Function;
-    error: string;
+    error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
 }
 
 export interface IVisualizationLoadingState {
-    error: string;
-    result: Execution.IExecutionResponses;
+    error?: string;
+    result?: Execution.IExecutionResponses;
     isLoading: boolean;
 }
 
 const defaultErrorHandler = (error: any) => {
-    if (error && error.status !== ErrorStates.OK) {
-        console.error(error); // tslint:disable-line:no-console
-    }
+    console.error(error); // tslint:disable-line:no-console
 };
 
 export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
@@ -78,8 +77,6 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             super(props);
 
             this.state = {
-                error: ErrorStates.OK,
-                result: null,
                 isLoading: false
             };
 
@@ -132,48 +129,41 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
         private initSubject() {
             this.subject = DataLayer.createSubject<Execution.IExecutionResponses>((result) => {
-                this.setState({
-                    result
-                });
-                const options = getVisualizationOptions(this.props.dataSource.getAfm());
-                this.props.pushData({
-                    result,
-                    options
-                });
+                this.setState({ result });
+                this.props.pushData({ result });
                 this.onLoadingChanged({ isLoading: false });
             }, error => this.onError(error));
         }
 
         private onLoadingChanged(loadingState: ILoadingState) {
             this.props.onLoadingChanged(loadingState);
-            const isLoading = loadingState.isLoading;
+
+            const { isLoading } = loadingState;
+
+            const state: IVisualizationLoadingState = { isLoading };
 
             if (isLoading) {
-                this.props.onError({ status: ErrorStates.OK });
-                this.setState({
-                    isLoading,
-                    error: ErrorStates.OK
-                });
-            } else {
-                this.setState({
-                    isLoading
-                });
+                state.error = null;
             }
+
+            this.setState(state);
         }
 
-        private onError(errorCode: string, dataSource = this.props.dataSource) {
+        private onError(error: RuntimeError, dataSource = this.props.dataSource) {
             if (DataLayer.DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
-                const options = getVisualizationOptions(this.props.dataSource.getAfm());
-                this.setState({
-                    error: errorCode
-                });
+                this.setState({ error: error.getMessage() });
                 this.onLoadingChanged({ isLoading: false });
-                this.props.onError({ status: errorCode, options });
+
+                this.props.onError(error);
             }
         }
 
         private onDataTooLarge() {
-            this.onError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY);
+            this.onError(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
+        }
+
+        private onNegativeValues() {
+            this.onError(new RuntimeError(ErrorStates.NEGATIVE_VALUES));
         }
 
         private initDataLoading(
@@ -185,13 +175,11 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
             const promise = dataSource.getData(resultSpec)
                 .then(checkEmptyResult)
-                .catch(convertErrors);
+                .catch((error: ApiResponseError) => {
+                    throw convertErrors(error);
+                });
 
             this.subject.next(promise);
-        }
-
-        private onNegativeValues() {
-            this.onError(ErrorStates.NEGATIVE_VALUES);
         }
     }
 

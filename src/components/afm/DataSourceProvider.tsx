@@ -88,11 +88,10 @@ export function dataSourceProvider<T>(
             this.sdk = sdk.clone();
             setTelemetryHeaders(this.sdk, componentName, props);
 
-            this.subject = DataLayer.createSubject<IDataSource>((dataSource) => {
-                this.setState({
-                    dataSource
-                });
-            }, error => this.handleError(error));
+            this.subject = DataLayer.createSubject<IDataSource>(
+                dataSource => this.setState({ dataSource }),
+                error => this.handleError(error)
+            );
         }
 
         public componentDidMount() {

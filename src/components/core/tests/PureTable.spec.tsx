@@ -21,6 +21,8 @@ jest.mock('@gooddata/indigo-visualizations', () => ({
 import { PureTable, ITableProps, ITableState } from '../PureTable';
 import { executionObjectWithTotals } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
+import { RuntimeError } from '../../../errors/RuntimeError';
+import { ErrorStates } from '../../../constants/errorStates';
 
 function getFakeSortItem(): AFM.SortItem {
     return {
@@ -142,12 +144,7 @@ describe('PureTable', () => {
 
             renderedTableTransformation.props().onDataTooLarge();
 
-            expect(onError).toHaveBeenCalledWith({
-                options: {
-                    dateOptionsDisabled: false
-                },
-                status: 'DATA_TOO_LARGE_TO_DISPLAY'
-            });
+            expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
         });
     });
 

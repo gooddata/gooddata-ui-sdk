@@ -6,15 +6,10 @@ import { AFM } from '@gooddata/typings';
 import { DataLayer } from '@gooddata/gooddata-js';
 import { PureTable, ITableProps } from './PureTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+import { IPushData } from '../../interfaces/PushData';
 
 export interface ISortableTableState {
     sortItems: AFM.SortItem[];
-}
-
-export interface IPushData {
-    properties?: {
-        sotItems?: AFM.SortItem[];
-    };
 }
 
 export class SortableTable
