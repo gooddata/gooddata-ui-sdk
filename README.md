@@ -2,26 +2,21 @@
 > React.js components for building visualizations on top of GoodData platform
 
 ## Getting started
+- [Documentation](http://sdk.gooddata.com/gdc-ui-sdk-doc/)
+
 
 ### Usage
-
 With [yarn](https://yarnpkg.com) installed, go to your project directory and run
 ```
 $ yarn add @gooddata/react-components
 ```
-
 If you prefer [npm](npmjs.com) run
 ```
 $ npm install --save @gooddata/react-components
 ```
 
-## Documentation
-[Documentation](https://help.gooddata.com/display/bHsp5IhQjuz0e6HS0s76/React+Components)
-
 ## Develop
-
 ### Running the development
-
 To develop, you need to run the typescript compiler. By running `yarn dev`, the typescript compiler will be run in watch mode.
 ```sh
 $ cd gooddata-react-components
@@ -45,14 +40,12 @@ $ yarn build-storybook
 ```
 
 ### Running the tests
-
 To validate using [tslint](https://palantir.github.io/tslint/), run
 ```sh
 $ yarn validate
 ```
 
 #### Storybook visual regression tests
-
 Visual regression testing for Storybook is provided by [@gooddata/test-storybook](https://github.com/gooddata/gdc-client-utils/tree/master/test-storybook) package.
 
 ### Deployment
@@ -64,9 +57,7 @@ git push upstream master --tags
 ```
 
 ### Examples
-
-For more details see ./examples/README.md
-
+For more details see [examples/README.md](./examples/README.md)
 ```
 cd examples
 yarn install
@@ -75,6 +66,9 @@ yarn dev
 
 ## Contributing
 Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-react-components/issues).
+
+## Changelog
+- see [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 (C) 2007-2018 GoodData Corporation
