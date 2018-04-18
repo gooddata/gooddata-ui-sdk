@@ -8,9 +8,10 @@ import { IAdapter } from './interfaces/Adapter';
 import { IDataSource } from './interfaces/DataSource';
 import { isAfmExecutable } from './utils/AfmUtils';
 import { createSubject, ISubject } from './utils/async';
+import { ApiResponseError } from '../xhr';
 
 export type IDataSubscriber = (data: any) => void;
-export type IErrorSubscriber = (error: any) => void;
+export type IErrorSubscriber = (error: ApiResponseError) => void;
 
 export class DataTable<T> {
     private static getDefaultDimensionsForTable(afm: AFM.IAfm): AFM.IDimension[] {
@@ -72,7 +73,7 @@ export class DataTable<T> {
         return this;
     }
 
-    public onError(callback: IDataSubscriber) {
+    public onError(callback: IErrorSubscriber) {
         this.errorSubscribers.push(callback);
         return this;
     }

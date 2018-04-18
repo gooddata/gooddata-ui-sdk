@@ -8,7 +8,6 @@ import { createSubject, ISubject } from './utils/async';
 import { toAfmResultSpec } from './converters/toAfmResultSpec';
 import * as ResultSpecUtils from './utils/ResultSpecUtils';
 import * as AfmUtils from './utils/AfmUtils';
-import { ErrorCodes } from './constants/errors';
 import { DataTable } from './DataTable';
 import { DummyAdapter } from './utils/DummyAdapter';
 import { ExecuteAfmAdapter } from './adapters/ExecuteAfmAdapter';
@@ -23,7 +22,6 @@ import { IAdapter } from './interfaces/Adapter';
  */
 export {
     Header,
-    ErrorCodes,
     AfmUtils,
     ExecuteAfmAdapter,
     DataSourceUtils,
