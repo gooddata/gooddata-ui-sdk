@@ -10,4 +10,4 @@
  - Default loadings and errors ([commit](https://github.com/gooddata/gooddata-react-components/commit/235bd3f7cd4d88613356b8e3c8b80a7ee3aaea61))
  - Remove backward compatible CatalogHelper code ([commit](https://github.com/gooddata/gooddata-react-components/commit/68796d866458be889dbc52509ee757a3bc0eb957))
  - Allow disabled gridline ([commit](https://github.com/gooddata/gooddata-react-components/commit/a3bd32e54a72aa5bf9433a46bd1331a7e66b1bba))
-
+ - Remove ErrorState.OK from the onError callback ([commit](https://github.com/gooddata/gooddata-react-components/commit/a7d0eab65b12e576bd64b76e12f9759c2faf9487))
