@@ -1,17 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
-import React from 'react';
+import * as React from 'react';
 import { shallow } from 'enzyme';
+import noop = require('lodash/noop');
 
-import { BAR_CHART } from '../../../VisualizationTypes';
+import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import StaticLegend from '../StaticLegend';
 import LegendItem from '../LegendItem';
 
 describe('StaticLegend', () => {
-    function render(customProps = {}) {
+    function render(customProps: any = {}) {
         const props = {
-            chartType: BAR_CHART,
+            chartType: VisualizationTypes.BAR,
             series: [],
-            onItemClick: () => {},
+            onItemClick: noop,
             position: 'top',
             containerHeight: 500,
             ...customProps

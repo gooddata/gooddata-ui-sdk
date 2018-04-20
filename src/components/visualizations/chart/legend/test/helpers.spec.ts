@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import noop = require('lodash/noop');
 import {
     calculateFluidLegend,
     calculateStaticLegend,
@@ -98,7 +99,7 @@ describe('helpers', () => {
 
     describe('getLegendConfig', () => {
         it('should enable position on right by default', () => {
-            const config = getLegendConfig({}, true, [], () => {});
+            const config = getLegendConfig({}, true, [], noop);
             expect(config.position).toEqual(RIGHT);
             expect(config.enabled).toEqual(true);
         });
@@ -107,7 +108,7 @@ describe('helpers', () => {
             const config = getLegendConfig({
                 position: TOP,
                 enabled: false
-            }, true, [], () => {});
+            }, true, [], noop);
             expect(config.position).toEqual(TOP);
             expect(config.enabled).toEqual(false);
         });

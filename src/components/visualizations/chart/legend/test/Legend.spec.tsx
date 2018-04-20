@@ -1,9 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import React from 'react';
+import * as React from 'react';
+import noop = require('lodash/noop');
 import { mount } from 'enzyme';
-import { BAR_CHART } from '../../../VisualizationTypes';
+import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import Legend, { FLUID_LEGEND_THRESHOLD } from '../Legend';
-import { withIntl } from '../../../test/utils';
+import { withIntl } from '../../../common/utils/intlUtils';
 
 describe('Legend', () => {
     const series = [
@@ -27,10 +28,10 @@ describe('Legend', () => {
 
     function createComponent(userProps = {}) {
         const props = {
-            chartType: BAR_CHART,
+            chartType: VisualizationTypes.BAR,
             legendLayout: 'vertical',
             series,
-            onItemClick: () => {},
+            onItemClick: noop,
             ...userProps
         };
 
