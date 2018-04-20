@@ -195,7 +195,8 @@ export function generateDimensions(
         }
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
-        case VisualizationTypes.TREEMAP: {
+        case VisualizationTypes.TREEMAP:
+        case VisualizationTypes.FUNNEL: {
             return getPieOrTreemapDimensions(mdObject);
         }
         case VisualizationTypes.DUAL:

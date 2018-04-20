@@ -62,6 +62,7 @@ export const isAreaChart = isEqual(VisualizationTypes.AREA);
 export const isHeadline = isEqual(VisualizationTypes.HEADLINE);
 export const isComboChart = isEqual(VisualizationTypes.COMBO);
 export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
+export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
 export const stringifyChartTypes = () => Object.keys(VisualizationTypes).reduce((acc, type) => {
     acc.push(VisualizationTypes[type]);

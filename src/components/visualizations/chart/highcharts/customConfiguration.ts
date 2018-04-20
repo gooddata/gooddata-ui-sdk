@@ -429,6 +429,7 @@ function getHoverStyles(chartOptions: any, config: any) {
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
+        case VisualizationTypes.FUNNEL:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
 

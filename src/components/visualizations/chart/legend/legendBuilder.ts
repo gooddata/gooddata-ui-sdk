@@ -2,7 +2,13 @@
 import pick = require('lodash/pick');
 import set = require('lodash/set');
 import { RIGHT } from './PositionTypes';
-import { isAreaChart, isPieOrDonutChart, isScatterPlot, isTreemap } from '../../utils/common';
+import {
+    isAreaChart,
+    isPieOrDonutChart,
+    isScatterPlot,
+    isTreemap,
+    isFunnelChart
+} from '../../utils/common';
 
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
@@ -27,7 +33,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
 
 export function getLegendItems(chartOptions: any) {
     const { type } = chartOptions;
-    const legendDataSource = (isPieOrDonutChart(type) || isTreemap(type))
+    const legendDataSource = (isPieOrDonutChart(type) || isTreemap(type) || isFunnelChart(type))
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
 
@@ -38,6 +44,10 @@ export function getLegendItems(chartOptions: any) {
 export default function getLegend(legendConfig: any = {}, chartOptions: any) {
     if (isScatterPlot(chartOptions.type) || isTreemap(chartOptions.type)) { // TODO: refactor
         set(legendConfig, 'position', 'right');
+    }
+
+    if (isFunnelChart(chartOptions.type)) { // TODO: refactor
+        set(legendConfig, 'enabled', 'false');
     }
 
     const baseConfig = {

@@ -9,9 +9,11 @@ import { initChartPlugins } from './highcharts/chartPlugins';
 export const Highcharts = require('highcharts/highcharts');
 const drillmodule = require('highcharts/modules/drilldown'); // tslint:disable-line
 const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-line
+const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
 drillmodule(Highcharts);
 treemapModule(Highcharts);
 initChartPlugins(Highcharts);
+funnelModule(Highcharts);
 
 export interface ILegendConfig {
     enabled?: boolean;

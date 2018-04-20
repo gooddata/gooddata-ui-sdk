@@ -7,6 +7,7 @@ import { BaseChart as CoreBaseChart, IBaseChartProps } from './components/core/b
 import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
 import { ScatterPlot as CoreScatterPlot } from './components/core/ScatterPlot';
+import { FunnelChart as CoreFunnelChart } from './components/core/FunnelChart';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { ErrorComponent } from './components/simple/ErrorComponent';
 import { LoadingComponent } from './components/simple/LoadingComponent';
@@ -37,20 +38,22 @@ import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
+import { FunnelChart } from './components/FunnelChart';
 import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 
 /**
  * CoreComponents
- * A collection of BaseChart, Headline, Table
+ * A collection of BaseChart, Headline, Table, ScatterPlot, FunnelChart
  * @internal
  */
 const CoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
     Table: CoreTable,
-    ScatterPlot: CoreScatterPlot
+    ScatterPlot: CoreScatterPlot,
+    FunnelChart: CoreFunnelChart
 };
 
 export {
@@ -64,6 +67,7 @@ export {
     ColumnChart,
     ScatterPlot,
     ComboChart,
+    FunnelChart,
     CoreComponents,
     ErrorCodes,
     ErrorStates,

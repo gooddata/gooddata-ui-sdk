@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import cloneDeep = require('lodash/cloneDeep');
 
 export const LINE_WIDTH = 3;
