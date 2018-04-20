@@ -96,9 +96,9 @@
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/test-storybook@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.1.2.tgz#dcc729d82738c062f1164cd6d457bbf2c6fedddd"
+"@gooddata/test-storybook@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-1.2.0.tgz#1bcca2eeac7f30e68e6a770b3c50a93125a8616c"
   dependencies:
     acorn "5.1.1"
     acorn-jsx "4.0.1"
