@@ -99,6 +99,11 @@
       "error": {
         "readySelector": ".screenshot-wrapper .s-error"
       }
+    },
+    "AFM components/DonutChart": {
+      "error": {
+        "readySelector": ".screenshot-wrapper .s-error"
+      }
     }
   },
   "jest": {
