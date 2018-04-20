@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "@gooddata/mock-js": "1.0.0-alpha4",
-    "@gooddata/test-storybook": "1.1.2",
+    "@gooddata/test-storybook": "1.2.0",
     "@gooddata/typings": "2.0.0-alpha0",
     "@storybook/addon-actions": "3.4.0",
     "@storybook/addon-options": "3.4.0",
@@ -92,9 +92,12 @@
   },
   "typings": "dist/index.d.ts",
   "test-storybook": {
-    "AFM components - PieChart": {
+    "_defaults": {
+      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap"
+    },
+    "AFM components/PieChart": {
       "error": {
-        "readySelector": ".s-error"
+        "readySelector": ".screenshot-wrapper .s-error"
       }
     }
   },
