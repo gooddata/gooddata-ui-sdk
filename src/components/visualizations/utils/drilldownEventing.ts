@@ -49,7 +49,7 @@ export interface IDrillConfig {
 }
 
 export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
-    return event.points !== undefined;
+    return !!event.points;
 }
 
 function getPoPMeasureIdentifier(measure: AFM.IMeasure): AFM.Identifier {

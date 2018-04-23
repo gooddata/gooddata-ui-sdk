@@ -197,6 +197,26 @@ describe('Drilldown Eventing', () => {
         }).toThrowError();
     });
 
+    it('should call point drill context (non-group) when event.points given but null', () => {
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const target = { dispatchEvent: jest.fn() };
+
+        chartClick(
+            drillConfig,
+            {
+                ...pointClickEventData,
+                points: null
+            } as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
+
+        jest.runAllTimers();
+
+        const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+        expect(drillContext.element).toEqual('point');
+    });
+
     it('should call default fire event on point click and fire correct data', () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
