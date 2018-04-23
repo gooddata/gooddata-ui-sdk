@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
+import { AFM } from '@gooddata/typings';
+
 import {
     getClickableElementNameByChartType,
     chartClick,
     cellClick,
-    isDrillable
+    isDrillable,
+    IHighchartsChartDrilldownEvent
 } from '../drilldownEventing';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
-import noop = require('lodash/noop');
 
 describe('isDrillable', () => {
     const PURE_MEASURE_URI = '/gdc/md/projectId/obj/1';
@@ -113,7 +115,10 @@ describe('isDrillable', () => {
                         localIdentifier: ADHOC_MEASURE_POP_LOCAL_IDENTIFIER,
                         definition: {
                             popMeasure: {
-                                measureIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER
+                                measureIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                                popAttribute: {
+                                    uri: ADHOC_MEASURE_URI
+                                }
                             }
                         }
                     }
@@ -128,6 +133,22 @@ describe('isDrillable', () => {
 
 describe('Drilldown Eventing', () => {
     jest.useFakeTimers();
+    const ADHOC_MEASURE_LOCAL_IDENTIFIER = 'm1';
+    const ADHOC_MEASURE_URI = '/gdc/md/projectId/obj/2';
+    const afm: AFM.IAfm = {
+        measures: [
+            {
+                localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                definition: {
+                    measure: {
+                        item: {
+                            uri: ADHOC_MEASURE_URI
+                        }
+                    }
+                }
+            }
+        ]
+    };
 
     const pointClickEventData = {
         point: {
@@ -137,19 +158,25 @@ describe('Drilldown Eventing', () => {
                 {
                     id: 'id',
                     title: 'title',
+                    value: '123',
+                    name: 'name1',
                     identifier: 'identifier1',
                     uri: 'uri1',
                     some: 'nonrelevant data'
                 },
                 {
                     id: 'id',
-                    value: 'value',
+                    title: 'title',
+                    value: '123',
+                    name: 'name2',
                     identifier: 'identifier2',
                     uri: 'uri2'
                 },
                 {
                     id: 'id',
-                    name: 'name',
+                    title: 'title',
+                    value: '123',
+                    name: 'name3',
                     identifier: 'identifier3',
                     uri: 'uri3'
                 }
@@ -166,23 +193,40 @@ describe('Drilldown Eventing', () => {
         expect(fn(VisualizationTypes.PIE)).toBe('slice');
         expect(fn(VisualizationTypes.TABLE)).toBe('cell');
         expect(() => {
-            fn('nonsense');
+            fn('headline'); // headline is not defined
         }).toThrowError();
     });
 
     it('should call default fire event on point click and fire correct data', () => {
-        const afm = { is: 'AFM' };
-        const drillConfig = { afm, onFiredDrillEvent: noop };
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
 
         jest.runAllTimers();
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: { is: 'AFM' },
+            executionContext: {
+                measures: [
+                    {
+                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                        definition: {
+                            measure: {
+                                item: {
+                                    uri: ADHOC_MEASURE_URI
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             drillContext: {
                 type: 'line',
                 element: 'point',
@@ -199,7 +243,7 @@ describe('Drilldown Eventing', () => {
                     },
                     {
                         id: 'id',
-                        title: 'value',
+                        title: 'title',
                         header: {
                             identifier: 'identifier2',
                             uri: 'uri2'
@@ -207,7 +251,7 @@ describe('Drilldown Eventing', () => {
                     },
                     {
                         id: 'id',
-                        title: 'name',
+                        title: 'title',
                         header: {
                             identifier: 'identifier3',
                             uri: 'uri3'
@@ -219,11 +263,15 @@ describe('Drilldown Eventing', () => {
     });
 
     it('should call user defined callback on point click', () => {
-        const afm = { is: 'AFM' };
         const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
-        const target = { dispatchEvent: noop };
+        const target = { dispatchEvent: () => true };
 
-        chartClick(drillConfig, pointClickEventData, target, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
 
         jest.runAllTimers();
 
@@ -231,11 +279,15 @@ describe('Drilldown Eventing', () => {
     });
 
     it('should call both default fire event and user defined callback on point click', () => {
-        const afm = { is: 'AFM' };
         const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
 
         jest.runAllTimers();
 
@@ -244,11 +296,15 @@ describe('Drilldown Eventing', () => {
     });
 
     it('should only call user defined callback on point click', () => {
-        const afm = { is: 'AFM' };
         const drillConfig = { afm, onFiredDrillEvent: jest.fn().mockReturnValue(false) };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, target, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
 
         jest.runAllTimers();
 
@@ -257,8 +313,7 @@ describe('Drilldown Eventing', () => {
     });
 
     it('should call fire event on label click', () => {
-        const afm = { is: 'AFM' };
-        const drillConfig = { afm, onFiredDrillEvent: noop };
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const labelClickEventData = {
             points: [{
@@ -270,6 +325,8 @@ describe('Drilldown Eventing', () => {
                         title: 'title',
                         identifier: 'identifier1',
                         uri: 'uri1',
+                        value: '123',
+                        name: 'name1',
                         some: 'nonrelevant data'
                     }
                 ],
@@ -277,14 +334,32 @@ describe('Drilldown Eventing', () => {
             }]
         };
 
-        chartClick(drillConfig, labelClickEventData, target, VisualizationTypes.LINE);
+        chartClick(
+            drillConfig,
+            labelClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.LINE
+        );
 
         jest.runAllTimers();
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: { is: 'AFM' },
+            executionContext: {
+                measures: [
+                    {
+                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                        definition: {
+                            measure: {
+                                item: {
+                                    uri: ADHOC_MEASURE_URI
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             drillContext: {
                 type: 'line',
                 element: 'label',
@@ -308,8 +383,7 @@ describe('Drilldown Eventing', () => {
     });
 
     it('should call fire event on cell click', () => {
-        const afm = { is: 'AFM' };
-        const drillConfig = { afm, onFiredDrillEvent: noop };
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const cellClickEventData = {
             columnIndex: 1,
@@ -320,17 +394,36 @@ describe('Drilldown Eventing', () => {
                 id: 'id1',
                 identifier: 'identifier1',
                 uri: 'uri1',
+                name: 'name1',
+                value: '123',
                 some: 'irrelevant data'
             }],
             some: 'nonrelevant data'
         };
 
-        cellClick(drillConfig, cellClickEventData, target);
+        cellClick(
+            drillConfig,
+            cellClickEventData,
+            target as any as EventTarget
+        );
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: { is: 'AFM' },
+            executionContext: {
+                measures: [
+                    {
+                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                        definition: {
+                            measure: {
+                                item: {
+                                    uri: ADHOC_MEASURE_URI
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             drillContext: {
                 type: 'table',
                 element: 'cell',

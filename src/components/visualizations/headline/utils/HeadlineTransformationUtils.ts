@@ -5,9 +5,10 @@ import isEmpty = require('lodash/isEmpty');
 import isNumber = require('lodash/isNumber');
 import * as CustomEventPolyfill from 'custom-event';
 import * as invariant from 'invariant';
-import { getMeasureUriOrIdentifier } from '../../common/utils/drilldownEventing';
 import { AFM, Execution } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
+
+import { getMeasureUriOrIdentifier } from '../../utils/drilldownEventing';
 import { IDrillableItem, IDrillEvent, IDrillEventCallback } from '../../../../interfaces/DrillEvents';
 import { VisualizationTypes, VisElementType } from '../../../../constants/visualizationTypes';
 import { IHeadlineData, IHeadlineDataItem } from '../../../../interfaces/Headlines';
