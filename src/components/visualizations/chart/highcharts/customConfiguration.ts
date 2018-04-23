@@ -416,6 +416,7 @@ function getDataConfiguration(chartOptions: any) {
 
     switch (type) {
         case VisualizationTypes.SCATTER:
+        case VisualizationTypes.BUBBLE:
             return {
                 series
             };
@@ -447,6 +448,7 @@ function getHoverStyles(chartOptions: any, config: any) {
         case VisualizationTypes.LINE:
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
+        case VisualizationTypes.BUBBLE:
             seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
 

@@ -26,6 +26,7 @@ import {
     stringifyChartTypes,
     isScatterPlot,
     isFunnelChart,
+    isBubbleChart,
     unwrap,
     isHeatMap
 } from '../utils/common';
@@ -82,7 +83,7 @@ export function validateData(limits: any = {}, chartOptions: any) {
             ? pieChartLimits
             : limits),
         // check pie chart for negative values
-        hasNegativeValue: (isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type))
+        hasNegativeValue: (isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type) || isBubbleChart(type))
             && isNegativeValueIncluded(chartOptions.data.series)
     };
 }
@@ -124,12 +125,19 @@ export function getColorPalette(
     const isAttributePieChart = (isPieOrDonutChart(type) || isFunnelChart(type))
         && afm.attributes && afm.attributes.length > 0;
     const isAttributeScatterPlot = isScatterPlot(type) && afm.attributes && afm.attributes.length > 0;
+    const isAttributeBubbleChart = isBubbleChart(type) && afm.attributes && afm.attributes.length > 0;
     const isAttributeTreemap = isTreemap(type) && afm.attributes && afm.attributes.length > 0;
     if (isHeatMap(type)) {
         return [];
     }
 
-    if (stackByAttribute || isAttributePieChart || isAttributeScatterPlot || isAttributeTreemap) {
+    if (
+        stackByAttribute ||
+        isAttributePieChart ||
+        isAttributeScatterPlot ||
+        isAttributeBubbleChart ||
+        isAttributeTreemap
+    ) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
         return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
     }
@@ -159,8 +167,9 @@ export function getColorPalette(
 }
 
 export interface IPointData {
-    x?: number;
     y: number;
+    x?: number;
+    z?: number;
     value?: number;
     format: string;
     marker: {
@@ -174,6 +183,7 @@ export interface IPointData {
 export interface IPoint {
     x?: number;
     y: number;
+    z?: number;
     value?: number;
     series: ISeriesItem;
     category?: string;
@@ -375,6 +385,11 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
         if (measures[1]) {
             textData.push([customEscape(measures[1].measureHeaderItem.name),
             customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label)]);
+        }
+
+        if (measures[2]) {
+            textData.push([customEscape(measures[2].measureHeaderItem.name),
+                customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label)]);
         }
 
         return `<table class="tt-values">${textData.map(line => (
@@ -643,7 +658,8 @@ function getXAxes(config: IChartConfig, measureGroup: any, viewByAttribute: any)
         { label: config.xLabel, format: config.xFormat });
 
     const firstMeasureGroupItem = measureGroupItems[0];
-    if (isScatterPlot(type)) {
+
+    if (isScatterPlot(type) || isBubbleChart(type)) {
         const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
         if (noPrimaryMeasures) {
             return [{
@@ -651,7 +667,8 @@ function getXAxes(config: IChartConfig, measureGroup: any, viewByAttribute: any)
             }];
         } else {
             return [{
-                ...firstMeasureGroupItem
+                label: firstMeasureGroupItem.label || '',
+                format: firstMeasureGroupItem.format || ''
             }];
         }
     }
@@ -694,7 +711,7 @@ function getYAxes(config: IChartConfig, measureGroup: any, stackByAttribute: any
             } : null;
             yAxes = compact([firstAxis, secondAxis]);
         }
-    } else if (isScatterPlot(type)) {
+    } else if (isScatterPlot(type) || isBubbleChart(type)) {
         const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
         if (noPrimaryMeasures) {
             yAxes = [{
@@ -957,6 +974,57 @@ export function getChartOptions(
                 enabled: false
             },
             colorPalette: [] as any
+        };
+    }
+
+    if (isBubbleChart(type)) {
+        const seriesData = executionResultData.map((resData: any, index: number) => {
+            return {
+                name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
+                color: colorPalette[index],
+                legendIndex: index,
+                data: [{
+                    x: parseFloat(resData[0]),
+                    y: parseFloat(resData[1]),
+                    z: parseFloat(resData[2])
+                }]
+            };
+        });
+
+        const series = getDrillableSeries(
+            seriesData,
+            drillableItems,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            type,
+            afm
+        );
+
+        const measures = [
+            measureGroup.items[0] ? measureGroup.items[0] : null,
+            measureGroup.items[1] ? measureGroup.items[1] : null,
+            measureGroup.items[2] ? measureGroup.items[2] : null
+        ];
+
+        return {
+            type,
+            stacking,
+            legendLayout: 'horizontal',
+            colorPalette,
+            yAxes,
+            xAxes,
+            showInPercent: false,
+            data: {
+                series,
+                categories: ['']
+            },
+            actions: {
+                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+            },
+            grid: {
+                enabled: gridEnabled
+            }
         };
     }
 

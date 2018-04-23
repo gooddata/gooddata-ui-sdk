@@ -14,6 +14,32 @@ export const MEASURE_1: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_2: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm2',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/2'
+                }
+            }
+        }
+    }
+};
+
+export const MEASURE_3: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm3',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/3'
+                }
+            }
+        }
+    }
+};
+
 export const MEASURE_1_POP: VisualizationObject.IMeasure = {
     measure: {
         localIdentifier: 'm1_pop',
@@ -33,19 +59,6 @@ export const MEASURE_1_WITH_ALIAS: VisualizationObject.IMeasure = {
     measure: {
         ...MEASURE_1.measure,
         alias: 'My measure alias'
-    }
-};
-
-export const MEASURE_2: VisualizationObject.IMeasure = {
-    measure: {
-        localIdentifier: 'm2',
-        definition: {
-            measureDefinition: {
-                item: {
-                    uri: '/gdc/md/storybook/obj/2'
-                }
-            }
-        }
     }
 };
 

@@ -28,6 +28,10 @@ jest.mock('highcharts/modules/funnel', () => {
     return (H: any) => H;
 });
 
+jest.mock('highcharts/highcharts-more', () => {
+    return (H: any) => H;
+});
+
 jest.mock('../highcharts/chartPlugins', () => {
     return {
         initChartPlugins: (H: any) => H

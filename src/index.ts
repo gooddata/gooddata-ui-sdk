@@ -34,6 +34,7 @@ import { AreaChart } from './components/AreaChart';
 import { PieChart } from './components/PieChart';
 import { Treemap } from './components/Treemap';
 import { DonutChart } from './components/DonutChart';
+import { BubbleChart } from './components/BubbleChart';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
@@ -90,6 +91,7 @@ export {
     AreaChart,
     PieChart,
     Treemap,
+    BubbleChart,
     DonutChart,
     HeatMap,
     PoPHelper,

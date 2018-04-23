@@ -1660,6 +1660,66 @@ describe('chartOptionsBuilder', () => {
 
                 expect(chartOptions.xAxes).toEqual(expectedAxes);
             });
+
+            it('should generate one axis with no label if primary measures are empty for bubble chart', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                    type: 'bubble',
+                    mdObject: {
+                        buckets: [
+                            { localIdentifier: 'measures', items: [] },
+                            { localIdentifier: 'secondary_measures', items: [{}] },
+                            { localIdentifier: 'tertiary_measures', items: [{}] }
+                        ]
+                    }
+                });
+                const expectedAxes = [{
+                    label: ''
+                }];
+
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate one axis with label from primary measure for bubble chart', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                    type: 'bubble',
+                    mdObject: {
+                        buckets: [
+                            { localIdentifier: 'measures', items: [{}] },
+                            { localIdentifier: 'secondary_measures', items: [] },
+                            { localIdentifier: 'tertiary_measures', items: [] }
+                        ]
+                    }
+                });
+                const expectedAxes = [{
+                    label: '<button>Lost</button> ...',
+                    format: '#,##0.00'
+                }];
+
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+        });
+
+        describe('Bubble chart configuration', () => {
+            it('Should generate series from attribute elements', () => {
+                const chartOptions = generateChartOptions(fixtures.bubbleChartWith3MetricsAndAttribute, {
+                    type: 'bubble',
+                    mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
+                });
+
+                expect(chartOptions.data.series.length).toEqual(20);
+            });
+
+            it('Should generate correct axes', () => {
+                const chartOptions = generateChartOptions(fixtures.bubbleChartWith3MetricsAndAttribute, {
+                    type: 'bubble',
+                    mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
+                });
+
+                expect(chartOptions.xAxes.length).toEqual(1);
+                expect(chartOptions.yAxes.length).toEqual(1);
+                expect(chartOptions.xAxes[0].label).toEqual('_Snapshot [EOP-2]');
+                expect(chartOptions.yAxes[0].label).toEqual('# of Open Opps.');
+            });
         });
 
         describe('HeatMap configuration', () => {

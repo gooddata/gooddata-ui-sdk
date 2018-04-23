@@ -155,6 +155,33 @@ class DynamicChart extends React.Component<any, any> {
 }
 
 storiesOf('Internal/HighCharts/ChartTransformation', module)
+    .add('Bubble chart with three measures and one attribute', () => {
+        const dataSet = {
+            ...fixtures.bubbleChartWith3MetricsAndAttribute
+        };
+        const dataLarge = () => { throw new Error('Data too large'); };
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[]}
+                    config={{
+                        type: 'bubble',
+                        legend: {
+                            enabled: true,
+                            position: 'right'
+                        },
+                        legendLayout: 'horizontal',
+                        colors: fixtures.customPalette,
+                        mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={dataLarge}
+                    onNegativeValues={null}
+                />
+            )
+        );
+    })
     .add('Scatterplot with two measures and one attribute', () => {
         const dataSet = {
             ...fixtures.scatterPlotWith2MetricsAndAttribute

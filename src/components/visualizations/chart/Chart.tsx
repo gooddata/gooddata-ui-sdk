@@ -6,7 +6,8 @@ import { initChartPlugins } from './highcharts/chartPlugins';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
-export const Highcharts = require('highcharts/highcharts');
+export const HighchartsMore = require('highcharts/highcharts-more');
+export const Highcharts = require('highcharts/highcharts'); // tslint:disable-line
 const drillmodule = require('highcharts/modules/drilldown'); // tslint:disable-line
 const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-line
 const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
@@ -15,6 +16,7 @@ drillmodule(Highcharts);
 treemapModule(Highcharts);
 funnelModule(Highcharts);
 heatmap(Highcharts);
+HighchartsMore(Highcharts);
 initChartPlugins(Highcharts);
 
 export interface ILegendConfig {

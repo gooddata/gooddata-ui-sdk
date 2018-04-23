@@ -49,6 +49,17 @@ export const scatterPlotWith2MetricsAndAttribute: any = {
 
 };
 
+export const bubbleChartWith3MetricsAndAttributeMd: any = {
+    mdObject: require('../test_data/bubble_chart_with_3_metrics_and_attribute_md.json')
+};
+
+export const bubbleChartWith3MetricsAndAttribute: any = {
+    executionRequest: require('../test_data/bubble_chart_with_3_metrics_and_attribute_request.json').execution,
+    executionResponse:
+    require('../test_data/bubble_chart_with_3_metrics_and_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/bubble_chart_with_3_metrics_and_attribute_result.json').executionResult
+};
+
 export const scatterPlotWith2MetricsAndAttributeMdObject: any = {
     mdObject: require('../test_data/scatter_plot_with_2_metrics_and_attribute_md.json')
 };
