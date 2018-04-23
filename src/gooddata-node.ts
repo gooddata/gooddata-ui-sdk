@@ -3,7 +3,8 @@ const fetchCookie = require('fetch-cookie'); // tslint:disable-line:no-var-requi
 import nodeFetch from 'node-fetch';
 
 import { factory, SDK } from './gooddata';
-import { DataLayer, ApiResponse, ApiResponseError, ApiNetworkError } from './gooddata-browser';
+import * as DataLayer from './DataLayer';
+import { ApiResponse, ApiResponseError, ApiNetworkError } from './xhr';
 
 const factoryNode = factory(fetchCookie(nodeFetch as any));
 
