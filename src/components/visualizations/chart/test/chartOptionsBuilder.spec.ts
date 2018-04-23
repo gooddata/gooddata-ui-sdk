@@ -755,7 +755,7 @@ describe('chartOptionsBuilder', () => {
         it('should return correct drillContex for bar chart with stack by and view by attributes', () => {
             const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
             const [measureGroup, viewByAttribute, stackByAttribute] = getMVS(dataSet);
-            const measure = measureGroup.items[0].measureHeaderItem;
+            const measures = [measureGroup.items[0].measureHeaderItem];
 
             const viewByItem = {
                 ...viewByAttribute.items[0].attributeHeaderItem,
@@ -768,13 +768,14 @@ describe('chartOptionsBuilder', () => {
             };
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measure, afm);
+            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
             expect(drillContext).toEqual([
                 {
-                    id: '1225',
-                    identifier: 'label.owner.region',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024',
-                    value: 'East Coast'
+                    format: '#,##0.00',
+                    id: 'amountMetric',
+                    identifier: 'ah1EuQxwaCqs',
+                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
+                    value: 'Amount'
                 },
                 {
                     id: '1226',
@@ -783,11 +784,10 @@ describe('chartOptionsBuilder', () => {
                     value: 'Direct Sales'
                 },
                 {
-                    format: '#,##0.00',
-                    id: 'amountMetric',
-                    identifier: 'ah1EuQxwaCqs',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                    value: 'Amount'
+                    id: '1225',
+                    identifier: 'label.owner.region',
+                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024',
+                    value: 'East Coast'
                 }
             ]);
         });
@@ -795,13 +795,13 @@ describe('chartOptionsBuilder', () => {
         it('should return correct drillContex for pie chart measures only', () => {
             const dataSet = fixtures.pieChartWithMetricsOnly;
             const [measureGroup] = getMVS(dataSet);
-            const measure = measureGroup.items[0].measureHeaderItem;
+            const measures = [measureGroup.items[0].measureHeaderItem];
 
             const viewByItem: any = null;
             const stackByItem: any = null;
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measure, afm);
+            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
             expect(drillContext).toEqual([
                 {
                     format: '#,##0.00',
@@ -815,6 +815,100 @@ describe('chartOptionsBuilder', () => {
     });
 
     describe('getDrillableSeries', () => {
+        describe('in usecase of scatter plot with 2 measures and attribute', () => {
+            const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+            const { afm } = dataSet.executionRequest;
+            const mVS = getMVS(dataSet);
+            const type = 'scatter';
+            const seriesWithoutDrillability = getSeries(
+                dataSet.executionResult.data,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                DEFAULT_COLOR_PALETTE
+            );
+
+            const drillableMeasures = [{
+                uri: dataSet.executionResponse.dimensions[0]
+                    .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
+            }];
+            const drillableMeasuresSeriesData = getDrillableSeries(
+                seriesWithoutDrillability,
+                drillableMeasures,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                afm
+            );
+
+            it('should assign correct drillContext to pointData with drilldown true', () => {
+                expect(drillableMeasuresSeriesData
+                    .map((seriesItem: any) => seriesItem.data[0].drillContext)
+                ).toEqual([
+                    [
+                        {
+                            format: '#,##0.00',
+                            id: 'lostMetric',
+                            identifier: 'af2Ewj9Re2vK',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                            value: '<button>Lost</button> ...'
+                        }, {
+                            format: '#,##0.00',
+                            id: 'wonMetric',
+                            identifier: 'afSEwRwdbMeQ',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
+                            value: 'Won'
+                        }, {
+                            id: '2008',
+                            identifier: 'created.aag81lMifn6q',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
+                            value: '<button>2008</button>'
+                        }
+                    ], [
+                        {
+                            format: '#,##0.00',
+                            id: 'lostMetric',
+                            identifier: 'af2Ewj9Re2vK',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                            value: '<button>Lost</button> ...'
+                        }, {
+                            format: '#,##0.00',
+                            id: 'wonMetric',
+                            identifier: 'afSEwRwdbMeQ',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
+                            value: 'Won'
+                        }, {
+                            id: '2008',
+                            identifier: 'created.aag81lMifn6q',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
+                            value: '<button>2008</button>'
+                        }
+                    ], [
+                        {
+                            format: '#,##0.00',
+                            id: 'lostMetric',
+                            identifier: 'af2Ewj9Re2vK',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
+                            value: '<button>Lost</button> ...'
+                        }, {
+                            format: '#,##0.00',
+                            id: 'wonMetric',
+                            identifier: 'afSEwRwdbMeQ',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
+                            value: 'Won'
+                        }, {
+                            id: '2008',
+                            identifier: 'created.aag81lMifn6q',
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
+                            value: '<button>2008</button>'
+                        }
+                    ]
+                ]);
+            });
+        });
+
         describe('in usecase of bar chart with 6 pop measures and view by attribute', () => {
             const dataSet = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
             const { afm } = dataSet.executionRequest;
@@ -966,8 +1060,7 @@ describe('chartOptionsBuilder', () => {
                                 identifier: 'af2Ewj9Re2vK',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
                                 value: '<button>Lost</button> ...'
-                            },
-                            {
+                            }, {
                                 id: '2008',
                                 identifier: 'created.aag81lMifn6q',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
@@ -982,8 +1075,7 @@ describe('chartOptionsBuilder', () => {
                                 identifier: 'alUEwmBtbwSh',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285',
                                 value: 'Expected'
-                            },
-                            {
+                            }, {
                                 id: '2008',
                                 identifier: 'created.aag81lMifn6q',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',

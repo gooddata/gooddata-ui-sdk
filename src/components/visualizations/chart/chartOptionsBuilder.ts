@@ -36,8 +36,6 @@ import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
-
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
 
 const enableAreaChartStacking = (stacking: any) => {
@@ -463,11 +461,11 @@ export function findAttributeInDimension(dimension: any, attributeHeaderItemsDim
     });
 }
 
-export function getDrillContext(stackByItem: any, viewByItem: any, measure: AFM.IMeasure, afm: AFM.IAfm) {
+export function getDrillContext(stackByItem: any, viewByItem: any, measures: AFM.IMeasure[], afm: AFM.IAfm) {
     return without([
-        stackByItem,
+        ...measures,
         viewByItem,
-        measure
+        stackByItem
     ], null).map(({
         uri, // header attribute value or measure uri
         identifier = '', // header attribute value or measure identifier
@@ -507,14 +505,20 @@ export function getDrillableSeries(
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
         const data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
+            let measures = [];
+
+            if (isScatterPlot(type)) {
+                measures = get(measureGroup, 'items', []).slice(0, 2).map(unwrap);
+            } else {
             // measureIndex is usually seriesIndex,
             // except for stack by attribute and metricOnly pie or treemap chart it is looped-around pointIndex instead
             // Looping around the end of items array only works when measureGroup is the last header on it's dimension
             // We do not support setups with measureGroup before attributeHeaders
-            const measureIndex = !stackByAttribute && !isPieOrTreemapWithOnlyMeasures
-                ? seriesIndex
-                : pointIndex % measureGroup.items.length;
-            const measure = unwrap(measureGroup.items[measureIndex]);
+                const measureIndex = !stackByAttribute && !isPieOrTreemapWithOnlyMeasures
+                ? seriesIndex : pointIndex % measureGroup.items.length;
+
+                measures = [unwrap(measureGroup.items[measureIndex])];
+            }
 
             const viewByIndex = isHeatMap(type) ? pointData.x : pointIndex;
             const stackByIndex = isHeatMap(type) ? pointData.y : seriesIndex;
@@ -537,7 +541,7 @@ export function getDrillableSeries(
             //   point's stackBy attribute,
             //   point's stackBy attribute item,
             const drillableHooks = without([
-                measure,
+                ...measures,
                 viewByAttribute,
                 viewByItem,
                 stackByAttribute,
@@ -551,8 +555,9 @@ export function getDrillableSeries(
             const drillableProps: any = {
                 drilldown
             };
+
             if (drilldown) {
-                drillableProps.drillContext = getDrillContext(measure, viewByItem, stackByItem, afm);
+                drillableProps.drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
                 isSeriesDrillable = true;
             }
             return {
@@ -785,7 +790,7 @@ export function getChartOptions(
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
-    if (type === VisualizationTypes.SCATTER) {
+    if (isScatterPlot(type)) {
         const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
             .find(bucket => bucket.localIdentifier === 'measures');
         const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])

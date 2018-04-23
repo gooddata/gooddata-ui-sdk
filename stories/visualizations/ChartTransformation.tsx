@@ -164,7 +164,12 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
         return screenshotWrap(
             wrap(
                 <ChartTransformation
-                    drillableItems={[]}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResponse.dimensions[1]
+                                .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                        }
+                    ]}
                     config={{
                         type: 'scatter',
                         legend: {
