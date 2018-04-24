@@ -49,11 +49,11 @@ function isNullExecutionResult(responses: Execution.IExecutionResponses): boolea
 }
 
 function hasEmptyData(responses: Execution.IExecutionResponses): boolean {
-    return responses.executionResult.executionResult.data.length === 0;
+    return responses.executionResult.data.length === 0;
 }
 
 function hasMissingHeaderItems(responses: Execution.IExecutionResponses): boolean {
-    return !responses.executionResult.executionResult.headerItems;
+    return !responses.executionResult.headerItems;
 }
 
 function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {

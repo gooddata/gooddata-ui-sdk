@@ -2,14 +2,14 @@
 import { Execution } from '@gooddata/typings';
 
 export function fixEmptyHeaderItems(
-    executionResultWrapper: Execution.IExecutionResult,
+    executionResult: Execution.IExecutionResult,
     emptyHeaderString: string
 ): Execution.IExecutionResult {
-    if (!executionResultWrapper.executionResult.headerItems) {
-        return executionResultWrapper;
+    if (!executionResult.headerItems) {
+        return executionResult;
     }
 
-    const headerItems = executionResultWrapper.executionResult.headerItems.map((dim) => {
+    const headerItems = executionResult.headerItems.map((dim) => {
         return dim.map((attr) => {
             return attr.map((headerItemWrapper) => {
                 const type = Object.keys(headerItemWrapper)[0];
@@ -23,9 +23,7 @@ export function fixEmptyHeaderItems(
     });
 
     return {
-        executionResult: {
-            ...executionResultWrapper.executionResult,
-            headerItems
-        }
+        ...executionResult,
+        headerItems
     };
 }

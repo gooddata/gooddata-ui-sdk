@@ -2,6 +2,8 @@
 import * as HttpStatusCodes from 'http-status-codes';
 import { checkEmptyResult, convertErrors } from '../errorHandlers';
 import { ApiResponseError } from '@gooddata/gooddata-js';
+import 'isomorphic-fetch';
+
 import {
     emptyResponse,
     emptyResponseWithNull,

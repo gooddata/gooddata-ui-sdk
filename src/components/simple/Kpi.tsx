@@ -138,7 +138,7 @@ export class KpiWrapped extends React.Component<IKpiProps & InjectedIntlProps, n
         if (isEmptyResult(result)) {
             return '';
         }
-        return parseFloat(result.executionResult.executionResult.data[0].toString());
+        return parseFloat(result.executionResult.data[0].toString());
     }
 }
 

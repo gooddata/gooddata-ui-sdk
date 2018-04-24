@@ -40,72 +40,68 @@ export const executionRequest = {
 };
 
 const executionResponse = {
-    executionResponse: {
-        dimensions: [
-            {
-                headers: [
-                    {
-                        measureGroupHeader: {
-                            items: [
-                                {
-                                    measureHeaderItem: {
-                                        name: 'Primary',
-                                        format: '#,##0.00',
-                                        localIdentifier: 'm1',
-                                        uri: 'urim1',
-                                        identifier: 'idm1'
-                                    }
-                                },
-                                {
-                                    measureHeaderItem: {
-                                        name: 'Secondary',
-                                        format: '#,##0.00',
-                                        localIdentifier: 'm2',
-                                        uri: 'urim2',
-                                        identifier: 'idm2'
-                                    }
+    dimensions: [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: [
+                            {
+                                measureHeaderItem: {
+                                    name: 'Primary',
+                                    format: '#,##0.00',
+                                    localIdentifier: 'm1',
+                                    uri: 'urim1',
+                                    identifier: 'idm1'
                                 }
-                            ]
-                        }
+                            },
+                            {
+                                measureHeaderItem: {
+                                    name: 'Secondary',
+                                    format: '#,##0.00',
+                                    localIdentifier: 'm2',
+                                    uri: 'urim2',
+                                    identifier: 'idm2'
+                                }
+                            }
+                        ]
                     }
-                ]
-            }
-        ],
-        links: {
-            executionResult: 'abc'
+                }
+            ]
         }
+    ],
+    links: {
+        executionResult: 'abc'
     }
 };
 
 const executionResult = {
-    executionResult: {
-        data: [
-            '80406324.96',
-            '36219131.58'
-        ],
-        headerItems: [
+    data: [
+        '80406324.96',
+        '36219131.58'
+    ],
+    headerItems: [
+        [
             [
-                [
-                    {
-                        measureHeaderItem: {
-                            name: 'Primary',
-                            order: 0
-                        }
-                    },
-                    {
-                        measureHeaderItem: {
-                            name: 'Secondary',
-                            order: 1
-                        }
+                {
+                    measureHeaderItem: {
+                        name: 'Primary',
+                        order: 0
                     }
-                ]
+                },
+                {
+                    measureHeaderItem: {
+                        name: 'Secondary',
+                        order: 1
+                    }
+                }
             ]
-        ],
-        paging: {
-            count: [2],
-            offset: [0],
-            total: [2]
-        }
+        ]
+    ],
+    paging: {
+        count: [2],
+        offset: [0],
+        total: [2]
     }
 };
 

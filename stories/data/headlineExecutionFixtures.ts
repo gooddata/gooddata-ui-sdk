@@ -29,7 +29,7 @@ const headlineWithOneMeasureExecutionRequest: AFM.IExecution['execution'] = {
     }
 };
 
-const headlineWithOneMeasureExecutionResponse: Execution.IExecutionResponse['executionResponse'] = {
+const headlineWithOneMeasureExecutionResponse: Execution.IExecutionResponse = {
     dimensions: [
         {
             headers: [
@@ -56,7 +56,7 @@ const headlineWithOneMeasureExecutionResponse: Execution.IExecutionResponse['exe
     }
 };
 
-const headlineWithOneMeasureExecutionResult: Execution.IExecutionResult['executionResult'] = {
+const headlineWithOneMeasureExecutionResult: Execution.IExecutionResult = {
     data: [
         9011389.956
     ],
@@ -125,7 +125,7 @@ const headlineWithTwoMeasuresExecutionRequest: AFM.IExecution['execution'] = {
     }
 };
 
-const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse['executionResponse'] = {
+const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse = {
     dimensions: [
         {
             headers: [
@@ -161,7 +161,7 @@ const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse['ex
     }
 };
 
-const headlineWithTwoMeasuresExecutionResult: Execution.IExecutionResult['executionResult'] = {
+const headlineWithTwoMeasuresExecutionResult: Execution.IExecutionResult = {
     data: [
         9011389.956,
         42470571.16
