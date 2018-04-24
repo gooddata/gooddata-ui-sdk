@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/gooddata-js",
-  "version": "6.0.0-alpha8",
+  "version": "6.0.0-alpha9",
   "author": "GoodData",
   "description": "GoodData JavaScript SDK",
   "license": "BSD-3-Clause",
