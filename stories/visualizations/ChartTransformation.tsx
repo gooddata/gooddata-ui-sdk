@@ -733,6 +733,12 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
         return screenshotWrap(
             wrap(
                 <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResponse.dimensions[0]
+                                .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
+                        }
+                    ]}
                     config={{
                         type: 'dual',
                         mdObject: fixtures.barChartWith2MetricsAndViewByAttributeMd.mdObject

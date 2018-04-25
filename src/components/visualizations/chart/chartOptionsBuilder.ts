@@ -704,12 +704,12 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
+    const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
 
     let yAxes: IAxis[] = [];
 
     if (isDualChart(type)) {
-        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
-        if (firstMeasureGroupItem && noPrimaryMeasures) {
+        if (noPrimaryMeasures) {
             yAxes = [null, {
                 ...firstMeasureGroupItem,
                 opposite: true,
@@ -728,7 +728,6 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
             yAxes = compact([firstAxis, secondAxis]);
         }
     } else if (isScatterPlot(type) || isBubbleChart(type)) {
-        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
         if (noPrimaryMeasures) {
             yAxes = [{
                 ...firstMeasureGroupItem,

@@ -101,6 +101,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
     switch (type) {
         case VisualizationTypes.LINE:
         case VisualizationTypes.AREA:
+        case VisualizationTypes.DUAL:
         case VisualizationTypes.SCATTER:
             return 'point';
         case VisualizationTypes.COLUMN:
