@@ -192,6 +192,39 @@ storiesOf('Internal/Headline', module)
                 />,
                 'auto', 475)
         )
+    )
+    .add('Truncated', () =>
+        screenshotWrap(
+            wrap(
+                <Headline
+                    data={{
+                        primaryItem: {
+                            localIdentifier: 'm1',
+                            value: '666429.405',
+                            title: 'Yearly Earnings',
+                            isDrillable: false
+                        },
+                        secondaryItem: {
+                            localIdentifier: 'm2',
+                            value: '32225.01',
+                            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
+                            'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ' +
+                            'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure ' +
+                            'dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
+                            'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt ' +
+                            'mollit anim id est laborum.'
+                        },
+                        tertiaryItem: {
+                            localIdentifier: 'tertiaryIdentifier',
+                            value: '0.9',
+                            title: 'Versus',
+                            format: '#,##0%'
+                        }
+                    }}
+                    onAfterRender={action('onAfterRender')}
+                />,
+                'auto', 475)
+        )
     );
 
 storiesOf('Internal/Headline/Drilldown eventing', module)
