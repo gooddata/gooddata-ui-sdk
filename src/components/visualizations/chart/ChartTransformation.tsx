@@ -4,7 +4,8 @@ import * as invariant from 'invariant';
 import noop = require('lodash/noop');
 import {
     AFM,
-    Execution
+    Execution,
+    VisualizationObject
 } from '@gooddata/typings';
 
 import { getChartOptions, validateData } from './chartOptionsBuilder';
@@ -16,14 +17,11 @@ import HighChartsRenderer, {
     renderChart as chartRenderer
 } from './HighChartsRenderer';
 import { IChartConfig } from './Chart';
+import { OnLegendReady } from '../../../interfaces/Events';
+import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
-}
-
-export interface IDrillableItems {
-    identifier: string;
-    uri: string;
 }
 
 export interface IExecutionRequest {
@@ -33,21 +31,21 @@ export interface IExecutionRequest {
 
 export interface IChartTransformationProps {
     config: IChartConfig;
-    drillableItems: IDrillableItems[];
+    drillableItems: IDrillableItem[];
     height: number;
     width: number;
 
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
-    mdObject?: any;
+    mdObject?: VisualizationObject.IVisualizationObjectContent;
 
+    onLegendReady: OnLegendReady;
     afterRender(): void;
     renderer(arg: IHighChartsRendererProps): JSX.Element;
-    onDataTooLarge(): void;
-    onNegativeValues(): void;
+    onDataTooLarge(chartOptions: any): void;
+    onNegativeValues(chartOptions: any): void;
     onFiredDrillEvent(): void;
-    onLegendReady(): void;
 }
 
 export interface IChartTransformationState {
@@ -57,7 +55,7 @@ export interface IChartTransformationState {
 
 export default class ChartTransformation extends React.Component<IChartTransformationProps, IChartTransformationState> {
     public static defaultProps = {
-        drillableItems: [] as any,
+        drillableItems: [] as IDrillableItem[],
         renderer: renderHighCharts,
         afterRender: noop,
         onNegativeValues: null as any,
@@ -73,7 +71,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         this.assignChartOptions(this.props);
     }
 
-    public componentWillReceiveProps(nextProps: any) {
+    public componentWillReceiveProps(nextProps: IChartTransformationProps) {
         this.assignChartOptions(nextProps);
     }
 
@@ -102,7 +100,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         };
     }
 
-    public assignChartOptions(props: any) {
+    public assignChartOptions(props: IChartTransformationProps) {
         const {
             drillableItems,
             executionRequest: { afm, resultSpec },
@@ -113,11 +111,16 @@ export default class ChartTransformation extends React.Component<IChartTransform
             onNegativeValues
         } = props;
 
+        let multiDimensionalData = data;
+        if (data[0].constructor !== Array) {
+            multiDimensionalData = [data] as Execution.DataValue[][];
+        }
+
         this.chartOptions = getChartOptions(
             afm,
             resultSpec,
             dimensions,
-            data,
+            multiDimensionalData as Execution.DataValue[][],
             headerItems,
             config,
             drillableItems

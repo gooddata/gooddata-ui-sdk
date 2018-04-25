@@ -6,10 +6,26 @@ import * as cx from 'classnames';
 
 import FluidLegend from './FluidLegend';
 import StaticLegend from './StaticLegend';
+import { ChartType } from '../../../../constants/visualizationTypes';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 
-export default class Legend extends React.PureComponent<any, any> {
+export interface ILegendProps {
+    responsive: boolean;
+    documentObj?: Document;
+    legendItemsEnabled: any;
+    height: number;
+    position: string;
+    chartType: ChartType;
+    series: any;
+    onItemClick(item: any): void;
+}
+
+export interface ILegendState {
+    showFluid: boolean;
+}
+
+export default class Legend extends React.PureComponent<ILegendProps, ILegendState> {
     public static defaultProps = {
         responsive: false,
         documentObj: document,
@@ -19,7 +35,7 @@ export default class Legend extends React.PureComponent<any, any> {
 
     private throttledOnWindowResize: any;
 
-    constructor(props: any) {
+    constructor(props: ILegendProps) {
         super(props);
 
         this.state = {

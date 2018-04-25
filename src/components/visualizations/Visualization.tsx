@@ -5,7 +5,6 @@ import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import isFunction = require('lodash/isFunction');
 import omitBy = require('lodash/omitBy');
-import { Highcharts, IChartConfig } from './chart/Chart';
 
 // TODO: will be ported later
 import {
@@ -22,7 +21,11 @@ import {
     stringifyChartTypes
 } from './utils/common';
 
-import ChartTransformation, { IExecutionRequest, IDrillableItems, renderHighCharts } from './chart/ChartTransformation';
+import { Highcharts, IChartConfig } from './chart/Chart';
+
+import { IDrillableItem } from '../../interfaces/DrillEvents';
+
+import ChartTransformation, { IExecutionRequest, renderHighCharts } from './chart/ChartTransformation';
 
 export interface IVisualizationProps {
     height: number;
@@ -33,7 +36,7 @@ export interface IVisualizationProps {
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
-    drillableItems: IDrillableItems[];
+    drillableItems: IDrillableItem[];
 
     onFiredDrillEvent(): void;
     afterRender(): void;

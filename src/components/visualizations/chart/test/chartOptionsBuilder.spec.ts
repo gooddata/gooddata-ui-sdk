@@ -32,6 +32,7 @@ import {
 import {
     DEFAULT_COLOR_PALETTE
 } from '../../utils/color';
+import { IDrillableItem } from '../../../..';
 
 export function generateChartOptions(
     dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,
@@ -39,7 +40,7 @@ export function generateChartOptions(
         type: 'column',
         stacking: false
     },
-    drillableItems: any = []
+    drillableItems: IDrillableItem[] = []
 ) {
     const {
         executionRequest: { afm, resultSpec },

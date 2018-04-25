@@ -7,11 +7,16 @@ import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import partial = require('lodash/partial');
 import * as cx from 'classnames';
-import Chart from './Chart';
-import Legend from './legend/Legend';
+import Chart, { IChartConfig, IChartProps } from './Chart';
+import Legend, { ILegendProps } from './legend/Legend';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 import { isPieOrDonutChart, isTreemap } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
+import { OnLegendReady } from '../../../interfaces/Events';
+
+export interface IChartHTMLElement extends HTMLElement {
+    getChart(): Highcharts.ChartObject;
+}
 
 export interface IHighChartsRendererProps {
     chartOptions: any;
@@ -19,21 +24,21 @@ export interface IHighChartsRendererProps {
     height: number;
     width: number;
     legend: any;
-    legendRenderer(legendProps: any): void;
-    chartRenderer(chartProps: any): void;
+    onLegendReady: OnLegendReady;
+    legendRenderer(legendProps: ILegendProps): any;
+    chartRenderer(chartProps: IChartProps): any;
     afterRender(): void;
-    onLegendReady(legendItems: any): void;
 }
 
 export interface IHighChartsRendererState {
     legendItemsEnabled: boolean[];
 }
 
-export function renderChart(props: any) {
+export function renderChart(props: IChartProps) {
     return <Chart {...props} />;
 }
 
-export function renderLegend(props: any) {
+export function renderLegend(props: ILegendProps) {
     return <Legend {...props} />;
 }
 
@@ -48,7 +53,7 @@ export default class HighChartsRenderer
     extends React.PureComponent<IHighChartsRendererProps, IHighChartsRendererState> {
     public static defaultProps = {
         afterRender: noop,
-        height: null as any,
+        height: null as number,
         legend: {
             enabled: true,
             responsive: false,
@@ -59,9 +64,9 @@ export default class HighChartsRenderer
         onLegendReady: noop
     };
 
-    private chartRef: any;
+    private chartRef: IChartHTMLElement;
 
-    constructor(props: any) {
+    constructor(props: IHighChartsRendererProps) {
         super(props);
         this.state = {
             legendItemsEnabled: []
@@ -80,7 +85,7 @@ export default class HighChartsRenderer
             if (this.chartRef) {
                 const chart = this.chartRef.getChart();
 
-                chart.container.style.height = this.props.height || '100%';
+                chart.container.style.height = (this.props.height && String(this.props.height)) || '100%';
                 chart.container.style.position = this.props.height ? 'relative' : 'absolute';
 
                 chart.reflow();
@@ -92,7 +97,7 @@ export default class HighChartsRenderer
         });
     }
 
-    public componentWillReceiveProps(nextProps: any) {
+    public componentWillReceiveProps(nextProps: IHighChartsRendererProps) {
         const thisLegendItems = get(this.props, 'legend.items', []);
         const nextLegendItems = get(nextProps, 'legend.items', []);
         const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
@@ -117,7 +122,7 @@ export default class HighChartsRenderer
         });
     }
 
-    public setChartRef(chartRef: any) {
+    public setChartRef(chartRef: IChartHTMLElement) {
         this.chartRef = chartRef;
     }
 
@@ -148,7 +153,7 @@ export default class HighChartsRenderer
         });
     }
 
-    public createChartConfig(chartConfig: any, legendItemsEnabled: any) {
+    public createChartConfig(chartConfig: any, legendItemsEnabled: any): IChartConfig {
         const config: any = cloneDeep(chartConfig);
         const { yAxis } = config;
 
@@ -181,7 +186,7 @@ export default class HighChartsRenderer
         const { items } = legend;
 
         if (!legend.enabled) {
-            return false;
+            return null;
         }
 
         let { type } = chartOptions;
