@@ -612,7 +612,10 @@ describe('Headline', () => {
             expect(emptyValueElement.exists()).toEqual(false);
 
             const secondaryValueText = wrapper.find('.s-headline-secondary-item .s-headline-value').text();
-            const secondaryValueStyle = wrapper.find('.s-headline-secondary-item').prop('style');
+            const secondaryValueStyle = wrapper
+                .find('.s-headline-secondary-item')
+                .find('.s-headline-value-wrapper')
+                .prop('style');
 
             expect(secondaryValueText).toEqual('$1,666.11');
             expect(secondaryValueStyle).toHaveProperty('color', '#9c46b5');
