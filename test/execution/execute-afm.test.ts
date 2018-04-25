@@ -1,6 +1,7 @@
 // Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
+import { Execution } from '@gooddata/typings';
 import { ExecuteAfmModule, nextPageOffset, mergePageData } from '../../src/execution/execute-afm';
 import { XhrModule } from '../../src/xhr';
 
@@ -26,73 +27,110 @@ describe('nextPageOffset', () => {
 });
 
 describe('mergePageData', () => {
-    it('should work for 1 dimension', () => {
-        let result = { executionResult: { data: [1], headerItems: [[['A1']]] } };
+    function createAttributeHeaderItem(name: string): Execution.IResultAttributeHeaderItem {
+        return {
+            attributeHeaderItem: {
+                name,
+                uri: `/gdc/md/projectId/obj/${name}`
+            }
+        };
+    }
+    function createMeasureHeaderItem(name: string, order: number): Execution.IResultMeasureHeaderItem {
+        return {
+            measureHeaderItem: {
+                name,
+                order
+            }
+        };
+    }
+    const A1 = createAttributeHeaderItem('a1');
+    const A2 = createAttributeHeaderItem('a2');
+    const A3 = createAttributeHeaderItem('a3');
+    const M1 = createMeasureHeaderItem('m1', 1);
+    const M2 = createMeasureHeaderItem('m2', 2);
+    const M5 = createMeasureHeaderItem('m5', 5);
 
-        result = mergePageData(result, {
+    it('should work for 1 dimension', () => {
+        let resultWrapper = {
+            executionResult: {
+                data: [1],
+                headerItems: [[[A1]]]
+            }
+        };
+
+        resultWrapper = mergePageData(resultWrapper, {
             executionResult: {
                 paging: { offset: [1] },
                 data: [2],
-                headerItems: [[['A1']]]
+                headerItems: [[[A1]]]
             }
         });
-        expect(result).toEqual({ executionResult: { data: [1, 2], headerItems: [[['A1']]] } });
+        expect(resultWrapper).toEqual({
+            executionResult: {
+                data: [1, 2],
+                headerItems: [[[A1]]]
+            }
+        });
 
-        result = mergePageData(result, {
+        resultWrapper = mergePageData(resultWrapper, {
             executionResult: {
                 paging: { offset: [2] },
                 data: [3],
-                headerItems: [[['A1']]]
+                headerItems: [[[A1]]]
             }
         });
-        expect(result).toEqual({ executionResult: { data: [1, 2, 3], headerItems: [[['A1']]] } });
+        expect(resultWrapper).toEqual({
+            executionResult: {
+                data: [1, 2, 3],
+                headerItems: [[[A1]]]
+            }
+        });
     });
 
     it('should work for 2 dimensions', () => {
         // page [0,0]
-        let result = {
+        let resultWrapper = {
             executionResult: {
                 data: [[11, 12], [21, 22]],
-                headerItems: [[['M1', 'M2']], [['A1', 'A2']]]
+                headerItems: [[[M1, M2]], [[A1, A2]]]
             }
         };
 
         // merge page [0,1]
-        result = mergePageData(result, {
+        resultWrapper = mergePageData(resultWrapper, {
             executionResult: {
                 paging: { offset: [0, 2] },
                 data: [[13], [23]],
-                headerItems: [[['M1', 'M2']], [['A3']]]
+                headerItems: [[[M1, M2]], [[A3]]]
             }
         });
-        expect(result).toEqual({
+        expect(resultWrapper).toEqual({
             executionResult: {
                 data: [[11, 12, 13], [21, 22, 23]],
-                headerItems: [[['M1', 'M2']], [['A1', 'A2', 'A3']]]
+                headerItems: [[[M1, M2]], [[A1, A2, A3]]]
             }
         });
 
         // merge page [1,0]
-        result = mergePageData(result, {
+        resultWrapper = mergePageData(resultWrapper, {
             executionResult: {
                 paging: { offset: [2, 0] },
                 data: [[51, 52]],
-                headerItems: [[['M5']], [['A1', 'A2']]]
+                headerItems: [[[M5]], [[A1, A2]]]
             }
         });
         // merge page [1,1]
-        result = mergePageData(result, {
+        resultWrapper = mergePageData(resultWrapper, {
             executionResult: {
                 paging: { offset: [2, 2] },
                 data: [[53]],
-                headerItems: [[['M5']], [['A3']]]
+                headerItems: [[[M5]], [[A3]]]
             }
         });
-        expect(result).toEqual({
+        expect(resultWrapper).toEqual({
             executionResult: {
                 data: [[11, 12, 13], [21, 22, 23], [51, 52, 53]],
-                headerItems: [[['M1', 'M2', 'M5']], [['A1', 'A2', 'A3']]]
-
+                headerItems: [[[M1, M2, M5]], [[A1, A2, A3]]]
             }
         });
     });
@@ -104,25 +142,70 @@ describe('executeAfm', () => {
         fetchMock.restore();
     });
 
-    function pollingResponseBody() {
+    function getExecutionResponse(): Execution.IExecutionResponse {
         return {
-            executionResponse: {
-                dimensions: [],
-                links: {
-                    executionResult: '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overriden'
-                }
+            dimensions: [],
+            links: {
+                executionResult: '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overriden'
             }
         };
     }
 
-    function executionResultResponseBody() {
-        return {
-            executionResult: {
-                data: [[11, 12], [51, 52]],
-                paging: { total: [2, 2], offset: [0, 0] },
-                headerItems: [[['M1', 'M2']], [['A1', 'A2']]]
-            }
+    function getPollingResponseBody(): string {
+        const response: Execution.IExecutionResponseWrapper = {
+            executionResponse: getExecutionResponse()
         };
+        return JSON.stringify(response);
+    }
+
+    function getExecutionResult(): Execution.IExecutionResult {
+        return {
+            data: [
+                [11, 12],
+                [51, 52]
+            ],
+            paging: {
+                total: [2, 2],
+                offset: [0, 0],
+                count: [2, 2]
+            },
+            headerItems: [
+                [
+                    [{
+                        measureHeaderItem: {
+                            name: 'M1',
+                            order: 0
+                        }
+                    }, {
+                        measureHeaderItem: {
+                            name: 'M2',
+                            order: 0
+                        }
+                    }]
+                ],
+                [
+                    [{
+                        attributeHeaderItem: {
+                            name: 'A1',
+                            uri: '/gdc/md/obj/attr1'
+                        }
+                    }, {
+                        attributeHeaderItem: {
+                            name: 'A2',
+                            uri: '/gdc/md/obj/attr2'
+                        }
+                    }]
+                ]
+            ]
+        };
+    }
+
+    function getExecutionResultResponseBody(): string {
+        const result: Execution.IExecutionResultWrapper = {
+            executionResult: getExecutionResult()
+        };
+
+        return JSON.stringify(result);
     }
 
     it('should reject when /executeAfm fails', () => {
@@ -139,7 +222,7 @@ describe('executeAfm', () => {
     it('should reject when first polling fails', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&offset=0%2C0',
@@ -154,7 +237,7 @@ describe('executeAfm', () => {
     it('should resolve when first polling returns 204', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&offset=0%2C0',
@@ -162,7 +245,7 @@ describe('executeAfm', () => {
         );
         return createExecuteAfm().executeAfm('myFakeProjectId', {}).then((response) => {
             expect(response).toEqual({
-                executionResponse: pollingResponseBody(),
+                executionResponse: getExecutionResponse(),
                 executionResult: null
             });
         });
@@ -171,7 +254,7 @@ describe('executeAfm', () => {
     it('should reject when first polling returns 413', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&offset=0%2C0',
@@ -186,16 +269,16 @@ describe('executeAfm', () => {
     it('should resolve on first polling', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&offset=0%2C0',
-            { status: 200, body: JSON.stringify(executionResultResponseBody()) }
+            { status: 200, body: getExecutionResultResponseBody() }
         );
         return createExecuteAfm().executeAfm('myFakeProjectId', {}).then((response) => {
             expect(response).toEqual({
-                executionResponse: pollingResponseBody(),
-                executionResult: executionResultResponseBody()
+                executionResponse: getExecutionResponse(),
+                executionResult: getExecutionResult()
             });
         });
     });
@@ -203,7 +286,7 @@ describe('executeAfm', () => {
     it('should resolve on second polling', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
         let pollingCounter = 0;
         fetchMock.mock(
@@ -219,14 +302,14 @@ describe('executeAfm', () => {
                     }
                     : {
                         status: 200,
-                        body: JSON.stringify(executionResultResponseBody())
+                        body: getExecutionResultResponseBody()
                     };
             }
         );
         return createExecuteAfm().executeAfm('myFakeProjectId', {}).then((response) => {
             expect(response).toEqual({
-                executionResponse: pollingResponseBody(),
-                executionResult: executionResultResponseBody()
+                executionResponse: getExecutionResponse(),
+                executionResult: getExecutionResult()
             });
         });
     });
@@ -234,7 +317,7 @@ describe('executeAfm', () => {
     it('should resolve with 2x2 pages', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
 
         const pagesByOffset: any = {
@@ -277,16 +360,14 @@ describe('executeAfm', () => {
         );
         return createExecuteAfm().executeAfm('myFakeProjectId', {}).then((response) => {
             expect(response).toEqual({
-                executionResponse: pollingResponseBody(),
+                executionResponse: getExecutionResponse(),
                 executionResult: {
-                    executionResult: {
-                        data: [...Array(500).fill([1, 2, 3]), [91, 92, 93]],
-                        paging: {
-                            total: [501, 501],
-                            offset: [0, 0]
-                        },
-                        headerItems: [[[...Array(500).fill('M'), 'M501']], [['A1', 'A2', 'A3']]]
-                    }
+                    data: [...Array(500).fill([1, 2, 3]), [91, 92, 93]],
+                    paging: {
+                        total: [501, 501],
+                        offset: [0, 0]
+                    },
+                    headerItems: [[[...Array(500).fill('M'), 'M501']], [['A1', 'A2', 'A3']]]
                 }
             });
         });
@@ -295,7 +376,7 @@ describe('executeAfm', () => {
     it('should resolve for 1 dimension x 2 pages', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
-            { status: 200, body: JSON.stringify(pollingResponseBody()) }
+            { status: 200, body: getPollingResponseBody() }
         );
 
         const pagesByOffset: any = {
@@ -314,16 +395,14 @@ describe('executeAfm', () => {
             .executeAfm('myFakeProjectId', { execution: { resultSpec: { dimensions: [1] } } })
             .then((response) => {
                 expect(response).toEqual({
-                    executionResponse: pollingResponseBody(),
+                    executionResponse: getExecutionResponse(),
                     executionResult: {
-                        executionResult: {
-                            data: [1, 2],
-                            paging: {
-                                total: [501],
-                                offset: [0]
-                            },
-                            headerItems: [[['A']]]
-                        }
+                        data: [1, 2],
+                        paging: {
+                            total: [501],
+                            offset: [0]
+                        },
+                        headerItems: [[['A']]]
                     }
                 });
             });

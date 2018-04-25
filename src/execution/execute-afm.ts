@@ -85,15 +85,17 @@ export class ExecuteAfmModule {
 
         return this.xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: JSON.stringify(execution) })
             .then((r => r.getData()))
-            .then((executionResponse) => {
+            .then((executionResponseWrapper: Execution.IExecutionResponseWrapper) => {
                 const offset = Array(dimensionality).fill(0); // offset holds information on dimensionality
-                const pollingUri = executionResponse.executionResponse.links.executionResult;
-                return this.getOnePage(pollingUri, offset).then((executionResult: Execution.IExecutionResult) => {
-                    return {
-                        executionResponse,
-                        executionResult
-                    };
-                });
+                const pollingUri = executionResponseWrapper.executionResponse.links.executionResult;
+                return this.getOnePage(pollingUri, offset)
+                    .then((executionResultWrapper: Execution.IExecutionResultWrapper) => {
+                        const responses: Execution.IExecutionResponses = {
+                            executionResponse: executionResponseWrapper.executionResponse,
+                            executionResult: executionResultWrapper ? executionResultWrapper.executionResult : null
+                        };
+                        return responses;
+                    });
             });
     }
 
@@ -113,18 +115,23 @@ export class ExecuteAfmModule {
         });
     }
 
-    private getOnePage(pollingUri: string, offset: number[], prevResult: any = null): any {
-        return this.fetchExecutionResult(pollingUri, offset).then((executionResult: Execution.IExecutionResult) => {
-            if (executionResult === null) {
-                return null;
-            }
+    private getOnePage(
+        pollingUri: string, offset: number[], prevResultWrapper?: Execution.IExecutionResultWrapper
+    ): any {
+        return this.fetchExecutionResult(pollingUri, offset)
+            .then((executionResultWrapper: Execution.IExecutionResultWrapper) => {
+                if (!executionResultWrapper) {
+                    return null;
+                }
 
-            const newResult = prevResult ? mergePageData(prevResult, executionResult) : executionResult;
+                const newResultWrapper = prevResultWrapper
+                    ? mergePageData(prevResultWrapper, executionResultWrapper)
+                    : executionResultWrapper;
 
-            const nextOffset = nextPageOffset(executionResult.executionResult.paging);
-            return nextOffset
-                ? this.getOnePage(pollingUri, nextOffset, newResult)
-                : newResult;
-        });
+                const nextOffset = nextPageOffset(executionResultWrapper.executionResult.paging);
+                return nextOffset
+                    ? this.getOnePage(pollingUri, nextOffset, newResultWrapper)
+                    : newResultWrapper;
+            });
     }
 }
