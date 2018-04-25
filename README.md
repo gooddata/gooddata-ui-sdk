@@ -4,7 +4,7 @@ over the GoodData REST API. It is created to make it easy to use the GD platform
 and write small javascript apps relying on GD APIs.
 
 
-# WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js` 
+# WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js`
 
 
 
