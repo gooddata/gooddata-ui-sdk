@@ -12,6 +12,8 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
+import { IChartLimits } from './Chart';
+
 import { getLineConfiguration } from './highcharts/lineConfiguration';
 import { getBarConfiguration } from './highcharts/barConfiguration';
 import { getColumnConfiguration } from './highcharts/columnConfiguration';
@@ -54,7 +56,7 @@ export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
     );
 }
 
-export function isDataOfReasonableSize(chartData: any, limits: any) {
+export function isDataOfReasonableSize(chartData: any, limits: IChartLimits) {
     const seriesLimit = get(limits, 'series', DEFAULT_SERIES_LIMIT);
     const categoriesLimit = get(limits, 'categories', DEFAULT_CATEGORIES_LIMIT);
     return chartData.series.length <= seriesLimit &&

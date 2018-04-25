@@ -1539,7 +1539,7 @@ describe('chartOptionsBuilder', () => {
                     }
                 );
 
-                expect(chartOptions.data.series[0].type).toBeUndefined();
+                expect(chartOptions.data.series[0].type).toBe('column');
                 expect(chartOptions.data.series[1].type).toBe('line');
             });
 

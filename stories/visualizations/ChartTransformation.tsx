@@ -836,6 +836,12 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][4].attributeHeaderItem.uri
+                        }
+                    ]}
                 />
             )
         );

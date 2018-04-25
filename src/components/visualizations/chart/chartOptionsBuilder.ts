@@ -12,7 +12,7 @@ import without = require('lodash/without');
 import escape = require('lodash/escape');
 import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
-import { IChartConfig } from './Chart';
+import { IChartConfig, IChartLimits } from './Chart';
 import {
     parseValue,
     getAttributeElementIdFromAttributeElementUri,
@@ -69,21 +69,29 @@ export function isNegativeValueIncluded(series: ISeriesItem[]) {
         ));
 }
 
-export function validateData(limits: any = {}, chartOptions: any) {
-    const pieChartLimits = {
-        series: 1, // pie charts can have just one series
+export function getAdjustedLimits(type: string, limits: IChartLimits): IChartLimits {
+    const smallerLimits: IChartLimits = {
+        series: 1, // pie charts/donuts/... can have just one series
         categories: Math.min(limits.categories || DEFAULT_CATEGORIES_LIMIT, PIE_CHART_LIMIT)
     };
 
+    return (isPieOrDonutChart(type) || isFunnelChart(type)) ?
+        smallerLimits : limits;
+}
+
+export function cannotShowNegativeValues(type: string) {
+    return isPieOrDonutChart(type) ||
+        isFunnelChart(type) ||
+        isTreemap(type) ||
+        isBubbleChart(type);
+}
+
+export function validateData(limits: IChartLimits = {}, chartOptions: any) {
     const { type } = chartOptions;
 
     return {
-        // series and categories limit
-        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, (isPieOrDonutChart(type) || isFunnelChart(type))
-            ? pieChartLimits
-            : limits),
-        // check pie chart for negative values
-        hasNegativeValue: (isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type) || isBubbleChart(type))
+        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, getAdjustedLimits(type, limits)),
+        hasNegativeValue: cannotShowNegativeValues(type)
             && isNegativeValueIncluded(chartOptions.data.series)
     };
 }
@@ -113,6 +121,16 @@ function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number): number
     );
 }
 
+export function isAttributeColorPalette(type: string, afm: AFM.IAfm, stackByAttribute: any) {
+    const attributeChartSupported = isPieOrDonutChart(type) ||
+        isFunnelChart(type) ||
+        isScatterPlot(type) ||
+        isBubbleChart(type) ||
+        isTreemap(type);
+
+    return stackByAttribute || (attributeChartSupported && afm.attributes && afm.attributes.length > 0);
+}
+
 export function getColorPalette(
     colorPalette: string[] = DEFAULT_COLOR_PALETTE,
     measureGroup: any,
@@ -122,22 +140,11 @@ export function getColorPalette(
     type: string
 
 ): string[] {
-    const isAttributePieChart = (isPieOrDonutChart(type) || isFunnelChart(type))
-        && afm.attributes && afm.attributes.length > 0;
-    const isAttributeScatterPlot = isScatterPlot(type) && afm.attributes && afm.attributes.length > 0;
-    const isAttributeBubbleChart = isBubbleChart(type) && afm.attributes && afm.attributes.length > 0;
-    const isAttributeTreemap = isTreemap(type) && afm.attributes && afm.attributes.length > 0;
     if (isHeatMap(type)) {
         return [];
     }
 
-    if (
-        stackByAttribute ||
-        isAttributePieChart ||
-        isAttributeScatterPlot ||
-        isAttributeBubbleChart ||
-        isAttributeTreemap
-    ) {
+    if (isAttributeColorPalette(type, afm, stackByAttribute)) {
         const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
         return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
     }

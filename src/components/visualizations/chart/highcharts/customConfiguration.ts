@@ -175,6 +175,14 @@ const showFullscreenTooltip = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
+function isPointBasedChart(chartType: string) {
+    return isLineChart(chartType) ||
+        isAreaChart(chartType) ||
+        isTreemap(chartType) ||
+        isDualChart(chartType) ||
+        isScatterPlot(chartType);
+}
+
 function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     const { chart } = this.series;
     const { color: pointColor } = this.point;
@@ -184,12 +192,9 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         return false;
     }
 
-    const dataPointEnd = (isLineChart(chartType) ||
-        isAreaChart(chartType) ||
-        isTreemap(chartType) ||
-        isDualChart(chartType) ||
-        isScatterPlot(chartType) ||
-        (!this.point.tooltipPos)
+    const dataPointEnd = (
+        isPointBasedChart(chartType) ||
+        !this.point.tooltipPos
     )
         ? this.point.plotX
         : getDataPointEnd(
@@ -200,12 +205,9 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
             stacking
         );
 
-    const ignorePointHeight = isLineChart(chartType) ||
-        isAreaChart(chartType) ||
-        isDualChart(chartType) ||
-        isScatterPlot(chartType) ||
-        isTreemap(chartType) ||
-        (!this.point.shapeArgs);
+    const ignorePointHeight =
+        isPointBasedChart(chartType) ||
+        !this.point.shapeArgs;
 
     const dataPointHeight = ignorePointHeight ? 0 : this.point.shapeArgs.height;
 
@@ -437,62 +439,58 @@ function getDataConfiguration(chartOptions: any) {
     };
 }
 
-function getHoverStyles(chartOptions: any, config: any) {
+function lineSeriesMapFn(seriesOrig: any) {
+    const series = cloneDeep(seriesOrig);
+
+    if (series.isDrillable) {
+        set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
+        set(series, 'cursor', 'pointer');
+    } else {
+        set(series, 'states.hover.halo.size', 0);
+    }
+
+    return series;
+}
+
+function barSeriesMapFn(seriesOrig: any) {
+    const series = cloneDeep(seriesOrig);
+
+    set(series, 'states.hover.brightness', HOVER_BRIGHTNESS);
+    set(series, 'states.hover.enabled', series.isDrillable);
+
+    return series;
+}
+
+function getHoverStyles({ type }: any, config: any) {
     let seriesMapFn = noop;
 
-    switch (chartOptions.type) {
+    switch (type) {
         default:
-            throw new Error(`Undefined chart type "${chartOptions.type}".`);
+            throw new Error(`Undefined chart type "${type}".`);
 
         case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE:
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
         case VisualizationTypes.BUBBLE:
-            seriesMapFn = (seriesOrig) => {
-                const series = cloneDeep(seriesOrig);
-
-                if (series.isDrillable) {
-                    set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
-                    set(series, 'cursor', 'pointer');
-                } else {
-                    set(series, 'states.hover.halo.size', 0);
-                }
-
-                return series;
-            };
+            seriesMapFn = lineSeriesMapFn;
             break;
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.FUNNEL:
         case VisualizationTypes.HEATMAP:
-            seriesMapFn = (seriesOrig) => {
-                const series = cloneDeep(seriesOrig);
-
-                set(series, 'states.hover.brightness', HOVER_BRIGHTNESS);
-                set(series, 'states.hover.enabled', series.isDrillable);
-
-                return series;
-            };
+            seriesMapFn = barSeriesMapFn;
             break;
 
         case VisualizationTypes.COMBO:
             seriesMapFn = (seriesOrig) => {
-                const series = cloneDeep(seriesOrig);
-                // TODO duplicates code above - rewrite once merged with others
-                if (seriesOrig.type === 'line') {
-                    if (series.isDrillable) {
-                        set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
-                        set(series, 'cursor', 'pointer');
-                    } else {
-                        set(series, 'states.hover.halo.size', 0);
-                    }
-                } else {
-                    set(series, 'states.hover.brightness', HOVER_BRIGHTNESS);
-                    set(series, 'states.hover.enabled', series.isDrillable);
+                const { type } = seriesOrig;
+
+                if (type === 'line') {
+                    return lineSeriesMapFn(seriesOrig);
                 }
-                return series;
+                return barSeriesMapFn(seriesOrig);
             };
             break;
 

@@ -1,4 +1,4 @@
-import { SECONDARY_MEASURES } from '../../../../constants/bucketNames';
+import { MEASURES, SECONDARY_MEASURES } from '../../../../constants/bucketNames';
 import {
     unwrap
 } from '../../utils/common';
@@ -25,6 +25,12 @@ export function getComboChartOptions(
                }
             });
             measureBuckets[bucket.localIdentifier] = metricIndexes;
+        });
+    }
+
+    if (measureBuckets[MEASURES]) {
+        measureBuckets[MEASURES].forEach((measureIndex: number) => {
+            series[measureIndex].type = 'column';
         });
     }
 

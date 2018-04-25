@@ -7,6 +7,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import * as Highcharts from '@types/highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
+import { isComboChart } from './common';
 
 export interface IDrillableItemLocalId extends IDrillableItem {
     localIdentifier: AFM.Identifier;
@@ -173,10 +174,15 @@ const chartClickDebounced = debounce((drillConfig: IDrillConfig, event: IHighcha
                                       target: EventTarget, chartType: VisType) => {
     const { afm, onFiredDrillEvent } = drillConfig;
 
+    let usedChartType = chartType;
+    if (isComboChart(chartType)) {
+        usedChartType = get(event, ['point', 'series', 'options', 'type'], chartType);
+    }
+
     const data = {
         executionContext: afm,
         drillContext: isGroupHighchartsDrillEvent(event) ?
-            composeDrillContextGroup(event, chartType) : composeDrillContextPoint(event, chartType)
+            composeDrillContextGroup(event, usedChartType) : composeDrillContextPoint(event, usedChartType)
     };
 
     fireEvent(onFiredDrillEvent, data, target);
