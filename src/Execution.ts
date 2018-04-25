@@ -67,12 +67,14 @@ export namespace Execution {
     }
 
     export interface IExecutionResponse {
-        executionResponse: {
-            links: {
-                executionResult: string;
-            };
-            dimensions: IResultDimension[];
-        }
+        links: {
+            executionResult: string;
+        };
+        dimensions: IResultDimension[];
+    }
+
+    export interface IExecutionResponseWrapper {
+        executionResponse: IExecutionResponse
     }
 
     export type DataValue = null | string | number;
@@ -84,17 +86,19 @@ export namespace Execution {
     }
 
     export interface IExecutionResult {
-        executionResult: {
-            headerItems?: IResultHeaderItem[][][];
-            data: DataValue[][] | DataValue[];
-            totals?: DataValue[][][];
-            paging: {
-                count: number[];
-                offset: number[];
-                total: number[];
-            };
-            warnings?: Warning[];
-        }
+        headerItems?: IResultHeaderItem[][][];
+        data: DataValue[][] | DataValue[];
+        totals?: DataValue[][][];
+        paging: {
+            count: number[];
+            offset: number[];
+            total: number[];
+        };
+        warnings?: Warning[];
+    }
+
+    export interface IExecutionResultWrapper {
+        executionResult: IExecutionResult
     }
 
     export interface IError extends Error {
