@@ -71,7 +71,7 @@ export class ExecuteExample extends Component {
                         font-weight: 700;
                     }
                 `}</style>
-                <p className="kpi s-execute-kpi">{result.executionResult.executionResult.data[0]}</p>
+                <p className="kpi s-execute-kpi">{result.executionResult.data[0]}</p>
                 <p>Full execution response and result as JSON:</p>
                 <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
             </div>

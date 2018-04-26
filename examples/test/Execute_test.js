@@ -18,5 +18,5 @@ test('should display correct result and retry should fail', async (t) => {
 
     await t
         .click(retryButton)
-        .expect(Selector('div.gd-message.error').exists).ok();
+        .expect(Selector('.Error.s-error').exists).ok();
 });

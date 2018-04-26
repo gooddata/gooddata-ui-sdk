@@ -14,8 +14,8 @@ import {
 
 export interface IHeadlineTransformationProps {
     executionRequest: AFM.IExecution['execution'];
-    executionResponse: Execution.IExecutionResponse['executionResponse'];
-    executionResult: Execution.IExecutionResult['executionResult'];
+    executionResponse: Execution.IExecutionResponse;
+    executionResult: Execution.IExecutionResult;
 
     drillableItems?: IDrillableItem[];
 

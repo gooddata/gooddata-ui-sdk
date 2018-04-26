@@ -79,8 +79,8 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                                     afm: this.props.dataSource.getAfm(),
                                     resultSpec: this.props.resultSpec
                                 }}
-                                executionResponse={execution.executionResponse.executionResponse}
-                                executionResult={fixedExecutionResult.executionResult}
+                                executionResponse={execution.executionResponse}
+                                executionResult={fixedExecutionResult}
                                 height={height}
                                 config={fullConfig}
                                 afterRender={afterRender}

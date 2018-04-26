@@ -69,7 +69,7 @@ export const TWO_MEASURES_WITH_IDENTIFIER_EXECUTION_REQUEST: AFM.IExecution['exe
     }
 };
 
-export const TWO_MEASURES_EXECUTION_RESPONSE: Execution.IExecutionResponse['executionResponse'] = {
+export const TWO_MEASURES_EXECUTION_RESPONSE: Execution.IExecutionResponse = {
     dimensions: [
         {
             headers: [
@@ -103,7 +103,7 @@ export const TWO_MEASURES_EXECUTION_RESPONSE: Execution.IExecutionResponse['exec
     }
 };
 
-export const TWO_MEASURES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const TWO_MEASURES_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '42470571.16',
         '12345678'
@@ -139,7 +139,7 @@ export const TWO_MEASURES_EXECUTION_RESULT: Execution.IExecutionResult['executio
     }
 };
 
-export const EMPTY_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const EMPTY_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         null,
         '12345678'
@@ -175,7 +175,7 @@ export const EMPTY_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionRes
     }
 };
 
-export const EMPTY_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const EMPTY_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '42470571.16',
         null
@@ -211,7 +211,7 @@ export const EMPTY_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionRe
     }
 };
 
-export const EMPTY_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const EMPTY_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         null,
         null
@@ -247,7 +247,7 @@ export const EMPTY_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['
     }
 };
 
-export const ZERO_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const ZERO_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '0',
         '12345678'
@@ -283,7 +283,7 @@ export const ZERO_FIRST_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResu
     }
 };
 
-export const ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '42470571.16',
         '0'
@@ -319,7 +319,7 @@ export const ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT: Execution.IExecutionRes
     }
 };
 
-export const SAME_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const SAME_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '1234',
         '1234'
@@ -355,7 +355,7 @@ export const SAME_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['e
     }
 };
 
-export const ZERO_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult['executionResult'] = {
+export const ZERO_MEASURE_VALUES_EXECUTION_RESULT: Execution.IExecutionResult = {
     data: [
         '0',
         '0'

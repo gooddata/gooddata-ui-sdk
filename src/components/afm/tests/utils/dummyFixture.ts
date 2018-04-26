@@ -47,93 +47,89 @@ export const executionRequest = {
 };
 
 const executionResponse = {
-    executionResponse: {
-        dimensions: [
-            {
-                headers: [
-                    {
-                        measureGroupHeader: {
-                            items: [
-                                {
-                                    measureHeaderItem: {
-                                        name: 'Amount',
-                                        format: '#,##0.00',
-                                        localIdentifier: 'amountMetric',
-                                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                                        identifier: 'ah1EuQxwaCqs'
-                                    }
+    dimensions: [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: [
+                            {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    format: '#,##0.00',
+                                    localIdentifier: 'amountMetric',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
+                                    identifier: 'ah1EuQxwaCqs'
                                 }
-                            ]
-                        }
-                    }
-                ]
-            },
-            {
-                headers: [
-                    {
-                        attributeHeader: {
-                            name: 'Department',
-                            localIdentifier: 'departmentAttribute',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
-                            identifier: 'label.owner.department',
-                            formOf: {
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026',
-                                identifier: 'department',
-                                name: 'Department'
                             }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            headers: [
+                {
+                    attributeHeader: {
+                        name: 'Department',
+                        localIdentifier: 'departmentAttribute',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
+                        identifier: 'label.owner.department',
+                        formOf: {
+                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026',
+                            identifier: 'department',
+                            name: 'Department'
                         }
                     }
-                ]
-            }
-        ],
-        links: {
-            executionResult: 'abc'
+                }
+            ]
         }
+    ],
+    links: {
+        executionResult: 'abc'
     }
 };
 
 const executionResult = {
-    executionResult: {
-        data: [
-            [
-                '80406324.96',
-                '36219131.58'
-            ]
+    data: [
+        [
+            '80406324.96',
+            '36219131.58'
+        ]
+    ],
+    headerItems: [
+        [
         ],
-        headerItems: [
+        [
             [
-            ],
-            [
-                [
-                    {
-                        attributeHeaderItem: {
-                            name: 'Direct Sales',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1226'
-                        }
-                    },
-                    {
-                        attributeHeaderItem: {
-                            name: 'Inside Sales',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1234'
-                        }
+                {
+                    attributeHeaderItem: {
+                        name: 'Direct Sales',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1226'
                     }
-                ]
+                },
+                {
+                    attributeHeaderItem: {
+                        name: 'Inside Sales',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1234'
+                    }
+                }
             ]
+        ]
+    ],
+    paging: {
+        count: [
+            1,
+            2
         ],
-        paging: {
-            count: [
-                1,
-                2
-            ],
-            offset: [
-                0,
-                0
-            ],
-            total: [
-                1,
-                2
-            ]
-        }
+        offset: [
+            0,
+            0
+        ],
+        total: [
+            1,
+            2
+        ]
     }
 };
 

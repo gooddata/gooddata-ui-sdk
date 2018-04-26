@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
-fixture.only('Drill With External Data') // eslint-disable-line no-undef
+fixture('Drill With External Data') // eslint-disable-line no-undef
     .page(config.hostname)
     .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/drill-with-external-data`));
 

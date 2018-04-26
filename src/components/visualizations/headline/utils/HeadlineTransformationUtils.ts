@@ -72,8 +72,8 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
  * @param executionResult
  * @returns {any[]}
  */
-function getExecutionData(executionResponse: Execution.IExecutionResponse['executionResponse'],
-                          executionResult: Execution.IExecutionResult['executionResult']): IHeadlineExecutionData[] {
+function getExecutionData(executionResponse: Execution.IExecutionResponse,
+                          executionResult: Execution.IExecutionResult): IHeadlineExecutionData[] {
     const headerItems = get(executionResponse, 'dimensions[0].headers[0].measureGroupHeader.items', []);
 
     return headerItems.map((item, index) => {
@@ -97,8 +97,8 @@ function getExecutionData(executionResponse: Execution.IExecutionResponse['execu
  * @param intl - Required localization for compare item title
  * @returns {*}
  */
-export function getHeadlineData(executionResponse: Execution.IExecutionResponse['executionResponse'],
-                                executionResult: Execution.IExecutionResult['executionResult'],
+export function getHeadlineData(executionResponse: Execution.IExecutionResponse,
+                                executionResult: Execution.IExecutionResult,
                                 intl: InjectedIntl): IHeadlineData {
     const executionData = getExecutionData(executionResponse, executionResult);
 
@@ -118,7 +118,7 @@ export function getHeadlineData(executionResponse: Execution.IExecutionResponse[
 }
 
 function findMeasureHeaderItem(localIdentifier: AFM.Identifier,
-                               executionResponse: Execution.IExecutionResponse['executionResponse']) {
+                               executionResponse: Execution.IExecutionResponse) {
     const measureGroupHeaderItems = get(executionResponse, 'dimensions[0].headers[0].measureGroupHeader.items', []);
     return measureGroupHeaderItems
         .map(item => item.measureHeaderItem)
@@ -182,7 +182,7 @@ export function applyDrillableItems(headlineData: IHeadlineData,
  */
 export function buildDrillEventData(itemContext: IHeadlineDrillItemContext,
                                     executionRequest: AFM.IExecution['execution'],
-                                    executionResponse: Execution.IExecutionResponse['executionResponse']): IDrillEvent {
+                                    executionResponse: Execution.IExecutionResponse): IDrillEvent {
     const measureHeaderItem = findMeasureHeaderItem(itemContext.localIdentifier, executionResponse);
     if (!measureHeaderItem) {
         throw new Error('The metric uri has not been found in execution response!');

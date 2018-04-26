@@ -15,7 +15,7 @@
   "devDependencies": {
     "@gooddata/mock-js": "1.0.0-alpha4",
     "@gooddata/test-storybook": "1.2.0",
-    "@gooddata/typings": "2.0.0-alpha0",
+    "@gooddata/typings": "2.0.0-alpha2",
     "@storybook/addon-actions": "3.4.0",
     "@storybook/addon-options": "3.4.0",
     "@storybook/react": "3.4.0",
@@ -36,6 +36,7 @@
     "@types/storybook__react": "3.0.6",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-15": "1.0.5",
+    "isomorphic-fetch": "2.2.1",
     "jest": "21.2.1",
     "jest-junit": "3.0.0",
     "node-sass": "4.7.2",
@@ -51,7 +52,7 @@
     "utility-types": "^1.1.0"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "6.0.0-alpha8",
+    "@gooddata/gooddata-js": "6.0.0-alpha10",
     "@gooddata/goodstrap": "55.0.0-alpha6",
     "@gooddata/indigo-visualizations": "2.0.0-alpha11",
     "@gooddata/js-utils": "^2.0.0",

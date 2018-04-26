@@ -1,5 +1,5 @@
 # Changelog
-## 5.0.0 (April 25, 2018)
+## 5.0.0 (April 26, 2018)
 
  - Ability to have visualizations from different domains on the same page ([commit](https://github.com/gooddata/gooddata-react-components/commit/c73c8f272e0461bde48c202e5f630271f709e279))
  - Upgrade React to 15.6.2 ([commit](https://github.com/gooddata/gooddata-react-components/commit/bd4cac04141f50dbeb237e417377cc77a4b0f484))
@@ -11,3 +11,4 @@
  - Remove backward compatible CatalogHelper code ([commit](https://github.com/gooddata/gooddata-react-components/commit/68796d866458be889dbc52509ee757a3bc0eb957))
  - Allow disabled gridline ([commit](https://github.com/gooddata/gooddata-react-components/commit/a3bd32e54a72aa5bf9433a46bd1331a7e66b1bba))
  - Remove ErrorState.OK from the onError callback ([commit](https://github.com/gooddata/gooddata-react-components/commit/a7d0eab65b12e576bd64b76e12f9759c2faf9487))
+ - Removed execution responses wrappers ([commit](https://github.com/gooddata/gooddata-react-components/commit/c6ae42d4af2711949eecf64d68d50d2f134fb90e))

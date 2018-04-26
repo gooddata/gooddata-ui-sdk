@@ -188,9 +188,9 @@ class SimpleTable extends
                                 afm: dataSource.getAfm(),
                                 resultSpec
                             }}
-                            executionResponse={execution.executionResponse.executionResponse}
+                            executionResponse={execution.executionResponse}
                             executionResult={
-                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString).executionResult
+                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString)
                             }
                             afterRender={afterRender}
                             config={{ stickyHeaderOffset }}
