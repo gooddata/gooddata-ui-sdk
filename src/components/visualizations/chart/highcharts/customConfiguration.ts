@@ -18,13 +18,9 @@ import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import { getLighterColor } from '../../utils/color';
 import {
-    isLineChart,
-    isAreaChart,
     isBarChart,
-    isDualChart,
     isColumnChart,
-    isScatterPlot,
-    isTreemap
+    isOneOfTypes
 } from '../../utils/common';
 
 const {
@@ -176,11 +172,14 @@ const showFullscreenTooltip = () => {
 };
 
 function isPointBasedChart(chartType: string) {
-    return isLineChart(chartType) ||
-        isAreaChart(chartType) ||
-        isTreemap(chartType) ||
-        isDualChart(chartType) ||
-        isScatterPlot(chartType);
+    const pointBasedTypes = [
+        VisualizationTypes.LINE,
+        VisualizationTypes.AREA,
+        VisualizationTypes.TREEMAP,
+        VisualizationTypes.DUAL,
+        VisualizationTypes.SCATTER
+    ];
+    return isOneOfTypes(chartType, pointBasedTypes);
 }
 
 function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {

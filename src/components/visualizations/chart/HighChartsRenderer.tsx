@@ -10,7 +10,7 @@ import * as cx from 'classnames';
 import Chart, { IChartConfig, IChartProps } from './Chart';
 import Legend, { ILegendProps } from './legend/Legend';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
-import { isPieOrDonutChart, isTreemap } from '../utils/common';
+import { isPieOrDonutChart, isOneOfTypes } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
 
@@ -166,7 +166,8 @@ export default class HighChartsRenderer
         }
 
         // render chart with disabled visibility based on legendItemsEnabled
-        const itemsPath = isPieOrDonutChart(config.chart.type) || isTreemap(config.chart.type) ?
+        const firstSeriesTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT, VisualizationTypes.TREEMAP];
+        const itemsPath = isOneOfTypes(config.chart.type, firstSeriesTypes) ?
             'series[0].data' : 'series';
         const items: any[] = get(config, itemsPath) as any[];
         set(config, itemsPath, items.map((item: any, itemIndex: any) => {

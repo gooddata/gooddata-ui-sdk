@@ -1245,7 +1245,7 @@ describe('chartOptionsBuilder', () => {
         it('should render correct values in usecase of treemap chart with measures', () => {
             const tooltipFn = generateTooltipFn(null, 'treemap');
             const tooltip = tooltipFn(pointData);
-            expect(getValues(tooltip)).toEqual(['series', ' 1']);
+            expect(getValues(tooltip)).toEqual(['point', ' 1']);
         });
     });
 

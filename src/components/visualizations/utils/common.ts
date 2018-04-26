@@ -66,6 +66,7 @@ export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
 export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
 export const isHeatMap = isEqual(VisualizationTypes.HEATMAP);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
+export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
 export const stringifyChartTypes = () => Object.keys(VisualizationTypes).reduce((acc, type) => {
     acc.push(VisualizationTypes[type]);
     return acc;

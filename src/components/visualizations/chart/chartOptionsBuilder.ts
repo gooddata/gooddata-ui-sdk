@@ -14,36 +14,67 @@ import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
 import { IChartConfig, IChartLimits } from './Chart';
 import {
-    parseValue,
     getAttributeElementIdFromAttributeElementUri,
-    isLineChart,
     isAreaChart,
-    isDualChart,
-    isPieOrDonutChart,
-    isComboChart,
-    isTreemap,
-    isChartSupported,
-    stringifyChartTypes,
-    isScatterPlot,
-    isFunnelChart,
     isBubbleChart,
-    unwrap,
-    isHeatMap
+    isChartSupported,
+    isComboChart,
+    isDualChart,
+    isHeatMap,
+    isLineChart,
+    isOneOfTypes,
+    isScatterPlot,
+    isTreemap,
+    parseValue,
+    stringifyChartTypes,
+    unwrap
 } from '../utils/common';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
 import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
+import { VisualizationTypes, ChartType } from '../../../constants/visualizationTypes';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
-import { ChartType } from '../../../constants/visualizationTypes';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
 };
+
+// types with only many measures or one measure and one attribute
+const multiMeasuresAlternatingTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+    VisualizationTypes.TREEMAP
+];
+
+const dontSupportNegativeValuesTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+    VisualizationTypes.TREEMAP,
+    VisualizationTypes.BUBBLE
+];
+
+const attributeChartSupportedTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+    VisualizationTypes.SCATTER,
+    VisualizationTypes.BUBBLE,
+    VisualizationTypes.TREEMAP
+];
+
+// charts sorted by default by measure value
+const sortedByMeasureTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL
+];
 
 export interface IAxis {
     label: string;
@@ -77,15 +108,12 @@ export function getAdjustedLimits(type: string, limits: IChartLimits): IChartLim
         categories: Math.min(limits.categories || DEFAULT_CATEGORIES_LIMIT, PIE_CHART_LIMIT)
     };
 
-    return (isPieOrDonutChart(type) || isFunnelChart(type)) ?
+    return isOneOfTypes(type, [VisualizationTypes.PIE, VisualizationTypes.DONUT, VisualizationTypes.FUNNEL]) ?
         smallerLimits : limits;
 }
 
 export function cannotShowNegativeValues(type: string) {
-    return isPieOrDonutChart(type) ||
-        isFunnelChart(type) ||
-        isTreemap(type) ||
-        isBubbleChart(type);
+    return isOneOfTypes(type, dontSupportNegativeValuesTypes);
 }
 
 export function validateData(limits: IChartLimits = {}, chartOptions: any) {
@@ -124,11 +152,7 @@ function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number): number
 }
 
 export function isAttributeColorPalette(type: string, afm: AFM.IAfm, stackByAttribute: any) {
-    const attributeChartSupported = isPieOrDonutChart(type) ||
-        isFunnelChart(type) ||
-        isScatterPlot(type) ||
-        isBubbleChart(type) ||
-        isTreemap(type);
+    const attributeChartSupported = isOneOfTypes(type, attributeChartSupportedTypes);
 
     return stackByAttribute || (attributeChartSupported && afm.attributes && afm.attributes.length > 0);
 }
@@ -222,7 +246,7 @@ export function getSeriesItemData(
             viewByIndex = pointIndex;
             // stack bar chart has always just one measure
             measureIndex = 0;
-        } else if ((isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type)) && !viewByAttribute) {
+        } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
             measureIndex = pointIndex;
         }
 
@@ -236,13 +260,13 @@ export function getSeriesItemData(
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
             pointData.name = unwrap(stackByAttribute.items[seriesIndex]).name;
-        } else if ((isPieOrDonutChart(type) || isFunnelChart(type) || isTreemap(type)) && viewByAttribute) {
+        } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && viewByAttribute) {
             pointData.name = unwrap(viewByAttribute.items[viewByIndex]).name;
         } else {
             pointData.name = unwrap(measureGroup.items[measureIndex]).name;
         }
 
-        if (isPieOrDonutChart(type) || isTreemap(type) || isFunnelChart(type)) {
+        if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             pointData.color = colorPalette[pointIndex];
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
             // instead of seriesItem legendIndex
@@ -395,7 +419,7 @@ export function getSeries(
             // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
             // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
             seriesItemConfig.name = stackByAttribute.items[seriesIndex].attributeHeaderItem.name;
-        } else if ((isPieOrDonutChart(type) || isFunnelChart(type)) && !viewByAttribute) {
+        } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
             // Pie charts with measures only have a single series which name would is ambiguous
             seriesItemConfig.name = measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
                 return unwrap(wrappedMeasure).name;
@@ -424,7 +448,7 @@ export function generateTooltipFn(viewByAttribute: any, type: string) {
             // For some reason, highcharts ommit categories for pie charts with attribute. Use point.name instead.
             // use attribute name instead of attribute display form name
             textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(point.category || point.name)]);
-        } else if (isPieOrDonutChart(type) || isFunnelChart(type)) {
+        } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
             textData[0][0] = customEscape(point.name);
         }
@@ -590,8 +614,7 @@ export function getDrillableSeries(
     type: ChartType,
     afm: AFM.IAfm
 ) {
-    const isPieOrTreemapWithOnlyMeasures = (isPieOrDonutChart(type) || isTreemap(type) || isFunnelChart(type))
-        && !viewByAttribute;
+    const isMultiMeasureWithOnlyMeasures = isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
@@ -605,7 +628,7 @@ export function getDrillableSeries(
             // except for stack by attribute and metricOnly pie or treemap chart it is looped-around pointIndex instead
             // Looping around the end of items array only works when measureGroup is the last header on it's dimension
             // We do not support setups with measureGroup before attributeHeaders
-                const measureIndex = !stackByAttribute && !isPieOrTreemapWithOnlyMeasures
+                const measureIndex = !stackByAttribute && !isMultiMeasureWithOnlyMeasures
                 ? seriesIndex : pointIndex % measureGroup.items.length;
 
                 measures = [unwrap(measureGroup.items[measureIndex])];
@@ -679,7 +702,8 @@ function getCategories(type: string, measureGroup: Execution.IMeasureGroupHeader
     if (viewByAttribute) {
         return viewByAttribute.items.map(({ attributeHeaderItem }: any) => attributeHeaderItem.name);
     }
-    if (isPieOrDonutChart(type) || isTreemap(type) || isFunnelChart(type)) {
+
+    if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
         // Pie or Treemap chart with measures only (no viewByAttribute) needs to list
         return measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => unwrap(wrappedMeasure).name);
         // Pie chart categories are later sorted by seriesItem pointValue
@@ -911,7 +935,7 @@ export function getChartOptions(
     let categories = getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order
-    if (isPieOrDonutChart(type) || isFunnelChart(type)) {
+    if (isOneOfTypes(type, sortedByMeasureTypes)) {
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints.sort((pointDataA: IPointData, pointDataB: IPointData) => {

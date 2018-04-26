@@ -14,7 +14,7 @@ const BUBBLE_TEMPLATE = {
                 states: {
                     hover: {
                         enabled: true,
-                        lineColor: 'rgb(100,100,100)'
+                        lineColor: 'white'
                     }
                 }
             },
