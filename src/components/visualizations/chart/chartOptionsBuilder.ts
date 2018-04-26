@@ -295,16 +295,80 @@ export function getHeatMapSeries(
     }];
 }
 
+export function getScatterPlotSeries(
+    executionResultData: Execution.DataValue[][],
+    stackByAttribute: any,
+    mdObject: VisualizationObject.IVisualizationObjectContent,
+    colorPalette: string[]
+) {
+        const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
+            .find(bucket => bucket.localIdentifier === 'measures');
+        const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
+            .find(bucket => bucket.localIdentifier === 'secondary_measures');
+
+        const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
+        const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+
+        const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
+            const values = seriesItem.map((value: string) => {
+                return parseValue(value);
+            });
+
+            return {
+                x: !primaryMeasuresBucketEmpty ? values[0] : 0,
+                y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
+                name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : ''
+            };
+        });
+
+        return data.map((dataItem: ISeriesDataItem, dataIndex: number) => {
+            return {
+                name: dataItem.name,
+                color: colorPalette[dataIndex],
+                legendIndex: dataIndex,
+                data: [{
+                    x: dataItem.x,
+                    y: dataItem.y
+                }]
+            };
+        });
+
+}
+
+export function getBubbleChartSeries(
+    executionResultData: Execution.DataValue[][],
+    stackByAttribute: any,
+    colorPalette: string[]
+) {
+    return executionResultData.map((resData: any, index: number) => {
+        return {
+            name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
+            color: colorPalette[index],
+            legendIndex: index,
+            data: [{
+                x: parseFloat(resData[0]),
+                y: parseFloat(resData[1]),
+                z: parseFloat(resData[2])
+            }]
+        };
+    });
+}
+
 export function getSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: any,
     stackByAttribute: any,
     type: string,
+    mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ): any {
     if (isHeatMap(type)) {
         return getHeatMapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+    } else if (isScatterPlot(type)) {
+        return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
+    } else if (isBubbleChart(type)) {
+        return getBubbleChartSeries(executionResultData, stackByAttribute, colorPalette);
     }
     return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const seriesItemData = getSeriesItemData(
@@ -822,86 +886,13 @@ export function getChartOptions(
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
-    if (isScatterPlot(type)) {
-        const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
-            .find(bucket => bucket.localIdentifier === 'measures');
-        const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
-            .find(bucket => bucket.localIdentifier === 'secondary_measures');
-
-        const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
-        const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
-
-        const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
-            const values = seriesItem.map((value: string) => {
-                return parseValue(value);
-            });
-
-            return {
-                x: !primaryMeasuresBucketEmpty ? values[0] : 0,
-                y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
-                name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : ''
-            };
-        });
-
-        const measures = [
-            measureGroup.items[0] ? measureGroup.items[0] : null,
-            measureGroup.items[1] ? measureGroup.items[1] : null
-        ];
-
-        const seriesWithoutDrillability: ISeriesItemConfig[] =
-            data.map((dataItem: ISeriesDataItem, dataIndex: number) => {
-            return {
-                name: dataItem.name,
-                color: colorPalette[dataIndex],
-                legendIndex: dataIndex,
-                data: [{
-                    x: dataItem.x,
-                    y: dataItem.y
-                }]
-            };
-        });
-
-        const series = getDrillableSeries(
-            seriesWithoutDrillability,
-            drillableItems,
-            measureGroup,
-            viewByAttribute,
-            stackByAttribute,
-            type,
-            afm
-        );
-
-        const categories = [''];
-
-        const options = {
-            type,
-            stacking,
-            legendLayout: 'horizontal',
-            colorPalette,
-            yAxes,
-            xAxes,
-            showInPercent: false,
-            data: {
-                series,
-                categories
-            },
-            actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
-            },
-            grid: {
-                enabled: gridEnabled
-            }
-        };
-
-        return options;
-    }
-
     const seriesWithoutDrillability = getSeries(
         executionResultData,
         measureGroup,
         viewByAttribute,
         stackByAttribute,
         type,
+        mdObject,
         colorPalette
     );
 
@@ -965,6 +956,35 @@ export function getChartOptions(
         };
     }
 
+    if (isScatterPlot(type)) {
+        const measures = [
+            measureGroup.items[0] ? measureGroup.items[0] : null,
+            measureGroup.items[1] ? measureGroup.items[1] : null
+        ];
+
+        const categories = [''];
+
+        return {
+            type,
+            stacking,
+            legendLayout: 'horizontal',
+            colorPalette,
+            yAxes,
+            xAxes,
+            showInPercent: false,
+            data: {
+                series,
+                categories
+            },
+            actions: {
+                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+            },
+            grid: {
+                enabled: gridEnabled
+            }
+        };
+    }
+
     if (isHeatMap(type)) {
         return {
             type,
@@ -993,29 +1013,6 @@ export function getChartOptions(
     }
 
     if (isBubbleChart(type)) {
-        const seriesData = executionResultData.map((resData: any, index: number) => {
-            return {
-                name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
-                color: colorPalette[index],
-                legendIndex: index,
-                data: [{
-                    x: parseFloat(resData[0]),
-                    y: parseFloat(resData[1]),
-                    z: parseFloat(resData[2])
-                }]
-            };
-        });
-
-        const series = getDrillableSeries(
-            seriesData,
-            drillableItems,
-            measureGroup,
-            viewByAttribute,
-            stackByAttribute,
-            type,
-            afm
-        );
-
         const measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null,

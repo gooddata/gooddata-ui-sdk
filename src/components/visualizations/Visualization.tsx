@@ -20,11 +20,8 @@ import {
     isChartSupported,
     stringifyChartTypes
 } from './utils/common';
-
 import { Highcharts, IChartConfig } from './chart/Chart';
-
 import { IDrillableItem } from '../../interfaces/DrillEvents';
-
 import ChartTransformation, { IExecutionRequest, renderHighCharts } from './chart/ChartTransformation';
 
 export interface IVisualizationProps {

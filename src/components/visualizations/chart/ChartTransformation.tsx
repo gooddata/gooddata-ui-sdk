@@ -61,8 +61,8 @@ export default class ChartTransformation extends React.Component<IChartTransform
         onNegativeValues: null as any,
         onFiredDrillEvent: noop,
         onLegendReady: noop,
-        height: undefined as any,
-        width: undefined as any
+        height: undefined as number,
+        width: undefined as number
     };
 
     private chartOptions: any;

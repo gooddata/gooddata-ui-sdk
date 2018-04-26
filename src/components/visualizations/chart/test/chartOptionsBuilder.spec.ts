@@ -643,6 +643,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
@@ -703,6 +704,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
@@ -827,6 +829,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
@@ -921,6 +924,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
@@ -962,6 +966,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
@@ -1098,6 +1103,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[1],
                 mVS[2],
                 type,
+                {} as any,
                 DEFAULT_COLOR_PALETTE
             );
 
