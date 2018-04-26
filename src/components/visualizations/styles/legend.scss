@@ -43,6 +43,7 @@ $responsive-legend: 'only screen and (max-width: 767px)';
     .series-item {
         display: flex;
         align-items: center;
+        font-family: $gd-font-primary;
         cursor: pointer;
 
         .series-icon {
@@ -54,12 +55,50 @@ $responsive-legend: 'only screen and (max-width: 767px)';
 
         .series-name {
             flex: 1 1 auto;
-            font-family: Avenir, 'Helvetica Neue', arial, sans-serif;
             font-size: 12px;
             line-height: 20px;
             color: $gd-color-link;
 
             @include text-overflow();
+        }
+    }
+
+    .heatmap-legend {
+        font-family: $gd-font-primary;
+
+        .legend-labels {
+            display: flex;
+
+            .label {
+                font-size: 11px;
+                line-height: 20px;
+                color: $gd-color-link;
+
+                @include text-overflow();
+                &.left {
+                    width: 25px;
+                    text-align: left;
+                }
+                &.right {
+                    width: 25px;
+                    text-align: right;
+                }
+                &.center {
+                    width: 50px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .legend-boxes {
+            flex: 1 0 0;
+            display: flex;
+
+            .box {
+                box-sizing: border-box;
+                width: 50px;
+                height: 10px;
+            }
         }
     }
 

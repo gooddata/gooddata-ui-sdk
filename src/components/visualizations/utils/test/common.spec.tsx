@@ -4,7 +4,8 @@ import {
     immutableSet,
     repeatItemsNTimes,
     unEscapeAngleBrackets,
-    getAttributeElementIdFromAttributeElementUri
+    getAttributeElementIdFromAttributeElementUri,
+    formatLegendLabel
 } from '../common';
 
 describe('Common utils', () => {
@@ -69,6 +70,39 @@ describe('Common utils', () => {
 
         it('should return id from attribute value uri', () => {
             expect(unEscapeAngleBrackets(str)).toEqual(expectedString);
+        });
+    });
+
+    describe('formatLegendLabel', () => {
+        const testSet = [
+            // format with %
+            [0.5, '%', 5,  '50%'],
+            // diff < 10
+            [0.245, '', 4, '0.25'],
+            [5.58, '', 4, '5.6'],
+            [58.76, '', 9, '58.8'],
+            // diff > 10
+            [0.245, '', 20, '0'],
+            [5.58, '', 20, '6'],
+            [58.76, '', 20, '59'],
+            [1234, '', 20, '1.2k'],
+            [999490, '', 20, '999k'],
+            [999555, '', 20, '1M'],
+            [9095550, '', 20, '9.1M'],
+            [19999555, '', 20, '20M'],
+            [169995550, '', 20, '170M'],
+            [999400000, '', 20, '999M'],
+            [999600000, '', 20, '1G']
+        ];
+
+        testSet.forEach((testCase) => {
+            it(`should correctly format  number ${testCase[0]}`, () => {
+                expect(
+                    formatLegendLabel(
+                        testCase[0] as number, testCase[1] as string, testCase[2] as number, ['k', 'M', 'G']
+                    )
+                ).toEqual(testCase[3] as string);
+            });
         });
     });
 });
