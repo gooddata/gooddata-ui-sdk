@@ -46,9 +46,9 @@
     react-transition-group "1.2.1"
     rxjs "5.4.3"
 
-"@gooddata/goodstrap@55.0.0-alpha7":
-  version "55.0.0-alpha7"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha7.tgz#234c4abb963dc6c42eb17f1b57a1303c1e68180f"
+"@gooddata/goodstrap@55.0.0-alpha8":
+  version "55.0.0-alpha8"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-55.0.0-alpha8.tgz#942d8efbbe17eeb72ab916d6cf903421ecff0656"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
