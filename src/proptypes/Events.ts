@@ -9,6 +9,7 @@ export {
 export const EventsPropTypes = {
     onError: PropTypes.func,
     onLoadingChanged: PropTypes.func,
+    onLoadingFinish: PropTypes.func,
     afterRender: PropTypes.func,
     pushData: PropTypes.func
 };
