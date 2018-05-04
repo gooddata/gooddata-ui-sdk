@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { SDK } from '@gooddata/gooddata-js';
 import { testUtils } from '@gooddata/js-utils';
+import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
     Table,
     BaseChart,
@@ -19,6 +19,7 @@ import { IntlWrapper } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
+import * as HttpStatusCodes from 'http-status-codes';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -38,9 +39,10 @@ function getResponse(response: string, delay: number): Promise<string> {
 // tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
-
     if (!visObj) {
-        throw new Error(`Unknown uri ${uri}`);
+        throw new ApiResponseError(`Unknown uri ${uri}`, {
+            status: HttpStatusCodes.NOT_FOUND
+        }, {});
     }
 
     return Promise.resolve(visObj.visualizationObject);
@@ -199,6 +201,7 @@ describe('VisualizationWrapped', () => {
         mount(
             <VisualizationWrapped
                 projectId={projectId}
+                fetchVisObject={fetchVisObject}
                 uri={'/invalid/url'}
                 onError={errorHandler}
                 intl={intl}

@@ -13,6 +13,11 @@ export const ErrorStates = {
     BAD_REQUEST: 'BAD_REQUEST',
 
     /**
+     * This error means that you are not authorized.
+     */
+    UNAUTHORIZED: 'UNAUTHORIZED',
+
+    /**
      * This error means that executed data were too large to be displayed by UI SDK.
      */
     DATA_TOO_LARGE_TO_DISPLAY: 'DATA_TOO_LARGE_TO_DISPLAY',

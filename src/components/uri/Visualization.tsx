@@ -23,11 +23,11 @@ import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
     IDrillableItem,
-    ErrorStates,
     generateDimensions,
     RuntimeError
 } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
+import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 
 export { Requireable };
 
@@ -89,9 +89,7 @@ export interface IVisualizationState {
     resultSpec: AFM.IResultSpec;
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
-    error: {
-        status: string;
-    };
+    error?: RuntimeError;
 }
 
 export interface IVisualizationExecInfo {
@@ -153,6 +151,8 @@ export class VisualizationWrapped
 
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
+    private errorMap: IErrorMap;
+
     private sdk: SDK;
 
     constructor(props: IVisualizationProps & InjectedIntlProps) {
@@ -172,6 +172,8 @@ export class VisualizationWrapped
 
         this.visualizationUri = props.uri;
 
+        this.errorMap = generateErrorMap(props.intl);
+
         this.subject = createSubject<IVisualizationExecInfo>(
             ({ type, resultSpec, dataSource, totals }) => {
                 this.dataSource = dataSource;
@@ -181,12 +183,13 @@ export class VisualizationWrapped
                     isLoading: false,
                     totals
                 });
-            }, () => {
+            }, (error) => {
+                const runtimeError = convertErrors(error);
                 this.setState({
                     isLoading: false,
-                    error: { status: ErrorStates.NOT_FOUND }
+                    error: runtimeError
                 });
-                return props.onError(new RuntimeError(ErrorStates.NOT_FOUND));
+                return props.onError(runtimeError);
             });
     }
 
@@ -259,12 +262,15 @@ export class VisualizationWrapped
         const { resultSpec, type, totals, error, isLoading } = this.state;
 
         if (error) {
+            const errorProps = this.errorMap[error.getMessage()];
+
             return ErrorComponent
                 ? (
                     <ErrorComponent
-                        code={this.state.error.status}
+                        code={error.getMessage()}
                         message={intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' })}
                         description={intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })}
+                        {...errorProps}
                     />
                 )
                 : null;

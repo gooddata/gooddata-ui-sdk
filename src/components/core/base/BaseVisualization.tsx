@@ -6,39 +6,30 @@ import {
 } from './VisualizationLoadingHOC';
 import { ILoadingProps } from '../../simple/LoadingComponent';
 import { IErrorProps } from '../../simple/ErrorComponent';
+import { generateErrorMap, IErrorMap } from '../../../helpers/errorHandlers';
 
 export abstract class BaseVisualization<P extends ICommonVisualizationProps & ILoadingInjectedProps, S>
 extends React.Component<P, S> {
+    private errorMap: IErrorMap;
+
+    constructor(props: P) {
+        super(props);
+
+        this.errorMap = generateErrorMap(props.intl);
+    }
 
     public render(): JSX.Element {
         const {
             execution,
             error,
-            isLoading,
-            intl
+            isLoading
         } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
         const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
 
         if (error) {
-            const errorMap = {
-                [ErrorStates.DATA_TOO_LARGE_TO_DISPLAY]: {
-                    icon: 'icon-cloud-rain',
-                    message: intl.formatMessage({ id: 'visualization.ErrorMessageDataTooLarge' }),
-                    description: intl.formatMessage({ id: 'visualization.ErrorDescriptionDataTooLarge' })
-                },
-                [ErrorStates.NO_DATA]: {
-                    icon: 'icon-filter',
-                    message: intl.formatMessage({ id: 'visualization.ErrorMessageNoData' }),
-                    description: intl.formatMessage({ id: 'visualization.ErrorDescriptionNoData' })
-                },
-                [ErrorStates.UNKNOWN_ERROR]: {
-                    message: intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' }),
-                    description: intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })
-                }
-            };
-            const errorProps = errorMap[errorMap.hasOwnProperty(error) ? error : ErrorStates.UNKNOWN_ERROR];
+            const errorProps = this.errorMap[this.errorMap.hasOwnProperty(error) ? error : ErrorStates.UNKNOWN_ERROR];
             return ErrorComponent ? (
                 <ErrorComponent
                     code={error}
