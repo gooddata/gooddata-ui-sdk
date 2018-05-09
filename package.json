@@ -19,17 +19,17 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "yarn run build:lib && yarn run build:dist",
-    "build:lib": "rm -rf lib && tsc",
+    "build:lib": "rm -rf lib && tsc -p tsconfig.build.json",
     "build:dist": "rm -rf dist && grunt dist",
     "prepublishOnly": "yarn run build",
     "test": "jest --watch",
     "test-single-run": "jest",
     "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
-    "run-tslint": "tslint -p tsconfig.base.json",
+    "run-tslint": "tslint -p tsconfig.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-    "validate": "tsc -p tsconfig.base.json --noEmit && yarn tslint",
-    "validate-ci": "tsc -p tsconfig.base.json --noEmit && yarn tslint-ci"
+    "validate": "tsc --noEmit && yarn tslint",
+    "validate-ci": "tsc --noEmit && yarn tslint-ci"
   },
   "repository": {
     "type": "git",
