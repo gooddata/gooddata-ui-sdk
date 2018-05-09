@@ -4,7 +4,7 @@ import { PureTable, ITableProps } from './PureTable';
 import { SortableTable } from './SortableTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 
-export class Table extends React.Component<ITableProps & IDataSourceProviderInjectedProps, null> {
+export class Table extends React.PureComponent<ITableProps & IDataSourceProviderInjectedProps> {
     public render() {
         if (this.props.environment === 'dashboards') {
             return (

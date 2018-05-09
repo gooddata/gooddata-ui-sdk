@@ -20,7 +20,7 @@ export interface IAttributeFilterItemProps {
     item?: IAttributeElement;
 }
 
-export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps, null> {
+export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps> {
     public static propTypes = {
         classname: PropTypes.string,
         item: PropTypes.shape({

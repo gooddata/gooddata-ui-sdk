@@ -45,7 +45,7 @@ const DefaultFilterError = injectIntl(({ intl }) => {
  * AttributeFilter
  * is a component that renders a dropdown populated with attribute values
  */
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, null> {
+export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
     public static propTypes = {
         uri: PropTypes.string,
         identifier: PropTypes.string,

@@ -77,7 +77,7 @@ export const KpiError = (props: IErrorProps) => {
     );
 };
 
-export class KpiWrapped extends React.Component<IKpiProps & InjectedIntlProps, null> {
+export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProps> {
     public static defaultProps: Partial<IKpiProps> = {
         format: '#,#.##',
         filters: [],
