@@ -12,6 +12,26 @@ import {
 import { delay } from '../../../tests/utils';
 
 describe('AttributeElements', () => {
+    function createProps(customProps = {}) {
+        const sdk = {
+            md: createMetadataMock(),
+            clone: () => sdk,
+            config: {
+                setJsPackage: () => false,
+                setRequestHeader: () => false
+            }
+        };
+
+        return {
+            projectId: '1',
+            sdk,
+            options: { limit: 1 },
+            uri: ATTRIBUTE_DISPLAY_FORM_URI,
+            children: jest.fn().mockReturnValue(<div />),
+            ...customProps
+        };
+    }
+
     function renderComponent(props: IAttributeElementsProps) {
         const children = (params: IAttributeElementsChildren) => {
             return props.children(params);
@@ -25,14 +45,7 @@ describe('AttributeElements', () => {
     }
 
     it('should load attribute values by uri', () => {
-        const metadata = createMetadataMock();
-        const props = {
-            projectId: '1',
-            metadata,
-            options: { limit: 1 },
-            uri: ATTRIBUTE_DISPLAY_FORM_URI,
-            children: jest.fn().mockReturnValue(<div />)
-        };
+        const props = createProps();
         renderComponent(props as any); // because mocked metadata don't match
 
         expect(props.children).toHaveBeenCalledTimes(1);
@@ -40,7 +53,7 @@ describe('AttributeElements', () => {
 
         return delay().then(() => {
             expect(props.children).toHaveBeenCalledTimes(2);
-            expect(metadata.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
+            expect(props.sdk.md.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
                     items: [
@@ -60,22 +73,18 @@ describe('AttributeElements', () => {
     });
 
     it('should load attribute defined by identifier', () => {
-        const metadata = createMetadataMock();
-        const props = {
-            projectId: '1',
-            metadata,
-            options: { limit: 1 },
-            identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
-            children: jest.fn().mockReturnValue(<div />)
-        };
+        const props = createProps({
+            uri: undefined,
+            identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER
+        });
         renderComponent(props as any); // because mocked metadata don't match
 
         expect(props.children).toHaveBeenCalledTimes(1);
         expect(props.children.mock.calls[0][0].isLoading).toBe(true);
 
         return delay().then(() => {
-            expect(metadata.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
-            expect(metadata.getValidElements).toHaveBeenCalledTimes(1);
+            expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
+            expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children).toHaveBeenCalledTimes(2);
             expect(props.children.mock.calls[1][0].validElements).toEqual(
                 {
@@ -89,32 +98,26 @@ describe('AttributeElements', () => {
     });
 
     it('should load all entries if no options.limit is defined', () => {
-        const metadata = createMetadataMock();
-        const props = {
-            projectId: '1',
-            metadata,
+        const props = createProps({
+            uri: undefined,
             identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
-            children: jest.fn().mockReturnValue(<div />)
-        };
+            options: undefined
+        });
         renderComponent(props as any); // because mocked metadata don't match
 
         return delay().then(() => {
-            expect(metadata.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
-            expect(metadata.getValidElements).toHaveBeenCalledTimes(1);
+            expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
+            expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children).toHaveBeenCalledTimes(2);
             expect(props.children.mock.calls[1][0].validElements.items.length).toEqual(COUNTRIES.length);
         });
     });
 
     it('should load more results with loadMore function', () => {
-        const metadata = createMetadataMock();
-        const props = {
-            projectId: '1',
-            metadata,
-            options: { limit: 1 },
-            identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
-            children: jest.fn().mockReturnValue(<div />)
-        };
+        const props = createProps({
+            uri: undefined,
+            identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER
+        });
         renderComponent(props as any); // because mocked metadata don't match
 
         return delay().then(() => {
@@ -131,7 +134,7 @@ describe('AttributeElements', () => {
 
             return delay().then(() => {
                 expect(props.children).toHaveBeenCalledTimes(4);
-                expect(metadata.getValidElements).toHaveBeenCalledTimes(2);
+                expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(2);
                 expect(props.children).toHaveBeenCalledTimes(4);
                 expect(props.children.mock.calls[3][0].isLoading).toBe(false);
                 expect(props.children.mock.calls[3][0].validElements).toEqual(
@@ -148,20 +151,15 @@ describe('AttributeElements', () => {
     });
 
     it('should load another attribute on prop change', () => {
-        const metadata = createMetadataMock();
-        const props = {
-            projectId: '1',
-            metadata,
-            options: { limit: 1 },
-            uri: ATTRIBUTE_DISPLAY_FORM_URI_2,
-            children: jest.fn().mockReturnValue(<div />)
-        };
+        const props = createProps({
+            uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+        });
         const wrapper = renderComponent(props as any); // because mocked metadata don't match
 
         return delay().then(() => {
             expect(props.children).toHaveBeenCalledTimes(2);
-            expect(metadata.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
-            expect(metadata.getValidElements).toHaveBeenCalledTimes(1);
+            expect(props.sdk.md.getIdentifiersFromUris).toHaveBeenCalledTimes(0);
+            expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(1);
             expect(props.children.mock.calls[1][0].validElements).toEqual({
                 items: [{ element: { title: 'Abundant Ammunition', uri: '/gdc/md/projectId/object/baz?id=0' } }],
                 paging: { count: 1, offset: 0, total: 167 }
@@ -176,8 +174,8 @@ describe('AttributeElements', () => {
 
             return delay().then(() => {
                 expect(props.children).toHaveBeenCalledTimes(4);
-                expect(metadata.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
-                expect(metadata.getValidElements).toHaveBeenCalledTimes(2);
+                expect(props.sdk.md.getUrisFromIdentifiers).toHaveBeenCalledTimes(1);
+                expect(props.sdk.md.getValidElements).toHaveBeenCalledTimes(2);
                 expect(props.children).toHaveBeenCalledTimes(4);
                 expect(props.children.mock.calls[3][0].isLoading).toBe(false);
                 expect(props.children.mock.calls[3][0].validElements).toEqual(

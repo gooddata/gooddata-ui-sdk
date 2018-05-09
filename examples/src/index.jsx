@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as GD from 'gooddata';
+import sdk from '@gooddata/gooddata-js';
 
 import {
     BrowserRouter as Router,
@@ -13,7 +13,7 @@ import {
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
 import Header from './components/utils/Header';
 import LoginOverlay from './components/utils/LoginOverlay';
-import { Error } from './components/utils/Error';
+import { CustomError } from './components/utils/CustomError';
 
 import { routes, mainRoutes } from './routes/_list';
 
@@ -44,7 +44,7 @@ export class App extends React.Component {
     }
 
     isUserLoggedIn() {
-        GD.user.isLoggedIn()
+        sdk.user.isLoggedIn()
             .then((isLoggedIn) => {
                 this.setState({ isLoggedIn, errorMessage: null });
             })
@@ -54,7 +54,7 @@ export class App extends React.Component {
     }
 
     logout() {
-        GD.user.logout().then(() => {
+        sdk.user.logout().then(() => {
             this.setState({
                 isLoggedIn: false
             });
@@ -105,7 +105,7 @@ export class App extends React.Component {
                         logoutAction={this.logout}
                     />
                     {errorMessage
-                        ? <Error error={{ status: '403', message: errorMessage }} />
+                        ? <CustomError error={{ status: '403', message: errorMessage }} />
                         : null
                     }
                     <main style={{ padding: 20 }}>

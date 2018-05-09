@@ -22,7 +22,7 @@ function logTotalsChange(data: any) {
     }
 }
 
-storiesOf('AFM components - Table', module)
+storiesOf('AFM components/Table', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 600, height: 300 }}>
@@ -30,6 +30,9 @@ storiesOf('AFM components - Table', module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
+                    maxHeight={223}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -41,6 +44,8 @@ storiesOf('AFM components - Table', module)
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -53,6 +58,8 @@ storiesOf('AFM components - Table', module)
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
                     onError={onErrorHandler}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -67,6 +74,8 @@ storiesOf('AFM components - Table', module)
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -90,6 +99,8 @@ storiesOf('AFM components - Table', module)
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

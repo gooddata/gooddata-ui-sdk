@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { DataTable, DummyAdapter } from '@gooddata/data-layer';
+import { DataLayer, factory } from '@gooddata/gooddata-js';
 import { AFM } from '@gooddata/typings';
 import { Execute, IExecuteProps } from '../Execute';
 import { delay } from '../../components/tests/utils';
@@ -20,8 +20,7 @@ describe('Execute', () => {
     };
 
     function dataTableFactory() {
-        const adapter = new DummyAdapter(data);
-        return new DataTable(adapter);
+        return new DataLayer.DataTable(new DataLayer.DummyAdapter(data));
     }
 
     function createStatelessChild() {
@@ -66,7 +65,7 @@ describe('Execute', () => {
         });
     });
 
-    it('should not dispatch execution for same AFM', () => {
+    it('should not run execution for same AFM', () => {
         const child = createStatelessChild();
         const wrapper = createComponent(child);
 
@@ -75,8 +74,24 @@ describe('Execute', () => {
         });
 
         return delay().then(() => {
-            // first render is loading, second result
-            expect(child).toHaveBeenCalledTimes(2);
+            expect(child).toHaveBeenCalledTimes(2); // first loading, second result
+        });
+    });
+
+    it('should run execution on props change (sdk,projectId,afm,resultSpec)', () => {
+        const child = createStatelessChild();
+        const wrapper = createComponent(child);
+
+        return delay().then(() => {
+            expect(child).toHaveBeenCalledTimes(2); // first loading, second result
+            wrapper.setProps({ sdk: factory({ domain: 'example.com' }) });
+            expect(child).toHaveBeenCalledTimes(3);
+            wrapper.setProps({ projectId: 'dummy' });
+            expect(child).toHaveBeenCalledTimes(4);
+            wrapper.setProps({ afm: {} });
+            expect(child).toHaveBeenCalledTimes(5);
+            wrapper.setProps({ resultSpec: { a: 'a' } });
+            expect(child).toHaveBeenCalledTimes(6);
         });
     });
 });

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import * as GoodData from 'gooddata';
+import { SDK, factory as createSdk } from '@gooddata/gooddata-js';
 import pick = require('lodash/pick');
 
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -9,8 +9,10 @@ import { injectIntl } from 'react-intl';
 import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from './AttributeDropdown';
 import { AttributeLoader } from './AttributeLoader';
 import { IAttributeDisplayForm } from './model';
+import { setTelemetryHeaders } from '../../../helpers/utils';
 
 export interface IAttributeFilterProps {
+    sdk?: SDK;
     uri?: string;
     identifier?: string;
     projectId?: string;
@@ -39,6 +41,10 @@ const DefaultFilterError = injectIntl(({ intl }) => {
     return <div className="gd-message error">{text}</div>;
 });
 
+/**
+ * AttributeFilter
+ * is a component that renders a dropdown populated with attribute values
+ */
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
     public static propTypes = {
         uri: PropTypes.string,
@@ -47,11 +53,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
 
         FilterLoading: PropTypes.func,
         FilterError: PropTypes.func,
-        locale: PropTypes.string,
-        metadata: PropTypes.shape({
-            getObjectUri: PropTypes.func.isRequired,
-            getObjectDetails: PropTypes.func.isRequired
-        })
+        locale: PropTypes.string
     };
 
     public static defaultProps: Partial<IAttributeFilterProps> = {
@@ -59,17 +61,34 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         identifier: null,
         projectId: null,
         locale: 'en-US',
-        metadata: GoodData.md,
 
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError
     };
 
+    private sdk: SDK;
+
+    constructor(props: IAttributeFilterProps) {
+        super(props);
+
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'AttributeFilter', props);
+    }
+
+    public componentWillReceiveProps(nextProps: IAttributeFilterProps) {
+        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'AttributeFilter', nextProps);
+        }
+    }
+
     public render() {
-        const { locale, projectId, uri, identifier, metadata } = this.props;
+        const { locale, projectId, uri, identifier } = this.props;
+        const { md } = this.sdk;
         return (
             <IntlWrapper locale={locale}>
-                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={metadata}>
+                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
                     {props => this.renderContent(props)}
                 </AttributeLoader>
             </IntlWrapper>
@@ -90,9 +109,11 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
             this.props,
             Object.keys(AttributeDropdownWrapped.propTypes)
         );
+        const { md } = this.sdk;
         return (
             <AttributeDropdown
                 attributeDisplayForm={attributeDisplayForm}
+                metadata={md}
                 {...dropdownProps}
             />
         );

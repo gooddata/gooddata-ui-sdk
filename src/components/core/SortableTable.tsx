@@ -3,26 +3,24 @@ import * as React from 'react';
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import { AFM } from '@gooddata/typings';
-import { ResultSpecUtils } from '@gooddata/data-layer';
+import { DataLayer } from '@gooddata/gooddata-js';
 import { PureTable, ITableProps } from './PureTable';
+import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+import { IPushData } from '../../interfaces/PushData';
 
 export interface ISortableTableState {
     sortItems: AFM.SortItem[];
 }
 
-export interface IPushData {
-    properties?: {
-        sotItems?: AFM.SortItem[];
-    };
-}
+export class SortableTable
+    extends React.Component<ITableProps & IDataSourceProviderInjectedProps, ISortableTableState> {
 
-export class SortableTable extends React.Component<ITableProps, ISortableTableState> {
     public static defaultProps: Partial<ITableProps> = {
         pushData: noop
     };
 
-    constructor() {
-        super();
+    constructor(props: ITableProps & IDataSourceProviderInjectedProps) {
+        super(props);
 
         this.state = {
             sortItems: []
@@ -31,8 +29,8 @@ export class SortableTable extends React.Component<ITableProps, ISortableTableSt
         this.handlePushData = this.handlePushData.bind(this);
     }
 
-    public componentWillReceiveProps(nextProps: ITableProps): void {
-        if (!ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
+    public componentWillReceiveProps(nextProps: ITableProps & IDataSourceProviderInjectedProps): void {
+        if (!DataLayer.ResultSpecUtils.isSortValid(nextProps.dataSource.getAfm(), this.state.sortItems[0])) {
             this.setState({ sortItems: [] });
         }
     }
@@ -59,7 +57,7 @@ export class SortableTable extends React.Component<ITableProps, ISortableTableSt
             <PureTable
                 {...this.props}
                 pushData={this.handlePushData}
-                resultSpec={ResultSpecUtils.applySorting(this.props.resultSpec, this.state.sortItems)}
+                resultSpec={DataLayer.ResultSpecUtils.applySorting(this.props.resultSpec, this.state.sortItems)}
             />
         );
     }

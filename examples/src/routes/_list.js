@@ -11,13 +11,20 @@ import DatePicker from './DatePicker';
 import ResponsiveChart from './ResponsiveChart';
 import DynamicMeasures from './DynamicMeasures';
 import CustomLegend from './CustomLegend';
+import ParentFilter from './ParentFilter';
+import LoadingAndError from './LoadingAndError';
+import MultipleDomains from './MultipleDomains';
+import DrillWithExternalData from './DrillWithExternalData';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
     { path: '/advanced/dynamic-measures', title: 'Dynamic Measures', Component: DynamicMeasures },
     { path: '/advanced/date-picker', title: 'Date Picker', Component: DatePicker },
     { path: '/advanced/responsive', title: 'Responsive Chart', Component: ResponsiveChart },
-    { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend }
+    { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
+    { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
+    { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError },
+    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData }
 ];
 
 const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advancedUseCasesRoutes });
@@ -34,7 +41,8 @@ export const mainRoutes = [
 
 export const routes = [
     ...mainRoutes,
-    ...advancedUseCasesRoutes
+    ...advancedUseCasesRoutes,
+    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains }
 ];
 
 const components = routes.map(r => r.component);

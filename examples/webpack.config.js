@@ -112,9 +112,11 @@ module.exports = ({ gdc = defaultBackend, link = false, basepath = '' } = {}) =>
             path: path.resolve(__dirname, 'dist'),
             publicPath: `${basepath}/`
         },
+        devtool: isProduction ? false : 'cheap-module-eval-source-map',
         node: {
             __filename: true
         },
+        devtool: isProduction ? false : 'cheap-module-eval-source-map',
         module: {
             rules: [
                 {

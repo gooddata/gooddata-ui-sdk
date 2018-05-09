@@ -23,11 +23,11 @@ function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem
     });
 }
 
-function getTableDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-    const attributes: VisualizationObject.IBucket = mdObject.buckets
-        .find(bucket => bucket.localIdentifier === ATTRIBUTE);
+export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const attributes: VisualizationObject.IBucket = buckets
+        .find(bucket => bucket.localIdentifier === ATTRIBUTE || bucket.localIdentifier === 'attributes');
 
-    const measures: VisualizationObject.IBucket = mdObject.buckets
+    const measures: VisualizationObject.IBucket = buckets
         .find(bucket => bucket.localIdentifier === MEASURES);
 
     const attributesItemIdentifiers = get(attributes, 'items', [])
@@ -145,14 +145,28 @@ function getLineDimensions(mdObject: VisualizationObject.IVisualizationObjectCon
     ];
 }
 
-// duplicates logic from pluggable visualizations. Remove once react components support pluggable visualizations
+function getHeadlinesDimensions(): AFM.IDimension[] {
+    return [
+        { itemIdentifiers: ['measureGroup'] }
+    ];
+}
+
+/**
+ * generateDimensions
+ * is a function that generates dimensions based on buckets and visualization objects.
+ * WARNING: It duplicates logic from pluggable visualizations.
+ *          Remove once react components support pluggable visualizations.
+ * @param mdObject:VisualizationObject.IVisualizationObjectContent - metadata object with buckets
+ * @param type:VisType - visualization type string
+ * @internal
+ */
 export function generateDimensions(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     type: VisType
 ): AFM.IDimension[] {
     switch (type) {
         case VisualizationTypes.TABLE: {
-            return getTableDimensions(mdObject);
+            return getTableDimensions(mdObject.buckets);
         }
         case VisualizationTypes.PIE: {
             return getPieDimensions(mdObject);
@@ -161,9 +175,33 @@ export function generateDimensions(
             return getLineDimensions(mdObject);
         }
         case VisualizationTypes.BAR:
+        case VisualizationTypes.AREA:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
         }
+        case VisualizationTypes.HEADLINE: {
+            return getHeadlinesDimensions();
+        }
     }
     return [];
+}
+
+export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const stackByAttribute = buckets.find(bucket => bucket.localIdentifier === 'stacks').items[0] as
+        VisualizationObject.IVisualizationAttribute;
+
+    const viewByAttribute = buckets.find(bucket => bucket.localIdentifier === 'attributes').items[0] as
+        VisualizationObject.IVisualizationAttribute;
+
+    const stackByAttributeLocalIdentifier = stackByAttribute.visualizationAttribute.localIdentifier;
+    const viewByAttributeLocalIdentifier = viewByAttribute.visualizationAttribute.localIdentifier;
+
+    return [
+        {
+            itemIdentifiers: [stackByAttributeLocalIdentifier]
+        },
+        {
+            itemIdentifiers: [viewByAttributeLocalIdentifier, 'measureGroup']
+        }
+    ];
 }

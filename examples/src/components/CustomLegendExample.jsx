@@ -4,8 +4,6 @@ import { AfmComponents } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import {
     projectId,
     franchiseFeesAdRoyaltyIdentifier,
@@ -133,8 +131,6 @@ export class CustomChartExample extends Component {
                         }}
                         onError={this.onError}
                         onLegendReady={this.onLegendReady}
-                        LoadingComponent={Loading}
-                        ErrorComponent={Error}
                     />
                 </div>
             </div>

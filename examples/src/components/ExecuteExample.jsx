@@ -1,11 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { Execute } from '@gooddata/react-components';
+import { Execute, LoadingComponent, ErrorComponent } from '@gooddata/react-components';
 
 import { totalSalesIdentifier, projectId } from '../utils/fixtures';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 export class ExecuteExample extends Component {
     constructor(props) {
@@ -55,10 +53,10 @@ export class ExecuteExample extends Component {
 
     executeChildrenFunction({ result, isLoading, error }) {
         if (error) {
-            return <Error error={error} />;
+            return <ErrorComponent message="There was an error getting your execution" description={JSON.stringify(error, null, '  ')} />;
         }
         if (isLoading) {
-            return <Loading />;
+            return <LoadingComponent />;
         }
         return (
             <div>
@@ -73,7 +71,7 @@ export class ExecuteExample extends Component {
                         font-weight: 700;
                     }
                 `}</style>
-                <p className="kpi s-execute-kpi">{result.executionResult.executionResult.data[0]}</p>
+                <p className="kpi s-execute-kpi">{result.executionResult.data[0]}</p>
                 <p>Full execution response and result as JSON:</p>
                 <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
             </div>
@@ -112,7 +110,7 @@ export class ExecuteExample extends Component {
                 {status}
                 <p>
                     <button onClick={this.retry} className="button button-secondary s-retry-button">Retry</button>
-                    (fails every second attempt)
+                    &ensp;(fails every second attempt)
                 </p>
                 {/*
                     We need to render the Execute component even in loading

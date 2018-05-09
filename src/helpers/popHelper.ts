@@ -11,6 +11,13 @@ function getOriginalMeasure(
     return bucketItems.find(bucketItem => get(bucketItem, ['measure', 'localIdentifier']) === measureIdentifier);
 }
 
+/**
+ * fillPoPTitlesAndAliases
+ * is a function that fills in titles and aliases into pop measure definition based on original measure definition
+ * @param mdObject:VisualizationObject.IVisualizationObjectContent - metadata object
+ * @param popSuffix:string - string to append to localIdentifier
+ * @internal
+ */
 export function fillPoPTitlesAndAliases(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     popSuffix: string

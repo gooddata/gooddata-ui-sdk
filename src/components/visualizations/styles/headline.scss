@@ -1,0 +1,128 @@
+// (C) 2007-2018 GoodData Corporation
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/_typo-mixins';
+
+.headline {
+    text-align: center;
+
+    .headline-primary-item {
+        overflow: hidden;
+        height: 60px;
+        line-height: 60px;
+        font-size: 50px;
+        white-space: nowrap;
+
+        @extend %gd-heading-1;
+
+        .headline-value-wrapper {
+            display: inline-block;
+            -webkit-backface-visibility: hidden;
+        }
+
+        &.is-drillable {
+            .headline-value-wrapper {
+                cursor: pointer;
+                transition: opacity 0.4s;
+            }
+
+            .headline-value-wrapper:hover {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .headline-secondary-item {
+        flex-shrink: 1;
+        padding-right: 0;
+        border-left: 1px dashed transparentize($gd-color-disabled, 0.5);
+
+        &.is-drillable {
+            cursor: pointer;
+
+            .headline-value-wrapper,
+            .headline-title-wrapper {
+                transition: opacity 0.4s;
+            }
+
+            &:hover .headline-value-wrapper,
+            &:hover .headline-title-wrapper {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .headline-primary-item,
+    .headline-secondary-item {
+        .headline-value {
+            position: relative;
+            display: inline-block;
+            line-height: 115%;
+        }
+    }
+
+    .headline-value--empty {
+        color: $gd-color-disabled;
+    }
+
+    .headline-item-link {
+        .headline-value {
+            &:not(.headline-value--empty)::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: block;
+                border-bottom: 2px solid;
+            }
+        }
+    }
+
+    .headline-secondary-item .headline-item-link {
+        .headline-value {
+            &:not(.headline-value--empty)::after {
+                border-bottom: 1px solid;
+            }
+        }
+    }
+
+    .headline-compare-section {
+        position: relative;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        color: $gd-color-state-blank;
+
+        @extend %gd-font-base;
+    }
+
+    .headline-compare-section-item {
+        overflow: hidden;
+        margin: 0;
+        padding: 0 15px;
+        color: $gd-color-state-blank;
+
+        .headline-title-wrapper,
+        .headline-value-wrapper {
+            line-height: 14px;
+        }
+
+        .headline-value-wrapper {
+            overflow: hidden;
+            height: 20px;
+            margin-bottom: 0.25em;
+            font-size: 17px;
+            font-weight: bold;
+            line-height: 20px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .headline-title-wrapper {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+    }
+}

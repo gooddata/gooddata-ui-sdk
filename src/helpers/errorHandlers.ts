@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
-import {
-    ErrorCodes as DataErrorCodes
-} from '@gooddata/data-layer';
+import { ApiResponseError } from '@gooddata/gooddata-js';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
+import * as HttpStatusCodes from 'http-status-codes';
+import { RuntimeError } from '../errors/RuntimeError';
 
 function getJSONFromText(data: string): object {
     try {
@@ -14,34 +14,33 @@ function getJSONFromText(data: string): object {
     }
 }
 
-export function convertErrors(error: Execution.IError) {
+export function convertErrors(error: ApiResponseError): RuntimeError {
     const errorCode: number = error.response.status;
-    return error.response.text().then((data: string) => {
-        switch (errorCode) {
-            case 204:
-                throw ErrorStates.NO_DATA;
+    switch (errorCode) {
+        case HttpStatusCodes.NO_CONTENT:
+            return new RuntimeError(ErrorStates.NO_DATA, error);
 
-            case DataErrorCodes.HTTP_TOO_LARGE:
-                throw ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
+        case HttpStatusCodes.REQUEST_TOO_LONG:
+            return new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error);
 
-            case DataErrorCodes.HTTP_BAD_REQUEST:
-                const message = get(getJSONFromText(data), 'error.message', '');
-                if (includes(message, 'Attempt to execute protected report unsafely')) {
-                    throw ErrorStates.PROTECTED_REPORT;
-                } else {
-                    throw ErrorStates.BAD_REQUEST;
-                }
+        case HttpStatusCodes.BAD_REQUEST:
+            const message = get(getJSONFromText(error.responseBody), 'error.message', '');
 
-            case ErrorCodes.EMPTY_AFM:
-                throw ErrorStates.EMPTY_AFM;
+            if (includes(message, 'Attempt to execute protected report unsafely')) {
+                return new RuntimeError(ErrorStates.PROTECTED_REPORT, error);
+            } else {
+                return new RuntimeError(ErrorStates.BAD_REQUEST, error);
+            }
 
-            case ErrorCodes.INVALID_BUCKETS:
-                throw ErrorStates.INVALID_BUCKETS;
+        case ErrorCodes.EMPTY_AFM:
+            return new RuntimeError(ErrorStates.EMPTY_AFM);
 
-            default:
-                throw ErrorStates.UNKNOWN_ERROR;
-        }
-    });
+        case ErrorCodes.INVALID_BUCKETS:
+            return new RuntimeError(ErrorStates.INVALID_BUCKETS);
+
+        default:
+            return new RuntimeError(ErrorStates.UNKNOWN_ERROR);
+    }
 }
 
 /** @deprecated */
@@ -50,17 +49,24 @@ function isNullExecutionResult(responses: Execution.IExecutionResponses): boolea
 }
 
 function hasEmptyData(responses: Execution.IExecutionResponses): boolean {
-    return responses.executionResult.executionResult.data.length === 0;
+    return responses.executionResult.data.length === 0;
 }
 
 function hasMissingHeaderItems(responses: Execution.IExecutionResponses): boolean {
-    return !responses.executionResult.executionResult.headerItems;
+    return !responses.executionResult.headerItems;
 }
 
 function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {
     return hasEmptyData(responses) && hasMissingHeaderItems(responses);
 }
 
+/**
+ * isEmptyResult
+ * is a function that returns true if the execution result is empty (no data points) and false otherwise.
+ * @param responses:Execution.IExecutionResponses - object with execution response and result
+ * @return boolean
+ * @internal
+ */
 export function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
     return isNullExecutionResult(responses) || isEmptyDataResult(responses);
 }
@@ -68,9 +74,9 @@ export function isEmptyResult(responses: Execution.IExecutionResponses): boolean
 export function checkEmptyResult(responses: Execution.IExecutionResponses) {
     if (isEmptyResult(responses)) {
         throw {
-            name: 'EmptyResulError',
+            name: 'EmptyResultError',
             response: {
-                status: 204,
+                status: HttpStatusCodes.NO_CONTENT,
                 json: () => Promise.resolve(null),
                 text: () => Promise.resolve(null)
             }

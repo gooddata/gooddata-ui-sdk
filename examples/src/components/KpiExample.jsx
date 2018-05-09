@@ -5,8 +5,6 @@ import { Kpi } from '@gooddata/react-components';
 import '@gooddata/react-components/styles/css/main.css';
 
 import { totalSalesIdentifier, projectId } from '../utils/fixtures';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 export class KpiExample extends Component {
     render() {
@@ -18,6 +16,8 @@ export class KpiExample extends Component {
                         font-size: 50px;
                         white-space: nowrap;
                         vertical-align: bottom;
+                        text-align: center;
+                        min-width: 300px;
                         line-height: 1.2em;
                         font-weight: 700;
                         width: 300px;
@@ -26,8 +26,6 @@ export class KpiExample extends Component {
                 <Kpi
                     projectId={projectId}
                     measure={totalSalesIdentifier}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

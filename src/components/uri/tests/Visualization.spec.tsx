@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
+import { SDK } from '@gooddata/gooddata-js';
 import {
     Table,
     BaseChart,
@@ -17,6 +18,7 @@ import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
 import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
+import { RuntimeError } from '../../../errors/RuntimeError';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -39,7 +41,8 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
-function fetchVisObject(uri: string): Promise<VisualizationObject.IVisualizationObject> {
+// tslint:disable-next-line:variable-name
+function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
 
     if (!visObj) {
@@ -49,7 +52,11 @@ function fetchVisObject(uri: string): Promise<VisualizationObject.IVisualization
     return Promise.resolve(visObj.visualizationObject);
 }
 
-function fetchVisualizationClass(visualizationClassUri: string): Promise<VisualizationClass.IVisualizationClass> {
+function fetchVisualizationClass(
+    // tslint:disable-next-line:variable-name
+    _sdk: SDK,
+    visualizationClassUri: string
+): Promise<VisualizationClass.IVisualizationClass> {
     const visClass = visualizationClasses.find(vc => vc.visualizationClass.meta.uri === visualizationClassUri);
 
     if (!visClass) {
@@ -60,7 +67,7 @@ function fetchVisualizationClass(visualizationClassUri: string): Promise<Visuali
 }
 
 // tslint:disable-next-line:variable-name
-function uriResolver(_projectId: string, uri: string, identifier: string): Promise<string> {
+function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
     }
@@ -109,6 +116,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
     });
@@ -160,6 +168,7 @@ describe('VisualizationWrapped', () => {
         ];
 
         return delay(SLOW).then(() => {
+            wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
             expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
             expect(wrapper.state('dataSource')).not.toBeNull();
@@ -182,13 +191,14 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
     });
 
     it('should trigger error in case of given uri is not valid', (done) => {
-        const errorHandler = (value: { status: string }) => {
-            expect(value.status).toEqual(ErrorStates.NOT_FOUND);
+        const errorHandler = (error: RuntimeError) => {
+            expect(error.getMessage()).toEqual(ErrorStates.NOT_FOUND);
             done();
         };
 
@@ -220,6 +230,7 @@ describe('VisualizationWrapped', () => {
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
         });
     });
@@ -243,6 +254,7 @@ describe('VisualizationWrapped', () => {
         // Would throw an error if not handled properly
         wrapper.unmount();
         return delay(FAST + 1).then(() => {
+            wrapper.update();
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
         });
@@ -265,6 +277,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
             const TableElement = wrapper.find(Table).get(0);
             expect(TableElement.props.LoadingComponent).toBe(LoadingComponent);
@@ -289,6 +302,7 @@ describe('VisualizationWrapped', () => {
         );
 
         return delay(SLOW + 1).then(() => {
+            wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
             const BaseChartElement = wrapper.find(BaseChart).get(0);
             expect(BaseChartElement.props.LoadingComponent).toBe(LoadingComponent);

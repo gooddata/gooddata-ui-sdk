@@ -1,0 +1,66 @@
+{
+    "execution": {
+        "afm": {
+            "measures": [
+                {
+                    "definition": {
+                        "measure": {
+                            "item": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"
+                            }
+                        }
+                    },
+                    "localIdentifier": "lostMetric",
+                    "format": "#,##0.00",
+                    "alias": "Lost"
+                },
+                {
+                    "definition": {
+                        "measure": {
+                            "item": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"
+                            }
+                        }
+                    },
+                    "localIdentifier": "wonMetric",
+                    "format": "#,##0.00",
+                    "alias": "Won"
+                },
+                {
+                    "definition": {
+                        "measure": {
+                            "item": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285"
+                            }
+                        }
+                    },
+                    "localIdentifier": "expectedMetric",
+                    "format": "#,##0.00",
+                    "alias": "Expected"
+                }
+            ],
+            "attributes": [
+                {
+                    "displayForm": {
+                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                    },
+                    "localIdentifier": "yearCreatedAttribute"
+                }
+            ]
+        },
+        "resultSpec": {
+            "dimensions": [
+                {
+                    "itemIdentifiers": [
+                        "yearCreatedAttribute"
+                    ]
+                },
+                {
+                    "itemIdentifiers": [
+                        "measureGroup"
+                    ]
+                }
+            ]
+        }
+    }
+}

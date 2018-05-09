@@ -8,7 +8,6 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 import { executionRequest } from './utils/dummyFixture';
 
 describe('Table', () => {
-
     it('should provide default resultSpec to the core Table with attributes', () => {
         const wrapper = mount((
             <Table
@@ -18,6 +17,7 @@ describe('Table', () => {
             />));
 
         return delay().then(() => {
+            wrapper.update();
             const dimensions = wrapper.find(SortableTable).props().resultSpec.dimensions;
             expect(dimensions).toEqual([
                 { itemIdentifiers: ['departmentAttribute'] },

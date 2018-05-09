@@ -74,6 +74,9 @@
   }, {
     "title": "Pie",
     "url": "local:pie"
+  }, {
+    "title": "Headline",
+    "url": "local:headline"
   }],
   "visualizationObjects": [
     {
@@ -117,7 +120,7 @@
       }]
     },
     {
-      "title": "Chart with PoP measure",
+      "title": "Chart with PoP measures",
       "identifier": "1003",
       "type": "local:bar",
       "filters": [],
@@ -135,6 +138,18 @@
           "filters": [],
           "identifier": "1",
           "alias": "Amount"
+        }, {
+            "localIdentifier": "m2",
+            "filters": [],
+            "identifier": "2",
+            "alias": "Value"
+        }, {
+          "localIdentifier": "m2_pop",
+          "filters": [],
+          "identifier": "2",
+          "showPoP": "true",
+          "measureIdentifier": "m2",
+          "popAttribute": "attr.closed.year"
         }]
       }, {
         "localIdentifier": "view",
@@ -142,6 +157,19 @@
           "localIdentifier": "a1",
           "displayForm": "attr.closed.year.df",
           "alias": "Date"
+        }]
+      }]
+    },
+    {
+      "identifier": "1004",
+      "title": "Headline",
+      "type": "local:headline",
+      "buckets": [{
+        "localIdentifier": "measures",
+        "items": [{
+          "localIdentifier": "1",
+          "identifier": "1",
+          "alias": "Amount"
         }]
       }]
     }

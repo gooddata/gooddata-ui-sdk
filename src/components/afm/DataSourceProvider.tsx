@@ -1,24 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import * as GoodData from 'gooddata';
+import { SDK, factory as createSdk, DataLayer } from '@gooddata/gooddata-js';
 import * as PropTypes from 'prop-types';
 
 import isEqual = require('lodash/isEqual');
 import omit = require('lodash/omit');
 import { AFM, Execution } from '@gooddata/typings';
-import { ExecuteAfmAdapter, createSubject, IAdapter } from '@gooddata/data-layer';
-import { AfmPropTypesShape, ResultSpecPropTypesShape } from '@gooddata/indigo-visualizations';
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from '../visualizations/proptypes/execution';
 
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
+import { setTelemetryHeaders } from '../../helpers/utils';
 
-export type IAdapterFactory = (sdk: typeof GoodData, projectId: string) => IAdapter<Execution.IExecutionResponses>;
+export type IAdapterFactory = (sdk: SDK, projectId: string) => DataLayer.IAdapter<Execution.IExecutionResponses>;
 
 export interface IDataSourceProviderProps {
     afm: AFM.IAfm;
     projectId: string;
     resultSpec?: AFM.IResultSpec;
     adapterFactory?: IAdapterFactory;
+    sdk?: SDK;
 
     [p: string]: any; // other params of inner componnent, just for pass through
 }
@@ -31,8 +32,8 @@ export interface IDataSourceProviderInjectedProps {
 export type IDataSourceInfoPromise = Promise<IDataSource>;
 export type IGenerateDefaultDimensionsFunction = (afm: AFM.IAfm) => AFM.IDimension[];
 
-function defaultAdapterFactory(sdk: typeof GoodData, projectId: string): IAdapter<Execution.IExecutionResponses> {
-    return new ExecuteAfmAdapter(sdk, projectId);
+function defaultAdapterFactory(sdk: SDK, projectId: string): DataLayer.IAdapter<Execution.IExecutionResponses> {
+    return new DataLayer.ExecuteAfmAdapter(sdk, projectId);
 }
 
 function addDefaultDimensions(
@@ -47,9 +48,19 @@ function addDefaultDimensions(
     };
 }
 
+/**
+ * dataSourceProvider
+ * is a function that creates a dataSource and passes it to InnerComponent
+ * @param InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>
+ *   a component that will be pased dataSource prop
+ * @param generateDefaultDimensions - a function that returns default dimensions
+ * @param componentName: string - InnerComponent actual name
+ * @internal
+ */
 export function dataSourceProvider<T>(
     InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>,
-    generateDefaultDimensions: IGenerateDefaultDimensionsFunction
+    generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
+    componentName: string
 ): React.ComponentClass<IDataSourceProviderProps> {
 
     return class WrappedComponent
@@ -61,8 +72,9 @@ export function dataSourceProvider<T>(
             resultSpec: ResultSpecPropTypesShape
         };
 
-        private adapter: IAdapter<Execution.IExecutionResponses>;
+        private adapter: DataLayer.IAdapter<Execution.IExecutionResponses>;
         private subject: ISubject<IDataSourceInfoPromise>;
+        private sdk: SDK;
 
         constructor(props: IDataSourceProviderProps) {
             super(props);
@@ -72,11 +84,14 @@ export function dataSourceProvider<T>(
                 resultSpec: null
             };
 
-            this.subject = createSubject<IDataSource>((dataSource) => {
-                this.setState({
-                    dataSource
-                });
-            }, error => this.handleError(error));
+            const sdk = props.sdk || createSdk();
+            this.sdk = sdk.clone();
+            setTelemetryHeaders(this.sdk, componentName, props);
+
+            this.subject = DataLayer.createSubject<IDataSource>(
+                dataSource => this.setState({ dataSource }),
+                error => this.handleError(error)
+            );
         }
 
         public componentDidMount() {
@@ -86,10 +101,16 @@ export function dataSourceProvider<T>(
         }
 
         public componentWillReceiveProps(nextProps: IDataSourceProviderProps) {
-            const { projectId, afm, resultSpec } = nextProps;
+            const { projectId, afm, resultSpec, sdk } = nextProps;
             if (projectId !== this.props.projectId) {
                 this.createAdapter(projectId);
             }
+
+            if (sdk && sdk !== this.sdk) {
+                this.sdk = nextProps.sdk.clone();
+                setTelemetryHeaders(this.sdk, componentName, nextProps);
+            }
+
             if (
                 !isEqual(afm, this.props.afm)
                 || !isEqual(resultSpec, this.props.resultSpec)
@@ -126,7 +147,7 @@ export function dataSourceProvider<T>(
 
         private createAdapter(projectId: string) {
             const adapterFactory = this.props.adapterFactory || defaultAdapterFactory;
-            this.adapter = adapterFactory(GoodData, projectId);
+            this.adapter = adapterFactory(this.sdk, projectId);
         }
 
         private handleError(error: string) {

@@ -1,22 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import * as GoodData from 'gooddata';
+import { DataLayer, SDK, factory as createSdk } from '@gooddata/gooddata-js';
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
-import { DataTable, ExecuteAfmAdapter, ErrorCodes } from '@gooddata/data-layer';
 
-import { ErrorStates } from '../constants/errorStates';
 import { IEvents } from '../interfaces/Events';
 import { ExecutePropType, Requireable } from '../proptypes/Execute';
+import { setTelemetryHeaders } from '../helpers/utils';
+import { convertErrors } from '../helpers/errorHandlers';
+import { RuntimeError } from '../errors/RuntimeError';
 
 export { Requireable };
 
-export type IDataTableFactory = (projectId: string) => DataTable<Execution.IExecutionResponses>;
+const { DataTable, ExecuteAfmAdapter } = DataLayer;
 
-export interface ILoadingStateProps {
-    error?: object;
-    props: object;
+export type IDataTableFactory = (sdk: SDK, projectId: string) => DataLayer.DataTable<Execution.IExecutionResponses>;
+
+function dataTableFactory(sdk: SDK, projectId: string): DataLayer.DataTable<Execution.IExecutionResponses> {
+    return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
 }
 
 export interface IExecuteProps extends IEvents {
@@ -24,20 +26,14 @@ export interface IExecuteProps extends IEvents {
     resultSpec?: AFM.IResultSpec;
     projectId: string;
     children?: any;
+    sdk?: SDK;
     dataTableFactory?: IDataTableFactory; // only for tests
 }
 
 export interface IExecuteState {
     result: Execution.IExecutionResponses;
     isLoading: boolean;
-    error: {
-        status: string;
-        response?: object;
-    };
-}
-
-function dataTableFactory(projectId: string): DataTable<Execution.IExecutionResponses> {
-    return new DataTable(new ExecuteAfmAdapter(GoodData, projectId));
+    error?: RuntimeError;
 }
 
 export interface IExecuteChildrenProps {
@@ -49,6 +45,10 @@ export interface IExecuteChildrenProps {
     isLoading: boolean;
 }
 
+/**
+ * [Execute](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/execute_component.html)
+ * is a component that does execution based on afm and resultSpec props and passes the result to it's children function
+ */
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     public static proptTypes = ExecutePropType;
     public static defaultProps: Partial<IExecuteProps> = {
@@ -57,7 +57,9 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         onLoadingChanged: noop
     };
 
-    private dataTable: DataTable<Execution.IExecutionResponses>;
+    private dataTable: DataLayer.DataTable<Execution.IExecutionResponses>;
+
+    private sdk: SDK;
 
     public constructor(props: IExecuteProps) {
         super(props);
@@ -68,37 +70,10 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             error: null
         };
 
-        const { onError, onLoadingChanged } = props;
-
-        this.dataTable = props.dataTableFactory(props.projectId);
-        this.dataTable.onData((result: Execution.IExecutionResponses) => {
-            this.setState({
-                result,
-                isLoading: false
-            });
-            onLoadingChanged({ isLoading: false });
-        });
-
-        this.dataTable.onError((error: Execution.IError) => {
-            const { status } = error.response;
-            const newError = {
-                status: ErrorStates.UNKNOWN_ERROR,
-                error
-            };
-            if (status === ErrorCodes.HTTP_TOO_LARGE) {
-                newError.status = ErrorStates.DATA_TOO_LARGE_TO_COMPUTE;
-            } else if (status === ErrorCodes.HTTP_BAD_REQUEST) {
-                newError.status = ErrorStates.BAD_REQUEST;
-            }
-
-            this.setState({
-                result: null,
-                isLoading: false,
-                error: newError
-            });
-            onLoadingChanged({ isLoading: false });
-            onError(newError);
-        });
+        const sdk = props.sdk || createSdk();
+        this.sdk = sdk.clone();
+        setTelemetryHeaders(this.sdk, 'Execute', props);
+        this.initDataTable(props);
     }
 
     public componentWillMount() {
@@ -106,14 +81,20 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     public componentWillReceiveProps(nextProps: IExecuteProps) {
-        if (this.hasPropsChanged(nextProps, ['afm', 'resultSpec'])) {
+        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
+            this.sdk = nextProps.sdk.clone();
+            setTelemetryHeaders(this.sdk, 'Execute', nextProps);
+            this.initDataTable(nextProps);
+        }
+        if (this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec'])) {
+            this.initDataTable(nextProps);
             this.runExecution(nextProps);
         }
     }
 
     public shouldComponentUpdate(nextProps: IExecuteProps, nextState: IExecuteState) {
         return !isEqual(this.state, nextState) ||
-            this.hasPropsChanged(nextProps, ['afm', 'resultSpec', 'children']);
+            this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec', 'children']);
     }
 
     public render() {
@@ -147,5 +128,31 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         });
 
         this.dataTable.getData(afm, resultSpec);
+    }
+
+    private initDataTable(props: IExecuteProps) {
+        const { onError, onLoadingChanged, projectId } = props;
+        this.dataTable = props.dataTableFactory(this.sdk, projectId);
+        this.dataTable.onData((result: Execution.IExecutionResponses) => {
+            this.setState({
+                result,
+                isLoading: false
+            });
+            onLoadingChanged({ isLoading: false });
+        });
+
+        this.dataTable.onError((error) => {
+            const newError = convertErrors(error);
+
+            onError(newError);
+
+            onLoadingChanged({ isLoading: false });
+
+            this.setState({
+                result: null,
+                isLoading: false,
+                error: newError
+            });
+        });
     }
 }

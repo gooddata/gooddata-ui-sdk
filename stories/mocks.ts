@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
 
-import { ErrorStates } from '../src/constants/errorStates';
 import { IDataSource } from '../src/interfaces/DataSource';
 
 export class DataSourceMock implements IDataSource {
@@ -22,7 +21,5 @@ export class DataSourceMock implements IDataSource {
 }
 
 export function onErrorHandler(error: any) {
-    if (error.status !== ErrorStates.OK) {
-        console.error(error); // tslint:disable-line:no-console
-    }
+    console.error(error); // tslint:disable-line:no-console
 }

@@ -13,7 +13,7 @@ import { CUSTOM_COLORS } from './data/colors';
 import { onErrorHandler } from './mocks';
 import '../styles/scss/charts.scss';
 
-storiesOf('AFM components - ColumnChart', module)
+storiesOf('AFM components/ColumnChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -21,6 +21,8 @@ storiesOf('AFM components - ColumnChart', module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -32,6 +34,8 @@ storiesOf('AFM components - ColumnChart', module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -44,6 +48,8 @@ storiesOf('AFM components - ColumnChart', module)
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

@@ -1,5 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
 import {
     dataSourceProvider,
     IDataSourceProviderProps
@@ -11,16 +10,12 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ColumnChart as CoreColumnChart } from '../core/ColumnChart';
+import { generateDefaultDimensions } from './afmHelper';
 
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-export const ColumnChart = dataSourceProvider<ICommonChartProps>(CoreColumnChart, generateDefaultDimensions);
+/**
+ * AFM ColumnChart
+ * is an internal component that accepts afm, resultSpec
+ * @internal
+ */
+export const ColumnChart = dataSourceProvider<ICommonChartProps>(
+    CoreColumnChart, generateDefaultDimensions, 'ColumnChart');

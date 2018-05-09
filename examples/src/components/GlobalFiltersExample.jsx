@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from 'react';
 import { PropTypes } from 'prop-types';
-import { AttributeElements, AfmComponents, Kpi } from '@gooddata/react-components';
+import { AttributeElements, Kpi, BarChart, PieChart } from '@gooddata/react-components';
 import { SidebarItem } from '../components/utils/SidebarItem';
 import { EmployeeCard } from '../components/GlobalFiltersComponents/EmployeeCard';
 import { KpiMetricBox } from '../components/GlobalFiltersComponents/KpiMetricBox';
@@ -15,10 +15,8 @@ import {
     menuCategoryAttributeDFIdentifier
 } from '../utils/fixtures';
 import { Layout } from '../components/utils/Layout';
-import { Loading } from '../components/utils/Loading';
-import { Error } from '../components/utils/Error';
-
-const { BarChart, PieChart } = AfmComponents;
+import { CustomLoading } from '../components/utils/CustomLoading';
+import { CustomError } from '../components/utils/CustomError';
 
 export class EmployeeProfile extends React.Component {
     static propTypes = {
@@ -91,12 +89,13 @@ export class EmployeeProfile extends React.Component {
                 in: [selectedEmployeeUri]
             }
         };
-        const chartAfm = {
-            measures: [
-                {
+
+        const measures = [
+            {
+                measure: {
                     localIdentifier: 'm1',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: averageDailyTotalSales
                             }
@@ -104,9 +103,26 @@ export class EmployeeProfile extends React.Component {
                     },
                     alias: '$ Avg Daily Total Sales'
                 }
-            ],
-            filters: [employeeFilter]
+            }
+        ];
+        const menuCategoryAttribute = {
+            visualizationAttribute: {
+                localIdentifier: 'a1',
+                displayForm: {
+                    identifier: menuCategoryAttributeDFIdentifier
+                }
+            }
         };
+        const menuItemNameAttribute = {
+            visualizationAttribute: {
+                localIdentifier: 'a1',
+                displayForm: {
+                    identifier: menuItemNameAttributeDFIdentifier
+                },
+                alias: 'Menu Item name'
+            }
+        };
+
         const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri).element;
         const employeeName = selectedEmployee.title;
 
@@ -164,9 +180,9 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <Loading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
                                         }
-                                        ErrorComponent={Error}
+                                        ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
 
@@ -177,9 +193,9 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         format="$#,##0"
                                         LoadingComponent={
-                                            (...otherProps) => <Loading inline height={20} {...otherProps} />
+                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
                                         }
-                                        ErrorComponent={Error}
+                                        ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
                             </div>
@@ -187,20 +203,12 @@ export class EmployeeProfile extends React.Component {
                                 <h2>Average daily total sales by menu category</h2>
                                 <div className="pie-chart">
                                     <PieChart
-                                        afm={{
-                                            ...chartAfm,
-                                            attributes: [
-                                                {
-                                                    localIdentifier: 'a1',
-                                                    displayForm: {
-                                                        identifier: menuCategoryAttributeDFIdentifier
-                                                    }
-                                                }
-                                            ]
-                                        }}
+                                        measures={measures}
+                                        viewBy={menuCategoryAttribute}
+                                        filters={[employeeFilter]}
                                         projectId={projectId}
-                                        LoadingComponent={Loading}
-                                        ErrorComponent={Error}
+                                        LoadingComponent={CustomLoading}
+                                        ErrorComponent={CustomError}
                                         config={{ legend: { position: 'bottom' } }}
                                     />
                                 </div>
@@ -209,21 +217,12 @@ export class EmployeeProfile extends React.Component {
                                 <h2>Average daily total sales by menu item</h2>
                                 <div className="bar-chart">
                                     <BarChart
-                                        afm={{
-                                            ...chartAfm,
-                                            attributes: [
-                                                {
-                                                    localIdentifier: 'a1',
-                                                    displayForm: {
-                                                        identifier: menuItemNameAttributeDFIdentifier
-                                                    },
-                                                    alias: 'Employee name'
-                                                }
-                                            ]
-                                        }}
+                                        measures={measures}
+                                        viewBy={menuItemNameAttribute}
+                                        filters={[employeeFilter]}
                                         projectId={projectId}
-                                        LoadingComponent={Loading}
-                                        ErrorComponent={Error}
+                                        LoadingComponent={CustomLoading}
+                                        ErrorComponent={CustomError}
                                     />
                                 </div>
                             </div>
@@ -239,12 +238,12 @@ export const GlobalFiltersExample = () => (
     <AttributeElements identifier={employeeNameIdentifier} projectId={projectId} options={{ limit: 20 }}>
         {({ validElements, error, isLoading }) => {
             if (error) {
-                return <Error error={{ status: '400', message: error }} />;
+                return <CustomError message="There was an error getting Employee Name attribute values" />;
             }
             if (isLoading) {
                 return (
                     <div style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-                        <Loading speed={2} color="tomato" height="100px" />
+                        <CustomLoading speed={2} color="tomato" imageHeight={100} />
                     </div>
                 );
             }

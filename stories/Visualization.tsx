@@ -54,6 +54,8 @@ class DynamicVisualization extends React.Component<any, any> {
                     onLoadingChanged={this.onLoadingChanged}
                     onError={onErrorHandler}
                     projectId={this.state.projectId}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                     {...this.state}
                 />
                 {this.state.isLoading
@@ -84,7 +86,7 @@ class DynamicVisualization extends React.Component<any, any> {
     }
 }
 
-storiesOf('Visualization', module)
+storiesOf('URI components/Visualization', module)
     .add('table example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -92,6 +94,8 @@ storiesOf('Visualization', module)
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1001'}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -103,6 +107,8 @@ storiesOf('Visualization', module)
                     projectId="myproject"
                     identifier="1001"
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -116,6 +122,8 @@ storiesOf('Visualization', module)
                     drillableItems={[{ identifier: '1' }, { identifier: '3' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -136,11 +144,13 @@ storiesOf('Visualization', module)
                     projectId="myproject"
                     identifier="1001"
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
     ))
-    .add('chart with PoP measure', () => (
+    .add('chart with PoP measures', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
@@ -148,6 +158,8 @@ storiesOf('Visualization', module)
                     uri={'/gdc/md/myproject/obj/1003'}
                     onError={onErrorHandler}
                     locale="de-DE"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -159,6 +171,8 @@ storiesOf('Visualization', module)
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1002'}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -176,6 +190,8 @@ storiesOf('Visualization', module)
                     }}
                     onLegendReady={action('onLegendReady')} // NOTE: onClick is not shown in action logger
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -199,6 +215,8 @@ storiesOf('Visualization', module)
                     filters={[filter]}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         );
@@ -212,6 +230,21 @@ storiesOf('Visualization', module)
                     drillableItems={[{ identifier: '1' }, { identifier: '2' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('Headline', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1004'}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
@@ -222,4 +255,14 @@ storiesOf('Visualization', module)
                 <DynamicVisualization />
             </div>
         )
+    ))
+    .add('error', () => (
+        <div style={{ width: 800, height: 400 }}>
+            <Visualization
+                projectId="myproject"
+                uri={'/gdc/md/myproject/obj/1005'}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+            />
+        </div>
     ));

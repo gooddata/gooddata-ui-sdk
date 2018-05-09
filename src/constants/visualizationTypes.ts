@@ -5,11 +5,12 @@ export const VisualizationTypes = {
     LINE: 'line' as 'line',
     PIE: 'pie' as 'pie',
     TABLE: 'table' as 'table',
-    DOUGHNUT: 'doughnut' as 'doughnut',
-    COMBO: 'combo' as 'combo'
+    HEADLINE: 'headline' as 'headline',
+    AREA: 'area' as 'area',
+    DOUGHNUT: 'doughnut' as 'doughnut'
 };
 
-export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'doughnut' | 'combo';
-export type VisType = ChartType | 'table';
+export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area';
+export type VisType = ChartType | 'table' | 'headline';
 export type ChartElementType = 'slice' | 'bar' | 'point';
-export type VisElementType = ChartElementType | 'cell';
+export type VisElementType = ChartElementType | 'cell' | 'primaryValue' | 'secondaryValue';

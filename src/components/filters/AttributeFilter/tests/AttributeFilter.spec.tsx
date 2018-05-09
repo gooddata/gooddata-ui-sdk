@@ -5,13 +5,23 @@ import { AttributeFilter } from '../AttributeFilter';
 import { createMetadataMock } from './utils';
 
 describe('AttributeFilter', () => {
-    function renderComponent(props: any = {}) {
-        const {
-            projectId = 'storybook',
-            onApply = (f: Function) => f,
-            metadata = createMetadataMock()
-        } = props;
-        return mount(<AttributeFilter {...{ ...props, projectId, onApply, metadata }} />);
+    function renderComponent(customProps = {}) {
+        const sdk = {
+            md: createMetadataMock(),
+            clone: () => sdk,
+            config: {
+                setJsPackage: () => false,
+                setRequestHeader: () => false
+            }
+        };
+
+        const props = {
+            projectId: 'storybook',
+            onApply: () => ({}),
+            sdk,
+            ...customProps
+        };
+        return mount(<AttributeFilter {...props as any} />);
     }
 
     it('should render loading button after mount', () => {

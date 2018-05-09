@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import { Table } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -12,8 +12,6 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 
 export class TableExample extends Component {
     onLoadingChanged(...params) {
@@ -27,45 +25,51 @@ export class TableExample extends Component {
     }
 
     render() {
-        const afm = {
-            measures: [
-                {
+        const measures = [
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesIdentifier',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesIdentifier
                             }
                         }
                     },
                     format: '#,##0'
-                },
-                {
+                }
+            },
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesAdRoyaltyIdentifier
                             }
                         }
                     },
                     format: '#,##0'
-                },
-                {
+                }
+            },
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesInitialFranchiseFeeIdentifier
                             }
                         }
                     },
                     format: '#,##0'
-                },
-                {
+                }
+            },
+            {
+                measure: {
                     localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
                     definition: {
-                        measure: {
+                        measureDefinition: {
                             item: {
                                 identifier: franchiseFeesIdentifierOngoingRoyalty
                             }
@@ -73,63 +77,52 @@ export class TableExample extends Component {
                     },
                     format: '#,##0'
                 }
-            ],
-            attributes: [
-                {
+            }
+        ];
+
+        const totals = [
+            {
+                measureIdentifier: 'franchiseFeesIdentifier',
+                type: 'avg',
+                attributeIdentifier: 'month'
+            },
+            {
+                measureIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
+                type: 'avg',
+                attributeIdentifier: 'month'
+            },
+            {
+                measureIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
+                type: 'avg',
+                attributeIdentifier: 'month'
+            },
+            {
+                measureIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
+                type: 'avg',
+                attributeIdentifier: 'month'
+            }
+        ];
+
+        const attributes = [
+            {
+                visualizationAttribute: {
                     displayForm: {
                         identifier: monthDateIdentifier
                     },
                     localIdentifier: 'month'
                 }
-            ]
-        };
-
-        const resultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ['month'],
-                    totals: [
-                        {
-                            measureIdentifier: 'franchiseFeesIdentifier',
-                            type: 'avg',
-                            attributeIdentifier: 'month'
-                        },
-                        {
-                            measureIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                            type: 'avg',
-                            attributeIdentifier: 'month'
-                        },
-                        {
-                            measureIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                            type: 'avg',
-                            attributeIdentifier: 'month'
-                        },
-                        {
-                            measureIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-                            type: 'avg',
-                            attributeIdentifier: 'month'
-                        }
-                    ]
-                },
-                {
-                    itemIdentifiers: ['measureGroup']
-                }
-            ]
-        };
+            }
+        ];
 
         return (
             <div style={{ height: 300 }} className="s-table">
-                <AfmComponents.Table
+                <Table
                     projectId={projectId}
-                    afm={afm}
-                    resultSpec={resultSpec}
-                    totals={[
-                        { type: 'avg', outputMeasureIndexes: [0, 1, 2, 3], alias: 'AVG' }
-                    ]}
+                    measures={measures}
+                    attributes={attributes}
+                    totals={totals}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    LoadingComponent={Loading}
-                    ErrorComponent={Error}
                 />
             </div>
         );

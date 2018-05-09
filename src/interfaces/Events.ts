@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDrillEvent } from './DrillEvents';
+import { RuntimeError } from '../errors/RuntimeError';
 
 export interface ILoadingState {
     isLoading: boolean;
 }
 
-export type OnError = (error: object) => void;
+export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnFiredDrillEvent = (param: IDrillEvent) => void | boolean;
 

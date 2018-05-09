@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/react-components",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "description": "GoodData React Components",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-react-components.git",
@@ -13,54 +13,65 @@
     "LICENSE"
   ],
   "devDependencies": {
-    "@gooddata/mock-js": "1.0.0",
-    "@gooddata/test-storybook": "1.1.0",
-    "@gooddata/typings": "1.0.1",
-    "@storybook/addon-actions": "3.2.18",
-    "@storybook/addon-options": "3.2.6",
-    "@storybook/react": "3.2.6",
+    "@gooddata/mock-js": "1.0.0-alpha4",
+    "@gooddata/test-storybook": "1.2.0",
+    "@gooddata/typings": "2.0.0-alpha2",
+    "@storybook/addon-actions": "3.4.0",
+    "@storybook/addon-options": "3.4.0",
+    "@storybook/react": "3.4.0",
     "@types/classnames": "2.2.3",
-    "@types/enzyme": "2.8.8",
+    "@types/enzyme": "3.1.6",
+    "@types/enzyme-adapter-react-15": "1.0.1",
+    "@types/invariant": "2.2.29",
     "@types/jest": "20.0.4",
     "@types/lodash": "4.14.61",
     "@types/node": "7.0.8",
     "@types/prop-types": "15.5.2",
-    "@types/react": "16.0.7",
-    "@types/react-addons-test-utils": "0.14.17",
-    "@types/react-dom": "15.5.4",
-    "@types/react-intl": "2.3.2",
+    "@types/react": "16.0.34",
+    "@types/react-dom": "16.0.3",
+    "@types/react-intl": "2.3.5",
+    "@types/react-measure": "0.4.7",
+    "@types/react-test-renderer": "16.0.0",
     "@types/storybook__addon-actions": "3.0.1",
-    "@types/storybook__react": "3.0.5",
-    "enzyme": "2.8.0",
+    "@types/storybook__react": "3.0.6",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-15": "1.0.5",
+    "isomorphic-fetch": "2.2.1",
     "jest": "21.2.1",
     "jest-junit": "3.0.0",
     "node-sass": "4.7.2",
     "node-sass-magic-importer": "5.1.0",
-    "react": "15.3.2",
-    "react-addons-test-utils": "15.3.2",
-    "react-dom": "15.3.2",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
+    "react-test-renderer": "15.6.2",
     "sass-loader": "6.0.6",
     "ts-jest": "21.2.4",
     "ts-loader": "2.3.7",
     "tslint-config-gooddata": "0.0.8",
-    "typescript": "2.3.3"
+    "typescript": "2.3.3",
+    "utility-types": "^1.1.0"
   },
   "dependencies": {
-    "@gooddata/data-layer": "6.0.0",
-    "@gooddata/goodstrap": "54.0.0",
-    "@gooddata/indigo-visualizations": "1.4.0",
-    "@gooddata/js-utils": "^0.9.0",
+    "@gooddata/gooddata-js": "6.0.0-alpha10",
+    "@gooddata/goodstrap": "55.0.0-alpha6",
+    "@gooddata/indigo-visualizations": "2.0.0-alpha11",
+    "@gooddata/js-utils": "^2.0.0",
     "@gooddata/numberjs": "^3.1.2",
+    "@types/highcharts": "4.2.56",
     "classnames": "^2.2.5",
-    "gooddata": "5.0.0",
+    "custom-event": "^1.0.1",
+    "highcharts": "4.2.5",
+    "http-status-codes": "^1.3.0",
+    "invariant": "^2.2.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react-intl": "^2.2.3",
+    "react-intl": "^2.4.0",
+    "react-measure": "^1.4.7",
     "rxjs": "^5.5.6"
   },
   "peerDependencies": {
-    "react": "15.3.2",
-    "react-dom": "15.3.2"
+    "react": "15.6.2",
+    "react-dom": "15.6.2"
   },
   "config": {
     "tslint": "'./{src,stories}/**/*.{ts,tsx}'"
@@ -68,8 +79,9 @@
   "scripts": {
     "test": "jest --watch",
     "build-css": "node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss",
-    "dev": "rm -rf dist && tsc --watch && cp -rf src/translations/ dist/translations/",
+    "dev": "rm -rf dist && tsc --watch -p tsconfig.dev.json && cp -rf src/translations/ dist/translations/",
     "prepublish": "rm -rf dist && tsc && cp -rf src/translations/ dist/translations/ && yarn build-css",
+    "prepublish-dev": "rm -rf dist && tsc -p tsconfig.dev.json && cp -rf src/translations/ dist/translations/ && yarn build-css",
     "run-tslint": "tslint -p tsconfig.base.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
@@ -80,6 +92,16 @@
     "test-storybook": "test-storybook"
   },
   "typings": "dist/index.d.ts",
+  "test-storybook": {
+    "_defaults": {
+      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap"
+    },
+    "AFM components/PieChart": {
+      "error": {
+        "readySelector": ".screenshot-wrapper .s-error"
+      }
+    }
+  },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "transform": {
@@ -100,12 +122,5 @@
       "tsx",
       "js"
     ]
-  },
-  "test-storybook": {
-    "AFM components - BarChart": {
-      "two measures, one attribute": {
-        "delay": 1000
-      }
-    }
   }
 }

@@ -1,22 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
-import * as GD from 'gooddata';
-
+import { LineChart, ColumnChart, ErrorComponent, LoadingComponent } from '@gooddata/react-components';
+import sdk from '@gooddata/gooddata-js';
 import '@gooddata/react-components/styles/css/main.css';
 
 import { Layout } from './utils/Layout';
-import { Loading } from './utils/Loading';
-import { Error } from './utils/Error';
 import { SidebarItem } from './utils/SidebarItem';
 import {
     monthDateIdentifier,
     projectId,
     franchiseFeesTag
 } from '../utils/fixtures';
-
-const { LineChart, ColumnChart } = AfmComponents;
 
 export class DynamicMeasuresExample extends Component {
     constructor(props) {
@@ -30,27 +25,29 @@ export class DynamicMeasuresExample extends Component {
     }
 
     componentWillMount() {
-        GD.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`).then(
+        sdk.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`).then(
             (response) => {
-                if (!response.entries.length) {
+                if (!response.data.entries.length) {
                     return this.setState({
                         measureList: null,
                         error: {
-                            status: '404',
-                            message: `No measures with tag ${franchiseFeesTag}. Please check your project.
-                                Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`
+                            message: `No measures with tag ${franchiseFeesTag}`,
+                            description: `Please check your project. Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`
                         }
                     });
                 }
                 return this.setState({
-                    measureList: response.entries.map(entry => ({ ...entry, isSelected: true })),
+                    measureList: response.data.entries.map(entry => ({ ...entry, isSelected: true })),
                     error: null
                 });
             }
         ).catch((error) => {
             this.setState({
                 measureList: null,
-                error: { status: '400', message: `Error while requesting measures by tag ${franchiseFeesTag}. ${JSON.stringify(error)}` }
+                error: {
+                    message: `There was Error while requesting measures by tag ${franchiseFeesTag}`,
+                    description: JSON.stringify(error)
+                }
             });
         });
     }
@@ -84,11 +81,27 @@ export class DynamicMeasuresExample extends Component {
         };
     }
 
+    getNewMeasureDefinition(measureItem) {
+        return {
+            measure: {
+                localIdentifier: measureItem.link.split('/').reverse()[0],
+                definition: {
+                    measureDefinition: {
+                        item: {
+                            uri: measureItem.link
+                        }
+                    }
+                },
+                format: '#,##0'
+            }
+        };
+    }
+
     render() {
         const { measureList, error } = this.state;
 
         if (error) {
-            return <Error error={error} />;
+            return <ErrorComponent message={error.message} description={error.description} />;
         }
 
         const loadingBlock = (<div className="loading-block" >
@@ -102,7 +115,7 @@ export class DynamicMeasuresExample extends Component {
                     align-items: center;
                 }
             `}</style>
-            <Loading />
+            <LoadingComponent />
         </div>);
 
         const sidebar = measureList
@@ -113,8 +126,8 @@ export class DynamicMeasuresExample extends Component {
                         h3 {
                             margin-top: 0;
                         }
-                        .ul {
-                            list-style-type: 'none';
+                        ul {
+                            list-style-type: none;
                             padding: 0;
                             margin: 0;
                         }
@@ -140,22 +153,16 @@ export class DynamicMeasuresExample extends Component {
 
         if (measureList) {
             const selectedMeasures = measureList.filter(measure => measure.isSelected);
-            const measures = selectedMeasures.map(this.getMeasureDefinition);
+            const measures = selectedMeasures.map(this.getNewMeasureDefinition);
 
             if (selectedMeasures.length) {
-                const lineChartAfm = {
-                    measures,
-                    attributes: [
-                        {
-                            displayForm: {
-                                identifier: monthDateIdentifier
-                            },
-                            localIdentifier: 'month'
-                        }
-                    ]
-                };
-                const columnChartAfm = {
-                    measures
+                const attribute = {
+                    visualizationAttribute: {
+                        displayForm: {
+                            identifier: monthDateIdentifier
+                        },
+                        localIdentifier: 'month'
+                    }
                 };
 
                 content = (
@@ -163,45 +170,36 @@ export class DynamicMeasuresExample extends Component {
                         {/* language=CSS */}
                         <style jsx>{`
                             .graph-wrapper {
-                                display: flex;
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                             }
                             .graph {
                                 height: 300px;
-                            }
-                            .graph-line {
-                                flex: 1 1 60%;
-                                margin-right: 20px;
-                            }
-                            .graph-column {
-                                flex: 1 1 40%;
                             }
                         `}</style>
                         <div className="graph graph-line s-dynamic-measures-line-chart">
                             <LineChart
                                 projectId={projectId}
-                                afm={lineChartAfm}
+                                measures={measures}
+                                trendBy={attribute}
                                 onLoadingChanged={this.onLoadingChanged}
                                 onError={this.onError}
-                                LoadingComponent={Loading}
-                                ErrorComponent={Error}
                                 config={config}
                             />
                         </div>
                         <div className="graph graph-column s-dynamic-measures-column-chart">
                             <ColumnChart
                                 projectId={projectId}
-                                afm={columnChartAfm}
+                                measures={measures}
                                 onLoadingChanged={this.onLoadingChanged}
                                 onError={this.onError}
-                                LoadingComponent={Loading}
-                                ErrorComponent={Error}
                                 config={config}
                             />
                         </div>
                     </div>
                 );
             } else {
-                content = <Error error={{ status: '400', message: 'Please select at least one measure' }} />;
+                content = <ErrorComponent message="Please select at least one measure" />;
             }
         }
 

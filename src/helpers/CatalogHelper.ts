@@ -28,7 +28,6 @@ export interface IDataSet {
 }
 
 export interface ICatalog {
-    metrics?: { [key: string]: IIdentifierWithTags };
     measures?: { [key: string]: IIdentifierWithTags };
     visualizations: { [key: string]: IIdentifierWithTags };
     attributes: IAttrs;
@@ -46,6 +45,8 @@ function getDisplayFormFromAttr(
 }
 
 /**
+ * CatalogHelper
+ * is a tool that exposes API that to look up measures, attributes, visualizations and other metadata elements
  * example usage:
  *  import catalog from './catalog.json';
  *  const C = new CatalogHelper(catalog);
@@ -57,26 +58,18 @@ export default class CatalogHelper {
     public dateDataSets: { [key: string]: IDataSet };
 
     constructor(catalog: ICatalog) {
-        this.measures = catalog.metrics || catalog.measures;
+        this.measures = catalog.measures;
         this.visualizations = catalog.visualizations;
         this.attributes = catalog.attributes;
         this.dateDataSets = catalog.dateDataSets;
     }
 
-    public metric(name: string): string {
-        return this.getMeasure(name);
-    }
-
     public measure(name: string): string {
-        return this.getMeasure(name);
-    }
-
-    public metricTags(name: string): string {
-        return this.getMeasureTags(name);
+        return get<CatalogHelper, string>(this, ['measures', name, 'identifier']);
     }
 
     public measureTags(name: string): string {
-        return this.getMeasureTags(name);
+        return get<CatalogHelper, string>(this, ['measures', name, 'tags']);
     }
 
     public visualization(name: string): string {
@@ -127,13 +120,5 @@ export default class CatalogHelper {
     public dateDataSetDisplayFormTags(dataSetName: string, attributeName: string, displayFormName?: string): string {
         const attrs = get<CatalogHelper, IAttrs>(this, ['dateDataSets', dataSetName, 'attributes']);
         return getDisplayFormFromAttr(attrs, attributeName, displayFormName, 'tags');
-    }
-
-    private getMeasure(name: string) {
-        return get<CatalogHelper, string>(this, ['measures', name, 'identifier']);
-    }
-
-    private getMeasureTags(name: string) {
-        return get<CatalogHelper, string>(this, ['measures', name, 'tags']);
     }
 }

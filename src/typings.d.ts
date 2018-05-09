@@ -1,7 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
+declare module '*/package.json' {
+    export const name: string;
+    export const version: string;
+}
+
 declare module '*.json' {
     const value: any;
     export default value;
+}
+
+declare module 'custom-event' {
+    export = CustomEvent;
 }
 
 // TODO move goodstrap TypeScript declarations into goodstrap repo
@@ -31,6 +40,12 @@ declare module '@gooddata/goodstrap/lib/Dropdown/Dropdown' {
 
 declare module '@gooddata/goodstrap/lib/List/InvertableList' {
     export default class InvertableList extends React.Component<any, any> {
+
+    }
+}
+
+declare module '@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText' {
+    export default class ResponsiveText extends React.PureComponent<any> {
 
     }
 }

@@ -26,6 +26,7 @@ describe('PieChart', () => {
             />));
 
         return delay().then(() => {
+            wrapper.update();
             const dimensions = wrapper.find(CorePieChart).props().resultSpec.dimensions;
             expect(dimensions).toEqual([ { itemIdentifiers: [] }, { itemIdentifiers: ['measureGroup'] } ]);
         });
@@ -41,6 +42,7 @@ describe('PieChart', () => {
             />));
 
         return delay().then(() => {
+            wrapper.update();
             const dimensions = wrapper.find(CorePieChart).props().resultSpec.dimensions;
             expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: ['a1'] } ]);
         });
