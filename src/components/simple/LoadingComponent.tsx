@@ -29,7 +29,7 @@ export interface ILoadingProps {
 const baseAnimationDuration = 1.4;
 
 /**
- * [LoadingComponent](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/loading_component.html)
+ * [LoadingComponent](http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html)
  * is a component that renders a default loading indicator
  */
 export class LoadingComponent extends React.Component<ILoadingProps, null> {

@@ -24,7 +24,7 @@ export interface ITableProps extends ICommonChartProps, ITableBucketProps {
 type ITableNonBucketProps = Subtract<ITableProps, ITableBucketProps>;
 
 /**
- * [Table](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/table_component.html)
+ * [Table](http://sdk.gooddata.com/gooddata-ui/docs/table_component.html)
  * is a component with bucket props measures, attributes, totals, filters
  */
 export function Table(props: ITableProps): JSX.Element {

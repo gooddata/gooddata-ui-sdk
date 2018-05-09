@@ -51,7 +51,7 @@ function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IRes
 }
 
 /**
- * [AreaChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/area_chart_component.html)
+ * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
  * is a component with bucket props measures, viewBy, stacksBy, filters
  */
 export function AreaChart(props: IAreaChartProps): JSX.Element {

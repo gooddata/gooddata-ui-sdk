@@ -46,7 +46,7 @@ export interface IExecuteChildrenProps {
 }
 
 /**
- * [Execute](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/execute_component.html)
+ * [Execute](http://sdk.gooddata.com/gooddata-ui/docs/execute_component.html)
  * is a component that does execution based on afm and resultSpec props and passes the result to it's children function
  */
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
