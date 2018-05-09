@@ -2,7 +2,7 @@
 > React.js components for building visualizations on top of GoodData platform
 
 ## Getting started
-- [Documentation](http://sdk.gooddata.com/gdc-ui-sdk-doc/)
+- [Documentation](http://sdk.gooddata.com/gooddata-ui/)
 
 
 ### Usage

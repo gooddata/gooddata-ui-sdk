@@ -46,7 +46,7 @@ function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IRes
 }
 
 /**
- * [ColumnChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/column_chart_component.html)
+ * [ColumnChart](http://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html)
  * is a component with bucket props measures, viewBy, stackBy, filters
  */
 export function ColumnChart(props: IColumnChartProps): JSX.Element {
