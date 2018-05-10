@@ -111,6 +111,18 @@ describe('Kpi', () => {
         });
     });
 
+    it('should pass telemetryComponentName prop to the Execute component', () => {
+        const wrapper = createComponent({
+            ExecuteComponent: (props: any) => {
+                return props.children({ result: emptyResponse });
+            }
+        });
+        return testUtils.delay().then(() => {
+            expect(wrapper.find('ExecuteComponent').prop('telemetryComponentName'))
+                .toEqual('KPI');
+        });
+    });
+
     it('should render LoadingComponent during loading', () => {
         const wrapper = createComponent({
             LoadingComponent,

@@ -28,6 +28,7 @@ export interface IExecuteProps extends IEvents {
     children?: any;
     sdk?: SDK;
     dataTableFactory?: IDataTableFactory; // only for tests
+    telemetryComponentName?: string;
 }
 
 export interface IExecuteState {
@@ -55,7 +56,8 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         dataTableFactory,
         onError: noop,
         onLoadingChanged: noop,
-        onLoadingFinish: noop
+        onLoadingFinish: noop,
+        telemetryComponentName: 'Execute'
     };
 
     private dataTable: DataLayer.DataTable<Execution.IExecutionResponses>;
@@ -73,7 +75,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
 
         const sdk = props.sdk || createSdk();
         this.sdk = sdk.clone();
-        setTelemetryHeaders(this.sdk, 'Execute', props);
+        setTelemetryHeaders(this.sdk, this.props.telemetryComponentName, props);
         this.initDataTable(props);
     }
 
@@ -84,7 +86,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     public componentWillReceiveProps(nextProps: IExecuteProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
-            setTelemetryHeaders(this.sdk, 'Execute', nextProps);
+            setTelemetryHeaders(this.sdk, this.props.telemetryComponentName, nextProps);
             this.initDataTable(nextProps);
         }
         if (this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec'])) {

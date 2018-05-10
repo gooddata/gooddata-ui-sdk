@@ -27,7 +27,7 @@ describe('Execute', () => {
         return jest.fn(props => <span>{JSON.stringify(props.result)}</span>);
     }
 
-    function createComponent(child: Function, props = {}) {
+    function createComponent(child: Function, props = {}): any {
         const defaultProps: IExecuteProps = {
             afm,
             projectId: 'foo',
@@ -88,6 +88,13 @@ describe('Execute', () => {
         return testUtils.delay().then(() => {
             expect(child).toHaveBeenCalledTimes(2); // first loading, second result
         });
+    });
+
+    it('should be able to override telemetryComponentName', () => {
+        const child = createStatelessChild();
+        const wrapper = createComponent(child, { telemetryComponentName: 'componentName' });
+        const wrapperInstance = wrapper.instance();
+        expect(wrapperInstance.sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP')).toEqual('componentName');
     });
 
     it('should run execution on props change (sdk,projectId,afm,resultSpec)', () => {
