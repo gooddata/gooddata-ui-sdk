@@ -53,7 +53,7 @@ describe('Execute', () => {
         });
     });
 
-    it('should dispatch loading before and after execution', () => {
+    it('should dispatch onLoadingChanged before and after execution', () => {
         const onLoadingChanged = jest.fn();
         const child = createStatelessChild();
         createComponent(child, {
@@ -62,6 +62,18 @@ describe('Execute', () => {
 
         return testUtils.delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    it('should dispatch onLoadingFinish after execution', () => {
+        const onLoadingFinish = jest.fn();
+        const child = createStatelessChild();
+        createComponent(child, {
+            onLoadingFinish
+        });
+
+        return testUtils.delay().then(() => {
+            expect(onLoadingFinish).toHaveBeenCalledTimes(1);
         });
     });
 
