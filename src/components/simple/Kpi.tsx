@@ -109,6 +109,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
                 afm={afm}
                 resultSpec={resultSpec}
                 {...executeProps}
+                telemetryComponentName="KPI"
             >
                 {({ result, error, isLoading }: IExecuteChildrenProps) => {
                     if (error) {

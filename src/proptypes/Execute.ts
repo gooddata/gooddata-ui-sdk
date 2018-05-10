@@ -15,5 +15,6 @@ export const ExecutePropType = {
     resultSpec: ResultSpecPropTypesShape,
     children: PropTypes.func.isRequired,
     LoadingComponent: PropTypes.func,
-    ErrorComponent: PropTypes.func
+    ErrorComponent: PropTypes.func,
+    telemetryComponentName: PropTypes.string
 };
