@@ -45,6 +45,13 @@ module.exports = async (env) => {
                 proxyReq.setHeader('referer', backendUrl);
                 proxyReq.setHeader('origin', null);
             }
+        },
+        '/api': {
+            target: 'http://localhost:3009',
+            secure: false,
+            onProxyReq: (req) => {
+                console.log(`Proxy ${req.path} to http://localhost:3009 (use /examples/server)`);
+            }
         }
     };
 
