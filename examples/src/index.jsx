@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import sdk from '@gooddata/gooddata-js';
+import 'babel-polyfill';
 
 import {
     BrowserRouter as Router,
