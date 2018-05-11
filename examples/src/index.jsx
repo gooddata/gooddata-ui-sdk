@@ -6,26 +6,27 @@ import sdk from '@gooddata/gooddata-js';
 
 import {
     BrowserRouter as Router,
-    Route
+    Route,
+    Redirect,
+    Switch
 } from 'react-router-dom';
 
 
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
 import Header from './components/utils/Header';
-import LoginOverlay from './components/utils/LoginOverlay';
 import { CustomError } from './components/utils/CustomError';
+import CustomLoading from './components/utils/CustomLoading';
 
-import { routes, mainRoutes } from './routes/_list';
+import { routes, userRoutes, mainRoutes } from './routes/_list';
 
 export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: true,
+            isLoggedIn: null,
+            isLoadingUserState: true,
             errorMessage: null
         };
-        this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
-        this.onUserLogin = this.onUserLogin.bind(this);
         this.logout = this.logout.bind(this);
     }
 
@@ -33,37 +34,97 @@ export class App extends React.Component {
         this.isUserLoggedIn();
     }
 
-    onUserLogin(isLoggedIn, errorMessage) {
+    onUserLogin = (isLoggedIn, errorMessage) => {
         this.setState({
-            isLoggedIn
+            isLoggedIn,
+            isLoadingUserState: false,
+            errorMessage
         });
-
-        if (errorMessage) {
-            this.setState({ errorMessage: errorMessage.message });
-        }
     }
 
-    isUserLoggedIn() {
-        sdk.user.isLoggedIn()
+    isUserLoggedIn = () => {
+        this.setState({
+            isLoadingUserState: true
+        });
+        return sdk.user.isLoggedIn()
             .then((isLoggedIn) => {
-                this.setState({ isLoggedIn, errorMessage: null });
+                this.onUserLogin(isLoggedIn, null);
             })
             .catch((errorMessage) => {
-                this.setState({ errorMessage });
+                this.onUserLogin(false, errorMessage);
             });
     }
 
     logout() {
+        this.setState({
+            isLoadingUserState: true
+        });
         sdk.user.logout().then(() => {
             this.setState({
-                isLoggedIn: false
+                isLoggedIn: false,
+                isLoadingUserState: false
+            });
+        }).catch(() => {
+            this.setState({
+                isLoadingUserState: false
             });
         });
     }
 
+    renderContent = () => {
+        const { isLoggedIn, isLoadingUserState } = this.state;
+        const flexWrapperStyles = {
+            flex: '1 0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch'
+        };
+        if (isLoadingUserState) {
+            return (
+                <div
+                    style={{
+                        ...flexWrapperStyles,
+                        justifyContent: 'center'
+                    }}
+                ><CustomLoading height={null} label="Checking if user is already logged in&hellip;" /></div>
+            );
+        }
+        return (<div style={flexWrapperStyles}>
+            <Switch>
+                {userRoutes.map(({ title, path, Component, redirectTo, ...routeProps }) => (<Route
+                    key={path}
+                    path={path}
+                    component={() => <Component isLoggedIn={isLoggedIn} onLogin={this.onUserLogin} />}
+                    {...routeProps}
+                />))}
+                {isLoggedIn === false && <Route component={() => (
+                    <Redirect to={{
+                        pathname: '/login',
+                        state: {
+                            redirectUriAfterLogin: '/',
+                            defaultRoute: true
+                        }
+                    }}
+                    />
+                )}
+                />}
+            </Switch>
+            {isLoggedIn === true &&
+                routes.map(({ title, path, Component, redirectTo, ...routeProps }) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        component={Component}
+                        {...routeProps}
+                    />))
+            }
+        </div>
+        );
+    }
+
     render() {
         const { isLoggedIn, errorMessage } = this.state;
-
         return (
             <Router basename={BASEPATH}>
                 <div className="main-wrapper">
@@ -73,6 +134,16 @@ export class App extends React.Component {
                         :global(body),
                         :global(.root) {
                             height: 100%;
+                        }
+
+                        :global(body) {
+                            background-color: #fafafa;
+                        }
+
+                        :global(*),
+                        :global(::before),
+                        :global(::after) {
+                            box-sizing: border-box;
                         }
 
                         :global(hr.separator) {
@@ -86,16 +157,46 @@ export class App extends React.Component {
                             height: 100%;
                             flex-direction: column;
                             justify-content: flex-start;
-                            align-items: stretch;
+                            align-items: center;
+                        }
+
+                        :global(h1),
+                        :global(h2),
+                        :global(h3) {
+                            color: black;
+                        }
+
+                        :global(h1) {
+                            font-weight: bold;
+                            font-size: 50px;
+                            line-height: 50px;
+                        }
+
+                        :global(h2) {
+                            font-weight: normal;
+                            font-size: 40px;
+                            line-height: 55px;
+                        }
+
+                        :global(h3) {
+                            font-weight: bold;
+                            font-size: 24px;
+                        }
+
+                        :global(p) {
+                            max-width: 800px;
                         }
 
                         main {
-                            flex: 1;
+                            flex: 1 1 auto;
                             overflow: auto;
                             display: flex;
                             flex-direction: column;
                             justify-content: flex-start;
                             align-items: stretch;
+                            width: 100%;
+                            max-width: 1400px;
+                            padding: 20px;
                         }
                     `}</style>
                     <Header
@@ -108,15 +209,9 @@ export class App extends React.Component {
                         ? <CustomError error={{ status: '403', message: errorMessage }} />
                         : null
                     }
-                    <main style={{ padding: 20 }}>
-                        {routes.map(({ title, path, Component, redirectTo, ...routeProps }) => (<Route
-                            key={path}
-                            path={path}
-                            component={Component}
-                            {...routeProps}
-                        />))}
+                    <main>
+                        {this.renderContent()}
                     </main>
-                    <LoginOverlay onLogin={this.onUserLogin} isLoggedIn={isLoggedIn} />
                 </div>
             </Router>
         );

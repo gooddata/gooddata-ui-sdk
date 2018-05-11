@@ -49,7 +49,6 @@ export const CustomLoading = ({ label, inline, height, width, imageHeight, image
             className="s-loading"
             style={wrapperStyle}
         >
-            {label ? <h3>{label}</h3> : null}
             <svg
                 alt="loading…"
                 style={svgStyle}
@@ -70,6 +69,7 @@ export const CustomLoading = ({ label, inline, height, width, imageHeight, image
                 <rect style={barStyle2} x="14" y="0" width="10" height="38" />
                 <rect style={barStyle3} x="28" y="0" width="10" height="38" />
             </svg>
+            {label ? <h3>{label}</h3> : null}
         </div>
     );
 };

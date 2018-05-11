@@ -243,7 +243,7 @@ export const GlobalFiltersExample = () => (
             if (isLoading) {
                 return (
                     <div style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-                        <CustomLoading speed={2} color="tomato" imageHeight={100} />
+                        <CustomLoading speed={2} color="tomato" imageHeight={100} height={200} />
                     </div>
                 );
             }

@@ -36,12 +36,24 @@ export class ExampleWithSource extends React.Component {
                         flex-direction: column;
                         justify-content: flex-start;
                         align-items: stretch;
+                        margin-top: 30px;
                     }
+
+                    .example {
+                        padding: 20px;
+                        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+                        background-color: white;
+                    }
+
                     .source {
                         margin: 20px 0;
                     }
+
+                    :global(pre) {
+                        overflow: auto;
+                    }
                 `}</style>
-                <Component />
+                <div className="example"><Component /></div>
                 <div className="source">
                     <button className={`button button-secondary button-dropdown icon-right ${iconClassName}`} onClick={this.toggle}>source</button>
                     {hidden ? '' : (

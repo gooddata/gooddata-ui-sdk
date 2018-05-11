@@ -29,6 +29,7 @@ module.exports = async (env) => {
 
     const isProduction = process.env.NODE_ENV === 'production';
 
+    // see also production proxy at /examples/server/src/endpoints/proxy.js
     const proxy = {
         '/gdc': {
             target: backendUrl,

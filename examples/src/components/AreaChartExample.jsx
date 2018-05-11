@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { AreaChart } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
-import CustomLoading from './utils/CustomLoading';
-import CustomError from './utils/CustomError';
 
 import {
     projectId,
@@ -100,8 +98,6 @@ export class AreaChartExample extends Component {
                     viewBy={attributes}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    LoadingComponent={CustomLoading}
-                    ErrorComponent={CustomError}
                     config={{
                         stacking: false
                     }}

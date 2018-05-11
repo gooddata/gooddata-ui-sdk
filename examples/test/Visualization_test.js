@@ -9,7 +9,7 @@ fixture('Visualization') // eslint-disable-line no-undef
 
 test('Chart visualization should render', async (t) => {
     const loading = Selector('.s-loading');
-    const chart = Selector('.s-visualization-chart svg');
+    const chart = Selector('.s-visualization-chart svg'); // could need timeout ie 20 secs to work
     await t
         .expect(loading.exists).ok()
         .expect(chart.exists)

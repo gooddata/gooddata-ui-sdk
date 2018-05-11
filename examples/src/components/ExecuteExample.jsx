@@ -109,7 +109,7 @@ export class ExecuteExample extends Component {
             <div>
                 {status}
                 <p>
-                    <button onClick={this.retry} className="button button-secondary s-retry-button">Retry</button>
+                    <button onClick={this.retry} className="button button-action s-retry-button">Retry</button>
                     &ensp;(fails every second attempt)
                 </p>
                 {/*
