@@ -1,0 +1,17 @@
+import 'isomorphic-fetch';
+import * as fetchMock from 'fetch-mock';
+
+export function mockPollingRequest(uri: string, pendingResponse: any, finalResponse: any) {
+    let counter = 0;
+    fetchMock.mock(
+        uri,
+        () => {
+            counter += 1;
+            const response = counter > 3 ? finalResponse : pendingResponse;
+            return {
+                status: 200,
+                body: JSON.stringify(response)
+            };
+        }
+    );
+}
