@@ -3,9 +3,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { version } from '../../package.json';
-import { key } from '../utils/catalog';
-import { projectId } from '../utils/fixtures';
+import { version } from '../../../package.json';
+import { projectId, backendUrlForInfo } from '../utils/fixtures';
 
 import KpiExample from '../components/KpiExample';
 import VisualizationTable from '../components/VisualizationTableExample';
@@ -15,7 +14,7 @@ import DynamicMeasuresExample from '../components/DynamicMeasuresExample';
 export const Home = () => (
     <div>
         <h1>GoodData examples for React Components v{version}</h1>
-        <p style={{ color: '#AAA', marginTop: -10 }}>Connected to &quot;{key}&quot; backend. Project id: {projectId}</p>
+        <p style={{ color: '#AAA', marginTop: -10 }}>Connected to &quot;{backendUrlForInfo}&quot; backend. Project id: {projectId}</p>
 
         <p>Here are the examples of <a href="https://github.com/gooddata/gooddata-react-components">GoodData React Components UI SDK</a>.</p>
         <p>Explore the top menu to see different use cases that feature sample code and interactive examples.</p>

@@ -10,7 +10,10 @@
     "react/jsx-curly-spacing": [1, {"when": "never", "children": true}],
     "newline-per-chained-call": 0,
     "react/no-multi-comp": 0,
-    "jsx-a11y/anchor-is-valid": 0
+    "jsx-a11y/anchor-is-valid": 0,
+
+    "import/no-unresolved": [2, { "ignore": ["@gooddata/react-components"] }],
+    "import/extensions": [2, { "ignore": ["@gooddata/react-components"] }]
   },
 
   "globals": {
