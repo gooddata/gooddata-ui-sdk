@@ -157,7 +157,7 @@ storiesOf('URI components/Visualization', module)
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1003'}
                     onError={onErrorHandler}
-                    locale="de-DE"
+                    locale="en-US"
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
