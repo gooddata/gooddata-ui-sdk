@@ -9,7 +9,7 @@ import { convertBucketsToAFM } from '../helpers/conversion';
 import { getTableDimensions } from '../helpers/dimensions';
 
 export interface ITableBucketProps {
-    measures: VisualizationObject.BucketItem[];
+    measures?: VisualizationObject.BucketItem[];
     attributes?: VisualizationObject.IVisualizationAttribute[];
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
