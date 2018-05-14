@@ -87,7 +87,7 @@ requiredOptionKeys.map(
     (requiredKey) => {
         const { key, param, defaultValue } = definedOptions.find(definedOption => definedOption.key === requiredKey);
         const defaultText = defaultValue ? ` Default: ${defaultValue}` : '';
-        return invariant(config[requiredKey] !== undefined, `${key} is missing in config. Pass it with -- ${param} or { "${key}": "${key}" } in ${DEFAULT_CONFIG_FILE_NAME.substr(3)}${defaultText}`);
+        return invariant(config[requiredKey] !== undefined, `${key} is missing in config. Pass it with ${param} or { "${key}": "${key}" } in ${DEFAULT_CONFIG_FILE_NAME}${defaultText}`);
     }
 );
 

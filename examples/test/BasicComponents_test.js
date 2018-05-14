@@ -1,12 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
-import { range } from 'lodash';
 import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Basic components') // eslint-disable-line no-undef
     .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/basic-components`));
+    .beforeEach(loginUsingGreyPages(`${config.hostname}`));
 
 test('Column chart should render', async (t) => {
     const loading = Selector('.s-loading');
@@ -36,7 +35,7 @@ test('Line chart should render', async (t) => {
 });
 
 test('Line chart should have custom colors', async (t) => {
-    const legendIcons = Selector('.s-line-chart .series-icon');
+    const lineChart = Selector('.s-line-chart');
     const CUSTOM_COLORS = [
         'rgb(195, 49, 73)',
         'rgb(168, 194, 86)',
@@ -45,19 +44,11 @@ test('Line chart should have custom colors', async (t) => {
     ];
 
     await t
-        .expect(legendIcons.count).eql(4);
-
-    const legendIconsCount = await legendIcons.count;
-
-    const backgroundColors = await Promise.all(range(legendIconsCount).map(
-        async (index) => {
-            const legendIcon = await legendIcons.nth(index);
-            return legendIcon.getStyleProperty('background-color');
-        }
-    ));
-
-    await t
-        .expect(backgroundColors).eql(CUSTOM_COLORS);
+        .expect(lineChart.exists).ok();
+    const legendIcons = lineChart.find('.series-icon');
+    for (let index = 0; index < CUSTOM_COLORS.length; index += 1) {
+        await t.expect(await legendIcons.nth(index).getStyleProperty('background-color')).eql(CUSTOM_COLORS[index]); // eslint-disable-line no-await-in-loop
+    }
 });
 
 test('Pie chart should render', async (t) => {
@@ -76,4 +67,12 @@ test('Table should render', async (t) => {
         .expect(loading.exists).ok()
         .expect(table.exists).ok()
         .expect(table.textContent);
+});
+
+test('KPI has correct number', async (t) => {
+    const kpi = Selector('.gdc-kpi', { timeout: 20000 });
+    await t
+        .expect(kpi.exists).ok()
+        .expect(kpi.textContent)
+        .eql('92,556,577.3');
 });

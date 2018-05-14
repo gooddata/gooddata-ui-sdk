@@ -3,11 +3,11 @@ import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
-fixture('Resizable chart')
+fixture('Responsive chart')
     .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/resizable`));
+    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/responsive`));
 
-test('Resizable chart could be resized', async (t) => {
+test('Responsive chart could be resized', async (t) => {
     const chart = Selector('.s-resizable-vis svg');
     const resizeButton = Selector('.s-resize-800x200');
 

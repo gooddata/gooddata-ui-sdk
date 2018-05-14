@@ -22,7 +22,7 @@ export const GlobalFilters = () => (<div className="example-wrapper">
         <h1>Global Filters</h1>
         <p>
             Here is how you can combine several components to apply a dynamic attribute
-            filter to multiple display and SDK components.
+            filter to multiple display and GoodData.UI components.
         </p>
         <p>
             The AttributeElements component loads values of the Employee Name attribute.

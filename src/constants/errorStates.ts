@@ -13,7 +13,7 @@ export const ErrorStates = {
     BAD_REQUEST: 'BAD_REQUEST',
 
     /**
-     * This error means that executed data were too large to be displayed by UI SDK.
+     * This error means that executed data were too large to be displayed by GoodData.UI.
      */
     DATA_TOO_LARGE_TO_DISPLAY: 'DATA_TOO_LARGE_TO_DISPLAY',
 
@@ -40,7 +40,7 @@ export const ErrorStates = {
     NOT_FOUND: 'NOT_FOUND',
 
     /**
-     * This error means that empty AFM was went to the UI SDK and as such can't be executed.
+     * This error means that empty AFM was went to the GoodData.UI and as such can't be executed.
      */
     EMPTY_AFM: 'EMPTY_AFM',
 
@@ -56,7 +56,7 @@ export const ErrorStates = {
     PROTECTED_REPORT: 'PROTECTED_REPORT',
 
     /**
-     * This error means that UI SDK does not know how to handle such error.
+     * This error means that GoodData.UI does not know how to handle such error.
      */
     UNKNOWN_ERROR: 'UNKNOWN_ERROR'
 };

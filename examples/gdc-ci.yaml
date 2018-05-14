@@ -1,9 +1,0 @@
-before:
-  - cd ..
-  - yarn install --pure-lockfile
-  - cd -
-  - yarn install --pure-lockfile
-dist:
-  - yarn build --env.basepath=/examples --env.link
-pull-request:
-  - ./node_modules/.bin/eslint src/ --ext .jsx,.js src/ -f checkstyle -o ci/results/eslint-results.xml

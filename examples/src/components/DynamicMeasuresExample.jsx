@@ -205,11 +205,9 @@ export class DynamicMeasuresExample extends Component {
 
         return (
             <div className="s-dynamic-measures">
-                <hr className="separator" />
                 <Layout sidebar={sidebar} >
                     {content}
                 </Layout>
-                <hr className="separator" />
             </div>
         );
     }

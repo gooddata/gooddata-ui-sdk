@@ -38,3 +38,10 @@ coverage
 junit.xml
 
 test-storybook/
+
+.env
+/server.key
+/server.crt
+
+/.testcaferc.json
+/examples/_screenshots
