@@ -37,7 +37,8 @@ export function getLegendItems(chartOptions: any) {
         VisualizationTypes.PIE,
         VisualizationTypes.DONUT,
         VisualizationTypes.TREEMAP,
-        VisualizationTypes.FUNNEL
+        VisualizationTypes.FUNNEL,
+        VisualizationTypes.SCATTER
     ];
     const legendDataSource = isOneOfTypes(type, firstSeriesDataTypes)
         ? chartOptions.data.series[0].data

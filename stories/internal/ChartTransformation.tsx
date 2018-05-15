@@ -202,7 +202,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                         },
                         legendLayout: 'horizontal',
                         colors: fixtures.customPalette,
-                        mdObject: fixtures.scatterPlotWith2MetricsAndAttributeMdObject.mdObject
+                        mdObject: dataSet.mdObject
                     }}
                     {...dataSet}
                     onDataTooLarge={dataLarge}

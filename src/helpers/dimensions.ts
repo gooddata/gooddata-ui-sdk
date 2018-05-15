@@ -325,7 +325,7 @@ export function isStackedChart(buckets: VisualizationObject.IBucket[]) {
     return buckets.some(bucket => bucket.localIdentifier === 'stacks' && bucket.items.length > 0);
 }
 
-// for ScatterChart
+// for ScatterPlot
 export function generateDefaultScatterDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     return [
         {

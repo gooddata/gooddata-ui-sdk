@@ -20,7 +20,7 @@ export interface IDonutChartProps extends ICommonChartProps, IDonutChartBucketPr
 type IDonutChartNonBucketProps = Subtract<IDonutChartProps, IDonutChartBucketProps>;
 
 /**
- * [DonutChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/pie_chart_component.html)
+ * [DonutChart](http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html)
  * is a component with bucket props measures, viewBy, filters
  */
 export function DonutChart(props: IDonutChartProps): JSX.Element {

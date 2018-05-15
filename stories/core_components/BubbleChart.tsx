@@ -44,8 +44,10 @@ storiesOf('Core components/BubbleChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[{
-                        ...ATTRIBUTE_1_SORT_ITEM,
-                        direction: 'desc'
+                        attributeSortItem: {
+                            ...ATTRIBUTE_1_SORT_ITEM.attributeSortItem,
+                            direction: 'desc'
+                        }
                     }]}
                 />
             </div>

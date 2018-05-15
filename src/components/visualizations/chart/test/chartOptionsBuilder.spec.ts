@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import range = require('lodash/range');
+import get = require('lodash/get');
 import { immutableSet } from '../../utils/common';
 import {
     isNegativeValueIncluded,
@@ -873,44 +874,6 @@ describe('chartOptionsBuilder', () => {
                             uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
                             value: '<button>2008</button>'
                         }
-                    ], [
-                        {
-                            format: '#,##0.00',
-                            id: 'lostMetric',
-                            identifier: 'af2Ewj9Re2vK',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                            value: '<button>Lost</button> ...'
-                        }, {
-                            format: '#,##0.00',
-                            id: 'wonMetric',
-                            identifier: 'afSEwRwdbMeQ',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
-                            value: 'Won'
-                        }, {
-                            id: '2008',
-                            identifier: 'created.aag81lMifn6q',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                            value: '<button>2008</button>'
-                        }
-                    ], [
-                        {
-                            format: '#,##0.00',
-                            id: 'lostMetric',
-                            identifier: 'af2Ewj9Re2vK',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                            value: '<button>Lost</button> ...'
-                        }, {
-                            format: '#,##0.00',
-                            id: 'wonMetric',
-                            identifier: 'afSEwRwdbMeQ',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
-                            value: 'Won'
-                        }, {
-                            id: '2008',
-                            identifier: 'created.aag81lMifn6q',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                            value: '<button>2008</button>'
-                        }
                     ]
                 ]);
             });
@@ -1272,14 +1235,19 @@ describe('chartOptionsBuilder', () => {
             expect(generateChartOptions.bind(this, dataSetWithoutMeasureGroup, { type: 'bs' })).toThrow();
         });
 
-        it('should assign showInPercent true only if at least one measure`s format includes a "%" sign', () => {
+        it('should assign format from first measure which format includes a "%" sign', () => {
+            const expectedPercentageFormat = '0.00 %';
+            const expectedNormalFormat = get(dataSet, `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
+                'headers[0].measureGroupHeader.items[1].measureHeaderItem.format');
             const dataSetWithPercentFormat = immutableSet(dataSet,
                 `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
-                'headers[0].measureGroupHeader.items[0].measureHeaderItem.format',
+                'headers[0].measureGroupHeader.items[1].measureHeaderItem.format',
                 '0.00 %');
             const chartOptions = generateChartOptions(dataSetWithPercentFormat);
-            expect(generateChartOptions(dataSet).showInPercent).toBe(false); // false by default
-            expect(chartOptions.showInPercent).toBe(true); // true if format includes %
+            // first measure format by default
+            expect(generateChartOptions(dataSet).yAxes[0].format).toBe(expectedNormalFormat);
+            // if measure format including %
+            expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
         });
 
         it('should assign custom legend format', () => {
@@ -1565,19 +1533,25 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.data.series[1].type).toBeUndefined();
             });
 
-            it('should assign showInPercent true only if at least one measure`s format includes a "%" sign', () => {
+            it('should assign format from first measure whichs format includes a "%" sign', () => {
                 const dataSet = fixtures.comboWithTwoMeasuresAndViewByAttribute;
+                const expectedPercentageFormat = '0.00 %';
+                const expectedNormalFormat = get(dataSet, `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
+                    'headers[0].measureGroupHeader.items[1].measureHeaderItem.format');
+
                 const dataSetWithPercentFormat = immutableSet(dataSet,
-                    'executionResponse.dimensions[0]' +
-                    'headers[0].measureGroupHeader.items[0].measureHeaderItem.format',
+                    `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
+                    'headers[0].measureGroupHeader.items[1].measureHeaderItem.format',
                     '0.00 %');
                 const chartOptions = generateChartOptions(
                     dataSetWithPercentFormat,
                     {
                         type: 'combo'
                     });
-                expect(generateChartOptions(dataSet).showInPercent).toBe(false); // false by default
-                expect(chartOptions.showInPercent).toBe(true); // true if format includes %
+                // first measure format by default
+                expect(generateChartOptions(dataSet).yAxes[0].format).toBe(expectedNormalFormat);
+                // if measure format includes %
+                expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
         });
 

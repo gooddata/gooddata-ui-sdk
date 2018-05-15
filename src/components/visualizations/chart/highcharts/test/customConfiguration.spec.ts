@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { getCustomizedConfiguration } from '../customConfiguration';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
+import { immutableSet } from '../../../utils/common';
 
 const chartOptions = {
     type: VisualizationTypes.LINE,
@@ -35,5 +36,14 @@ describe('getCustomizedConfiguration', () => {
     it('should set gridline width to zero', () => {
         const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
         expect(result.yAxis[0].gridLineWidth).toEqual(0);
+    });
+
+    it('should handle "%" format on axis and use lable formater', () => {
+        const chartOptionsWithFormat = immutableSet(chartOptions, 'yAxes[0].format', '0.00 %');
+        const resultWithoutFormat = getCustomizedConfiguration(chartOptions);
+        const resultWithFormat = getCustomizedConfiguration(chartOptionsWithFormat);
+
+        expect(resultWithoutFormat.yAxis[0].labels.formatter).toBeUndefined();
+        expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
     });
 });

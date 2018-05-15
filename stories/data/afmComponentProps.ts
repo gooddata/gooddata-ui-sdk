@@ -388,3 +388,63 @@ export const AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT: VisualizationOb
         uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/76038'
     }
 };
+
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_SCATTER_MD_OBJECT: VisualizationObject.IVisualizationObjectContent = {
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: MEASURE_1.localIdentifier,
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: ((MEASURE_1.definition as AFM.ISimpleMeasureDefinition)
+                                        .measure.item as AFM.IObjUriQualifier).uri
+                                }
+                            }
+                        },
+                        title: 'Lost'
+                    }
+                }
+            ]
+        },
+        {
+            localIdentifier: 'secondary_measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: MEASURE_2.localIdentifier,
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: ((MEASURE_2.definition as AFM.ISimpleMeasureDefinition)
+                                        .measure.item as AFM.IObjUriQualifier).uri
+                                }
+                            }
+                        },
+                        title: 'Won'
+                    }
+                }
+            ]
+        },
+        {
+            localIdentifier: 'attribute',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: ATTRIBUTE.localIdentifier,
+                        displayForm: {
+                            uri: (ATTRIBUTE.displayForm as AFM.IObjUriQualifier).uri
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    filters: [],
+    visualizationClass: {
+        uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/76038'
+    }
+};

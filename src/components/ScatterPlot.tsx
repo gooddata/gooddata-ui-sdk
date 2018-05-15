@@ -26,8 +26,8 @@ const generateScatterDimensionsFromBuckets =
     (buckets: VisualizationObject.IBucket[]) => generateDefaultScatterDimensions(convertBucketsToAFM(buckets));
 
 /**
- * [ScatterPlot](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/line_chart_component.html) TODO: change
- * is a component with bucket props measures, trendBy, segmentBy, filters
+ * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
+ * is a component with bucket props xAxisMeasure, yAxisMeasure, attribute, filters
  */
 export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
