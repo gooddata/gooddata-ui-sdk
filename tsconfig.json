@@ -1,4 +1,5 @@
 {
+  "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
   "compilerOptions": {
     "declaration": true,
     "jsx": "react",

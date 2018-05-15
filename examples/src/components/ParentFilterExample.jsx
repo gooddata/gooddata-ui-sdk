@@ -221,7 +221,6 @@ export class ParentFilterExample extends Component {
                     stateFilterValues,
                     cityFilterValues
                 )}
-                <hr className="separator" />
             </div>
         );
     }

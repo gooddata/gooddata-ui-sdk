@@ -1,9 +1,10 @@
-# GoodData React Components
-> React.js components for building visualizations on top of GoodData platform
+# GoodData.UI React components
+> A React-based JavaScript library for building data-driven applications
 
 ## Getting started
-- [Documentation](http://sdk.gooddata.com/gooddata-ui/)
-
+- [GoodData.UI Documentation](http://sdk.gooddata.com/gooddata-ui/)
+- [GoodData.UI Live Examples](https://gooddata-examples.herokuapp.com/)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/gooddata)
 
 ### Usage
 With [yarn](https://yarnpkg.com) installed, go to your project directory and run
@@ -15,57 +16,51 @@ If you prefer [npm](npmjs.com) run
 $ npm install --save @gooddata/react-components
 ```
 
-## Develop
-### Running the development
-To develop, you need to run the typescript compiler. By running `yarn dev`, the typescript compiler will be run in watch mode.
-```sh
-$ cd gooddata-react-components
-$ yarn dev
+
+## Contributing
+
+We welcome any contribution in form of [issues](https://github.com/gooddata/gooddata-react-components/issues) or [pull requests](https://github.com/gooddata/gooddata-react-components/pulls).
+These commands may come in handy while developing:
+
+| command | description |
+| ------- | ----------- |
+| `yarn install --pure-lockfile` | first step |
+| ||
+| `yarn dev` | build react-components to `/dist` in watch mode |
+| `yarn test` | run all unit tests |
+| `yarn validate` | validate codestyle |
+| ||
+| `yarn storybook` | run storybook from `/stories` on http://localhost:9001 |
+| `yarn build-storybook` | build storybook to `/dist-storybook` |
+| `yarn test-storybook` | run storybook and [screenshot tests](https://github.com/gooddata/gdc-client-utils/tree/master/test-storybook) |
+| ||
+| `yarn examples` | run Live Examples dev-server from `/examples` on https://localhost:8999 |
+| `yarn examples-build` | build Live Examples to `/examples/dist` |
+| `yarn examples-server` | serve built Live Examples - see `/examples/server/src` |
+| `yarn examples-testcafe` | run testcafe tests against `localhost:8999` |
+
+### Deploy to heroku.com
+When you deploy this repo to heroku, it serves *GoodData.UI Live Examples*.
+Relevant tasks are in `Procfile` and `package.json`.
+
+```bash
+# run in the project directory
+heroku login
+heroku create <your-app-name>
+heroku config:set DOMAIN_ADMIN_USERNAME=x@gooddata.com DOMAIN_ADMIN_PASSWORD=xy PROJECT_ID_TO_ASSIGN=xms7ga4tf3g3nzucd8380o2bev8oeknp
+git push heroku HEAD:master
+heroku open
 ```
 
-If you just need to build the CSS files from SASS, run
-```sh
-$ yarn build-css
-```
-
-To see and validate the react components, you can use [Storybook](https://storybook.js.org/).
-To run the storybook in development mode, run
-```sh
-$ yarn storybook
-```
-
-To deploy the production version of storybook, run
-```sh
-$ yarn build-storybook
-```
-
-### Running the tests
-To validate using [tslint](https://palantir.github.io/tslint/), run
-```sh
-$ yarn validate
-```
-
-#### Storybook visual regression tests
-Visual regression testing for Storybook is provided by [@gooddata/test-storybook](https://github.com/gooddata/gdc-client-utils/tree/master/test-storybook) package.
-
-### Deployment
-```
+#### NPM package publishing
+```bash
+# only for internal gooddata developers
 git checkout master && git pull upstream master --tags
-npm version [major|minor|patch] -m "Release v%s"
+yarn version
 npm publish
 git push upstream master --tags
 ```
 
-### Examples
-For more details see [examples/README.md](./examples/README.md)
-```
-cd examples
-yarn install
-yarn dev
-```
-
-## Contributing
-Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-react-components/issues).
 
 ## Changelog
 - see [CHANGELOG.md](CHANGELOG.md)

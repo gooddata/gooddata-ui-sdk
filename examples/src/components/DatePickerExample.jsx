@@ -18,6 +18,7 @@ const dateFormat = 'YYYY-MM-DD';
 export class DatePickerExample extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             from: moment('2017-01-01', dateFormat),
             to: moment('2017-12-31', dateFormat),
@@ -139,7 +140,6 @@ export class DatePickerExample extends Component {
                             onError={this.onError}
                         />)}
                 </div>
-                <hr className="separator" />
             </div>
         );
     }

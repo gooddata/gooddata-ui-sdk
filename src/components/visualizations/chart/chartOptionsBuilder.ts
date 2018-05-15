@@ -880,7 +880,7 @@ export function getChartOptions(
     unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
     drillableItems: IDrillableItem[]
-) {
+): any {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
     const attributeHeaderItems = unfilteredHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {

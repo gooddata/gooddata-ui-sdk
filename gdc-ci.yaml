@@ -3,7 +3,7 @@ before:
   - ci-yarn-install
 pull-request:
   - yarn validate-ci
-  - JEST_SUITE_NAME="GoodData React Components Unit Tests" JEST_JUNIT_OUTPUT="./ci/results/test-results.xml" jest --config=jest.ci.json
+  - JEST_SUITE_NAME="GoodData React Components Unit Tests" JEST_JUNIT_OUTPUT="./ci/results/test-results.xml" jest --config=jest.ci.js
 dist:
   - yarn build-storybook
 rpm-build:

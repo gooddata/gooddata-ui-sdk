@@ -34,7 +34,7 @@ test('Custom filter shows more', async (t) => {
     const showMoreButton = Selector('.s-show-more-filters-button');
 
     await t
-        .expect(attributeFilterItem.count).eql(20)
+        .expect(attributeFilterItem.count).eql(20) // NOTE: this test failed sometimes when --assertion-timout was 5 s
         .click(showMoreButton)
         .expect(attributeFilterItem.count).eql(40);
 });

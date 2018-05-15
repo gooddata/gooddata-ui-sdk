@@ -40,7 +40,7 @@ export class SortableTable
 
         if (sortItems) {
             // TODO save sortItems together with some resultSpec fingerprint
-            // SDK case
+            // GoodData.UI case
             // 1. click on header -> sort
             // 2. change programatically sort in resultSpec
             // 3. Local state overrides new sort in resultSpec -> wrong
