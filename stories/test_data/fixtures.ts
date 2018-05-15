@@ -62,7 +62,14 @@ export const bubbleChartWith3MetricsAndAttribute: any = {
     executionRequest: require('../test_data/bubble_chart_with_3_metrics_and_attribute_request.json').execution,
     executionResponse:
     require('../test_data/bubble_chart_with_3_metrics_and_attribute_response.json').executionResponse,
-    executionResult: require('../test_data/bubble_chart_with_3_metrics_and_attribute_result.json').executionResult
+    executionResult: require('../test_data/bubble_chart_with_3_metrics_and_attribute_result.json').executionResult,
+    ...bubbleChartWith3MetricsAndAttributeMd
+};
+
+export const bubbleChartWithNulls = {
+    ...bubbleChartWith3MetricsAndAttribute,
+    ...bubbleChartWith3MetricsAndAttributeMd,
+    executionResult: require('../test_data/bubble_chart_with_nulls_result.json').executionResult
 };
 
 export const areaChartWith3MetricsAndViewByAttribute: any = {

@@ -103,6 +103,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
         case VisualizationTypes.AREA:
         case VisualizationTypes.DUAL:
         case VisualizationTypes.SCATTER:
+        case VisualizationTypes.BUBBLE:
             return 'point';
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BAR:

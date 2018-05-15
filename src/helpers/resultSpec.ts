@@ -10,7 +10,7 @@ const generateDefaultDimensionsFromBuckets =
 export function getResultSpec(
     buckets: VisualizationObject.IBucket[],
     sortBy: AFM.SortItem[] = null,
-    getDimensions: (afm: AFM.IAfm) => AFM.IDimension[] = generateDefaultDimensionsFromBuckets
+    getDimensions: (buckets: VisualizationObject.IBucket[]) => AFM.IDimension[] = generateDefaultDimensionsFromBuckets
 ): AFM.IResultSpec {
     const resultSpec: AFM.IResultSpec = {
         dimensions: getDimensions(buckets)
