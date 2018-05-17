@@ -4,6 +4,7 @@ import { Subtract } from 'utility-types';
 
 import { BaseChart, ICommonChartProps, IChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
+import { getResultSpec } from '../helpers/resultSpec';
 
 import { AFM, VisualizationObject } from '@gooddata/typings';
 import {
@@ -22,18 +23,7 @@ export {
     IDataSourceProviderProps
 };
 
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    if ((afm.attributes || []).length === 0) {
-        return [
-            {
-                itemIdentifiers: []
-            },
-            {
-                itemIdentifiers: ['measureGroup']
-            }
-        ];
-    }
-
+function generateBubbleDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     return [
         {
             itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
@@ -44,6 +34,9 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
+const generateBubbleDimensionsFromBuckets =
+    (buckets: VisualizationObject.IBucket[]) => generateBubbleDimensions(convertBucketsToAFM(buckets));
+
 export interface IBubbleChartBucketProps {
     xAxisMeasure: VisualizationObject.IMeasure;
     yAxisMeasure: VisualizationObject.IMeasure;
@@ -51,6 +44,7 @@ export interface IBubbleChartBucketProps {
     viewBy?: VisualizationObject.IVisualizationAttribute;
     stackBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IBubbleChartProps extends ICommonChartProps, IBubbleChartBucketProps {
@@ -68,7 +62,7 @@ const CoreBubbleChart = (props: IChartProps) => {
     );
 };
 
-const AfmBubbleChart = dataSourceProvider<ICommonChartProps>(CoreBubbleChart, generateDefaultDimensions, 'BubbleChart');
+const AfmBubbleChart = dataSourceProvider<ICommonChartProps>(CoreBubbleChart, generateBubbleDimensions, 'BubbleChart');
 
 /**
  * [BubbleChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/)
@@ -106,12 +100,10 @@ export function BubbleChart(props: IBubbleChartProps): JSX.Element {
         mdObject: convertBucketsToMdObject(buckets, props.filters, 'local:bubble')
     };
 
-    const afmFromBuckets = convertBucketsToAFM(buckets, props.filters);
-
     return (
         <AfmBubbleChart
-            afm={afmFromBuckets}
-            type={'bubble'}
+            afm={convertBucketsToAFM(buckets, props.filters)}
+            resultSpec={getResultSpec(buckets, props.sortBy, generateBubbleDimensionsFromBuckets)}
             {...newProps}
         />
     );

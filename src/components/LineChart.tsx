@@ -6,14 +6,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { LineChart as AfmLineChart } from './afm/LineChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { generateStackedDimensions } from '../helpers/dimensions';
-import { isStackedChart } from '../helpers/stacks';
+import { getStackingResultSpec } from '../helpers/resultSpec';
 
 export interface ILineChartBucketProps {
     measures: VisualizationObject.BucketItem[];
     trendBy?: VisualizationObject.IVisualizationAttribute;
     segmentBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface ILineChartProps extends ICommonChartProps, ILineChartBucketProps {
@@ -24,29 +24,6 @@ type ILineChartNonBucketProps = Subtract<ILineChartProps, ILineChartBucketProps>
 
 export interface ILineChartProps extends ICommonChartProps {
     projectId: string;
-}
-
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    if (isStackedChart(buckets)) {
-        return {
-            dimensions: generateStackedDimensions(buckets)
-        };
-    }
-
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
 }
 
 /**
@@ -77,7 +54,7 @@ export function LineChart(props: ILineChartProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }

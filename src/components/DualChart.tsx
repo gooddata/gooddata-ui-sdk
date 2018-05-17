@@ -6,12 +6,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { DualChart as AfmDualChart } from './afm/DualChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
+import { getResultSpec } from '../helpers/resultSpec';
 
 export interface IDualChartBucketProps {
     leftAxisMeasure: VisualizationObject.BucketItem;
     rightAxisMeasure: VisualizationObject.BucketItem;
     trendBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IDualChartProps extends ICommonChartProps, IDualChartBucketProps {
@@ -22,23 +24,6 @@ type IDualChartNonBucketProps = Subtract<IDualChartProps, IDualChartBucketProps>
 
 export interface IDualChartProps extends ICommonChartProps {
     projectId: string;
-}
-
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-function getResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
 }
 
 /**
@@ -74,7 +59,7 @@ export function DualChart(props: IDualChartProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getResultSpec(buckets)}
+            resultSpec={getResultSpec(buckets, props.sortBy)}
         />
     );
 }

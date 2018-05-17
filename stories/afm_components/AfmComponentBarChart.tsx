@@ -15,10 +15,12 @@ import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
 
+const wrapperStyle = { width: 800, height: 400 };
+
 storiesOf('AFM components/BarChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
@@ -31,7 +33,7 @@ storiesOf('AFM components/BarChart', module)
     ))
     .add('two measures, one attribute, PoP', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP}
@@ -44,7 +46,7 @@ storiesOf('AFM components/BarChart', module)
     ))
     .add('stacked bar chart', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
@@ -67,7 +69,7 @@ storiesOf('AFM components/BarChart', module)
     ))
     .add('custom axis label (renaming, alias)', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE}
@@ -80,7 +82,7 @@ storiesOf('AFM components/BarChart', module)
     ))
     .add('custom colors', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}

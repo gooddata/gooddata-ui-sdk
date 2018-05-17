@@ -14,10 +14,12 @@ import {
 
 import '../../styles/scss/charts.scss';
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('AFM components/Treemap', module)
     .add('two measures', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES}
@@ -28,7 +30,7 @@ storiesOf('AFM components/Treemap', module)
     ))
     .add('measure and attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
@@ -39,7 +41,7 @@ storiesOf('AFM components/Treemap', module)
     ))
     .add('renamed measure and renamed attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
@@ -50,7 +52,7 @@ storiesOf('AFM components/Treemap', module)
     ))
     .add('legend on the bottom', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
@@ -62,7 +64,7 @@ storiesOf('AFM components/Treemap', module)
     ))
     .add('custom colors', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}

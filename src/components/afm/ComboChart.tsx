@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ComboChart as CoreComboChart } from '../core/ComboChart';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensions } from '../../helpers/dimensions';
 
 /**
  * AFM ComboChart

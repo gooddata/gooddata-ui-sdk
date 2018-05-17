@@ -6,15 +6,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { HeatMap as AfmHeatMap } from './afm/HeatMap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { generateStackedDimensions } from '../helpers/dimensions';
-import { isStackedChart } from '../helpers/stacks';
-import { generateDefaultDimensions } from './afm//afmHelper';
+import { getStackingResultSpec } from '../helpers/resultSpec';
 
 export interface IHeatMapBucketProps {
     measures: VisualizationObject.BucketItem[];
     trendBy?: VisualizationObject.IVisualizationAttribute;
     segmentBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IHeatMapProps extends ICommonChartProps, IHeatMapBucketProps {
@@ -25,18 +24,6 @@ type IHeatMapNonBucketProps = Subtract<IHeatMapProps, IHeatMapBucketProps>;
 
 export interface IHeatMapProps extends ICommonChartProps {
     projectId: string;
-}
-
-function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    if (isStackedChart(buckets)) {
-        return {
-            dimensions: generateStackedDimensions(buckets)
-        };
-    }
-
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
 }
 
 export function HeatMap(props: IHeatMapProps): JSX.Element {
@@ -63,7 +50,7 @@ export function HeatMap(props: IHeatMapProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }

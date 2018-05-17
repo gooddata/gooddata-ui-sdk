@@ -5,12 +5,21 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { LineChart } from '../../src/index';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
-import { ATTRIBUTE_1, ATTRIBUTE_1_WITH_ALIAS, MEASURE_1, MEASURE_2 } from '../data/componentProps';
+import {
+    ATTRIBUTE_1,
+    ATTRIBUTE_1_WITH_ALIAS,
+    MEASURE_1,
+    MEASURE_2,
+    ATTRIBUTE_1_SORT_ITEM,
+    MEASURE_2_SORT_ITEM
+} from '../data/componentProps';
+
+const wrapperStyle = { width: 800, height: 400 };
 
 storiesOf('Core components/LineChart', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <LineChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -24,7 +33,7 @@ storiesOf('Core components/LineChart', module)
     ))
     .add('two measures, one attribute with alias', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <LineChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -38,7 +47,7 @@ storiesOf('Core components/LineChart', module)
     ))
     .add('custom colors', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <LineChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
@@ -47,6 +56,35 @@ storiesOf('Core components/LineChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    )).add('sorted by attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    sortBy={[ATTRIBUTE_1_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('sorted by measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    sortBy={[MEASURE_2_SORT_ITEM]}
                 />
             </div>
         )

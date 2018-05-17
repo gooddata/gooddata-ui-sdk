@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 export const MEASURE_1: VisualizationObject.IMeasure = {
     measure: {
@@ -97,4 +97,22 @@ export const TOTAL_M2_A1: VisualizationObject.IVisualizationTotal = {
     measureIdentifier: MEASURE_2.measure.localIdentifier,
     type: 'nat',
     attributeIdentifier: ATTRIBUTE_1.visualizationAttribute.localIdentifier
+};
+
+export const ATTRIBUTE_1_SORT_ITEM: AFM.IAttributeSortItem = {
+    attributeSortItem: {
+        direction: 'asc',
+        attributeIdentifier: ATTRIBUTE_1.visualizationAttribute.localIdentifier
+    }
+};
+
+export const MEASURE_2_SORT_ITEM: AFM.IMeasureSortItem = {
+    measureSortItem: {
+        direction: 'asc',
+        locators: [{
+            measureLocatorItem: {
+                measureIdentifier: MEASURE_2.measure.localIdentifier
+            }
+        }]
+    }
 };

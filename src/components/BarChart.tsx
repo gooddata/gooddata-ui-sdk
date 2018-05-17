@@ -6,14 +6,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { BarChart as AfmBarChart } from './afm/BarChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { generateStackedDimensions } from '../helpers/dimensions';
-import { isStackedChart } from '../helpers/stacks';
+import { getStackingResultSpec } from '../helpers/resultSpec';
 
 export interface IBarChartBucketProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     stackBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IBarChartProps extends ICommonChartProps, IBarChartBucketProps {
@@ -21,29 +21,6 @@ export interface IBarChartProps extends ICommonChartProps, IBarChartBucketProps 
 }
 
 type IBarChartNonBucketProps = Subtract<IBarChartProps, IBarChartBucketProps>;
-
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    if (isStackedChart(buckets)) {
-        return {
-            dimensions: generateStackedDimensions(buckets)
-        };
-    }
-
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
-}
 
 /**
  * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
@@ -73,7 +50,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { omit, get } from 'lodash';
+import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 
@@ -7,14 +7,14 @@ import { AreaChart as AfmAreaChart } from './afm/AreaChart';
 
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { generateStackedDimensions } from '../helpers/dimensions';
-import { isStackedChart } from '../helpers/stacks';
+import { getStackingResultSpec } from '../helpers/resultSpec';
 
 export interface IAreaChartBucketProps extends ICommonChartProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute[];
     stackBy?: VisualizationObject.IVisualizationAttribute[];
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProps {
@@ -27,29 +27,6 @@ export interface IAreaChartProps extends ICommonChartProps {
     projectId: string;
 }
 
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: get(afm, 'attributes', []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-function getStackingResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    if (isStackedChart(buckets)) {
-        return {
-            dimensions: generateStackedDimensions(buckets)
-        };
-    }
-
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
-}
-
 /**
  * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
  * is a component with bucket props measures, viewBy, stacksBy, filters
@@ -58,15 +35,15 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: 'measures',
-            items: get(props, 'measures', [])
+            items: props.measures || []
         },
         {
             localIdentifier: 'attributes',
-            items: get(props, 'viewBy', [])
+            items: props.viewBy ? props.viewBy : []
         },
         {
             localIdentifier: 'stacks',
-            items: get(props, 'stackBy', [])
+            items: props.stackBy ? props.stackBy : []
         }
     ];
 
@@ -78,7 +55,7 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }

@@ -145,7 +145,7 @@ function getLineDimensions(mdObject: VisualizationObject.IVisualizationObjectCon
     ];
 }
 
-function getHeadlinesDimensions(): AFM.IDimension[] {
+export function getHeadlinesDimensions(): AFM.IDimension[] {
     return [
         { itemIdentifiers: ['measureGroup'] }
     ];
@@ -308,3 +308,54 @@ export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]
         }
     ];
 }
+
+// for LineChart, AreaChart, BarChart, ColumnChart
+export function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    return [
+        {
+            itemIdentifiers: ['measureGroup']
+        },
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        }
+    ];
+}
+
+export function isStackedChart(buckets: VisualizationObject.IBucket[]) {
+    return buckets.some(bucket => bucket.localIdentifier === 'stacks' && bucket.items.length > 0);
+}
+
+// for ScatterChart
+export function generateDefaultScatterDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    return [
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        },
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ];
+}
+
+// for PieChart, DonutChart, Treemap
+export const generateDefaultDimensionsForRoundChart = (afm: AFM.IAfm): AFM.IDimension[] => {
+    if ((afm.attributes || []).length === 0) {
+        return [
+            {
+                itemIdentifiers: []
+            },
+            {
+                itemIdentifiers: ['measureGroup']
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: ['measureGroup']
+        },
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        }
+    ];
+};

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 import { Table as AfmTable } from './afm/Table';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getTableDimensions } from '../helpers/dimensions';
+import { getResultSpec } from '../helpers/resultSpec';
 
 export interface ITableBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -14,6 +15,7 @@ export interface ITableBucketProps {
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface ITableProps extends ICommonChartProps, ITableBucketProps {
@@ -47,7 +49,7 @@ export function Table(props: ITableProps): JSX.Element {
         <AfmTable
             {...newProps}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={{ dimensions: getTableDimensions(buckets) }}
+            resultSpec={getResultSpec(buckets, props.sortBy, getTableDimensions)}
         />
     );
 }
