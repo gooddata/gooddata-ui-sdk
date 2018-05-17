@@ -116,7 +116,8 @@
     "tslint": "'./{src,stories}/**/*.{ts,tsx}'"
   },
   "scripts": {
-    "postinstall": "cd examples/server; yarn install --pure-lockfile; cd ../..; rm -r examples/node_modules 2>/dev/null; true",
+    "prepare?": "# Called before `npm publish` and on local `npm install`. Temporarily also for deleting obsolete node_modules. Ends with `true` to continue gracefully.",
+    "prepare": "cd examples/server && yarn install --pure-lockfile && cd ../..; rm -r examples/node_modules 2>/dev/null; true",
     "prepublishOnly": "yarn build",
     "build": "bash scripts/build.sh",
     "build-dev": "bash scripts/build.sh --dev",
