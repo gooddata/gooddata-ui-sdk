@@ -72,6 +72,7 @@ export const KpiError = (props: IErrorProps) => {
     const message: string = props.message;
     return (
         <span
+            className="gdc-kpi-error"
             style={{
                 whiteSpace: 'normal',
                 lineHeight: 'normal',
