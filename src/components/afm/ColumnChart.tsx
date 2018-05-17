@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ColumnChart as CoreColumnChart } from '../core/ColumnChart';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensions } from '../../helpers/dimensions';
 
 /**
  * AFM ColumnChart

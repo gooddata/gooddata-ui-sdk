@@ -10,10 +10,12 @@ import {
     MEASURE_1_POP
 } from '../data/componentProps';
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('Core components/Headline', module)
     .add('one measure with alias', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Headline
                     projectId="storybook"
                     primaryMeasure={MEASURE_1_WITH_ALIAS}
@@ -25,7 +27,7 @@ storiesOf('Core components/Headline', module)
     ))
     .add('two measures', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Headline
                     projectId="storybook"
                     primaryMeasure={MEASURE_1_WITH_ALIAS}
@@ -38,7 +40,7 @@ storiesOf('Core components/Headline', module)
     ))
     .add('two measures with PoP', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Headline
                     projectId="storybook"
                     primaryMeasure={MEASURE_1}

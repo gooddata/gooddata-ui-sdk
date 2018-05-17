@@ -5,12 +5,15 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { ScatterPlot as AfmScatterPlot } from './afm/ScatterPlot';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
+import { generateDefaultScatterDimensions } from '../helpers/dimensions';
+import { getResultSpec } from '../helpers/resultSpec';
 
 export interface IScatterPlotBucketProps {
-    xAxisMeasure: VisualizationObject.IMeasure;
+    xAxisMeasure?: VisualizationObject.IMeasure;
     yAxisMeasure?: VisualizationObject.IMeasure;
     attribute?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucketProps {
@@ -19,22 +22,8 @@ export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucket
 
 type IScatterPlotNonBucketProps = Subtract<IScatterPlotProps, IScatterPlotBucketProps>;
 
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        },
-        {
-            itemIdentifiers: ['measureGroup']
-        }
-    ];
-}
-
-function getResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
-}
+const generateScatterDimensionsFromBuckets =
+    (buckets: VisualizationObject.IBucket[]) => generateDefaultScatterDimensions(convertBucketsToAFM(buckets));
 
 /**
  * [ScatterPlot](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/line_chart_component.html) TODO: change
@@ -70,7 +59,7 @@ export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getResultSpec(buckets)}
+            resultSpec={getResultSpec(buckets, props.sortBy, generateScatterDimensionsFromBuckets)}
         />
     );
 }

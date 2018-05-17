@@ -28,7 +28,7 @@ describe('ScatterPlot', () => {
         return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(CoreScatterPlot).props().resultSpec.dimensions;
-            expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: [] } ]);
+            expect(dimensions).toEqual([{ itemIdentifiers: [] }, { itemIdentifiers: ['measureGroup'] }]);
         });
     });
 
@@ -44,7 +44,7 @@ describe('ScatterPlot', () => {
         return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(CoreScatterPlot).props().resultSpec.dimensions;
-            expect(dimensions).toEqual([ { itemIdentifiers: ['measureGroup'] }, { itemIdentifiers: ['a1'] } ]);
+            expect(dimensions).toEqual([{ itemIdentifiers: ['a1'] }, { itemIdentifiers: ['measureGroup'] }]);
         });
     });
 

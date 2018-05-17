@@ -22,10 +22,12 @@ function logTotalsChange(data: any) {
     }
 }
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('AFM components/Table', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
@@ -39,7 +41,7 @@ storiesOf('AFM components/Table', module)
     ))
     .add('renamed measure and renamed attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
@@ -52,7 +54,7 @@ storiesOf('AFM components/Table', module)
     ))
     .add('with table totals', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}
@@ -66,7 +68,7 @@ storiesOf('AFM components/Table', module)
     ))
     .add('with table totals editable', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS}

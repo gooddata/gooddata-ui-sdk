@@ -2,17 +2,23 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 import { Treemap as AfmTreemap } from './afm/Treemap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
+import { generateDefaultDimensionsForRoundChart } from '../helpers/dimensions';
+import { getResultSpec } from '../helpers/resultSpec';
 
 export interface ITreemapBucketProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
+
+const generateTreemapDimensionsFromBuckets =
+    (buckets: VisualizationObject.IBucket[]) => generateDefaultDimensionsForRoundChart(convertBucketsToAFM(buckets));
 
 export interface ITreemapProps extends ICommonChartProps, ITreemapBucketProps {
     projectId: string;
@@ -45,6 +51,7 @@ export function Treemap(props: ITreemapProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
+            resultSpec={getResultSpec(buckets, props.sortBy, generateTreemapDimensionsFromBuckets)}
         />
     );
 }

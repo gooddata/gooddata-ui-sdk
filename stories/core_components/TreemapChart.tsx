@@ -14,10 +14,12 @@ import {
     MEASURE_2
 } from '../data/componentProps';
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('Core components/Treemap', module)
     .add('two measures', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -28,7 +30,7 @@ storiesOf('Core components/Treemap', module)
     ))
     .add('measure and attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1]}
@@ -40,7 +42,7 @@ storiesOf('Core components/Treemap', module)
     ))
     .add('renamed measure and renamed attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1_WITH_ALIAS]}
@@ -52,7 +54,7 @@ storiesOf('Core components/Treemap', module)
     ))
     .add('legend on the bottom', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1]}
@@ -65,7 +67,7 @@ storiesOf('Core components/Treemap', module)
     ))
     .add('custom colors', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1]}

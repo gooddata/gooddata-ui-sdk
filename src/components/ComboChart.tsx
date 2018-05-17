@@ -6,12 +6,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { ComboChart as AfmComboChart } from './afm/ComboChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
+import { getResultSpec } from '../helpers/resultSpec';
 
 export interface IComboChartBucketProps {
     columnMeasures: VisualizationObject.IMeasure[];
     lineMeasures?: VisualizationObject.IMeasure[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IComboChartProps extends ICommonChartProps, IComboChartBucketProps {
@@ -19,23 +21,6 @@ export interface IComboChartProps extends ICommonChartProps, IComboChartBucketPr
 }
 
 type IComboChartNonBucketProps = Subtract<IComboChartProps, IComboChartBucketProps>;
-
-function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
-    return [
-        {
-            itemIdentifiers: ['measureGroup']
-        },
-        {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
-        }
-    ];
-}
-
-function getResultSpec(buckets: VisualizationObject.IBucket[]): AFM.IResultSpec {
-    return {
-        dimensions: generateDefaultDimensions(convertBucketsToAFM(buckets))
-    };
-}
 
 /**
  * [ComboChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/combo_chart_component.html)
@@ -71,7 +56,7 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getResultSpec(buckets)}
+            resultSpec={getResultSpec(buckets, props.sortBy)}
         />
     );
 }

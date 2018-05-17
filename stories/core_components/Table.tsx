@@ -13,7 +13,9 @@ import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
     TOTAL_M1_A1,
-    TOTAL_M2_A1
+    TOTAL_M2_A1,
+    ATTRIBUTE_1_SORT_ITEM,
+    MEASURE_2_SORT_ITEM
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -22,10 +24,12 @@ function logTotalsChange(data: any) {
     }
 }
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('Core components/Table', module)
     .add('two measures, one attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -39,7 +43,7 @@ storiesOf('Core components/Table', module)
     ))
     .add('renamed measure and renamed attribute', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1_WITH_ALIAS]}
@@ -53,7 +57,7 @@ storiesOf('Core components/Table', module)
     ))
     .add('with table totals', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -68,7 +72,7 @@ storiesOf('Core components/Table', module)
     ))
     .add('with table totals editable', () => (
         screenshotWrap(
-             <div style={{ width: 600, height: 300 }}>
+             <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -105,6 +109,35 @@ storiesOf('Core components/Table', module)
                     pushData={logTotalsChange}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    )).add('sorted by attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    sortBy={[ATTRIBUTE_1_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('sorted by measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    sortBy={[MEASURE_2_SORT_ITEM]}
                 />
             </div>
         )

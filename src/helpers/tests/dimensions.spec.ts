@@ -4,7 +4,7 @@ import cloneDeep = require('lodash/cloneDeep');
 import update = require('lodash/update');
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
-import { generateDimensions } from '../dimensions';
+import { generateDimensions, getHeadlinesDimensions } from '../dimensions';
 import { charts } from '../../../__mocks__/fixtures';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
@@ -103,6 +103,18 @@ function addTotals(
     return newVis;
 }
 
+describe('getHeadlinesDimensions', () => {
+    it('should always return just one dimension with a measureGroup', () => {
+        const expectedDimensions: AFM.IDimension[] = [
+            {
+                itemIdentifiers: ['measureGroup']
+            }
+        ];
+
+        expect(getHeadlinesDimensions()).toEqual(expectedDimensions);
+    });
+});
+
 describe('generateDimensions', () => {
     describe('column/bar chart', () => {
         it('should generate dimensions for one measure', () => {
@@ -182,7 +194,6 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
-
     describe('heat map', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [
@@ -253,7 +264,6 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
-
     describe('line chart', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [

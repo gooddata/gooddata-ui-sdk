@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 import { PieChart as AfmPieChart } from './afm/PieChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -11,6 +11,7 @@ export interface IPieChartBucketProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
+    sortBy?: AFM.SortItem[];
 }
 
 export interface IPieChartProps extends ICommonChartProps, IPieChartBucketProps {

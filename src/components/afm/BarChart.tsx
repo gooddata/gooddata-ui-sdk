@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { BarChart as CoreBarChart } from '../core/BarChart';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensions } from '../../helpers/dimensions';
 
 /**
  * AFM BarChart

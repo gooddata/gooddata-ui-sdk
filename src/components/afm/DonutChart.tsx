@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { DonutChart as CoreDonutChart } from '../core/DonutChart';
-import { generateDefaultDimensionsForRoundChart as generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions';
 
 /**
  * AFM DonutChart
@@ -19,6 +19,6 @@ import { generateDefaultDimensionsForRoundChart as generateDefaultDimensions } f
  */
 export const DonutChart = dataSourceProvider<ICommonChartProps>(
     CoreDonutChart,
-    generateDefaultDimensions,
+    generateDefaultDimensionsForRoundChart,
     'DonutChart'
 );

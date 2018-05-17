@@ -12,10 +12,12 @@ import {
     MEASURE_2
 } from '../data/componentProps';
 
+const wrapperStyle = { width: 400, height: 400 };
+
 storiesOf('Core components/DonutChart', module)
     .add('two measures', () => (
         screenshotWrap(
-            <div style={{ width: 400, height: 400 }}>
+            <div style={wrapperStyle}>
                 <DonutChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -28,7 +30,7 @@ storiesOf('Core components/DonutChart', module)
     ))
     .add('measure and attribute', () => (
         screenshotWrap(
-            <div style={{ width: 400, height: 400 }}>
+            <div style={wrapperStyle}>
                 <DonutChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
@@ -42,7 +44,7 @@ storiesOf('Core components/DonutChart', module)
     ))
     .add('one measure with alias, one attribute with alias', () => (
         screenshotWrap(
-            <div style={{ width: 400, height: 400 }}>
+            <div style={wrapperStyle}>
                 <DonutChart
                     projectId="storybook"
                     measures={[MEASURE_1_WITH_ALIAS]}
@@ -56,7 +58,7 @@ storiesOf('Core components/DonutChart', module)
     ))
     .add('legend on the bottom', () => (
         screenshotWrap(
-            <div style={{ width: 400, height: 400 }}>
+            <div style={wrapperStyle}>
                 <DonutChart
                     projectId="storybook"
                     measures={[MEASURE_1]}

@@ -10,6 +10,6 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { HeatMap as CoreHeatMap } from '../core/HeatMap';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensions } from '../../helpers/dimensions';
 
 export const HeatMap = dataSourceProvider<ICommonChartProps>(CoreHeatMap, generateDefaultDimensions, 'HeatMap');

@@ -13,10 +13,12 @@ import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
 
+const wrapperStyle = { width: 800, height: 400 };
+
 storiesOf('AFM components/Area chart', module)
     .add('two measures, one attribute (stacking by default)', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <AreaChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
@@ -27,7 +29,7 @@ storiesOf('AFM components/Area chart', module)
     ))
     .add('two measures, one attribute (without stacking)', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <AreaChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
@@ -39,7 +41,7 @@ storiesOf('AFM components/Area chart', module)
     ))
     .add('stacked by attribute', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <AreaChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
@@ -60,7 +62,7 @@ storiesOf('AFM components/Area chart', module)
     ))
     .add('two measures, one renamed attribute', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <AreaChart
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE}
@@ -71,7 +73,7 @@ storiesOf('AFM components/Area chart', module)
     ))
     .add('custom colors', () => (
         screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
+            <div style={wrapperStyle}>
                 <AreaChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}

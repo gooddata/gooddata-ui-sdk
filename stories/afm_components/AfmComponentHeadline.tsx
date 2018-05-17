@@ -8,10 +8,12 @@ import {
 import { Headline } from '../../src/components/afm/Headline';
 import '../../styles/scss/headline.scss';
 
+const wrapperStyle = { width: 600, height: 300 };
+
 storiesOf('AFM components/Headline', module)
     .add('one measure', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Headline
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE}
@@ -23,7 +25,7 @@ storiesOf('AFM components/Headline', module)
     ))
     .add('two measures', () => (
         screenshotWrap(
-            <div style={{ width: 600, height: 300 }}>
+            <div style={wrapperStyle}>
                 <Headline
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES}

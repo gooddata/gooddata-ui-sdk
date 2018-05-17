@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { DualChart as CoreDualChart } from '../core/DualChart';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultDimensions } from '../../helpers/dimensions';
 
 /**
  * AFM DualChart

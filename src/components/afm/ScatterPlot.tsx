@@ -10,12 +10,15 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ScatterPlot as CoreScatterPlot } from '../core/ScatterPlot';
-import { generateDefaultDimensions } from './afmHelper';
+import { generateDefaultScatterDimensions } from '../../helpers/dimensions';
 
 /**
  * AFM ScatterPlot
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const ScatterPlot =
-    dataSourceProvider<ICommonChartProps>(CoreScatterPlot, generateDefaultDimensions, 'ScatterPlot');
+export const ScatterPlot = dataSourceProvider<ICommonChartProps>(
+    CoreScatterPlot,
+    generateDefaultScatterDimensions,
+    'ScatterPlot'
+);
