@@ -28,6 +28,16 @@ export interface IKpiProps extends IEvents {
     ErrorComponent?: React.ComponentType<IErrorProps>;
 }
 
+const DEFAULT_FORMAT = '#,#.##';
+
+function getFormatFromExecution(result: Execution.IExecutionResponses): string {
+    if (isEmptyResult(result)) {
+        return null;
+    }
+    const measureGroupHeader = result.executionResponse.dimensions[0].headers[0] as Execution.IMeasureGroupHeader;
+    return measureGroupHeader.measureGroupHeader.items[0].measureHeaderItem.format;
+}
+
 function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
     const item = DataLayer.Uri.isUri(measure) ? { uri: measure } : { identifier: measure };
 
@@ -79,7 +89,6 @@ export const KpiError = (props: IErrorProps) => {
 
 export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProps> {
     public static defaultProps: Partial<IKpiProps> = {
-        format: '#,#.##',
         filters: [],
         onError: defaultErrorHandler,
         onLoadingChanged: noop,
@@ -122,15 +131,16 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
                         return LoadingComponent ? <LoadingComponent /> : null;
                     }
                     return (<span className="gdc-kpi">
-                        {this.getFormattedResult(this.extractNumber(result))}
+                        {this.getFormattedResult(this.extractNumber(result), result)}
                     </span>);
                 }}
             </ExecuteComponent>
         );
     }
 
-    private getFormattedResult(num: number | string) {
-        const formattedNumber = numberFormat(num, this.props.format);
+    private getFormattedResult(num: number | string, result: Execution.IExecutionResponses) {
+        const format = this.props.format || getFormatFromExecution(result) || DEFAULT_FORMAT;
+        const formattedNumber = numberFormat(num, format);
         const { label, color, backgroundColor } = colors2Object(formattedNumber);
         return color ? <span style={{ color, backgroundColor }}>{label}</span> : label;
     }
