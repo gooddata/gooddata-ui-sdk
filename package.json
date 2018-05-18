@@ -139,7 +139,7 @@
   "typings": "dist/index.d.ts",
   "test-storybook": {
     "_defaults": {
-      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap"
+      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, .screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error"
     },
     "AFM components/PieChart": {
       "error": {

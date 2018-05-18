@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { set } from 'lodash';
 
 import {
     LoadingComponent,
@@ -9,11 +10,11 @@ import {
 import { Kpi, IKpiProps } from '../Kpi';
 import { delay } from '../../tests/utils';
 import { ErrorStates } from '../../../constants/errorStates';
-import { emptyResponse, oneMeasureResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
+import { emptyResponse, oneMeasureOneDimensionResponse } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 
 class DummyExecute extends React.Component<any, null> {
     public render() {
-        return this.props.children({ result: oneMeasureResponse });
+        return this.props.children({ result: oneMeasureOneDimensionResponse });
     }
 }
 
@@ -47,8 +48,26 @@ describe('Kpi', () => {
         return mount(<Kpi {...props} />);
     }
 
-    it('should accept no format', () => {
+    it('should use default format from execution', () => {
         const wrapper = createComponent();
+        return delay().then(() => {
+            expect(wrapper.find('.gdc-kpi').text()).toEqual('$42,470,571.16');
+        });
+    });
+
+    it('should use default format specified in component if there is none in execution', () => {
+        class ExecuteComp extends React.Component<any, null> {
+            public render() {
+                const result = oneMeasureOneDimensionResponse;
+                set(
+                    result,
+                    'executionResponse.dimensions.0.headers.0.measureGroupHeader.items.0.measureHeaderItem.format', null
+                );
+
+                return this.props.children({ result });
+            }
+        }
+        const wrapper = createComponent({ ExecuteComponent: ExecuteComp });
         return delay().then(() => {
             expect(wrapper.find('.gdc-kpi').text()).toEqual('42,470,571.16');
         });
