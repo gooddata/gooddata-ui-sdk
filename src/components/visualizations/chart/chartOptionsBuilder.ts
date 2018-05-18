@@ -1089,6 +1089,19 @@ export function getChartOptions(
         };
     }
 
+    // Custom props
+
+    // Bar chart
+    const xAxisMin = get(config, 'xaxis.min');
+    const xAxisMax = get(config, 'xaxis.max');
+    const xAxisVisible = get(config, 'xaxis.visible', true);
+    const xAxisLabelsEnabled = get(config, 'xaxis.labelsEnabled', true);
+
+    const yAxisMin = get(config, 'yaxis.min');
+    const yAxisMax = get(config, 'yaxis.max');
+    const yAxisVisible = get(config, 'yaxis.visible', true);
+    const yAxisLabelsEnabled = get(config, 'yaxis.labelsEnabled', true);
+
     return {
         type,
         stacking,
@@ -1106,6 +1119,18 @@ export function getChartOptions(
         },
         grid: {
             enabled: gridEnabled
+        },
+        yAxisProps: {
+            min: yAxisMin,
+            max: yAxisMax,
+            visible: yAxisVisible,
+            labelsEnabled: yAxisLabelsEnabled
+        },
+        xAxisProps: {
+            min: xAxisMin,
+            max: xAxisMax,
+            visible: xAxisVisible,
+            labelsEnabled: xAxisLabelsEnabled
         }
     };
 }

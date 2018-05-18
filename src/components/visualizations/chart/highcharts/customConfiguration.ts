@@ -22,6 +22,11 @@ import {
     isColumnChart,
     isOneOfTypes
 } from '../../utils/common';
+import {
+    shouldFollowPointer,
+    shouldStartOnTick,
+    shouldEndOnTick
+} from '../../../visualizations/chart/highcharts/helpers';
 
 const {
     stripColors,
@@ -301,6 +306,7 @@ function getTooltipConfiguration(chartOptions: any) {
             borderRadius: 0,
             shadow: false,
             useHTML: true,
+            followPointer: shouldFollowPointer(chartOptions),
             positioner: partial(positionTooltip, chartType, stacking),
             formatter: partial(formatTooltip, chartType, stacking, tooltipAction)
         }
@@ -560,9 +566,31 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
+            let min: string;
+            let max: string;
+            let visible: boolean;
+            let labelsEnabled: boolean;
+
+            // For bar chart take x axis options
+            if (isBarChart(chartOptions.type)) {
+                min = get(chartOptions, 'xAxisProps.min', '');
+                max = get(chartOptions, 'xAxisProps.max', '');
+                visible = get(chartOptions, 'xAxisProps.visible', true);
+                labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
+            } else {
+                min = get(chartOptions, 'yAxisProps.min', '');
+                max = get(chartOptions, 'yAxisProps.max', '');
+                visible = get(chartOptions, 'yAxisProps.visible', true);
+                labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
+            }
+
+            const maxProp = max ? { max: Number(max) } : {};
+            const minProp = min ? { min: Number(min) } : {};
+
             return {
                 gridLineColor: '#ebebeb',
                 labels: {
+                    enabled: labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
@@ -575,15 +603,28 @@ function getAxesConfiguration(chartOptions: any) {
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                opposite: axis.opposite
+                opposite: axis.opposite,
+                visible,
+                ...maxProp,
+                ...minProp,
+                startOnTick: shouldStartOnTick(max, min),
+                endOnTick: shouldEndOnTick(max, min)
             };
         }),
+
         xAxis: get(chartOptions, 'xAxes', []).map((axis: any) => {
             if (!axis) {
                 return {
                     visible: false
                 };
             }
+
+            let visible: boolean;
+
+            // for bar chart take y axis options
+            visible = isBarChart(chartOptions.type)
+                ? get(chartOptions, 'yAxisProps.visible', true)
+                : get(chartOptions, 'xAxisProps.visible', true);
 
             return {
                 lineColor: '#d5d5d5',
@@ -608,7 +649,8 @@ function getAxesConfiguration(chartOptions: any) {
                         color: styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
-                }
+                },
+                visible
             };
         })
     };

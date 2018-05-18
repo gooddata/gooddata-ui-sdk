@@ -1,17 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    flatten,
-    flatMap,
-    get,
-    map,
-    zip,
-    unzip,
-    initial,
-    tail,
-    isEmpty
-} from 'lodash';
+import flatten = require('lodash/flatten');
+import flatMap = require('lodash/flatMap');
+import get = require('lodash/get');
+import map = require('lodash/map');
+import zip = require('lodash/zip');
+import unzip = require('lodash/unzip');
+import initial = require('lodash/initial');
+import tail = require('lodash/tail');
+import isEmpty = require('lodash/isEmpty');
+import maxBy = require('lodash/maxBy');
+import max = require('lodash/max');
+import sum = require('lodash/sum');
 
+import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { isBarChart, isColumnChart } from '../../utils/common';
 
 // https://silentmatt.com/rectangle-intersection/
 export const rectanglesAreOverlapping = (r1: any, r2: any, padding: any = 0) =>
@@ -72,6 +75,13 @@ export const showDataLabels = (points: any) => {
     points.filter(hasDataLabel).forEach(showDataLabel);
 };
 
+export const showDataLabelInAxisRange = (point: any, minAxisValue: number) => {
+    const { dataLabel } = point;
+    if (dataLabel && (point.y < minAxisValue)) {
+        dataLabel.hide();
+    }
+};
+
 export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
 
 export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, s => s.points));
@@ -120,8 +130,9 @@ export function getShapeAttributes(point: any) {
 export function getDataLabelAttributes(point: any) {
     const dataLabel = get(point, 'dataLabel', null);
     const parentGroup = get(point, 'dataLabel.parentGroup', null);
+    const labelVisible = dataLabel && dataLabel.x > 0 && dataLabel.y > 0; // ONE-3011 (label is in axis range)
 
-    if (dataLabel && parentGroup) {
+    if (dataLabel && parentGroup && labelVisible) {
         return {
             x: dataLabel.x + parentGroup.translateX,
             y: dataLabel.y + parentGroup.translateY,
@@ -136,4 +147,69 @@ export function getDataLabelAttributes(point: any) {
         width: 0,
         height: 0
     };
+}
+
+export function shouldFollowPointer(chartOptions: any) {
+    const type = chartOptions.type;
+    const xMax = Number(get(chartOptions, 'xAxisProps.max'));
+    const yMax = Number(get(chartOptions, 'yAxisProps.max'));
+
+    if ((!isColumnChart(type) && !isBarChart(type)) || (!xMax && !yMax)) {
+        return false;
+    }
+
+    const maxDataValue = getMaxDataValue(chartOptions);
+
+    if (isBarChart(type)) {
+        return xMax && maxDataValue > xMax;
+    }
+
+    return yMax && maxDataValue > yMax;
+}
+
+function getNonStackedMaxvalue(series: any): number {
+    return series.reduce((maxValue: number, serie: ISeriesItem) => {
+        const maxSerieValue = getSerieMaxDataValue(serie.data).y;
+        return maxValue > maxSerieValue ? maxValue : maxSerieValue;
+    }, 0);
+}
+
+function getMaxDataValue(chartOptions: any) {
+    const series = chartOptions.data.series;
+
+    const maxDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMaxValue(chartOptions.data.series)
+        : getNonStackedMaxvalue(series);
+
+    return maxDataValue;
+}
+
+function getSerieMaxDataValue(serieData: ISeriesDataItem[]): ISeriesDataItem {
+    return maxBy(serieData, (item: ISeriesDataItem) => item.y);
+}
+
+function getStackedMaxValue(series: ISeriesItem[]) {
+    const seriesData = flatten(zip(series.map(serie => serie.data)));
+    const stackSums: number[] = [];
+
+    // tslint:disable-next-line:forin
+    for (const index in seriesData[0]) {
+        stackSums.push(sum(seriesData.map(data => data[index].y)));
+    }
+
+    return max(stackSums);
+}
+
+export function shouldStartOnTick(max: string, min: string) {
+    if (!max && min) {
+        return Number(min) < 0;
+    }
+    return true;
+}
+
+export function shouldEndOnTick(max: string, min: string) {
+    if (max && !min) {
+        return Number(max) < 0;
+    }
+    return true;
 }
