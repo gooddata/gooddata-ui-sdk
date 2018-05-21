@@ -74,5 +74,5 @@ test('KPI has correct number', async (t) => {
     await t
         .expect(kpi.exists).ok()
         .expect(kpi.textContent)
-        .eql('92,556,577.3');
+        .eql('$92,556,577');
 });
