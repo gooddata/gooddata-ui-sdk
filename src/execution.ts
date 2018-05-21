@@ -1,4 +1,5 @@
-// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+// Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
+import { AFM, Execution } from '@gooddata/typings';
 import { ExperimentalExecutionsModule } from './execution/experimental-executions';
 import { AttributesMapLoaderModule } from './utils/attributesMapLoader';
 import { ExecuteAfmModule } from './execution/execute-afm';
@@ -23,7 +24,8 @@ export class ExecutionModule {
         return this.getExperimentalExecutionsModule().mdToExecutionDefinitionsAndColumns(projectId, mdObj, options);
     }
 
-    public executeAfm(projectId: string, execution: any) {
+    public executeAfm(projectId: string, execution: AFM.IExecution)
+        : Promise<Execution.IExecutionResponses> {
         return (new ExecuteAfmModule(this.xhr)).executeAfm(projectId, execution);
     }
 
