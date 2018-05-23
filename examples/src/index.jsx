@@ -6,12 +6,13 @@ import sdk from '@gooddata/gooddata-js';
 import 'babel-polyfill';
 
 import {
-    BrowserRouter as Router,
+    Router,
     Route,
     Redirect,
     Switch
 } from 'react-router-dom';
-
+import { createBrowserHistory } from 'history';
+import ReactGA from 'react-ga';
 
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
 import Header from './components/utils/Header';
@@ -19,6 +20,17 @@ import { CustomError } from './components/utils/CustomError';
 import CustomLoading from './components/utils/CustomLoading';
 
 import { routes, userRoutes, mainRoutes } from './routes/_list';
+
+const GA_ID = 'UA-3766725-19';
+const isProduction = process.env.NODE_ENV === 'production';
+ReactGA.initialize(GA_ID, {
+    testMode: !isProduction
+});
+
+const history = createBrowserHistory();
+history.listen((location) => {
+    ReactGA.pageview(location.pathname + location.search);
+});
 
 export class App extends React.Component {
     constructor(props) {
@@ -33,6 +45,7 @@ export class App extends React.Component {
 
     componentDidMount() {
         this.isUserLoggedIn();
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }
 
     onUserLogin = (isLoggedIn, errorMessage) => {
@@ -127,7 +140,7 @@ export class App extends React.Component {
     render() {
         const { isLoggedIn, errorMessage } = this.state;
         return (
-            <Router basename={BASEPATH}>
+            <Router basename={BASEPATH} history={history}>
                 <div className="main-wrapper">
                     {/* language=CSS */}
                     <style jsx>{`

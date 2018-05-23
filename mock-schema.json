@@ -63,6 +63,11 @@
       }]
     }
   ],
+  "afmExecutions": [{
+    "_description": "KPI / saved execution with no data",
+    "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/9"}}}}],"filters":[]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]}]}}},
+    "executionResult": {"executionResult":{"data":[],"paging":{"count":[0],"offset":[0],"total":[0]}}}
+  }],
   "visualizationClasses": [{
     "title": "Table",
     "url": "local:table"

@@ -55,6 +55,7 @@
     "eslint-config-gooddata": "0.0.17",
     "file-loader": "1.1.6",
     "formik": "^0.11.11",
+    "history": "^4.7.2",
     "html-webpack-plugin": "2.30.1",
     "isomorphic-fetch": "2.2.1",
     "jest": "21.2.1",
@@ -67,6 +68,7 @@
     "react-async-script": "^0.9.1",
     "react-datepicker": "1.1.0",
     "react-dom": "15.6.2",
+    "react-ga": "^2.5.2",
     "react-google-recaptcha": "^0.11.0",
     "react-helmet": "5.2.0",
     "react-router-dom": "4.2.2",
@@ -142,7 +144,7 @@
   "typings": "dist/index.d.ts",
   "test-storybook": {
     "_defaults": {
-      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap"
+      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, .screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error"
     },
     "AFM components/PieChart": {
       "error": {
