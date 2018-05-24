@@ -327,6 +327,70 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 contributor: '/gdc/account/profile/johndoe'
             }
         }
+    },
+    {
+        visualizationObject: {
+            content: {
+                buckets: [{
+                    localIdentifier: 'measures',
+                    items: [{
+                        measure: {
+                            localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
+                            format: '#,##0.00',
+                            title: 'Sum of Email Clicks',
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: 'sum',
+                                    item: {
+                                        uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15428'
+                                    }
+                                }
+                            }
+                        }
+                    }]
+                }, {
+                    localIdentifier: 'secondary_measures',
+                    items: [{
+                        measure: {
+                            localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062_pop',
+                            definition: {
+                                popMeasureDefinition: {
+                                    measureIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
+                                    popAttribute: {
+                                        uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15330'
+                                    }
+                                }
+                            }
+                        }
+                    }]
+                }],
+                filters: [{
+                    absoluteDateFilter: {
+                        to: '2017-12-31',
+                        from: '2014-01-01',
+                        dataSet: {
+                            uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15337'
+                        }
+                    }
+                }],
+                visualizationClass: {
+                    uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/808936'
+                }
+            },
+            meta: {
+                author: '/gdc/account/profile/26728eacad349ba6c4c04c5e5cc59437',
+                uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/809028',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aadQOoKTbq5E',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'pop headline test',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/26728eacad349ba6c4c04c5e5cc59437'
+            }
+        }
     }
 ];
 
