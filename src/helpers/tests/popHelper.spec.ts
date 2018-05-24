@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import { fillPoPTitlesAndAliases } from '../popHelper';
-import { charts } from '../../../__mocks__/fixtures';
+import { visualizationObjects } from '../../../__mocks__/fixtures';
 
 describe('fillPoPTitlesAndAliases', () => {
     it('should add missing title and alias for PoP measure', () => {
-        const visContentWithPoP = charts.find(chart =>
+        const visContentWithPoP = visualizationObjects.find(chart =>
             chart.visualizationObject.meta.title === 'PoP'
         ).visualizationObject.content;
         expect(fillPoPTitlesAndAliases(visContentWithPoP, ' - testing pop title').buckets[0].items).toEqual(
