@@ -2,7 +2,7 @@
 import { VisualizationObject, AFM } from '@gooddata/typings';
 
 import { getResultSpec, getStackingResultSpec } from '../resultSpec';
-import { charts } from '../../../__mocks__/fixtures';
+import { visualizationObjects } from '../../../__mocks__/fixtures';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_2,
@@ -11,7 +11,7 @@ import {
 
 describe('getResultSpec', () => {
     it('should return a resultSpec for a bucket with a measure', () => {
-        const buckets: VisualizationObject.IBucket[] = charts[2].visualizationObject.content.buckets;
+        const buckets: VisualizationObject.IBucket[] = visualizationObjects[2].visualizationObject.content.buckets;
 
         const expectedResultSpec: AFM.IResultSpec = {
             dimensions: [
@@ -27,7 +27,7 @@ describe('getResultSpec', () => {
         expect(getResultSpec(buckets)).toEqual(expectedResultSpec);
     });
     it('should return a resultSpec for a bucket with a measure and an attribute', () => {
-        const buckets: VisualizationObject.IBucket[] = charts[1].visualizationObject.content.buckets;
+        const buckets: VisualizationObject.IBucket[] = visualizationObjects[1].visualizationObject.content.buckets;
 
         const expectedResultSpec: AFM.IResultSpec = {
             dimensions: [
@@ -43,7 +43,7 @@ describe('getResultSpec', () => {
         expect(getResultSpec(buckets)).toEqual(expectedResultSpec);
     });
     it('should return a resultSpec with sorting', () => {
-        const buckets: VisualizationObject.IBucket[] = charts[2].visualizationObject.content.buckets;
+        const buckets: VisualizationObject.IBucket[] = visualizationObjects[2].visualizationObject.content.buckets;
 
         const measureSortItem: AFM.IMeasureSortItem = {
             measureSortItem: {
@@ -84,7 +84,7 @@ describe('getResultSpec', () => {
         expect(getResultSpec(buckets, [measureSortItem])).toEqual(expectedResultSpec);
     });
     it('should return a resultSpec with a custom getDimensions function', () => {
-        const buckets: VisualizationObject.IBucket[] = charts[2].visualizationObject.content.buckets;
+        const buckets: VisualizationObject.IBucket[] = visualizationObjects[2].visualizationObject.content.buckets;
 
         const expectedResultSpec: AFM.IResultSpec = {
             dimensions: []
@@ -98,7 +98,7 @@ describe('getResultSpec', () => {
 describe('getStackingResultSpec', () => {
     it('should return a resultSpec using generateDefaultDimensions for non-stacking charts', () => {
 
-        const buckets: VisualizationObject.IBucket[] = charts[2].visualizationObject.content.buckets;
+        const buckets: VisualizationObject.IBucket[] = visualizationObjects[2].visualizationObject.content.buckets;
 
         const measureSortItem: AFM.IMeasureSortItem = {
             measureSortItem: {

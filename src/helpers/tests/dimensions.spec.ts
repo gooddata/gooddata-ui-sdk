@@ -5,11 +5,11 @@ import update = require('lodash/update');
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import { generateDimensions, getHeadlinesDimensions } from '../dimensions';
-import { charts } from '../../../__mocks__/fixtures';
+import { visualizationObjects } from '../../../__mocks__/fixtures';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
     const uri = `/gdc/md/myproject/obj/${name}`;
-    const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
+    const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
 
     if (!visObj) {
         throw new Error(`Unknown uri ${uri}`);

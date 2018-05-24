@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as MdObjectHelper from '../MdObjectHelper';
-import { charts } from '../../../__mocks__/fixtures';
+import { visualizationObjects } from '../../../__mocks__/fixtures';
 
 describe('MdObjectHelper', () => {
     describe('getTotals', () => {
         it('should return table totals for table chart', () => {
-            const totals = MdObjectHelper.getTotals(charts[1].visualizationObject);
+            const totals = MdObjectHelper.getTotals(visualizationObjects[1].visualizationObject);
 
             expect(totals).toEqual([{
                 alias: 'average',
@@ -16,14 +16,14 @@ describe('MdObjectHelper', () => {
         });
 
         it('should return empty table totals for bar chart', () => {
-            const totals = MdObjectHelper.getTotals(charts[0].visualizationObject);
+            const totals = MdObjectHelper.getTotals(visualizationObjects[0].visualizationObject);
             expect(totals).toEqual([]);
         });
     });
 
     describe('getVisualizationClassUri', () => {
         it('should return uri', () => {
-            expect(MdObjectHelper.getVisualizationClassUri(charts[0].visualizationObject))
+            expect(MdObjectHelper.getVisualizationClassUri(visualizationObjects[0].visualizationObject))
                 .toEqual('/gdc/md/myproject/obj/column');
         });
     });

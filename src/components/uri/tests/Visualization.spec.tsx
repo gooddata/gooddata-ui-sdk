@@ -9,7 +9,7 @@ import {
     LoadingComponent,
     ErrorComponent
 } from '../../tests/mocks';
-import { charts, visualizationClasses } from '../../../../__mocks__/fixtures';
+import { visualizationObjects, visualizationClasses } from '../../../../__mocks__/fixtures';
 
 import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
 import { Visualization, IntlVisualization, VisualizationWrapped } from '../Visualization';
@@ -38,7 +38,7 @@ function getResponse(response: string, delay: number): Promise<string> {
 
 // tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
-    const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
+    const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
         throw new ApiResponseError(`Unknown uri ${uri}`, {
             status: HttpStatusCodes.NOT_FOUND
