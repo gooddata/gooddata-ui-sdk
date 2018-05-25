@@ -29,7 +29,7 @@ export const advancedUseCasesRoutes = [
 
 const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advancedUseCasesRoutes });
 
-export const mainRoutes = [
+export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/attribute-filter-components', title: 'Attribute Filter Components', Component: AttributeFilter },
@@ -46,22 +46,26 @@ export const userRoutes = [
     { path: '/registration', title: 'Registration', Component: Registration }
 ];
 
+export const topNavigationRoutes = [
+    { path: '/', title: 'Live Examples', Component: BasicComponents }
+];
+
 export const routes = [
-    ...mainRoutes,
+    ...sideNavigationRoutes,
     ...advancedUseCasesRoutes,
     ...hiddenPaths
 ];
 
 const components = routes.map(r => r.component);
 
-export const navigation = mainRoutes.map(({ path, title }) => ({
+export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
     href: path,
     title
 }));
 
 export default {
     advancedUseCasesRoutes,
-    mainRoutes,
+    sideNavigationRoutes,
     routes,
     navigation,
     components

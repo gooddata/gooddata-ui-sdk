@@ -33,6 +33,7 @@ export const LoginFormUncontrolled = (props) => {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                align-self: center;
                 text-align: center;
             }
 
