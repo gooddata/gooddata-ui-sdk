@@ -67,7 +67,7 @@ export class DonutChartExample extends Component {
         ];
 
         return (
-            <div style={{ height: 300 }} className="s-pie-chart">
+            <div style={{ height: 300 }} className="s-donut-chart">
                 <DonutChart
                     projectId={projectId}
                     measures={measures}

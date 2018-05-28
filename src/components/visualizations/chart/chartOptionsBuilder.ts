@@ -21,7 +21,6 @@ import {
     isComboChart,
     isDualChart,
     isHeatMap,
-    isLineChart,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -35,6 +34,7 @@ import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
+import { MEASURES, SECONDARY_MEASURES } from '../../../constants/bucketNames';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
@@ -52,7 +52,7 @@ const multiMeasuresAlternatingTypes = [
     VisualizationTypes.TREEMAP
 ];
 
-const dontSupportNegativeValuesTypes = [
+const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
@@ -74,6 +74,12 @@ const sortedByMeasureTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL
+];
+
+const unsupportedStackingTypes = [
+    VisualizationTypes.LINE,
+    VisualizationTypes.AREA,
+    VisualizationTypes.SCATTER
 ];
 
 export interface IAxis {
@@ -113,7 +119,7 @@ export function getAdjustedLimits(type: string, limits: IChartLimits): IChartLim
 }
 
 export function cannotShowNegativeValues(type: string) {
-    return isOneOfTypes(type, dontSupportNegativeValuesTypes);
+    return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
 export function validateData(limits: IChartLimits = {}, chartOptions: any) {
@@ -319,19 +325,22 @@ export function getHeatMapSeries(
     }];
 }
 
+function isBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent, bucketName: string) {
+    const bucket = get(mdObject, 'buckets', [])
+        .find(bucket => bucket.localIdentifier === bucketName);
+
+    const bucketItems = get(bucket, 'items', []);
+    return isEmpty(bucketItems);
+}
+
 export function getScatterPlotSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ) {
-        const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
-            .find(bucket => bucket.localIdentifier === 'measures');
-        const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
-            .find(bucket => bucket.localIdentifier === 'secondary_measures');
-
-        const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
-        const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+        const primaryMeasuresBucketEmpty = isBucketEmpty(mdObject, MEASURES);
+        const secondaryMeasuresBucketEmpty = isBucketEmpty(mdObject, SECONDARY_MEASURES);
 
         const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
             const values = seriesItem.map((value: string) => {
@@ -345,18 +354,20 @@ export function getScatterPlotSeries(
             };
         });
 
-        return data.map((dataItem: ISeriesDataItem, dataIndex: number) => {
-            return {
-                name: dataItem.name,
-                color: colorPalette[dataIndex],
-                legendIndex: dataIndex,
-                data: [{
-                    x: dataItem.x,
-                    y: dataItem.y
-                }]
-            };
-        });
-
+        return [{
+            color: colorPalette[0],
+            legendIndex: 0,
+            data: data.reduce((filteredData, dataItem: ISeriesDataItem) => {
+                if (dataItem.x !== null && dataItem.y !== null) {
+                    filteredData.push({
+                        name: dataItem.name,
+                        x: dataItem.x,
+                        y: dataItem.y
+                    });
+                }
+                return filteredData;
+            }, [])
+        }];
 }
 
 export function getBubbleChartSeries(
@@ -471,7 +482,7 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
         const textData = [];
 
         if (stackByAttribute) {
-            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(point.series.name)]);
+            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(point.name)]);
         }
 
         if (measures[0]) {
@@ -635,7 +646,10 @@ export function getDrillableSeries(
             }
 
             const viewByIndex = isHeatMap(type) ? pointData.x : pointIndex;
-            const stackByIndex = isHeatMap(type) ? pointData.y : seriesIndex;
+            let stackByIndex = isHeatMap(type) ? pointData.y : seriesIndex;
+            if (isScatterPlot(type)) {
+                stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
+            }
 
             const viewByItem = viewByAttribute ? {
                 ...unwrap(viewByAttribute.items[viewByIndex]),
@@ -696,6 +710,9 @@ function getCategories(type: string, measureGroup: Execution.IMeasureGroupHeader
             stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
         ];
     }
+    if (isScatterPlot(type)) {
+        return stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''];
+    }
 
     // Categories make up bar/slice labels in charts. These usually match view by attribute values.
     // Measure only pie or treemap charts get categories from measure names
@@ -715,14 +732,14 @@ function getStackingConfig(stackByAttribute: any, options: any) {
     const stackingValue = 'normal';
     const { type, stacking } = options;
 
-    const isNotLineOrAreaChart = !(isLineChart(type) || isAreaChart(type));
+    const supportsStacking = !(isOneOfTypes(type, unsupportedStackingTypes));
 
     /**
      * we should enable stacking for one of the following cases :
-     * 1) If stackby attibute have been set and chart is not line/area chart
+     * 1) If stackby attibute have been set and chart supports stacking
      * 2) If chart is an area chart and stacking is enabled (stackBy attribute doesn't matter)
      */
-    const isStackByChart = stackByAttribute && isNotLineOrAreaChart;
+    const isStackByChart = stackByAttribute && supportsStacking;
     const isAreaChartWithEnabledStacking = isAreaChart(type) && enableAreaChartStacking(stacking);
     if (isStackByChart || isAreaChartWithEnabledStacking) {
         return stackingValue;
@@ -730,14 +747,6 @@ function getStackingConfig(stackByAttribute: any, options: any) {
 
     // No stacking
     return null;
-}
-
-function isPrimaryMeasuresBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent) {
-    const primaryMeasuresBucket = get(mdObject, 'buckets', [])
-        .find(bucket => bucket.localIdentifier === 'measures');
-
-    const primaryMeasuresBucketItems = get(primaryMeasuresBucket, 'items', []);
-    return isEmpty(primaryMeasuresBucketItems);
 }
 
 function preprocessMeasureGroupItems(measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
@@ -763,7 +772,7 @@ function getXAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
     const firstMeasureGroupItem = measureGroupItems[0];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
+        const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
         if (noPrimaryMeasures) {
             return [{
                 label: ''
@@ -782,6 +791,14 @@ function getXAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
     }];
 }
 
+function getMeasureFormat(measure: any) {
+    return get(measure, 'format', '');
+}
+
+function isPercentage(format: string) {
+    return format.includes('%');
+}
+
 function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
                   stackByAttribute: any): IAxis[] {
     const { type, mdObject } = config;
@@ -789,10 +806,17 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
         { label: config.yLabel, format: config.yFormat });
 
+    const percentageFormat = getMeasureFormat(measureGroupItems.find((measure) => {
+        return isPercentage(getMeasureFormat(measure));
+    }));
+    const percentageFormatKey = percentageFormat !== '' ? {
+        format: percentageFormat
+    } : {};
+
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const noPrimaryMeasures = isPrimaryMeasuresBucketEmpty(mdObject);
+    const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
 
     let yAxes: IAxis[] = [];
 
@@ -818,18 +842,17 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
     } else if (isScatterPlot(type) || isBubbleChart(type)) {
         if (noPrimaryMeasures) {
             yAxes = [{
-                ...firstMeasureGroupItem,
-                seriesIndices: range(measureGroupItems.length)
+                ...firstMeasureGroupItem
             }];
         } else {
             yAxes = [{
-                ...secondMeasureGroupItem,
-                seriesIndices: range(measureGroupItems.length)
+                ...secondMeasureGroupItem
             }];
         }
     } else if (isHeatMap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : ''
+            label: stackByAttribute ? stackByAttribute.name : '',
+            format: firstMeasureGroupItem.format
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -839,7 +862,8 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         yAxes = [{
             ...firstMeasureGroupItem,
             ...nonDualMeasureAxis,
-            seriesIndices: range(measureGroupItems.length)
+            seriesIndices: range(measureGroupItems.length),
+            ...percentageFormatKey
         }];
     }
 
@@ -981,12 +1005,16 @@ export function getChartOptions(
     }
 
     if (isScatterPlot(type)) {
-        const measures = [
+        let measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null
         ];
-
-        const categories = [''];
+        if (isBucketEmpty(mdObject, MEASURES)) {
+            measures = [
+                null,
+                measureGroup.items[0] ? measureGroup.items[0] : null
+            ];
+        }
 
         return {
             type,
@@ -995,7 +1023,6 @@ export function getChartOptions(
             colorPalette,
             yAxes,
             xAxes,
-            showInPercent: false,
             data: {
                 series,
                 categories
@@ -1021,7 +1048,6 @@ export function getChartOptions(
             },
             xAxes,
             yAxes,
-            showInPercent: false,
             data: {
                 series,
                 categories
@@ -1050,7 +1076,6 @@ export function getChartOptions(
             colorPalette,
             yAxes,
             xAxes,
-            showInPercent: false,
             data: {
                 series,
                 categories: ['']
@@ -1072,10 +1097,6 @@ export function getChartOptions(
         colorPalette,
         xAxes,
         yAxes,
-        showInPercent: measureGroup.items.some((wrappedMeasure: Execution.IMeasureHeaderItem) => {
-            const measure = wrappedMeasure[Object.keys(wrappedMeasure)[0]];
-            return measure.format.includes('%');
-        }),
         data: {
             series,
             categories

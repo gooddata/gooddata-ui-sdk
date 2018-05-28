@@ -373,4 +373,98 @@ storiesOf('Internal/Drilldown', module)
                 />
             )
         )
-    ));
+    ))
+    .add('Scatter plot with onFiredDrillEvent', () => {
+        const dataSet = fixtures.scatterPlotWith2MetricsAndAttribute;
+        return screenshotWrap(
+            <div>
+                <p>Scatter plot with standard onFiredDrillEvent callback</p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={action('onFiredDrillEvent')}
+                            config={{
+                                type: 'scatter',
+                                mdObject: dataSet.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                                }
+                            ]}
+                            {...dataSet}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+                <p>Scatter plot with drilling on attribute</p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={action('onFiredDrillEvent')}
+                            config={{
+                                type: 'scatter',
+                                mdObject: dataSet.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                                }
+                            ]}
+                            {...dataSet}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+                <p>Scatter plot with drilling on attribute element "Educationly"</p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={action('onFiredDrillEvent')}
+                            config={{
+                                type: 'scatter',
+                                mdObject: dataSet.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionResult.headerItems[0][0][1].attributeHeaderItem.uri
+                                }
+                            ]}
+                            {...dataSet}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+                <p>
+                    Scatter plot with onFiredDrillEvent where drillEvent
+                    is logged into console and default event is prevented
+                </p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={onFiredDrillEvent}
+                            config={{
+                                type: 'scatter',
+                                mdObject: dataSet.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                                }
+                            ]}
+                            {...dataSet}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+            </div>
+        );
+    });

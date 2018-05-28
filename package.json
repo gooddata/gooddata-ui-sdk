@@ -13,9 +13,9 @@
     "LICENSE"
   ],
   "devDependencies": {
-    "@gooddata/mock-js": "1.0.0-alpha4",
+    "@gooddata/mock-js": "1.1.0",
     "@gooddata/test-storybook": "1.2.1",
-    "@gooddata/typings": "2.0.0-alpha2",
+    "@gooddata/typings": "2.0.0",
     "@storybook/addon-actions": "3.4.0",
     "@storybook/addon-options": "3.4.0",
     "@storybook/react": "3.4.0",
@@ -92,7 +92,7 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "6.0.0-alpha10",
+    "@gooddata/gooddata-js": "6.0.0",
     "@gooddata/goodstrap": "55.0.0",
     "@gooddata/js-utils": "^2.0.1",
     "@gooddata/numberjs": "^3.1.2",

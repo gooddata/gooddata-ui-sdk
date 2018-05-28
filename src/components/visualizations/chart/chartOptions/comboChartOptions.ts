@@ -1,7 +1,4 @@
 import { MEASURES, SECONDARY_MEASURES } from '../../../../constants/bucketNames';
-import {
-    unwrap
-} from '../../utils/common';
 
 export function getComboChartOptions(
     config: any,
@@ -40,13 +37,7 @@ export function getComboChartOptions(
         });
     }
 
-    const showInPercent = measureGroup.items.some((wrappedMeasure: any) => {
-        const measure = unwrap(wrappedMeasure);
-        return measure.format.includes('%');
-    });
-
     return {
-        showInPercent,
         data: {
             series,
             categories

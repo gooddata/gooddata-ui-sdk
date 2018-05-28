@@ -11,7 +11,8 @@ import {
     MEASURE_1,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    MEASURE_WITH_FORMAT
 } from '../data/componentProps';
 
 const wrapperStyle = { width: 800, height: 400 };
@@ -37,6 +38,20 @@ storiesOf('Core components/LineChart', module)
                 <LineChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
+                    trendBy={ATTRIBUTE_1_WITH_ALIAS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('some measure with % format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_WITH_FORMAT]}
                     trendBy={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
                     LoadingComponent={null}

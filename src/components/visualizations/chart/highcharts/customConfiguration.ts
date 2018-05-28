@@ -67,17 +67,29 @@ function formatAsPercent() {
     return `${val}%`;
 }
 
+function isInPercent(format: string = '') {
+    return format.includes('%');
+}
+
 function getShowInPercentConfiguration(chartOptions: any) {
-    const { showInPercent, yAxes = [] }: { showInPercent: boolean; yAxes: IAxis[] } = chartOptions;
-    const yAxis = yAxes.map(() => ({
+    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+
+    const xAxis = xAxes.map(axis => (axis && isInPercent(axis.format) ? {
         labels: {
             formatter: formatAsPercent
         }
-    }));
+    } : {}));
 
-    return showInPercent ? {
+    const yAxis = yAxes.map(axis => (axis && isInPercent(axis.format) ? {
+        labels: {
+            formatter: formatAsPercent
+        }
+    } : {}));
+
+    return {
+        xAxis,
         yAxis
-    } : {};
+    };
 }
 
 function getArrowAlignment(arrowPosition: any, chartWidth: any) {

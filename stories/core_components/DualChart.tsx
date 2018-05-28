@@ -9,7 +9,8 @@ import {
     MEASURE_1,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    MEASURE_WITH_FORMAT
 } from '../data/componentProps';
 
 const wrapperStyle = { width: 800, height: 400 };
@@ -58,6 +59,21 @@ storiesOf('Core components/DualChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('two measures, one attribute, % format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <DualChart
+                    projectId="storybook"
+                    leftAxisMeasure={MEASURE_WITH_FORMAT}
+                    rightAxisMeasure={MEASURE_2}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

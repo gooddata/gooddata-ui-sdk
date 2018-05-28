@@ -33,6 +33,7 @@ export const franchiseFeesIdentifierOngoingRoyalty = 'aaWGcgnsfxIg';
 export const franchiseFeesInitialFranchiseFeeIdentifier = 'aaDHcv6wevkl';
 export const franchiseFeesTag = 'franchise_fees';
 export const franchiseFeesVisualizationIdentifier = 'aahnVeLugyFj';
+export const franchisedSalesIdentifier = 'aclF4oDIe5hP';
 export const locationCityAttributeIdentifier = 'attr.restaurantlocation.locationcity';
 export const locationCityAttributeUri = '/gdc/md/k26dtejorcqlqf11crn6imbeevp2q4kg/obj/2208';
 export const locationCityDisplayFormIdentifier = 'label.restaurantlocation.locationcity';
