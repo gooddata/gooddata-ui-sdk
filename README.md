@@ -23,16 +23,13 @@ to be named `jquery`.
 
 You can use the SDK in nodejs, but do not forget to set custom domain URL:
 ```js
-const gooddata = require('@gooddata/gooddata-js');
-const getStream = require('get-stream');
+const gooddata = require('@gooddata/gooddata-js').default;
 
 gooddata.config.setCustomDomain('secure.gooddata.com');
 
 gooddata.user.login('john.doe@example.com', 'your-secret-password')
-    .then(() => console.log('Success'))
-    .catch((e) => {
-        getStream(e.response.body).then(str => console.error(str))
-    });
+    .then((response) => console.log('Login OK', response))
+    .catch((apiError) => console.error('Login failed', apiError, "\n\n", apiError.responseBody));
 ```
 
 ## Quick start
