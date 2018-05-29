@@ -36,6 +36,17 @@ describe('ColumnChart', () => {
         }
     };
 
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
     it('should render column chart and convert the buckets to AFM', () => {
         const wrapper = shallow(
             <ColumnChart
@@ -43,6 +54,7 @@ describe('ColumnChart', () => {
                 measures={[measure]}
                 viewBy={attribute}
                 stackBy={attribute2}
+                sortBy={[measureSortItem]}
             />
         );
 
@@ -75,7 +87,38 @@ describe('ColumnChart', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+              {
+                itemIdentifiers: [
+                  'a2'
+                ]
+              },
+              {
+                itemIdentifiers: [
+                  'a1',
+                  'measureGroup'
+                ]
+              }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmColumnChart)).toHaveLength(1);
         expect(wrapper.find(AfmColumnChart).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmColumnChart).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

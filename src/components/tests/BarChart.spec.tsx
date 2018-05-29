@@ -36,13 +36,25 @@ describe('BarChart', () => {
         }
     };
 
-    it('should render column chart and convert the buckets to AFM', () => {
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
+    it('should render column chart and convert the buckets to AFM and ResultSpec', () => {
         const wrapper = shallow(
             <BarChart
                 projectId="foo"
                 measures={[measure]}
                 viewBy={attribute}
                 stackBy={attribute2}
+                sortBy={[measureSortItem]}
             />
         );
 
@@ -75,7 +87,38 @@ describe('BarChart', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: [
+                        'a2'
+                    ]
+                },
+                {
+                    itemIdentifiers: [
+                        'a1',
+                        'measureGroup'
+                    ]
+                }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmBarChart)).toHaveLength(1);
         expect(wrapper.find(AfmBarChart).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmBarChart).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });
