@@ -16,10 +16,11 @@ import ReactGA from 'react-ga';
 
 import '@gooddata/goodstrap/lib/theme-indigo.scss';
 import Header from './components/utils/Header';
+import Menu from './components/utils/Menu';
 import { CustomError } from './components/utils/CustomError';
 import CustomLoading from './components/utils/CustomLoading';
 
-import { routes, userRoutes, mainRoutes } from './routes/_list';
+import { routes, userRoutes, sideNavigationRoutes, topNavigationRoutes } from './routes/_list';
 
 const GA_ID = 'UA-3766725-19';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -172,6 +173,7 @@ export class App extends React.Component {
                             flex-direction: column;
                             justify-content: flex-start;
                             align-items: center;
+                            padding-top: 64px;
                         }
 
                         :global(h1),
@@ -181,6 +183,7 @@ export class App extends React.Component {
                         }
 
                         :global(h1) {
+                            margin: 0 0 48px;
                             font-weight: bold;
                             font-size: 50px;
                             line-height: 50px;
@@ -201,31 +204,43 @@ export class App extends React.Component {
                             max-width: 800px;
                         }
 
+                        .page-wrapper {
+                            display: flex;
+                            width: 100%;
+                            max-width: 1400px;
+                            padding-top: 40px;
+                        }
+
                         main {
                             flex: 1 1 auto;
-                            overflow: auto;
                             display: flex;
                             flex-direction: column;
                             justify-content: flex-start;
                             align-items: stretch;
                             width: 100%;
-                            max-width: 1400px;
-                            padding: 20px;
+                            padding: 20px 40px;
                         }
                     `}</style>
                     <Header
-                        mainRoutes={mainRoutes}
+                        topNavigationRoutes={topNavigationRoutes}
                         routes={routes}
                         isUserLoggedIn={isLoggedIn}
                         logoutAction={this.logout}
                     />
-                    {errorMessage
-                        ? <CustomError error={{ status: '403', message: errorMessage }} />
-                        : null
-                    }
-                    <main>
-                        {this.renderContent()}
-                    </main>
+                    <div className="page-wrapper">
+                        <Menu
+                            sideNavigationRoutes={sideNavigationRoutes}
+                            routes={routes}
+                            isUserLoggedIn={isLoggedIn}
+                        />
+                        {errorMessage
+                            ? <CustomError error={{ status: '403', message: errorMessage }} />
+                            : null
+                        }
+                        <main>
+                            {this.renderContent()}
+                        </main>
+                    </div>
                 </div>
             </Router>
         );
