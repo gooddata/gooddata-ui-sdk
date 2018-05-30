@@ -14,7 +14,7 @@ export interface ITreemapBucketProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    sortBy?: AFM.SortItem[]; // TODO would it be removed? if not dont forget to test
 }
 
 const generateTreemapDimensionsFromBuckets =
