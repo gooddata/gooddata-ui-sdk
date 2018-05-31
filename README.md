@@ -1,97 +1,91 @@
+[![npm version](https://badge.fury.io/js/%40gooddata%2Fgooddata-js.svg)](https://www.npmjs.com/package/@gooddata/gooddata-js) 
 # GoodData JS SDK
-GoodData javascript sdk library mainly provides a thin javascript abstraction
-over the GoodData REST API. It is created to make it easy to use the GD platform
-and write small javascript apps relying on GD APIs.
+> Thin javascript abstraction over the GoodData REST API
 
-
-# WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js`
-
-
-
-----------------
-THIS SECTION IS OLD:
+## Getting started
+* For rich visualizations, please use the **GoodData.UI**:
+    - [GoodData.UI Documentation](http://sdk.gooddata.com/gooddata-ui/)
+    - [GoodData.UI React components](https://github.com/gooddata/gooddata-react-components) repository
+    - the [Execute component](https://sdk.gooddata.com/gooddata-ui/docs/execute_component.html) for custom visualizations
+* gooddata-js serves for specific background tasks, but it could be used for small applications both in the browser and in the node.js environment.
 
 ## Usage
+### Using as a npm package
+1) go to your project directory and add the package: \
+      → with [yarn](https://yarnpkg.com): `yarn add @gooddata/gooddata-js` \
+      → with [npm](npmjs.com): `npm install --save @gooddata/gooddata-js`
+    
+    :heavy_exclamation_mark: **WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js`** :heavy_exclamation_mark:
 
-The result of the build is in `dist/gooddata[.min].js`.
-Result of the build [UMD](https://github.com/umdjs/umd)-compatible -
-you can use it both globally (see [D3 example][d3ex]) and as AMD module. Note that you need to provide
-jQuery before trying to load sdk. In both AMD and CommonJS environment we expect jQuery library module
-to be named `jquery`.
+2) import the package's default export: \
+    → in transpiled browser app with ES6 modules syntax: `import gooddata from '@gooddata/gooddata-js';` \
+    → in node.js with CommonJS syntax: `const gooddata = require('@gooddata/gooddata-js').default;`
+ 
+4) call the API:
+    ```js
+    gooddata.config.setCustomDomain('secure.gooddata.com');
+    gooddata.user.login('john.doe@example.com', 'your-secret-password')
+        .then((response) => console.log('Login OK', response))
+        .catch((apiError) => console.error('Login failed', apiError, "\n\n", apiError.responseBody));
 
-### Node JS
+    ```
+    
+5) Please note that CORS could prevent the request. Refer to [your options in GoodData.UI documentation](https://sdk.gooddata.com/gooddata-ui/docs/cors.html), ie. setup local proxy or ask the GoodData platform for allowing a specific domain. 
 
-You can use the SDK in nodejs, but do not forget to set custom domain URL:
-```js
-const gooddata = require('@gooddata/gooddata-js').default;
+    
 
-gooddata.config.setCustomDomain('secure.gooddata.com');
 
-gooddata.user.login('john.doe@example.com', 'your-secret-password')
-    .then((response) => console.log('Login OK', response))
-    .catch((apiError) => console.error('Login failed', apiError, "\n\n", apiError.responseBody));
+### Using as a standalone library
+You have two options:
+  - [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/gooddata-js@latest/dist/) from the latest release
+  - build on your own:
+    ```bash
+    git clone https://github.com/zbycz/gooddata-js.git
+    cd gooddata-js
+    git checkout v6.0.0 # choose a version, or omit this line to use unstable code from `master` branch
+    yarn install --pure-lockfile
+    yarn build
+    # get gooddata.js and gooddata.min.js from /dist folder
+    ```
+
+Than you can import the library file and global variable `gooddata` contains all exported members:
+```html
+<script type="text/javascript" src="gooddata.js"></script>
+<script type="text/javascript">
+    var sdk = gooddata.default;
+    sdk.user.login('john.doe@example.com', 'your-secret-password')
+</script>
+``` 
+
+## Contributing :coffee:
+
+We welcome any contribution in form of [issues](https://github.com/gooddata/gooddata-js/issues) or [pull requests](https://github.com/gooddata/gooddata-js/pulls).
+These commands may come in handy while developing: 
+
+| command | description |
+| ------- | ----------- |
+| `yarn install --pure-lockfile` | first step |
+| `yarn dev` | build gooddata-js to `/dist` in watch mode |
+| `yarn test` | run unit tests in watch mode |
+| `yarn validate` | validate codestyle (tslint) |
+| `yarn build` | build commonjs `/lib` and bundle files to `/dist`  |
+
+
+#### NPM package publishing
+```bash
+# only for internal gooddata developers
+git checkout master && git pull upstream master --tags
+yarn version
+npm publish
+git push upstream master --tags
 ```
 
-## Quick start
-To build the sdk you need to have [git](http://git-scm.com) and [Node.js](http://nodejs.org)
-installed. MacOS users should install [Homebrew](http://mxcl.github.com/homebrew/)
-first and then run:
-```
-$ brew install git node yarn
-```
-Now, clone this repo with `$ git clone git@github.com:gooddata/gooddata-js.git`
-and get the library dependecies with
-```
-$ yarn install
-```
-## Build
-In the repository run:
-```
-$ grunt
-```
-and the built library is ready for you at `dist/gooddata.min.js`
 
-## Develop
-It is easy to start your own project with this repository or modify and explore
-examples depicting some of the sdk usages. To start with examples run:
-```
-$ grunt dev
-```
-Which starts proxy that allows your script to communicate with [secure.gooddata.com](https://secure.gooddata.com)
-(backend can be changed with `$ grunt dev --backend=some-other-backend.na.getgooddata.com`).
+## Changelog
+- see [CHANGELOG.md](CHANGELOG.md)
 
-To run some of the examples, first you need to update credentials in the related js file.
-In case of d3-data-viz example you need to edit
-[viz.js](https://github.com/gooddata/gooddata-js/blob/develop/examples/d3-data-viz/viz.js)
-file and update `user` and `passwd` variables. Then just add the name of the example to URL like
-[localhost:8443/d3-data-viz](https://localhost:8443/d3-data-viz) and you should get a nice chord
-chart rendered in a while.
 
-## Documentation
-Documentation of functions available in SDK can be found at [sdk.gooddata.com/gooddata-js/api](http://sdk.gooddata.com/gooddata-js/api).
-It can be generated right from the source code by running:
-```
-$ grunt doc
-```
+## License
+(C) 2007-2018 GoodData Corporation
 
-## Tests
-Run tests with:
-```
-$ grunt test
-```
-Test coverage report can be found in `coverage/` folder.
-
-## Releasing
-Flow of release is:
-
-* bump version to version+1 in `package.json`
-* create version commit & tag and push these to your *upstream* remote (so watch your remote naming)
-
-Steps to publish a release:
-
-* run `yarn version` command to select next version
-* run `grunt bump-gh-pages` in `master`
-* run `npm publish` in `master`
-* you're done
-
-[d3ex]: examples/d3-data-viz/viz.js
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-js/blob/master/LICENSE)
