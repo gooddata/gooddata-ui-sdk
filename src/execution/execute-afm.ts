@@ -74,10 +74,10 @@ export class ExecuteAfmModule {
      *
      * @method executeAfm
      * @param {String} projectId - GD project identifier
-     * @param {Object} execution - See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L4
-     *
-     * @return {Object} Structure with `executionResult` and `executionResponse` -
-     *  See https://github.com/gooddata/gooddata-typings/blob/master/index.ts#L294
+     * @param {IExecution} execution AFM with resultSpec -
+     *  See https://github.com/gooddata/gooddata-typings/blob/v2.0.0/src/AFM.ts#L2
+     * @return {IExecutionResponses} Structure with `executionResult` and `executionResponse` -
+     *  See https://github.com/gooddata/gooddata-typings/blob/v2.0.0/src/Execution.ts#L113
      */
     public executeAfm(projectId: string, execution: any) {
         const dimensionality = getDimensionality(execution);
