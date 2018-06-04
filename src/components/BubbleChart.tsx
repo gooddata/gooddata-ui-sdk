@@ -5,6 +5,7 @@ import { Subtract } from 'utility-types';
 import { BaseChart, ICommonChartProps, IChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
 import { getResultSpec } from '../helpers/resultSpec';
+import { visualizationIsBetaWarning } from '../helpers/utils';
 
 import { AFM, VisualizationObject } from '@gooddata/typings';
 import {
@@ -99,6 +100,8 @@ export function BubbleChart(props: IBubbleChartProps): JSX.Element {
         ...newProps.config,
         mdObject: convertBucketsToMdObject(buckets, props.filters, 'local:bubble')
     };
+
+    visualizationIsBetaWarning();
 
     return (
         <AfmBubbleChart
