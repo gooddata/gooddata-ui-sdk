@@ -2,11 +2,17 @@
 import * as React from 'react';
 import { BaseChart, IChartProps } from './base/BaseChart';
 import { ChartPropTypes, Requireable } from '../../proptypes/Chart';
+import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
 export class Treemap extends React.Component<IChartProps, null> {
     public static propTypes = ChartPropTypes;
+
+    constructor(props: IChartProps) {
+        super(props);
+        visualizationIsBetaWarning();
+    }
 
     public render() {
         return (
