@@ -129,4 +129,33 @@ describe('getCustomizedConfiguration', () => {
 
         expect(result.yAxis[0].endOnTick).toBeFalsy();
     });
+
+    it('should set connectNulls for stacked Area chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            type: VisualizationTypes.AREA,
+            stacking: 'normal'
+        });
+
+        expect(result.plotOptions.series.connectNulls).toBeTruthy();
+    });
+
+    it('should NOT set connectNulls for NONstacked Area chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            type: VisualizationTypes.AREA,
+            stacking: null
+        });
+
+        expect(result.plotOptions.series).toBeUndefined();
+    });
+
+    it('should NOT set connectNulls for stacked Line chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            stacking: 'normal'
+        });
+
+        expect(result.plotOptions.series.connectNulls).toBeUndefined();
+    });
 });
