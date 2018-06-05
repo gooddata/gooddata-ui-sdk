@@ -5,8 +5,7 @@ export const LINE_WIDTH = 3;
 
 const SCATTER_TEMPLATE: any = {
     chart: {
-        type: 'scatter',
-        zoomType: 'xy'
+        type: 'scatter'
     },
     plotOptions: {
         scatter: {
