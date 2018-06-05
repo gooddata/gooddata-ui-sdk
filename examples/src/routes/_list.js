@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import AdvancedUseCases from './AdvancedUseCases';
 import AttributeFilter from './AttributeFilter';
+import Sorting from './Sorting';
 import BasicComponents from './BasicComponents';
 import GlobalFilters from './GlobalFilters';
 import Visualization from './Visualization';
@@ -32,6 +33,7 @@ const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advanced
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
+    { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/attribute-filter-components', title: 'Attribute Filter Components', Component: AttributeFilter },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesWithProps }
