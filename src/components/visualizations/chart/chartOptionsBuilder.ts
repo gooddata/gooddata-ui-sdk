@@ -26,7 +26,8 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-    unwrap
+    unwrap,
+    isBarChart
 } from '../utils/common';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
@@ -1093,11 +1094,45 @@ export function getChartOptions(
     const xAxisMax = get(config, 'xaxis.max');
     const xAxisVisible = get(config, 'xaxis.visible', true);
     const xAxisLabelsEnabled = get(config, 'xaxis.labelsEnabled', true);
+    const xAxisRotation = get(config, 'xaxis.rotation', 'auto');
 
     const yAxisMin = get(config, 'yaxis.min');
     const yAxisMax = get(config, 'yaxis.max');
     const yAxisVisible = get(config, 'yaxis.visible', true);
     const yAxisLabelsEnabled = get(config, 'yaxis.labelsEnabled', true);
+    const yAxisRotation = get(config, 'yaxis.rotation', 'auto');
+
+    let xAxisProps;
+    let yAxisProps;
+
+    // Switch axes options for bar chart
+    if (isBarChart(type)) {
+        xAxisProps = {
+            labelsEnabled: yAxisLabelsEnabled,
+            rotation: yAxisRotation,
+            visible: yAxisVisible
+        };
+
+        yAxisProps = {
+            min: xAxisMin,
+            max: xAxisMax,
+            visible: xAxisVisible,
+            labelsEnabled: xAxisLabelsEnabled
+        };
+    } else {
+        xAxisProps = {
+            labelsEnabled: xAxisLabelsEnabled,
+            rotation: xAxisRotation,
+            visible: xAxisVisible
+        };
+
+        yAxisProps = {
+            min: yAxisMin,
+            max: yAxisMax,
+            visible: yAxisVisible,
+            labelsEnabled: yAxisLabelsEnabled
+        };
+    }
 
     return {
         type,
@@ -1117,17 +1152,7 @@ export function getChartOptions(
         grid: {
             enabled: gridEnabled
         },
-        yAxisProps: {
-            min: yAxisMin,
-            max: yAxisMax,
-            visible: yAxisVisible,
-            labelsEnabled: yAxisLabelsEnabled
-        },
-        xAxisProps: {
-            min: xAxisMin,
-            max: xAxisMax,
-            visible: xAxisVisible,
-            labelsEnabled: xAxisLabelsEnabled
-        }
+        xAxisProps,
+        yAxisProps
     };
 }

@@ -73,60 +73,24 @@ describe('getCustomizedConfiguration', () => {
         expect(result.yAxis[0]).toEqual(expectedResult);
     });
 
-    it('should set Y axis of bar chart by properties for X axis', () => {
+    it ('should set X axis configurations from properties', () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
-            type: VisualizationTypes.BAR,
             xAxisProps: {
-                min: 20,
-                max: 30,
+                visible: false,
                 labelsEnabled: false,
-                visible: false
+                rotation: '60'
             }
         });
 
         const expectedResult = {
-            ...result.yAxis[0],
-            min: 20,
-            max: 30,
+            ...result.xAxis[0],
+            visible: false,
             labels: {
-                ...result.yAxis[0].labels,
-                enabled: false
-            },
-            visible: false
-        };
-
-        expect(result.yAxis[0]).toEqual(expectedResult);
-    });
-
-    it ('should set X axis visibility from properties', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            xAxisProps: {
-                visible: false
+                ...result.xAxis[0].labels,
+                enabled: false,
+                rotation: -60
             }
-        });
-
-        const expectedResult = {
-            ...result.xAxis[0],
-            visible: false
-        };
-
-        expect(result.xAxis[0]).toEqual(expectedResult);
-    });
-
-    it ('should set X axis visibility for bar chart from Y-axis properties', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            type: VisualizationTypes.BAR,
-            yAxisProps: {
-                visible: false
-            }
-        });
-
-        const expectedResult = {
-            ...result.xAxis[0],
-            visible: false
         };
 
         expect(result.xAxis[0]).toEqual(expectedResult);
