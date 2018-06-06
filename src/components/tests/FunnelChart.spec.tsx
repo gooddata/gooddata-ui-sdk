@@ -27,9 +27,25 @@ describe('FunnelChart', () => {
         }
     };
 
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
     it('should render funnel chart and convert the buckets to AFM', () => {
         const wrapper = shallow(
-            <FunnelChart projectId="foo" measures={[measure]} viewBy={attribute} />
+            <FunnelChart
+                projectId="foo"
+                measures={[measure]}
+                viewBy={attribute}
+                sortBy={[measureSortItem]}
+            />
         );
 
         const expectedAfm: AFM.IAfm = {
@@ -55,7 +71,37 @@ describe('FunnelChart', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: [
+                        'measureGroup'
+                    ]
+                },
+                {
+                    itemIdentifiers: [
+                        'a1'
+                    ]
+                }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
         expect(wrapper.find(AfmFunnelChart).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmFunnelChart).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

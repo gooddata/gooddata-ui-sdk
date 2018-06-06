@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import map = require('lodash/map');
+import get = require('lodash/get');
 import {
     getVisibleSeries,
     getDataPoints,
@@ -10,13 +11,15 @@ import {
     getDataLabelAttributes,
     getShapeAttributes,
     hasDataLabel,
-    showDataLabel,
-    hideDataLabel,
-    showDataLabels,
-    hideDataLabels
+    showDataLabelInAxisRange,
+    hideDataLabels,
+    hideDataLabel
 } from '../../helpers';
 
-const toggleNonStackedChartLabels = (visiblePoints: any, shouldCheckShapeIntersection: boolean = false) => {
+const toggleNonStackedChartLabels = (
+    visiblePoints: any,
+    minAxisValue: number,
+    shouldCheckShapeIntersection: boolean = false) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
         visiblePoints.filter(hasDataLabel)
@@ -40,17 +43,17 @@ const toggleNonStackedChartLabels = (visiblePoints: any, shouldCheckShapeInterse
     if (foundIntersection) {
         hideDataLabels(visiblePoints);
     } else {
-        showDataLabels(visiblePoints);
+        visiblePoints.forEach((point: any) => showDataLabelInAxisRange(point, minAxisValue));
     }
 };
 
-const toggleStackedChartLabels = (visiblePoints: any) => {
+const toggleStackedChartLabels = (visiblePoints: any, minAxisValue: number) => {
     const toggleLabel = (point: any) => {
         const { dataLabel, shapeArgs } = point;
         if (dataLabel && shapeArgs) {
             const labelHeight = dataLabel.height + (2 * dataLabel.padding || 0);
             const isOverlappingHeight = labelHeight > shapeArgs.height;
-            return isOverlappingHeight ? hideDataLabel(point) : showDataLabel(point);
+            return isOverlappingHeight ? hideDataLabel(point) : showDataLabelInAxisRange(point, minAxisValue);
         }
 
         return null;
@@ -117,11 +120,12 @@ const autohideColumnLabels = (chart: any) => {
     const hasLabelsStacked = areLabelsStacked(chart);
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
+    const minAxisValue = get(chart, ['yAxis', 0, 'min'], 0);
 
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints);
+        toggleStackedChartLabels(visiblePoints, minAxisValue);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, true);
+        toggleNonStackedChartLabels(visiblePoints, minAxisValue, true);
     }
     if (hasLabelsStacked) {
         toggleStackedLabels.call(chart);

@@ -62,7 +62,8 @@ class Header extends React.Component {
                         top: 0;
                         right: 0;
                         left: 0;
-                        z-index: 1;
+                        /* Table component scrollbar has 99 */
+                        z-index: 100;
                         justify-content: center;
                         align-items: center;
                         width: 100%;

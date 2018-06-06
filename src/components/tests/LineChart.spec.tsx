@@ -36,6 +36,17 @@ describe('LineChart', () => {
         }
     };
 
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
     it('should render pie chart and convert the buckets to AFM', () => {
         const wrapper = shallow(
             <LineChart
@@ -43,6 +54,7 @@ describe('LineChart', () => {
                 measures={[measure]}
                 trendBy={attribute}
                 segmentBy={attribute2}
+                sortBy={[measureSortItem]}
             />
         );
 
@@ -75,7 +87,38 @@ describe('LineChart', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+              {
+                itemIdentifiers: [
+                  'a2'
+                ]
+              },
+              {
+                itemIdentifiers: [
+                  'a1',
+                  'measureGroup'
+                ]
+              }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmLineChart)).toHaveLength(1);
         expect(wrapper.find(AfmLineChart).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmLineChart).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

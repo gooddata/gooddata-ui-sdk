@@ -13,7 +13,7 @@ export interface IScatterPlotBucketProps {
     yAxisMeasure?: VisualizationObject.IMeasure;
     attribute?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    sortBy?: AFM.SortItem[]; // TODO would it be removed? if not dont forget to test
 }
 
 export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucketProps {

@@ -17,6 +17,7 @@ const autohideLabels = (Highcharts: any) => {
             autohideBarLabels(chart);
             return;
         }
+
         proceed.call(this, labels);
     });
 };

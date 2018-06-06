@@ -90,6 +90,7 @@ export interface IVisualizationState {
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
     error?: RuntimeError;
+    mdObject?: VisualizationObject.IVisualizationObject;
 }
 
 export interface IVisualizationExecInfo {
@@ -97,6 +98,7 @@ export interface IVisualizationExecInfo {
     resultSpec: AFM.IResultSpec;
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
+    mdObject: VisualizationObject.IVisualizationObject;
 }
 
 function uriResolver(sdk: SDK, projectId: string, uri?: string, identifier?: string): Promise<string> {
@@ -163,7 +165,8 @@ export class VisualizationWrapped
             type: null,
             resultSpec: null,
             totals: [],
-            error: null
+            error: null,
+            mdObject: null
         };
 
         const sdk = props.sdk || createSdk();
@@ -175,13 +178,14 @@ export class VisualizationWrapped
         this.errorMap = generateErrorMap(props.intl);
 
         this.subject = createSubject<IVisualizationExecInfo>(
-            ({ type, resultSpec, dataSource, totals }) => {
+            ({ type, resultSpec, dataSource, totals, mdObject }) => {
                 this.dataSource = dataSource;
                 this.setState({
                     type,
                     resultSpec,
                     isLoading: false,
-                    totals
+                    totals,
+                    mdObject
                 });
             }, (error) => {
                 const runtimeError = convertErrors(error);
@@ -259,7 +263,11 @@ export class VisualizationWrapped
             LoadingComponent,
             ErrorComponent
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading } = this.state;
+        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
+        const finalConfig = {
+            ...config,
+            mdObject: mdObject && mdObject.content
+        };
 
         if (error) {
             const errorProps = this.errorMap[error.getMessage()];
@@ -325,7 +333,7 @@ export class VisualizationWrapped
                         ErrorComponent={ErrorComponent}
                         locale={locale}
                         type={type}
-                        config={config}
+                        config={finalConfig}
                     />
                 );
         }
@@ -372,7 +380,8 @@ export class VisualizationWrapped
                                 type: visualizationType,
                                 dataSource,
                                 resultSpec: resultSpecWithDimensions,
-                                totals: mdObjectTotals
+                                totals: mdObjectTotals,
+                                mdObject
                             };
                         });
                     });

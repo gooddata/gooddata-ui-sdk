@@ -9,4 +9,5 @@ export { Headline } from './Headline';
 export { AreaChart } from './AreaChart';
 export { Treemap } from './Treemap';
 export { HeatMap } from './HeatMap';
+export { ScatterPlot } from './ScatterPlot';
 export { dataSourceProvider } from './DataSourceProvider';
