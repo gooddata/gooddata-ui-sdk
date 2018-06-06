@@ -357,16 +357,7 @@ export function getScatterPlotSeries(
         return [{
             color: colorPalette[0],
             legendIndex: 0,
-            data: data.reduce((filteredData, dataItem: ISeriesDataItem) => {
-                if (dataItem.x !== null && dataItem.y !== null) {
-                    filteredData.push({
-                        name: dataItem.name,
-                        x: dataItem.x,
-                        y: dataItem.y
-                    });
-                }
-                return filteredData;
-            }, [])
+            data
         }];
 }
 
@@ -629,7 +620,7 @@ export function getDrillableSeries(
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
-        const data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
+        let data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
             let measures = [];
 
             if (isScatterPlot(type)) {
@@ -693,6 +684,12 @@ export function getDrillableSeries(
                 ...drillableProps
             };
         });
+
+        if (isScatterPlot(type)) {
+            data = data.filter((dataItem: ISeriesDataItem) => {
+                return dataItem.x !== null && dataItem.y !== null;
+            });
+        }
 
         return {
             ...seriesItem,
