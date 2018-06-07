@@ -142,7 +142,7 @@ export class App extends React.Component {
         const { isLoggedIn, errorMessage } = this.state;
         return (
             <Router basename={BASEPATH} history={history}>
-                <div className="main-wrapper">
+                <div className="mainWrapper">
                     {/* language=CSS */}
                     <style jsx>{`
                         :global(html),
@@ -167,7 +167,7 @@ export class App extends React.Component {
                             margin: 20px 0;
                         }
 
-                        :global(.main-wrapper) {
+                        :global(.mainWrapper) {
                             display: flex;
                             height: 100%;
                             flex-direction: column;
@@ -204,11 +204,10 @@ export class App extends React.Component {
                             max-width: 800px;
                         }
 
-                        .page-wrapper {
+                        .pageWrapper {
                             display: flex;
                             width: 100%;
-                            max-width: 1400px;
-                            padding-top: 40px;
+                            max-width: 1440px;
                         }
 
                         main {
@@ -227,12 +226,13 @@ export class App extends React.Component {
                         isUserLoggedIn={isLoggedIn}
                         logoutAction={this.logout}
                     />
-                    <div className="page-wrapper">
-                        <Menu
-                            sideNavigationRoutes={sideNavigationRoutes}
-                            routes={routes}
-                            isUserLoggedIn={isLoggedIn}
-                        />
+                    <div className="pageWrapper">
+                        {isLoggedIn === true && (
+                            <Menu
+                                sideNavigationRoutes={sideNavigationRoutes}
+                                routes={routes}
+                            />
+                        )}
                         {errorMessage
                             ? <CustomError error={{ status: '403', message: errorMessage }} />
                             : null

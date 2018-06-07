@@ -15,7 +15,7 @@ export const AdvacedUseCases = ({ advancedUseCasesRoutes, match, location: { pat
             {/* language=CSS */}
             <style jsx>{`
                 .wrapper {
-                    flex: 0;
+                    flex: 0 0 auto;
                     margin-bottom: 20px;
                 }
                 .text {
