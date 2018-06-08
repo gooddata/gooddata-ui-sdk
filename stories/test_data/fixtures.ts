@@ -49,6 +49,11 @@ export const scatterPlotWith2MetricsAndAttribute: any = {
     mdObject: require('../test_data/scatter_plot_with_2_metrics_and_attribute_md.json')
 };
 
+export const scatterWithNulls = {
+    ...scatterPlotWith2MetricsAndAttribute,
+    executionResult: require('../test_data/scatter_plot_with_nulls_result.json').executionResult
+};
+
 export const bubbleChartWith3MetricsAndAttributeMd: any = {
     mdObject: require('../test_data/bubble_chart_with_3_metrics_and_attribute_md.json')
 };
@@ -252,5 +257,6 @@ export default {
     headlineWithOneMeasure,
     headlineWithTwoMeasures,
     comboWithTwoMeasuresAndViewByAttribute,
-    comboWithTwoMeasuresAndViewByAttributeMdObject
+    comboWithTwoMeasuresAndViewByAttributeMdObject,
+    scatterWithNulls
 };

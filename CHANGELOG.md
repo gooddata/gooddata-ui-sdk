@@ -1,4 +1,13 @@
 # Changelog
+## 5.1.0 (June 7, 2018)
+
+- Added Scatter Plot chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/77b748a40b620a5233a370bf8110fdba87b282f3))
+- Added Donut chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/a703cd78f5095c6df6c73c716c7865b17913ad73))
+- Moved the code from @gooddata/indigo-visualization to @gooddata/react-components and deprecated indigo-visualizations ([commit](https://github.com/gooddata/gooddata-react-components/commit/7a5ec756f39d4d222e2eb102f94f929aae0d44fc))
+- Increased the usage of TypeScript ([commit](https://github.com/gooddata/gooddata-react-components/commit/265fda101384f83fb2b530192c0d065de2970ba2))
+- Extended the existing examples and added new ones
+- Added miscellaneous bugfixes and minor improvements
+
 ## 5.0.0 (April 26, 2018)
 
  - Ability to have visualizations from different domains on the same page ([commit](https://github.com/gooddata/gooddata-react-components/commit/c73c8f272e0461bde48c202e5f630271f709e279))

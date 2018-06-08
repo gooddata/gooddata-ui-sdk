@@ -877,6 +877,39 @@ describe('chartOptionsBuilder', () => {
                     ]
                 ]);
             });
+
+            it('should fillter out points with one or both coordinates null', () => {
+                const dataSetWithNulls = fixtures.scatterWithNulls;
+                const { afm } = dataSetWithNulls.executionRequest;
+                const mVS = getMVS(dataSetWithNulls);
+                const type = 'scatter';
+
+                const seriesWithoutDrillability = getSeries(
+                    dataSetWithNulls.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSetWithNulls.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                const drillableMeasures = [{
+                    uri: dataSetWithNulls.executionResponse.dimensions[1]
+                        .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                }];
+                const drillableMeasuresSeriesData = getDrillableSeries(
+                    seriesWithoutDrillability,
+                    drillableMeasures,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    afm
+                );
+                expect(seriesWithoutDrillability[0].data.length).toEqual(6);
+                expect(drillableMeasuresSeriesData[0].data.length).toEqual(3);
+            });
         });
 
         describe('in usecase of bar chart with 6 pop measures and view by attribute', () => {
