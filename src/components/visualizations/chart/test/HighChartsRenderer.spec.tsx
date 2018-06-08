@@ -194,7 +194,7 @@ describe('HighChartsRenderer', () => {
         jest.runAllTimers();
 
         expect(chartMock.reflow).toHaveBeenCalledTimes(1);
-        expect(chartMock.container.style.height).toBe(mockHeight);
+        expect(chartMock.container.style.height).toBe(String(mockHeight));
         expect(chartMock.container.style.position).toBe('relative');
     });
 
@@ -352,7 +352,8 @@ describe('HighChartsRenderer', () => {
                             color: 'rgb(0, 0, 0)'
                         }
                     ]
-                }
+                },
+                children: null
             };
 
             wrapper.setState({ legendItemsEnabled: [false] });
@@ -376,7 +377,8 @@ describe('HighChartsRenderer', () => {
                 legend: {
                     ...props.legend,
                     position: RIGHT
-                }
+                },
+                children: null
             };
 
             wrapper.setState({ legendItemsEnabled: [false] });

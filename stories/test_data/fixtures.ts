@@ -1,5 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { range, cloneDeep } from 'lodash';
+import { VisualizationObject } from '@gooddata/typings';
+
 import { immutableSet, repeatItemsNTimes } from '../../src/components/visualizations/utils/common';
 import { STACK_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
 
@@ -26,6 +28,41 @@ export const barChartWith3MetricsAndViewByAttribute: any = {
     executionResponse:
         require('../test_data/bar_chart_with_3_metrics_and_view_by_attribute_response.json').executionResponse,
     executionResult: require('../test_data/bar_chart_with_3_metrics_and_view_by_attribute_result.json').executionResult
+};
+
+export const barChartWith2MetricsAndViewByAttribute: any = {
+    executionRequest: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult
+};
+
+export const barChartWith2MetricsAndViewByAttributeMd = {
+    mdObject: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_md.json')
+};
+
+export const scatterPlotWith2MetricsAndAttribute: any = {
+    executionRequest: require('../test_data/scatter_plot_with_2_metrics_and_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/scatter_plot_with_2_metrics_and_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/scatter_plot_with_2_metrics_and_attribute_result.json').executionResult,
+    mdObject: require('../test_data/scatter_plot_with_2_metrics_and_attribute_md.json')
+};
+
+export const scatterWithNulls = {
+    ...scatterPlotWith2MetricsAndAttribute,
+    executionResult: require('../test_data/scatter_plot_with_nulls_result.json').executionResult
+};
+
+export const bubbleChartWith3MetricsAndAttributeMd: any = {
+    mdObject: require('../test_data/bubble_chart_with_3_metrics_and_attribute_md.json')
+};
+
+export const bubbleChartWith3MetricsAndAttribute: any = {
+    executionRequest: require('../test_data/bubble_chart_with_3_metrics_and_attribute_request.json').execution,
+    executionResponse:
+    require('../test_data/bubble_chart_with_3_metrics_and_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/bubble_chart_with_3_metrics_and_attribute_result.json').executionResult
 };
 
 export const areaChartWith3MetricsAndViewByAttribute: any = {
@@ -115,6 +152,13 @@ export const headlineWithTwoMeasures: any = {
     executionResponse:
         require('../test_data/headline_with_two_measures_response.json').executionResponse,
     executionResult: require('../test_data/headline_with_two_measures_result.json').executionResult
+};
+
+export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
+export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
+    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
+    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
+    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets // tslint:disable-line:max-line-length
 };
 
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
@@ -211,5 +255,8 @@ export default {
     pieChartWithMetricsOnly,
     barChartWithNegativeAndZeroValues,
     headlineWithOneMeasure,
-    headlineWithTwoMeasures
+    headlineWithTwoMeasures,
+    comboWithTwoMeasuresAndViewByAttribute,
+    comboWithTwoMeasuresAndViewByAttributeMdObject,
+    scatterWithNulls
 };

@@ -1,0 +1,83 @@
+// (C) 2007-2018 GoodData Corporation
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import { screenshotWrap } from '@gooddata/test-storybook';
+
+import { PieChart } from '../../src/components/afm/PieChart';
+import {
+    AFM_ONE_MEASURE_ONE_ATTRIBUTE,
+    AFM_TWO_MEASURES,
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE,
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE
+} from '../data/afmComponentProps';
+import { onErrorHandler } from '../mocks';
+import '../../styles/scss/charts.scss';
+
+const wrapperStyle = { width: 400, height: 400 };
+
+storiesOf('AFM components/PieChart', module)
+    .add('two measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('measure and attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('renamed measure and renamed attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('legend on the bottom', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
+                    config={{ legend: { position: 'bottom' } }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('error', () => (
+        screenshotWrap(
+            <div style={{ ...wrapperStyle, display: 'flex', flexDirection: 'column' }}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    config={{ legend: { position: 'bottom' } }}
+                    LoadingComponent={null}
+                />
+            </div>
+        )
+    ));

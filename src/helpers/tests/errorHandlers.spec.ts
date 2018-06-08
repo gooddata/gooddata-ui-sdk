@@ -1,6 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as HttpStatusCodes from 'http-status-codes';
-import { checkEmptyResult, convertErrors } from '../errorHandlers';
+import {
+    checkEmptyResult,
+    convertErrors,
+    generateErrorMap
+} from '../errorHandlers';
 import { ApiResponseError } from '@gooddata/gooddata-js';
 import 'isomorphic-fetch';
 
@@ -43,6 +47,20 @@ describe('convertErrors', async () => {
 
         expect(e).toBeInstanceOf(RuntimeError);
         expect(e.message).toEqual(ErrorStates.BAD_REQUEST);
+    });
+
+    it('should return `UNAUTHORIZED` error', async () => {
+        const e = convertErrors(await createMockedError(HttpStatusCodes.UNAUTHORIZED));
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.UNAUTHORIZED);
+    });
+
+    it('should return `NOT_FOUND` error', async () => {
+        const e = convertErrors(await createMockedError(HttpStatusCodes.NOT_FOUND));
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual(ErrorStates.NOT_FOUND);
     });
 
     it('should return `PROTECTED_REPORT` error', async () => {
@@ -103,5 +121,15 @@ describe('checkEmptyResult', () => {
 
     it('should not throw 204 if executionResult does not contain any data, but contain headers', () => {
         expect(() => checkEmptyResult(attributeOnlyResponse)).not.toThrow();
+    });
+});
+
+describe('generateErrorMap', () => {
+    it('should generate map', () => {
+        const intlMock = {
+            formatMessage: ({ id }: { id: string}) => id
+        };
+        const map = generateErrorMap(intlMock as any);
+        expect(map).toMatchSnapshot();
     });
 });

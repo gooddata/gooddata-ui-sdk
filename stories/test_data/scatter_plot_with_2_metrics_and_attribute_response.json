@@ -1,0 +1,52 @@
+{
+    "executionResponse": {
+        "dimensions": [
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "name": "Product Name",
+                            "localIdentifier": "7369345339414eceaaf67ba05dfe6724",
+                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/952",
+                            "identifier": "label.product.id.name",
+                            "formOf": {
+                                "name": "Product",
+                                "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/949",
+                                "identifier": "attr.product.id"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "headers": [
+                    {
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Sum of Amount",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "33bd337ed5534fd383861f11ff657b23"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "# of Open Opps.",
+                                        "format": "#,##0",
+                                        "localIdentifier": "88291f6f6fef47a7b9c5ad709af2b45b",
+                                        "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465",
+                                        "identifier": "aaYh6Voua2yj"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "links": {
+            "executionResult": "/gdc/app/projects/adtxv0e7evvx6dawu7t2jju5a6r73eua/executionResults/7363611803027504128?q=eAGlkc1OwzAQhF%2Blcq5RHdL8KJUQ4gCoF0BAT1UOTrxFieI4stdpqyrvzoYAFUgcChfL3tXO7Hw%2B%0AMgOdNngvFLAlW7dYYQOS%2BazUjVOtZcsNU4CmKu%2BMdh3L%2FY%2Fn2DmyrTZKIE16vucF8yCgSeuUEuZA%0ARXq869H12amZ3s6ulXYtUn3SXElq8VdZciW5kLjvA0ih7%2FeJFDuXYljXLhaJSRfgBNdFzdMkjGM2%0A%2BD%2Btf%2FP1RteHDlo6Ojv%2Fh%2FPFIkrImQAYvZvSCyQwhUN4GalRlEejpSvHfN8gyMp2jTjcEqzzE2dx%0ASHqFsHDTgIIW10%2Brc6llUcZhmrZXlbwkwc%2BPOa38leYPO0bZKKlRNCOZTe5v8nzIhzdpzcgj%0A&c=64964c1a0ba0cf98bc7f69479a734199&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0"
+        }
+    }
+}

@@ -27,9 +27,25 @@ describe('PieChart', () => {
         }
     };
 
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
     it('should render pie chart and convert the buckets to AFM', () => {
         const wrapper = shallow(
-            <PieChart projectId="foo" measures={[measure]} viewBy={attribute} />
+            <PieChart
+                projectId="foo"
+                measures={[measure]}
+                viewBy={attribute}
+                sortBy={[measureSortItem]}
+            />
         );
 
         const expectedAfm: AFM.IAfm = {
@@ -55,7 +71,37 @@ describe('PieChart', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: [
+                        'measureGroup'
+                    ]
+                },
+                {
+                    itemIdentifiers: [
+                        'a1'
+                    ]
+                }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmPieChart)).toHaveLength(1);
         expect(wrapper.find(AfmPieChart).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmPieChart).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

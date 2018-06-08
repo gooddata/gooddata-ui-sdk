@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { delay } from '../../../tests/utils';
+import { testUtils } from '@gooddata/js-utils';
 import { Visualization, oneMeasureDataSource } from '../../../tests/mocks';
 import { BaseChart, IBaseChartProps } from '../BaseChart';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
@@ -37,7 +37,7 @@ describe('BaseChart', () => {
         });
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const visualization = wrapper.find(Visualization);
 
@@ -68,7 +68,7 @@ describe('BaseChart', () => {
         });
 
         const wrapper = createComponent(props);
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
 
             expect(

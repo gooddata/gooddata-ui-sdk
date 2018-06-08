@@ -1,24 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
-import { IntlProvider } from 'react-intl';
-import { SDK } from '@gooddata/gooddata-js';
+import { testUtils } from '@gooddata/js-utils';
+import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
     Table,
     BaseChart,
     LoadingComponent,
     ErrorComponent
 } from '../../tests/mocks';
-import { charts, visualizationClasses } from '../../../../__mocks__/fixtures';
+import { visualizationObjects, visualizationClasses } from '../../../../__mocks__/fixtures';
 
 import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
 import { Visualization, IntlVisualization, VisualizationWrapped } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
-import { delay } from '../../tests/utils';
 import { SortableTable } from '../../core/SortableTable';
-import { IntlWrapper, messagesMap } from '../../core/base/IntlWrapper';
+import { IntlWrapper } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
+import { createIntlMock } from '../../visualizations/utils/intlUtils';
+import * as HttpStatusCodes from 'http-status-codes';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -29,12 +30,6 @@ const TABLE_IDENTIFIER = 'table';
 const SLOW = 20;
 const FAST = 5;
 
-function createIntlMock() {
-    const intlProvider = new IntlProvider({ locale: 'en-US', messages: messagesMap['en-US'] }, {});
-    const { intl } = intlProvider.getChildContext();
-    return intl;
-}
-
 function getResponse(response: string, delay: number): Promise<string> {
     return new Promise((resolve) => {
         setTimeout(() => resolve(response), delay);
@@ -43,10 +38,11 @@ function getResponse(response: string, delay: number): Promise<string> {
 
 // tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
-    const visObj = charts.find(chart => chart.visualizationObject.meta.uri === uri);
-
+    const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
-        throw new Error(`Unknown uri ${uri}`);
+        throw new ApiResponseError(`Unknown uri ${uri}`, {
+            status: HttpStatusCodes.NOT_FOUND
+        }, {});
     }
 
     return Promise.resolve(visObj.visualizationObject);
@@ -92,7 +88,7 @@ describe('Visualization', () => {
             />
         );
 
-        return delay(FAST + 1).then(() => {
+        return testUtils.delay(FAST + 1).then(() => {
             expect(wrapper.find(IntlWrapper).length).toBe(1);
             expect(wrapper.find(IntlVisualization).length).toBe(1);
         });
@@ -115,7 +111,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
@@ -167,7 +163,7 @@ describe('VisualizationWrapped', () => {
             }
         ];
 
-        return delay(SLOW).then(() => {
+        return testUtils.delay(SLOW).then(() => {
             wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
             expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
@@ -190,7 +186,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
         });
@@ -205,6 +201,7 @@ describe('VisualizationWrapped', () => {
         mount(
             <VisualizationWrapped
                 projectId={projectId}
+                fetchVisObject={fetchVisObject}
                 uri={'/invalid/url'}
                 onError={errorHandler}
                 intl={intl}
@@ -229,7 +226,7 @@ describe('VisualizationWrapped', () => {
 
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
         });
@@ -253,7 +250,7 @@ describe('VisualizationWrapped', () => {
 
         // Would throw an error if not handled properly
         wrapper.unmount();
-        return delay(FAST + 1).then(() => {
+        return testUtils.delay(FAST + 1).then(() => {
             wrapper.update();
             expect(spy).not.toHaveBeenCalled();
             spy.mockRestore();
@@ -276,7 +273,7 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(Table).length).toBe(1);
             const TableElement = wrapper.find(Table).get(0);
@@ -301,12 +298,42 @@ describe('VisualizationWrapped', () => {
             />
         );
 
-        return delay(SLOW + 1).then(() => {
+        return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(wrapper.find(BaseChart).length).toBe(1);
             const BaseChartElement = wrapper.find(BaseChart).get(0);
             expect(BaseChartElement.props.LoadingComponent).toBe(LoadingComponent);
             expect(BaseChartElement.props.ErrorComponent).toBe(ErrorComponent);
+        });
+    });
+
+    it('should pass mdObject to BaseChart', () => {
+        const wrapper = mount(
+            <VisualizationWrapped
+                projectId={projectId}
+                identifier={CHART_IDENTIFIER}
+                uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                fetchVisualizationClass={fetchVisualizationClass}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
+                LoadingComponent={LoadingComponent}
+                ErrorComponent={ErrorComponent}
+                intl={intl}
+            />
+        );
+
+        const expectedMdObject = {
+            mdObject: visualizationObjects.find(
+                chart => chart.visualizationObject.meta.uri === CHART_URI
+            ).visualizationObject.content
+        };
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.config).toEqual(expectedMdObject);
         });
     });
 });

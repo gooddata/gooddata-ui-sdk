@@ -2,14 +2,23 @@
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import * as React from 'react';
+import { VisualizationObject } from '@gooddata/typings';
 import { initChartPlugins } from './highcharts/chartPlugins';
+import { VisType } from '../../../constants/visualizationTypes';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
-export const Highcharts = require('highcharts/highcharts');
-// tslint:disable-next-line
-const drillmodule = require('highcharts/modules/drilldown');
+export const HighchartsMore = require('highcharts/highcharts-more');
+export const Highcharts = require('highcharts/highcharts'); // tslint:disable-line
+const drillmodule = require('highcharts/modules/drilldown'); // tslint:disable-line
+const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-line
+const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
+const heatmap = require('highcharts/modules/heatmap'); // tslint:disable-line
 drillmodule(Highcharts);
+treemapModule(Highcharts);
+funnelModule(Highcharts);
+heatmap(Highcharts);
+HighchartsMore(Highcharts);
 initChartPlugins(Highcharts);
 
 export interface ILegendConfig {
@@ -25,11 +34,18 @@ export interface IChartLimits {
 
 export interface IChartConfig {
     colors?: string[];
-    type?: string;
+    type?: VisType;
     legend?: ILegendConfig;
+    legendLayout?: string;
     limits?: IChartLimits;
     stacking?: boolean;
     grid?: any;
+    mdObject?: VisualizationObject.IVisualizationObjectContent;
+    yFormat?: string;
+    yLabel?: string;
+    xLabel?: string;
+    xFormat?: string;
+    chart?: any;
 }
 
 export interface IChartProps {
@@ -76,7 +92,7 @@ export default class Chart extends React.Component<IChartProps> {
         this.chartRef = ref;
     }
 
-    public getChart() {
+    public getChart(): Highcharts.ChartObject {
         if (!this.chart) {
             throw new Error('getChart() should not be called before the component is mounted');
         }
@@ -84,7 +100,7 @@ export default class Chart extends React.Component<IChartProps> {
         return this.chart;
     }
 
-    public createChart(config: any) {
+    public createChart(config: IChartConfig) {
         const chartConfig = config.chart;
         this.chart = new Highcharts.Chart(
             {

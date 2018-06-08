@@ -36,6 +36,10 @@ declare module '@gooddata/goodstrap/lib/Dropdown/Dropdown' {
     export class DropdownButton extends React.Component<any, any> {
 
     }
+
+    export class DropdownBody extends React.Component<any, any> {
+
+    }
 }
 
 declare module '@gooddata/goodstrap/lib/List/InvertableList' {
@@ -44,8 +48,26 @@ declare module '@gooddata/goodstrap/lib/List/InvertableList' {
     }
 }
 
+declare module '@gooddata/goodstrap/lib/List/List' {
+    export default class List extends React.Component<any, any> {
+
+    }
+}
+
 declare module '@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText' {
     export default class ResponsiveText extends React.PureComponent<any> {
+
+    }
+}
+
+declare module '@gooddata/goodstrap/lib/Bubble/Bubble' {
+    export default class Bubble extends React.Component<any, any> {
+
+    }
+}
+
+declare module '@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger' {
+    export default class Bubble extends React.Component<any, any> {
 
     }
 }

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import cloneDeep = require('lodash/cloneDeep');
 
-const LINE_WIDTH = 3;
+export const LINE_WIDTH = 3;
 
 const LINE_TEMPLATE: any = {
     plotOptions: {
@@ -27,14 +27,14 @@ const LINE_TEMPLATE: any = {
             dataLabels: {}
         }
     },
-    xAxis: {
+    xAxis: [{
         categories: []
-    },
-    yAxis: {
+    }],
+    yAxis: [{
         stackLabels: {
             enabled: false
         }
-    }
+    }]
 };
 
 export function getLineConfiguration() {

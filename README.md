@@ -34,7 +34,7 @@ These commands may come in handy while developing:
 | `yarn build-storybook` | build storybook to `/dist-storybook` |
 | `yarn test-storybook` | run storybook and [screenshot tests](https://github.com/gooddata/gdc-client-utils/tree/master/test-storybook) |
 | ||
-| `yarn examples` | run Live Examples from `/examples` on https://localhost:8999 |
+| `yarn examples` | run Live Examples dev-server from `/examples` on https://localhost:8999 |
 | `yarn examples-build` | build Live Examples to `/examples/dist` |
 | `yarn examples-server` | serve built Live Examples - see `/examples/server/src` |
 | `yarn examples-testcafe` | run testcafe tests against `localhost:8999` |

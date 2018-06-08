@@ -34,7 +34,7 @@ export interface IHeadlineVisualizationProps {
  */
 export default class Headline extends React.Component<IHeadlineVisualizationProps> {
     public static defaultProps: Partial<IHeadlineVisualizationProps> = {
-        onFiredDrillEvent: noop,
+        onFiredDrillEvent: () => true,
         onAfterRender: noop
     };
 
@@ -155,9 +155,8 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
             <div
                 className={this.getSecondaryItemClasses(secondaryItem)}
                 onClick={valueClickCallback}
-                style={formattedItem.cssStyle}
             >
-                <div className="headline-value-wrapper s-headline-value-wrapper">
+                <div className="headline-value-wrapper s-headline-value-wrapper" style={formattedItem.cssStyle}>
                     <ResponsiveText>
                         {secondaryValue}
                     </ResponsiveText>

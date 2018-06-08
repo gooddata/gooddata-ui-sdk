@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from '@gooddata/typings';
 import { ApiResponseError } from '@gooddata/gooddata-js';
+import { InjectedIntl } from 'react-intl';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
 import * as HttpStatusCodes from 'http-status-codes';
@@ -12,6 +13,42 @@ function getJSONFromText(data: string): object {
     } catch (e) {
         return null;
     }
+}
+
+export interface IErrorMap {
+    [key: string]: {
+        icon?: string;
+        message: string;
+        description: string;
+    };
+}
+
+export function generateErrorMap(intl: InjectedIntl): IErrorMap {
+    const errorMap = {
+        [ErrorStates.DATA_TOO_LARGE_TO_DISPLAY]: {
+            icon: 'icon-cloud-rain',
+            message: intl.formatMessage({ id: 'visualization.ErrorMessageDataTooLarge' }),
+            description: intl.formatMessage({ id: 'visualization.ErrorDescriptionDataTooLarge' })
+        },
+        [ErrorStates.NOT_FOUND]: {
+            message: intl.formatMessage({ id: 'visualization.ErrorMessageNotFound' }),
+            description: intl.formatMessage({ id: 'visualization.ErrorDescriptionNotFound' })
+        },
+        [ErrorStates.UNAUTHORIZED]: {
+            message: intl.formatMessage({ id: 'visualization.ErrorMessageUnauthorized' }),
+            description: intl.formatMessage({ id: 'visualization.ErrorDescriptionUnauthorized' })
+        },
+        [ErrorStates.NO_DATA]: {
+            icon: 'icon-filter',
+            message: intl.formatMessage({ id: 'visualization.ErrorMessageNoData' }),
+            description: intl.formatMessage({ id: 'visualization.ErrorDescriptionNoData' })
+        },
+        [ErrorStates.UNKNOWN_ERROR]: {
+            message: intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' }),
+            description: intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })
+        }
+    };
+    return errorMap;
 }
 
 export function convertErrors(error: ApiResponseError): RuntimeError {
@@ -31,6 +68,12 @@ export function convertErrors(error: ApiResponseError): RuntimeError {
             } else {
                 return new RuntimeError(ErrorStates.BAD_REQUEST, error);
             }
+
+        case HttpStatusCodes.NOT_FOUND:
+            return new RuntimeError(ErrorStates.NOT_FOUND, error);
+
+        case HttpStatusCodes.UNAUTHORIZED:
+            return new RuntimeError(ErrorStates.UNAUTHORIZED, error);
 
         case ErrorCodes.EMPTY_AFM:
             return new RuntimeError(ErrorStates.EMPTY_AFM);

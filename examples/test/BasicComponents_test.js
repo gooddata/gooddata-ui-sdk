@@ -76,3 +76,21 @@ test('KPI has correct number', async (t) => {
         .expect(kpi.textContent)
         .eql('$92,556,577');
 });
+
+test('Donut chart should render', async (t) => {
+    const loading = Selector('.s-loading');
+    const chart = Selector('.s-donut-chart');
+    await t
+        .expect(loading.exists).ok()
+        .expect(chart.exists).ok()
+        .expect(chart.textContent);
+});
+
+test('Scatter plot should render', async (t) => {
+    const loading = Selector('.s-loading');
+    const chart = Selector('.s-scatter-plot');
+    await t
+        .expect(loading.exists).ok()
+        .expect(chart.exists).ok()
+        .expect(chart.textContent);
+});

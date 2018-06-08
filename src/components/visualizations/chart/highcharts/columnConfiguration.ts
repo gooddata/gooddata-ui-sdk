@@ -26,11 +26,11 @@ const COLUMN_TEMPLATE = {
             }
         }
     },
-    yAxis: {
+    yAxis: [{
         stackLabels: {
             enabled: true
         }
-    }
+    }]
 };
 
 export function getColumnConfiguration() {

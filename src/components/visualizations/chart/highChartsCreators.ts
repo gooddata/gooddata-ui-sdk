@@ -12,12 +12,21 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
+import { IChartLimits } from './Chart';
+
 import { getLineConfiguration } from './highcharts/lineConfiguration';
 import { getBarConfiguration } from './highcharts/barConfiguration';
 import { getColumnConfiguration } from './highcharts/columnConfiguration';
 import { getCustomizedConfiguration } from './highcharts/customConfiguration';
 import { getPieConfiguration } from './highcharts/pieConfiguration';
+import { getDonutConfiguration } from './highcharts/donutConfiguration';
 import { getAreaConfiguration } from './highcharts/areaConfiguration';
+import { getScatterConfiguration } from './highcharts/scatterConfiguration';
+import { getComboConfiguration } from './highcharts/comboConfiguration';
+import { getTreemapConfiguration } from './highcharts/treemapConfiguration';
+import { getFunnelConfiguration } from './highcharts/funnelConfiguration';
+import { getHeatMapConfiguration } from './highcharts/heatMapConfiguration';
+import { getBubbleConfiguration } from './highcharts/bubbleConfiguration';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
 const chartConfigurationMap = {
@@ -25,7 +34,15 @@ const chartConfigurationMap = {
     [VisualizationTypes.BAR]: getBarConfiguration,
     [VisualizationTypes.COLUMN]: getColumnConfiguration,
     [VisualizationTypes.PIE]: getPieConfiguration,
-    [VisualizationTypes.AREA]: getAreaConfiguration
+    [VisualizationTypes.AREA]: getAreaConfiguration,
+    [VisualizationTypes.DUAL]: getLineConfiguration, // dual chart is line/line chart
+    [VisualizationTypes.SCATTER]: getScatterConfiguration,
+    [VisualizationTypes.COMBO]: getComboConfiguration,
+    [VisualizationTypes.TREEMAP]: getTreemapConfiguration,
+    [VisualizationTypes.DONUT]: getDonutConfiguration,
+    [VisualizationTypes.FUNNEL]: getFunnelConfiguration,
+    [VisualizationTypes.HEATMAP]: getHeatMapConfiguration,
+    [VisualizationTypes.BUBBLE]: getBubbleConfiguration
 };
 
 export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
@@ -39,7 +56,7 @@ export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
     );
 }
 
-export function isDataOfReasonableSize(chartData: any, limits: any) {
+export function isDataOfReasonableSize(chartData: any, limits: IChartLimits) {
     const seriesLimit = get(limits, 'series', DEFAULT_SERIES_LIMIT);
     const categoriesLimit = get(limits, 'categories', DEFAULT_CATEGORIES_LIMIT);
     return chartData.series.length <= seriesLimit &&

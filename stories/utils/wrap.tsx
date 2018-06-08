@@ -11,9 +11,18 @@ export function wrap(
     key?: any
 ) {
     const keyProp: any = key ? { key } : {};
+    const style = {
+        height,
+        width,
+        minHeight,
+        minWidth,
+        border: '1px solid pink',
+        boxSizing: 'border-box'
+    };
+
     return (
         <IntlWrapper {...keyProp}>
-            <div style={{ height, width, minHeight, minWidth, border: '1px solid pink', margin: 10 }}>
+            <div style={style}>
                 {component}
             </div>
         </IntlWrapper>

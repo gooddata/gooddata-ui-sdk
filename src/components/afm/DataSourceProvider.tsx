@@ -58,7 +58,7 @@ function addDefaultDimensions(
  * @internal
  */
 export function dataSourceProvider<T>(
-    InnerComponent: React.ComponentClass<T & IDataSourceProviderInjectedProps>,
+    InnerComponent: React.ComponentType<T & IDataSourceProviderInjectedProps>,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
     componentName: string
 ): React.ComponentClass<IDataSourceProviderProps> {

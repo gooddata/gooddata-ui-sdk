@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { testUtils } from '@gooddata/js-utils';
 import { AttributeLoader, IAttributeLoaderProps } from '../AttributeLoader';
 import {
     createMetadataMock,
@@ -9,12 +10,11 @@ import {
     ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2
 } from './utils';
 import noop = require('lodash/noop');
-import { delay } from '../../../tests/utils';
 
 describe('AttributeLoader', () => {
     function renderComponent(props: IAttributeLoaderProps) {
         return mount(
-            <AttributeLoader{...props}>
+            <AttributeLoader {...props}>
                 {props =>
                     !props.isLoading &&
                     <div className={`s-is-using-${props.isUsingIdentifier ? 'identifier' : 'uri'}`}>
@@ -35,7 +35,7 @@ describe('AttributeLoader', () => {
         });
 
         expect(wrapper.isEmptyRender()).toEqual(true);
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(0);
@@ -55,7 +55,7 @@ describe('AttributeLoader', () => {
         });
 
         expect(wrapper.isEmptyRender()).toEqual(true);
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(1);
@@ -75,7 +75,7 @@ describe('AttributeLoader', () => {
         });
 
         expect(wrapper.isEmptyRender()).toEqual(true);
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             expect(wrapper.isEmptyRender()).toEqual(false);
             expect(metadata.getObjectUri).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('AttributeLoader', () => {
                 identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_2
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 expect(metadata.getObjectUri).toHaveBeenCalledTimes(2);
                 expect(metadata.getObjectDetails).toHaveBeenCalledTimes(2);

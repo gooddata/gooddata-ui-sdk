@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 export const MEASURE_1: VisualizationObject.IMeasure = {
     measure: {
@@ -8,6 +8,32 @@ export const MEASURE_1: VisualizationObject.IMeasure = {
             measureDefinition: {
                 item: {
                     uri: '/gdc/md/storybook/obj/1'
+                }
+            }
+        }
+    }
+};
+
+export const MEASURE_2: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm2',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/2'
+                }
+            }
+        }
+    }
+};
+
+export const MEASURE_3: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm3',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/3'
                 }
             }
         }
@@ -36,13 +62,13 @@ export const MEASURE_1_WITH_ALIAS: VisualizationObject.IMeasure = {
     }
 };
 
-export const MEASURE_2: VisualizationObject.IMeasure = {
+export const MEASURE_WITH_FORMAT: VisualizationObject.IMeasure = {
     measure: {
-        localIdentifier: 'm2',
+        localIdentifier: 'm3',
         definition: {
             measureDefinition: {
                 item: {
-                    uri: '/gdc/md/storybook/obj/2'
+                    uri: '/gdc/md/storybook/obj/4'
                 }
             }
         }
@@ -84,4 +110,22 @@ export const TOTAL_M2_A1: VisualizationObject.IVisualizationTotal = {
     measureIdentifier: MEASURE_2.measure.localIdentifier,
     type: 'nat',
     attributeIdentifier: ATTRIBUTE_1.visualizationAttribute.localIdentifier
+};
+
+export const ATTRIBUTE_1_SORT_ITEM: AFM.IAttributeSortItem = {
+    attributeSortItem: {
+        direction: 'asc',
+        attributeIdentifier: ATTRIBUTE_1.visualizationAttribute.localIdentifier
+    }
+};
+
+export const MEASURE_2_SORT_ITEM: AFM.IMeasureSortItem = {
+    measureSortItem: {
+        direction: 'asc',
+        locators: [{
+            measureLocatorItem: {
+                measureIdentifier: MEASURE_2.measure.localIdentifier
+            }
+        }]
+    }
 };

@@ -33,7 +33,7 @@ const chartOptions = {
     }
 };
 
-const pieChartOptions = {
+const pieChartOrTreemapOptions = {
     type: VisualizationTypes.PIE,
     colorPalette: [
         'rgb(20,178,226)',
@@ -52,6 +52,39 @@ const pieChartOptions = {
                         name: 'bb.0',
                         drilldown: true
                     }
+                ]
+            }
+        ]
+    }
+};
+
+const comboChartOptions = {
+    type: VisualizationTypes.COMBO,
+    colorPalette: [
+        'rgb(20,178,226)',
+        'rgb(0,193,141)'
+    ],
+    data: {
+        series: [
+            {
+                isDrillable: false,
+                name: 'aa',
+                data: [
+                    {
+                        name: 'aa.0'
+                    },
+                    null
+                ]
+            },
+            {
+                isDrillable: true,
+                type: 'line',
+                name: 'bb',
+                data: [
+                    {
+                        name: 'bb.0'
+                    },
+                    null
                 ]
             }
         ]
@@ -124,12 +157,32 @@ describe('highChartCreators', () => {
     });
 
     describe('Pie chart configuration', () => {
-        const config = getHighchartsOptions(pieChartOptions, {});
+        const config = getHighchartsOptions(pieChartOrTreemapOptions, {});
 
         it('contains styles for drillable and non-drillable', () => {
             expect(config).toHaveProperty('series.0.data.0.states.hover.brightness');
             expect(config).toHaveProperty('series.0.data.0.halo.size', 0);
             expect(config).not.toHaveProperty('series.0.data.1.halo.size');
+        });
+    });
+
+    describe('Treemap configuration', () => {
+        const config = getHighchartsOptions(pieChartOrTreemapOptions, {});
+
+        it('contains styles for drillable and non-drillable', () => {
+            expect(config).toHaveProperty('series.0.data.0.states.hover.brightness');
+            expect(config).toHaveProperty('series.0.data.0.halo.size', 0);
+            expect(config).not.toHaveProperty('series.0.data.1.halo.size');
+        });
+    });
+
+    describe('Combo chart configuration', () => {
+        const config = getHighchartsOptions(comboChartOptions, {});
+
+        it('contains different hover styles for column and line series', () => {
+            expect(config).toHaveProperty('series.0.states.hover.brightness');
+            expect(config).toHaveProperty('series.0.states.hover.enabled', false);
+            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 });

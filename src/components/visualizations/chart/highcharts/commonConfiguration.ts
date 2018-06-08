@@ -5,7 +5,7 @@ import get = require('lodash/get');
 import set = require('lodash/set');
 import isEmpty = require('lodash/isEmpty');
 import { chartClick } from '../../utils/drilldownEventing';
-import styleVariables from '../../styles/variables';
+import { styleVariables } from '../../styles/variables';
 
 const isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
@@ -28,47 +28,6 @@ const BASE_TEMPLATE: any = {
     series: [],
     legend: {
         enabled: false
-    },
-    yAxis: {
-        gridLineColor: '#ebebeb',
-        labels: {
-            style: {
-                color: styleVariables.gdColorStateBlank,
-                font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        },
-        title: {
-            margin: 15,
-            style: {
-                color: styleVariables.gdColorLink,
-                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        }
-    },
-    xAxis: {
-        lineColor: '#d5d5d5',
-
-        // hide ticks on x axis
-        minorTickLength: 0,
-        tickLength: 0,
-
-        // padding of maximum value
-        maxPadding: 0.05,
-
-        labels: {
-            style: {
-                color: styleVariables.gdColorStateBlank,
-                font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
-            },
-            autoRotation: [-90]
-        },
-        title: {
-            margin: 10,
-            style: {
-                color: styleVariables.gdColorLink,
-                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
-            }
-        }
     },
     drilldown: {
         activeDataLabelStyle: {

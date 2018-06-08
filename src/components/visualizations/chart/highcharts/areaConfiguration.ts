@@ -32,14 +32,14 @@ const AREA_TEMPLATE: any = {
             dataLabels: {}
         }
     },
-    xAxis: {
+    xAxis: [{
         categories: []
-    },
-    yAxis: {
+    }],
+    yAxis: [{
         stackLabels: {
             enabled: false
         }
-    }
+    }]
 };
 
 export function getAreaConfiguration() {

@@ -1,29 +1,24 @@
 #!/usr/bin/env bash
 
-_build-sass(){
+_common-build(){
+    rm -rf dist
+    mkdir dist
+    cp -rf src/translations/ dist/translations/
     node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss
 }
 
 build(){
-    rm -rf dist
-    tsc
-    cp -rf src/translations/ dist/translations/
-    _build-sass
+    _common-build
+    tsc -p tsconfig.build.json
 }
 
 build-dev(){
-    rm -rf dist
+    _common-build
     tsc -p tsconfig.dev.json
-    cp -rf src/translations/ dist/translations/
-    _build-sass
 }
 
 build-dev-watch(){
-    rm -rf dist
-    mkdir dist
-    cp -rf src/translations/ dist/translations/
-    _build-sass
-
+    _common-build
     tsc --watch -p tsconfig.dev.json
 }
 

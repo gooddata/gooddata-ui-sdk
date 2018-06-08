@@ -51,7 +51,7 @@ module.exports = async (env) => {
             target: 'http://localhost:3009',
             secure: false,
             onProxyReq: (req) => {
-                console.log(`Proxy ${req.path} to http://localhost:3009 (use /examples/server)`);
+                console.log(`Proxy ${req.path} to http://localhost:3009 (use: yarn examples-server)`);
             }
         }
     };

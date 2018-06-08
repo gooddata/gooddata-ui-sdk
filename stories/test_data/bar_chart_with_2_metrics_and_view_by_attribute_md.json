@@ -1,0 +1,37 @@
+{
+  "buckets": [{
+    "localIdentifier": "trend",
+    "items": [{
+      "visualizationAttribute": {
+        "localIdentifier": "a1",
+        "displayForm": {
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+        }
+      }
+    }]
+  }, {
+    "localIdentifier": "measures",
+    "items": [{
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"
+            }
+          }
+        }
+      }
+    }]
+  }, {
+    "localIdentifier": "secondary_measures",
+    "items": [{
+      "definition": {
+        "measureDefinition": {
+          "item": {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"
+          }
+        }
+      }
+    }]
+  }]
+}

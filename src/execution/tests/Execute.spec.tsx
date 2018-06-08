@@ -3,8 +3,8 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 import { DataLayer, factory } from '@gooddata/gooddata-js';
 import { AFM } from '@gooddata/typings';
+import { testUtils } from '@gooddata/js-utils';
 import { Execute, IExecuteProps } from '../Execute';
-import { delay } from '../../components/tests/utils';
 
 describe('Execute', () => {
     const data = [1, 2, 3];
@@ -46,22 +46,34 @@ describe('Execute', () => {
         const child = createStatelessChild();
         createComponent(child);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(child).toHaveBeenCalledWith({ result: null, error: null, isLoading: true });
             expect(child).toHaveBeenLastCalledWith({ result: data, error: null, isLoading: false });
             expect(child).toHaveBeenCalledTimes(2);
         });
     });
 
-    it('should dispatch loading before and after execution', () => {
+    it('should dispatch onLoadingChanged before and after execution', () => {
         const onLoadingChanged = jest.fn();
         const child = createStatelessChild();
         createComponent(child, {
             onLoadingChanged
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    it('should dispatch onLoadingFinish after execution', () => {
+        const onLoadingFinish = jest.fn();
+        const child = createStatelessChild();
+        createComponent(child, {
+            onLoadingFinish
+        });
+
+        return testUtils.delay().then(() => {
+            expect(onLoadingFinish).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -73,7 +85,7 @@ describe('Execute', () => {
             afm
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(child).toHaveBeenCalledTimes(2); // first loading, second result
         });
     });
@@ -89,7 +101,7 @@ describe('Execute', () => {
         const child = createStatelessChild();
         const wrapper = createComponent(child);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(child).toHaveBeenCalledTimes(2); // first loading, second result
             wrapper.setProps({ sdk: factory({ domain: 'example.com' }) });
             expect(child).toHaveBeenCalledTimes(3);

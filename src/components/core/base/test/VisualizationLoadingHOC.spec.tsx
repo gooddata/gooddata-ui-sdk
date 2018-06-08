@@ -1,6 +1,8 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import { testUtils } from '@gooddata/js-utils';
 import {
     oneMeasureDataSource,
     tooLargeDataSource,
@@ -17,7 +19,6 @@ import {
     visualizationLoadingHOC,
     commonDefaultProps
 } from '../VisualizationLoadingHOC';
-import { delay } from '../../../tests/utils';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDrillableItem } from '../../../../interfaces/DrillEvents';
 import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
@@ -72,7 +73,7 @@ describe('VisualizationLoadingHOC', () => {
         };
         const wrapper = createComponent(props);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
             expect(inner.length).toBe(1);
@@ -108,7 +109,7 @@ describe('VisualizationLoadingHOC', () => {
 
         expect(onLoadingChanged).toHaveBeenCalledTimes(1);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const innerWrapped = wrapper.find(TestInnerComponent);
             expect(innerWrapped.props()).toMatchObject({
@@ -127,7 +128,7 @@ describe('VisualizationLoadingHOC', () => {
             ErrorComponent
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const innerWrapped = wrapper.find(TestInnerComponent);
             expect(innerWrapped.props().error).toEqual('DATA_TOO_LARGE_TO_COMPUTE');
@@ -143,7 +144,7 @@ describe('VisualizationLoadingHOC', () => {
             onError
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(onError).toHaveBeenCalledTimes(1);
 
             expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
@@ -156,7 +157,7 @@ describe('VisualizationLoadingHOC', () => {
             onLoadingChanged
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
 
             wrapper.setProps({
@@ -164,7 +165,7 @@ describe('VisualizationLoadingHOC', () => {
                 onLoadingChanged
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 expect(onLoadingChanged.mock.calls.length).toBe(2);
             });
         });
@@ -176,7 +177,7 @@ describe('VisualizationLoadingHOC', () => {
             onLoadingChanged
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
 
             onLoadingChanged.mockReset();
@@ -186,7 +187,7 @@ describe('VisualizationLoadingHOC', () => {
                 resultSpec: { dimensions: [] }
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 expect(onLoadingChanged.mock.calls.length).toBe(2);
             });
         });
@@ -198,7 +199,7 @@ describe('VisualizationLoadingHOC', () => {
             onLoadingChanged
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(onLoadingChanged).toHaveBeenCalledTimes(2);
             onLoadingChanged.mockReset();
 
@@ -208,7 +209,7 @@ describe('VisualizationLoadingHOC', () => {
                 resultSpec: { dimensions: [] }
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 expect(onLoadingChanged.mock.calls.length).toBe(2);
             });
         });
@@ -220,7 +221,7 @@ describe('VisualizationLoadingHOC', () => {
             onError
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
 
@@ -239,7 +240,7 @@ describe('VisualizationLoadingHOC', () => {
 
         consoleErrorSpy.mockImplementation(jest.fn());
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const inner = wrapper.find(TestInnerComponent);
 
@@ -258,7 +259,7 @@ describe('VisualizationLoadingHOC', () => {
             pushData
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             expect(pushData).toHaveBeenCalledWith({
                 result: oneMeasureResponse
             });
@@ -274,13 +275,13 @@ describe('VisualizationLoadingHOC', () => {
             dataSource: tooLargeDataSource
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             wrapper.setProps({
                 dataSource: oneMeasureDataSource
             });
 
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 const innerWrapped = wrapper.find(TestInnerComponent);
 
@@ -298,7 +299,7 @@ describe('VisualizationLoadingHOC', () => {
             onError
         });
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const visualization = wrapper.find(TestInnerComponent);
             onError.mockReset();

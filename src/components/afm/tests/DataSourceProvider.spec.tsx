@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { AFM } from '@gooddata/typings';
+import { testUtils } from '@gooddata/js-utils';
 import {
     dataSourceProvider,
     IDataSourceProviderProps,
     IDataSourceProviderInjectedProps
 } from '../DataSourceProvider';
 import { Table } from '../../tests/mocks';
-import { delay } from '../../tests/utils';
 
 describe('DataSourceProvider', () => {
     const defaultProps = {
@@ -34,7 +34,7 @@ describe('DataSourceProvider', () => {
     it('should prepare datasource', () => {
         const wrapper = createComponent(Table);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const table = wrapper.find(Table);
             expect(table.length).toEqual(1);
@@ -51,13 +51,13 @@ describe('DataSourceProvider', () => {
             projectId: 'projid2',
             resultSpec: {}
         };
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const table = wrapper.find(Table);
             const tableProps: IDataSourceProviderInjectedProps = table.props();
             const oldDataSource = tableProps.dataSource;
             wrapper.setProps(newProps);
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 const table = wrapper.find(Table);
                 const tableProps = table.props() as IDataSourceProviderInjectedProps;
@@ -76,13 +76,13 @@ describe('DataSourceProvider', () => {
             resultSpec: {}
         };
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const table = wrapper.find(Table);
             const tableProps: IDataSourceProviderInjectedProps = table.props();
             const oldDataSource = tableProps.dataSource;
             wrapper.setProps(newProps);
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 const table = wrapper.find(Table);
                 const tableProps: IDataSourceProviderInjectedProps = table.props();
@@ -113,12 +113,12 @@ describe('DataSourceProvider', () => {
             }
         };
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             const instance: any = wrapper.instance();
             const prepareDataSourceSpy = jest.spyOn(instance, 'prepareDataSource');
             wrapper.setProps(newProps);
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 expect(prepareDataSourceSpy).toHaveBeenCalledTimes(1);
             });
@@ -128,10 +128,10 @@ describe('DataSourceProvider', () => {
     it('should not render component if dataSource is missing', () => {
         const wrapper = createComponent(Table);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             wrapper.setState({ dataSource: null });
-            return delay().then(() => {
+            return testUtils.delay().then(() => {
                 wrapper.update();
                 expect(wrapper.find(Table).length).toEqual(0);
             });
@@ -143,7 +143,7 @@ describe('DataSourceProvider', () => {
         const WrappedTable = dataSourceProvider(Table, defaultDimension, 'DummyNameInMocks');
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
-        return delay().then(() => {
+        return testUtils.delay().then(() => {
             wrapper.update();
             expect(wrapper.find(Table).props().resultSpec.dimensions).toEqual(defaultDimension());
         });

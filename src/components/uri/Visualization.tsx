@@ -23,11 +23,11 @@ import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
     IDrillableItem,
-    ErrorStates,
     generateDimensions,
     RuntimeError
 } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
+import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 
 export { Requireable };
 
@@ -89,9 +89,8 @@ export interface IVisualizationState {
     resultSpec: AFM.IResultSpec;
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
-    error: {
-        status: string;
-    };
+    error?: RuntimeError;
+    mdObject?: VisualizationObject.IVisualizationObject;
 }
 
 export interface IVisualizationExecInfo {
@@ -99,6 +98,7 @@ export interface IVisualizationExecInfo {
     resultSpec: AFM.IResultSpec;
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
+    mdObject: VisualizationObject.IVisualizationObject;
 }
 
 function uriResolver(sdk: SDK, projectId: string, uri?: string, identifier?: string): Promise<string> {
@@ -153,6 +153,8 @@ export class VisualizationWrapped
 
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
+    private errorMap: IErrorMap;
+
     private sdk: SDK;
 
     constructor(props: IVisualizationProps & InjectedIntlProps) {
@@ -163,7 +165,8 @@ export class VisualizationWrapped
             type: null,
             resultSpec: null,
             totals: [],
-            error: null
+            error: null,
+            mdObject: null
         };
 
         const sdk = props.sdk || createSdk();
@@ -172,21 +175,25 @@ export class VisualizationWrapped
 
         this.visualizationUri = props.uri;
 
+        this.errorMap = generateErrorMap(props.intl);
+
         this.subject = createSubject<IVisualizationExecInfo>(
-            ({ type, resultSpec, dataSource, totals }) => {
+            ({ type, resultSpec, dataSource, totals, mdObject }) => {
                 this.dataSource = dataSource;
                 this.setState({
                     type,
                     resultSpec,
                     isLoading: false,
-                    totals
+                    totals,
+                    mdObject
                 });
-            }, () => {
+            }, (error) => {
+                const runtimeError = convertErrors(error);
                 this.setState({
                     isLoading: false,
-                    error: { status: ErrorStates.NOT_FOUND }
+                    error: runtimeError
                 });
-                return props.onError(new RuntimeError(ErrorStates.NOT_FOUND));
+                return props.onError(runtimeError);
             });
     }
 
@@ -256,15 +263,22 @@ export class VisualizationWrapped
             LoadingComponent,
             ErrorComponent
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading } = this.state;
+        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
+        const finalConfig = {
+            ...config,
+            mdObject: mdObject && mdObject.content
+        };
 
         if (error) {
+            const errorProps = this.errorMap[error.getMessage()];
+
             return ErrorComponent
                 ? (
                     <ErrorComponent
-                        code={this.state.error.status}
+                        code={error.getMessage()}
                         message={intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' })}
                         description={intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })}
+                        {...errorProps}
                     />
                 )
                 : null;
@@ -319,7 +333,7 @@ export class VisualizationWrapped
                         ErrorComponent={ErrorComponent}
                         locale={locale}
                         type={type}
-                        config={config}
+                        config={finalConfig}
                     />
                 );
         }
@@ -366,7 +380,8 @@ export class VisualizationWrapped
                                 type: visualizationType,
                                 dataSource,
                                 resultSpec: resultSpecWithDimensions,
-                                totals: mdObjectTotals
+                                totals: mdObjectTotals,
+                                mdObject
                             };
                         });
                     });

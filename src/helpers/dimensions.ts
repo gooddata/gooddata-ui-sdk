@@ -52,7 +52,7 @@ function getLocalIdentifierFromAttribute(attribute: VisualizationObject.IVisuali
     return attribute.visualizationAttribute.localIdentifier;
 }
 
-function getPieDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+function getPieOrTreemapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
     const view = mdObject.buckets.find(bucket => bucket.localIdentifier === VIEW);
 
     if (view && view.items.length) {
@@ -145,9 +145,98 @@ function getLineDimensions(mdObject: VisualizationObject.IVisualizationObjectCon
     ];
 }
 
-function getHeadlinesDimensions(): AFM.IDimension[] {
+export function getHeadlinesDimensions(): AFM.IDimension[] {
     return [
         { itemIdentifiers: ['measureGroup'] }
+    ];
+}
+
+function getScatterDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const attribute: VisualizationObject.IBucket = mdObject.buckets
+            .find(bucket => bucket.localIdentifier === ATTRIBUTE);
+
+    if (attribute && attribute.items.length) {
+        return [
+            {
+                itemIdentifiers: attribute.items.map(getLocalIdentifierFromAttribute)
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: []
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP]
+        }
+    ];
+}
+
+function getHeatMapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = mdObject.buckets
+            .find(bucket => bucket.localIdentifier === VIEW);
+
+    const stack: VisualizationObject.IBucket = mdObject.buckets
+        .find(bucket => bucket.localIdentifier === STACK);
+
+    const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+
+    if (hasNoStacks) {
+        return [
+            {
+                itemIdentifiers: (view && view.items || [])
+                    .map(getLocalIdentifierFromAttribute)
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: (view && view.items || [])
+                .map(getLocalIdentifierFromAttribute)
+        },
+        {
+            itemIdentifiers: (stack && stack.items || [])
+                .map(getLocalIdentifierFromAttribute).concat([MEASUREGROUP])
+        }
+    ];
+}
+
+function getBubbleDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = mdObject.buckets
+        .find(bucket => bucket.localIdentifier === VIEW);
+    const stack: VisualizationObject.IBucket = mdObject.buckets
+        .find(bucket => bucket.localIdentifier === STACK);
+    const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+    if (hasNoStacks) {
+        return [
+            {
+                itemIdentifiers: (view && view.items || [])
+                    .map(getLocalIdentifierFromAttribute)
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: (view && view.items || [])
+                .map(getLocalIdentifierFromAttribute)
+                .concat((stack && stack.items || [])
+                    .map(getLocalIdentifierFromAttribute))
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP]
+        }
     ];
 }
 
@@ -168,19 +257,33 @@ export function generateDimensions(
         case VisualizationTypes.TABLE: {
             return getTableDimensions(mdObject.buckets);
         }
-        case VisualizationTypes.PIE: {
-            return getPieDimensions(mdObject);
+        case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
+        case VisualizationTypes.TREEMAP:
+        case VisualizationTypes.FUNNEL: {
+            return getPieOrTreemapDimensions(mdObject);
         }
+        case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE: {
             return getLineDimensions(mdObject);
         }
         case VisualizationTypes.BAR:
         case VisualizationTypes.AREA:
+        case VisualizationTypes.COMBO:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
         }
         case VisualizationTypes.HEADLINE: {
             return getHeadlinesDimensions();
+        }
+        case VisualizationTypes.SCATTER: {
+            return getScatterDimensions(mdObject);
+        }
+        case VisualizationTypes.HEATMAP: {
+            return getHeatMapDimensions(mdObject);
+        }
+        case VisualizationTypes.BUBBLE: {
+            return getBubbleDimensions(mdObject);
         }
     }
     return [];
@@ -205,3 +308,54 @@ export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]
         }
     ];
 }
+
+// for LineChart, AreaChart, BarChart, ColumnChart
+export function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    return [
+        {
+            itemIdentifiers: ['measureGroup']
+        },
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        }
+    ];
+}
+
+export function isStackedChart(buckets: VisualizationObject.IBucket[]) {
+    return buckets.some(bucket => bucket.localIdentifier === 'stacks' && bucket.items.length > 0);
+}
+
+// for ScatterPlot
+export function generateDefaultScatterDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+    return [
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        },
+        {
+            itemIdentifiers: ['measureGroup']
+        }
+    ];
+}
+
+// for PieChart, DonutChart, Treemap
+export const generateDefaultDimensionsForRoundChart = (afm: AFM.IAfm): AFM.IDimension[] => {
+    if ((afm.attributes || []).length === 0) {
+        return [
+            {
+                itemIdentifiers: []
+            },
+            {
+                itemIdentifiers: ['measureGroup']
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: ['measureGroup']
+        },
+        {
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+        }
+    ];
+};

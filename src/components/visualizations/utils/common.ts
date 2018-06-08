@@ -53,12 +53,25 @@ export const isTable = isEqual(VisualizationTypes.TABLE);
 export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
 export const isBarChart = isEqual(VisualizationTypes.BAR);
 export const isLineChart = isEqual(VisualizationTypes.LINE);
+export const isDualChart = isEqual(VisualizationTypes.DUAL);
+export const isScatterPlot = isEqual(VisualizationTypes.SCATTER);
 export const isPieChart = isEqual(VisualizationTypes.PIE);
+export const isDonutChart = isEqual(VisualizationTypes.DONUT);
+export const isPieOrDonutChart = (type: string) => isPieChart(type) || isDonutChart(type);
 export const isAreaChart = isEqual(VisualizationTypes.AREA);
-export const isDoughnutChart = isEqual(VisualizationTypes.DOUGHNUT);
+export const isBubbleChart = isEqual(VisualizationTypes.BUBBLE);
 export const isHeadline = isEqual(VisualizationTypes.HEADLINE);
+export const isComboChart = isEqual(VisualizationTypes.COMBO);
+export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
+export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
+export const isHeatMap = isEqual(VisualizationTypes.HEATMAP);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
+export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
 export const stringifyChartTypes = () => Object.keys(VisualizationTypes).reduce((acc, type) => {
     acc.push(VisualizationTypes[type]);
     return acc;
 }, []).join(', ');
+
+export function unwrap(wrappedObject: any) {
+    return wrappedObject[Object.keys(wrappedObject)[0]];
+}

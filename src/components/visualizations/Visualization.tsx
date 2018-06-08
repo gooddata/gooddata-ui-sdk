@@ -6,11 +6,7 @@ import noop = require('lodash/noop');
 import isFunction = require('lodash/isFunction');
 import omitBy = require('lodash/omitBy');
 import { Highcharts, IChartConfig } from './chart/Chart';
-
-// TODO: will be ported later
-import {
-    TableTransformation
-} from '@gooddata/indigo-visualizations';
+import { OnFiredDrillEvent } from '../../interfaces/Events';
 
 import {
     Execution
@@ -21,22 +17,23 @@ import {
     isChartSupported,
     stringifyChartTypes
 } from './utils/common';
-
-import ChartTransformation, { IExecutionRequest, IDrillableItems, renderHighCharts } from './chart/ChartTransformation';
+import { TableTransformation } from './table/TableTransformation';
+import { IDrillableItem } from '../../interfaces/DrillEvents';
+import ChartTransformation, { IExecutionRequest, renderHighCharts } from './chart/ChartTransformation';
 
 export interface IVisualizationProps {
     height: number;
     width: number;
     config: IChartConfig;
-    numericSymbols: string[];
+    numericSymbols?: string[];
 
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
-    drillableItems: IDrillableItems[];
+    drillableItems: IDrillableItem[];
 
-    onFiredDrillEvent(): void;
-    afterRender(): void;
+    onFiredDrillEvent?: OnFiredDrillEvent;
+    afterRender?: () => void;
     onDataTooLarge(): void;
     onNegativeValues(): void;
     onLegendReady(): void;
@@ -45,7 +42,7 @@ export interface IVisualizationProps {
 export class Visualization extends React.Component<IVisualizationProps> {
     public static defaultProps = {
         numericSymbols: [] as string[],
-        onFiredDrillEvent: noop,
+        onFiredDrillEvent: () => true,
         afterRender: noop
     };
 
@@ -80,7 +77,15 @@ export class Visualization extends React.Component<IVisualizationProps> {
 
         if (isTable(visType)) {
             return (
-                <TableTransformation {...this.props} />
+                <TableTransformation
+                    {...this.props}
+                    executionRequest={{
+                        execution: {
+                            afm: this.props.executionRequest.afm,
+                            resultSpec: this.props.executionRequest.resultSpec
+                        }
+                    }}
+                />
             );
         }
 

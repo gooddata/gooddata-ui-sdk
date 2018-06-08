@@ -27,9 +27,25 @@ describe('Table', () => {
         }
     };
 
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'asc',
+            locators: [{
+                measureLocatorItem: {
+                    measureIdentifier: 'm1'
+                }
+            }]
+        }
+    };
+
     it('should render table and convert the buckets to AFM', () => {
         const wrapper = shallow(
-            <Table projectId="foo" measures={[measure]} attributes={[attribute]} />
+            <Table
+                projectId="foo"
+                measures={[measure]}
+                attributes={[attribute]}
+                sortBy={[measureSortItem]}
+            />
         );
 
         const expectedAfm: AFM.IAfm = {
@@ -55,7 +71,37 @@ describe('Table', () => {
             ]
         };
 
+        const expectedResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: [
+                        'a1'
+                    ]
+                },
+                {
+                    itemIdentifiers: [
+                        'measureGroup'
+                    ]
+                }
+            ],
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
         expect(wrapper.find(AfmTable)).toHaveLength(1);
         expect(wrapper.find(AfmTable).prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.find(AfmTable).prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

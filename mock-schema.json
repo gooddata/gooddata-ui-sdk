@@ -15,6 +15,15 @@
           "title": "Bigger Amount"
         },
         {
+          "identifier": "3",
+          "title": "Sum of Sales"
+        },
+        {
+          "identifier": "4",
+          "title": "% of Goal",
+          "format": "#,##0.00%"
+        },
+        {
           "identifier": "aagV61RmaPTt",
           "title": "Amount [BOP]"
         },
