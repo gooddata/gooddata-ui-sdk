@@ -146,6 +146,10 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.0.0.tgz#bdf52bb34129176b84c29dd70677eaf35b36187d"
 
+"@gooddata/typings@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.1.0.tgz#3a5edb2f2a8412bbc00cfa468505d1ee4999ca1c"
+
 "@storybook/addon-actions@3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.4.0.tgz#8f6f869f708856845dff210af9340e54b443f346"
