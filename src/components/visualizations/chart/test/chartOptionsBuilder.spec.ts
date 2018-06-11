@@ -17,11 +17,11 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    getChartOptions,
     generateTooltipHeatMapFn,
     IPoint
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
+import { generateChartOptions } from './helper';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 
@@ -34,33 +34,8 @@ import {
 import {
     DEFAULT_COLOR_PALETTE
 } from '../../utils/color';
-import { IDrillableItem } from '../../../..';
 
 export { IPoint };
-
-export function generateChartOptions(
-    dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,
-    config: any = {
-        type: 'column',
-        stacking: false
-    },
-    drillableItems: IDrillableItem[] = []
-) {
-    const {
-        executionRequest: { afm, resultSpec },
-        executionResponse: { dimensions },
-        executionResult: { data, headerItems }
-    } = dataSet;
-    return getChartOptions(
-        afm,
-        resultSpec,
-        dimensions,
-        data,
-        headerItems,
-        config,
-        drillableItems
-    );
-}
 
 function getMVS(dataSet: any) {
     const {
