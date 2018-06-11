@@ -151,18 +151,13 @@ export function getDataLabelAttributes(point: any) {
 
 export function shouldFollowPointer(chartOptions: any) {
     const type = chartOptions.type;
-    const xMax = Number(get(chartOptions, 'xAxisProps.max'));
     const yMax = Number(get(chartOptions, 'yAxisProps.max'));
 
-    if ((!isColumnChart(type) && !isBarChart(type)) || (!xMax && !yMax)) {
+    if ((!isColumnChart(type) && !isBarChart(type)) || !yMax) {
         return false;
     }
 
     const maxDataValue = getMaxDataValue(chartOptions);
-
-    if (isBarChart(type)) {
-        return xMax && maxDataValue > xMax;
-    }
 
     return yMax && maxDataValue > yMax;
 }

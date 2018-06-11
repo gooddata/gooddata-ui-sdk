@@ -99,32 +99,6 @@ describe('shouldFollowPointer', () => {
 
             expect(result).toBeTruthy();
         });
-
-        it('should return false when data values are in axis range of bar chart (x-axis)', () => {
-            const result = shouldFollowPointer({
-                ...nonStackedChartOptions,
-                type: VisualizationTypes.BAR,
-                xAxisProps: {
-                    min: 30,
-                    max: 200
-                }
-            });
-
-            expect(result).toBeFalsy();
-        });
-
-        it('should return true when min and max are within data values of bar chart (x-axis)', () => {
-            const result = shouldFollowPointer({
-                ...nonStackedChartOptions,
-                type: VisualizationTypes.BAR,
-                xAxisProps: {
-                    min: 60,
-                    max: 100
-                }
-            });
-
-            expect(result).toBeTruthy();
-        });
     });
 
     describe('Stacked chart', () => {
@@ -154,32 +128,6 @@ describe('shouldFollowPointer', () => {
             const result = shouldFollowPointer({
                 ...stackedChartOptions,
                 yAxisProps: {
-                    min: 60,
-                    max: 100
-                }
-            });
-
-            expect(result).toBeTruthy();
-        });
-
-        it('should return false when data values are in axis range of bar chart (x-axis)', () => {
-            const result = shouldFollowPointer({
-                ...stackedChartOptions,
-                type: VisualizationTypes.BAR,
-                xAxisProps: {
-                    min: 30,
-                    max: 200
-                }
-            });
-
-            expect(result).toBeFalsy();
-        });
-
-        it('should return true when min and max are within data values of bar chart (x-axis)', () => {
-            const result = shouldFollowPointer({
-                ...stackedChartOptions,
-                type: VisualizationTypes.BAR,
-                xAxisProps: {
                     min: 60,
                     max: 100
                 }

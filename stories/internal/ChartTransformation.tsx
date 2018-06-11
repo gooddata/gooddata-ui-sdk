@@ -430,36 +430,6 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
-    .add('Column chart without gridline', () => {
-        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
-
-        return screenshotWrap(
-            wrap(
-                <ChartTransformation
-                    drillableItems={[
-                        {
-                            uri: dataSet.executionResult
-                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
-                        }
-                    ]}
-                    config={{
-                        type: 'column',
-                        legend: {
-                            enabled: true,
-                            position: 'top'
-                        },
-                        legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
-                        grid: {
-                            enabled: false
-                        }
-                    }}
-                    {...dataSet}
-                    onDataTooLarge={identity}
-                />
-            )
-        );
-    })
     .add('Bar chart with viewBy and stackBy attribute', () => {
         const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
 

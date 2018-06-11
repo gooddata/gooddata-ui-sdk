@@ -444,12 +444,13 @@ function getDataConfiguration(chartOptions: any) {
     }
 
     const categories = map(data.categories, escapeAngleBrackets);
+    const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
             labels: {
-                enabled: !isEmpty(compact(categories))
+                enabled: !isEmpty(compact(categories)) && labelsEnabled
             },
             categories
         }]
@@ -566,23 +567,11 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
-            let min: string;
-            let max: string;
-            let visible: boolean;
-            let labelsEnabled: boolean;
-
             // For bar chart take x axis options
-            if (isBarChart(chartOptions.type)) {
-                min = get(chartOptions, 'xAxisProps.min', '');
-                max = get(chartOptions, 'xAxisProps.max', '');
-                visible = get(chartOptions, 'xAxisProps.visible', true);
-                labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
-            } else {
-                min = get(chartOptions, 'yAxisProps.min', '');
-                max = get(chartOptions, 'yAxisProps.max', '');
-                visible = get(chartOptions, 'yAxisProps.visible', true);
-                labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
-            }
+            const min = get(chartOptions, 'yAxisProps.min', '');
+            const max = get(chartOptions, 'yAxisProps.max', '');
+            const visible = get(chartOptions, 'yAxisProps.visible', true);
+            const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -619,13 +608,12 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
-            let visible: boolean;
+            const visible = get(chartOptions, 'xAxisProps.visible', true);
+            const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
+
+            const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
             // for bar chart take y axis options
-            visible = isBarChart(chartOptions.type)
-                ? get(chartOptions, 'yAxisProps.visible', true)
-                : get(chartOptions, 'xAxisProps.visible', true);
-
             return {
                 lineColor: '#d5d5d5',
 
@@ -641,7 +629,8 @@ function getAxesConfiguration(chartOptions: any) {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
                     },
-                    autoRotation: [-90]
+                    autoRotation: [-90],
+                    ...rotationProp
                 },
                 title: {
                     margin: 10,
