@@ -301,15 +301,19 @@ function getTooltipConfiguration(chartOptions: any) {
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
 
+    const followPointer = isOneOfTypes(chartType, [VisualizationTypes.COLUMN, VisualizationTypes.BAR])
+        ? { followPointer: shouldFollowPointer(chartOptions) }
+        : {};
+
     return tooltipAction ? {
         tooltip: {
             borderWidth: 0,
             borderRadius: 0,
             shadow: false,
             useHTML: true,
-            followPointer: shouldFollowPointer(chartOptions),
             positioner: partial(positionTooltip, chartType, stacking),
-            formatter: partial(formatTooltip, chartType, stacking, tooltipAction)
+            formatter: partial(formatTooltip, chartType, stacking, tooltipAction),
+            ...followPointer
         }
     } : {};
 }
