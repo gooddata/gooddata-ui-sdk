@@ -575,6 +575,14 @@ function getAxesConfiguration(chartOptions: any) {
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
+            const visibleProp = visible ? {} : {
+                labels: {
+                    enabled: false
+                },
+                title: {
+                    enabled: false
+                }
+            };
 
             return {
                 gridLineColor: '#ebebeb',
@@ -593,7 +601,7 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite,
-                visible,
+                ...visibleProp,
                 ...maxProp,
                 ...minProp,
                 startOnTick: shouldStartOnTick(max, min),
