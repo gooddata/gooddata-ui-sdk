@@ -64,10 +64,12 @@ describe('getCustomizedConfiguration', () => {
             min: 20,
             max: 30,
             labels: {
-                ...result.yAxis[0].labels,
                 enabled: false
             },
-            visible: false
+            title: {
+                text: '',
+                enabled: false
+            }
         };
 
         expect(result.yAxis[0]).toEqual(expectedResult);
