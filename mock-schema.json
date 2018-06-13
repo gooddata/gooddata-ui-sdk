@@ -72,6 +72,102 @@
     "_description": "KPI / saved execution with no data",
     "execution": {"execution":{"afm":{"measures":[{"localIdentifier":"m1","definition":{"measure":{"item":{"uri":"/gdc/md/storybook/obj/9"}}}}],"filters":[]},"resultSpec":{"dimensions":[{"itemIdentifiers":["measureGroup"]}]}}},
     "executionResult": {"executionResult":{"data":[],"paging":{"count":[0],"offset":[0],"total":[0]}}}
+  },
+  {
+    "_description": "Area chart with missing values",
+    "execution": {
+      "execution": {
+        "afm": {
+          "measures": [{
+            "localIdentifier": "m1",
+            "definition": {
+              "measure": {
+                "item": {
+                  "uri": "/gdc/md/storybook/obj/1"
+                }
+              }
+            }
+          }, {
+            "localIdentifier": "m4",
+            "definition": {
+              "measure": {
+                "item": {
+                  "uri": "/gdc/md/storybook/obj/9"
+                }
+              }
+            }
+          }],
+          "attributes": [
+            {
+              "localIdentifier": "a1",
+              "displayForm": {
+                "uri": "/gdc/md/storybook/obj/4.df"
+              }
+            }
+          ]
+        },
+        "resultSpec": {
+          "dimensions": [{
+            "itemIdentifiers": ["measureGroup"]
+          }, {
+            "itemIdentifiers": ["a1"]
+          }]
+        }
+      }
+    },
+    "executionResult": {
+      "executionResult": {
+        "data": [
+          ["600", "250", "80", "100"],
+          ["300", null, "50", "80"]
+        ],
+        "headerItems": [
+          [
+            [{
+              "measureHeaderItem": {
+                "name": "Saved null",
+                "order": 0
+              }
+            }, {
+              "measureHeaderItem": {
+                "name": "Amount",
+                "order": 1
+              }
+            }]
+          ],
+          [
+            [{
+                "attributeHeaderItem": {
+                  "uri": "/gdc/md/mockproject/obj/4/elements?id=1",
+                  "name": "Pink"
+                }
+              },
+              {
+                "attributeHeaderItem": {
+                  "uri": "/gdc/md/mockproject/obj/4/elements?id=2",
+                  "name": "Red"
+                }
+              }, {
+                "attributeHeaderItem": {
+                  "uri": "/gdc/md/mockproject/obj/4/elements?id=3",
+                  "name": "Purple"
+                }
+              }, {
+                "attributeHeaderItem": {
+                  "uri": "/gdc/md/mockproject/obj/4/elements?id=4",
+                  "name": "Salmon"
+                }
+              }
+            ]
+          ]
+        ],
+        "paging": {
+          "count": [2, 4],
+          "offset": [0, 0],
+          "total": [2, 4]
+        }
+      }
+    }
   }],
   "visualizationClasses": [{
     "title": "Table",

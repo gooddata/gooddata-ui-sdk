@@ -20,7 +20,8 @@ import { getLighterColor } from '../../utils/color';
 import {
     isBarChart,
     isColumnChart,
-    isOneOfTypes
+    isOneOfTypes,
+    isAreaChart
 } from '../../utils/common';
 import {
     shouldFollowPointer,
@@ -361,7 +362,7 @@ function getLabelsConfiguration(chartOptions: any) {
 }
 
 function getStackingConfiguration(chartOptions: any) {
-    const { stacking, yAxes = [] }: { stacking: boolean; yAxes: IAxis[] } = chartOptions;
+    const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
@@ -369,10 +370,18 @@ function getStackingConfiguration(chartOptions: any) {
         }
     }));
 
+    let connectNulls = {};
+    if (stacking && isAreaChart(type)) {
+        connectNulls = {
+            connectNulls: true
+        };
+    }
+
     return stacking ? {
         plotOptions: {
             series: {
-                stacking
+                stacking,
+                ...connectNulls
             }
         },
         yAxis

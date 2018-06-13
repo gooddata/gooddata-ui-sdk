@@ -75,6 +75,19 @@ export const MEASURE_WITH_FORMAT: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_WITH_NULLS: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm4',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/9'
+                }
+            }
+        }
+    }
+};
+
 export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute = {
     visualizationAttribute: {
         localIdentifier: 'a1',

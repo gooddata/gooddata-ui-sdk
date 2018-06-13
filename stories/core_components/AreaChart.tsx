@@ -9,6 +9,7 @@ import { ATTRIBUTE_1,
     MEASURE_1,
     MEASURE_2,
     MEASURE_2_SORT_ITEM,
+    MEASURE_WITH_NULLS,
     ATTRIBUTE_1_SORT_ITEM
 } from '../data/componentProps';
 
@@ -122,6 +123,35 @@ storiesOf('Core components/AreaChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
+                />
+            </div>
+        )
+    )).add('undefined values with stacking', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_WITH_NULLS]}
+                    viewBy={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    )).add('undefined values without stacking', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_WITH_NULLS]}
+                    viewBy={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    config={{
+                        stacking: false
+                    }}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )
