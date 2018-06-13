@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
+import { Localization, VisualizationObject } from '@gooddata/typings';
 import cloneDeep = require('lodash/cloneDeep');
 import get = require('lodash/get');
 import set = require('lodash/set');
 import flatMap = require('lodash/flatMap');
+import IntlStore from './IntlStore';
+import { IMeasureDefinitionType } from '../interfaces/MeasureDefinitionType';
 
 function getMasterMeasure(
     bucketItems: VisualizationObject.IMeasure[],
@@ -25,6 +27,34 @@ function getAllMeasureBucketItems(
 
         return measureItems;
     }, []);
+}
+
+/**
+ * getPoPSuffix
+ * returns formatted localized pop suffix string based on measure definition type.
+ * Its used for AFM execution, Bucket item titles.
+ *
+ * @param {IMeasureDefinitionType} measureDefinitionType - measure definition type
+ * @param {Localization.ILocale} locale
+ * @returns {string}
+ * @internal
+ */
+export function getPoPSuffix(measureDefinitionType: IMeasureDefinitionType, locale: Localization.ILocale) {
+    let translationId = 'measure.title.suffix.';
+
+    switch (measureDefinitionType) {
+        case 'overPeriodMeasureDefinition': {
+            translationId += 'sp_year_ago';
+            break;
+        }
+        case 'popMeasureDefinition':
+        default: {
+            translationId += 'previous_year';
+            break;
+        }
+    }
+
+    return ` - ${IntlStore.getTranslation(translationId, locale)}`;
 }
 
 /**

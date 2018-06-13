@@ -44,5 +44,6 @@
    "gs.list.limitExceeded": "Leider haben Sie den Grenzwert ({limit}) überschritten.",
    "gs.list.noItemsFound": "Keine Elemente gefunden.",
    "gs.list.error": "Fehler beim Laden der Listenobjekte",
-   "previous_year": "vorheriges Jahr"
+   "measure.title.suffix.previous_year": "vorheriges Jahr",
+   "measure.title.suffix.sp_year_ago": "SP vor einem Jahr"
 }

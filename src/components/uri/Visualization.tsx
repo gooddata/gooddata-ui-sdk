@@ -3,8 +3,8 @@ import * as React from 'react';
 import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
-import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
+import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
+import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
 
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
@@ -18,7 +18,7 @@ import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
 import * as MdObjectHelper from '../../helpers/MdObjectHelper';
-import { fillPoPTitlesAndAliases } from '../../helpers/popHelper';
+import { fillPoPTitlesAndAliases, getPoPSuffix } from '../../helpers/popHelper';
 import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
@@ -69,7 +69,7 @@ export interface IVisualizationProps extends IEvents {
     sdk?: SDK;
     uri?: string;
     identifier?: string;
-    locale?: string;
+    locale?: Localization.ILocale;
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
     drillableItems?: IDrillableItem[];
@@ -198,7 +198,7 @@ export class VisualizationWrapped
     }
 
     public componentDidMount() {
-        const { projectId, uri, identifier, filters, intl } = this.props;
+        const { projectId, uri, identifier, filters } = this.props;
 
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
         this.visualizationUri = uri;
@@ -206,8 +206,7 @@ export class VisualizationWrapped
         this.prepareDataSources(
             projectId,
             identifier,
-            filters,
-            intl
+            filters
         );
     }
 
@@ -240,8 +239,7 @@ export class VisualizationWrapped
             this.prepareDataSources(
                 nextProps.projectId,
                 nextProps.identifier,
-                nextProps.filters,
-                nextProps.intl
+                nextProps.filters
             );
         }
     }
@@ -285,7 +283,7 @@ export class VisualizationWrapped
         }
         if (isLoading || !dataSource) {
             return LoadingComponent
-                ? <LoadingComponent />
+                ? <LoadingComponent/>
                 : null;
         }
 
@@ -342,8 +340,7 @@ export class VisualizationWrapped
     private prepareDataSources(
         projectId: string,
         identifier: string,
-        filters: AFM.FilterItem[] = [],
-        intl: InjectedIntl
+        filters: AFM.FilterItem[] = []
     ) {
         const promise = this.props.uriResolver(this.sdk, projectId, this.visualizationUri, identifier)
             .then((visualizationUri: string) => {
@@ -358,9 +355,9 @@ export class VisualizationWrapped
                 return this.props.fetchVisualizationClass(
                     this.sdk, visualizationClassUri
                 ).then((visualizationClass) => {
-                    const popSuffix = ` - ${intl.formatMessage({ id: 'previous_year' })}`;
-
-                    const { afm, resultSpec } = toAfmResultSpec(fillPoPTitlesAndAliases(mdObject.content, popSuffix));
+                    const popSuffix = getPoPSuffix('popMeasureDefinition', this.props.locale);
+                    const { afm, resultSpec } = toAfmResultSpec(fillPoPTitlesAndAliases(
+                        mdObject.content, popSuffix));
 
                     const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
 
@@ -384,8 +381,8 @@ export class VisualizationWrapped
                                 mdObject
                             };
                         });
-                    });
                 });
+            });
         this.subject.next(promise);
     }
 }
