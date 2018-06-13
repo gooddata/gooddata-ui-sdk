@@ -1,26 +1,29 @@
 // (C) 2007-2018 GoodData Corporation
 import { getCustomizedConfiguration } from '../customConfiguration';
+import { ISeriesDataItem } from '../../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { immutableSet } from '../../../utils/common';
+
+function getData(dataValues: ISeriesDataItem[]) {
+    return {
+        series: [
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>aaa</b>',
+                data: dataValues
+            }
+        ]
+    };
+}
 
 const chartOptions = {
     type: VisualizationTypes.LINE,
     yAxes: [{ title: 'atitle' }],
     xAxes: [{ title: 'xtitle' }],
-    data: {
-        series: [
-            {
-                color: 'rgb(0, 0, 0)',
-                name: '<b>aaa</b>',
-                data: [
-                    {
-                        name: '<b>bbb</b>'
-                    },
-                    null
-                ]
-            }
-        ]
-    }
+    data: getData([{
+        name: '<b>bbb</b>',
+        y: 1
+    }, null])
 };
 
 describe('getCustomizedConfiguration', () => {
@@ -159,5 +162,49 @@ describe('getCustomizedConfiguration', () => {
         });
 
         expect(result.plotOptions.series.connectNulls).toBeUndefined();
+    });
+
+    describe('tooltip followPointer', () => {
+        it ('should follow pointer for bar chart when data max is above axis max', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 100 }, { y: 101 }]),
+                type: VisualizationTypes.COLUMN,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeTruthy();
+        });
+
+        it ('should not follow pointer for bar chart when data max is below axis max', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 0 }, { y: 1 }]),
+                type: VisualizationTypes.COLUMN,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeFalsy();
+        });
+
+        it ('should follow pointer for pie chart should be false by default', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 100 } , { y: 101 }]),
+                type: VisualizationTypes.PIE,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeFalsy();
+        });
     });
 });

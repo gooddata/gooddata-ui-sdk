@@ -14,7 +14,6 @@ import sum = require('lodash/sum');
 
 import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
-import { isBarChart, isColumnChart } from '../../utils/common';
 
 // https://silentmatt.com/rectangle-intersection/
 export const rectanglesAreOverlapping = (r1: any, r2: any, padding: any = 0) =>
@@ -150,10 +149,9 @@ export function getDataLabelAttributes(point: any) {
 }
 
 export function shouldFollowPointer(chartOptions: any) {
-    const type = chartOptions.type;
     const yMax = Number(get(chartOptions, 'yAxisProps.max'));
 
-    if ((!isColumnChart(type) && !isBarChart(type)) || !yMax) {
+    if (!yMax) {
         return false;
     }
 
