@@ -12,6 +12,7 @@ import without = require('lodash/without');
 import escape = require('lodash/escape');
 import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
+import cloneDeep = require('lodash/cloneDeep');
 import { IChartConfig, IChartLimits } from './Chart';
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -35,7 +36,7 @@ import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
-import { MEASURES, SECONDARY_MEASURES } from '../../../constants/bucketNames';
+import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES } from '../../../constants/bucketNames';
 
 import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
@@ -57,8 +58,7 @@ const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
-    VisualizationTypes.TREEMAP,
-    VisualizationTypes.BUBBLE
+    VisualizationTypes.TREEMAP
 ];
 
 const attributeChartSupportedTypes = [
@@ -80,7 +80,8 @@ const sortedByMeasureTypes = [
 const unsupportedStackingTypes = [
     VisualizationTypes.LINE,
     VisualizationTypes.AREA,
-    VisualizationTypes.SCATTER
+    VisualizationTypes.SCATTER,
+    VisualizationTypes.BUBBLE
 ];
 
 export interface IAxis {
@@ -365,18 +366,32 @@ export function getScatterPlotSeries(
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
+    mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ) {
+    const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
+        .find(bucket => bucket.localIdentifier === 'measures');
+    const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
+        .find(bucket => bucket.localIdentifier === 'secondary_measures');
+
+    const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
+    const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+
     return executionResultData.map((resData: any, index: number) => {
+        let data: any = [];
+        if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
+            data = [{
+                x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
+                y: !secondaryMeasuresBucketEmpty ?
+                    (primaryMeasuresBucketEmpty ? parseValue(resData[0]) : parseValue(resData[1])) : 0,
+                z: parseFloat(resData[2]) // we want to allow NaN on z
+            }];
+        }
         return {
             name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
             color: colorPalette[index],
             legendIndex: index,
-            data: [{
-                x: parseFloat(resData[0]),
-                y: parseFloat(resData[1]),
-                z: parseFloat(resData[2])
-            }]
+            data
         };
     });
 }
@@ -395,7 +410,7 @@ export function getSeries(
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(executionResultData, stackByAttribute, colorPalette);
+        return getBubbleChartSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     }
     return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const seriesItemData = getSeriesItemData(
@@ -472,9 +487,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
 
     return (point: IPoint) => {
         const textData = [];
+        const name = point.name ? point.name : point.series.name;
 
         if (stackByAttribute) {
-            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(point.name)]);
+            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(name)]);
         }
 
         if (measures[0]) {
@@ -621,11 +637,13 @@ export function getDrillableSeries(
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
-        let data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
+        let data = seriesItem.data && seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
             let measures = [];
 
             if (isScatterPlot(type)) {
                 measures = get(measureGroup, 'items', []).slice(0, 2).map(unwrap);
+            } else if (isBubbleChart(type)) {
+                measures = get(measureGroup, 'items', []).slice(0, 3).map(unwrap);
             } else {
             // measureIndex is usually seriesIndex,
             // except for stack by attribute and metricOnly pie or treemap chart it is looped-around pointIndex instead
@@ -1061,11 +1079,26 @@ export function getChartOptions(
     }
 
     if (isBubbleChart(type)) {
-        const measures = [
-            measureGroup.items[0] ? measureGroup.items[0] : null,
-            measureGroup.items[1] ? measureGroup.items[1] : null,
-            measureGroup.items[2] ? measureGroup.items[2] : null
-        ];
+        const measures: Execution.IMeasureHeaderItem[] = [];
+        const measureGroupCopy = cloneDeep(measureGroup);
+
+        if (!isBucketEmpty(mdObject, MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
+
+        if (!isBucketEmpty(mdObject, SECONDARY_MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
+
+        if (!isBucketEmpty(mdObject, TERTIARY_MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
 
         return {
             type,

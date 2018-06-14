@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import range = require('lodash/range');
 import get = require('lodash/get');
+import cloneDeep = require('lodash/cloneDeep');
 import { immutableSet } from '../../utils/common';
 import {
     isNegativeValueIncluded,
@@ -18,7 +19,9 @@ import {
     customEscape,
     generateTooltipFn,
     generateTooltipHeatMapFn,
-    IPoint
+    generateTooltipXYFn,
+    IPoint,
+    getBubbleChartSeries
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions } from './helper';
@@ -731,6 +734,137 @@ describe('chartOptionsBuilder', () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
             });
         });
+
+        describe('in use case of bubble', () => {
+            const dummyBucketItem = {
+                visualizationAttribute: {
+                    localIdentifier: 'abc',
+                    displayForm: { uri: 'abc' }
+                }
+            };
+
+            it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
+                const executionResultData = [
+                    [ 1, 2, 3],
+                    [ 4, 5, 6]
+                ];
+                const stackByAttribute = {
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                name: 'abc'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'def'
+                            }
+                        }
+                    ]
+                };
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [ dummyBucketItem
+                            ]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [ dummyBucketItem ]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: 'abc',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 2, z: 3 }]
+                    }, {
+                        name: 'def',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 5, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill X and Y with zeroes when measure buckets are empty', () => {
+                const executionResultData = [
+                    [ 1, 2, 3],
+                    [ 4, 5, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [] as any
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 0, y: 0, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 0, y: 0, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill Y with x values when primary bucket is empty but secondary is not', () => {
+                const executionResultData = [
+                    [ 1, 2, 3],
+                    [ 4, 5, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'secondary_measures',
+                            items: [ dummyBucketItem ]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 0, y: 1, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 0, y: 4, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+        });
     });
 
     describe('getDrillContext', () => {
@@ -884,6 +1018,115 @@ describe('chartOptionsBuilder', () => {
                 );
                 expect(seriesWithoutDrillability[0].data.length).toEqual(6);
                 expect(drillableMeasuresSeriesData[0].data.length).toEqual(3);
+            });
+        });
+
+        describe('in usecase of bubble chart with 3 measures and attribute', () => {
+            const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
+            const { afm } = dataSet.executionRequest;
+            const mVS = getMVS(dataSet);
+            const type = 'bubble';
+            const seriesWithoutDrillability = getSeries(
+                dataSet.executionResult.data,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                dataSet.mdObject,
+                DEFAULT_COLOR_PALETTE
+            );
+            const drillableMeasures = [{
+                uri: dataSet.executionResponse.dimensions[1]
+                    .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
+            }];
+            const drillableMeasuresSeriesData = getDrillableSeries(
+                seriesWithoutDrillability,
+                drillableMeasures,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                afm
+            );
+
+            it('should assign correct drillContext to pointData with drilldown true', () => {
+                expect(drillableMeasuresSeriesData.length).toBe(20);
+                expect(drillableMeasuresSeriesData[8].data[0]).toEqual({
+                    x: 245,
+                    y: 32,
+                    z: 2280481.04,
+                    drilldown: true,
+                    drillContext: [
+                        {
+                            id: '784a5018a51049078e8f7e86247e08a3',
+                            format: '#,##0.00',
+                            value: '_Snapshot [EOP-2]',
+                            identifier: 'ab0bydLaaisS',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                        },
+                        {
+                            id: '9e5c3cd9a93f4476a93d3494cedc6010',
+                            format: '#,##0',
+                            value: '# of Open Opps.',
+                            identifier: 'aaYh6Voua2yj',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                        },
+                        {
+                            id: '71d50cf1d13746099b7f506576d78e4a',
+                            format: '$#,#00.00',
+                            value: 'Remaining Quota',
+                            identifier: 'ab4EFOAmhjOx',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                        },
+                        {
+                            id: '1235',
+                            value: 'Jessica Traven',
+                            identifier: 'label.owner.id.name',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                        }
+                    ]
+                });
+                drillableMeasuresSeriesData
+                    .map((seriesItem: any, index: number) => {
+                        expect(seriesItem.isDrillable).toEqual(true);
+                        expect(seriesItem.legendIndex).toEqual(index);
+                        expect(seriesItem.data[0].drilldown).toEqual(true);
+                    });
+            });
+
+            it('should fillter out points with some of measures are null', () => {
+                const dataSetWithNulls = fixtures.bubbleChartWithNulls;
+                const { afm } = dataSetWithNulls.executionRequest;
+                const mVS = getMVS(dataSetWithNulls);
+                const type = 'bubble';
+
+                const seriesWithoutDrillability = getSeries(
+                    dataSetWithNulls.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSetWithNulls.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                const drillableMeasures = [{
+                    uri: dataSetWithNulls.executionResponse.dimensions[1]
+                        .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                }];
+                const drillableMeasuresSeriesData = getDrillableSeries(
+                    seriesWithoutDrillability,
+                    drillableMeasures,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    afm
+                );
+                expect(drillableMeasuresSeriesData[0].data.length).toEqual(0); // x is null
+                expect(drillableMeasuresSeriesData[1].data.length).toEqual(0); // y is null
+                expect(drillableMeasuresSeriesData[2].data.length).toEqual(0); // x and y are null
+                expect(drillableMeasuresSeriesData[3].data.length).toEqual(0); // z is null
             });
         });
 
@@ -1220,6 +1463,116 @@ describe('chartOptionsBuilder', () => {
             const tooltipFn = generateTooltipFn(null, 'treemap');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['point', ' 1']);
+        });
+    });
+
+    describe('generateTooltipXYFn', () => {
+        const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
+        const [measureGroup, , stackByAttribute] = getMVS(dataSet);
+
+        const point: IPoint = {
+            value: 300,
+            name: 'point name',
+            x: 10,
+            y: 20,
+            z: 30,
+            series: {
+                name: 'serie name',
+                userOptions: {
+                    dataLabels: {
+                        formatGD: 'abcd'
+                    }
+                }
+            }
+        };
+        it('should generate valid tooltip for no measures', () => {
+            const measures: any[] = [];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 1 measure', () => {
+            const measures = [measureGroup.items[0]];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 2 measures', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1]];
+            const expectedResult =
+                `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 3 measures', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
+            const expectedResult =
+                `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr>\n<tr>
+                <td class=\"title\">Remaining Quota</td>
+                <td class=\"value\">$30.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for point without name using name of serie', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
+            const pointWithoutName = cloneDeep(point);
+            pointWithoutName.name = undefined;
+
+            const expectedResult =
+                `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">serie name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr>\n<tr>
+                <td class=\"title\">Remaining Quota</td>
+                <td class=\"value\">$30.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(pointWithoutName)).toEqual(expectedResult);
         });
     });
 
@@ -1699,6 +2052,17 @@ describe('chartOptionsBuilder', () => {
                 });
 
                 expect(chartOptions.data.series.length).toEqual(20);
+            });
+
+            it('should flip axis if primary measure bucket is empty', () => {
+                const customMdObject = cloneDeep(fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject);
+                customMdObject.buckets[0].items = [];
+                const chartOptions = generateChartOptions(fixtures.bubbleChartWith3MetricsAndAttribute, {
+                    type: 'bubble',
+                    mdObject: customMdObject
+                });
+
+                expect(chartOptions.data.series[0].data[0].x).toEqual(0);
             });
 
             it('Should generate correct axes', () => {

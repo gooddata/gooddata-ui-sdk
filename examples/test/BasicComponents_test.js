@@ -3,35 +3,29 @@ import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
+async function checkRenderChart(selector, t) {
+    const loading = Selector('.s-loading');
+    const chart = Selector(selector);
+    await t
+        .expect(loading.exists).ok()
+        .expect(chart.exists).ok()
+        .expect(chart.textContent);
+}
+
 fixture('Basic components') // eslint-disable-line no-undef
     .page(config.hostname)
     .beforeEach(loginUsingGreyPages(`${config.hostname}`));
 
 test('Column chart should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-column-chart');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-column-chart', t);
 });
 
 test('Bar chart should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-bar-chart');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-bar-chart', t);
 });
 
 test('Line chart should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-line-chart');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-line-chart', t);
 });
 
 test('Line chart should have custom colors', async (t) => {
@@ -52,21 +46,11 @@ test('Line chart should have custom colors', async (t) => {
 });
 
 test('Pie chart should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-pie-chart');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-pie-chart', t);
 });
 
 test('Table should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const table = Selector('.s-table');
-    await t
-        .expect(loading.exists).ok()
-        .expect(table.exists).ok()
-        .expect(table.textContent);
+    await checkRenderChart('.s-table', t);
 });
 
 test('KPI has correct number', async (t) => {
@@ -78,19 +62,13 @@ test('KPI has correct number', async (t) => {
 });
 
 test('Donut chart should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-donut-chart');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-donut-chart', t);
 });
 
 test('Scatter plot should render', async (t) => {
-    const loading = Selector('.s-loading');
-    const chart = Selector('.s-scatter-plot');
-    await t
-        .expect(loading.exists).ok()
-        .expect(chart.exists).ok()
-        .expect(chart.textContent);
+    await checkRenderChart('.s-scatter-plot', t);
+});
+
+test('Bubble chart should render', async (t) => {
+    await checkRenderChart('.s-bubble-chart', t);
 });

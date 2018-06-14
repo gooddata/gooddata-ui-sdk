@@ -52,6 +52,17 @@ const MEASURE_2_POP: AFM.IMeasure = {
     }
 };
 
+const MEASURE_3: AFM.IMeasure = {
+    localIdentifier: 'm3',
+    definition: {
+        measure: {
+            item: {
+                uri: '/gdc/md/storybook/obj/3'
+            }
+        }
+    }
+};
+
 const ATTRIBUTE_CITIES: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
@@ -241,6 +252,17 @@ export const RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS: AFM.IResultSpec = {
     ]
 };
 
+export const AFM_THREE_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2,
+        MEASURE_3
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
 export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT: VisualizationObject.IVisualizationObjectContent = {
     buckets: [
         {
@@ -425,6 +447,85 @@ export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_SCATTER_MD_OBJECT: VisualizationObje
                             }
                         },
                         title: 'Won'
+                    }
+                }
+            ]
+        },
+        {
+            localIdentifier: 'attribute',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: ATTRIBUTE.localIdentifier,
+                        displayForm: {
+                            uri: (ATTRIBUTE.displayForm as AFM.IObjUriQualifier).uri
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    filters: [],
+    visualizationClass: {
+        uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/76038'
+    }
+};
+
+export const AFM_THREE_MEASURES_ONE_ATTRIBUTE_BUBBLE_MD_OBJECT: VisualizationObject.IVisualizationObjectContent = {
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: MEASURE_1.localIdentifier,
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: ((MEASURE_1.definition as AFM.ISimpleMeasureDefinition)
+                                        .measure.item as AFM.IObjUriQualifier).uri
+                                }
+                            }
+                        },
+                        title: 'Lost'
+                    }
+                }
+            ]
+        },
+        {
+            localIdentifier: 'secondary_measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: MEASURE_2.localIdentifier,
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: ((MEASURE_2.definition as AFM.ISimpleMeasureDefinition)
+                                        .measure.item as AFM.IObjUriQualifier).uri
+                                }
+                            }
+                        },
+                        title: 'Won'
+                    }
+                }
+            ]
+        },
+        {
+            localIdentifier: 'tertiary_measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: MEASURE_3.localIdentifier,
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: ((MEASURE_3.definition as AFM.ISimpleMeasureDefinition)
+                                        .measure.item as AFM.IObjUriQualifier).uri
+                                }
+                            }
+                        },
+                        title: 'Size'
                     }
                 }
             ]

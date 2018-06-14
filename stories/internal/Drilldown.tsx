@@ -467,4 +467,61 @@ storiesOf('Internal/Drilldown', module)
                 }
             </div>
         );
+    })
+    .add('Bubble chart with onFiredDrillEvent', () => {
+        const dataSet = {
+            ...fixtures.bubbleChartWith3MetricsAndAttribute
+        };
+        return screenshotWrap(
+            <div>
+                <p>
+                    Bubble chart with drilling on measure
+                </p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={action('onFiredDrillEvent')}
+                            config={{
+                                type: 'bubble',
+                                mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            onNegativeValues={noop}
+                            {...dataSet}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                                }
+                            ]}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+                <p>
+                    Bubble chart with drilling on attribute and logging to console
+                </p>
+                {
+                    wrap(
+                        <Visualization
+                            onFiredDrillEvent={onFiredDrillEvent}
+                            config={{
+                                type: 'bubble',
+                                mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
+                            }}
+                            onDataTooLarge={noop}
+                            onNegativeValues={noop}
+                            {...dataSet}
+                            drillableItems={[
+                                {
+                                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                                }
+                            ]}
+                        />,
+                        500,
+                        '100%'
+                    )
+                }
+            </div>
+        );
     });

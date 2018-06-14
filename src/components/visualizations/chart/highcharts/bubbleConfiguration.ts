@@ -3,11 +3,11 @@ import { cloneDeep } from 'lodash';
 
 const BUBBLE_TEMPLATE = {
     chart: {
-        type: 'bubble',
-        zoomType: 'xy'
+        type: 'bubble'
     },
     plotOptions: {
         bubble: {
+            stickyTracking: false,
             marker: {
                 symbol: 'circle',
                 radius: 5,

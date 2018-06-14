@@ -9,16 +9,16 @@ export {
 };
 
 import { ICommonChartProps } from '../core/base/BaseChart';
-import { ScatterPlot as CoreScatterPlot } from '../core/ScatterPlot';
+import { BubbleChart as CoreBubbleChart } from '../core/BubbleChart';
 import { generateDefaultDimensionsForPointsCharts } from '../../helpers/dimensions';
 
 /**
- * AFM ScatterPlot
+ * AFM BubbleChart
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const ScatterPlot = dataSourceProvider<ICommonChartProps>(
-    CoreScatterPlot,
+export const BubbleChart = dataSourceProvider<ICommonChartProps>(
+    CoreBubbleChart,
     generateDefaultDimensionsForPointsCharts,
-    'ScatterPlot'
+    'BubbleChart'
 );

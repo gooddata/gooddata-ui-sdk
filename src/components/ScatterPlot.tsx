@@ -5,7 +5,7 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { ScatterPlot as AfmScatterPlot } from './afm/ScatterPlot';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
-import { generateDefaultScatterDimensions } from '../helpers/dimensions';
+import { generateDefaultDimensionsForPointsCharts } from '../helpers/dimensions';
 import { getResultSpec } from '../helpers/resultSpec';
 
 export interface IScatterPlotBucketProps {
@@ -23,7 +23,7 @@ export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucket
 type IScatterPlotNonBucketProps = Subtract<IScatterPlotProps, IScatterPlotBucketProps>;
 
 const generateScatterDimensionsFromBuckets =
-    (buckets: VisualizationObject.IBucket[]) => generateDefaultScatterDimensions(convertBucketsToAFM(buckets));
+    (buckets: VisualizationObject.IBucket[]) => generateDefaultDimensionsForPointsCharts(convertBucketsToAFM(buckets));
 
 /**
  * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
