@@ -363,6 +363,10 @@ export function getScatterPlotSeries(
         }];
 }
 
+function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
+    return bucketEmptyFlags.filter(bucketEmpyFlag => bucketEmpyFlag).length;
+}
+
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
@@ -380,11 +384,14 @@ export function getBubbleChartSeries(
     return executionResultData.map((resData: any, index: number) => {
         let data: any = [];
         if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
+            const emptyBucketsCount = getCountOfEmptyBuckets(
+                [primaryMeasuresBucketEmpty, secondaryMeasuresBucketEmpty]
+            );
             data = [{
                 x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
-                y: !secondaryMeasuresBucketEmpty ?
-                    (primaryMeasuresBucketEmpty ? parseValue(resData[0]) : parseValue(resData[1])) : 0,
-                z: parseFloat(resData[2]) // we want to allow NaN on z
+                y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
+                // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
+                z: parseFloat(resData[2 - emptyBucketsCount])
             }];
         }
         return {

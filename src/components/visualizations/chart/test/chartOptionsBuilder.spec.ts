@@ -766,10 +766,12 @@ describe('chartOptionsBuilder', () => {
                     buckets: [
                         {
                             localIdentifier: 'measures',
-                            items: [ dummyBucketItem
-                            ]
+                            items: [ dummyBucketItem ]
                         }, {
                             localIdentifier: 'secondary_measures',
+                            items: [ dummyBucketItem ]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
                             items: [ dummyBucketItem ]
                         }
                     ]
@@ -796,15 +798,18 @@ describe('chartOptionsBuilder', () => {
                 expect(series).toEqual(expectedSeries);
             });
 
-            it('should fill X and Y with zeroes when measure buckets are empty', () => {
+            it('should fill X and Y with zeroes when X and Y measure buckets are empty', () => {
                 const executionResultData = [
-                    [ 1, 2, 3],
-                    [ 4, 5, 6]
+                    [3],
+                    [6]
                 ];
                 const stackByAttribute = false;
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
-                    buckets: [] as any
+                    buckets: [{
+                        localIdentifier: 'tertiary_measures',
+                        items: [dummyBucketItem]
+                    }]
                 };
                 const colorPallete = ['red', 'green'];
 
@@ -830,8 +835,8 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill Y with x values when primary bucket is empty but secondary is not', () => {
                 const executionResultData = [
-                    [ 1, 2, 3],
-                    [ 4, 5, 6]
+                    [ 1, 3],
+                    [ 4, 6]
                 ];
                 const stackByAttribute = false;
                 const mdObject = {
@@ -840,6 +845,9 @@ describe('chartOptionsBuilder', () => {
                         {
                             localIdentifier: 'secondary_measures',
                             items: [ dummyBucketItem ]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
                         }
                     ]
                 };
@@ -856,6 +864,151 @@ describe('chartOptionsBuilder', () => {
                         color: 'green',
                         legendIndex: 1,
                         data: [{ x: 0, y: 4, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill X with x and Z with z values when secondary bucket is empty', () => {
+                const executionResultData = [
+                    [1, 3],
+                    [4, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 0, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 0, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill Z with NaNs when tertiary bucket is empty', () => {
+                const executionResultData = [
+                    [1, 3],
+                    [4, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 3, z: NaN }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 6, z: NaN }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should handle null in result', () => {
+                const executionResultData = [
+                    [null, 2, 3],
+                    [4, null, 6],
+                    [7, 8, null]
+                ];
+                const stackByAttribute = {
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                name: 'abc'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'def'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'ghi'
+                            }
+                        }
+                    ]
+                };
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green', 'blue'];
+
+                const expectedSeries = [
+                    {
+                        name: 'abc',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [] as any
+                    }, {
+                        name: 'def',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: []
+                    }, {
+                        name: 'ghi',
+                        color: 'blue',
+                        legendIndex: 2,
+                        data: []
                     }
                 ];
                 const series = getBubbleChartSeries(
