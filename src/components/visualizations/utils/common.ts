@@ -49,6 +49,10 @@ export function getAttributeElementIdFromAttributeElementUri(attributeElementUri
     return attributeElementUri.slice(attributeElementUri.lastIndexOf(match) + match.length);
 }
 
+export function isRotationInRange(rotation: number, min: number, max: number) {
+    return rotation >= min && rotation <= max;
+}
+
 export const isTable = isEqual(VisualizationTypes.TABLE);
 export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
 export const isBarChart = isEqual(VisualizationTypes.BAR);

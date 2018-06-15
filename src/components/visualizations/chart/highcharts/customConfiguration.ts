@@ -21,7 +21,8 @@ import {
     isBarChart,
     isColumnChart,
     isOneOfTypes,
-    isAreaChart
+    isAreaChart,
+    isRotationInRange
 } from '../../utils/common';
 import {
     shouldFollowPointer,
@@ -74,6 +75,40 @@ function formatAsPercent() {
 
 function isInPercent(format: string = '') {
     return format.includes('%');
+}
+
+function formatOverlapping() {
+    const chartHeight = get(this, 'chart.chartHeight', 1);
+    const categoriesCount = get(this, 'axis.categories', []).length;
+    const width = Math.floor(chartHeight / categoriesCount);
+    const pixelOffset = 20;
+
+    const finalWidth = Math.max(0, width - pixelOffset);
+
+    return (
+        `<div align="center" style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">`
+        + this.value + '</div>'
+    );
+}
+
+function hideOverlappedLabels(chartOptions: any) {
+    const rotation = Number(get(chartOptions, 'xAxisProps.rotation', '0'));
+
+    // Set only for bar chart and labels are rotated by 90
+    if (isBarChart(chartOptions.type) && isRotationInRange(rotation, 75, 105)) {
+        const { xAxes = [] }: { xAxes: IAxis[]} = chartOptions;
+
+        return {
+            xAxis: xAxes.map(axis => (axis) ? {
+                labels: {
+                    useHTML: true,
+                    formatter: formatOverlapping
+                }
+            } : {})
+        };
+    }
+
+    return {};
 }
 
 function getShowInPercentConfiguration(chartOptions: any) {
@@ -671,6 +706,7 @@ export function getCustomizedConfiguration(chartOptions: any) {
         getAxesConfiguration,
         getTitleConfiguration,
         getStackingConfiguration,
+        hideOverlappedLabels,
         getShowInPercentConfiguration,
         getLabelsConfiguration,
         getDataConfiguration,
