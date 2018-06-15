@@ -44,7 +44,7 @@ export function getPoPSuffix(measureDefinitionType: IMeasureDefinitionType, loca
 
     switch (measureDefinitionType) {
         case 'overPeriodMeasureDefinition': {
-            translationId += 'sp_year_ago';
+            translationId += 'same_period_year_ago';
             break;
         }
         case 'popMeasureDefinition':
