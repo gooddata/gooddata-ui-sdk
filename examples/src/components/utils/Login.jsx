@@ -37,7 +37,15 @@ export const LoginFormUncontrolled = (props) => {
                 text-align: center;
             }
 
-            form > div {
+            .LoginLogo {
+                margin-bottom: 10px;
+            }
+
+            .LoginForm {
+                width: 100%;
+            }
+
+            .LoginForm > div {
                 margin: 20px 0;
             }
 
@@ -53,8 +61,8 @@ export const LoginFormUncontrolled = (props) => {
                 text-align: left;
             }
         `}</style>
-        <img src="https://secure.gooddata.com/images/logo-new.png" alt="GoodData" style={{ height: 70 }} />
-        <form onSubmit={handleSubmit}>
+        <img src="https://secure.gooddata.com/images/logo-new.png" alt="GoodData" style={{ height: 70 }} className="LoginLogo" />
+        <form className="LoginForm" onSubmit={handleSubmit}>
             <h1>Sign in to the Live&nbsp;Examples</h1>
             <p>Accessing Live Examples requires a unique one-time <Link to="/registration">registration</Link> even if you already have a GoodData account.</p>
 
