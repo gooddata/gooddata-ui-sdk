@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/%40gooddata%2Freact-components.svg)](https://www.npmjs.com/package/@gooddata/react-components) 
+
 # GoodData.UI React components
 > A React-based JavaScript library for building data-driven applications
 
