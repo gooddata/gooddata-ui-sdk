@@ -52,6 +52,16 @@ git push heroku HEAD:master
 heroku open
 ```
 
+### Run Live Examples Locally
+To run *GoodData.UI Live Examples* locally:
+
+```bash
+git clone <this-repository>
+cd  <repository-folder>
+yarn install --pure-lockfile
+yarn examples
+```
+
 #### NPM package publishing
 ```bash
 # only for internal gooddata developers
