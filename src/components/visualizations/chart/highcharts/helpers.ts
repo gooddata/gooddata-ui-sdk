@@ -78,6 +78,8 @@ export const showDataLabelInAxisRange = (point: any, minAxisValue: number) => {
     const { dataLabel } = point;
     if (dataLabel && (point.y < minAxisValue)) {
         dataLabel.hide();
+    } else if (dataLabel) {
+        dataLabel.show();
     }
 };
 
