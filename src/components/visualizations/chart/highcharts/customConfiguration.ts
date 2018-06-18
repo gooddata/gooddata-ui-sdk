@@ -25,8 +25,7 @@ import {
 } from '../../utils/common';
 import {
     shouldFollowPointer,
-    shouldStartOnTick,
-    shouldEndOnTick
+    shouldStartOrEndOnTick
 } from '../../../visualizations/chart/highcharts/helpers';
 
 const {
@@ -585,6 +584,7 @@ function getAxesConfiguration(chartOptions: any) {
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
             const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
+            const startOrEndOnTick = shouldStartOrEndOnTick(max, min);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -617,8 +617,8 @@ function getAxesConfiguration(chartOptions: any) {
                 ...visibleProp,
                 ...maxProp,
                 ...minProp,
-                startOnTick: shouldStartOnTick(max, min),
-                endOnTick: shouldEndOnTick(max, min)
+                startOnTick: startOrEndOnTick,
+                endOnTick: startOrEndOnTick
             };
         }),
 
