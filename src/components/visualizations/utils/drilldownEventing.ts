@@ -30,6 +30,7 @@ export interface IDrillIntersection {
 
 export interface IHighchartsPointObject extends Highcharts.PointObject {
     drillContext: IDrillIntersection[];
+    z?: number; // is missing in HCH's interface
 }
 
 export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
@@ -163,11 +164,13 @@ function composeDrillContextGroup({ points }: IHighchartsChartDrilldownEvent, ch
 }
 
 function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: VisType) {
+    const zProp = isNaN(point.z) ? {} : { z: point.z };
     return {
         type: chartType,
         element: getClickableElementNameByChartType(chartType),
         x: point.x,
         y: point.y,
+        ...zProp,
         intersection: normalizeIntersectionElements(point.drillContext)
     };
 }
