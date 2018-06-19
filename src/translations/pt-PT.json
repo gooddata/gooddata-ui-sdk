@@ -30,7 +30,7 @@
    "visualization.ErrorDescriptionGeneric": "Contacte o seu administrador.",
    "visualization.ErrorMessageDataTooLarge": "Demasiados pontos de dados para apresentar",
    "visualization.ErrorDescriptionDataTooLarge": "Tentar aplicar filtros.",
-   "visualization.ErrorMessageNoData": "Nenhum dado",
+   "visualization.ErrorMessageNoData": "Sem dados",
    "visualization.ErrorDescriptionNoData": "Não existem dados para a sua seleção de filtro.",
    "visualization.ErrorMessageKpi": "Erro",
    "gs.filter.loading": "A carregar filtro…",
