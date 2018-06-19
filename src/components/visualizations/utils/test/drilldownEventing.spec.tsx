@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import cloneDeep = require('lodash/cloneDeep');
 import { AFM } from '@gooddata/typings';
 
 import {
@@ -185,6 +186,9 @@ describe('Drilldown Eventing', () => {
         }
     };
 
+    const pointClickWitZEventData = cloneDeep(pointClickEventData);
+    (pointClickWitZEventData as any as IHighchartsChartDrilldownEvent).point.z = 12000;
+
     it('should get clickable chart element name', () => {
         const fn = getClickableElementNameByChartType;
         expect(fn(VisualizationTypes.LINE)).toBe('point');
@@ -253,6 +257,72 @@ describe('Drilldown Eventing', () => {
                 element: 'point',
                 x: 1,
                 y: 2,
+                intersection: [
+                    {
+                        id: 'id',
+                        title: 'title',
+                        header: {
+                            identifier: 'identifier1',
+                            uri: 'uri1'
+                        }
+                    },
+                    {
+                        id: 'id',
+                        title: 'title',
+                        header: {
+                            identifier: 'identifier2',
+                            uri: 'uri2'
+                        }
+                    },
+                    {
+                        id: 'id',
+                        title: 'title',
+                        header: {
+                            identifier: 'identifier3',
+                            uri: 'uri3'
+                        }
+                    }
+                ]
+            }
+        });
+    });
+
+    it('should correctly handle z coordinate of point', () => {
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const target = { dispatchEvent: jest.fn() };
+
+        chartClick(
+            drillConfig,
+            pointClickWitZEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.BUBBLE
+        );
+
+        jest.runAllTimers();
+
+        expect(target.dispatchEvent).toHaveBeenCalled();
+
+        expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
+            executionContext: {
+                measures: [
+                    {
+                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                        definition: {
+                            measure: {
+                                item: {
+                                    uri: ADHOC_MEASURE_URI
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            drillContext: {
+                type: 'bubble',
+                element: 'point',
+                x: 1,
+                y: 2,
+                z: 12000,
                 intersection: [
                     {
                         id: 'id',
