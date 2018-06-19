@@ -1,6 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import { shouldFollowPointer } from '../helpers';
+import { shouldFollowPointer, shouldStartOrEndOnTick } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
+
+describe('shouldStartOrEndOnTick', () => {
+    it('should return true when no max or min are set', () => {
+        expect(shouldStartOrEndOnTick(null, null)).toBeTruthy();
+    });
+
+    it('should return false when min or max are set', () => {
+        expect(shouldStartOrEndOnTick('20', '5')).toBeFalsy();
+    });
+
+    it('should return true when min is greater than max', () => {
+        expect(shouldStartOrEndOnTick('20', '30')).toBeTruthy();
+    });
+});
 
 describe('shouldFollowPointer', () => {
     const nonStackedChartOptions = {

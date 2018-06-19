@@ -193,16 +193,14 @@ function getStackedMaxValue(series: ISeriesItem[]) {
     return max(stackSums);
 }
 
-export function shouldStartOnTick(max: string, min: string) {
-    if (!max && min) {
-        return Number(min) < 0;
+export function shouldStartOrEndOnTick(max: string, min: string) {
+    if (max && min) {
+        return Number(min) > Number(max);
     }
-    return true;
-}
 
-export function shouldEndOnTick(max: string, min: string) {
-    if (max && !min) {
-        return Number(max) < 0;
+    if (!max && !min) {
+        return true;
     }
-    return true;
+
+    return false;
 }
