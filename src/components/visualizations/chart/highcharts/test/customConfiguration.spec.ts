@@ -101,6 +101,24 @@ describe('getCustomizedConfiguration', () => {
         expect(result.xAxis[0]).toEqual(expectedResult);
     });
 
+    it ('should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            type: 'bar',
+            xAxisProps: {
+                rotation: '90'
+            }
+        });
+
+        expect(result.xAxis[0].labels.formatter).not.toBeUndefined();
+    });
+
+    it ('shouldn\'t set formatter for xAxis by default', () => {
+        const result = getCustomizedConfiguration(chartOptions);
+
+        expect(result.xAxis[0].labels.formatter).toBeUndefined();
+    });
+
     it ('should set startOnTick on true when min or max is not defined', () => {
         const result = getCustomizedConfiguration(chartOptions);
 
