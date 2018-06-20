@@ -131,7 +131,9 @@ export function getShapeAttributes(point: any) {
 export function getDataLabelAttributes(point: any) {
     const dataLabel = get(point, 'dataLabel', null);
     const parentGroup = get(point, 'dataLabel.parentGroup', null);
-    const labelVisible = dataLabel && dataLabel.x > 0 && dataLabel.y > 0; // ONE-3011 (label is in axis range)
+
+    const labelSafeOffset = -100; // labels outside axis range have typically -9999, hide them
+    const labelVisible = dataLabel && dataLabel.x > labelSafeOffset && dataLabel.y > labelSafeOffset;
 
     if (dataLabel && parentGroup && labelVisible) {
         return {
