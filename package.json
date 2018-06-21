@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "@gooddata/gooddata-js": "6.1.1",
-    "@gooddata/goodstrap": "56.0.2",
+    "@gooddata/goodstrap": "56.1.0",
     "@gooddata/js-utils": "^2.0.1",
     "@gooddata/numberjs": "^3.1.2",
     "@gooddata/typings": "2.1.0",
