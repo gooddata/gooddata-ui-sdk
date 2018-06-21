@@ -1,8 +1,79 @@
 // (C) 2007-2018 GoodData Corporation
-import { shouldFollowPointer, showDataLabelInAxisRange, shouldStartOrEndOnTick } from '../helpers';
+import {
+    shouldFollowPointer,
+    showDataLabelInAxisRange,
+    shouldStartOrEndOnTick,
+    getDataLabelAttributes
+} from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 
 describe('helpers', () => {
+    describe('getDataLabelAttributes', () => {
+        const hiddenAttributes = {
+            x: 0,
+            y: 0,
+            height: 0,
+            width: 0
+        };
+
+        it('should position data label when in range', () => {
+            const result = getDataLabelAttributes({
+                dataLabel: {
+                    parentGroup: {
+                        translateX: 0,
+                        translateY: 0
+                    },
+                    x: 1,
+                    y: 1,
+                    width: 100,
+                    height: 100
+                }
+            });
+
+            expect(result).toEqual({
+                x: 1,
+                y: 1,
+                width: 100,
+                height: 100
+            });
+        });
+
+        it('should hide data label when outside range', () => {
+            const result = getDataLabelAttributes({
+                dataLabel: {
+                    parentGroup: {
+                        translateX: 0,
+                        translateY: 0
+                    },
+                    x: -200,
+                    y: -200,
+                    width: 100,
+                    height: 100
+                }
+            });
+
+            expect(result).toEqual(hiddenAttributes);
+        });
+
+        it('should hide label when label not present on point', () => {
+            const result = getDataLabelAttributes({
+                dataLabel: null
+            });
+
+            expect(result).toEqual(hiddenAttributes);
+        });
+
+        it('should hide label when label present but parentgroup missing', () => {
+            const result = getDataLabelAttributes({
+                dataLabel: {
+                    parentGroup: null
+                }
+            });
+
+            expect(result).toEqual(hiddenAttributes);
+        });
+    });
+
     describe('shouldStartOrEndOnTick', () => {
         it('should return true when no max or min are set', () => {
             expect(shouldStartOrEndOnTick(null, null)).toBeTruthy();
