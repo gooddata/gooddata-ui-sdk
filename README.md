@@ -40,7 +40,7 @@ You have two options:
   - [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/gooddata-js@latest/dist/) from the latest release
   - build on your own:
     ```bash
-    git clone https://github.com/zbycz/gooddata-js.git
+    git clone https://github.com/gooddata/gooddata-js.git
     cd gooddata-js
     git checkout v6.0.0 # choose a version, or omit this line to use unstable code from `master` branch
     yarn install --pure-lockfile
