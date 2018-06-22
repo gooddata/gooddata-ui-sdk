@@ -27,7 +27,18 @@ async function createMockedError(status: number, body: string = '{}') {
     return new ApiResponseError('Response error', response, responseBody);
 }
 
+async function createTypeError() {
+    return new TypeError('TypeError message');
+}
+
 describe('convertErrors', async () => {
+    it('should return RuntimeError with message when error type is not ApiResponseError', async () => {
+        const e = convertErrors(await createTypeError());
+
+        expect(e).toBeInstanceOf(RuntimeError);
+        expect(e.message).toEqual('TypeError message');
+    });
+
     it('should return `NO_DATA` error', async () => {
         const e = convertErrors(await createMockedError(204));
 

@@ -15,6 +15,10 @@ function getJSONFromText(data: string): object {
     }
 }
 
+function isApiResponseError(error: TypeError | ApiResponseError): error is ApiResponseError {
+    return (error as ApiResponseError).response !== undefined;
+}
+
 export interface IErrorMap {
     [key: string]: {
         icon?: string;
@@ -51,7 +55,12 @@ export function generateErrorMap(intl: InjectedIntl): IErrorMap {
     return errorMap;
 }
 
-export function convertErrors(error: ApiResponseError): RuntimeError {
+// CAREFUL: error can also be of different type than listed
+export function convertErrors(error: ApiResponseError | TypeError): RuntimeError {
+    if (!isApiResponseError(error)) {
+        return new RuntimeError(error.message, error);
+    }
+
     const errorCode: number = error.response.status;
     switch (errorCode) {
         case HttpStatusCodes.NO_CONTENT:

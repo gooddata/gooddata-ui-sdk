@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import { ApiResponseError } from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
 import { MEASUREGROUP } from '../../constants/dimensions';
 
@@ -162,9 +163,10 @@ const attributeOnlyResponse: Execution.IExecutionResponses = {
     }
 };
 
-const tooLargeResponse: Execution.IError = {
+const tooLargeResponse: ApiResponseError = {
     name: 'Error 413',
     message: 'Response is too large',
+    cause: null,
     response: {
         status: 413,
         body: null as ReadableStream | null, // tslint:disable-line
@@ -184,12 +186,14 @@ const tooLargeResponse: Execution.IError = {
         arrayBuffer: jest.fn(),
         blob: jest.fn(),
         formData: jest.fn()
-    }
+    },
+    responseBody: ''
 };
 
-const badRequestResponse: Execution.IError = {
+const badRequestResponse: ApiResponseError = {
     name: 'Error 400',
     message: 'Bad request',
+    cause: null,
     response: {
         status: 400,
         body: null as ReadableStream | null, // tslint:disable-line
@@ -209,7 +213,8 @@ const badRequestResponse: Execution.IError = {
         arrayBuffer: jest.fn(),
         blob: jest.fn(),
         formData: jest.fn()
-    }
+    },
+    responseBody: ''
 };
 
 const oneMeasureAfm: AFM.IAfm = {
