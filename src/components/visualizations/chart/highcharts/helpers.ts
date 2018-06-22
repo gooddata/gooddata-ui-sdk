@@ -9,6 +9,8 @@ import initial = require('lodash/initial');
 import tail = require('lodash/tail');
 import isEmpty = require('lodash/isEmpty');
 import maxBy = require('lodash/maxBy');
+import minBy = require('lodash/minBy');
+import min = require('lodash/min');
 import max = require('lodash/max');
 import sum = require('lodash/sum');
 
@@ -154,35 +156,51 @@ export function getDataLabelAttributes(point: any) {
 
 export function shouldFollowPointer(chartOptions: any) {
     const yMax = Number(get(chartOptions, 'yAxisProps.max'));
+    const yMin = Number(get(chartOptions, 'yAxisProps.min'));
 
-    if (!yMax) {
+    if (!yMax && !yMin) {
         return false;
     }
 
-    const maxDataValue = getMaxDataValue(chartOptions);
+    const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
 
-    return yMax && maxDataValue > yMax;
+    return (yMax && maxDataValue > yMax) || (yMin && minDataValue < yMin);
 }
 
-function getNonStackedMaxvalue(series: any): number {
+function getNonStackedMaxValue(series: any): number {
     return series.reduce((maxValue: number, serie: ISeriesItem) => {
         const maxSerieValue = getSerieMaxDataValue(serie.data).y;
         return maxValue > maxSerieValue ? maxValue : maxSerieValue;
     }, 0);
 }
 
-function getMaxDataValue(chartOptions: any) {
+function getNonStackedMinValue(series: any, startValue: number): number {
+    return series.reduce((minValue: number, serie: ISeriesItem) => {
+        const minSerieValue = getSerieMinDataValue(serie.data).y;
+        return minValue < minSerieValue ? minValue : minSerieValue;
+    }, startValue);
+}
+
+function getDataExtremeDataValues(chartOptions: any) {
     const series = chartOptions.data.series;
 
     const maxDataValue = chartOptions.hasStackByAttribute
         ? getStackedMaxValue(chartOptions.data.series)
-        : getNonStackedMaxvalue(series);
+        : getNonStackedMaxValue(series);
 
-    return maxDataValue;
+    const minDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMinValue(chartOptions.data.series)
+        : getNonStackedMinValue(series, maxDataValue);
+
+    return { minDataValue, maxDataValue };
 }
 
 function getSerieMaxDataValue(serieData: ISeriesDataItem[]): ISeriesDataItem {
     return maxBy(serieData, (item: ISeriesDataItem) => item.y);
+}
+
+function getSerieMinDataValue(serieData: ISeriesDataItem[]): ISeriesDataItem {
+    return minBy(serieData, (item: ISeriesDataItem) => item.y);
 }
 
 function getStackedMaxValue(series: ISeriesItem[]) {
@@ -195,6 +213,18 @@ function getStackedMaxValue(series: ISeriesItem[]) {
     }
 
     return max(stackSums);
+}
+
+function getStackedMinValue(series: ISeriesItem[]) {
+    const seriesData = flatten(zip(series.map(serie => serie.data)));
+    const stackSums: number[] = [];
+
+    // tslint:disable-next-line:forin
+    for (const index in seriesData[0]) {
+        stackSums.push(sum(seriesData.map(data => data[index].y)));
+    }
+
+    return min(stackSums);
 }
 
 export function shouldStartOrEndOnTick(max: string, min: string) {
