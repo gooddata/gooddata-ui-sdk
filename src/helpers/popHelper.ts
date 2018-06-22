@@ -78,18 +78,18 @@ export function fillPoPTitlesAndAliases(
             const masterMeasure = getMasterMeasure(measureBucketItems,
                 get<string>(popDefinition, 'measureIdentifier'));
 
-            const originalTitle = get(masterMeasure, ['measure', 'title']);
-            const originalAlias = get(masterMeasure, ['measure', 'alias']);
+            const masterMeasureTitle = get(masterMeasure, ['measure', 'title']);
+            const masterMeasureAlias = get(masterMeasure, ['measure', 'alias']);
 
-            const title = `${originalTitle}${popSuffix}`;
-            const alias = `${originalAlias}${popSuffix}`;
+            const derivedMeasureTitleBase = masterMeasureAlias === undefined
+                ? masterMeasureTitle
+                : masterMeasureAlias;
 
-            const titleProp = originalTitle ? { title } : {};
-            const aliasProp = originalAlias ? { alias } : {};
+            const titleProp = { title: `${derivedMeasureTitleBase}${popSuffix}` };
+
             set(bucketItem, 'measure', {
                 ...bucketItem.measure,
-                ...titleProp,
-                ...aliasProp
+                ...titleProp
             });
         }
         return bucketItem;

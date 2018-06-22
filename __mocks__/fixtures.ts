@@ -391,7 +391,86 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 contributor: '/gdc/account/profile/26728eacad349ba6c4c04c5e5cc59437'
             }
         }
-    }
+    },
+    {
+        visualizationObject: {
+            content: {
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/table'
+                },
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'm1',
+                                    title: '# Accounts with AD Query',
+                                    alias: 'AD Queries',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_pop',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'm1',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'attribute',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'a1',
+                                    displayForm: {
+                                        uri: '/gdc/md/myproject/obj/1515'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                properties: JSON.stringify({
+                    sortItems: [
+                        {
+                            attributeSortItem: {
+                                direction: 'asc',
+                                attributeIdentifier: 'a1'
+                            }
+                        }
+                    ]
+                })
+            },
+            meta: {
+                author: '/gdc/account/profile/johndoe',
+                uri: '/gdc/md/myproject/obj/2',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aa5CD0OcfSpg',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'PoP alias test',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/johndoe'
+            }
+        }
+    },
 ];
 
 export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVisualizationClass }] = [
