@@ -7,7 +7,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { Treemap as CoreTreemap } from '../core/Treemap';
-import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions';
+import { getTreemapDimensionsFromAFM } from '../../helpers/dimensions';
 
 /**
  * AFM Treemap
@@ -16,6 +16,6 @@ import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions
  */
 export const Treemap = dataSourceProvider<ICommonChartProps>(
     CoreTreemap,
-    generateDefaultDimensionsForRoundChart,
+    getTreemapDimensionsFromAFM,
     'Treemap'
 );

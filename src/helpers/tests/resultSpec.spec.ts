@@ -145,11 +145,11 @@ describe('getStackingResultSpec', () => {
                 items: [MEASURE_1]
             },
             {
-                localIdentifier: 'attributes',
+                localIdentifier: 'attribute',
                 items: [ATTRIBUTE_2]
             },
             {
-                localIdentifier: 'stacks',
+                localIdentifier: 'stack',
                 items: [ATTRIBUTE_1]
             }
         ];

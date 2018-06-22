@@ -3,7 +3,7 @@ import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { InjectedIntlProps } from 'react-intl';
 import { ITableSortBubbleContentProps, TableSortBubbleContent } from '../TableSortBubbleContent';
-import { ASC, DESC } from '../constants/sort';
+import { ASC, DESC } from '../../../../constants/sort';
 import { withIntl } from '../../utils/intlUtils';
 
 describe('TableSortBubbleContent', () => {

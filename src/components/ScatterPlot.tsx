@@ -7,6 +7,7 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
 import { generateDefaultDimensionsForPointsCharts } from '../helpers/dimensions';
 import { getResultSpec } from '../helpers/resultSpec';
+import { MEASURES, SECONDARY_MEASURES, ATTRIBUTE } from '../constants/bucketNames';
 
 export interface IScatterPlotBucketProps {
     xAxisMeasure?: VisualizationObject.IMeasure;
@@ -32,15 +33,15 @@ const generateScatterDimensionsFromBuckets =
 export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.xAxisMeasure ? [props.xAxisMeasure] : []
         },
         {
-            localIdentifier: 'secondary_measures',
+            localIdentifier: SECONDARY_MEASURES,
             items: props.yAxisMeasure ? [props.yAxisMeasure] : []
         },
         {
-            localIdentifier: 'attribute',
+            localIdentifier: ATTRIBUTE,
             items: props.attribute ? [props.attribute] : []
         }
     ];

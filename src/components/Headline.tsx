@@ -6,6 +6,7 @@ import { VisualizationObject } from '@gooddata/typings';
 import { Headline as AfmHeadline } from './afm/Headline';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
+import { MEASURES } from '../constants/bucketNames';
 
 export interface IHeadlineBucketProps {
     primaryMeasure: VisualizationObject.IMeasure;
@@ -26,7 +27,7 @@ type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
 export function Headline(props: IHeadlineProps): JSX.Element {
     const buckets = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.secondaryMeasure ? [props.primaryMeasure, props.secondaryMeasure] : [props.primaryMeasure]
         }
     ];

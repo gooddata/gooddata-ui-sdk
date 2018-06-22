@@ -22,7 +22,8 @@ import {
     isColumnChart,
     isOneOfTypes,
     isAreaChart,
-    isRotationInRange
+    isRotationInRange,
+    isTreemap
 } from '../../utils/common';
 import {
     shouldFollowPointer,
@@ -283,16 +284,18 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         });
     };
 
-    return (
+    const tooltipContent = tooltipCallback(this.point); // null disables whole tooltip
+
+    return tooltipContent !== null ? (
         `<div class="hc-tooltip">
             <span class="stroke" style="${strokeStyle}"></span>
             <div class="content">
-                ${tooltipCallback(this.point)}
+                ${tooltipContent}
             </div>
             <div class="${getTailClasses('tail1')}" ${tailStyle}></div>
             <div class="${getTailClasses('tail2')}" ${tailStyle}></div>
         </div>`
-    );
+    ) : null;
 }
 
 function formatLabel(value: any, format: any) {
@@ -311,6 +314,13 @@ function labelFormatter() {
 
 function labelFormatterHeatMap(options: any) {
     return formatLabel(this.point.value, options.formatGD);
+}
+
+function level1LabelsFormatter() {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.node.val'), get(this, 'point.format'))})`;
+}
+function level2LabelsFormatter() {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'))})`;
 }
 
 // check whether series contains only positive values, not consider nulls
@@ -352,9 +362,58 @@ function getTooltipConfiguration(chartOptions: any) {
     } : {};
 }
 
+function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
+    const smallLabelInCenter = {
+        dataLabels: {
+            enabled: true,
+            padding: 2,
+            formatter: level2LabelsFormatter,
+            allowOverlap: false,
+            style
+        }
+    };
+    if (isMultiLevel) {
+        return {
+            levels: [{
+                level: 1,
+                dataLabels: {
+                    enabled: true,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    padding: 5,
+                    style: {
+                        ...style,
+                        fontSize: '14px'
+                    },
+                    formatter: level1LabelsFormatter,
+                    allowOverlap: false
+                }
+            }, {
+                level: 2,
+                ...smallLabelInCenter
+            }]
+        };
+    } else {
+        return {
+            levels: [{
+                level: 1,
+                ...smallLabelInCenter
+            }]
+        };
+    }
+}
+
 function getLabelsConfiguration(chartOptions: any) {
-    const { stacking, yAxes = [] }: {stacking: boolean; yAxes: IAxis[]} = chartOptions;
-    const style = stacking ? {
+    const {
+        stacking,
+        yAxes = [],
+        type
+    }: {
+        stacking: boolean;
+        yAxes: IAxis[];
+        type: string;
+    } = chartOptions;
+    const style = stacking || isTreemap(type) ? {
         color: '#ffffff',
         textShadow: '0 0 1px #000000'
     } : {
@@ -362,7 +421,7 @@ function getLabelsConfiguration(chartOptions: any) {
         textShadow: 'none'
     };
 
-    const drilldown = stacking ? {
+    const drilldown = stacking || isTreemap(type) ? {
         activeDataLabelStyle: {
             color: '#ffffff'
         }
@@ -393,6 +452,9 @@ function getLabelsConfiguration(chartOptions: any) {
                 dataLabels: {
                     formatter: labelFormatterHeatMap
                 }
+            },
+            treemap: {
+                ...getTreemapLabelsConfiguration(!!stacking, style)
             }
         },
         yAxis
@@ -572,11 +634,12 @@ function getHoverStyles({ type }: any, config: any) {
                     ...series,
                     data: series.data.map((dataItemOrig: any) => {
                         const dataItem = cloneDeep(dataItemOrig);
+                        const drilldown = get(dataItem, 'drilldown');
 
-                        set(dataItem, 'states.hover.brightness', dataItem.drilldown ?
+                        set(dataItem, 'states.hover.brightness', drilldown ?
                             HOVER_BRIGHTNESS : MINIMUM_HC_SAFE_BRIGHTNESS);
 
-                        if (!dataItem.drilldown) {
+                        if (!drilldown) {
                             set(dataItem, 'halo.size', 0); // see plugins/pointHalo.js
                         }
 
