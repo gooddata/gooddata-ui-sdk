@@ -131,6 +131,10 @@ describe('helpers', () => {
                             {
                                 name: 'data2',
                                 y: 150
+                            },
+                            {
+                                name: 'data3',
+                                y: -12
                             }
                         ]
                     }
@@ -156,6 +160,10 @@ describe('helpers', () => {
                             {
                                 name: 'data2',
                                 y: 75
+                            },
+                            {
+                                name: 'data3',
+                                y: -12
                             }
                         ]
                     }, {
@@ -169,6 +177,10 @@ describe('helpers', () => {
                             {
                                 name: 'data2',
                                 y: 75
+                            },
+                            {
+                                name: 'data3',
+                                y: -12
                             }
                         ]
                     }
@@ -191,12 +203,23 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...nonStackedChartOptions,
                     yAxisProps: {
-                        min: 30,
+                        min: -30,
                         max: 200
                     }
                 });
 
                 expect(result).toBeFalsy();
+            });
+
+            it('should return true when min is in negative value', () => {
+                const result = shouldFollowPointer({
+                    ...nonStackedChartOptions,
+                    yAxisProps: {
+                        min: -10
+                    }
+                });
+
+                expect(result).toBeTruthy();
             });
 
             it('should return true when min and max are within data values', () => {
@@ -227,7 +250,7 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...stackedChartOptions,
                     yAxisProps: {
-                        min: 30,
+                        min: -30,
                         max: 200
                     }
                 });
