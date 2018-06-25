@@ -28,9 +28,9 @@ const generateBubbleDimensionsFromBuckets =
     (buckets: VisualizationObject.IBucket[]) => generateDefaultDimensionsForPointsCharts(convertBucketsToAFM(buckets));
 
 export interface IBubbleChartBucketProps {
-    xAxisMeasure: VisualizationObject.IMeasure;
-    yAxisMeasure: VisualizationObject.IMeasure;
-    size: VisualizationObject.IMeasure;
+    xAxisMeasure?: VisualizationObject.IMeasure;
+    yAxisMeasure?: VisualizationObject.IMeasure;
+    size?: VisualizationObject.IMeasure;
     viewBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
