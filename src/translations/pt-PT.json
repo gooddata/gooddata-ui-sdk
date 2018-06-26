@@ -33,6 +33,10 @@
    "visualization.ErrorMessageNoData": "Sem dados",
    "visualization.ErrorDescriptionNoData": "Não existem dados para a sua seleção de filtro.",
    "visualization.ErrorMessageKpi": "Erro",
+   "visualization.ErrorMessageUnauthorized": "Não autorizado",
+   "visualization.ErrorDescriptionUnauthorized": "Lamentamos, mas não tem acesso a este insight. Inicie sessão ou solicite permissões ao seu administrador.",
+   "visualization.ErrorMessageNotFound": "Lamentamos, mas não foi possível encontrar este insight",
+   "visualization.ErrorDescriptionNotFound": "O insight com este URL não existe.",
    "gs.filter.loading": "A carregar filtro…",
    "gs.filter.error": "Erro ao carregar filtro",
    "gs.list.loading": "A carregar lista…",
@@ -44,5 +48,6 @@
    "gs.list.limitExceeded": "Lamentamos, excedeu o limite ({limit}).",
    "gs.list.noItemsFound": "Nenhum item encontrado.",
    "gs.list.error": "Erro ao carregar itens da lista",
-   "measure.title.suffix.previous_year": "ano anterior"
+   "measure.title.suffix.previous_year": "ano anterior",
+   "measure.title.suffix.same_period_year_ago": "MP do ano anterior"
 }

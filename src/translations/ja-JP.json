@@ -33,6 +33,10 @@
    "visualization.ErrorMessageNoData": "データはありません",
    "visualization.ErrorDescriptionNoData": "選択したフィルターに適合するデータがありません。",
    "visualization.ErrorMessageKpi": "エラー",
+   "visualization.ErrorMessageUnauthorized": "権限がありません",
+   "visualization.ErrorDescriptionUnauthorized": "申し訳ございません。このインサイトへのアクセス権がありません。ログインするか、管理者に権限を付与してもらうよう依頼してください。",
+   "visualization.ErrorMessageNotFound": "申し訳ございません。このインサイトが見つかりません。",
+   "visualization.ErrorDescriptionNotFound": "この URL の解析は存在しません。",
    "gs.filter.loading": "フィルターを読み込み中…",
    "gs.filter.error": "フィルターの読み込みエラー",
    "gs.list.loading": "リストを読み込み中…",
@@ -44,5 +48,6 @@
    "gs.list.limitExceeded": "申し訳ございません、制限({limit})を超過しました。",
    "gs.list.noItemsFound": "アイテムが見つかりません。",
    "gs.list.error": "リストの読み込みエラー",
-   "measure.title.suffix.previous_year": "前年"
+   "measure.title.suffix.previous_year": "前年",
+   "measure.title.suffix.same_period_year_ago": "前年同期"
 }
