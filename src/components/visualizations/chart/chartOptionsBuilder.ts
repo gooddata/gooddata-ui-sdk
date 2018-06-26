@@ -374,9 +374,9 @@ export function getBubbleChartSeries(
     colorPalette: string[]
 ) {
     const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
-        .find(bucket => bucket.localIdentifier === 'measures');
+        .find(bucket => bucket.localIdentifier === MEASURES);
     const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
-        .find(bucket => bucket.localIdentifier === 'secondary_measures');
+        .find(bucket => bucket.localIdentifier === SECONDARY_MEASURES);
 
     const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
     const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
@@ -863,14 +863,21 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
             yAxes = compact([firstAxis, secondAxis]);
         }
     } else if (isScatterPlot(type) || isBubbleChart(type)) {
-        if (noPrimaryMeasures) {
-            yAxes = [{
-                ...firstMeasureGroupItem
-            }];
+        const hasSecondaryMeasure = mdObject.buckets
+            .find(m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0);
+
+        if (hasSecondaryMeasure) {
+            if (noPrimaryMeasures) {
+                yAxes = [{
+                    ...firstMeasureGroupItem
+                }];
+            } else {
+                yAxes = [{
+                    ...secondMeasureGroupItem
+                }];
+            }
         } else {
-            yAxes = [{
-                ...secondMeasureGroupItem
-            }];
+            yAxes = [{ label: '' }];
         }
     } else if (isHeatMap(type)) {
         yAxes = [{

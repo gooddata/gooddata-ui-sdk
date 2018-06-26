@@ -52,4 +52,19 @@ storiesOf('Core components/BubbleChart', module)
                 />
             </div>
         )
+    ))
+    .add('without y axis measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
     ));
