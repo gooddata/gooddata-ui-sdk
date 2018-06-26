@@ -15,7 +15,9 @@ import max = require('lodash/max');
 import sum = require('lodash/sum');
 
 import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
-import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { VisualizationTypes, VisType } from '../../../../constants/visualizationTypes';
+import { IChartConfig } from '../Chart';
+import { isBarChart } from '../../utils/common';
 
 // https://silentmatt.com/rectangle-intersection/
 export const rectanglesAreOverlapping = (r1: any, r2: any, padding: any = 0) =>
@@ -84,6 +86,13 @@ export const showDataLabelInAxisRange = (point: any, minAxisValue: number) => {
         dataLabel.show();
     }
 };
+
+export function getChartProperties(config: IChartConfig, type: VisType) {
+    return {
+        xAxisProps:  isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
+        yAxisProps: isBarChart(type) ? { ...config.xaxis } : { ...config.yaxis }
+    };
+}
 
 export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
 

@@ -3,9 +3,11 @@ import {
     shouldFollowPointer,
     showDataLabelInAxisRange,
     shouldStartOrEndOnTick,
-    getDataLabelAttributes
+    getDataLabelAttributes,
+    getChartProperties
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
+import { IChartConfig } from '../../Chart';
 
 describe('helpers', () => {
     describe('getDataLabelAttributes', () => {
@@ -71,6 +73,34 @@ describe('helpers', () => {
             });
 
             expect(result).toEqual(hiddenAttributes);
+        });
+    });
+
+    describe('getChartProperties', () => {
+        const config: IChartConfig = {
+            xaxis: {
+                rotation: '60',
+                visible: false
+            },
+            yaxis: {
+                labelsEnabled: true
+            }
+        };
+
+        it('should return properties from config', () => {
+            expect(getChartProperties(config, VisualizationTypes.COLUMN))
+                .toEqual({
+                    xAxisProps: { rotation: '60', visible: false },
+                    yAxisProps: { labelsEnabled: true }
+            });
+        });
+
+        it('should return properties from config for bar chart with switched axes', () => {
+            expect(getChartProperties(config, VisualizationTypes.BAR))
+                .toEqual({
+                    yAxisProps: { rotation: '60', visible: false },
+                    xAxisProps: { labelsEnabled: true }
+            });
         });
     });
 

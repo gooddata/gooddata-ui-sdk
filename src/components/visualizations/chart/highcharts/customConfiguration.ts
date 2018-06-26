@@ -632,6 +632,9 @@ function getAxesConfiguration(chartOptions: any) {
                 }
             };
 
+            const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
+            const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
+
             return {
                 gridLineColor: '#ebebeb',
                 labels: {
@@ -639,7 +642,8 @@ function getAxesConfiguration(chartOptions: any) {
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
-                    }
+                    },
+                    ...rotationProp
                 },
                 title: {
                     margin: 15,
@@ -666,7 +670,7 @@ function getAxesConfiguration(chartOptions: any) {
 
             const visible = get(chartOptions, 'xAxisProps.visible', true);
             const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
-
+            const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
             // for bar chart take y axis options
@@ -681,6 +685,7 @@ function getAxesConfiguration(chartOptions: any) {
                 maxPadding: 0.05,
 
                 labels: {
+                    enabled: labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
