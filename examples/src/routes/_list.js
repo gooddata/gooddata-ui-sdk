@@ -17,6 +17,7 @@ import MultipleDomains from './MultipleDomains';
 import DrillWithExternalData from './DrillWithExternalData';
 import Registration from './Registration';
 import Login from './Login';
+import AGTable from './AGTable';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -33,6 +34,7 @@ const AdvancedUseCasesWithProps = props => AdvancedUseCases({ ...props, advanced
 
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
+    { path: '/ag-table', title: 'AG Table', Component: AGTable },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },

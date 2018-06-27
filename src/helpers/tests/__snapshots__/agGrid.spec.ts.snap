@@ -1,0 +1,916 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`executionToAGGridAdapter should return grid data for executionResult 1`] = `
+Object {
+  "columnDefs": Array [
+    Object {
+      "field": "a_2211",
+      "headerName": "Location State",
+    },
+    Object {
+      "field": "a_2205",
+      "headerName": "Location Name",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_1|a_2071_1|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_1|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_1|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_1|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_1|a_2071_1",
+              "headerName": "Jan",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_1|a_2071_2|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_2|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_2|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_2|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_1|a_2071_2",
+              "headerName": "Feb",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_1|a_2071_3|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_3|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_3|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_1|a_2071_3|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_1|a_2071_3",
+              "headerName": "Mar",
+            },
+          ],
+          "field": "a_2009_1",
+          "headerName": "Q1",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_2|a_2071_4|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_4|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_4|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_4|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_2|a_2071_4",
+              "headerName": "Apr",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_2|a_2071_5|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_5|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_5|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_5|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_2|a_2071_5",
+              "headerName": "May",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_2|a_2071_6|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_6|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_6|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_2|a_2071_6|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_2|a_2071_6",
+              "headerName": "Jun",
+            },
+          ],
+          "field": "a_2009_2",
+          "headerName": "Q2",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_3|a_2071_7|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_7|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_7|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_7|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_3|a_2071_7",
+              "headerName": "Jul",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_3|a_2071_8|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_8|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_8|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_8|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_3|a_2071_8",
+              "headerName": "Aug",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_3|a_2071_9|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_9|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_9|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_3|a_2071_9|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_3|a_2071_9",
+              "headerName": "Sep",
+            },
+          ],
+          "field": "a_2009_3",
+          "headerName": "Q3",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_4|a_2071_10|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_10|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_10|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_10|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_4|a_2071_10",
+              "headerName": "Oct",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_4|a_2071_11|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_11|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_11|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_11|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_4|a_2071_11",
+              "headerName": "Nov",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "field": "a_2009_4|a_2071_12|m_0",
+                  "headerName": "$ Franchise Fees",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_12|m_1",
+                  "headerName": "$ Franchise Fees (Ad Royalty)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_12|m_2",
+                  "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+                },
+                Object {
+                  "field": "a_2009_4|a_2071_12|m_3",
+                  "headerName": "$ Franchise Fees (Ongoing Royalty)",
+                },
+              ],
+              "field": "a_2009_4|a_2071_12",
+              "headerName": "Dec",
+            },
+          ],
+          "field": "a_2009_4",
+          "headerName": "Q4",
+        },
+      ],
+      "headerName": "default (Date)/Short (Jan) (Date)/measures",
+    },
+  ],
+  "rowData": Array [
+    Object {
+      "a_2009_1|a_2071_1|m_0": "160104.5665",
+      "a_2009_1|a_2071_1|m_1": "49454.8215",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "70649.745",
+      "a_2009_1|a_2071_2|m_0": "156148.86625",
+      "a_2009_1|a_2071_2|m_1": "47826.00375",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "68322.8625",
+      "a_2009_1|a_2071_3|m_0": "154299.8485",
+      "a_2009_1|a_2071_3|m_1": "47064.6435",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "67235.205",
+      "a_2009_2|a_2071_4|m_0": "158572.501",
+      "a_2009_2|a_2071_4|m_1": "48823.971",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "69748.53",
+      "a_2009_2|a_2071_5|m_0": "152789.662",
+      "a_2009_2|a_2071_5|m_1": "46442.802",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "66346.86",
+      "a_2009_2|a_2071_6|m_0": "158587.036",
+      "a_2009_2|a_2071_6|m_1": "48829.956",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "69757.08",
+      "a_2009_3|a_2071_7|m_0": "156553.19425",
+      "a_2009_3|a_2071_7|m_1": "47992.49175",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "68560.7025",
+      "a_2009_3|a_2071_8|m_0": "147504.62125",
+      "a_2009_3|a_2071_8|m_1": "44266.60875",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "63238.0125",
+      "a_2009_3|a_2071_9|m_0": "157944.04075",
+      "a_2009_3|a_2071_9|m_1": "48565.19325",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "69378.8475",
+      "a_2009_4|a_2071_10|m_0": "156878.19175",
+      "a_2009_4|a_2071_10|m_1": "48126.31425",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "68751.8775",
+      "a_2009_4|a_2071_11|m_0": "156446.52775",
+      "a_2009_4|a_2071_11|m_1": "47948.57025",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "68497.9575",
+      "a_2009_4|a_2071_12|m_0": "130719.01675",
+      "a_2009_4|a_2071_12|m_1": "37354.88925",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "53364.1275",
+      "a_2205": "Montgomery",
+      "a_2211": "Alabama",
+    },
+    Object {
+      "a_2009_1|a_2071_1|m_0": "102537.53365",
+      "a_2009_1|a_2071_1|m_1": "25750.74915",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "36786.7845",
+      "a_2009_1|a_2071_2|m_0": "101654.7925",
+      "a_2009_1|a_2071_2|m_1": "25387.2675",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "36267.525",
+      "a_2009_1|a_2071_3|m_0": "99395.06155",
+      "a_2009_1|a_2071_3|m_1": "24456.79005",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "34938.2715",
+      "a_2009_2|a_2071_4|m_0": "102786.11785",
+      "a_2009_2|a_2071_4|m_1": "25853.10735",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "36933.0105",
+      "a_2009_2|a_2071_5|m_0": "99300.72175",
+      "a_2009_2|a_2071_5|m_1": "24417.94425",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "34882.7775",
+      "a_2009_2|a_2071_6|m_0": "101882.16835",
+      "a_2009_2|a_2071_6|m_1": "25480.89285",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "36401.2755",
+      "a_2009_3|a_2071_7|m_0": "102116.65105",
+      "a_2009_3|a_2071_7|m_1": "25577.44455",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "36539.2065",
+      "a_2009_3|a_2071_8|m_0": "95625.6898",
+      "a_2009_3|a_2071_8|m_1": "22904.6958",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "32720.994",
+      "a_2009_3|a_2071_9|m_0": "101437.23925",
+      "a_2009_3|a_2071_9|m_1": "25297.68675",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "36139.5525",
+      "a_2009_4|a_2071_10|m_0": "100896.652",
+      "a_2009_4|a_2071_10|m_1": "25075.092",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "35821.56",
+      "a_2009_4|a_2071_11|m_0": "101242.97005",
+      "a_2009_4|a_2071_11|m_1": "25217.69355",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "36025.2765",
+      "a_2009_4|a_2071_12|m_0": "87546.96",
+      "a_2009_4|a_2071_12|m_1": "19578.16",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "27968.8",
+      "a_2205": "Highland Village",
+      "a_2211": "California",
+    },
+    Object {
+      "a_2009_1|a_2071_1|m_0": "98505.35125",
+      "a_2009_1|a_2071_1|m_1": "24090.43875",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "34414.9125",
+      "a_2009_1|a_2071_2|m_0": "96586.78225",
+      "a_2009_1|a_2071_2|m_1": "23300.43975",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "33286.3425",
+      "a_2009_1|a_2071_3|m_0": "94585.7335",
+      "a_2009_1|a_2071_3|m_1": "22476.4785",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "32109.255",
+      "a_2009_2|a_2071_4|m_0": "97354.294",
+      "a_2009_2|a_2071_4|m_1": "23616.474",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "33737.82",
+      "a_2009_2|a_2071_5|m_0": "94663.534",
+      "a_2009_2|a_2071_5|m_1": "22508.514",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "32155.02",
+      "a_2009_2|a_2071_6|m_0": "97547.23975",
+      "a_2009_2|a_2071_6|m_1": "23695.92225",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "33851.3175",
+      "a_2009_3|a_2071_7|m_0": "96944.62375",
+      "a_2009_3|a_2071_7|m_1": "23447.78625",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "33496.8375",
+      "a_2009_3|a_2071_8|m_0": "91530.10675",
+      "a_2009_3|a_2071_8|m_1": "21218.27925",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "30311.8275",
+      "a_2009_3|a_2071_9|m_0": "96684.0265",
+      "a_2009_3|a_2071_9|m_1": "23340.4815",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "33343.545",
+      "a_2009_4|a_2071_10|m_0": "96783.1195",
+      "a_2009_4|a_2071_10|m_1": "23381.2845",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "33401.835",
+      "a_2009_4|a_2071_11|m_0": "96353.73775",
+      "a_2009_4|a_2071_11|m_1": "23204.48025",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "33149.2575",
+      "a_2009_4|a_2071_12|m_0": "84114.8215",
+      "a_2009_4|a_2071_12|m_1": "18164.9265",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "25949.895",
+      "a_2205": "San Jose - Blossom Hill",
+      "a_2211": "California",
+    },
+    Object {
+      "a_2009_1|a_2071_1|m_0": "85399.56505",
+      "a_2009_1|a_2071_1|m_1": "18693.93855",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "26705.6265",
+      "a_2009_1|a_2071_2|m_0": "84016.1773",
+      "a_2009_1|a_2071_2|m_1": "18124.3083",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "25891.869",
+      "a_2009_1|a_2071_3|m_0": "83468.4883",
+      "a_2009_1|a_2071_3|m_1": "17898.7893",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "25569.699",
+      "a_2009_2|a_2071_4|m_0": "84844.4275",
+      "a_2009_2|a_2071_4|m_1": "18465.3525",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "26379.075",
+      "a_2009_2|a_2071_5|m_0": "82076.5096",
+      "a_2009_2|a_2071_5|m_1": "17325.6216",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "24750.888",
+      "a_2009_2|a_2071_6|m_0": "85410.29035",
+      "a_2009_2|a_2071_6|m_1": "18698.35485",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "26711.9355",
+      "a_2009_3|a_2071_7|m_0": "84249.63235",
+      "a_2009_3|a_2071_7|m_1": "18220.43685",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "26029.1955",
+      "a_2009_3|a_2071_8|m_0": "80440.58005",
+      "a_2009_3|a_2071_8|m_1": "16652.00355",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "23788.5765",
+      "a_2009_3|a_2071_9|m_0": "84269.34385",
+      "a_2009_3|a_2071_9|m_1": "18228.55335",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "26040.7905",
+      "a_2009_4|a_2071_10|m_0": "83658.33835",
+      "a_2009_4|a_2071_10|m_1": "17976.96285",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "25681.3755",
+      "a_2009_4|a_2071_11|m_0": "83779.92745",
+      "a_2009_4|a_2071_11|m_1": "18027.02895",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "25752.8985",
+      "a_2009_4|a_2071_12|m_0": "74111.3959",
+      "a_2009_4|a_2071_12|m_1": "14045.8689",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "20065.527",
+      "a_2205": "San Jose - Saratoga",
+      "a_2211": "California",
+    },
+    Object {
+      "a_2009_1|a_2071_1|m_0": "73611.61375",
+      "a_2009_1|a_2071_1|m_1": "13840.07625",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "19771.5375",
+      "a_2009_1|a_2071_2|m_0": "72389.73025",
+      "a_2009_1|a_2071_2|m_1": "13336.94775",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "19052.7825",
+      "a_2009_1|a_2071_3|m_0": "72073.50475",
+      "a_2009_1|a_2071_3|m_1": "13206.73725",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "18866.7675",
+      "a_2009_2|a_2071_4|m_0": "72985.1425",
+      "a_2009_2|a_2071_4|m_1": "13582.1175",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "19403.025",
+      "a_2009_2|a_2071_5|m_0": "71547.223",
+      "a_2009_2|a_2071_5|m_1": "12990.033",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "18557.19",
+      "a_2009_2|a_2071_6|m_0": "72952.92325",
+      "a_2009_2|a_2071_6|m_1": "13568.85075",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "19384.0725",
+      "a_2009_3|a_2071_7|m_0": "72957.7555",
+      "a_2009_3|a_2071_7|m_1": "13570.8405",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "19386.915",
+      "a_2009_3|a_2071_8|m_0": "69740.4715",
+      "a_2009_3|a_2071_8|m_1": "12246.0765",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "17494.395",
+      "a_2009_3|a_2071_9|m_0": "72820.183",
+      "a_2009_3|a_2071_9|m_1": "13514.193",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "19305.99",
+      "a_2009_4|a_2071_10|m_0": "71871.31525",
+      "a_2009_4|a_2071_10|m_1": "13123.48275",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "18747.8325",
+      "a_2009_4|a_2071_11|m_0": "72395.455",
+      "a_2009_4|a_2071_11|m_1": "13339.305",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "19056.15",
+      "a_2009_4|a_2071_12|m_0": "65183.83825",
+      "a_2009_4|a_2071_12|m_1": "10369.81575",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "14814.0225",
+      "a_2205": "Deerfield Beach",
+      "a_2211": "Florida",
+    },
+    Object {
+      "a_2009_1|a_2071_1|m_0": "85847.94175",
+      "a_2009_1|a_2071_1|m_1": "18878.56425",
+      "a_2009_1|a_2071_1|m_2": "40000",
+      "a_2009_1|a_2071_1|m_3": "26969.3775",
+      "a_2009_1|a_2071_2|m_0": "84886.6045",
+      "a_2009_1|a_2071_2|m_1": "18482.7195",
+      "a_2009_1|a_2071_2|m_2": "40000",
+      "a_2009_1|a_2071_2|m_3": "26403.885",
+      "a_2009_1|a_2071_3|m_0": "84948.697",
+      "a_2009_1|a_2071_3|m_1": "18508.287",
+      "a_2009_1|a_2071_3|m_2": "40000",
+      "a_2009_1|a_2071_3|m_3": "26440.41",
+      "a_2009_2|a_2071_4|m_0": "86835.35275",
+      "a_2009_2|a_2071_4|m_1": "19285.14525",
+      "a_2009_2|a_2071_4|m_2": "40000",
+      "a_2009_2|a_2071_4|m_3": "27550.2075",
+      "a_2009_2|a_2071_5|m_0": "84112.56475",
+      "a_2009_2|a_2071_5|m_1": "18163.99725",
+      "a_2009_2|a_2071_5|m_2": "40000",
+      "a_2009_2|a_2071_5|m_3": "25948.5675",
+      "a_2009_2|a_2071_6|m_0": "86397.2245",
+      "a_2009_2|a_2071_6|m_1": "19104.7395",
+      "a_2009_2|a_2071_6|m_2": "40000",
+      "a_2009_2|a_2071_6|m_3": "27292.485",
+      "a_2009_3|a_2071_7|m_0": "86254.92175",
+      "a_2009_3|a_2071_7|m_1": "19046.14425",
+      "a_2009_3|a_2071_7|m_2": "40000",
+      "a_2009_3|a_2071_7|m_3": "27208.7775",
+      "a_2009_3|a_2071_8|m_0": "82104.0955",
+      "a_2009_3|a_2071_8|m_1": "17336.9805",
+      "a_2009_3|a_2071_8|m_2": "40000",
+      "a_2009_3|a_2071_8|m_3": "24767.115",
+      "a_2009_3|a_2071_9|m_0": "86575.5715",
+      "a_2009_3|a_2071_9|m_1": "19178.1765",
+      "a_2009_3|a_2071_9|m_2": "40000",
+      "a_2009_3|a_2071_9|m_3": "27397.395",
+      "a_2009_4|a_2071_10|m_0": "84722.39725",
+      "a_2009_4|a_2071_10|m_1": "18415.10475",
+      "a_2009_4|a_2071_10|m_2": "40000",
+      "a_2009_4|a_2071_10|m_3": "26307.2925",
+      "a_2009_4|a_2071_11|m_0": "85807.996",
+      "a_2009_4|a_2071_11|m_1": "18862.116",
+      "a_2009_4|a_2071_11|m_2": "40000",
+      "a_2009_4|a_2071_11|m_3": "26945.88",
+      "a_2009_4|a_2071_12|m_0": "74981.5715",
+      "a_2009_4|a_2071_12|m_1": "14404.1765",
+      "a_2009_4|a_2071_12|m_2": "40000",
+      "a_2009_4|a_2071_12|m_3": "20577.395",
+      "a_2205": "Irving",
+      "a_2211": "Texas",
+    },
+  ],
+}
+`;
+
+exports[`getColumnHeaders should return hierarchical column headers 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_1|a_2071_1|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_1|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_1|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_1|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_1|a_2071_1",
+        "headerName": "Jan",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_1|a_2071_2|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_2|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_2|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_2|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_1|a_2071_2",
+        "headerName": "Feb",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_1|a_2071_3|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_3|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_3|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_1|a_2071_3|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_1|a_2071_3",
+        "headerName": "Mar",
+      },
+    ],
+    "field": "a_2009_1",
+    "headerName": "Q1",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_2|a_2071_4|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_4|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_4|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_4|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_2|a_2071_4",
+        "headerName": "Apr",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_2|a_2071_5|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_5|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_5|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_5|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_2|a_2071_5",
+        "headerName": "May",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_2|a_2071_6|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_6|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_6|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_2|a_2071_6|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_2|a_2071_6",
+        "headerName": "Jun",
+      },
+    ],
+    "field": "a_2009_2",
+    "headerName": "Q2",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_3|a_2071_7|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_7|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_7|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_7|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_3|a_2071_7",
+        "headerName": "Jul",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_3|a_2071_8|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_8|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_8|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_8|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_3|a_2071_8",
+        "headerName": "Aug",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_3|a_2071_9|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_9|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_9|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_3|a_2071_9|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_3|a_2071_9",
+        "headerName": "Sep",
+      },
+    ],
+    "field": "a_2009_3",
+    "headerName": "Q3",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_4|a_2071_10|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_10|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_10|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_10|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_4|a_2071_10",
+        "headerName": "Oct",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_4|a_2071_11|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_11|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_11|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_11|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_4|a_2071_11",
+        "headerName": "Nov",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "field": "a_2009_4|a_2071_12|m_0",
+            "headerName": "$ Franchise Fees",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_12|m_1",
+            "headerName": "$ Franchise Fees (Ad Royalty)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_12|m_2",
+            "headerName": "$ Franchise Fees (Initial Franchise Fee)",
+          },
+          Object {
+            "field": "a_2009_4|a_2071_12|m_3",
+            "headerName": "$ Franchise Fees (Ongoing Royalty)",
+          },
+        ],
+        "field": "a_2009_4|a_2071_12",
+        "headerName": "Dec",
+      },
+    ],
+    "field": "a_2009_4",
+    "headerName": "Q4",
+  },
+]
+`;

@@ -77,10 +77,6 @@ export const stringifyChartTypes = () => Object.keys(VisualizationTypes).reduce(
     return acc;
 }, []).join(', ');
 
-export function unwrap(wrappedObject: any) {
-    return wrappedObject[Object.keys(wrappedObject)[0]];
-}
-
 export function formatLegendLabel(value: number, format: string, diff: number, numericSymbols: string[]): string {
     if (format && format.includes('%')) {
         return numberFormat(value, '#,#0%');

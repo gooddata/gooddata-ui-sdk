@@ -49,8 +49,8 @@ export const locationStateDisplayFormIdentifier = 'label.restaurantlocation.loca
 export const menuCategoryAttributeDFIdentifier = 'label.menuitem.menucategory';
 export const menuItemNameAttributeDFIdentifier = 'label.menuitem.menuitemname';
 export const yearDateDataSetAttributeIdentifier = 'date.year';
+export const yearDateIdentifier = 'date.aam81lMifn6q';
 export const monthDateIdentifier = 'date.abm81lMifn6q';
-export const yearDateIdentifier = 'date.aag81lMifn6q';
 export const monthDateIdentifierJanuary = `/gdc/md/${demoProjectId}/obj/2071/elements?id=1`;
 export const numberOfChecksIdentifier = 'aeOt50ngicOD';
 export const tableVisualizationIdentifier = 'aatFRvXBdilm';

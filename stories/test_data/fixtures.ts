@@ -169,6 +169,13 @@ export const headlineWithTwoMeasures: any = {
     executionResult: require('../test_data/headline_with_two_measures_result.json').executionResult
 };
 
+export const agTableWithColumnAndRowAttributes: any = {
+    executionRequest: require('../test_data/ag_table_with_column_and_row_attributes_request.json').execution,
+    executionResponse:
+        require('../test_data/ag_table_with_column_and_row_attributes_response.json').executionResponse,
+    executionResult: require('../test_data/ag_table_with_column_and_row_attributes_result.json').executionResult
+};
+
 export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
 export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
     buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
@@ -349,6 +356,7 @@ export const customPalette = [
 ];
 
 export default {
+    agTableWithColumnAndRowAttributes,
     barChartWithSingleMeasureAndNoAttributes,
     barChartWithoutAttributes,
     barChartWith3MetricsAndViewByAttribute,
