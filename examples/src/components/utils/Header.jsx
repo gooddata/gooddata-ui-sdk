@@ -287,7 +287,7 @@ class Header extends React.Component {
                             </div>
                         </div>
                         <a
-                            href="https://github.com/gooddata/gooddata-react-components#gooddataui-react-components"
+                            href="https://github.com/gooddata/gooddata-react-components#run-live-examples-locally"
                             className="gd-header-menu-item button-header button-header-border"
                             target="_blank"
                             rel="noopener noreferrer"
