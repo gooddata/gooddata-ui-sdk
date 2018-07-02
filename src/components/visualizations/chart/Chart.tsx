@@ -46,6 +46,16 @@ export interface IChartConfig {
     xLabel?: string;
     xFormat?: string;
     chart?: any;
+    xaxis?: IAxisConfig;
+    yaxis?: IAxisConfig;
+}
+
+export interface IAxisConfig {
+    visible?: boolean;
+    labelsEnabled?: boolean;
+    rotation?: string;
+    min?: string;
+    max?: string;
 }
 
 export interface IChartProps {

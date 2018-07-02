@@ -27,9 +27,10 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-    unwrap,
-    isBarChart
+    unwrap
 } from '../utils/common';
+
+import { getChartProperties } from './highcharts/helpers';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
 import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
@@ -1035,6 +1036,8 @@ export function getChartOptions(
     }
 
     if (isScatterPlot(type)) {
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
+
         let measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null
@@ -1062,7 +1065,9 @@ export function getChartOptions(
             },
             grid: {
                 enabled: gridEnabled
-            }
+            },
+            xAxisProps,
+            yAxisProps
         };
     }
 
@@ -1095,6 +1100,7 @@ export function getChartOptions(
     if (isBubbleChart(type)) {
         const measures: Execution.IMeasureHeaderItem[] = [];
         const measureGroupCopy = cloneDeep(measureGroup);
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
         if (!isBucketEmpty(mdObject, MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
@@ -1130,56 +1136,13 @@ export function getChartOptions(
             },
             grid: {
                 enabled: gridEnabled
-            }
+            },
+            xAxisProps,
+            yAxisProps
         };
     }
 
-    // Custom props
-
-    // Bar chart
-    const xAxisMin = get(config, 'xaxis.min');
-    const xAxisMax = get(config, 'xaxis.max');
-    const xAxisVisible = get(config, 'xaxis.visible', true);
-    const xAxisLabelsEnabled = get(config, 'xaxis.labelsEnabled', true);
-    const xAxisRotation = get(config, 'xaxis.rotation', 'auto');
-
-    const yAxisMin = get(config, 'yaxis.min');
-    const yAxisMax = get(config, 'yaxis.max');
-    const yAxisVisible = get(config, 'yaxis.visible', true);
-    const yAxisLabelsEnabled = get(config, 'yaxis.labelsEnabled', true);
-    const yAxisRotation = get(config, 'yaxis.rotation', 'auto');
-
-    let xAxisProps;
-    let yAxisProps;
-
-    // Switch axes options for bar chart
-    if (isBarChart(type)) {
-        xAxisProps = {
-            labelsEnabled: yAxisLabelsEnabled,
-            rotation: yAxisRotation,
-            visible: yAxisVisible
-        };
-
-        yAxisProps = {
-            min: xAxisMin,
-            max: xAxisMax,
-            visible: xAxisVisible,
-            labelsEnabled: xAxisLabelsEnabled
-        };
-    } else {
-        xAxisProps = {
-            labelsEnabled: xAxisLabelsEnabled,
-            rotation: xAxisRotation,
-            visible: xAxisVisible
-        };
-
-        yAxisProps = {
-            min: yAxisMin,
-            max: yAxisMax,
-            visible: yAxisVisible,
-            labelsEnabled: yAxisLabelsEnabled
-        };
-    }
+    const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
     return {
         type,
