@@ -54,23 +54,13 @@ heroku open
 
 ### Run Live Examples Locally
 To run *GoodData.UI Live Examples* locally:
-
 ```bash
 git clone <this-repository>
 cd  <repository-folder>
 yarn install --pure-lockfile
 yarn examples
 ```
-
-#### NPM package publishing
-```bash
-# only for internal gooddata developers
-git checkout master && git pull upstream master --tags
-yarn version
-npm publish
-git push upstream master --tags
-```
-
+Then open https://localhost:8999 and login using Live Examples account (you can [create one here](https://gooddata-examples.herokuapp.com/registration)).
 
 ## Changelog
 - see [CHANGELOG.md](CHANGELOG.md)
