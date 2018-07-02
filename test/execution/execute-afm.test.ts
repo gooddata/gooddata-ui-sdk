@@ -756,6 +756,19 @@ describe('executeAfm', () => {
             });
     });
 
+    it('should throw error on second polling when num of dimensions is 3', () => {
+        fetchMock.mock(
+            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            { status: 200, body: getPollingResponseBody(3) }
+        );
+
+        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
+            .catch((error) => {
+                expect(error.name).toEqual('Invariant Violation');
+                expect(error.message).toEqual('3 dimensions are not allowed. Only 1 or 2 dimensions are supported.');
+            });
+    });
+
     it('should resolve on second polling', () => {
         fetchMock.mock(
             '/gdc/app/projects/myFakeProjectId/executeAfm',
