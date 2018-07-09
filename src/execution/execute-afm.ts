@@ -64,7 +64,8 @@ export class ExecuteAfmModule {
      */
     private getExecutionResult(executionResultUri: string)
         : Promise<Execution.IExecutionResult | null> {
-        const numOfDimensions = Number(qs.parse(executionResultUri).dimensions);
+        const executionResultUriQueryPart = executionResultUri.split(/\?(.+)/)[1];
+        const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
 
         const limit = Array(numOfDimensions).fill(DEFAULT_LIMIT);
