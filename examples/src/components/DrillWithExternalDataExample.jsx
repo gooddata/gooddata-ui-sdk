@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from 'react';
 import fetch from 'isomorphic-fetch';
+import moment from 'moment';
 import { PropTypes } from 'prop-types';
 import { Table, ColumnChart, LoadingComponent, ErrorComponent } from '@gooddata/react-components';
 import {
@@ -14,6 +15,8 @@ import {
     locationNameDisplayFormIdentifier,
     locationNameAttributeUri
 } from '../utils/fixtures';
+
+const dateFormat = 'YYYY-MM-DD';
 
 const EmployeeProfile = ({ gender, dob, cell, id, registered, location }) => {
     const menOrWomen = gender === 'male' ? 'men' : 'women';
@@ -39,20 +42,20 @@ const EmployeeProfile = ({ gender, dob, cell, id, registered, location }) => {
             `}</style>
             <div><img className="picture" src={`https://randomuser.me/api/portraits/${menOrWomen}/${parseInt(id, 10) % 100}.jpg`} alt="" /></div>
             <div className="text" >
-                <p>Date of birth: {dob}</p>
+                <p>Date of birth: {moment(dob.date).format(dateFormat)}</p>
                 <p>Place of birth: {location.city}, {location.state}</p>
                 <p>Phone: {cell}</p>
-                <p>Employed since: {registered}</p>
+                <p>Employed since: {moment(registered.date).format(dateFormat)}</p>
             </div>
         </div>
     );
 };
 EmployeeProfile.propTypes = {
     gender: PropTypes.string.isRequired,
-    dob: PropTypes.string.isRequired,
+    dob: PropTypes.object.isRequired,
     cell: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
-    registered: PropTypes.string.isRequired,
+    registered: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired
 };
 
