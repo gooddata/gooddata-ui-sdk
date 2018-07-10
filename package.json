@@ -138,7 +138,7 @@
     "examples-build": "bash scripts/build-examples.sh",
     "examples-server": "node examples/server/src/index.js",
     "examples-testcafe": "testcafe chrome --assertion-timeout 60000 -S -s examples/_screenshots examples/test/**/**/*_test* --debug-on-fail",
-    "examples-testcafe-docker": "testcafe 'chrome:headless --no-sandbox' --assertion-timeout 60000 -S -s examples/_screenshots examples/test/**/**/*_test*",
+    "examples-testcafe-ci": "testcafe 'chrome:headless --no-sandbox' --assertion-timeout 60000 -S -s examples/_screenshots examples/test/**/**/*_test*",
     "heroku-postbuild": "yarn examples-build developer"
   },
   "typings": "dist/index.d.ts",
