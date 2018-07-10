@@ -32,11 +32,12 @@ function createIntl(locale: Localization.ILocale): InjectedIntl {
 }
 
 function getIntl(locale: Localization.ILocale = DEFAULT_LOCALE): InjectedIntl {
+    let usedLocale = locale;
     if (isEmpty(locale)) {
-        locale = DEFAULT_LOCALE;
+        usedLocale = DEFAULT_LOCALE;
     }
 
-    return intlStore[locale] || (intlStore[locale] = createIntl(locale));
+    return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
 }
 
 function getTranslation(translationId: string, locale: Localization.ILocale): string {
