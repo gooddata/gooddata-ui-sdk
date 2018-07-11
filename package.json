@@ -46,6 +46,7 @@
       "!**/*.d.ts"
     ],
     "collectCoverage": false,
+    "mapCoverage": true,
     "coverageReporters": [
       "html"
     ],
