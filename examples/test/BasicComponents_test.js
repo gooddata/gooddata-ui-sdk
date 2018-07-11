@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Basic components') // eslint-disable-line no-undef
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}`));
 
 test('Column chart should render', async (t) => {
     const loading = Selector('.s-loading');

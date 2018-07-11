@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Detepicker')
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/date-picker`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/date-picker`));
 
 test('should be able to set from and to dates', async (t) => {
     const datePickerFrom = Selector('.s-date-picker-from .gd-input-field');

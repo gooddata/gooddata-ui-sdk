@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Responsive chart')
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/responsive`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/responsive`));
 
 test('Responsive chart could be resized', async (t) => {
     const chart = Selector('.s-resizable-vis svg');
