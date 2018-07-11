@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Dynamic measures')
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/dynamic-measures`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/dynamic-measures`));
 
 test('should be able to set measures and render them', async (t) => {
     const sidebarItems = Selector('.s-dynamic-measures-sidebar .list-item');
