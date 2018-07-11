@@ -5,7 +5,8 @@ import { RIGHT } from './PositionTypes';
 import {
     isAreaChart,
     isScatterPlot,
-    isOneOfTypes
+    isOneOfTypes,
+    isBubbleChart
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
@@ -53,6 +54,11 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any) {
 
     if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
         set(legendConfig, 'position', 'right');
+
+        // TODO: Remove after bubble will have own legend configuration
+        if (isBubbleChart(chartOptions.type)) {
+            set(legendConfig, 'enabled', true);
+        }
     }
 
     const baseConfig = {

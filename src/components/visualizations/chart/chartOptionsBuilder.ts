@@ -1064,7 +1064,7 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute)
             },
             grid: {
-                enabled: gridEnabled
+                enabled: true
             },
             xAxisProps,
             yAxisProps
@@ -1135,7 +1135,7 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute)
             },
             grid: {
-                enabled: gridEnabled
+                enabled: true
             },
             xAxisProps,
             yAxisProps
