@@ -481,15 +481,17 @@ function getExecutionDefinitionsAndColumns(mdObj: any, options: any, attributesM
     };
 }
 
+/**
+ * Module for execution on experimental execution resource
+ *
+ * @class execution
+ * @module execution
+ * @deprecated The module is in maintenance mode only (just the the compilation issues are being fixed when
+ *      referenced utilities and interfaces are being changed) and is not being extended when AFM executor
+ *      have new functionality added.
+ */
 export class ExperimentalExecutionsModule {
     constructor(private xhr: XhrModule, private loadAttributesMap: any) {}
-
-    /**
-     * Module for execution on experimental execution resource
-     *
-     * @class execution
-     * @module execution
-     */
 
     /**
      * For the given projectId it returns table structure with the given
@@ -508,6 +510,11 @@ export class ExperimentalExecutionsModule {
      * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
      */
     public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
+
+        // tslint:disable-next-line:no-console
+        console.warn('ExperimentalExecutionsModule is deprecated and is no longer being maintained. ' +
+            'Please migrate to the ExecuteAfmModule.');
+
         const executedReport: any = {
             isLoaded: false
         };

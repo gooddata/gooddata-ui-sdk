@@ -8,325 +8,251 @@ import {
     isDateFilter,
     isAttributeFilter,
     dateFiltersDataSetsMatch,
-    ALL_TIME_GRANULARITY
+    unwrapSimpleMeasure,
+    unwrapPoPMeasure,
+    unwrapPreviousPeriodMeasure,
+    isSimpleMeasure,
+    isPoP,
+    isPreviousPeriodMeasure,
+    hasGlobalDateFilter,
+    hasFilters,
+    getGlobalDateFilters,
+    getId,
+    getMeasureDateFilters
 } from '../AfmUtils';
-import {
-    Granularities
- } from '../../constants/granularities';
-import {
-    afmWithMetricDateFilter,
-    afmWithoutMetricDateFilters
-} from '../../fixtures/Afm.fixtures';
+import { Granularities } from '../../constants/granularities';
+import * as fixture from '../../fixtures/Afm.fixtures';
 
-describe('hasMetricDateFilters', () => {
-    it('TRUE if contains at least one metric date filter', () => {
-        const normalizedAfm = normalizeAfm(afmWithMetricDateFilter);
-        const result = hasMetricDateFilters(normalizedAfm);
-        expect(result).toEqual(true);
-    });
+describe('AFM utils', () => {
+    describe('isDateFilter', () => {
+        it('should return true for valid date filter', () => {
+            const relativeDateFilter: AFM.IRelativeDateFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        identifier: 'filter'
+                    },
+                    from: 1,
+                    to: 2,
+                    granularity: Granularities.YEAR
+                }
+            };
+            expect(isDateFilter(relativeDateFilter)).toEqual(true);
 
-    it('FALSE if does not contain any metric date filter', () => {
-        const normalizedAfm = normalizeAfm(afmWithoutMetricDateFilters);
-        const result = hasMetricDateFilters(normalizedAfm);
-        expect(result).toEqual(false);
-    });
-});
+            const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        identifier: 'filter'
+                    },
+                    from: '2001-01-01',
+                    to: '2001-02-02'
+                }
+            };
+            expect(isDateFilter(absoluteDateFilter)).toEqual(true);
+        });
 
-describe('isDateFilter', () => {
-    it('should return true for valid date filter', () => {
-        const relativeDateFilter: AFM.IRelativeDateFilter = {
-            relativeDateFilter: {
-                dataSet: {
-                    identifier: 'filter'
-                },
-                from: 1,
-                to: 2,
-                granularity: Granularities.YEAR
-            }
-        };
-        expect(isDateFilter(relativeDateFilter)).toEqual(true);
-
-        const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
-            absoluteDateFilter: {
-                dataSet: {
-                    identifier: 'filter'
-                },
-                from: '2001-01-01',
-                to: '2001-02-02'
-            }
-        };
-        expect(isDateFilter(absoluteDateFilter)).toEqual(true);
-    });
-
-    it('should return false for attribute filter', () => {
-        const attributeFilter: AFM.IPositiveAttributeFilter = {
-            positiveAttributeFilter: {
-                displayForm: {
-                    identifier: 'filter'
-                },
-                in: ['1', '2']
-            }
-        };
-        expect(isDateFilter(attributeFilter)).toEqual(false);
-    });
-});
-
-describe('isAttributeFilter', () => {
-    it('should return true for valid attribute filter', () => {
-        const positiveAttributeFilter: AFM.IPositiveAttributeFilter = {
-            positiveAttributeFilter: {
-                displayForm: {
-                    identifier: 'filter'
-                },
-                in: ['1', '2']
-            }
-        };
-        expect(isAttributeFilter(positiveAttributeFilter)).toEqual(true);
-
-        const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
-            negativeAttributeFilter: {
-                displayForm: {
-                    identifier: 'filter'
-                },
-                notIn: ['1', '2']
-            }
-        };
-        expect(isAttributeFilter(negativeAttributeFilter)).toEqual(true);
-    });
-
-    it('should return false for attribute filter', () => {
-        const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
-            absoluteDateFilter: {
-                dataSet: {
-                    identifier: 'filter'
-                },
-                from: '2001-01-01',
-                to: '2001-02-02'
-            }
-        };
-        expect(isAttributeFilter(absoluteDateFilter)).toEqual(false);
-    });
-});
-
-describe('normalizeAfm', () => {
-    it('should add optional arrays - empty', () => {
-        const afm: AFM.IAfm = {};
-        expect(normalizeAfm(afm)).toEqual({
-            measures: [],
-            attributes: [],
-            filters: [],
-            nativeTotals: []
+        it('should return false for attribute filter', () => {
+            const attributeFilter: AFM.IPositiveAttributeFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: 'filter'
+                    },
+                    in: ['1', '2']
+                }
+            };
+            expect(isDateFilter(attributeFilter)).toEqual(false);
         });
     });
 
-    it('should add optional arrays - measures & filters', () => {
-        const expectedAfm: AFM.IAfm = {
-            attributes: [
-                {
-                    localIdentifier: 'a1',
+    describe('isAttributeFilter', () => {
+        it('should return true for valid attribute filter', () => {
+            const positiveAttributeFilter: AFM.IPositiveAttributeFilter = {
+                positiveAttributeFilter: {
                     displayForm: {
-                        identifier: 'a1'
-                    }
+                        identifier: 'filter'
+                    },
+                    in: ['1', '2']
                 }
-            ],
-            measures: [],
-            filters: [],
-            nativeTotals: []
-        };
-        expect(normalizeAfm({
-            attributes: [
-                {
-                    localIdentifier: 'a1',
+            };
+            expect(isAttributeFilter(positiveAttributeFilter)).toEqual(true);
+
+            const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
+                negativeAttributeFilter: {
                     displayForm: {
-                        identifier: 'a1'
-                    }
+                        identifier: 'filter'
+                    },
+                    notIn: ['1', '2']
                 }
-            ]
-        })).toEqual(expectedAfm);
+            };
+            expect(isAttributeFilter(negativeAttributeFilter)).toEqual(true);
+        });
+
+        it('should return false for attribute filter', () => {
+            const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        identifier: 'filter'
+                    },
+                    from: '2001-01-01',
+                    to: '2001-02-02'
+                }
+            };
+            expect(isAttributeFilter(absoluteDateFilter)).toEqual(false);
+        });
     });
 
-    it('should add optional arrays - attributes & filters', () => {
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: 'm1',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: 'm1'
+    describe('normalizeAfm', () => {
+        it('should add optional arrays - empty', () => {
+            const afm: AFM.IAfm = {};
+            expect(normalizeAfm(afm)).toEqual({
+                measures: [],
+                attributes: [],
+                filters: [],
+                nativeTotals: []
+            });
+        });
+
+        it('should add optional arrays - measures & filters', () => {
+            const expectedAfm: AFM.IAfm = {
+                attributes: [
+                    {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            identifier: 'a1'
+                        }
+                    }
+                ],
+                measures: [],
+                filters: [],
+                nativeTotals: []
+            };
+            expect(normalizeAfm({
+                attributes: [
+                    {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            identifier: 'a1'
+                        }
+                    }
+                ]
+            })).toEqual(expectedAfm);
+        });
+
+        it('should add optional arrays - attributes & filters', () => {
+            const expectedAfm: AFM.IAfm = {
+                measures: [
+                    {
+                        localIdentifier: 'm1',
+                        definition: {
+                            measure: {
+                                item: {
+                                    identifier: 'm1'
+                                }
                             }
                         }
                     }
-                }
-            ],
-            attributes: [],
-            filters: [],
-            nativeTotals: []
-        };
-        expect(normalizeAfm({
-            measures: [
-                {
-                    localIdentifier: 'm1',
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: 'm1'
+                ],
+                attributes: [],
+                filters: [],
+                nativeTotals: []
+            };
+            expect(normalizeAfm({
+                measures: [
+                    {
+                        localIdentifier: 'm1',
+                        definition: {
+                            measure: {
+                                item: {
+                                    identifier: 'm1'
+                                }
                             }
                         }
                     }
-                }
-            ]
-        })).toEqual(expectedAfm);
-    });
+                ]
+            })).toEqual(expectedAfm);
+        });
 
-    it('should add optional arrays - attributes & measures', () => {
-        const expectedAfm: AFM.IAfm = {
-            attributes: [],
-            measures: [],
-            filters: [
-                {
-                    relativeDateFilter: {
-                        dataSet: {
-                            identifier: '1'
-                        },
-                        from: 0,
-                        to: 1,
-                        granularity: Granularities.YEAR
+        it('should add optional arrays - attributes & measures', () => {
+            const expectedAfm: AFM.IAfm = {
+                attributes: [],
+                measures: [],
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: '1'
+                            },
+                            from: 0,
+                            to: 1,
+                            granularity: Granularities.YEAR
+                        }
                     }
-                }
-            ],
-            nativeTotals: []
-        };
-        expect(normalizeAfm({
-            filters: [
-                {
-                    relativeDateFilter: {
-                        dataSet: {
-                            identifier: '1'
-                        },
-                        from: 0,
-                        to: 1,
-                        granularity: Granularities.YEAR
+                ],
+                nativeTotals: []
+            };
+            expect(normalizeAfm({
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: '1'
+                            },
+                            from: 0,
+                            to: 1,
+                            granularity: Granularities.YEAR
+                        }
                     }
-                }
-            ]
-        })).toEqual(expectedAfm);
+                ]
+            })).toEqual(expectedAfm);
+        });
     });
-});
-
-describe('AFM utils', () => {
-    const af1: AFM.IPositiveAttributeFilter = {
-        positiveAttributeFilter: {
-            displayForm: {
-                identifier: '1'
-            },
-            in: []
-        }
-    };
-    const af2: AFM.IPositiveAttributeFilter = {
-        positiveAttributeFilter: {
-            displayForm: {
-                identifier: '2'
-            },
-            in: []
-        }
-    };
-
-    const relativeDateFilterD1: AFM.IRelativeDateFilter = {
-        relativeDateFilter: {
-            dataSet: {
-                identifier: 'd1'
-            },
-            from: -1,
-            to: -1,
-            granularity: Granularities.YEAR
-        }
-    };
-
-    const absoluteDateFilterD1: AFM.IAbsoluteDateFilter = {
-        absoluteDateFilter: {
-            dataSet: {
-                identifier: 'd1'
-            },
-            from: '2001-01-01',
-            to: '2001-12-12'
-        }
-    };
-
-    const absoluteDateFilterAb: AFM.IAbsoluteDateFilter = {
-        absoluteDateFilter: {
-             dataSet: {
-                 identifier: 'ab'
-             },
-             from: '2001-01-01',
-             to: '2001-02-02'
-        }
-    };
-
-    const allTimeDateFilterD1: AFM.IRelativeDateFilter = {
-        relativeDateFilter: {
-            dataSet: {
-                identifier: 'd1'
-            },
-            from: 0,
-            to: 0,
-            granularity: ALL_TIME_GRANULARITY
-        }
-    };
 
     describe('appendFilters', () => {
         it('should concatenate filters when all different', () => {
             const afm = {
                 filters: [
-                    af1
+                    fixture.positiveAttributeFilter
                 ]
             };
-            const attributeFilters = [af2];
-            const dateFilter = relativeDateFilterD1;
-
-            const enriched = appendFilters(afm, attributeFilters, dateFilter);
+            const attributeFilters = [fixture.negativeAttributeFilter];
+            const enriched = appendFilters(afm, attributeFilters, fixture.relativeDateFilter);
             expect(enriched.filters).toEqual([
-                af1, af2, relativeDateFilterD1
+                fixture.positiveAttributeFilter, fixture.negativeAttributeFilter, fixture.relativeDateFilter
             ]);
         });
 
         it('should override date filter if identifier is identical', () => {
             const afm = {
                 filters: [
-                    af1, relativeDateFilterD1
+                    fixture.positiveAttributeFilter, fixture.relativeDateFilter
                 ]
             };
             const attributeFilters: AFM.AttributeFilterItem[] = [];
-            const dateFilter = relativeDateFilterD1;
-
-            const enriched = appendFilters(afm, attributeFilters, dateFilter);
+            const enriched = appendFilters(afm, attributeFilters, fixture.relativeDateFilter);
             expect(enriched.filters).toEqual([
-                af1, relativeDateFilterD1
+                fixture.positiveAttributeFilter, fixture.relativeDateFilter
             ]);
         });
 
-        it('should append date filter if ID different', () => {
+        it('should append date filter if ID is different', () => {
             const afm = {
                 filters: [
-                    relativeDateFilterD1
+                    fixture.relativeDateFilter
                 ]
             };
             const attributeFilters: AFM.AttributeFilterItem[] = [];
-            const dateFilter = absoluteDateFilterAb;
-
-            const enriched = appendFilters(afm, attributeFilters, dateFilter);
+            const enriched = appendFilters(afm, attributeFilters, fixture.absoluteDateFilter2);
             expect(enriched.filters).toEqual([
-                absoluteDateFilterAb, relativeDateFilterD1
+                fixture.absoluteDateFilter2, fixture.relativeDateFilter
             ]);
         });
 
         it('should delete date filter from AFM if "All time" date filter requested', () => {
             const afm = {
                 filters: [
-                    relativeDateFilterD1
+                    fixture.relativeDateFilter
                 ]
             };
-            const enriched = appendFilters(afm, [], allTimeDateFilterD1);
+            const enriched = appendFilters(afm, [], fixture.allTimeDateFilter);
             expect(enriched.filters).toEqual([]);
         });
 
@@ -334,25 +260,25 @@ describe('AFM utils', () => {
             const afm: AFM.IAfm = {
                 filters: []
             };
-            const enriched = appendFilters(afm, [], absoluteDateFilterAb);
-            expect(enriched.filters).toEqual([absoluteDateFilterAb]);
+            const enriched = appendFilters(afm, [], fixture.absoluteDateFilter1);
+            expect(enriched.filters).toEqual([fixture.absoluteDateFilter1]);
         });
     });
 
     describe('dateFiltersDataSetsMatch', () => {
         it('should match same filters', () => {
             expect(
-                dateFiltersDataSetsMatch(relativeDateFilterD1, allTimeDateFilterD1)
+                dateFiltersDataSetsMatch(fixture.relativeDateFilter, fixture.allTimeDateFilter)
             ).toEqual(true);
 
             expect(
-                dateFiltersDataSetsMatch(relativeDateFilterD1, absoluteDateFilterD1)
+                dateFiltersDataSetsMatch(fixture.relativeDateFilter, fixture.absoluteDateFilter1)
             ).toEqual(true);
         });
 
         it('should detect different filters', () => {
             expect(
-                dateFiltersDataSetsMatch(relativeDateFilterD1, absoluteDateFilterAb)
+                dateFiltersDataSetsMatch(fixture.absoluteDateFilter1, fixture.absoluteDateFilter2)
             ).toEqual(false);
         });
     });
@@ -361,7 +287,7 @@ describe('AFM utils', () => {
         it('should be false for only filters', () => {
             const afm = {
                 filters: [
-                    relativeDateFilterD1
+                    fixture.relativeDateFilter
                 ]
             };
 
@@ -401,6 +327,235 @@ describe('AFM utils', () => {
             };
 
             expect(isAfmExecutable(afm)).toBeTruthy();
+        });
+    });
+
+    describe('unwrapSimpleMeasure', () => {
+        it('should return simple measure content when simple measure is provided', () => {
+            const result = unwrapSimpleMeasure(fixture.simpleMeasure);
+            expect(result).toEqual({
+                item: {
+                    uri: '/gdc/mock/measure'
+                }
+            });
+        });
+
+        it('should return undefined when PoP measure is provided', () => {
+            const result = unwrapSimpleMeasure(fixture.popMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return undefined when previous period measure is provided', () => {
+            const result = unwrapSimpleMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(undefined);
+        });
+    });
+
+    describe('unwrapPoPMeasure', () => {
+        it('should return undefined when simple measure is provided', () => {
+            const result = unwrapPoPMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return PoP measure content when PoP measure is provided', () => {
+            const result = unwrapPoPMeasure(fixture.popMeasure);
+            expect(result).toEqual({
+                measureIdentifier: 'm1',
+                popAttribute: {
+                    uri: '/gdc/mock/measure'
+                }
+            });
+        });
+
+        it('should return undefined when previous period measure is provided', () => {
+            const result = unwrapPoPMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(undefined);
+        });
+    });
+
+    describe('unwrapPreviousPeriodMeasure', () => {
+        it('should return undefined when simple measure is provided', () => {
+            const result = unwrapPreviousPeriodMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return undefined when PoP measure is provided', () => {
+            const result = unwrapPreviousPeriodMeasure(fixture.popMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return previous period measure content when previous period measure is provided', () => {
+            const result = unwrapPreviousPeriodMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual({
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            );
+        });
+    });
+
+    describe('isSimpleMeasure', () => {
+        it('should return true when simple measure is tested', () => {
+            const result = isSimpleMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when pop measure is tested', () => {
+            const result = isSimpleMeasure(fixture.popMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when previous period measure is tested', () => {
+            const result = isSimpleMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isPoP', () => {
+        it('should return false when simple measure is tested', () => {
+            const result = isPoP(fixture.simpleMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when pop measure is tested', () => {
+            const result = isPoP(fixture.popMeasure);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when previous period measure is tested', () => {
+            const result = isPoP(fixture.previousPeriodMeasure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isPreviousPeriodMeasure', () => {
+        it('should return false when simple measure is tested', () => {
+            const result = isPreviousPeriodMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when pop measure is tested', () => {
+            const result = isPreviousPeriodMeasure(fixture.popMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when previous period measure is tested', () => {
+            const result = isPreviousPeriodMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe('hasFilters', () => {
+        it('should return false when simple measure has no filters', () => {
+            const result = hasFilters((fixture.metricSum.definition as AFM.ISimpleMeasureDefinition).measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when simple measure has some filters', () => {
+            const result = hasFilters((fixture.metricSum4.definition as AFM.ISimpleMeasureDefinition).measure);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe('hasGlobalDateFilter', () => {
+        it('should return false when AFM has no filters', () => {
+            const result = hasGlobalDateFilter(fixture.afmWithoutGlobalFilters);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when AFM has only attribute filters', () => {
+            const result = hasGlobalDateFilter(fixture.afmWithAttributeGlobalDateFilter);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when AFM has relative date filter', () => {
+            const result = hasGlobalDateFilter(fixture.afmWithRelativeGlobalDateFilter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return true when AFM has absolute date filter', () => {
+            const result = hasGlobalDateFilter(fixture.afmWithAbsoluteGlobalDateFilter);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe('hasMetricDateFilters', () => {
+        it('should return true if AFM contains at least one metric date filter', () => {
+            const normalizedAfm = normalizeAfm(fixture.afmWithMetricDateFilter);
+            const result = hasMetricDateFilters(normalizedAfm);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false if AFM does not contain any metric date filter', () => {
+            const normalizedAfm = normalizeAfm(fixture.afmWithoutMetricDateFilters);
+            const result = hasMetricDateFilters(normalizedAfm);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false if AFM does not contain any metric date filter and has PoP measure', () => {
+            const normalizedAfm = normalizeAfm(fixture.afmWithPopMeasure);
+            const result = hasMetricDateFilters(normalizedAfm);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false if AFM does not contain any metric date filter and has previous period measure', () => {
+            const normalizedAfm = normalizeAfm(fixture.afmWithPreviousPeriodMeasure);
+            const result = hasMetricDateFilters(normalizedAfm);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('getGlobalDateFilters', () => {
+        it('should return empty array when AFM has no filters', () => {
+            const result = getGlobalDateFilters(fixture.afmWithoutGlobalFilters);
+            expect(result).toEqual([]);
+        });
+
+        it('should return array with date filters when AFM has attribute and date filters', () => {
+            const result = getGlobalDateFilters(fixture.afmWithAttributeAndDateGlobalFilters);
+            expect(result).toEqual([
+                    fixture.relativeDateFilter,
+                    fixture.absoluteDateFilter1
+                ]
+            );
+        });
+    });
+
+    describe('getMeasureDateFilters', () => {
+        it('should return empty array when no measure has a date filter', () => {
+            const result = getMeasureDateFilters(fixture.afmWWithMeasuresWithoutFilters);
+            expect(result).toEqual([]);
+        });
+
+        it('should return empty array when measures have only attribute filters', () => {
+            const result = getMeasureDateFilters(fixture.afmWWithMeasuresWithAttributeFilters);
+            expect(result).toEqual([]);
+        });
+
+        it('should return array with all date filters when measures have all kinds of filters', () => {
+            const result = getMeasureDateFilters(fixture.afmWithAllMetricTypesSomeWithFilters);
+            expect(result).toEqual([fixture.relativeDateFilter, fixture.absoluteDateFilter2]);
+        });
+    });
+
+    describe('getId', () => {
+        it('should return uri if uri object qualifier is provided', () => {
+            const result = getId({
+                uri: '/uri'
+            });
+            expect(result).toEqual('/uri');
+        });
+
+        it('should return identifier if identifier object qualifier is provided', () => {
+            const result = getId({
+                identifier: 'id'
+            });
+            expect(result).toEqual('id');
         });
     });
 });

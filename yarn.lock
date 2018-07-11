@@ -54,9 +54,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@gooddata/typings@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.0.0.tgz#bdf52bb34129176b84c29dd70677eaf35b36187d"
+"@gooddata/typings@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
+  dependencies:
+    lodash "4.17.4"
 
 "@types/es6-promise@3.3.0":
   version "3.3.0"

@@ -3,6 +3,7 @@ import compact = require('lodash/compact');
 import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 import { AFM, VisualizationObject } from '@gooddata/typings';
+import MeasureConverter from './MeasureConverter';
 
 function convertAttribute(attribute: VisualizationObject.IVisualizationAttribute, idx: number): AFM.IAttribute {
     const alias = attribute.visualizationAttribute.alias;
@@ -21,7 +22,7 @@ function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjec
     const attrProp = attributes.length ? { attributes } : {};
 
     const measures: AFM.IMeasure[] = getMeasures(visualizationObject.buckets)
-        .map(convertMeasure);
+        .map(MeasureConverter.convertMeasure);
     const measuresProp = measures.length ? { measures } : {};
 
     const filters: AFM.CompatibilityFilter[] = visualizationObject.filters
@@ -37,61 +38,6 @@ function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjec
         ...attrProp,
         ...filtersProp,
         ...nativeTotalsProp
-    };
-}
-
-function convertMeasure(measure: VisualizationObject.IMeasure): AFM.IMeasure {
-    let convertedDefinition;
-    let alias;
-    let formatProp = {};
-
-    if (VisualizationObject.isMeasureDefinition(measure.measure.definition)) {
-        const measureDefinition = measure.measure.definition.measureDefinition;
-
-        const filters: AFM.FilterItem[] = measureDefinition.filters
-            ? compact(measureDefinition.filters.map(convertVisualizationObjectFilter)) : [];
-        const filtersProp = filters.length ? { filters } : {};
-
-        const aggregation = measureDefinition.aggregation;
-        const aggregationProp = aggregation ? { aggregation } : {};
-
-        const computeRatio = measureDefinition.computeRatio;
-        const computeRatioProp = computeRatio ? { computeRatio } : {};
-
-        alias = measure.measure.alias ? measure.measure.alias : measure.measure.title;
-
-        // should we prefer format defined on measure? If so, fix computeRatio format in AD
-        formatProp = computeRatio
-            ? { format: '#,##0.00%' }
-            : (aggregation === 'count' ? { format: '#,##0' } : {});
-
-        convertedDefinition = {
-            measure: {
-                item: measureDefinition.item,
-                ...filtersProp,
-                ...aggregationProp,
-                ...computeRatioProp
-            }
-        };
-    } else {
-        const popDefinition = measure.measure.definition.popMeasureDefinition;
-        alias = `${measure.measure.alias ? measure.measure.alias : measure.measure.title}`;
-
-        convertedDefinition = {
-            popMeasure: {
-                measureIdentifier: popDefinition.measureIdentifier,
-                popAttribute: popDefinition.popAttribute
-            }
-        };
-    }
-
-    const aliasProp = alias ? { alias } : {};
-
-    return {
-        localIdentifier: measure.measure.localIdentifier,
-        definition: convertedDefinition,
-        ...aliasProp,
-        ...formatProp
     };
 }
 
@@ -165,7 +111,7 @@ function getAttributes(buckets: VisualizationObject.IBucket[]): VisualizationObj
                 bucket.items.filter(VisualizationObject.isAttribute);
 
             return result.concat(items);
-    }, []);
+        }, []);
 }
 
 function convertSorting(visObj: VisualizationObject.IVisualizationObjectContent): AFM.SortItem[] {
