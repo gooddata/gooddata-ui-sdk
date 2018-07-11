@@ -3,7 +3,7 @@ import { ClientFunction } from 'testcafe';
 import { config } from './utils/config';
 
 fixture('Login') // eslint-disable-line no-undef
-    .page(config.hostname);
+    .page(config.url);
 
 test('should show login overlay and log in successfully', async (t) => {
     const getLocation = ClientFunction(() => document.location.pathname);

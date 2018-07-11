@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Visualization') // eslint-disable-line no-undef
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/visualization`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/visualization`));
 
 test('Chart visualization should render', async (t) => {
     const loading = Selector('.s-loading');
