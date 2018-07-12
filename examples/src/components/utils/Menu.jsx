@@ -6,13 +6,9 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 class Menu extends React.Component {
     render() {
-        const { location: { pathname }, sideNavigationRoutes, routes, isUserLoggedIn } = this.props;
+        const { location: { pathname }, sideNavigationRoutes, routes } = this.props;
         const href = pathname;
         const currentRoute = (href !== undefined && routes.find(link => (link.path === BASEPATH + href))) || null;
-
-        if (!isUserLoggedIn) {
-            return null;
-        }
 
         const navigationElements = sideNavigationRoutes.map(({ path, title, exact = false }) => (
             <li key={path} className={`navListItem${path === currentRoute ? ' navListItemActive' : ''}`}>
@@ -100,13 +96,11 @@ class Menu extends React.Component {
 Menu.propTypes = {
     location: PropTypes.object.isRequired,
     sideNavigationRoutes: PropTypes.array,
-    routes: PropTypes.array,
-    isUserLoggedIn: PropTypes.bool
+    routes: PropTypes.array
 };
 Menu.defaultProps = {
     sideNavigationRoutes: [],
-    routes: [],
-    isUserLoggedIn: null
+    routes: []
 };
 
 export default withRouter(Menu);

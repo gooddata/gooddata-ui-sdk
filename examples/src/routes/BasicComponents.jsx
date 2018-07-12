@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from 'react';
 
-import { projectId, backendUrlForInfo } from '../utils/fixtures';
 import ExampleWithSource from '../components/utils/ExampleWithSource';
 
 import BarChartExample from '../components/BarChartExample';
@@ -32,10 +31,6 @@ import KpiExampleSRC from '!raw-loader!../components/KpiExample'; // eslint-disa
 
 export const BasicComponents = () => (
     <div>
-        <p style={{ color: '#AAA', marginTop: -10 }}>
-            Connected to {backendUrlForInfo} backend, project id used: {projectId}
-        </p>
-
         <h1>Basic Components</h1>
 
         <p>

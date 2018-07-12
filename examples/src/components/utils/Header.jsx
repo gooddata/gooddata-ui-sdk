@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import CustomLoading from './CustomLoading';
+import { projectId, backendUrlForInfo } from '../../utils/fixtures';
 
 const favicon = require('../../static/favicon.ico');
 const logo = require('../../static/gooddata.svg');
@@ -12,6 +13,41 @@ const logo = require('../../static/gooddata.svg');
 const appName = 'GoodData.UI Examples';
 
 class Header extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            displayBackendInfo: true
+        };
+    }
+
+    toggleBackendInfo = () => {
+        const { displayBackendInfo } = this.state;
+        this.setState({ displayBackendInfo: !displayBackendInfo });
+    }
+
+    renderBackendInfo = () => {
+        const { isUserLoggedIn } = this.props;
+        const { displayBackendInfo } = this.state;
+
+        if (!isUserLoggedIn || !displayBackendInfo) {
+            return null;
+        }
+
+        return (
+            <div className="backendInfo">
+                <span className="backendInfoItem">
+                    Connected to:
+                    <span className="backendInfoValue">{backendUrlForInfo}</span>
+                </span>
+                <span className="backendInfoItem">
+                    Project ID:
+                    <span className="backendInfoValue">{projectId}</span>
+                </span>
+                <span className="backendInfoClose" onClick={this.toggleBackendInfo} />
+            </div>
+        );
+    }
+
     renderLoggingBlock = () => {
         const { isUserLoggedIn } = this.props;
         const redirectUri = typeof window !== 'undefined' && !window.location.pathname.match('/login') ? window.location.pathname : '/';
@@ -21,7 +57,7 @@ class Header extends React.Component {
         if (isUserLoggedIn === false) {
             return (<div>
                 <Link
-                    className="gd-header-menu-item button-login"
+                    className="gd-header-menu-item button-login button-header"
                     to={{
                         pathname: '/login',
                         state: {
@@ -31,8 +67,9 @@ class Header extends React.Component {
                 ><span>Login</span></Link>
             </div>);
         }
-        return <div className="gd-header-menu-item button-logout" onClick={this.props.logoutAction}>Logout</div>;
+        return <div className="gd-header-menu-item button-logout button-header" onClick={this.props.logoutAction}>Logout</div>;
     }
+
     render() {
         const { location: { pathname }, topNavigationRoutes, routes } = this.props;
         const href = pathname;
@@ -55,6 +92,7 @@ class Header extends React.Component {
                 <style jsx>{`
                     .page {
                         width: 100%;
+                        text-align: center;
                     }
 
                     .gd-header {
@@ -103,13 +141,19 @@ class Header extends React.Component {
 
                     .gd-header-inner :global(.gd-header-menu-item) {
                         height: 62px;
-                        margin: 0 23px;
+                        margin: 0;
                         padding: 0 22px;
                         border-bottom: 2px solid transparent;
                         color: rgba(0, 0, 0, 0.7);
                         font-size: 15px;
                         line-height: 62px;
                         transition: all 0.2s;
+                    }
+
+                    @media screen and (min-width: 1025px) {
+                        .gd-header-inner :global(.gd-header-menu-item) {
+                            margin: 0 23px;
+                        }
                     }
 
                     .gd-header-inner :global(.gd-header-menu-item:hover),
@@ -125,25 +169,97 @@ class Header extends React.Component {
                         font-weight: normal;
                     }
 
-                    .gd-header-inner :global(.button-login),
-                    .gd-header-inner :global(.button-logout) {
+                    .gd-header-inner :global(.button-header) {
                         height: 28px;
-                        margin: 0;
+                        margin: 0 0 0 20px;
+                        padding: 0 10px;
+                        border: none;
+                        color: rgba(0, 0, 0, 0.7);
+                        font-size: 12px;
+                        line-height: 28px;
+                    }
+
+                    .gd-header-inner :global(.button-header-border) {
                         padding: 0 22px;
                         border: 1px solid rgba(0, 0, 0, 0.5);
                         border-radius: 100px;
-                        color: black;
-                        font-size: 12px;
                         line-height: 26px;
                     }
 
-                    .gd-header-inner :global(.button-login:hover),
-                    .gd-header-inner :global(.button-login:focus),
-                    .gd-header-inner :global(.button-login:active),
-                    .gd-header-inner :global(.button-logout:hover),
-                    .gd-header-inner :global(.button-logout:focus),
-                    .gd-header-inner :global(.button-logout:active) {
-                        border-color: #000;
+                    .gd-header-inner :global(.button-header:hover),
+                    .gd-header-inner :global(.button-header:focus),
+                    .gd-header-inner :global(.button-header:active) {
+                        color: rgba(0, 0, 0, 0.9);
+                        border-color: rgba(0, 0, 0, 0.9);
+                    }
+
+                    .page :global(.backendInfo) {
+                        position: relative;
+                        display: inline-block;
+                        max-width: 1400px;
+                        margin: 40px 20px 20px;
+                        padding: 15px 60px 15px 30px;
+                        border-radius: 50px;
+                        color: #94a1ad;
+                        font-size: 13px;
+                        text-align: center;
+                        background: #f0f0f0;
+                    }
+
+                    .page :global(.backendInfoItem) {
+                        display: inline-block;
+                        margin-left: 20px;
+                        padding-left: 20px;
+                        border-left: 1px solid #94a1ad;
+                    }
+
+                    .page :global(.backendInfoItem:first-child) {
+                        border-left: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .page :global(.backendInfoValue) {
+                        display: inline-block;
+                        margin-left: 4px;
+                        color: #333;
+                    }
+
+                    .page :global(.backendInfoClose) {
+                        position: absolute;
+                        top: 50%;
+                        right: 20px;
+                        width: 20px;
+                        height: 20px;
+                        margin-top: -10px;
+                        color: #94a1ad;
+                        cursor: pointer;
+                        transition: color 0.2s;
+                    }
+
+                    .page :global(.backendInfoClose:hover),
+                    .page :global(.backendInfoClose:focus),
+                    .page :global(.backendInfoClose:active) {
+                        color: #000;
+                    }
+
+                    .page :global(.backendInfoClose::before),
+                    .page :global(.backendInfoClose::after) {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        width: 20px;
+                        height: 0;
+                        border-bottom: 1px solid currentColor;
+                    }
+
+                    .page :global(.backendInfoClose::before) {
+                        transform: rotate(45deg);
+                    }
+
+                    .page :global(.backendInfoClose::after) {
+                        transform: rotate(-45deg);
                     }
                 `}</style>
                 <Helmet>
@@ -170,9 +286,16 @@ class Header extends React.Component {
                                 </ul>
                             </div>
                         </div>
+                        <a
+                            href="https://github.com/gooddata/gooddata-react-components#run-live-examples-locally"
+                            className="gd-header-menu-item button-header button-header-border"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Run Locally</a>
                         {this.renderLoggingBlock()}
                     </div>
                 </div>
+                {this.renderBackendInfo()}
             </div>
         );
     }
