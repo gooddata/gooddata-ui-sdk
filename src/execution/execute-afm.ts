@@ -194,6 +194,18 @@ export function nextPageExists(nextOffset: number[], total: number[]): boolean {
     return nextOffset[0] < total[0];
 }
 
+function mergeHeaderItemsForEachAttribute(
+    dimension: number,
+    headerItems: Execution.IResultHeaderItem[][][] | undefined,
+    result: Execution.IExecutionResult
+) {
+    if (headerItems && result.headerItems) {
+        for (let attrIdx = 0; attrIdx < headerItems[dimension].length; attrIdx += 1) {
+            result.headerItems[dimension][attrIdx].push(...headerItems[dimension][attrIdx]);
+        }
+    }
+}
+
 // works only for one or two dimensions
 export function mergePage(
     prevExecutionResult: Execution.IExecutionResult,
@@ -206,10 +218,8 @@ export function mergePage(
         // for 1 dimension we already have the headers from first page
         const otherDimension = dimension === 0 ? 1 : 0;
         const isEdge = (paging.offset[otherDimension] === 0);
-        if (isEdge && headerItems && result.headerItems) {
-            for (let attrIdx = 0; attrIdx < headerItems[dimension].length; attrIdx += 1) {
-                result.headerItems[dimension][attrIdx].push(...headerItems[dimension][attrIdx]);
-            }
+        if (isEdge) {
+            mergeHeaderItemsForEachAttribute(dimension, headerItems, result);
         }
     };
 
@@ -231,14 +241,21 @@ export function mergePage(
     if (paging.offset.length > 1) {
         mergeHeaderItems(0);
         mergeHeaderItems(1);
+    } else {
+        mergeHeaderItemsForEachAttribute(0, headerItems, result);
     }
 
     // update page count
     if (paging.offset.length === 1) {
-        result.paging.count = [result.data.length];
+        result.paging.count = [
+            get(result, 'headerItems[0][0]', []).length
+        ];
     }
     if (paging.offset.length === 2) {
-        result.paging.count = [result.data.length, (result.data[0] as Execution.DataValue[]).length];
+        result.paging.count = [
+            get(result, 'headerItems[0][0]', []).length,
+            get(result, 'headerItems[1][0]', []).length
+        ];
     }
 
     return result;
