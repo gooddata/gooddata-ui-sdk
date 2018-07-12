@@ -296,7 +296,7 @@ describe('mergePage', () => {
                 headerItems: [
                     [
                         [
-                            A1
+                            createMeasureHeaderItem(`m${offset + 1}`, offset + 1)
                         ]
                     ]
                 ],
@@ -319,7 +319,8 @@ describe('mergePage', () => {
                 headerItems: [
                     [
                         [
-                            A1
+                            M1,
+                            M2
                         ]
                     ]
                 ],
@@ -348,7 +349,9 @@ describe('mergePage', () => {
                 headerItems: [
                     [
                         [
-                            A1
+                            M1,
+                            M2,
+                            M3
                         ]
                     ]
                 ],
@@ -956,7 +959,7 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                M1
+                                ...range(500).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
                             ]
                         ]
                     ],
@@ -973,7 +976,7 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                M1
+                                createMeasureHeaderItem('m501', 501)
                             ]
                         ]
                     ],
@@ -1015,12 +1018,7 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    {
-                                        measureHeaderItem: {
-                                            name: 'm1',
-                                            order: 1
-                                        }
-                                    }
+                                    ...range(501).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
                                 ]
                             ]
                         ],
