@@ -6,7 +6,18 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "rm -rf dist && tsc",
-    "dev": "tsc --watch --noEmit"
+    "dev": "tsc --watch --noEmit",
+    "test": "jest --watch",
+    "test-single-run": "jest",
+    "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+    "run-tslint": "tslint -p tsconfig.json",
+    "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
+    "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+    "validate": "tsc --noEmit && yarn tslint",
+    "validate-ci": "tsc --noEmit && yarn tslint-ci"
+  },
+  "config": {
+    "tslint": "'./{src,test}/**/*.ts'"
   },
   "files": [
     "dist",
@@ -16,6 +27,25 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gooddata/gooddata-typings.git"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
+    "collectCoverageFrom": [
+      "src/**/*.{ts}",
+      "!**/*.d.ts"
+    ],
+    "collectCoverage": false,
+    "coverageReporters": [
+      "html"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
   },
   "keywords": [
     "typescript",
@@ -29,6 +59,12 @@
   },
   "homepage": "https://github.com/gooddata/gooddata-typings#readme",
   "devDependencies": {
+    "@gooddata/tslint-config": "0.0.10",
+    "@types/jest": "22.2.0",
+    "jest": "21.2.1",
+    "jest-junit": "3.0.0",
+    "ts-jest": "21.2.3",
     "typescript": "2.5.3"
-  }
+  },
+  "dependencies": {}
 }

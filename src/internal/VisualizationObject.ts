@@ -160,21 +160,27 @@ export namespace Internal {
         }
 
         export function isMeasureDefinition(
-            definition: IMeasureDefinition | IPoPMeasureDefinition,
+            definition: IMeasureDefinition | IPoPMeasureDefinition
         ): definition is IMeasureDefinition {
             return (definition as IMeasureDefinition).measureDefinition !== undefined;
         }
 
-        export function isAttributeFilter(filter: VisualizationObjectFilter): filter is VisualizationObjectAttributeFilter {
+        export function isAttributeFilter(
+            filter: VisualizationObjectFilter
+        ): filter is VisualizationObjectAttributeFilter {
             return (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
                 (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined;
         }
 
-        export function isPositiveAttributeFilter(filter: VisualizationObjectAttributeFilter): filter is IVisualizationObjectPositiveAttributeFilter {
+        export function isPositiveAttributeFilter(
+            filter: VisualizationObjectAttributeFilter
+        ): filter is IVisualizationObjectPositiveAttributeFilter {
             return (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined;
         }
 
-        export function isAbsoluteDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectAbsoluteDateFilter {
+        export function isAbsoluteDateFilter(
+            filter: VisualizationObjectDateFilter
+        ): filter is IVisualizationObjectAbsoluteDateFilter {
             return (filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined;
         }
 

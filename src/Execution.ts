@@ -6,20 +6,20 @@ export namespace Execution {
             localIdentifier: string;
             name: string;
             format: string;
-        }
+        };
     }
 
     export interface ITotalHeaderItem {
         totalHeaderItem: {
             name: string;
-        }
+        };
     }
 
     export interface IMeasureGroupHeader {
         measureGroupHeader: {
             items: IMeasureHeaderItem[];
             totalItems?: ITotalHeaderItem[];
-        }
+        };
     }
 
     export interface IAttributeHeader {
@@ -34,7 +34,7 @@ export namespace Execution {
                 identifier: string;
                 name: string;
             };
-        }
+        };
     }
 
     export type IHeader = IMeasureGroupHeader | IAttributeHeader;
@@ -43,21 +43,21 @@ export namespace Execution {
         attributeHeaderItem: {
             uri: string;
             name: string;
-        }
+        };
     }
 
     export interface IResultMeasureHeaderItem {
         measureHeaderItem: {
             name: string,
             order: number
-        }
+        };
     }
 
     export interface IResultTotalHeaderItem {
         totalHeaderItem: {
             name: string,
             type: string
-        }
+        };
     }
 
     export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
@@ -74,11 +74,12 @@ export namespace Execution {
     }
 
     export interface IExecutionResponseWrapper {
-        executionResponse: IExecutionResponse
+        executionResponse: IExecutionResponse;
     }
 
     export type DataValue = null | string | number;
 
+    // tslint:disable-next-line:interface-name
     export interface Warning {
         warningCode: string;
         message: string;
@@ -98,7 +99,7 @@ export namespace Execution {
     }
 
     export interface IExecutionResultWrapper {
-        executionResult: IExecutionResult
+        executionResult: IExecutionResult;
     }
 
     export interface IError extends Error {
