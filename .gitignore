@@ -6,8 +6,6 @@
 /ci/results/*
 .DS_Store
 
-*.js
-*.js.map
 *.swp
 
 /npm-debug.log

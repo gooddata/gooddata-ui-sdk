@@ -130,7 +130,6 @@ export namespace VisualizationObject {
         visualizationObject: IVisualizationObject;
     }
 
-
     export function isMeasure(bucketItem: IMeasure | IVisualizationAttribute): bucketItem is IMeasure {
         return (bucketItem as IMeasure).measure !== undefined;
     }
@@ -142,7 +141,7 @@ export namespace VisualizationObject {
     }
 
     export function isMeasureDefinition(
-        definition: IMeasureDefinition | IPoPMeasureDefinition,
+        definition: IMeasureDefinition | IPoPMeasureDefinition
     ): definition is IMeasureDefinition {
         return (definition as IMeasureDefinition).measureDefinition !== undefined;
     }
@@ -152,11 +151,15 @@ export namespace VisualizationObject {
             (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined;
     }
 
-    export function isPositiveAttributeFilter(filter: VisualizationObjectAttributeFilter): filter is IVisualizationObjectPositiveAttributeFilter {
+    export function isPositiveAttributeFilter(
+        filter: VisualizationObjectAttributeFilter
+    ): filter is IVisualizationObjectPositiveAttributeFilter {
         return (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined;
     }
 
-    export function isAbsoluteDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectAbsoluteDateFilter {
+    export function isAbsoluteDateFilter(
+        filter: VisualizationObjectDateFilter
+    ): filter is IVisualizationObjectAbsoluteDateFilter {
         return (filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined;
     }
 
