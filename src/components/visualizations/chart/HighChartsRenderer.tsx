@@ -230,9 +230,7 @@ export default class HighChartsRenderer
             }
         );
 
-        const renderLegendFirst = !legend.responsive && (
-            legend.position === TOP || legend.position === LEFT
-        );
+        const renderLegendFirst = legend.position === TOP || legend.position === LEFT;
 
         return (
             <div className={classes}>
