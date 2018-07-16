@@ -8,6 +8,16 @@ import SortItem = AFM.SortItem;
 
 describe('AFM', () => {
     describe('isObjectUriQualifier', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isObjectUriQualifier(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isObjectUriQualifier(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when identifier object qualifier is tested', () => {
             const objectQualifier: ObjQualifier = {
                 identifier: 'id'
@@ -26,6 +36,16 @@ describe('AFM', () => {
     });
 
     describe('isSimpleMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isSimpleMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isSimpleMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return true when simple measure definition is tested', () => {
             const measure: MeasureDefinition = {
                 measure: {
@@ -50,9 +70,35 @@ describe('AFM', () => {
             const result = AFM.isSimpleMeasureDefinition(measure);
             expect(result).toEqual(false);
         });
+
+        it('should return false when previous period measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
     });
 
     describe('isPopMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isPopMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isPopMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when simple measure definition is tested', () => {
             const measure: MeasureDefinition = {
                 measure: {
@@ -77,9 +123,88 @@ describe('AFM', () => {
             const result = AFM.isPopMeasureDefinition(measure);
             expect(result).toEqual(true);
         });
+
+        it('should return false when previous period measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isPreviousPeriodMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isPreviousPeriodMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isPreviousPeriodMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when simple measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when pop measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: 'm1',
+                    popAttribute: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when previous period measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
     });
 
     describe('isAttributeSortItem', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isAttributeSortItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isAttributeSortItem(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return true when attribute sort item is tested', () => {
             const sortItem: SortItem = {
                 attributeSortItem: {
@@ -108,6 +233,16 @@ describe('AFM', () => {
     });
 
     describe('isMeasureSortItem', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isMeasureSortItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isMeasureSortItem(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when attribute sort item is tested', () => {
             const sortItem: SortItem = {
                 attributeSortItem: {
@@ -136,6 +271,16 @@ describe('AFM', () => {
     });
 
     describe('isMeasureLocatorItem', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isMeasureLocatorItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isMeasureLocatorItem(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when attribute locator is tested', () => {
             const locatorItem: LocatorItem = {
                 attributeLocatorItem: {
@@ -159,6 +304,16 @@ describe('AFM', () => {
     });
 
     describe('isPositiveAttributeFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isPositiveAttributeFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isPositiveAttributeFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when negative attribute filter is tested', () => {
             const filter: CompatibilityFilter = {
                 negativeAttributeFilter: {
@@ -187,6 +342,16 @@ describe('AFM', () => {
     });
 
     describe('isNegativeAttributeFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isNegativeAttributeFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isNegativeAttributeFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return true when negative attribute filter is tested', () => {
             const filter: CompatibilityFilter = {
                 negativeAttributeFilter: {
