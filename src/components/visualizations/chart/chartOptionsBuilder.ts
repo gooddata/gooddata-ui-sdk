@@ -882,8 +882,7 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         }
     } else if (isHeatMap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : '',
-            format: firstMeasureGroupItem.format
+            label: stackByAttribute ? stackByAttribute.name : ''
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name

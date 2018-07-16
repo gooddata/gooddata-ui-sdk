@@ -2331,6 +2331,19 @@ describe('chartOptionsBuilder', () => {
                     const expectedCategories = [[''], ['']];
                     expect(chartOptions.data.categories).toEqual(expectedCategories);
                 });
+
+                it('should generate Yaxes without format from measure', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWithStackByAndViewByAttributes,
+                        {
+                            type: 'heatmap'
+                        }
+                    );
+                    const expectedYAxis = [{
+                        label: 'Region'
+                    }];
+                    expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
             });
         });
     });
