@@ -35,6 +35,17 @@ export function unwrapPoPMeasure(item: AFM.IMeasure): AFM.IPopMeasure {
 }
 
 /**
+ * Unwraps previousPeriodMeasure object
+ *
+ * @method unwrapPreviousPeriodMeasure
+ * @param {AFM.IMeasure} item
+ * @returns {AFM.IPreviousPeriodMeasure}
+ */
+export function unwrapPreviousPeriodMeasure(item: AFM.IMeasure): AFM.IPreviousPeriodMeasure {
+    return (item.definition as AFM.IPreviousPeriodMeasureDefinition).previousPeriodMeasure;
+}
+
+/**
  * Normalize AFM
  *
  * @method normalizeAfm
@@ -51,15 +62,37 @@ export function normalizeAfm(afm: AFM.IAfm): INormalizedAFM {
 }
 
 /**
+ * Returns true if measure is a simple measure
+ *
+ * @method isSimpleMeasure
+ * @param {AFM.IMeasure} item
+ * @returns {boolean}
+ */
+export function isSimpleMeasure(item: AFM.IMeasure): boolean {
+    return !!unwrapSimpleMeasure(item);
+}
+
+/**
  * Returns true if measure is PeriodOverPeriod
  *
  * @method isPoP
  * @param {AFM.IMeasure} item
  * @returns {boolean}
  */
-export const isPoP = (item: AFM.IMeasure): boolean => {
+export function isPoP(item: AFM.IMeasure): boolean {
     return !!unwrapPoPMeasure(item);
-};
+}
+
+/**
+ * Returns true if measure is previous period measure
+ *
+ * @method isPreviousPeriodMeasure
+ * @param {AFM.IMeasure} item
+ * @returns {boolean}
+ */
+export function isPreviousPeriodMeasure(item: AFM.IMeasure): boolean {
+    return !!unwrapPreviousPeriodMeasure(item);
+}
 
 /**
  * Returns true if filter is attributeFilter
@@ -94,7 +127,7 @@ export function isDateFilter(filter: AFM.CompatibilityFilter): filter is AFM.Dat
  */
 export function hasMetricDateFilters(normalizedAfm: INormalizedAFM): boolean {
     return normalizedAfm.measures.some((measure) => {
-        if (!isPoP(measure)) {
+        if (isSimpleMeasure(measure)) {
             const filters = unwrapSimpleMeasure(measure).filters;
             return !!(filters && filters.some(isDateFilter));
         }
@@ -165,9 +198,9 @@ function isDateFilterAbsolute(filter: AFM.DateFilterItem): filter is AFM.IAbsolu
  *
  * @method getId
  * @param {AFM.ObjQualifier} obj
- * @returns {any}
+ * @returns {string|null}
  */
-export function getId(obj: AFM.ObjQualifier) {
+export function getId(obj: AFM.ObjQualifier): string | null {
     if ((obj as AFM.IObjUriQualifier).uri) {
         return (obj as AFM.IObjUriQualifier).uri;
     }
