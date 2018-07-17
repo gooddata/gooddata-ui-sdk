@@ -67,11 +67,11 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@6.1.2":
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.1.2.tgz#ba4b053f33cc91dfedb200f423d925e59c793ebf"
+"@gooddata/gooddata-js@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.2.0.tgz#c5fa5c5b063db88c359ca1193dec8ee68f5c5bee"
   dependencies:
-    "@gooddata/typings" "2.0.0"
+    "@gooddata/typings" "2.3.0"
     es6-promise "3.0.2"
     fetch-cookie "0.7.0"
     invariant "2.2.2"
@@ -164,13 +164,11 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-1.0.1.tgz#ec39e13bfb5ba28ce0f5b558e1745ed9e566f897"
 
-"@gooddata/typings@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.0.0.tgz#bdf52bb34129176b84c29dd70677eaf35b36187d"
-
-"@gooddata/typings@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.1.0.tgz#3a5edb2f2a8412bbc00cfa468505d1ee4999ca1c"
+"@gooddata/typings@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
+  dependencies:
+    lodash "4.17.4"
 
 "@storybook/addon-actions@3.4.0":
   version "3.4.0"

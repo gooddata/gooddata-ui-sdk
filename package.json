@@ -91,11 +91,11 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "6.1.2",
+    "@gooddata/gooddata-js": "6.2.0",
     "@gooddata/goodstrap": "56.1.0",
     "@gooddata/js-utils": "^2.0.1",
     "@gooddata/numberjs": "^3.1.2",
-    "@gooddata/typings": "2.1.0",
+    "@gooddata/typings": "2.3.0",
     "@types/highcharts": "4.2.56",
     "classnames": "^2.2.5",
     "custom-event": "^1.0.1",
