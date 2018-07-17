@@ -1,4 +1,5 @@
 import { IObjectMeta } from '../Meta';
+import isEmpty = require('lodash/isEmpty');
 
 export namespace Internal {
     /**
@@ -102,10 +103,14 @@ export namespace Internal {
             alias?: string;
         }
 
+        export type IMeasureDefinitionType = IMeasureDefinition
+            | IPoPMeasureDefinition
+            | IPreviousPeriodMeasureDefinition;
+
         export interface IMeasure {
             measure: {
                 localIdentifier: Identifier;
-                definition: IMeasureDefinition | IPoPMeasureDefinition;
+                definition: IMeasureDefinitionType;
                 alias?: string;
                 title?: string;
                 format?: string;
@@ -136,6 +141,18 @@ export namespace Internal {
             };
         }
 
+        export interface IPreviousPeriodMeasureDefinition {
+            previousPeriodMeasure: {
+                measureIdentifier: Identifier;
+                dateDataSets: IPreviousPeriodDateDataSet[];
+            };
+        }
+
+        export interface IPreviousPeriodDateDataSet {
+            dataSet: IObjUriQualifier;
+            periodsAgo: number;
+        }
+
         export interface IVisualizationObject {
             meta: IObjectMeta;
             content: IVisualizationObjectContent;
@@ -150,42 +167,46 @@ export namespace Internal {
         }
 
         export function isMeasure(bucketItem: IMeasure | IVisualizationAttribute): bucketItem is IMeasure {
-            return (bucketItem as IMeasure).measure !== undefined;
+            return !isEmpty(bucketItem) && (bucketItem as IMeasure).measure !== undefined;
         }
 
         export function isVisualizationAttribute(
             bucketItem: IMeasure | IVisualizationAttribute
         ): bucketItem is IVisualizationAttribute {
-            return (bucketItem as IVisualizationAttribute).visualizationAttribute !== undefined;
+            return !isEmpty(bucketItem) && (bucketItem as IVisualizationAttribute).visualizationAttribute !== undefined;
         }
 
         export function isMeasureDefinition(
-            definition: IMeasureDefinition | IPoPMeasureDefinition
+            definition: IMeasureDefinitionType
         ): definition is IMeasureDefinition {
-            return (definition as IMeasureDefinition).measureDefinition !== undefined;
+            return !isEmpty(definition) && (definition as IMeasureDefinition).measureDefinition !== undefined;
         }
 
         export function isAttributeFilter(
             filter: VisualizationObjectFilter
         ): filter is VisualizationObjectAttributeFilter {
-            return (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
-                (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined;
+            return !isEmpty(filter) && (
+                (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined
+                || (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined
+            );
         }
 
         export function isPositiveAttributeFilter(
             filter: VisualizationObjectAttributeFilter
         ): filter is IVisualizationObjectPositiveAttributeFilter {
-            return (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+            return !isEmpty(filter)
+                && (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined;
         }
 
         export function isAbsoluteDateFilter(
             filter: VisualizationObjectDateFilter
         ): filter is IVisualizationObjectAbsoluteDateFilter {
-            return (filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined;
+            return !isEmpty(filter)
+                && (filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined;
         }
 
         export function isAttribute(bucketItem: BucketItem): bucketItem is IVisualizationAttribute {
-            return (bucketItem as IVisualizationAttribute).visualizationAttribute !== undefined;
+            return !isEmpty(bucketItem) && (bucketItem as IVisualizationAttribute).visualizationAttribute !== undefined;
         }
     }
 }

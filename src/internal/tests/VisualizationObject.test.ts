@@ -7,9 +7,20 @@ import BucketItem = VisualizationObject.BucketItem;
 import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
 import VisualizationObjectDateFilter = VisualizationObject.VisualizationObjectDateFilter;
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
+import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
 
 describe('VisualizationObject', () => {
     describe('isMeasure', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isMeasure(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isMeasure(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when visualization attribute is tested', () => {
             const attribute: IVisualizationAttribute = {
                 visualizationAttribute: {
@@ -42,6 +53,16 @@ describe('VisualizationObject', () => {
     });
 
     describe('isVisualizationAttribute', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isVisualizationAttribute(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isVisualizationAttribute(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when measure is tested', () => {
             const measure: IMeasure = {
                 measure: {
@@ -73,7 +94,70 @@ describe('VisualizationObject', () => {
         });
     });
 
+    describe('isMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when simple measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                measureDefinition: {
+                    item: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when pop measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                popMeasureDefinition: {
+                    measureIdentifier: 'm1',
+                    popAttribute: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when previous period measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+    });
+
     describe('isAttributeFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isAttributeFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isAttributeFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when relative date filter is tested', () => {
             const filter: VisualizationObjectFilter = {
                 relativeDateFilter: {
@@ -117,6 +201,16 @@ describe('VisualizationObject', () => {
     });
 
     describe('isPositiveAttributeFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isPositiveAttributeFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isPositiveAttributeFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when negative attribute filter is tested', () => {
             const filter: VisualizationObjectAttributeFilter = {
                 negativeAttributeFilter: {
@@ -145,6 +239,16 @@ describe('VisualizationObject', () => {
     });
 
     describe('isAbsoluteDateFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isAbsoluteDateFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isAbsoluteDateFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when relative date filter is tested', () => {
             const filter: VisualizationObjectDateFilter = {
                 relativeDateFilter: {
@@ -176,6 +280,16 @@ describe('VisualizationObject', () => {
     });
 
     describe('isAttribute', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isAttribute(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isAttribute(undefined);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when measure is tested', () => {
             const measure: BucketItem = {
                 measure: {
