@@ -12,6 +12,8 @@ import {
 } from '../../src/execution/execute-afm';
 import { XhrModule } from '../../src/xhr';
 
+const DEFAULT_LIMIT = 1000;
+
 interface IPagesByOffset {
     [offset: string]: Execution.IExecutionResultWrapper;
 }
@@ -45,7 +47,8 @@ const M3 = createMeasureHeaderItem('m3', 3);
 
 describe('replaceLimitAndOffsetInUri', () => {
     it('should return correct results for 1 dimension', () => {
-        const oldUri = '/gdc/app/projects/projectId/executionResults/123?limit=500&dimensions=1&offset=0';
+        // tslint:disable-next-line:max-line-length
+        const oldUri = `/gdc/app/projects/projectId/executionResults/123?limit=${DEFAULT_LIMIT}&dimensions=1&offset=0`;
         const limit = [5];
         const offset = [3];
 
@@ -56,7 +59,8 @@ describe('replaceLimitAndOffsetInUri', () => {
     });
 
     it('should return correct results for 2 dimensions', () => {
-        const oldUri = '/gdc/app/projects/projectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0';
+        // tslint:disable-next-line:max-line-length
+        const oldUri = `/gdc/app/projects/projectId/executionResults/123?limit=${DEFAULT_LIMIT}%2C${DEFAULT_LIMIT}&dimensions=2&offset=0%2C0`;
         const limit = [12, 12];
         const offset = [3, 9];
 
@@ -591,6 +595,11 @@ describe('executeAfm', () => {
         fetchMock.restore();
     });
 
+    const fakeExecutionResultsUri =
+        // tslint:disable-next-line:max-line-length
+        `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=${DEFAULT_LIMIT}%2C${DEFAULT_LIMIT}&dimensions=2&offset=0%2C0`;
+    const fakeExecuteAfmUri = '/gdc/app/projects/myFakeProjectId/executeAfm';
+
     function getExecution(numOfDimensions: number = 2): AFM.IExecution {
         const dimension = { itemIdentifiers: [] };
 
@@ -610,7 +619,8 @@ describe('executeAfm', () => {
         return {
             dimensions: Array(numOfDimensions).fill(dimension),
             links: {
-                executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overridden&dimensions=${numOfDimensions}` // tslint:disable-line:max-line-length
+                // tslint:disable-next-line:max-line-length
+                executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overridden&dimensions=${numOfDimensions}`
             }
         };
     }
@@ -675,7 +685,7 @@ describe('executeAfm', () => {
 
     it('should reject when /executeAfm fails', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             400
         );
 
@@ -687,12 +697,12 @@ describe('executeAfm', () => {
 
     it('should reject when first polling fails', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0',
+            fakeExecutionResultsUri,
             400
         );
 
@@ -704,12 +714,12 @@ describe('executeAfm', () => {
 
     it('should resolve when first polling returns 204', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0',
+            fakeExecutionResultsUri,
             204
         );
 
@@ -724,12 +734,12 @@ describe('executeAfm', () => {
 
     it('should reject when first polling returns 413', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0',
+            fakeExecutionResultsUri,
             413
         );
 
@@ -741,12 +751,12 @@ describe('executeAfm', () => {
 
     it('should resolve on first polling', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0',
+            fakeExecutionResultsUri,
             { status: 200, body: getExecutionResultResponseBody() }
         );
 
@@ -761,7 +771,7 @@ describe('executeAfm', () => {
 
     it('should throw error on second polling when num of dimensions is 3', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody(3) }
         );
 
@@ -774,22 +784,21 @@ describe('executeAfm', () => {
 
     it('should resolve on second polling', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
         let pollingCounter = 0;
 
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?limit=500%2C500&dimensions=2&offset=0%2C0',
+            fakeExecutionResultsUri,
             () => {
                 pollingCounter += 1;
                 return pollingCounter === 1
                     ? {
                         status: 202,
                         headers: {
-                            Location: '/gdc/app/projects/myFakeProjectId/executionResults/' +
-                            '123?limit=500%2C500&dimensions=2&offset=0%2C0'
+                            Location: fakeExecutionResultsUri
                         }
                     }
                     : {
@@ -810,7 +819,7 @@ describe('executeAfm', () => {
 
     it('should resolve with 2x2 pages', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody() }
         );
 
@@ -820,80 +829,80 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                ...range(1, 501).map(i => createAttributeHeaderItem(`a${i}`))
+                                ...range(1, DEFAULT_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
                             ]
                         ],
                         [
                             [
-                                ...range(1, 501).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                ...range(1, DEFAULT_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
                             ]
                         ]
                     ],
-                    data: Array(500).fill(0).map(() => Array(500).fill(0)),
+                    data: Array(DEFAULT_LIMIT).fill(0).map(() => Array(DEFAULT_LIMIT).fill(0)),
                     paging: {
-                        count: [500, 500],
+                        count: [DEFAULT_LIMIT, DEFAULT_LIMIT],
                         offset: [0, 0],
-                        total: [501, 501]
+                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
                     }
                 }
             },
-            '0,500': {
+            ['0,' + DEFAULT_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                ...range(1, 501).map(i => createAttributeHeaderItem(`a${i}`))
+                                ...range(1, DEFAULT_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
                             ]
                         ],
                         [
                             [
-                                createMeasureHeaderItem('m501', 501)
+                                createMeasureHeaderItem('m' + (DEFAULT_LIMIT + 1), DEFAULT_LIMIT + 1)
                             ]
                         ]
                     ],
-                    data: Array(500).fill([0]),
+                    data: Array(DEFAULT_LIMIT).fill([0]),
                     paging: {
-                        count: [500, 1],
-                        offset: [0, 500],
-                        total: [501, 501]
+                        count: [DEFAULT_LIMIT, 1],
+                        offset: [0, DEFAULT_LIMIT],
+                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
                     }
                 }
             },
-            '500,0': {
+            [DEFAULT_LIMIT + ',0']: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createAttributeHeaderItem('a501')
+                                createAttributeHeaderItem('a' + (DEFAULT_LIMIT + 1))
                             ]
                         ],
                         [
                             [
-                                ...range(1, 501).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                ...range(1, DEFAULT_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
                             ]
                         ]
                     ],
                     data: [
-                        Array(500).fill(0)
+                        Array(DEFAULT_LIMIT).fill(0)
                     ],
                     paging: {
-                        count: [1, 500],
-                        offset: [500, 0],
-                        total: [501, 501]
+                        count: [1, DEFAULT_LIMIT],
+                        offset: [DEFAULT_LIMIT, 0],
+                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
                     }
                 }
             },
-            '500,500': {
+            [DEFAULT_LIMIT + ',' + DEFAULT_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createAttributeHeaderItem('a501')
+                                createAttributeHeaderItem('a' + (DEFAULT_LIMIT + 1))
                             ]
                         ],
                         [
                             [
-                                createMeasureHeaderItem('m501', 501)
+                                createMeasureHeaderItem('m' + DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1)
                             ]
                         ]
                     ],
@@ -904,8 +913,8 @@ describe('executeAfm', () => {
                     ],
                     paging: {
                         count: [1, 1],
-                        offset: [500, 500],
-                        total: [501, 501]
+                        offset: [DEFAULT_LIMIT, DEFAULT_LIMIT],
+                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
                     }
                 }
             }
@@ -927,20 +936,20 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(1, 502).map(i => createAttributeHeaderItem(`a${i}`))
+                                    ...range(1, DEFAULT_LIMIT + 2).map(i => createAttributeHeaderItem(`a${i}`))
                                 ]
                             ],
                             [
                                 [
-                                    ...range(1, 502).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                    ...range(1, DEFAULT_LIMIT + 2).map(i => createMeasureHeaderItem(`m${i}`, i))
                                 ]
                             ]
                         ],
-                        data: Array(501).fill(0).map(() => Array(501).fill(0)),
+                        data: Array(DEFAULT_LIMIT + 1).fill(0).map(() => Array(DEFAULT_LIMIT + 1).fill(0)),
                         paging: {
-                            count: [501, 501],
+                            count: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1],
                             offset: [0, 0],
-                            total: [501, 501]
+                            total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
                         }
                     }
                 });
@@ -949,7 +958,7 @@ describe('executeAfm', () => {
 
     it('should resolve for 1 dimension x 2 pages', () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executeAfm',
+            fakeExecuteAfmUri,
             { status: 200, body: getPollingResponseBody(1) }
         );
 
@@ -959,34 +968,34 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                ...range(500).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
+                                ...range(DEFAULT_LIMIT).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
                             ]
                         ]
                     ],
-                    data: range(1, 501),
+                    data: range(1, DEFAULT_LIMIT + 1),
                     paging: {
-                        count: [500],
+                        count: [DEFAULT_LIMIT],
                         offset: [0],
-                        total: [501]
+                        total: [DEFAULT_LIMIT + 1]
                     }
                 }
             },
-            500: {
+            [DEFAULT_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createMeasureHeaderItem('m501', 501)
+                                createMeasureHeaderItem('m' + (DEFAULT_LIMIT + 1), DEFAULT_LIMIT + 1)
                             ]
                         ]
                     ],
                     data: [
-                        501
+                        DEFAULT_LIMIT + 1
                     ],
                     paging: {
                         count: [1],
-                        offset: [500],
-                        total: [501]
+                        offset: [DEFAULT_LIMIT],
+                        total: [DEFAULT_LIMIT + 1]
                     }
                 }
             }
@@ -1018,15 +1027,16 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(501).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
+                                    ...range(DEFAULT_LIMIT + 1)
+                                        .map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
                                 ]
                             ]
                         ],
-                        data: range(1, 502),
+                        data: range(1, DEFAULT_LIMIT + 2),
                         paging: {
-                            count: [501],
+                            count: [DEFAULT_LIMIT + 1],
                             offset: [0],
-                            total: [501]
+                            total: [DEFAULT_LIMIT + 1]
                         }
                     }
                 });
