@@ -18,7 +18,8 @@ import {
     hasFilters,
     getGlobalDateFilters,
     getId,
-    getMeasureDateFilters
+    getMeasureDateFilters,
+    getDateFilterDateDataSet
 } from '../AfmUtils';
 import { Granularities } from '../../constants/granularities';
 import * as fixture from '../../fixtures/Afm.fixtures';
@@ -556,6 +557,39 @@ describe('AFM utils', () => {
                 identifier: 'id'
             });
             expect(result).toEqual('id');
+        });
+    });
+
+    describe('getDateFilterDateDataSet', () => {
+        it('should return data set of relative date filter', () => {
+            const filter = fixture.relativeDateFilter;
+
+            const dataSet = getDateFilterDateDataSet(filter);
+
+            expect(dataSet).toBe(filter.relativeDateFilter.dataSet);
+        });
+
+        it('should return data set of absolute date filter', () => {
+            const filter = fixture.absoluteDateFilter1;
+
+            const dataSet = getDateFilterDateDataSet(filter);
+
+            expect(dataSet).toBe(filter.absoluteDateFilter.dataSet);
+        });
+
+        it('should throw exception for invalid date filter', () => {
+            const filter = {
+                anotherDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/md/project/obj/727'
+                    }
+                }
+            };
+
+            // noinspection JSValidateTypesInspection
+            const getDataSet = () => getDateFilterDateDataSet(filter as any);
+
+            expect(getDataSet).toThrow();
         });
     });
 });

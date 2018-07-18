@@ -2,7 +2,11 @@
 import cloneDeep = require('lodash/cloneDeep');
 import isEmpty = require('lodash/isEmpty');
 import { AFM } from '@gooddata/typings';
-import { unwrapSimpleMeasure } from '../utils/AfmUtils';
+import {
+    unwrapSimpleMeasure,
+    getId,
+    getDateFilterDateDataSet
+} from '../utils/AfmUtils';
 
 function isFilterItem(filter: AFM.CompatibilityFilter): filter is AFM.FilterItem {
     return !(filter as AFM.IExpressionFilter).value;
@@ -55,15 +59,18 @@ function getGlobalDateFilters(afm: AFM.IAfm): AFM.DateFilterItem[] {
 
 /**
  * AFM Date Filter logic:
- * Prerequisities: At least one metric (M1) with date filter & global date filter (D1)
  *
- * Steps:
- * 1. Remove date filter (D1) from global
- * 2. Add D1 to each metric without date filter
- * 3. M1 is untouched
+ * When:
+ *   There is at least one metric with date filter & global date filter present
+ * Then:
+ *   1. To each metric add all global date filters if there isn't other date filter with the same date data set
+ *   2. Remove global date filter
+ * Otherwise
+ *   Return provided AFM without any change
  */
+
 export function handleMeasureDateFilter(afm: AFM.IAfm): AFM.IAfm {
-    const globalDateFilters = getGlobalDateFilters(afm);
+    const globalDateFilters: AFM.DateFilterItem[] = getGlobalDateFilters(afm);
     if (!globalDateFilters.length) {
         return afm;
     }
@@ -83,20 +90,38 @@ export function handleMeasureDateFilter(afm: AFM.IAfm): AFM.IAfm {
     return {
         ...afm,
         filters: (afm.filters || []).filter(f => isFilterItem(f) && !isDateFilter(f)),
-        measures: (afm.measures || []).map((item: AFM.IMeasure): AFM.IMeasure => {
-            const simpleMeasure = unwrapSimpleMeasure(item);
-            if (!simpleMeasure || measureHasDateFilter(simpleMeasure)) {
-                return item;
-            }
-            return {
-                ...item,
-                definition: {
-                    measure: {
-                        ...simpleMeasure,
-                        filters: [...(simpleMeasure.filters || []), ...globalDateFilters]
+        measures: (afm.measures || []).map((measure: AFM.IMeasure): AFM.IMeasure => {
+            const simpleMeasure = unwrapSimpleMeasure(measure);
+            if (simpleMeasure) {
+                const simpleMeasureFilters = simpleMeasure.filters || [];
+                return {
+                    ...measure,
+                    definition: {
+                        measure: {
+                            ...simpleMeasure,
+                            filters: joinGlobalAndMeasureFilters(simpleMeasureFilters, globalDateFilters)
+                        }
                     }
-                }
-            };
+                };
+            }
+
+            return measure;
         })
     };
+}
+
+function joinGlobalAndMeasureFilters(
+    measureFilters: AFM.FilterItem[], globalDateFilters: AFM.DateFilterItem[]
+): AFM.FilterItem[] {
+    const measureDateFilters: AFM.DateFilterItem[] = measureFilters.filter(isDateFilter);
+    const globalDateFiltersToAdd = globalDateFilters.filter((globalDateFilter: AFM.DateFilterItem) => {
+        const dateDataSetPresent = !measureDateFilters.some((measureDateFilter: AFM.DateFilterItem) => {
+            const globalFilterDataSet = getDateFilterDateDataSet(globalDateFilter);
+            const measureFilterDataSet = getDateFilterDateDataSet(measureDateFilter);
+            return getId(globalFilterDataSet) === getId(measureFilterDataSet);
+        });
+        return dateDataSetPresent;
+    });
+
+    return [...measureFilters, ...globalDateFiltersToAdd];
 }

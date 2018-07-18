@@ -210,14 +210,21 @@ export function getId(obj: AFM.ObjQualifier): string | null {
     return null;
 }
 
-function getDateFilterDateDataSet(filter: AFM.DateFilterItem): AFM.ObjQualifier | null {
+/**
+ * Returns date filter date dataset
+ *
+ * @method getDateFilterDateDataSet
+ * @param {AFM.DateFilterItem} filter
+ * @returns {AFM.ObjQualifier | null }
+ */
+export function getDateFilterDateDataSet(filter: AFM.DateFilterItem): AFM.ObjQualifier {
     if (isDateFilterRelative(filter)) {
         return filter.relativeDateFilter.dataSet;
     }
     if (isDateFilterAbsolute(filter)) {
         return filter.absoluteDateFilter.dataSet;
     }
-    return null;
+    throw new Error('Unsupported type of date filter');
 }
 
 /**
