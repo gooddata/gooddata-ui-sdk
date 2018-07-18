@@ -1,5 +1,4 @@
 // Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
-import { AFM, Execution } from '@gooddata/typings';
 import { ExperimentalExecutionsModule } from './execution/experimental-executions';
 import { AttributesMapLoaderModule } from './utils/attributesMapLoader';
 import { ExecuteAfmModule } from './execution/execute-afm';
@@ -14,7 +13,21 @@ import { MetadataModule } from './metadata';
  *
  */
 export class ExecutionModule {
-    constructor(private xhr: XhrModule, private md: MetadataModule) {}
+    public readonly executeAfm: ExecuteAfmModule['executeAfm'];
+    public readonly getExecutionResponse: ExecuteAfmModule['getExecutionResponse'];
+    public readonly fetchExecutionResult: ExecuteAfmModule['fetchExecutionResult'];
+    private readonly executeAfmModule: ExecuteAfmModule;
+    private readonly xhr: XhrModule;
+    private readonly md: MetadataModule;
+
+    constructor(xhr: XhrModule, md: MetadataModule) {
+        this.executeAfmModule = new ExecuteAfmModule(xhr);
+        this.executeAfm = this.executeAfmModule.executeAfm.bind(this.executeAfmModule);
+        this.getExecutionResponse = this.executeAfmModule.getExecutionResponse.bind(this.executeAfmModule);
+        this.fetchExecutionResult = this.executeAfmModule.fetchExecutionResult.bind(this.executeAfmModule);
+        this.xhr = xhr;
+        this.md = md;
+    }
 
     public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
         return this.getExperimentalExecutionsModule().getData(projectId, columns, executionConfiguration, settings);
@@ -22,11 +35,6 @@ export class ExecutionModule {
 
     public mdToExecutionDefinitionsAndColumns(projectId: string, mdObj: any, options = {}) {
         return this.getExperimentalExecutionsModule().mdToExecutionDefinitionsAndColumns(projectId, mdObj, options);
-    }
-
-    public executeAfm(projectId: string, execution: AFM.IExecution)
-        : Promise<Execution.IExecutionResponses> {
-        return (new ExecuteAfmModule(this.xhr)).executeAfm(projectId, execution);
     }
 
     private getExperimentalExecutionsModule() {

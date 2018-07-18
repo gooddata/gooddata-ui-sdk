@@ -6,7 +6,7 @@ import { Execution, AFM } from '@gooddata/typings';
 
 import { XhrModule } from '../xhr';
 
-export const DEFAULT_LIMIT = 500;
+export const DEFAULT_LIMIT = 1000;
 
 export class ExecuteAfmModule {
     constructor(private xhr: XhrModule) {
@@ -44,12 +44,21 @@ export class ExecuteAfmModule {
      * @returns {Promise<Execution.IExecutionResponse>} Promise with `executionResponse`
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L69
      */
-    private getExecutionResponse(projectId: string, execution: AFM.IExecution)
+    public getExecutionResponse(projectId: string, execution: AFM.IExecution)
         : Promise<Execution.IExecutionResponse> {
         validateNumOfDimensions(get(execution, 'execution.resultSpec.dimensions').length);
         return this.xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: JSON.stringify(execution) })
             .then(apiResponse => apiResponse.getData())
             .then(unwrapExecutionResponse);
+    }
+
+    public fetchExecutionResult(executionResultUri: string, offset: number[], limit: number[])
+        : Promise<Execution.IExecutionResult> {
+        const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
+
+        return this.xhr.get(uri)
+            .then(apiResponse => apiResponse.getData())
+            .then(unwrapExecutionResult);
     }
 
     /**
@@ -80,13 +89,11 @@ export class ExecuteAfmModule {
         offset: number[],
         prevExecutionResult?: Execution.IExecutionResult
     ): Promise<Execution.IExecutionResult | null> {
-        return this.fetchExecutionResult(executionResultUri, limit, offset)
-            .then((executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
-                if (!executionResultWrapper) {
+        return this.fetchExecutionResult(executionResultUri, offset, limit)
+            .then((executionResult: Execution.IExecutionResult | null) => {
+                if (!executionResult) {
                     return null;
                 }
-
-                const executionResult = unwrapExecutionResult(executionResultWrapper);
 
                 const newExecutionResult = prevExecutionResult
                     ? mergePage(prevExecutionResult, executionResult)
@@ -99,19 +106,6 @@ export class ExecuteAfmModule {
                 return nextPageExists(nextOffset, total)
                     ? this.getAllPages(executionResultUri, nextLimit, nextOffset, newExecutionResult)
                     : newExecutionResult;
-            });
-    }
-
-    private fetchExecutionResult(executionResultUri: string, limit: number[], offset: number[])
-        : Promise<Execution.IExecutionResultWrapper | null> {
-        const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
-
-        return this.xhr.ajax(uri, { method: 'GET' })
-            .then((apiResponse) => {
-                if (apiResponse.response.status === 204) {
-                    return null;
-                }
-                return apiResponse.getData();
             });
     }
 }

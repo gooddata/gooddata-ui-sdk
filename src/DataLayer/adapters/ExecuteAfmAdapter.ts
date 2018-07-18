@@ -18,6 +18,7 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
         afm: AFM.IAfm,
         fingerprint?: string
     ): Promise<IDataSource<Execution.IExecutionResponses>> {
+
         const execFactory = (resultSpec: AFM.IResultSpec) => {
             const execution: AFM.IExecution = {
                 execution: {
@@ -25,14 +26,29 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
                     resultSpec
                 }
             };
-
             return this.sdk.execution.executeAfm(this.projectId, execution);
         };
+
+        const responseFactory = (resultSpec: AFM.IResultSpec) => {
+            const execution: AFM.IExecution = {
+                execution: {
+                    afm: handleMeasureDateFilter(afm),
+                    resultSpec
+                }
+            };
+            return this.sdk.execution.getExecutionResponse(this.projectId, execution);
+        };
+
+        const resultFactory = this.sdk.execution.fetchExecutionResult;
+
         const dataSource = new DataSource<Execution.IExecutionResponses>(
             execFactory,
             afm,
-            fingerprint
+            fingerprint,
+            responseFactory,
+            resultFactory
         );
+
         return Promise.resolve(dataSource);
     }
 }
