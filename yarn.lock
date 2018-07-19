@@ -67,9 +67,9 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-6.2.0.tgz#c5fa5c5b063db88c359ca1193dec8ee68f5c5bee"
+"@gooddata/gooddata-js@7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-7.1.0.tgz#e335652f986ce7e9670f255cfc3b6b79dd1706f8"
   dependencies:
     "@gooddata/typings" "2.3.0"
     es6-promise "3.0.2"

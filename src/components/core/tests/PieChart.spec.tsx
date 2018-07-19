@@ -2,17 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { BaseChart, IChartProps } from '../base/BaseChart';
 import { PieChart } from '../PieChart';
-import { getComponentProps } from './helper';
+import { BaseChart } from '../base/BaseChart';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('PieChart', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<PieChart {...props} />);
-    }
-
-    it('should render pie chart', () => {
-        const wrapper = createComponent(getComponentProps());
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<PieChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

@@ -2,17 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { BaseChart, IChartProps } from '../base/BaseChart';
 import { Treemap } from '../Treemap';
-import { getComponentProps } from './helper';
+import { BaseChart } from '../base/BaseChart';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('Treemap', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<Treemap {...props} />);
-    }
-
-    it('should render Treemap', () => {
-        const wrapper = createComponent(getComponentProps());
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<Treemap dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });
