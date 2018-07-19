@@ -79,23 +79,21 @@ export class StackedAreaChartExample extends Component {
             }
         ];
 
-        const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
+        const viewBy = {
+            visualizationAttribute: {
+                displayForm: {
+                    identifier: monthDateIdentifier
+                },
+                localIdentifier: 'month'
             }
-        ];
+        };
 
         return (
             <div style={{ height: 300 }} className="s-area-chart">
                 <AreaChart
                     projectId={projectId}
                     measures={measures}
-                    viewBy={attributes}
+                    viewBy={viewBy}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     config={{
