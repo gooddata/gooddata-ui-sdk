@@ -2,17 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { BaseChart, IChartProps } from '../base/BaseChart';
 import { LineChart } from '../LineChart';
-import { getComponentProps } from './helper';
+import { BaseChart } from '../base/BaseChart';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('LineChart', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<LineChart {...props} />);
-    }
-
-    it('should render line chart', () => {
-        const wrapper = createComponent(getComponentProps());
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<LineChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

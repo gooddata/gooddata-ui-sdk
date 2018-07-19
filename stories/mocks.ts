@@ -15,6 +15,10 @@ export class DataSourceMock implements IDataSource {
         return {};
     }
 
+    public getPage() {
+        return Promise.resolve(this.returnValue);
+    }
+
     public getFingerprint() {
         return '{}';
     }

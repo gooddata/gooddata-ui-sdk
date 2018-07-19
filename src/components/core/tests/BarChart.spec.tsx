@@ -3,17 +3,12 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 
 import { BarChart } from '../BarChart';
-import { BaseChart, IChartProps } from '../base/BaseChart';
-import { getComponentProps } from './helper';
+import { BaseChart } from '../base/BaseChart';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('BarChart', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<BarChart {...props} />);
-    }
-
-    it('should render bar chart', () => {
-        const wrapper = createComponent(getComponentProps());
-
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<BarChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });
