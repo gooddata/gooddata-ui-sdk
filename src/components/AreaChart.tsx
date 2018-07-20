@@ -11,8 +11,8 @@ import { getStackingResultSpec } from '../helpers/resultSpec';
 
 export interface IAreaChartBucketProps extends ICommonChartProps {
     measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute[];
-    stackBy?: VisualizationObject.IVisualizationAttribute[];
+    viewBy?: VisualizationObject.IVisualizationAttribute;
+    stackBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
 }
@@ -39,11 +39,11 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         },
         {
             localIdentifier: 'attributes',
-            items: props.viewBy ? props.viewBy : []
+            items: props.viewBy ? [props.viewBy] : []
         },
         {
             localIdentifier: 'stacks',
-            items: props.stackBy ? props.stackBy : []
+            items: props.stackBy ? [props.stackBy] : []
         }
     ];
 

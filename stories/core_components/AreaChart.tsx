@@ -22,7 +22,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -36,7 +36,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
@@ -53,7 +53,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: true
@@ -70,8 +70,8 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
-                    viewBy={[ATTRIBUTE_1]}
-                    stackBy={[ATTRIBUTE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    stackBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -85,8 +85,8 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
-                    viewBy={[ATTRIBUTE_1]}
-                    stackBy={[ATTRIBUTE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    stackBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
@@ -103,7 +103,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -118,7 +118,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -132,7 +132,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_WITH_NULLS]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -145,7 +145,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_WITH_NULLS]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
