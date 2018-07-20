@@ -4,7 +4,7 @@ import debounce = require('lodash/debounce');
 import * as invariant from 'invariant';
 import * as CustomEvent from 'custom-event';
 import { AFM, Execution } from '@gooddata/typings';
-import * as Highcharts from '@types/highcharts';
+import * as Highcharts from 'highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
 import { isComboChart } from './common';

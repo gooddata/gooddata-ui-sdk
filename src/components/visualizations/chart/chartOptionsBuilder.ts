@@ -2,7 +2,7 @@
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
-import * as Highcharts from '@types/highcharts';
+import * as Highcharts from 'highcharts';
 
 import range = require('lodash/range');
 import get = require('lodash/get');
