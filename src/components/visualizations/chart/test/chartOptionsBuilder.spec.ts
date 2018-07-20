@@ -21,7 +21,8 @@ import {
     generateTooltipHeatMapFn,
     generateTooltipXYFn,
     IPoint,
-    getBubbleChartSeries
+    getBubbleChartSeries,
+    getHeatMapDataClasses
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions } from './helper';
@@ -2343,6 +2344,62 @@ describe('chartOptionsBuilder', () => {
                         label: 'Region'
                     }];
                     expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
+
+                describe('getHeatMapDataClasses', () => {
+                    it('should return single dataClass when series have only one value', () => {
+                        const series = [{
+                            data: [{
+                                value: 10
+                            }]
+                        }];
+                        const colorPalette = ['r', 'g', 'b'];
+                        const expectedDataClasses = [
+                            {
+                                from: 10,
+                                to: 10,
+                                color: 'g'
+                            }
+                        ];
+                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+
+                        expect(dataClasses).toEqual(expectedDataClasses);
+                    });
+
+                    it('should return 7 data classes with valid color', () => {
+                        const series = [{
+                            data: [{
+                                    value: 10
+                                }, {
+                                    value: 20
+                                }, {
+                                    value: 30
+                            }]
+                        }];
+                        const colorPalette = ['r', 'g', 'b'];
+                        const approximatelyExpectedDataClasses = [
+                            {
+                                from: 10,
+                                color: 'r'
+                            }, {
+                                color: 'g'
+                            }, {
+                                color: 'b'
+                            }, {
+                                color: 'r'
+                            }, {
+                                color: 'g'
+                            }, {
+                                color: 'b'
+                            }, {
+                                to: 30,
+                                color: 'r'
+                            }
+                        ];
+                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+
+                        expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
+                    });
                 });
             });
         });

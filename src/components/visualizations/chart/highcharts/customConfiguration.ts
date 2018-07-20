@@ -471,7 +471,10 @@ function getHeatMapDataConfiguration(chartOptions: any) {
                 enabled: !isEmpty(compact(categories))
             },
             categories: categories[1] || []
-        }]
+        }],
+        colorAxis: {
+            dataClasses: get(chartOptions, 'colorAxis.dataClasses', [])
+        }
     };
 }
 

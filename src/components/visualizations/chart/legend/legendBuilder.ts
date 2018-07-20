@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import pick = require('lodash/pick');
 import set = require('lodash/set');
+import get = require('lodash/get');
 import { RIGHT } from './PositionTypes';
 import {
     isAreaChart,
     isScatterPlot,
     isOneOfTypes,
-    isBubbleChart
+    isBubbleChart,
+    isHeatMap
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
@@ -16,7 +18,7 @@ export const DEFAULT_LEGEND_CONFIG = {
 };
 
 export function shouldLegendBeEnabled(chartOptions: any) {
-    const seriesLength = chartOptions.data.series.length;
+    const seriesLength = get(chartOptions, 'data.series.length');
     const { type, stacking, hasStackByAttribute } = chartOptions;
     // More than one measure or stackedBy more than one category
     const hasMoreThanOneSeries = seriesLength > 1;
@@ -29,7 +31,11 @@ export function shouldLegendBeEnabled(chartOptions: any) {
 
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
 
-    return hasMoreThanOneSeries || isSliceChartWithMoreThanOneCategory || isStacked || isScatterPlotWithAttribute;
+    return hasMoreThanOneSeries
+        || isSliceChartWithMoreThanOneCategory
+        || isStacked
+        || isScatterPlotWithAttribute
+        || isHeatMap(type);
 }
 
 export function getLegendItems(chartOptions: any) {
@@ -41,6 +47,24 @@ export function getLegendItems(chartOptions: any) {
         VisualizationTypes.FUNNEL,
         VisualizationTypes.SCATTER
     ];
+
+    if (isHeatMap(type)) {
+        const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, 'colorAxis.dataClasses', []);
+        return dataClasses.map((dataClass, index) => {
+            const { from, to, color } = dataClass;
+            const range = {
+                from,
+                to
+            };
+
+            return {
+                range,
+                color,
+                legendIndex: index
+            };
+        });
+    }
+
     const legendDataSource = isOneOfTypes(type, firstSeriesDataTypes)
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
@@ -59,6 +83,8 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any) {
         if (isBubbleChart(chartOptions.type)) {
             set(legendConfig, 'enabled', true);
         }
+    } else if (isHeatMap(chartOptions.type)) {
+        set(legendConfig, 'position', 'top');
     }
 
     const baseConfig = {
@@ -69,6 +95,7 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any) {
     return {
         ...baseConfig,
         enabled: baseConfig.enabled && shouldLegendBeEnabled(chartOptions),
+        format: get(chartOptions, 'title.format', ''),
         items: getLegendItems(chartOptions)
     };
 }

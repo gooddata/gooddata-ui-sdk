@@ -7,6 +7,7 @@ import getLegend, {
     getLegendItems,
     DEFAULT_LEGEND_CONFIG
 } from '../legendBuilder';
+import { VisualizationTypes } from '../../../../..';
 
 describe('shouldLegendBeEnabled', () => {
     it('should return false by default', () => {
@@ -27,6 +28,14 @@ describe('shouldLegendBeEnabled', () => {
     it('should return true if the chart is stacked and has only one stack item', () => {
         const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, { type: 'bar' });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return true if chart is heatmap', () => {
+        const chartOptions = {
+            type: VisualizationTypes.HEATMAP
+        };
+
+        expect(shouldLegendBeEnabled(chartOptions)).toEqual(true);
     });
 });
 
@@ -67,6 +76,35 @@ describe('getLegendItems', () => {
             }
         ]);
     });
+
+    it('should return correct legend items for heatmap', () => {
+        const chartOptions = {
+            type: VisualizationTypes.HEATMAP,
+            colorAxis: {
+                dataClasses: [{
+                    from: 0,
+                    to: 10,
+                    color: 'color1'
+                }, {
+                    from: 0.5,
+                    to: 0.8,
+                    color: 'color2'
+                }]
+            }
+        };
+
+        const expectedItems = [{
+            range: { from: 0, to: 10 },
+            color: 'color1',
+            legendIndex: 0
+        }, {
+            range: { from: 0.5, to: 0.8 },
+            color: 'color2',
+            legendIndex: 1
+        }];
+
+        expect(getLegendItems(chartOptions)).toEqual(expectedItems);
+    });
 });
 
 describe('getLegend', () => {
@@ -94,5 +132,13 @@ describe('getLegend', () => {
     it('should assign items', () => {
         const legendItems = getLegendItems(chartOptions);
         expect(legend.items).toEqual(legendItems);
+    });
+
+    it('should set legend position to top for heatmap', () => {
+        const chartOptions = { type: VisualizationTypes.HEATMAP };
+        const legendConfig = {};
+        const legend = getLegend(legendConfig, chartOptions);
+
+        expect(legend.position).toEqual('top');
     });
 });

@@ -2,6 +2,7 @@
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
+import * as Highcharts from '@types/highcharts';
 
 import range = require('lodash/range');
 import get = require('lodash/get');
@@ -13,6 +14,7 @@ import escape = require('lodash/escape');
 import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
 import cloneDeep = require('lodash/cloneDeep');
+
 import { IChartConfig, IChartLimits } from './Chart';
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -33,7 +35,7 @@ import {
 import { getChartProperties } from './highcharts/helpers';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
-import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
+import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
@@ -102,6 +104,24 @@ export interface ISeriesItem {
     data?: ISeriesDataItem[];
     color?: string;
     userOptions?: any;
+}
+
+export interface IChartOptions {
+    type?: string;
+    stacking?: any;
+    hasStackByAttribute?: boolean;
+    legendLayout?: string;
+    colorPalette?: string[];
+    dualAxis?: boolean;
+    xAxes?: any;
+    yAxes?: any;
+    data?: any;
+    actions?: any;
+    grid?: any;
+    xAxisProps?: any;
+    yAxisProps?: any;
+    title?: any;
+    colorAxis?: Highcharts.ColorAxisOptions;
 }
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
@@ -176,7 +196,7 @@ export function getColorPalette(
 
 ): string[] {
     if (isHeatMap(type)) {
-        return [];
+        return HEATMAP_BLUE_COLOR_PALETTE;
     }
 
     if (isAttributeColorPalette(type, afm, stackByAttribute)) {
@@ -914,6 +934,44 @@ function assignYAxes(series: any, yAxes: IAxis[]) {
     return series;
 }
 
+export const HEAT_MAP_CATEGORIES_COUNT = 7;
+export const HIGHCHARTS_PRECISION = 15;
+
+export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
+    const newSeries = series.map((item: any) => ({
+        ...item,
+        borderWidth: 0
+    }));
+
+    const values: number[] = compact(get(newSeries, '0.data', []).map((item: any) => item.value));
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
+    const safeMax = parseFloat(Number(max).toPrecision(HIGHCHARTS_PRECISION));
+    const dataClasses = [];
+
+    if (min === max) {
+        dataClasses.push({
+            from: min,
+            to: max,
+            color: colorPalette[1]
+        });
+    } else {
+        const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
+        let currentSum = safeMin;
+        for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
+            dataClasses.push({
+                from: currentSum,
+                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? safeMax : currentSum + step,
+                color: colorPalette[i % colorPalette.length]
+            });
+            currentSum += step;
+        }
+    }
+
+    return dataClasses;
+}
+
 /**
  * Creates an object providing data for all you need to render a chart except drillability.
  *
@@ -934,7 +992,7 @@ export function getChartOptions(
     unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
     drillableItems: IDrillableItem[]
-): any {
+): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
     const attributeHeaderItems = unfilteredHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
@@ -1073,7 +1131,7 @@ export function getChartOptions(
     if (isHeatMap(type)) {
         return {
             type,
-            stacking: null as any,
+            stacking: null,
             legendLayout: 'horizontal',
             title: {
                 x: (viewByAttribute ? viewByAttribute.name : ''),
@@ -1092,7 +1150,10 @@ export function getChartOptions(
             grid: {
                 enabled: false
             },
-            colorPalette: [] as any
+            colorPalette,
+            colorAxis: {
+                dataClasses: getHeatMapDataClasses(series, colorPalette)
+            }
         };
     }
 
