@@ -140,6 +140,14 @@ export const barChartWithPopMeasureAndViewByAttribute: any = {
         require('../test_data/bar_chart_with_pop_measure_and_view_by_attribute_result.json').executionResult
 };
 
+export const barChartWithPreviousPeriodMeasure: any = {
+    executionRequest: require('../test_data/bar_chart_with_previous_period_measure_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_previous_period_measure_response.json').executionResponse,
+    executionResult:
+        require('../test_data/bar_chart_with_previous_period_measure_result.json').executionResult
+};
+
 export const pieChartWithMetricsOnly: any = {
     executionRequest: require('../test_data/pie_chart_with_metrics_only_request.json').execution,
     executionResponse:
@@ -287,6 +295,50 @@ export const barChartWith6PopMeasuresAndViewByAttribute = (() => {
     return dataSet;
 })();
 
+export const barChartWith6PreviousPeriodMeasures = (() => {
+    const n = 6;
+    let dataSet: any = immutableSet(
+        barChartWithPreviousPeriodMeasure,
+        'executionRequest.afm.measures',
+        range(n).reduce((result, measuresIndex) => {
+            const { measures } = barChartWithPreviousPeriodMeasure.executionRequest.afm;
+            const previousPeriodMeasure = cloneDeep(measures[0]);
+            const postfix = `_${measuresIndex}`;
+            previousPeriodMeasure.localIdentifier += postfix;
+            previousPeriodMeasure.definition.previousPeriodMeasure.measureIdentifier += postfix;
+            previousPeriodMeasure.definition.previousPeriodMeasure.dateDataSets.forEach((dateDataSet: any) => {
+                dateDataSet.dataSet.uri += postfix;
+            });
+            previousPeriodMeasure.alias += postfix;
+            const sourceMeasure = cloneDeep(measures[1]);
+            sourceMeasure.localIdentifier += postfix;
+            sourceMeasure.definition.measure.item.uri += postfix;
+            sourceMeasure.alias += postfix;
+            return result.concat([previousPeriodMeasure, sourceMeasure]);
+        }, []));
+    dataSet = immutableSet(
+        dataSet,
+        `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}].headers[0].measureGroupHeader.items`,
+        repeatItemsNTimes(
+            dataSet.executionResponse.dimensions[STACK_BY_DIMENSION_INDEX].headers[0].measureGroupHeader.items, n)
+            .map((headerItem: any, headerItemIndex: any) => {
+                const postfix = `_${Math.floor(headerItemIndex / 2)}`;
+                return {
+                    measureHeaderItem: {
+                        ...headerItem.measureHeaderItem,
+                        localIdentifier: headerItem.measureHeaderItem.localIdentifier + postfix
+                    }
+                };
+            })
+    );
+    dataSet = immutableSet(
+        dataSet,
+        'executionResult.data',
+        repeatItemsNTimes(dataSet.executionResult.data, n)
+    );
+    return dataSet;
+})();
+
 export const customPalette = [
     '#FF69B4',
     '#d40606',
@@ -311,6 +363,8 @@ export default {
     barChartWithStackByAndViewByAttributes,
     barChartWithPopMeasureAndViewByAttribute,
     barChartWith6PopMeasuresAndViewByAttribute,
+    barChartWithPreviousPeriodMeasure,
+    barChartWith6PreviousPeriodMeasures,
     pieChartWithMetricsOnly,
     barChartWithNegativeAndZeroValues,
     headlineWithOneMeasure,

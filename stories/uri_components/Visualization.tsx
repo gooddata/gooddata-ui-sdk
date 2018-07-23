@@ -164,6 +164,20 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
+    .add('chart with previous period measures', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1006'}
+                    onError={onErrorHandler}
+                    locale="en-US"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
     .add('chart example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>

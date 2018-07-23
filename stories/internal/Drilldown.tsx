@@ -68,6 +68,29 @@ storiesOf('Internal/Drilldown', module)
             )
         );
     })
+    .add('Column chart with 6 previous period measures', () => {
+        const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    drillableItems={[{
+                        uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                    }]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
+    })
     .add('Line chart drillable by measure', () => {
         const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
         return screenshotWrap(
