@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Sorting')
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/sorting`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/sorting`));
 
 test('should display sorted graphs', async (t) => {
     const measureSortingAxisLabels = Selector('.s-measure-sorting .highcharts-xaxis-labels');

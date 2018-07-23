@@ -13,8 +13,8 @@ async function checkRenderChart(selector, t) {
 }
 
 fixture('Basic components') // eslint-disable-line no-undef
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}`));
 
 test('Column chart should render', async (t) => {
     await checkRenderChart('.s-column-chart', t);

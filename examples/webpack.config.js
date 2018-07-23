@@ -81,7 +81,8 @@ module.exports = async (env) => {
                 // This has effect on the react lib size
                 NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development')
             }
-        })
+        }),
+        new SimplestProgressPlugin()
     ];
 
     if (isProduction) {
@@ -166,6 +167,19 @@ module.exports = async (env) => {
             stats: { chunks: false, assets: false, modules: false, hash: false, version: false },
             proxy
         },
+        stats: { chunks: false, assets: false, modules: false, hash: false, version: false },
         resolve
     };
 };
+
+
+function SimplestProgressPlugin() {
+    let lastPercent = -10;
+    return new webpack.ProgressPlugin(function (percent, msg) {
+        const percentInt = Math.ceil(percent*100);
+        if (percentInt >= lastPercent + 5) {
+            lastPercent = percentInt;
+            process.stderr.write(`${percentInt}% `);
+        }
+    })
+}
