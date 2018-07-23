@@ -19,6 +19,47 @@ export const createMeasureBucketItem = (qualifierString, localIdentifier, alias)
     };
 };
 
+export const createSamePeriodMeasureBucketItem = (masterLocalIdentifier, attributeDFQualifier, alias) => {
+    const aliasProp = alias ? { alias } : {};
+    return {
+        measure: {
+            localIdentifier: `${masterLocalIdentifier}_sp`,
+            definition: {
+                popMeasureDefinition: {
+                    measureIdentifier: masterLocalIdentifier,
+                    popAttribute: {
+                        [isUri(attributeDFQualifier) ? 'uri' : 'identifier']: attributeDFQualifier
+                    }
+                }
+            },
+            ...aliasProp
+        }
+    };
+};
+
+export const createPreviousPeriodMeasureBucketItem = (masterLocalIdentifier, dateDataSetQualifier, alias) => {
+    const aliasProp = alias ? { alias } : {};
+    return {
+        measure: {
+            localIdentifier: `${masterLocalIdentifier}_pp`,
+            definition: {
+                previousPeriodMeasure: {
+                    measureIdentifier: masterLocalIdentifier,
+                    dateDataSets: [
+                        {
+                            dataSet: {
+                                [isUri(dateDataSetQualifier) ? 'uri' : 'identifier']: dateDataSetQualifier
+                            },
+                            periodsAgo: 1
+                        }
+                    ]
+                }
+            },
+            ...aliasProp
+        }
+    };
+};
+
 export const createAttributeBucketItem = (qualifierString, localIdentifier, alias) => {
     const aliasProp = alias ? { alias } : {};
     return {
@@ -50,6 +91,19 @@ export const createNegativeAttributeFilter = (qualifierString, values) => {
                 [isUri(qualifierString) ? 'uri' : 'identifier']: qualifierString
             },
             notIn: values
+        }
+    };
+};
+
+export const createRelativeDateFilter = (dateDataSetQualifier, granularity, from, to) => {
+    return {
+        relativeDateFilter: {
+            dataSet: {
+                [isUri(dateDataSetQualifier) ? 'uri' : 'identifier']: dateDataSetQualifier
+            },
+            granularity,
+            from,
+            to
         }
     };
 };

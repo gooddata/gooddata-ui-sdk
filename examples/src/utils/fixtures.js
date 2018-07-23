@@ -26,6 +26,7 @@ export const averageCheckSizeByServer = 'afewRzGAersh';
 export const averageDailyTotalSales = 'aagJGHg1bxap';
 export const columnVisualizationIdentifier = 'acFJltTsifSQ';
 export const dateDatasetIdentifier = 'date.dataset.dt';
+export const dateDataSetUri = `/gdc/md/${demoProjectId}/obj/2180`;
 export const employeeNameIdentifier = 'label.employee.employeename';
 export const franchiseFeesAdRoyaltyIdentifier = 'aabHeqImaK0d';
 export const franchiseFeesIdentifier = 'aaEGaXAEgB7U';
@@ -47,7 +48,9 @@ export const locationStateAttributeCaliforniaUri = `/gdc/md/${demoProjectId}/obj
 export const locationStateDisplayFormIdentifier = 'label.restaurantlocation.locationstate';
 export const menuCategoryAttributeDFIdentifier = 'label.menuitem.menucategory';
 export const menuItemNameAttributeDFIdentifier = 'label.menuitem.menuitemname';
+export const yearDateDataSetAttributeIdentifier = 'date.year';
 export const monthDateIdentifier = 'date.abm81lMifn6q';
+export const yearDateIdentifier = 'date.aag81lMifn6q';
 export const monthDateIdentifierJanuary = `/gdc/md/${demoProjectId}/obj/2071/elements?id=1`;
 export const numberOfChecksIdentifier = 'aeOt50ngicOD';
 export const tableVisualizationIdentifier = 'aatFRvXBdilm';
