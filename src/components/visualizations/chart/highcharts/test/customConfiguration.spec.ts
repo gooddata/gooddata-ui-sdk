@@ -182,6 +182,30 @@ describe('getCustomizedConfiguration', () => {
         expect(result.plotOptions.series.connectNulls).toBeUndefined();
     });
 
+    describe('labels configuration', () => {
+        it('should set two levels labels for multi-level heatmap', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                type: VisualizationTypes.TREEMAP,
+                stacking: 'normal'
+            });
+
+            const treemapConfig = result.plotOptions.treemap;
+            expect(treemapConfig.levels.length).toEqual(2);
+        });
+
+        it('should set one level labels for single-level heatmap', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                type: VisualizationTypes.TREEMAP,
+                stacking: null
+            });
+
+            const treemapConfig = result.plotOptions.treemap;
+            expect(treemapConfig.levels.length).toEqual(1);
+        });
+    });
+
     describe('tooltip followPointer', () => {
         it ('should follow pointer for bar chart when data max is above axis max', () => {
             const result = getCustomizedConfiguration({

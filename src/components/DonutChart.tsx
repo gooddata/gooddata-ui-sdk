@@ -6,6 +6,7 @@ import { VisualizationObject } from '@gooddata/typings';
 import { DonutChart as AfmDonutChart } from './afm/DonutChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
+import { MEASURES, VIEW } from '../constants/bucketNames';
 
 export interface IDonutChartBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -26,11 +27,11 @@ type IDonutChartNonBucketProps = Subtract<IDonutChartProps, IDonutChartBucketPro
 export function DonutChart(props: IDonutChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'view',
+            localIdentifier: VIEW,
             items: props.viewBy ? [props.viewBy] : []
         }
     ];

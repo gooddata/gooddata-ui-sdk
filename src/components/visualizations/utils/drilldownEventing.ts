@@ -7,7 +7,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
-import { isComboChart } from './common';
+import { isComboChart, isTreemap } from './common';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
 
@@ -31,6 +31,7 @@ export interface IDrillIntersection {
 export interface IHighchartsPointObject extends Highcharts.PointObject {
     drillContext: IDrillIntersection[];
     z?: number; // is missing in HCH's interface
+    value?: number; // is missing in HCH's interface
 }
 
 export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
@@ -165,12 +166,17 @@ function composeDrillContextGroup({ points }: IHighchartsChartDrilldownEvent, ch
 
 function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: VisType) {
     const zProp = isNaN(point.z) ? {} : { z: point.z };
+    const valueProp = isTreemap(chartType) ? { value: point.value } : {};
+    const xyProp = isTreemap(chartType) ? {} : {
+        x: point.x,
+        y: point.y
+    };
     return {
         type: chartType,
         element: getClickableElementNameByChartType(chartType),
-        x: point.x,
-        y: point.y,
+        ...xyProp,
         ...zProp,
+        ...valueProp,
         intersection: normalizeIntersectionElements(point.drillContext)
     };
 }

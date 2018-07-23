@@ -72,3 +72,7 @@ test('Scatter plot should render', async (t) => {
 test('Bubble chart should render', async (t) => {
     await checkRenderChart('.s-bubble-chart', t);
 });
+
+test('Treemap should render', async (t) => {
+    await checkRenderChart('.s-tree-map', t);
+});

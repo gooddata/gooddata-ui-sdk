@@ -30,6 +30,7 @@ export interface ILegendConfig {
 export interface IChartLimits {
     series?: number;
     categories?: number;
+    dataPoints?: number;
 }
 
 export interface IChartConfig {

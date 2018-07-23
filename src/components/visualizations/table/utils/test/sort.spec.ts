@@ -2,7 +2,7 @@
 import { AFM } from '@gooddata/typings';
 
 import { createSortItem, getHeaderSortClassName, getNextSortDir, getSortInfo, getSortItem } from '../sort';
-import { ASC, DESC } from '../../constants/sort';
+import { ASC, DESC } from '../../../../../constants/sort';
 import { TABLE_HEADERS_2A_3M } from '../../fixtures/2attributes3measures';
 import { IAttributeTableHeader, IMeasureTableHeader, ISortInfo, ISortObj } from '../../../../../interfaces/Table';
 import IAttributeSortItem = AFM.IAttributeSortItem;

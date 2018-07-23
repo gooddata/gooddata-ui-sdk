@@ -5,7 +5,7 @@ import { first, get } from 'lodash';
 
 import { AFM } from '@gooddata/typings';
 
-import { ASC, DESC } from '../constants/sort';
+import { ASC, DESC } from '../../../../constants/sort';
 import {
     isAttributeTableHeader,
     isMeasureTableHeader,

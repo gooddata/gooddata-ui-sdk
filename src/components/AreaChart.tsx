@@ -8,6 +8,7 @@ import { AreaChart as AfmAreaChart } from './afm/AreaChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
+import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IAreaChartBucketProps extends ICommonChartProps {
     measures: VisualizationObject.BucketItem[];
@@ -34,15 +35,15 @@ export interface IAreaChartProps extends ICommonChartProps {
 export function AreaChart(props: IAreaChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'attributes',
+            localIdentifier: ATTRIBUTE,
             items: props.viewBy ? props.viewBy : []
         },
         {
-            localIdentifier: 'stacks',
+            localIdentifier: STACK,
             items: props.stackBy ? props.stackBy : []
         }
     ];

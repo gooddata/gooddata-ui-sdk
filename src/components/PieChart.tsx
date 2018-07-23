@@ -8,6 +8,7 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getResultSpec } from '../helpers/resultSpec';
 import { generateDefaultDimensionsForRoundChart } from '../helpers/dimensions';
+import { MEASURES, VIEW } from '../constants/bucketNames';
 
 export interface IPieChartBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -32,11 +33,11 @@ const generatePieDimensionsFromBuckets =
 export function PieChart(props: IPieChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'view',
+            localIdentifier: VIEW,
             items: props.viewBy ? [props.viewBy] : []
         }
     ];
