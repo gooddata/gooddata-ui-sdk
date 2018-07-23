@@ -55,8 +55,10 @@ export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEven
     return !!event.points;
 }
 
-function getPoPMeasureIdentifier(measure: AFM.IMeasure): AFM.Identifier {
-    return get<string>(measure, ['definition', 'popMeasure', 'measureIdentifier']);
+function getDerivedMeasureMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
+    const measureDefinition = get<string>(measure, ['definition', 'popMeasure'])
+        || get<string>(measure, ['definition', 'previousPeriodMeasure']);
+    return get<string>(measureDefinition, ['measureIdentifier']);
 }
 
 function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier) {
@@ -66,9 +68,12 @@ function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier)
 export function getMeasureUriOrIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier): IDrillableItem {
     let measure = findMeasureByIdentifier(afm, localIdentifier);
     if (measure) {
-        const popMeasureIdentifier = getPoPMeasureIdentifier(measure);
-        if (popMeasureIdentifier) {
-            measure = findMeasureByIdentifier(afm, popMeasureIdentifier);
+        const masterMeasureIdentifier = getDerivedMeasureMasterMeasureLocalIdentifier(measure);
+        if (masterMeasureIdentifier) {
+            measure = findMeasureByIdentifier(afm, masterMeasureIdentifier);
+        }
+        if (!measure) {
+            return null;
         }
         return {
             uri: get<string>(measure, ['definition', 'measure', 'item', 'uri']),

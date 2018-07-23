@@ -48,6 +48,5 @@
    "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
    "gs.list.noItemsFound": "Geen items gevonden.",
    "gs.list.error": "Fout bij inlezen lijstitems",
-   "measure.title.suffix.previous_year": "vorig jaar",
    "measure.title.suffix.same_period_year_ago": "ZP jaar geleden"
 }
