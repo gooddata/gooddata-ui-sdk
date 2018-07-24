@@ -10,3 +10,17 @@ rpm-build:
   - yarn build-storybook
 test-storybook:
   - yarn test-storybook
+
+# Mandatory env params:
+# - HEROKU_API_KEY
+# - PULL_REQUEST_ID
+# - LIVE_EXAMPLES_ADMIN_PASSWORD
+# - LIVE_EXAMPLES_TESTER_PASSWORD
+#
+# These are injected at https://github.com/zbycz/ci-infra/blob/cacd3/jenkins/jobs/templates/client-macros.yaml#L73
+examples-deploy-and-testcafe:
+  - bash scripts/ci-deploy-and-testcafe.sh
+
+examples-heroku-destroy:
+  - export HEROKU_APP_NAME="gdc-live-examples-$PULL_REQUEST_ID"
+  - heroku apps:destroy --app=$HEROKU_APP_NAME --confirm $HEROKU_APP_NAME

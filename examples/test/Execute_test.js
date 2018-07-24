@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Execute') // eslint-disable-line no-undef
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/execute`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/execute`));
 
 test('should display correct result and retry should fail', async (t) => {
     const kpi = Selector('.s-execute-kpi');
