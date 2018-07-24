@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Attribute filter components')
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/parent-filter`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/parent-filter`));
 
 test('Check if child filters are restricted by parent filters and visualization is properly filtered', async (t) => {
     const dropdownState = Selector('.s-select-state');

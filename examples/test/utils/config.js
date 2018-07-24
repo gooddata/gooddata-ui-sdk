@@ -5,7 +5,7 @@ import program from 'commander';
 import invariant from 'invariant';
 
 const DEFAULT_CONFIG_FILE_NAME = '.testcaferc.json';
-const DEFAULT_HOSTNAME = 'https://localhost:8999';
+const DEFAULT_URL = 'https://localhost:8999';
 
 export const definedOptions = [
     {
@@ -15,10 +15,10 @@ export const definedOptions = [
         defaultValue: DEFAULT_CONFIG_FILE_NAME
     },
     {
-        key: 'hostname',
-        param: '--hostname <url>',
-        description: `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`,
-        defaultValue: DEFAULT_HOSTNAME,
+        key: 'url',
+        param: '--url <url>',
+        description: `Url of tested app. The default is ${DEFAULT_URL}`,
+        defaultValue: DEFAULT_URL,
         isRequired: true
     },
     {

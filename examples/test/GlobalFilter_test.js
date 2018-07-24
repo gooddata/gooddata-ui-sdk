@@ -4,8 +4,8 @@ import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Global filter') // eslint-disable-line no-undef
-    .page(config.hostname)
-    .beforeEach(loginUsingGreyPages(`${config.hostname}/advanced/global-filters`));
+    .page(config.url)
+    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/global-filters`));
 
 test('should filter components according to selected employee', async (t) => {
     const displayedNameSelector = Selector('.additional-info > h1');
