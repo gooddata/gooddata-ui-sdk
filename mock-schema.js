@@ -545,6 +545,57 @@ module.exports = {
                     alias: 'Amount'
                 }]
             }]
+        },
+        {
+            title: 'Chart with previous period measures',
+            identifier: '1006',
+            type: 'local:bar',
+            filters: [],
+            buckets: [{
+                localIdentifier: 'measures',
+                items: [{
+                    localIdentifier: 'm1_previous_period',
+                    filters: [],
+                    identifier: '1',
+                    showPoP: 'true',
+                    measureIdentifier: 'm1',
+                    previousPeriod: {
+                        dateDataSets: [{
+                            dataSet: 'attr.closed',
+                            periodsAgo: 1
+                        }]
+                    }
+                }, {
+                    localIdentifier: 'm1',
+                    filters: [],
+                    identifier: '1',
+                    alias: 'Amount'
+                }, {
+                    localIdentifier: 'm2',
+                    filters: [],
+                    identifier: '2',
+                    alias: 'Value'
+                }, {
+                    localIdentifier: 'm2_previous_period',
+                    filters: [],
+                    identifier: '2',
+                    showPoP: 'true',
+                    measureIdentifier: 'm2',
+                    previousPeriod: {
+                        dateDataSets: [{
+                            dataSet: 'attr.closed',
+                            periodsAgo: 1
+                        }]
+                    }
+                }]
+            }, {
+                localIdentifier: 'view',
+                items: [{
+                    localIdentifier: 'a1',
+                    displayForm: 'attr.closed.year.df',
+                    alias: 'Date'
+                }]
+            }]
         }
     ]
 };

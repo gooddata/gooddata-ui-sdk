@@ -48,6 +48,5 @@
    "gs.list.limitExceeded": "Désolé, vous avez dépassé la limite ({limit}).",
    "gs.list.noItemsFound": "Éléments introuvables.",
    "gs.list.error": "Erreur lors du chargement des éléments de la liste",
-   "measure.title.suffix.previous_year": "année précédente",
    "measure.title.suffix.same_period_year_ago": "Même période de l'année antérieure"
 }

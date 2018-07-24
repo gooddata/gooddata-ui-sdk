@@ -430,6 +430,33 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
+    .add('Column chart with 6 previous period measures', () => {
+        const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
     .add('Bar chart with viewBy and stackBy attribute', () => {
         const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
 

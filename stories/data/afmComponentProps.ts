@@ -24,6 +24,21 @@ const MEASURE_1_POP: AFM.IMeasure = {
     }
 };
 
+const MEASURE_1_PREVIOUS_PERIOD: AFM.IMeasure = {
+    localIdentifier: 'm1_previous_period',
+    definition: {
+        previousPeriodMeasure: {
+            measureIdentifier: 'm1',
+            dateDataSets: [{
+                dataSet: {
+                    uri: '/gdc/md/storybook/obj/3.df'
+                },
+                periodsAgo: 1
+            }]
+        }
+    }
+};
+
 const MEASURE_1_DUPLICATE: AFM.IMeasure = {
     ...MEASURE_1,
     localIdentifier: 'm2'
@@ -48,6 +63,21 @@ const MEASURE_2_POP: AFM.IMeasure = {
             popAttribute: {
                 uri: '/gdc/md/storybook/obj/3.df'
             }
+        }
+    }
+};
+
+const MEASURE_2_PREVIOUS_PERIOD: AFM.IMeasure = {
+    localIdentifier: 'm2_previous_period',
+    definition: {
+        previousPeriodMeasure: {
+            measureIdentifier: 'm2',
+            dateDataSets: [{
+                dataSet: {
+                    uri: '/gdc/md/storybook/obj/3.df'
+                },
+                periodsAgo: 1
+            }]
         }
     }
 };
@@ -157,6 +187,18 @@ export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP: AFM.IAfm = {
         MEASURE_1,
         MEASURE_2,
         MEASURE_2_POP
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
+export const AFM_TWO_MEASURES_ONE_ATTRIBUTE_PREVIOUS_PERIOD: AFM.IAfm = {
+    measures: [
+        MEASURE_1_PREVIOUS_PERIOD,
+        MEASURE_1,
+        MEASURE_2,
+        MEASURE_2_PREVIOUS_PERIOD
     ],
     attributes: [
         ATTRIBUTE

@@ -18,7 +18,7 @@ import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
 import * as MdObjectHelper from '../../helpers/MdObjectHelper';
-import { fillPoPTitlesAndAliases, getPoPSuffix } from '../../helpers/popHelper';
+import { fillPoPTitlesAndAliases } from '../../helpers/popHelper';
 import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
@@ -28,6 +28,7 @@ import {
 } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
+import DerivedMeasureTitleSuffixFactory from '../../factory/DerivedMeasureTitleSuffixFactory';
 
 export { Requireable };
 
@@ -355,9 +356,10 @@ export class VisualizationWrapped
                 return this.props.fetchVisualizationClass(
                     this.sdk, visualizationClassUri
                 ).then((visualizationClass) => {
-                    const popSuffix = getPoPSuffix('popMeasureDefinition', this.props.locale);
-                    const { afm, resultSpec } = toAfmResultSpec(fillPoPTitlesAndAliases(
-                        mdObject.content, popSuffix));
+
+                    const suffixFactory = new DerivedMeasureTitleSuffixFactory(this.props.locale);
+                    const processedVisualizationObject = fillPoPTitlesAndAliases(mdObject.content, suffixFactory);
+                    const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
                     const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
 

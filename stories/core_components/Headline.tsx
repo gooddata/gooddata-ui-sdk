@@ -7,7 +7,8 @@ import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
     MEASURE_1,
-    MEASURE_1_POP
+    MEASURE_1_POP,
+    MEASURE_1_PREVIOUS_PERIOD
 } from '../data/componentProps';
 
 const wrapperStyle = { width: 600, height: 300 };
@@ -45,6 +46,19 @@ storiesOf('Core components/Headline', module)
                     projectId="storybook"
                     primaryMeasure={MEASURE_1}
                     secondaryMeasure={MEASURE_1_POP}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('two measures with previous period', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Headline
+                    projectId="storybook"
+                    primaryMeasure={MEASURE_1}
+                    secondaryMeasure={MEASURE_1_PREVIOUS_PERIOD}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

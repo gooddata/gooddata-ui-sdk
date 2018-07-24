@@ -55,6 +55,24 @@ export const MEASURE_1_POP: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_1_PREVIOUS_PERIOD: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm1_previous_period',
+        definition: {
+            previousPeriodMeasure: {
+                measureIdentifier: 'm1',
+                dateDataSets: [{
+                    dataSet: {
+                        uri: '/gdc/md/storybook/obj/3.df'
+                    },
+                    periodsAgo: 1
+                }]
+            }
+        },
+        alias: 'Previous period'
+    }
+};
+
 export const MEASURE_1_WITH_ALIAS: VisualizationObject.IMeasure = {
     measure: {
         ...MEASURE_1.measure,

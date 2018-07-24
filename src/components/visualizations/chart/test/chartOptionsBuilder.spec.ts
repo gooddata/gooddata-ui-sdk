@@ -24,7 +24,8 @@ import {
     IPoint,
     getBubbleChartSeries,
     getHeatMapDataClasses,
-    getTreemapAttributes
+    getTreemapAttributes,
+    isDerivedMeasure
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions } from './helper';
@@ -268,6 +269,20 @@ describe('chartOptionsBuilder', () => {
             ).toEqual(true);
         });
 
+        it('should return false if measureItem was defined as a previousPeriodMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPreviousPeriodMeasure
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            expect(
+                isPopMeasure(measureItem, afm)
+            ).toEqual(false);
+        });
+
         it('should return false if measureItem was defined as a simple measure', () => {
             const measureItem = fixtures
                 .barChartWithPopMeasureAndViewByAttribute
@@ -280,6 +295,51 @@ describe('chartOptionsBuilder', () => {
 
             expect(
                 isPopMeasure(measureItem, afm)
+            ).toEqual(false);
+        });
+    });
+
+    describe('isDerivedMeasure', () => {
+        it('should return true if measureItem was defined as a popMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPopMeasureAndViewByAttribute
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+            expect(
+                isDerivedMeasure(measureItem, afm)
+            ).toEqual(true);
+        });
+
+        it('should return true if measureItem was defined as a previousPeriodMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPreviousPeriodMeasure
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            expect(
+                isDerivedMeasure(measureItem, afm)
+            ).toEqual(true);
+        });
+
+        it('should return false if measureItem was defined as a simple measure', () => {
+            const measureItem = fixtures
+                .barChartWithPopMeasureAndViewByAttribute
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[1];
+            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+
+            expect(
+                isDerivedMeasure(measureItem, afm)
             ).toEqual(false);
         });
     });
@@ -403,10 +463,38 @@ describe('chartOptionsBuilder', () => {
             expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
         });
 
-        it('should rotate colors from original palete and generate lighter PoP colors', () => {
+        it('should return a palette with a lighter color for each previous period based on it`s source measure', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWithPreviousPeriodMeasure);
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            const type = 'column';
+
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
+            const updatedPalette =
+                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
+        });
+
+        it('should rotate colors from original palette and generate lighter PoP colors', () => {
             const [measureGroup, viewByAttribute, stackByAttribute] =
                 getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
             const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const type = 'column';
+
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
+            const updatedPalette =
+                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)',
+                'rgb(100,100,100)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
+                'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)' ]);
+        });
+
+        it('should rotate colors from original palette and generate lighter previous period measures', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
+            const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
             const type = 'column';
 
             const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
@@ -474,6 +562,52 @@ describe('chartOptionsBuilder', () => {
                     true,
                     true,
                     true
+                ]);
+            });
+        });
+
+        describe('in usecase of bar chart with previous period measure and view by attribute', () => {
+            const parameters = getSeriesItemDataParameters(fixtures.barChartWithPreviousPeriodMeasure, 0);
+            const seriesItem = parameters[0];
+            const seriesIndex = parameters[1];
+            const measureGroup = parameters[2];
+            const viewByAttribute = parameters[3];
+            const stackByAttribute = parameters[4];
+
+            const seriesItemData = getSeriesItemData(
+                seriesItem,
+                seriesIndex,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                'column',
+                DEFAULT_COLOR_PALETTE
+            );
+
+            it('should fill correct pointData name', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.name)
+                ).toEqual([
+                    'Primary measure - previous period',
+                    'Primary measure - previous period'
+                ]);
+            });
+
+            it('should parse all pointData values', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.y)
+                ).toEqual([
+                    24000,
+                    null
+                ]);
+            });
+
+            it('should enable markers for all non-null pointData values', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.marker.enabled)
+                ).toEqual([
+                    true,
+                    false
                 ]);
             });
         });
@@ -1686,6 +1820,48 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
+        describe('in usecase of bar chart with 6 previous period measures', () => {
+            const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
+            const { afm } = dataSet.executionRequest;
+            const mVS = getMVS(dataSet);
+            const type = 'bar';
+            const seriesWithoutDrillability = getSeries(
+                dataSet.executionResult.data,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                {} as any,
+                DEFAULT_COLOR_PALETTE
+            );
+
+            describe('with all drillable measures', () => {
+                const drillableMeasures = [{
+                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                }];
+                const drillableMeasuresSeriesData = getDrillableSeries(
+                    seriesWithoutDrillability,
+                    drillableMeasures,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    afm
+                );
+
+                it('should assign correct drillContext to pointData with drilldown true', () => {
+                    const startYear = parseInt(// should be 2008
+                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                    );
+                    drillableMeasuresSeriesData.forEach((seriesItem: any) => {
+                        seriesItem.data.forEach((point: any, index: number) => {
+                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                        });
+                    });
+                });
+            });
+        });
+
         describe('in usecase of bar chart with 3 measures and view by attribute', () => {
             const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
             const { afm } = dataSet.executionRequest;
@@ -2419,8 +2595,25 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.colorPalette).toEqual(['rgb(161,224,243)', 'rgb(20,178,226)']);
             });
 
-            it('should assign correct tooltip function', () => {
+            it('should assign correct tooltip function for pop measure', () => {
                 const mVS = getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
+                const viewByAttribute = mVS[1];
+                const pointData = {
+                    y: 1,
+                    format: '# ###',
+                    name: 'point',
+                    category: 'category',
+                    series: {
+                        name: 'series'
+                    }
+                };
+                const tooltip = chartOptions.actions.tooltip(pointData);
+                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                expect(tooltip).toBe(expectedTooltip);
+            });
+
+            it('should assign correct tooltip function for previous period measure', () => {
+                const mVS = getMVS(fixtures.barChartWithPreviousPeriodMeasure);
                 const viewByAttribute = mVS[1];
                 const pointData = {
                     y: 1,
