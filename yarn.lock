@@ -54,6 +54,27 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@gooddata/eslint-config@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@gooddata/eslint-config/-/eslint-config-0.0.19.tgz#8cbce70434fef57f18475648809385d1b48d8ee2"
+  dependencies:
+    babel-eslint "8.2.1"
+    eslint "4.16.0"
+    eslint-config-airbnb "16.1.0"
+    eslint-config-airbnb-base "12.1.0"
+    eslint-plugin-import "2.8.0"
+    eslint-plugin-jest "21.7.0"
+    eslint-plugin-jsx-a11y "6.0.3"
+    eslint-plugin-react "7.6.1"
+
+"@gooddata/tslint-config@0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.10.tgz#b2497fad1ae7a1b84bf37a3953cdfd10dbd492b5"
+  dependencies:
+    tslint "5.8.0"
+    tslint-eslint-rules "5.1.0"
+    tslint-react "3.5.1"
+
 "@gooddata/typings@2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
@@ -1502,19 +1523,6 @@ eslint-config-airbnb@16.1.0:
   resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-16.1.0.tgz#2546bfb02cc9fe92284bf1723ccf2e87bc45ca46"
   dependencies:
     eslint-config-airbnb-base "^12.1.0"
-
-eslint-config-gooddata@0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/eslint-config-gooddata/-/eslint-config-gooddata-0.0.18.tgz#c9164c36f7042c9060582da9030da578f7537a26"
-  dependencies:
-    babel-eslint "8.2.1"
-    eslint "4.16.0"
-    eslint-config-airbnb "16.1.0"
-    eslint-config-airbnb-base "12.1.0"
-    eslint-plugin-import "2.8.0"
-    eslint-plugin-jest "21.7.0"
-    eslint-plugin-jsx-a11y "6.0.3"
-    eslint-plugin-react "7.6.1"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
@@ -5414,13 +5422,6 @@ tslib@1.9.0, tslib@^1.7.1, tslib@^1.8.1:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 
-tslint-config-gooddata@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/tslint-config-gooddata/-/tslint-config-gooddata-0.0.8.tgz#a6b749a3131994fe82adb063857abb5291b16ffd"
-  dependencies:
-    tslint "5.8.0"
-    tslint-eslint-rules "5.1.0"
-    tslint-react "3.5.1"
 
 tslint-eslint-rules@5.1.0:
   version "5.1.0"
