@@ -96,6 +96,7 @@ export interface IAxis {
 export interface ISeriesDataItem {
     x?: number;
     y: number;
+    value?: number;
     name?: string;
 }
 
@@ -127,7 +128,7 @@ export interface IChartOptions {
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
         .some((seriesItem: ISeriesItem) => (
-            seriesItem.data.some(({ y }: ISeriesDataItem) => (y < 0))
+            seriesItem.data.some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
         ));
 }
 
@@ -345,8 +346,17 @@ export function getSeriesItemData(
             measureIndex = pointIndex;
         }
 
+        let valueProp: any = {
+            y: parseValue(pointValue)
+        };
+        if (isTreemap(type)) {
+            valueProp = {
+                value: parseValue(pointValue)
+            };
+        }
+
         const pointData: IPointData = {
-            y: parseValue(pointValue),
+            ...valueProp,
             format: unwrap(measureGroup.items[measureIndex]).format,
             marker: {
                 enabled: pointValue !== null
@@ -366,10 +376,6 @@ export function getSeriesItemData(
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
             // instead of seriesItem legendIndex
             pointData.legendIndex = viewByAttribute ? viewByIndex : pointIndex;
-        }
-
-        if (isTreemap(type)) {
-            pointData.value = parseValue(pointValue);
         }
 
         return pointData;
