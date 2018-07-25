@@ -209,6 +209,19 @@ storiesOf('Internal/Visualization', module)
             )
         );
     })
+    .add('visualization bar chart with previous period measure and view by attribute', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.barChartWithPreviousPeriodMeasure}
+                    config={{
+                        type: 'bar'
+                    }}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
+    })
     .add('visualization pie chart with metrics only', () => {
         return screenshotWrap(
             wrap(

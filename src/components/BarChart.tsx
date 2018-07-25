@@ -7,6 +7,7 @@ import { BarChart as AfmBarChart } from './afm/BarChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
+import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IBarChartBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -29,15 +30,15 @@ type IBarChartNonBucketProps = Subtract<IBarChartProps, IBarChartBucketProps>;
 export function BarChart(props: IBarChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'attributes',
+            localIdentifier: ATTRIBUTE,
             items: props.viewBy ? [props.viewBy] : []
         },
         {
-            localIdentifier: 'stacks',
+            localIdentifier: STACK,
             items: props.stackBy ? [props.stackBy] : []
         }
     ];

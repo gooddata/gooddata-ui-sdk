@@ -140,6 +140,14 @@ export const barChartWithPopMeasureAndViewByAttribute: any = {
         require('../test_data/bar_chart_with_pop_measure_and_view_by_attribute_result.json').executionResult
 };
 
+export const barChartWithPreviousPeriodMeasure: any = {
+    executionRequest: require('../test_data/bar_chart_with_previous_period_measure_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_previous_period_measure_response.json').executionResponse,
+    executionResult:
+        require('../test_data/bar_chart_with_previous_period_measure_result.json').executionResult
+};
+
 export const pieChartWithMetricsOnly: any = {
     executionRequest: require('../test_data/pie_chart_with_metrics_only_request.json').execution,
     executionResponse:
@@ -166,6 +174,58 @@ export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject
     buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
     filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
     visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets // tslint:disable-line:max-line-length
+};
+
+export const tableWithSorting: any = {
+    executionRequest: require('../test_data/table_with_sort_request.json').execution,
+    executionResponse:
+        require('../test_data/table_with_sort_response.json').executionResponse,
+    executionResult: require('../test_data/table_with_sort_result.json').executionResult
+};
+
+export const treemapWithMetricAndViewByAttributeMd: any = {
+    mdObject: require('../test_data/treemap_with_metric_and_view_by_attribute_md.json')
+};
+
+export const treemapWithMetricAndViewByAttribute: any = {
+    executionRequest: require('../test_data/treemap_with_metric_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_metric_and_view_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_metric_and_view_by_attribute_result.json').executionResult,
+    ...treemapWithMetricAndViewByAttributeMd
+};
+
+export const treemapWithMetricAndStackByAttributeMd: any = {
+    mdObject: require('../test_data/treemap_with_metric_and_stack_by_attribute_md.json')
+};
+
+export const treemapWithMetricAndStackByAttribute: any = {
+    ...treemapWithMetricAndViewByAttribute, // execution is the same
+    ...treemapWithMetricAndStackByAttributeMd
+};
+
+export const treemapWithMetricViewByAndStackByAttributeMd: any = {
+    mdObject: require('../test_data/treemap_with_metric_view_by_and_stack_by_attribute_md.json')
+};
+
+export const treemapWithMetricViewByAndStackByAttribute: any = {
+    executionRequest: require('../test_data/treemap_with_metric_view_by_and_stack_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_metric_view_by_and_stack_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_metric_view_by_and_stack_by_attribute_result.json').executionResult, // tslint:disable-line:max-line-length
+    ...treemapWithMetricViewByAndStackByAttributeMd
+};
+
+export const treemapWithTwoMetricsAndStackByAttributeMd: any = {
+    mdObject: require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_md.json')
+};
+
+export const treemapWithTwoMetricsAndStackByAttribute: any = {
+    executionRequest: require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithTwoMetricsAndStackByAttributeMd
 };
 
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
@@ -235,6 +295,50 @@ export const barChartWith6PopMeasuresAndViewByAttribute = (() => {
     return dataSet;
 })();
 
+export const barChartWith6PreviousPeriodMeasures = (() => {
+    const n = 6;
+    let dataSet: any = immutableSet(
+        barChartWithPreviousPeriodMeasure,
+        'executionRequest.afm.measures',
+        range(n).reduce((result, measuresIndex) => {
+            const { measures } = barChartWithPreviousPeriodMeasure.executionRequest.afm;
+            const previousPeriodMeasure = cloneDeep(measures[0]);
+            const postfix = `_${measuresIndex}`;
+            previousPeriodMeasure.localIdentifier += postfix;
+            previousPeriodMeasure.definition.previousPeriodMeasure.measureIdentifier += postfix;
+            previousPeriodMeasure.definition.previousPeriodMeasure.dateDataSets.forEach((dateDataSet: any) => {
+                dateDataSet.dataSet.uri += postfix;
+            });
+            previousPeriodMeasure.alias += postfix;
+            const sourceMeasure = cloneDeep(measures[1]);
+            sourceMeasure.localIdentifier += postfix;
+            sourceMeasure.definition.measure.item.uri += postfix;
+            sourceMeasure.alias += postfix;
+            return result.concat([previousPeriodMeasure, sourceMeasure]);
+        }, []));
+    dataSet = immutableSet(
+        dataSet,
+        `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}].headers[0].measureGroupHeader.items`,
+        repeatItemsNTimes(
+            dataSet.executionResponse.dimensions[STACK_BY_DIMENSION_INDEX].headers[0].measureGroupHeader.items, n)
+            .map((headerItem: any, headerItemIndex: any) => {
+                const postfix = `_${Math.floor(headerItemIndex / 2)}`;
+                return {
+                    measureHeaderItem: {
+                        ...headerItem.measureHeaderItem,
+                        localIdentifier: headerItem.measureHeaderItem.localIdentifier + postfix
+                    }
+                };
+            })
+    );
+    dataSet = immutableSet(
+        dataSet,
+        'executionResult.data',
+        repeatItemsNTimes(dataSet.executionResult.data, n)
+    );
+    return dataSet;
+})();
+
 export const customPalette = [
     '#FF69B4',
     '#d40606',
@@ -259,11 +363,18 @@ export default {
     barChartWithStackByAndViewByAttributes,
     barChartWithPopMeasureAndViewByAttribute,
     barChartWith6PopMeasuresAndViewByAttribute,
+    barChartWithPreviousPeriodMeasure,
+    barChartWith6PreviousPeriodMeasures,
     pieChartWithMetricsOnly,
     barChartWithNegativeAndZeroValues,
     headlineWithOneMeasure,
     headlineWithTwoMeasures,
     comboWithTwoMeasuresAndViewByAttribute,
     comboWithTwoMeasuresAndViewByAttributeMdObject,
-    scatterWithNulls
+    scatterWithNulls,
+    tableWithSorting,
+    treemapWithMetricAndViewByAttribute,
+    treemapWithMetricAndStackByAttribute,
+    treemapWithMetricViewByAndStackByAttribute,
+    treemapWithTwoMetricsAndStackByAttribute
 };

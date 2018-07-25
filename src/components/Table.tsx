@@ -8,6 +8,7 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getTableDimensions } from '../helpers/dimensions';
 import { getResultSpec } from '../helpers/resultSpec';
+import { MEASURES, ATTRIBUTE } from '../constants/bucketNames';
 
 export interface ITableBucketProps {
     measures?: VisualizationObject.BucketItem[];
@@ -32,11 +33,11 @@ type ITableNonBucketProps = Subtract<ITableProps, ITableBucketProps>;
 export function Table(props: ITableProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'attributes',
+            localIdentifier: ATTRIBUTE,
             items: props.attributes || [],
             totals: props.totals || []
         }

@@ -68,6 +68,29 @@ storiesOf('Internal/Drilldown', module)
             )
         );
     })
+    .add('Column chart with 6 previous period measures', () => {
+        const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    drillableItems={[{
+                        uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                    }]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colors: fixtures.customPalette
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
+    })
     .add('Line chart drillable by measure', () => {
         const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
         return screenshotWrap(
@@ -213,6 +236,25 @@ storiesOf('Internal/Drilldown', module)
                     drillableItems={[
                         {
                             uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                        }
+                    ]}
+                    {...dataSet}
+                />,
+                500,
+                '100%'
+            )
+        );
+    })
+    .add('Stacked bar chart drillable by stack by attribute', () => {
+        const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...defaultColumnChartProps}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionRequest
+                                .afm.attributes[0].displayForm.uri
                         }
                     ]}
                     {...dataSet}
@@ -524,4 +566,89 @@ storiesOf('Internal/Drilldown', module)
                 }
             </div>
         );
-    });
+    })
+    .add('Treemap with onFiredDrillEvent', () => {
+    const dataSetWithManyMeasure = {
+        ...fixtures.treemapWithTwoMetricsAndStackByAttribute
+    };
+    const dataSet = {
+        ...fixtures.treemapWithMetricViewByAndStackByAttribute
+    };
+    return screenshotWrap(
+        <div>
+            <p>
+                Treemap with drilling on one measure from two
+                </p>
+            {
+                wrap(
+                    <Visualization
+                        onFiredDrillEvent={action('onFiredDrillEvent')}
+                        config={{
+                            type: 'treemap',
+                            mdObject: dataSetWithManyMeasure.mdObject
+                        }}
+                        onDataTooLarge={noop}
+                        onNegativeValues={noop}
+                        {...dataSetWithManyMeasure}
+                        drillableItems={[
+                            {
+                                uri: dataSetWithManyMeasure.executionRequest.afm.measures[0].definition.measure.item.uri
+                            }
+                        ]}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>
+                Treemap with drilling on view by attribute and logging to console
+                </p>
+            {
+                wrap(
+                    <Visualization
+                        onFiredDrillEvent={onFiredDrillEvent}
+                        config={{
+                            type: 'treemap',
+                            mdObject: dataSet.mdObject
+                        }}
+                        onDataTooLarge={noop}
+                        onNegativeValues={noop}
+                        {...dataSet}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                            }
+                        ]}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>
+                Treemap with drilling on segment by attribute element and logging to console
+                </p>
+            {
+                wrap(
+                    <Visualization
+                        onFiredDrillEvent={onFiredDrillEvent}
+                        config={{
+                            type: 'treemap',
+                            mdObject: dataSet.mdObject
+                        }}
+                        onDataTooLarge={noop}
+                        onNegativeValues={noop}
+                        {...dataSet}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionResult
+                                    .headerItems[STACK_BY_DIMENSION_INDEX][1][0].attributeHeaderItem.uri
+                            }
+                        ]}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+        </div>
+    );
+});

@@ -7,6 +7,7 @@ import { DualChart as AfmDualChart } from './afm/DualChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
 import { getResultSpec } from '../helpers/resultSpec';
+import { MEASURES, SECONDARY_MEASURES, TREND } from '../constants/bucketNames';
 
 export interface IDualChartBucketProps {
     leftAxisMeasure: VisualizationObject.BucketItem;
@@ -33,15 +34,15 @@ export interface IDualChartProps extends ICommonChartProps {
 export function DualChart(props: IDualChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.leftAxisMeasure ? [props.leftAxisMeasure] : []
         },
         {
-            localIdentifier: 'secondary_measures',
+            localIdentifier: SECONDARY_MEASURES,
             items: props.rightAxisMeasure ? [props.rightAxisMeasure] : []
         },
         {
-            localIdentifier: 'trend',
+            localIdentifier: TREND,
             items: props.trendBy ? [props.trendBy] : []
         }
     ];

@@ -285,6 +285,22 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                                         }
                                     }
                                 }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    }
+                                }
                             }
                         ]
                     },
@@ -362,6 +378,21 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                                 }
                             }
                         }
+                    }, {
+                        measure: {
+                            localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062_previous_period',
+                            definition: {
+                                previousPeriodMeasure: {
+                                    measureIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
+                                    dateDataSets: [{
+                                        dataSet: {
+                                            uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/921'
+                                        },
+                                        periodsAgo: 1
+                                    }]
+                                }
+                            }
+                        }
                     }]
                 }],
                 filters: [{
@@ -428,6 +459,22 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                                         }
                                     }
                                 }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    }
+                                }
                             }
                         ]
                     },
@@ -470,7 +517,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 contributor: '/gdc/account/profile/johndoe'
             }
         }
-    },
+    }
 ];
 
 export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVisualizationClass }] = [
