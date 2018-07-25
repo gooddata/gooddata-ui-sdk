@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import { loginUsingGreyPages } from './utils/helpers';
 
-fixture('Attribute filter components')
+fixture('Parent filter')
     .page(config.url)
     .beforeEach(loginUsingGreyPages(`${config.url}/advanced/parent-filter`));
 

@@ -276,7 +276,6 @@ export const Registration = withFormik({
         lastName: Yup.string()
             .required('Last name is required'),
         password: Yup.string()
-            .min(7, 'Password must be at least 7 characters long')
             .required('Password is required'),
         company: Yup.string()
             .required('Company is required'),
