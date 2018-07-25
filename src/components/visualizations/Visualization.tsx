@@ -31,6 +31,7 @@ export interface IVisualizationProps {
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
     drillableItems: IDrillableItem[];
+    locale?: string;
 
     onFiredDrillEvent?: OnFiredDrillEvent;
     afterRender?: () => void;
@@ -41,6 +42,7 @@ export interface IVisualizationProps {
 
 export class Visualization extends React.Component<IVisualizationProps> {
     public static defaultProps = {
+        locale: 'en-US',
         numericSymbols: [] as string[],
         onFiredDrillEvent: () => true,
         afterRender: noop
@@ -102,7 +104,8 @@ export class Visualization extends React.Component<IVisualizationProps> {
                 afterRender,
                 onDataTooLarge,
                 onNegativeValues,
-                onLegendReady
+                onLegendReady,
+                locale
             } = this.props;
 
             return (
@@ -111,6 +114,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                     width={width}
                     config={config}
                     drillableItems={drillableItems}
+                    locale={locale}
 
                     executionRequest={executionRequest}
                     executionResponse={executionResponse}

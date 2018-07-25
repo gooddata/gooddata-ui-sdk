@@ -97,11 +97,26 @@ const popMeasureDefinitionPropTypes = {
     popMeasure: PropTypes.shape(popMeasurePropTypes).isRequired
 };
 
+const dateDataSetsPropTypes = {
+    dataSet: objQualifierPropTypes.isRequired,
+    periodsAgo: PropTypes.number
+};
+
+const previousPeriodMeasurePropTypes = {
+    measureIdentifier: identifierPropTypes.isRequired,
+    dateDataSets: PropTypes.arrayOf(PropTypes.shape(dateDataSetsPropTypes)).isRequired
+};
+
+const previousPeriodMeasureDefinitionPropTypes = {
+    previousPeriodMeasure: PropTypes.shape(previousPeriodMeasurePropTypes).isRequired
+};
+
 const measurePropTypes = {
     localIdentifier: identifierPropTypes.isRequired,
     definition: PropTypes.oneOfType([
         PropTypes.shape(simpleMeasureDefinitionPropTypes),
-        PropTypes.shape(popMeasureDefinitionPropTypes)
+        PropTypes.shape(popMeasureDefinitionPropTypes),
+        PropTypes.shape(previousPeriodMeasureDefinitionPropTypes)
     ]).isRequired,
     alias: PropTypes.string,
     format: PropTypes.string

@@ -32,6 +32,14 @@ export const isIntersecting = (o1: any, o2: any) =>
     o1.y < (o2.y + o2.height) &&
     (o1.y + o1.height) > o2.y;
 
+export function isLabelOverlappingItsShape(point: any) {
+    const { dataLabel, shapeArgs } = point;
+    if (dataLabel && shapeArgs) { // shapeArgs for point hidden by legend is undefined
+        return dataLabel.width > shapeArgs.width || dataLabel.height > shapeArgs.height;
+    }
+    return false;
+}
+
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
 export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);

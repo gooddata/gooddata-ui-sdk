@@ -7,6 +7,7 @@ import { HeatMap as AfmHeatMap } from './afm/HeatMap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
+import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IHeatMapBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -29,15 +30,15 @@ export interface IHeatMapProps extends ICommonChartProps {
 export function HeatMap(props: IHeatMapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'attributes',
+            localIdentifier: ATTRIBUTE,
             items: props.trendBy ? [props.trendBy] : []
         },
         {
-            localIdentifier: 'stacks',
+            localIdentifier: STACK,
             items: props.segmentBy ? [props.segmentBy] : []
         }
     ];

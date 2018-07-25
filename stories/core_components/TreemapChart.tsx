@@ -9,9 +9,11 @@ import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
+    ATTRIBUTE_2,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
-    MEASURE_2
+    MEASURE_2,
+    MEASURE_3
 } from '../data/componentProps';
 
 const wrapperStyle = { width: 600, height: 300 };
@@ -28,13 +30,38 @@ storiesOf('Core components/Treemap', module)
             </div>
         )
     ))
-    .add('measure and attribute', () => (
+    .add('measure and View By attribute', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Treemap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('measure, View By and Segment by attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    segmentBy={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('measures and Segment by attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    segmentBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                 />
             </div>

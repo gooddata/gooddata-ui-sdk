@@ -15,7 +15,7 @@ import {
     ITableVisualizationState
 } from '../TableVisualization';
 import { TableHeader, TableRow } from '../../../../interfaces/Table';
-import { ASC, DESC } from '../constants/sort';
+import { ASC, DESC } from '../../../../constants/sort';
 import { EXECUTION_REQUEST_1A_2M, TABLE_HEADERS_1A_2M, TABLE_ROWS_1A_2M } from '../fixtures/1attribute2measures';
 import { EXECUTION_REQUEST_2M, TABLE_HEADERS_2M, TABLE_ROWS_2M } from '../fixtures/2measures';
 import { RemoveRows } from '../totals/RemoveRows';

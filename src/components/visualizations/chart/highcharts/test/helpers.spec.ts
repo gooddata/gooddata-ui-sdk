@@ -4,7 +4,8 @@ import {
     showDataLabelInAxisRange,
     shouldStartOrEndOnTick,
     getDataLabelAttributes,
-    getChartProperties
+    getChartProperties,
+    isLabelOverlappingItsShape
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -299,6 +300,49 @@ describe('helpers', () => {
 
                 expect(result).toBeTruthy();
             });
+        });
+    });
+
+    describe('isLabelOverlappingItsShape', () => {
+        const shape = {
+            width: 100,
+            height: 100
+        };
+
+        it('should return false when label smaller than shape', () => {
+            const point = {
+                dataLabel: {
+                    width: 50,
+                    height: 50
+                },
+                shapeArgs: shape
+            };
+
+            expect(isLabelOverlappingItsShape(point)).toBeFalsy();
+        });
+
+        it('should return true when label is wider than shape', () => {
+            const point = {
+                dataLabel: {
+                    width: 150,
+                    height: 50
+                },
+                shapeArgs: shape
+            };
+
+            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        });
+
+        it('should return true when label is higher than shape', () => {
+            const point = {
+                dataLabel: {
+                    width: 50,
+                    height: 150
+                },
+                shapeArgs: shape
+            };
+
+            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
         });
     });
 });

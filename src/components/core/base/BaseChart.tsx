@@ -90,6 +90,7 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                                 onFiredDrillEvent={this.props.onFiredDrillEvent}
                                 onLegendReady={this.props.onLegendReady}
                                 numericSymbols={translationProps.numericSymbols}
+                                locale={locale}
                             />
                         );
                     }}
