@@ -36,7 +36,7 @@ import { PieChart } from './components/PieChart';
 import { Treemap } from './components/Treemap';
 import { DonutChart } from './components/DonutChart';
 import { BubbleChart } from './components/BubbleChart';
-import { AGTable } from './components/AGTable';
+import { PivotTable } from './components/PivotTable';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
@@ -100,7 +100,7 @@ export {
     DerivedMeasureTitleSuffixFactory,
     PropTypes,
     RuntimeError,
-    AGTable,
+    PivotTable,
     Table,
     VisEvents,
     Visualization,

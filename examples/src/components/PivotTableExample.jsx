@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AGTable } from '@gooddata/react-components';
+import { PivotTable } from '@gooddata/react-components';
 import PropTypes from 'prop-types';
 
 import '@gooddata/react-components/styles/css/main.css';
@@ -14,24 +14,29 @@ import {
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty
+    franchiseFeesIdentifierOngoingRoyalty,
+    menuCategoryAttributeDFIdentifier
 } from '../utils/fixtures';
 
-export class AGTableExample extends Component {
+export class PivotTableExample extends Component {
     static propTypes = {
+        className: PropTypes.string,
         withMeasures: PropTypes.bool,
         withAttributes: PropTypes.bool,
-        withPivot: PropTypes.bool
+        withPivot: PropTypes.bool,
+        hasError: PropTypes.bool
     }
 
     static defaultProps = {
+        className: undefined,
         withMeasures: false,
         withAttributes: false,
-        withPivot: false
+        withPivot: false,
+        hasError: false
     }
 
     render() {
-        const { withMeasures, withAttributes, withPivot } = this.props;
+        const { withMeasures, withAttributes, withPivot, hasError, className } = this.props;
         const measures = withMeasures ? [
             {
                 measure: {
@@ -87,29 +92,6 @@ export class AGTableExample extends Component {
             }
         ] : [];
 
-        // const totals = [
-        //     {
-        //         measureIdentifier: 'franchiseFeesIdentifier',
-        //         type: 'avg',
-        //         attributeIdentifier: 'month'
-        //     },
-        //     {
-        //         measureIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-        //         type: 'avg',
-        //         attributeIdentifier: 'month'
-        //     },
-        //     {
-        //         measureIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-        //         type: 'avg',
-        //         attributeIdentifier: 'month'
-        //     },
-        //     {
-        //         measureIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-        //         type: 'avg',
-        //         attributeIdentifier: 'month'
-        //     }
-        // ];
-
         const attributes = withAttributes ? [
             {
                 visualizationAttribute: {
@@ -125,6 +107,14 @@ export class AGTableExample extends Component {
                         identifier: locationNameDisplayFormIdentifier
                     },
                     localIdentifier: 'location'
+                }
+            },
+            {
+                visualizationAttribute: {
+                    displayForm: {
+                        identifier: menuCategoryAttributeDFIdentifier
+                    },
+                    localIdentifier: 'menu'
                 }
             }
         ] : [];
@@ -149,19 +139,17 @@ export class AGTableExample extends Component {
         ] : [];
 
         return (
-            <div style={{ height: 300 }} className="s-table ag-theme-balham">
-                <AGTable
-                    projectId={projectId}
+            <div style={{ height: 300 }} className={className}>
+                <PivotTable
+                    projectId={hasError ? 'incorrectProjectId' : projectId}
                     measures={measures}
-                    attributes={attributes}
+                    rows={attributes}
                     columns={columns}
-                    // totals={totals}
-                    // onLoadingChanged={this.onLoadingChanged}
-                    // onError={this.onError}
+                    pageSize={20}
                 />
             </div>
         );
     }
 }
 
-export default AGTableExample;
+export default PivotTableExample;

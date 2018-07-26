@@ -9,7 +9,6 @@ import {
     SEGMENT,
     TREND,
     ATTRIBUTE,
-    ATTRIBUTES,
     ROWS,
     COLUMNS,
     MEASURES
@@ -30,9 +29,8 @@ export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITo
 export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
     const rowAttributes: VisualizationObject.IBucket = buckets
         .find(
-            bucket => bucket.localIdentifier === ATTRIBUTE
-            || bucket.localIdentifier === ATTRIBUTES
-            || bucket.localIdentifier === ROWS
+            bucket => bucket.localIdentifier === ROWS
+
         );
 
     const columnAttributes: VisualizationObject.IBucket = buckets
@@ -70,11 +68,7 @@ export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]):
 
 export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
     const attributes: VisualizationObject.IBucket = buckets
-<<<<<<< HEAD
         .find(bucket => bucket.localIdentifier === ATTRIBUTE);
-=======
-        .find(bucket => bucket.localIdentifier === ATTRIBUTE || bucket.localIdentifier === ATTRIBUTES);
->>>>>>> FEATURE: RAIL-908 Data load to ag grid
 
     const measures: VisualizationObject.IBucket = buckets
         .find(bucket => bucket.localIdentifier === MEASURES);

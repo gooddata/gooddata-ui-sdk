@@ -234,6 +234,7 @@ const oneMeasureAfm: AFM.IAfm = {
 
 const twoMeasuresAfm: AFM.IAfm = {
     measures: [
+        ...oneMeasureAfm.measures,
         {
             localIdentifier: '2nd_measure_local_identifier',
             definition: {

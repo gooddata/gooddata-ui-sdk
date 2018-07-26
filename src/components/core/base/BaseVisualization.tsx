@@ -38,7 +38,8 @@ extends React.Component<P, S> {
             ) : null;
         }
 
-        if (isLoading || !execution) {
+        // when in pageble mode (getPage present) never show loading (its handled by the component)
+        if ((isLoading || !execution) && !this.props.getPage) {
             return LoadingComponent ? <LoadingComponent /> : null;
         }
 

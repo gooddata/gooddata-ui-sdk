@@ -622,6 +622,37 @@ Object {
 }
 `;
 
+exports[`executionToAGGridAdapter should return grid data for executionResult with rowGroups and loadingRenderer 1`] = `
+Object {
+  "columnDefs": Array [
+    Object {
+      "field": "a_1024",
+      "headerName": "Region",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "field": "a_1027_1226",
+          "headerName": "Direct Sales",
+        },
+        Object {
+          "field": "a_1027_1234",
+          "headerName": "Inside Sales",
+        },
+      ],
+      "headerName": "Department",
+    },
+  ],
+  "rowData": Array [
+    Object {
+      "a_1024": "East Coast",
+      "a_1027_1226": "21978695.46",
+      "a_1027_1234": "6038400.96",
+    },
+  ],
+}
+`;
+
 exports[`getColumnHeaders should return hierarchical column headers 1`] = `
 Array [
   Object {

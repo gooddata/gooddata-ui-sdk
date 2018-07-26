@@ -14,11 +14,13 @@ describe('Table', () => {
                 projectId="prId"
                 afm={executionRequest.execution.afm}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
-            />));
+            />
+        ));
 
         return testUtils.delay().then(() => {
             wrapper.update();
             const dimensions = wrapper.find(SortableTable).props().resultSpec.dimensions;
+
             expect(dimensions).toEqual([
                 { itemIdentifiers: ['departmentAttribute'] },
                 { itemIdentifiers: ['measureGroup'] }

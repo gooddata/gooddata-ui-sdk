@@ -15,13 +15,13 @@ import * as fixtures from '../../../stories/test_data/fixtures';
 describe('identifyHeader', () => {
     it('should return correct field key for an attribute header', () => {
         expect(
-            identifyHeader(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0])
+            identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0])
         ).toBe('a_2210_6340109');
     });
 
     it('should return correct field key for a measure header', () => {
         expect(
-            identifyHeader(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0])
+            identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0])
         ).toBe('m_0');
     });
 });
@@ -29,13 +29,13 @@ describe('identifyHeader', () => {
 describe('headerToGrid', () => {
     it('should return correct grid header for an attribute header with correct prefix', () => {
         expect(
-            headerToGrid(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0], 'prefix_')
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0], 'prefix_')
         ).toEqual({ field: 'prefix_a_2210_6340109', headerName: 'Alabama' });
     });
 
     it('should return correct grid header for a measure header with correct prefix', () => {
         expect(
-            headerToGrid(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0], 'prefix_')
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0], 'prefix_')
         ).toEqual({ field: 'prefix_m_0', headerName: '$ Franchise Fees' });
     });
 });
@@ -43,7 +43,7 @@ describe('headerToGrid', () => {
 describe('getColumnHeaders', () => {
     it('should return hierarchical column headers', () => {
         expect(
-            getColumnHeaders(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[1])
+            getColumnHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1])
         ).toMatchSnapshot();
     });
 });
@@ -51,7 +51,7 @@ describe('getColumnHeaders', () => {
 describe('getRowHeaders', () => {
     it('should return an array of grid headers', () => {
         expect(
-            getRowHeaders(fixtures.agTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers)
+            getRowHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers, false)
         ).toEqual(
             [
                 { field: 'a_2211', headerName: 'Location State' },
@@ -59,16 +59,13 @@ describe('getRowHeaders', () => {
             ]
         );
     });
-});
-
-describe('getRowHeaders', () => {
-    it('should return an array of grid headers', () => {
+    it('should return an array of grid headers with row group settings', () => {
         expect(
-            getRowHeaders(fixtures.agTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers)
+            getRowHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers, true)
         ).toEqual(
             [
-                { field: 'a_2211', headerName: 'Location State' },
-                { field: 'a_2205', headerName: 'Location Name' }
+                { field: 'a_2211', headerName: 'Location State', hide: true, rowGroup: true },
+                { field: 'a_2205', headerName: 'Location Name', hide: true, rowGroup: true }
             ]
         );
     });
@@ -77,7 +74,7 @@ describe('getRowHeaders', () => {
 describe('getFields', () => {
     it('should return an array of all column fields', () => {
         expect(
-            getFields(fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[1])
+            getFields(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1])
         ).toEqual(
             [
                 'a_2009_1|a_2071_1|m_0',
@@ -135,16 +132,17 @@ describe('getFields', () => {
 
 describe('getRow', () => {
     it('should return a grid row', () => {
-        const headerItems = fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems;
+        const headerItems = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems;
         const rowHeaders = getRowHeaders(
-            fixtures.agTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers
+            fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+            false
         );
 
         const columnFields: string[] = getFields(headerItems[1]);
 
         expect(
             getRow(
-                fixtures.agTableWithColumnAndRowAttributes.executionResult.data[0],
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.data[0],
                 0,
                 columnFields,
                 rowHeaders,
@@ -210,7 +208,7 @@ describe('getMinimalRowData', () => {
         expect(
             getMinimalRowData(
                 [],
-                fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[0]
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0]
             )
         ).toEqual([
             [null],
@@ -227,7 +225,7 @@ describe('getMinimalRowData', () => {
         expect(
             getMinimalRowData(
                 data,
-                fixtures.agTableWithColumnAndRowAttributes.executionResult.headerItems[0]
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0]
             )
         ).toBe(data);
     });
@@ -237,8 +235,16 @@ describe('executionToAGGridAdapter', () => {
     it('should return grid data for executionResult', () => {
         expect(
             executionToAGGridAdapter({
-                executionResponse: fixtures.agTableWithColumnAndRowAttributes.executionResponse,
-                executionResult: fixtures.agTableWithColumnAndRowAttributes.executionResult
+                executionResponse: fixtures.pivotTableWithColumnAndRowAttributes.executionResponse,
+                executionResult: fixtures.pivotTableWithColumnAndRowAttributes.executionResult
+            })
+        ).toMatchSnapshot();
+    });
+    it('should return grid data for executionResult with rowGroups and loadingRenderer', () => {
+        expect(
+            executionToAGGridAdapter({
+                executionResponse: fixtures.barChartWithStackByAndOnlyOneStack.executionResponse,
+                executionResult: fixtures.barChartWithStackByAndOnlyOneStack.executionResult
             })
         ).toMatchSnapshot();
     });

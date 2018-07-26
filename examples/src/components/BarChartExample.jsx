@@ -25,8 +25,7 @@ export class BarChartExample extends Component {
                     measureDefinition: {
                         item: {
                             identifier: totalSalesIdentifier
-                        },
-                        aggregation: 'sum'
+                        }
                     }
                 },
                 alias: '$ Total Sales',

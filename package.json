@@ -148,7 +148,7 @@
   "typings": "dist/index.d.ts",
   "test-storybook": {
     "_defaults": {
-      "readySelector": ".screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, .screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error"
+      "readySelector": ".screenshot-target, .screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, .screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error, .screenshot-wrapper .s-pivot-table .ag-cell"
     },
     "AFM components/PieChart": {
       "error": {

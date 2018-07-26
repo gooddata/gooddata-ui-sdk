@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactTestUtils from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
+import { testUtils } from '@gooddata/js-utils';
 
 import { AttributeDropdown, VISIBLE_ITEMS_COUNT, createAfmFilter } from '../AttributeDropdown';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
@@ -64,9 +65,12 @@ describe('AttributeDropdown', () => {
         ).toHaveLength(1);
     });
 
-    it('should render overlay with loaded items', (done) => {
+    it('should render overlay with loaded items', async (done) => {
         const attributeDisplayForm = createADF();
         const wrapper = renderComponent({ attributeDisplayForm });
+
+        // wait for the plugin to initialize before click
+        await testUtils.delay(300);
         wrapper.find(DropdownButton).simulate('click');
 
         const testItems = () => {
@@ -78,10 +82,11 @@ describe('AttributeDropdown', () => {
         };
 
         const delayOffset = 250; // Magic constant inside Goodstrap FLEX_DIMENSIONS_THROTTLE :(
-        const maxDelay = 1000;
+        const maxDelay = 5000;
         const increment = 10;
+
         const intervalTest = () => (document.querySelectorAll('.s-attribute-filter-list-item').length);
-        waitFor(intervalTest, maxDelay, delayOffset, increment).then(testItems, testItems);
+        await waitFor(intervalTest, maxDelay, delayOffset, increment).then(testItems, testItems);
     });
 
     it('should run onApply with current selection', (done) => {

@@ -25,8 +25,7 @@ export class ResponsiveExample extends Component {
                         measure: {
                             item: {
                                 identifier: totalSalesIdentifier
-                            },
-                            aggregation: 'sum'
+                            }
                         }
                     },
                     alias: '$ Total Sales',

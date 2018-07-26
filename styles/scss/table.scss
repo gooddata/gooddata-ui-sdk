@@ -1,3 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 // TODO: move to styles folder
 @import '../../src/components/visualizations/styles/table.scss';
+
+$ag-icons-path: "~ag-grid/src/styles/balham-icons/";
+$border-color: #BDC3C7;
+@import '~ag-grid/src/styles/ag-grid';
+@import '~ag-grid/src/styles/ag-theme-balham';

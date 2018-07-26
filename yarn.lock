@@ -595,13 +595,6 @@ address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
-<<<<<<< HEAD
-agent-base@^4.1.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.2.1.tgz#d89e5999f797875674c07d87f260fc41e83e8ca9"
-  dependencies:
-    es6-promisify "^5.0.0"
-=======
 ag-grid-react@^18.0.0:
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-18.0.0.tgz#6d277bc4974a32c5a4953702fe27f3f14ee68651"
@@ -611,7 +604,12 @@ ag-grid-react@^18.0.0:
 ag-grid@^18.0.1:
   version "18.0.1"
   resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-18.0.1.tgz#e72ee2f7cd79063466fc99fa22f7f4e9880adda2"
->>>>>>> FEATURE: RAIL-908 Data load to ag grid
+
+agent-base@^4.1.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.2.1.tgz#d89e5999f797875674c07d87f260fc41e83e8ca9"
+  dependencies:
+    es6-promisify "^5.0.0"
 
 airbnb-js-shims@^1.4.1:
   version "1.4.1"
@@ -8873,15 +8871,11 @@ react-document-title@2.0.3:
     prop-types "^15.5.6"
     react-side-effect "^1.0.2"
 
-<<<<<<< HEAD
-react-dom@15.6.2:
-=======
 react-dom-factories@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
 
-react-dom@15.6.2, react-dom@^15.6.1:
->>>>>>> FEATURE: RAIL-908 Data load to ag grid
+react-dom@15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
   dependencies:

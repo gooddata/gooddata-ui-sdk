@@ -2,7 +2,9 @@ import { DataLayer } from '@gooddata/gooddata-js';
 
 const { Uri: { isUri } } = DataLayer;
 
-const getQualifierKey = qualifierString => (isUri(qualifierString) ? 'uri' : 'identifier');
+const getQualifierObject = qualifierString => ({
+    [(isUri(qualifierString) ? 'uri' : 'identifier')]: qualifierString
+});
 
 export const createMeasureBucketItem = (qualifierString, localIdentifier, alias) => {
     const aliasProp = alias ? { alias } : {};
@@ -11,9 +13,7 @@ export const createMeasureBucketItem = (qualifierString, localIdentifier, alias)
             localIdentifier: localIdentifier || qualifierString,
             definition: {
                 measureDefinition: {
-                    item: {
-                        [getQualifierKey(qualifierString)]: qualifierString
-                    }
+                    item: getQualifierObject(qualifierString)
                 }
             },
             ...aliasProp
@@ -67,9 +67,7 @@ export const createAttributeBucketItem = (qualifierString, localIdentifier, alia
     return {
         visualizationAttribute: {
             localIdentifier: qualifierString,
-            displayForm: {
-                [getQualifierKey(qualifierString)]: qualifierString
-            }
+            displayForm: getQualifierObject(qualifierString)
         },
         ...aliasProp
     };
@@ -78,9 +76,7 @@ export const createAttributeBucketItem = (qualifierString, localIdentifier, alia
 export const createPositiveAttributeFilter = (qualifierString, values) => {
     return {
         positiveAttributeFilter: {
-            displayForm: {
-                [getQualifierKey(qualifierString)]: qualifierString
-            },
+            displayForm: getQualifierObject(qualifierString),
             in: values
         }
     };
@@ -89,9 +85,7 @@ export const createPositiveAttributeFilter = (qualifierString, values) => {
 export const createNegativeAttributeFilter = (qualifierString, values) => {
     return {
         negativeAttributeFilter: {
-            displayForm: {
-                [getQualifierKey(qualifierString)]: qualifierString
-            },
+            displayForm: getQualifierObject(qualifierString),
             notIn: values
         }
     };
