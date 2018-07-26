@@ -4,7 +4,8 @@ import cloneDeep = require('lodash/cloneDeep');
 const HEATMAP_TEMPLATE = {
     chart: {
         type: 'heatmap',
-        marginTop: 25
+        marginTop: 25,
+        marginRight: 0
     },
     plotOptions: {
         heatmap: {
