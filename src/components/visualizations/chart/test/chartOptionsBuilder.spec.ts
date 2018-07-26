@@ -3029,7 +3029,7 @@ describe('chartOptionsBuilder', () => {
                     it('should return 7 data classes with valid color', () => {
                         const series = [{
                             data: [{
-                                    value: 10
+                                    value: 0
                                 }, {
                                     value: 20
                                 }, {
@@ -3039,7 +3039,7 @@ describe('chartOptionsBuilder', () => {
                         const colorPalette = ['r', 'g', 'b'];
                         const approximatelyExpectedDataClasses = [
                             {
-                                from: 10,
+                                from: 0,
                                 color: 'r'
                             }, {
                                 color: 'g'
