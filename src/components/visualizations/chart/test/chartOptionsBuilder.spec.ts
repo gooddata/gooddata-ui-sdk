@@ -2999,6 +2999,14 @@ describe('chartOptionsBuilder', () => {
                 });
 
                 describe('getHeatMapDataClasses', () => {
+                    it('should return empty array when there are no values in series', () => {
+                        const series = [{ data: [{ value: null as any }] }];
+                        const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
+                        const dataClasses = getHeatMapDataClasses(series, []);
+
+                        expect(dataClasses).toEqual(expectedDataClasses);
+                    });
+
                     it('should return single dataClass when series have only one value', () => {
                         const series = [{
                             data: [{

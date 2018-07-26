@@ -1260,6 +1260,11 @@ export function getHeatMapDataClasses(series: any = [], colorPalette: string[]):
     }));
 
     const values: number[] = compact(get(newSeries, '0.data', []).map((item: any) => item.value));
+
+    if (isEmpty(values)) {
+        return [];
+    }
+
     const min = Math.min(...values);
     const max = Math.max(...values);
     const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
