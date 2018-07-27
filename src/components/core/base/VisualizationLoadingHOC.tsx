@@ -33,11 +33,17 @@ export interface ICommonVisualizationProps extends IEvents {
 
 export interface ILoadingInjectedProps {
     execution: Execution.IExecutionResponses;
-    onDataTooLarge: any;
-    onNegativeValues: any;
     error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
+    // if autoExecuteDataSource is on, this callback is passed to the inner component and handles loading
+    getPage?: (
+        resultSpec: AFM.IResultSpec,
+        offset: number[],
+        limit: number[]
+    ) => Promise<Execution.IExecutionResponses>;
+    onDataTooLarge(): void;
+    onNegativeValues(): void;
 }
 
 export interface IVisualizationLoadingState {
@@ -51,7 +57,7 @@ const defaultErrorHandler = (error: any) => {
 };
 
 export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
-    resultSpec: {},
+    resultSpec: undefined,
     onError: defaultErrorHandler,
     onLoadingChanged: noop,
     ErrorComponent,
@@ -64,7 +70,8 @@ export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSource
 };
 
 export function visualizationLoadingHOC<T extends ICommonVisualizationProps & IDataSourceProviderInjectedProps>(
-    InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>
+    InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
+    autoExecuteDataSource: boolean = true
 ): React.ComponentClass<T> {
     class LoadingHOCWrapped
         extends React.Component<T & ILoadingInjectedProps, IVisualizationLoadingState> {
@@ -77,24 +84,33 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             super(props);
 
             this.state = {
-                isLoading: false
+                isLoading: false,
+                result: null
             };
 
             this.onLoadingChanged = this.onLoadingChanged.bind(this);
             this.onDataTooLarge = this.onDataTooLarge.bind(this);
             this.onNegativeValues = this.onNegativeValues.bind(this);
+            this.getPage = this.getPage.bind(this);
 
             this.initSubject();
         }
 
         public componentDidMount() {
             const { dataSource, resultSpec } = this.props;
-            this.initDataLoading(dataSource, resultSpec);
+            if (autoExecuteDataSource) {
+                this.initDataLoading(dataSource, resultSpec);
+            }
         }
 
         public render() {
             const { result, isLoading, error } = this.state;
             const { intl } = this.props;
+
+            const getPageProperty = autoExecuteDataSource ? {}
+                : {
+                    getPage: this.getPage
+                };
 
             return (
                 <InnerComponent
@@ -105,8 +121,28 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                     error={error}
                     isLoading={isLoading}
                     intl={intl}
+                    {...getPageProperty}
                 />
             );
+        }
+
+        public getPage(
+            resultSpec: AFM.IResultSpec,
+            offset: number[],
+            limit: number[]
+        ) {
+            return this.props.dataSource.getPage(resultSpec, offset, limit)
+                .then(checkEmptyResult)
+                .then((result) => {
+                    // This returns only current page,
+                    // gooddata-js mergePages doesn't support discontinuous page ranges yet
+                    this.setState({ result });
+                    this.props.pushData({ result });
+                    return result;
+                })
+                .catch((error: ApiResponseError) => {
+                    this.onError(convertErrors(error));
+                });
         }
 
         public isDataReloadRequired(nextProps: Readonly<T & ILoadingInjectedProps>) {
@@ -115,7 +151,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            if (this.isDataReloadRequired(nextProps)) {
+            if (this.isDataReloadRequired(nextProps) && autoExecuteDataSource) {
                 const { dataSource, resultSpec } = nextProps;
                 this.initDataLoading(dataSource, resultSpec);
             }

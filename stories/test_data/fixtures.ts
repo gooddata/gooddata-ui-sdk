@@ -169,11 +169,18 @@ export const headlineWithTwoMeasures: any = {
     executionResult: require('../test_data/headline_with_two_measures_result.json').executionResult
 };
 
+export const pivotTableWithColumnAndRowAttributes: any = {
+    executionRequest: require('../test_data/pivot_table_with_column_and_row_attributes_request.json').execution,
+    executionResponse:
+        require('../test_data/pivot_table_with_column_and_row_attributes_response.json').executionResponse,
+    executionResult: require('../test_data/pivot_table_with_column_and_row_attributes_result.json').executionResult
+};
+
 export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
 export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
-    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
-    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
-    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets // tslint:disable-line:max-line-length
+    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets,
+    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets,
+    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets
 };
 
 export const tableWithSorting: any = {
@@ -349,6 +356,7 @@ export const customPalette = [
 ];
 
 export default {
+    pivotTableWithColumnAndRowAttributes,
     barChartWithSingleMeasureAndNoAttributes,
     barChartWithoutAttributes,
     barChartWith3MetricsAndViewByAttribute,

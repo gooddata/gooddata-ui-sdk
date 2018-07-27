@@ -100,6 +100,438 @@ module.exports = {
             }
         },
         {
+            _description: 'PivotTable / two measures, 2 column attributes',
+            execution: {
+                execution: {
+                    afm: {
+                        measures: [{
+                                localIdentifier: 'm1',
+                                definition: {
+                                    measure: {
+                                        item: {
+                                            uri: '/gdc/md/storybook/obj/1'
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                localIdentifier: 'm2',
+                                definition: {
+                                    measure: {
+                                        item: {
+                                            uri: '/gdc/md/storybook/obj/2'
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        attributes: [{
+                                displayForm: {
+                                    uri: '/gdc/md/storybook/obj/4.df'
+                                },
+                                localIdentifier: 'a1'
+                            },
+                            {
+                                displayForm: {
+                                    uri: '/gdc/md/storybook/obj/5.df'
+                                },
+                                localIdentifier: 'a2'
+                            }
+                        ]
+                    },
+                    resultSpec: {
+                        dimensions: [{
+                                itemIdentifiers: []
+                            },
+                            {
+                                itemIdentifiers: ['a1', 'a2', 'measureGroup']
+                            }
+                        ]
+                    }
+                }
+            },
+            executionResult: {
+                executionResult: {
+                    data: [
+                        ['1000678', '907', '958', '525', '928', '824', '201', '482', '47', '788', '864', '82', '613', '243', '37', '864', '416', '471', '253', '24', '897', '324', '278', '267']
+                    ],
+                    headerItems: [
+                        [],
+                        [
+                            [{
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                    name: 'Pink'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                    name: 'Red'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                    name: 'Purple'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                    name: 'Salmon'
+                                }
+                            }],
+                            [{
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                    name: 'low'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                    name: 'medium'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }, {
+                                attributeHeaderItem: {
+                                    uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                    name: 'high'
+                                }
+                            }],
+                            [{
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Amount',
+                                    order: 0
+                                }
+                            }, {
+                                measureHeaderItem: {
+                                    name: 'Bigger Amount',
+                                    order: 1
+                                }
+                            }]
+                        ]
+                    ],
+                    paging: {
+                        count: [1, 24],
+                        offset: [0, 0],
+                        total: [1, 24]
+                    }
+                }
+            }
+        },
+        {
             _description: 'Area chart with missing values',
             execution: {
                 execution: {
@@ -226,8 +658,7 @@ module.exports = {
                         }, {
                             itemIdentifiers: ['measureGroup']
                         }],
-                        sorts: [
-                            {
+                        sorts: [{
                                 attributeSortItem: {
                                     attributeIdentifier: 'a1',
                                     direction: 'asc'
@@ -236,13 +667,11 @@ module.exports = {
                             {
                                 measureSortItem: {
                                     direction: 'desc',
-                                    locators: [
-                                        {
-                                            measureLocatorItem: {
-                                                measureIdentifier: "m1"
-                                            }
+                                    locators: [{
+                                        measureLocatorItem: {
+                                            measureIdentifier: 'm1'
                                         }
-                                    ]
+                                    }]
                                 }
                             }
                         ]
@@ -267,150 +696,149 @@ module.exports = {
                     ],
                     headerItems: [
                         [
-                            [
-                                {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=1",
-                                        "name": "Pink"
+                            [{
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                        name: 'Pink'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=1",
-                                        "name": "Pink"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                        name: 'Pink'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=1",
-                                        "name": "Pink"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                        name: 'Pink'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=3",
-                                        "name": "Purple"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                        name: 'Purple'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=3",
-                                        "name": "Purple"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                        name: 'Purple'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=3",
-                                        "name": "Purple"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                                        name: 'Purple'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=2",
-                                        "name": "Red"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                        name: 'Red'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=2",
-                                        "name": "Red"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                        name: 'Red'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=2",
-                                        "name": "Red"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                                        name: 'Red'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=4",
-                                        "name": "Salmon"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                        name: 'Salmon'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=4",
-                                        "name": "Salmon"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                        name: 'Salmon'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/4/elements?id=4",
-                                        "name": "Salmon"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                                        name: 'Salmon'
                                     }
                                 }
                             ],
                             [{
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=1",
-                                        "name": "low"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                        name: 'low'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=2",
-                                        "name": "medium"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                        name: 'medium'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=3",
-                                        "name": "high"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                        name: 'high'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=1",
-                                        "name": "low"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                        name: 'low'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=2",
-                                        "name": "medium"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                        name: 'medium'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=3",
-                                        "name": "high"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                        name: 'high'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=1",
-                                        "name": "low"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                        name: 'low'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=2",
-                                        "name": "medium"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                        name: 'medium'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=3",
-                                        "name": "high"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                        name: 'high'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=1",
-                                        "name": "low"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                        name: 'low'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=2",
-                                        "name": "medium"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                        name: 'medium'
                                     }
                                 },
                                 {
-                                    "attributeHeaderItem": {
-                                        "uri": "/gdc/md/storybook/obj/5/elements?id=3",
-                                        "name": "high"
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/storybook/obj/5/elements?id=3',
+                                        name: 'high'
                                     }
                                 }
                             ]

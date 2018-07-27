@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { testUtils } from '@gooddata/js-utils';
 import {
     oneMeasureDataSource,
+    oneMeasurePagableOnlyDataSource,
     tooLargeDataSource,
     executionObjectWithTotalsDataSource,
     LoadingComponent,
@@ -42,22 +43,41 @@ class TestInnerComponent
         customPropFooBar: PropTypes.number
     };
 
+    public componentWillMount() {
+        const {
+            getPage,
+            resultSpec
+        } = this.props;
+        // we get getPage is available, we assume this is a pagable component
+        // and therefor should not get autoexecuted datasource
+        if (getPage) {
+            getPage(
+                resultSpec,
+                [0, 500],
+                [0, 500]
+            );
+        }
+    }
+
     public render() {
         return <span title={this.props.customPropFooBar.toString()} />;
     }
 }
 
 describe('VisualizationLoadingHOC', () => {
-    const WrappedComponent = visualizationLoadingHOC(TestInnerComponent);
 
     const createComponent =
-        (customProps: Partial<ITestInnerComponentProps & IDataSourceProviderInjectedProps> = {}) => {
-            const props = {
-                dataSource: oneMeasureDataSource,
-                ...customProps
-            };
-            return mount<ITestInnerComponentProps & IDataSourceProviderInjectedProps>(<WrappedComponent {...props} />);
+    (
+        customProps: Partial<ITestInnerComponentProps & IDataSourceProviderInjectedProps> = {},
+        autoExecuteDataSource = true
+    ) => {
+        const props = {
+            dataSource: oneMeasureDataSource,
+            ...customProps
         };
+        const WrappedComponent = visualizationLoadingHOC(TestInnerComponent, autoExecuteDataSource);
+        return mount<ITestInnerComponentProps & IDataSourceProviderInjectedProps>(<WrappedComponent {...props} />);
+    };
 
     it('should render the inner component passing down all the external properties', () => {
         const props = {
@@ -307,6 +327,67 @@ describe('VisualizationLoadingHOC', () => {
             visualization.props().onNegativeValues();
 
             expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.NEGATIVE_VALUES));
+        });
+    });
+
+    describe('with autoExecuteDataSource disabled', () => {
+        it('should not init loading automatically', () => {
+            const wrapper = createComponent({
+                LoadingComponent
+            }, false);
+
+            const innerWrapped = wrapper.find(TestInnerComponent);
+            expect(innerWrapped.props().isLoading).toBe(false);
+            expect(innerWrapped.props().execution).toBe(null);
+        });
+
+        it('should call pushData with result from getPage', () => {
+            const pushData = jest.fn();
+            const onLoadingChanged = jest.fn();
+            createComponent({
+                pushData,
+                onLoadingChanged,
+                dataSource: oneMeasurePagableOnlyDataSource
+            }, false);
+
+            return testUtils.delay().then(() => {
+                expect(pushData).toHaveBeenCalledWith({
+                    result: oneMeasureResponse
+                });
+                expect(onLoadingChanged).not.toHaveBeenCalled();
+            });
+        });
+
+        it('should pass down error flag when execution failed', () => {
+            const consoleErrorSpy = jest.spyOn(global.console, 'error');
+            consoleErrorSpy.mockImplementation(jest.fn());
+
+            const wrapper = createComponent({
+                dataSource: tooLargeDataSource,
+                ErrorComponent
+            }, false);
+
+            return testUtils.delay().then(() => {
+                wrapper.update();
+                const innerWrapped = wrapper.find(TestInnerComponent);
+                expect(innerWrapped.props().error).toEqual('DATA_TOO_LARGE_TO_COMPUTE');
+
+                consoleErrorSpy.mockRestore();
+            });
+        });
+
+        it('should call onError then when error occured', () => {
+            const onError = jest.fn();
+            createComponent({
+                dataSource: tooLargeDataSource,
+                onError
+            }, false);
+
+            return testUtils.delay().then(() => {
+                expect(onError).toHaveBeenCalledTimes(1);
+
+                expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
+            });
         });
     });
 });

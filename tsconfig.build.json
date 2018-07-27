@@ -3,5 +3,8 @@
   "include": [
     "src/index.ts",
     "src/typings.d.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "noImplicitAny": true
+  }
 }

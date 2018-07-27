@@ -33,6 +33,9 @@ test('should display sorted graphs', async (t) => {
         // attribute sorting
         .expect(attributeSortingAxisLabels.textContent).eql('Times SquareSan JoseNew YorkMontgomeryIrvingHighland VillageHaywardDeerfield BeachDaly CityDallasAventura')
 
+        // click to scroll to chart
+        .click(dynamicSortingChartXAxisLabels)
+
         // dynamic default sorting is preselected
         .expect(dynamicSortingChartXAxisLabels.textContent).eql('JanFebMarAprMayJunJulAugSepOctNovDec')
         .expect(dynamicSortingChartLegendLabels.textContent).eql('AlabamaCaliforniaFloridaNew YorkTexas')

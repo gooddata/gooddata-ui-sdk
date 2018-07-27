@@ -595,6 +595,16 @@ address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
 
+ag-grid-react@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-18.0.0.tgz#6d277bc4974a32c5a4953702fe27f3f14ee68651"
+  dependencies:
+    prop-types "15.6.0"
+
+ag-grid@^18.0.1:
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-18.0.1.tgz#e72ee2f7cd79063466fc99fa22f7f4e9880adda2"
+
 agent-base@^4.1.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.2.1.tgz#d89e5999f797875674c07d87f260fc41e83e8ca9"
@@ -5170,6 +5180,10 @@ har-validator@~5.0.3:
     ajv "^5.1.0"
     har-schema "^2.0.0"
 
+harmony-reflect@^1.4.6:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/harmony-reflect/-/harmony-reflect-1.6.0.tgz#9c28a77386ec225f7b5d370f9861ba09c4eea58f"
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
@@ -5554,6 +5568,12 @@ icss-utils@^2.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-2.1.0.tgz#83f0a0ec378bf3246178b6c2ad9136f135b1c962"
   dependencies:
     postcss "^6.0.1"
+
+identity-obj-proxy@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/identity-obj-proxy/-/identity-obj-proxy-3.0.0.tgz#94d2bda96084453ef36fbc5aaec37e0f79f1fc14"
+  dependencies:
+    harmony-reflect "^1.4.6"
 
 ieee754@^1.1.4:
   version "1.1.11"
@@ -8850,6 +8870,10 @@ react-document-title@2.0.3:
   dependencies:
     prop-types "^15.5.6"
     react-side-effect "^1.0.2"
+
+react-dom-factories@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
 
 react-dom@15.6.2:
   version "15.6.2"
