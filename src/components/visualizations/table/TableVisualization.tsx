@@ -12,8 +12,7 @@ import 'nodelist-foreach-polyfill';
 import Bubble from '@gooddata/goodstrap/lib/Bubble/Bubble';
 import BubbleHoverTrigger from '@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger';
 import { Subscription } from 'rxjs/Subscription';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
-import { OnFiredDrillEvent } from '../../../interfaces/Events';
+import { IDrillableItem, IDrillEventCallback } from '../../../interfaces/DrillEvents';
 import {
     Align,
     IAlignPoint,
@@ -120,7 +119,7 @@ export interface ITableVisualizationProps {
     hasHiddenRows?: boolean;
     headers?: TableHeader[];
     rows?: TableRow[];
-    onFiredDrillEvent?: OnFiredDrillEvent;
+    onFiredDrillEvent?: IDrillEventCallback;
     onSortChange?: OnSortChangeWithItem;
     sortBy?: number;
     sortDir?: SortDir;

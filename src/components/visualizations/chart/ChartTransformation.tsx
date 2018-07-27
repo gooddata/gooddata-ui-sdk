@@ -17,8 +17,8 @@ import HighChartsRenderer, {
     renderChart as chartRenderer
 } from './HighChartsRenderer';
 import { IChartConfig } from './Chart';
-import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { OnLegendReady } from '../../../interfaces/Events';
+import { IDrillableItem, IDrillEventCallback } from '../../../interfaces/DrillEvents';
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
@@ -41,7 +41,7 @@ export interface IChartTransformationProps {
     executionResult: Execution.IExecutionResult;
     mdObject?: VisualizationObject.IVisualizationObjectContent;
 
-    onFiredDrillEvent: OnFiredDrillEvent;
+    onFiredDrillEvent: IDrillEventCallback;
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
