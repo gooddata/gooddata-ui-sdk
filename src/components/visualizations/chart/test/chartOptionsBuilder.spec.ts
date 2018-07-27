@@ -107,7 +107,7 @@ describe('chartOptionsBuilder', () => {
     const barChartWith3MetricsAndViewByAttributeOptions =
         generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
 
-    const pieAndDreemapDataSet = {
+    const pieAndTreemapDataSet = {
         ...fixtures.pieChartWithMetricsOnly,
         executionResult: {
             ...fixtures.pieChartWithMetricsOnly.executionResult,
@@ -121,9 +121,9 @@ describe('chartOptionsBuilder', () => {
         }
     };
 
-    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'pie' });
+    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'pie' });
 
-    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'treemap' });
+    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'treemap' });
 
     const pieChartWithMetricsOnlyOptions: any = generateChartOptions({
         ...fixtures.pieChartWithMetricsOnly
@@ -1218,7 +1218,6 @@ describe('chartOptionsBuilder', () => {
                 it('should fill correct series data', () => {
                     expect(seriesData[0].data.length).toBe(1);
                     expect(seriesData[0].data[0]).toMatchObject({
-                        y: 116625456.54,
                         value: 116625456.54,
                         color: DEFAULT_COLOR_PALETTE[0],
                         format: '#,##0.00',
@@ -1258,7 +1257,6 @@ describe('chartOptionsBuilder', () => {
                 it('should fill correct series data', () => {
                     expect(seriesData[0].data.length).toBe(2);
                     expect(seriesData[0].data[0]).toMatchObject({
-                        y: 80406324.96,
                         value: 80406324.96,
                         color: DEFAULT_COLOR_PALETTE[0],
                         format: '#,##0.00',
@@ -1268,7 +1266,6 @@ describe('chartOptionsBuilder', () => {
                     });
 
                     expect(seriesData[0].data[1]).toMatchObject({
-                        y: 36219131.58,
                         value: 36219131.58,
                         color: DEFAULT_COLOR_PALETTE[1],
                         format: '#,##0.00',
