@@ -29,18 +29,4 @@ describe('HeatMapLegend', () => {
 
         expect(wrapper.find('.heatmap-legend').length).toEqual(1);
     });
-
-    it('should not render legend when series has only one value', () => {
-        const series = [
-            {
-                range: {
-                    from: 1,
-                    to: 1
-                }
-            }
-        ];
-        const wrapper = renderLegend({ series, numericSymbols });
-
-        expect(wrapper.find('.heatmap-legend').length).toEqual(0);
-    });
 });

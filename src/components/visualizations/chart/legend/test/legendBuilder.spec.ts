@@ -30,12 +30,29 @@ describe('shouldLegendBeEnabled', () => {
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
-    it('should return true if chart is heatmap', () => {
+    it('should return true if chart is heatmap with multiple dataClasses', () => {
         const chartOptions = {
-            type: VisualizationTypes.HEATMAP
+            type: VisualizationTypes.HEATMAP,
+            colorAxis: {
+                dataClasses: [
+                    { from: 1, to: 2 },
+                    { from: 2, to: 3 }
+                ]
+            }
         };
 
         expect(shouldLegendBeEnabled(chartOptions)).toEqual(true);
+    });
+
+    it('should return false when chart is heatmap with single dataClass', () => {
+        const chartOptions = {
+            type: VisualizationTypes.HEATMAP,
+            colorAxis: {
+                dataClasses: [{ from: 7, to: 7 }]
+            }
+        };
+
+        expect(shouldLegendBeEnabled(chartOptions)).toEqual(false);
     });
 });
 

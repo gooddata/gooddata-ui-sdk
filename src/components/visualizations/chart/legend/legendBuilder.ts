@@ -3,6 +3,7 @@ import pick = require('lodash/pick');
 import set = require('lodash/set');
 import get = require('lodash/get');
 import { RIGHT } from './PositionTypes';
+import * as Highcharts from 'highcharts';
 import {
     isAreaChart,
     isScatterPlot,
@@ -35,7 +36,14 @@ export function shouldLegendBeEnabled(chartOptions: any) {
         || isSliceChartWithMoreThanOneCategory
         || isStacked
         || isScatterPlotWithAttribute
-        || isHeatMap(type);
+        || isHeatMapWithMultipleValues(chartOptions);
+}
+
+function isHeatMapWithMultipleValues(chartOptions: any) {
+    const { type } = chartOptions;
+    const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, 'colorAxis.dataClasses', []);
+
+    return isHeatMap(type) && dataClasses.length > 1;
 }
 
 export function getLegendItems(chartOptions: any) {

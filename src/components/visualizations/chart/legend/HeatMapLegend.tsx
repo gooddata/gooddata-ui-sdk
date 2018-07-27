@@ -20,11 +20,6 @@ export default class HeatMapLegend extends React.PureComponent<IHeatMapLegendPro
         const max = get(last(series), 'range.to', 0);
         const diff =  max - min;
 
-        // don't show legend when only one value is present
-        if (this.isSingleValueInSeries(series)) {
-            return null;
-        }
-
         return (
             <div className="heatmap-legend">
                 <div className="legend-labels">
@@ -84,10 +79,6 @@ export default class HeatMapLegend extends React.PureComponent<IHeatMapLegendPro
             backgroundColor: item.color,
             border: item.color === 'rgb(255,255,255)' ? '1px solid #ccc' : 'none'
         };
-    }
-
-    private isSingleValueInSeries(series: any) {
-        return series.length === 1 && get(series, '0.range.from') === get(series, '0.range.to');
     }
 }
 
