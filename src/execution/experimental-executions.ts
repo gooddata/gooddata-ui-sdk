@@ -511,9 +511,11 @@ export class ExperimentalExecutionsModule {
      */
     public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
 
-        // tslint:disable-next-line:no-console
-        console.warn('ExperimentalExecutionsModule is deprecated and is no longer being maintained. ' +
-            'Please migrate to the ExecuteAfmModule.');
+        if (process.env.NODE_ENV !== 'test') {
+            // tslint:disable-next-line:no-console
+            console.warn('ExperimentalExecutionsModule is deprecated and is no longer being maintained. ' +
+                'Please migrate to the ExecuteAfmModule.');
+        }
 
         const executedReport: any = {
             isLoaded: false

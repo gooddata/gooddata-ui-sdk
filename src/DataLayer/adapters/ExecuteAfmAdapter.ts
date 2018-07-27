@@ -39,7 +39,7 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
             return this.sdk.execution.getExecutionResponse(this.projectId, execution);
         };
 
-        const resultFactory = this.sdk.execution.fetchExecutionResult;
+        const resultFactory = this.sdk.execution.getPartialExecutionResult;
 
         const dataSource = new DataSource<Execution.IExecutionResponses>(
             execFactory,

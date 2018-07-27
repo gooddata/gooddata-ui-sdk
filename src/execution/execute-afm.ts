@@ -52,13 +52,25 @@ export class ExecuteAfmModule {
             .then(unwrapExecutionResponse);
     }
 
-    public fetchExecutionResult(executionResultUri: string, offset: number[], limit: number[])
-        : Promise<Execution.IExecutionResult> {
-        const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
+    /**
+     * Get one page of Result from Execution (with requested limit and offset)
+     *
+     * @method getPartialExecutionResult
+     * @param {string} executionResultUri
+     * @param {number[]} limit - limit for each dimension
+     * @param {number[]} offset - offset for each dimension
+     *
+     * @returns {Promise<Execution.IExecutionResult | null>}
+     *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
+     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
+     */
+    public getPartialExecutionResult(executionResultUri: string, limit: number[], offset: number[])
+        : Promise<Execution.IExecutionResult | null> {
+        const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
+        const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
+        validateNumOfDimensions(numOfDimensions);
 
-        return this.xhr.get(uri)
-            .then(apiResponse => apiResponse.getData())
-            .then(unwrapExecutionResult);
+        return this.getPage(executionResultUri, limit, offset);
     }
 
     /**
@@ -71,9 +83,9 @@ export class ExecuteAfmModule {
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
-    private getExecutionResult(executionResultUri: string)
+    public getExecutionResult(executionResultUri: string)
         : Promise<Execution.IExecutionResult | null> {
-        const executionResultUriQueryPart = executionResultUri.split(/\?(.+)/)[1];
+        const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
 
@@ -83,17 +95,32 @@ export class ExecuteAfmModule {
         return this.getAllPages(executionResultUri, limit, offset);
     }
 
+    private getPage(
+        executionResultUri: string,
+        limit: number[],
+        offset: number[]
+    ): Promise<Execution.IExecutionResult | null> {
+        return this.fetchExecutionResult(executionResultUri, limit, offset)
+            .then((executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+                return executionResultWrapper
+                    ? unwrapExecutionResult(executionResultWrapper)
+                    : null;
+            });
+    }
+
     private getAllPages(
         executionResultUri: string,
         limit: number[],
         offset: number[],
         prevExecutionResult?: Execution.IExecutionResult
     ): Promise<Execution.IExecutionResult | null> {
-        return this.fetchExecutionResult(executionResultUri, offset, limit)
-            .then((executionResult: Execution.IExecutionResult | null) => {
-                if (!executionResult) {
+        return this.fetchExecutionResult(executionResultUri, limit, offset)
+            .then((executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+                if (!executionResultWrapper) {
                     return null;
                 }
+
+                const executionResult = unwrapExecutionResult(executionResultWrapper);
 
                 const newExecutionResult = prevExecutionResult
                     ? mergePage(prevExecutionResult, executionResult)
@@ -108,6 +135,21 @@ export class ExecuteAfmModule {
                     : newExecutionResult;
             });
     }
+
+    private fetchExecutionResult(executionResultUri: string, limit: number[], offset: number[])
+        : Promise<Execution.IExecutionResultWrapper | null> {
+        const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
+
+        return this.xhr.get(uri).then(
+            apiResponse => apiResponse.response.status === 204
+                ? null
+                : apiResponse.getData()
+        );
+    }
+}
+
+function getExecutionResultUriQueryPart(executionResultUri: string): string {
+    return executionResultUri.split(/\?(.+)/)[1];
 }
 
 function unwrapExecutionResponse(executionResponseWrapper: Execution.IExecutionResponseWrapper)

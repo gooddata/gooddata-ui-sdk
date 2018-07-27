@@ -79,7 +79,7 @@ describe('DataSource', () => {
 
             const dataSource = new DataSource(execFactory, afm, 'finger', responseFactory, resultFactory);
             expect(() => {
-                dataSource.getPage(resultSpec, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+                dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             }).toThrow();
         });
 
@@ -90,7 +90,7 @@ describe('DataSource', () => {
 
             const dataSource = new DataSource(execFactory, afm, 'finger', responseFactory, resultFactory);
             try {
-                await dataSource.getPage(resultSpec, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+                await dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             } catch (e) {
                 expect(e).toBeInstanceOf(Error);
             }
@@ -98,10 +98,10 @@ describe('DataSource', () => {
 
         it('should use responseFactory+resultFactory', async () => {
             const { responseFactory, resultFactory, dataSource } = createDataSource();
-            const responses = await dataSource.getPage(resultSpec, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            const responses = await dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
 
             expect(responseFactory).toBeCalledWith(resultSpec);
-            expect(resultFactory).toBeCalledWith('url1', [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            expect(resultFactory).toBeCalledWith('url1', [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             expect(responses).toEqual({
                 executionResponse: { links: { executionResult: 'url1' } },
                 executionResult: { data: [] }
@@ -110,7 +110,7 @@ describe('DataSource', () => {
 
         it('should cache first response', async () => {
             const { responseFactory, resultFactory, dataSource } = createDataSource();
-            await dataSource.getPage(resultSpec, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            await dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             const responses2 = await dataSource.getPage(
                 resultSpec,
                 [DEFAULT_LIMIT, DEFAULT_LIMIT],
@@ -121,8 +121,8 @@ describe('DataSource', () => {
             expect(resultFactory).toHaveBeenCalledTimes(2);
             expect(resultFactory.mock.calls[0]).toEqual([
                 'url1',
-                [0, 0],
-                [DEFAULT_LIMIT, DEFAULT_LIMIT]
+                [DEFAULT_LIMIT, DEFAULT_LIMIT],
+                [0, 0]
             ]);
             expect(resultFactory.mock.calls[1]).toEqual([
                 'url1',
@@ -138,16 +138,16 @@ describe('DataSource', () => {
         it('should be able to handle two different result spec requests', async () => {
             const resultSpec2: AFM.IResultSpec = { dimensions: [ ] };
             const { responseFactory, resultFactory, dataSource } = createDataSource();
-            await dataSource.getPage(resultSpec, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            await dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             await dataSource.getPage(resultSpec, [DEFAULT_LIMIT, DEFAULT_LIMIT], [10, 10]);
-            const responsesRS2 = await dataSource.getPage(resultSpec2, [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            const responsesRS2 = await dataSource.getPage(resultSpec2, [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
 
             expect(responseFactory).toHaveBeenCalledTimes(2);
             expect(resultFactory).toHaveBeenCalledTimes(3);
             expect(resultFactory.mock.calls[2]).toEqual([
                 'urlRS2',
-                [0, 0],
-                [DEFAULT_LIMIT, DEFAULT_LIMIT]
+                [DEFAULT_LIMIT, DEFAULT_LIMIT],
+                [0, 0]
             ]);
             expect(responsesRS2).toEqual({
                 executionResponse: { links: { executionResult: 'urlRS2' } },
@@ -161,10 +161,10 @@ describe('DataSource', () => {
 
             const { responseFactory, resultFactory, dataSource } = createDataSource();
             const overLimit = [DEFAULT_LIMIT + 2, DEFAULT_LIMIT + 2];
-            const responses = await dataSource.getPage(resultSpec, [0, 0], overLimit);
+            const responses = await dataSource.getPage(resultSpec, overLimit, [0, 0]);
 
             expect(responseFactory).toBeCalledWith(resultSpec);
-            expect(resultFactory).toBeCalledWith('url1', [0, 0], [DEFAULT_LIMIT, DEFAULT_LIMIT]);
+            expect(resultFactory).toBeCalledWith('url1', [DEFAULT_LIMIT, DEFAULT_LIMIT], [0, 0]);
             expect(responses).toEqual({
                 executionResponse: { links: { executionResult: 'url1' } },
                 executionResult: { data: [] }
@@ -176,14 +176,14 @@ describe('DataSource', () => {
 
         it('should work with a single dimension', async () => {
             const { responseFactory, resultFactory, dataSource } = createDataSource();
-            const responses = await dataSource.getPage(resultSpec, [0], [DEFAULT_LIMIT]);
+            const responses = await dataSource.getPage(resultSpec, [DEFAULT_LIMIT], [0]);
 
             expect(responseFactory).toHaveBeenCalledTimes(1);
             expect(resultFactory).toHaveBeenCalledTimes(1);
             expect(resultFactory).toHaveBeenCalledWith(
                 'url1',
-                [0],
-                [DEFAULT_LIMIT]
+                [DEFAULT_LIMIT],
+                [0]
             );
             expect(responses).toEqual({
                 executionResponse: { links: { executionResult: 'url1' } },

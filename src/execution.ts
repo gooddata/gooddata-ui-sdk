@@ -15,7 +15,8 @@ import { MetadataModule } from './metadata';
 export class ExecutionModule {
     public readonly executeAfm: ExecuteAfmModule['executeAfm'];
     public readonly getExecutionResponse: ExecuteAfmModule['getExecutionResponse'];
-    public readonly fetchExecutionResult: ExecuteAfmModule['fetchExecutionResult'];
+    public readonly getPartialExecutionResult: ExecuteAfmModule['getPartialExecutionResult'];
+    public readonly getExecutionResult: ExecuteAfmModule['getExecutionResult'];
     private readonly executeAfmModule: ExecuteAfmModule;
     private readonly xhr: XhrModule;
     private readonly md: MetadataModule;
@@ -24,7 +25,8 @@ export class ExecutionModule {
         this.executeAfmModule = new ExecuteAfmModule(xhr);
         this.executeAfm = this.executeAfmModule.executeAfm.bind(this.executeAfmModule);
         this.getExecutionResponse = this.executeAfmModule.getExecutionResponse.bind(this.executeAfmModule);
-        this.fetchExecutionResult = this.executeAfmModule.fetchExecutionResult.bind(this.executeAfmModule);
+        this.getPartialExecutionResult = this.executeAfmModule.getPartialExecutionResult.bind(this.executeAfmModule);
+        this.getExecutionResult = this.executeAfmModule.getExecutionResult.bind(this.executeAfmModule);
         this.xhr = xhr;
         this.md = md;
     }

@@ -5,5 +5,5 @@ export interface IDataSource<T> {
     getData(resultSpec: AFM.IResultSpec): Promise<T>;
     getAfm(): AFM.IAfm;
     getFingerprint(): string;
-    getPage(resultSpec: AFM.IResultSpec, offset: number[], limit: number[]): Promise<Execution.IExecutionResponses>;
+    getPage(resultSpec: AFM.IResultSpec, limit: number[], offset: number[]): Promise<Execution.IExecutionResponses>;
 }
