@@ -30,6 +30,61 @@ describe('shouldLegendBeEnabled', () => {
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
+    it('should return false if the treemap is stacked and has only one measure item', () => {
+        const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
+    });
+
+    it('should return true if the treemap is stacked and has many measures', () => {
+        const dataSet = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return true if the treemap has many measures', () => {
+        const dataSet = fixtures.treemapWithThreeMetrics;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return false if the treemap has only one measures', () => {
+        const dataSet = fixtures.treemapWithOneMetric;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
+    });
+
+    it('should return true if the treemap has view by and has only one view by item', () => {
+        const dataSet = fixtures.treemapWithMetricAndViewByAndOnlyOneElement;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
     it('should return true if chart is heatmap with multiple dataClasses', () => {
         const chartOptions = {
             type: VisualizationTypes.HEATMAP,

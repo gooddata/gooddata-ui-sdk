@@ -4,12 +4,13 @@ import {
     getDataPoints,
     hideDataLabel,
     isLabelOverlappingItsShape,
+    intersectsParentLabel,
     showDataLabel
 } from '../../helpers';
 
 function hideOverlappingChartLabels(visiblePoints: any) {
     visiblePoints.forEach((point: any) => {
-        if (isLabelOverlappingItsShape(point)) {
+        if (isLabelOverlappingItsShape(point) || intersectsParentLabel(point, visiblePoints)) {
             hideDataLabel(point);
         } else {
             showDataLabel(point);

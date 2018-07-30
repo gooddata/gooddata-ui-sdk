@@ -5,7 +5,8 @@ import {
     shouldStartOrEndOnTick,
     getDataLabelAttributes,
     getChartProperties,
-    isLabelOverlappingItsShape
+    isLabelOverlappingItsShape,
+    intersectsParentLabel
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -343,6 +344,36 @@ describe('helpers', () => {
             };
 
             expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        });
+    });
+
+    describe('intersectsParentLabel', () => {
+        function createPointWithLabel(parentId: any, dataLabel: any) {
+            return {
+                parent: parentId,
+                dataLabel
+            };
+        }
+
+        const points = [
+            createPointWithLabel(undefined, { x: 0, y: 0, width: 10, height: 10 }),
+            createPointWithLabel('0', { x: 100, y: 100, width: 10, height: 10 }),
+            createPointWithLabel('0', { x: 0, y: 0, width: 10, height: 10 })
+        ];
+
+        it('should return false if no parent given', () => {
+            const intersects = intersectsParentLabel(points[0], points);
+            expect(intersects).toEqual(false);
+        });
+
+        it('should return false if parent given but no intersection', () => {
+            const intersects = intersectsParentLabel(points[1], points);
+            expect(intersects).toEqual(false);
+        });
+
+        it('should return true if parent given and intersects', () => {
+            const intersects = intersectsParentLabel(points[2], points);
+            expect(intersects).toEqual(true);
         });
     });
 });

@@ -41,7 +41,11 @@ import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } fr
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
 
-import { DEFAULT_SERIES_LIMIT, DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
+import {
+    DEFAULT_SERIES_LIMIT,
+    DEFAULT_CATEGORIES_LIMIT,
+    DEFAULT_DATA_POINTS_LIMIT
+} from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
@@ -110,6 +114,7 @@ export interface IChartOptions {
     type?: string;
     stacking?: any;
     hasStackByAttribute?: boolean;
+    hasViewByAttribute?: boolean;
     legendLayout?: string;
     colorPalette?: string[];
     dualAxis?: boolean;
@@ -149,7 +154,7 @@ function getChartLimits(type: string): IChartLimits {
             return {
                 series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_CATEGORIES_LIMIT,
-                dataPoints: 30000
+                dataPoints: DEFAULT_DATA_POINTS_LIMIT
             };
         default:
             return {
@@ -1622,6 +1627,7 @@ export function getChartOptions(
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
+        hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || 'horizontal',
         colorPalette,
         xAxes,
