@@ -6,7 +6,7 @@ import noop = require('lodash/noop');
 import isFunction = require('lodash/isFunction');
 import omitBy = require('lodash/omitBy');
 import { Highcharts, IChartConfig } from './chart/Chart';
-import { OnFiredDrillEvent } from '../../interfaces/Events';
+import { IDrillEventCallback, IDrillableItem } from '../../interfaces/DrillEvents';
 
 import {
     Execution
@@ -18,7 +18,6 @@ import {
     stringifyChartTypes
 } from './utils/common';
 import { TableTransformation } from './table/TableTransformation';
-import { IDrillableItem } from '../../interfaces/DrillEvents';
 import ChartTransformation, { IExecutionRequest, renderHighCharts } from './chart/ChartTransformation';
 
 export interface IVisualizationProps {
@@ -33,7 +32,7 @@ export interface IVisualizationProps {
     drillableItems: IDrillableItem[];
     locale?: string;
 
-    onFiredDrillEvent?: OnFiredDrillEvent;
+    onFiredDrillEvent?: IDrillEventCallback;
     afterRender?: () => void;
     onDataTooLarge(): void;
     onNegativeValues(): void;

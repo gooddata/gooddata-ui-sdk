@@ -32,7 +32,8 @@ export class HeadlineStateless extends
             locale,
             dataSource,
             resultSpec,
-            execution
+            execution,
+            onFiredDrillEvent
         } = this.props;
 
         return (
@@ -46,6 +47,7 @@ export class HeadlineStateless extends
                                 afm: dataSource.getAfm(),
                                 resultSpec
                             }}
+                            onFiredDrillEvent={onFiredDrillEvent}
                             executionResponse={execution.executionResponse}
                             executionResult={
                                 fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString)
