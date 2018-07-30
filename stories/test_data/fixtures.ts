@@ -202,6 +202,14 @@ export const treemapWithMetricAndViewByAttribute: any = {
     ...treemapWithMetricAndViewByAttributeMd
 };
 
+export const treemapWithMetricAndViewByAndOnlyOneElement: any = {
+    executionRequest: require('../test_data/treemap_with_metric_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_metric_and_view_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_metric_and_view_by_and_only_one_element_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithMetricAndViewByAttributeMd
+};
+
 export const treemapWithMetricAndStackByAttributeMd: any = {
     mdObject: require('../test_data/treemap_with_metric_and_stack_by_attribute_md.json')
 };
@@ -233,6 +241,30 @@ export const treemapWithTwoMetricsAndStackByAttribute: any = {
         require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_response.json').executionResponse,
     executionResult: require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_result.json').executionResult,  // tslint:disable-line:max-line-length
     ...treemapWithTwoMetricsAndStackByAttributeMd
+};
+
+export const treemapWithThreeMetricsMd: any = {
+    mdObject: require('../test_data/treemap_with_three_metrics_md.json')
+};
+
+export const treemapWithThreeMetrics: any = {
+    executionRequest: require('../test_data/treemap_with_three_metrics_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_three_metrics_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_three_metrics_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithThreeMetricsMd
+};
+
+export const treemapWithOneMetricMd: any = {
+    mdObject: require('../test_data/treemap_with_one_metric_md.json')
+};
+
+export const treemapWithOneMetric: any = {
+    executionRequest: require('../test_data/treemap_with_one_metric_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_one_metric_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_one_metric_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithOneMetricMd
 };
 
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
@@ -384,5 +416,8 @@ export default {
     treemapWithMetricAndViewByAttribute,
     treemapWithMetricAndStackByAttribute,
     treemapWithMetricViewByAndStackByAttribute,
-    treemapWithTwoMetricsAndStackByAttribute
+    treemapWithTwoMetricsAndStackByAttribute,
+    treemapWithMetricAndViewByAndOnlyOneElement,
+    treemapWithThreeMetrics,
+    treemapWithOneMetric
 };

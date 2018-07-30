@@ -1,0 +1,22 @@
+{
+  "buckets": [{
+      "localIdentifier": "measures",
+      "items": [{
+        "localIdentifier": "amountMetric",
+        "title": "Amount",
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+            }
+          }
+        }
+      }
+    ]
+    },
+    {
+      "localIdentifier": "segment",
+      "items": []
+    }
+  ]
+}
