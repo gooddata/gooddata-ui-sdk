@@ -53,7 +53,8 @@ export interface IVisualizationLoadingState {
 }
 
 const defaultErrorHandler = (error: any) => {
-    console.error(error); // tslint:disable-line:no-console
+    // if error was not placed in object, we couldnt see its properties in console (ie cause, responseText etc.)
+    console.error('Error in execution:', { error }); // tslint:disable-line no-console
 };
 
 export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
