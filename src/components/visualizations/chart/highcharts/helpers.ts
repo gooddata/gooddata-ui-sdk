@@ -255,3 +255,15 @@ export function shouldStartOrEndOnTick(max: string, min: string) {
 
     return false;
 }
+
+export function intersectsParentLabel(point: any, points: any) {
+    const pointParent = parseInt(point.parent, 10);
+    if (isNaN(pointParent)) {
+        return false;
+    }
+
+    const pointLabelShape = point.dataLabel;
+    const parentPoint = points[pointParent];
+    const parentLabelShape = parentPoint.dataLabel;
+    return isIntersecting(pointLabelShape, parentLabelShape);
+}
