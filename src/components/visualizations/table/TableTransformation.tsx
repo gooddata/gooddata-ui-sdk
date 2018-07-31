@@ -17,7 +17,8 @@ import { getHeaders, getRows, validateTableProportions, getTotalsWithData } from
 import { getSortInfo, getSortItem } from './utils/sort';
 
 import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
-import { IDrillableItem, IDrillEventCallback } from '../../../interfaces/DrillEvents';
+import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { OnFiredDrillEvent } from '../../../interfaces/Events';
 
 export interface ITableTransformationProps {
     afterRender?: Function;
@@ -31,7 +32,7 @@ export interface ITableTransformationProps {
     executionResult: Execution.IExecutionResult;
     height?: number;
     maxHeight?: number;
-    onFiredDrillEvent?: IDrillEventCallback;
+    onFiredDrillEvent?: OnFiredDrillEvent;
     onSortChange?: OnSortChangeWithItem;
     onDataTooLarge?: Function;
     tableRenderer?: (props: ITableProps) => JSX.Element;

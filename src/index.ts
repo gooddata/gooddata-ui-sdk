@@ -16,7 +16,7 @@ import { Visualization, VisualizationEnvironment } from './components/uri/Visual
 import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
-import { IDrillableItem, IDrillEventCallback } from './interfaces/DrillEvents';
+import { IDrillableItem } from './interfaces/DrillEvents';
 import { IPushData } from './interfaces/PushData';
 import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
@@ -83,7 +83,6 @@ export {
     ICommonVisualizationProps,
     IDataSourceProviderInjectedProps,
     IDrillableItem,
-    IDrillEventCallback,
     ILegendConfig,
     IPushData,
     isEmptyResult,
