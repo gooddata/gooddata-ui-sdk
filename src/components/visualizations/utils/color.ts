@@ -1,4 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
+export const WHITE = 'rgb(255, 255, 255)';
+export const BLACK = 'rgb(0, 0, 0)';
+export const GRAY = 'rgb(201, 213, 223)';
+
 export const DEFAULT_COLOR_PALETTE = [
     'rgb(20,178,226)',
     'rgb(0,193,141)',

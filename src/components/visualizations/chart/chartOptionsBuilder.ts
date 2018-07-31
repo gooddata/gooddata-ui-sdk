@@ -37,7 +37,12 @@ import { unwrap } from '../../../helpers/utils';
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
 import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
+import {
+    VIEW_BY_DIMENSION_INDEX,
+    STACK_BY_DIMENSION_INDEX,
+    PIE_CHART_LIMIT,
+    HEATMAP_DATA_POINTS_LIMIT
+} from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
 
@@ -155,6 +160,12 @@ function getChartLimits(type: string): IChartLimits {
                 series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_CATEGORIES_LIMIT,
                 dataPoints: DEFAULT_DATA_POINTS_LIMIT
+            };
+        case VisualizationTypes.HEATMAP:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT,
+                dataPoints: HEATMAP_DATA_POINTS_LIMIT
             };
         default:
             return {
@@ -418,9 +429,7 @@ export function getHeatMapSeries(
                         (!stackByAttribute || (stackByAttribute.items.length <= 20))),
             formatGD: unwrap(measureGroup.items[0]).format
         },
-        legendIndex: 0,
-        borderWidth: ((!viewByAttribute || (viewByAttribute.items.length <= 30)) &&
-                        (!stackByAttribute || (stackByAttribute.items.length <= 30))) ? 1 : 0
+        legendIndex: 0
     }];
 }
 
@@ -816,7 +825,7 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
 
 export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any) {
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(val === null ? '-' : numberFormat(val, format));
     };
 
     return (point: IPoint) => {
@@ -1229,7 +1238,7 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         }
     } else if (isHeatMap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : ''
+            label: stackByAttribute ? stackByAttribute.formOf.name : ''
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -1263,14 +1272,10 @@ function assignYAxes(series: any, yAxes: IAxis[]) {
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;
 export const HIGHCHARTS_PRECISION = 15;
+export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
 export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
-    const newSeries = series.map((item: any) => ({
-        ...item,
-        borderWidth: 0
-    }));
-
-    const values: number[] = without(get(newSeries, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
+    const values: number[] = without(get(series, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
 
     if (isEmpty(values)) {
         return [];
@@ -1286,7 +1291,7 @@ export function getHeatMapDataClasses(series: any = [], colorPalette: string[]):
         dataClasses.push({
             from: min,
             to: max,
-            color: colorPalette[1]
+            color: colorPalette[DEFAULT_HEATMAP_COLOR_INDEX]
         });
     } else {
         const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
