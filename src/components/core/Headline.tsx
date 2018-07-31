@@ -32,7 +32,8 @@ export class HeadlineStateless extends
             locale,
             dataSource,
             resultSpec,
-            execution
+            execution,
+            onFiredDrillEvent
         } = this.props;
 
         return (
@@ -41,6 +42,7 @@ export class HeadlineStateless extends
                     {(props: ITranslationsComponentProps) => (
                         <HeadlineTransformation
                             onAfterRender={afterRender}
+                            onFiredDrillEvent={onFiredDrillEvent}
                             drillableItems={drillableItems}
                             executionRequest={{
                                 afm: dataSource.getAfm(),

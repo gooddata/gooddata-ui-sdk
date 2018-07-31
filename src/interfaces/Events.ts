@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IDrillEvent } from './DrillEvents';
+import { IDrillEventCallback } from './DrillEvents';
 import { RuntimeError } from '../errors/RuntimeError';
 
 export interface ILoadingState {
@@ -9,7 +9,7 @@ export interface ILoadingState {
 export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnLoadingFinish = (result: object) => void;
-export type OnFiredDrillEvent = (param: IDrillEvent) => boolean | void;
+export type OnFiredDrillEvent = IDrillEventCallback;
 
 export interface ILegendItem {
     name: string;
