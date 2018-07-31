@@ -15,4 +15,5 @@ export interface IObjectMeta {
     unlisted?: boolean;
     updated?: Date;
     uri?: string;
+    flags?: string[];
 }
