@@ -29,10 +29,8 @@ describe('Headline', () => {
 
     describe('one measure', () => {
         it('should render HeadlineTransformation and pass down given props and props from execution', () => {
-            const drillEventCallback = jest.fn();
             const wrapper = createComponent({
-                dataSource: oneMeasureOneDimensionDataSource,
-                onFiredDrillEvent: drillEventCallback
+                dataSource: oneMeasureOneDimensionDataSource
             });
 
             return testUtils.delay().then(() => {
@@ -47,8 +45,7 @@ describe('Headline', () => {
                     executionResponse: expect.any(Object),
                     executionResult: expect.any(Object),
                     onAfterRender: wrapperProps.afterRender,
-                    drillableItems: wrapperProps.drillableItems,
-                    onFiredDrillEvent: drillEventCallback
+                    drillableItems: wrapperProps.drillableItems
                 });
             });
         });

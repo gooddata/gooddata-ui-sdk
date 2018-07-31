@@ -5,9 +5,10 @@ import * as invariant from 'invariant';
 import * as CustomEvent from 'custom-event';
 import { AFM, Execution } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
-import { IDrillableItem, IDrillEventIntersectionElement, IDrillEventCallback } from '../../../interfaces/DrillEvents';
+import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
 import { isComboChart, isTreemap } from './common';
+import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
 
 export interface IDrillableItemLocalId extends IDrillableItem {
@@ -47,7 +48,7 @@ export interface ICellDrillEvent {
 
 export interface IDrillConfig {
     afm: AFM.IAfm;
-    onFiredDrillEvent: IDrillEventCallback;
+    onFiredDrillEvent: OnFiredDrillEvent;
 }
 
 export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
@@ -128,7 +129,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
     }
 }
 
-function fireEvent(onFiredDrillEvent: IDrillEventCallback, data: any, target: EventTarget) {
+function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: EventTarget) {
     const returnValue = onFiredDrillEvent(data);
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
