@@ -75,9 +75,9 @@
     tslint-eslint-rules "5.1.0"
     tslint-react "3.5.1"
 
-"@gooddata/typings@2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
+"@gooddata/typings@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.1.tgz#b8d1e7819b3ec3dab111dcefbf26e692bdabe41d"
   dependencies:
     lodash "4.17.4"
 
@@ -5421,7 +5421,6 @@ ts-loader@3.2.0:
 tslib@1.9.0, tslib@^1.7.1, tslib@^1.8.1:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
-
 
 tslint-eslint-rules@5.1.0:
   version "5.1.0"
