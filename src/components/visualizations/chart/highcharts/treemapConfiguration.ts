@@ -4,7 +4,7 @@ import cloneDeep = require('lodash/cloneDeep');
 const TREEMAP_TEMPLATE: any = {
     chart: {
         type: 'treemap',
-        margin: [0, 0, 0, 0]
+        margin: [0, 0, 5, 0]
     },
     plotOptions: {
         treemap: {
