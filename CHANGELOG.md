@@ -1,5 +1,10 @@
 # Changelog
 
+<a name="8.0.0"></a>
+## 2018-08-01 Version [8.0.0](https://github.com/gooddata/gooddata-js/compare/v7.1.1...v8.0.0)
+
+- export executeAfm paging functions ([commit](https://github.com/gooddata/gooddata-js/commit/81740bb1bb28b21f4b02694c65028f4c3fcfeffe))
+
 <a name="7.0.0"></a>
 ## 2018-07-19 Version [7.0.0](https://github.com/gooddata/gooddata-js/compare/v6.2.0...v7.1.0)
 
