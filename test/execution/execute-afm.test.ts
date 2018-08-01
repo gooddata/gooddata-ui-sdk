@@ -12,7 +12,7 @@ import {
 } from '../../src/execution/execute-afm';
 import { XhrModule } from '../../src/xhr';
 
-const DEFAULT_LIMIT = 1000;
+const DEFAULT_TEST_LIMIT = 1000;
 
 interface IPagesByOffset {
     [offset: string]: Execution.IExecutionResultWrapper;
@@ -38,6 +38,89 @@ function createMeasureHeaderItem(name: string, order: number): Execution.IResult
     };
 }
 
+function getExecutionResult(): Execution.IExecutionResult {
+    return {
+        data: [
+            [11, 12],
+            [51, 52]
+        ],
+        paging: {
+            count: [2, 2],
+            offset: [0, 0],
+            total: [2, 2]
+        },
+        headerItems: [
+            [
+                [{
+                    attributeHeaderItem: {
+                        name: 'A1',
+                        uri: '/gdc/md/obj/attr1'
+                    }
+                }, {
+                    attributeHeaderItem: {
+                        name: 'A2',
+                        uri: '/gdc/md/obj/attr2'
+                    }
+                }]
+            ],
+            [
+                [{
+                    measureHeaderItem: {
+                        name: 'M1',
+                        order: 0
+                    }
+                }, {
+                    measureHeaderItem: {
+                        name: 'M2',
+                        order: 0
+                    }
+                }]
+            ]
+        ]
+    };
+}
+
+function getExecutionResultResponseBody(): string {
+    const result: Execution.IExecutionResultWrapper = {
+        executionResult: getExecutionResult()
+    };
+
+    return JSON.stringify(result);
+}
+
+function getExecution(numOfDimensions: number = 2): AFM.IExecution {
+    const dimension = { itemIdentifiers: [] };
+
+    return {
+        execution: {
+            afm: {},
+            resultSpec: {
+                dimensions: Array(numOfDimensions).fill(dimension)
+            }
+        }
+    };
+}
+
+function getExecutionResponse(numOfDimensions: number = 2): Execution.IExecutionResponse {
+    const dimension = { headers: [] };
+
+    return {
+        dimensions: Array(numOfDimensions).fill(dimension),
+        links: {
+            // tslint:disable-next-line:max-line-length
+            executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=${numOfDimensions}&limit=overridden&offset=overridden`
+        }
+    };
+}
+
+function getPollingResponseBody(numOfDimensions: number = 2): string {
+    const response: Execution.IExecutionResponseWrapper = {
+        executionResponse: getExecutionResponse(numOfDimensions)
+    };
+
+    return JSON.stringify(response);
+}
+
 const A1 = createAttributeHeaderItem('a1');
 const A2 = createAttributeHeaderItem('a2');
 const A3 = createAttributeHeaderItem('a3');
@@ -45,28 +128,31 @@ const M1 = createMeasureHeaderItem('m1', 1);
 const M2 = createMeasureHeaderItem('m2', 2);
 const M3 = createMeasureHeaderItem('m3', 3);
 
+const fakeExecutionResultsUri = `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`; // tslint:disable-line:max-line-length
+const fakeExecuteAfmUri = '/gdc/app/projects/myFakeProjectId/executeAfm';
+
 describe('replaceLimitAndOffsetInUri', () => {
     it('should return correct results for 1 dimension', () => {
         // tslint:disable-next-line:max-line-length
-        const oldUri = `/gdc/app/projects/projectId/executionResults/123?limit=${DEFAULT_LIMIT}&dimensions=1&offset=0`;
+        const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=${DEFAULT_TEST_LIMIT}&offset=0`;
         const limit = [5];
         const offset = [3];
 
         expect(
             replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
-            '/gdc/app/projects/projectId/executionResults/123?limit=5&dimensions=1&offset=3'
+            '/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=5&offset=3'
         );
     });
 
     it('should return correct results for 2 dimensions', () => {
         // tslint:disable-next-line:max-line-length
-        const oldUri = `/gdc/app/projects/projectId/executionResults/123?limit=${DEFAULT_LIMIT}%2C${DEFAULT_LIMIT}&dimensions=2&offset=0%2C0`;
+        const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`;
         const limit = [12, 12];
         const offset = [3, 9];
 
         expect(
             replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
-            '/gdc/app/projects/projectId/executionResults/123?limit=12%2C12&dimensions=2&offset=3%2C9'
+            '/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=12%2C12&offset=3%2C9'
         );
     });
 });
@@ -595,94 +681,6 @@ describe('executeAfm', () => {
         fetchMock.restore();
     });
 
-    const fakeExecutionResultsUri =
-        // tslint:disable-next-line:max-line-length
-        `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=${DEFAULT_LIMIT}%2C${DEFAULT_LIMIT}&dimensions=2&offset=0%2C0`;
-    const fakeExecuteAfmUri = '/gdc/app/projects/myFakeProjectId/executeAfm';
-
-    function getExecution(numOfDimensions: number = 2): AFM.IExecution {
-        const dimension = { itemIdentifiers: [] };
-
-        return {
-            execution: {
-                afm: {},
-                resultSpec: {
-                    dimensions: Array(numOfDimensions).fill(dimension)
-                }
-            }
-        };
-    }
-
-    function getExecutionResponse(numOfDimensions: number = 2): Execution.IExecutionResponse {
-        const dimension = { headers: [] };
-
-        return {
-            dimensions: Array(numOfDimensions).fill(dimension),
-            links: {
-                // tslint:disable-next-line:max-line-length
-                executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overridden&dimensions=${numOfDimensions}`
-            }
-        };
-    }
-
-    function getPollingResponseBody(numOfDimensions: number = 2): string {
-        const response: Execution.IExecutionResponseWrapper = {
-            executionResponse: getExecutionResponse(numOfDimensions)
-        };
-
-        return JSON.stringify(response);
-    }
-
-    function getExecutionResult(): Execution.IExecutionResult {
-        return {
-            data: [
-                [11, 12],
-                [51, 52]
-            ],
-            paging: {
-                count: [2, 2],
-                offset: [0, 0],
-                total: [2, 2]
-            },
-            headerItems: [
-                [
-                    [{
-                        attributeHeaderItem: {
-                            name: 'A1',
-                            uri: '/gdc/md/obj/attr1'
-                        }
-                    }, {
-                        attributeHeaderItem: {
-                            name: 'A2',
-                            uri: '/gdc/md/obj/attr2'
-                        }
-                    }]
-                ],
-                [
-                    [{
-                        measureHeaderItem: {
-                            name: 'M1',
-                            order: 0
-                        }
-                    }, {
-                        measureHeaderItem: {
-                            name: 'M2',
-                            order: 0
-                        }
-                    }]
-                ]
-            ]
-        };
-    }
-
-    function getExecutionResultResponseBody(): string {
-        const result: Execution.IExecutionResultWrapper = {
-            executionResult: getExecutionResult()
-        };
-
-        return JSON.stringify(result);
-    }
-
     it('should reject when /executeAfm fails', () => {
         fetchMock.mock(
             fakeExecuteAfmUri,
@@ -829,80 +827,80 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                ...range(1, DEFAULT_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
                             ]
                         ],
                         [
                             [
-                                ...range(1, DEFAULT_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
                             ]
                         ]
                     ],
-                    data: Array(DEFAULT_LIMIT).fill(0).map(() => Array(DEFAULT_LIMIT).fill(0)),
+                    data: Array(DEFAULT_TEST_LIMIT).fill(0).map(() => Array(DEFAULT_TEST_LIMIT).fill(0)),
                     paging: {
-                        count: [DEFAULT_LIMIT, DEFAULT_LIMIT],
+                        count: [DEFAULT_TEST_LIMIT, DEFAULT_TEST_LIMIT],
                         offset: [0, 0],
-                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             },
-            ['0,' + DEFAULT_LIMIT]: {
+            ['0,' + DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                ...range(1, DEFAULT_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
                             ]
                         ],
                         [
                             [
-                                createMeasureHeaderItem('m' + (DEFAULT_LIMIT + 1), DEFAULT_LIMIT + 1)
+                                createMeasureHeaderItem('m' + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)
                             ]
                         ]
                     ],
-                    data: Array(DEFAULT_LIMIT).fill([0]),
+                    data: Array(DEFAULT_TEST_LIMIT).fill([0]),
                     paging: {
-                        count: [DEFAULT_LIMIT, 1],
-                        offset: [0, DEFAULT_LIMIT],
-                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
+                        count: [DEFAULT_TEST_LIMIT, 1],
+                        offset: [0, DEFAULT_TEST_LIMIT],
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             },
-            [DEFAULT_LIMIT + ',0']: {
+            [DEFAULT_TEST_LIMIT + ',0']: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createAttributeHeaderItem('a' + (DEFAULT_LIMIT + 1))
+                                createAttributeHeaderItem('a' + (DEFAULT_TEST_LIMIT + 1))
                             ]
                         ],
                         [
                             [
-                                ...range(1, DEFAULT_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
                             ]
                         ]
                     ],
                     data: [
-                        Array(DEFAULT_LIMIT).fill(0)
+                        Array(DEFAULT_TEST_LIMIT).fill(0)
                     ],
                     paging: {
-                        count: [1, DEFAULT_LIMIT],
-                        offset: [DEFAULT_LIMIT, 0],
-                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
+                        count: [1, DEFAULT_TEST_LIMIT],
+                        offset: [DEFAULT_TEST_LIMIT, 0],
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             },
-            [DEFAULT_LIMIT + ',' + DEFAULT_LIMIT]: {
+            [DEFAULT_TEST_LIMIT + ',' + DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createAttributeHeaderItem('a' + (DEFAULT_LIMIT + 1))
+                                createAttributeHeaderItem('a' + (DEFAULT_TEST_LIMIT + 1))
                             ]
                         ],
                         [
                             [
-                                createMeasureHeaderItem('m' + DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1)
+                                createMeasureHeaderItem('m' + DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1)
                             ]
                         ]
                     ],
@@ -913,15 +911,15 @@ describe('executeAfm', () => {
                     ],
                     paging: {
                         count: [1, 1],
-                        offset: [DEFAULT_LIMIT, DEFAULT_LIMIT],
-                        total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
+                        offset: [DEFAULT_TEST_LIMIT, DEFAULT_TEST_LIMIT],
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             }
         };
 
         fetchMock.mock(
-            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?limit=*%2C*&dimensions=2&offset=*',
+            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=*%2C*&offset=*',
             (url: string): any => {
                 const offset = url.replace(/.*offset=/, '').replace('%2C', ',');
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
@@ -936,20 +934,20 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(1, DEFAULT_LIMIT + 2).map(i => createAttributeHeaderItem(`a${i}`))
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i => createAttributeHeaderItem(`a${i}`))
                                 ]
                             ],
                             [
                                 [
-                                    ...range(1, DEFAULT_LIMIT + 2).map(i => createMeasureHeaderItem(`m${i}`, i))
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i => createMeasureHeaderItem(`m${i}`, i))
                                 ]
                             ]
                         ],
-                        data: Array(DEFAULT_LIMIT + 1).fill(0).map(() => Array(DEFAULT_LIMIT + 1).fill(0)),
+                        data: Array(DEFAULT_TEST_LIMIT + 1).fill(0).map(() => Array(DEFAULT_TEST_LIMIT + 1).fill(0)),
                         paging: {
-                            count: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1],
+                            count: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
                             offset: [0, 0],
-                            total: [DEFAULT_LIMIT + 1, DEFAULT_LIMIT + 1]
+                            total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
                         }
                     }
                 });
@@ -968,41 +966,43 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                ...range(DEFAULT_LIMIT).map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
+                                ...range(DEFAULT_TEST_LIMIT).map(
+                                    (i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1)
+                                )
                             ]
                         ]
                     ],
-                    data: range(1, DEFAULT_LIMIT + 1),
+                    data: range(1, DEFAULT_TEST_LIMIT + 1),
                     paging: {
-                        count: [DEFAULT_LIMIT],
+                        count: [DEFAULT_TEST_LIMIT],
                         offset: [0],
-                        total: [DEFAULT_LIMIT + 1]
+                        total: [DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             },
-            [DEFAULT_LIMIT]: {
+            [DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
                         [
                             [
-                                createMeasureHeaderItem('m' + (DEFAULT_LIMIT + 1), DEFAULT_LIMIT + 1)
+                                createMeasureHeaderItem('m' + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)
                             ]
                         ]
                     ],
                     data: [
-                        DEFAULT_LIMIT + 1
+                        DEFAULT_TEST_LIMIT + 1
                     ],
                     paging: {
                         count: [1],
-                        offset: [DEFAULT_LIMIT],
-                        total: [DEFAULT_LIMIT + 1]
+                        offset: [DEFAULT_TEST_LIMIT],
+                        total: [DEFAULT_TEST_LIMIT + 1]
                     }
                 }
             }
         };
 
         fetchMock.mock(
-            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?limit=*&dimensions=1&offset=*',
+            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=1&limit=*&offset=*',
             (url) => {
                 const offset = url.replace(/.*offset=/, '');
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
@@ -1027,19 +1027,76 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(DEFAULT_LIMIT + 1)
+                                    ...range(DEFAULT_TEST_LIMIT + 1)
                                         .map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
                                 ]
                             ]
                         ],
-                        data: range(1, DEFAULT_LIMIT + 2),
+                        data: range(1, DEFAULT_TEST_LIMIT + 2),
                         paging: {
-                            count: [DEFAULT_LIMIT + 1],
+                            count: [DEFAULT_TEST_LIMIT + 1],
                             offset: [0],
-                            total: [DEFAULT_LIMIT + 1]
+                            total: [DEFAULT_TEST_LIMIT + 1]
                         }
                     }
                 });
+            });
+    });
+});
+
+describe('getExecutionResponse', () => {
+    beforeEach(() => {
+        expect.hasAssertions();
+        fetchMock.restore();
+    });
+
+    it('should return correct execution response', () => {
+        fetchMock.mock(
+            fakeExecuteAfmUri,
+            { status: 200, body: getPollingResponseBody() }
+        );
+
+        return createExecuteAfm().getExecutionResponse('myFakeProjectId', getExecution())
+            .then((responses: Execution.IExecutionResponse) => {
+                expect(responses).toEqual(getExecutionResponse());
+            });
+    });
+});
+
+describe('getPartialExecutionResult', () => {
+    beforeEach(() => {
+        expect.hasAssertions();
+        fetchMock.restore();
+    });
+
+    it('should return correct partial execution result', () => {
+        fetchMock.mock(
+            '/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=2%2C2&offset=2%2C2',
+            { status: 200, body: getExecutionResultResponseBody() }
+        );
+
+        return createExecuteAfm().getPartialExecutionResult(fakeExecutionResultsUri, [2, 2], [2, 2])
+            .then((responses: Execution.IExecutionResult | null) => {
+                expect(responses).toEqual(getExecutionResult());
+            });
+    });
+});
+
+describe('getExecutionResult', () => {
+    beforeEach(() => {
+        expect.hasAssertions();
+        fetchMock.restore();
+    });
+
+    it('should return correct execution result', () => {
+        fetchMock.mock(
+            fakeExecutionResultsUri,
+            { status: 200, body: getExecutionResultResponseBody() }
+        );
+
+        return createExecuteAfm().getExecutionResult(fakeExecutionResultsUri)
+            .then((responses: Execution.IExecutionResult | null) => {
+                expect(responses).toEqual(getExecutionResult());
             });
     });
 });

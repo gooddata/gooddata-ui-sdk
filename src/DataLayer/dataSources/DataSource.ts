@@ -20,8 +20,8 @@ export class DataSource<T> implements IDataSource<T> {
         private afm: AFM.IAfm,
         private fingerprint?: string,
         private responseFactory?: (resultSpec: AFM.IResultSpec) => Promise<Execution.IExecutionResponse>,
-        private resultFactory?:
-            (executionResultUri: string, offset: number[], limit: number[]) => Promise<Execution.IExecutionResult>
+        private resultFactory?: (executionResultUri: string, limit: number[], offset: number[]) =>
+            Promise<Execution.IExecutionResult | null>
     ) {
         this.executionPromises = {};
     }
@@ -32,8 +32,8 @@ export class DataSource<T> implements IDataSource<T> {
 
     public getPage(
         resultSpec: AFM.IResultSpec,
-        offset: number[] = [],
-        limit: number[] = []
+        limit: number[] = [],
+        offset: number[] = []
     ): Promise<Execution.IExecutionResponses> {
         const resultSpecFingerprint = stringify(resultSpec);
         if (!this.responseFactory) {
@@ -62,10 +62,10 @@ export class DataSource<T> implements IDataSource<T> {
 
                 return this.resultFactory(
                     executionResponse.links.executionResult,
-                    safeOffset,
-                    safeLimit
+                    safeLimit,
+                    safeOffset
                 ).then(
-                        (executionResult: Execution.IExecutionResult) => ({
+                        (executionResult: Execution.IExecutionResult | null) => ({
                             executionResult,
                             executionResponse
                         })
