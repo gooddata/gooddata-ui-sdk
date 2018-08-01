@@ -39,8 +39,8 @@ export interface ILoadingInjectedProps {
     // if autoExecuteDataSource is on, this callback is passed to the inner component and handles loading
     getPage?: (
         resultSpec: AFM.IResultSpec,
-        offset: number[],
-        limit: number[]
+        limit: number[],
+        offset: number[]
     ) => Promise<Execution.IExecutionResponses>;
     onDataTooLarge(): void;
     onNegativeValues(): void;
@@ -53,7 +53,8 @@ export interface IVisualizationLoadingState {
 }
 
 const defaultErrorHandler = (error: any) => {
-    console.error(error); // tslint:disable-line:no-console
+    // if error was not placed in object, we couldnt see its properties in console (ie cause, responseText etc.)
+    console.error('Error in execution:', { error }); // tslint:disable-line no-console
 };
 
 export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps> = {
@@ -128,10 +129,10 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
         public getPage(
             resultSpec: AFM.IResultSpec,
-            offset: number[],
-            limit: number[]
+            limit: number[],
+            offset: number[]
         ) {
-            return this.props.dataSource.getPage(resultSpec, offset, limit)
+            return this.props.dataSource.getPage(resultSpec, limit, offset)
                 .then(checkEmptyResult)
                 .then((result) => {
                     // This returns only current page,

@@ -53,8 +53,8 @@ export interface IGridParams {
 
 export type IGetPage = (
     resultSpec: AFM.IResultSpec,
-    offset: number[],
-    limit: number[]
+    limit: number[],
+    offset: number[]
 ) => Promise<Execution.IExecutionResponses | null>;
 
 export type IOnSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void;
@@ -67,10 +67,10 @@ export const getGridDataSource = (
     getRows: ({ startRow, endRow, successCallback }: IGetRowsParams) => {
         const pagePromise = getPage(
             resultSpec,
-            // column offset defaults to 0, because we do not support horizontal paging yet
-            [startRow, undefined],
             // column limit defaults to SERVERSIDE_COLUMN_LIMIT (1000), because 1000 columns is hopefully enough.
-            [endRow - startRow, undefined]
+            [endRow - startRow, undefined],
+            // column offset defaults to 0, because we do not support horizontal paging yet
+            [startRow, undefined]
         );
         return pagePromise
             .then(

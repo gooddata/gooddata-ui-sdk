@@ -267,7 +267,8 @@ describe('VisualizationLoadingHOC', () => {
             inner.props().onDataTooLarge();
 
             expect(consoleErrorSpy).toHaveBeenCalled();
-            expect(consoleErrorSpy).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
+            expect(consoleErrorSpy).toHaveBeenCalledWith('Error in execution:',
+                { error: new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY) });
 
             consoleErrorSpy.mockRestore();
         });

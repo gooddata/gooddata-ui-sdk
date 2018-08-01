@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/react-components",
-  "version": "5.2.0-alpha26-fix3",
+  "version": "5.2.0-alpha27",
   "description": "GoodData React Components",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-react-components.git",
@@ -92,11 +92,11 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "7.1.0",
+    "@gooddata/gooddata-js": "8.0.0",
     "@gooddata/goodstrap": "56.1.0",
     "@gooddata/js-utils": "^2.0.1",
     "@gooddata/numberjs": "^3.1.2",
-    "@gooddata/typings": "2.3.0",
+    "@gooddata/typings": "2.3.1",
     "@types/highcharts": "4.2.56",
     "ag-grid": "^18.0.1",
     "ag-grid-react": "^18.0.0",
