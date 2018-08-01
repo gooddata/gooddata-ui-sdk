@@ -454,6 +454,7 @@ export function getScatterPlotSeries(
         });
 
         return [{
+            turboThreshold: 0,
             color: colorPalette[0],
             legendIndex: 0,
             data
