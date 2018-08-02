@@ -17,6 +17,7 @@ import {
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 function logTotalsChange(data: any) {
     if (data.properties && data.properties.totals) {
@@ -138,6 +139,22 @@ storiesOf('Core components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+             <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={GERMAN_SEPARATORS}
                 />
             </div>
         )

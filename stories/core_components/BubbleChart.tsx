@@ -11,6 +11,7 @@ import {
     MEASURE_3,
     ATTRIBUTE_1_SORT_ITEM
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -61,6 +62,23 @@ storiesOf('Core components/BubbleChart', module)
                     xAxisMeasure={MEASURE_1}
                     size={MEASURE_3}
                     viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

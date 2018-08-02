@@ -7,6 +7,7 @@ import {
 } from '../data/afmComponentProps';
 import { Headline } from '../../src/components/afm/Headline';
 import '../../styles/scss/headline.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -29,6 +30,19 @@ storiesOf('AFM components/Headline', module)
                 <Headline
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Headline
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES}
+                    config={GERMAN_SEPARATORS}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

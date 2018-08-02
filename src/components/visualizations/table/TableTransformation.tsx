@@ -90,7 +90,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
         const { sortBy, sortDir } = sortItem ? getSortInfo(sortItem, headers) : EMPTY_SORT_INFO;
 
         const tableProps: ITableProps = {
-            ...pick(config, ['rowsPerPage', 'onMore', 'onLess', 'sortInTooltip', 'stickyHeaderOffset']),
+            ...pick(config, ['rowsPerPage', 'onMore', 'onLess', 'sortInTooltip', 'stickyHeaderOffset', 'separators']),
             afterRender,
             totalsWithData,
             totalsEditAllowed,

@@ -6,6 +6,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { wrap } from '../utils/wrap';
 import Headline from '../../src/components/visualizations/headline/Headline';
 import '../../styles/scss/headline.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 storiesOf('Internal/Headline', module)
     .add('One measure', () =>
@@ -221,6 +222,37 @@ storiesOf('Internal/Headline', module)
                             format: '#,##0%'
                         }
                     }}
+                    onAfterRender={action('onAfterRender')}
+                />,
+                'auto', 475)
+        )
+    )
+    .add('Headline with German number format', () =>
+        screenshotWrap(
+            wrap(
+                <Headline
+                    data={{
+                        primaryItem: {
+                            localIdentifier: 'm1',
+                            value: '40200.405',
+                            format: '[color=9c46b5][backgroundColor=d2ccde]$#,##0.00 group',
+                            title: 'Yearly Earnings',
+                            isDrillable: false
+                        },
+                        secondaryItem: {
+                            localIdentifier: 'm2',
+                            value: '28000.01',
+                            title: 'Sum of Taps',
+                            format: '[color=9c46b5][backgroundColor=d2ccde]$#,##0.00 group'
+                        },
+                        tertiaryItem: {
+                            localIdentifier: 'tertiaryIdentifier',
+                            value: '43',
+                            title: 'Versus',
+                            format: null
+                        }
+                    }}
+                    config={GERMAN_SEPARATORS}
                     onAfterRender={action('onAfterRender')}
                 />,
                 'auto', 475)

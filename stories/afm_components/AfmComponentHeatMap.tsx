@@ -11,6 +11,7 @@ import {
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -114,6 +115,28 @@ storiesOf('AFM components/Heat Map', module)
                             },
                             {
                                 itemIdentifiers: ['a1', 'measureGroup']
+                            }
+                        ]
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <HeatMap
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    resultSpec={{
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['a1']
+                            },
+                            {
+                                itemIdentifiers: ['a2', 'measureGroup']
                             }
                         ]
                     }}

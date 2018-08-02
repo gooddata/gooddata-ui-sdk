@@ -24,6 +24,7 @@ import {
     EXECUTION_RESPONSE_2A_3M,
     EXECUTION_RESULT_2A_3M
 } from '../../src/components/visualizations/table/fixtures/2attributes3measures';
+import { GERMAN_NUMBER_FORMAT } from '../data/numberFormat';
 
 const tableWrap = (component: JSX.Element) => (
     <IntlWrapper locale="en-US">
@@ -230,6 +231,27 @@ storiesOf('Internal/TableTransformation', module)
                         onMore: action('More clicked'),
                         onLess: action('Less clicked'),
                         stickyHeaderOffset: 0
+                    }}
+                    executionRequest={EXECUTION_REQUEST_2A_3M}
+                    executionResponse={EXECUTION_RESPONSE_2A_3M}
+                    executionResult={EXECUTION_RESULT_2A_3M}
+                    height={400}
+                    onSortChange={action('Sort changed')}
+                    tableRenderer={tableRenderer}
+                    totals={generateTotals(['avg', 'nat', 'sum'])}
+                />
+            )
+        )
+    ))
+    .add('Totals view mode with German number format', () => (
+        screenshotWrap(
+            tableWrap(
+                <TableTransformation
+                    config={{
+                        onMore: action('More clicked'),
+                        onLess: action('Less clicked'),
+                        stickyHeaderOffset: 0,
+                        separators: GERMAN_NUMBER_FORMAT
                     }}
                     executionRequest={EXECUTION_REQUEST_2A_3M}
                     executionResponse={EXECUTION_RESPONSE_2A_3M}

@@ -302,6 +302,7 @@ export class VisualizationWrapped
                         LoadingComponent={LoadingComponent}
                         ErrorComponent={ErrorComponent}
                         locale={locale}
+                        config={finalConfig}
                     />
                 );
             case VisualizationTypes.HEADLINE:
@@ -316,6 +317,7 @@ export class VisualizationWrapped
                         LoadingComponent={LoadingComponent}
                         ErrorComponent={ErrorComponent}
                         locale={locale}
+                        config={finalConfig}
                     />
                 );
             default:

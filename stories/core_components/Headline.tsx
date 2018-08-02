@@ -10,6 +10,7 @@ import {
     MEASURE_1_POP,
     MEASURE_1_PREVIOUS_PERIOD
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -59,6 +60,20 @@ storiesOf('Core components/Headline', module)
                     projectId="storybook"
                     primaryMeasure={MEASURE_1}
                     secondaryMeasure={MEASURE_1_PREVIOUS_PERIOD}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Headline
+                    projectId="storybook"
+                    primaryMeasure={MEASURE_1_WITH_ALIAS}
+                    secondaryMeasure={MEASURE_2}
+                    config={GERMAN_SEPARATORS}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

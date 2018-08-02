@@ -11,6 +11,7 @@ import {
     IHeadlineDataItem
 } from '../../../interfaces/Headlines';
 import { formatItemValue, formatPercentageValue } from './utils/HeadlineDataItemUtils';
+import { IChartConfig } from '../chart/Chart';
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: AFM.Identifier;
@@ -25,6 +26,7 @@ export type IHeadlineFiredDrillEvent = (
 
 export interface IHeadlineVisualizationProps {
     data: IHeadlineData;
+    config?: IChartConfig;
     onFiredDrillEvent?: IHeadlineFiredDrillEvent;
     onAfterRender?: () => void;
 }
@@ -35,7 +37,8 @@ export interface IHeadlineVisualizationProps {
 export default class Headline extends React.Component<IHeadlineVisualizationProps> {
     public static defaultProps: Partial<IHeadlineVisualizationProps> = {
         onFiredDrillEvent: () => true,
-        onAfterRender: noop
+        onAfterRender: noop,
+        config: {}
     };
 
     constructor(props: IHeadlineVisualizationProps) {
@@ -142,9 +145,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private renderSecondaryItem() {
-        const { data: { secondaryItem } } = this.props;
+        const { data: { secondaryItem }, config } = this.props;
 
-        const formattedItem = formatItemValue(secondaryItem);
+        const formattedItem = formatItemValue(secondaryItem, config);
         const valueClickCallback = secondaryItem.isDrillable ? this.handleClickOnSecondaryItem : null;
 
         const secondaryValue = secondaryItem.isDrillable
@@ -214,8 +217,8 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private renderPrimaryItem() {
-        const { data: { primaryItem } } = this.props;
-        const formattedItem = formatItemValue(primaryItem);
+        const { data: { primaryItem }, config } = this.props;
+        const formattedItem = formatItemValue(primaryItem, config);
 
         const valueClickCallback = primaryItem.isDrillable ? this.handleClickOnPrimaryItem : null;
 
