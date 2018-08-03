@@ -70,16 +70,24 @@ These commands may come in handy while developing:
 | `yarn validate` | validate codestyle (tslint) |
 | `yarn build` | build commonjs `/lib` and bundle files to `/dist`  |
 
+## Publishing
 
-#### NPM package publishing
-```bash
-# only for internal gooddata developers
-git checkout master && git pull upstream master --tags
-yarn version
-npm publish
-git push upstream master --tags
-```
+:heavy_exclamation_mark: **Only for internal gooddata developers** :heavy_exclamation_mark:
 
+### NPM package publishing
+
+Package publishing is done via Jenkins Job:
+
+https://checklist.intgdc.com/job/client-libs/job/gooddata-js-release/
+
+### SDK API documentation publishing
+
+To publish API documentation [sdk.gooddata.com/gooddata-js/api](http://sdk.gooddata.com/gooddata-js/api) you have to prompt following commands:   
+
+| command | description |
+| ------- | ----------- |
+| 1. `yarn build` |  |
+| 2. `grunt bump-gd-pages` | Publishes documentation |
 
 ## Changelog
 - see [CHANGELOG.md](CHANGELOG.md)
