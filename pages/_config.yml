@@ -1,5 +1,5 @@
 name: GoodData Javascript SDK
-highlighter: pygments
+highlighter: rouge
 safe: true
 url: "//sdk.gooddata.com/gooddata-js"
 permalink: /:categories/:title
