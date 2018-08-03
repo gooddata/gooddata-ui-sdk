@@ -8,7 +8,10 @@ import {
     showDataLabel
 } from '../../helpers';
 
-function hideOverlappingChartLabels(visiblePoints: any) {
+const autohideLabelsOverlappingItsShape = (chart: any) => {
+    const visibleSeries = getVisibleSeries(chart);
+    const visiblePoints = getDataPoints(visibleSeries);
+
     visiblePoints.forEach((point: any) => {
         if (isLabelOverlappingItsShape(point) || intersectsParentLabel(point, visiblePoints)) {
             hideDataLabel(point);
@@ -16,12 +19,6 @@ function hideOverlappingChartLabels(visiblePoints: any) {
             showDataLabel(point);
         }
     });
-}
-
-const autohideTreemapLabels = (chart: any) => {
-    const visibleSeries = getVisibleSeries(chart);
-    const visiblePoints = getDataPoints(visibleSeries);
-    hideOverlappingChartLabels(visiblePoints);
 };
 
-export default autohideTreemapLabels;
+export default autohideLabelsOverlappingItsShape;

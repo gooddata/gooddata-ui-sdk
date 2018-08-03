@@ -2923,6 +2923,26 @@ describe('chartOptionsBuilder', () => {
 
                     expect(tooltipFn(point)).toEqual(expectedResult);
                 });
+
+                it('should display "-" for null value', () => {
+                    const tooltipValue = generateTooltipHeatMapFn(viewBy, stackBy)({
+                        ...point,
+                        value: null
+                    });
+                    const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">stackAttr</td>
+                <td class=\"value\">stackHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">viewAttr</td>
+                <td class=\"value\">viewHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">name</td>
+                <td class=\"value\">-</td>
+            </tr></table>`;
+
+                    expect(tooltipValue).toEqual(expectedResult);
+                });
             });
 
             describe('getChartOptions for heatmap', () => {
@@ -2935,7 +2955,6 @@ describe('chartOptionsBuilder', () => {
                         }
                     );
                     const expectedSeries = [{
-                        borderWidth: 1,
                         data: [
                             { x: 0, y: 0, value: 21978695.46, drilldown: false },
                             { x: 1, y: 0, value: 6038400.96, drilldown: false },
@@ -2991,6 +3010,19 @@ describe('chartOptionsBuilder', () => {
                     );
                     const expectedYAxis = [{
                         label: 'Region'
+                    }];
+                    expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
+
+                it('should generate Yaxes label from attribute name', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.heatMapMetricRowColumn,
+                        {
+                            type: 'heatmap'
+                        }
+                    );
+                    const expectedYAxis = [{
+                        label: 'Product'
                     }];
                     expect(chartOptions.yAxes).toEqual(expectedYAxis);
                 });

@@ -79,7 +79,8 @@ class DynamicChart extends React.Component<any, any> {
             'column',
             'bar',
             'line',
-            'pie'
+            'pie',
+            'heatmap'
         ];
 
         this.state = {

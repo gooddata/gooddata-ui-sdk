@@ -8,6 +8,8 @@ import {
     getDataLabelAttributes,
     getShapeAttributes
 } from '../helpers';
+import { HEAT_MAP_CATEGORIES_COUNT } from '../../chartOptionsBuilder';
+import get = require('lodash/get');
 
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = '#fff';
@@ -19,9 +21,13 @@ const setBlackColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style['text-shadow'] = 'none';
 };
 
-function setLabelsColor(chart: any) {
-    const points = flatMap(getVisibleSeries(chart), (series: any) => series.points)
+const getVisibleDataPoints = (chart: any) => {
+    return flatMap(getVisibleSeries(chart), (series: any) => series.points)
         .filter((point: any) => (point.dataLabel && point.graphic));
+};
+
+function setBarDataLabelsColor(chart: any) {
+    const points = getVisibleDataPoints(chart);
 
     return points.forEach((point: any) => {
         const labelDimensions = getDataLabelAttributes(point);
@@ -37,6 +43,25 @@ function setLabelsColor(chart: any) {
     });
 }
 
+export const START_DARK_COLOR_INDEX = 5;
+
+function setHeatMapDataLabelsColor(chart: any) {
+    const points = getVisibleDataPoints(chart);
+    const dataClasses = get(chart, 'colorAxis.0.dataClasses', []);
+    const hasDarkColor = dataClasses.length === HEAT_MAP_CATEGORIES_COUNT;
+    const colorTickPoints = dataClasses.map(dataClass => (dataClass.from));
+    const darkColorThreshold = hasDarkColor ? colorTickPoints[START_DARK_COLOR_INDEX] : null;
+
+    return points.forEach((point: any) => {
+        const isDarkCell = darkColorThreshold && point.value >= darkColorThreshold;
+        if (isDarkCell) {
+            setWhiteColor(point);
+        } else {
+            setBlackColor(point);
+        }
+    });
+}
+
 export function extendDataLabelColors(Highcharts: any) {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
         const type = getChartType(chart);
@@ -44,8 +69,10 @@ export function extendDataLabelColors(Highcharts: any) {
         const changeLabelColor = () => {
             if (type === VisualizationTypes.BAR && !isStacked(chart)) {
                 setTimeout(() => {
-                    setLabelsColor(chart);
+                    setBarDataLabelsColor(chart);
                 }, 500);
+            } else if (type === VisualizationTypes.HEATMAP) {
+                setHeatMapDataLabelsColor(chart);
             }
         };
 

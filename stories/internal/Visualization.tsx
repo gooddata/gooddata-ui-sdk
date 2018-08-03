@@ -47,7 +47,8 @@ class DynamicVisualization extends React.Component<null, IDynamicVisualizationSt
             'bar',
             'line',
             'pie',
-            'area'
+            'area',
+            'heatmap'
         ];
 
         this.state = {
