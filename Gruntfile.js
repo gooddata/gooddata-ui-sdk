@@ -77,6 +77,7 @@ module.exports = (grunt) => {
                 url: '<%= pkg.homepage %>',
                 options: {
                     paths: 'src/',
+                    extension: '.ts',
                     themedir: 'tools/yuidoc/theme-gh-pages/',
                     outdir: 'pages/api/'
                 }
