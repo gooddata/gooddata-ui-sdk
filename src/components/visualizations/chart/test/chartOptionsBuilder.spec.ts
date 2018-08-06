@@ -252,6 +252,50 @@ describe('chartOptionsBuilder', () => {
                     });
                 });
         });
+
+        describe('Treemap filters out root nodes for dataPoints limit', () => {
+            it('should validate with "dataTooLarge: false" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 4
+                }, treemapOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: false
+                });
+            });
+
+            it('should validate with "dataTooLarge: true" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 3
+                }, treemapOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
+        });
     });
 
     describe('isPopMeasure', () => {
