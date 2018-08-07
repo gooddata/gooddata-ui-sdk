@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/%40gooddata%2Fgooddata-js.svg)](https://www.npmjs.com/package/@gooddata/gooddata-js) 
+[![npm version](https://badge.fury.io/js/%40gooddata%2Fgooddata-js.svg)](https://www.npmjs.com/package/@gooddata/gooddata-js)
 # GoodData JS SDK
 > Thin javascript abstraction over the GoodData REST API
 
@@ -14,25 +14,25 @@
 1) go to your project directory and add the package: \
       → with [yarn](https://yarnpkg.com): `yarn add @gooddata/gooddata-js` \
       → with [npm](npmjs.com): `npm install --save @gooddata/gooddata-js`
-    
+
     :heavy_exclamation_mark: **WARNING: npm package renamed from `gooddata` to `@gooddata/gooddata-js`** :heavy_exclamation_mark:
 
 2) import the package's default export: \
-    → in transpiled browser app with ES6 modules syntax: `import gooddata from '@gooddata/gooddata-js';` \
-    → in node.js with CommonJS syntax: `const gooddata = require('@gooddata/gooddata-js').default;`
- 
+    → in transpiled browser app with ES6 modules syntax: `import { factory } from '@gooddata/gooddata-js';` \
+    → in node.js with CommonJS syntax: `const factory = require('@gooddata/gooddata-js').factory;`
+
 4) call the API:
     ```js
-    gooddata.config.setCustomDomain('secure.gooddata.com');
+    var gooddata = factory({ domain: 'secure.gooddata.com' });
     gooddata.user.login('john.doe@example.com', 'your-secret-password')
         .then((response) => console.log('Login OK', response))
         .catch((apiError) => console.error('Login failed', apiError, "\n\n", apiError.responseBody));
 
     ```
-    
-5) Please note that CORS could prevent the request. Refer to [your options in GoodData.UI documentation](https://sdk.gooddata.com/gooddata-ui/docs/cors.html), ie. setup local proxy or ask the GoodData platform for allowing a specific domain. 
 
-    
+5) Please note that CORS could prevent the request. Refer to [your options in GoodData.UI documentation](https://sdk.gooddata.com/gooddata-ui/docs/cors.html), ie. setup local proxy or ask the GoodData platform for allowing a specific domain.
+
+
 
 
 ### Using as a standalone library
@@ -48,19 +48,19 @@ You have two options:
     # get gooddata.js and gooddata.min.js from /dist folder
     ```
 
-Than you can import the library file and global variable `gooddata` contains all exported members:
+Then you can import the library file and global variable `gooddata` contains all exported members:
 ```html
 <script type="text/javascript" src="gooddata.js"></script>
 <script type="text/javascript">
-    var sdk = gooddata.default;
+    var sdk = gooddata.factory({ domain: 'secure.gooddata.com' });
     sdk.user.login('john.doe@example.com', 'your-secret-password')
 </script>
-``` 
+```
 
 ## Contributing :coffee:
 
 We welcome any contribution in form of [issues](https://github.com/gooddata/gooddata-js/issues) or [pull requests](https://github.com/gooddata/gooddata-js/pulls).
-These commands may come in handy while developing: 
+These commands may come in handy while developing:
 
 | command | description |
 | ------- | ----------- |
@@ -82,7 +82,7 @@ https://checklist.intgdc.com/job/client-libs/job/gooddata-js-release/
 
 ### SDK API documentation publishing
 
-To publish API documentation [sdk.gooddata.com/gooddata-js/api](http://sdk.gooddata.com/gooddata-js/api) you have to prompt following commands:   
+To publish API documentation [sdk.gooddata.com/gooddata-js/api](http://sdk.gooddata.com/gooddata-js/api) you have to prompt following commands:
 
 | command | description |
 | ------- | ----------- |
