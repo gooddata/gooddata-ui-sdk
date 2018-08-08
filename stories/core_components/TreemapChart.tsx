@@ -10,6 +10,7 @@ import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
     ATTRIBUTE_2,
+    ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
@@ -92,7 +93,19 @@ storiesOf('Core components/Treemap', module)
             </div>
         )
     ))
-    .add('custom colors', () => (
+    .add('all default colors', () => (
+        screenshotWrap(
+            <div style={{ width: 1900, height: 1200 }}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_3}
+                    segmentBy={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    )).add('custom colors', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Treemap

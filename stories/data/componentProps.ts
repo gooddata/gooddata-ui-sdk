@@ -131,6 +131,15 @@ export const ATTRIBUTE_2: VisualizationObject.IVisualizationAttribute = {
     }
 };
 
+export const ATTRIBUTE_3: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'a3',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/6.df'
+        }
+    }
+};
+
 export const TOTAL_M1_A1: VisualizationObject.IVisualizationTotal = {
     measureIdentifier: MEASURE_1.measure.localIdentifier,
     type: 'sum',
