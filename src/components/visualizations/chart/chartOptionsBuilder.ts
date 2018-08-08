@@ -113,6 +113,7 @@ export interface ISeriesItem {
     data?: ISeriesDataItem[];
     color?: string;
     userOptions?: any;
+    visible?: boolean;
 }
 
 export interface IChartOptions {

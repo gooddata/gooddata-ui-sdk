@@ -26,10 +26,7 @@ import {
     isRotationInRange,
     isTreemap
 } from '../../utils/common';
-import {
-    shouldFollowPointer,
-    shouldStartOrEndOnTick
-} from '../../../visualizations/chart/highcharts/helpers';
+import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
 
 const {
     stripColors,
@@ -690,7 +687,6 @@ function getAxesConfiguration(chartOptions: any) {
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
             const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
-            const startOrEndOnTick = shouldStartOrEndOnTick(max, min);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -726,9 +722,7 @@ function getAxesConfiguration(chartOptions: any) {
                 opposite: axis.opposite,
                 ...visibleProp,
                 ...maxProp,
-                ...minProp,
-                startOnTick: startOrEndOnTick,
-                endOnTick: startOrEndOnTick
+                ...minProp
             };
         }),
 

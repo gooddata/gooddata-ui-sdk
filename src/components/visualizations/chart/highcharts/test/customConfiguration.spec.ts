@@ -22,7 +22,7 @@ const chartOptions = {
     xAxes: [{ title: 'xtitle' }],
     data: getData([{
         name: '<b>bbb</b>',
-        y: 1
+        y: 10
     }, null])
 };
 
@@ -117,40 +117,6 @@ describe('getCustomizedConfiguration', () => {
         const result = getCustomizedConfiguration(chartOptions);
 
         expect(result.xAxis[0].labels.formatter).toBeUndefined();
-    });
-
-    it ('should set startOnTick on true when min or max is not defined', () => {
-        const result = getCustomizedConfiguration(chartOptions);
-
-        expect(result.yAxis[0].startOnTick).toBeTruthy();
-    });
-
-    it ('should set startOnTick on false when min is bigger than 0 and max is not defined', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            yAxisProps: {
-                min: 50
-            }
-        });
-
-        expect(result.yAxis[0].startOnTick).toBeFalsy();
-    });
-
-    it ('should set endOnTick on true when min or max is not defined', () => {
-        const result = getCustomizedConfiguration(chartOptions);
-
-        expect(result.yAxis[0].endOnTick).toBeTruthy();
-    });
-
-    it ('should set endOnTick on false when max is bigger than 0 and min is not defined', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            yAxisProps: {
-                max: 50
-            }
-        });
-
-        expect(result.yAxis[0].endOnTick).toBeFalsy();
     });
 
     it('should set connectNulls for stacked Area chart', () => {
