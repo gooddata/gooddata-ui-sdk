@@ -158,7 +158,7 @@ function getChartLimits(type: string): IChartLimits {
         case VisualizationTypes.TREEMAP:
             return {
                 series: DEFAULT_SERIES_LIMIT,
-                categories: DEFAULT_CATEGORIES_LIMIT,
+                categories: DEFAULT_DATA_POINTS_LIMIT,
                 dataPoints: DEFAULT_DATA_POINTS_LIMIT
             };
         case VisualizationTypes.HEATMAP:
@@ -179,12 +179,27 @@ export function cannotShowNegativeValues(type: string) {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
+function getTreemapDataForValidation(data: any) {
+    // filter out root nodes
+    return {
+        ...data,
+        series: data.series.map((serie: any) => ({
+            ...serie,
+            data: serie.data.filter((dataItem: any) => dataItem.id === undefined)
+        }))
+    };
+}
+
 export function validateData(limits: IChartLimits, chartOptions: any) {
     const { type } = chartOptions;
     const finalLimits = limits || getChartLimits(type);
+    let dataToValidate = chartOptions.data;
+    if (isTreemap(type)) {
+        dataToValidate = getTreemapDataForValidation(chartOptions.data);
+    }
 
     return {
-        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, finalLimits),
+        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits),
         hasNegativeValue: cannotShowNegativeValues(type)
             && isNegativeValueIncluded(chartOptions.data.series)
     };
