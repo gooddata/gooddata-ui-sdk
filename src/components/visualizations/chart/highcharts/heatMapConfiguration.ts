@@ -20,6 +20,20 @@ const HEATMAP_TEMPLATE = {
             }
         }]
     },
+    plotOptions: {
+        heatmap: {
+            point: {
+                events: {
+                    // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
+                    mouseOver() {
+                        if (this.drilldown) {
+                            this.graphic.element.style.cursor = 'pointer';
+                        }
+                    }
+                }
+            }
+        }
+    },
     series: [{
         borderWidth: 0,
         nullColor: 'url(#empty-data-pattern)',

@@ -7,7 +7,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
-import { isComboChart, isTreemap } from './common';
+import { isComboChart, isTreemap, isHeatMap } from './common';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
 
@@ -171,7 +171,7 @@ function composeDrillContextGroup({ points }: IHighchartsChartDrilldownEvent, ch
 
 function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: VisType) {
     const zProp = isNaN(point.z) ? {} : { z: point.z };
-    const valueProp = isTreemap(chartType) ? { value: point.value } : {};
+    const valueProp = (isTreemap(chartType) || isHeatMap(chartType)) ? { value: point.value } : {};
     const xyProp = isTreemap(chartType) ? {} : {
         x: point.x,
         y: point.y
