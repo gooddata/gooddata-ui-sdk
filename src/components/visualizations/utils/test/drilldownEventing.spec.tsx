@@ -194,6 +194,7 @@ describe('Drilldown Eventing', () => {
         point: {
             x: 1,
             y: 2,
+            value: 678.00,
             drillContext: [
                 {
                     id: 'id',
@@ -235,6 +236,7 @@ describe('Drilldown Eventing', () => {
         expect(fn(VisualizationTypes.BAR)).toBe('bar');
         expect(fn(VisualizationTypes.PIE)).toBe('slice');
         expect(fn(VisualizationTypes.TREEMAP)).toBe('slice');
+        expect(fn(VisualizationTypes.HEATMAP)).toBe('cell');
         expect(fn(VisualizationTypes.TABLE)).toBe('cell');
         expect(() => {
             fn('headline'); // headline is not defined
@@ -324,6 +326,37 @@ describe('Drilldown Eventing', () => {
                 ]
             }
         });
+    });
+
+    it('should fire correct data with property \"value\" for treemap and heatmap', () => {
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const target = { dispatchEvent: jest.fn() };
+
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.TREEMAP
+        );
+
+        jest.runAllTimers();
+
+        expect(target.dispatchEvent).toHaveBeenCalled();
+
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
+
+        chartClick(
+            drillConfig,
+            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            target as any as EventTarget,
+            VisualizationTypes.HEATMAP
+        );
+
+        jest.runAllTimers();
+
+        expect(target.dispatchEvent).toHaveBeenCalled();
+
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
     });
 
     it('should correctly handle z coordinate of point', () => {
