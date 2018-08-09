@@ -48,5 +48,6 @@
    "gs.list.limitExceeded": "Lamentamos, excedeu o limite ({limit}).",
    "gs.list.noItemsFound": "Nenhum item encontrado.",
    "gs.list.error": "Erro ao carregar itens da lista",
-   "measure.title.suffix.same_period_year_ago": "MP do ano anterior"
+   "measure.title.suffix.same_period_year_ago": "MP do ano anterior",
+   "measure.title.suffix.previous_period": "período anterior"
 }
