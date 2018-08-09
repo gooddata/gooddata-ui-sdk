@@ -78,4 +78,65 @@ describe('Table utils - Cell', () => {
             });
         });
     });
+
+    describe('regional number format', () => {
+
+        const MEASURE = {
+            type: 'measure',
+            uri: '/gdc/md/project_id/obj/measure_uri_id',
+            identifier: 'measure_identifier',
+            localIdentifier: 'measure_local_identifier',
+            name: 'test measure',
+            format: '#,##0.00'
+        };
+
+        it('should return float label if separator not defined', () => {
+            expect(getStyledLabel(MEASURE, '1234567.89')).toEqual({
+                style: {},
+                label: '1,234,567.89'
+            });
+        });
+
+        it('should return float label with dot and comma', () => {
+            expect(getStyledLabel(MEASURE, '1234567.89', undefined, { thousand: '.', decimal: ',' })).toEqual({
+                style: {},
+                label: '1.234.567,89'
+            });
+        });
+
+        it('should return float label without separator', () => {
+            expect(getStyledLabel(MEASURE, '1234567.89', undefined, { thousand: '', decimal: '' })).toEqual({
+                style: {},
+                label: '123456789'
+            });
+        });
+
+        it('should return float label with space', () => {
+            expect(getStyledLabel(MEASURE, '1234567.89', undefined, { thousand: ' ', decimal: ' ' })).toEqual({
+                style: {},
+                label: '1 234 567 89'
+            });
+        });
+
+        it('should return integer label if separator not defined', () => {
+            expect(getStyledLabel(MEASURE, '1234567')).toEqual({
+                style: {},
+                label: '1,234,567.00'
+            });
+        });
+
+        it('should return integer label with only dot', () => {
+            expect(getStyledLabel(MEASURE, '1234567', undefined, { thousand: '.', decimal: ',' })).toEqual({
+                style: {},
+                label: '1.234.567,00'
+            });
+        });
+
+        it('should return hundred integer label', () => {
+            expect(getStyledLabel(MEASURE, '123', undefined, { thousand: '.', decimal: ',' })).toEqual({
+                style: {},
+                label: '123,00'
+            });
+        });
+    });
 });

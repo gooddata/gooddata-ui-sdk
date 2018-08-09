@@ -90,7 +90,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
             locale
         } = this.props;
         const drillConfig = { afm, onFiredDrillEvent };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config);
 
         return {
             chartOptions,

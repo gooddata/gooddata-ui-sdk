@@ -16,6 +16,7 @@ import {
     MEASURE_2,
     MEASURE_3
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -113,6 +114,19 @@ storiesOf('Core components/Treemap', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
                     config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                 />
             </div>

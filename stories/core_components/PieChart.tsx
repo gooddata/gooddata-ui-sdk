@@ -11,6 +11,7 @@ import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 400, height: 400 };
 
@@ -64,6 +65,21 @@ storiesOf('Core components/PieChart', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
                     config={{ legend: { position: 'bottom' } }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

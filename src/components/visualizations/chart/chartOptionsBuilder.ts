@@ -774,9 +774,10 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-export function generateTooltipFn(viewByAttribute: any, type: string) {
+export function generateTooltipFn(viewByAttribute: any, type: string, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -801,9 +802,10 @@ export function generateTooltipFn(viewByAttribute: any, type: string) {
     };
 }
 
-export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
+export function generateTooltipXYFn(measures: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -838,9 +840,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
     };
 }
 
-export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any) {
+export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(val === null ? '-' : numberFormat(val, format));
+        return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -873,12 +876,10 @@ export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute:
     };
 }
 
-export function generateTooltipTreemapFn(
-    viewByAttribute: any,
-    stackByAttribute: any
-) {
+export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -1515,7 +1516,7 @@ export function getChartOptions(
             legendLayout: config.legendLayout || 'horizontal',
             dualAxis: false,
             actions: {
-                tooltip: generateTooltipFn(viewByAttribute, type)
+                tooltip: generateTooltipFn(viewByAttribute, type, config)
             },
             grid: {
                 enabled: gridEnabled
@@ -1555,7 +1556,7 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1582,7 +1583,7 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute)
+                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute, config)
             },
             grid: {
                 enabled: false
@@ -1629,7 +1630,7 @@ export function getChartOptions(
                 categories: ['']
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1641,8 +1642,8 @@ export function getChartOptions(
 
     const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute) :
-        generateTooltipFn(viewByAttribute, type);
+    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
+        generateTooltipFn(viewByAttribute, type, config);
 
     const chartOptions = {
         type,

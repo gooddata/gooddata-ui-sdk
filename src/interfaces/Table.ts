@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from '@gooddata/typings';
+import { ISeparators } from '@gooddata/numberjs';
 
 export interface IAttributeTableHeader {
     uri: string;
@@ -129,6 +130,7 @@ export interface ITableTransformationConfig {
     onLess?: Function;
     sortInTooltip?: boolean;
     stickyHeaderOffset?: number;
+    separators?: ISeparators;
 }
 
 export function isAttributeCell(cell: TableCell): cell is IAttributeCell {

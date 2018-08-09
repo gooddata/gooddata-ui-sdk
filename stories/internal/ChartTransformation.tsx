@@ -16,6 +16,7 @@ import { wrap } from '../utils/wrap';
 import CustomLegend from '../utils/CustomLegend';
 
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 function getChart({
     type = 'column',
@@ -979,4 +980,27 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
     ))
     .add('Dynamic Chart test', () => (
         <DynamicChart />
-    ));
+    ))
+    .add('ChartTransformation with viewBy attribute and German number format', () => {
+        const dataSet = fixtures.barChartWithViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'treemap',
+                        colors: fixtures.customPalette,
+                        ...GERMAN_SEPARATORS
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    });

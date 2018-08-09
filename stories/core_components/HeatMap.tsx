@@ -10,6 +10,7 @@ import {
     MEASURE_1,
     ATTRIBUTE_1_WITH_ALIAS
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -79,6 +80,22 @@ storiesOf('Core components/HeatMap', module)
                     measures={[MEASURE_1]}
                     segmentBy={ATTRIBUTE_2}
                     trendBy={ATTRIBUTE_1_WITH_ALIAS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <HeatMap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    segmentBy={ATTRIBUTE_1}
+                    trendBy={ATTRIBUTE_2}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

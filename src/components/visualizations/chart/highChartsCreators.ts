@@ -10,7 +10,8 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
-import { IChartLimits } from './Chart';
+import { IChartConfig, IChartLimits } from './Chart';
+import { IChartOptions } from './chartOptionsBuilder';
 
 import { getLineConfiguration } from './highcharts/lineConfiguration';
 import { getBarConfiguration } from './highcharts/barConfiguration';
@@ -43,14 +44,14 @@ const chartConfigurationMap = {
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration
 };
 
-export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
+export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: any, config?: IChartConfig) {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(getConfigurationByType,
         `visualisation type ${chartOptions.type} is invalid (valid types: ${stringifyChartTypes()}).`);
     return merge({},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType(),
-        getCustomizedConfiguration(chartOptions)
+        getCustomizedConfiguration(chartOptions, config)
     );
 }
 

@@ -15,6 +15,7 @@ import {
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 function logTotalsChange(data: any) {
     if (data.properties && data.properties.totals) {
@@ -101,6 +102,21 @@ storiesOf('AFM components/Table', module)
                     totalsEditAllowed={true}
                     resultSpec={RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    maxHeight={223}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

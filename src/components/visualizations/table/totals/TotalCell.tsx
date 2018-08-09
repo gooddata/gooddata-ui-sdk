@@ -20,6 +20,7 @@ import {
 import { AddTotal } from './AddTotal';
 import { ITotalWithData, IIndexedTotalItem } from '../../../../interfaces/Totals';
 import { TableHeader } from '../../../../interfaces/Table';
+import { ISeparators } from '@gooddata/numberjs';
 
 export interface ITotalCellProps {
     totalsWithData: ITotalWithData[];
@@ -28,6 +29,7 @@ export interface ITotalCellProps {
     headersCount: number;
     firstMeasureIndex: number;
     editAllowed?: boolean;
+    separators?: ISeparators;
     onCellMouseOver?: Function;
     onCellMouseLeave?: Function;
     onEnableColumn?: Function;
@@ -59,6 +61,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
             editAllowed,
             headersCount,
             firstMeasureIndex,
+            separators,
             onCellMouseOver,
             onCellMouseLeave
         } = this.props;
@@ -92,7 +95,8 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
                         columnIndex,
                         measureColumnIndex,
                         total,
-                        header
+                        header,
+                        separators
                     )}
                 </div>
             );
@@ -230,7 +234,8 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
         columnIndex: number,
         measureColumnIndex: number,
         total: ITotalWithData,
-        header: TableHeader
+        header: TableHeader,
+        separators: ISeparators
     ) {
         if (isFirstColumn) {
             return this.renderHeaderCellContent(total);
@@ -241,7 +246,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
                 ? total.values[measureColumnIndex].toString()
                 : null;
 
-            const { label, style } = getStyledLabel(header, value, false);
+            const { label, style } = getStyledLabel(header, value, false, separators);
             return this.renderMeasureCellContent(label, style, total, header, columnIndex);
         }
 
