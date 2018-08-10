@@ -2,17 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { BaseChart, IChartProps } from '../base/BaseChart';
 import { FunnelChart } from '../FunnelChart';
-import { getComponentProps } from './helper';
+import { BaseChart } from '../base/BaseChart';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('FunnelChart', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<FunnelChart {...props} />);
-    }
-
-    it('should render funnel chart', () => {
-        const wrapper = createComponent(getComponentProps());
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<FunnelChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

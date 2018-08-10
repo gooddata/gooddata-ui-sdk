@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { getObjectIdFromUri, setTelemetryHeaders } from '../utils';
+import { getObjectIdFromUri, setTelemetryHeaders, unwrap } from '../utils';
 import { factory as createSdk } from '@gooddata/gooddata-js';
 
 describe('getObjectIdFromUri', () => {
@@ -26,5 +26,11 @@ describe('setTelemetryHeaders', () => {
 
         expect(sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP')).toEqual('componentName');
         expect(sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP-PROPS')).toEqual('prop');
+    });
+});
+
+describe('unwrap', () => {
+    it('should unwrap an object', () => {
+        expect(unwrap({ key: 'value' })).toEqual('value');
     });
 });

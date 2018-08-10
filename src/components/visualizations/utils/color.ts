@@ -25,6 +25,16 @@ export const DEFAULT_COLOR_PALETTE = [
     'rgb(239,197,194)'
 ];
 
+export const HEATMAP_BLUE_COLOR_PALETTE = [
+    'rgb(255,255,255)',
+    'rgb(197,236,248)',
+    'rgb(138,217,241)',
+    'rgb(79,198,234)',
+    'rgb(20,178,226)',
+    'rgb(22,151,192)',
+    'rgb(0,110,145)'
+];
+
 function lighter(color: number, percent: number) {
     const t = percent < 0 ? 0 : 255;
     const p = Math.abs(percent);

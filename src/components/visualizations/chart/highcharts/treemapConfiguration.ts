@@ -4,14 +4,27 @@ import cloneDeep = require('lodash/cloneDeep');
 const TREEMAP_TEMPLATE: any = {
     chart: {
         type: 'treemap',
-        margin: [0, 0, 0, 0]
+        margin: [0, 0, 5, 0]
     },
     plotOptions: {
         treemap: {
             dataLabels: {
-                enabled: true
+                enabled: true,
+                allowOverlap: false
             },
-            showInLegend: true
+            showInLegend: true,
+            borderColor: 'white',
+            layoutAlgorithm: 'squarified',
+            point: {
+                events: {
+                    // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
+                    mouseOver() {
+                        if (this.drilldown) {
+                            this.graphic.element.style.cursor = 'pointer';
+                        }
+                    }
+                }
+            }
         }
     },
     legend: {

@@ -25,6 +25,7 @@ import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
 import * as PoPHelper from './helpers/popHelper';
+import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
 
 import { BarChart } from './components/BarChart';
@@ -35,6 +36,7 @@ import { PieChart } from './components/PieChart';
 import { Treemap } from './components/Treemap';
 import { DonutChart } from './components/DonutChart';
 import { BubbleChart } from './components/BubbleChart';
+import { PivotTable } from './components/PivotTable';
 import { Table } from './components/Table';
 import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
@@ -95,8 +97,10 @@ export {
     DonutChart,
     HeatMap,
     PoPHelper,
+    DerivedMeasureTitleSuffixFactory,
     PropTypes,
     RuntimeError,
+    PivotTable,
     Table,
     VisEvents,
     Visualization,

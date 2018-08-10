@@ -430,8 +430,8 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
-    .add('Column chart without gridline', () => {
-        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+    .add('Column chart with 6 previous period measures', () => {
+        const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
 
         return screenshotWrap(
             wrap(
@@ -449,10 +449,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
-                        grid: {
-                            enabled: false
-                        }
+                        colors: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}

@@ -33,6 +33,10 @@
    "visualization.ErrorMessageNoData": "Aucune donnée",
    "visualization.ErrorDescriptionNoData": "Aucune donnée pour votre sélection de filtre.",
    "visualization.ErrorMessageKpi": "Erreur",
+   "visualization.ErrorMessageUnauthorized": "Non autorisé",
+   "visualization.ErrorDescriptionUnauthorized": "Désolé, vous n'avez pas accès à cette perception. Connectez-vous ou demandez à votre administrateur de vous accorder les autorisations.",
+   "visualization.ErrorMessageNotFound": "Désolé, cette perception est introuvable",
+   "visualization.ErrorDescriptionNotFound": "La perception avec cette URL n'existe pas.",
    "gs.filter.loading": "Chargement du filtre en cours …",
    "gs.filter.error": "Erreur lors du chargement du filtre",
    "gs.list.loading": "Chargement de la liste en cours…",
@@ -44,5 +48,5 @@
    "gs.list.limitExceeded": "Désolé, vous avez dépassé la limite ({limit}).",
    "gs.list.noItemsFound": "Éléments introuvables.",
    "gs.list.error": "Erreur lors du chargement des éléments de la liste",
-   "previous_year": "année précédente"
+   "measure.title.suffix.same_period_year_ago": "Même période de l'année antérieure"
 }

@@ -7,6 +7,7 @@ import * as cx from 'classnames';
 import FluidLegend from './FluidLegend';
 import StaticLegend from './StaticLegend';
 import { ChartType } from '../../../../constants/visualizationTypes';
+import { isHeatMap } from '../../utils/common';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 
@@ -18,6 +19,8 @@ export interface ILegendProps {
     position: string;
     chartType: ChartType;
     series: any;
+    format?: string;
+    locale?: string;
     onItemClick(item: any): void;
 }
 
@@ -103,7 +106,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
     }
 
     public renderStatic() {
-        const { chartType, position, height } = this.props;
+        const { chartType, position, height, format, locale } = this.props;
 
         const classNames = cx('viz-static-legend-wrap', `position-${position}`);
 
@@ -111,7 +114,9 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             series: this.getSeries(),
             chartType,
             onItemClick: this.onItemClick,
-            position
+            position,
+            format,
+            locale
         };
 
         return (
@@ -134,7 +139,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
 
         const fluidLegend = responsive && showFluid;
 
-        if (fluidLegend) {
+        if (fluidLegend && !isHeatMap(this.props.chartType)) {
             return this.renderFluid();
         }
 

@@ -1,17 +1,14 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { BaseChart, IChartProps } from '../base/BaseChart';
+import { BaseChart } from '../base/BaseChart';
 import { AreaChart } from '../AreaChart';
-import { getComponentProps } from './helper';
+import { emptyDataSource } from '../../tests/mocks';
 
 describe('AreaChart', () => {
-    function createComponent(props: IChartProps) {
-        return shallow(<AreaChart {...props} />);
-    }
-
-    it('should render area chart', () => {
-        const wrapper = createComponent(getComponentProps());
+    it('should render BaseChart', () => {
+        const wrapper = shallow(<AreaChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

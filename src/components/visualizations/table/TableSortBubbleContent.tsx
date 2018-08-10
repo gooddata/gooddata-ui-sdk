@@ -4,7 +4,7 @@ import * as classNames from 'classnames';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { noop } from 'lodash';
 
-import { ASC, DESC } from './constants/sort';
+import { ASC, DESC } from '../../../constants/sort';
 import { OnSortChangeWithDir, SortDir } from '../../../interfaces/Table';
 
 export interface ITableSortBubbleContentProps {

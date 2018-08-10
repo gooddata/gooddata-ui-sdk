@@ -9,10 +9,13 @@ import {
     SEGMENT,
     TREND,
     ATTRIBUTE,
+    ROWS,
+    COLUMNS,
     MEASURES
  } from '../constants/bucketNames';
+import { convertBucketsToAFM } from '../helpers/conversion';
 
-function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem[] {
+export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem[] {
     const bucketTotals = get(bucket, 'totals', []);
     return bucketTotals.map((total: VisualizationObject.IVisualizationTotal): AFM.ITotalItem => {
         return {
@@ -23,9 +26,49 @@ function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem
     });
 }
 
+export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const rowAttributes: VisualizationObject.IBucket = buckets
+        .find(
+            bucket => bucket.localIdentifier === ROWS
+
+        );
+
+    const columnAttributes: VisualizationObject.IBucket = buckets
+        .find(
+            bucket => bucket.localIdentifier === COLUMNS
+        );
+
+    const measures: VisualizationObject.IBucket = buckets
+        .find(bucket => bucket.localIdentifier === MEASURES);
+
+    const rowAttributesItemIdentifiers = get(rowAttributes, 'items', [])
+        .map((a: VisualizationObject.IVisualizationAttribute) =>
+            a.visualizationAttribute.localIdentifier);
+
+    const columnAttributesItemIdentifiers = get(columnAttributes, 'items', [])
+        .map((a: VisualizationObject.IVisualizationAttribute) =>
+            a.visualizationAttribute.localIdentifier);
+
+    const measuresItemIdentifiers =
+        get(measures, 'items.length') ? [MEASUREGROUP] : [];
+
+    const totals = getDimensionTotals(rowAttributes);
+    const totalsProp = totals.length ? { totals } : {};
+
+    return [{
+        itemIdentifiers: rowAttributesItemIdentifiers,
+        ...totalsProp
+    }, {
+        itemIdentifiers: [
+            ...columnAttributesItemIdentifiers,
+            ...measuresItemIdentifiers
+        ]
+    }];
+}
+
 export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
     const attributes: VisualizationObject.IBucket = buckets
-        .find(bucket => bucket.localIdentifier === ATTRIBUTE || bucket.localIdentifier === 'attributes');
+        .find(bucket => bucket.localIdentifier === ATTRIBUTE);
 
     const measures: VisualizationObject.IBucket = buckets
         .find(bucket => bucket.localIdentifier === MEASURES);
@@ -52,7 +95,7 @@ function getLocalIdentifierFromAttribute(attribute: VisualizationObject.IVisuali
     return attribute.visualizationAttribute.localIdentifier;
 }
 
-function getPieOrTreemapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+function getPieOrDonutDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
     const view = mdObject.buckets.find(bucket => bucket.localIdentifier === VIEW);
 
     if (view && view.items.length) {
@@ -259,10 +302,13 @@ export function generateDimensions(
         }
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
-        case VisualizationTypes.TREEMAP:
         case VisualizationTypes.FUNNEL: {
-            return getPieOrTreemapDimensions(mdObject);
+            return getPieOrDonutDimensions(mdObject);
         }
+        case VisualizationTypes.TREEMAP: {
+            return getTreemapDimensionsFromMdObj(mdObject);
+        }
+
         case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE: {
             return getLineDimensions(mdObject);
@@ -290,10 +336,10 @@ export function generateDimensions(
 }
 
 export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
-    const stackByAttribute = buckets.find(bucket => bucket.localIdentifier === 'stacks').items[0] as
+    const stackByAttribute = buckets.find(bucket => bucket.localIdentifier === STACK).items[0] as
         VisualizationObject.IVisualizationAttribute;
 
-    const viewByAttribute = buckets.find(bucket => bucket.localIdentifier === 'attributes').items[0] as
+    const viewByAttribute = buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE).items[0] as
         VisualizationObject.IVisualizationAttribute;
 
     const stackByAttributeLocalIdentifier = stackByAttribute.visualizationAttribute.localIdentifier;
@@ -304,7 +350,7 @@ export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]
             itemIdentifiers: [stackByAttributeLocalIdentifier]
         },
         {
-            itemIdentifiers: [viewByAttributeLocalIdentifier, 'measureGroup']
+            itemIdentifiers: [viewByAttributeLocalIdentifier, MEASUREGROUP]
         }
     ];
 }
@@ -313,7 +359,7 @@ export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]
 export function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     return [
         {
-            itemIdentifiers: ['measureGroup']
+            itemIdentifiers: [MEASUREGROUP]
         },
         {
             itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
@@ -321,23 +367,23 @@ export function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     ];
 }
 
-export function isStackedChart(buckets: VisualizationObject.IBucket[]) {
-    return buckets.some(bucket => bucket.localIdentifier === 'stacks' && bucket.items.length > 0);
+export function isStackedChart(buckets: VisualizationObject.IBucket[], stackedBuckedName: string = STACK) {
+    return buckets.some(bucket => bucket.localIdentifier === stackedBuckedName && bucket.items.length > 0);
 }
 
-// for ScatterPlot
-export function generateDefaultScatterDimensions(afm: AFM.IAfm): AFM.IDimension[] {
+// for ScatterPlot and BubbleChart
+export function generateDefaultDimensionsForPointsCharts(afm: AFM.IAfm): AFM.IDimension[] {
     return [
         {
             itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
         },
         {
-            itemIdentifiers: ['measureGroup']
+            itemIdentifiers: [MEASUREGROUP]
         }
     ];
 }
 
-// for PieChart, DonutChart, Treemap
+// for PieChart, DonutChart
 export const generateDefaultDimensionsForRoundChart = (afm: AFM.IAfm): AFM.IDimension[] => {
     if ((afm.attributes || []).length === 0) {
         return [
@@ -345,17 +391,53 @@ export const generateDefaultDimensionsForRoundChart = (afm: AFM.IAfm): AFM.IDime
                 itemIdentifiers: []
             },
             {
-                itemIdentifiers: ['measureGroup']
+                itemIdentifiers: [MEASUREGROUP]
             }
         ];
     }
 
     return [
         {
-            itemIdentifiers: ['measureGroup']
+            itemIdentifiers: [MEASUREGROUP]
         },
         {
             itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
         }
     ];
 };
+
+// Treemap
+export function getTreemapDimensionsFromMdObj(
+    mdObject: VisualizationObject.IVisualizationObjectContent
+): AFM.IDimension[] {
+    const buckets: VisualizationObject.IBucket[] = mdObject.buckets;
+    return getTreemapDimensionsFromBuckets(buckets);
+}
+
+export function getTreemapDimensionsFromBuckets(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const afm: AFM.IAfm = convertBucketsToAFM(buckets);
+    return getTreemapDimensionsFromAFM(afm);
+}
+
+export function getTreemapDimensionsFromAFM(afm: AFM.IAfm): AFM.IDimension[] {
+    const attributes = (afm.attributes || []);
+    if (attributes.length === 1) {
+        return [
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            },
+            {
+                itemIdentifiers: attributes.map(a => a.localIdentifier)
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: attributes.map(a => a.localIdentifier)
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP]
+        }
+    ];
+}

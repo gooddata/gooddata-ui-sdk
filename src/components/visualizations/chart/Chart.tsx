@@ -30,6 +30,7 @@ export interface ILegendConfig {
 export interface IChartLimits {
     series?: number;
     categories?: number;
+    dataPoints?: number;
 }
 
 export interface IChartConfig {
@@ -46,6 +47,16 @@ export interface IChartConfig {
     xLabel?: string;
     xFormat?: string;
     chart?: any;
+    xaxis?: IAxisConfig;
+    yaxis?: IAxisConfig;
+}
+
+export interface IAxisConfig {
+    visible?: boolean;
+    labelsEnabled?: boolean;
+    rotation?: string;
+    min?: string;
+    max?: string;
 }
 
 export interface IChartProps {

@@ -1,26 +1,29 @@
 // (C) 2007-2018 GoodData Corporation
 import { getCustomizedConfiguration } from '../customConfiguration';
+import { ISeriesDataItem } from '../../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { immutableSet } from '../../../utils/common';
+
+function getData(dataValues: ISeriesDataItem[]) {
+    return {
+        series: [
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>aaa</b>',
+                data: dataValues
+            }
+        ]
+    };
+}
 
 const chartOptions = {
     type: VisualizationTypes.LINE,
     yAxes: [{ title: 'atitle' }],
     xAxes: [{ title: 'xtitle' }],
-    data: {
-        series: [
-            {
-                color: 'rgb(0, 0, 0)',
-                name: '<b>aaa</b>',
-                data: [
-                    {
-                        name: '<b>bbb</b>'
-                    },
-                    null
-                ]
-            }
-        ]
-    }
+    data: getData([{
+        name: '<b>bbb</b>',
+        y: 1
+    }, null])
 };
 
 describe('getCustomizedConfiguration', () => {
@@ -64,72 +67,56 @@ describe('getCustomizedConfiguration', () => {
             min: 20,
             max: 30,
             labels: {
-                ...result.yAxis[0].labels,
                 enabled: false
             },
-            visible: false
+            title: {
+                text: '',
+                enabled: false
+            }
         };
 
         expect(result.yAxis[0]).toEqual(expectedResult);
     });
 
-    it('should set Y axis of bar chart by properties for X axis', () => {
+    it ('should set X axis configurations from properties', () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
-            type: VisualizationTypes.BAR,
             xAxisProps: {
-                min: 20,
-                max: 30,
+                visible: false,
                 labelsEnabled: false,
-                visible: false
+                rotation: '60'
             }
         });
 
         const expectedResult = {
-            ...result.yAxis[0],
-            min: 20,
-            max: 30,
+            ...result.xAxis[0],
+            visible: false,
             labels: {
-                ...result.yAxis[0].labels,
-                enabled: false
-            },
-            visible: false
+                ...result.xAxis[0].labels,
+                enabled: false,
+                rotation: -60
+            }
         };
 
-        expect(result.yAxis[0]).toEqual(expectedResult);
+        expect(result.xAxis[0]).toEqual(expectedResult);
     });
 
-    it ('should set X axis visibility from properties', () => {
+    it ('should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation', () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
+            type: 'bar',
             xAxisProps: {
-                visible: false
+                rotation: '90'
             }
         });
 
-        const expectedResult = {
-            ...result.xAxis[0],
-            visible: false
-        };
-
-        expect(result.xAxis[0]).toEqual(expectedResult);
+        expect(result.xAxis[0].labels.formatter).not.toBeUndefined();
     });
 
-    it ('should set X axis visibility for bar chart from Y-axis properties', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            type: VisualizationTypes.BAR,
-            yAxisProps: {
-                visible: false
-            }
-        });
+    it ('shouldn\'t set formatter for xAxis by default', () => {
+        const result = getCustomizedConfiguration(chartOptions);
 
-        const expectedResult = {
-            ...result.xAxis[0],
-            visible: false
-        };
-
-        expect(result.xAxis[0]).toEqual(expectedResult);
+        expect(result.xAxis[0].labels.formatter).toBeUndefined();
     });
 
     it ('should set startOnTick on true when min or max is not defined', () => {
@@ -164,5 +151,102 @@ describe('getCustomizedConfiguration', () => {
         });
 
         expect(result.yAxis[0].endOnTick).toBeFalsy();
+    });
+
+    it('should set connectNulls for stacked Area chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            type: VisualizationTypes.AREA,
+            stacking: 'normal'
+        });
+
+        expect(result.plotOptions.series.connectNulls).toBeTruthy();
+    });
+
+    it('should NOT set connectNulls for NONstacked Area chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            type: VisualizationTypes.AREA,
+            stacking: null
+        });
+
+        expect(result.plotOptions.series).toBeUndefined();
+    });
+
+    it('should NOT set connectNulls for stacked Line chart', () => {
+        const result = getCustomizedConfiguration({
+            ...chartOptions,
+            stacking: 'normal'
+        });
+
+        expect(result.plotOptions.series.connectNulls).toBeUndefined();
+    });
+
+    describe('labels configuration', () => {
+        it('should set two levels labels for multi-level heatmap', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                type: VisualizationTypes.TREEMAP,
+                stacking: 'normal'
+            });
+
+            const treemapConfig = result.plotOptions.treemap;
+            expect(treemapConfig.levels.length).toEqual(2);
+        });
+
+        it('should set one level labels for single-level heatmap', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                type: VisualizationTypes.TREEMAP,
+                stacking: null
+            });
+
+            const treemapConfig = result.plotOptions.treemap;
+            expect(treemapConfig.levels.length).toEqual(1);
+        });
+    });
+
+    describe('tooltip followPointer', () => {
+        it ('should follow pointer for bar chart when data max is above axis max', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 100 }, { y: 101 }]),
+                type: VisualizationTypes.COLUMN,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeTruthy();
+        });
+
+        it ('should not follow pointer for bar chart when data max is below axis max', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 0 }, { y: 1 }]),
+                type: VisualizationTypes.COLUMN,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeFalsy();
+        });
+
+        it ('should follow pointer for pie chart should be false by default', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                actions: { tooltip: true },
+                data: getData([{ y: 100 } , { y: 101 }]),
+                type: VisualizationTypes.PIE,
+                yAxisProps: {
+                    max: 50
+                }
+            });
+
+            expect(result.tooltip.followPointer).toBeFalsy();
+        });
     });
 });

@@ -12,7 +12,10 @@ import PieChartExample from '../components/PieChartExample';
 import DonutChartExample from '../components/DonutChartExample';
 import ComboChartExample from '../components/ComboChartExample';
 import ScatterPlotExample from '../components/ScatterPlotExample';
+import BubbleChartExample from '../components/BubbleChartExample';
+import TreemapExample from '../components/TreemapExample';
 import TableExample from '../components/TableExample';
+import HeadlineExample from '../components/HeadlineExample';
 import KpiExample from '../components/KpiExample';
 
 import BarChartExampleSRC from '!raw-loader!../components/BarChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -24,7 +27,10 @@ import PieChartExampleSRC from '!raw-loader!../components/PieChartExample'; // e
 import DonutChartExampleSRC from '!raw-loader!../components/DonutChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ComboChartExampleSRC from '!raw-loader!../components/ComboChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ScatterPlotExampleSRC from '!raw-loader!../components/ScatterPlotExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import BubbleChartExampleSRC from '!raw-loader!../components/BubbleChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import TreemapExampleSRC from '!raw-loader!../components/TreemapExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import HeadlineExampleSRC from '!raw-loader!../components/HeadlineExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import KpiExampleSRC from '!raw-loader!../components/KpiExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const BasicComponents = () => (
@@ -71,10 +77,19 @@ export const BasicComponents = () => (
         <h2 id="scatter-plot">Scatter plot</h2>
         <ExampleWithSource for={ScatterPlotExample} source={ScatterPlotExampleSRC} />
 
+        <h2 id="bubble-chart">Bubble chart</h2>
+        <ExampleWithSource for={BubbleChartExample} source={BubbleChartExampleSRC} />
+
+        <h2 id="treemap">Treemap</h2>
+        <ExampleWithSource for={TreemapExample} source={TreemapExampleSRC} />
+
         <hr className="separator" />
 
         <h2 id="table">Table</h2>
         <ExampleWithSource for={TableExample} source={TableExampleSRC} />
+
+        <h2 id="table">Headline</h2>
+        <ExampleWithSource for={HeadlineExample} source={HeadlineExampleSRC} />
 
         <h2 id="kpi">KPI</h2>
         <p>

@@ -2,9 +2,11 @@
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
+import * as Highcharts from 'highcharts';
 
 import range = require('lodash/range');
 import get = require('lodash/get');
+import isEqual = require('lodash/isEqual');
 import includes = require('lodash/includes');
 import isEmpty = require('lodash/isEmpty');
 import compact = require('lodash/compact');
@@ -12,6 +14,8 @@ import without = require('lodash/without');
 import escape = require('lodash/escape');
 import unescape = require('lodash/unescape');
 import isUndefined = require('lodash/isUndefined');
+import cloneDeep = require('lodash/cloneDeep');
+
 import { IChartConfig, IChartLimits } from './Chart';
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -25,18 +29,23 @@ import {
     isScatterPlot,
     isTreemap,
     parseValue,
-    stringifyChartTypes,
-    unwrap
+    stringifyChartTypes
 } from '../utils/common';
+import { getChartProperties } from './highcharts/helpers';
+import { unwrap } from '../../../helpers/utils';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
-import { DEFAULT_COLOR_PALETTE, getLighterColor } from '../utils/color';
+import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
-import { MEASURES, SECONDARY_MEASURES } from '../../../constants/bucketNames';
+import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
 
-import { DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
+import {
+    DEFAULT_SERIES_LIMIT,
+    DEFAULT_CATEGORIES_LIMIT,
+    DEFAULT_DATA_POINTS_LIMIT
+} from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
@@ -56,8 +65,7 @@ const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
-    VisualizationTypes.TREEMAP,
-    VisualizationTypes.BUBBLE
+    VisualizationTypes.TREEMAP
 ];
 
 const attributeChartSupportedTypes = [
@@ -65,8 +73,7 @@ const attributeChartSupportedTypes = [
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
     VisualizationTypes.SCATTER,
-    VisualizationTypes.BUBBLE,
-    VisualizationTypes.TREEMAP
+    VisualizationTypes.BUBBLE
 ];
 
 // charts sorted by default by measure value
@@ -79,7 +86,8 @@ const sortedByMeasureTypes = [
 const unsupportedStackingTypes = [
     VisualizationTypes.LINE,
     VisualizationTypes.AREA,
-    VisualizationTypes.SCATTER
+    VisualizationTypes.SCATTER,
+    VisualizationTypes.BUBBLE
 ];
 
 export interface IAxis {
@@ -91,6 +99,7 @@ export interface IAxis {
 export interface ISeriesDataItem {
     x?: number;
     y: number;
+    value?: number;
     name?: string;
 }
 
@@ -101,32 +110,70 @@ export interface ISeriesItem {
     userOptions?: any;
 }
 
+export interface IChartOptions {
+    type?: string;
+    stacking?: any;
+    hasStackByAttribute?: boolean;
+    hasViewByAttribute?: boolean;
+    legendLayout?: string;
+    colorPalette?: string[];
+    dualAxis?: boolean;
+    xAxes?: any;
+    yAxes?: any;
+    data?: any;
+    actions?: any;
+    grid?: any;
+    xAxisProps?: any;
+    yAxisProps?: any;
+    title?: any;
+    colorAxis?: Highcharts.ColorAxisOptions;
+}
+
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
         .some((seriesItem: ISeriesItem) => (
-            seriesItem.data.some(({ y }: ISeriesDataItem) => (y < 0))
+            seriesItem.data.some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
         ));
 }
 
-export function getAdjustedLimits(type: string, limits: IChartLimits): IChartLimits {
-    const smallerLimits: IChartLimits = {
-        series: 1, // pie charts/donuts/... can have just one series
-        categories: Math.min(limits.categories || DEFAULT_CATEGORIES_LIMIT, PIE_CHART_LIMIT)
-    };
-
-    return isOneOfTypes(type, [VisualizationTypes.PIE, VisualizationTypes.DONUT, VisualizationTypes.FUNNEL]) ?
-        smallerLimits : limits;
+function getChartLimits(type: string): IChartLimits {
+    switch (type) {
+        case VisualizationTypes.SCATTER:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_SERIES_LIMIT
+            };
+        case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
+        case VisualizationTypes.FUNNEL:
+            return {
+                series: 1,
+                categories: PIE_CHART_LIMIT
+            };
+        case VisualizationTypes.TREEMAP:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT,
+                dataPoints: DEFAULT_DATA_POINTS_LIMIT
+            };
+        default:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT
+            };
+    }
 }
 
 export function cannotShowNegativeValues(type: string) {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
-export function validateData(limits: IChartLimits = {}, chartOptions: any) {
+export function validateData(limits: IChartLimits, chartOptions: any) {
     const { type } = chartOptions;
+    const finalLimits = limits || getChartLimits(type);
 
     return {
-        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, getAdjustedLimits(type, limits)),
+        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, finalLimits),
         hasNegativeValue: cannotShowNegativeValues(type)
             && isNegativeValueIncluded(chartOptions.data.series)
     };
@@ -139,6 +186,15 @@ export function isPopMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM
     });
 }
 
+export function isDerivedMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
+    return afm.measures.some((measure: AFM.IMeasure) => {
+        const measureDefinition = get(measure, 'definition.popMeasure')
+            || get(measure, 'definition.previousPeriodMeasure');
+        const derivedMeasureIdentifier = measureDefinition ? measure.localIdentifier : null;
+        return derivedMeasureIdentifier && derivedMeasureIdentifier === measureItem.measureHeaderItem.localIdentifier;
+    });
+}
+
 export function normalizeColorToRGB(color: string) {
     const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
     return color.replace(hexPattern, ({}, r: string, g: string, b: string) => {
@@ -146,15 +202,25 @@ export function normalizeColorToRGB(color: string) {
     });
 }
 
+function findMeasureIndex(afm: AFM.IAfm, measureIdentifier: string): number {
+    return afm.measures.findIndex(
+        (measure: AFM.IMeasure) => measure.localIdentifier === measureIdentifier
+    );
+}
+
 function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number): number {
     const measureDefinition = afm.measures[measureItemIndex].definition;
-    if (!AFM.isPopMeasureDefinition(measureDefinition)) {
-        return -1;
+
+    if (AFM.isPopMeasureDefinition(measureDefinition)) {
+        const sourceMeasureIdentifier = measureDefinition.popMeasure.measureIdentifier;
+        return findMeasureIndex(afm, sourceMeasureIdentifier);
     }
-    const sourceMeasureIdentifier = measureDefinition.popMeasure.measureIdentifier;
-    return afm.measures.findIndex(
-        (measure: AFM.IMeasure) => measure.localIdentifier === sourceMeasureIdentifier
-    );
+    if (AFM.isPreviousPeriodMeasureDefinition(measureDefinition)) {
+        const sourceMeasureIdentifier = measureDefinition.previousPeriodMeasure.measureIdentifier;
+        return findMeasureIndex(afm, sourceMeasureIdentifier);
+    }
+
+    return -1;
 }
 
 export function isAttributeColorPalette(type: string, afm: AFM.IAfm, stackByAttribute: any) {
@@ -163,28 +229,15 @@ export function isAttributeColorPalette(type: string, afm: AFM.IAfm, stackByAttr
     return stackByAttribute || (attributeChartSupported && afm.attributes && afm.attributes.length > 0);
 }
 
-export function getColorPalette(
+function getColorPaletteByMeasureGroup(
     colorPalette: string[] = DEFAULT_COLOR_PALETTE,
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
-    afm: AFM.IAfm,
-    type: string
-
+    afm: AFM.IAfm
 ): string[] {
-    if (isHeatMap(type)) {
-        return [];
-    }
-
-    if (isAttributeColorPalette(type, afm, stackByAttribute)) {
-        const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
-        return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
-    }
-
     let parentMeasuresCounter = 0;
 
     const paletteMeasures = range(measureGroup.items.length).map((measureItemIndex) => {
-        if (isPopMeasure(measureGroup.items[measureItemIndex], afm)) {
+        if (isDerivedMeasure(measureGroup.items[measureItemIndex], afm)) {
             return '';
         }
         const colorIndex = parentMeasuresCounter % colorPalette.length;
@@ -193,7 +246,7 @@ export function getColorPalette(
     });
 
     return paletteMeasures.map((color, measureItemIndex) => {
-        if (!isPopMeasure(measureGroup.items[measureItemIndex], afm)) {
+        if (!isDerivedMeasure(measureGroup.items[measureItemIndex], afm)) {
             return color;
         }
         const parentMeasureIndex = findParentMeasureIndex(afm, measureItemIndex);
@@ -203,6 +256,43 @@ export function getColorPalette(
         }
         return color;
     });
+}
+
+function getTreemapColorPalette(
+    colorPalette: string[] = DEFAULT_COLOR_PALETTE,
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    viewByAttribute: any,
+    afm: AFM.IAfm
+): string[] {
+    if (viewByAttribute) {
+        const itemsCount = viewByAttribute.items.length;
+        return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
+    }
+    return getColorPaletteByMeasureGroup(colorPalette, measureGroup, afm);
+}
+
+export function getColorPalette(
+    colorPalette: string[] = DEFAULT_COLOR_PALETTE,
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    viewByAttribute: any,
+    stackByAttribute: any,
+    afm: AFM.IAfm,
+    type: string
+): string[] {
+    if (isHeatMap(type)) {
+        return HEATMAP_BLUE_COLOR_PALETTE;
+    }
+
+    if (isTreemap(type)) {
+        return getTreemapColorPalette(colorPalette, measureGroup, viewByAttribute, afm);
+    }
+
+    if (isAttributeColorPalette(type, afm, stackByAttribute)) {
+        const itemsCount = stackByAttribute ? stackByAttribute.items.length : viewByAttribute.items.length;
+        return range(itemsCount).map(itemIndex => colorPalette[itemIndex % colorPalette.length]);
+    }
+
+    return getColorPaletteByMeasureGroup(colorPalette, measureGroup, afm);
 }
 
 export interface IPointData {
@@ -217,6 +307,8 @@ export interface IPointData {
     name?: string;
     color?: string;
     legendIndex?: number;
+    id?: string;
+    parent?: string;
 }
 
 export interface IPoint {
@@ -228,6 +320,8 @@ export interface IPoint {
     category?: string;
     format?: string;
     name?: string;
+    id?: string;
+    parent?: string;
 }
 
 export function getSeriesItemData(
@@ -256,8 +350,17 @@ export function getSeriesItemData(
             measureIndex = pointIndex;
         }
 
+        let valueProp: any = {
+            y: parseValue(pointValue)
+        };
+        if (isTreemap(type)) {
+            valueProp = {
+                value: parseValue(pointValue)
+            };
+        }
+
         const pointData: IPointData = {
-            y: parseValue(pointValue),
+            ...valueProp,
             format: unwrap(measureGroup.items[measureIndex]).format,
             marker: {
                 enabled: pointValue !== null
@@ -277,10 +380,6 @@ export function getSeriesItemData(
             // Pie and Treemap charts use pointData viewByIndex as legendIndex if available
             // instead of seriesItem legendIndex
             pointData.legendIndex = viewByAttribute ? viewByIndex : pointIndex;
-        }
-
-        if (isTreemap(type)) {
-            pointData.value = parseValue(pointValue);
         }
 
         return pointData;
@@ -309,7 +408,7 @@ export function getHeatMapSeries(
         });
     });
 
-    return[{
+    return [{
         name: measureGroup.items[0].measureHeaderItem.name,
         data,
         turboThreshold: 0,
@@ -355,29 +454,234 @@ export function getScatterPlotSeries(
         });
 
         return [{
+            turboThreshold: 0,
             color: colorPalette[0],
             legendIndex: 0,
             data
         }];
 }
 
+function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
+    return bucketEmptyFlags.filter(bucketEmpyFlag => bucketEmpyFlag).length;
+}
+
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
+    mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ) {
+    const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
+        .find(bucket => bucket.localIdentifier === MEASURES);
+    const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
+        .find(bucket => bucket.localIdentifier === SECONDARY_MEASURES);
+
+    const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
+    const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+
     return executionResultData.map((resData: any, index: number) => {
+        let data: any = [];
+        if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
+            const emptyBucketsCount = getCountOfEmptyBuckets(
+                [primaryMeasuresBucketEmpty, secondaryMeasuresBucketEmpty]
+            );
+            data = [{
+                x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
+                y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
+                // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
+                z: parseFloat(resData[2 - emptyBucketsCount])
+            }];
+        }
         return {
             name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
             color: colorPalette[index],
             legendIndex: index,
-            data: [{
-                x: parseFloat(resData[0]),
-                y: parseFloat(resData[1]),
-                z: parseFloat(resData[2])
-            }]
+            data
         };
     });
+}
+
+function getColorStep(valuesCount: number): number {
+    const MAX_COLOR_BRIGHTNESS = 0.8;
+    return MAX_COLOR_BRIGHTNESS / valuesCount;
+
+}
+
+function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
+    const colorChange = getColorStep(solidColorLeafs.length);
+    return solidColorLeafs.map((leaf: any, index: number) =>
+        ({
+            ...leaf,
+            color: getLighterColor(leaf.color, (colorChange * index))
+        })
+    );
+}
+
+function getRootPoint(
+    rootName: string,
+    index: number,
+    format: string,
+    colorPalette: string[]
+) {
+    return {
+        id: `${index}`,
+        name: rootName,
+        color: colorPalette[index],
+        showInLegend: true,
+        legendIndex: index,
+        format
+    };
+}
+
+function getLeafPoint(
+    stackByAttribute: any,
+    parentIndex: number,
+    seriesIndex: number,
+    data: any,
+    format: string,
+    colorPalette: string[]
+) {
+    return {
+        name: stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
+        parent: `${parentIndex}`,
+        value: parseValue(data),
+        x: seriesIndex,
+        y: seriesIndex,
+        showInLegend: false,
+        color: colorPalette[parentIndex],
+        format
+    };
+}
+
+function isLastSerie(seriesIndex: number, dataLength: number) {
+    return seriesIndex === (dataLength - 1);
+}
+
+export function getTreemapStackedSeriesDataWithViewBy(
+    executionResultData: Execution.DataValue[][],
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    viewByAttribute: any,
+    stackByAttribute: any,
+    colorPalette: string[]
+): any[] {
+    const roots: any = [];
+    const leafs: any = [];
+    let rootId = -1;
+    let uncoloredLeafs: any = [];
+    let lastRoot: Execution.IResultAttributeHeaderItem['attributeHeaderItem'] = null;
+
+    const dataLength = executionResultData.length;
+    const format = unwrap(measureGroup.items[0]).format; // this configuration has only one measure
+
+    executionResultData.forEach((seriesItems: string[], seriesIndex: number) => {
+        const currentRoot = viewByAttribute.items[seriesIndex].attributeHeaderItem;
+
+        if (!isEqual(currentRoot, lastRoot)) {
+            // store previous group leafs
+            leafs.push(...gradientPreviousGroup(uncoloredLeafs));
+            rootId++;
+            lastRoot = currentRoot;
+            uncoloredLeafs = [];
+            // create parent for pasted leafs
+            const lastRootName: string =
+                get<Execution.IResultAttributeHeaderItem['attributeHeaderItem'], string>(lastRoot, 'name');
+            roots.push(getRootPoint(lastRootName, rootId, format, colorPalette));
+        }
+        // create leafs which will be colored at the end of group
+        uncoloredLeafs.push(
+            getLeafPoint(stackByAttribute, rootId, seriesIndex, seriesItems[0], format, colorPalette)
+        );
+
+        if (isLastSerie(seriesIndex, dataLength)) {
+            // store last group leafs
+            leafs.push(...gradientPreviousGroup(uncoloredLeafs));
+        }
+    });
+
+    return [...roots, ...leafs]; // roots need to be first items in data to keep legend working
+}
+
+export function getTreemapStackedSeriesDataWithMeasures(
+    executionResultData: Execution.DataValue[][],
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    stackByAttribute: any,
+    colorPalette: string[]
+): any[] {
+    let data: any = [];
+
+    measureGroup.items.reduce((data: any[], measureGroupItem: any, index: number) => {
+        data.push({
+            id: `${index}`,
+            name: measureGroupItem.measureHeaderItem.name,
+            format: measureGroupItem.measureHeaderItem.format,
+            color: colorPalette[index],
+            showInLegend: true,
+            legendIndex: index
+        });
+        return data;
+    }, data);
+
+    executionResultData.forEach((seriesItems: string[], seriesIndex: number) => {
+        const colorChange = getColorStep(seriesItems.length);
+        const unsortedLeafs: any[] = [];
+        seriesItems.forEach((seriesItem: string, seriesItemIndex: number) => {
+            unsortedLeafs.push({
+                name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
+                parent: `${seriesIndex}`,
+                format: unwrap(measureGroup.items[seriesIndex]).format,
+                value: parseValue(seriesItem),
+                x: seriesIndex,
+                y: seriesItemIndex,
+                showInLegend: false
+            });
+        });
+        const sortedLeafs = unsortedLeafs.sort((a: IPoint, b: IPoint) => b.value - a.value);
+
+        data = [...data, ...sortedLeafs.map((leaf: IPoint, seriesItemIndex: number) => ({
+            ...leaf,
+            color: getLighterColor(colorPalette[seriesIndex], (colorChange * seriesItemIndex))
+        }))];
+    });
+
+    return data;
+}
+
+export function getTreemapStackedSeries(
+    executionResultData: Execution.DataValue[][],
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    viewByAttribute: any,
+    stackByAttribute: any,
+    colorPalette: string[]
+) {
+    let data = [];
+    if (viewByAttribute) {
+        data = getTreemapStackedSeriesDataWithViewBy(
+            executionResultData,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            colorPalette
+        );
+    } else {
+        data = getTreemapStackedSeriesDataWithMeasures(
+            executionResultData,
+            measureGroup,
+            stackByAttribute,
+            colorPalette
+        );
+    }
+
+    const seriesName = measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
+        return unwrap(wrappedMeasure).name;
+    }).join(', ');
+
+    return [{
+        name: seriesName,
+        legendType: 'point',
+        showInLegend: true,
+        data,
+        turboThreshold: 0
+    }];
 }
 
 export function getSeries(
@@ -394,8 +698,17 @@ export function getSeries(
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(executionResultData, stackByAttribute, colorPalette);
+        return getBubbleChartSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
+    } else if (isTreemap(type) && stackByAttribute) {
+        return getTreemapStackedSeries(
+            executionResultData,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            colorPalette
+        );
     }
+
     return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const seriesItemData = getSeriesItemData(
             seriesItem,
@@ -471,9 +784,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
 
     return (point: IPoint) => {
         const textData = [];
+        const name = point.name ? point.name : point.series.name;
 
         if (stackByAttribute) {
-            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(point.name)]);
+            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(name)]);
         }
 
         if (measures[0]) {
@@ -535,6 +849,48 @@ export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute:
     };
 }
 
+export function generateTooltipTreemapFn(
+    viewByAttribute: any,
+    stackByAttribute: any
+) {
+    const formatValue = (val: number, format: string) => {
+        return colors2Object(numberFormat(val, format));
+    };
+
+    return (point: IPoint) => {
+        if (point.id !== undefined) { // no tooltip for root points
+            return null;
+        }
+        const formattedValue = customEscape(formatValue(point.value, point.format).label);
+
+        const textData = [];
+
+        if (stackByAttribute) {
+            textData.push([
+                customEscape(stackByAttribute.formOf.name),
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name)
+            ]);
+        }
+
+        if (viewByAttribute) {
+            textData.unshift([
+                customEscape(viewByAttribute.formOf.name),
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name)
+            ]);
+            textData.push([customEscape(point.series.name), formattedValue]);
+        } else {
+            textData.push([customEscape(point.category), formattedValue]);
+        }
+
+        return `<table class="tt-values">${textData.map(line => (
+            `<tr>
+                <td class="title">${line[0]}</td>
+                <td class="value">${line[1]}</td>
+            </tr>`
+        )).join('\n')}</table>`;
+    };
+}
+
 export function findInDimensionHeaders(dimensions: Execution.IResultDimension[], headerCallback: Function): any {
     let returnValue: any = null;
     dimensions.some((dimension: any, dimensionIndex: any) => {
@@ -564,17 +920,23 @@ export function findMeasureGroupInDimensions(dimensions: Execution.IResultDimens
         });
 }
 
-export function findAttributeInDimension(dimension: any, attributeHeaderItemsDimension: any) {
-    return findInDimensionHeaders([dimension], (headerType: any, header: any) => {
-        if (headerType === 'attributeHeader') {
-            return {
-                ...header,
-                // attribute items are delivered separately from attributeHeaderItems
-                // there should ever only be maximum of one attribute on each dimension, other attributes are ignored
-                items: attributeHeaderItemsDimension[0]
-            };
-        }
-        return null;
+export function findAttributeInDimension(
+    dimension: any,
+    attributeHeaderItemsDimension: any,
+    indexInDimension?: number
+) {
+    return findInDimensionHeaders(
+        [dimension],
+        (headerType: any, header: any, {}, headerIndex: number) => {
+            if (headerType === 'attributeHeader'
+                && (indexInDimension === undefined || indexInDimension === headerIndex)) {
+                return {
+                    ...header,
+                    // attribute items are delivered separately from attributeHeaderItems
+                    items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0]
+                };
+            }
+            return null;
     });
 }
 
@@ -620,14 +982,26 @@ export function getDrillableSeries(
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
-        let data = seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
+        let data = seriesItem.data && seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
             let measures = [];
 
+            const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
             if (isScatterPlot(type)) {
                 measures = get(measureGroup, 'items', []).slice(0, 2).map(unwrap);
+            } else if (isBubbleChart(type)) {
+                measures = get(measureGroup, 'items', []).slice(0, 3).map(unwrap);
+            } else if (isStackedTreemap) {
+                if (pointData.id !== undefined) { // not leaf -> can't be drillable
+                    return pointData;
+                }
+                let measureIndex = 0;
+                if (!viewByAttribute) {
+                    measureIndex = parseInt(pointData.parent, 10);
+                }
+                measures = [unwrap(measureGroup.items[measureIndex])];
             } else {
             // measureIndex is usually seriesIndex,
-            // except for stack by attribute and metricOnly pie or treemap chart it is looped-around pointIndex instead
+            // except for stack by attribute and metricOnly pie or donut chart it is looped-around pointIndex instead
             // Looping around the end of items array only works when measureGroup is the last header on it's dimension
             // We do not support setups with measureGroup before attributeHeaders
                 const measureIndex = !stackByAttribute && !isMultiMeasureWithOnlyMeasures
@@ -636,8 +1010,8 @@ export function getDrillableSeries(
                 measures = [unwrap(measureGroup.items[measureIndex])];
             }
 
-            const viewByIndex = isHeatMap(type) ? pointData.x : pointIndex;
-            let stackByIndex = isHeatMap(type) ? pointData.y : seriesIndex;
+            const viewByIndex = isHeatMap(type) || isStackedTreemap ? pointData.x : pointIndex;
+            let stackByIndex = isHeatMap(type) || isStackedTreemap ? pointData.y : seriesIndex;
             if (isScatterPlot(type)) {
                 stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
             }
@@ -837,19 +1211,25 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
             yAxes = compact([firstAxis, secondAxis]);
         }
     } else if (isScatterPlot(type) || isBubbleChart(type)) {
-        if (noPrimaryMeasures) {
-            yAxes = [{
-                ...firstMeasureGroupItem
-            }];
+        const hasSecondaryMeasure = mdObject.buckets
+            .find(m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0);
+
+        if (hasSecondaryMeasure) {
+            if (noPrimaryMeasures) {
+                yAxes = [{
+                    ...firstMeasureGroupItem
+                }];
+            } else {
+                yAxes = [{
+                    ...secondMeasureGroupItem
+                }];
+            }
         } else {
-            yAxes = [{
-                ...secondMeasureGroupItem
-            }];
+            yAxes = [{ label: '' }];
         }
     } else if (isHeatMap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : '',
-            format: firstMeasureGroupItem.format
+            label: stackByAttribute ? stackByAttribute.name : ''
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -881,6 +1261,119 @@ function assignYAxes(series: any, yAxes: IAxis[]) {
     return series;
 }
 
+export const HEAT_MAP_CATEGORIES_COUNT = 7;
+export const HIGHCHARTS_PRECISION = 15;
+
+export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
+    const newSeries = series.map((item: any) => ({
+        ...item,
+        borderWidth: 0
+    }));
+
+    const values: number[] = without(get(newSeries, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
+
+    if (isEmpty(values)) {
+        return [];
+    }
+
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
+    const safeMax = parseFloat(Number(max).toPrecision(HIGHCHARTS_PRECISION));
+    const dataClasses = [];
+
+    if (min === max) {
+        dataClasses.push({
+            from: min,
+            to: max,
+            color: colorPalette[1]
+        });
+    } else {
+        const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
+        let currentSum = safeMin;
+        for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
+            dataClasses.push({
+                from: currentSum,
+                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? safeMax : currentSum + step,
+                color: colorPalette[i % colorPalette.length]
+            });
+            currentSum += step;
+        }
+    }
+
+    return dataClasses;
+}
+
+export function getDefaultTreemapAttributes(
+    dimensions: Execution.IResultDimension[],
+    attributeHeaderItems: Execution.IResultHeaderItem[][][]
+): any {
+    let viewByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+    );
+    const stackByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+        1
+    );
+    if (!viewByAttribute) {
+        viewByAttribute = findAttributeInDimension(
+            dimensions[VIEW_BY_DIMENSION_INDEX],
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+        );
+    }
+    return {
+        viewByAttribute,
+        stackByAttribute
+    };
+}
+
+export function getTreemapAttributes(
+    dimensions: Execution.IResultDimension[],
+    attributeHeaderItems: Execution.IResultHeaderItem[][][],
+    mdObject: VisualizationObject.IVisualizationObjectContent
+): any {
+    if (!mdObject) { // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
+        return getDefaultTreemapAttributes(dimensions, attributeHeaderItems);
+    }
+    if (isBucketEmpty(mdObject, SEGMENT)) {
+        if (isBucketEmpty(mdObject, VIEW)) {
+            return {
+                viewByAttribute: null,
+                stackByAttribute: null
+            };
+        }
+        return {
+            viewByAttribute: findAttributeInDimension(
+                dimensions[VIEW_BY_DIMENSION_INDEX],
+                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+            ),
+            stackByAttribute: null
+        };
+    }
+    if (isBucketEmpty(mdObject, VIEW)) {
+        return {
+            viewByAttribute: null,
+            stackByAttribute: findAttributeInDimension(
+                dimensions[VIEW_BY_DIMENSION_INDEX],
+                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+            )
+        };
+    }
+    return {
+        viewByAttribute: findAttributeInDimension(
+            dimensions[STACK_BY_DIMENSION_INDEX],
+            attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+        ),
+        stackByAttribute: findAttributeInDimension(
+            dimensions[STACK_BY_DIMENSION_INDEX],
+            attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+            1
+        )
+    };
+}
+
 /**
  * Creates an object providing data for all you need to render a chart except drillability.
  *
@@ -901,7 +1394,7 @@ export function getChartOptions(
     unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
     drillableItems: IDrillableItem[]
-): any {
+): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
     const attributeHeaderItems = unfilteredHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
@@ -913,19 +1406,34 @@ export function getChartOptions(
 
     const { type, mdObject } = config;
     const measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'] = findMeasureGroupInDimensions(dimensions);
-    const viewByAttribute = findAttributeInDimension(
-        dimensions[VIEW_BY_DIMENSION_INDEX],
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
-    );
-    const stackByAttribute = findAttributeInDimension(
-        dimensions[STACK_BY_DIMENSION_INDEX],
-        attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
-    );
+    let viewByAttribute;
+    let stackByAttribute;
+
+    if (isTreemap(type)) {
+        const {
+            viewByAttribute: treemapViewByAttribute,
+            stackByAttribute: treemapStackByAttribute
+        } = getTreemapAttributes(
+            dimensions,
+            attributeHeaderItems,
+            mdObject
+        );
+        viewByAttribute = treemapViewByAttribute;
+        stackByAttribute = treemapStackByAttribute;
+    } else {
+        viewByAttribute = findAttributeInDimension(
+            dimensions[VIEW_BY_DIMENSION_INDEX],
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+        );
+        stackByAttribute = findAttributeInDimension(
+            dimensions[STACK_BY_DIMENSION_INDEX],
+            attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+        );
+    }
 
     invariant(measureGroup, 'missing measureGroup');
 
-    const colorPalette =
-        getColorPalette(config.colors, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+    const colorPalette = getColorPalette(config.colors, measureGroup, viewByAttribute, stackByAttribute, afm, type);
     const gridEnabled = get(config, 'grid.enabled', true);
     const stacking = getStackingConfig(stackByAttribute, config);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
@@ -1002,6 +1510,8 @@ export function getChartOptions(
     }
 
     if (isScatterPlot(type)) {
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
+
         let measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null
@@ -1028,15 +1538,17 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute)
             },
             grid: {
-                enabled: gridEnabled
-            }
+                enabled: true
+            },
+            xAxisProps,
+            yAxisProps
         };
     }
 
     if (isHeatMap(type)) {
         return {
             type,
-            stacking: null as any,
+            stacking: null,
             legendLayout: 'horizontal',
             title: {
                 x: (viewByAttribute ? viewByAttribute.name : ''),
@@ -1055,16 +1567,35 @@ export function getChartOptions(
             grid: {
                 enabled: false
             },
-            colorPalette: [] as any
+            colorPalette,
+            colorAxis: {
+                dataClasses: getHeatMapDataClasses(series, colorPalette)
+            }
         };
     }
 
     if (isBubbleChart(type)) {
-        const measures = [
-            measureGroup.items[0] ? measureGroup.items[0] : null,
-            measureGroup.items[1] ? measureGroup.items[1] : null,
-            measureGroup.items[2] ? measureGroup.items[2] : null
-        ];
+        const measures: Execution.IMeasureHeaderItem[] = [];
+        const measureGroupCopy = cloneDeep(measureGroup);
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
+
+        if (!isBucketEmpty(mdObject, MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
+
+        if (!isBucketEmpty(mdObject, SECONDARY_MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
+
+        if (!isBucketEmpty(mdObject, TERTIARY_MEASURES)) {
+            measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
+        } else {
+            measures.push(null);
+        }
 
         return {
             type,
@@ -1081,28 +1612,23 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute)
             },
             grid: {
-                enabled: gridEnabled
-            }
+                enabled: true
+            },
+            xAxisProps,
+            yAxisProps
         };
     }
 
-    // Custom props
+    const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-    // Bar chart
-    const xAxisMin = get(config, 'xaxis.min');
-    const xAxisMax = get(config, 'xaxis.max');
-    const xAxisVisible = get(config, 'xaxis.visible', true);
-    const xAxisLabelsEnabled = get(config, 'xaxis.labelsEnabled', true);
+    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute) :
+        generateTooltipFn(viewByAttribute, type);
 
-    const yAxisMin = get(config, 'yaxis.min');
-    const yAxisMax = get(config, 'yaxis.max');
-    const yAxisVisible = get(config, 'yaxis.visible', true);
-    const yAxisLabelsEnabled = get(config, 'yaxis.labelsEnabled', true);
-
-    return {
+    const chartOptions = {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
+        hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || 'horizontal',
         colorPalette,
         xAxes,
@@ -1112,22 +1638,14 @@ export function getChartOptions(
             categories
         },
         actions: {
-            tooltip: generateTooltipFn(viewByAttribute, type)
+            tooltip: tooltipFn
         },
         grid: {
             enabled: gridEnabled
         },
-        yAxisProps: {
-            min: yAxisMin,
-            max: yAxisMax,
-            visible: yAxisVisible,
-            labelsEnabled: yAxisLabelsEnabled
-        },
-        xAxisProps: {
-            min: xAxisMin,
-            max: xAxisMax,
-            visible: xAxisVisible,
-            labelsEnabled: xAxisLabelsEnabled
-        }
+        xAxisProps,
+        yAxisProps
     };
+
+    return chartOptions;
 }

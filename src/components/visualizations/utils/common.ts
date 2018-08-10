@@ -3,6 +3,7 @@ import setWith = require('lodash/setWith');
 import clone = require('lodash/clone');
 import includes = require('lodash/includes');
 import { Observable } from 'rxjs/Rx';
+import { numberFormat } from '@gooddata/numberjs';
 
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
@@ -49,6 +50,10 @@ export function getAttributeElementIdFromAttributeElementUri(attributeElementUri
     return attributeElementUri.slice(attributeElementUri.lastIndexOf(match) + match.length);
 }
 
+export function isRotationInRange(rotation: number, min: number, max: number) {
+    return rotation >= min && rotation <= max;
+}
+
 export const isTable = isEqual(VisualizationTypes.TABLE);
 export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
 export const isBarChart = isEqual(VisualizationTypes.BAR);
@@ -72,6 +77,23 @@ export const stringifyChartTypes = () => Object.keys(VisualizationTypes).reduce(
     return acc;
 }, []).join(', ');
 
-export function unwrap(wrappedObject: any) {
-    return wrappedObject[Object.keys(wrappedObject)[0]];
+export function formatLegendLabel(value: number, format: string, diff: number, numericSymbols: string[]): string {
+    if (format && format.includes('%')) {
+        return numberFormat(value, '#,#0%');
+    }
+
+    const sign = Math.sign(value) === -1 ? '-' : '';
+    const positiveValue = Math.abs(value);
+    let formattingString = '';
+
+    if (diff < 10) {
+        formattingString += '[<1]0.00;[<10]#.#;[<100]#.#;';
+    }
+
+    const k = `[<1000]0;[<10000]#.#,${numericSymbols[0]};[<999500]#,${numericSymbols[0]};`;
+    const m = `[<10000000]#.#,,${numericSymbols[1]};[<999500000]#,,${numericSymbols[1]};`;
+    const b = `[<10000000000]#.#,,,${numericSymbols[2]};[<999500000000]#,,,${numericSymbols[2]};`;
+    const t = `[<10000000000000]#.#,,,${numericSymbols[3]};[>=10000000000000]#,,,${numericSymbols[3]}`;
+    formattingString += k + m + b + t;
+    return sign + numberFormat(positiveValue, formattingString);
 }

@@ -7,6 +7,7 @@ import { LineChart as AfmLineChart } from './afm/LineChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
+import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface ILineChartBucketProps {
     measures: VisualizationObject.BucketItem[];
@@ -33,15 +34,15 @@ export interface ILineChartProps extends ICommonChartProps {
 export function LineChart(props: ILineChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
-            localIdentifier: 'measures',
+            localIdentifier: MEASURES,
             items: props.measures || []
         },
         {
-            localIdentifier: 'attributes',
+            localIdentifier: ATTRIBUTE,
             items: props.trendBy ? [props.trendBy] : []
         },
         {
-            localIdentifier: 'stacks',
+            localIdentifier: STACK,
             items: props.segmentBy ? [props.segmentBy] : []
         }
     ];

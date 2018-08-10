@@ -4,10 +4,10 @@ import debounce = require('lodash/debounce');
 import * as invariant from 'invariant';
 import * as CustomEvent from 'custom-event';
 import { AFM, Execution } from '@gooddata/typings';
-import * as Highcharts from '@types/highcharts';
+import * as Highcharts from 'highcharts';
 import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
-import { isComboChart } from './common';
+import { isComboChart, isTreemap } from './common';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
 
@@ -30,6 +30,8 @@ export interface IDrillIntersection {
 
 export interface IHighchartsPointObject extends Highcharts.PointObject {
     drillContext: IDrillIntersection[];
+    z?: number; // is missing in HCH's interface
+    value?: number; // is missing in HCH's interface
 }
 
 export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
@@ -53,8 +55,10 @@ export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEven
     return !!event.points;
 }
 
-function getPoPMeasureIdentifier(measure: AFM.IMeasure): AFM.Identifier {
-    return get<string>(measure, ['definition', 'popMeasure', 'measureIdentifier']);
+function getDerivedMeasureMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
+    const measureDefinition = get<string>(measure, ['definition', 'popMeasure'])
+        || get<string>(measure, ['definition', 'previousPeriodMeasure']);
+    return get<string>(measureDefinition, ['measureIdentifier']);
 }
 
 function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier) {
@@ -64,9 +68,12 @@ function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier)
 export function getMeasureUriOrIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier): IDrillableItem {
     let measure = findMeasureByIdentifier(afm, localIdentifier);
     if (measure) {
-        const popMeasureIdentifier = getPoPMeasureIdentifier(measure);
-        if (popMeasureIdentifier) {
-            measure = findMeasureByIdentifier(afm, popMeasureIdentifier);
+        const masterMeasureIdentifier = getDerivedMeasureMasterMeasureLocalIdentifier(measure);
+        if (masterMeasureIdentifier) {
+            measure = findMeasureByIdentifier(afm, masterMeasureIdentifier);
+        }
+        if (!measure) {
+            return null;
         }
         return {
             uri: get<string>(measure, ['definition', 'measure', 'item', 'uri']),
@@ -103,6 +110,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
         case VisualizationTypes.AREA:
         case VisualizationTypes.DUAL:
         case VisualizationTypes.SCATTER:
+        case VisualizationTypes.BUBBLE:
             return 'point';
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BAR:
@@ -162,11 +170,18 @@ function composeDrillContextGroup({ points }: IHighchartsChartDrilldownEvent, ch
 }
 
 function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: VisType) {
+    const zProp = isNaN(point.z) ? {} : { z: point.z };
+    const valueProp = isTreemap(chartType) ? { value: point.value } : {};
+    const xyProp = isTreemap(chartType) ? {} : {
+        x: point.x,
+        y: point.y
+    };
     return {
         type: chartType,
         element: getClickableElementNameByChartType(chartType),
-        x: point.x,
-        y: point.y,
+        ...xyProp,
+        ...zProp,
+        ...valueProp,
         intersection: normalizeIntersectionElements(point.drillContext)
     };
 }

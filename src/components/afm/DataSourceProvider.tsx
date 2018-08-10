@@ -41,11 +41,12 @@ function addDefaultDimensions(
     resultSpec: AFM.IResultSpec,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction
 ): AFM.IResultSpec {
-    const dimensions = generateDefaultDimensions(afm);
-    return {
-        dimensions,
-        ...resultSpec
-    };
+    return resultSpec && resultSpec.dimensions
+        ? resultSpec
+        : {
+            dimensions: generateDefaultDimensions(afm),
+            ...resultSpec
+        };
 }
 
 /**

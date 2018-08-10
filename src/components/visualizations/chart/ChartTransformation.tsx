@@ -8,7 +8,7 @@ import {
     VisualizationObject
 } from '@gooddata/typings';
 
-import { getChartOptions, validateData } from './chartOptionsBuilder';
+import { getChartOptions, validateData, IChartOptions } from './chartOptionsBuilder';
 import { getHighchartsOptions } from './highChartsCreators';
 import getLegend from './legend/legendBuilder';
 import HighChartsRenderer, {
@@ -34,6 +34,7 @@ export interface IChartTransformationProps {
     drillableItems: IDrillableItem[];
     height: number;
     width: number;
+    locale: string;
 
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
@@ -66,7 +67,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         width: undefined as number
     };
 
-    private chartOptions: any;
+    private chartOptions: IChartOptions;
 
     public componentWillMount() {
         this.assignChartOptions(this.props);
@@ -85,7 +86,8 @@ export default class ChartTransformation extends React.Component<IChartTransform
             afterRender,
             config,
             onFiredDrillEvent,
-            onLegendReady
+            onLegendReady,
+            locale
         } = this.props;
         const drillConfig = { afm, onFiredDrillEvent };
         const hcOptions = getHighchartsOptions(chartOptions, drillConfig);
@@ -97,6 +99,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
             width,
             afterRender,
             onLegendReady,
+            locale,
             legend: getLegend(config.legend, chartOptions)
         };
     }

@@ -16,7 +16,7 @@
    "visualizations.totals.row.title.avg": "Mittelwert",
    "visualizations.totals.row.title.min": "Min",
    "visualizations.totals.row.title.max": "Max",
-   "visualizations.totals.row.title.nat": "Summe",
+   "visualizations.totals.row.title.nat": "Gesamt",
    "visualizations.totals.row.title.med": "Medianwert",
    "visualizations.headline.tertiary.title": "im Vergleich zu",
    "visualization.numericValues.k": "k",
@@ -33,6 +33,10 @@
    "visualization.ErrorMessageNoData": "Keine Daten",
    "visualization.ErrorDescriptionNoData": "Keine Daten für Ihre Filterauswahl.",
    "visualization.ErrorMessageKpi": "Fehler",
+   "visualization.ErrorMessageUnauthorized": "Nicht autorisiert",
+   "visualization.ErrorDescriptionUnauthorized": "Sie haben leider keinen Zugriff auf diese Betrachtung. Melden Sie sich an oder lassen Sie sich die Berechtigung von Ihrem Administrator erteilen.",
+   "visualization.ErrorMessageNotFound": "Leider können wir diese Betrachtung nicht finden",
+   "visualization.ErrorDescriptionNotFound": "Die Betrachtung mit dieser URL existiert nicht.",
    "gs.filter.loading": "Filter wird geladen…",
    "gs.filter.error": "Fehler beim Laden des Filters",
    "gs.list.loading": "Liste wird geladen…",
@@ -44,5 +48,5 @@
    "gs.list.limitExceeded": "Leider haben Sie den Grenzwert ({limit}) überschritten.",
    "gs.list.noItemsFound": "Keine Elemente gefunden.",
    "gs.list.error": "Fehler beim Laden der Listenobjekte",
-   "previous_year": "vorheriges Jahr"
+   "measure.title.suffix.same_period_year_ago": "vor SP Jahr"
 }

@@ -285,6 +285,22 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                                         }
                                     }
                                 }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    }
+                                }
                             }
                         ]
                     },
@@ -362,6 +378,21 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                                 }
                             }
                         }
+                    }, {
+                        measure: {
+                            localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062_previous_period',
+                            definition: {
+                                previousPeriodMeasure: {
+                                    measureIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
+                                    dateDataSets: [{
+                                        dataSet: {
+                                            uri: '/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/921'
+                                        },
+                                        periodsAgo: 1
+                                    }]
+                                }
+                            }
+                        }
                     }]
                 }],
                 filters: [{
@@ -389,6 +420,101 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 title: 'pop headline test',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/26728eacad349ba6c4c04c5e5cc59437'
+            }
+        }
+    },
+    {
+        visualizationObject: {
+            content: {
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/table'
+                },
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'm1',
+                                    title: '# Accounts with AD Query',
+                                    alias: 'AD Queries',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_pop',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'm1',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'attribute',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'a1',
+                                    displayForm: {
+                                        uri: '/gdc/md/myproject/obj/1515'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                properties: JSON.stringify({
+                    sortItems: [
+                        {
+                            attributeSortItem: {
+                                direction: 'asc',
+                                attributeIdentifier: 'a1'
+                            }
+                        }
+                    ]
+                })
+            },
+            meta: {
+                author: '/gdc/account/profile/johndoe',
+                uri: '/gdc/md/myproject/obj/2',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aa5CD0OcfSpg',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'PoP alias test',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/johndoe'
             }
         }
     }

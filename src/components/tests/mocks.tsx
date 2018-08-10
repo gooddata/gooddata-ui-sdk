@@ -10,7 +10,8 @@ import {
     executionObjectWithTotals,
     oneMeasureOneDimensionResponse,
     twoMeasuresOneDimensionResponse,
-    twoMeasuresAfm
+    twoMeasuresAfm,
+    emptyResponse
 } from '../../execution/fixtures/ExecuteAfm.fixtures';
 
 export const initChartDataLoading = jest.fn(() => Promise.resolve({
@@ -44,30 +45,49 @@ export class ErrorComponent extends DummyComponent {}
 
 export const oneMeasureDataSource: IDataSource = {
     getData: () => Promise.resolve(oneMeasureResponse),
+    getPage: () => Promise.resolve(oneMeasureResponse),
+    getAfm: () => oneMeasureAfm,
+    getFingerprint: () => JSON.stringify(oneMeasureResponse)
+};
+
+export const oneMeasurePagableOnlyDataSource: IDataSource = {
+    getData: () => Promise.resolve(null),
+    getPage: () => Promise.resolve(oneMeasureResponse),
     getAfm: () => oneMeasureAfm,
     getFingerprint: () => JSON.stringify(oneMeasureResponse)
 };
 
 export const oneMeasureOneDimensionDataSource: IDataSource = {
     getData: () => Promise.resolve(oneMeasureOneDimensionResponse),
+    getPage: () => Promise.resolve(oneMeasureOneDimensionResponse),
     getAfm: () => oneMeasureAfm,
     getFingerprint: () => JSON.stringify(oneMeasureOneDimensionResponse)
 };
 
 export const twoMeasuresOneDimensionDataSource: IDataSource = {
     getData: () => Promise.resolve(twoMeasuresOneDimensionResponse),
+    getPage: () => Promise.resolve(twoMeasuresOneDimensionResponse),
     getAfm: () => twoMeasuresAfm,
     getFingerprint: () => JSON.stringify(twoMeasuresOneDimensionResponse)
 };
 
 export const executionObjectWithTotalsDataSource: IDataSource = {
     getData: () => Promise.resolve(responseWithTotals),
+    getPage: () => Promise.resolve(responseWithTotals),
     getAfm: () => executionObjectWithTotals.execution.afm,
     getFingerprint: () => JSON.stringify(responseWithTotals)
 };
 
+export const emptyDataSource: IDataSource = {
+    getData: () => Promise.resolve(emptyResponse),
+    getPage: () => Promise.resolve(emptyResponse),
+    getAfm: () => ({}),
+    getFingerprint: () => JSON.stringify(emptyResponse)
+};
+
 export const tooLargeDataSource: IDataSource = {
     getData: () => Promise.reject(tooLargeResponse),
+    getPage: () => Promise.reject(tooLargeResponse),
     getAfm: () => ({}),
     getFingerprint: () => JSON.stringify(tooLargeDataSource)
 };
@@ -75,6 +95,10 @@ export const tooLargeDataSource: IDataSource = {
 export const delayedTooLargeDataSource: IDataSource = {
     // tslint:disable-next-line:variable-name
     getData: () => (new Promise((_resolve, reject) => {
+        setTimeout(reject(tooLargeResponse), 20);
+    })),
+    // tslint:disable-next-line:variable-name
+    getPage: () => (new Promise((_resolve, reject) => {
         setTimeout(reject(tooLargeResponse), 20);
     })),
     getAfm: () => ({}),

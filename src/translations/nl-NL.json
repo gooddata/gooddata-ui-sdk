@@ -33,6 +33,10 @@
    "visualization.ErrorMessageNoData": "Geen gegevens",
    "visualization.ErrorDescriptionNoData": "Geen gegevens voor uw filterselectie.",
    "visualization.ErrorMessageKpi": "Fout",
+   "visualization.ErrorMessageUnauthorized": "Niet-toegestaan",
+   "visualization.ErrorDescriptionUnauthorized": "U hebt helaas geen toegang tot dit inzicht. Meld u aan of vraag uw administrator om de nodige machtigingen.",
+   "visualization.ErrorMessageNotFound": "Sorry, we kunnen dit inzicht niet vinden",
+   "visualization.ErrorDescriptionNotFound": "Het inzicht met deze url bestaat niet.",
    "gs.filter.loading": "Filter wordt ingelezen…",
    "gs.filter.error": "Fout bij inlezen filter",
    "gs.list.loading": "Lijst wordt ingelezen…",
@@ -44,5 +48,5 @@
    "gs.list.limitExceeded": "Sorry, u hebt de limiet ({limit}) overschreden.",
    "gs.list.noItemsFound": "Geen items gevonden.",
    "gs.list.error": "Fout bij inlezen lijstitems",
-   "previous_year": "vorig jaar"
+   "measure.title.suffix.same_period_year_ago": "ZP jaar geleden"
 }

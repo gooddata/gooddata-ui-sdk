@@ -24,6 +24,7 @@ export interface IHighChartsRendererProps {
     height: number;
     width: number;
     legend: any;
+    locale: string;
     onLegendReady: OnLegendReady;
     legendRenderer(legendProps: ILegendProps): any;
     chartRenderer(chartProps: IChartProps): any;
@@ -183,8 +184,8 @@ export default class HighChartsRenderer
     }
 
     public renderLegend() {
-        const { chartOptions, legend, height, legendRenderer } = this.props;
-        const { items } = legend;
+        const { chartOptions, legend, height, legendRenderer, locale } = this.props;
+        const { items, format } = legend;
 
         if (!legend.enabled) {
             return null;
@@ -202,7 +203,9 @@ export default class HighChartsRenderer
             series: items,
             onItemClick: this.onLegendItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,
-            height
+            height,
+            format,
+            locale
         };
 
         return legendRenderer(legendProps);
@@ -230,9 +233,7 @@ export default class HighChartsRenderer
             }
         );
 
-        const renderLegendFirst = !legend.responsive && (
-            legend.position === TOP || legend.position === LEFT
-        );
+        const renderLegendFirst = legend.position === TOP || legend.position === LEFT;
 
         return (
             <div className={classes}>

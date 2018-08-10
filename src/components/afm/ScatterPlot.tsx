@@ -10,7 +10,7 @@ export {
 
 import { ICommonChartProps } from '../core/base/BaseChart';
 import { ScatterPlot as CoreScatterPlot } from '../core/ScatterPlot';
-import { generateDefaultScatterDimensions } from '../../helpers/dimensions';
+import { generateDefaultDimensionsForPointsCharts } from '../../helpers/dimensions';
 
 /**
  * AFM ScatterPlot
@@ -19,6 +19,6 @@ import { generateDefaultScatterDimensions } from '../../helpers/dimensions';
  */
 export const ScatterPlot = dataSourceProvider<ICommonChartProps>(
     CoreScatterPlot,
-    generateDefaultScatterDimensions,
+    generateDefaultDimensionsForPointsCharts,
     'ScatterPlot'
 );

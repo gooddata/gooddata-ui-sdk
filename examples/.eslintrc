@@ -1,5 +1,5 @@
 {
-  "extends": "gooddata",
+  "extends": "@gooddata",
 
   "rules": {
     "jsx-a11y/label-has-for": 0,

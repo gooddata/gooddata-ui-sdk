@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import range = require('lodash/range');
 import get = require('lodash/get');
+import cloneDeep = require('lodash/cloneDeep');
 import { immutableSet } from '../../utils/common';
 import {
     isNegativeValueIncluded,
@@ -17,11 +18,17 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    getChartOptions,
     generateTooltipHeatMapFn,
-    IPoint
+    generateTooltipXYFn,
+    generateTooltipTreemapFn,
+    IPoint,
+    getBubbleChartSeries,
+    getHeatMapDataClasses,
+    getTreemapAttributes,
+    isDerivedMeasure
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
+import { generateChartOptions } from './helper';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 
@@ -32,35 +39,11 @@ import {
 } from '../constants';
 
 import {
-    DEFAULT_COLOR_PALETTE
+    DEFAULT_COLOR_PALETTE,
+    getLighterColor
 } from '../../utils/color';
-import { IDrillableItem } from '../../../..';
 
 export { IPoint };
-
-export function generateChartOptions(
-    dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,
-    config: any = {
-        type: 'column',
-        stacking: false
-    },
-    drillableItems: IDrillableItem[] = []
-) {
-    const {
-        executionRequest: { afm, resultSpec },
-        executionResponse: { dimensions },
-        executionResult: { data, headerItems }
-    } = dataSet;
-    return getChartOptions(
-        afm,
-        resultSpec,
-        dimensions,
-        data,
-        headerItems,
-        config,
-        drillableItems
-    );
-}
 
 function getMVS(dataSet: any) {
     const {
@@ -83,6 +66,29 @@ function getMVS(dataSet: any) {
     ];
 }
 
+function getMVSTreemap(dataSet: any) {
+    const {
+        executionResponse: { dimensions },
+        executionResult: { headerItems },
+        mdObject
+    } = dataSet;
+    const measureGroup = findMeasureGroupInDimensions(dimensions);
+    const {
+        viewByAttribute: treemapViewByAttribute,
+        stackByAttribute: treemapStackByAttribute
+    } = getTreemapAttributes(
+        dimensions,
+        headerItems,
+        mdObject
+    );
+
+    return [
+        measureGroup,
+        treemapViewByAttribute,
+        treemapStackByAttribute
+    ];
+}
+
 function getSeriesItemDataParameters(dataSet: any, seriesIndex: any) {
     const seriesItem = dataSet.executionResult.data[seriesIndex];
     const mvs = getMVS(dataSet);
@@ -101,7 +107,7 @@ describe('chartOptionsBuilder', () => {
     const barChartWith3MetricsAndViewByAttributeOptions =
         generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
 
-    const pieAndDreemapDataSet = {
+    const pieAndTreemapDataSet = {
         ...fixtures.pieChartWithMetricsOnly,
         executionResult: {
             ...fixtures.pieChartWithMetricsOnly.executionResult,
@@ -115,9 +121,9 @@ describe('chartOptionsBuilder', () => {
         }
     };
 
-    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'pie' });
+    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'pie' });
 
-    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'treemap' });
+    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'treemap' });
 
     const pieChartWithMetricsOnlyOptions: any = generateChartOptions({
         ...fixtures.pieChartWithMetricsOnly
@@ -140,108 +146,112 @@ describe('chartOptionsBuilder', () => {
     });
 
     describe('validateData', () => {
-        it('should be able to validate successfuly', () => {
-            const chartOptions = barChartWithStackByAndViewByAttributesOptions;
-            const validationResult = validateData({}, chartOptions);
+        describe('user supplied limits', () => {
+            it('should validate with "dataTooLarge: true" against series limit', () => {
+                const validationResult = validateData({
+                    series: 1
+                }, barChartWith3MetricsAndViewByAttributeOptions);
 
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: false,
-                hasNegativeValue: false
-            });
-        });
-        it('should validate with "dataTooLarge: true" against series limit', () => {
-            const validationResult = validateData({
-                series: 1
-            }, barChartWith3MetricsAndViewByAttributeOptions);
-
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: true,
-                hasNegativeValue: false
-            });
-        });
-        it('should validate with "dataTooLarge: true" against categories limit', () => {
-            const validationResult = validateData({
-                categories: 1
-            }, barChartWith3MetricsAndViewByAttributeOptions);
-
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: true,
-                hasNegativeValue: false
-            });
-        });
-
-        it('should validate with "dataTooLarge: true" against default chart categories limit ' +
-            `of ${DEFAULT_CATEGORIES_LIMIT}`, () => {
-            const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
-            chartOptions.data.categories = range(DEFAULT_CATEGORIES_LIMIT + 1);
-
-            const validationResult = validateData({}, chartOptions);
-
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: true,
-                hasNegativeValue: false
-            });
-        });
-
-        it('should validate with "dataTooLarge: true" against default pie chart series limit of 1', () => {
-            const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute,
-                {
-                    type: 'pie'
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
                 });
-            const validationResult = validateData({}, chartOptions);
-
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: true,
-                hasNegativeValue: false
             });
-        });
+            it('should validate with "dataTooLarge: true" against categories limit', () => {
+                const validationResult = validateData({
+                    categories: 1
+                }, barChartWith3MetricsAndViewByAttributeOptions);
 
-        it('should validate with "dataTooLarge: true" against default' +
-            `pie chart categories limit of ${PIE_CHART_LIMIT}`, () => {
-            const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly,
-                {
-                    type: 'pie'
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
                 });
-            chartOptions.data.categories = range(PIE_CHART_LIMIT + 1);
-            const validationResult = validateData({}, chartOptions);
-
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: true,
-                hasNegativeValue: false
             });
         });
-        it('should validate with "hasNegativeValue: true" for pie chart if its series contains a negative value',
-            () => {
-            const chartOptions = pieChartOptionsWithNegativeValue;
-            const validationResult = validateData({}, chartOptions);
 
-            expect(
-                validationResult
-            ).toEqual({
-                dataTooLarge: false,
-                hasNegativeValue: true
+        describe('default limits', () => {
+            it('should be able to validate successfuly', () => {
+                const chartOptions = barChartWithStackByAndViewByAttributesOptions;
+                const validationResult = validateData(undefined, chartOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: false
+                });
             });
-        });
-        it('should validate with "hasNegativeValue: true" for treemap if its series contains a negative value',
-            () => {
-                const validationResult = validateData({}, treemapOptionsWithNegativeValue);
-                expect(validationResult).toEqual({
+            it('should validate with "dataTooLarge: true" against default chart categories limit ' +
+                `of ${DEFAULT_CATEGORIES_LIMIT}`, () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+                chartOptions.data.categories = range(DEFAULT_CATEGORIES_LIMIT + 1);
+
+                const validationResult = validateData(undefined, chartOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
+
+            it('should validate with "dataTooLarge: true" against default pie chart series limit of 1', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute,
+                    {
+                        type: 'pie'
+                    });
+                const validationResult = validateData(undefined, chartOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
+
+            it('should validate with "dataTooLarge: true" against default' +
+                `pie chart categories limit of ${PIE_CHART_LIMIT}`, () => {
+                const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly,
+                    {
+                        type: 'pie'
+                    });
+                chartOptions.data.categories = range(PIE_CHART_LIMIT + 1);
+                const validationResult = validateData(undefined, chartOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
+            it('should validate with "hasNegativeValue: true" for pie chart if its series contains a negative value',
+                () => {
+                const chartOptions = pieChartOptionsWithNegativeValue;
+                const validationResult = validateData(undefined, chartOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
                     dataTooLarge: false,
                     hasNegativeValue: true
                 });
             });
+            it('should validate with "hasNegativeValue: true" for treemap if its series contains a negative value',
+                () => {
+                    const validationResult = validateData(undefined, treemapOptionsWithNegativeValue);
+                    expect(validationResult).toEqual({
+                        dataTooLarge: false,
+                        hasNegativeValue: true
+                    });
+                });
+        });
     });
 
     describe('isPopMeasure', () => {
@@ -259,6 +269,20 @@ describe('chartOptionsBuilder', () => {
             ).toEqual(true);
         });
 
+        it('should return false if measureItem was defined as a previousPeriodMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPreviousPeriodMeasure
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            expect(
+                isPopMeasure(measureItem, afm)
+            ).toEqual(false);
+        });
+
         it('should return false if measureItem was defined as a simple measure', () => {
             const measureItem = fixtures
                 .barChartWithPopMeasureAndViewByAttribute
@@ -271,6 +295,51 @@ describe('chartOptionsBuilder', () => {
 
             expect(
                 isPopMeasure(measureItem, afm)
+            ).toEqual(false);
+        });
+    });
+
+    describe('isDerivedMeasure', () => {
+        it('should return true if measureItem was defined as a popMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPopMeasureAndViewByAttribute
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+            expect(
+                isDerivedMeasure(measureItem, afm)
+            ).toEqual(true);
+        });
+
+        it('should return true if measureItem was defined as a previousPeriodMeasure', () => {
+            const measureItem = fixtures
+                .barChartWithPreviousPeriodMeasure
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[0];
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            expect(
+                isDerivedMeasure(measureItem, afm)
+            ).toEqual(true);
+        });
+
+        it('should return false if measureItem was defined as a simple measure', () => {
+            const measureItem = fixtures
+                .barChartWithPopMeasureAndViewByAttribute
+                .executionResponse
+                .dimensions[STACK_BY_DIMENSION_INDEX]
+                .headers[0]
+                .measureGroupHeader
+                .items[1];
+            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+
+            expect(
+                isDerivedMeasure(measureItem, afm)
             ).toEqual(false);
         });
     });
@@ -394,10 +463,38 @@ describe('chartOptionsBuilder', () => {
             expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
         });
 
-        it('should rotate colors from original palete and generate lighter PoP colors', () => {
+        it('should return a palette with a lighter color for each previous period based on it`s source measure', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWithPreviousPeriodMeasure);
+            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            const type = 'column';
+
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
+            const updatedPalette =
+                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
+        });
+
+        it('should rotate colors from original palette and generate lighter PoP colors', () => {
             const [measureGroup, viewByAttribute, stackByAttribute] =
                 getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
             const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const type = 'column';
+
+            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
+            const updatedPalette =
+                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
+
+            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)',
+                'rgb(100,100,100)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
+                'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)' ]);
+        });
+
+        it('should rotate colors from original palette and generate lighter previous period measures', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
+            const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
             const type = 'column';
 
             const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
@@ -465,6 +562,52 @@ describe('chartOptionsBuilder', () => {
                     true,
                     true,
                     true
+                ]);
+            });
+        });
+
+        describe('in usecase of bar chart with previous period measure and view by attribute', () => {
+            const parameters = getSeriesItemDataParameters(fixtures.barChartWithPreviousPeriodMeasure, 0);
+            const seriesItem = parameters[0];
+            const seriesIndex = parameters[1];
+            const measureGroup = parameters[2];
+            const viewByAttribute = parameters[3];
+            const stackByAttribute = parameters[4];
+
+            const seriesItemData = getSeriesItemData(
+                seriesItem,
+                seriesIndex,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                'column',
+                DEFAULT_COLOR_PALETTE
+            );
+
+            it('should fill correct pointData name', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.name)
+                ).toEqual([
+                    'Primary measure - previous period',
+                    'Primary measure - previous period'
+                ]);
+            });
+
+            it('should parse all pointData values', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.y)
+                ).toEqual([
+                    24000,
+                    null
+                ]);
+            });
+
+            it('should enable markers for all non-null pointData values', () => {
+                expect(
+                    seriesItemData.map((pointData: any) => pointData.marker.enabled)
+                ).toEqual([
+                    true,
+                    false
                 ]);
             });
         });
@@ -756,6 +899,617 @@ describe('chartOptionsBuilder', () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
             });
         });
+
+        describe('in use case of bubble', () => {
+            const dummyBucketItem = {
+                visualizationAttribute: {
+                    localIdentifier: 'abc',
+                    displayForm: { uri: 'abc' }
+                }
+            };
+
+            it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
+                const executionResultData = [
+                    [ 1, 2, 3],
+                    [ 4, 5, 6]
+                ];
+                const stackByAttribute = {
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                name: 'abc'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'def'
+                            }
+                        }
+                    ]
+                };
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [ dummyBucketItem ]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [ dummyBucketItem ]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [ dummyBucketItem ]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: 'abc',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 2, z: 3 }]
+                    }, {
+                        name: 'def',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 5, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill X and Y with zeroes when X and Y measure buckets are empty', () => {
+                const executionResultData = [
+                    [3],
+                    [6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [{
+                        localIdentifier: 'tertiary_measures',
+                        items: [dummyBucketItem]
+                    }]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 0, y: 0, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 0, y: 0, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill Y with x values when primary bucket is empty but secondary is not', () => {
+                const executionResultData = [
+                    [ 1, 3],
+                    [ 4, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'secondary_measures',
+                            items: [ dummyBucketItem ]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 0, y: 1, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 0, y: 4, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill X with x and Z with z values when secondary bucket is empty', () => {
+                const executionResultData = [
+                    [1, 3],
+                    [4, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 0, z: 3 }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 0, z: 6 }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should fill Z with NaNs when tertiary bucket is empty', () => {
+                const executionResultData = [
+                    [1, 3],
+                    [4, 6]
+                ];
+                const stackByAttribute = false;
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green'];
+
+                const expectedSeries = [
+                    {
+                        name: '',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [{ x: 1, y: 3, z: NaN }]
+                    }, {
+                        name: '',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: [{ x: 4, y: 6, z: NaN }]
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+
+            it('should handle null in result', () => {
+                const executionResultData = [
+                    [null, 2, 3],
+                    [4, null, 6],
+                    [7, 8, null]
+                ];
+                const stackByAttribute = {
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                name: 'abc'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'def'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                name: 'ghi'
+                            }
+                        }
+                    ]
+                };
+                const mdObject = {
+                    visualizationClass: { uri: 'abc' },
+                    buckets: [
+                        {
+                            localIdentifier: 'measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'secondary_measures',
+                            items: [dummyBucketItem]
+                        }, {
+                            localIdentifier: 'tertiary_measures',
+                            items: [dummyBucketItem]
+                        }
+                    ]
+                };
+                const colorPallete = ['red', 'green', 'blue'];
+
+                const expectedSeries = [
+                    {
+                        name: 'abc',
+                        color: 'red',
+                        legendIndex: 0,
+                        data: [] as any
+                    }, {
+                        name: 'def',
+                        color: 'green',
+                        legendIndex: 1,
+                        data: []
+                    }, {
+                        name: 'ghi',
+                        color: 'blue',
+                        legendIndex: 2,
+                        data: []
+                    }
+                ];
+                const series = getBubbleChartSeries(
+                    executionResultData, stackByAttribute, mdObject, colorPallete
+                );
+
+                expect(series).toEqual(expectedSeries);
+            });
+        });
+
+        describe('in use case of treemap', () => {
+            describe('with only one measure', () => {
+                const dataSet = fixtures.barChartWithSingleMeasureAndNoAttributes;
+                const mVS = getMVSTreemap(dataSet);
+                const type = 'treemap';
+                const seriesData = getSeries(
+                    dataSet.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    {} as any,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                it('should return only one serie', () => {
+                    expect(seriesData.length).toBe(1);
+                });
+
+                it('should fill correct series name equal to measure name', () => {
+                    expect(seriesData[0].name).toEqual('Amount');
+                });
+
+                it('should fill correct series color', () => {
+                    expect(seriesData[0].color).toEqual(DEFAULT_COLOR_PALETTE[0]);
+                });
+
+                it('should fill correct series legendIndex', () => {
+                    expect(seriesData[0].legendIndex).toEqual(0);
+                });
+
+                it('should fill correct series data', () => {
+                    expect(seriesData[0].data.length).toBe(1);
+                    expect(seriesData[0].data[0]).toMatchObject({
+                        value: 116625456.54,
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        format: '#,##0.00',
+                        legendIndex: 0,
+                        name: 'Amount',
+                        marker: expect.any(Object)
+                    });
+                });
+            });
+
+            describe('with one measure and view by attribute', () => {
+                const dataSet = fixtures.treemapWithMetricAndViewByAttribute;
+                const mVS = getMVSTreemap(dataSet);
+                const type = 'treemap';
+                const seriesData = getSeries(
+                    dataSet.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSet.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                it('should return only one serie', () => {
+                    expect(seriesData.length).toBe(1);
+                });
+
+                it('should fill correct series name equal to measure name', () => {
+                    expect(seriesData[0].name).toEqual('Amount');
+                });
+
+                it('should fill correct series legendIndex', () => {
+                    expect(seriesData[0].legendIndex).toEqual(0);
+                });
+
+                it('should fill correct series data', () => {
+                    expect(seriesData[0].data.length).toBe(2);
+                    expect(seriesData[0].data[0]).toMatchObject({
+                        value: 80406324.96,
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        format: '#,##0.00',
+                        legendIndex: 0,
+                        name: 'Direct Sales',
+                        marker: expect.any(Object)
+                    });
+
+                    expect(seriesData[0].data[1]).toMatchObject({
+                        value: 36219131.58,
+                        color: DEFAULT_COLOR_PALETTE[1],
+                        format: '#,##0.00',
+                        legendIndex: 1,
+                        name: 'Inside Sales',
+                        marker: expect.any(Object)
+                    });
+                });
+            });
+
+            describe('with one measure and stack by attribute', () => {
+                const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
+                const mVS = getMVSTreemap(dataSet);
+                const type = 'treemap';
+                const seriesData = getSeries(
+                    dataSet.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSet.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                it('should return only one serie', () => {
+                    expect(seriesData.length).toBe(1);
+                });
+
+                it('should fill correct series name equal to measure name', () => {
+                    expect(seriesData[0].name).toEqual('Amount');
+                });
+
+                it('should fill correct series data', () => {
+                    expect(seriesData[0].data.length).toBe(3); // parent + 2 leafs
+
+                    expect(seriesData[0].data[0]).toMatchObject({
+                        id: '0',
+                        name: 'Amount',
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        showInLegend: true,
+                        legendIndex: 0,
+                        format: '#,##0.00'
+                    });
+
+                    expect(seriesData[0].data[1]).toMatchObject({
+                        parent: '0',
+                        x: 0,
+                        y: 0,
+                        value: 80406324.96,
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Direct Sales'
+                    });
+
+                    expect(seriesData[0].data[2]).toMatchObject({
+                        parent: '0',
+                        x: 0,
+                        y: 1,
+                        value: 36219131.58,
+                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Inside Sales'
+                    });
+                });
+            });
+
+            describe('with one measure, view by and stack by attribute', () => {
+                const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
+                const mVS = getMVSTreemap(dataSet);
+                const type = 'treemap';
+                const seriesData = getSeries(
+                    dataSet.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSet.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                it('should return only one serie', () => {
+                    expect(seriesData.length).toBe(1);
+                });
+
+                it('should fill correct series name equal to measure name', () => {
+                    expect(seriesData[0].name).toEqual('Amount');
+                });
+
+                it('should fill correct series data', () => {
+                    expect(seriesData[0].data.length).toBe(6); // 2 parents + 2 * 2 leafs
+
+                    expect(seriesData[0].data[0]).toMatchObject({
+                        id: '0',
+                        name: 'Direct Sales',
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        showInLegend: true,
+                        legendIndex: 0,
+                        format: '#,##0.00'
+                    });
+                    expect(seriesData[0].data[1]).toMatchObject({
+                        id: '1',
+                        name: 'Inside Sales',
+                        color: DEFAULT_COLOR_PALETTE[1],
+                        showInLegend: true,
+                        legendIndex: 1,
+                        format: '#,##0.00'
+                    });
+
+                    expect(seriesData[0].data[2]).toMatchObject({
+                        parent: '0',
+                        x: 0,
+                        y: 0,
+                        value: 58427629.5,
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'West Coast'
+                    });
+
+                    expect(seriesData[0].data[3]).toMatchObject({
+                        parent: '0',
+                        x: 1,
+                        y: 1,
+                        value: 21978695.46,
+                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'East Coast'
+                    });
+
+                    expect(seriesData[0].data[4]).toMatchObject({
+                        parent: '1',
+                        x: 2,
+                        y: 2,
+                        value: 30180730.62,
+                        color: DEFAULT_COLOR_PALETTE[1],
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'West Coast'
+                    });
+
+                    expect(seriesData[0].data[5]).toMatchObject({
+                        parent: '1',
+                        x: 3,
+                        y: 3,
+                        value: 6038400.96,
+                        color: getLighterColor(DEFAULT_COLOR_PALETTE[1], 0.4),
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'East Coast'
+                    });
+                });
+            });
+
+            describe('with two measures and stack by attribute including client sorting', () => {
+                const dataSet = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+                const mVS = getMVSTreemap(dataSet);
+                const type = 'treemap';
+                const seriesData = getSeries(
+                    dataSet.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSet.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                it('should return only one serie', () => {
+                    expect(seriesData.length).toBe(1);
+                });
+
+                it('should fill correct series name equal to measure name', () => {
+                    expect(seriesData[0].name).toEqual('Amount, # of Open Opps.');
+                });
+
+                it('should fill correct series data', () => {
+                    expect(seriesData[0].data.length).toBe(6); // 2 parents + 2 * 2 leafs
+
+                    expect(seriesData[0].data[0]).toMatchObject({
+                        id: '0',
+                        name: 'Amount',
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        showInLegend: true,
+                        legendIndex: 0,
+                        format: '#,##0.00'
+                    });
+                    expect(seriesData[0].data[1]).toMatchObject({
+                        id: '1',
+                        name: '# of Open Opps.',
+                        color: DEFAULT_COLOR_PALETTE[1],
+                        showInLegend: true,
+                        legendIndex: 1,
+                        format: '#,##0.00'
+                    });
+
+                    expect(seriesData[0].data[2]).toMatchObject({
+                        parent: '0',
+                        x: 0,
+                        y: 0,
+                        value: 58427629.5,
+                        color: DEFAULT_COLOR_PALETTE[0],
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Direct Sales'
+                    });
+
+                    expect(seriesData[0].data[3]).toMatchObject({
+                        parent: '0',
+                        x: 0,
+                        y: 1,
+                        value: 21978695.46,
+                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Inside Sales'
+                    });
+
+                    expect(seriesData[0].data[4]).toMatchObject({
+                        parent: '1',
+                        x: 1,
+                        y: 1,
+                        value: 30180730.62,
+                        color: DEFAULT_COLOR_PALETTE[1],
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Inside Sales'
+                    });
+
+                    expect(seriesData[0].data[5]).toMatchObject({
+                        parent: '1',
+                        x: 1,
+                        y: 0,
+                        value: 6038400.96,
+                        color: getLighterColor(DEFAULT_COLOR_PALETTE[1], 0.4),
+                        format: '#,##0.00',
+                        showInLegend: false,
+                        name: 'Direct Sales'
+                    });
+                });
+            });
+        });
     });
 
     describe('getDrillContext', () => {
@@ -912,8 +1666,159 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
+        describe('in usecase of bubble chart with 3 measures and attribute', () => {
+            const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
+            const { afm } = dataSet.executionRequest;
+            const mVS = getMVS(dataSet);
+            const type = 'bubble';
+            const seriesWithoutDrillability = getSeries(
+                dataSet.executionResult.data,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                dataSet.mdObject,
+                DEFAULT_COLOR_PALETTE
+            );
+            const drillableMeasures = [{
+                uri: dataSet.executionResponse.dimensions[1]
+                    .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
+            }];
+            const drillableMeasuresSeriesData = getDrillableSeries(
+                seriesWithoutDrillability,
+                drillableMeasures,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                afm
+            );
+
+            it('should assign correct drillContext to pointData with drilldown true', () => {
+                expect(drillableMeasuresSeriesData.length).toBe(20);
+                expect(drillableMeasuresSeriesData[8].data[0]).toEqual({
+                    x: 245,
+                    y: 32,
+                    z: 2280481.04,
+                    drilldown: true,
+                    drillContext: [
+                        {
+                            id: '784a5018a51049078e8f7e86247e08a3',
+                            format: '#,##0.00',
+                            value: '_Snapshot [EOP-2]',
+                            identifier: 'ab0bydLaaisS',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                        },
+                        {
+                            id: '9e5c3cd9a93f4476a93d3494cedc6010',
+                            format: '#,##0',
+                            value: '# of Open Opps.',
+                            identifier: 'aaYh6Voua2yj',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                        },
+                        {
+                            id: '71d50cf1d13746099b7f506576d78e4a',
+                            format: '$#,#00.00',
+                            value: 'Remaining Quota',
+                            identifier: 'ab4EFOAmhjOx',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                        },
+                        {
+                            id: '1235',
+                            value: 'Jessica Traven',
+                            identifier: 'label.owner.id.name',
+                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                        }
+                    ]
+                });
+                drillableMeasuresSeriesData
+                    .map((seriesItem: any, index: number) => {
+                        expect(seriesItem.isDrillable).toEqual(true);
+                        expect(seriesItem.legendIndex).toEqual(index);
+                        expect(seriesItem.data[0].drilldown).toEqual(true);
+                    });
+            });
+
+            it('should fillter out points with some of measures are null', () => {
+                const dataSetWithNulls = fixtures.bubbleChartWithNulls;
+                const { afm } = dataSetWithNulls.executionRequest;
+                const mVS = getMVS(dataSetWithNulls);
+                const type = 'bubble';
+
+                const seriesWithoutDrillability = getSeries(
+                    dataSetWithNulls.executionResult.data,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    dataSetWithNulls.mdObject,
+                    DEFAULT_COLOR_PALETTE
+                );
+
+                const drillableMeasures = [{
+                    uri: dataSetWithNulls.executionResponse.dimensions[1]
+                        .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                }];
+                const drillableMeasuresSeriesData = getDrillableSeries(
+                    seriesWithoutDrillability,
+                    drillableMeasures,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    afm
+                );
+                expect(drillableMeasuresSeriesData[0].data.length).toEqual(0); // x is null
+                expect(drillableMeasuresSeriesData[1].data.length).toEqual(0); // y is null
+                expect(drillableMeasuresSeriesData[2].data.length).toEqual(0); // x and y are null
+                expect(drillableMeasuresSeriesData[3].data.length).toEqual(0); // z is null
+            });
+        });
+
         describe('in usecase of bar chart with 6 pop measures and view by attribute', () => {
             const dataSet = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
+            const { afm } = dataSet.executionRequest;
+            const mVS = getMVS(dataSet);
+            const type = 'bar';
+            const seriesWithoutDrillability = getSeries(
+                dataSet.executionResult.data,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                type,
+                {} as any,
+                DEFAULT_COLOR_PALETTE
+            );
+
+            describe('with all drillable measures', () => {
+                const drillableMeasures = [{
+                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                }];
+                const drillableMeasuresSeriesData = getDrillableSeries(
+                    seriesWithoutDrillability,
+                    drillableMeasures,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    type,
+                    afm
+                );
+
+                it('should assign correct drillContext to pointData with drilldown true', () => {
+                    const startYear = parseInt(// should be 2008
+                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                    );
+                    drillableMeasuresSeriesData.forEach((seriesItem: any) => {
+                        seriesItem.data.forEach((point: any, index: number) => {
+                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                        });
+                    });
+                });
+            });
+        });
+
+        describe('in usecase of bar chart with 6 previous period measures', () => {
+            const dataSet = fixtures.barChartWith6PreviousPeriodMeasures;
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'bar';
@@ -1248,6 +2153,208 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
+    describe('generateTooltipXYFn', () => {
+        const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
+        const [measureGroup, , stackByAttribute] = getMVS(dataSet);
+
+        const point: IPoint = {
+            value: 300,
+            name: 'point name',
+            x: 10,
+            y: 20,
+            z: 30,
+            series: {
+                name: 'serie name',
+                userOptions: {
+                    dataLabels: {
+                        formatGD: 'abcd'
+                    }
+                }
+            }
+        };
+        it('should generate valid tooltip for no measures', () => {
+            const measures: any[] = [];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 1 measure', () => {
+            const measures = [measureGroup.items[0]];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 2 measures', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1]];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 3 measures', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">point name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr>\n<tr>
+                <td class=\"title\">Remaining Quota</td>
+                <td class=\"value\">$30.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for point without name using name of serie', () => {
+            const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
+            const pointWithoutName = cloneDeep(point);
+            pointWithoutName.name = undefined;
+
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Sales Rep</td>
+                <td class=\"value\">serie name</td>
+            </tr>\n<tr>
+                <td class=\"title\">_Snapshot [EOP-2]</td>
+                <td class=\"value\">10.00</td>
+            </tr>\n<tr>
+                <td class=\"title\"># of Open Opps.</td>
+                <td class=\"value\">20</td>
+            </tr>\n<tr>
+                <td class=\"title\">Remaining Quota</td>
+                <td class=\"value\">$30.00</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
+            expect(tooltipFn(pointWithoutName)).toEqual(expectedResult);
+        });
+    });
+
+    describe('generateTooltipTreemapFn', () => {
+        const point: IPoint = {
+            category: 'category',
+            value: 300,
+            name: 'point name',
+            x: 0,
+            y: 0,
+            series: {
+                name: 'serie name',
+                userOptions: {
+                    dataLabels: {
+                        formatGD: 'abcd'
+                    }
+                }
+            }
+        };
+        it('should generate valid tooltip for 1 measure', () => {
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">category</td>
+                <td class=\"value\">300</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipTreemapFn(null, null);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should respect measure format', () => {
+            const pointWithFormat = cloneDeep(point);
+            pointWithFormat.format = 'abcd';
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">category</td>
+                <td class=\"value\">abcd</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipTreemapFn(null, null);
+            expect(tooltipFn(pointWithFormat)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 1 measure and view by', () => {
+            const dataSet = fixtures.treemapWithMetricAndViewByAttribute;
+            const [, viewByAttribute , stackByAttribute] = getMVSTreemap(dataSet);
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Department</td>
+                <td class=\"value\">Direct Sales</td>
+            </tr>\n<tr>
+                <td class=\"title\">serie name</td>
+                <td class=\"value\">300</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 1 measure and stack by', () => {
+            const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
+            const [, viewByAttribute, stackByAttribute] = getMVSTreemap(dataSet);
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Department</td>
+                <td class=\"value\">Direct Sales</td>
+            </tr>\n<tr>
+                <td class=\"title\">category</td>
+                <td class=\"value\">300</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it('should generate valid tooltip for 1 measure, view by and stack by', () => {
+            const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const [, viewByAttribute, stackByAttribute] = getMVSTreemap(dataSet);
+            const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">Department</td>
+                <td class=\"value\">Direct Sales</td>
+            </tr>\n<tr>
+                <td class=\"title\">Region</td>
+                <td class=\"value\">West Coast</td>
+            </tr>\n<tr>
+                <td class=\"title\">serie name</td>
+                <td class=\"value\">300</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+    });
+
     describe('getChartOptions', () => {
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
         const dataSetWithoutMeasureGroup = immutableSet(dataSet,
@@ -1376,8 +2483,11 @@ describe('chartOptionsBuilder', () => {
                 { type: 'pie' }
             );
             const treemapOptions = generateChartOptions(
-                fixtures.barChartWithViewByAttribute,
-                { type: 'treemap' }
+                fixtures.treemapWithMetricAndViewByAttribute,
+                {
+                    type: 'treemap',
+                    mdObject: fixtures.treemapWithMetricAndViewByAttribute.mdObject
+                }
             );
 
             it('should assign stacking normal', () => {
@@ -1399,6 +2509,7 @@ describe('chartOptionsBuilder', () => {
                 const mVS = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
                 const viewByAttribute = mVS[1];
                 const pointData = {
+                    x: 0,
                     y: 1,
                     format: '# ###',
                     name: 'point',
@@ -1408,10 +2519,12 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
 
-                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                let expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
 
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedTooltip);
+
+                expectedTooltip = generateTooltipTreemapFn(viewByAttribute, null)(pointData);
 
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTooltip);
@@ -1445,14 +2558,15 @@ describe('chartOptionsBuilder', () => {
                     category: 'category',
                     series: {
                         name: 'series'
-                    }
+                    },
+                    value: 2
                 };
 
                 const expectedPieChartTooltip = generateTooltipFn(null, 'pie')(pointData);
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
-                const expectedTreemapTooltip = generateTooltipFn(null, 'treemap')(pointData);
+                const expectedTreemapTooltip = generateTooltipTreemapFn(null, null)(pointData);
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTreemapTooltip);
             });
@@ -1478,8 +2592,25 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.colorPalette).toEqual(['rgb(161,224,243)', 'rgb(20,178,226)']);
             });
 
-            it('should assign correct tooltip function', () => {
+            it('should assign correct tooltip function for pop measure', () => {
                 const mVS = getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
+                const viewByAttribute = mVS[1];
+                const pointData = {
+                    y: 1,
+                    format: '# ###',
+                    name: 'point',
+                    category: 'category',
+                    series: {
+                        name: 'series'
+                    }
+                };
+                const tooltip = chartOptions.actions.tooltip(pointData);
+                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                expect(tooltip).toBe(expectedTooltip);
+            });
+
+            it('should assign correct tooltip function for previous period measure', () => {
+                const mVS = getMVS(fixtures.barChartWithPreviousPeriodMeasure);
                 const viewByAttribute = mVS[1];
                 const pointData = {
                     y: 1,
@@ -1726,6 +2857,17 @@ describe('chartOptionsBuilder', () => {
                 expect(chartOptions.data.series.length).toEqual(20);
             });
 
+            it('should flip axis if primary measure bucket is empty', () => {
+                const customMdObject = cloneDeep(fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject);
+                customMdObject.buckets[0].items = [];
+                const chartOptions = generateChartOptions(fixtures.bubbleChartWith3MetricsAndAttribute, {
+                    type: 'bubble',
+                    mdObject: customMdObject
+                });
+
+                expect(chartOptions.data.series[0].data[0].x).toEqual(0);
+            });
+
             it('Should generate correct axes', () => {
                 const chartOptions = generateChartOptions(fixtures.bubbleChartWith3MetricsAndAttribute, {
                     type: 'bubble',
@@ -1838,6 +2980,83 @@ describe('chartOptionsBuilder', () => {
                     );
                     const expectedCategories = [[''], ['']];
                     expect(chartOptions.data.categories).toEqual(expectedCategories);
+                });
+
+                it('should generate Yaxes without format from measure', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.barChartWithStackByAndViewByAttributes,
+                        {
+                            type: 'heatmap'
+                        }
+                    );
+                    const expectedYAxis = [{
+                        label: 'Region'
+                    }];
+                    expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
+
+                describe('getHeatMapDataClasses', () => {
+                    it('should return empty array when there are no values in series', () => {
+                        const series = [{ data: [{ value: null as any }] }];
+                        const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
+                        const dataClasses = getHeatMapDataClasses(series, []);
+
+                        expect(dataClasses).toEqual(expectedDataClasses);
+                    });
+
+                    it('should return single dataClass when series have only one value', () => {
+                        const series = [{
+                            data: [{
+                                value: 10
+                            }]
+                        }];
+                        const colorPalette = ['r', 'g', 'b'];
+                        const expectedDataClasses = [
+                            {
+                                from: 10,
+                                to: 10,
+                                color: 'g'
+                            }
+                        ];
+                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+
+                        expect(dataClasses).toEqual(expectedDataClasses);
+                    });
+
+                    it('should return 7 data classes with valid color', () => {
+                        const series = [{
+                            data: [{
+                                    value: 0
+                                }, {
+                                    value: 20
+                                }, {
+                                    value: 30
+                            }]
+                        }];
+                        const colorPalette = ['r', 'g', 'b'];
+                        const approximatelyExpectedDataClasses = [
+                            {
+                                from: 0,
+                                color: 'r'
+                            }, {
+                                color: 'g'
+                            }, {
+                                color: 'b'
+                            }, {
+                                color: 'r'
+                            }, {
+                                color: 'g'
+                            }, {
+                                color: 'b'
+                            }, {
+                                to: 30,
+                                color: 'r'
+                            }
+                        ];
+                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+
+                        expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
+                    });
                 });
             });
         });

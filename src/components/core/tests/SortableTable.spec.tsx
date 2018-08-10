@@ -3,27 +3,10 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 import { AFM } from '@gooddata/typings';
 import { testUtils } from '@gooddata/js-utils';
-import { IDataSource } from '../../../interfaces/DataSource';
-import {
-    emptyResponse,
-    oneMeasureResponse,
-    oneMeasureAfm
-} from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { ITableProps, PureTable } from '../PureTable';
 import { SortableTable, ISortableTableState } from '../SortableTable';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
-
-const oneMeasureDataSource: IDataSource = {
-    getData: () => Promise.resolve(oneMeasureResponse),
-    getAfm: () => oneMeasureAfm,
-    getFingerprint: () => JSON.stringify(oneMeasureResponse)
-};
-
-const emptyDataSource: IDataSource = {
-    getData: () => Promise.resolve(emptyResponse),
-    getAfm: () => ({}),
-    getFingerprint: () => JSON.stringify(emptyResponse)
-};
+import { oneMeasureDataSource, emptyDataSource } from '../../tests/mocks';
 
 const sortItem: AFM.IAttributeSortItem = {
     attributeSortItem: {
