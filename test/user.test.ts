@@ -151,6 +151,30 @@ describe('user', () => {
             });
         });
 
+        describe('getCurrentProfile', () => {
+            it('should get current user\'s profile', () => {
+                const profileUri = 'PROFILE_URI';
+
+                fetchMock.mock(
+                    '/gdc/account/profile/current',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            accountSetting: {
+                                links: {
+                                    self: profileUri
+                                }
+                            }
+                        })
+                    }
+                );
+
+                return createUser().getCurrentProfile().then((accountSetting) => {
+                    expect(accountSetting.links.self).toEqual(profileUri);
+                });
+            });
+        });
+
         describe('updateProfileSettings', () => {
             it('should update user\'s settings', () => {
                 expect.assertions(1);

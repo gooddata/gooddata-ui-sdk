@@ -91,6 +91,16 @@ export class UserModule {
     }
 
     /**
+     * Gets current user's profile
+     * @method getCurrentProfile
+     * @return {Promise} resolves with account setting object if user logged in, false otherwise
+     */
+    public getCurrentProfile() {
+        return this.xhr.get('/gdc/account/profile/current')
+            .then(r => r.getData().accountSetting);
+    }
+
+    /**
      * Updates user's profile settings
      * @method updateProfileSettings
      * @param {String} profileId - User profile identifier
