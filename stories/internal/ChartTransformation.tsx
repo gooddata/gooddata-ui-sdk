@@ -981,8 +981,8 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
     .add('Dynamic Chart test', () => (
         <DynamicChart />
     ))
-    .add('ChartTransformation with viewBy attribute and German number format', () => {
-        const dataSet = fixtures.barChartWithViewByAttribute;
+    .add('ChartTransformation with viewBy and stackBy attribute and German number format', () => {
+        const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
 
         return screenshotWrap(
             wrap(
@@ -994,7 +994,12 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                         }
                     ]}
                     config={{
-                        type: 'treemap',
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
                         colors: fixtures.customPalette,
                         ...GERMAN_SEPARATORS
                     }}

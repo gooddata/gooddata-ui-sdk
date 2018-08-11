@@ -404,7 +404,7 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any, config
     }
 }
 
-function getLabelsConfiguration(chartOptions: any, config?: IChartConfig) {
+function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const {
         stacking,
         yAxes = [],
@@ -463,12 +463,12 @@ function getLabelsConfiguration(chartOptions: any, config?: IChartConfig) {
     };
 }
 
-function getStackingConfiguration(chartOptions: any) {
+function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            formatter: stackLabelFormatter
+            formatter: partial(stackLabelFormatter, config)
         }
     }));
 
@@ -778,6 +778,7 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getStackingConfiguration,
         hideOverlappedLabels,
         getShowInPercentConfiguration,
+        getLabelsConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,
@@ -785,10 +786,8 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config));
+        return merge(config, configurator(chartOptions, config, chartConfig));
     }, {});
 
-    const labelConfigData = getLabelsConfiguration(chartOptions, chartConfig);
-
-    return merge({}, commonData, labelConfigData);
+    return merge({}, commonData);
 }
