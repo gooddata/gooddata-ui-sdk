@@ -466,12 +466,12 @@ function getLabelsConfiguration(chartOptions: any, config?: IChartConfig) {
     };
 }
 
-function getStackingConfiguration(chartOptions: any, config?: IChartConfig) {
+function getStackingConfiguration(chartOptions: any) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            formatter: partial(stackLabelFormatter, config)
+            formatter: stackLabelFormatter
         }
     }));
 
@@ -781,6 +781,7 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
     const configurators = [
         getAxesConfiguration,
         getTitleConfiguration,
+        getStackingConfiguration,
         hideOverlappedLabels,
         getShowInPercentConfiguration,
         getDataConfiguration,
@@ -793,12 +794,7 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         return merge(config, configurator(chartOptions, config));
     }, {});
 
-    const chartConfigData = [
-        getLabelsConfiguration,
-        getStackingConfiguration
-    ].reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, chartConfig));
-    }, {});
+    const labelConfigData = getLabelsConfiguration(chartOptions, chartConfig);
 
-    return merge({}, commonData, chartConfigData);
+    return merge({}, commonData, labelConfigData);
 }
