@@ -768,7 +768,12 @@ export function getSeries(
             seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
         }
 
-        return seriesItemConfig;
+        const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
+
+        return {
+            ...seriesItemConfig,
+            ...turboThresholdProp
+        };
     });
 }
 
