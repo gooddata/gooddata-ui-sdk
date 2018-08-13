@@ -17,6 +17,11 @@ import {
     MEASURE_3
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
+import {
+    DATA_LABELS_VISIBLE_CONFIG,
+    DATA_LABELS_HIDDEN_CONFIG,
+    DATA_LABELS_AUTO_CONFIG
+} from '../data/configProps';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -129,6 +134,54 @@ storiesOf('Core components/Treemap', module)
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                 />
+            </div>
+        )
+    )).add('data labels config', () => (
+        screenshotWrap(
+            <div>
+                <div className="storybook-title">default = auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <Treemap
+                        projectId="storybook"
+                        measures={[MEASURE_1]}
+                        viewBy={ATTRIBUTE_1}
+                        segmentBy={ATTRIBUTE_2}
+                        onError={onErrorHandler}
+                    />
+                </div>
+                <div className="storybook-title">auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <Treemap
+                        projectId="storybook"
+                        measures={[MEASURE_1]}
+                        viewBy={ATTRIBUTE_1}
+                        segmentBy={ATTRIBUTE_2}
+                        onError={onErrorHandler}
+                        config={DATA_LABELS_AUTO_CONFIG}
+                    />
+                </div>
+                <div className="storybook-title">show</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <Treemap
+                        projectId="storybook"
+                        measures={[MEASURE_1]}
+                        viewBy={ATTRIBUTE_1}
+                        segmentBy={ATTRIBUTE_2}
+                        onError={onErrorHandler}
+                        config={DATA_LABELS_VISIBLE_CONFIG}
+                    />
+                </div>
+                <div className="storybook-title">hide</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <Treemap
+                        projectId="storybook"
+                        measures={[MEASURE_1]}
+                        viewBy={ATTRIBUTE_1}
+                        segmentBy={ATTRIBUTE_2}
+                        onError={onErrorHandler}
+                        config={DATA_LABELS_HIDDEN_CONFIG}
+                    />
+                </div>
             </div>
         )
     ));

@@ -906,6 +906,19 @@ describe('chartOptionsBuilder', () => {
                 }
             };
 
+            const dummyMeasureGroup = {
+                items: [
+                    {
+                        measureHeaderItem: {
+                            localIdentifier: 'm1',
+                            name: 'dummyName',
+                            format: '#.##x'
+                        }
+
+                    }
+                ]
+            };
+
             it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
                 const executionResultData = [
                     [ 1, 2, 3],
@@ -924,6 +937,7 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [
@@ -946,16 +960,20 @@ describe('chartOptionsBuilder', () => {
                         name: 'abc',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 2, z: 3 }]
+                        data: [{ x: 1, y: 2, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 5, z: 6 }]
+                        data: [{ x: 4, y: 5, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -981,16 +999,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 0, y: 0, z: 3 }]
+                        data: [{ x: 0, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 0, y: 0, z: 6 }]
+                        data: [{ x: 0, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1021,16 +1043,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 0, y: 1, z: 3 }]
+                        data: [{ x: 0, y: 1, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 0, y: 4, z: 6 }]
+                        data: [{ x: 0, y: 4, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1061,16 +1087,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 0, z: 3 }]
+                        data: [{ x: 1, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 0, z: 6 }]
+                        data: [{ x: 4, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1101,16 +1131,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 3, z: NaN }]
+                        data: [{ x: 1, y: 3, z: NaN, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 6, z: NaN }]
+                        data: [{ x: 4, y: 6, z: NaN, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1175,7 +1209,11 @@ describe('chartOptionsBuilder', () => {
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1698,6 +1736,7 @@ describe('chartOptionsBuilder', () => {
                     x: 245,
                     y: 32,
                     z: 2280481.04,
+                    format: '$#,#00.00',
                     drilldown: true,
                     drillContext: [
                         {
@@ -2960,7 +2999,6 @@ describe('chartOptionsBuilder', () => {
                             { x: 1, y: 1, value: 30180730.62, drilldown: false }
                         ],
                         dataLabels: {
-                            enabled: true,
                             formatGD: '#,##0.00'
                         },
                         legendIndex: 0,

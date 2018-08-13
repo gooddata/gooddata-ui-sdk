@@ -4,17 +4,18 @@ import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
 
-import range = require('lodash/range');
+import cloneDeep = require('lodash/cloneDeep');
+import compact = require('lodash/compact');
+import escape = require('lodash/escape');
 import get = require('lodash/get');
-import isEqual = require('lodash/isEqual');
 import includes = require('lodash/includes');
 import isEmpty = require('lodash/isEmpty');
-import compact = require('lodash/compact');
-import without = require('lodash/without');
-import escape = require('lodash/escape');
-import unescape = require('lodash/unescape');
+import isEqual = require('lodash/isEqual');
 import isUndefined = require('lodash/isUndefined');
-import cloneDeep = require('lodash/cloneDeep');
+import last = require('lodash/last');
+import range = require('lodash/range');
+import unescape = require('lodash/unescape');
+import without = require('lodash/without');
 
 import { IChartConfig, IChartLimits } from './Chart';
 import {
@@ -417,9 +418,7 @@ export interface ISeriesItemConfig {
 
 export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader']
 ) {
     const data = [] as any;
     executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
@@ -434,8 +433,6 @@ export function getHeatmapSeries(
         turboThreshold: 0,
         yAxis: 0,
         dataLabels: {
-            enabled: ((!viewByAttribute || (viewByAttribute.items.length <= 6)) &&
-                        (!stackByAttribute || (stackByAttribute.items.length <= 20))),
             formatGD: unwrap(measureGroup.items[0]).format
         },
         legendIndex: 0
@@ -485,6 +482,7 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
@@ -507,7 +505,8 @@ export function getBubbleChartSeries(
                 x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
                 y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
                 // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
-                z: parseFloat(resData[2 - emptyBucketsCount])
+                z: parseFloat(resData[2 - emptyBucketsCount]),
+                format: unwrap(last(measureGroup.items)).format // only for dataLabel format
             }];
         }
         return {
@@ -712,11 +711,11 @@ export function getSeries(
     colorPalette: string[]
 ): any {
     if (isHeatmap(type)) {
-        return getHeatmapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+        return getHeatmapSeries(executionResultData, measureGroup);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
+        return getBubbleChartSeries(executionResultData, measureGroup, stackByAttribute, mdObject, colorPalette);
     } else if (isTreemap(type) && stackByAttribute) {
         return getTreemapStackedSeries(
             executionResultData,
