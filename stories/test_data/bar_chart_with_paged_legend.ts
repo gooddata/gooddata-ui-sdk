@@ -9,8 +9,7 @@ const config: any = {
                     objectUri: '/gdc/md/oim7k9wbfmhq1xcpbuwvr41pl7ztaat7/obj/9211',
                     title: '_Close [BOP]',
                     measureFilters: [],
-                    showInPercent: false,
-                    showPoP: false
+                    showInPercent: false
                 }
             }
         ],

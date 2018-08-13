@@ -57,7 +57,7 @@ function getDerivedMeasureTitleBase(masterMeasure: VisualizationObject.IMeasure)
  *
  * @internal
  */
-export function fillPoPTitlesAndAliases(
+export function fillDerivedMeasuresTitlesAndAliases(
     mdObject: IVisualizationObjectContent,
     suffixFactory: DerivedMeasureTitleSuffixFactory
 ): IVisualizationObjectContent {
