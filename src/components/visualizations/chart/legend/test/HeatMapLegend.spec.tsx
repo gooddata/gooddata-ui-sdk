@@ -14,18 +14,22 @@ describe('HeatMapLegend', () => {
     it('should render legend', () => {
         const series = [
             {
+                color: 'abc',
+                legendIndex: 0,
                 range: {
                     from: 1,
                     to: 2
                 }
             }, {
+                color: 'def',
+                legendIndex: 1,
                 range: {
                     from: 4,
                     to: 5
                 }
             }
         ];
-        const wrapper = renderLegend({ series, numericSymbols });
+        const wrapper = renderLegend({ series, numericSymbols, isSmall: false });
 
         expect(wrapper.find('.heatmap-legend').length).toEqual(1);
     });

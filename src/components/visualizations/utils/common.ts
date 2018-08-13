@@ -90,7 +90,8 @@ export function formatLegendLabel(value: number, format: string, diff: number, n
         formattingString += '[<1]0.00;[<10]#.#;[<100]#.#;';
     }
 
-    const k = `[<1000]0;[<10000]#.#,${numericSymbols[0]};[<999500]#,${numericSymbols[0]};`;
+    const k = diff < 10000
+        ? '[<999500]0;' : `[<1000]0;[<10000]#.#,${numericSymbols[0]};[<999500]#,${numericSymbols[0]};`;
     const m = `[<10000000]#.#,,${numericSymbols[1]};[<999500000]#,,${numericSymbols[1]};`;
     const b = `[<10000000000]#.#,,,${numericSymbols[2]};[<999500000000]#,,,${numericSymbols[2]};`;
     const t = `[<10000000000000]#.#,,,${numericSymbols[3]};[>=10000000000000]#,,,${numericSymbols[3]}`;

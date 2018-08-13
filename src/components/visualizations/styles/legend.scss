@@ -63,45 +63,6 @@ $responsive-legend: 'only screen and (max-width: 767px)';
         }
     }
 
-    .heatmap-legend {
-        font-family: $gd-font-primary;
-
-        .legend-labels {
-            display: flex;
-
-            .label {
-                font-size: 11px;
-                line-height: 20px;
-                color: $gd-color-link;
-
-                @include text-overflow();
-                &.left {
-                    width: 25px;
-                    text-align: left;
-                }
-                &.right {
-                    width: 25px;
-                    text-align: right;
-                }
-                &.center {
-                    width: 50px;
-                    text-align: center;
-                }
-            }
-        }
-
-        .legend-boxes {
-            flex: 1 0 0;
-            display: flex;
-
-            .box {
-                box-sizing: border-box;
-                width: 50px;
-                height: 10px;
-            }
-        }
-    }
-
     .paging {
         white-space: nowrap;
 
@@ -215,6 +176,126 @@ $responsive-legend: 'only screen and (max-width: 767px)';
                 // stylelint-disable-next-line max-nesting-depth
                 strong {
                     color: $gd-color-dark;
+                }
+            }
+        }
+
+    }
+
+    &.heatmap-legend {
+        align-items: flex-end;
+        flex-direction: column;
+
+        font-family: $gd-font-primary;
+        margin-bottom: 2px;
+
+        .labels {
+            display: flex;
+            font-size: 11px;
+            line-height: 20px;
+            overflow: visible;
+            text-overflow: unset;
+            color: $gd-color-link;
+
+            .left {
+                width: 30px;
+                text-align: left;
+            }
+            .right {
+                width: 30px;
+                text-align: right;
+            }
+            .center {
+                width: 40px;
+                text-align: center;
+            }
+            .middle {
+                width: 40px;
+                text-align: center;
+            }
+            .empty {
+                width: 10px;
+            }
+        }
+
+        .boxes {
+            display: flex;
+            flex: 0 0 auto;
+            height: 10px;
+
+            .box {
+                box-sizing: border-box;
+                width: 50px;
+            }
+        }
+
+        &.small {
+            .labels {
+                .left {
+                    width: 20px;
+                }
+                .right {
+                    width: 20px;
+                }
+                .center {
+                    width: 40px;
+                }
+                .middle {
+                    width: 38px;
+                }
+                .empty {
+                    display: none;
+                }
+            }
+
+            .boxes {
+                .box {
+                    width: 40px;
+                    height: 10px;
+
+                    &.middle {
+                        width: 36px;
+                    }
+                }
+            }
+        }
+
+        &.shortened {
+            .labels {
+                .left {
+                    width: 45px;
+                }
+                .right {
+                    width: 45px;
+                }
+                .center-empty {
+                    width: 40px;
+                }
+                .middle {
+                    width: 90px;
+                }
+                .dots {
+                    width: 10px;
+                }
+            }
+
+            &.small {
+                .labels {
+                    .left {
+                        width: 35px;
+                    }
+                    .right {
+                        width: 35px;
+                    }
+                    .center-empty {
+                        width: 26px;
+                    }
+                    .middle {
+                        width: 70px;
+                    }
+                    .dots {
+                        width: 10px;
+                    }
                 }
             }
         }

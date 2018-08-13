@@ -8,6 +8,9 @@ import FluidLegend from './FluidLegend';
 import StaticLegend from './StaticLegend';
 import { ChartType } from '../../../../constants/visualizationTypes';
 import { isHeatMap } from '../../utils/common';
+import HeatMapLegend from './HeatMapLegend';
+import { IntlWrapper } from '../../../core/base/IntlWrapper';
+import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 
@@ -106,7 +109,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
     }
 
     public renderStatic() {
-        const { chartType, position, height, format, locale } = this.props;
+        const { chartType, position, height, format, locale, responsive } = this.props;
 
         const classNames = cx('viz-static-legend-wrap', `position-${position}`);
 
@@ -116,7 +119,8 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             onItemClick: this.onItemClick,
             position,
             format,
-            locale
+            locale,
+            responsive
         };
 
         return (
@@ -139,10 +143,36 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
 
         const fluidLegend = responsive && showFluid;
 
-        if (fluidLegend && !isHeatMap(this.props.chartType)) {
+        if (isHeatMap(this.props.chartType)) {
+            return this.renderHeatMapLegend();
+        }
+
+        if (fluidLegend) {
             return this.renderFluid();
         }
 
         return this.renderStatic();
+    }
+
+    private renderHeatMapLegend() {
+        const { locale, format, responsive } = this.props;
+        const { showFluid } = this.state;
+        const series = this.getSeries();
+        const isSmall = responsive && showFluid;
+
+        return (
+            <IntlWrapper locale={locale}>
+                <IntlTranslationsProvider>
+                    {(props: ITranslationsComponentProps) => (
+                        <HeatMapLegend
+                            series={series}
+                            format={format}
+                            isSmall={isSmall}
+                            numericSymbols={props.numericSymbols}
+                        />
+                    )}
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
     }
 }
