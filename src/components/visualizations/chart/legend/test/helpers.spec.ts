@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import noop = require('lodash/noop');
 import {
+    ITEM_HEIGHT,
+    LEGEND_PADDING,
+    RESPONSIVE_ITEM_MIN_WIDTH,
+    UTF_NON_BREAKING_SPACE,
     calculateFluidLegend,
     calculateStaticLegend,
-    ITEM_HEIGHT,
-    RESPONSIVE_ITEM_MIN_WIDTH,
-    LEGEND_PADDING,
-    getLegendConfig,
     getHeatmapLegendConfiguration,
-    UTF_NON_BREAKING_SPACE
+    getLegendConfig
 } from '../helpers';
 import { RIGHT, TOP } from '../PositionTypes';
 
@@ -175,44 +175,72 @@ describe('helpers', () => {
 
         it('should prepare legend config without shortening when everything fits', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', null, null],
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', null, null],
                 labels,
-                boxes
+                boxes,
+                position: 'top'
             };
-            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, false);
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, false, 'top');
+
+            expect(result).toEqual(expectedResult);
+        });
+
+        it('should prepare legend config with position on right, without shortening when everything fits', () => {
+            const expectedResult = {
+                classes: ['viz-legend', 'heatmap-legend', 'position-right', null, null],
+                labels,
+                boxes,
+                position: 'right'
+            };
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, false, null);
 
             expect(result).toEqual(expectedResult);
         });
 
         it('should prepare small legend config without shortening when everything fits', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'small', null],
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small', null],
                 labels,
-                boxes
+                boxes,
+                position: 'top'
             };
-            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, true);
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, true, 'top');
+
+            expect(result).toEqual(expectedResult);
+        });
+
+        it('should prepare small legend config with bottom position, without shortening when everything fits', () => {
+            const expectedResult = {
+                classes: ['viz-legend', 'heatmap-legend', 'position-bottom', 'small', null],
+                labels,
+                boxes,
+                position: 'bottom'
+            };
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, true, 'right');
 
             expect(result).toEqual(expectedResult);
         });
 
         it('should prepare legend config with shortening', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', null, 'shortened'],
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', null, 'shortened'],
                 labels: shortenedLabels,
-                boxes
+                boxes,
+                position: 'top'
             };
-            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, false);
+            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, false, 'top');
 
             expect(result).toEqual(expectedResult);
         });
 
         it('should prepare small legend config with shortening', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'small', 'shortened'],
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small', 'shortened'],
                 labels: shortenedLabels,
-                boxes
+                boxes,
+                position: 'top'
             };
-            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, true);
+            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, true, 'top');
 
             expect(result).toEqual(expectedResult);
         });

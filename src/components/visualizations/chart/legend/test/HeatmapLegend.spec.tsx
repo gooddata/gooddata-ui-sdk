@@ -29,7 +29,7 @@ describe('HeatmapLegend', () => {
                 }
             }
         ];
-        const wrapper = renderLegend({ series, numericSymbols, isSmall: false });
+        const wrapper = renderLegend({ series, numericSymbols, isSmall: false, position: 'top' });
 
         expect(wrapper.find('.heatmap-legend').length).toEqual(1);
     });
