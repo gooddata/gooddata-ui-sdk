@@ -43,7 +43,7 @@ export function isLabelOverlappingItsShape(point: any) {
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
 export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
-export const getDataPoints = (series: any) => flatten(unzip(map(series, (s: any) => s.points)));
+export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
 export const getChartType = (chart: any) => get(chart, 'options.chart.type');
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
@@ -172,85 +172,126 @@ export function getDataLabelAttributes(point: any) {
 }
 
 export function shouldFollowPointer(chartOptions: any) {
-    const yMax = Number(get(chartOptions, 'yAxisProps.max'));
-    const yMin = Number(get(chartOptions, 'yAxisProps.min'));
+    const yMax = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
+    const yMin = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
 
-    if (!yMax && !yMin) {
+    if (isNaN(yMax) && isNaN(yMin)) {
         return false;
     }
 
     const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
 
-    return (yMax && maxDataValue > yMax) || (yMin && minDataValue < yMin);
+    return (!isNaN(yMax) && maxDataValue > yMax) || (!isNaN(yMin) && minDataValue < yMin);
 }
 
-function getNonStackedMaxValue(series: any): number {
+function isSerieVisible(serie: ISeriesItem): boolean {
+    return serie.visible === undefined || serie.visible;
+}
+
+function getNonStackedMaxValue(series: ISeriesItem[]): number {
     return series.reduce((maxValue: number, serie: ISeriesItem) => {
-        const maxSerieValue = getSerieMaxDataValue(serie.data).y;
-        return maxValue > maxSerieValue ? maxValue : maxSerieValue;
-    }, 0);
+        if (isSerieVisible(serie)) {
+            const maxSerieValue = getSerieMaxDataValue(serie.data);
+
+            return maxValue > maxSerieValue ? maxValue : maxSerieValue;
+        }
+        return maxValue;
+    }, Number.MIN_SAFE_INTEGER);
 }
 
-function getNonStackedMinValue(series: any, startValue: number): number {
+function getNonStackedMinValue(series: ISeriesItem[]): number {
     return series.reduce((minValue: number, serie: ISeriesItem) => {
-        const minSerieValue = getSerieMinDataValue(serie.data).y;
-        return minValue < minSerieValue ? minValue : minSerieValue;
-    }, startValue);
+        if (isSerieVisible(serie)) {
+            const minSerieValue = getSerieMinDataValue(serie.data);
+
+            return minValue < minSerieValue ? minValue : minSerieValue;
+        }
+        return minValue;
+    }, Number.MAX_SAFE_INTEGER);
 }
 
 function getDataExtremeDataValues(chartOptions: any) {
-    const series = chartOptions.data.series;
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
 
     const maxDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMaxValue(chartOptions.data.series)
+        ? getStackedMaxValue(series)
         : getNonStackedMaxValue(series);
 
     const minDataValue = chartOptions.hasStackByAttribute
-        ? getStackedMinValue(chartOptions.data.series)
-        : getNonStackedMinValue(series, maxDataValue);
+        ? getStackedMinValue(series)
+        : getNonStackedMinValue(series);
 
     return { minDataValue, maxDataValue };
 }
 
-function getSerieMaxDataValue(serieData: ISeriesDataItem[]): ISeriesDataItem {
-    return maxBy(serieData, (item: ISeriesDataItem) => item.y);
+function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
+    const max = maxBy(serieData, (item: ISeriesDataItem) => item && item.y ? item.y : null);
+    return max ? max.y : Number.MIN_SAFE_INTEGER;
 }
 
-function getSerieMinDataValue(serieData: ISeriesDataItem[]): ISeriesDataItem {
-    return minBy(serieData, (item: ISeriesDataItem) => item.y);
+function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
+    const min = minBy(serieData, (item: ISeriesDataItem) =>  item && item.y ? item.y : null);
+    return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 
 function getStackedMaxValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series.map(serie => serie.data)));
+    const seriesData = flatten(zip(series
+        .filter(isSerieVisible)
+        .map(serie => serie.data)));
     const stackSums: number[] = [];
 
     // tslint:disable-next-line:forin
     for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index].y)));
+        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
     }
 
-    return max(stackSums);
+    const maxValue = max(stackSums);
+    return maxValue ? maxValue : Number.MIN_SAFE_INTEGER;
 }
 
 function getStackedMinValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series.map(serie => serie.data)));
+    const seriesData = flatten(zip(series
+        .filter(isSerieVisible)
+        .map(serie => serie.data)));
     const stackSums: number[] = [];
 
     // tslint:disable-next-line:forin
     for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index].y)));
+        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
     }
 
-    return min(stackSums);
+    const minValue = min(stackSums);
+    return minValue ? minValue : Number.MAX_SAFE_INTEGER;
 }
 
-export function shouldStartOrEndOnTick(max: string, min: string) {
-    if (max && min) {
-        return Number(min) > Number(max);
+export function shouldStartOrEndOnTick(chartOptions: any): boolean {
+    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+    const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
+
+    if ((isNaN(min) && isNaN(max))) {
+        return true;
     }
 
-    if (!max && !min) {
-        return true;
+    if ((!isNaN(min) && !isNaN(max))) {
+        return min > max;
+    }
+
+    if (!isNaN(min)) {
+        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+        const maxDataValue = chartOptions.hasStackByAttribute
+            ? getStackedMaxValue(series)
+            : getNonStackedMaxValue(series);
+        return min > maxDataValue;
+    }
+
+    if (!isNaN(max)) {
+        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+
+        const minDataValue = chartOptions.hasStackByAttribute
+            ? getStackedMinValue(series)
+            : getNonStackedMinValue(series);
+
+        return max <= minDataValue;
     }
 
     return false;
