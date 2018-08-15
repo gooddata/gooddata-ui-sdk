@@ -1619,6 +1619,7 @@ export function getChartOptions(
         return {
             type,
             stacking,
+            hasViewByAttribute: Boolean(stackByAttribute),
             legendLayout: 'horizontal',
             colorPalette,
             yAxes,

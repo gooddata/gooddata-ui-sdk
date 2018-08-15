@@ -4,14 +4,14 @@ import * as classNames from 'classnames';
 import {
     IHeatmapLegendBox,
     IHeatmapLegendConfig,
-    IHeatmapLegendSerie,
     IHeatmapLegendLabel,
     getHeatmapLegendConfiguration
 } from './helpers';
 import { TOP, BOTTOM } from './PositionTypes';
+import { IHeatmapLegendItem } from '../../typings/legend';
 
 export interface IHeatmapLegendProps {
-    series: IHeatmapLegendSerie[];
+    series: IHeatmapLegendItem[];
     isSmall: boolean;
     format?: string;
     numericSymbols: string[];
