@@ -47,7 +47,7 @@ function setBarDataLabelsColor(chart: any) {
 
 export const START_DARK_COLOR_INDEX = 5;
 
-function setHeatMapDataLabelsColor(chart: any) {
+function setHeatmapDataLabelsColor(chart: any) {
     const points = getVisiblePointsWithLabel(chart);
     const dataClasses = get(chart, 'colorAxis.0.dataClasses', []);
     const hasDarkColor = dataClasses.length === HEAT_MAP_CATEGORIES_COUNT;
@@ -96,7 +96,7 @@ export function extendDataLabelColors(Highcharts: any) {
                     setBarDataLabelsColor(chart);
                 }, 500);
             } else if (type === VisualizationTypes.HEATMAP) {
-                setHeatMapDataLabelsColor(chart);
+                setHeatmapDataLabelsColor(chart);
             } else if (type === VisualizationTypes.TREEMAP) {
                 setContrastLabelsColor(chart);
             }

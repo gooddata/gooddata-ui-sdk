@@ -848,7 +848,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
-    .add('Heat map with one metric and two attributes', () => {
+    .add('Heatmap with one metric and two attributes', () => {
         const dataSet: any = fixtures.barChartWithStackByAndViewByAttributes;
 
         return screenshotWrap(

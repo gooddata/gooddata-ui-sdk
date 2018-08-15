@@ -251,7 +251,7 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
-    describe('heat map', () => {
+    describe('heatmap', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [
                 {

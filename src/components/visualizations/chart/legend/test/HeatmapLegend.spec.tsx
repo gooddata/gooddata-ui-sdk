@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import HeatMapLegend, { IHeatMapLegendProps } from '../HeatMapLegend';
+import HeatmapLegend, { IHeatmapLegendProps } from '../HeatmapLegend';
 
-describe('HeatMapLegend', () => {
+describe('HeatmapLegend', () => {
     const numericSymbols = [ 'k', 'M', 'G' ];
-    function renderLegend(props: IHeatMapLegendProps) {
+    function renderLegend(props: IHeatmapLegendProps) {
         return shallow(
-            <HeatMapLegend {...props}/>
+            <HeatmapLegend {...props}/>
         );
     }
 

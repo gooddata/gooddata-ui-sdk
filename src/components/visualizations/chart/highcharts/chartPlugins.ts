@@ -3,7 +3,7 @@ import autohideLabels from './plugins/autohideLabels/autohideLabels';
 import { extendDataLabelColors } from './plugins/dataLabelsColors';
 import { applyPointHaloOptions } from './plugins/pointHalo';
 import { patternFill } from './plugins/patternFillV2';
-import { renderHeatMapCells } from './plugins/renderHeatMapCells';
+import { renderHeatmapCells } from './plugins/renderHeatmapCells';
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, 'renderStackTotals', function(proceed: any) {
@@ -36,5 +36,5 @@ export function initChartPlugins(Highcharts: any) {
     extendDataLabelColors(Highcharts);
     applyPointHaloOptions(Highcharts);
     patternFill(Highcharts);
-    renderHeatMapCells(Highcharts);
+    renderHeatmapCells(Highcharts);
 }

@@ -7,7 +7,7 @@ import {
     RESPONSIVE_ITEM_MIN_WIDTH,
     LEGEND_PADDING,
     getLegendConfig,
-    getHeatMapLegendConfiguration,
+    getHeatmapLegendConfiguration,
     UTF_NON_BREAKING_SPACE
 } from '../helpers';
 import { RIGHT, TOP } from '../PositionTypes';
@@ -116,7 +116,7 @@ describe('helpers', () => {
         });
     });
 
-    describe('getHeatMapLegendConfiguration', () => {
+    describe('getHeatmapLegendConfiguration', () => {
         const format = '#,##';
         const numericSymbols = ['k', 'm', 'b', 'g'];
         const series = [
@@ -179,7 +179,7 @@ describe('helpers', () => {
                 labels,
                 boxes
             };
-            const result = getHeatMapLegendConfiguration(series, format, numericSymbols, false);
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, false);
 
             expect(result).toEqual(expectedResult);
         });
@@ -190,7 +190,7 @@ describe('helpers', () => {
                 labels,
                 boxes
             };
-            const result = getHeatMapLegendConfiguration(series, format, numericSymbols, true);
+            const result = getHeatmapLegendConfiguration(series, format, numericSymbols, true);
 
             expect(result).toEqual(expectedResult);
         });
@@ -201,7 +201,7 @@ describe('helpers', () => {
                 labels: shortenedLabels,
                 boxes
             };
-            const result = getHeatMapLegendConfiguration(seriesForShortening, format, numericSymbols, false);
+            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, false);
 
             expect(result).toEqual(expectedResult);
         });
@@ -212,7 +212,7 @@ describe('helpers', () => {
                 labels: shortenedLabels,
                 boxes
             };
-            const result = getHeatMapLegendConfiguration(seriesForShortening, format, numericSymbols, true);
+            const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, true);
 
             expect(result).toEqual(expectedResult);
         });

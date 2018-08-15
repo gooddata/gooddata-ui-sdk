@@ -42,7 +42,7 @@ import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
-import { HeatMap } from './components/HeatMap';
+import { Heatmap } from './components/Heatmap';
 import Chart, { ILegendConfig, IChartConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
@@ -96,7 +96,7 @@ export {
     Treemap,
     BubbleChart,
     DonutChart,
-    HeatMap,
+    Heatmap,
     PoPHelper,
     DerivedMeasureTitleSuffixFactory,
     PropTypes,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { HeatMap } from '../../src/index';
+import { Heatmap } from '../../src/index';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -14,11 +14,11 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('Core components/HeatMap', module)
+storiesOf('Core components/Heatmap', module)
     .add('metric row column', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     segmentBy={ATTRIBUTE_1}
@@ -33,7 +33,7 @@ storiesOf('Core components/HeatMap', module)
     .add('metric only', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     onError={onErrorHandler}
@@ -46,7 +46,7 @@ storiesOf('Core components/HeatMap', module)
     .add('metric and attribute', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     trendBy={ATTRIBUTE_2}
@@ -60,7 +60,7 @@ storiesOf('Core components/HeatMap', module)
     .add('metric row column with row alias', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     segmentBy={ATTRIBUTE_1_WITH_ALIAS}
@@ -75,7 +75,7 @@ storiesOf('Core components/HeatMap', module)
     .add('metric row column with cloumn alias', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     segmentBy={ATTRIBUTE_2}
@@ -90,7 +90,7 @@ storiesOf('Core components/HeatMap', module)
     .add('with German number format', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     segmentBy={ATTRIBUTE_1}

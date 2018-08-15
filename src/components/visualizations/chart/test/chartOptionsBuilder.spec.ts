@@ -18,12 +18,12 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    generateTooltipHeatMapFn,
+    generateTooltipHeatmapFn,
     generateTooltipXYFn,
     generateTooltipTreemapFn,
     IPoint,
     getBubbleChartSeries,
-    getHeatMapDataClasses,
+    getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure
 } from '../chartOptionsBuilder';
@@ -2925,8 +2925,8 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('HeatMap configuration', () => {
-            describe('generateTooltipHeatMapFn', () => {
+        describe('Heatmap configuration', () => {
+            describe('generateTooltipHeatmapFn', () => {
                 const viewBy = {
                     formOf: { name: 'viewAttr' },
                     items: [{ attributeHeaderItem: { name: 'viewHeader' } }]
@@ -2952,7 +2952,7 @@ describe('chartOptionsBuilder', () => {
                 };
 
                 it('should generate correct tooltip', () => {
-                    const tooltipFn = generateTooltipHeatMapFn(viewBy, stackBy);
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
                     const expectedResult =
             `<table class=\"tt-values\"><tr>
                 <td class=\"title\">stackAttr</td>
@@ -2969,7 +2969,7 @@ describe('chartOptionsBuilder', () => {
                 });
 
                 it('should display "-" for null value', () => {
-                    const tooltipValue = generateTooltipHeatMapFn(viewBy, stackBy)({
+                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)({
                         ...point,
                         value: null
                     });
@@ -3060,7 +3060,7 @@ describe('chartOptionsBuilder', () => {
 
                 it('should generate Yaxes label from attribute name', () => {
                     const chartOptions = generateChartOptions(
-                        fixtures.heatMapMetricRowColumn,
+                        fixtures.heatmapMetricRowColumn,
                         {
                             type: 'heatmap'
                         }
@@ -3071,11 +3071,11 @@ describe('chartOptionsBuilder', () => {
                     expect(chartOptions.yAxes).toEqual(expectedYAxis);
                 });
 
-                describe('getHeatMapDataClasses', () => {
+                describe('getHeatmapDataClasses', () => {
                     it('should return empty array when there are no values in series', () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
-                        const dataClasses = getHeatMapDataClasses(series, []);
+                        const dataClasses = getHeatmapDataClasses(series, []);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3094,7 +3094,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'g'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3129,7 +3129,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'r'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
                     });
