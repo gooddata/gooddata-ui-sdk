@@ -1,5 +1,6 @@
 // Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
 import { XhrModule, ApiResponseError, ApiResponse } from './xhr';
+import { ProjectModule } from './project';
 
 export class UserModule {
     constructor(private xhr: XhrModule) {
@@ -26,6 +27,32 @@ export class UserModule {
                 } else {
                     reject(err);
                 }
+            });
+        });
+    }
+
+    /**
+     * Find out whether a specified project is available to a currently logged user
+     *
+     * @method isLoggedInProject
+     * @return {Promise} resolves with true if user logged in and project available,
+     *                   resolves with false if user logged in and project not available,
+     *                   rejects if user not logged in
+     */
+    public isLoggedInProject(projectId: string) {
+        return this.getCurrentProfile().then((profile) => {
+            return new Promise((resolve, reject) => {
+                const projectModule = new ProjectModule(this.xhr);
+
+                projectModule.getProjects(profile.links.self.split('/')[4]).then((projects) => {
+                    if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                }, (err: ApiResponseError) => {
+                    reject(err);
+                });
             });
         });
     }

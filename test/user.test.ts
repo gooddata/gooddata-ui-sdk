@@ -104,6 +104,79 @@ describe('user', () => {
             });
         });
 
+        describe('isLoggedInProject', () => {
+            it('should resolve true if user logged in and project is available', () => {
+                const projectId = 'myProject';
+                const profileId = 'asdf1234';
+                const profileUri = `/gdc/account/profile/${profileId}`;
+
+                fetchMock.mock(
+                    '/gdc/account/profile/current',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            accountSetting: {
+                                links: {
+                                    self: profileUri
+                                }
+                            }
+                        })
+                    }
+                );
+
+                fetchMock.mock(
+                    `/gdc/account/profile/${profileId}/projects`,
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            projects: [
+                                { project: { links: { self: '/gdc/projects/differentproject' } } },
+                                { project: { links: { self: `/gdc/projects/${projectId}` } } },
+                                { project: { links: { self: '/gdc/projects/anotherproject' } } }
+                            ]
+                        })
+                    }
+                );
+
+                return expect(createUser().isLoggedInProject(projectId)).resolves.toEqual(true);
+            });
+
+            it('should resolve false if user logged in but project not available', () => {
+                const projectId = 'myProject';
+                const profileId = 'asdf1234';
+                const profileUri = `/gdc/account/profile/${profileId}`;
+
+                fetchMock.mock(
+                    '/gdc/account/profile/current',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            accountSetting: {
+                                links: {
+                                    self: profileUri
+                                }
+                            }
+                        })
+                    }
+                );
+
+                fetchMock.mock(
+                    `/gdc/account/profile/${profileId}/projects`,
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            projects: [
+                                { project: { links: { self: '/gdc/projects/differentproject' } } },
+                                { project: { links: { self: '/gdc/projects/anotherproject' } } }
+                            ]
+                        })
+                    }
+                );
+
+                return expect(createUser().isLoggedInProject(projectId)).resolves.toEqual(false);
+            });
+        });
+
         describe('logout', () => {
             it('should resolve when user is not logged in', () => {
                 expect.assertions(1);
