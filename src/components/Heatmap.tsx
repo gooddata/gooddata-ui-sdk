@@ -10,7 +10,7 @@ import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IHeatmapBucketProps {
-    measures: VisualizationObject.BucketItem[];
+    measure: VisualizationObject.BucketItem;
     trendBy?: VisualizationObject.IVisualizationAttribute;
     segmentBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
@@ -31,7 +31,7 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: [props.measure] || []
         },
         {
             localIdentifier: ATTRIBUTE,
@@ -44,7 +44,7 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
     ];
 
     const newProps
-        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measures', 'trendBy', 'segmentBy', 'filters']);
+        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'trendBy', 'segmentBy', 'filters']);
 
     return (
         <AfmHeatmap
