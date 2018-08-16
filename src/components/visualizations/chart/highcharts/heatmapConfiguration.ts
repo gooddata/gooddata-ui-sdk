@@ -40,6 +40,9 @@ const HEATMAP_TEMPLATE = {
         dataLabels: {
             allowOverlap: false
         }
+    }],
+    yAxis: [{
+        endOnTick: false
     }]
 };
 
