@@ -4,7 +4,7 @@ import cloneDeep = require('lodash/cloneDeep');
 import update = require('lodash/update');
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
-import { generateDimensions, getHeadlinesDimensions } from '../dimensions';
+import { generateDimensions, getHeadlinesDimensions, getPivotTableDimensions } from '../dimensions';
 import { visualizationObjects } from '../../../__mocks__/fixtures';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
@@ -115,6 +115,63 @@ describe('getHeadlinesDimensions', () => {
     });
 });
 
+describe('getPivotTableDimensions', () => {
+    // tslint:disable-next-line:max-line-length
+    it('should return row attributes in the first dimensions, column attributes and measureGroup in second dimension', () => {
+        const expectedDimensions: AFM.IDimension[] = [
+            {
+                itemIdentifiers: ['a1']
+            },
+            {
+                itemIdentifiers: ['a2', 'measureGroup']
+            }
+        ];
+
+        const buckets = [
+            {
+                localIdentifier: 'measures',
+                items: [{
+                    measure: {
+                        localIdentifier: 'm1',
+                        title: '# Accounts with AD Query',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: '/gdc/md/myproject/obj/m1'
+                                }
+                            }
+                        }
+                    }
+                }]
+            },
+            {
+                localIdentifier: 'rows',
+                items: [{
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            uri: '/gdc/md/myproject/obj/a1'
+                        }
+                    }
+                }]
+            },
+            {
+                localIdentifier: 'columns',
+                items: [{
+                    visualizationAttribute: {
+                        localIdentifier: 'a2',
+                        displayForm: {
+                            uri: '/gdc/md/myproject/obj/a2'
+                        }
+                    }
+                }]
+            }
+        ];
+
+        expect(getPivotTableDimensions(buckets)).toEqual(expectedDimensions);
+    });
+});
+
 describe('generateDimensions', () => {
     describe('column/bar chart', () => {
         it('should generate dimensions for one measure', () => {
@@ -194,7 +251,7 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
         });
     });
-    describe('heat map', () => {
+    describe('heatmap', () => {
         it('should generate dimensions for one measure', () => {
             const expectedDimensions: AFM.IDimension[] = [
                 {

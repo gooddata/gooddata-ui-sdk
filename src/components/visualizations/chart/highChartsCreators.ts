@@ -10,7 +10,8 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
-import { IChartLimits } from './Chart';
+import { IChartConfig, IChartLimits } from './Chart';
+import { IChartOptions } from './chartOptionsBuilder';
 
 import { getLineConfiguration } from './highcharts/lineConfiguration';
 import { getBarConfiguration } from './highcharts/barConfiguration';
@@ -23,7 +24,7 @@ import { getScatterConfiguration } from './highcharts/scatterConfiguration';
 import { getComboConfiguration } from './highcharts/comboConfiguration';
 import { getTreemapConfiguration } from './highcharts/treemapConfiguration';
 import { getFunnelConfiguration } from './highcharts/funnelConfiguration';
-import { getHeatMapConfiguration } from './highcharts/heatMapConfiguration';
+import { getHeatmapConfiguration } from './highcharts/heatmapConfiguration';
 import { getBubbleConfiguration } from './highcharts/bubbleConfiguration';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 
@@ -39,18 +40,18 @@ const chartConfigurationMap = {
     [VisualizationTypes.TREEMAP]: getTreemapConfiguration,
     [VisualizationTypes.DONUT]: getDonutConfiguration,
     [VisualizationTypes.FUNNEL]: getFunnelConfiguration,
-    [VisualizationTypes.HEATMAP]: getHeatMapConfiguration,
+    [VisualizationTypes.HEATMAP]: getHeatmapConfiguration,
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration
 };
 
-export function getHighchartsOptions(chartOptions: any, drillConfig: any) {
+export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: any, config?: IChartConfig) {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(getConfigurationByType,
         `visualisation type ${chartOptions.type} is invalid (valid types: ${stringifyChartTypes()}).`);
     return merge({},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType(),
-        getCustomizedConfiguration(chartOptions)
+        getCustomizedConfiguration(chartOptions, config)
     );
 }
 

@@ -10,6 +10,6 @@ export class RuntimeError extends Error {
     }
 
     public getCause() {
-        return this.message;
+        return this.cause;
     }
 }

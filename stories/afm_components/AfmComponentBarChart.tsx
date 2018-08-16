@@ -15,6 +15,7 @@ import {
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -101,6 +102,30 @@ storiesOf('AFM components/BarChart', module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
+                    resultSpec={{
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['a1']
+                            },
+                            {
+                                itemIdentifiers: ['a2', 'measureGroup']
+                            }
+                        ]
+                    }}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

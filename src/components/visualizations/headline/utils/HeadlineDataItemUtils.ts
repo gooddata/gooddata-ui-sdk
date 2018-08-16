@@ -1,8 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import { colors2Object, numberFormat } from '@gooddata/numberjs';
+import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
 import isEmpty = require('lodash/isEmpty');
 import isNaN = require('lodash/isNaN');
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from '../../../../interfaces/Headlines';
+import { IChartConfig } from '../../chart/Chart';
 
 const DEFAULT_VALUE_WHEN_EMPTY = '–';
 const INVALID_VALUE = 'NaN';
@@ -14,9 +15,9 @@ function processStringForNumberJs(value: string | null, format: string) {
         : parseFloat(value as string);
 }
 
-function formatValueToLabelWithColors(value: string | null, format: string) {
+function formatValueToLabelWithColors(value: string | null, format: string, separators?: ISeparators) {
     const processedValue = processStringForNumberJs(value, format);
-    const formattedValue = numberFormat(processedValue, format);
+    const formattedValue = numberFormat(processedValue, format, undefined, separators);
     return colors2Object(formattedValue);
 }
 
@@ -40,8 +41,9 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
  * @param item
  * @returns {{cssStyle: {color, backgroundColor}, value: string, isValueEmpty: boolean}}
  */
-export function formatItemValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
-    const { label, color, backgroundColor } = formatValueToLabelWithColors(item.value, item.format);
+export function formatItemValue(item: IHeadlineDataItem, config: IChartConfig = {}): IFormattedHeadlineDataItem {
+    const { separators } = config;
+    const { label, color, backgroundColor } = formatValueToLabelWithColors(item.value, item.format, separators);
     const isValueEmpty = label === INVALID_VALUE || label === '';
     const value = isValueEmpty
         ? DEFAULT_VALUE_WHEN_EMPTY

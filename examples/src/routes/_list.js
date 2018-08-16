@@ -2,6 +2,7 @@
 import AdvancedUseCases from './AdvancedUseCases';
 import AttributeFilter from './AttributeFilter';
 import Sorting from './Sorting';
+import TimeOverTimeComparison from './TimeOverTimeComparison';
 import BasicComponents from './BasicComponents';
 import GlobalFilters from './GlobalFilters';
 import Visualization from './Visualization';
@@ -16,6 +17,7 @@ import MultipleDomains from './MultipleDomains';
 import DrillWithExternalData from './DrillWithExternalData';
 import Registration from './Registration';
 import Login from './Login';
+import PivotTable from './PivotTable';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -34,13 +36,15 @@ export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
+    { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },
     { path: '/attribute-filter-components', title: 'Attribute Filter Components', Component: AttributeFilter },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesWithProps }
 ];
 
 export const hiddenPaths = [
-    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains }
+    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
+    { path: '/pivot-table', title: 'Pivot Table', Component: PivotTable }
 ];
 
 export const userRoutes = [

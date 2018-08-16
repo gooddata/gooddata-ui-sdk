@@ -12,6 +12,7 @@ import {
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 400, height: 400 };
 
@@ -77,6 +78,20 @@ storiesOf('AFM components/PieChart', module)
                     afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
                     config={{ legend: { position: 'bottom' } }}
                     LoadingComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

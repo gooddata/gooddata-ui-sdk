@@ -4,12 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
 
 import LegendItem from './LegendItem';
-import HeatMapLegend from './HeatMapLegend';
 import { TOP, BOTTOM } from './PositionTypes';
 import { calculateStaticLegend, ITEM_HEIGHT } from './helpers';
-import { isHeatMap } from '../../utils/common';
-import { IntlWrapper } from '../../../core/base/IntlWrapper';
-import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
 
 export default class StaticLegend extends React.PureComponent<any, any> {
     constructor(props: any) {
@@ -60,31 +56,13 @@ export default class StaticLegend extends React.PureComponent<any, any> {
     }
 
     public render() {
-        const { series, chartType, onItemClick, position, containerHeight, format, locale } = this.props;
+        const { series, chartType, onItemClick, position, containerHeight } = this.props;
         const { page } = this.state;
 
         const classNames = cx('viz-legend', 'static', `position-${position}`);
 
         // Without paging
         if (position === TOP || position === BOTTOM) {
-            if (isHeatMap(chartType)) {
-                return (
-                    <div className={classNames}>
-                        <IntlWrapper locale={locale}>
-                            <IntlTranslationsProvider>
-                                {(props: ITranslationsComponentProps) => (
-                                    <HeatMapLegend
-                                        series={series}
-                                        format={format}
-                                        numericSymbols={props.numericSymbols}
-                                    />
-                                )}
-                            </IntlTranslationsProvider>
-                        </IntlWrapper>
-                    </div>
-                );
-            }
-
             return (
                 <div className={classNames}>
                     <div className="series">

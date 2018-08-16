@@ -20,5 +20,6 @@ export const TablePropTypes = {
     totals: PropTypes.array,
     totalsEditAllowed: PropTypes.bool,
     ErrorComponent: PropTypes.func,
-    LoadingComponent: PropTypes.func
+    LoadingComponent: PropTypes.func,
+    config: PropTypes.object
 };

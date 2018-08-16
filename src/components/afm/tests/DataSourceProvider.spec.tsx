@@ -157,7 +157,7 @@ describe('DataSourceProvider', () => {
                 setRequestHeader: jest.fn()
             },
             execution: {
-                fetchExecutionResult: jest.fn()
+                getPartialExecutionResult: jest.fn()
             }
         };
         const defaultProps = {

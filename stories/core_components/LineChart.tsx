@@ -14,6 +14,7 @@ import {
     MEASURE_2_SORT_ITEM,
     MEASURE_WITH_FORMAT
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -100,6 +101,21 @@ storiesOf('Core components/LineChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    trendBy={ATTRIBUTE_1_WITH_ALIAS}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

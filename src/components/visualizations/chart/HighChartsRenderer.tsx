@@ -13,6 +13,7 @@ import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 import { isPieOrDonutChart, isOneOfTypes } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
+import { shouldStartOrEndOnTick } from '../chart/highcharts/helpers';
 
 export interface IChartHTMLElement extends HTMLElement {
     getChart(): Highcharts.ChartObject;
@@ -50,6 +51,13 @@ function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
         overflow: 'hidden'
     });
 }
+
+function setStartOrEndOnTick(axis: Highcharts.AxisOptions, chartOptions: any) {
+    const startOrEndOnTick = shouldStartOrEndOnTick(chartOptions);
+    set(axis, 'startOnTick', startOrEndOnTick);
+    set(axis, 'endOnTick', startOrEndOnTick);
+}
+
 export default class HighChartsRenderer
     extends React.PureComponent<IHighChartsRendererProps, IHighChartsRendererState> {
     public static defaultProps = {
@@ -154,7 +162,7 @@ export default class HighChartsRenderer
         });
     }
 
-    public createChartConfig(chartConfig: any, legendItemsEnabled: any): IChartConfig {
+    public createChartConfig(chartConfig: IChartConfig, legendItemsEnabled: any): IChartConfig {
         const config: any = cloneDeep(chartConfig);
         const { yAxis } = config;
 
@@ -180,6 +188,11 @@ export default class HighChartsRenderer
                 visible
             };
         }));
+
+        const chartOptionsWithProperties = { ...this.props.chartOptions,  data: { series: config.series } };
+        yAxis.forEach((axis: Highcharts.AxisOptions) =>
+            setStartOrEndOnTick(axis, chartOptionsWithProperties));
+
         return config;
     }
 

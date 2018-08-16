@@ -11,7 +11,8 @@ import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
 import { styleVariables } from '../../styles/variables';
-import { IAxis } from '../chartOptionsBuilder';
+import { IAxis, IChartOptions } from '../chartOptionsBuilder';
+import { IChartConfig } from '../Chart';
 
 import * as numberJS from '@gooddata/numberjs';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
@@ -25,10 +26,7 @@ import {
     isRotationInRange,
     isTreemap
 } from '../../utils/common';
-import {
-    shouldFollowPointer,
-    shouldStartOrEndOnTick
-} from '../../../visualizations/chart/highcharts/helpers';
+import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
 
 const {
     stripColors,
@@ -298,29 +296,32 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     ) : null;
 }
 
-function formatLabel(value: any, format: any) {
+function formatLabel(value: any, format: any, config: IChartConfig = {}) {
     // no labels for missing values
     if (value === null) {
         return null;
     }
 
     const stripped = stripColors(format || '');
-    return escapeAngleBrackets(String(numberFormat(value, stripped)));
+    const { separators } = config;
+    return escapeAngleBrackets(String(numberFormat(value, stripped, undefined, separators)));
 }
 
-function labelFormatter() {
-    return formatLabel(this.y, get(this, 'point.format'));
+function labelFormatter(config?: IChartConfig) {
+    return formatLabel(this.y, get(this, 'point.format'), config);
 }
 
-function labelFormatterHeatMap(options: any) {
-    return formatLabel(this.point.value, options.formatGD);
+function labelFormatterHeatmap(options: any) {
+    return formatLabel(this.point.value, options.formatGD, options.config);
 }
 
-function level1LabelsFormatter() {
-    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.node.val'), get(this, 'point.format'))})`;
+function level1LabelsFormatter(config?: IChartConfig) {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.node.val'),
+                                                        get(this, 'point.format'),
+                                                        config)})`;
 }
-function level2LabelsFormatter() {
-    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'))})`;
+function level2LabelsFormatter(config?: IChartConfig) {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'), config)})`;
 }
 
 // check whether series contains only positive values, not consider nulls
@@ -331,16 +332,16 @@ function hasOnlyPositiveValues(series: any, x: any) {
     });
 }
 
-function stackLabelFormatter() {
+function stackLabelFormatter(config?: IChartConfig) {
     // show labels: always for negative,
     // without negative values or with non-zero total for positive
     const showStackLabel =
         this.isNegative || hasOnlyPositiveValues(this.axis.series, this.x) || this.total !== 0;
     return showStackLabel ?
-        formatLabel(this.total, get(this, 'axis.userOptions.defaultFormat')) : null;
+        formatLabel(this.total, get(this, 'axis.userOptions.defaultFormat'), config) : null;
 }
 
-function getTooltipConfiguration(chartOptions: any) {
+function getTooltipConfiguration(chartOptions: IChartOptions) {
     const tooltipAction = get(chartOptions, 'actions.tooltip');
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
@@ -362,12 +363,12 @@ function getTooltipConfiguration(chartOptions: any) {
     } : {};
 }
 
-function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
+function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any, config?: IChartConfig) {
     const smallLabelInCenter = {
         dataLabels: {
             enabled: true,
             padding: 2,
-            formatter: level2LabelsFormatter,
+            formatter: partial(level2LabelsFormatter, config),
             allowOverlap: false,
             style
         }
@@ -385,7 +386,7 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
                         ...style,
                         fontSize: '14px'
                     },
-                    formatter: level1LabelsFormatter,
+                    formatter: partial(level1LabelsFormatter, config),
                     allowOverlap: false
                 }
             }, {
@@ -403,7 +404,7 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
     }
 }
 
-function getLabelsConfiguration(chartOptions: any) {
+function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const {
         stacking,
         yAxes = [],
@@ -436,37 +437,38 @@ function getLabelsConfiguration(chartOptions: any) {
         plotOptions: {
             bar: {
                 dataLabels: {
-                    formatter: labelFormatter,
+                    formatter: partial(labelFormatter, config),
                     style,
                     allowOverlap: false
                 }
             },
             column: {
                 dataLabels: {
-                    formatter: labelFormatter,
+                    formatter: partial(labelFormatter, config),
                     style,
                     allowOverlap: false
                 }
             },
             heatmap: {
                 dataLabels: {
-                    formatter: labelFormatterHeatMap
+                    formatter: labelFormatterHeatmap,
+                    config
                 }
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style)
+                ...getTreemapLabelsConfiguration(!!stacking, style, config)
             }
         },
         yAxis
     };
 }
 
-function getStackingConfiguration(chartOptions: any) {
+function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            formatter: stackLabelFormatter
+            formatter: partial(stackLabelFormatter, config)
         }
     }));
 
@@ -515,7 +517,7 @@ function getSeries(series: any, colorPalette: any = []) {
     });
 }
 
-function getHeatMapDataConfiguration(chartOptions: any) {
+function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
@@ -552,7 +554,7 @@ function getDataConfiguration(chartOptions: any) {
                 series
             };
         case VisualizationTypes.HEATMAP:
-            return getHeatMapDataConfiguration(chartOptions);
+            return getHeatmapDataConfiguration(chartOptions);
     }
 
     const categories = map(data.categories, escapeAngleBrackets);
@@ -685,7 +687,6 @@ function getAxesConfiguration(chartOptions: any) {
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
             const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
-            const startOrEndOnTick = shouldStartOrEndOnTick(max, min);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -721,9 +722,7 @@ function getAxesConfiguration(chartOptions: any) {
                 opposite: axis.opposite,
                 ...visibleProp,
                 ...maxProp,
-                ...minProp,
-                startOnTick: startOrEndOnTick,
-                endOnTick: startOrEndOnTick
+                ...minProp
             };
         }),
 
@@ -772,7 +771,7 @@ function getAxesConfiguration(chartOptions: any) {
     };
 }
 
-export function getCustomizedConfiguration(chartOptions: any) {
+export function getCustomizedConfiguration(chartOptions: IChartOptions, chartConfig?: IChartConfig) {
     const configurators = [
         getAxesConfiguration,
         getTitleConfiguration,
@@ -787,7 +786,7 @@ export function getCustomizedConfiguration(chartOptions: any) {
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config));
+        return merge(config, configurator(chartOptions, config, chartConfig));
     }, {});
 
     return merge({}, commonData);

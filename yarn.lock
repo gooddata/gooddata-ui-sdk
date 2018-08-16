@@ -67,11 +67,11 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-7.1.0.tgz#e335652f986ce7e9670f255cfc3b6b79dd1706f8"
+"@gooddata/gooddata-js@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-8.0.0.tgz#995c0fa83ffbc33dbef2e86f1d9a58d6eceab97d"
   dependencies:
-    "@gooddata/typings" "2.3.0"
+    "@gooddata/typings" "2.3.1"
     es6-promise "3.0.2"
     fetch-cookie "0.7.0"
     invariant "2.2.2"
@@ -83,9 +83,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@56.1.0":
-  version "56.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.0.tgz#146153a00a85e8603c72c17c47347f9414fd55d0"
+"@gooddata/goodstrap@56.1.2":
+  version "56.1.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.2.tgz#5b26b016031ef4f6ea381323f188fe666cf30b96"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -163,6 +163,12 @@
 "@gooddata/typings@2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
+  dependencies:
+    lodash "4.17.4"
+
+"@gooddata/typings@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.1.tgz#b8d1e7819b3ec3dab111dcefbf26e692bdabe41d"
   dependencies:
     lodash "4.17.4"
 
@@ -594,6 +600,16 @@ acorn@^5.0.3:
 address@1.0.3, address@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
+
+ag-grid-react@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-18.0.0.tgz#6d277bc4974a32c5a4953702fe27f3f14ee68651"
+  dependencies:
+    prop-types "15.6.0"
+
+ag-grid@^18.0.1:
+  version "18.0.1"
+  resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-18.0.1.tgz#e72ee2f7cd79063466fc99fa22f7f4e9880adda2"
 
 agent-base@^4.1.0:
   version "4.2.1"
@@ -5170,6 +5186,10 @@ har-validator@~5.0.3:
     ajv "^5.1.0"
     har-schema "^2.0.0"
 
+harmony-reflect@^1.4.6:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/harmony-reflect/-/harmony-reflect-1.6.0.tgz#9c28a77386ec225f7b5d370f9861ba09c4eea58f"
+
 has-ansi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
@@ -5554,6 +5574,12 @@ icss-utils@^2.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-2.1.0.tgz#83f0a0ec378bf3246178b6c2ad9136f135b1c962"
   dependencies:
     postcss "^6.0.1"
+
+identity-obj-proxy@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/identity-obj-proxy/-/identity-obj-proxy-3.0.0.tgz#94d2bda96084453ef36fbc5aaec37e0f79f1fc14"
+  dependencies:
+    harmony-reflect "^1.4.6"
 
 ieee754@^1.1.4:
   version "1.1.11"
@@ -8850,6 +8876,10 @@ react-document-title@2.0.3:
   dependencies:
     prop-types "^15.5.6"
     react-side-effect "^1.0.2"
+
+react-dom-factories@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
 
 react-dom@15.6.2:
   version "15.6.2"

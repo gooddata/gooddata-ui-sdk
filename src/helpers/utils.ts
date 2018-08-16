@@ -23,3 +23,7 @@ export function visualizationIsBetaWarning() {
         'This chart is not production-ready and may not provide the full functionality. Use it at your own risk.'
     );
 }
+
+export const unwrap = (wrappedObject: any) => {
+    return wrappedObject[Object.keys(wrappedObject)[0]];
+};

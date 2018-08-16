@@ -18,12 +18,12 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    generateTooltipHeatMapFn,
+    generateTooltipHeatmapFn,
     generateTooltipXYFn,
     generateTooltipTreemapFn,
     IPoint,
     getBubbleChartSeries,
-    getHeatMapDataClasses,
+    getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure
 } from '../chartOptionsBuilder';
@@ -107,7 +107,7 @@ describe('chartOptionsBuilder', () => {
     const barChartWith3MetricsAndViewByAttributeOptions =
         generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
 
-    const pieAndDreemapDataSet = {
+    const pieAndTreemapDataSet = {
         ...fixtures.pieChartWithMetricsOnly,
         executionResult: {
             ...fixtures.pieChartWithMetricsOnly.executionResult,
@@ -121,9 +121,9 @@ describe('chartOptionsBuilder', () => {
         }
     };
 
-    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'pie' });
+    const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'pie' });
 
-    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndDreemapDataSet, { type: 'treemap' });
+    const treemapOptionsWithNegativeValue = generateChartOptions(pieAndTreemapDataSet, { type: 'treemap' });
 
     const pieChartWithMetricsOnlyOptions: any = generateChartOptions({
         ...fixtures.pieChartWithMetricsOnly
@@ -251,6 +251,50 @@ describe('chartOptionsBuilder', () => {
                         hasNegativeValue: true
                     });
                 });
+        });
+
+        describe('Treemap filters out root nodes for dataPoints limit', () => {
+            it('should validate with "dataTooLarge: false" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 4
+                }, treemapOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: false
+                });
+            });
+
+            it('should validate with "dataTooLarge: true" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 3
+                }, treemapOptions);
+
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
         });
     });
 
@@ -1218,7 +1262,6 @@ describe('chartOptionsBuilder', () => {
                 it('should fill correct series data', () => {
                     expect(seriesData[0].data.length).toBe(1);
                     expect(seriesData[0].data[0]).toMatchObject({
-                        y: 116625456.54,
                         value: 116625456.54,
                         color: DEFAULT_COLOR_PALETTE[0],
                         format: '#,##0.00',
@@ -1258,7 +1301,6 @@ describe('chartOptionsBuilder', () => {
                 it('should fill correct series data', () => {
                     expect(seriesData[0].data.length).toBe(2);
                     expect(seriesData[0].data[0]).toMatchObject({
-                        y: 80406324.96,
                         value: 80406324.96,
                         color: DEFAULT_COLOR_PALETTE[0],
                         format: '#,##0.00',
@@ -1268,7 +1310,6 @@ describe('chartOptionsBuilder', () => {
                     });
 
                     expect(seriesData[0].data[1]).toMatchObject({
-                        y: 36219131.58,
                         value: 36219131.58,
                         color: DEFAULT_COLOR_PALETTE[1],
                         format: '#,##0.00',
@@ -2884,8 +2925,8 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('HeatMap configuration', () => {
-            describe('generateTooltipHeatMapFn', () => {
+        describe('Heatmap configuration', () => {
+            describe('generateTooltipHeatmapFn', () => {
                 const viewBy = {
                     formOf: { name: 'viewAttr' },
                     items: [{ attributeHeaderItem: { name: 'viewHeader' } }]
@@ -2911,7 +2952,7 @@ describe('chartOptionsBuilder', () => {
                 };
 
                 it('should generate correct tooltip', () => {
-                    const tooltipFn = generateTooltipHeatMapFn(viewBy, stackBy);
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
                     const expectedResult =
             `<table class=\"tt-values\"><tr>
                 <td class=\"title\">stackAttr</td>
@@ -2926,6 +2967,26 @@ describe('chartOptionsBuilder', () => {
 
                     expect(tooltipFn(point)).toEqual(expectedResult);
                 });
+
+                it('should display "-" for null value', () => {
+                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)({
+                        ...point,
+                        value: null
+                    });
+                    const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">stackAttr</td>
+                <td class=\"value\">stackHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">viewAttr</td>
+                <td class=\"value\">viewHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">name</td>
+                <td class=\"value\">-</td>
+            </tr></table>`;
+
+                    expect(tooltipValue).toEqual(expectedResult);
+                });
             });
 
             describe('getChartOptions for heatmap', () => {
@@ -2938,7 +2999,6 @@ describe('chartOptionsBuilder', () => {
                         }
                     );
                     const expectedSeries = [{
-                        borderWidth: 1,
                         data: [
                             { x: 0, y: 0, value: 21978695.46, drilldown: false },
                             { x: 1, y: 0, value: 6038400.96, drilldown: false },
@@ -2998,7 +3058,28 @@ describe('chartOptionsBuilder', () => {
                     expect(chartOptions.yAxes).toEqual(expectedYAxis);
                 });
 
-                describe('getHeatMapDataClasses', () => {
+                it('should generate Yaxes label from attribute name', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.heatmapMetricRowColumn,
+                        {
+                            type: 'heatmap'
+                        }
+                    );
+                    const expectedYAxis = [{
+                        label: 'Product'
+                    }];
+                    expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
+
+                describe('getHeatmapDataClasses', () => {
+                    it('should return empty array when there are no values in series', () => {
+                        const series = [{ data: [{ value: null as any }] }];
+                        const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
+                        const dataClasses = getHeatmapDataClasses(series, []);
+
+                        expect(dataClasses).toEqual(expectedDataClasses);
+                    });
+
                     it('should return single dataClass when series have only one value', () => {
                         const series = [{
                             data: [{
@@ -3013,7 +3094,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'g'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3021,7 +3102,7 @@ describe('chartOptionsBuilder', () => {
                     it('should return 7 data classes with valid color', () => {
                         const series = [{
                             data: [{
-                                    value: 10
+                                    value: 0
                                 }, {
                                     value: 20
                                 }, {
@@ -3031,7 +3112,7 @@ describe('chartOptionsBuilder', () => {
                         const colorPalette = ['r', 'g', 'b'];
                         const approximatelyExpectedDataClasses = [
                             {
-                                from: 10,
+                                from: 0,
                                 color: 'r'
                             }, {
                                 color: 'g'
@@ -3048,7 +3129,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'r'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
                     });

@@ -15,6 +15,7 @@ import {
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -100,6 +101,25 @@ storiesOf('AFM components/ComboChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ComboChart
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={
+                        {
+                            mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
+                            ...GERMAN_SEPARATORS
+                        }
+                    }
                 />
             </div>
         )

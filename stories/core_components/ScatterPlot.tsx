@@ -11,6 +11,7 @@ import {
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_WITH_FORMAT
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -72,6 +73,22 @@ storiesOf('Core components/ScatterPlot', module)
                     xAxisMeasure={MEASURE_1}
                     yAxisMeasure={MEASURE_WITH_FORMAT}
                     attribute={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ScatterPlot
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    attribute={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

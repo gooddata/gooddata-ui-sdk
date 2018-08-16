@@ -169,11 +169,18 @@ export const headlineWithTwoMeasures: any = {
     executionResult: require('../test_data/headline_with_two_measures_result.json').executionResult
 };
 
+export const pivotTableWithColumnAndRowAttributes: any = {
+    executionRequest: require('../test_data/pivot_table_with_column_and_row_attributes_request.json').execution,
+    executionResponse:
+        require('../test_data/pivot_table_with_column_and_row_attributes_response.json').executionResponse,
+    executionResult: require('../test_data/pivot_table_with_column_and_row_attributes_result.json').executionResult
+};
+
 export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
 export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
-    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
-    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets, // tslint:disable-line:max-line-length
-    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets // tslint:disable-line:max-line-length
+    buckets: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets,
+    filters: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets,
+    visualizationClass: require('../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json').buckets
 };
 
 export const tableWithSorting: any = {
@@ -192,6 +199,14 @@ export const treemapWithMetricAndViewByAttribute: any = {
     executionResponse:
         require('../test_data/treemap_with_metric_and_view_by_attribute_response.json').executionResponse,
     executionResult: require('../test_data/treemap_with_metric_and_view_by_attribute_result.json').executionResult,
+    ...treemapWithMetricAndViewByAttributeMd
+};
+
+export const treemapWithMetricAndViewByAndOnlyOneElement: any = {
+    executionRequest: require('../test_data/treemap_with_metric_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_metric_and_view_by_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_metric_and_view_by_and_only_one_element_result.json').executionResult,  // tslint:disable-line:max-line-length
     ...treemapWithMetricAndViewByAttributeMd
 };
 
@@ -226,6 +241,30 @@ export const treemapWithTwoMetricsAndStackByAttribute: any = {
         require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_response.json').executionResponse,
     executionResult: require('../test_data/treemap_with_two_metrics_and_stack_by_attribute_result.json').executionResult,  // tslint:disable-line:max-line-length
     ...treemapWithTwoMetricsAndStackByAttributeMd
+};
+
+export const treemapWithThreeMetricsMd: any = {
+    mdObject: require('../test_data/treemap_with_three_metrics_md.json')
+};
+
+export const treemapWithThreeMetrics: any = {
+    executionRequest: require('../test_data/treemap_with_three_metrics_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_three_metrics_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_three_metrics_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithThreeMetricsMd
+};
+
+export const treemapWithOneMetricMd: any = {
+    mdObject: require('../test_data/treemap_with_one_metric_md.json')
+};
+
+export const treemapWithOneMetric: any = {
+    executionRequest: require('../test_data/treemap_with_one_metric_request.json').execution,
+    executionResponse:
+        require('../test_data/treemap_with_one_metric_response.json').executionResponse,
+    executionResult: require('../test_data/treemap_with_one_metric_result.json').executionResult,  // tslint:disable-line:max-line-length
+    ...treemapWithOneMetricMd
 };
 
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
@@ -348,7 +387,14 @@ export const customPalette = [
     '#001a98'
 ];
 
+export const heatmapMetricRowColumn: any = {
+    executionRequest: require('./heat_map_with_metric_row_column_request.json').execution,
+    executionResponse: require('./heat_map_with_metric_row_column_response.json').executionResponse,
+    executionResult: require('./heat_map_with_metric_row_column_result.json').executionResult
+};
+
 export default {
+    pivotTableWithColumnAndRowAttributes,
     barChartWithSingleMeasureAndNoAttributes,
     barChartWithoutAttributes,
     barChartWith3MetricsAndViewByAttribute,
@@ -376,5 +422,9 @@ export default {
     treemapWithMetricAndViewByAttribute,
     treemapWithMetricAndStackByAttribute,
     treemapWithMetricViewByAndStackByAttribute,
-    treemapWithTwoMetricsAndStackByAttribute
+    treemapWithTwoMetricsAndStackByAttribute,
+    treemapWithMetricAndViewByAndOnlyOneElement,
+    treemapWithThreeMetrics,
+    treemapWithOneMetric,
+    heatmapMetricRowColumn
 };

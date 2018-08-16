@@ -11,6 +11,7 @@ import {
     fireDrillEvent,
     getHeadlineData
 } from './utils/HeadlineTransformationUtils';
+import { IChartConfig } from '../chart/Chart';
 
 export interface IHeadlineTransformationProps {
     executionRequest: AFM.IExecution['execution'];
@@ -18,6 +19,7 @@ export interface IHeadlineTransformationProps {
     executionResult: Execution.IExecutionResult;
 
     drillableItems?: IDrillableItem[];
+    config?: IChartConfig;
 
     onFiredDrillEvent?: IDrillEventCallback;
     onAfterRender?: () => void;
@@ -48,6 +50,7 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
             executionResponse,
             executionResult,
             drillableItems,
+            config,
             onAfterRender
         } = this.props;
 
@@ -57,6 +60,7 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
         return (
             <Headline
                 data={dataWithUpdatedDrilling}
+                config={config}
                 onFiredDrillEvent={this.handleFiredDrillEvent}
                 onAfterRender={onAfterRender}
             />

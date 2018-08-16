@@ -1,4 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
+export const WHITE = 'rgb(255, 255, 255)';
+export const BLACK = 'rgb(0, 0, 0)';
+export const GRAY = 'rgb(201, 213, 223)';
+
 export const DEFAULT_COLOR_PALETTE = [
     'rgb(20,178,226)',
     'rgb(0,193,141)',
@@ -46,15 +50,20 @@ function formatColor(red: number, green: number, blue: number) {
     return `rgb(${red},${green},${blue})`;
 }
 
+export function parseRGBColorCode(color: string) {
+    const f = color.split(',');
+    const R = parseInt(f[0].slice(4), 10);
+    const G = parseInt(f[1], 10);
+    const B = parseInt(f[2], 10);
+    return { R, G, B };
+}
+
 /**
  * Source:
  *     http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
  */
 export function getLighterColor(color: string, percent: number) {
-    const f = color.split(',');
-    const R = parseInt(f[0].slice(4), 10);
-    const G = parseInt(f[1], 10);
-    const B = parseInt(f[2], 10);
+    const { R, G, B } = parseRGBColorCode(color);
 
     return formatColor(
         lighter(R, percent),

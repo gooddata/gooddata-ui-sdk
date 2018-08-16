@@ -24,25 +24,33 @@ import {
     isChartSupported,
     isComboChart,
     isDualChart,
-    isHeatMap,
+    isHeatmap,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
     parseValue,
-    stringifyChartTypes,
-    unwrap
+    stringifyChartTypes
 } from '../utils/common';
-
 import { getChartProperties } from './highcharts/helpers';
+import { unwrap } from '../../../helpers/utils';
 
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
 import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
+import {
+    VIEW_BY_DIMENSION_INDEX,
+    STACK_BY_DIMENSION_INDEX,
+    PIE_CHART_LIMIT,
+    HEATMAP_DATA_POINTS_LIMIT
+} from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
 
-import { DEFAULT_SERIES_LIMIT, DEFAULT_CATEGORIES_LIMIT } from './highcharts/commonConfiguration';
+import {
+    DEFAULT_SERIES_LIMIT,
+    DEFAULT_CATEGORIES_LIMIT,
+    DEFAULT_DATA_POINTS_LIMIT
+} from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
@@ -96,6 +104,7 @@ export interface IAxis {
 export interface ISeriesDataItem {
     x?: number;
     y: number;
+    value?: number;
     name?: string;
 }
 
@@ -104,12 +113,14 @@ export interface ISeriesItem {
     data?: ISeriesDataItem[];
     color?: string;
     userOptions?: any;
+    visible?: boolean;
 }
 
 export interface IChartOptions {
     type?: string;
     stacking?: any;
     hasStackByAttribute?: boolean;
+    hasViewByAttribute?: boolean;
     legendLayout?: string;
     colorPalette?: string[];
     dualAxis?: boolean;
@@ -127,7 +138,7 @@ export interface IChartOptions {
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
         .some((seriesItem: ISeriesItem) => (
-            seriesItem.data.some(({ y }: ISeriesDataItem) => (y < 0))
+            seriesItem.data.some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
         ));
 }
 
@@ -148,8 +159,14 @@ function getChartLimits(type: string): IChartLimits {
         case VisualizationTypes.TREEMAP:
             return {
                 series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_DATA_POINTS_LIMIT,
+                dataPoints: DEFAULT_DATA_POINTS_LIMIT
+            };
+        case VisualizationTypes.HEATMAP:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_CATEGORIES_LIMIT,
-                dataPoints: 30000
+                dataPoints: HEATMAP_DATA_POINTS_LIMIT
             };
         default:
             return {
@@ -163,12 +180,27 @@ export function cannotShowNegativeValues(type: string) {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
+function getTreemapDataForValidation(data: any) {
+    // filter out root nodes
+    return {
+        ...data,
+        series: data.series.map((serie: any) => ({
+            ...serie,
+            data: serie.data.filter((dataItem: any) => dataItem.id === undefined)
+        }))
+    };
+}
+
 export function validateData(limits: IChartLimits, chartOptions: any) {
     const { type } = chartOptions;
     const finalLimits = limits || getChartLimits(type);
+    let dataToValidate = chartOptions.data;
+    if (isTreemap(type)) {
+        dataToValidate = getTreemapDataForValidation(chartOptions.data);
+    }
 
     return {
-        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, finalLimits),
+        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits),
         hasNegativeValue: cannotShowNegativeValues(type)
             && isNegativeValueIncluded(chartOptions.data.series)
     };
@@ -274,7 +306,7 @@ export function getColorPalette(
     afm: AFM.IAfm,
     type: string
 ): string[] {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return HEATMAP_BLUE_COLOR_PALETTE;
     }
 
@@ -345,8 +377,17 @@ export function getSeriesItemData(
             measureIndex = pointIndex;
         }
 
+        let valueProp: any = {
+            y: parseValue(pointValue)
+        };
+        if (isTreemap(type)) {
+            valueProp = {
+                value: parseValue(pointValue)
+            };
+        }
+
         const pointData: IPointData = {
-            y: parseValue(pointValue),
+            ...valueProp,
             format: unwrap(measureGroup.items[measureIndex]).format,
             marker: {
                 enabled: pointValue !== null
@@ -368,10 +409,6 @@ export function getSeriesItemData(
             pointData.legendIndex = viewByAttribute ? viewByIndex : pointIndex;
         }
 
-        if (isTreemap(type)) {
-            pointData.value = parseValue(pointValue);
-        }
-
         return pointData;
     });
 }
@@ -385,7 +422,7 @@ export interface ISeriesItemConfig {
     xAxis?: number;
 }
 
-export function getHeatMapSeries(
+export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: any,
@@ -408,9 +445,7 @@ export function getHeatMapSeries(
                         (!stackByAttribute || (stackByAttribute.items.length <= 20))),
             formatGD: unwrap(measureGroup.items[0]).format
         },
-        legendIndex: 0,
-        borderWidth: ((!viewByAttribute || (viewByAttribute.items.length <= 30)) &&
-                        (!stackByAttribute || (stackByAttribute.items.length <= 30))) ? 1 : 0
+        legendIndex: 0
     }];
 }
 
@@ -444,6 +479,7 @@ export function getScatterPlotSeries(
         });
 
         return [{
+            turboThreshold: 0,
             color: colorPalette[0],
             legendIndex: 0,
             data
@@ -682,8 +718,8 @@ export function getSeries(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ): any {
-    if (isHeatMap(type)) {
-        return getHeatMapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+    if (isHeatmap(type)) {
+        return getHeatmapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
@@ -733,15 +769,21 @@ export function getSeries(
             seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
         }
 
-        return seriesItemConfig;
+        const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
+
+        return {
+            ...seriesItemConfig,
+            ...turboThresholdProp
+        };
     });
 }
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-export function generateTooltipFn(viewByAttribute: any, type: string) {
+export function generateTooltipFn(viewByAttribute: any, type: string, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -766,9 +808,10 @@ export function generateTooltipFn(viewByAttribute: any, type: string) {
     };
 }
 
-export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
+export function generateTooltipXYFn(measures: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -803,9 +846,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
     };
 }
 
-export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any) {
+export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -838,12 +882,10 @@ export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute:
     };
 }
 
-export function generateTooltipTreemapFn(
-    viewByAttribute: any,
-    stackByAttribute: any
-) {
+export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -999,8 +1041,8 @@ export function getDrillableSeries(
                 measures = [unwrap(measureGroup.items[measureIndex])];
             }
 
-            const viewByIndex = isHeatMap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            let stackByIndex = isHeatMap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+            const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
+            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
             if (isScatterPlot(type)) {
                 stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
             }
@@ -1064,7 +1106,7 @@ export function getDrillableSeries(
 
 function getCategories(type: string, measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
                        viewByAttribute: any, stackByAttribute: any) {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return [
             viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
             stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
@@ -1216,9 +1258,9 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         } else {
             yAxes = [{ label: '' }];
         }
-    } else if (isHeatMap(type)) {
+    } else if (isHeatmap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : ''
+            label: stackByAttribute ? stackByAttribute.formOf.name : ''
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -1252,14 +1294,15 @@ function assignYAxes(series: any, yAxes: IAxis[]) {
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;
 export const HIGHCHARTS_PRECISION = 15;
+export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
-export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
-    const newSeries = series.map((item: any) => ({
-        ...item,
-        borderWidth: 0
-    }));
+export function getHeatmapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
+    const values: number[] = without(get(series, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
 
-    const values: number[] = compact(get(newSeries, '0.data', []).map((item: any) => item.value));
+    if (isEmpty(values)) {
+        return [];
+    }
+
     const min = Math.min(...values);
     const max = Math.max(...values);
     const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
@@ -1270,7 +1313,7 @@ export function getHeatMapDataClasses(series: any = [], colorPalette: string[]):
         dataClasses.push({
             from: min,
             to: max,
-            color: colorPalette[1]
+            color: colorPalette[DEFAULT_HEATMAP_COLOR_INDEX]
         });
     } else {
         const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
@@ -1479,7 +1522,7 @@ export function getChartOptions(
             legendLayout: config.legendLayout || 'horizontal',
             dualAxis: false,
             actions: {
-                tooltip: generateTooltipFn(viewByAttribute, type)
+                tooltip: generateTooltipFn(viewByAttribute, type, config)
             },
             grid: {
                 enabled: gridEnabled
@@ -1519,7 +1562,7 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1529,7 +1572,7 @@ export function getChartOptions(
         };
     }
 
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return {
             type,
             stacking: null,
@@ -1546,14 +1589,14 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute)
+                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config)
             },
             grid: {
                 enabled: false
             },
             colorPalette,
             colorAxis: {
-                dataClasses: getHeatMapDataClasses(series, colorPalette)
+                dataClasses: getHeatmapDataClasses(series, colorPalette)
             }
         };
     }
@@ -1593,7 +1636,7 @@ export function getChartOptions(
                 categories: ['']
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1605,13 +1648,14 @@ export function getChartOptions(
 
     const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute) :
-        generateTooltipFn(viewByAttribute, type);
+    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
+        generateTooltipFn(viewByAttribute, type, config);
 
     const chartOptions = {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
+        hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || 'horizontal',
         colorPalette,
         xAxes,

@@ -14,7 +14,9 @@ import ComboChartExample from '../components/ComboChartExample';
 import ScatterPlotExample from '../components/ScatterPlotExample';
 import BubbleChartExample from '../components/BubbleChartExample';
 import TreemapExample from '../components/TreemapExample';
+import HeatmapExample from '../components/HeatmapExample';
 import TableExample from '../components/TableExample';
+import HeadlineExample from '../components/HeadlineExample';
 import KpiExample from '../components/KpiExample';
 
 import BarChartExampleSRC from '!raw-loader!../components/BarChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -28,7 +30,9 @@ import ComboChartExampleSRC from '!raw-loader!../components/ComboChartExample'; 
 import ScatterPlotExampleSRC from '!raw-loader!../components/ScatterPlotExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import BubbleChartExampleSRC from '!raw-loader!../components/BubbleChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import TreemapExampleSRC from '!raw-loader!../components/TreemapExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import HeatmapExampleSRC from '!raw-loader!../components/HeatmapExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import HeadlineExampleSRC from '!raw-loader!../components/HeadlineExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import KpiExampleSRC from '!raw-loader!../components/KpiExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const BasicComponents = () => (
@@ -81,10 +85,16 @@ export const BasicComponents = () => (
         <h2 id="treemap">Treemap</h2>
         <ExampleWithSource for={TreemapExample} source={TreemapExampleSRC} />
 
+        <h2 id="heatmap">Heatmap</h2>
+        <ExampleWithSource for={HeatmapExample} source={HeatmapExampleSRC} />
+
         <hr className="separator" />
 
         <h2 id="table">Table</h2>
         <ExampleWithSource for={TableExample} source={TableExampleSRC} />
+
+        <h2 id="table">Headline</h2>
+        <ExampleWithSource for={HeadlineExample} source={HeadlineExampleSRC} />
 
         <h2 id="kpi">KPI</h2>
         <p>
