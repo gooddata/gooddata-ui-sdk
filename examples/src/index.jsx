@@ -64,8 +64,7 @@ export class App extends React.Component {
         return sdk.user.isLoggedIn()
             .then((isLoggedIn) => {
                 this.onUserLogin(isLoggedIn, null);
-            })
-            .catch((errorMessage) => {
+            }, (errorMessage) => {
                 this.onUserLogin(false, errorMessage);
             });
     }

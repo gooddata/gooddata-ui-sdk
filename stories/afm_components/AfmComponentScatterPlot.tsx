@@ -12,6 +12,7 @@ import {
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 storiesOf('AFM components/ScatterPlot', module)
     .add('two measures, one attribute', () => (
@@ -59,6 +60,24 @@ storiesOf('AFM components/ScatterPlot', module)
                     config={{
                         colors: CUSTOM_COLORS,
                         mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_SCATTER_MD_OBJECT
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <ScatterPlot
+                    projectId="storybook"
+                    afm={AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE}
+                    config={{
+                        colors: CUSTOM_COLORS,
+                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_SCATTER_MD_OBJECT,
+                        ...GERMAN_SEPARATORS
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}

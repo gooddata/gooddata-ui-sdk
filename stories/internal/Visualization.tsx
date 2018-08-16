@@ -11,6 +11,7 @@ import { wrap } from '../utils/wrap';
 import { immutableSet } from '../../src/components/visualizations/utils/common';
 
 import '../../styles/scss/charts.scss';
+import { GERMAN_NUMBER_FORMAT } from '../data/numberFormat';
 
 export interface IDynamicVisualizationState {
     chartType: string;
@@ -47,7 +48,8 @@ class DynamicVisualization extends React.Component<null, IDynamicVisualizationSt
             'bar',
             'line',
             'pie',
-            'area'
+            'area',
+            'heatmap'
         ];
 
         this.state = {
@@ -321,4 +323,18 @@ storiesOf('Internal/Visualization', module)
     })
     .add('dynamic visualization', () => {
         return <DynamicVisualization />;
+    })
+    .add('visualization with German number format', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.barChartWith3MetricsAndViewByAttribute}
+                    config={{
+                        type: 'bar',
+                        separators: GERMAN_NUMBER_FORMAT
+                    }}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
     });

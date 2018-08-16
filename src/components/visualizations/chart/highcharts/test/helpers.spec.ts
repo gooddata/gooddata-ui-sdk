@@ -5,7 +5,8 @@ import {
     shouldStartOrEndOnTick,
     getDataLabelAttributes,
     getChartProperties,
-    isLabelOverlappingItsShape
+    isLabelOverlappingItsShape,
+    intersectsParentLabel
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -105,17 +106,131 @@ describe('helpers', () => {
         });
     });
 
-    describe('shouldStartOrEndOnTick', () => {
-        it('should return true when no max or min are set', () => {
-            expect(shouldStartOrEndOnTick(null, null)).toBeTruthy();
+    describe ('shouldStartOrEndOnTick', () => {
+        const nonStackedChartOptions = {
+            hasStackByAttribute: false,
+            data: {
+                series: [
+                    {
+                        data: [ { y: 20 }],
+                        visible: true
+                    }
+                ]
+            }
+        };
+
+        const stackedChartOptions = {
+            hasStackByAttribute: true,
+            data: {
+                series: [
+                    {
+                        data: [
+                            { y: 20 },
+                            { y: 10 },
+                            { y: 5 }
+                        ],
+                        visible: true
+                    }
+                ]
+            }
+        };
+
+        describe('Non stacked chart', () => {
+            it ('should return false when min and max are set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '5', max: '10' }
+                };
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+            });
+
+            it ('should return false when min is greater than max', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '10', max: '5' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it ('should return false if min is set but less than max data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '10' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+            });
+
+            it ('should return true if min is set and bigger than max data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '22' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it ('should return true when no max or min are set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: {}
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it ('should return true if max is set but less than min data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { max: '-10' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
         });
 
-        it('should return false when min or max are set', () => {
-            expect(shouldStartOrEndOnTick('20', '5')).toBeFalsy();
-        });
+        describe('Stacked chart', () => {
+            it ('should return false if min is set but less than max data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { min: '10' }
+                };
 
-        it('should return true when min is greater than max', () => {
-            expect(shouldStartOrEndOnTick('20', '30')).toBeTruthy();
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+            });
+
+            it ('should return true if min is set but serie is not visible (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    data: {
+                        series: [
+                            { ...stackedChartOptions.data.series[0], visible: false }
+                        ]
+                    },
+                    yAxisProps: { min: '10' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it ('should return true if min is set and greater than max data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { min: '22' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it ('should return true if max is set but less than min data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { max: '-10' }
+                };
+
+                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+            });
         });
     });
 
@@ -167,7 +282,8 @@ describe('helpers', () => {
                                 name: 'data3',
                                 y: -12
                             }
-                        ]
+                        ],
+                        visible: true
                     }
                 ]
             }
@@ -196,7 +312,8 @@ describe('helpers', () => {
                                 name: 'data3',
                                 y: -12
                             }
-                        ]
+                        ],
+                        visible: true
                     }, {
                         color: 'rgb(0, 0, 0)',
                         name: '<b>bbb</b>',
@@ -213,7 +330,8 @@ describe('helpers', () => {
                                 name: 'data3',
                                 y: -12
                             }
-                        ]
+                        ],
+                        visible: true
                     }
                 ]
             }
@@ -234,8 +352,8 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...nonStackedChartOptions,
                     yAxisProps: {
-                        min: -30,
-                        max: 200
+                        min: '-30',
+                        max: '200'
                     }
                 });
 
@@ -246,7 +364,7 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...nonStackedChartOptions,
                     yAxisProps: {
-                        min: -10
+                        min: '-10'
                     }
                 });
 
@@ -257,8 +375,19 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...nonStackedChartOptions,
                     yAxisProps: {
-                        min: 60,
-                        max: 100
+                        min: '60',
+                        max: '100'
+                    }
+                });
+
+                expect(result).toBeTruthy();
+            });
+
+            it('should return true when min is bigger than minimal value', () => {
+                const result = shouldFollowPointer({
+                    ...nonStackedChartOptions,
+                    yAxisProps: {
+                        min: '0'
                     }
                 });
 
@@ -281,8 +410,8 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...stackedChartOptions,
                     yAxisProps: {
-                        min: -30,
-                        max: 200
+                        min: '-30',
+                        max: '200'
                     }
                 });
 
@@ -293,8 +422,19 @@ describe('helpers', () => {
                 const result = shouldFollowPointer({
                     ...stackedChartOptions,
                     yAxisProps: {
-                        min: 60,
-                        max: 100
+                        min: '60',
+                        max: '100'
+                    }
+                });
+
+                expect(result).toBeTruthy();
+            });
+
+            it('should return true when min is bigger than minimal value', () => {
+                const result = shouldFollowPointer({
+                    ...stackedChartOptions,
+                    yAxisProps: {
+                        min: '0'
                     }
                 });
 
@@ -343,6 +483,36 @@ describe('helpers', () => {
             };
 
             expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        });
+    });
+
+    describe('intersectsParentLabel', () => {
+        function createPointWithLabel(parentId: any, dataLabel: any) {
+            return {
+                parent: parentId,
+                dataLabel
+            };
+        }
+
+        const points = [
+            createPointWithLabel(undefined, { x: 0, y: 0, width: 10, height: 10 }),
+            createPointWithLabel('0', { x: 100, y: 100, width: 10, height: 10 }),
+            createPointWithLabel('0', { x: 0, y: 0, width: 10, height: 10 })
+        ];
+
+        it('should return false if no parent given', () => {
+            const intersects = intersectsParentLabel(points[0], points);
+            expect(intersects).toEqual(false);
+        });
+
+        it('should return false if parent given but no intersection', () => {
+            const intersects = intersectsParentLabel(points[1], points);
+            expect(intersects).toEqual(false);
+        });
+
+        it('should return true if parent given and intersects', () => {
+            const intersects = intersectsParentLabel(points[2], points);
+            expect(intersects).toEqual(true);
         });
     });
 });

@@ -153,6 +153,19 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
     ]
 };
 
+export const AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        MEASURE_1
+    ],
+    attributes: [
+        ATTRIBUTE_POPULARITY,
+        {
+            ...ATTRIBUTE_COLOURS,
+            alias: 'My Attribute Alias'
+        }
+    ]
+};
+
 export const AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
     measures: [{
         ...MEASURE_1,

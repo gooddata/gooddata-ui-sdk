@@ -5,6 +5,7 @@ import * as React from 'react';
 import { VisualizationObject } from '@gooddata/typings';
 import { initChartPlugins } from './highcharts/chartPlugins';
 import { VisType } from '../../../constants/visualizationTypes';
+import { ISeparators } from '@gooddata/numberjs';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
@@ -49,6 +50,7 @@ export interface IChartConfig {
     chart?: any;
     xaxis?: IAxisConfig;
     yaxis?: IAxisConfig;
+    separators?: ISeparators;
 }
 
 export interface IAxisConfig {

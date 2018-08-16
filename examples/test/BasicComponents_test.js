@@ -76,3 +76,11 @@ test('Bubble chart should render', async (t) => {
 test('Treemap should render', async (t) => {
     await checkRenderChart('.s-tree-map', t);
 });
+
+test('Headline should render', async (t) => {
+    await checkRenderChart('.s-headline', t);
+});
+
+test('Heatmap should render', async (t) => {
+    await checkRenderChart('.s-heat-map', t);
+});

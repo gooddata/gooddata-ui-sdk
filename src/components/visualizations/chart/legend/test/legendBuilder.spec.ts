@@ -30,12 +30,84 @@ describe('shouldLegendBeEnabled', () => {
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
-    it('should return true if chart is heatmap', () => {
+    it('should return false if the treemap is stacked and has only one measure item', () => {
+        const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
+    });
+
+    it('should return true if the treemap is stacked and has many measures', () => {
+        const dataSet = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return true if the treemap has many measures', () => {
+        const dataSet = fixtures.treemapWithThreeMetrics;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return false if the treemap has only one measures', () => {
+        const dataSet = fixtures.treemapWithOneMetric;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
+    });
+
+    it('should return true if the treemap has view by and has only one view by item', () => {
+        const dataSet = fixtures.treemapWithMetricAndViewByAndOnlyOneElement;
+        const chartOptions = generateChartOptions(
+            dataSet,
+            {
+                type: 'treemap',
+                mdObject: dataSet.mdObject
+            });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return true if chart is heatmap with multiple dataClasses', () => {
         const chartOptions = {
-            type: VisualizationTypes.HEATMAP
+            type: VisualizationTypes.HEATMAP,
+            colorAxis: {
+                dataClasses: [
+                    { from: 1, to: 2 },
+                    { from: 2, to: 3 }
+                ]
+            }
         };
 
         expect(shouldLegendBeEnabled(chartOptions)).toEqual(true);
+    });
+
+    it('should return false when chart is heatmap with single dataClass', () => {
+        const chartOptions = {
+            type: VisualizationTypes.HEATMAP,
+            colorAxis: {
+                dataClasses: [{ from: 7, to: 7 }]
+            }
+        };
+
+        expect(shouldLegendBeEnabled(chartOptions)).toEqual(false);
     });
 });
 
@@ -132,13 +204,5 @@ describe('getLegend', () => {
     it('should assign items', () => {
         const legendItems = getLegendItems(chartOptions);
         expect(legend.items).toEqual(legendItems);
-    });
-
-    it('should set legend position to top for heatmap', () => {
-        const chartOptions = { type: VisualizationTypes.HEATMAP };
-        const legendConfig = {};
-        const legend = getLegend(legendConfig, chartOptions);
-
-        expect(legend.position).toEqual('top');
     });
 });

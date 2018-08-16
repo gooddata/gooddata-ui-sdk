@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { SDK, DataLayer } from '@gooddata/gooddata-js';
-import { colors2Object, numberFormat } from '@gooddata/numberjs';
+import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
 import noop = require('lodash/noop');
 import { AFM, Execution } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
@@ -23,6 +23,7 @@ export interface IKpiProps extends IEvents {
     sdk?: SDK;
     filters?: AFM.FilterItem[];
     format?: string;
+    separators?: ISeparators;
     ExecuteComponent?: React.ComponentType<IExecuteProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     ErrorComponent?: React.ComponentType<IErrorProps>;
@@ -141,7 +142,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
 
     private getFormattedResult(num: number | string, result: Execution.IExecutionResponses) {
         const format = this.props.format || getFormatFromExecution(result) || DEFAULT_FORMAT;
-        const formattedNumber = numberFormat(num, format);
+        const formattedNumber = numberFormat(num, format, undefined, this.props.separators);
         const { label, color, backgroundColor } = colors2Object(formattedNumber);
         return color ? <span style={{ color, backgroundColor }}>{label}</span> : label;
     }

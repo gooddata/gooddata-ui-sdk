@@ -38,4 +38,4 @@ export interface IDrillableItem {
     identifier?: string;
 }
 
-export type IDrillEventCallback = (event: IDrillEvent) => boolean;
+export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;

@@ -61,6 +61,7 @@ import {
 import { TotalCell } from './totals/TotalCell';
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
+import { ISeparators } from '@gooddata/numberjs';
 
 const FULLSCREEN_TOOLTIP_VIEWPORT_THRESHOLD: number = 480;
 const MIN_COLUMN_WIDTH: number = 100;
@@ -131,6 +132,7 @@ export interface ITableVisualizationProps {
     totalsWithData?: ITotalWithData[];
     lastAddedTotalType?: AFM.TotalType;
     onLastAddedTotalRowHighlightPeriodEnd?: () => void;
+    separators?: ISeparators;
 }
 
 export interface ITableVisualizationState {
@@ -753,7 +755,7 @@ export class TableVisualizationClass
     }
 
     private renderCell(headers: TableHeader[], columnIndex: number): (cellProps: CellProps) => JSX.Element {
-        const { executionRequest, drillableItems, onFiredDrillEvent, rows } = this.props;
+        const { executionRequest, drillableItems, onFiredDrillEvent, rows, separators } = this.props;
         const afm = executionRequest.execution.afm;
         const header: TableHeader = headers[columnIndex];
         const drillable: boolean = isDrillable(drillableItems, header, afm);
@@ -766,7 +768,7 @@ export class TableVisualizationClass
             const classes: string = getCellClassNames(rowIndex, columnKey, drillable);
             const drillConfig: IDrillConfig = { afm, onFiredDrillEvent };
             const hoverable: boolean = isMeasureTableHeader(header) && this.isTotalsEditAllowed();
-            const { style, label } = getStyledLabel(header, cellContent);
+            const { style, label } = getStyledLabel(header, cellContent, true, separators);
 
             const cellPropsDrill: CellProps = drillable
                 ? {
@@ -803,7 +805,7 @@ export class TableVisualizationClass
     }
 
     private renderFooter(header: TableHeader, columnIndex: number, headersCount: number): JSX.Element {
-        const { headers, totalsWithData } = this.props;
+        const { headers, totalsWithData, separators } = this.props;
 
         if (!shouldShowTotals(headers)) {
             return null;
@@ -842,6 +844,7 @@ export class TableVisualizationClass
                 headersCount={headersCount}
                 firstMeasureIndex={getFirstMeasureIndex(headers)}
                 editAllowed={this.isTotalsEditAllowed()}
+                separators={separators}
                 onCellMouseOver={onCellMouseOver}
                 onCellMouseLeave={onCellMouseLeave}
                 onEnableColumn={this.enableTotalColumn}

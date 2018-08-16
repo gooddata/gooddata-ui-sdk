@@ -651,4 +651,110 @@ storiesOf('Internal/Drilldown', module)
             }
         </div>
     );
-});
+    })
+    .add('Heatmap with onFiredDrillEvent', () => {
+        const dataSet = fixtures.heatmapMetricRowColumn;
+        return screenshotWrap(
+            <div><p>Heatmap drillable by measure</p>
+            {
+                wrap(
+                    <Visualization
+                        config={{
+                            type: 'heatmap'
+                        }}
+                        onDataTooLarge={noop}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                            }
+                        ]}
+                        {...dataSet}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>Heatmap drillable by attribute</p>
+            {
+                wrap(
+                    <Visualization
+                        config={{
+                            type: 'heatmap'
+                        }}
+                        onDataTooLarge={noop}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                            }
+                        ]}
+                        {...dataSet}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>Heatmap drillable by attribute element</p>
+            {
+                wrap(
+                    <Visualization
+                        config={{
+                            type: 'heatmap'
+                        }}
+                        onDataTooLarge={noop}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionResult
+                                        .headerItems[STACK_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                            }
+                        ]}
+                        {...dataSet}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>Heatmap with standard onFiredDrillEvent callback</p>
+            {
+                wrap(
+                    <Visualization
+                        onFiredDrillEvent={action('onFiredDrillEvent')}
+                        config={{
+                            type: 'heatmap'
+                        }}
+                        onDataTooLarge={noop}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                            }
+                        ]}
+                        {...dataSet}
+                    />,
+                    500,
+                    '100%'
+                )
+            }
+            <p>
+                Heatmap with onFiredDrillEvent where drillEvent
+                is logged into console and default event is prevented
+            </p>
+            {
+                wrap(
+                    <Visualization
+                        onFiredDrillEvent={onFiredDrillEvent}
+                        config={{
+                            type: 'heatmap'
+                        }}
+                        onDataTooLarge={noop}
+                        drillableItems={[
+                            {
+                                uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                            }
+                        ]}
+                        {...dataSet}
+                    />,
+                    500,
+                    '100%'
+                )
+            }</div>
+        );
+    });

@@ -11,6 +11,7 @@ import {
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 storiesOf('AFM components/BubbleChart', module)
     .add('three measures, one attribute', () => (
@@ -63,6 +64,25 @@ storiesOf('AFM components/BubbleChart', module)
                         {
                             grid: { enabled: false },
                             mdObject: AFM_THREE_MEASURES_ONE_ATTRIBUTE_BUBBLE_MD_OBJECT
+                        }
+                    }
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <BubbleChart
+                    projectId="storybook"
+                    afm={AFM_THREE_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={
+                        {
+                            mdObject: AFM_THREE_MEASURES_ONE_ATTRIBUTE_BUBBLE_MD_OBJECT,
+                            ...GERMAN_SEPARATORS
                         }
                     }
                 />
