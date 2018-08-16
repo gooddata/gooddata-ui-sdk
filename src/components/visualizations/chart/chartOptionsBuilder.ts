@@ -24,7 +24,7 @@ import {
     isChartSupported,
     isComboChart,
     isDualChart,
-    isHeatMap,
+    isHeatmap,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -306,7 +306,7 @@ export function getColorPalette(
     afm: AFM.IAfm,
     type: string
 ): string[] {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return HEATMAP_BLUE_COLOR_PALETTE;
     }
 
@@ -422,7 +422,7 @@ export interface ISeriesItemConfig {
     xAxis?: number;
 }
 
-export function getHeatMapSeries(
+export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: any,
@@ -718,8 +718,8 @@ export function getSeries(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ): any {
-    if (isHeatMap(type)) {
-        return getHeatMapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+    if (isHeatmap(type)) {
+        return getHeatmapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
@@ -846,7 +846,7 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any, config
     };
 }
 
-export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
@@ -1041,8 +1041,8 @@ export function getDrillableSeries(
                 measures = [unwrap(measureGroup.items[measureIndex])];
             }
 
-            const viewByIndex = isHeatMap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            let stackByIndex = isHeatMap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+            const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
+            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
             if (isScatterPlot(type)) {
                 stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
             }
@@ -1106,7 +1106,7 @@ export function getDrillableSeries(
 
 function getCategories(type: string, measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
                        viewByAttribute: any, stackByAttribute: any) {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return [
             viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
             stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
@@ -1258,7 +1258,7 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         } else {
             yAxes = [{ label: '' }];
         }
-    } else if (isHeatMap(type)) {
+    } else if (isHeatmap(type)) {
         yAxes = [{
             label: stackByAttribute ? stackByAttribute.formOf.name : ''
         }];
@@ -1296,7 +1296,7 @@ export const HEAT_MAP_CATEGORIES_COUNT = 7;
 export const HIGHCHARTS_PRECISION = 15;
 export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
-export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
+export function getHeatmapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
     const values: number[] = without(get(series, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
 
     if (isEmpty(values)) {
@@ -1572,7 +1572,7 @@ export function getChartOptions(
         };
     }
 
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return {
             type,
             stacking: null,
@@ -1589,14 +1589,14 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute, config)
+                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config)
             },
             grid: {
                 enabled: false
             },
             colorPalette,
             colorAxis: {
-                dataClasses: getHeatMapDataClasses(series, colorPalette)
+                dataClasses: getHeatmapDataClasses(series, colorPalette)
             }
         };
     }

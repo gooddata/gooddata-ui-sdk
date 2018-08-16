@@ -9,7 +9,7 @@ export {
 };
 
 import { ICommonChartProps } from '../core/base/BaseChart';
-import { HeatMap as CoreHeatMap } from '../core/HeatMap';
+import { Heatmap as CoreHeatmap } from '../core/Heatmap';
 import { generateDefaultDimensions } from '../../helpers/dimensions';
 
-export const HeatMap = dataSourceProvider<ICommonChartProps>(CoreHeatMap, generateDefaultDimensions, 'HeatMap');
+export const Heatmap = dataSourceProvider<ICommonChartProps>(CoreHeatmap, generateDefaultDimensions, 'Heatmap');

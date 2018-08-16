@@ -311,7 +311,7 @@ function labelFormatter(config?: IChartConfig) {
     return formatLabel(this.y, get(this, 'point.format'), config);
 }
 
-function labelFormatterHeatMap(options: any) {
+function labelFormatterHeatmap(options: any) {
     return formatLabel(this.point.value, options.formatGD, options.config);
 }
 
@@ -451,7 +451,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             },
             heatmap: {
                 dataLabels: {
-                    formatter: labelFormatterHeatMap,
+                    formatter: labelFormatterHeatmap,
                     config
                 }
             },
@@ -517,7 +517,7 @@ function getSeries(series: any, colorPalette: any = []) {
     });
 }
 
-function getHeatMapDataConfiguration(chartOptions: any) {
+function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
@@ -554,7 +554,7 @@ function getDataConfiguration(chartOptions: any) {
                 series
             };
         case VisualizationTypes.HEATMAP:
-            return getHeatMapDataConfiguration(chartOptions);
+            return getHeatmapDataConfiguration(chartOptions);
     }
 
     const categories = map(data.categories, escapeAngleBrackets);

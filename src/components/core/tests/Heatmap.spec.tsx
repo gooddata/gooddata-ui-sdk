@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { HeatMap } from '../HeatMap';
+import { Heatmap } from '../Heatmap';
 import { BaseChart } from '../base/BaseChart';
 import { emptyDataSource } from '../../tests/mocks';
 
-describe('HeatMap', () => {
+describe('Heatmap', () => {
     it('should render BaseChart', () => {
-        const wrapper = shallow(<HeatMap dataSource={emptyDataSource} />);
+        const wrapper = shallow(<Heatmap dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

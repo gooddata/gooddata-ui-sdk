@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { HeatMap } from '../../src/components/afm/HeatMap';
+import { Heatmap } from '../../src/components/afm/Heatmap';
 import {
     AFM_ONE_MEASURE,
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
@@ -15,11 +15,11 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('AFM components/Heat Map', module)
+storiesOf('AFM components/Heatmap', module)
     .add('metric row column', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
                     onError={onErrorHandler}
@@ -40,7 +40,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('metric only', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE}
                     onError={onErrorHandler}
@@ -51,7 +51,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('metric and row', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
@@ -72,7 +72,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('metric and column', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
@@ -83,7 +83,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('metric row column with row alias', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
@@ -104,7 +104,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('metric row column with cloumn alias', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE}
                     onError={onErrorHandler}
@@ -125,7 +125,7 @@ storiesOf('AFM components/Heat Map', module)
     .add('with German number format', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
-                <HeatMap
+                <Heatmap
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
                     config={GERMAN_SEPARATORS}

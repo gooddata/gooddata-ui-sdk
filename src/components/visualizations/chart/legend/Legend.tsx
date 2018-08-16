@@ -7,8 +7,8 @@ import * as cx from 'classnames';
 import FluidLegend from './FluidLegend';
 import StaticLegend from './StaticLegend';
 import { ChartType } from '../../../../constants/visualizationTypes';
-import { isHeatMap } from '../../utils/common';
-import HeatMapLegend from './HeatMapLegend';
+import { isHeatmap } from '../../utils/common';
+import HeatmapLegend from './HeatmapLegend';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
 
@@ -143,8 +143,8 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
 
         const fluidLegend = responsive && showFluid;
 
-        if (isHeatMap(this.props.chartType)) {
-            return this.renderHeatMapLegend();
+        if (isHeatmap(this.props.chartType)) {
+            return this.renderHeatmapLegend();
         }
 
         if (fluidLegend) {
@@ -154,7 +154,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         return this.renderStatic();
     }
 
-    private renderHeatMapLegend() {
+    private renderHeatmapLegend() {
         const { locale, format, responsive } = this.props;
         const { showFluid } = this.state;
         const series = this.getSeries();
@@ -164,7 +164,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => (
-                        <HeatMapLegend
+                        <HeatmapLegend
                             series={series}
                             format={format}
                             isSmall={isSmall}

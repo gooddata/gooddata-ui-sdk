@@ -4,7 +4,7 @@ import noop = require('lodash/noop');
 import { mount } from 'enzyme';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import Legend, { FLUID_LEGEND_THRESHOLD } from '../Legend';
-import HeatMapLegend from '../HeatMapLegend';
+import HeatmapLegend from '../HeatmapLegend';
 import { withIntl } from '../../../utils/intlUtils';
 
 describe('Legend', () => {
@@ -69,6 +69,6 @@ describe('Legend', () => {
 
     it('should render heat map legend when type is heatmap', () => {
         const wrapper = createComponent({ chartType: VisualizationTypes.HEATMAP });
-        expect(wrapper.find(HeatMapLegend).length).toEqual(1);
+        expect(wrapper.find(HeatmapLegend).length).toEqual(1);
     });
 });

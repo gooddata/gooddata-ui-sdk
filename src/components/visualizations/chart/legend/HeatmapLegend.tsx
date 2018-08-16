@@ -2,21 +2,21 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import {
-    IHeatMapLegendBox,
-    IHeatMapLegendConfig,
-    IHeatMapLegendSerie,
+    IHeatmapLegendBox,
+    IHeatmapLegendConfig,
+    IHeatmapLegendSerie,
     IHeatmapLegendLabel,
-    getHeatMapLegendConfiguration
+    getHeatmapLegendConfiguration
 } from './helpers';
 
-export interface IHeatMapLegendProps {
-    series: IHeatMapLegendSerie[];
+export interface IHeatmapLegendProps {
+    series: IHeatmapLegendSerie[];
     isSmall: boolean;
     format?: string;
     numericSymbols: string[];
 }
 
-function HeatMapLabels(labels: IHeatmapLegendLabel[]) {
+function HeatmapLabels(labels: IHeatmapLegendLabel[]) {
     return (
         <div className="labels">
             {labels.map((item: IHeatmapLegendLabel) => {
@@ -33,10 +33,10 @@ function HeatMapLabels(labels: IHeatmapLegendLabel[]) {
     );
 }
 
-function HeatMapBoxes(boxes: IHeatMapLegendBox[]) {
+function HeatmapBoxes(boxes: IHeatmapLegendBox[]) {
     return (
         <div className="boxes">
-            {boxes.map((box: IHeatMapLegendBox) => {
+            {boxes.map((box: IHeatmapLegendBox) => {
                 const classes = classNames('box', box.class);
 
                 return (
@@ -47,17 +47,17 @@ function HeatMapBoxes(boxes: IHeatMapLegendBox[]) {
     );
 }
 
-export default class HeatMapLegend extends React.PureComponent<IHeatMapLegendProps> {
+export default class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
     public render() {
         const { series, format, numericSymbols, isSmall } = this.props;
 
-        const config: IHeatMapLegendConfig = getHeatMapLegendConfiguration(series, format, numericSymbols, isSmall);
+        const config: IHeatmapLegendConfig = getHeatmapLegendConfiguration(series, format, numericSymbols, isSmall);
         const classes = classNames(...config.classes);
 
         return (
             <div className={classes}>
-                {HeatMapLabels(config.labels)}
-                {HeatMapBoxes(config.boxes)}
+                {HeatmapLabels(config.labels)}
+                {HeatmapBoxes(config.boxes)}
             </div>
         );
     }

@@ -16,7 +16,7 @@ export const SKIPPED_LABEL_TEXT = '...';
 export const UTF_NON_BREAKING_SPACE = '\u00A0';
 const STATIC_PAGING_HEIGHT = 44;
 
-export interface IHeatMapLegendSerie {
+export interface IHeatmapLegendSerie {
     color: string;
     isVisible?: boolean;
     legendIndex: number;
@@ -26,7 +26,7 @@ export interface IHeatMapLegendSerie {
     };
 }
 
-export interface IHeatMapLegendBox {
+export interface IHeatmapLegendBox {
     class: string;
     key: string;
     style: {
@@ -41,8 +41,8 @@ export interface IHeatmapLegendLabel {
     label: string;
 }
 
-export interface IHeatMapLegendConfig {
-    boxes: IHeatMapLegendBox[];
+export interface IHeatmapLegendConfig {
+    boxes: IHeatmapLegendBox[];
     classes: string[];
     labels: IHeatmapLegendLabel[];
 }
@@ -121,7 +121,7 @@ export function getLegendConfig(userConfig: any, shouldBeEnabled: any, items: an
     };
 }
 
-function getHeatmapLegendLabels(series: IHeatMapLegendSerie[], format: string, numericSymbols: string[]) {
+function getHeatmapLegendLabels(series: IHeatmapLegendSerie[], format: string, numericSymbols: string[]) {
     const min = get(head(series), 'range.from', 0);
     const max = get(last(series), 'range.to', 0);
     const diff = max - min;
@@ -220,13 +220,13 @@ function shouldShortenHeatmapLabels(legendLabels: string[], isSmall: boolean) {
 
 const MIDDLE_LEGEND_BOX_INDEX = 3;
 
-function getHeatmapBoxes(series: IHeatMapLegendSerie[]): IHeatMapLegendBox[] {
-    const getBoxStyle = (item: IHeatMapLegendSerie) => ({
+function getHeatmapBoxes(series: IHeatmapLegendSerie[]): IHeatmapLegendBox[] {
+    const getBoxStyle = (item: IHeatmapLegendSerie) => ({
         backgroundColor: item.color,
         border: item.color === 'rgb(255,255,255)' ? '1px solid #ccc' : 'none'
     });
 
-    return series.map((item: IHeatMapLegendSerie, index: number) => {
+    return series.map((item: IHeatmapLegendSerie, index: number) => {
         const style = getBoxStyle(item);
         const middle = index === MIDDLE_LEGEND_BOX_INDEX ? 'middle' : null;
 
@@ -238,9 +238,9 @@ function getHeatmapBoxes(series: IHeatMapLegendSerie[]): IHeatMapLegendBox[] {
     });
 }
 
-export function getHeatMapLegendConfiguration(
-    series: IHeatMapLegendSerie[], format: string, numericSymbols: string[], isSmall: boolean
-): IHeatMapLegendConfig {
+export function getHeatmapLegendConfiguration(
+    series: IHeatmapLegendSerie[], format: string, numericSymbols: string[], isSmall: boolean
+): IHeatmapLegendConfig {
     const legendLabels = getHeatmapLegendLabels(series, format, numericSymbols);
     const small = isSmall ? 'small' : null;
 

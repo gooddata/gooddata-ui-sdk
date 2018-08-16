@@ -2,7 +2,7 @@
 
 import { WHITE, GRAY } from '../../../utils/color';
 
-export function renderHeatMapCells(Highcharts: any) {
+export function renderHeatmapCells(Highcharts: any) {
     const wrap = Highcharts.wrap;
     const each = Highcharts.each;
     const stop = Highcharts.stop;

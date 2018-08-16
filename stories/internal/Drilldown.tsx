@@ -652,10 +652,10 @@ storiesOf('Internal/Drilldown', module)
         </div>
     );
     })
-    .add('Heat Map with onFiredDrillEvent', () => {
-        const dataSet = fixtures.heatMapMetricRowColumn;
+    .add('Heatmap with onFiredDrillEvent', () => {
+        const dataSet = fixtures.heatmapMetricRowColumn;
         return screenshotWrap(
-            <div><p>Heat Map drillable by measure</p>
+            <div><p>Heatmap drillable by measure</p>
             {
                 wrap(
                     <Visualization
@@ -674,7 +674,7 @@ storiesOf('Internal/Drilldown', module)
                     '100%'
                 )
             }
-            <p>Heat Map drillable by attribute</p>
+            <p>Heatmap drillable by attribute</p>
             {
                 wrap(
                     <Visualization
@@ -693,7 +693,7 @@ storiesOf('Internal/Drilldown', module)
                     '100%'
                 )
             }
-            <p>Heat Map drillable by attribute element</p>
+            <p>Heatmap drillable by attribute element</p>
             {
                 wrap(
                     <Visualization
@@ -713,7 +713,7 @@ storiesOf('Internal/Drilldown', module)
                     '100%'
                 )
             }
-            <p>Heat map with standard onFiredDrillEvent callback</p>
+            <p>Heatmap with standard onFiredDrillEvent callback</p>
             {
                 wrap(
                     <Visualization
@@ -734,7 +734,7 @@ storiesOf('Internal/Drilldown', module)
                 )
             }
             <p>
-                Heat map with onFiredDrillEvent where drillEvent
+                Heatmap with onFiredDrillEvent where drillEvent
                 is logged into console and default event is prevented
             </p>
             {

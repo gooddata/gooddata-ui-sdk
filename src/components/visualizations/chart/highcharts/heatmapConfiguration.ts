@@ -43,6 +43,6 @@ const HEATMAP_TEMPLATE = {
     }]
 };
 
-export function getHeatMapConfiguration() {
+export function getHeatmapConfiguration() {
     return cloneDeep(HEATMAP_TEMPLATE);
 }

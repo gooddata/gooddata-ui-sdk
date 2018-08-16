@@ -186,7 +186,7 @@ describe('highChartCreators', () => {
         });
     });
 
-    describe('Heat Map configuration', () => {
+    describe('Heatmap configuration', () => {
         const config = getHighchartsOptions({
             ...chartOptions,
             type: VisualizationTypes.HEATMAP,

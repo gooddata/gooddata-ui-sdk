@@ -6,7 +6,7 @@ import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
-export class HeatMap extends React.Component<IChartProps, null> {
+export class Heatmap extends React.Component<IChartProps, null> {
     public static propTypes = ChartPropTypes;
 
     constructor(props: IChartProps) {

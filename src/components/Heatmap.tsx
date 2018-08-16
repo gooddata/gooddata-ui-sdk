@@ -3,13 +3,13 @@ import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 
-import { HeatMap as AfmHeatMap } from './afm/HeatMap';
+import { Heatmap as AfmHeatmap } from './afm/Heatmap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
-export interface IHeatMapBucketProps {
+export interface IHeatmapBucketProps {
     measures: VisualizationObject.BucketItem[];
     trendBy?: VisualizationObject.IVisualizationAttribute;
     segmentBy?: VisualizationObject.IVisualizationAttribute;
@@ -17,17 +17,17 @@ export interface IHeatMapBucketProps {
     sortBy?: AFM.SortItem[];
 }
 
-export interface IHeatMapProps extends ICommonChartProps, IHeatMapBucketProps {
+export interface IHeatmapProps extends ICommonChartProps, IHeatmapBucketProps {
     projectId: string;
 }
 
-type IHeatMapNonBucketProps = Subtract<IHeatMapProps, IHeatMapBucketProps>;
+type IHeatmapNonBucketProps = Subtract<IHeatmapProps, IHeatmapBucketProps>;
 
-export interface IHeatMapProps extends ICommonChartProps {
+export interface IHeatmapProps extends ICommonChartProps {
     projectId: string;
 }
 
-export function HeatMap(props: IHeatMapProps): JSX.Element {
+export function Heatmap(props: IHeatmapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
@@ -44,10 +44,10 @@ export function HeatMap(props: IHeatMapProps): JSX.Element {
     ];
 
     const newProps
-        = omit<IHeatMapProps, IHeatMapNonBucketProps>(props, ['measures', 'trendBy', 'segmentBy', 'filters']);
+        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measures', 'trendBy', 'segmentBy', 'filters']);
 
     return (
-        <AfmHeatMap
+        <AfmHeatmap
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
