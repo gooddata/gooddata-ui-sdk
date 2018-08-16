@@ -155,7 +155,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
     }
 
     private renderHeatmapLegend() {
-        const { locale, format, responsive } = this.props;
+        const { locale, format, responsive, position } = this.props;
         const { showFluid } = this.state;
         const series = this.getSeries();
         const isSmall = responsive && showFluid;
@@ -169,6 +169,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
                             format={format}
                             isSmall={isSmall}
                             numericSymbols={props.numericSymbols}
+                            position={position}
                         />
                     )}
                 </IntlTranslationsProvider>

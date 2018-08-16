@@ -4,7 +4,7 @@ import get = require('lodash/get');
 import head = require('lodash/head');
 import last = require('lodash/last');
 
-import { RIGHT } from './PositionTypes';
+import { RIGHT, TOP, BOTTOM } from './PositionTypes';
 import { formatLegendLabel } from '../../utils/common';
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
@@ -45,6 +45,7 @@ export interface IHeatmapLegendConfig {
     boxes: IHeatmapLegendBox[];
     classes: string[];
     labels: IHeatmapLegendLabel[];
+    position: string;
 }
 
 export function calculateFluidLegend(seriesCount: any, containerWidth: any) {
@@ -239,14 +240,24 @@ function getHeatmapBoxes(series: IHeatmapLegendSerie[]): IHeatmapLegendBox[] {
 }
 
 export function getHeatmapLegendConfiguration(
-    series: IHeatmapLegendSerie[], format: string, numericSymbols: string[], isSmall: boolean
+    series: IHeatmapLegendSerie[], format: string, numericSymbols: string[], isSmall: boolean, position: string
 ): IHeatmapLegendConfig {
     const legendLabels = getHeatmapLegendLabels(series, format, numericSymbols);
     const small = isSmall ? 'small' : null;
 
-    const shouldShorten = shouldShortenHeatmapLabels(legendLabels, isSmall);
+    let finalPosition;
+
+    // tslint:disable-next-line:prefer-conditional-expression
+    if (isSmall) {
+        finalPosition = position === TOP ? TOP : BOTTOM;
+    } else {
+        finalPosition = position || RIGHT;
+    }
+
+    const shouldShorten = finalPosition === TOP || finalPosition === BOTTOM
+        ? shouldShortenHeatmapLabels(legendLabels, isSmall) : false;
     const shortened = shouldShorten ? 'shortened' : null;
-    const classes = ['viz-legend', 'heatmap-legend', small, shortened];
+    const classes = ['viz-legend', 'heatmap-legend', `position-${finalPosition}`, small, shortened];
 
     // legend has *always* 7 boxes, 8 numeric labels when labels fit, 4 otherwise
     const finalLabels = shouldShorten
@@ -257,6 +268,7 @@ export function getHeatmapLegendConfiguration(
     return {
         classes,
         labels: finalLabels,
-        boxes
+        boxes,
+        position: finalPosition
     };
 }
