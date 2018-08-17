@@ -11,7 +11,6 @@ export const barChart2Series: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -22,7 +21,6 @@ export const barChart2Series: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/2825',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -61,7 +59,6 @@ export const stackedBar: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -118,7 +115,6 @@ export const pie: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -157,7 +153,6 @@ export const metricPie: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/324',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -168,7 +163,6 @@ export const metricPie: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -179,7 +173,6 @@ export const metricPie: any = {
                     objectUri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13468',
                     metricAttributeFilters: [],
                     showInPercent: false,
-                    showPoP: false,
                     format: '#,##0',
                     sorts: []
                 }
@@ -210,8 +203,7 @@ export const longBar: any = {
                     objectUri: '/gdc/md/oim7k9wbfmhq1xcpbuwvr41pl7ztaat7/obj/9211',
                     title: '_Close [BOP]',
                     measureFilters: [],
-                    showInPercent: false,
-                    showPoP: false
+                    showInPercent: false
                 }
             }
         ],

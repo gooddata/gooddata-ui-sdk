@@ -60,7 +60,7 @@ export class HeatmapExample extends Component {
             <div style={{ height: 300 }} className="s-heat-map">
                 <Heatmap
                     projectId={projectId}
-                    measures={[totalSales]}
+                    measure={totalSales}
                     trendBy={locationState}
                     segmentBy={menuCategory}
                     onLoadingChanged={this.onLoadingChanged}

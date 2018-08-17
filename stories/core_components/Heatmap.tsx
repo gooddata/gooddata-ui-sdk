@@ -20,7 +20,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     segmentBy={ATTRIBUTE_1}
                     trendBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
@@ -35,7 +35,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -48,7 +48,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     trendBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -62,7 +62,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     segmentBy={ATTRIBUTE_1_WITH_ALIAS}
                     trendBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
@@ -77,7 +77,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     segmentBy={ATTRIBUTE_2}
                     trendBy={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
@@ -92,7 +92,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     segmentBy={ATTRIBUTE_1}
                     trendBy={ATTRIBUTE_2}
                     config={GERMAN_SEPARATORS}
@@ -108,7 +108,7 @@ storiesOf('Core components/Heatmap', module)
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
-                    measures={[MEASURE_1]}
+                    measure={MEASURE_1}
                     segmentBy={ATTRIBUTE_1}
                     trendBy={ATTRIBUTE_2}
                     config={{ legend: { position: 'top' } }}

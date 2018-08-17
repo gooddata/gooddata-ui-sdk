@@ -338,7 +338,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 deprecated: false,
                 summary: '',
                 isProduction: true,
-                title: 'PoP',
+                title: 'Over time comparison',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/johndoe'
             }
@@ -417,7 +417,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 deprecated: false,
                 summary: '',
                 isProduction: true,
-                title: 'pop headline test',
+                title: 'Headline over time comparison',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/26728eacad349ba6c4c04c5e5cc59437'
             }
@@ -512,7 +512,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 deprecated: false,
                 summary: '',
                 isProduction: true,
-                title: 'PoP alias test',
+                title: 'Over time comparison alias',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/johndoe'
             }

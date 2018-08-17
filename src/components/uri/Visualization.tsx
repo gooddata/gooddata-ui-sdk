@@ -18,7 +18,7 @@ import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
 import * as MdObjectHelper from '../../helpers/MdObjectHelper';
-import { fillPoPTitlesAndAliases } from '../../helpers/popHelper';
+import { fillDerivedMeasuresTitlesAndAliases } from '../../helpers/overTimeComparisonHelper';
 import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import {
@@ -360,7 +360,8 @@ export class VisualizationWrapped
                 ).then((visualizationClass) => {
 
                     const suffixFactory = new DerivedMeasureTitleSuffixFactory(this.props.locale);
-                    const processedVisualizationObject = fillPoPTitlesAndAliases(mdObject.content, suffixFactory);
+                    const processedVisualizationObject
+                        = fillDerivedMeasuresTitlesAndAliases(mdObject.content, suffixFactory);
                     const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
                     const mdObjectTotals = MdObjectHelper.getTotals(mdObject);

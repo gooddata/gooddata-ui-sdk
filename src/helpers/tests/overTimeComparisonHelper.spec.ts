@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { fillPoPTitlesAndAliases } from '../popHelper';
+import { fillDerivedMeasuresTitlesAndAliases } from '../overTimeComparisonHelper';
 import { visualizationObjects } from '../../../__mocks__/fixtures';
 import DerivedMeasureTitleSuffixFactory from '../../factory/DerivedMeasureTitleSuffixFactory';
 import { VisualizationObject } from '@gooddata/typings';
@@ -12,14 +12,21 @@ function findVisualizationObjectFixture(metaTitle: string): IVisualizationObject
     return visualizationObject.visualizationObject.content;
 }
 
-describe('popHelper', () => {
-    describe('fillPoPTitlesAndAliases', () => {
-        it('should set title of derived measures based on master title when master is NOT renamed', () => {
-            const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            suffixFactory.getSuffix = jest.fn(() => ' - testing pop title');
+describe('overTimeComparisonHelper', () => {
+    describe('fillDerivedMeasuresTitlesAndAliases', () => {
+        const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
+        suffixFactory.getSuffix = jest.fn((measureDefinition) => {
+            if (measureDefinition.popMeasureDefinition) {
+                return ' - pop';
+            } else if (measureDefinition.previousPeriodMeasure) {
+                return ' - previous';
+            }
+            return '';
+        });
 
-            const visualizationObjectContent = findVisualizationObjectFixture('PoP');
-            const result = fillPoPTitlesAndAliases(visualizationObjectContent, suffixFactory);
+        it('should set title of derived measures based on master title when master is NOT renamed', () => {
+            const visualizationObjectContent = findVisualizationObjectFixture('Over time comparison');
+            const result = fillDerivedMeasuresTitlesAndAliases(visualizationObjectContent, suffixFactory);
 
             expect(result.buckets[0].items).toEqual(
                 [
@@ -39,7 +46,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'm1_pop',
-                            title: '# Accounts with AD Query - testing pop title',
+                            title: '# Accounts with AD Query - pop',
                             definition: {
                                 popMeasureDefinition: {
                                     measureIdentifier: 'm1',
@@ -53,7 +60,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'm1_previous_period',
-                            title: '# Accounts with AD Query - testing pop title',
+                            title: '# Accounts with AD Query - previous',
                             definition: {
                                 previousPeriodMeasure: {
                                     measureIdentifier: 'm1',
@@ -72,11 +79,8 @@ describe('popHelper', () => {
         });
 
         it('should set title of derived measures based on master alias when master is renamed', () => {
-            const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            suffixFactory.getSuffix = jest.fn(() => ' - testing pop title');
-
-            const visualizationObjectContent = findVisualizationObjectFixture('PoP alias test');
-            const result = fillPoPTitlesAndAliases(visualizationObjectContent, suffixFactory);
+            const visualizationObjectContent = findVisualizationObjectFixture('Over time comparison alias');
+            const result = fillDerivedMeasuresTitlesAndAliases(visualizationObjectContent, suffixFactory);
 
             expect(result.buckets[0].items).toEqual(
                 [
@@ -97,7 +101,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'm1_pop',
-                            title: 'AD Queries - testing pop title',
+                            title: 'AD Queries - pop',
                             definition: {
                                 popMeasureDefinition: {
                                     measureIdentifier: 'm1',
@@ -111,7 +115,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'm1_previous_period',
-                            title: 'AD Queries - testing pop title',
+                            title: 'AD Queries - previous',
                             definition: {
                                 previousPeriodMeasure: {
                                     measureIdentifier: 'm1',
@@ -130,11 +134,8 @@ describe('popHelper', () => {
         });
 
         it('should set title of derived based on master title even when it is located in a different bucket', () => {
-            const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            suffixFactory.getSuffix = jest.fn(() => ' - testing pop title');
-
-            const visualizationObjectContent = findVisualizationObjectFixture('pop headline test');
-            const result = fillPoPTitlesAndAliases(visualizationObjectContent, suffixFactory);
+            const visualizationObjectContent = findVisualizationObjectFixture('Headline over time comparison');
+            const result = fillDerivedMeasuresTitlesAndAliases(visualizationObjectContent, suffixFactory);
 
             expect(result.buckets[0].items).toEqual(
                 [
@@ -161,7 +162,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062_pop',
-                            title: 'Sum of Email Clicks - testing pop title',
+                            title: 'Sum of Email Clicks - pop',
                             definition: {
                                 popMeasureDefinition: {
                                     measureIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
@@ -175,7 +176,7 @@ describe('popHelper', () => {
                     {
                         measure: {
                             localIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062_previous_period',
-                            title: 'Sum of Email Clicks - testing pop title',
+                            title: 'Sum of Email Clicks - previous',
                             definition: {
                                 previousPeriodMeasure: {
                                     measureIdentifier: 'fdd41e4ca6224cd2b5ecce15fdabf062',
