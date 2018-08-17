@@ -24,7 +24,7 @@ import { AttributeElements } from './components/filters/AttributeFilter/Attribut
 import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
-import * as PoPHelper from './helpers/popHelper';
+import * as OverTimeComparisonHelper from './helpers/overTimeComparisonHelper';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
 
@@ -97,7 +97,7 @@ export {
     BubbleChart,
     DonutChart,
     Heatmap,
-    PoPHelper,
+    OverTimeComparisonHelper,
     DerivedMeasureTitleSuffixFactory,
     PropTypes,
     RuntimeError,

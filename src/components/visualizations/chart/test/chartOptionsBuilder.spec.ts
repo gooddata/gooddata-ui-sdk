@@ -6,7 +6,6 @@ import { immutableSet } from '../../utils/common';
 import {
     isNegativeValueIncluded,
     validateData,
-    isPopMeasure,
     findInDimensionHeaders,
     findMeasureGroupInDimensions,
     findAttributeInDimension,
@@ -295,51 +294,6 @@ describe('chartOptionsBuilder', () => {
                     hasNegativeValue: false
                 });
             });
-        });
-    });
-
-    describe('isPopMeasure', () => {
-        it('should return true if measureItem was defined as a popMeasure', () => {
-            const measureItem = fixtures
-                .barChartWithPopMeasureAndViewByAttribute
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[0];
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(true);
-        });
-
-        it('should return false if measureItem was defined as a previousPeriodMeasure', () => {
-            const measureItem = fixtures
-                .barChartWithPreviousPeriodMeasure
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[0];
-            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(false);
-        });
-
-        it('should return false if measureItem was defined as a simple measure', () => {
-            const measureItem = fixtures
-                .barChartWithPopMeasureAndViewByAttribute
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[1];
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
-
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(false);
         });
     });
 

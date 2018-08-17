@@ -206,13 +206,6 @@ export function validateData(limits: IChartLimits, chartOptions: any) {
     };
 }
 
-export function isPopMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
-    return afm.measures.some((measure: AFM.IMeasure) => {
-        const popMeasureIdentifier = get(measure, 'definition.popMeasure') ? measure.localIdentifier : null;
-        return popMeasureIdentifier && popMeasureIdentifier === measureItem.measureHeaderItem.localIdentifier;
-    });
-}
-
 export function isDerivedMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
     return afm.measures.some((measure: AFM.IMeasure) => {
         const measureDefinition = get(measure, 'definition.popMeasure')
