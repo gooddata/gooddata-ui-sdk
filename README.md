@@ -87,7 +87,7 @@ To publish API documentation [sdk.gooddata.com/gooddata-js/api](http://sdk.goodd
 | command | description |
 | ------- | ----------- |
 | 1. `yarn build` |  |
-| 2. `grunt bump-gd-pages` | Publishes documentation |
+| 2. `grunt bump-gh-pages` | Publishes documentation |
 
 ## Changelog
 - see [CHANGELOG.md](CHANGELOG.md)
