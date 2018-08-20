@@ -68,7 +68,8 @@ These commands may come in handy while developing:
 | `yarn dev` | build gooddata-js to `/dist` in watch mode |
 | `yarn test` | run unit tests in watch mode |
 | `yarn validate` | validate codestyle (tslint) |
-| `yarn build` | build commonjs `/lib` and bundle files to `/dist`  |
+| `yarn build` | build commonjs `/lib` and bundle files to `/dist` |
+| `grunt yuidoc:compile` | build yui docs to `/docs` |
 
 ## Publishing
 
