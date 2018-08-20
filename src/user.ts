@@ -35,7 +35,8 @@ export class UserModule {
      * Find out whether a specified project is available to a currently logged user
      *
      * @method isLoggedInProject
-     * @return {Promise} resolves with true if user logged in and project available,
+     * @param {String} projectId A project identifier
+     * @return {Promise} Resolves with true if user logged in and project available,
      *                   resolves with false if user logged in and project not available,
      *                   rejects if user not logged in
      */
@@ -120,7 +121,7 @@ export class UserModule {
     /**
      * Gets current user's profile
      * @method getCurrentProfile
-     * @return {Promise} resolves with account setting object if user logged in, false otherwise
+     * @return {Promise} Resolves with account setting object
      */
     public getCurrentProfile() {
         return this.xhr.get('/gdc/account/profile/current')
