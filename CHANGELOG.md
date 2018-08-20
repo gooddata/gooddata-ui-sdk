@@ -1,5 +1,16 @@
 # Changelog
 
+<a name="8.1.1"></a>
+## 2018-08-20 Version [8.1.1](https://github.com/gooddata/gooddata-js/compare/v8.1.0...v8.1.1)
+
+- minor docs updates
+
+<a name="8.1.0"></a>
+## 2018-08-20 Version [8.1.0](https://github.com/gooddata/gooddata-js/compare/v8.0.0...v8.1.0)
+
+- `user.getCurrentProfile()` gets current user's profile ([commit](https://github.com/gooddata/gooddata-js/commit/3e86de798f6c2541bf7200adcad9161dc528edc6))
+- `user.isLoggedInProject(projectId)` finds out whether a specified project is available to a currently logged user ([commit](https://github.com/gooddata/gooddata-js/commit/f041263d3a50cd3eb4d99324467451248b8c3970))
+
 <a name="8.0.0"></a>
 ## 2018-08-01 Version [8.0.0](https://github.com/gooddata/gooddata-js/compare/v7.1.1...v8.0.0)
 
