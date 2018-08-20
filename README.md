@@ -71,6 +71,8 @@ These commands may come in handy while developing:
 | `yarn build` | build commonjs `/lib` and bundle files to `/dist` |
 | `grunt yuidoc:compile` | build yui docs to `/docs` |
 
+> Do not forget to update *CHANGELOG.md* when contributing.
+
 ## Publishing
 
 :heavy_exclamation_mark: **Only for internal gooddata developers** :heavy_exclamation_mark:
