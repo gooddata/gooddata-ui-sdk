@@ -3,30 +3,19 @@ import get = require('lodash/get');
 import debounce = require('lodash/debounce');
 import * as invariant from 'invariant';
 import * as CustomEvent from 'custom-event';
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
-import { IDrillableItem, IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
+import {
+    IDrillableItem,
+    IDrillEventIntersectionElement,
+    IDrillItem,
+    IDrillIntersection,
+    isDrillableItemLocalId
+} from '../../../interfaces/DrillEvents';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
 import { isComboChart, isTreemap, isHeatmap } from './common';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
-
-export interface IDrillableItemLocalId extends IDrillableItem {
-    localIdentifier: AFM.Identifier;
-}
-
-export function isDrillableItemLocalId(item: IDrillableItem | IDrillableItemLocalId): item is IDrillableItemLocalId {
-    return (item as IDrillableItemLocalId).localIdentifier !== undefined;
-}
-
-export interface IDrillIntersection {
-    id: string;
-    title?: string;
-    value?: Execution.DataValue;
-    name?: string;
-    uri: string;
-    identifier: AFM.Identifier;
-}
 
 export interface IHighchartsPointObject extends Highcharts.PointObject {
     drillContext: IDrillIntersection[];
@@ -92,7 +81,7 @@ function isHeaderDrillable(drillableItems: IDrillableItem[], header: IDrillableI
 }
 
 export function isDrillable(drillableItems: IDrillableItem[],
-                            header: IDrillableItemLocalId | IDrillableItem,
+                            header: IDrillItem,
                             afm: AFM.IAfm) {
     // This works only for non adhoc metric & attributes
     // because adhoc metrics don't have uri & identifier

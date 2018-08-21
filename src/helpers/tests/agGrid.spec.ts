@@ -7,10 +7,16 @@ import {
     getFields,
     getRow,
     getMinimalRowData,
-    executionToAGGridAdapter
+    executionToAGGridAdapter,
+    sanitizeField,
+    getMeasureDrillItem,
+    assignDrillItemsAndType
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
+import { Execution } from '@gooddata/typings/dist';
+import { IDrillItem } from '../../interfaces/DrillEvents';
+import { IGridHeader } from '../../interfaces/AGGrid';
 
 describe('identifyHeader', () => {
     it('should return correct field key for an attribute header', () => {
@@ -43,7 +49,10 @@ describe('headerToGrid', () => {
 describe('getColumnHeaders', () => {
     it('should return hierarchical column headers', () => {
         expect(
-            getColumnHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1])
+            getColumnHeaders(
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1],
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[1].headers
+            )
         ).toMatchSnapshot();
     });
 });
@@ -51,21 +60,79 @@ describe('getColumnHeaders', () => {
 describe('getRowHeaders', () => {
     it('should return an array of grid headers', () => {
         expect(
-            getRowHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers, false)
+            getRowHeaders(
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+                {},
+                false
+            )
         ).toEqual(
             [
-                { field: 'a_2211', headerName: 'Location State' },
-                { field: 'a_2205', headerName: 'Location Name' }
+                {
+                    field: 'a_2211',
+                    headerName: 'Location State',
+                    type: 'ROW_ATTRIBUTE_COLUMN',
+                    drillItems: [
+                        {
+                            identifier: 'label.restaurantlocation.locationstate',
+                            localIdentifier: 'state',
+                            title: 'Location State',
+                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+                        }
+                    ]
+                },
+                {
+                    field: 'a_2205',
+                    headerName: 'Location Name',
+                    type: 'ROW_ATTRIBUTE_COLUMN',
+                    drillItems: [{
+                        identifier: 'label.restaurantlocation.locationname',
+                        localIdentifier: 'location',
+                        title: 'Location Name',
+                        uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205'
+                    }]
+                }
             ]
         );
     });
-    it('should return an array of grid headers with row group settings', () => {
+    it('should return an array of grid headers with row group settings and extended by custom options', () => {
         expect(
-            getRowHeaders(fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers, true)
+            getRowHeaders(
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+                { type: 'custom' },
+                true
+            )
         ).toEqual(
             [
-                { field: 'a_2211', headerName: 'Location State', hide: true, rowGroup: true },
-                { field: 'a_2205', headerName: 'Location Name', hide: true, rowGroup: true }
+                {
+                    field: 'a_2211',
+                    headerName: 'Location State',
+                    hide: true,
+                    rowGroup: true,
+                    type: 'custom',
+                    drillItems: [
+                        {
+                            identifier: 'label.restaurantlocation.locationstate',
+                            localIdentifier: 'state',
+                            title: 'Location State',
+                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+                        }
+                    ]
+                },
+                {
+                    field: 'a_2205',
+                    headerName: 'Location Name',
+                    hide: true,
+                    rowGroup: true,
+                    type: 'custom',
+                    drillItems: [
+                        {
+                            identifier: 'label.restaurantlocation.locationname',
+                            localIdentifier: 'location',
+                            title: 'Location Name',
+                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205'
+                        }
+                    ]
+                }
             ]
         );
     });
@@ -77,54 +144,54 @@ describe('getFields', () => {
             getFields(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1])
         ).toEqual(
             [
-                'a_2009_1|a_2071_1|m_0',
-                'a_2009_1|a_2071_1|m_1',
-                'a_2009_1|a_2071_1|m_2',
-                'a_2009_1|a_2071_1|m_3',
-                'a_2009_1|a_2071_2|m_0',
-                'a_2009_1|a_2071_2|m_1',
-                'a_2009_1|a_2071_2|m_2',
-                'a_2009_1|a_2071_2|m_3',
-                'a_2009_1|a_2071_3|m_0',
-                'a_2009_1|a_2071_3|m_1',
-                'a_2009_1|a_2071_3|m_2',
-                'a_2009_1|a_2071_3|m_3',
-                'a_2009_2|a_2071_4|m_0',
-                'a_2009_2|a_2071_4|m_1',
-                'a_2009_2|a_2071_4|m_2',
-                'a_2009_2|a_2071_4|m_3',
-                'a_2009_2|a_2071_5|m_0',
-                'a_2009_2|a_2071_5|m_1',
-                'a_2009_2|a_2071_5|m_2',
-                'a_2009_2|a_2071_5|m_3',
-                'a_2009_2|a_2071_6|m_0',
-                'a_2009_2|a_2071_6|m_1',
-                'a_2009_2|a_2071_6|m_2',
-                'a_2009_2|a_2071_6|m_3',
-                'a_2009_3|a_2071_7|m_0',
-                'a_2009_3|a_2071_7|m_1',
-                'a_2009_3|a_2071_7|m_2',
-                'a_2009_3|a_2071_7|m_3',
-                'a_2009_3|a_2071_8|m_0',
-                'a_2009_3|a_2071_8|m_1',
-                'a_2009_3|a_2071_8|m_2',
-                'a_2009_3|a_2071_8|m_3',
-                'a_2009_3|a_2071_9|m_0',
-                'a_2009_3|a_2071_9|m_1',
-                'a_2009_3|a_2071_9|m_2',
-                'a_2009_3|a_2071_9|m_3',
-                'a_2009_4|a_2071_10|m_0',
-                'a_2009_4|a_2071_10|m_1',
-                'a_2009_4|a_2071_10|m_2',
-                'a_2009_4|a_2071_10|m_3',
-                'a_2009_4|a_2071_11|m_0',
-                'a_2009_4|a_2071_11|m_1',
-                'a_2009_4|a_2071_11|m_2',
-                'a_2009_4|a_2071_11|m_3',
-                'a_2009_4|a_2071_12|m_0',
-                'a_2009_4|a_2071_12|m_1',
-                'a_2009_4|a_2071_12|m_2',
-                'a_2009_4|a_2071_12|m_3'
+                'a_2009_1-a_2071_1-m_0',
+                'a_2009_1-a_2071_1-m_1',
+                'a_2009_1-a_2071_1-m_2',
+                'a_2009_1-a_2071_1-m_3',
+                'a_2009_1-a_2071_2-m_0',
+                'a_2009_1-a_2071_2-m_1',
+                'a_2009_1-a_2071_2-m_2',
+                'a_2009_1-a_2071_2-m_3',
+                'a_2009_1-a_2071_3-m_0',
+                'a_2009_1-a_2071_3-m_1',
+                'a_2009_1-a_2071_3-m_2',
+                'a_2009_1-a_2071_3-m_3',
+                'a_2009_2-a_2071_4-m_0',
+                'a_2009_2-a_2071_4-m_1',
+                'a_2009_2-a_2071_4-m_2',
+                'a_2009_2-a_2071_4-m_3',
+                'a_2009_2-a_2071_5-m_0',
+                'a_2009_2-a_2071_5-m_1',
+                'a_2009_2-a_2071_5-m_2',
+                'a_2009_2-a_2071_5-m_3',
+                'a_2009_2-a_2071_6-m_0',
+                'a_2009_2-a_2071_6-m_1',
+                'a_2009_2-a_2071_6-m_2',
+                'a_2009_2-a_2071_6-m_3',
+                'a_2009_3-a_2071_7-m_0',
+                'a_2009_3-a_2071_7-m_1',
+                'a_2009_3-a_2071_7-m_2',
+                'a_2009_3-a_2071_7-m_3',
+                'a_2009_3-a_2071_8-m_0',
+                'a_2009_3-a_2071_8-m_1',
+                'a_2009_3-a_2071_8-m_2',
+                'a_2009_3-a_2071_8-m_3',
+                'a_2009_3-a_2071_9-m_0',
+                'a_2009_3-a_2071_9-m_1',
+                'a_2009_3-a_2071_9-m_2',
+                'a_2009_3-a_2071_9-m_3',
+                'a_2009_4-a_2071_10-m_0',
+                'a_2009_4-a_2071_10-m_1',
+                'a_2009_4-a_2071_10-m_2',
+                'a_2009_4-a_2071_10-m_3',
+                'a_2009_4-a_2071_11-m_0',
+                'a_2009_4-a_2071_11-m_1',
+                'a_2009_4-a_2071_11-m_2',
+                'a_2009_4-a_2071_11-m_3',
+                'a_2009_4-a_2071_12-m_0',
+                'a_2009_4-a_2071_12-m_1',
+                'a_2009_4-a_2071_12-m_2',
+                'a_2009_4-a_2071_12-m_3'
             ]
         );
     });
@@ -135,6 +202,7 @@ describe('getRow', () => {
         const headerItems = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems;
         const rowHeaders = getRowHeaders(
             fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+            {},
             false
         );
 
@@ -149,57 +217,67 @@ describe('getRow', () => {
                 headerItems[0]
             )
         ).toEqual({
-            'a_2009_1|a_2071_1|m_0': '160104.5665',
-            'a_2009_1|a_2071_1|m_1': '49454.8215',
-            'a_2009_1|a_2071_1|m_2': '40000',
-            'a_2009_1|a_2071_1|m_3': '70649.745',
-            'a_2009_1|a_2071_2|m_0': '156148.86625',
-            'a_2009_1|a_2071_2|m_1': '47826.00375',
-            'a_2009_1|a_2071_2|m_2': '40000',
-            'a_2009_1|a_2071_2|m_3': '68322.8625',
-            'a_2009_1|a_2071_3|m_0': '154299.8485',
-            'a_2009_1|a_2071_3|m_1': '47064.6435',
-            'a_2009_1|a_2071_3|m_2': '40000',
-            'a_2009_1|a_2071_3|m_3': '67235.205',
-            'a_2009_2|a_2071_4|m_0': '158572.501',
-            'a_2009_2|a_2071_4|m_1': '48823.971',
-            'a_2009_2|a_2071_4|m_2': '40000',
-            'a_2009_2|a_2071_4|m_3': '69748.53',
-            'a_2009_2|a_2071_5|m_0': '152789.662',
-            'a_2009_2|a_2071_5|m_1': '46442.802',
-            'a_2009_2|a_2071_5|m_2': '40000',
-            'a_2009_2|a_2071_5|m_3': '66346.86',
-            'a_2009_2|a_2071_6|m_0': '158587.036',
-            'a_2009_2|a_2071_6|m_1': '48829.956',
-            'a_2009_2|a_2071_6|m_2': '40000',
-            'a_2009_2|a_2071_6|m_3': '69757.08',
-            'a_2009_3|a_2071_7|m_0': '156553.19425',
-            'a_2009_3|a_2071_7|m_1': '47992.49175',
-            'a_2009_3|a_2071_7|m_2': '40000',
-            'a_2009_3|a_2071_7|m_3': '68560.7025',
-            'a_2009_3|a_2071_8|m_0': '147504.62125',
-            'a_2009_3|a_2071_8|m_1': '44266.60875',
-            'a_2009_3|a_2071_8|m_2': '40000',
-            'a_2009_3|a_2071_8|m_3': '63238.0125',
-            'a_2009_3|a_2071_9|m_0': '157944.04075',
-            'a_2009_3|a_2071_9|m_1': '48565.19325',
-            'a_2009_3|a_2071_9|m_2': '40000',
-            'a_2009_3|a_2071_9|m_3': '69378.8475',
-            'a_2009_4|a_2071_10|m_0': '156878.19175',
-            'a_2009_4|a_2071_10|m_1': '48126.31425',
-            'a_2009_4|a_2071_10|m_2': '40000',
-            'a_2009_4|a_2071_10|m_3': '68751.8775',
-            'a_2009_4|a_2071_11|m_0': '156446.52775',
-            'a_2009_4|a_2071_11|m_1': '47948.57025',
-            'a_2009_4|a_2071_11|m_2': '40000',
-            'a_2009_4|a_2071_11|m_3': '68497.9575',
-            'a_2009_4|a_2071_12|m_0': '130719.01675',
-            'a_2009_4|a_2071_12|m_1': '37354.88925',
-            'a_2009_4|a_2071_12|m_2': '40000',
-            'a_2009_4|a_2071_12|m_3': '53364.1275',
+            'a_2009_1-a_2071_1-m_0': '160104.5665',
+            'a_2009_1-a_2071_1-m_1': '49454.8215',
+            'a_2009_1-a_2071_1-m_2': '40000',
+            'a_2009_1-a_2071_1-m_3': '70649.745',
+            'a_2009_1-a_2071_2-m_0': '156148.86625',
+            'a_2009_1-a_2071_2-m_1': '47826.00375',
+            'a_2009_1-a_2071_2-m_2': '40000',
+            'a_2009_1-a_2071_2-m_3': '68322.8625',
+            'a_2009_1-a_2071_3-m_0': '154299.8485',
+            'a_2009_1-a_2071_3-m_1': '47064.6435',
+            'a_2009_1-a_2071_3-m_2': '40000',
+            'a_2009_1-a_2071_3-m_3': '67235.205',
+            'a_2009_2-a_2071_4-m_0': '158572.501',
+            'a_2009_2-a_2071_4-m_1': '48823.971',
+            'a_2009_2-a_2071_4-m_2': '40000',
+            'a_2009_2-a_2071_4-m_3': '69748.53',
+            'a_2009_2-a_2071_5-m_0': '152789.662',
+            'a_2009_2-a_2071_5-m_1': '46442.802',
+            'a_2009_2-a_2071_5-m_2': '40000',
+            'a_2009_2-a_2071_5-m_3': '66346.86',
+            'a_2009_2-a_2071_6-m_0': '158587.036',
+            'a_2009_2-a_2071_6-m_1': '48829.956',
+            'a_2009_2-a_2071_6-m_2': '40000',
+            'a_2009_2-a_2071_6-m_3': '69757.08',
+            'a_2009_3-a_2071_7-m_0': '156553.19425',
+            'a_2009_3-a_2071_7-m_1': '47992.49175',
+            'a_2009_3-a_2071_7-m_2': '40000',
+            'a_2009_3-a_2071_7-m_3': '68560.7025',
+            'a_2009_3-a_2071_8-m_0': '147504.62125',
+            'a_2009_3-a_2071_8-m_1': '44266.60875',
+            'a_2009_3-a_2071_8-m_2': '40000',
+            'a_2009_3-a_2071_8-m_3': '63238.0125',
+            'a_2009_3-a_2071_9-m_0': '157944.04075',
+            'a_2009_3-a_2071_9-m_1': '48565.19325',
+            'a_2009_3-a_2071_9-m_2': '40000',
+            'a_2009_3-a_2071_9-m_3': '69378.8475',
+            'a_2009_4-a_2071_10-m_0': '156878.19175',
+            'a_2009_4-a_2071_10-m_1': '48126.31425',
+            'a_2009_4-a_2071_10-m_2': '40000',
+            'a_2009_4-a_2071_10-m_3': '68751.8775',
+            'a_2009_4-a_2071_11-m_0': '156446.52775',
+            'a_2009_4-a_2071_11-m_1': '47948.57025',
+            'a_2009_4-a_2071_11-m_2': '40000',
+            'a_2009_4-a_2071_11-m_3': '68497.9575',
+            'a_2009_4-a_2071_12-m_0': '130719.01675',
+            'a_2009_4-a_2071_12-m_1': '37354.88925',
+            'a_2009_4-a_2071_12-m_2': '40000',
+            'a_2009_4-a_2071_12-m_3': '53364.1275',
             'a_2205': 'Montgomery',
-            'a_2211': 'Alabama'
-          });
+            'a_2211': 'Alabama',
+            'drillItemMap': {
+                a_2205: {
+                    title: 'Montgomery',
+                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340107'
+                },
+                a_2211: {
+                    title: 'Alabama',
+                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+                }
+            }
+        });
     });
 });
 
@@ -247,5 +325,103 @@ describe('executionToAGGridAdapter', () => {
                 executionResult: fixtures.barChartWithStackByAndOnlyOneStack.executionResult
             })
         ).toMatchSnapshot();
+    });
+});
+
+describe('sanitizeField', () => {
+    it('should replace [.] and [-] characters with placeholders', () => {
+        expect(
+            sanitizeField('field.with-replacement')
+        ).toBe('fieldDOTwithDASHreplacement');
+    });
+});
+
+describe('getMeasureDrillItem', () => {
+    it('should return measure drill item based on response headers', () => {
+        const responseHeaders: Execution.IHeader[]
+            = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
+        const header: Execution.IResultMeasureHeaderItem = { measureHeaderItem: { name: 'not important', order: 0 } };
+        expect(
+            getMeasureDrillItem(responseHeaders, header)
+        ).toEqual({
+            identifier: 'ah1EuQxwaCqs',
+            localIdentifier: 'amountMetric',
+            title: 'Amount',
+            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
+        });
+    });
+    it('should return null if the header cannot be found', () => {
+        const responseHeaders1: Execution.IHeader[]
+            = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[0].headers;
+        const responseHeaders2: Execution.IHeader[]
+            = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
+        const header: Execution.IResultMeasureHeaderItem = { measureHeaderItem: { name: 'not important', order: 99 } };
+        expect(
+            getMeasureDrillItem(responseHeaders1, header)
+        ).toBe(null);
+        expect(
+            getMeasureDrillItem(responseHeaders2, header)
+        ).toBe(null);
+    });
+});
+
+describe('assignDrillItemsAndType', () => {
+    it('should assign measure header item drillItems and type to header', () => {
+        const header: IGridHeader = {
+            headerName: 'test',
+            drillItems: []
+        };
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[1].headers;
+        const headerIndex = 0;
+        const drillItems: IDrillItem[] = [];
+        assignDrillItemsAndType(
+            header,
+            currentHeader,
+            responseHeaders,
+            headerIndex,
+            drillItems
+        );
+        expect(header.type).toEqual('MEASURE_COLUMN');
+        expect(header.drillItems).toEqual([{
+            identifier: 'aaEGaXAEgB7U',
+            localIdentifier: 'franchiseFeesIdentifier',
+            title: '$ Franchise Fees',
+            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685'
+        }]);
+    });
+    it('should assign attribute header type to header and attribute and attribute value to drillItems', () => {
+        const header: IGridHeader = {
+            headerName: 'test',
+            drillItems: []
+        };
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers;
+        const headerIndex = 0;
+        const drillItems: IDrillItem[] = [];
+        assignDrillItemsAndType(
+            header,
+            currentHeader,
+            responseHeaders,
+            headerIndex,
+            drillItems
+        );
+        expect(header.type).toEqual('COLUMN_ATTRIBUTE_COLUMN');
+        expect(drillItems).toEqual([
+            // attribute value
+            {
+                title: 'Alabama',
+                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+            },
+            // attribute
+            {
+                identifier: 'label.restaurantlocation.locationstate',
+                localIdentifier: 'state',
+                title: 'Location State',
+                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+            }
+        ]);
+        // assign empty array to drillItems header. Only leaf headers (measures) should have assigned drill items
+        expect(header.drillItems).toEqual([]);
     });
 });
