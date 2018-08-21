@@ -16,6 +16,7 @@ import { IChartConfig } from '../Chart';
 
 import * as numberJS from '@gooddata/numberjs';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { IDataLabelsVisibile } from '../../../../interfaces/Config';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import { getLighterColor } from '../../utils/color';
 import {
@@ -324,6 +325,18 @@ function level2LabelsFormatter(config?: IChartConfig) {
     return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'), config)})`;
 }
 
+function labelFormatterBubble(config?: IChartConfig) {
+    const value = get<number>(this, 'point.z');
+    if (isNaN(value)) {
+        return null;
+    }
+    return formatLabel(value, get(this, 'point.format'), config);
+}
+
+function labelFormatterScatter() {
+    return escapeAngleBrackets(this.key);
+}
+
 // check whether series contains only positive values, not consider nulls
 function hasOnlyPositiveValues(series: any, x: any) {
     return every(series, (seriesItem: any) => {
@@ -363,14 +376,17 @@ function getTooltipConfiguration(chartOptions: IChartOptions) {
     } : {};
 }
 
-function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any, config?: IChartConfig) {
+function getTreemapLabelsConfiguration(
+    isMultiLevel: boolean, style: any, config?: IChartConfig, labelsConfig?: object
+) {
     const smallLabelInCenter = {
         dataLabels: {
             enabled: true,
             padding: 2,
             formatter: partial(level2LabelsFormatter, config),
             allowOverlap: false,
-            style
+            style,
+            ...labelsConfig
         }
     };
     if (isMultiLevel) {
@@ -387,7 +403,8 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any, config
                         fontSize: '14px'
                     },
                     formatter: partial(level1LabelsFormatter, config),
-                    allowOverlap: false
+                    allowOverlap: false,
+                    ...labelsConfig
                 }
             }, {
                 level: 2,
@@ -404,6 +421,60 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any, config
     }
 }
 
+function getLabelsVisibilityConfig(visible: IDataLabelsVisibile): any {
+    switch (visible) {
+        case 'auto':
+            return {
+                enabled: true,
+                allowOverlap: false
+            };
+        case true:
+            return {
+                enabled: true,
+                allowOverlap: true
+            };
+        case false:
+            return {
+                enabled: false
+            };
+        default: // keep decision on each chart for `undefined`
+            return {};
+    }
+}
+
+// types with label inside sections have white labels
+const whiteDataLabelTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.TREEMAP,
+    VisualizationTypes.BUBBLE
+];
+
+function getLabelStyle(chartOptions: any) {
+    const {
+        stacking,
+        type
+    }: {
+        stacking: boolean;
+        type: string;
+    } = chartOptions;
+
+    const WHITE_LABEL = {
+        color: '#ffffff',
+        textShadow: '0 0 1px #000000'
+    };
+
+    const BLACK_LABEL = {
+        color: '#000000',
+        textShadow: 'none'
+    };
+
+    if (isAreaChart(type)) {
+        return BLACK_LABEL;
+    }
+    return (stacking || isOneOfTypes(type, whiteDataLabelTypes)) ? WHITE_LABEL : BLACK_LABEL;
+}
+
 function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const {
         stacking,
@@ -414,13 +485,12 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
         yAxes: IAxis[];
         type: string;
     } = chartOptions;
-    const style = stacking || isTreemap(type) ? {
-        color: '#ffffff',
-        textShadow: '0 0 1px #000000'
-    } : {
-        color: '#000000',
-        textShadow: 'none'
-    };
+
+    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+
+    const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
+
+    const style = getLabelStyle(chartOptions);
 
     const drilldown = stacking || isTreemap(type) ? {
         activeDataLabelStyle: {
@@ -432,31 +502,65 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
         defaultFormat: get(axis, 'format')
     }));
 
+    const DEFAULT_LABELS_CONFIG = {
+        formatter: partial(labelFormatter, config),
+        style,
+        allowOverlap: false,
+        ...labelsConfig
+    };
+
     return {
         drilldown,
         plotOptions: {
-            bar: {
+            gdcOptions: {
                 dataLabels: {
-                    formatter: partial(labelFormatter, config),
-                    style,
-                    allowOverlap: false
+                    visible: labelsVisible
                 }
+            },
+            bar: {
+                dataLabels: DEFAULT_LABELS_CONFIG
             },
             column: {
                 dataLabels: {
                     formatter: partial(labelFormatter, config),
                     style,
-                    allowOverlap: false
+                    allowOverlap: false,
+                    ...labelsConfig
                 }
             },
             heatmap: {
                 dataLabels: {
                     formatter: labelFormatterHeatmap,
-                    config
+                    config,
+                    ...labelsConfig
                 }
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style, config)
+                ...getTreemapLabelsConfiguration(!!stacking, style, config, labelsConfig)
+            },
+            line: {
+                dataLabels: DEFAULT_LABELS_CONFIG
+            },
+            area: {
+                dataLabels: DEFAULT_LABELS_CONFIG
+            },
+            scatter: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(labelFormatterScatter, config)
+                }
+            },
+            bubble: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(labelFormatterBubble, config)
+                }
+            },
+            pie: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    verticalAlign: 'middle'
+                }
             }
         },
         yAxis
@@ -782,7 +886,8 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,
-        getGridConfiguration
+        getGridConfiguration,
+        getLabelsConfiguration
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

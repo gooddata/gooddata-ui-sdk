@@ -120,4 +120,22 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
+    )).add('with dataLabels explicitly hidden', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    config={{
+                        dataLabels: {
+                            visible: false
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
     ));

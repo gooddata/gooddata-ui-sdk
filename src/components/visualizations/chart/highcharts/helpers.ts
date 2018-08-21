@@ -35,6 +35,9 @@ export const isIntersecting = (o1: any, o2: any) =>
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
     if (dataLabel && shapeArgs) { // shapeArgs for point hidden by legend is undefined
+        if (shapeArgs.width === undefined) {
+            return dataLabel.width > (shapeArgs.r * 2) || dataLabel.height > (shapeArgs.r * 2);
+        }
         return dataLabel.width > shapeArgs.width || dataLabel.height > shapeArgs.height;
     }
     return false;
@@ -45,6 +48,8 @@ export const getVisibleSeries = (chart: any) => chart.series && chart.series.fil
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
 export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
 export const getChartType = (chart: any) => get(chart, 'options.chart.type');
+export const getDataLabelsGdcVisible = (chart: any) =>
+    get(chart, 'options.plotOptions.gdcOptions.dataLabels.visible', 'auto');
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
     if (get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
@@ -63,6 +68,14 @@ export const areLabelsStacked = (chart: any) =>
     (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
 
 export const hasDataLabel = (point: any) => point.dataLabel;
+
+export const minimizeDataLabel = (point: any) => {
+    const { dataLabel } = point;
+    if (dataLabel) {
+        dataLabel.width = 0;
+        dataLabel.height = 0;
+    }
+};
 
 export const hideDataLabel = (point: any) => {
     const { dataLabel } = point;
