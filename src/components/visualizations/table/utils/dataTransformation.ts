@@ -3,7 +3,8 @@ import * as invariant from 'invariant';
 import { get, has, omit, zip, isEmpty } from 'lodash';
 import { AFM, Execution } from '@gooddata/typings';
 import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
-import { getMeasureUriOrIdentifier, IDrillIntersection } from '../../utils/drilldownEventing';
+import { getMeasureUriOrIdentifier } from '../../utils/drilldownEventing';
+import { IDrillIntersection } from '../../../../interfaces/DrillEvents';
 import {
     IAttributeTableHeader,
     IMeasureTableHeader,
@@ -19,8 +20,9 @@ import {
 import { AVAILABLE_TOTALS } from '../totals/utils';
 import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
 
-function getAttributeHeaders(resultDimension: Execution.IResultDimension): IAttributeTableHeader[] {
+export function getAttributeHeaders(resultDimension: Execution.IResultDimension): IAttributeTableHeader[] {
     return resultDimension.headers
+        .filter(header => Execution.isAttributeHeader(header))
         .map((attributeHeader: Execution.IAttributeHeader) => {
             return {
                 ...omit(attributeHeader.attributeHeader, ['formOf', 'totalItems']) as any,
@@ -30,14 +32,18 @@ function getAttributeHeaders(resultDimension: Execution.IResultDimension): IAttr
         });
 }
 
-function getMeasureHeaders(resultDimension: Execution.IResultDimension): IMeasureTableHeader[] {
-    return get(resultDimension.headers[0], ['measureGroupHeader', 'items'], [])
-        .map((measureHeader: Execution.IMeasureHeaderItem) => {
-            return {
-                ...measureHeader.measureHeaderItem,
-                type: 'measure'
-            };
-        });
+export function getMeasureHeaders(resultDimension: Execution.IResultDimension): IMeasureTableHeader[] {
+    return get(
+        resultDimension.headers.find(header => Execution.isMeasureGroupHeader(header)),
+        ['measureGroupHeader', 'items'],
+        []
+    )
+    .map((measureHeader: Execution.IMeasureHeaderItem) => {
+        return {
+            ...measureHeader.measureHeaderItem,
+            type: 'measure'
+        };
+    });
 }
 
 export function getHeaders(executionResponse: Execution.IExecutionResponse): TableHeader[] {
