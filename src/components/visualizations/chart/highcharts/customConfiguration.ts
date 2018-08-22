@@ -334,7 +334,11 @@ function labelFormatterBubble(config?: IChartConfig) {
 }
 
 function labelFormatterScatter() {
-    return escapeAngleBrackets(this.key);
+    const name = get(this, 'point.name');
+    if (name) {
+        return escapeAngleBrackets(name);
+    }
+    return null;
 }
 
 // check whether series contains only positive values, not consider nulls
