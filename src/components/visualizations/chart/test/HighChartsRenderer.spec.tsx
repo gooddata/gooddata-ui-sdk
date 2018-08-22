@@ -262,19 +262,6 @@ describe('HighChartsRenderer', () => {
         expect(wrapper.instance().state.legendItemsEnabled).toEqual([true]);
     });
 
-    it('should keep custom startOnTick or endOnTick for axis configuration', () => {
-        const wrapper = mount(createComponent({
-            yAxis: [{
-                startOnTick: false,
-                endOnTick: false
-            }]
-        }));
-        const { props } = wrapper.instance();
-
-        expect(props.yAxis[0].startOnTick).toBe(false);
-        expect(props.yAxis[0].endOnTick).toBe(false);
-    });
-
     describe('render', () => {
         const customComponentProps = ({ position = TOP, responsive = false }) => ({
             legend: {

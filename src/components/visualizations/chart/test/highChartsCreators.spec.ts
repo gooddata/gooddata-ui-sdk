@@ -203,9 +203,5 @@ describe('highChartCreators', () => {
         it('defined empty data pattern', () => {
             expect(config.defs.patterns[0].id).toEqual('empty-data-pattern');
         });
-
-        it('should not end on tick on yaxis', () => {
-            expect(config.yAxis[0].endOnTick).toBe(false);
-        });
     });
 });

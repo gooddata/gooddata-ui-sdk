@@ -41,9 +41,6 @@ const HEATMAP_TEMPLATE = {
     series: [{
         borderWidth: 0,
         nullColor: 'url(#empty-data-pattern)'
-    }],
-    yAxis: [{
-        endOnTick: false
     }]
 };
 
