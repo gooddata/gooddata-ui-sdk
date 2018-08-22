@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import cloneDeep = require('lodash/cloneDeep');
-import isUndefined = require('lodash/isUndefined');
 import get = require('lodash/get');
 import set = require('lodash/set');
 import isEqual = require('lodash/isEqual');
@@ -54,17 +53,9 @@ function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
 }
 
 function setStartOrEndOnTick(axis: Highcharts.AxisOptions, chartOptions: any) {
-    const undefinedStartOnTick = isUndefined(axis.startOnTick);
-    const undefinedEndOnTick = isUndefined(axis.endOnTick);
-    const startOrEndOnTick = (undefinedStartOnTick || undefinedEndOnTick) ? shouldStartOrEndOnTick(chartOptions) : null;
-
-    if (undefinedStartOnTick) {
-        set(axis, 'startOnTick', startOrEndOnTick);
-    }
-
-    if (undefinedEndOnTick) {
-        set(axis, 'endOnTick', startOrEndOnTick);
-    }
+    const startOrEndOnTick = shouldStartOrEndOnTick(chartOptions);
+    set(axis, 'startOnTick', startOrEndOnTick);
+    set(axis, 'endOnTick', startOrEndOnTick);
 }
 
 export default class HighChartsRenderer
