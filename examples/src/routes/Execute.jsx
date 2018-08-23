@@ -6,7 +6,7 @@ import ExecuteExample from '../components/ExecuteExample';
 import ExecuteExampleSRC from '!raw-loader!../components/ExecuteExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 
-export const Kpi = () => (
+export const Execute = () => (
     <div>
         <h1>Execute</h1>
 
@@ -23,4 +23,4 @@ export const Kpi = () => (
     </div>
 );
 
-export default Kpi;
+export default Execute;

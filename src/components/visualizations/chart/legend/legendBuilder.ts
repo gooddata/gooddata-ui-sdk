@@ -9,7 +9,7 @@ import {
     isScatterPlot,
     isOneOfTypes,
     isBubbleChart,
-    isHeatMap,
+    isHeatmap,
     isTreemap
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
@@ -19,11 +19,11 @@ export const DEFAULT_LEGEND_CONFIG = {
     position: RIGHT
 };
 
-function isHeatMapWithMultipleValues(chartOptions: any) {
+function isHeatmapWithMultipleValues(chartOptions: any) {
     const { type } = chartOptions;
     const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, 'colorAxis.dataClasses', []);
 
-    return isHeatMap(type) && dataClasses.length > 1;
+    return isHeatmap(type) && dataClasses.length > 1;
 }
 
 export function shouldLegendBeEnabled(chartOptions: any) {
@@ -48,7 +48,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
         || isScatterPlotWithAttribute
         || isTreemapWithViewByAttribute
         || isTreemapWithManyCategories
-        || isHeatMapWithMultipleValues(chartOptions);
+        || isHeatmapWithMultipleValues(chartOptions);
 }
 
 export function getLegendItems(chartOptions: any) {
@@ -61,7 +61,7 @@ export function getLegendItems(chartOptions: any) {
         VisualizationTypes.SCATTER
     ];
 
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, 'colorAxis.dataClasses', []);
         return dataClasses.map((dataClass, index) => {
             const { from, to, color } = dataClass;
@@ -100,8 +100,6 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any) {
         if (isBubbleChart(chartOptions.type)) {
             set(defaultLegendConfigByType, 'enabled', true);
         }
-    } else if (isHeatMap(chartOptions.type)) {
-        set(legendConfig, 'position', 'top');
     }
 
     const baseConfig = {

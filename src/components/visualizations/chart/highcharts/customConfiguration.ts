@@ -11,10 +11,12 @@ import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
 import { styleVariables } from '../../styles/variables';
-import { IAxis } from '../chartOptionsBuilder';
+import { IAxis, IChartOptions } from '../chartOptionsBuilder';
+import { IChartConfig } from '../Chart';
 
 import * as numberJS from '@gooddata/numberjs';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { IDataLabelsVisibile } from '../../../../interfaces/Config';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import { getLighterColor } from '../../utils/color';
 import {
@@ -25,10 +27,7 @@ import {
     isRotationInRange,
     isTreemap
 } from '../../utils/common';
-import {
-    shouldFollowPointer,
-    shouldStartOrEndOnTick
-} from '../../../visualizations/chart/highcharts/helpers';
+import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
 
 const {
     stripColors,
@@ -298,29 +297,48 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     ) : null;
 }
 
-function formatLabel(value: any, format: any) {
+function formatLabel(value: any, format: any, config: IChartConfig = {}) {
     // no labels for missing values
     if (value === null) {
         return null;
     }
 
     const stripped = stripColors(format || '');
-    return escapeAngleBrackets(String(numberFormat(value, stripped)));
+    const { separators } = config;
+    return escapeAngleBrackets(String(numberFormat(value, stripped, undefined, separators)));
 }
 
-function labelFormatter() {
-    return formatLabel(this.y, get(this, 'point.format'));
+function labelFormatter(config?: IChartConfig) {
+    return formatLabel(this.y, get(this, 'point.format'), config);
 }
 
-function labelFormatterHeatMap(options: any) {
-    return formatLabel(this.point.value, options.formatGD);
+function labelFormatterHeatmap(options: any) {
+    return formatLabel(this.point.value, options.formatGD, options.config);
 }
 
-function level1LabelsFormatter() {
-    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.node.val'), get(this, 'point.format'))})`;
+function level1LabelsFormatter(config?: IChartConfig) {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.node.val'),
+                                                        get(this, 'point.format'),
+                                                        config)})`;
 }
-function level2LabelsFormatter() {
-    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'))})`;
+function level2LabelsFormatter(config?: IChartConfig) {
+    return `${get(this, 'point.name')} (${formatLabel(get(this, 'point.value'), get(this, 'point.format'), config)})`;
+}
+
+function labelFormatterBubble(config?: IChartConfig) {
+    const value = get<number>(this, 'point.z');
+    if (isNaN(value)) {
+        return null;
+    }
+    return formatLabel(value, get(this, 'point.format'), config);
+}
+
+function labelFormatterScatter() {
+    const name = get(this, 'point.name');
+    if (name) {
+        return escapeAngleBrackets(name);
+    }
+    return null;
 }
 
 // check whether series contains only positive values, not consider nulls
@@ -331,16 +349,16 @@ function hasOnlyPositiveValues(series: any, x: any) {
     });
 }
 
-function stackLabelFormatter() {
+function stackLabelFormatter(config?: IChartConfig) {
     // show labels: always for negative,
     // without negative values or with non-zero total for positive
     const showStackLabel =
         this.isNegative || hasOnlyPositiveValues(this.axis.series, this.x) || this.total !== 0;
     return showStackLabel ?
-        formatLabel(this.total, get(this, 'axis.userOptions.defaultFormat')) : null;
+        formatLabel(this.total, get(this, 'axis.userOptions.defaultFormat'), config) : null;
 }
 
-function getTooltipConfiguration(chartOptions: any) {
+function getTooltipConfiguration(chartOptions: IChartOptions) {
     const tooltipAction = get(chartOptions, 'actions.tooltip');
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
@@ -362,14 +380,17 @@ function getTooltipConfiguration(chartOptions: any) {
     } : {};
 }
 
-function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
+function getTreemapLabelsConfiguration(
+    isMultiLevel: boolean, style: any, config?: IChartConfig, labelsConfig?: object
+) {
     const smallLabelInCenter = {
         dataLabels: {
             enabled: true,
             padding: 2,
-            formatter: level2LabelsFormatter,
+            formatter: partial(level2LabelsFormatter, config),
             allowOverlap: false,
-            style
+            style,
+            ...labelsConfig
         }
     };
     if (isMultiLevel) {
@@ -385,8 +406,9 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
                         ...style,
                         fontSize: '14px'
                     },
-                    formatter: level1LabelsFormatter,
-                    allowOverlap: false
+                    formatter: partial(level1LabelsFormatter, config),
+                    allowOverlap: false,
+                    ...labelsConfig
                 }
             }, {
                 level: 2,
@@ -403,7 +425,61 @@ function getTreemapLabelsConfiguration(isMultiLevel: boolean, style: any) {
     }
 }
 
-function getLabelsConfiguration(chartOptions: any) {
+function getLabelsVisibilityConfig(visible: IDataLabelsVisibile): any {
+    switch (visible) {
+        case 'auto':
+            return {
+                enabled: true,
+                allowOverlap: false
+            };
+        case true:
+            return {
+                enabled: true,
+                allowOverlap: true
+            };
+        case false:
+            return {
+                enabled: false
+            };
+        default: // keep decision on each chart for `undefined`
+            return {};
+    }
+}
+
+// types with label inside sections have white labels
+const whiteDataLabelTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.TREEMAP,
+    VisualizationTypes.BUBBLE
+];
+
+function getLabelStyle(chartOptions: any) {
+    const {
+        stacking,
+        type
+    }: {
+        stacking: boolean;
+        type: string;
+    } = chartOptions;
+
+    const WHITE_LABEL = {
+        color: '#ffffff',
+        textShadow: '0 0 1px #000000'
+    };
+
+    const BLACK_LABEL = {
+        color: '#000000',
+        textShadow: 'none'
+    };
+
+    if (isAreaChart(type)) {
+        return BLACK_LABEL;
+    }
+    return (stacking || isOneOfTypes(type, whiteDataLabelTypes)) ? WHITE_LABEL : BLACK_LABEL;
+}
+
+function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const {
         stacking,
         yAxes = [],
@@ -413,13 +489,12 @@ function getLabelsConfiguration(chartOptions: any) {
         yAxes: IAxis[];
         type: string;
     } = chartOptions;
-    const style = stacking || isTreemap(type) ? {
-        color: '#ffffff',
-        textShadow: '0 0 1px #000000'
-    } : {
-        color: '#000000',
-        textShadow: 'none'
-    };
+
+    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+
+    const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
+
+    const style = getLabelStyle(chartOptions);
 
     const drilldown = stacking || isTreemap(type) ? {
         activeDataLabelStyle: {
@@ -431,42 +506,77 @@ function getLabelsConfiguration(chartOptions: any) {
         defaultFormat: get(axis, 'format')
     }));
 
+    const DEFAULT_LABELS_CONFIG = {
+        formatter: partial(labelFormatter, config),
+        style,
+        allowOverlap: false,
+        ...labelsConfig
+    };
+
     return {
         drilldown,
         plotOptions: {
-            bar: {
+            gdcOptions: {
                 dataLabels: {
-                    formatter: labelFormatter,
-                    style,
-                    allowOverlap: false
+                    visible: labelsVisible
                 }
+            },
+            bar: {
+                dataLabels: DEFAULT_LABELS_CONFIG
             },
             column: {
                 dataLabels: {
-                    formatter: labelFormatter,
+                    formatter: partial(labelFormatter, config),
                     style,
-                    allowOverlap: false
+                    allowOverlap: false,
+                    ...labelsConfig
                 }
             },
             heatmap: {
                 dataLabels: {
-                    formatter: labelFormatterHeatMap
+                    formatter: labelFormatterHeatmap,
+                    config,
+                    ...labelsConfig
                 }
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style)
+                ...getTreemapLabelsConfiguration(!!stacking, style, config, labelsConfig)
+            },
+            line: {
+                dataLabels: DEFAULT_LABELS_CONFIG
+            },
+            area: {
+                dataLabels: DEFAULT_LABELS_CONFIG
+            },
+            scatter: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(labelFormatterScatter, config)
+                }
+            },
+            bubble: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(labelFormatterBubble, config)
+                }
+            },
+            pie: {
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    verticalAlign: 'middle'
+                }
             }
         },
         yAxis
     };
 }
 
-function getStackingConfiguration(chartOptions: any) {
+function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            formatter: stackLabelFormatter
+            formatter: partial(stackLabelFormatter, config)
         }
     }));
 
@@ -515,7 +625,7 @@ function getSeries(series: any, colorPalette: any = []) {
     });
 }
 
-function getHeatMapDataConfiguration(chartOptions: any) {
+function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
@@ -552,7 +662,7 @@ function getDataConfiguration(chartOptions: any) {
                 series
             };
         case VisualizationTypes.HEATMAP:
-            return getHeatMapDataConfiguration(chartOptions);
+            return getHeatmapDataConfiguration(chartOptions);
     }
 
     const categories = map(data.categories, escapeAngleBrackets);
@@ -685,7 +795,6 @@ function getAxesConfiguration(chartOptions: any) {
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
             const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
-            const startOrEndOnTick = shouldStartOrEndOnTick(max, min);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -721,9 +830,7 @@ function getAxesConfiguration(chartOptions: any) {
                 opposite: axis.opposite,
                 ...visibleProp,
                 ...maxProp,
-                ...minProp,
-                startOnTick: startOrEndOnTick,
-                endOnTick: startOrEndOnTick
+                ...minProp
             };
         }),
 
@@ -772,7 +879,7 @@ function getAxesConfiguration(chartOptions: any) {
     };
 }
 
-export function getCustomizedConfiguration(chartOptions: any) {
+export function getCustomizedConfiguration(chartOptions: IChartOptions, chartConfig?: IChartConfig) {
     const configurators = [
         getAxesConfiguration,
         getTitleConfiguration,
@@ -783,11 +890,12 @@ export function getCustomizedConfiguration(chartOptions: any) {
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,
-        getGridConfiguration
+        getGridConfiguration,
+        getLabelsConfiguration
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config));
+        return merge(config, configurator(chartOptions, config, chartConfig));
     }, {});
 
     return merge({}, commonData);

@@ -12,6 +12,7 @@ import {
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -79,6 +80,28 @@ storiesOf('AFM components/Area chart', module)
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_TWO_ATTRIBUTES}
+                    onError={onErrorHandler}
+                    config={GERMAN_SEPARATORS}
+                    resultSpec={{
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['a1']
+                            },
+                            {
+                                itemIdentifiers: ['a2', 'measureGroup']
+                            }
+                        ]
+                    }}
                 />
             </div>
         )

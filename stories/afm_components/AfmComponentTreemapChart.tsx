@@ -13,6 +13,7 @@ import {
 } from '../data/afmComponentProps';
 
 import '../../styles/scss/charts.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -69,6 +70,18 @@ storiesOf('AFM components/Treemap', module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                 />
             </div>

@@ -33,7 +33,8 @@ export class HeadlineStateless extends
             dataSource,
             resultSpec,
             execution,
-            onFiredDrillEvent
+            onFiredDrillEvent,
+            config
         } = this.props;
 
         return (
@@ -44,6 +45,7 @@ export class HeadlineStateless extends
                             onAfterRender={afterRender}
                             onFiredDrillEvent={onFiredDrillEvent}
                             drillableItems={drillableItems}
+                            config={config}
                             executionRequest={{
                                 afm: dataSource.getAfm(),
                                 resultSpec

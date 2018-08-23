@@ -11,6 +11,7 @@ import { ATTRIBUTE_1,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -74,6 +75,22 @@ storiesOf('Core components/ComboChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ComboChart
+                    projectId="storybook"
+                    columnMeasures={[MEASURE_1]}
+                    lineMeasures={[MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

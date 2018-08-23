@@ -12,6 +12,7 @@ import {
     MEASURE_2_SORT_ITEM,
     MEASURE_WITH_FORMAT
 } from '../data/componentProps';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -71,6 +72,22 @@ storiesOf('Core components/DualChart', module)
                     leftAxisMeasure={MEASURE_WITH_FORMAT}
                     rightAxisMeasure={MEASURE_2}
                     trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with German number format in tooltip', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <DualChart
+                    projectId="storybook"
+                    leftAxisMeasure={MEASURE_1}
+                    rightAxisMeasure={MEASURE_2}
+                    trendBy={ATTRIBUTE_1}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

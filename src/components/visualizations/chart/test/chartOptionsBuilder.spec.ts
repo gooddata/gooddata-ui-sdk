@@ -6,7 +6,6 @@ import { immutableSet } from '../../utils/common';
 import {
     isNegativeValueIncluded,
     validateData,
-    isPopMeasure,
     findInDimensionHeaders,
     findMeasureGroupInDimensions,
     findAttributeInDimension,
@@ -18,12 +17,12 @@ import {
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
-    generateTooltipHeatMapFn,
+    generateTooltipHeatmapFn,
     generateTooltipXYFn,
     generateTooltipTreemapFn,
     IPoint,
     getBubbleChartSeries,
-    getHeatMapDataClasses,
+    getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure
 } from '../chartOptionsBuilder';
@@ -252,50 +251,49 @@ describe('chartOptionsBuilder', () => {
                     });
                 });
         });
-    });
 
-    describe('isPopMeasure', () => {
-        it('should return true if measureItem was defined as a popMeasure', () => {
-            const measureItem = fixtures
-                .barChartWithPopMeasureAndViewByAttribute
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[0];
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(true);
-        });
+        describe('Treemap filters out root nodes for dataPoints limit', () => {
+            it('should validate with "dataTooLarge: false" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 4
+                }, treemapOptions);
 
-        it('should return false if measureItem was defined as a previousPeriodMeasure', () => {
-            const measureItem = fixtures
-                .barChartWithPreviousPeriodMeasure
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[0];
-            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(false);
-        });
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: false
+                });
+            });
 
-        it('should return false if measureItem was defined as a simple measure', () => {
-            const measureItem = fixtures
-                .barChartWithPopMeasureAndViewByAttribute
-                .executionResponse
-                .dimensions[STACK_BY_DIMENSION_INDEX]
-                .headers[0]
-                .measureGroupHeader
-                .items[1];
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+            it('should validate with "dataTooLarge: true" against data points limit', () => {
+                // 2 roots + 4 leafs
+                const treemapOptions = generateChartOptions(
+                    fixtures.treemapWithMetricViewByAndStackByAttribute,
+                    {
+                        type: 'treemap',
+                        mdObject: fixtures.treemapWithMetricViewByAndStackByAttribute.mdObject
+                    }
+                );
+                const validationResult = validateData({
+                    dataPoints: 3
+                }, treemapOptions);
 
-            expect(
-                isPopMeasure(measureItem, afm)
-            ).toEqual(false);
+                expect(
+                    validationResult
+                ).toEqual({
+                    dataTooLarge: true,
+                    hasNegativeValue: false
+                });
+            });
         });
     });
 
@@ -908,6 +906,19 @@ describe('chartOptionsBuilder', () => {
                 }
             };
 
+            const dummyMeasureGroup = {
+                items: [
+                    {
+                        measureHeaderItem: {
+                            localIdentifier: 'm1',
+                            name: 'dummyName',
+                            format: '#.##x'
+                        }
+
+                    }
+                ]
+            };
+
             it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
                 const executionResultData = [
                     [ 1, 2, 3],
@@ -926,6 +937,7 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [
@@ -948,16 +960,20 @@ describe('chartOptionsBuilder', () => {
                         name: 'abc',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 2, z: 3 }]
+                        data: [{ x: 1, y: 2, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 5, z: 6 }]
+                        data: [{ x: 4, y: 5, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -983,16 +999,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 0, y: 0, z: 3 }]
+                        data: [{ x: 0, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 0, y: 0, z: 6 }]
+                        data: [{ x: 0, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1023,16 +1043,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 0, y: 1, z: 3 }]
+                        data: [{ x: 0, y: 1, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 0, y: 4, z: 6 }]
+                        data: [{ x: 0, y: 4, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1063,16 +1087,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 0, z: 3 }]
+                        data: [{ x: 1, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 0, z: 6 }]
+                        data: [{ x: 4, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1103,16 +1131,20 @@ describe('chartOptionsBuilder', () => {
                         name: '',
                         color: 'red',
                         legendIndex: 0,
-                        data: [{ x: 1, y: 3, z: NaN }]
+                        data: [{ x: 1, y: 3, z: NaN, format: '#.##x' }]
                     }, {
                         name: '',
                         color: 'green',
                         legendIndex: 1,
-                        data: [{ x: 4, y: 6, z: NaN }]
+                        data: [{ x: 4, y: 6, z: NaN, format: '#.##x' }]
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1177,7 +1209,11 @@ describe('chartOptionsBuilder', () => {
                     }
                 ];
                 const series = getBubbleChartSeries(
-                    executionResultData, stackByAttribute, mdObject, colorPallete
+                    executionResultData,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    mdObject,
+                    colorPallete
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1700,6 +1736,7 @@ describe('chartOptionsBuilder', () => {
                     x: 245,
                     y: 32,
                     z: 2280481.04,
+                    format: '$#,#00.00',
                     drilldown: true,
                     drillContext: [
                         {
@@ -2881,8 +2918,8 @@ describe('chartOptionsBuilder', () => {
             });
         });
 
-        describe('HeatMap configuration', () => {
-            describe('generateTooltipHeatMapFn', () => {
+        describe('Heatmap configuration', () => {
+            describe('generateTooltipHeatmapFn', () => {
                 const viewBy = {
                     formOf: { name: 'viewAttr' },
                     items: [{ attributeHeaderItem: { name: 'viewHeader' } }]
@@ -2908,7 +2945,7 @@ describe('chartOptionsBuilder', () => {
                 };
 
                 it('should generate correct tooltip', () => {
-                    const tooltipFn = generateTooltipHeatMapFn(viewBy, stackBy);
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
                     const expectedResult =
             `<table class=\"tt-values\"><tr>
                 <td class=\"title\">stackAttr</td>
@@ -2923,6 +2960,26 @@ describe('chartOptionsBuilder', () => {
 
                     expect(tooltipFn(point)).toEqual(expectedResult);
                 });
+
+                it('should display "-" for null value', () => {
+                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)({
+                        ...point,
+                        value: null
+                    });
+                    const expectedResult =
+            `<table class=\"tt-values\"><tr>
+                <td class=\"title\">stackAttr</td>
+                <td class=\"value\">stackHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">viewAttr</td>
+                <td class=\"value\">viewHeader</td>
+            </tr>\n<tr>
+                <td class=\"title\">name</td>
+                <td class=\"value\">-</td>
+            </tr></table>`;
+
+                    expect(tooltipValue).toEqual(expectedResult);
+                });
             });
 
             describe('getChartOptions for heatmap', () => {
@@ -2935,7 +2992,6 @@ describe('chartOptionsBuilder', () => {
                         }
                     );
                     const expectedSeries = [{
-                        borderWidth: 1,
                         data: [
                             { x: 0, y: 0, value: 21978695.46, drilldown: false },
                             { x: 1, y: 0, value: 6038400.96, drilldown: false },
@@ -2943,7 +2999,6 @@ describe('chartOptionsBuilder', () => {
                             { x: 1, y: 1, value: 30180730.62, drilldown: false }
                         ],
                         dataLabels: {
-                            enabled: true,
                             formatGD: '#,##0.00'
                         },
                         legendIndex: 0,
@@ -2995,11 +3050,24 @@ describe('chartOptionsBuilder', () => {
                     expect(chartOptions.yAxes).toEqual(expectedYAxis);
                 });
 
-                describe('getHeatMapDataClasses', () => {
+                it('should generate Yaxes label from attribute name', () => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.heatmapMetricRowColumn,
+                        {
+                            type: 'heatmap'
+                        }
+                    );
+                    const expectedYAxis = [{
+                        label: 'Product'
+                    }];
+                    expect(chartOptions.yAxes).toEqual(expectedYAxis);
+                });
+
+                describe('getHeatmapDataClasses', () => {
                     it('should return empty array when there are no values in series', () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
-                        const dataClasses = getHeatMapDataClasses(series, []);
+                        const dataClasses = getHeatmapDataClasses(series, []);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3018,7 +3086,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'g'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3053,7 +3121,7 @@ describe('chartOptionsBuilder', () => {
                                 color: 'r'
                             }
                         ];
-                        const dataClasses = getHeatMapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
                     });

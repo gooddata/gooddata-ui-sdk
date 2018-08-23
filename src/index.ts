@@ -24,7 +24,7 @@ import { AttributeElements } from './components/filters/AttributeFilter/Attribut
 import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
-import * as PoPHelper from './helpers/popHelper';
+import * as OverTimeComparisonHelper from './helpers/overTimeComparisonHelper';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
 
@@ -42,8 +42,8 @@ import { Headline } from './components/Headline';
 import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
-import { HeatMap } from './components/HeatMap';
-import Chart, { ILegendConfig } from './components/visualizations/chart/Chart';
+import { Heatmap } from './components/Heatmap';
+import Chart, { ILegendConfig, IChartConfig } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 
@@ -84,6 +84,7 @@ export {
     IDataSourceProviderInjectedProps,
     IDrillableItem,
     ILegendConfig,
+    IChartConfig,
     IPushData,
     isEmptyResult,
     IVisualizationProperties,
@@ -95,8 +96,8 @@ export {
     Treemap,
     BubbleChart,
     DonutChart,
-    HeatMap,
-    PoPHelper,
+    Heatmap,
+    OverTimeComparisonHelper,
     DerivedMeasureTitleSuffixFactory,
     PropTypes,
     RuntimeError,

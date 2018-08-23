@@ -205,12 +205,4 @@ describe('getLegend', () => {
         const legendItems = getLegendItems(chartOptions);
         expect(legend.items).toEqual(legendItems);
     });
-
-    it('should set legend position to top for heatmap', () => {
-        const chartOptions = { type: VisualizationTypes.HEATMAP };
-        const legendConfig = {};
-        const legend = getLegend(legendConfig, chartOptions);
-
-        expect(legend.position).toEqual('top');
-    });
 });

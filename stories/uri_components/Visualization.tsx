@@ -10,6 +10,7 @@ import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
 import '../../styles/scss/table.scss';
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const defaultFilter: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
@@ -150,6 +151,20 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
+    .add('table with German number format', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1001'}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
     .add('chart with PoP measures', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -184,6 +199,20 @@ storiesOf('URI components/Visualization', module)
                 <Visualization
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1002'}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('chart example with German format number', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1002'}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -256,6 +285,20 @@ storiesOf('URI components/Visualization', module)
                 <Visualization
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1004'}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('Headline with German number format', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1004'}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

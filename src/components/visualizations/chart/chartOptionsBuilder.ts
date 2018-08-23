@@ -4,17 +4,18 @@ import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import * as Highcharts from 'highcharts';
 
-import range = require('lodash/range');
+import cloneDeep = require('lodash/cloneDeep');
+import compact = require('lodash/compact');
+import escape = require('lodash/escape');
 import get = require('lodash/get');
-import isEqual = require('lodash/isEqual');
 import includes = require('lodash/includes');
 import isEmpty = require('lodash/isEmpty');
-import compact = require('lodash/compact');
-import without = require('lodash/without');
-import escape = require('lodash/escape');
-import unescape = require('lodash/unescape');
+import isEqual = require('lodash/isEqual');
 import isUndefined = require('lodash/isUndefined');
-import cloneDeep = require('lodash/cloneDeep');
+import last = require('lodash/last');
+import range = require('lodash/range');
+import unescape = require('lodash/unescape');
+import without = require('lodash/without');
 
 import { IChartConfig, IChartLimits } from './Chart';
 import {
@@ -24,7 +25,7 @@ import {
     isChartSupported,
     isComboChart,
     isDualChart,
-    isHeatMap,
+    isHeatmap,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -37,7 +38,12 @@ import { unwrap } from '../../../helpers/utils';
 import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
 import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX, PIE_CHART_LIMIT } from './constants';
+import {
+    VIEW_BY_DIMENSION_INDEX,
+    STACK_BY_DIMENSION_INDEX,
+    PIE_CHART_LIMIT,
+    HEATMAP_DATA_POINTS_LIMIT
+} from './constants';
 import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
 
@@ -108,6 +114,7 @@ export interface ISeriesItem {
     data?: ISeriesDataItem[];
     color?: string;
     userOptions?: any;
+    visible?: boolean;
 }
 
 export interface IChartOptions {
@@ -153,8 +160,14 @@ function getChartLimits(type: string): IChartLimits {
         case VisualizationTypes.TREEMAP:
             return {
                 series: DEFAULT_SERIES_LIMIT,
-                categories: DEFAULT_CATEGORIES_LIMIT,
+                categories: DEFAULT_DATA_POINTS_LIMIT,
                 dataPoints: DEFAULT_DATA_POINTS_LIMIT
+            };
+        case VisualizationTypes.HEATMAP:
+            return {
+                series: DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT,
+                dataPoints: HEATMAP_DATA_POINTS_LIMIT
             };
         default:
             return {
@@ -168,22 +181,30 @@ export function cannotShowNegativeValues(type: string) {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
-export function validateData(limits: IChartLimits, chartOptions: any) {
-    const { type } = chartOptions;
-    const finalLimits = limits || getChartLimits(type);
-
+function getTreemapDataForValidation(data: any) {
+    // filter out root nodes
     return {
-        dataTooLarge: !isDataOfReasonableSize(chartOptions.data, finalLimits),
-        hasNegativeValue: cannotShowNegativeValues(type)
-            && isNegativeValueIncluded(chartOptions.data.series)
+        ...data,
+        series: data.series.map((serie: any) => ({
+            ...serie,
+            data: serie.data.filter((dataItem: any) => dataItem.id === undefined)
+        }))
     };
 }
 
-export function isPopMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
-    return afm.measures.some((measure: AFM.IMeasure) => {
-        const popMeasureIdentifier = get(measure, 'definition.popMeasure') ? measure.localIdentifier : null;
-        return popMeasureIdentifier && popMeasureIdentifier === measureItem.measureHeaderItem.localIdentifier;
-    });
+export function validateData(limits: IChartLimits, chartOptions: any) {
+    const { type } = chartOptions;
+    const finalLimits = limits || getChartLimits(type);
+    let dataToValidate = chartOptions.data;
+    if (isTreemap(type)) {
+        dataToValidate = getTreemapDataForValidation(chartOptions.data);
+    }
+
+    return {
+        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits),
+        hasNegativeValue: cannotShowNegativeValues(type)
+            && isNegativeValueIncluded(chartOptions.data.series)
+    };
 }
 
 export function isDerivedMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
@@ -279,7 +300,7 @@ export function getColorPalette(
     afm: AFM.IAfm,
     type: string
 ): string[] {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return HEATMAP_BLUE_COLOR_PALETTE;
     }
 
@@ -395,11 +416,9 @@ export interface ISeriesItemConfig {
     xAxis?: number;
 }
 
-export function getHeatMapSeries(
+export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader']
 ) {
     const data = [] as any;
     executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
@@ -414,13 +433,9 @@ export function getHeatMapSeries(
         turboThreshold: 0,
         yAxis: 0,
         dataLabels: {
-            enabled: ((!viewByAttribute || (viewByAttribute.items.length <= 6)) &&
-                        (!stackByAttribute || (stackByAttribute.items.length <= 20))),
             formatGD: unwrap(measureGroup.items[0]).format
         },
-        legendIndex: 0,
-        borderWidth: ((!viewByAttribute || (viewByAttribute.items.length <= 30)) &&
-                        (!stackByAttribute || (stackByAttribute.items.length <= 30))) ? 1 : 0
+        legendIndex: 0
     }];
 }
 
@@ -467,6 +482,7 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
+    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
@@ -489,7 +505,8 @@ export function getBubbleChartSeries(
                 x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
                 y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
                 // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
-                z: parseFloat(resData[2 - emptyBucketsCount])
+                z: parseFloat(resData[2 - emptyBucketsCount]),
+                format: unwrap(last(measureGroup.items)).format // only for dataLabel format
             }];
         }
         return {
@@ -693,12 +710,12 @@ export function getSeries(
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorPalette: string[]
 ): any {
-    if (isHeatMap(type)) {
-        return getHeatMapSeries(executionResultData, measureGroup, viewByAttribute, stackByAttribute);
+    if (isHeatmap(type)) {
+        return getHeatmapSeries(executionResultData, measureGroup);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(executionResultData, stackByAttribute, mdObject, colorPalette);
+        return getBubbleChartSeries(executionResultData, measureGroup, stackByAttribute, mdObject, colorPalette);
     } else if (isTreemap(type) && stackByAttribute) {
         return getTreemapStackedSeries(
             executionResultData,
@@ -744,15 +761,21 @@ export function getSeries(
             seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
         }
 
-        return seriesItemConfig;
+        const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
+
+        return {
+            ...seriesItemConfig,
+            ...turboThresholdProp
+        };
     });
 }
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-export function generateTooltipFn(viewByAttribute: any, type: string) {
+export function generateTooltipFn(viewByAttribute: any, type: string, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -777,9 +800,10 @@ export function generateTooltipFn(viewByAttribute: any, type: string) {
     };
 }
 
-export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
+export function generateTooltipXYFn(measures: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -814,9 +838,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any) {
     };
 }
 
-export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute: any) {
+export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -849,12 +874,10 @@ export function generateTooltipHeatMapFn(viewByAttribute: any, stackByAttribute:
     };
 }
 
-export function generateTooltipTreemapFn(
-    viewByAttribute: any,
-    stackByAttribute: any
-) {
+export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format));
+        return colors2Object(numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
@@ -1010,8 +1033,8 @@ export function getDrillableSeries(
                 measures = [unwrap(measureGroup.items[measureIndex])];
             }
 
-            const viewByIndex = isHeatMap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            let stackByIndex = isHeatMap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+            const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
+            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
             if (isScatterPlot(type)) {
                 stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
             }
@@ -1075,7 +1098,7 @@ export function getDrillableSeries(
 
 function getCategories(type: string, measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
                        viewByAttribute: any, stackByAttribute: any) {
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return [
             viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
             stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
@@ -1227,9 +1250,9 @@ function getYAxes(config: IChartConfig, measureGroup: Execution.IMeasureGroupHea
         } else {
             yAxes = [{ label: '' }];
         }
-    } else if (isHeatMap(type)) {
+    } else if (isHeatmap(type)) {
         yAxes = [{
-            label: stackByAttribute ? stackByAttribute.name : ''
+            label: stackByAttribute ? stackByAttribute.formOf.name : ''
         }];
     } else {
         // if more than one measure and NOT dual, then have empty item name
@@ -1263,14 +1286,10 @@ function assignYAxes(series: any, yAxes: IAxis[]) {
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;
 export const HIGHCHARTS_PRECISION = 15;
+export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
-export function getHeatMapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
-    const newSeries = series.map((item: any) => ({
-        ...item,
-        borderWidth: 0
-    }));
-
-    const values: number[] = without(get(newSeries, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
+export function getHeatmapDataClasses(series: any = [], colorPalette: string[]): Highcharts.ColorAxisDataClass[] {
+    const values: number[] = without(get(series, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
 
     if (isEmpty(values)) {
         return [];
@@ -1286,7 +1305,7 @@ export function getHeatMapDataClasses(series: any = [], colorPalette: string[]):
         dataClasses.push({
             from: min,
             to: max,
-            color: colorPalette[1]
+            color: colorPalette[DEFAULT_HEATMAP_COLOR_INDEX]
         });
     } else {
         const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
@@ -1495,7 +1514,7 @@ export function getChartOptions(
             legendLayout: config.legendLayout || 'horizontal',
             dualAxis: false,
             actions: {
-                tooltip: generateTooltipFn(viewByAttribute, type)
+                tooltip: generateTooltipFn(viewByAttribute, type, config)
             },
             grid: {
                 enabled: gridEnabled
@@ -1535,7 +1554,7 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1545,7 +1564,7 @@ export function getChartOptions(
         };
     }
 
-    if (isHeatMap(type)) {
+    if (isHeatmap(type)) {
         return {
             type,
             stacking: null,
@@ -1562,14 +1581,14 @@ export function getChartOptions(
                 categories
             },
             actions: {
-                tooltip: generateTooltipHeatMapFn(viewByAttribute, stackByAttribute)
+                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config)
             },
             grid: {
                 enabled: false
             },
             colorPalette,
             colorAxis: {
-                dataClasses: getHeatMapDataClasses(series, colorPalette)
+                dataClasses: getHeatmapDataClasses(series, colorPalette)
             }
         };
     }
@@ -1609,7 +1628,7 @@ export function getChartOptions(
                 categories: ['']
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
                 enabled: true
@@ -1621,8 +1640,8 @@ export function getChartOptions(
 
     const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute) :
-        generateTooltipFn(viewByAttribute, type);
+    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
+        generateTooltipFn(viewByAttribute, type, config);
 
     const chartOptions = {
         type,

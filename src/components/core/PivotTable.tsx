@@ -1,22 +1,60 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import * as classNames from 'classnames';
 import noop = require('lodash/noop');
+import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
 import { AFM, Execution } from '@gooddata/typings';
+import {
+    ColDef,
+    IDatasource,
+    IGetRowsParams,
+    GridApi,
+    GridReadyEvent,
+    ICellRendererParams
+} from 'ag-grid';
+import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
 
 import { visualizationIsBetaWarning } from '../../helpers/utils';
-import { executionToAGGridAdapter, IGridHeader } from '../../helpers/agGrid';
+
+import {
+    executionToAGGridAdapter,
+    ROW_ATTRIBUTE_COLUMN,
+    COLUMN_ATTRIBUTE_COLUMN,
+    MEASURE_COLUMN
+} from '../../helpers/agGrid';
+
 import { LoadingComponent } from '../simple/LoadingComponent';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+
 import {
     visualizationLoadingHOC,
     ILoadingInjectedProps,
     commonDefaultProps
 } from './base/VisualizationLoadingHOC';
+
 import { ICommonChartProps } from './base/BaseChart';
 import { IDataSource } from '../../interfaces/DataSource';
 import { BaseVisualization } from './base/BaseVisualization';
+
+import { getCellClassNames } from '../visualizations/table/utils/cell';
+
+import {
+    IDrillableItem,
+    IDrillEvent,
+    IDrillEventIntersectionElement,
+    isDrillableItemLocalId,
+    IDrillItem
+} from '../../interfaces/DrillEvents';
+
+import {
+    isDrillable,
+    getMeasureUriOrIdentifier
+} from '../visualizations/utils/drilldownEventing';
+
+import { VisualizationTypes } from '../../constants/visualizationTypes';
+import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
 
 export interface IPivotTableProps extends ICommonChartProps {
     resultSpec?: AFM.IResultSpec;
@@ -27,28 +65,10 @@ export interface IPivotTableProps extends ICommonChartProps {
 }
 
 export interface IPivotTableState {
-    columnDefs: IGridHeader[];
+    columnDefs: ColDef[];
     // rowData an an array of different objects depending on the content of the table.
-    rowData: any[];
+    rowData: IGridRow[];
     execution: Execution.IExecutionResponses;
-}
-
-export interface IGetRowsParams {
-    startRow: number;
-    endRow: number;
-    successCallback(rowData: any[], lastRow: number): void;
-}
-
-export interface IGridDatasource {
-    getRows(params: IGetRowsParams): Promise<Execution.IExecutionResponses | null>;
-}
-
-export interface IGridApi {
-    setDatasource(dataSource: IGridDatasource): void;
-}
-
-export interface IGridParams {
-    api: IGridApi;
 }
 
 export type IGetPage = (
@@ -57,12 +77,48 @@ export type IGetPage = (
     offset: number[]
 ) => Promise<Execution.IExecutionResponses | null>;
 
-export type IOnSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void;
+export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string]: any}) => {
+    return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
+        const { type } = colDef;
+        // colDef without field is a utility column (e.g. top column label)
+        if (colDef.field) {
+            if (type === MEASURE_COLUMN) {
+                return [...drillRow, rowData[colDef.field]];
+            }
+            const drillItem = rowData.drillItemMap[colDef.field];
+            if (drillItem && (type === COLUMN_ATTRIBUTE_COLUMN || type === ROW_ATTRIBUTE_COLUMN)) {
+                return [...drillRow, {
+                    id: drillItem.uri.split('?id=')[1],
+                    title: rowData[colDef.field]
+                }];
+            }
+        }
+        return drillRow;
+    }, []);
+};
+
+export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && node.children) => {
+    const leaves = [];
+    const nodes = Array.isArray(tree) ? [...tree] : [tree];
+    let node;
+    let children;
+    while (
+        // tslint:disable-next-line:no-conditional-assignment ban-comma-operator
+        node = nodes.shift(), children = getChildren(node),
+        ((children && children.length) || (leaves.push(node) && nodes.length))
+    ) {
+        if (children) {
+            nodes.push(...children);
+        }
+    }
+    return leaves;
+};
 
 export const getGridDataSource = (
     resultSpec: AFM.IResultSpec,
     getPage: IGetPage,
-    onSuccess: IOnSuccess
+    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
+    columnDefOptions: IColumnDefOptions = {}
 ) => ({
     getRows: ({ startRow, endRow, successCallback }: IGetRowsParams) => {
         const pagePromise = getPage(
@@ -80,7 +136,10 @@ export const getGridDataSource = (
                     }
                     const { columnDefs, rowData } = executionToAGGridAdapter(
                         execution,
-                        { addLoadingRenderer: 'loadingRenderer' }
+                        {
+                            addLoadingRenderer: 'loadingRenderer',
+                            columnDefOptions
+                        }
                     );
                     const lastRow = execution.executionResult.paging.total[0];
                     successCallback(rowData, lastRow);
@@ -91,22 +150,44 @@ export const getGridDataSource = (
     }
 });
 
-// This is a minimal interface for AG Grid's renderer props. Run Debugger to see full object.
-// Imported styles from AG Grid dont seem compatible.
-export interface ILoadingRendererProps {
-    node: {
-        id?: any;
-    };
-    data?: any[];
-    colDef?: {
-        field: string
-    };
-}
-
-export const RowLoadingElement = (props: ILoadingRendererProps) =>
+export const RowLoadingElement = (props: ICellRendererParams) =>
     (props.node.id !== undefined
         ? <span>{props.data[props.colDef.field]}</span>
         : <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />);
+
+export const getDrillIntersection = (
+    drillItems: IDrillItem[],
+    afm: AFM.IAfm
+): IDrillEventIntersectionElement[] => {
+    // Drilling needs refactoring: all '' should be replaced by null (breaking change)
+    // intersection consists of
+        // 0..1 measure
+        // 0..1 row attribute and row attribute value
+        // 0..n column attribute and column attribute values
+    return drillItems.map((drillItem: IDrillItem) => {
+        const { identifier, uri, title } = drillItem;
+        return {
+            // id: Measure localIdentifier or attribute identifier
+            // Properties default to empty strings to maintain compatibility
+            id: isDrillableItemLocalId(drillItem) ? drillItem.localIdentifier : (identifier || ''),
+            title,
+            header: {
+                uri: isDrillableItemLocalId(drillItem)
+                    ? get(
+                        getMeasureUriOrIdentifier(afm, drillItem.localIdentifier),
+                        'uri',
+                        uri || ''
+                    ) : uri || '',
+                identifier: isDrillableItemLocalId(drillItem)
+                    ? get(
+                        getMeasureUriOrIdentifier(afm, drillItem.localIdentifier),
+                        'identifier',
+                        identifier || ''
+                    ) : identifier || ''
+            }
+        };
+    });
+};
 
 export class PivotTableInner extends
         BaseVisualization<
@@ -120,8 +201,8 @@ export class PivotTableInner extends
         pageSize: 100
     };
 
-    private gridDataSource: IGridDatasource;
-    private gridApi: IGridApi;
+    private gridDataSource: IDatasource;
+    private gridApi: GridApi;
 
     constructor(props: IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps) {
         super(props);
@@ -153,20 +234,88 @@ export class PivotTableInner extends
         }
     }
 
-    public createDataSource = (resultSpec: AFM.IResultSpec, getPage: IGetPage) => {
+    /**
+     * getCellClass returns class for drillable cells. (maybe format in the future as well)
+     */
+    public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
+        const { drillableItems, dataSource } = this.props;
+        // return none if no drillableItems are specified
+        if (drillableItems.length === 0) {
+            return null;
+        }
+
+        const afm: AFM.IAfm = dataSource.getAfm();
+
+        const { rowIndex } = cellClassParams;
+        const colDef = cellClassParams.colDef as IGridHeader;
+        const rowDrillItem =
+        get<CellClassParams, IDrillableItem>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
+
+        const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+        const hasDrillableHeader = drillItems
+            .some(
+                (drillItem: Execution.IResultHeaderItem) => isDrillable(drillableItems, drillItem, afm)
+            );
+
+        const className = classNames(
+            classList,
+            getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
+            colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
+            colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null
+        );
+        return className;
+    }
+
+    public createDataSource(resultSpec: AFM.IResultSpec, getPage: IGetPage) {
         const onSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => {
             this.setState({ execution, columnDefs });
         };
         this.gridDataSource = getGridDataSource(resultSpec, getPage, onSuccess);
     }
 
-    public onGridReady = (params: IGridParams) => {
+    public onGridReady = (params: GridReadyEvent) => {
         this.gridApi = params.api;
         this.setGridDataSource();
     }
 
-    public setGridDataSource = () => {
+    public setGridDataSource() {
         this.gridApi.setDatasource(this.gridDataSource);
+    }
+
+    public cellClicked = (cellEvent: IGridCellEvent) => {
+        const { drillableItems, onFiredDrillEvent } = this.props;
+        const { columnDefs } = this.state;
+        const afm: AFM.IAfm = this.props.dataSource.getAfm();
+
+        const { colDef, rowIndex } = cellEvent;
+        const rowDrillItem = get<any, IDrillableItem>(cellEvent, ['data', 'drillItemMap', colDef.field]);
+        const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+        const drillableHeaders = drillItems
+            .filter(
+                (drillItem: Execution.IResultHeaderItem) => isDrillable(drillableItems, drillItem, afm)
+            );
+        if (drillableHeaders.length === 0) {
+            return false;
+        }
+
+        const leafColumnDefs = getTreeLeaves(columnDefs);
+        const drillEvent: IDrillEvent = {
+            executionContext: afm,
+            drillContext: {
+                type: VisualizationTypes.TABLE,
+                element: 'cell',
+                columnIndex: leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field),
+                rowIndex,
+                row: getDrillRowData(leafColumnDefs, cellEvent.data),
+                intersection: getDrillIntersection(drillItems, afm),
+                value: cellEvent.value ? cellEvent.value.toString() : null
+            }
+        };
+
+        if (onFiredDrillEvent(drillEvent)) {
+            return true;
+        }
+        return false;
     }
 
     public renderVisualization() {
@@ -177,6 +326,12 @@ export class PivotTableInner extends
             // Initial data
             columnDefs,
             rowData,
+
+            defaultColDef: {
+                cellClass: this.getCellClass(null)
+            },
+
+            onCellClicked: this.cellClicked,
 
             // Basic options
             suppressMovableColumns: true,
@@ -193,6 +348,19 @@ export class PivotTableInner extends
             infiniteInitialRowCount: pageSize,
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
+
+            // Column types
+            columnTypes: {
+                [ROW_ATTRIBUTE_COLUMN]: {
+                    cellClass: this.getCellClass('gd-row-attribute-column')
+                },
+                [COLUMN_ATTRIBUTE_COLUMN]: {
+                    cellClass: this.getCellClass('gd-column-attribute-column')
+                },
+                [MEASURE_COLUMN]: {
+                    cellClass: this.getCellClass('gd-measure-column')
+                }
+            },
 
             // Custom renderers
             frameworkComponents: {
@@ -220,7 +388,9 @@ export class PivotTableInner extends
         return (
             <div className="ag-theme-balham s-pivot-table" style={{ height: '100%', position: 'relative' }}>
                 {tableLoadingOverlay}
-                <AgGridReact {...gridOptions} />
+                <AgGridReact
+                    {...gridOptions}
+                />
             </div>
         );
     }
