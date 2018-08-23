@@ -395,6 +395,9 @@ function getTreemapLabelsConfiguration(
     };
     if (isMultiLevel) {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 dataLabels: {
@@ -417,6 +420,9 @@ function getTreemapLabelsConfiguration(
         };
     } else {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 ...smallLabelInCenter
