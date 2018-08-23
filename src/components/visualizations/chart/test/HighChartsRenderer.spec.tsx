@@ -353,7 +353,7 @@ describe('HighChartsRenderer', () => {
                         }
                     ]
                 },
-                children: null
+                children: null as any
             };
 
             wrapper.setState({ legendItemsEnabled: [false] });
@@ -378,7 +378,7 @@ describe('HighChartsRenderer', () => {
                     ...props.legend,
                     position: RIGHT
                 },
-                children: null
+                children: null as any
             };
 
             wrapper.setState({ legendItemsEnabled: [false] });

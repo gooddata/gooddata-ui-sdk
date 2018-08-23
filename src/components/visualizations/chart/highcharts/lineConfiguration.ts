@@ -16,11 +16,6 @@ const LINE_TEMPLATE: any = {
                 hover: {
                     lineWidth: LINE_WIDTH + 1
                 }
-            },
-            dataLabels: {
-                style: {
-                    fontWeight: 'normal'
-                }
             }
         },
         column: {
