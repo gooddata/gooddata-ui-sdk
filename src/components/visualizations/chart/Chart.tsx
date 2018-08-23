@@ -7,6 +7,7 @@ import { initChartPlugins } from './highcharts/chartPlugins';
 import { VisType } from '../../../constants/visualizationTypes';
 import { IDataLabelsConfig } from '../../../interfaces/Config';
 import { ISeparators } from '@gooddata/numberjs';
+import { PositionType } from '../typings/legend';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
@@ -16,6 +17,7 @@ const drillmodule = require('highcharts/modules/drilldown'); // tslint:disable-l
 const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-line
 const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
 const heatmap = require('highcharts/modules/heatmap'); // tslint:disable-line
+
 drillmodule(Highcharts);
 treemapModule(Highcharts);
 funnelModule(Highcharts);
@@ -25,7 +27,7 @@ initChartPlugins(Highcharts);
 
 export interface ILegendConfig {
     enabled?: boolean;
-    position?: 'top' | 'left' | 'right' | 'bottom';
+    position?: PositionType;
     responsive?: boolean;
 }
 

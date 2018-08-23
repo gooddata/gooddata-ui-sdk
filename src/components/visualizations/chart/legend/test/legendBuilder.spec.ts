@@ -4,9 +4,9 @@ import { generateChartOptions } from '../../test/helper';
 import * as fixtures from '../../../../../../stories/test_data/fixtures';
 import getLegend, {
     shouldLegendBeEnabled,
-    getLegendItems,
-    DEFAULT_LEGEND_CONFIG
+    getLegendItems
 } from '../legendBuilder';
+import { DEFAULT_LEGEND_CONFIG } from '../../../typings/legend';
 import { VisualizationTypes } from '../../../../..';
 
 describe('shouldLegendBeEnabled', () => {

@@ -38,6 +38,7 @@ export interface IVisualizationProps {
     onDataTooLarge(): void;
     onNegativeValues(): void;
     onLegendReady(): void;
+    pushData?(data: any): void;
 }
 
 export class Visualization extends React.Component<IVisualizationProps> {
@@ -105,7 +106,8 @@ export class Visualization extends React.Component<IVisualizationProps> {
                 onDataTooLarge,
                 onNegativeValues,
                 onLegendReady,
-                locale
+                locale,
+                pushData
             } = this.props;
 
             return (
@@ -125,6 +127,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                     onDataTooLarge={onDataTooLarge}
                     onNegativeValues={onNegativeValues}
                     onLegendReady={onLegendReady}
+                    pushData={pushData}
                     renderer={renderHighCharts}
                 />
             );

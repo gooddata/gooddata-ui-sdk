@@ -2,22 +2,17 @@
 import pick = require('lodash/pick');
 import set = require('lodash/set');
 import get = require('lodash/get');
-import { RIGHT } from './PositionTypes';
 import * as Highcharts from 'highcharts';
 import {
     isAreaChart,
     isScatterPlot,
     isOneOfTypes,
-    isBubbleChart,
     isHeatmap,
-    isTreemap
+    isTreemap,
+    isBubbleChart
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
-
-export const DEFAULT_LEGEND_CONFIG = {
-    enabled: true,
-    position: RIGHT
-};
+import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from '../../typings/legend';
 
 function isHeatmapWithMultipleValues(chartOptions: any) {
     const { type } = chartOptions;
@@ -33,25 +28,25 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
     const isStacked = !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
-
     const sliceTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
-    const isSliceChartWithMoreThanOneCategory = isOneOfTypes(type, sliceTypes) &&
-        chartOptions.data.series[0].data.length > 1;
-
+    const isSliceChartWithViewByAttributeOrMultipleMeasures =
+        isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
+    const isBubbleWithViewByAttribute = isBubbleChart(type) && hasViewByAttribute;
     const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
     const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
 
     return hasMoreThanOneSeries
-        || isSliceChartWithMoreThanOneCategory
+        || isSliceChartWithViewByAttributeOrMultipleMeasures
         || isStacked
         || isScatterPlotWithAttribute
         || isTreemapWithViewByAttribute
+        || isBubbleWithViewByAttribute
         || isTreemapWithManyCategories
         || isHeatmapWithMultipleValues(chartOptions);
 }
 
-export function getLegendItems(chartOptions: any) {
+export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
     const { type } = chartOptions;
     const firstSeriesDataTypes = [
         VisualizationTypes.PIE,
@@ -64,7 +59,9 @@ export function getLegendItems(chartOptions: any) {
     if (isHeatmap(type)) {
         const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, 'colorAxis.dataClasses', []);
         return dataClasses.map((dataClass, index) => {
-            const { from, to, color } = dataClass;
+            const { from, to } = dataClass;
+            const color: string = dataClass.color as string; // wa are not using Gradient
+
             const range = {
                 from,
                 to
@@ -89,16 +86,14 @@ export function getLegendItems(chartOptions: any) {
             pick(legendDataSourceItem, ['name', 'color', 'legendIndex']));
 }
 
-export default function getLegend(legendConfig: any = {}, chartOptions: any) {
+export default function getLegend(legendConfig: any = {}, chartOptions: any): ILegendOptions {
     const defaultLegendConfigByType = {};
-    const rightLegendCharts = [VisualizationTypes.SCATTER, VisualizationTypes.TREEMAP, VisualizationTypes.BUBBLE];
+    const rightLegendCharts =
+        [VisualizationTypes.SCATTER, VisualizationTypes.TREEMAP, VisualizationTypes.BUBBLE, VisualizationTypes.HEATMAP];
 
-    if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
-        set(defaultLegendConfigByType, 'position', 'right');
-
-        // TODO: Remove after bubble will have own legend configuration
-        if (isBubbleChart(chartOptions.type)) {
-            set(defaultLegendConfigByType, 'enabled', true);
+    if (legendConfig.position === 'auto' || !legendConfig.position) {
+        if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
+            set(defaultLegendConfigByType, 'position', 'right');
         }
     }
 

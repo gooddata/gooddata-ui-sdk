@@ -138,4 +138,107 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
-    ));
+    )).add('with disabled legend', () => (
+    screenshotWrap(
+        <div style={wrapperStyle}>
+            <BarChart
+                projectId="storybook"
+                measures={[MEASURE_1, MEASURE_2]}
+                viewBy={ATTRIBUTE_1}
+                config={{
+                    legend: {
+                        enabled: false
+                    }
+                }}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+            />
+        </div>
+    )
+    )).add('with different legend positions', () => (
+        screenshotWrap(
+            <div>
+                <div className="storybook-title">default = auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BarChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'auto'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">left</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BarChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'left'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">top</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BarChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'top'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">right</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BarChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'right'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">bottom</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BarChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+            </div>
+        ))
+    );
