@@ -185,7 +185,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     config={{
                         legend: {
                             enabled: false
@@ -205,7 +205,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1]}
+                        viewBy={ATTRIBUTE_1}
                         config={{
                             legend: {
                                 position: 'auto'
@@ -221,7 +221,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1]}
+                        viewBy={ATTRIBUTE_1}
                         config={{
                             legend: {
                                 position: 'left'
@@ -237,7 +237,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1]}
+                        viewBy={ATTRIBUTE_1}
                         config={{
                             legend: {
                                 position: 'top'
@@ -253,7 +253,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1]}
+                        viewBy={ATTRIBUTE_1}
                         config={{
                             legend: {
                                 position: 'right'
@@ -269,7 +269,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1]}
+                        viewBy={ATTRIBUTE_1}
                         config={{
                             legend: {
                                 position: 'bottom'
@@ -290,7 +290,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -301,7 +301,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -313,7 +313,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -325,7 +325,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
