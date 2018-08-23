@@ -21,12 +21,12 @@ export function getColumnAlign(header: TableHeader): Align {
     return isMeasureTableHeader(header) ? ALIGN_RIGHT : ALIGN_LEFT;
 }
 
-export function getCellClassNames(rowIndex: number, columnKey: number, isDrillable: boolean): string {
+export function getCellClassNames(rowIndex: number, columnIndex: number, isDrillable: boolean): string {
     return classNames(
         {
             'gd-cell-drillable': isDrillable
         },
-        `s-cell-${rowIndex}-${columnKey}`,
+        `s-cell-${rowIndex}-${columnIndex}`,
         's-table-cell'
     );
 }

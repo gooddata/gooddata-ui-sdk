@@ -22,6 +22,10 @@ const HEATMAP_TEMPLATE = {
     },
     plotOptions: {
         heatmap: {
+            dataLabels: {
+                enabled: true,
+                allowOverlap: false
+            },
             point: {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
@@ -36,10 +40,7 @@ const HEATMAP_TEMPLATE = {
     },
     series: [{
         borderWidth: 0,
-        nullColor: 'url(#empty-data-pattern)',
-        dataLabels: {
-            allowOverlap: false
-        }
+        nullColor: 'url(#empty-data-pattern)'
     }]
 };
 

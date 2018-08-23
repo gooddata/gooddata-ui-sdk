@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { cloneDeep } from 'lodash';
+import cloneDeep = require('lodash/cloneDeep');
 
 const BUBBLE_TEMPLATE = {
     chart: {
@@ -24,6 +24,10 @@ const BUBBLE_TEMPLATE = {
                         enabled: false
                     }
                 }
+            },
+            dataLabels: {
+                enabled: false, // TODO remove once FF for config panel is removed
+                allowOverlap: false
             }
         },
         xAxis: [{

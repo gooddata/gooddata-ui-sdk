@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { BaseChart, IChartProps } from './base/BaseChart';
 import { ChartPropTypes, Requireable } from '../../proptypes/Chart';
-import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
@@ -11,7 +10,6 @@ export class Heatmap extends React.Component<IChartProps, null> {
 
     constructor(props: IChartProps) {
         super(props);
-        visualizationIsBetaWarning();
     }
 
     public render() {

@@ -11,7 +11,7 @@ export const ChartConfigPropType =
         colors: PropTypes.arrayOf(PropTypes.string),
         legend: PropTypes.shape({
             enabled: PropTypes.bool,
-            position: PropTypes.oneOf(['top', 'left', 'right', 'bottom'])
+            position: PropTypes.oneOf(['top', 'left', 'right', 'bottom', 'auto'])
         }),
         limits: PropTypes.shape({
             series: PropTypes.number,

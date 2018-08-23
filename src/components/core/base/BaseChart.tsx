@@ -59,7 +59,8 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
             type,
             execution,
             onDataTooLarge,
-            visualizationProperties
+            visualizationProperties,
+            pushData
         } = this.props;
 
         const fullConfig = { ...config, ...visualizationProperties, type };
@@ -91,6 +92,7 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                                 onLegendReady={this.props.onLegendReady}
                                 numericSymbols={translationProps.numericSymbols}
                                 locale={locale}
+                                pushData={pushData}
                             />
                         );
                     }}

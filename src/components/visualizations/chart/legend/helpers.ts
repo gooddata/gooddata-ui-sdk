@@ -4,6 +4,7 @@ import get = require('lodash/get');
 import head = require('lodash/head');
 import last = require('lodash/last');
 
+import { IHeatmapLegendItem } from '../../typings/legend';
 import { RIGHT, TOP, BOTTOM } from './PositionTypes';
 import { formatLegendLabel } from '../../utils/common';
 
@@ -15,16 +16,6 @@ export const ITEM_HEIGHT = 20;
 export const SKIPPED_LABEL_TEXT = '...';
 export const UTF_NON_BREAKING_SPACE = '\u00A0';
 const STATIC_PAGING_HEIGHT = 44;
-
-export interface IHeatmapLegendSerie {
-    color: string;
-    isVisible?: boolean;
-    legendIndex: number;
-    range: {
-        from: number;
-        to: number;
-    };
-}
 
 export interface IHeatmapLegendBox {
     class: string;
@@ -48,7 +39,7 @@ export interface IHeatmapLegendConfig {
     position: string;
 }
 
-export function calculateFluidLegend(seriesCount: any, containerWidth: any) {
+export function calculateFluidLegend(seriesCount: number, containerWidth: number) {
     // -1 because flex dimensions provide rounded number and the real width can be float
     const realWidth = containerWidth - (2 * LEGEND_PADDING) - 1;
 
@@ -85,12 +76,12 @@ export function calculateFluidLegend(seriesCount: any, containerWidth: any) {
     };
 }
 
-function getStaticVisibleItemsCount(containerHeight: any, withPaging: any = false) {
+function getStaticVisibleItemsCount(containerHeight: number, withPaging: boolean = false) {
     const pagingHeight = withPaging ? STATIC_PAGING_HEIGHT : 0;
     return Math.floor((containerHeight - pagingHeight) / ITEM_HEIGHT);
 }
 
-export function calculateStaticLegend(seriesCount: any, containerHeight: any) {
+export function calculateStaticLegend(seriesCount: number, containerHeight: number) {
     const visibleItemsCount = getStaticVisibleItemsCount(containerHeight);
     if (visibleItemsCount >= seriesCount) {
         return {
@@ -104,25 +95,7 @@ export function calculateStaticLegend(seriesCount: any, containerHeight: any) {
     };
 }
 
-const DEFAULT_LEGEND_CONFIG = {
-    enabled: true,
-    position: RIGHT
-};
-
-export function getLegendConfig(userConfig: any, shouldBeEnabled: any, items: any, onItemClick: any) {
-    const baseConfig = {
-        ...DEFAULT_LEGEND_CONFIG,
-        ...userConfig
-    };
-    return {
-        ...baseConfig,
-        enabled: baseConfig.enabled && shouldBeEnabled,
-        onItemClick,
-        items
-    };
-}
-
-function getHeatmapLegendLabels(series: IHeatmapLegendSerie[], format: string, numericSymbols: string[]) {
+function getHeatmapLegendLabels(series: IHeatmapLegendItem[], format: string, numericSymbols: string[]) {
     const min = get(head(series), 'range.from', 0);
     const max = get(last(series), 'range.to', 0);
     const diff = max - min;
@@ -221,13 +194,13 @@ function shouldShortenHeatmapLabels(legendLabels: string[], isSmall: boolean) {
 
 const MIDDLE_LEGEND_BOX_INDEX = 3;
 
-function getHeatmapBoxes(series: IHeatmapLegendSerie[]): IHeatmapLegendBox[] {
-    const getBoxStyle = (item: IHeatmapLegendSerie) => ({
+function getHeatmapBoxes(series: IHeatmapLegendItem[]): IHeatmapLegendBox[] {
+    const getBoxStyle = (item: IHeatmapLegendItem) => ({
         backgroundColor: item.color,
         border: item.color === 'rgb(255,255,255)' ? '1px solid #ccc' : 'none'
     });
 
-    return series.map((item: IHeatmapLegendSerie, index: number) => {
+    return series.map((item: IHeatmapLegendItem, index: number) => {
         const style = getBoxStyle(item);
         const middle = index === MIDDLE_LEGEND_BOX_INDEX ? 'middle' : null;
 
@@ -240,7 +213,7 @@ function getHeatmapBoxes(series: IHeatmapLegendSerie[]): IHeatmapLegendBox[] {
 }
 
 export function getHeatmapLegendConfiguration(
-    series: IHeatmapLegendSerie[], format: string, numericSymbols: string[], isSmall: boolean, position: string
+    series: IHeatmapLegendItem[], format: string, numericSymbols: string[], isSmall: boolean, position: string
 ): IHeatmapLegendConfig {
     const legendLabels = getHeatmapLegendLabels(series, format, numericSymbols);
     const small = isSmall ? 'small' : null;

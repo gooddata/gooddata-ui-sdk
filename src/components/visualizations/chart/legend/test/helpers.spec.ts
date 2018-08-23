@@ -1,5 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import noop = require('lodash/noop');
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,
@@ -7,10 +6,8 @@ import {
     UTF_NON_BREAKING_SPACE,
     calculateFluidLegend,
     calculateStaticLegend,
-    getHeatmapLegendConfiguration,
-    getLegendConfig
+    getHeatmapLegendConfiguration
 } from '../helpers';
-import { RIGHT, TOP } from '../PositionTypes';
 
 describe('helpers', () => {
     describe('calculateFluidLegend', () => {
@@ -96,23 +93,6 @@ describe('helpers', () => {
 
             expect(legendObj.hasPaging).toEqual(true);
             expect(legendObj.visibleItemsCount).toEqual(6);
-        });
-    });
-
-    describe('getLegendConfig', () => {
-        it('should enable position on right by default', () => {
-            const config = getLegendConfig({}, true, [], noop);
-            expect(config.position).toEqual(RIGHT);
-            expect(config.enabled).toEqual(true);
-        });
-
-        it('should be able to override defaults', () => {
-            const config = getLegendConfig({
-                position: TOP,
-                enabled: false
-            }, true, [], noop);
-            expect(config.position).toEqual(TOP);
-            expect(config.enabled).toEqual(false);
         });
     });
 

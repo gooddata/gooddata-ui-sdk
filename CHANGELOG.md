@@ -1,4 +1,10 @@
 # Changelog
+## 5.3.0 (August 23, 2018)
+- Added Heatmap chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/660b01d949e08623f2cc1b3e7a091ca16efaf29e))
+- Improved label rendering in Treemaps ([commit](https://github.com/gooddata/gooddata-react-components/pull/440/commits/5d5d002128e15f31e2af27b2ccccec4a809db0c9))
+- Extended the existing examples and added new ones
+- Added miscellaneous bugfixes and minor improvements
+
 ## 5.2.0 (August 10, 2018)
 
 - Added Bubble chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/2e4031b9296275e60a4c90b171fa7c2064c0e11e))
