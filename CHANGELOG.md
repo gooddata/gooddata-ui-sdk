@@ -5,7 +5,6 @@
 - Extended the existing examples and added new ones
 - Added miscellaneous bugfixes and minor improvements
 
-# Changelog
 ## 5.2.0 (August 10, 2018)
 
 - Added Bubble chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/2e4031b9296275e60a4c90b171fa7c2064c0e11e))
