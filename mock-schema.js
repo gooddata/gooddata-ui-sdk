@@ -1,3 +1,7 @@
+const heatmapAfmExecutions = {
+    execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
+    executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+}
 module.exports = {
     project: {
         title: 'Storybook project v1',
@@ -1626,7 +1630,7 @@ module.exports = {
                 }
             }
         },
-
+        heatmapAfmExecutions
     ],
     visualizationClasses: [{
         title: 'Table',
