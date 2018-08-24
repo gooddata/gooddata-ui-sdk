@@ -573,9 +573,16 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
 
 function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
+    let labelsConfig = {};
+
+    if (isColumnChart(type)) {
+        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+        labelsConfig = getLabelsVisibilityConfig(labelsVisible);
+    }
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
+            ...labelsConfig,
             formatter: partial(stackLabelFormatter, config)
         }
     }));
@@ -886,7 +893,6 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getStackingConfiguration,
         hideOverlappedLabels,
         getShowInPercentConfiguration,
-        getLabelsConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,

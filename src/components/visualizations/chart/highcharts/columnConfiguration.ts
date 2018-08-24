@@ -28,7 +28,8 @@ const COLUMN_TEMPLATE = {
     },
     yAxis: [{
         stackLabels: {
-            enabled: true
+            enabled: true,
+            allowOverlap: false
         }
     }]
 };
