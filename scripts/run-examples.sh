@@ -19,4 +19,4 @@ fi
 
 
 echo "$ webpack-dev-server --https $PARAMS"
-webpack-dev-server --https $PARAMS
+webpack-dev-server --hot --https $PARAMS

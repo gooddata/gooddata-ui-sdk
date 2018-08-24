@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import noop = require('lodash/noop');
+import cloneDeep = require('lodash/cloneDeep');
 
 import {
     PivotTable,
@@ -9,6 +10,7 @@ import {
     RowLoadingElement,
     getDrillRowData,
     getTreeLeaves,
+    indexOfTreeNode,
     getDrillIntersection
 } from '../PivotTable';
 import { oneMeasureDataSource } from '../../tests/mocks';
@@ -210,5 +212,73 @@ describe('PivotTable', () => {
                 '53364.1275'
             ]);
         });
+    });
+});
+
+const tree: any = {
+    name: 'A',
+    children: [
+        {
+            name: 'A.A'
+        },
+        {
+            name: 'A.B',
+            children: [
+                {
+                    name: 'A.B.A'
+                },
+                {
+                    name: 'A.B.B'
+                },
+                {
+                    name: 'A.B.C'
+                }
+            ]
+        },
+        {
+            name: 'A.C'
+        }
+    ]
+};
+
+describe('getTreeleaves', () => {
+    it('should return tree nodes that have no children', () => {
+        expect(getTreeLeaves(tree)).toEqual([
+            {
+                name: 'A.A'
+            },
+            {
+                name: 'A.C'
+            },
+            {
+                name: 'A.B.A'
+            },
+            {
+                name: 'A.B.B'
+            },
+            {
+                name: 'A.B.C'
+            }
+        ]);
+    });
+});
+
+describe('indexOfTreeNode', () => {
+    it('should return an array of indexes that define a matiching node in a tree structure', () => {
+        const node: any = tree.children[1].children[2];
+        expect(indexOfTreeNode(node, tree)).toEqual([0, 1, 2]);
+    });
+    it('should return indexes with custom matchNode function', () => {
+        const clonedTree: any = cloneDeep(tree);
+        const node: any = tree.children[1].children[2];
+        expect(indexOfTreeNode(
+            node,
+            clonedTree,
+            (nodeA, nodeB) => (nodeA.name && nodeA.name === nodeB.name)
+        )).toEqual([0, 1, 2]);
+    });
+    it('should return return null if the node is not found', () => {
+        const node = {};
+        expect(indexOfTreeNode(node, tree)).toEqual(null);
     });
 });

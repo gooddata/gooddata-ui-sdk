@@ -295,6 +295,7 @@ export const executionToAGGridAdapter = (
             })
             .filter((item: string) => item !== null)
             .join('/'),
+        field: 'columnGroupLabel',
         children: columnHeaders,
         drillItems: []
     }] : columnHeaders;
