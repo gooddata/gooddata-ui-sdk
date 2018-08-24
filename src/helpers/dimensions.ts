@@ -446,3 +446,22 @@ export function getTreemapDimensionsFromAFM(afm: AFM.IAfm): AFM.IDimension[] {
         }
     ];
 }
+
+export function getGeneralDimensionsFromAFM(afm: AFM.IAfm): AFM.IDimension[] {
+    const attributes = afm.attributes || [];
+    const measures = afm.measures || [];
+    const dimensions = [];
+    if (attributes.length > 0) {
+        dimensions.push({
+            itemIdentifiers: attributes.map(
+                (attribute: AFM.IAttribute) => attribute.localIdentifier
+            )
+        });
+    }
+    if (measures.length > 0) {
+        dimensions.push({
+            itemIdentifiers: [MEASUREGROUP]
+        });
+    }
+    return dimensions;
+}
