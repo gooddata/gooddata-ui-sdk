@@ -90,11 +90,18 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
     const defaultLegendConfigByType = {};
     const rightLegendCharts =
         [VisualizationTypes.SCATTER, VisualizationTypes.TREEMAP, VisualizationTypes.BUBBLE, VisualizationTypes.HEATMAP];
+    const defaultTopLegendCharts =
+        [VisualizationTypes.COLUMN, VisualizationTypes.BAR, VisualizationTypes.LINE,
+        VisualizationTypes.AREA, VisualizationTypes.PIE, VisualizationTypes.DONUT];
 
     if (legendConfig.position === 'auto' || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
             set(defaultLegendConfigByType, 'position', 'right');
         }
+    }
+
+    if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
+        set(defaultLegendConfigByType, 'position', 'top');
     }
 
     const baseConfig = {
