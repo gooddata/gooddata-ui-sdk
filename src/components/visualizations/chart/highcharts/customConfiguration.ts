@@ -780,18 +780,35 @@ function getHoverStyles({ type }: any, config: any) {
 
 function getGridConfiguration(chartOptions: any) {
     const gridEnabled = get(chartOptions, 'grid.enabled', true);
-    const { yAxes = [] }: { yAxes: IAxis[] } = chartOptions;
+    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+    let xAxis = {};
+
     const yAxis = yAxes.map(() => ({
         gridLineWidth: 0
     }));
 
+    const bothAxesGridlineCharts = [VisualizationTypes.BUBBLE, VisualizationTypes.SCATTER];
+
+    if (isOneOfTypes(chartOptions.type, bothAxesGridlineCharts) && gridEnabled) {
+        xAxis = xAxes.map(() => ({
+            gridLineWidth: 1
+        }));
+    } else {
+        xAxis = xAxes.map(() => ({
+            gridLineWidth: 0
+        }));
+    }
+
     if (!gridEnabled) {
         return {
-            yAxis
+            yAxis,
+            xAxis
         };
     }
 
-    return {};
+    return {
+        xAxis
+    };
 }
 
 function getAxesConfiguration(chartOptions: any) {
