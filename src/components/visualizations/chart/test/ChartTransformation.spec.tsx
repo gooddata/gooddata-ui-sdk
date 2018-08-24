@@ -3,7 +3,7 @@ import * as React from 'react';
 import { shallow, mount } from 'enzyme';
 import ChartTransformation from '../ChartTransformation';
 import * as fixtures from '../../../../../stories/test_data/fixtures';
-import { RIGHT } from '../legend/PositionTypes';
+import { TOP } from '../legend/PositionTypes';
 import HighChartsRenderer from '../HighChartsRenderer';
 import noop = require('lodash/noop');
 import { IChartConfig } from '../Chart';
@@ -122,10 +122,10 @@ describe('ChartTransformation', () => {
             expect(passedProps.legend.enabled).toEqual(false);
         });
 
-        it('should be enabled & on the right by default', () => {
+        it('should be enabled & on the top by default', () => {
             const passedProps = createChartRendererProps(fixtures.barChartWith3MetricsAndViewByAttribute);
             expect(passedProps.legend.enabled).toEqual(true);
-            expect(passedProps.legend.position).toEqual(RIGHT);
+            expect(passedProps.legend.position).toEqual(TOP);
         });
 
         it('should be able to disable default', () => {

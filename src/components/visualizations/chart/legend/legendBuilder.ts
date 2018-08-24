@@ -98,10 +98,10 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
             set(defaultLegendConfigByType, 'position', 'right');
         }
-    }
 
-    if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
-        set(defaultLegendConfigByType, 'position', 'top');
+        if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
+            set(defaultLegendConfigByType, 'position', 'top');
+        }
     }
 
     const baseConfig = {
