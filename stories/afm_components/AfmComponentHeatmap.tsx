@@ -7,7 +7,8 @@ import {
     AFM_ONE_MEASURE,
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE,
-    AFM_ONE_MEASURE_TWO_ATTRIBUTES
+    AFM_ONE_MEASURE_TWO_ATTRIBUTES,
+    AFM_HEATMAP_60ROWS
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
@@ -137,6 +138,27 @@ storiesOf('AFM components/Heatmap', module)
                             },
                             {
                                 itemIdentifiers: ['a2', 'measureGroup']
+                            }
+                        ]
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with left out some label of yaxis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    afm={AFM_HEATMAP_60ROWS}
+                    onError={onErrorHandler}
+                    resultSpec={{
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['60countries']
+                            },
+                            {
+                                itemIdentifiers: ['Popularity', 'measureGroup']
                             }
                         ]
                     }}
