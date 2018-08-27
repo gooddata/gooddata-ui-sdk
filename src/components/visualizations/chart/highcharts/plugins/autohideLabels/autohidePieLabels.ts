@@ -1,10 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import get = require('lodash/get');
+import fill = require('lodash/fill');
 
 import {
     getVisibleSeries,
     getDataPoints,
-    isIntersecting
+    isIntersecting,
+    IRectBySize
 } from '../../helpers';
 
 // delete this plugin once we upgrade to newer highcharts,
@@ -17,25 +19,29 @@ const autohidePieLabels = (chart: any) => {
         return;
     }
 
-    let lastVisibleLabel = get(visiblePoints, '0.dataLabel');
-    if (!lastVisibleLabel) {
-        return;
-    }
+    const visibilityMap = fill(Array(visiblePoints.length), true);
 
-    for (let i = 1; i < visiblePoints.length; i++) {
-        const actualLabel: any = get(visiblePoints, `${i}.dataLabel`);
+    for (let i = 0; i < visiblePoints.length; i++) {
+        const actualLabel: IRectBySize = get<IRectBySize>(visiblePoints, `${i}.dataLabel`);
 
-        // do nothing if label not found
-        if (!actualLabel) {
+        // do nothing if label not found or already hidden
+        if (!actualLabel || !visibilityMap[i]) {
             continue;
         }
 
-        const intersects = isIntersecting(lastVisibleLabel, actualLabel);
-        if (!intersects) {
-            lastVisibleLabel = actualLabel;
-            actualLabel.show();
-        } else {
-            actualLabel.hide();
+        for (let neighborIdx = i + 1; neighborIdx < visiblePoints.length; neighborIdx++) {
+            const neighborLabel: IRectBySize = get<IRectBySize>(visiblePoints, `${neighborIdx}.dataLabel`);
+            // do nothing if label not found or already hidden
+            if (!neighborLabel || !visibilityMap[neighborIdx]) {
+                continue;
+            }
+            const intersects = isIntersecting(actualLabel, neighborLabel);
+            if (!intersects) {
+                neighborLabel.show();
+            } else {
+                visibilityMap[neighborIdx] = false;
+                neighborLabel.hide();
+            }
         }
     }
 };

@@ -484,6 +484,20 @@ describe('helpers', () => {
 
             expect(isLabelOverlappingItsShape(point)).toBeTruthy();
         });
+
+        it('should work also for circle', () => {
+            const point = {
+                dataLabel: {
+                    width: 50,
+                    height: 150
+                },
+                shapeArgs: {
+                    r: 20
+                }
+            };
+
+            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        });
     });
 
     describe('intersectsParentLabel', () => {

@@ -19,18 +19,34 @@ import { VisualizationTypes, VisType } from '../../../../constants/visualization
 import { IChartConfig } from '../Chart';
 import { isBarChart } from '../../utils/common';
 
+export interface IRectByPoints {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+}
+
+export interface IRectBySize {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    show?: () => {};
+    hide?: () => {};
+}
+
 // https://silentmatt.com/rectangle-intersection/
-export const rectanglesAreOverlapping = (r1: any, r2: any, padding: any = 0) =>
+export const rectanglesAreOverlapping = (r1: IRectByPoints, r2: IRectByPoints, padding: number = 0) =>
     r1.left - padding < r2.right + padding &&
     r1.right + padding > r2.left - padding &&
     r1.top - padding < r2.bottom + padding &&
     r1.bottom + padding > r2.top - padding;
 
-export const isIntersecting = (o1: any, o2: any) =>
-    o1.x < (o2.x + o2.width) &&
-    (o1.x + o1.width) > o2.x &&
-    o1.y < (o2.y + o2.height) &&
-    (o1.y + o1.height) > o2.y;
+export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
+    r1.x < (r2.x + r2.width) &&
+    (r1.x + r1.width) > r2.x &&
+    r1.y < (r2.y + r2.height) &&
+    (r1.y + r1.height) > r2.y;
 
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
