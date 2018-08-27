@@ -101,31 +101,44 @@ describe('ChartTransformation', () => {
                 enabled: true
             }
         };
+        let pushData: any;
         function createChartRendererProps(
             executionData = fixtures.barChartWithStackByAndViewByAttributes,
             config: IChartConfig = {}
         ) {
             const renderer = jest.fn().mockReturnValue(<div />);
+            pushData = jest.fn();
             mount(createComponent({
                 renderer,
                 ...executionData,
                 config: {
                     ...config,
                     type: config.type || defaultConfig.type
-                }
+                },
+                pushData
             }));
             return renderer.mock.calls[0][0];
         }
 
-        it('should be always disabled for single series', () => {
+        it('should be always disabled for single series and push this info out', () => {
             const passedProps = createChartRendererProps(fixtures.barChartWithViewByAttribute);
             expect(passedProps.legend.enabled).toEqual(false);
+            expect(pushData).toBeCalledWith({
+                propertiesMeta: {
+                    legend_enabled: false
+                }
+            });
         });
 
-        it('should be enabled & on the top by default', () => {
+        it('should be enabled & on the top by default and push this info out', () => {
             const passedProps = createChartRendererProps(fixtures.barChartWith3MetricsAndViewByAttribute);
             expect(passedProps.legend.enabled).toEqual(true);
             expect(passedProps.legend.position).toEqual(TOP);
+            expect(pushData).toBeCalledWith({
+                propertiesMeta: {
+                    legend_enabled: true
+                }
+            });
         });
 
         it('should be able to disable default', () => {

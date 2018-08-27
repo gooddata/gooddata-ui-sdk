@@ -113,9 +113,12 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
         ...defaultLegendConfigByType // TODO: swipe these two lines once default legend logic is moved to the sdk
     };
 
+    const isLegendEnabled = shouldLegendBeEnabled(chartOptions);
+
     return {
         ...baseConfig,
-        enabled: baseConfig.enabled && shouldLegendBeEnabled(chartOptions),
+        enabled: baseConfig.enabled && isLegendEnabled,
+        toggleEnabled: isLegendEnabled,
         format: get(chartOptions, 'title.format', ''),
         items: getLegendItems(chartOptions)
     };
