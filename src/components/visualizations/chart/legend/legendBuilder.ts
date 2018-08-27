@@ -5,11 +5,12 @@ import get = require('lodash/get');
 import * as Highcharts from 'highcharts';
 import {
     isAreaChart,
-    isScatterPlot,
-    isOneOfTypes,
+    isBubbleChart,
     isHeatmap,
-    isTreemap,
-    isBubbleChart
+    isLineChart,
+    isOneOfTypes,
+    isScatterPlot,
+    isTreemap
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from '../../typings/legend';
@@ -24,9 +25,10 @@ function isHeatmapWithMultipleValues(chartOptions: any) {
 export function shouldLegendBeEnabled(chartOptions: any) {
     const seriesLength = get(chartOptions, 'data.series.length');
     const { type, stacking, hasStackByAttribute, hasViewByAttribute } = chartOptions;
-    // More than one measure or stackedBy more than one category
+
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
+    const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
     const sliceTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
@@ -39,6 +41,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     return hasMoreThanOneSeries
         || isSliceChartWithViewByAttributeOrMultipleMeasures
         || isStacked
+        || isLineChartStacked
         || isScatterPlotWithAttribute
         || isTreemapWithViewByAttribute
         || isBubbleWithViewByAttribute
