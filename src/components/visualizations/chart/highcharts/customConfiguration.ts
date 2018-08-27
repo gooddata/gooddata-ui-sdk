@@ -865,6 +865,12 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
+            const min = get(chartOptions, 'xAxisProps.min', '');
+            const max = get(chartOptions, 'xAxisProps.max', '');
+
+            const maxProp = max ? { max: Number(max) } : {};
+            const minProp = min ? { min: Number(min) } : {};
+
             const visible = get(chartOptions, 'xAxisProps.visible', true);
             const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
             const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
@@ -897,7 +903,9 @@ function getAxesConfiguration(chartOptions: any) {
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                visible
+                visible,
+                ...maxProp,
+                ...minProp
             };
         })
     };

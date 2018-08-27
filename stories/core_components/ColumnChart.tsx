@@ -125,6 +125,26 @@ storiesOf('Core components/ColumnChart', module)
             </div>
         )
     ))
+    .add('with min max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        yaxis: {
+                            min: '200',
+                            max: '750'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
     .add('with different legend positions', () => (
         screenshotWrap(
             <div>
