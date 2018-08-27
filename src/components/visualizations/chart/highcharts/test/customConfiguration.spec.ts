@@ -149,7 +149,7 @@ describe('getCustomizedConfiguration', () => {
     });
 
     describe('labels configuration', () => {
-        it('should set two levels labels for multi-level heatmap', () => {
+        it('should set two levels labels for multi-level treemap', () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 type: VisualizationTypes.TREEMAP,
@@ -160,7 +160,7 @@ describe('getCustomizedConfiguration', () => {
             expect(treemapConfig.levels.length).toEqual(2);
         });
 
-        it('should set one level labels for single-level heatmap', () => {
+        it('should set one level labels for single-level treemap', () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 type: VisualizationTypes.TREEMAP,
@@ -169,6 +169,27 @@ describe('getCustomizedConfiguration', () => {
 
             const treemapConfig = result.plotOptions.treemap;
             expect(treemapConfig.levels.length).toEqual(1);
+        });
+
+        it('should set global HCH dataLabels config according user config for treemap', () => {
+            const result = getCustomizedConfiguration(
+                {
+                    ...chartOptions,
+                    type: VisualizationTypes.TREEMAP,
+                    stacking: null
+                },
+                {
+                    dataLabels: {
+                        visible: true
+                    }
+                }
+            );
+
+            const treemapConfig = result.plotOptions.treemap;
+            expect(treemapConfig.dataLabels).toEqual({
+                allowOverlap: true,
+                enabled: true
+            });
         });
     });
 
