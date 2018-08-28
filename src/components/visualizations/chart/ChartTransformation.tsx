@@ -154,7 +154,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
 
         pushData({
             propertiesMeta: {
-                legend_visible: this.legendOptions.enabled
+                legend_enabled: this.legendOptions.toggleEnabled
             }
         });
 

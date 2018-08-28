@@ -4,6 +4,7 @@ export type PositionType = 'left' | 'right' | 'top' | 'bottom' | 'auto';
 
 export interface ILegendOptions {
     enabled: boolean;
+    toggleEnabled: boolean;
     position: PositionType;
     format: string;
     items: LegendOptionsItemType[];
