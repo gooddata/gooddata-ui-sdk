@@ -37,11 +37,6 @@ describe('getCustomizedConfiguration', () => {
         expect(result.series[0].data[0].name).toEqual('&lt;b&gt;bbb&lt;/b&gt;');
     });
 
-    it('should set gridline width to zero', () => {
-        const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
-        expect(result.yAxis[0].gridLineWidth).toEqual(0);
-    });
-
     it('should handle "%" format on axis and use lable formater', () => {
         const chartOptionsWithFormat = immutableSet(chartOptions, 'yAxes[0].format', '0.00 %');
         const resultWithoutFormat = getCustomizedConfiguration(chartOptions);
@@ -146,6 +141,42 @@ describe('getCustomizedConfiguration', () => {
         });
 
         expect(result.plotOptions.series.connectNulls).toBeUndefined();
+    });
+
+    describe('gridline configuration', () => {
+        it('should set gridline width to 0 when grid is disabled', () => {
+            const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
+            expect(result.yAxis[0].gridLineWidth).toEqual(0);
+        });
+
+        it('should set gridline width on xAxis on 0 for base chart when enabled', () => {
+            const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: true } });
+            expect(result.xAxis[0].gridLineWidth).toEqual(0);
+        });
+
+        it('should set gridline width on xAxis on 1 for Scatterplot when enabled', () => {
+            const customConfig = { grid: { enabled: true }, type: VisualizationTypes.SCATTER };
+            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            expect(result.xAxis[0].gridLineWidth).toEqual(1);
+        });
+
+        it('should set gridline width on xAxis on 1 for Bubblechart when enabled', () => {
+            const customConfig = { grid: { enabled: true }, type: VisualizationTypes.BUBBLE };
+            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            expect(result.xAxis[0].gridLineWidth).toEqual(1);
+        });
+
+        it('should set gridline width on xAxis on 0 for Scatterplot when disabled', () => {
+            const customConfig = { grid: { enabled: false }, type: VisualizationTypes.SCATTER };
+            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            expect(result.xAxis[0].gridLineWidth).toEqual(0);
+        });
+
+        it('should set gridline width on xAxis on 0 for Bubblechart when disabled', () => {
+            const customConfig = { grid: { enabled: false }, type: VisualizationTypes.BUBBLE };
+            const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
+            expect(result.xAxis[0].gridLineWidth).toEqual(0);
+        });
     });
 
     describe('labels configuration', () => {
