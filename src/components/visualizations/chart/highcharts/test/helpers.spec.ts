@@ -1,83 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     shouldFollowPointer,
-    showDataLabelInAxisRange,
     shouldStartOrEndOnTick,
-    getDataLabelAttributes,
-    getChartProperties,
-    isLabelOverlappingItsShape,
-    intersectsParentLabel
+    getChartProperties
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
 
 describe('helpers', () => {
-    describe('getDataLabelAttributes', () => {
-        const hiddenAttributes = {
-            x: 0,
-            y: 0,
-            height: 0,
-            width: 0
-        };
-
-        it('should position data label when in range', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: {
-                        translateX: 0,
-                        translateY: 0
-                    },
-                    x: 1,
-                    y: 1,
-                    width: 100,
-                    height: 100
-                }
-            });
-
-            expect(result).toEqual({
-                x: 1,
-                y: 1,
-                width: 100,
-                height: 100
-            });
-        });
-
-        it('should hide data label when outside range', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: {
-                        translateX: 0,
-                        translateY: 0
-                    },
-                    x: -200,
-                    y: -200,
-                    width: 100,
-                    height: 100
-                }
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-
-        it('should hide label when label not present on point', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: null
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-
-        it('should hide label when label present but parentgroup missing', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: null
-                }
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-    });
-
     describe('getChartProperties', () => {
         const config: IChartConfig = {
             xaxis: {
@@ -231,31 +161,6 @@ describe('helpers', () => {
 
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
-        });
-    });
-
-    describe('showDataLabelInAxisRange', () => {
-        let point: any;
-        beforeEach(() => {
-            point = {
-                dataLabel: {
-                    show: jest.fn(),
-                    hide: jest.fn()
-                },
-                y: 100
-            };
-        });
-
-        it('should hide data label when below minimum', () => {
-            showDataLabelInAxisRange(point, 200);
-            expect(point.dataLabel.hide).toHaveBeenCalled();
-            expect(point.dataLabel.show).not.toHaveBeenCalled();
-        });
-
-        it('should show data label when in range', () => {
-            showDataLabelInAxisRange(point, 0);
-            expect(point.dataLabel.show).toHaveBeenCalled();
-            expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
     });
 
@@ -440,93 +345,6 @@ describe('helpers', () => {
 
                 expect(result).toBeTruthy();
             });
-        });
-    });
-
-    describe('isLabelOverlappingItsShape', () => {
-        const shape = {
-            width: 100,
-            height: 100
-        };
-
-        it('should return false when label smaller than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 50,
-                    height: 50
-                },
-                shapeArgs: shape
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeFalsy();
-        });
-
-        it('should return true when label is wider than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 150,
-                    height: 50
-                },
-                shapeArgs: shape
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
-        });
-
-        it('should return true when label is higher than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 50,
-                    height: 150
-                },
-                shapeArgs: shape
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
-        });
-
-        it('should work also for circle', () => {
-            const point = {
-                dataLabel: {
-                    width: 50,
-                    height: 150
-                },
-                shapeArgs: {
-                    r: 20
-                }
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
-        });
-    });
-
-    describe('intersectsParentLabel', () => {
-        function createPointWithLabel(parentId: any, dataLabel: any) {
-            return {
-                parent: parentId,
-                dataLabel
-            };
-        }
-
-        const points = [
-            createPointWithLabel(undefined, { x: 0, y: 0, width: 10, height: 10 }),
-            createPointWithLabel('0', { x: 100, y: 100, width: 10, height: 10 }),
-            createPointWithLabel('0', { x: 0, y: 0, width: 10, height: 10 })
-        ];
-
-        it('should return false if no parent given', () => {
-            const intersects = intersectsParentLabel(points[0], points);
-            expect(intersects).toEqual(false);
-        });
-
-        it('should return false if parent given but no intersection', () => {
-            const intersects = intersectsParentLabel(points[1], points);
-            expect(intersects).toEqual(false);
-        });
-
-        it('should return true if parent given and intersects', () => {
-            const intersects = intersectsParentLabel(points[2], points);
-            expect(intersects).toEqual(true);
         });
     });
 });

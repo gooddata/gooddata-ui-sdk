@@ -5,9 +5,12 @@ import {
     getChartType,
     getVisibleSeries,
     isStacked,
-    getDataLabelAttributes,
     getShapeAttributes
 } from '../helpers';
+
+import {
+    getDataLabelAttributes
+} from '../dataLabelsHelpers';
 import { HEAT_MAP_CATEGORIES_COUNT } from '../../chartOptionsBuilder';
 import get = require('lodash/get');
 

@@ -1,24 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
 import map = require('lodash/map');
-import get = require('lodash/get');
+
 import {
-    getVisibleSeries,
-    getDataPoints,
+    getDataPointsOfVisibleSeries,
     isStacked,
-    areLabelsStacked,
     toNeighbors,
     isIntersecting,
-    getDataLabelAttributes,
     getShapeAttributes,
+    IRectBySize
+} from '../../helpers';
+
+import {
+    areLabelsStacked,
+    getDataLabelAttributes,
     hasDataLabel,
-    showDataLabelInAxisRange,
+    showDataLabelInsideChart,
     hideDataLabels,
     hideDataLabel
-} from '../../helpers';
+} from '../../dataLabelsHelpers';
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
-    minAxisValue: number,
+    chartBox: IRectBySize,
     shouldCheckShapeIntersection: boolean = false) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
@@ -43,17 +46,19 @@ const toggleNonStackedChartLabels = (
     if (foundIntersection) {
         hideDataLabels(visiblePoints);
     } else {
-        visiblePoints.forEach((point: any) => showDataLabelInAxisRange(point, minAxisValue));
+        visiblePoints.forEach((point: any) => showDataLabelInsideChart(point, chartBox, 'horizontal'));
     }
 };
 
-const toggleStackedChartLabels = (visiblePoints: any, minAxisValue: number) => {
+const toggleStackedChartLabels = (visiblePoints: any, chartBox: IRectBySize) => {
     const toggleLabel = (point: any) => {
         const { dataLabel, shapeArgs } = point;
         if (dataLabel && shapeArgs) {
             const labelHeight = dataLabel.height + (2 * dataLabel.padding || 0);
             const isOverlappingHeight = labelHeight > shapeArgs.height;
-            return isOverlappingHeight ? hideDataLabel(point) : showDataLabelInAxisRange(point, minAxisValue);
+            return isOverlappingHeight ?
+                hideDataLabel(point) :
+                showDataLabelInsideChart(point, chartBox, 'horizontal');
         }
 
         return null;
@@ -115,21 +120,24 @@ function toggleStackedLabels() {
     }
 }
 
-const autohideColumnLabels = (chart: any) => {
+export const autohideColumnLabels = (chart: any) => {
     const isStackedChart = isStacked(chart);
     const hasLabelsStacked = areLabelsStacked(chart);
-    const visibleSeries = getVisibleSeries(chart);
-    const visiblePoints = getDataPoints(visibleSeries);
-    const minAxisValue = get(chart, ['yAxis', 0, 'min'], 0);
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const chartBox: IRectBySize = chart.plotBox;
 
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints, minAxisValue);
+        toggleStackedChartLabels(visiblePoints, chartBox);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, minAxisValue, true);
+        toggleNonStackedChartLabels(visiblePoints, chartBox, true);
     }
     if (hasLabelsStacked) {
         toggleStackedLabels.call(chart);
     }
 };
 
-export default autohideColumnLabels;
+export const handleColumnLabelsOutsideChart = (chart: any) => {
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const chartBox: IRectBySize = chart.plotBox;
+    visiblePoints.forEach((point: any) => showDataLabelInsideChart(point, chartBox, 'horizontal'));
+};

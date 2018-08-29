@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import flatten = require('lodash/flatten');
-import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 import map = require('lodash/map');
 import zip = require('lodash/zip');
@@ -48,24 +47,12 @@ export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
     r1.y < (r2.y + r2.height) &&
     (r1.y + r1.height) > r2.y;
 
-export function isLabelOverlappingItsShape(point: any) {
-    const { dataLabel, shapeArgs } = point;
-    if (dataLabel && shapeArgs) { // shapeArgs for point hidden by legend is undefined
-        if (shapeArgs.width === undefined) {
-            return dataLabel.width > (shapeArgs.r * 2) || dataLabel.height > (shapeArgs.r * 2);
-        }
-        return dataLabel.width > shapeArgs.width || dataLabel.height > shapeArgs.height;
-    }
-    return false;
-}
-
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
 export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
 export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
+export const getDataPointsOfVisibleSeries = (chart: any) => getDataPoints(getVisibleSeries(chart));
 export const getChartType = (chart: any) => get(chart, 'options.chart.type');
-export const getDataLabelsGdcVisible = (chart: any) =>
-    get(chart, 'options.plotOptions.gdcOptions.dataLabels.visible', 'auto');
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
     if (get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
@@ -80,49 +67,6 @@ export const isStacked = (chart: any) => {
 
     return false;
 };
-export const areLabelsStacked = (chart: any) =>
-    (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
-
-export const hasDataLabel = (point: any) => point.dataLabel;
-
-export const minimizeDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.width = 0;
-        dataLabel.height = 0;
-    }
-};
-
-export const hideDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.hide();
-    }
-};
-
-export const showDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.show();
-    }
-};
-
-export const hideDataLabels = (points: any) => {
-    points.filter(hasDataLabel).forEach(hideDataLabel);
-};
-
-export const showDataLabels = (points: any) => {
-    points.filter(hasDataLabel).forEach(showDataLabel);
-};
-
-export const showDataLabelInAxisRange = (point: any, minAxisValue: number) => {
-    const { dataLabel } = point;
-    if (dataLabel && (point.y < minAxisValue)) {
-        dataLabel.hide();
-    } else if (dataLabel) {
-        dataLabel.show();
-    }
-};
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
     return {
@@ -130,10 +74,6 @@ export function getChartProperties(config: IChartConfig, type: VisType) {
         yAxisProps: isBarChart(type) ? { ...config.xaxis } : { ...config.yaxis }
     };
 }
-
-export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
-
-export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, s => s.points));
 
 export const getPointPositions = (point: any) => {
     const { dataLabel, graphic } = point;
@@ -165,30 +105,6 @@ export function getShapeAttributes(point: any) {
             y: shapeArgs.y + series.group.translateY,
             width: shapeArgs.width,
             height: shapeArgs.height
-        };
-    }
-
-    return {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0
-    };
-}
-
-export function getDataLabelAttributes(point: any) {
-    const dataLabel = get(point, 'dataLabel', null);
-    const parentGroup = get(point, 'dataLabel.parentGroup', null);
-
-    const labelSafeOffset = -100; // labels outside axis range have typically -9999, hide them
-    const labelVisible = dataLabel && dataLabel.x > labelSafeOffset && dataLabel.y > labelSafeOffset;
-
-    if (dataLabel && parentGroup && labelVisible) {
-        return {
-            x: dataLabel.x + parentGroup.translateX,
-            y: dataLabel.y + parentGroup.translateY,
-            width: dataLabel.width,
-            height: dataLabel.height
         };
     }
 
@@ -324,16 +240,4 @@ export function shouldStartOrEndOnTick(chartOptions: any): boolean {
     }
 
     return false;
-}
-
-export function intersectsParentLabel(point: any, points: any) {
-    const pointParent = parseInt(point.parent, 10);
-    if (isNaN(pointParent)) {
-        return false;
-    }
-
-    const pointLabelShape = point.dataLabel;
-    const parentPoint = points[pointParent];
-    const parentLabelShape = parentPoint.dataLabel;
-    return isIntersecting(pointLabelShape, parentLabelShape);
 }

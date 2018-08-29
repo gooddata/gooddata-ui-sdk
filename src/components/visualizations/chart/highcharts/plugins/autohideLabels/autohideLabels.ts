@@ -1,13 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    getChartType,
+    getChartType
+} from '../../helpers';
+
+import {
     getDataLabelsGdcVisible,
     minimizeDataLabel,
     hideDataLabel
-} from '../../helpers';
+} from '../../dataLabelsHelpers';
 import { VisualizationTypes } from '../../../../../../constants/visualizationTypes';
-import autohideColumnLabels from './autohideColumnLabels';
-import autohideBarLabels from './autohideBarLabels';
+import { autohideColumnLabels, handleColumnLabelsOutsideChart } from './autohideColumnLabels';
+import { autohideBarLabels, handleBarLabelsOutsideChart } from './autohideBarLabels';
 import autohidePieLabels from './autohidePieLabels';
 import autohideLabelsOverlappingItsShape from './autohideLabelsOverlappingItsShape';
 
@@ -40,6 +43,15 @@ const autohideLabels = (Highcharts: any) => {
                         hideDataLabel(point);
                     });
                     proceed.call(this, labels);
+                    return;
+            }
+        } else if (dataLabelsUserVisibility === true) {
+            switch (chartType) {
+                case VisualizationTypes.COLUMN:
+                    handleColumnLabelsOutsideChart(chart);
+                    return;
+                case VisualizationTypes.BAR:
+                    handleBarLabelsOutsideChart(chart);
                     return;
             }
         }
