@@ -642,18 +642,20 @@ function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
+    const labelsEnabledX = get(chartOptions, 'xAxisProps.labelsEnabled', true);
+    const labelsEnabledY = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
             labels: {
-                enabled: !isEmpty(compact(categories))
+                enabled: !isEmpty(compact(categories)) && labelsEnabledX
             },
             categories: categories[0] || []
         }],
         yAxis: [{
             labels: {
-                enabled: !isEmpty(compact(categories))
+                enabled: !isEmpty(compact(categories)) && labelsEnabledY
             },
             categories: categories[1] || []
         }],
@@ -828,14 +830,6 @@ function getAxesConfiguration(chartOptions: any) {
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
-            const visibleProp = visible ? {} : {
-                labels: {
-                    enabled: false
-                },
-                title: {
-                    enabled: false
-                }
-            };
 
             const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
@@ -858,7 +852,7 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite,
-                ...visibleProp,
+                visible,
                 ...maxProp,
                 ...minProp
             };
