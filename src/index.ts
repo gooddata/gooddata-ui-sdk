@@ -18,7 +18,6 @@ import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
 import { IPushData } from './interfaces/PushData';
-import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
@@ -87,7 +86,6 @@ export {
     IChartConfig,
     IPushData,
     isEmptyResult,
-    IVisualizationProperties,
     Kpi,
     LoadingComponent,
     LineChart,
