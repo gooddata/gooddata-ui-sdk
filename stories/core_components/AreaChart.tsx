@@ -197,6 +197,25 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
+    )).add('with min max configuration', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        yaxis: {
+                            min: '500',
+                            max: '1500'
+                        }
+                    }}
+                />
+            </div>
+        )
     )).add('with different legend positions', () => (
         screenshotWrap(
             <div>
