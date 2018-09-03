@@ -3,7 +3,7 @@ import * as React from 'react';
 import { shallow, mount } from 'enzyme';
 import noop = require('lodash/noop');
 
-import HighChartsRenderer from '../HighChartsRenderer';
+import HighChartsRenderer, { FLUID_LEGEND_THRESHOLD } from '../HighChartsRenderer';
 import { getHighchartsOptions } from '../highChartsCreators';
 import Chart from '../Chart';
 import Legend from '../legend/Legend';
@@ -263,7 +263,14 @@ describe('HighChartsRenderer', () => {
     });
 
     describe('render', () => {
-        const customComponentProps = ({ position = TOP, responsive = false }) => ({
+        const defaultDocumentObj = {
+            documentElement: {
+                clientWidth: FLUID_LEGEND_THRESHOLD
+            }
+        };
+
+        const customComponentProps = ({ position = TOP, responsive = false, documentObj = defaultDocumentObj }) => ({
+            documentObj,
             legend: {
                 enabled: true,
                 position,
@@ -306,6 +313,28 @@ describe('HighChartsRenderer', () => {
         it('should set non-responsive-legend class for non responsive legend', () => {
             const wrapper = shallow(createComponent(customComponentProps({ responsive: false })));
             expect(wrapper.hasClass('non-responsive-legend')).toBe(true);
+        });
+
+        it('should render responsive legend for mobile', () => {
+            const documentObj = {
+                documentElement: {
+                    clientWidth: FLUID_LEGEND_THRESHOLD - 10
+                }
+            };
+
+            const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
+            expect(wrapper.state().showFluidLegend).toBeTruthy();
+        });
+
+        it('should render StaticLegend on desktop', () => {
+            const documentObj = {
+                documentElement: {
+                    clientWidth: FLUID_LEGEND_THRESHOLD + 10
+                }
+            };
+
+            const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
+            expect(wrapper.state().showFluidLegend).toBeFalsy();
         });
     });
 
