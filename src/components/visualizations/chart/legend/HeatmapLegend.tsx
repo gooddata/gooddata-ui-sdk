@@ -7,7 +7,7 @@ import {
     IHeatmapLegendLabel,
     getHeatmapLegendConfiguration
 } from './helpers';
-import { TOP, BOTTOM } from './PositionTypes';
+import { TOP } from './PositionTypes';
 import { IHeatmapLegendItem } from '../../typings/legend';
 
 export interface IHeatmapLegendProps {
@@ -24,8 +24,8 @@ function HeatmapLabels(labels: IHeatmapLegendLabel[]) {
             {labels.map((item: IHeatmapLegendLabel) => {
                 return (
                     <span
-                        className={item.class}
                         key={item.key}
+                        style={item.style}
                     >
                         {item.label}
                     </span>
@@ -58,7 +58,7 @@ export default class HeatmapLegend extends React.PureComponent<IHeatmapLegendPro
         );
         const classes = classNames(...config.classes);
 
-        const renderLabelsFirst = config.position === TOP || config.position === BOTTOM;
+        const renderLabelsFirst = config.position === TOP;
 
         return (
             <div className={classes}>
