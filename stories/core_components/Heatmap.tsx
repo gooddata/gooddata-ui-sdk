@@ -52,13 +52,27 @@ storiesOf('Core components/Heatmap', module)
             </div>
         )
     ))
-    .add('metric and attribute', () => (
+    .add('metric and columns', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
                     trendBy={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('metric and rows', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_1}
+                    segmentBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
