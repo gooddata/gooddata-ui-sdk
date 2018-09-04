@@ -395,6 +395,9 @@ function getTreemapLabelsConfiguration(
     };
     if (isMultiLevel) {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 dataLabels: {
@@ -417,6 +420,9 @@ function getTreemapLabelsConfiguration(
         };
     } else {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 ...smallLabelInCenter
@@ -573,9 +579,16 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
 
 function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
+    let labelsConfig = {};
+
+    if (isColumnChart(type)) {
+        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+        labelsConfig = getLabelsVisibilityConfig(labelsVisible);
+    }
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
+            ...labelsConfig,
             formatter: partial(stackLabelFormatter, config)
         }
     }));
@@ -629,18 +642,20 @@ function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
+    const labelsEnabledX = get(chartOptions, 'xAxisProps.labelsEnabled', true);
+    const labelsEnabledY = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
             labels: {
-                enabled: !isEmpty(compact(categories))
+                enabled: !isEmpty(compact(categories)) && labelsEnabledX
             },
             categories: categories[0] || []
         }],
         yAxis: [{
             labels: {
-                enabled: !isEmpty(compact(categories))
+                enabled: !isEmpty(compact(categories)) && labelsEnabledY
             },
             categories: categories[1] || []
         }],
@@ -767,18 +782,35 @@ function getHoverStyles({ type }: any, config: any) {
 
 function getGridConfiguration(chartOptions: any) {
     const gridEnabled = get(chartOptions, 'grid.enabled', true);
-    const { yAxes = [] }: { yAxes: IAxis[] } = chartOptions;
+    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+    let xAxis = {};
+
     const yAxis = yAxes.map(() => ({
         gridLineWidth: 0
     }));
 
+    const bothAxesGridlineCharts = [VisualizationTypes.BUBBLE, VisualizationTypes.SCATTER];
+
+    if (isOneOfTypes(chartOptions.type, bothAxesGridlineCharts) && gridEnabled) {
+        xAxis = xAxes.map(() => ({
+            gridLineWidth: 1
+        }));
+    } else {
+        xAxis = xAxes.map(() => ({
+            gridLineWidth: 0
+        }));
+    }
+
     if (!gridEnabled) {
         return {
-            yAxis
+            yAxis,
+            xAxis
         };
     }
 
-    return {};
+    return {
+        xAxis
+    };
 }
 
 function getAxesConfiguration(chartOptions: any) {
@@ -798,14 +830,6 @@ function getAxesConfiguration(chartOptions: any) {
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
-            const visibleProp = visible ? {} : {
-                labels: {
-                    enabled: false
-                },
-                title: {
-                    enabled: false
-                }
-            };
 
             const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
@@ -828,7 +852,7 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite,
-                ...visibleProp,
+                visible,
                 ...maxProp,
                 ...minProp
             };
@@ -840,6 +864,12 @@ function getAxesConfiguration(chartOptions: any) {
                     visible: false
                 };
             }
+
+            const min = get(chartOptions, 'xAxisProps.min', '');
+            const max = get(chartOptions, 'xAxisProps.max', '');
+
+            const maxProp = max ? { max: Number(max) } : {};
+            const minProp = min ? { min: Number(min) } : {};
 
             const visible = get(chartOptions, 'xAxisProps.visible', true);
             const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
@@ -873,7 +903,9 @@ function getAxesConfiguration(chartOptions: any) {
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                visible
+                visible,
+                ...maxProp,
+                ...minProp
             };
         })
     };
@@ -886,7 +918,6 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getStackingConfiguration,
         hideOverlappedLabels,
         getShowInPercentConfiguration,
-        getLabelsConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,

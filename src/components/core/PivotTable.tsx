@@ -12,7 +12,8 @@ import {
     IGetRowsParams,
     GridApi,
     GridReadyEvent,
-    ICellRendererParams
+    ICellRendererParams,
+    GridOptions
 } from 'ag-grid';
 import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
 
@@ -37,6 +38,7 @@ import {
 import { ICommonChartProps } from './base/BaseChart';
 import { IDataSource } from '../../interfaces/DataSource';
 import { BaseVisualization } from './base/BaseVisualization';
+import PivotHeader from './PivotTableHeader';
 
 import { getCellClassNames } from '../visualizations/table/utils/cell';
 
@@ -77,6 +79,13 @@ export type IGetPage = (
     offset: number[]
 ) => Promise<Execution.IExecutionResponses | null>;
 
+interface ICustomGridOptions extends GridOptions {
+    enableMenu?: boolean;
+}
+
+const AG_NUMERIC_CELL_CLASSNAME = 'ag-numeric-cell';
+const AG_NUMERIC_HEADER_CLASSNAME = 'ag-numeric-header';
+
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string]: any}) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
         const { type } = colDef;
@@ -95,6 +104,35 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string
         }
         return drillRow;
     }, []);
+};
+
+export const indexOfTreeNode = (
+    node: any,
+    tree: any,
+    matchNode = (nodeA: any, nodeB: any) => (nodeA === nodeB),
+    getChildren = (node: any) => ((node && node.children) || []),
+    indexes: number[] = []
+): number[] => {
+    const nodes = Array.isArray(tree) ? [...tree] : [tree];
+    for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
+        const currentNode = nodes[nodeIndex];
+        // match current node
+        if (matchNode(currentNode, node)) {
+            return [...indexes, nodeIndex];
+        }
+        // check children
+        const childrenMatchIndexes = indexOfTreeNode(
+            node,
+            getChildren(currentNode),
+            matchNode,
+            getChildren,
+            [...indexes, nodeIndex]
+        );
+        if (childrenMatchIndexes !== null) {
+            return childrenMatchIndexes;
+        }
+    }
+    return null;
 };
 
 export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && node.children) => {
@@ -197,7 +235,6 @@ export class PivotTableInner extends
     public static defaultProps: Partial<IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
         ...commonDefaultProps,
         onDataTooLarge: noop,
-        onLegendReady: noop,
         pageSize: 100
     };
 
@@ -239,29 +276,50 @@ export class PivotTableInner extends
      */
     public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
         const { drillableItems, dataSource } = this.props;
+        const { rowIndex } = cellClassParams;
+        const colDef = cellClassParams.colDef as IGridHeader;
         // return none if no drillableItems are specified
-        if (drillableItems.length === 0) {
-            return null;
-        }
 
         const afm: AFM.IAfm = dataSource.getAfm();
 
-        const { rowIndex } = cellClassParams;
-        const colDef = cellClassParams.colDef as IGridHeader;
-        const rowDrillItem =
-        get<CellClassParams, IDrillableItem>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
-
-        const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
-        const hasDrillableHeader = drillItems
-            .some(
-                (drillItem: Execution.IResultHeaderItem) => isDrillable(drillableItems, drillItem, afm)
-            );
+        let hasDrillableHeader = false;
+        if (drillableItems.length !== 0) {
+            const rowDrillItem =
+                get<CellClassParams, IDrillableItem>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
+            const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+            hasDrillableHeader = drillItems
+                .some(
+                    (drillItem: IDrillItem) => isDrillable(drillableItems, drillItem, afm)
+                );
+        }
 
         const className = classNames(
             classList,
             getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
             colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null
+        );
+        return className;
+    }
+
+    public getHeaderClass = (classList: string) => (headerClassParams: any): string => {
+        const colDef: ColDef = headerClassParams.colDef;
+        const { field } = colDef;
+        const treeIndexes = colDef ? indexOfTreeNode(
+            colDef,
+            this.state.columnDefs,
+            (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field
+        ) : null;
+        const colGroupIndex = treeIndexes
+            ? treeIndexes[treeIndexes.length - 1]
+            : null;
+        const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
+        const className = classNames(
+            classList,
+            'gd-column-group-header',
+            colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
+            !field ? 'gd-column-group-header--empty' : null,
+            isFirstColumn ? 'gd-column-group-header--first' : null
         );
         return className;
     }
@@ -292,7 +350,7 @@ export class PivotTableInner extends
         const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
         const drillableHeaders = drillItems
             .filter(
-                (drillItem: Execution.IResultHeaderItem) => isDrillable(drillableItems, drillItem, afm)
+                (drillItem: IDrillItem) => isDrillable(drillableItems, drillItem, afm)
             );
         if (drillableHeaders.length === 0) {
             return false;
@@ -322,15 +380,21 @@ export class PivotTableInner extends
         const { columnDefs, rowData } = this.state;
         const { pageSize } = this.props;
 
-        const gridOptions = {
+        const gridOptions: ICustomGridOptions = {
             // Initial data
             columnDefs,
             rowData,
 
             defaultColDef: {
-                cellClass: this.getCellClass(null)
+                cellClass: this.getCellClass(null),
+                headerComponentParams: {
+                    enableMenu: false
+                }
             },
-
+            defaultColGroupDef: {
+                headerClass: this.getHeaderClass(null),
+                children: []
+            },
             onCellClicked: this.cellClicked,
 
             // Basic options
@@ -352,21 +416,27 @@ export class PivotTableInner extends
             // Column types
             columnTypes: {
                 [ROW_ATTRIBUTE_COLUMN]: {
-                    cellClass: this.getCellClass('gd-row-attribute-column')
+                    cellClass: this.getCellClass('gd-row-attribute-column'),
+                    headerClass: this.getHeaderClass('gd-row-attribute-column-header')
                 },
                 [COLUMN_ATTRIBUTE_COLUMN]: {
-                    cellClass: this.getCellClass('gd-column-attribute-column')
+                    cellClass: this.getCellClass('gd-column-attribute-column'),
+                    headerClass: this.getHeaderClass('gd-column-attribute-column-header')
                 },
                 [MEASURE_COLUMN]: {
-                    cellClass: this.getCellClass('gd-measure-column')
+                    cellClass: this.getCellClass(classNames(
+                        AG_NUMERIC_CELL_CLASSNAME, 'gd-measure-column')),
+                    headerClass: this.getHeaderClass(classNames(
+                        AG_NUMERIC_HEADER_CLASSNAME, 'gd-measure-column-header'))
                 }
             },
 
             // Custom renderers
             frameworkComponents: {
-                // loading indicator
                 // any is needed here because of incompatible types with AgGridReact types
-                loadingRenderer: RowLoadingElement as any
+                // loading indicator
+                loadingRenderer: RowLoadingElement as any,
+                agColumnHeader: PivotHeader as any
             }
         };
 

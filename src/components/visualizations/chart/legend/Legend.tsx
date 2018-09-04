@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import throttle = require('lodash/throttle');
 import * as Measure from 'react-measure';
 import * as cx from 'classnames';
 
@@ -12,11 +11,8 @@ import HeatmapLegend from './HeatmapLegend';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
 
-export const FLUID_LEGEND_THRESHOLD = 768;
-
 export interface ILegendProps {
     responsive?: boolean;
-    documentObj?: Document;
     legendItemsEnabled?: any[];
     height?: number;
     position: string;
@@ -24,6 +20,7 @@ export interface ILegendProps {
     series: any;
     format?: string;
     locale?: string;
+    showFluidLegend?: boolean;
     onItemClick(item: any): void;
 }
 
@@ -34,37 +31,15 @@ export interface ILegendState {
 export default class Legend extends React.PureComponent<ILegendProps, ILegendState> {
     public static defaultProps = {
         responsive: false,
-        documentObj: document,
         legendItemsEnabled: [] as any,
-        height: 0
+        height: 0,
+        showFluidLegend: false
     };
-
-    private throttledOnWindowResize: any;
 
     constructor(props: ILegendProps) {
         super(props);
 
-        this.state = {
-            showFluid: this.shouldShowFluid()
-        };
-
         this.onItemClick = this.onItemClick.bind(this);
-        this.throttledOnWindowResize = throttle(this.onWindowResize.bind(this), 100);
-    }
-
-    public componentDidMount() {
-        window.addEventListener('resize', this.throttledOnWindowResize);
-    }
-
-    public componentWillUnmount() {
-        this.throttledOnWindowResize.cancel();
-        window.removeEventListener('resize', this.throttledOnWindowResize);
-    }
-
-    public onWindowResize() {
-        this.setState({
-            showFluid: this.shouldShowFluid()
-        });
     }
 
     public onItemClick(item: any) {
@@ -82,11 +57,6 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             };
         });
         return seriesWithVisibility;
-    }
-
-    public shouldShowFluid() {
-        const { documentObj } = this.props;
-        return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
     }
 
     public renderFluid() {
@@ -139,9 +109,9 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
 
     public render() {
         const { responsive } = this.props;
-        const { showFluid } = this.state;
+        const { showFluidLegend } = this.props;
 
-        const fluidLegend = responsive && showFluid;
+        const fluidLegend = responsive && showFluidLegend;
 
         if (isHeatmap(this.props.chartType)) {
             return this.renderHeatmapLegend();
@@ -156,9 +126,9 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
 
     private renderHeatmapLegend() {
         const { locale, format, responsive, position } = this.props;
-        const { showFluid } = this.state;
+        const { showFluidLegend } = this.props;
         const series = this.getSeries();
-        const isSmall = responsive && showFluid;
+        const isSmall = responsive && showFluidLegend;
 
         return (
             <IntlWrapper locale={locale}>

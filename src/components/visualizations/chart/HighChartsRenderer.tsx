@@ -6,6 +6,7 @@ import set = require('lodash/set');
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import partial = require('lodash/partial');
+import throttle = require('lodash/throttle');
 import * as cx from 'classnames';
 import Chart, { IChartConfig, IChartProps } from './Chart';
 import Legend, { ILegendProps } from './legend/Legend';
@@ -15,6 +16,8 @@ import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
 import { shouldStartOrEndOnTick } from '../chart/highcharts/helpers';
 
+export const FLUID_LEGEND_THRESHOLD = 768;
+
 export interface IChartHTMLElement extends HTMLElement {
     getChart(): Highcharts.ChartObject;
 }
@@ -22,6 +25,7 @@ export interface IChartHTMLElement extends HTMLElement {
 export interface IHighChartsRendererProps {
     chartOptions: any;
     hcOptions: any;
+    documentObj?: Document;
     height: number;
     width: number;
     legend: any;
@@ -34,6 +38,7 @@ export interface IHighChartsRendererProps {
 
 export interface IHighChartsRendererState {
     legendItemsEnabled: boolean[];
+    showFluidLegend: boolean;
 }
 
 export function renderChart(props: IChartProps) {
@@ -70,18 +75,33 @@ export default class HighChartsRenderer
         },
         chartRenderer: renderChart,
         legendRenderer: renderLegend,
-        onLegendReady: noop
+        onLegendReady: noop,
+        documentObj: document
     };
 
     private chartRef: IChartHTMLElement;
+    private throttledOnWindowResize: any;
 
     constructor(props: IHighChartsRendererProps) {
         super(props);
         this.state = {
-            legendItemsEnabled: []
+            legendItemsEnabled: [],
+            showFluidLegend: this.shouldShowFluid()
         };
         this.setChartRef = this.setChartRef.bind(this);
         this.onLegendItemClick = this.onLegendItemClick.bind(this);
+        this.throttledOnWindowResize = throttle(this.onWindowResize.bind(this), 100);
+    }
+
+    public onWindowResize() {
+        this.setState({
+            showFluidLegend: this.shouldShowFluid()
+        });
+    }
+
+    public shouldShowFluid() {
+        const { documentObj } = this.props;
+        return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
     }
 
     public componentWillMount() {
@@ -104,6 +124,13 @@ export default class HighChartsRenderer
         this.props.onLegendReady({
             legendItems: this.getItems(this.props.legend.items)
         });
+
+        window.addEventListener('resize', this.throttledOnWindowResize);
+    }
+
+    public componentWillUnmount() {
+        this.throttledOnWindowResize.cancel();
+        window.removeEventListener('resize', this.throttledOnWindowResize);
     }
 
     public componentWillReceiveProps(nextProps: IHighChartsRendererProps) {
@@ -199,6 +226,7 @@ export default class HighChartsRenderer
     public renderLegend() {
         const { chartOptions, legend, height, legendRenderer, locale } = this.props;
         const { items, format } = legend;
+        const { showFluidLegend } = this.state;
 
         if (!legend.enabled) {
             return null;
@@ -218,7 +246,8 @@ export default class HighChartsRenderer
             legendItemsEnabled: this.state.legendItemsEnabled,
             height,
             format,
-            locale
+            locale,
+            showFluidLegend
         };
 
         return legendRenderer(legendProps);
@@ -237,6 +266,7 @@ export default class HighChartsRenderer
 
     public render() {
         const { legend } = this.props;
+        const { showFluidLegend } = this.state;
 
         const classes = cx(
             'viz-line-family-chart-wrap',
@@ -246,7 +276,7 @@ export default class HighChartsRenderer
             }
         );
 
-        const renderLegendFirst = legend.position === TOP || legend.position === LEFT;
+        const renderLegendFirst = legend.position === TOP || (legend.position === LEFT && !showFluidLegend);
 
         return (
             <div className={classes}>

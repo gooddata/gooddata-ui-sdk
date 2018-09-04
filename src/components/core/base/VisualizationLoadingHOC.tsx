@@ -9,7 +9,6 @@ import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
-import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -29,7 +28,6 @@ export interface ICommonVisualizationProps extends IEvents {
     pushData?: (data: IPushData) => void;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
-    visualizationProperties?: IVisualizationProperties;
     config?: IChartConfig;
 }
 

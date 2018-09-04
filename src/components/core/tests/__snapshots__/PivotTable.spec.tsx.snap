@@ -3694,6 +3694,7 @@ Array [
         },
       ],
       "drillItems": Array [],
+      "field": "columnGroupLabel",
       "headerName": "default (Date)/Short (Jan) (Date)/measures",
       "index": 2,
     },

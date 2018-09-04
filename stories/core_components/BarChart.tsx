@@ -155,7 +155,25 @@ storiesOf('Core components/BarChart', module)
                 ErrorComponent={null}
             />
         </div>
-    )
+    ))).add('with min max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            min: '100',
+                            max: '600'
+                        }
+                    }}
+                />
+            </div>
+        )
     )).add('with different legend positions', () => (
         screenshotWrap(
             <div>

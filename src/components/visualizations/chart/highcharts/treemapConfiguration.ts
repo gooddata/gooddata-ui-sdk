@@ -8,13 +8,29 @@ const TREEMAP_TEMPLATE: any = {
     },
     plotOptions: {
         treemap: {
+            showInLegend: true,
+            borderColor: 'white',
+            layoutAlgorithm: 'squarified',
             dataLabels: {
                 enabled: true,
                 allowOverlap: false
             },
-            showInLegend: true,
-            borderColor: 'white',
-            layoutAlgorithm: 'squarified',
+            levels: [
+                {
+                    level: 1,
+                    dataLabels: {
+                        enabled: true,
+                        allowOverlap: false
+                    }
+                },
+                {
+                    level: 2,
+                    dataLabels: {
+                        enabled: true,
+                        allowOverlap: false
+                    }
+                }
+            ],
             point: {
                 events: {
                     // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items

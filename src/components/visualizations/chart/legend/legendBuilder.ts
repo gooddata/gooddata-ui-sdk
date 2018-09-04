@@ -5,11 +5,12 @@ import get = require('lodash/get');
 import * as Highcharts from 'highcharts';
 import {
     isAreaChart,
-    isScatterPlot,
-    isOneOfTypes,
+    isBubbleChart,
     isHeatmap,
-    isTreemap,
-    isBubbleChart
+    isLineChart,
+    isOneOfTypes,
+    isScatterPlot,
+    isTreemap
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from '../../typings/legend';
@@ -24,9 +25,10 @@ function isHeatmapWithMultipleValues(chartOptions: any) {
 export function shouldLegendBeEnabled(chartOptions: any) {
     const seriesLength = get(chartOptions, 'data.series.length');
     const { type, stacking, hasStackByAttribute, hasViewByAttribute } = chartOptions;
-    // More than one measure or stackedBy more than one category
+
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
+    const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
     const sliceTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
@@ -39,6 +41,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     return hasMoreThanOneSeries
         || isSliceChartWithViewByAttributeOrMultipleMeasures
         || isStacked
+        || isLineChartStacked
         || isScatterPlotWithAttribute
         || isTreemapWithViewByAttribute
         || isBubbleWithViewByAttribute
@@ -90,10 +93,17 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
     const defaultLegendConfigByType = {};
     const rightLegendCharts =
         [VisualizationTypes.SCATTER, VisualizationTypes.TREEMAP, VisualizationTypes.BUBBLE, VisualizationTypes.HEATMAP];
+    const defaultTopLegendCharts =
+        [VisualizationTypes.COLUMN, VisualizationTypes.BAR, VisualizationTypes.LINE,
+        VisualizationTypes.AREA, VisualizationTypes.PIE, VisualizationTypes.DONUT];
 
     if (legendConfig.position === 'auto' || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
             set(defaultLegendConfigByType, 'position', 'right');
+        }
+
+        if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
+            set(defaultLegendConfigByType, 'position', 'top');
         }
     }
 
@@ -103,9 +113,12 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
         ...defaultLegendConfigByType // TODO: swipe these two lines once default legend logic is moved to the sdk
     };
 
+    const isLegendEnabled = shouldLegendBeEnabled(chartOptions);
+
     return {
         ...baseConfig,
-        enabled: baseConfig.enabled && shouldLegendBeEnabled(chartOptions),
+        enabled: baseConfig.enabled && isLegendEnabled,
+        toggleEnabled: isLegendEnabled,
         format: get(chartOptions, 'title.format', ''),
         items: getLegendItems(chartOptions)
     };

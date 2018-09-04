@@ -115,6 +115,24 @@ export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute = {
     }
 };
 
+export const ATTRIBUTE_60COUTRIES: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: '60countries',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/3.df'
+        }
+    }
+};
+
+export const ATTRIBUTE_POPULARITY: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'Popularity',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/5.df'
+        }
+    }
+};
+
 export const ATTRIBUTE_1_WITH_ALIAS: VisualizationObject.IVisualizationAttribute = {
     visualizationAttribute: {
         ...ATTRIBUTE_1.visualizationAttribute,

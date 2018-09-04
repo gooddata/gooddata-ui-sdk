@@ -153,6 +153,23 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
     ]
 };
 
+export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
+    measures: [
+        MEASURE_1
+    ],
+    attributes: [{
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/3.df'
+        },
+        localIdentifier: '60countries'
+    }, {
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/5.df'
+        },
+        localIdentifier: 'Popularity'
+    }]
+};
+
 export const AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
     measures: [
         MEASURE_1

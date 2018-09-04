@@ -1,9 +1,10 @@
-import { RIGHT } from '../chart/legend/PositionTypes';
+import { TOP } from '../chart/legend/PositionTypes';
 
 export type PositionType = 'left' | 'right' | 'top' | 'bottom' | 'auto';
 
 export interface ILegendOptions {
     enabled: boolean;
+    toggleEnabled: boolean;
     position: PositionType;
     format: string;
     items: LegendOptionsItemType[];
@@ -31,5 +32,5 @@ export interface IRange {
 
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
-    position: RIGHT
+    position: TOP
 };

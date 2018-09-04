@@ -9,7 +9,9 @@ import {
     ATTRIBUTE_2,
     ATTRIBUTE_3,
     MEASURE_1,
-    ATTRIBUTE_1_WITH_ALIAS
+    ATTRIBUTE_1_WITH_ALIAS,
+    ATTRIBUTE_60COUTRIES,
+    ATTRIBUTE_POPULARITY
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -103,6 +105,21 @@ storiesOf('Core components/Heatmap', module)
                     segmentBy={ATTRIBUTE_1}
                     trendBy={ATTRIBUTE_2}
                     config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with left out some label of yaxis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_1}
+                    segmentBy={ATTRIBUTE_60COUTRIES}
+                    trendBy={ATTRIBUTE_POPULARITY}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
