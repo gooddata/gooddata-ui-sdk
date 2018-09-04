@@ -1557,7 +1557,7 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
-                enabled: true
+                enabled: gridEnabled
             },
             xAxisProps,
             yAxisProps
@@ -1565,6 +1565,7 @@ export function getChartOptions(
     }
 
     if (isHeatmap(type)) {
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
         return {
             type,
             stacking: null,
@@ -1589,7 +1590,9 @@ export function getChartOptions(
             colorPalette,
             colorAxis: {
                 dataClasses: getHeatmapDataClasses(series, colorPalette)
-            }
+            },
+            xAxisProps,
+            yAxisProps
         };
     }
 
@@ -1632,7 +1635,7 @@ export function getChartOptions(
                 tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
             },
             grid: {
-                enabled: true
+                enabled: gridEnabled
             },
             xAxisProps,
             yAxisProps

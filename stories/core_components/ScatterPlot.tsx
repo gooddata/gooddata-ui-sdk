@@ -101,7 +101,32 @@ storiesOf('Core components/ScatterPlot', module)
                 />
             </div>
         )
-    )).add('data labels config', () => (
+    ))
+    .add('with min/max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ScatterPlot
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    attribute={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            min: '600'
+                        },
+                        yaxis: {
+                            min: '500',
+                            max: '950'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = hidden</div>

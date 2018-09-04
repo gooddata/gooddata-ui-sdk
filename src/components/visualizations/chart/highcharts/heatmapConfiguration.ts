@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import cloneDeep = require('lodash/cloneDeep');
+import last = require('lodash/last');
 import { WHITE, GRAY } from '../../utils/color';
 
 const HEATMAP_TEMPLATE = {
@@ -41,6 +42,26 @@ const HEATMAP_TEMPLATE = {
     series: [{
         borderWidth: 0,
         nullColor: 'url(#empty-data-pattern)'
+    }],
+    yAxis: [{
+        labels: {
+            formatter() {
+                const  { axis, isLast } = this;
+                const { tickPositions, categories } = axis;
+                // tickPositions is array of index of categories
+                const lastIndex = parseInt(last(tickPositions).toString(), 10);
+                const lastCategory = categories ? categories[lastIndex] : null;
+                let labelValue = axis.defaultLabelFormatter.call(this);
+
+                // When generate linear tick positions base on categories length.
+                // Last tick position can be out of index of categories.
+                // In this case, set label value to null to ignore last label.
+                if (isLast && categories && !lastCategory) {
+                    labelValue = null;
+                }
+                return labelValue;
+            }
+        }
     }]
 };
 

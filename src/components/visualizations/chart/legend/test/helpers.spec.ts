@@ -6,7 +6,11 @@ import {
     UTF_NON_BREAKING_SPACE,
     calculateFluidLegend,
     calculateStaticLegend,
-    getHeatmapLegendConfiguration
+    getHeatmapLegendConfiguration,
+    buildHeatmapLabelsConfig,
+    heatmapLegendConfigMatrix,
+    heatmapSmallLegendConfigMatrix,
+    verticalHeatmapConfig
 } from '../helpers';
 
 describe('helpers', () => {
@@ -118,30 +122,29 @@ describe('helpers', () => {
             { range: { from: 100006, to: 100007  }, color: 'rgb(0,0,0)', legendIndex: 6 }
         ];
         const labels = [
-            { class: 'left', key: 'label-0', label: '0' },
-            { class: 'center', key: 'label-1', label: '10' },
-            { class: 'empty', key: 'empty-1', label: UTF_NON_BREAKING_SPACE },
-            { class: 'center', key: 'label-2', label: '20' },
-            { class: 'empty', key: 'empty-2', label: UTF_NON_BREAKING_SPACE },
-            { class: 'middle', key: 'label-3', label: '30' },
-            { class: 'empty', key: 'empty-3', label: UTF_NON_BREAKING_SPACE },
-            { class: 'middle', key: 'label-4', label: '40' },
-            { class: 'empty', key: 'empty-4', label: UTF_NON_BREAKING_SPACE },
-            { class: 'center', key: 'label-5', label: '50' },
-            { class: 'empty', key: 'empty-5', label: UTF_NON_BREAKING_SPACE },
-            { class: 'center', key: 'label-6', label: '60' },
-            { class: 'right', key: 'label-7', label: '70' }
+            { key: 'label-0', label: '0', style: { textAlign: 'left', width: 30 } },
+            { key: 'label-1', label: '10', style: { textAlign: 'center', width: 40 } },
+            { key: 'empty-2', label: UTF_NON_BREAKING_SPACE, style: { width: 10 } },
+            { key: 'label-3', label: '20', style: { textAlign: 'center', width: 40 }  },
+            { key: 'empty-4', label: UTF_NON_BREAKING_SPACE, style: { width: 10 } },
+            { key: 'label-5', label: '30', style: { textAlign: 'center', width: 40 } },
+            { key: 'empty-6', label: UTF_NON_BREAKING_SPACE, style: { width: 10 } },
+            { key: 'label-7', label: '40', style: { textAlign: 'center', width: 40 } },
+            { key: 'empty-8', label: UTF_NON_BREAKING_SPACE, style: { width: 10 } },
+            { key: 'label-9', label: '50', style: { textAlign: 'center', width: 40 } },
+            { key: 'empty-10', label: UTF_NON_BREAKING_SPACE, style: { width: 10 } },
+            { key: 'label-11', label: '60', style: { textAlign: 'center', width: 40 } },
+            { key: 'label-12', label: '70', style: { textAlign: 'right', width: 30 } }
         ];
-        const shortenedLabels = [
-            { class: 'left', key: 'label-0', label: '99999' },
-            { class: 'dots', key: 'label-1', label: '...' },
-            { class: 'middle', key: 'label-2', label: '100002' },
-            { class: 'dots', key: 'label-3', label: '...' },
-            { class: 'center-empty', key: 'label-4', label: UTF_NON_BREAKING_SPACE },
-            { class: 'dots', key: 'label-5', label: '...' },
-            { class: 'middle', key: 'label-6', label: '100005' },
-            { class: 'dots', key: 'label-7', label: '...' },
-            { class: 'right', key: 'label-8', label: '100007' }
+        const labelsSmall = [
+            { key: 'label-0', label: '0', style: { textAlign: 'left', width: 20 } },
+            { key: 'label-1', label: '10', style: { textAlign: 'center', width: 40 } },
+            { key: 'label-2', label: '20', style: { textAlign: 'center', width: 40 }  },
+            { key: 'label-3', label: '30', style: { textAlign: 'center', width: 38 } },
+            { key: 'label-4', label: '40', style: { textAlign: 'center', width: 38 } },
+            { key: 'label-5', label: '50', style: { textAlign: 'center', width: 40 } },
+            { key: 'label-6', label: '60', style: { textAlign: 'center', width: 40 } },
+            { key: 'label-7', label: '70', style: { textAlign: 'right', width: 20 } }
         ];
         const boxes = [
             { class: null, key: 'item-0', style: { backgroundColor: 'rgb(255,255,255)', border: '1px solid #ccc' } },
@@ -155,7 +158,7 @@ describe('helpers', () => {
 
         it('should prepare legend config without shortening when everything fits', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-top', null, null],
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', null],
                 labels,
                 boxes,
                 position: 'top'
@@ -166,9 +169,19 @@ describe('helpers', () => {
         });
 
         it('should prepare legend config with position on right, without shortening when everything fits', () => {
+            const expectedLabels = [
+                { key: 'label-0', label: '0', style: { textAlign: 'left' , height: 15, lineHeight: '11px' } },
+                { key: 'label-1', label: '10', style: { textAlign: 'left', height: 30, lineHeight: '30px' } },
+                { key: 'label-2', label: '20', style: { textAlign: 'left', height: 30, lineHeight: '30px' }  },
+                { key: 'label-3', label: '30', style: { textAlign: 'left', height: 30, lineHeight: '30px' } },
+                { key: 'label-4', label: '40', style: { textAlign: 'left', height: 30, lineHeight: '30px' } },
+                { key: 'label-5', label: '50', style: { textAlign: 'left', height: 30, lineHeight: '30px' } },
+                { key: 'label-6', label: '60', style: { textAlign: 'left', height: 30, lineHeight: '30px' } },
+                { key: 'label-7', label: '70', style: { textAlign: 'left', height: 15, lineHeight: '20px' } }
+            ];
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-right', null, null],
-                labels,
+                classes: ['viz-legend', 'heatmap-legend', 'position-right', null],
+                labels: expectedLabels,
                 boxes,
                 position: 'right'
             };
@@ -179,8 +192,8 @@ describe('helpers', () => {
 
         it('should prepare small legend config without shortening when everything fits', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small', null],
-                labels,
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small'],
+                labels: labelsSmall,
                 boxes,
                 position: 'top'
             };
@@ -191,8 +204,8 @@ describe('helpers', () => {
 
         it('should prepare small legend config with bottom position, without shortening when everything fits', () => {
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-bottom', 'small', null],
-                labels,
+                classes: ['viz-legend', 'heatmap-legend', 'position-bottom', 'small'],
+                labels: labelsSmall,
                 boxes,
                 position: 'bottom'
             };
@@ -202,9 +215,20 @@ describe('helpers', () => {
         });
 
         it('should prepare legend config with shortening', () => {
+            const expectedLabels = [
+                { key: 'label-0', label: '99999', style: { textAlign: 'left', width: 45 } },
+                { key: 'dots-1', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-2', label: '100002', style: { textAlign: 'center', width: 90 } },
+                { key: 'dots-3', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'empty-4', label: ' ', style: { width: 40 } },
+                { key: 'dots-5', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-6', label: '100005', style: { textAlign: 'center', width: 90 } },
+                { key: 'dots-7', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-8', label: '100007', style: { textAlign: 'right', width: 45 } }
+            ];
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-top', null, 'shortened'],
-                labels: shortenedLabels,
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', null],
+                labels: expectedLabels,
                 boxes,
                 position: 'top'
             };
@@ -214,15 +238,66 @@ describe('helpers', () => {
         });
 
         it('should prepare small legend config with shortening', () => {
+            const expectedLabels = [
+                { key: 'label-0', label: '99999', style: { textAlign: 'left', width: 35 } },
+                { key: 'dots-1', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-2', label: '100002', style: { textAlign: 'center', width: 70 } },
+                { key: 'dots-3', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'empty-4', label: ' ', style: { width: 26 } },
+                { key: 'dots-5', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-6', label: '100005', style: { textAlign: 'center', width: 70 } },
+                { key: 'dots-7', label: '...', style: { textAlign: 'center', width: 10 } },
+                { key: 'label-8', label: '100007', style: { textAlign: 'right', width: 35 } }
+            ];
             const expectedResult = {
-                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small', 'shortened'],
-                labels: shortenedLabels,
+                classes: ['viz-legend', 'heatmap-legend', 'position-top', 'small'],
+                labels: expectedLabels,
                 boxes,
                 position: 'top'
             };
             const result = getHeatmapLegendConfiguration(seriesForShortening, format, numericSymbols, true, 'top');
 
             expect(result).toEqual(expectedResult);
+        });
+
+        it('should sum widths to 350', () => {
+            const labels = ['0', '1', '2', '3', '4', '5', '6', '7'];
+
+            heatmapLegendConfigMatrix.forEach((config: any) => {
+                const elementsConfig = buildHeatmapLabelsConfig(labels, config);
+
+                const width = elementsConfig.reduce((sum: number, item: any) => {
+                    return sum + item.style.width;
+                }, 0);
+
+                expect(width).toEqual(350);
+            });
+        });
+
+        it('should sum widths to 276 in small legend', () => {
+            const labels = ['0', '1', '2', '3', '4', '5', '6', '7'];
+
+            heatmapSmallLegendConfigMatrix.forEach((config: any) => {
+                const elementsConfig = buildHeatmapLabelsConfig(labels, config);
+
+                const width = elementsConfig.reduce((sum: number, item: any) => {
+                    return sum + item.style.width;
+                }, 0);
+
+                expect(width).toEqual(276);
+            });
+        });
+
+        it('should sum heights to 210 in vertical legend', () => {
+            const labels = ['0', '1', '2', '3', '4', '5', '6', '7'];
+
+            const elementsConfig = buildHeatmapLabelsConfig(labels, verticalHeatmapConfig);
+
+            const width = elementsConfig.reduce((sum: number, item: any) => {
+                return sum + item.style.height;
+            }, 0);
+
+            expect(width).toEqual(210);
         });
     });
 });

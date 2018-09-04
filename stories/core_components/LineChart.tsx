@@ -144,6 +144,26 @@ storiesOf('Core components/LineChart', module)
             </div>
         )
     ))
+    .add('with min/max configuration', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        yaxis: {
+                            min: '250',
+                            max: '900'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
     .add('with different legend positions', () => (
         screenshotWrap(
             <div>

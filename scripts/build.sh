@@ -19,7 +19,7 @@ build-dev(){
 
 build-dev-watch(){
     _common-build
-    tsc --watch -p tsconfig.dev.json
+    tsc --watch -p tsconfig.dev.json & node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss --watch
 }
 
 

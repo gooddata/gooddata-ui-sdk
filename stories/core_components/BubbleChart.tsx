@@ -111,6 +111,32 @@ storiesOf('Core components/BubbleChart', module)
             </div>
         )
     ))
+    .add('with min max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            min: '600',
+                            max: '1000'
+                        },
+                        yaxis: {
+                            min: '750',
+                            max: '950'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
     .add('with different legend positions', () => (
         screenshotWrap(
             <div>

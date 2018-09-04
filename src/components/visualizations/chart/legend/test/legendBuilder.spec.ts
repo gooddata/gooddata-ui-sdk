@@ -30,6 +30,11 @@ describe('shouldLegendBeEnabled', () => {
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
+    it('should return true if the Line chart is stacked and has only one stack item', () => {
+        const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, { type: 'line' });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
     it('should return false if the treemap is stacked and has only one measure item', () => {
         const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
         const chartOptions = generateChartOptions(

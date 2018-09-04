@@ -6,7 +6,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import identity = require('lodash/identity');
 
 import ChartTransformation from '../../src/components/visualizations/chart/ChartTransformation';
-import { FLUID_LEGEND_THRESHOLD } from '../../src/components/visualizations/chart/legend/Legend';
+import { FLUID_LEGEND_THRESHOLD } from '../../src/components/visualizations/chart/HighChartsRenderer';
 import { immutableSet } from '../../src/components/visualizations/utils/common';
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
 
