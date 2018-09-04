@@ -1,4 +1,8 @@
 # Changelog
+## 5.3.1 (September 4, 2018)
+
+- Heatmap bugfix ([commit](https://github.com/gooddata/gooddata-react-components/commit/7553681f471748de999430746944573b081ec88b))
+
 ## 5.3.0 (August 23, 2018)
 
 - Added Heatmap chart ([commit](https://github.com/gooddata/gooddata-react-components/commit/660b01d949e08623f2cc1b3e7a091ca16efaf29e))
