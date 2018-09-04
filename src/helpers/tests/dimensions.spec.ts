@@ -4,7 +4,12 @@ import cloneDeep = require('lodash/cloneDeep');
 import update = require('lodash/update');
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
-import { generateDimensions, getHeadlinesDimensions, getPivotTableDimensions } from '../dimensions';
+import {
+    generateDimensions,
+    getHeadlinesDimensions,
+    getPivotTableDimensions,
+    generateStackedDimensions
+} from '../dimensions';
 import { visualizationObjects } from '../../../__mocks__/fixtures';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
@@ -633,5 +638,51 @@ describe('generateDimensions', () => {
             expect(generateDimensions(visualizationWithTotals, VisualizationTypes.TABLE))
                 .toEqual(expectedDimensions);
         });
+    });
+});
+
+describe('generateStackedDimensions', () => {
+    it('measure and stack by only', () => {
+        const expectedDimensions: AFM.IDimension[] = [
+            {
+                itemIdentifiers: ['a2']
+            },
+            {
+                itemIdentifiers: ['measureGroup']
+            }
+        ];
+
+        const buckets = [
+            {
+                localIdentifier: 'measures',
+                items: [{
+                    measure: {
+                        localIdentifier: 'm1',
+                        title: '# Accounts with AD Query',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: '/gdc/md/myproject/obj/m1'
+                                }
+                            }
+                        }
+                    }
+                }]
+            },
+            {
+                localIdentifier: 'stack',
+                items: [{
+                    visualizationAttribute: {
+                        localIdentifier: 'a2',
+                        displayForm: {
+                            uri: '/gdc/md/myproject/obj/a2'
+                        }
+                    }
+                }]
+            }
+        ];
+
+        expect(generateStackedDimensions(buckets))
+            .toEqual(expectedDimensions);
     });
 });

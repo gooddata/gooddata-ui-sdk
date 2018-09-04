@@ -336,21 +336,26 @@ export function generateDimensions(
 }
 
 export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
-    const stackByAttribute = buckets.find(bucket => bucket.localIdentifier === STACK).items[0] as
+    const viewBucket = buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE);
+    const stackBucket = buckets.find(bucket => bucket.localIdentifier === STACK);
+
+    const viewByAttribute = viewBucket && viewBucket.items[0] as
+    VisualizationObject.IVisualizationAttribute;
+    const stackByAttribute = stackBucket && stackBucket.items[0] as
         VisualizationObject.IVisualizationAttribute;
 
-    const viewByAttribute = buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE).items[0] as
-        VisualizationObject.IVisualizationAttribute;
-
-    const stackByAttributeLocalIdentifier = stackByAttribute.visualizationAttribute.localIdentifier;
-    const viewByAttributeLocalIdentifier = viewByAttribute.visualizationAttribute.localIdentifier;
+    const stackByAttributeLocalIdentifier = stackByAttribute ?
+        stackByAttribute.visualizationAttribute.localIdentifier : undefined;
+    const viewByAttributeLocalIdentifier = viewByAttribute ?
+        viewByAttribute.visualizationAttribute.localIdentifier : undefined;
 
     return [
         {
-            itemIdentifiers: [stackByAttributeLocalIdentifier]
+            itemIdentifiers: stackByAttributeLocalIdentifier ? [stackByAttributeLocalIdentifier] : []
         },
         {
-            itemIdentifiers: [viewByAttributeLocalIdentifier, MEASUREGROUP]
+            itemIdentifiers: viewByAttributeLocalIdentifier ?
+                [viewByAttributeLocalIdentifier, MEASUREGROUP] : [MEASUREGROUP]
         }
     ];
 }
