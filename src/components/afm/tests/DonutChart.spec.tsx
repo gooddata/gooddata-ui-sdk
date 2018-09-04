@@ -8,6 +8,7 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 
 describe('DonutChart', () => {
     const afmWithAttr = {
+        measures: [] as any,
         attributes: [
             {
                 localIdentifier: 'a1',
@@ -20,7 +21,7 @@ describe('DonutChart', () => {
         const wrapper = mount((
             <DonutChart
                 projectId="prId"
-                afm={{}}
+                afm={{ measures: [] }}
                 resultSpec={{}}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));

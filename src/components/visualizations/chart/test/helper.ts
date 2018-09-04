@@ -2,7 +2,8 @@
 import {
     getChartOptions,
     findMeasureGroupInDimensions,
-    findAttributeInDimension
+    findAttributeInDimension,
+    IChartOptions
 } from '../chartOptionsBuilder';
 
 import {
@@ -20,7 +21,7 @@ export function generateChartOptions(
         stacking: false
     },
     drillableItems: IDrillableItem[] = []
-) {
+): IChartOptions {
     const {
         executionRequest: { afm, resultSpec },
         executionResponse: { dimensions },

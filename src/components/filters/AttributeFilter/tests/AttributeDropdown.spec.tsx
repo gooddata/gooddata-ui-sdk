@@ -59,7 +59,7 @@ describe('AttributeDropdown', () => {
     it('should render overlay on click and display loading', () => {
         const attributeDisplayForm = createADF();
         const wrapper = renderComponent({ attributeDisplayForm });
-        wrapper.find('.gd-attribute-filter .button-dropdown .s-country button').simulate('click');
+        wrapper.find('button.s-country').simulate('click');
         expect(
             document.querySelectorAll('.gd-attribute-filter-overlay .s-attribute-filter-list-loading')
         ).toHaveLength(1);

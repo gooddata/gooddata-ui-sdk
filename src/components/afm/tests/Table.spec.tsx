@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { testUtils } from '@gooddata/js-utils';
 import { Table } from '../Table';
 import { SortableTable } from '../../core/SortableTable';
-import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
+import { dummyExecuteAfmAdapterFactoryTable } from './utils/DummyExecuteAfmAdapter';
 import { executionRequest } from './utils/dummyFixture';
 
 describe('Table', () => {
@@ -13,7 +13,7 @@ describe('Table', () => {
             <Table
                 projectId="prId"
                 afm={executionRequest.execution.afm}
-                adapterFactory={dummyExecuteAfmAdapterFactory}
+                adapterFactory={dummyExecuteAfmAdapterFactoryTable}
             />
         ));
 
