@@ -1,22 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
 import sortBy = require('lodash/sortBy');
-import get = require('lodash/get');
 
 import {
     isStacked,
-    getVisibleSeries,
-    getDataPoints,
+    getDataPointsOfVisibleSeries,
+    toNeighbors,
+    isIntersecting,
+    getShapeAttributes,
+    IRectBySize
+} from '../../helpers';
+
+import {
     hideDataLabels,
     hideDataLabel,
     hasDataLabel,
-    toNeighbors,
-    isIntersecting,
     getDataLabelAttributes,
-    getShapeAttributes,
-    showDataLabelInAxisRange
-} from '../../helpers';
+    showDataLabelInsideChart
+} from '../../dataLabelsHelpers';
 
-const toggleStackedChartLabels = (visiblePoints: any,  minAxisValue: number) => {
+const toggleStackedChartLabels = (visiblePoints: any, chartBox: IRectBySize) => {
     const intersectionFound = visiblePoints
         .filter(hasDataLabel)
         .some((point: any) => {
@@ -41,7 +43,7 @@ const toggleStackedChartLabels = (visiblePoints: any,  minAxisValue: number) => 
                 const labelWidth = dataLabelAttr.width + (2 * dataLabel.padding);
                 const foundIntersection = labelWidth > shapeAttr.width;
                 // switch axis for bar chart
-                return foundIntersection ? hideDataLabel(point) : showDataLabelInAxisRange(point, minAxisValue);
+                return foundIntersection ? hideDataLabel(point) : showDataLabelInsideChart(point, chartBox, 'vertical');
             }
             return null;
         });
@@ -50,7 +52,7 @@ const toggleStackedChartLabels = (visiblePoints: any,  minAxisValue: number) => 
 
 const toggleNonStackedChartLabels = (
     points: any,
-    minAxisValue: number,
+    chartBox: IRectBySize,
     shouldCheckShapeIntersection: boolean = false
 ) => {
     const sortedPoints = sortBy(points, (a, b) => {
@@ -79,20 +81,23 @@ const toggleNonStackedChartLabels = (
     if (intersectionFound) {
         hideDataLabels(points);
     } else {
-        points.forEach((point: any) => showDataLabelInAxisRange(point, minAxisValue));
+        points.forEach((point: any) => showDataLabelInsideChart(point, chartBox, 'vertical'));
     }
 };
 
-const autohideBarLabels = (chart: any) => {
-    const visibleSeries = getVisibleSeries(chart);
-    const visiblePoints = getDataPoints(visibleSeries);
-    const minAxisValue = get(chart, ['yAxis', 0, 'min'], 0);
+export const autohideBarLabels = (chart: any) => {
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const chartBox: IRectBySize = chart.plotBox;
 
     if (isStacked(chart)) {
-        toggleStackedChartLabels(visiblePoints, minAxisValue);
+        toggleStackedChartLabels(visiblePoints, chartBox);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, minAxisValue, true);
+        toggleNonStackedChartLabels(visiblePoints, chartBox, true);
     }
 };
 
-export default autohideBarLabels;
+export const handleBarLabelsOutsideChart = (chart: any) => {
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const chartBox: IRectBySize = chart.plotBox;
+    visiblePoints.forEach((point: any) => showDataLabelInsideChart(point, chartBox, 'vertical'));
+};
