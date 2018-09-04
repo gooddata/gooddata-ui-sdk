@@ -1,0 +1,189 @@
+// (C) 2007-2018 GoodData Corporation
+@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/variables';
+
+$ag-icons-path: "~ag-grid/src/styles/balham-icons/";
+
+$border-color: transparent;
+$font-size: 12px;
+$font-family: $gd-font-primary;
+$foreground-color: $gd-color-text;
+$default-background: $gd-color-white;
+$header-background-color: $gd-color-white;
+$odd-row-background-color: transparent;
+$primary-color: transparent;
+$secondary-foreground-color: $gd-color-state-blank;
+$secondary-font-weight: normal;
+$hover-color: transparentize($gd-color-state-blank, 0.9);
+$cell-horizontal-border: none;
+$cell-border: 1px dashed transparent;
+$cell-border-color: transparentize($gd-color-disabled, 0.5);
+
+@import '~ag-grid/src/styles/ag-grid';
+@import '~ag-grid/src/styles/ag-theme-balham';
+
+.gd-table {
+    .ag-header-cell,
+    .ag-header-group-cell,
+    .ag-header-cell-resize {
+        &::after {
+            display: none;
+        }
+    }
+
+    .ag-header {
+        border-bottom: none;
+    }
+
+    .ag-cell {
+        border-left: 1px solid transparent;
+    }
+
+    .ag-cell,
+    .ag-header-cell,
+    .gd-column-group-header {
+        border-bottom: $cell-border;
+        border-bottom-color: $cell-border-color;
+        border-left: $cell-border;
+    }
+
+    .gd-column-group-header-0,
+    .gd-column-measure-0,
+    .ag-header-group-cell-with-group {
+        border-left-color: $cell-border-color;
+    }
+
+    .gd-column-index-0,
+    .gd-column-group-header--first {
+        border-left-color: transparent;
+    }
+
+    .gd-column-group-header--empty {
+        border-bottom-color: transparent;
+    }
+
+    .ag-header-row {
+        &:last-child {
+            border-bottom: none;
+
+            .ag-header-cell,
+            .ag-header-group-cell-with-group {
+                border-bottom-style: solid;
+            }
+        }
+    }
+
+    .gd-table-row {
+        border-bottom: none;
+    }
+}
+
+.gd-pivot-table-header {
+    display: flex;
+    position: relative;
+    margin: 0 -12px;
+
+    &-label {
+        display: flex;
+        flex: 1 1 auto;
+        padding: 0 12px;
+        overflow: hidden;
+
+        &-text {
+            flex: 0 1 auto;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &--numeric {
+        flex-direction: row-reverse;
+
+    }
+    &--numeric &-label {
+        &-text {
+            text-align: right;
+            flex: 1 1 auto;
+        }
+    }
+    &--numeric &-sort {
+        flex: 0 0 auto;
+    }
+    &--numeric &-next-sort {
+        flex: 0 0 auto;
+    }
+
+    &--sorting-enabled &-label {
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+    }
+
+    &:hover &-menu {
+        opacity: 1;
+    }
+
+    &-sort {
+        flex: 1 0 auto;
+    }
+
+    &:hover &-sort {
+        display: none;
+    }
+
+    &-next-sort {
+        flex: 1 0 auto;
+        display: none;
+    }
+
+    &:hover &-next-sort {
+        display: block;
+    }
+
+    &-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 12px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.4s;
+
+        &:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+    }
+
+    &--open &-menu {
+        opacity: 1;
+        background-color: rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 4px #BDC3C7;
+    }
+
+    &-arrow-up, &-arrow-down {
+        display: inline-block;
+        flex: 0 0 auto;
+        margin-left: 4px;
+        line-height: 16px;
+        font-size: 12px;
+        font-weight: normal;
+
+        &::before {
+            content: '\E60D';
+            position: relative;
+            top: 1px;
+            display: inherit;
+            font-family: Indigo;
+            font-size: 10px;
+            vertical-align: bottom;
+        }
+    }
+
+    &-arrow-down::before {
+        top: -2px;
+        transform: rotate(180deg);
+    }
+}
