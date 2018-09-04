@@ -10,6 +10,7 @@ import { ExecutePropType, Requireable } from '../proptypes/Execute';
 import { setTelemetryHeaders } from '../helpers/utils';
 import { convertErrors } from '../helpers/errorHandlers';
 import { RuntimeError } from '../errors/RuntimeError';
+import { getGeneralDimensionsFromAFM } from '../helpers/dimensions';
 
 export { Requireable };
 
@@ -130,7 +131,13 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             isLoading: true
         });
 
-        this.dataTable.getData(afm, resultSpec);
+        const finalResultSpec = {
+            ...(resultSpec || {})
+        };
+        if (!finalResultSpec.dimensions) {
+            finalResultSpec.dimensions = getGeneralDimensionsFromAFM(afm);
+        }
+        this.dataTable.getData(afm, finalResultSpec);
     }
 
     private initDataTable(props: IExecuteProps) {

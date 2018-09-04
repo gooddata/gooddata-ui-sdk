@@ -8,9 +8,11 @@ import {
     generateDimensions,
     getHeadlinesDimensions,
     getPivotTableDimensions,
-    generateStackedDimensions
+    generateStackedDimensions,
+    getGeneralDimensionsFromAFM
 } from '../dimensions';
 import { visualizationObjects } from '../../../__mocks__/fixtures';
+import { MEASURE_1, ATTRIBUTE_CITIES } from '../../../stories/data/afmComponentProps';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
     const uri = `/gdc/md/myproject/obj/${name}`;
@@ -684,5 +686,30 @@ describe('generateStackedDimensions', () => {
 
         expect(generateStackedDimensions(buckets))
             .toEqual(expectedDimensions);
+    });
+});
+
+describe('getGeneralDimensionsFromAFM', () => {
+    it('should return resultSpec dimensions for AFM with both measures and attributes', () => {
+        const afm = {
+            measures: [MEASURE_1],
+            attributes: [ATTRIBUTE_CITIES]
+        };
+        const expectedDimensions = [{ itemIdentifiers: ['a1'] }, { itemIdentifiers: ['measureGroup'] }];
+        expect(getGeneralDimensionsFromAFM(afm)).toEqual(expectedDimensions);
+    });
+    it('should return resultSpec dimensions for AFM with measures only', () => {
+        const afm = {
+            measures: [MEASURE_1]
+        };
+        const expectedDimensions = [{ itemIdentifiers: ['measureGroup'] }];
+        expect(getGeneralDimensionsFromAFM(afm)).toEqual(expectedDimensions);
+    });
+    it('should return resultSpec dimensions for AFM with attributes only', () => {
+        const afm = {
+            attributes: [ATTRIBUTE_CITIES]
+        };
+        const expectedDimensions = [{ itemIdentifiers: ['a1'] }];
+        expect(getGeneralDimensionsFromAFM(afm)).toEqual(expectedDimensions);
     });
 });

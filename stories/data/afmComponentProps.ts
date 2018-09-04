@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, VisualizationObject } from '@gooddata/typings';
 
-const MEASURE_1: AFM.IMeasure = {
+export const MEASURE_1: AFM.IMeasure = {
     localIdentifier: 'm1',
     definition: {
         measure: {
@@ -93,7 +93,7 @@ const MEASURE_3: AFM.IMeasure = {
     }
 };
 
-const ATTRIBUTE_CITIES: AFM.IAttribute = {
+export const ATTRIBUTE_CITIES: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
         uri: '/gdc/md/storybook/obj/3.df'
