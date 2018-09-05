@@ -152,12 +152,14 @@
     },
     "AFM components/PieChart": {
       "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain"
+        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
+        "delay": 500
       }
     },
     "AFM components/DonutChart": {
       "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain"
+        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
+        "delay": 500
       }
     },
     "Core components/AreaChart": {
