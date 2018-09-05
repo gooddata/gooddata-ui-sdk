@@ -43,6 +43,11 @@ class Header extends React.Component {
                     Project ID:
                     <span className="backendInfoValue">{projectId}</span>
                 </span>
+                <span className="backendInfoItem">
+                    <Link to="/about-this-project">
+                        <span>About This Project</span>
+                    </Link>
+                </span>
                 <span className="backendInfoClose" onClick={this.toggleBackendInfo} />
             </div>
         );
