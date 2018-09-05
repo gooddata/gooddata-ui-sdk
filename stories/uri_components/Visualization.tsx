@@ -9,7 +9,7 @@ import { Visualization, IVisualizationProps } from '../../src/components/uri/Vis
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
-import '../../styles/scss/table.scss';
+import '../../src/components/visualizations/styles/table.scss';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const defaultFilter: AFM.IAbsoluteDateFilter = {

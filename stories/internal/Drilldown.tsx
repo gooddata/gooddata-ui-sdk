@@ -14,7 +14,7 @@ import {
 } from '../../src/components/visualizations/chart/constants';
 
 import '../../styles/scss/charts.scss';
-import '../../styles/scss/table.scss';
+import '../../src/components/visualizations/styles/table.scss';
 import {
     EXECUTION_REQUEST_POP,
     EXECUTION_RESPONSE_POP,

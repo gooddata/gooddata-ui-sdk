@@ -58,6 +58,8 @@ import {
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
 
+import '../../../styles/scss/pivotTable.scss';
+
 export interface IPivotTableProps extends ICommonChartProps {
     resultSpec?: AFM.IResultSpec;
     dataSource: IDataSource;
@@ -437,7 +439,10 @@ export class PivotTableInner extends
                 // loading indicator
                 loadingRenderer: RowLoadingElement as any,
                 agColumnHeader: PivotHeader as any
-            }
+            },
+
+            // Custom CSS classes
+            rowClass: 'gd-table-row'
         };
 
         // columnDefs are loaded with first page request. Show overlay loading before first page is available.
@@ -456,7 +461,7 @@ export class PivotTableInner extends
         ) : null;
 
         return (
-            <div className="ag-theme-balham s-pivot-table" style={{ height: '100%', position: 'relative' }}>
+            <div className="gd-table ag-theme-balham s-pivot-table" style={{ height: '100%', position: 'relative' }}>
                 {tableLoadingOverlay}
                 <AgGridReact
                     {...gridOptions}
