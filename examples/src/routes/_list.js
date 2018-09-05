@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import AboutThisProject from './AboutThisProject';
 import AttributeFilter from './AttributeFilter';
 import Sorting from './Sorting';
 import TimeOverTimeComparison from './TimeOverTimeComparison';
@@ -55,6 +56,10 @@ export const hiddenPaths = [
     { path: '/pivot-table', title: 'Pivot Table', Component: PivotTable }
 ];
 
+export const backendInfoRoutes = [
+    { path: '/about-this-project', title: 'About This Project', Component: AboutThisProject }
+];
+
 export const userRoutes = [
     { path: '/login', title: 'Login', Component: Login },
     { path: '/registration', title: 'Registration', Component: Registration }
@@ -68,7 +73,8 @@ export const routes = [
     ...sideNavigationRoutes,
     ...advancedUseCasesRoutes,
     ...nextRoutes,
-    ...hiddenPaths
+    ...hiddenPaths,
+    ...backendInfoRoutes
 ];
 
 const components = routes.map(r => r.component);
