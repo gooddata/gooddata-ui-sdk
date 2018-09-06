@@ -25,7 +25,9 @@ const HEATMAP_TEMPLATE = {
         heatmap: {
             dataLabels: {
                 enabled: true,
-                allowOverlap: false
+                allowOverlap: false,
+                crop: true,
+                overflow: 'justify'
             },
             point: {
                 events: {
