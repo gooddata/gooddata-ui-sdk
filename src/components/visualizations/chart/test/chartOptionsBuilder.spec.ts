@@ -586,8 +586,8 @@ describe('chartOptionsBuilder', () => {
                 expect(
                     seriesItemData.map((pointData: any) => pointData.name)
                 ).toEqual([
-                    'Primary measure - previous period',
-                    'Primary measure - previous period'
+                    'Primary measure - period ago',
+                    'Primary measure - period ago'
                 ]);
             });
 

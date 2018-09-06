@@ -11,7 +11,7 @@
         [
           {
             "measureHeaderItem": {
-              "name": "Primary measure - previous period",
+              "name": "Primary measure - period ago",
               "order": 0
             }
           }, {

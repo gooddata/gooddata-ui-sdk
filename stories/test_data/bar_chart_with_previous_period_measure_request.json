@@ -4,7 +4,7 @@
       "measures": [
         {
           "localIdentifier": "m1.pp1",
-          "alias": "Primary measure - previous period",
+          "alias": "Primary measure - period ago",
           "definition": {
             "previousPeriodMeasure": {
               "measureIdentifier": "m1",
