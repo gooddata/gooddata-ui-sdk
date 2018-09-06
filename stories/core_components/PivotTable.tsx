@@ -103,6 +103,46 @@ storiesOf('Core components/PivotTable', module)
             </div>
         )
     ))
+    .add('two measures, 1 column attribute, 1 row attribute with sorting', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    columns={[ATTRIBUTE_1]}
+                    sortBy={[
+                        {
+                            attributeSortItem: {
+                                direction: 'asc',
+                                attributeIdentifier: 'a2'
+                            }
+                        },
+                        {
+                            measureSortItem: {
+                                direction: 'asc',
+                                locators: [
+                                    {
+                                        attributeLocatorItem: {
+                                            attributeIdentifier: 'a1',
+                                            element: '/gdc/md/storybook/obj/4/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        measureLocatorItem: {
+                                            measureIdentifier: 'm1'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]}
+                    rows={[ATTRIBUTE_2]}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
     .add('table with resizing', () => (
         screenshotWrap(
             <div

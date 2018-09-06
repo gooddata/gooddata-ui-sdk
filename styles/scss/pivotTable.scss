@@ -182,7 +182,7 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
         }
     }
 
-    &-arrow-down::before {
+    &-arrow-up::before {
         top: -2px;
         transform: rotate(180deg);
     }

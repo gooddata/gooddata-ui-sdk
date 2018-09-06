@@ -67,6 +67,8 @@ export function dataSourceProvider<T>(
     return class WrappedComponent
         extends React.Component<IDataSourceProviderProps, IDataSourceProviderInjectedProps> {
 
+        public static displayName = componentName ? `${componentName}WithDataSource` : 'WrappedComponent';
+
         public static propTypes = {
             projectId: PropTypes.string,
             afm: AfmPropTypesShape.isRequired,
@@ -136,7 +138,6 @@ export function dataSourceProvider<T>(
                 ['afm', 'projectId', 'resultSpec', 'adapterFactory']
             );
             const resultSpec = addDefaultDimensions(this.props.afm, this.props.resultSpec, generateDefaultDimensions);
-
             return (
                 <InnerComponent
                     {...props}

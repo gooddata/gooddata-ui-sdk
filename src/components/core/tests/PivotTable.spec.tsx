@@ -6,12 +6,15 @@ import cloneDeep = require('lodash/cloneDeep');
 import {
     PivotTable,
     PivotTableInner,
+    getSortItemByColId,
     getGridDataSource,
     RowLoadingElement,
     getDrillRowData,
     getTreeLeaves,
     indexOfTreeNode,
-    getDrillIntersection
+    getDrillIntersection,
+    getParsedFields,
+    getSortsFromModel
 } from '../PivotTable';
 import { oneMeasureDataSource } from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
@@ -38,9 +41,11 @@ describe('PivotTable', () => {
             const endRow = 0;
             const successCallback = jest.fn();
             const onSuccess = jest.fn();
+            const sortModel: any[] = [];
+            const getExecution = () => pivotTableWithColumnAndRowAttributes;
 
-            const gridDataSource = getGridDataSource(resultSpec, getPage, onSuccess);
-            await gridDataSource.getRows({ startRow, endRow, successCallback } as any);
+            const gridDataSource = getGridDataSource(resultSpec, getPage, getExecution, onSuccess);
+            await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
             expect(successCallback.mock.calls[0]).toMatchSnapshot();
             expect(onSuccess.mock.calls[0]).toMatchSnapshot();
@@ -240,6 +245,75 @@ const tree: any = {
         }
     ]
 };
+
+describe('getParsedFields', () => {
+    it('should return last parsed field from colId', () => {
+        expect(getParsedFields('a_2009')).toEqual([['a', '2009']]);
+        expect(getParsedFields('a_2009_4-a_2071_12'))
+            .toEqual([['a', '2009', '4'], ['a', '2071', '12']]);
+        expect(getParsedFields('a_2009_4-a_2071_12-m_3'))
+            .toEqual([['a', '2009', '4'], ['a', '2071', '12'], ['m', '3']]);
+    });
+});
+
+describe('getSortItemByColId', () => {
+    it('should return an attributeSortItem', () => {
+        expect(getSortItemByColId(
+            pivotTableWithColumnAndRowAttributes,
+            'a_2211',
+            'asc'
+        )).toEqual({ attributeSortItem: { attributeIdentifier: 'state', direction: 'asc' } });
+    });
+    it('should return a measureSortItem', () => {
+        expect(getSortItemByColId(
+            pivotTableWithColumnAndRowAttributes,
+            'a_2009_1-a_2071_1-m_0',
+            'asc'
+        )).toEqual({
+            measureSortItem: {
+                direction: 'asc',
+                locators: [
+                    {
+                        attributeLocatorItem: {
+                            attributeIdentifier: 'year',
+                            element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                        }
+                    },
+                    {
+                        attributeLocatorItem: {
+                            attributeIdentifier: 'month',
+                            element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                        }
+                    },
+                    {
+                        measureLocatorItem: {
+                            measureIdentifier: 'franchiseFeesIdentifier'
+                        }
+                    }
+                ]
+            }
+        });
+    });
+});
+
+describe('getSortsFromModel', () => {
+    it('should return sortItems based on sortModel', () => {
+        const sortModel: any[] = [
+            {
+                colId: 'a_2011',
+                sort: 'asc'
+            }
+        ];
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
+            [{
+                attributeSortItem: {
+                    attributeIdentifier: 'year',
+                    direction: 'asc'
+                }
+            }]
+        );
+    });
+});
 
 describe('getTreeleaves', () => {
     it('should return tree nodes that have no children', () => {

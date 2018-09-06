@@ -36,7 +36,7 @@ export interface ILoadingInjectedProps {
     error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
-    // if autoExecuteDataSource is on, this callback is passed to the inner component and handles loading
+    // if autoExecuteDataSource is false, this callback is passed to the inner component and handles loading
     getPage?: (
         resultSpec: AFM.IResultSpec,
         limit: number[],
@@ -108,13 +108,13 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             const { result, isLoading, error } = this.state;
             const { intl } = this.props;
 
-            const getPageProperty = autoExecuteDataSource ? {}
-                : {
-                    getPage: this.getPage
-                };
+            const getPageProperty = autoExecuteDataSource
+                ? {}
+                : { getPage: this.getPage };
 
             return (
                 <InnerComponent
+                    key="InnerComponent"
                     {...this.props}
                     execution={result}
                     onDataTooLarge={this.onDataTooLarge}
@@ -132,6 +132,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             limit: number[],
             offset: number[]
         ) {
+            this.setState({ error: null });
             return this.props.dataSource.getPage(resultSpec, limit, offset)
                 .then(checkEmptyResult)
                 .then((result) => {

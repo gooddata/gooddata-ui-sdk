@@ -17,7 +17,7 @@ import DrillWithExternalData from './DrillWithExternalData';
 import Registration from './Registration';
 import Login from './Login';
 import PivotTable from './PivotTable';
-import PivotTableDrilling from './PivotTableDrilling';
+import PivotTableDynamic from './PivotTableDynamic';
 import WithSubRoutes from './WithSubRoutes';
 
 export const advancedUseCasesRoutes = [
@@ -33,7 +33,7 @@ export const advancedUseCasesRoutes = [
 
 export const nextRoutes = [
     { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTable },
-    { path: '/next/pivot-table-drilling', title: 'PivotTable Drilling', Component: PivotTableDrilling }
+    { path: '/next/pivot-table-dynamic', title: 'PivotTable Dynamic', Component: PivotTableDynamic }
 ];
 
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
