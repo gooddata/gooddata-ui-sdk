@@ -1795,6 +1795,34 @@ module.exports = {
                     alias: 'Date'
                 }]
             }]
-        }
+        },
+        {
+            title: 'Chart with disabled gridline',
+            identifier: '1007',
+            type: 'local:bar',
+            filters: [],
+            buckets: [{
+                localIdentifier: 'measures',
+                items: [{
+                    localIdentifier: 'm1',
+                    filters: [],
+                    identifier: '1',
+                    alias: 'Amount'
+                }, {
+                    localIdentifier: 'm2',
+                    filters: [],
+                    identifier: '2',
+                    alias: 'Value'
+                }]
+            }, {
+                localIdentifier: 'view',
+                items: [{
+                    localIdentifier: 'a1',
+                    displayForm: 'attr.closed.year.df',
+                    alias: 'Date'
+                }]
+            }],
+            properties: "{\"controls\":{\"grid\":{\"enabled\":false}}}"
+        },
     ]
 };
