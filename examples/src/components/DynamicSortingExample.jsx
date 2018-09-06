@@ -88,8 +88,7 @@ export class DynamicSortingExample extends Component {
                     createMeasureSortItem(
                         totalSalesIdentifier,
                         dir,
-                        locationStateDisplayFormIdentifier,
-                        locationStateAttributeCaliforniaUri
+                        [locationStateDisplayFormIdentifier, locationStateAttributeCaliforniaUri]
                     )
                 ])
             },
@@ -101,8 +100,7 @@ export class DynamicSortingExample extends Component {
                     createMeasureSortItem(
                         totalSalesIdentifier,
                         dir,
-                        monthDateIdentifier,
-                        monthDateIdentifierJanuary
+                        [monthDateIdentifier, monthDateIdentifierJanuary]
                     )
                 ])
             },
@@ -115,14 +113,12 @@ export class DynamicSortingExample extends Component {
                     createMeasureSortItem(
                         totalSalesIdentifier,
                         'asc',
-                        locationStateDisplayFormIdentifier,
-                        locationStateAttributeCaliforniaUri
+                        [locationStateDisplayFormIdentifier, locationStateAttributeCaliforniaUri]
                     ),
                     createMeasureSortItem(
                         totalSalesIdentifier,
                         'desc',
-                        monthDateIdentifier,
-                        monthDateIdentifierJanuary
+                        [monthDateIdentifier, monthDateIdentifierJanuary]
                     )
                 ])
             }

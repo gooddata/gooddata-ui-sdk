@@ -1,23 +1,47 @@
 // (C) 2007-2018 GoodData Corporation
 import {
+    getIdsFromUri,
     identifyHeader,
+    identifyResponseHeader,
     headerToGrid,
     getColumnHeaders,
     getRowHeaders,
     getFields,
     getRow,
     getMinimalRowData,
+    assortDimensionHeaders,
+    assignSorting,
     executionToAGGridAdapter,
     sanitizeField,
     getMeasureDrillItem,
-    assignDrillItemsAndType
+    assignDrillItemsAndType,
+    getAttributeSortItemFieldAndDirection,
+    getMeasureSortItemFieldAndDirection
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
-import { Execution } from '@gooddata/typings/dist';
+import { Execution, AFM } from '@gooddata/typings';
 import { IDrillItem } from '../../interfaces/DrillEvents';
 import { IGridHeader } from '../../interfaces/AGGrid';
 
+describe('getIdsFromUri', () => {
+    it('should return array of attribute id and attribute value id', () => {
+        expect(getIdsFromUri('/gdc/md/storybook/obj/123/elements?id=456'))
+            .toEqual(['123', '456']);
+    });
+    it('should return null as attribute value id if supplied with attribute uri', () => {
+        expect(getIdsFromUri('/gdc/md/storybook/obj/123'))
+            .toEqual(['123', null]);
+    });
+    it('should work with non standard ids and sanitize them', () => {
+        expect(getIdsFromUri('/gdc/md/storybook/obj/123_ABC.DEF/elements?id=456_GHI.789'))
+            .toEqual(['123UNDERSCOREABCDOTDEF', '456UNDERSCOREGHIDOT789']);
+    });
+    it('should return unsanitized ids if sanitize: false', () => {
+        expect(getIdsFromUri('/gdc/md/storybook/obj/123_ABC.DEF/elements?id=456_GHI.789', false))
+            .toEqual(['123_ABC.DEF', '456_GHI.789']);
+    });
+});
 describe('identifyHeader', () => {
     it('should return correct field key for an attribute header', () => {
         expect(
@@ -29,6 +53,15 @@ describe('identifyHeader', () => {
         expect(
             identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0])
         ).toBe('m_0');
+    });
+});
+describe('identifyResponseHeader', () => {
+    it('should return correct field key for an attribute response header', () => {
+        expect(
+            identifyResponseHeader(
+                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers[0]
+            )
+        ).toBe('a_2211');
     });
 });
 
@@ -309,6 +342,80 @@ describe('getMinimalRowData', () => {
     });
 });
 
+describe('assortDimensionHeaders', () => {
+    it('should return attribute and measure dimension headers', () => {
+        const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+        const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+        expect(attributeHeaders).toHaveLength(4);
+        expect(attributeHeaders.filter(header => Execution.isAttributeHeader(header))).toHaveLength(4);
+        expect(measureHeaderItems).toHaveLength(4);
+        expect(measureHeaderItems.filter(header => header.hasOwnProperty('measureHeaderItem'))).toHaveLength(4);
+    });
+});
+
+describe('getAttributeSortItemFieldAndDirection', () => {
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+    const { attributeHeaders } = assortDimensionHeaders(dimensions);
+    const attributeSortItem: AFM.IAttributeSortItem = {
+        attributeSortItem: {
+            direction: 'asc',
+            attributeIdentifier: 'state'
+        }
+    };
+    it('should return matching key and direction from attributeHeaders', () => {
+        expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeHeaders))
+            .toEqual(['a_2211', 'asc' ]);
+    });
+});
+
+describe('getMeasureSortItemFieldAndDirection', () => {
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+    const { measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: 'desc',
+            locators: [
+                {
+                    attributeLocatorItem: {
+                        attributeIdentifier: 'date.aam81lMifn6q',
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                    }
+                },
+                {
+                    attributeLocatorItem: {
+                        attributeIdentifier: 'date.abm81lMifn6q',
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                    }
+                },
+                {
+                    measureLocatorItem: {
+                        measureIdentifier: 'aaEGaXAEgB7U'
+                    }
+                }
+            ]
+        }
+    };
+    it('should return matching key and direction from attributeHeaders', () => {
+        expect(getMeasureSortItemFieldAndDirection(measureSortItem, measureHeaderItems))
+            .toEqual(['a_2009_1-a_2071_1-m_-1', 'desc' ]);
+    });
+});
+
+describe('assignSorting', () => {
+    const ASC = 'asc';
+    const sortingMap = { a_1234: ASC };
+    it('should assign sort property to the colDef with matching field', () => {
+        const colDef = { field: 'a_1234' };
+        assignSorting(colDef, sortingMap);
+        expect(colDef).toEqual({ field: 'a_1234', sort: 'asc' });
+    });
+    it('should return identical', () => {
+        const colDef = { field: 'a_5678' };
+        assignSorting(colDef, sortingMap);
+        expect(colDef).toEqual({ field: 'a_5678' });
+    });
+});
+
 describe('executionToAGGridAdapter', () => {
     it('should return grid data for executionResult', () => {
         expect(
@@ -329,10 +436,10 @@ describe('executionToAGGridAdapter', () => {
 });
 
 describe('sanitizeField', () => {
-    it('should replace [.] and [-] characters with placeholders', () => {
+    it('should replace [.], [_] and [-] characters with placeholders', () => {
         expect(
-            sanitizeField('field.with-replacement')
-        ).toBe('fieldDOTwithDASHreplacement');
+            sanitizeField('field.with-replacement_')
+        ).toBe('fieldDOTwithDASHreplacementUNDERSCORE');
     });
 });
 
