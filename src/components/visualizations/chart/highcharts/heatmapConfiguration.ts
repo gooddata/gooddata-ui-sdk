@@ -6,7 +6,7 @@ import { WHITE, GRAY } from '../../utils/color';
 const HEATMAP_TEMPLATE = {
     chart: {
         type: 'heatmap',
-        marginTop: 0,
+        marginTop: 8,
         marginRight: 0,
         spacingRight: 0
     },

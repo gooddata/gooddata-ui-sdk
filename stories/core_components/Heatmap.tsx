@@ -9,8 +9,9 @@ import {
     ATTRIBUTE_2,
     ATTRIBUTE_3,
     MEASURE_1,
+    MEASURE_2,
     ATTRIBUTE_1_WITH_ALIAS,
-    ATTRIBUTE_60COUTRIES,
+    ATTRIBUTE_COUNTRY,
     ATTRIBUTE_POPULARITY
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
@@ -132,7 +133,22 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_60COUTRIES}
+                    segmentBy={ATTRIBUTE_COUNTRY}
+                    trendBy={ATTRIBUTE_POPULARITY}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with last label of yaxis exceed top grid line', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_2}
+                    segmentBy={ATTRIBUTE_COUNTRY}
                     trendBy={ATTRIBUTE_POPULARITY}
                     onError={onErrorHandler}
                     LoadingComponent={null}

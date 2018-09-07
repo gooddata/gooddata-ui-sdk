@@ -115,9 +115,9 @@ export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute = {
     }
 };
 
-export const ATTRIBUTE_60COUTRIES: VisualizationObject.IVisualizationAttribute = {
+export const ATTRIBUTE_COUNTRY: VisualizationObject.IVisualizationAttribute = {
     visualizationAttribute: {
-        localIdentifier: '60countries',
+        localIdentifier: 'country',
         displayForm: {
             uri: '/gdc/md/storybook/obj/3.df'
         }

@@ -4,6 +4,7 @@ import { extendDataLabelColors } from './plugins/dataLabelsColors';
 import { applyPointHaloOptions } from './plugins/pointHalo';
 import { patternFill } from './plugins/patternFillV2';
 import { renderHeatmapCells } from './plugins/renderHeatmapCells';
+import { linearTickPositions } from './plugins/linearTickPositions';
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, 'renderStackTotals', function(proceed: any) {
@@ -37,4 +38,5 @@ export function initChartPlugins(Highcharts: any) {
     applyPointHaloOptions(Highcharts);
     patternFill(Highcharts);
     renderHeatmapCells(Highcharts);
+    linearTickPositions(Highcharts);
 }
