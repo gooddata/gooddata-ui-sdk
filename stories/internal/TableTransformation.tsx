@@ -11,7 +11,7 @@ import { TableTransformation } from '../../src/components/visualizations/table/T
 import { IResponsiveTableProps, ResponsiveTable } from '../../src/components/visualizations/table/ResponsiveTable';
 import { IIndexedTotalItem } from '../../src/interfaces/Totals';
 
-import '../../src/components/visualizations/styles/table.scss';
+import '../../styles/scss/table.scss';
 
 import {
     EXECUTION_REQUEST_2A_1M,
