@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Localization, VisualizationObject } from '@gooddata/typings';
 import IntlStore from '../helpers/IntlStore';
 import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;

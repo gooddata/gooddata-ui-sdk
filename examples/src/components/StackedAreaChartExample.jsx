@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
 import { AreaChart } from '@gooddata/react-components';
 
