@@ -19,6 +19,7 @@ import Registration from './Registration';
 import Login from './Login';
 import PivotTable from './PivotTable';
 import PivotTableDynamic from './PivotTableDynamic';
+import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
 
 export const advancedUseCasesRoutes = [
@@ -53,6 +54,7 @@ export const sideNavigationRoutes = [
 
 export const hiddenPaths = [
     { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
+    { path: '/aggregation-test', title: 'Aggregation Test', Component: AggregationTest },
     { path: '/pivot-table', title: 'Pivot Table', Component: PivotTable }
 ];
 
