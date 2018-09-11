@@ -2222,6 +2222,7 @@ Object {
       },
     },
   ],
+  "rowTotals": null,
 }
 `;
 
@@ -2278,6 +2279,7 @@ Object {
       },
     },
   ],
+  "rowTotals": null,
 }
 `;
 

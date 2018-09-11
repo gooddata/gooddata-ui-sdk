@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import noop = require('lodash/noop');
 import cloneDeep = require('lodash/cloneDeep');
 
@@ -22,6 +23,8 @@ import { LoadingComponent } from '../../simple/LoadingComponent';
 import { executionToAGGridAdapter } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
 
+const intl = createIntlMock();
+
 describe('PivotTable', () => {
     it('should render PivotTableInner', () => {
         const wrapper = mount(
@@ -41,10 +44,21 @@ describe('PivotTable', () => {
             const endRow = 0;
             const successCallback = jest.fn();
             const onSuccess = jest.fn();
+            const getGridApi = () => ({
+                setPinnedBottomRowData: jest.fn()
+            });
             const sortModel: any[] = [];
             const getExecution = () => pivotTableWithColumnAndRowAttributes;
 
-            const gridDataSource = getGridDataSource(resultSpec, getPage, getExecution, onSuccess);
+            const gridDataSource = getGridDataSource(
+                resultSpec,
+                getPage,
+                getExecution,
+                onSuccess,
+                getGridApi,
+                intl,
+                {}
+            );
             await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
             expect(successCallback.mock.calls[0]).toMatchSnapshot();
@@ -72,10 +86,14 @@ describe('PivotTable', () => {
 
     describe('getDrillIntersection', () => {
         const afm = pivotTableWithColumnAndRowAttributes.executionRequest.afm;
-        const { columnDefs, rowData } = executionToAGGridAdapter({
-            executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-            executionResult: pivotTableWithColumnAndRowAttributes.executionResult
-        });
+        const { columnDefs, rowData } = executionToAGGridAdapter(
+            {
+                executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
+                executionResult: pivotTableWithColumnAndRowAttributes.executionResult
+            },
+            {},
+            intl
+        );
         it('should return intersection of row attribute and row attribute value for row header cell', async () => {
             const rowColDef = columnDefs[0]; // row header
             const drillItems = [...rowColDef.drillItems, rowData[0].drillItemMap[rowColDef.field]];
@@ -152,10 +170,14 @@ describe('PivotTable', () => {
 
     describe('getDrillRowData', () => {
         it('should return an array of row data', async () => {
-            const { columnDefs, rowData } = executionToAGGridAdapter({
-                executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-                executionResult: pivotTableWithColumnAndRowAttributes.executionResult
-            });
+            const { columnDefs, rowData } = executionToAGGridAdapter(
+                {
+                    executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
+                    executionResult: pivotTableWithColumnAndRowAttributes.executionResult
+                },
+                {},
+                intl
+            );
             const leafColumnDefs = getTreeLeaves(columnDefs);
             const drillRow = getDrillRowData(leafColumnDefs, rowData[0]);
             expect(drillRow).toEqual([

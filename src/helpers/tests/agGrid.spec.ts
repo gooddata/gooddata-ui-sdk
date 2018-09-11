@@ -5,6 +5,7 @@ import {
     identifyResponseHeader,
     headerToGrid,
     getColumnHeaders,
+    getRowTotals,
     getRowHeaders,
     getFields,
     getRow,
@@ -23,6 +24,9 @@ import * as fixtures from '../../../stories/test_data/fixtures';
 import { Execution, AFM } from '@gooddata/typings';
 import { IDrillItem } from '../../interfaces/DrillEvents';
 import { IGridHeader } from '../../interfaces/AGGrid';
+import { createIntlMock } from '../../components/visualizations/utils/intlUtils';
+
+const intl = createIntlMock();
 
 describe('getIdsFromUri', () => {
     it('should return array of attribute id and attribute value id', () => {
@@ -76,6 +80,108 @@ describe('headerToGrid', () => {
         expect(
             headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0], 'prefix_')
         ).toEqual({ field: 'prefix_m_0', headerName: '$ Franchise Fees' });
+    });
+});
+
+describe('getRowTotals', () => {
+    it('should return total rows', () => {
+        const fixture = fixtures.pivotTableWithColumnRowAttributesAndTotals;
+        const rowFields: string[]
+            = getRowHeaders(fixture.executionResponse.dimensions[0].headers, {}, false).map(header => header.field);
+        const columnFields: string[]
+            = getFields(fixture.executionResult.headerItems[1]);
+        expect(
+            getRowTotals(
+                fixture.executionResult.totals,
+                [...rowFields, ...columnFields],
+                fixture.executionResponse.dimensions[0].headers,
+                intl
+            )
+        ).toEqual([
+            {
+                'a_2009_1-a_2071_1-m_0': '1566006.57195',
+                'a_2009_1-a_2071_1-m_1': '150708.58845',
+                'a_2009_1-a_2071_2-m_0': '1555682.95305',
+                'a_2009_1-a_2071_2-m_1': '146457.68655',
+                'a_2009_1-a_2071_3-m_0': '1548771.3336',
+                'a_2009_1-a_2071_3-m_1': '143611.7256',
+                'a_2009_2-a_2071_4-m_0': '1563377.8356',
+                'a_2009_2-a_2071_4-m_1': '149626.1676',
+                'a_2009_2-a_2071_5-m_0': '1544490.2151',
+                'a_2009_2-a_2071_5-m_1': '141848.9121',
+                'a_2009_2-a_2071_6-m_0': '1562776.8822',
+                'a_2009_2-a_2071_6-m_1': '149378.7162',
+                'a_2009_3-a_2071_7-m_0': '1559076.77865',
+                'a_2009_3-a_2071_7-m_1': '147855.14415',
+                'a_2009_3-a_2071_8-m_0': '1526945.56485',
+                'a_2009_3-a_2071_8-m_1': '134624.64435',
+                'a_2009_3-a_2071_9-m_0': '1559730.40485',
+                'a_2009_3-a_2071_9-m_1': '148124.28435',
+                'a_2009_4-a_2071_10-m_0': '1554810.0141',
+                'a_2009_4-a_2071_10-m_1': '146098.2411',
+                'a_2009_4-a_2071_11-m_0': '1556026.614',
+                'a_2009_4-a_2071_11-m_1': '146599.194',
+                'a_2009_4-a_2071_12-m_0': '1476657.6039',
+                'a_2009_4-a_2071_12-m_1': '113917.8369',
+                'a_2211': 'Sum',
+                'colSpan': {
+                    count: 3,
+                    headerKey: 'a_2211'
+                },
+                'type': {
+                    rowTotal: true
+                }
+            },
+            {
+              'a_2009_1-a_2071_1-m_0': '52200.219065',
+              'a_2009_1-a_2071_1-m_1': null,
+              'a_2009_1-a_2071_2-m_0': '51856.098435',
+              'a_2009_1-a_2071_2-m_1': null,
+              'a_2009_1-a_2071_3-m_0': '51625.71112',
+              'a_2009_1-a_2071_3-m_1': null,
+              'a_2009_2-a_2071_4-m_0': '52112.59452',
+              'a_2009_2-a_2071_4-m_1': null,
+              'a_2009_2-a_2071_5-m_0': '51483.00717',
+              'a_2009_2-a_2071_5-m_1': null,
+              'a_2009_2-a_2071_6-m_0': '52092.56274',
+              'a_2009_2-a_2071_6-m_1': null,
+              'a_2009_3-a_2071_7-m_0': '51969.225955',
+              'a_2009_3-a_2071_7-m_1': null,
+              'a_2009_3-a_2071_8-m_0': '50898.185495',
+              'a_2009_3-a_2071_8-m_1': null,
+              'a_2009_3-a_2071_9-m_0': '51991.013495',
+              'a_2009_3-a_2071_9-m_1': null,
+              'a_2009_4-a_2071_10-m_0': '51827.00047',
+              'a_2009_4-a_2071_10-m_1': null,
+              'a_2009_4-a_2071_11-m_0': '51867.5538',
+              'a_2009_4-a_2071_11-m_1': null,
+              'a_2009_4-a_2071_12-m_0': '49221.92013',
+              'a_2009_4-a_2071_12-m_1': null,
+              'a_2211': 'Avg',
+              'colSpan': {
+                count: 3,
+                headerKey: 'a_2211'
+              },
+              'type': {
+                rowTotal: true
+              }
+            }
+          ]);
+    });
+    it('should return null when no totals are defined', () => {
+        const fixture = fixtures.pivotTableWithColumnAndRowAttributes;
+        const rowFields: string[]
+            = getRowHeaders(fixture.executionResponse.dimensions[0].headers, {}, false).map(header => header.field);
+        const columnFields: string[]
+            = getFields(fixture.executionResult.headerItems[1]);
+        expect(
+            getRowTotals(
+                fixture.executionResult.totals,
+                [...rowFields, ...columnFields],
+                fixture.executionResponse.dimensions[0].headers,
+                intl
+            )
+        ).toBe(null);
     });
 });
 
@@ -419,18 +525,26 @@ describe('assignSorting', () => {
 describe('executionToAGGridAdapter', () => {
     it('should return grid data for executionResult', () => {
         expect(
-            executionToAGGridAdapter({
-                executionResponse: fixtures.pivotTableWithColumnAndRowAttributes.executionResponse,
-                executionResult: fixtures.pivotTableWithColumnAndRowAttributes.executionResult
-            })
+            executionToAGGridAdapter(
+                {
+                    executionResponse: fixtures.pivotTableWithColumnAndRowAttributes.executionResponse,
+                    executionResult: fixtures.pivotTableWithColumnAndRowAttributes.executionResult
+                },
+                {},
+                intl
+            )
         ).toMatchSnapshot();
     });
     it('should return grid data for executionResult with rowGroups and loadingRenderer', () => {
         expect(
-            executionToAGGridAdapter({
-                executionResponse: fixtures.barChartWithStackByAndOnlyOneStack.executionResponse,
-                executionResult: fixtures.barChartWithStackByAndOnlyOneStack.executionResult
-            })
+            executionToAGGridAdapter(
+                {
+                    executionResponse: fixtures.barChartWithStackByAndOnlyOneStack.executionResponse,
+                    executionResult: fixtures.barChartWithStackByAndOnlyOneStack.executionResult
+                },
+                {},
+                intl
+            )
         ).toMatchSnapshot();
     });
 });
