@@ -3,7 +3,9 @@ import {
     shouldFollowPointer,
     shouldStartOrEndOnTick,
     getChartProperties,
-    pointInRange
+    pointInRange,
+    getStackedMaxValue,
+    getStackedMinValue
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -25,7 +27,7 @@ describe('helpers', () => {
                 .toEqual({
                     xAxisProps: { rotation: '60', visible: false },
                     yAxisProps: { labelsEnabled: true }
-            });
+                });
         });
 
         it('should return properties from config for bar chart with switched axes', () => {
@@ -33,17 +35,17 @@ describe('helpers', () => {
                 .toEqual({
                     yAxisProps: { rotation: '60', visible: false },
                     xAxisProps: { labelsEnabled: true }
-            });
+                });
         });
     });
 
-    describe ('shouldStartOrEndOnTick', () => {
+    describe('shouldStartOrEndOnTick', () => {
         const nonStackedChartOptions = {
             hasStackByAttribute: false,
             data: {
                 series: [
                     {
-                        data: [ { y: 20 }],
+                        data: [{ y: 20 }],
                         visible: true
                     }
                 ]
@@ -67,7 +69,7 @@ describe('helpers', () => {
         };
 
         describe('Non stacked chart', () => {
-            it ('should return false when min and max are set', () => {
+            it('should return false when min and max are set', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '5', max: '10' }
@@ -75,7 +77,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return false when min is greater than max', () => {
+            it('should return false when min is greater than max', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '10', max: '5' }
@@ -84,7 +86,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return false if min is set but less than max data value (non stacked)', () => {
+            it('should return false if min is set but less than max data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '10' }
@@ -93,7 +95,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true if min is set and bigger than max data value (non stacked)', () => {
+            it('should return true if min is set and bigger than max data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '22' }
@@ -102,7 +104,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true when no max or min are set', () => {
+            it('should return true when no max or min are set', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: {}
@@ -111,7 +113,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true if max is set but less than min data value (non stacked)', () => {
+            it('should return true if max is set but less than min data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { max: '-10' }
@@ -122,7 +124,7 @@ describe('helpers', () => {
         });
 
         describe('Stacked chart', () => {
-            it ('should return false if min is set but less than max data value (stacked)', () => {
+            it('should return false if min is set but less than max data value (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
                     yAxisProps: { min: '10' }
@@ -131,7 +133,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true if min is set but serie is not visible (stacked)', () => {
+            it('should return true if min is set but serie is not visible (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
                     data: {
@@ -145,7 +147,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true if min is set and greater than max data value (stacked)', () => {
+            it('should return true if min is set and greater than max data value (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
                     yAxisProps: { min: '22' }
@@ -154,7 +156,7 @@ describe('helpers', () => {
                 expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true if max is set but less than min data value (stacked)', () => {
+            it('should return true if max is set but less than min data value (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
                     yAxisProps: { max: '-10' }
@@ -376,6 +378,152 @@ describe('helpers', () => {
                 minAxisValue: -5,
                 maxAxisValue: 2
             })).toBeFalsy();
+        });
+    });
+    describe('getStackedExtremeValues', () => {
+
+        const seriesNegativeAndPositiveValues = [
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>aaa</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: 25
+                    },
+                    {
+                        name: 'data2',
+                        y: 75
+                    },
+                    {
+                        name: 'data3',
+                        y: 30
+                    }
+                ],
+                visible: true
+            }, {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -25
+                    },
+                    {
+                        name: 'data2',
+                        y: -75
+                    },
+                    {
+                        name: 'data3',
+                        y: -30
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: 15
+                    },
+                    {
+                        name: 'data2',
+                        y: 60
+                    },
+                    {
+                        name: 'data3',
+                        y: 20
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -15
+                    },
+                    {
+                        name: 'data2',
+                        y: -60
+                    },
+                    {
+                        name: 'data3',
+                        y: -20
+                    }
+                ],
+                visible: true
+            }
+        ];
+
+        const negativeValues = [
+                       {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -25
+                    },
+                    {
+                        name: 'data2',
+                        y: -75
+                    },
+                    {
+                        name: 'data3',
+                        y: -30
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -15
+                    },
+                    {
+                        name: 'data2',
+                        y: -60
+                    },
+                    {
+                        name: 'data3',
+                        y: -20
+                    }
+                ],
+                visible: true
+            }
+        ];
+
+        describe('getStackedMaxValue', () => {
+            it('should match output for negative and positive values', () => {
+                const result = getStackedMaxValue(seriesNegativeAndPositiveValues);
+                expect(result).toEqual(135);
+            });
+
+            it('should match output for negative values', () => {
+                const result = getStackedMaxValue(negativeValues);
+                expect(result).toEqual(-15);
+            });
+        });
+
+        describe('getStackedMinValue', () => {
+
+            it('should match output for negative and positive values', () => {
+                const result = getStackedMinValue(seriesNegativeAndPositiveValues);
+                expect(result).toEqual(-135);
+            });
+
+            it('should match output for negative values', () => {
+                const result = getStackedMinValue(negativeValues);
+                expect(result).toEqual(-135);
+            });
         });
     });
 });
