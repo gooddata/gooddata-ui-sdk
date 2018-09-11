@@ -2,7 +2,8 @@
 import {
     shouldFollowPointer,
     shouldStartOrEndOnTick,
-    getChartProperties
+    getChartProperties,
+    pointInRange
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -345,6 +346,36 @@ describe('helpers', () => {
 
                 expect(result).toBeTruthy();
             });
+        });
+    });
+
+    describe('pointInRange', () => {
+        it('should return true when data point is in the axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 2,
+                maxAxisValue: 8
+            })).toBeTruthy();
+        });
+
+        it('should return true when data point is on the left edge of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 5,
+                maxAxisValue: 8
+            })).toBeTruthy();
+        });
+
+        it('should return true when data point is on the right edge of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 2,
+                maxAxisValue: 5
+            })).toBeTruthy();
+        });
+
+        it('should return false when data point is outside of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: -5,
+                maxAxisValue: 2
+            })).toBeFalsy();
         });
     });
 });

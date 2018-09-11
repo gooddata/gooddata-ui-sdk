@@ -5,7 +5,9 @@ import get = require('lodash/get');
 import {
     isStacked,
     IRectBySize,
-    isIntersecting
+    isIntersecting,
+    pointInRange,
+    IAxisRange
 } from './helpers';
 
 export function isLabelOverlappingItsShape(point: any) {
@@ -57,60 +59,27 @@ export const showDataLabels = (points: any) => {
     points.filter(hasDataLabel).forEach(showDataLabel);
 };
 
-export const showDataLabelInsideChart = (
-    point: any,
-    chartBox: IRectBySize,
-    showDirection: DirectionToHide
-) => {
-    const dataLabel = point.dataLabel;
-    const dataLabelRec: IRectBySize = getDataLabelAttributes(point);
-    const inside: IInsideResult = isDataLabelInsideChart(dataLabelRec, chartBox);
-    if (dataLabel && inside.horizontally && inside.vertically) {
-        dataLabel.show();
-    } else if (inside.vertically && showDirection === 'horizontal') {
-        shiftDataLabelHorizontallyInsideChart(dataLabel, chartBox);
-    } else if (inside.horizontally && showDirection === 'vertical') {
-        shiftDataLabelVerticallyInsideChart(dataLabel, chartBox);
-    } else if (dataLabel) {
-        dataLabel.hide();
-    }
-};
-
-function shiftDataLabelVerticallyInsideChart(dataLabel: any, chartBox: IRectBySize) {
-    if (dataLabel.y < chartBox.y) {
-        dataLabel.ySetter(0);
-    }
-    if ((dataLabel.y + dataLabel.height) > chartBox.height) {
-        dataLabel.ySetter(chartBox.height - dataLabel.height);
-    }
-}
-
-function shiftDataLabelHorizontallyInsideChart(dataLabel: any, chartBox: IRectBySize) {
-    if (dataLabel.x < chartBox.x) {
-        dataLabel.xSetter(0);
-    }
-    if ((dataLabel.x + dataLabel.width) > chartBox.width) {
-        dataLabel.xSetter(chartBox.width - dataLabel.width);
-    }
-}
-
-export function isDataLabelInsideChart(dataLabelRect: IRectBySize, chartBox: IRectBySize): IInsideResult {
-    const safePaddingForOnYAxesLabels = 2;
-    return {
-        vertically: dataLabelRect.y >= chartBox.y &&
-            (dataLabelRect.y + dataLabelRect.height) <= (chartBox.y + chartBox.height + safePaddingForOnYAxesLabels),
-        horizontally: dataLabelRect.x >= chartBox.x &&
-                    (dataLabelRect.x + dataLabelRect.width) <= (chartBox.x + chartBox.width)
-    };
-}
 export interface IInsideResult {
     vertically: boolean;
     horizontally: boolean;
 }
 
-export const HORIZONTAL = 'horizontal';
-export const VERTICAL = 'vertical';
-export type DirectionToHide = 'horizontal' | 'vertical';
+export function showDataLabelInAxisRange(point: any, value: number, axisRange: IAxisRange) {
+    const isInsideAxisRange: boolean = pointInRange(value, axisRange);
+    if (!isInsideAxisRange) {
+        hideDataLabel(point);
+    }
+}
+
+export function showStackLabelInAxisRange(point: any, axisRange: IAxisRange) {
+    const end = point.stackY || point.total;
+    const start = end - point.y;
+    const isWholeUnderMin: boolean = start <= axisRange.minAxisValue && end <= axisRange.minAxisValue;
+    const isWholeAboveMax: boolean = start >= axisRange.maxAxisValue && end >= axisRange.maxAxisValue;
+    if (isWholeUnderMin || isWholeAboveMax) {
+        hideDataLabel(point);
+    }
+}
 
 export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
 
