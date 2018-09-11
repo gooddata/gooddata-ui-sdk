@@ -1,4 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
+import get = require('lodash/get');
+import set = require('lodash/set');
+import noop = require('lodash/noop');
 import { getCustomizedConfiguration } from '../customConfiguration';
 import { ISeriesDataItem } from '../../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
@@ -213,6 +216,83 @@ describe('getCustomizedConfiguration', () => {
             expect(treemapConfig.dataLabels).toEqual({
                 allowOverlap: true,
                 enabled: true
+            });
+        });
+
+        describe('bubble dataLabels formatter', () => {
+            function setMinMax(obj: any, xAxisMin: number, xAxisMax: number, yAxisMin: number, yAxisMax: number) {
+                set(obj, 'series.xAxis.min', xAxisMin);
+                set(obj, 'series.xAxis.max', xAxisMax);
+                set(obj, 'series.yAxis.min', yAxisMin);
+                set(obj, 'series.yAxis.max', yAxisMax);
+            }
+
+            function setPoint(obj: any, x: number, y: number, z: number) {
+                set(obj, 'x', x);
+                set(obj, 'y', y);
+                set(obj, 'point.z', z);
+            }
+
+            it('should draw label when bubble is inside chart area', () => {
+                const result = getCustomizedConfiguration(
+                    {
+                        ...chartOptions,
+                        type: VisualizationTypes.BUBBLE
+                    },
+                    {
+                        dataLabels: {
+                            visible: true
+                        }
+                    }
+                );
+
+                setMinMax(result, 0, 10, 0, 10);
+                setPoint(result, 5, 10, 5);
+
+                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+
+                expect(bubbleFormatter()).toEqual('5');
+            });
+
+            it('should not draw dataLabel when label is outside chart area', () => {
+                const result = getCustomizedConfiguration(
+                    {
+                        ...chartOptions,
+                        type: VisualizationTypes.BUBBLE
+                    },
+                    {
+                        dataLabels: {
+                            visible: true
+                        }
+                    }
+                );
+
+                setMinMax(result, 0, 10, 0, 10);
+                setPoint(result, 5, 11, 5);
+
+                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+
+                expect(bubbleFormatter()).toEqual(null);
+            });
+
+            it('should show data label when min and max are not defined', () => {
+                const result = getCustomizedConfiguration(
+                    {
+                        ...chartOptions,
+                        type: VisualizationTypes.BUBBLE
+                    },
+                    {
+                        dataLabels: {
+                            visible: true
+                        }
+                    }
+                );
+
+                setPoint(result, 5, 11, 5);
+
+                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+
+                expect(bubbleFormatter()).toEqual('5');
             });
         });
     });

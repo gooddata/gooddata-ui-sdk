@@ -10,6 +10,7 @@ import isEmpty = require('lodash/isEmpty');
 import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
+import isNil = require('lodash/isNil');
 import { styleVariables } from '../../styles/variables';
 import { IAxis, IChartOptions } from '../chartOptionsBuilder';
 import { IChartConfig } from '../Chart';
@@ -330,7 +331,22 @@ function labelFormatterBubble(config?: IChartConfig) {
     if (isNaN(value)) {
         return null;
     }
-    return formatLabel(value, get(this, 'point.format'), config);
+
+    const xAxisMin = get(this, 'series.xAxis.min');
+    const xAxisMax = get(this, 'series.xAxis.max');
+    const yAxisMin = get(this, 'series.yAxis.min');
+    const yAxisMax = get(this, 'series.yAxis.max');
+
+    if (
+        (!isNil(xAxisMax) && this.x > xAxisMax) ||
+        (!isNil(xAxisMin) && this.x < xAxisMin) ||
+        (!isNil(yAxisMax) && this.y > yAxisMax) ||
+        (!isNil(yAxisMin) && this.y < yAxisMin)
+    ) {
+        return null;
+    } else {
+        return formatLabel(value, get(this, 'point.format'), config);
+    }
 }
 
 function labelFormatterScatter() {
