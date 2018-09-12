@@ -17,12 +17,14 @@ const drillmodule = require('highcharts/modules/drilldown'); // tslint:disable-l
 const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-line
 const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
 const heatmap = require('highcharts/modules/heatmap'); // tslint:disable-line
+const patternFill = require('highcharts-pattern-fill'); // tslint:disable-line
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
 funnelModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);
+patternFill(Highcharts);
 initChartPlugins(Highcharts);
 
 export interface ILegendConfig {
