@@ -11,7 +11,9 @@ import {
     ATTRIBUTE_2,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
-    MEASURE_2
+    MEASURE_2,
+    TOTAL_M1_A1,
+    TOTAL_M2_A1
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -160,8 +162,40 @@ storiesOf('Core components/PivotTable', module)
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
                     rows={[ATTRIBUTE_2, ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('totals - two measures, two row attributes', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('totals - two measures, one column attributes, one row attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    columns={[ATTRIBUTE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
