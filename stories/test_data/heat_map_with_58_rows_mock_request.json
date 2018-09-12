@@ -2,11 +2,11 @@
   "execution": {
     "afm": {
       "measures": [{
-        "localIdentifier": "amount",
+        "localIdentifier": "m2",
         "definition": {
           "measure": {
             "item": {
-              "uri": "/gdc/md/storybook/obj/1"
+              "uri": "/gdc/md/storybook/obj/2"
             }
           }
         }
@@ -20,12 +20,12 @@
         "displayForm": {
           "uri": "/gdc/md/storybook/obj/3.df"
         },
-        "localIdentifier": "60countries"
+        "localIdentifier": "country"
       }]
     },
     "resultSpec": {
       "dimensions": [{
-        "itemIdentifiers": ["60countries"]
+        "itemIdentifiers": ["country"]
       }, {
         "itemIdentifiers": ["Popularity", "measureGroup"]
       }]

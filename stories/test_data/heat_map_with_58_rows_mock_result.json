@@ -58,9 +58,7 @@
           ["455", "764", "164"],
           ["195", "754", "397"],
           ["891", "228", "163"],
-          ["555", "244", "337"],
-          ["902", "855", "639"],
-          ["156", "618", "298"]
+          ["555", "244", "337"]
       ],
       "headerItems": [
           [
@@ -354,16 +352,6 @@
                       "uri": "/gdc/md/storybook/obj/3/elements?id=58",
                       "name": "Estonia"
                   }
-              }, {
-                  "attributeHeaderItem": {
-                      "uri": "/gdc/md/storybook/obj/3/elements?id=59",
-                      "name": "Ethiopia"
-                  }
-              }, {
-                  "attributeHeaderItem": {
-                      "uri": "/gdc/md/storybook/obj/3/elements?id=60",
-                      "name": "Fiji"
-                  }
               }]
           ],
           [
@@ -385,26 +373,26 @@
               }],
               [{
                   "measureHeaderItem": {
-                      "name": "Amount",
+                      "name": "Bigger Amount",
                       "order": 0
                   }
               }, {
                   "measureHeaderItem": {
-                      "name": "Amount",
+                      "name": "Bigger Amount",
                       "order": 0
                   }
               }, {
                   "measureHeaderItem": {
-                      "name": "Amount",
+                      "name": "Bigger Amount",
                       "order": 0
                   }
               }]
           ]
       ],
       "paging": {
-          "count": [60, 3],
+          "count": [58, 3],
           "offset": [0, 0],
-          "total": [60, 3]
+          "total": [58, 3]
       }
   }
 }

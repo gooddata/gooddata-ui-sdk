@@ -121,6 +121,13 @@ const ATTRIBUTE_POPULARITY: AFM.IAttribute = {
     }
 };
 
+export const ATTRIBUTE_COUNTRY = {
+    displayForm: {
+        uri: '/gdc/md/storybook/obj/3.df'
+    },
+    localIdentifier: 'country'
+};
+
 export const AFM_ONE_MEASURE: AFM.IAfm = {
     measures: [{
         ...MEASURE_1
@@ -153,20 +160,25 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
     ]
 };
 
-export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
-    measures: [
-        MEASURE_1
-    ],
+export const AFM_HEATMAP_58ROWS: AFM.IAfm = {
+    measures: [MEASURE_2],
     attributes: [{
-        displayForm: {
-            uri: '/gdc/md/storybook/obj/3.df'
-        },
-        localIdentifier: '60countries'
-    }, {
-        displayForm: {
-            uri: '/gdc/md/storybook/obj/5.df'
-        },
+        ...ATTRIBUTE_POPULARITY,
         localIdentifier: 'Popularity'
+    }, {
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '58countries'
+    }]
+};
+
+export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
+    measures: [MEASURE_1],
+    attributes: [{
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
+    }, {
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '60countries'
     }]
 };
 
