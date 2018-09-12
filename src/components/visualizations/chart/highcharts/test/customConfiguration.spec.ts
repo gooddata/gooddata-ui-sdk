@@ -49,49 +49,6 @@ describe('getCustomizedConfiguration', () => {
         expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
     });
 
-    it('should set Y axis configuration from properties', () => {
-        const result = getCustomizedConfiguration({
-                ...chartOptions,
-                yAxisProps: {
-                    min: 20,
-                    max: 30,
-                    labelsEnabled: false,
-                    visible: false
-                }
-            });
-
-        const expectedResult = {
-            ...result.yAxis[0],
-            min: 20,
-            max: 30,
-            visible: false
-        };
-        expect(result.yAxis[0]).toEqual(expectedResult);
-    });
-
-    it ('should set X axis configurations from properties', () => {
-        const result = getCustomizedConfiguration({
-            ...chartOptions,
-            xAxisProps: {
-                visible: false,
-                labelsEnabled: false,
-                rotation: '60'
-            }
-        });
-
-        const expectedResult = {
-            ...result.xAxis[0],
-            visible: false,
-            labels: {
-                ...result.xAxis[0].labels,
-                enabled: false,
-                rotation: -60
-            }
-        };
-
-        expect(result.xAxis[0]).toEqual(expectedResult);
-    });
-
     it ('should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation', () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
@@ -139,15 +96,206 @@ describe('getCustomizedConfiguration', () => {
         expect(result.plotOptions.series.connectNulls).toBeUndefined();
     });
 
+    describe('getAxesConfiguration', () => {
+        it('should set Y axis configuration from properties', () => {
+            const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    yAxisProps: {
+                        min: 20,
+                        max: 30,
+                        labelsEnabled: false,
+                        visible: false
+                    }
+                });
+
+            const expectedResult = {
+                ...result.yAxis[0],
+                min: 20,
+                max: 30,
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: false
+                },
+                title: {
+                    ...result.yAxis[0].title,
+                    enabled: false,
+                    text: ''
+                }
+            };
+            expect(result.yAxis[0]).toEqual(expectedResult);
+        });
+
+        it ('should set X axis configurations from properties', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                xAxisProps: {
+                    visible: false,
+                    labelsEnabled: false,
+                    rotation: '60'
+                }
+            });
+
+            const expectedResult = {
+                ...result.xAxis[0],
+                title: {
+                    ...result.xAxis[0].title,
+                    enabled: false,
+                    text: ''
+                },
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: false,
+                    rotation: -60
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedResult);
+        });
+
+        it('should enable axis label for scatter plot when x and y are not set', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                type: VisualizationTypes.SCATTER
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: true
+                }
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: true
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should disable xAxis labels when x axis is disabled in scatter', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                xAxisProps: {
+                    visible: false
+                },
+                type: VisualizationTypes.SCATTER
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: false
+                }
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: true
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should disable labels when labels are disabled in bubble', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                xAxisProps: {
+                    labelsEnabled: false
+                },
+                type: VisualizationTypes.BUBBLE
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: false
+                }
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: true
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should enable labels for heatmap when categories are not empty', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                data: {
+                    ...chartOptions.data,
+                    categories: ['c1', 'c2']
+                },
+                type: VisualizationTypes.HEATMAP
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: true
+                }
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: true
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should disable lables for heatmap when categories are empty', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                data: {
+                    ...chartOptions.data,
+                    categories: []
+                },
+                type: VisualizationTypes.HEATMAP
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                labels: {
+                    ...result.xAxis[0].labels,
+                    enabled: false
+                }
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                labels: {
+                    ...result.yAxis[0].labels,
+                    enabled: false
+                }
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+    });
+
     describe('gridline configuration', () => {
         it('should set gridline width to 0 when grid is disabled', () => {
             const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
             expect(result.yAxis[0].gridLineWidth).toEqual(0);
-        });
-
-        it('should set gridline width on xAxis on 0 for base chart when enabled', () => {
-            const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: true } });
-            expect(result.xAxis[0].gridLineWidth).toEqual(0);
         });
 
         it('should set gridline width on xAxis on 1 for Scatterplot when enabled', () => {
