@@ -1,15 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    showDataLabelInsideChart,
     getDataLabelAttributes,
     isLabelOverlappingItsShape,
     intersectsParentLabel,
-    isDataLabelInsideChart,
-    IInsideResult
+    showDataLabelInAxisRange,
+    showStackLabelInAxisRange
 } from '../dataLabelsHelpers';
 
 import {
-    IRectBySize
+    IRectBySize, IAxisRange
 } from '../helpers';
 
 describe('dataLabelsHelpers', () => {
@@ -76,208 +75,6 @@ describe('dataLabelsHelpers', () => {
             });
 
             expect(result).toEqual(hiddenAttributes);
-        });
-    });
-
-    describe('isDataLabelInsideChart', () => {
-        const CHART_BOX_WIDTH = 200;
-        const chartBox: IRectBySize = {
-            x: 0,
-            y: 0,
-            width: CHART_BOX_WIDTH,
-            height: CHART_BOX_WIDTH
-        };
-
-        const baseDataLabelRect: IRectBySize = {
-            x: 50,
-            y: 50,
-            width: 50,
-            height: 50
-        };
-
-        function prepareDataLabels(offset: number): IRectBySize[] {
-            const topLeftDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: -offset,
-                y: -offset
-            };
-
-            const topDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                y: -offset
-            };
-
-            const topRightDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: CHART_BOX_WIDTH + offset,
-                y: -offset
-            };
-
-            const rightDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: CHART_BOX_WIDTH + offset
-            };
-
-            const rightBottomDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: CHART_BOX_WIDTH + offset,
-                y: CHART_BOX_WIDTH + offset
-            };
-
-            const bottomDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                y: CHART_BOX_WIDTH + offset
-            };
-
-            const leftBottomDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: -offset,
-                y: CHART_BOX_WIDTH + offset
-            };
-
-            const leftDataLabelRect: IRectBySize = {
-                ...baseDataLabelRect,
-                x: -offset
-            };
-
-            return [
-                topLeftDataLabelRect,
-                topDataLabelRect,
-                topRightDataLabelRect,
-                rightDataLabelRect,
-                rightBottomDataLabelRect,
-                bottomDataLabelRect,
-                leftBottomDataLabelRect,
-                leftDataLabelRect
-            ];
-        }
-
-        const expectedResultsOut = [{
-            vertically: false,
-            horizontally: false
-        }, {
-            vertically: false,
-            horizontally: true
-        }, {
-            vertically: false,
-            horizontally: false
-        }, {
-            vertically: true,
-            horizontally: false
-        }, {
-            vertically: false,
-            horizontally: false
-        }, {
-            vertically: false,
-            horizontally: true
-        }, {
-            vertically: false,
-            horizontally: false
-        }, {
-            vertically: true,
-            horizontally: false
-        }];
-
-        it('should detect data label inside chart', () => {
-            const dataLabelRect: IRectBySize = {
-                ...baseDataLabelRect
-            };
-
-            const expectedResult: IInsideResult = {
-                vertically: true,
-                horizontally: true
-            };
-            expect(isDataLabelInsideChart(dataLabelRect, chartBox)).toEqual(expectedResult);
-        });
-
-        it('should detect data label completely out of chart', () => {
-            const results = prepareDataLabels(75).map(
-                (dataLabelRect: IRectBySize) =>
-                    isDataLabelInsideChart(dataLabelRect, chartBox)
-            );
-
-            expect(results).toEqual(expectedResultsOut);
-        });
-
-        it('should detect data label partially out of chart', () => {
-            const results = prepareDataLabels(25).map(
-                (dataLabelRect: IRectBySize) =>
-                    isDataLabelInsideChart(dataLabelRect, chartBox)
-            );
-
-            expect(results).toEqual(expectedResultsOut);
-        });
-    });
-
-    describe('showDataLabelInsideChart', () => {
-        const chartBox: IRectBySize = {
-            x: 0,
-            y: 0,
-            width: 200,
-            height: 200
-        };
-        let point: any;
-        beforeEach(() => {
-            point = {
-                dataLabel: {
-                    x: 50,
-                    y: 50,
-                    width: 50,
-                    height: 50,
-                    show: jest.fn(),
-                    hide: jest.fn(),
-                    xSetter: jest.fn(),
-                    ySetter: jest.fn(),
-                    parentGroup: {
-                        translateX: 0,
-                        translateY: 0
-                    }
-                }
-            };
-        });
-
-        it('should show data label when inside chart in both directions', () => {
-            showDataLabelInsideChart(point, chartBox, 'horizontal');
-            expect(point.dataLabel.show).toHaveBeenCalled();
-            expect(point.dataLabel.hide).not.toHaveBeenCalled();
-        });
-
-        it('should move data label inside chart when partially left and direction is horizontal', () => {
-            point.dataLabel.x = -25;
-            showDataLabelInsideChart(point, chartBox, 'horizontal');
-            expect(point.dataLabel.xSetter).toHaveBeenCalledWith(0);
-        });
-
-        it('should move data label inside chart when partially right and direction is horizontal', () => {
-            point.dataLabel.x = 225;
-            showDataLabelInsideChart(point, chartBox, 'horizontal');
-            expect(point.dataLabel.xSetter).toHaveBeenCalledWith(150);
-        });
-
-        it('should hide data label when horizontally out and direction is vertical', () => {
-            point.dataLabel.x = -25;
-            showDataLabelInsideChart(point, chartBox, 'vertical');
-            expect(point.dataLabel.hide).toHaveBeenCalled();
-            expect(point.dataLabel.show).not.toHaveBeenCalled();
-        });
-
-        it('should move data label inside chart when partially above and direction is vertical', () => {
-            point.dataLabel.y = -25;
-            showDataLabelInsideChart(point, chartBox, 'vertical');
-            expect(point.dataLabel.ySetter).toHaveBeenCalledWith(0);
-        });
-
-        it('should move data label inside chart when partially bellow and direction is vertical', () => {
-            point.dataLabel.y = 225;
-            showDataLabelInsideChart(point, chartBox, 'vertical');
-            expect(point.dataLabel.ySetter).toHaveBeenCalledWith(150);
-        });
-
-        it('should hide data label when vertically out and direction is horizontal', () => {
-            point.dataLabel.y = 225;
-            showDataLabelInsideChart(point, chartBox, 'horizontal');
-            expect(point.dataLabel.hide).toHaveBeenCalled();
-            expect(point.dataLabel.show).not.toHaveBeenCalled();
         });
     });
 
@@ -365,6 +162,98 @@ describe('dataLabelsHelpers', () => {
         it('should return true if parent given and intersects', () => {
             const intersects = intersectsParentLabel(points[2], points);
             expect(intersects).toEqual(true);
+        });
+    });
+
+    describe('showDataLabelInAxisRange', () => {
+        const axisRange: IAxisRange = {
+            minAxisValue: 5,
+            maxAxisValue: 10
+        };
+        let point: any;
+        beforeEach(() => {
+            point = {
+                y: 8,
+                dataLabel: {
+                    x: 50,
+                    y: 50,
+                    width: 50,
+                    height: 50,
+                    show: jest.fn(),
+                    hide: jest.fn(),
+                    xSetter: jest.fn(),
+                    ySetter: jest.fn(),
+                    parentGroup: {
+                        translateX: 0,
+                        translateY: 0
+                    }
+                }
+            };
+        });
+
+        it('should keep shown data label when inside axis range', () => {
+            showDataLabelInAxisRange(point, point.y, axisRange);
+            expect(point.dataLabel.hide).not.toHaveBeenCalled();
+        });
+
+        it('should hide data label when outside axis range', () => {
+            point.y = 20;
+            showDataLabelInAxisRange(point, point.y, axisRange);
+            expect(point.dataLabel.hide).toHaveBeenCalled();
+        });
+    });
+
+    describe('showStackLabelInAxisRange', () => {
+        const axisRange: IAxisRange = {
+            minAxisValue: 5,
+            maxAxisValue: 10
+        };
+        let point: any;
+        beforeEach(() => {
+            point = {
+                y: 8,
+                total: 20,
+                stackY: 10,
+                dataLabel: {
+                    x: 50,
+                    y: 50,
+                    width: 50,
+                    height: 50,
+                    show: jest.fn(),
+                    hide: jest.fn(),
+                    xSetter: jest.fn(),
+                    ySetter: jest.fn(),
+                    parentGroup: {
+                        translateX: 0,
+                        translateY: 0
+                    }
+                }
+            };
+        });
+
+        it('should keep shown data label when inside axis range', () => {
+            showStackLabelInAxisRange(point, axisRange);
+            expect(point.dataLabel.hide).not.toHaveBeenCalled();
+        });
+
+        it('should hide data label when outside axis range', () => {
+            point.y = 10;
+            point.stackY = 20;
+            showStackLabelInAxisRange(point, axisRange);
+            expect(point.dataLabel.hide).toHaveBeenCalled();
+        });
+
+        it('should show last data label without stackY', () => {
+            delete(point.stackY);
+            point.total = 10;
+            showStackLabelInAxisRange(point, axisRange);
+            expect(point.dataLabel.hide).not.toHaveBeenCalled();
+        });
+
+        it('should hide last data label without stackY', () => {
+            delete (point.stackY);
+            showStackLabelInAxisRange(point, axisRange);
+            expect(point.dataLabel.hide).toHaveBeenCalled();
         });
     });
 });

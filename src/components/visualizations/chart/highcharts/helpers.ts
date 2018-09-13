@@ -88,7 +88,7 @@ export const getPointPositions = (point: any) => {
     };
 };
 
-export function getShapeAttributes(point: any) {
+export function getShapeAttributes(point: any): IRectBySize {
     const { series, shapeArgs } = point;
     const { plotSizeX, plotSizeY, options } = series.chart;
 
@@ -240,4 +240,20 @@ export function shouldStartOrEndOnTick(chartOptions: any): boolean {
     }
 
     return false;
+}
+
+export interface IAxisRange {
+    minAxisValue: number;
+    maxAxisValue: number;
+}
+
+export function getAxisRange(chart: any, axisName = 'yAxis'): IAxisRange {
+    return {
+        minAxisValue: get(chart, [axisName, 0, 'min'], 0),
+        maxAxisValue: get(chart, [axisName, 0, 'max'], 0)
+    };
+}
+
+export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {
+    return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
 }
