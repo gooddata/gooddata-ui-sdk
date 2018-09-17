@@ -188,7 +188,7 @@ export const factBasedRenamedMeasure: IMeasure = {
 export const attributeBasedMeasure: IMeasure = {
     measure: {
         localIdentifier: 'm1',
-        format: '#,##0',
+        format: '$#,##0.00',
         definition: {
             measureDefinition: {
                 item: {
@@ -218,7 +218,7 @@ export const attributeBasedRenamedMeasure: IMeasure = {
     measure: {
         localIdentifier: 'm1',
         alias: 'Count',
-        format: '#,##0',
+        format: '$#,##0.00',
         definition: {
             measureDefinition: {
                 item: {
@@ -234,7 +234,7 @@ export const showInPercent: IMeasure = {
     measure: {
         localIdentifier: 'm1',
         alias: 'Measure M1',
-        format: '#,##0.00%',
+        format: '$#,##0.00',
         definition: {
             measureDefinition: {
                 item: {

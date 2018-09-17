@@ -44,6 +44,27 @@ export const simpleMeasure: IFixture = {
     }
 };
 
+export const simpleMeasureWithFormat: IFixture = {
+    afm: {
+        measures: [
+            {
+                localIdentifier: 'm1',
+                definition: {
+                    measure: {
+                        item: {
+                            uri: METRIC_URI
+                        }
+                    }
+                },
+                alias: 'Measure M1',
+                format: 'GD #,##0.00000'
+            }
+        ]
+    },
+    resultSpec: {
+    }
+};
+
 export const simpleMeasureWithIdentifiers: IFixture = {
     afm: {
         measures: [
@@ -529,7 +550,8 @@ export const stackingAttribute: IFixture = {
                         aggregation: 'sum'
                     }
                 },
-                alias: 'Sum of Bundle cost'
+                alias: 'Sum of Bundle cost',
+                format: '#,##0.00'
             }
         ],
         attributes: [
@@ -786,7 +808,8 @@ export const oneMeasureOneAttribute: IFixture = {
                         }
                     }
                 },
-                alias: 'Sum of Bundle cost'
+                alias: 'Sum of Bundle cost',
+                format: '#,##0.00'
             }
         ],
         attributes: [
@@ -814,7 +837,8 @@ export const oneMeasureOneAttributeWithIdentifiers: IFixture = {
                         }
                     }
                 },
-                alias: 'Sum of Bundle cost'
+                alias: 'Sum of Bundle cost',
+                format: '#,##0.00'
             }
         ],
         attributes: [
@@ -842,7 +866,8 @@ export const reducedMultipleSorts: IFixture = {
                         }
                     }
                 },
-                alias: 'Sum of Bundle cost'
+                alias: 'Sum of Bundle cost',
+                format: '#,##0.00'
             },
             {
                 localIdentifier: 'm2',
@@ -854,7 +879,8 @@ export const reducedMultipleSorts: IFixture = {
                         }
                     }
                 },
-                alias: 'Sum of Bundle cost'
+                alias: 'Sum of Bundle cost',
+                format: '#,##0.00'
             }
         ]
     },
