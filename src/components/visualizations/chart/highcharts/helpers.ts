@@ -230,7 +230,7 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-export function shouldStartOrEndOnTick(chartOptions: any): boolean {
+export function shouldStartOnTick(chartOptions: any): boolean {
     const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
     const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
 
@@ -242,22 +242,38 @@ export function shouldStartOrEndOnTick(chartOptions: any): boolean {
         return min > max;
     }
 
-    if (!isNaN(min)) {
-        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
-        const maxDataValue = chartOptions.hasStackByAttribute
-            ? getStackedMaxValue(series)
-            : getNonStackedMaxValue(series);
-        return min > maxDataValue;
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const minDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMinValue(series)
+        : getNonStackedMinValue(series);
+
+    const hasIncorrectMax = !isNaN(max) && max <= minDataValue;
+    if (hasIncorrectMax) {
+        return true;
     }
 
-    if (!isNaN(max)) {
-        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    return false;
+}
+export function shouldEndOnTick(chartOptions: any): boolean {
+    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+    const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
 
-        const minDataValue = chartOptions.hasStackByAttribute
-            ? getStackedMinValue(series)
-            : getNonStackedMinValue(series);
+    if ((isNaN(min) && isNaN(max))) {
+        return true;
+    }
 
-        return max <= minDataValue;
+    if ((!isNaN(min) && !isNaN(max))) {
+        return min > max;
+    }
+
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const maxDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMaxValue(series)
+        : getNonStackedMaxValue(series);
+
+    const hasIncorrectMin = !isNaN(min) && min >= maxDataValue;
+    if (hasIncorrectMin) {
+        return true;
     }
 
     return false;
