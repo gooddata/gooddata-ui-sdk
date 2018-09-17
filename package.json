@@ -154,13 +154,13 @@
     "AFM components/PieChart": {
       "error": {
         "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
-        "delay": 500
+        "delay": 1000
       }
     },
     "AFM components/DonutChart": {
       "error": {
         "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
-        "delay": 500
+        "delay": 1000
       }
     },
     "Core components/AreaChart": {
