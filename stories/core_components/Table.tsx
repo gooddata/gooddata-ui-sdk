@@ -15,7 +15,9 @@ import {
     TOTAL_M1_A1,
     TOTAL_M2_A1,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    MEASURE_2_WITH_FORMAT,
+    MEASURE_WITH_NULLS
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -143,18 +145,48 @@ storiesOf('Core components/Table', module)
             </div>
         )
     ))
-    .add('with German number format', () => (
+    .add('custom number separators', () => (
         screenshotWrap(
              <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
                     attributes={[ATTRIBUTE_1]}
+                    config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    config={GERMAN_SEPARATORS}
+                />
+            </div>
+        )
+    ))
+    .add('custom measure format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2_WITH_FORMAT]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('empty value', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_WITH_NULLS]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

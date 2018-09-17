@@ -658,6 +658,111 @@ module.exports = {
             }
         },
         {
+            _description: 'Table with empty values',
+            execution: {
+                execution: {
+                    afm: {
+                        measures: [{
+                            localIdentifier: 'm1',
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: '/gdc/md/storybook/obj/1'
+                                    }
+                                }
+                            }
+                        }, {
+                            localIdentifier: 'm4',
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: '/gdc/md/storybook/obj/9'
+                                    }
+                                }
+                            }
+                        }],
+                        attributes: [{
+                            localIdentifier: 'a1',
+                            displayForm: {
+                                uri: '/gdc/md/storybook/obj/4.df'
+                            }
+                        }]
+                    },
+                    resultSpec: {
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['a1']
+                            },
+                            {
+                                itemIdentifiers: ['measureGroup']
+                            }
+                        ]
+                    }
+                }
+            },
+            executionResult: {
+                executionResult: {
+                    data: [
+                        ['1', '2'],
+                        ['3', null],
+                        ['5', '6'],
+                        ['7', null]
+                    ],
+                    headerItems: [
+                        [
+                            [
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=1',
+                                        name: 'Pink'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=2',
+                                        name: 'Red'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=3',
+                                        name: 'Purple'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=4',
+                                        name: 'Salmon'
+                                    }
+                                }
+                            ]
+                        ],
+                        [
+                            [
+                                {
+                                    measureHeaderItem: {
+                                        name: 'Saved null',
+                                        order: 0
+                                    }
+                                },
+                                {
+                                    measureHeaderItem: {
+                                        name: 'Amount',
+                                        order: 1
+                                    }
+                                }
+                            ]
+                        ]
+                    ],
+                    paging: {
+                        count: [4, 2],
+                        offset: [0, 0],
+                        total: [4, 2]
+                    }
+                }
+            }
+        },
+        {
             _description: 'Treemap with sorted values', // once mock-js will support multi-sorting this can be removed
             execution: {
                 execution: {

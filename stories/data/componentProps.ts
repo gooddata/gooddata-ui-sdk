@@ -93,6 +93,20 @@ export const MEASURE_WITH_FORMAT: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_2_WITH_FORMAT: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm2',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/2'
+                }
+            }
+        },
+        format: '[green]#,##0.00 €'
+    }
+};
+
 export const MEASURE_WITH_NULLS: VisualizationObject.IMeasure = {
     measure: {
         localIdentifier: 'm4',

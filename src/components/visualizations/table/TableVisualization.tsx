@@ -29,8 +29,9 @@ import {
 
 import { TableSortBubbleContent } from './TableSortBubbleContent';
 
+import { getColumnAlign } from './utils/column';
 import { subscribeEvents } from '../utils/common';
-import { getCellClassNames, getColumnAlign, getStyledLabel } from './utils/cell';
+import { getCellClassNames, getCellStyleAndFormattedValue } from '../../../helpers/tableCell';
 import {
     getIntersectionForDrilling,
     getBackwardCompatibleRowForDrilling
@@ -768,7 +769,7 @@ export class TableVisualizationClass
             const classes: string = getCellClassNames(rowIndex, columnKey, drillable);
             const drillConfig: IDrillConfig = { afm, onFiredDrillEvent };
             const hoverable: boolean = isMeasureTableHeader(header) && this.isTotalsEditAllowed();
-            const { style, label } = getStyledLabel(header, cellContent, true, separators);
+            const { style, formattedValue } = getCellStyleAndFormattedValue(header, cellContent, true, separators);
 
             const cellPropsDrill: CellProps = drillable
                 ? {
@@ -798,7 +799,7 @@ export class TableVisualizationClass
 
             return (
                 <Cell {...cellPropsHover} className={classNames(`col-${columnIndex}`)}>
-                    <span className={classes} style={style} title={label}>{label}</span>
+                    <span className={classes} style={style} title={formattedValue}>{formattedValue}</span>
                 </Cell>
             );
         };
