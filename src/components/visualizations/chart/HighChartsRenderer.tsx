@@ -14,7 +14,7 @@ import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 import { isPieOrDonutChart, isOneOfTypes } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
-import { shouldStartOrEndOnTick } from '../chart/highcharts/helpers';
+import { shouldStartOnTick, shouldEndOnTick } from '../chart/highcharts/helpers';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 
@@ -58,9 +58,10 @@ function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
 }
 
 function setStartOrEndOnTick(axis: Highcharts.AxisOptions, chartOptions: any) {
-    const startOrEndOnTick = shouldStartOrEndOnTick(chartOptions);
-    set(axis, 'startOnTick', startOrEndOnTick);
-    set(axis, 'endOnTick', startOrEndOnTick);
+    const startOnTick = shouldStartOnTick(chartOptions);
+    const endOnTick = shouldEndOnTick(chartOptions);
+    set(axis, 'startOnTick', startOnTick);
+    set(axis, 'endOnTick', endOnTick);
 }
 
 export default class HighChartsRenderer

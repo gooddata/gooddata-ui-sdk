@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     shouldFollowPointer,
-    shouldStartOrEndOnTick,
+    shouldStartOnTick,
+    shouldEndOnTick,
     getChartProperties,
     pointInRange,
     getStackedMaxValue,
@@ -39,7 +40,7 @@ describe('helpers', () => {
         });
     });
 
-    describe('shouldStartOrEndOnTick', () => {
+    describe('shouldStartOnTick, shouldEndOnTick', () => {
         const nonStackedChartOptions = {
             hasStackByAttribute: false,
             data: {
@@ -68,13 +69,13 @@ describe('helpers', () => {
             }
         };
 
-        describe('Non stacked chart', () => {
+        describe('shouldStartOnTick', () => {
             it('should return false when min and max are set', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '5', max: '10' }
                 };
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
             it('should return false when min is greater than max', () => {
@@ -83,25 +84,25 @@ describe('helpers', () => {
                     yAxisProps: { min: '10', max: '5' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
 
-            it('should return false if min is set but less than max data value (non stacked)', () => {
+            it('should return false if max is set but greater than min data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
-                    yAxisProps: { min: '10' }
+                    yAxisProps: { max: '40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
-            it('should return true if min is set and bigger than max data value (non stacked)', () => {
+            it('should return false if max is set but greater than min data value (stacked)', () => {
                 const chartOptions = {
-                    ...nonStackedChartOptions,
-                    yAxisProps: { min: '22' }
+                    ...stackedChartOptions,
+                    yAxisProps: { max: '40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
             it('should return true when no max or min are set', () => {
@@ -110,59 +111,89 @@ describe('helpers', () => {
                     yAxisProps: {}
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
 
-            it('should return true if max is set but less than min data value (non stacked)', () => {
+            it('should return true if max is set but smaller than min data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
-                    yAxisProps: { max: '-10' }
+                    yAxisProps: { max: '-40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it('should return true if max is set but smaller than min data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { max: '-40' }
+                };
+
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
         });
 
-        describe('Stacked chart', () => {
-            it('should return false if min is set but less than max data value (stacked)', () => {
+        describe('shouldEndOnTick', () => {
+            it('should return false when min and max are set', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    yAxisProps: { min: '10' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '5', max: '10' }
                 };
-
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it('should return true if min is set but serie is not visible (stacked)', () => {
+            it('should return false when min is greater than max', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    data: {
-                        series: [
-                            { ...stackedChartOptions.data.series[0], visible: false }
-                        ]
-                    },
-                    yAxisProps: { min: '10' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '10', max: '5' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it('should return true if min is set and greater than max data value (stacked)', () => {
+            it('should return false if min is set but smaller than max data value (non stacked)', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    yAxisProps: { min: '22' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '1' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it('should return true if max is set but less than min data value (stacked)', () => {
+            it('should return false if min is set but smaller than max data value (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
-                    yAxisProps: { max: '-10' }
+                    yAxisProps: { min: '1' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
+            });
+
+            it('should return true when no max or min are set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: {}
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it('should return true if min is set but bigger than max data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '40' }
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it('should return true if min is set but bigger than max data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { min: '40' }
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
             });
         });
     });
