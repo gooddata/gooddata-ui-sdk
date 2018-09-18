@@ -504,7 +504,7 @@ function getLabelStyle(chartOptions: any) {
     return (stacking || isOneOfTypes(type, whiteDataLabelTypes)) ? WHITE_LABEL : BLACK_LABEL;
 }
 
-function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
+function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
     const {
         stacking,
         yAxes = [],
@@ -515,7 +515,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
         type: string;
     } = chartOptions;
 
-    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -532,7 +532,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
     }));
 
     const DEFAULT_LABELS_CONFIG = {
-        formatter: partial(labelFormatter, config),
+        formatter: partial(labelFormatter, chartConfig),
         style,
         allowOverlap: false,
         ...labelsConfig
@@ -551,7 +551,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             },
             column: {
                 dataLabels: {
-                    formatter: partial(labelFormatter, config),
+                    formatter: partial(labelFormatter, chartConfig),
                     style,
                     allowOverlap: false,
                     ...labelsConfig
@@ -560,12 +560,12 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             heatmap: {
                 dataLabels: {
                     formatter: labelFormatterHeatmap,
-                    config,
+                    config: chartConfig,
                     ...labelsConfig
                 }
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style, config, labelsConfig)
+                ...getTreemapLabelsConfiguration(!!stacking, style, chartConfig, labelsConfig)
             },
             line: {
                 dataLabels: DEFAULT_LABELS_CONFIG
@@ -576,13 +576,13 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             scatter: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: partial(labelFormatterScatter, config)
+                    formatter: partial(labelFormatterScatter, chartConfig)
                 }
             },
             bubble: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: partial(labelFormatterBubble, config)
+                    formatter: partial(labelFormatterBubble, chartConfig)
                 }
             },
             pie: {
@@ -596,19 +596,19 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
     };
 }
 
-function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
+function getStackingConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
     let labelsConfig = {};
 
     if (isColumnChart(type)) {
-        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
         labelsConfig = getLabelsVisibilityConfig(labelsVisible);
     }
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
             ...labelsConfig,
-            formatter: partial(stackLabelFormatter, config)
+            formatter: partial(stackLabelFormatter, chartConfig)
         }
     }));
 

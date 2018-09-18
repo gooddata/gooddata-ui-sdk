@@ -93,11 +93,9 @@ export const tooLargeDataSource: IDataSource = {
 };
 
 export const delayedTooLargeDataSource: IDataSource = {
-    // tslint:disable-next-line:variable-name
     getData: () => (new Promise((_resolve, reject) => {
         setTimeout(reject(tooLargeResponse), 20);
     })),
-    // tslint:disable-next-line:variable-name
     getPage: () => (new Promise((_resolve, reject) => {
         setTimeout(reject(tooLargeResponse), 20);
     })),

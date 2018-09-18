@@ -218,7 +218,7 @@ export function isDerivedMeasure(measureItem: Execution.IMeasureHeaderItem, afm:
 
 export function normalizeColorToRGB(color: string) {
     const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
-    return color.replace(hexPattern, ({}, r: string, g: string, b: string) => {
+    return color.replace(hexPattern, (_prefix: string, r: string, g: string, b: string) => {
         return `rgb(${[r, g, b].map(value => (parseInt(value, 16).toString(10))).join(', ')})`;
     });
 }
@@ -934,7 +934,7 @@ export function findInDimensionHeaders(dimensions: Execution.IResultDimension[],
 export function findMeasureGroupInDimensions(dimensions: Execution.IResultDimension[]) {
     return findInDimensionHeaders(dimensions,
         (headerType: string, header: Execution.IMeasureGroupHeader['measureGroupHeader'],
-         {}, headerIndex: number, headerCount: number) => {
+         _dimensionIndex: number, headerIndex: number, headerCount: number) => {
             const measureGroupHeader = headerType === 'measureGroupHeader' ? header : null;
             if (measureGroupHeader) {
                 invariant(headerIndex === headerCount - 1, 'MeasureGroup must be the last header in it\'s dimension');
@@ -950,7 +950,7 @@ export function findAttributeInDimension(
 ) {
     return findInDimensionHeaders(
         [dimension],
-        (headerType: any, header: any, {}, headerIndex: number) => {
+        (headerType: any, header: any, _dimensionIndex: number, headerIndex: number) => {
             if (headerType === 'attributeHeader'
                 && (indexInDimension === undefined || indexInDimension === headerIndex)) {
                 return {
@@ -1407,7 +1407,7 @@ export function getTreemapAttributes(
  */
 export function getChartOptions(
     afm: AFM.IAfm,
-    {},
+    _resultSpec: AFM.IResultSpec,
     dimensions: Execution.IResultDimension[],
     executionResultData: Execution.DataValue[][],
     unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
@@ -1500,7 +1500,8 @@ export function getChartOptions(
             };
         });
         // categories need to be sorted in exactly the same order as dataPoints
-        categories = categories.map(({}, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]]);
+        categories = categories.map((_category: any, dataPointIndex: number) =>
+            categories[indexSortOrder[dataPointIndex]]);
         series[0].data = sortedDataPoints;
     }
 
