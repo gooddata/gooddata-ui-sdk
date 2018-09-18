@@ -78,9 +78,7 @@ export class DummyDataSource<T> implements IDataSource<T> {
 
     public getPage(
         resultSpec: AFM.IResultSpec,
-        // tslint:disable-next-line:variable-name
         _limit: number[],
-        // tslint:disable-next-line:variable-name
         _offset: number[]
     ): Promise<Execution.IExecutionResponses> {
         this.resultSpec = resultSpec;

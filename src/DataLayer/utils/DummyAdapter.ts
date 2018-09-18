@@ -17,7 +17,7 @@ export class DummyAdapter implements IAdapter<any> {
     }
 
     public createDataSource(
-        _afm: AFM.IAfm // tslint:disable-line:variable-name
+        _afm: AFM.IAfm
     ): Promise<IDataSource<any>> {
         return this.dataSource
             ? Promise.resolve(this.dataSource)
