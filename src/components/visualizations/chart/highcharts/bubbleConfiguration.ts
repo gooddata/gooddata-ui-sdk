@@ -29,21 +29,11 @@ const BUBBLE_TEMPLATE = {
                 enabled: false, // TODO remove once FF for config panel is removed
                 allowOverlap: false
             }
-        },
-        xAxis: [{
-            labels: {
-                enabled: true
-            },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
-        }],
-        yAxis: [{
-            labels: {
-                enabled: true
-            }
-        }]
+        }
     },
+    xAxis: [{
+        startOnTick: true
+    }],
     series: {
         states: {
             hover: {

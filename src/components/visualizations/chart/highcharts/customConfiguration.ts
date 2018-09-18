@@ -10,6 +10,7 @@ import isEmpty = require('lodash/isEmpty');
 import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
+import isNil = require('lodash/isNil');
 import { styleVariables } from '../../styles/variables';
 import { IAxis, IChartOptions } from '../chartOptionsBuilder';
 import { IChartConfig } from '../Chart';
@@ -25,7 +26,10 @@ import {
     isOneOfTypes,
     isAreaChart,
     isRotationInRange,
-    isTreemap
+    isTreemap,
+    isHeatmap,
+    isScatterPlot,
+    isBubbleChart
 } from '../../utils/common';
 import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
 
@@ -327,10 +331,25 @@ function level2LabelsFormatter(config?: IChartConfig) {
 
 function labelFormatterBubble(config?: IChartConfig) {
     const value = get<number>(this, 'point.z');
-    if (isNaN(value)) {
+    if (isNil(value)) {
         return null;
     }
-    return formatLabel(value, get(this, 'point.format'), config);
+
+    const xAxisMin = get(this, 'series.xAxis.min');
+    const xAxisMax = get(this, 'series.xAxis.max');
+    const yAxisMin = get(this, 'series.yAxis.min');
+    const yAxisMax = get(this, 'series.yAxis.max');
+
+    if (
+        (!isNil(xAxisMax) && this.x > xAxisMax) ||
+        (!isNil(xAxisMin) && this.x < xAxisMin) ||
+        (!isNil(yAxisMax) && this.y > yAxisMax) ||
+        (!isNil(yAxisMin) && this.y < yAxisMin)
+    ) {
+        return null;
+    } else {
+        return formatLabel(value, get(this, 'point.format'), config);
+    }
 }
 
 function labelFormatterScatter() {
@@ -642,21 +661,13 @@ function getHeatmapDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
-    const labelsEnabledX = get(chartOptions, 'xAxisProps.labelsEnabled', true);
-    const labelsEnabledY = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories)) && labelsEnabledX
-            },
             categories: categories[0] || []
         }],
         yAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories)) && labelsEnabledY
-            },
             categories: categories[1] || []
         }],
         colorAxis: {
@@ -681,14 +692,10 @@ function getDataConfiguration(chartOptions: any) {
     }
 
     const categories = map(data.categories, escapeAngleBrackets);
-    const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories)) && labelsEnabled
-            },
             categories
         }]
     };
@@ -783,37 +790,41 @@ function getHoverStyles({ type }: any, config: any) {
 function getGridConfiguration(chartOptions: any) {
     const gridEnabled = get(chartOptions, 'grid.enabled', true);
     const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
-    let xAxis = {};
 
-    const yAxis = yAxes.map(() => ({
-        gridLineWidth: 0
-    }));
+    const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: '#ebebeb' } : { gridLineWidth: 0 };
+
+    const yAxis = yAxes.map(() => config);
 
     const bothAxesGridlineCharts = [VisualizationTypes.BUBBLE, VisualizationTypes.SCATTER];
-
-    if (isOneOfTypes(chartOptions.type, bothAxesGridlineCharts) && gridEnabled) {
-        xAxis = xAxes.map(() => ({
-            gridLineWidth: 1
-        }));
-    } else {
-        xAxis = xAxes.map(() => ({
-            gridLineWidth: 0
-        }));
-    }
-
-    if (!gridEnabled) {
-        return {
-            yAxis,
-            xAxis
-        };
+    let xAxis = {};
+    if (isOneOfTypes(chartOptions.type, bothAxesGridlineCharts)) {
+        xAxis = xAxes.map(() => config);
     }
 
     return {
+        yAxis,
         xAxis
     };
 }
 
+export function areAxisLabelsEnabled(chartOptions: any, axisPropsName: string, shouldCheckForEmptyCategories: boolean) {
+    const data = chartOptions.data || EMPTY_DATA;
+    const { type } = chartOptions;
+    const categories = isHeatmap(type) ? data.categories : map(data.categories, escapeAngleBrackets);
+
+    const visible = get(chartOptions, `${axisPropsName}.visible`, true);
+    const labelsEnabled = get(chartOptions, `${axisPropsName}.labelsEnabled`, true);
+
+    const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
+
+    return {
+        enabled: categoriesFlag && visible && labelsEnabled
+    };
+}
+
 function getAxesConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+
     return {
         yAxis: get(chartOptions, 'yAxes', []).map((axis: any) => {
             if (!axis) {
@@ -826,7 +837,6 @@ function getAxesConfiguration(chartOptions: any) {
             const min = get(chartOptions, 'yAxisProps.min', '');
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
-            const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
@@ -834,10 +844,12 @@ function getAxesConfiguration(chartOptions: any) {
             const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
+            const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
+
             return {
-                gridLineColor: '#ebebeb',
                 labels: {
-                    enabled: labelsEnabled,
+                    ...labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
@@ -845,6 +857,7 @@ function getAxesConfiguration(chartOptions: any) {
                     ...rotationProp
                 },
                 title: {
+                    enabled: visible,
                     margin: 15,
                     style: {
                         color: styleVariables.gdColorLink,
@@ -852,7 +865,6 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite,
-                visible,
                 ...maxProp,
                 ...minProp
             };
@@ -873,8 +885,10 @@ function getAxesConfiguration(chartOptions: any) {
 
             const visible = get(chartOptions, 'xAxisProps.visible', true);
             const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
-            const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
+
+            const shouldCheckForEmptyCategories = (isScatterPlot(type) || isBubbleChart(type)) ? false : true;
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'xAxisProps', shouldCheckForEmptyCategories);
 
             // for bar chart take y axis options
             return {
@@ -888,7 +902,7 @@ function getAxesConfiguration(chartOptions: any) {
                 maxPadding: 0.05,
 
                 labels: {
-                    enabled: labelsEnabled,
+                    ...labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
@@ -897,13 +911,13 @@ function getAxesConfiguration(chartOptions: any) {
                     ...rotationProp
                 },
                 title: {
+                    enabled: visible,
                     margin: 10,
                     style: {
                         color: styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                visible,
                 ...maxProp,
                 ...minProp
             };
