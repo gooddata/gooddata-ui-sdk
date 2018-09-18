@@ -9,8 +9,6 @@ import {
     findInDimensionHeaders,
     findMeasureGroupInDimensions,
     findAttributeInDimension,
-    normalizeColorToRGB,
-    getColorPalette,
     getSeriesItemData,
     getSeries,
     getDrillContext,
@@ -27,7 +25,7 @@ import {
     isDerivedMeasure
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
-import { generateChartOptions } from './helper';
+import { generateChartOptions, getMVS } from './helper';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 
@@ -42,28 +40,13 @@ import {
     getLighterColor
 } from '../../utils/color';
 
-export { IPoint };
+import { TreeMapColorStrategy,
+    MeasureColorStrategy,
+    AttributeColorStrategy,
+    HeatMapColorStrategy
+} from '../colorFactory';
 
-function getMVS(dataSet: any) {
-    const {
-        executionResponse: { dimensions },
-        executionResult: { headerItems }
-    } = dataSet;
-    const measureGroup = findMeasureGroupInDimensions(dimensions);
-    const viewByAttribute = findAttributeInDimension(
-        dimensions[VIEW_BY_DIMENSION_INDEX],
-        headerItems[VIEW_BY_DIMENSION_INDEX]
-    );
-    const stackByAttribute = findAttributeInDimension(
-        dimensions[STACK_BY_DIMENSION_INDEX],
-        headerItems[STACK_BY_DIMENSION_INDEX]
-    );
-    return [
-        measureGroup,
-        viewByAttribute,
-        stackByAttribute
-    ];
-}
+export { IPoint };
 
 function getMVSTreemap(dataSet: any) {
     const {
@@ -414,97 +397,6 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
-    describe('normalizeColorToRGB', () => {
-        it('should just return the original color it is not in hex format', () => {
-            const color = 'rgb(255, 255, 255)';
-            expect(
-                normalizeColorToRGB(color)
-            ).toEqual(color);
-        });
-        it('should return color in rgb format if supplied color is in hex format', () => {
-            const color = '#ffffff';
-            const expectedColor = 'rgb(255, 255, 255)';
-            expect(
-                normalizeColorToRGB(color)
-            ).toEqual(expectedColor);
-        });
-    });
-
-    describe('getColorPalette', () => {
-        it('should just return the original palette if there are no pop measures shorten to cover all legend items',
-            () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] = getMVS(fixtures.barChartWithoutAttributes);
-            const { afm } = fixtures.barChartWithoutAttributes.executionRequest;
-            const type = 'column';
-            expect(
-                getColorPalette(
-                    DEFAULT_COLOR_PALETTE,
-                    measureGroup,
-                    viewByAttribute,
-                    stackByAttribute,
-                    afm,
-                    type
-                )
-            ).toEqual(DEFAULT_COLOR_PALETTE.slice(0, measureGroup.items.length));
-        });
-
-        it('should return a palette with a lighter color for each pop measure based on it`s source measure', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
-            const type = 'column';
-
-            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
-            const updatedPalette =
-                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
-
-            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
-        });
-
-        it('should return a palette with a lighter color for each previous period based on it`s source measure', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithPreviousPeriodMeasure);
-            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
-            const type = 'column';
-
-            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
-            const updatedPalette =
-                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
-
-            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)']);
-        });
-
-        it('should rotate colors from original palette and generate lighter PoP colors', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
-            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
-            const type = 'column';
-
-            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
-            const updatedPalette =
-                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
-
-            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)',
-                'rgb(100,100,100)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
-                'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)' ]);
-        });
-
-        it('should rotate colors from original palette and generate lighter previous period measures', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
-            const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
-            const type = 'column';
-
-            const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
-            const updatedPalette =
-                getColorPalette(customPalette, measureGroup, viewByAttribute, stackByAttribute, afm, type);
-
-            expect(updatedPalette).toEqual(['rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)',
-                'rgb(100,100,100)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
-                'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)' ]);
-        });
-    });
-
     describe('getSeriesItemData', () => {
         describe('in usecase of bar chart with pop measure and view by attribute', () => {
             const parameters = getSeriesItemDataParameters(fixtures.barChartWithPopMeasureAndViewByAttribute, 0);
@@ -514,6 +406,14 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
+            const attributeColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.pieChartWithMetricsOnly.executionRequest.afm
+            );
+
             const seriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
@@ -521,7 +421,7 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'column',
-                DEFAULT_COLOR_PALETTE
+                attributeColorStrategy
             );
 
             it('should fill correct pointData name', () => {
@@ -572,6 +472,14 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
+            const attributeColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.pieChartWithMetricsOnly.executionRequest.afm
+            );
+
             const seriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
@@ -579,7 +487,7 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'column',
-                DEFAULT_COLOR_PALETTE
+                attributeColorStrategy
             );
 
             it('should fill correct pointData name', () => {
@@ -618,6 +526,14 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
+            const metricColorStrategy = new MeasureColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.pieChartWithMetricsOnly.executionRequest.afm
+            );
+
             const pieSeriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
@@ -625,7 +541,15 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'pie',
-                DEFAULT_COLOR_PALETTE
+                metricColorStrategy
+            );
+
+            const treeMapColorStrategy = new TreeMapColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.pieChartWithMetricsOnly.executionRequest.afm
             );
 
             const treemapSeriesItemData = getSeriesItemData(
@@ -635,7 +559,7 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'treemap',
-                DEFAULT_COLOR_PALETTE
+                treeMapColorStrategy
             );
 
             it('should fill correct pointData name', () => {
@@ -703,6 +627,14 @@ describe('chartOptionsBuilder', () => {
             const viewByAttribute = parameters[3];
             const stackByAttribute = parameters[4];
 
+            const attributeColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.pieChartWithMetricsOnly.executionRequest.afm
+            );
+
             const pieSeriesItemData = getSeriesItemData(
                 seriesItem,
                 seriesIndex,
@@ -710,7 +642,15 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'pie',
-                DEFAULT_COLOR_PALETTE
+                attributeColorStrategy
+            );
+
+            const treeMapColorStrategy = new TreeMapColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                fixtures.barChartWithViewByAttribute.executionRequest.afm
             );
 
             const treemapSeriesItemData = getSeriesItemData(
@@ -720,7 +660,7 @@ describe('chartOptionsBuilder', () => {
                 viewByAttribute,
                 stackByAttribute,
                 'treemap',
-                DEFAULT_COLOR_PALETTE
+                treeMapColorStrategy
             );
 
             it('should fill correct pointData name', () => {
@@ -781,6 +721,15 @@ describe('chartOptionsBuilder', () => {
         describe('in usecase of bar chart with 3 measures and view by attribute', () => {
             const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
             const mVS = getMVS(dataSet);
+
+            const attributeColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWith3MetricsAndViewByAttribute.executionRequest.afm
+            );
+
             const type = 'column';
             const seriesData = getSeries(
                 dataSet.executionResult.data,
@@ -789,7 +738,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                attributeColorStrategy
             );
 
             it('should return number of series equal to the count of measures', () => {
@@ -832,7 +781,7 @@ describe('chartOptionsBuilder', () => {
                         viewByAttribute,
                         stackByAttribute,
                         type,
-                        DEFAULT_COLOR_PALETTE
+                        attributeColorStrategy
                     );
                 }));
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -843,6 +792,15 @@ describe('chartOptionsBuilder', () => {
             const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
             const mVS = getMVS(dataSet);
             const type = 'column';
+
+            const attributeColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWithStackByAndViewByAttributes.executionRequest.afm
+            );
+
             const seriesData = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -850,7 +808,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                attributeColorStrategy
             );
 
             it('should return number of series equal to the count of stack by attribute values', () => {
@@ -884,6 +842,14 @@ describe('chartOptionsBuilder', () => {
                     const viewByAttribute = parameters[3];
                     const stackByAttribute = parameters[4];
 
+                    const attributeColorStrategy = new AttributeColorStrategy(
+                        DEFAULT_COLOR_PALETTE,
+                        mVS[0],
+                        mVS[1],
+                        mVS[2],
+                        fixtures.barChartWith3MetricsAndViewByAttribute.executionRequest.afm
+                    );
+
                     return getSeriesItemData(
                         seriesItem,
                         si,
@@ -891,7 +857,7 @@ describe('chartOptionsBuilder', () => {
                         viewByAttribute,
                         stackByAttribute,
                         type,
-                        DEFAULT_COLOR_PALETTE
+                        attributeColorStrategy
                     );
                 }));
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -919,24 +885,25 @@ describe('chartOptionsBuilder', () => {
                 ]
             };
 
+            const stackByAttribute = {
+                items: [
+                    {
+                        attributeHeaderItem: {
+                            name: 'abc'
+                        }
+                    }, {
+                        attributeHeaderItem: {
+                            name: 'def'
+                        }
+                    }
+                ]
+            };
+
             it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
                 const executionResultData = [
                     [ 1, 2, 3],
                     [ 4, 5, 6]
                 ];
-                const stackByAttribute = {
-                    items: [
-                        {
-                            attributeHeaderItem: {
-                                name: 'abc'
-                            }
-                        }, {
-                            attributeHeaderItem: {
-                                name: 'def'
-                            }
-                        }
-                    ]
-                };
 
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
@@ -968,12 +935,21 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 4, y: 5, z: 6, format: '#.##x' }]
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    null,
+                    stackByAttribute,
+                    {}
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -984,7 +960,7 @@ describe('chartOptionsBuilder', () => {
                     [3],
                     [6]
                 ];
-                const stackByAttribute = false;
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [{
@@ -1007,12 +983,21 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 0, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    null,
+                    stackByAttribute,
+                    {}
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
-                    stackByAttribute,
+                    null,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1023,7 +1008,7 @@ describe('chartOptionsBuilder', () => {
                     [ 1, 3],
                     [ 4, 6]
                 ];
-                const stackByAttribute = false;
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [
@@ -1040,23 +1025,32 @@ describe('chartOptionsBuilder', () => {
 
                 const expectedSeries = [
                     {
-                        name: '',
+                        name: 'abc',
                         color: 'red',
                         legendIndex: 0,
                         data: [{ x: 0, y: 1, z: 3, format: '#.##x' }]
                     }, {
-                        name: '',
+                        name: 'def',
                         color: 'green',
                         legendIndex: 1,
                         data: [{ x: 0, y: 4, z: 6, format: '#.##x' }]
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    stackByAttribute,
+                    {}
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1067,7 +1061,7 @@ describe('chartOptionsBuilder', () => {
                     [1, 3],
                     [4, 6]
                 ];
-                const stackByAttribute = false;
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [
@@ -1084,23 +1078,32 @@ describe('chartOptionsBuilder', () => {
 
                 const expectedSeries = [
                     {
-                        name: '',
+                        name: 'abc',
                         color: 'red',
                         legendIndex: 0,
                         data: [{ x: 1, y: 0, z: 3, format: '#.##x' }]
                     }, {
-                        name: '',
+                        name: 'def',
                         color: 'green',
                         legendIndex: 1,
                         data: [{ x: 4, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    stackByAttribute,
+                    stackByAttribute,
+                    null
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1111,7 +1114,7 @@ describe('chartOptionsBuilder', () => {
                     [1, 3],
                     [4, 6]
                 ];
-                const stackByAttribute = false;
+
                 const mdObject = {
                     visualizationClass: { uri: 'abc' },
                     buckets: [
@@ -1128,23 +1131,32 @@ describe('chartOptionsBuilder', () => {
 
                 const expectedSeries = [
                     {
-                        name: '',
+                        name: 'abc',
                         color: 'red',
                         legendIndex: 0,
                         data: [{ x: 1, y: 3, z: NaN, format: '#.##x' }]
                     }, {
-                        name: '',
+                        name: 'def',
                         color: 'green',
                         legendIndex: 1,
                         data: [{ x: 4, y: 6, z: NaN, format: '#.##x' }]
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    null,
+                    stackByAttribute,
+                    null
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1156,7 +1168,7 @@ describe('chartOptionsBuilder', () => {
                     [4, null, 6],
                     [7, 8, null]
                 ];
-                const stackByAttribute = {
+                const stackByAttributeWithThreeElements = {
                     items: [
                         {
                             attributeHeaderItem: {
@@ -1208,12 +1220,21 @@ describe('chartOptionsBuilder', () => {
                         data: []
                     }
                 ];
+
+                const attributeColorStrategy = new AttributeColorStrategy(
+                    colorPallete,
+                    dummyMeasureGroup,
+                    null,
+                    stackByAttributeWithThreeElements,
+                    null
+                );
+
                 const series = getBubbleChartSeries(
                     executionResultData,
                     dummyMeasureGroup,
-                    stackByAttribute,
+                    stackByAttributeWithThreeElements,
                     mdObject,
-                    colorPallete
+                    attributeColorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1225,6 +1246,15 @@ describe('chartOptionsBuilder', () => {
                 const dataSet = fixtures.barChartWithSingleMeasureAndNoAttributes;
                 const mVS = getMVSTreemap(dataSet);
                 const type = 'treemap';
+
+                const treeMapColorStrategy = new TreeMapColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.barChartWithSingleMeasureAndNoAttributes.executionRequest.afm
+                );
+
                 const seriesData = getSeries(
                     dataSet.executionResult.data,
                     mVS[0],
@@ -1232,7 +1262,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     {} as any,
-                    DEFAULT_COLOR_PALETTE
+                    treeMapColorStrategy
                 );
 
                 it('should return only one serie', () => {
@@ -1268,6 +1298,13 @@ describe('chartOptionsBuilder', () => {
                 const dataSet = fixtures.treemapWithMetricAndViewByAttribute;
                 const mVS = getMVSTreemap(dataSet);
                 const type = 'treemap';
+                const treeMapColorStrategy = new TreeMapColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.treemapWithMetricAndViewByAttribute.executionRequest.afm
+                );
                 const seriesData = getSeries(
                     dataSet.executionResult.data,
                     mVS[0],
@@ -1275,7 +1312,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSet.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    treeMapColorStrategy
                 );
 
                 it('should return only one serie', () => {
@@ -1316,6 +1353,15 @@ describe('chartOptionsBuilder', () => {
                 const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
                 const mVS = getMVSTreemap(dataSet);
                 const type = 'treemap';
+
+                const treeMapColorStrategy = new TreeMapColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.treemapWithMetricAndStackByAttribute.executionRequest.afm
+                );
+
                 const seriesData = getSeries(
                     dataSet.executionResult.data,
                     mVS[0],
@@ -1323,7 +1369,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSet.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    treeMapColorStrategy
                 );
 
                 it('should return only one serie', () => {
@@ -1374,6 +1420,13 @@ describe('chartOptionsBuilder', () => {
                 const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
                 const mVS = getMVSTreemap(dataSet);
                 const type = 'treemap';
+                const treeMapColorStrategy = new TreeMapColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest.afm
+                );
                 const seriesData = getSeries(
                     dataSet.executionResult.data,
                     mVS[0],
@@ -1381,7 +1434,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSet.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    treeMapColorStrategy
                 );
 
                 it('should return only one serie', () => {
@@ -1462,6 +1515,13 @@ describe('chartOptionsBuilder', () => {
                 const dataSet = fixtures.treemapWithTwoMetricsAndStackByAttribute;
                 const mVS = getMVSTreemap(dataSet);
                 const type = 'treemap';
+                const treeMapColorStrategy = new TreeMapColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.treemapWithTwoMetricsAndStackByAttribute.executionRequest.afm
+                );
                 const seriesData = getSeries(
                     dataSet.executionResult.data,
                     mVS[0],
@@ -1469,7 +1529,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSet.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    treeMapColorStrategy
                 );
 
                 it('should return only one serie', () => {
@@ -1617,6 +1677,15 @@ describe('chartOptionsBuilder', () => {
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'scatter';
+
+            const metricColorStrategy = new MeasureColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWith3MetricsAndViewByAttribute.executionRequest.afm
+            );
+
             const seriesWithoutDrillability = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -1624,7 +1693,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                metricColorStrategy
             );
 
             const drillableMeasures = [{
@@ -1674,6 +1743,14 @@ describe('chartOptionsBuilder', () => {
                 const mVS = getMVS(dataSetWithNulls);
                 const type = 'scatter';
 
+                const metricColorStrategy = new MeasureColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.scatterWithNulls.executionRequest.afm
+                );
+
                 const seriesWithoutDrillability = getSeries(
                     dataSetWithNulls.executionResult.data,
                     mVS[0],
@@ -1681,7 +1758,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSetWithNulls.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    metricColorStrategy
                 );
 
                 const drillableMeasures = [{
@@ -1707,6 +1784,15 @@ describe('chartOptionsBuilder', () => {
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'bubble';
+
+            const metricColorStrategy = new MeasureColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.bubbleChartWith3MetricsAndAttribute.executionRequest.afm
+            );
+
             const seriesWithoutDrillability = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -1714,7 +1800,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 dataSet.mdObject,
-                DEFAULT_COLOR_PALETTE
+                metricColorStrategy
             );
             const drillableMeasures = [{
                 uri: dataSet.executionResponse.dimensions[1]
@@ -1782,6 +1868,14 @@ describe('chartOptionsBuilder', () => {
                 const mVS = getMVS(dataSetWithNulls);
                 const type = 'bubble';
 
+                const metricColorStrategy = new MeasureColorStrategy(
+                    DEFAULT_COLOR_PALETTE,
+                    mVS[0],
+                    mVS[1],
+                    mVS[2],
+                    fixtures.bubbleChartWithNulls.executionRequest.afm
+                );
+
                 const seriesWithoutDrillability = getSeries(
                     dataSetWithNulls.executionResult.data,
                     mVS[0],
@@ -1789,7 +1883,7 @@ describe('chartOptionsBuilder', () => {
                     mVS[2],
                     type,
                     dataSetWithNulls.mdObject,
-                    DEFAULT_COLOR_PALETTE
+                    metricColorStrategy
                 );
 
                 const drillableMeasures = [{
@@ -1817,6 +1911,13 @@ describe('chartOptionsBuilder', () => {
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'bar';
+            const metricColorStrategy = new MeasureColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest.afm
+            );
             const seriesWithoutDrillability = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -1824,7 +1925,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                metricColorStrategy
             );
 
             describe('with all drillable measures', () => {
@@ -1859,6 +1960,13 @@ describe('chartOptionsBuilder', () => {
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'bar';
+            const metricColorStrategy = new MeasureColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWith6PreviousPeriodMeasures.executionRequest.afm
+            );
             const seriesWithoutDrillability = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -1866,7 +1974,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                metricColorStrategy
             );
 
             describe('with all drillable measures', () => {
@@ -1901,6 +2009,15 @@ describe('chartOptionsBuilder', () => {
             const { afm } = dataSet.executionRequest;
             const mVS = getMVS(dataSet);
             const type = 'column';
+
+            const attColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWith3MetricsAndViewByAttribute.executionRequest.afm
+            );
+
             const seriesWithoutDrillability = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -1908,7 +2025,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                attColorStrategy
             );
 
             describe('with no drillable items', () => {
@@ -2038,6 +2155,15 @@ describe('chartOptionsBuilder', () => {
             const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
             const mVS = getMVS(dataSet);
             const type = 'column';
+
+            const attColorStrategy = new AttributeColorStrategy(
+                DEFAULT_COLOR_PALETTE,
+                mVS[0],
+                mVS[1],
+                mVS[2],
+                fixtures.barChartWithStackByAndViewByAttributes.executionRequest.afm
+            );
+
             const seriesData = getSeries(
                 dataSet.executionResult.data,
                 mVS[0],
@@ -2045,7 +2171,7 @@ describe('chartOptionsBuilder', () => {
                 mVS[2],
                 type,
                 {} as any,
-                DEFAULT_COLOR_PALETTE
+                attColorStrategy
             );
 
             it('should return number of series equal to the count of stack by attribute values', () => {
@@ -2086,7 +2212,7 @@ describe('chartOptionsBuilder', () => {
                         viewByAttribute,
                         stackByAttribute,
                         type,
-                        DEFAULT_COLOR_PALETTE
+                        attColorStrategy
                     );
                 }));
                 expect(seriesData.map((seriesItem: any) => seriesItem.data)).toEqual(expectedData);
@@ -2460,7 +2586,8 @@ describe('chartOptionsBuilder', () => {
             });
 
             it('should assign 3 colors from default colorPalette', () => {
-                expect(chartOptions.colorPalette).toEqual(DEFAULT_COLOR_PALETTE.slice(0, 3));
+                const seriesColors = chartOptions.data.series.map((serie: any) => serie.color);
+                expect(seriesColors).toEqual(DEFAULT_COLOR_PALETTE.slice(0, 3));
             });
 
             it('should assign correct tooltip function', () => {
@@ -2626,7 +2753,8 @@ describe('chartOptionsBuilder', () => {
             });
 
             it('should assign updated color for pop measure', () => {
-                expect(chartOptions.colorPalette).toEqual(['rgb(161,224,243)', 'rgb(20,178,226)']);
+                expect(chartOptions.data.series[0].color).toEqual('rgb(161,224,243)');
+                expect(chartOptions.data.series[1].color).toEqual('rgb(20,178,226)');
             });
 
             it('should assign correct tooltip function for pop measure', () => {
@@ -3067,7 +3195,10 @@ describe('chartOptionsBuilder', () => {
                     it('should return empty array when there are no values in series', () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
-                        const dataClasses = getHeatmapDataClasses(series, []);
+                        const dataClasses = getHeatmapDataClasses(
+                            series,
+                            new HeatMapColorStrategy(null, null, null, null, null)
+                        );
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3078,15 +3209,18 @@ describe('chartOptionsBuilder', () => {
                                 value: 10
                             }]
                         }];
-                        const colorPalette = ['r', 'g', 'b'];
+
                         const expectedDataClasses = [
                             {
                                 from: 10,
                                 to: 10,
-                                color: 'g'
+                                color: 'rgb(197,236,248)'
                             }
                         ];
-                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(
+                            series,
+                            new HeatMapColorStrategy(null, null, null, null, null)
+                        );
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });
@@ -3101,27 +3235,29 @@ describe('chartOptionsBuilder', () => {
                                     value: 30
                             }]
                         }];
-                        const colorPalette = ['r', 'g', 'b'];
                         const approximatelyExpectedDataClasses = [
                             {
                                 from: 0,
-                                color: 'r'
+                                color: 'rgb(255,255,255)'
                             }, {
-                                color: 'g'
+                                color: 'rgb(197,236,248)'
                             }, {
-                                color: 'b'
+                                color: 'rgb(138,217,241)'
                             }, {
-                                color: 'r'
+                                color: 'rgb(79,198,234)'
                             }, {
-                                color: 'g'
+                                color: 'rgb(20,178,226)'
                             }, {
-                                color: 'b'
+                                color: 'rgb(22,151,192)'
                             }, {
                                 to: 30,
-                                color: 'r'
+                                color: 'rgb(0,110,145)'
                             }
                         ];
-                        const dataClasses = getHeatmapDataClasses(series, colorPalette);
+                        const dataClasses = getHeatmapDataClasses(
+                            series,
+                            new HeatMapColorStrategy(null, null, null, null, null)
+                        );
 
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
                     });

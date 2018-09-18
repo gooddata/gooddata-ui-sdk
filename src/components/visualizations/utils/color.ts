@@ -71,3 +71,10 @@ export function getLighterColor(color: string, percent: number) {
         lighter(B, percent)
     );
 }
+
+export function normalizeColorToRGB(color: string) {
+    const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
+    return color.replace(hexPattern, (_prefix: string, r: string, g: string, b: string) => {
+        return `rgb(${[r, g, b].map(value => (parseInt(value, 16).toString(10))).join(', ')})`;
+    });
+}
