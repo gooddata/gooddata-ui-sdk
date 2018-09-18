@@ -271,11 +271,11 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
 
     const chartWidth = chart.plotWidth;
     const align = getArrowAlignment(arrowPosition, chartWidth);
+    const arrowPositionForTail = arrowPosition > chartWidth ? chartWidth / 2 : arrowPosition;
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : '';
-
     const tailStyle = showFullscreenTooltip() ?
-        `style="left: ${arrowPosition + chart.plotLeft}px;"` : '';
+        `style="left: ${arrowPositionForTail + chart.plotLeft}px;"` : '';
 
     const getTailClasses = (classname: any) => {
         return cx(classname, {
