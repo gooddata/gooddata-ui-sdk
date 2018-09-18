@@ -36,7 +36,6 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
-// tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
@@ -49,7 +48,6 @@ function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVi
 }
 
 function fetchVisualizationClass(
-    // tslint:disable-next-line:variable-name
     _sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
@@ -62,7 +60,6 @@ function fetchVisualizationClass(
     return Promise.resolve(visClass.visualizationClass);
 }
 
-// tslint:disable-next-line:variable-name
 function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);

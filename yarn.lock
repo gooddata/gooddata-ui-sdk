@@ -152,9 +152,9 @@
     lodash "4.17.4"
     node-glob "1.2.0"
 
-"@gooddata/tslint-config@0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.10.tgz#b2497fad1ae7a1b84bf37a3953cdfd10dbd492b5"
+"@gooddata/tslint-config@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.11.tgz#31e50083030ef597393cd21cff5039be3f876cc4"
   dependencies:
     tslint "5.8.0"
     tslint-eslint-rules "5.1.0"

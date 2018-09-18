@@ -464,7 +464,6 @@ export const executionToAGGridAdapter = (
         ...groupColumnHeaders
     ].map((column, index) => {
         if (column.children) {
-            // tslint:disable-next-line:variable-name
             getTreeLeaves(column).forEach((leafColumn, leafColumnIndex) => {
                 leafColumn.index = index + leafColumnIndex;
                 assignSorting(leafColumn, sortingMap);

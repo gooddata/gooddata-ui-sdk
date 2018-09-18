@@ -28,19 +28,16 @@ export const VISIBLE_ITEMS_COUNT = 10;
 export const LIMIT = 50;
 const INITIAL_OFFSET = 0;
 
-// tslint:disable-next-line:variable-name
 const getDefaultListLoading = (_listError: any, { intl }: { intl: InjectedIntl}) => {
     const text = intl.formatMessage({ id: 'gs.list.loading' });
     return <div><span className="s-attribute-filter-list-loading"/> {text}</div>;
 };
 
-// tslint:disable-next-line:variable-name
 const getDefaultListError = (_listError: any, { intl }: { intl: InjectedIntl}) => {
     const text = intl.formatMessage({ id: 'gs.list.error' });
     return <div className="gd-message error">{text}</div>;
 };
 
-// tslint:disable-next-line:variable-name
 const getDefaultListNoResults = (_listError: any, { intl }: { intl: InjectedIntl}) => {
     const text = intl.formatMessage({ id: 'gs.list.noItemsFound' });
     return <div>{text}</div>;
@@ -292,7 +289,7 @@ export class AttributeDropdownWrapped
         this.setState({ searchString });
     }
 
-    private onRangeChange = (_: any, from: number, to: number) => {
+    private onRangeChange = (_searchString: string, from: number, to: number) => {
         range(from, to).forEach(this.dataSource.getRowAt);
     }
 
