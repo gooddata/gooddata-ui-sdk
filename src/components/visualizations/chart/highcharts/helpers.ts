@@ -11,7 +11,7 @@ import maxBy = require('lodash/maxBy');
 import minBy = require('lodash/minBy');
 import min = require('lodash/min');
 import max = require('lodash/max');
-import sum = require('lodash/sum');
+import isNil = require('lodash/isNil');
 
 import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
 import { VisualizationTypes, VisType } from '../../../../constants/visualizationTypes';
@@ -70,7 +70,7 @@ export const isStacked = (chart: any) => {
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
     return {
-        xAxisProps:  isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
+        xAxisProps: isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
         yAxisProps: isBarChart(type) ? { ...config.xaxis } : { ...config.yaxis }
     };
 }
@@ -175,38 +175,59 @@ function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
 }
 
 function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
-    const min = minBy(serieData, (item: ISeriesDataItem) =>  item && item.y ? item.y : null);
+    const min = minBy(serieData, (item: ISeriesDataItem) => item && item.y ? item.y : null);
     return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 
-function getStackedMaxValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series
-        .filter(isSerieVisible)
-        .map(serie => serie.data)));
-    const stackSums: number[] = [];
+export function getStackedMaxValue(series: ISeriesItem[]) {
+    const maximumPerColumn = getColumnExtremeValue(series, getMaxFromPositiveNegativeStacks);
 
-    // tslint:disable-next-line:forin
-    for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
-    }
-
-    const maxValue = max(stackSums);
-    return maxValue ? maxValue : Number.MIN_SAFE_INTEGER;
+    const maxValue = max(maximumPerColumn);
+    return !isNil(maxValue) ? maxValue : Number.MIN_SAFE_INTEGER;
 }
 
-function getStackedMinValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series
+export function getStackedMinValue(series: ISeriesItem[]) {
+    const minimumPerColumn = getColumnExtremeValue(series, getMinFromPositiveNegativeStacks);
+
+    const minValue = min(minimumPerColumn);
+    return !isNil(minValue) ? minValue : Number.MAX_SAFE_INTEGER;
+}
+
+function getColumnExtremeValue(series: ISeriesItem[], extremeColumnGetter: (data: number[]) => number): number[] {
+    const seriesDataPerColumn = zip(...series
         .filter(isSerieVisible)
-        .map(serie => serie.data)));
-    const stackSums: number[] = [];
+        .map(serie => serie.data));
 
-    // tslint:disable-next-line:forin
-    for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
-    }
+    const seriesDataYValue = seriesDataPerColumn.map(data => data.map(x => x.y));
+    return seriesDataYValue.map(extremeColumnGetter);
+}
 
-    const minValue = min(stackSums);
-    return minValue ? minValue : Number.MAX_SAFE_INTEGER;
+function getMaxFromPositiveNegativeStacks(data: number[]): number {
+    return data.reduce((acc: number, current: number) => {
+        if (isNil(current)) {
+            return acc;
+        }
+
+        if ((current < 0) || (acc < 0)) {
+            return Math.max(acc, current);
+        }
+
+        return acc + current;
+    }, Number.MIN_SAFE_INTEGER);
+}
+
+function getMinFromPositiveNegativeStacks(data: number[]): number {
+    return data.reduce((acc: number, current: number) => {
+        if (isNil(current)) {
+            return acc;
+        }
+
+        if ((current > 0) || (acc > 0)) {
+            return Math.min(acc, current);
+        }
+
+        return acc + current;
+    }, Number.MAX_SAFE_INTEGER);
 }
 
 export function shouldStartOrEndOnTick(chartOptions: any): boolean {
