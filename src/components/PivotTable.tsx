@@ -16,6 +16,7 @@ import {
     ROWS,
     COLUMNS
  } from '../constants/bucketNames';
+import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
 
 export interface IPivotTableBucketProps {
     measures?: VisualizationObject.BucketItem[];
@@ -33,8 +34,9 @@ export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketPr
     pageSize?: number;
 }
 
-const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.IBucket[] => {
+export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.IBucket[] => {
     const { measures, rows, columns, totals } = props;
+
     return [
         {
             localIdentifier: MEASURES,
@@ -68,6 +70,8 @@ export class PivotTable extends React.Component<IPivotTableProps> {
 
         const afm = convertBucketsToAFM(buckets, filters);
         const resultSpec = getResultSpec(buckets, sortBy, getPivotTableDimensions);
+
+        hasDuplicateIdentifiers(buckets);
 
         const newProps
             = omit<IPivotTableProps, IPivotTableNonBucketProps>(this.props,
