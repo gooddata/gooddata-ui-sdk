@@ -98,7 +98,12 @@ const bucketPresets = {
         bucketProps: {
             measures,
             rows,
-            columns: rows
+            columns: rows.map(attribute => ({
+                visualizationAttribute: {
+                    ...attribute.visualizationAttribute,
+                    localIdentifier: `${attribute.visualizationAttribute.localIdentifier}_2`
+                }
+            }))
         }
     }
 };

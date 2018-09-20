@@ -68,9 +68,9 @@ export const createAttributeBucketItem = (qualifierString, localIdentifier, alia
     return {
         visualizationAttribute: {
             localIdentifier: qualifierString,
-            displayForm: getQualifierObject(qualifierString)
-        },
-        ...aliasProp
+            displayForm: getQualifierObject(qualifierString),
+            ...aliasProp
+        }
     };
 };
 
