@@ -18,6 +18,7 @@ import DrillWithExternalData from './DrillWithExternalData';
 import Registration from './Registration';
 import Login from './Login';
 import PivotTable from './PivotTable';
+import PivotTableDemo from './PivotTableDemo';
 import PivotTableDynamic from './PivotTableDynamic';
 import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
@@ -43,6 +44,7 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
+    { path: '/pivot-table-demo', title: 'Pivot Table', Component: PivotTableDemo },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },
