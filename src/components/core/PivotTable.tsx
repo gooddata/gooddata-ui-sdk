@@ -28,7 +28,8 @@ import {
     ID_SEPARATOR,
     getIdsFromUri,
     ROW_TOTAL,
-    assortDimensionHeaders
+    assortDimensionHeaders,
+    getParsedFields
 } from '../../helpers/agGrid';
 
 import { LoadingComponent } from '../simple/LoadingComponent';
@@ -44,7 +45,7 @@ import { ICommonChartProps } from './base/BaseChart';
 import { IDataSource } from '../../interfaces/DataSource';
 import { IPivotTableConfig } from '../../interfaces/Table';
 import { BaseVisualization } from './base/BaseVisualization';
-import PivotHeader from './PivotTableHeader';
+import ColumnHeader from './pivotTable/ColumnHeader';
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
 
@@ -70,6 +71,7 @@ import InjectedIntl = ReactIntl.InjectedIntl;
 import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
 
 import '../../../styles/scss/pivotTable.scss';
+import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
 
 export interface IPivotTableProps extends ICommonChartProps {
     resultSpec?: AFM.IResultSpec;
@@ -169,13 +171,6 @@ export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && no
     return leaves;
 };
 
-export const getParsedFields = (colId: string): string[][] => {
-    // supported colIds are 'a_2009', 'a_2009_4-a_2071_12', 'a_2009_4-a_2071_12-m_3'
-    return colId
-        .split(FIELD_SEPARATOR)
-        .map((field: string) => (field.split(ID_SEPARATOR)));
-};
-
 export const getSortItemByColId = (
     execution: Execution.IExecutionResponses,
     colId: string,
@@ -239,14 +234,14 @@ export const getSortItemByColId = (
 
 export interface ISortModelItem {
     colId: string;
-    sort: string;
+    sort: AFM.SortDirection;
 }
 
 export const getSortsFromModel = (
     sortModel: ISortModelItem[], // AgGrid has any, but we can do better
     execution: Execution.IExecutionResponses
 ) => {
-    return sortModel.map((sortModelItem: any) => {
+    return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
         const sortHeader = getSortItemByColId(execution, colId, sort);
         invariant(sortHeader, `unable to find sort item by field ${colId}`);
@@ -544,13 +539,18 @@ export class PivotTableInner extends
 
             defaultColDef: {
                 cellClass: this.getCellClass(null),
+                headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     enableMenu: false
                 }
             },
             defaultColGroupDef: {
                 headerClass: this.getHeaderClass(null),
-                children: []
+                children: [],
+                headerGroupComponentFramework: ColumnGroupHeader as any,
+                headerGroupComponentParams: {
+                    enableMenu: false
+                }
             },
             onCellClicked: this.cellClicked,
 
@@ -629,8 +629,7 @@ export class PivotTableInner extends
             // Custom renderers
             frameworkComponents: {
                 // any is needed here because of incompatible types with AgGridReact types
-                loadingRenderer: RowLoadingElement as any, // loading indicator
-                agColumnHeader: PivotHeader as any
+                loadingRenderer: RowLoadingElement as any // loading indicator
             },
 
             // Custom CSS classes

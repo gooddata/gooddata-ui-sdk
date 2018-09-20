@@ -14,13 +14,12 @@ import {
     getTreeLeaves,
     indexOfTreeNode,
     getDrillIntersection,
-    getParsedFields,
     getSortsFromModel
 } from '../PivotTable';
 import { oneMeasureDataSource } from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
 import { LoadingComponent } from '../../simple/LoadingComponent';
-import { executionToAGGridAdapter } from '../../../helpers/agGrid';
+import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
 
 const intl = createIntlMock();
