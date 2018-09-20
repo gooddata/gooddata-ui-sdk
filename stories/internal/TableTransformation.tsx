@@ -133,10 +133,6 @@ function generateTotals(totalsTypes: AFM.TotalType[]): IIndexedTotalItem[] {
     });
 }
 
-function isMeasureGroupHeader(header: Execution.IHeader): header is Execution.IMeasureGroupHeader {
-    return (header as Execution.IMeasureGroupHeader).measureGroupHeader !== undefined;
-}
-
 const tableRenderer = (props: IResponsiveTableProps) => (<ResponsiveTable {...props} rowsPerPage={10} />);
 
 storiesOf('Internal/TableTransformation', module)
@@ -270,7 +266,7 @@ storiesOf('Internal/TableTransformation', module)
         const response = cloneDeep(EXECUTION_RESPONSE_2A_3M);
         // set formatting of third metric - for null display "unknown"
         const header: Execution.IHeader = response.dimensions[1].headers[0];
-        if (isMeasureGroupHeader(header)) {
+        if (Execution.isMeasureGroupHeader(header)) {
             header.measureGroupHeader.items[2].measureHeaderItem.format = '[=null][magenta]unknown';
         }
         const onTotalsEdit = (updateTotals: IIndexedTotalItem[]) => {

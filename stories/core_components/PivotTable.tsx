@@ -5,6 +5,8 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { PivotTable } from '../../src/index';
 import { onErrorHandler } from '../mocks';
+
+import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
@@ -12,6 +14,8 @@ import {
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
+    MEASURE_2_WITH_FORMAT,
+    MEASURE_WITH_NULLS,
     TOTAL_M1_A1,
     TOTAL_M2_A1
 } from '../data/componentProps';
@@ -165,6 +169,49 @@ storiesOf('Core components/PivotTable', module)
                     totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('custom number separators', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('custom measure format', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2_WITH_FORMAT]}
+                    rows={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('empty value', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_WITH_NULLS]}
+                    rows={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

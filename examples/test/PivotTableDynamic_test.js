@@ -74,16 +74,16 @@ test('should sort PivotTable using sortBy prop', async (t) => {
     await t.click(Selector('.s-bucket-preset-measuresColumnAndRowAttributes'));
 
     await t.click(Selector('.s-sorting-preset-byMenuCategory'));
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '71475.721', '.s-cell-0-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$71,476', '.s-cell-0-3');
 
     await t.click(Selector('.s-sorting-preset-byQ1JanFranchiseFees'));
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '101054.599', '.s-cell-0-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$101,055', '.s-cell-0-3');
 
     await t.click(Selector('.s-sorting-preset-byLocationStateAndQ1JanFranchiseFees'));
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '71475.721', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$71,476', '.s-cell-1-3');
 
     await t.click(Selector('.s-sorting-preset-noSort'));
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '51420.62125', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$51,421', '.s-cell-1-3');
 });
 
 test('should sort PivotTable on column header click', async (t) => {
@@ -91,17 +91,17 @@ test('should sort PivotTable on column header click', async (t) => {
     await t.click(Selector('.s-sorting-preset-noSort'));
 
     await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (initial should be ASC)
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '51917.88655', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$51,918', '.s-cell-1-3');
 
     await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (toggled should be DESC)
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '69105.0115', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$69,105', '.s-cell-1-3');
 
     await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (third state should be ASC again)
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '51917.88655', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$51,918', '.s-cell-1-3');
 
     await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .gd-pivot-table-header-label')); // Franchise fees (initial should be DESC)
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '81350.29', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$81,350', '.s-cell-1-3');
 
     await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .gd-pivot-table-header-label')); // Franchise fees (toggled should be ASC)
-    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '42140.27875', '.s-cell-1-3');
+    await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$42,140', '.s-cell-1-3');
 });
