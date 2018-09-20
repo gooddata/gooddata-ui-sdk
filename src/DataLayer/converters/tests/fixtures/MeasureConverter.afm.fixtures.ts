@@ -13,6 +13,19 @@ export const simpleMeasure: IMeasure = {
     alias: 'Measure M1'
 };
 
+export const simpleMeasureWithFormat: IMeasure = {
+    localIdentifier: 'm1',
+    definition: {
+        measure: {
+            item: {
+                uri: '/gdc/md/project/obj/metric.id'
+            }
+        }
+    },
+    alias: 'Measure M1',
+    format: 'GD #,##0.00000'
+};
+
 export const simpleMeasureWithIdentifiers: IMeasure = {
     localIdentifier: 'm1',
     definition: {

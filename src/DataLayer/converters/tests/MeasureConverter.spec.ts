@@ -16,9 +16,9 @@ describe('convertMeasure', () => {
         });
     });
 
-    it('should ignore format defined on simple measures', () => {
+    it('should convert simple measure with format', () => {
         expect(MeasureConverter.convertMeasure(measures.simpleMeasureWithFormat)).toEqual({
-            ...afm.simpleMeasure
+            ...afm.simpleMeasureWithFormat
         });
     });
 

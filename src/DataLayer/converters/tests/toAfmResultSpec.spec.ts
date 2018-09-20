@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     simpleMeasure,
+    simpleMeasureWithFormat,
     simpleMeasureWithIdentifiers,
     renamedMeasure,
     filteredMeasure,
@@ -43,9 +44,9 @@ describe('toAfmResultSpec', () => {
         });
     });
 
-    it('should ignore format defined on simple measures', () => {
+    it('should convert simple measure with format', () => {
         expect(toAfmResultSpec(charts.simpleMeasureWithFormat)).toEqual({
-            ...simpleMeasure
+            ...simpleMeasureWithFormat
         });
     });
 

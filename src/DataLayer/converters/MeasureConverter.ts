@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import compact = require('lodash/compact');
+import get = require('lodash/get');
 import { AFM, VisualizationObject } from '@gooddata/typings';
 import IMeasure = VisualizationObject.IMeasure;
 import IMeasureDefinition = VisualizationObject.IMeasureDefinition;
@@ -22,7 +23,7 @@ function convertMeasure(measure: IMeasure): AFM.IMeasure {
 
     const convertedDefinition = convertMeasureDefinition(definition);
 
-    const format = convertMeasureDefinitionFormat(definition);
+    const format = getFormat(measure);
     const formatProp = format ? { format } : {};
 
     const alias = measure.measure.alias ? measure.measure.alias : measure.measure.title;
@@ -147,14 +148,18 @@ function convertPreviousPeriodMeasureDefinition(definition: IPreviousPeriodMeasu
     };
 }
 
-function convertMeasureDefinitionFormat(definition: IMeasureDefinitionType): string | null {
-    if (VisualizationObject.isMeasureDefinition(definition)) {
-        return convertSimpleMeasureDefinitionFormat(definition);
-    }
-    return null;
+function getFormat(measure: IMeasure): string | undefined {
+    const { measure: { definition } } = measure;
+    const measureFormat = get(measure.measure, 'format');
+
+    const predefinedFormat = VisualizationObject.isMeasureDefinition(definition)
+        ? getPredefinedFormat(definition)
+        : undefined;
+
+    return predefinedFormat || measureFormat;
 }
 
-function convertSimpleMeasureDefinitionFormat(definition: IMeasureDefinition): string | null {
+function getPredefinedFormat(definition: IMeasureDefinition): string | null {
     const { measureDefinition } = definition;
     // should we prefer format defined on measure? If so, fix computeRatio format in AD
     return measureDefinition.computeRatio
