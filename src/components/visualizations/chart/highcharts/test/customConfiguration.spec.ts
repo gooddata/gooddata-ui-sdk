@@ -305,6 +305,84 @@ describe('getCustomizedConfiguration', () => {
             };
             expect(result.plotOptions.series).toEqual(expectedPlotOptions);
         });
+
+        it('should set axis line width to 1 when axis is enabled and gridline disabled', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                yAxisProps: {
+                    visible: true
+                },
+                xAxisProps: {
+                    visible: true
+                },
+                grid: {
+                    enabled: false
+                }
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                lineWidth: 1
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                lineWidth: 1
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should set axis line width to 0 when axis and gridline are visible', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                yAxisProps: {
+                    visible: true
+                },
+                xAxisProps: {
+                    visible: true
+                },
+                grid: {
+                    enabled: true
+                }
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                lineWidth: 0
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                lineWidth: 0
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should set axis line width to 0 when axis is disabled', () => {
+            const result = getCustomizedConfiguration({
+                ...chartOptions,
+                yAxisProps: {
+                    visible: false
+                },
+                xAxisProps: {
+                    visible: false
+                }
+            });
+
+            const expectedXAxisResult = {
+                ...result.xAxis[0],
+                lineWidth: 0
+            };
+            const expectedYAxisResult = {
+                ...result.yAxis[0],
+                lineWidth: 0
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
+            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
     });
 
     describe('gridline configuration', () => {
