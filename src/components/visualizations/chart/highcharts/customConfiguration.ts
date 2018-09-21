@@ -331,7 +331,7 @@ function level2LabelsFormatter(config?: IChartConfig) {
 
 function labelFormatterBubble(config?: IChartConfig) {
     const value = get<number>(this, 'point.z');
-    if (isNil(value)) {
+    if (isNil(value) || isNaN(value)) {
         return null;
     }
 

@@ -74,6 +74,22 @@ storiesOf('Core components/BubbleChart', module)
             </div>
         )
     ))
+    .add('without size measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="screenshot-container">
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={DATA_LABELS_VISIBLE_CONFIG}
+                />
+            </div>
+        )
+    ))
     .add('with German number format', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
