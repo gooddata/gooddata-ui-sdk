@@ -822,10 +822,21 @@ export function areAxisLabelsEnabled(chartOptions: any, axisPropsName: string, s
     };
 }
 
+function shouldExpandYAxis(chartOptions: any) {
+    const min = get(chartOptions, 'xAxisProps.min', '');
+    const max = get(chartOptions, 'xAxisProps.max', '');
+    return min === '' && max === '' ? {} : { getExtremesFromAll: true };
+}
+
 function getAxesConfiguration(chartOptions: any) {
     const { type } = chartOptions;
 
     return {
+        plotOptions: {
+            series: {
+                ...shouldExpandYAxis(chartOptions)
+            }
+        },
         yAxis: get(chartOptions, 'yAxes', []).map((axis: any) => {
             if (!axis) {
                 return {

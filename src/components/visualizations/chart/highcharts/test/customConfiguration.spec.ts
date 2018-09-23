@@ -84,7 +84,7 @@ describe('getCustomizedConfiguration', () => {
             stacking: null
         });
 
-        expect(result.plotOptions.series).toBeUndefined();
+        expect(result.plotOptions.series).toEqual({});
     });
 
     it('should NOT set connectNulls for stacked Line chart', () => {
@@ -289,6 +289,21 @@ describe('getCustomizedConfiguration', () => {
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+        });
+
+        it('should set extremes for y axis when x axis scale changed', () => {
+            const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    xAxisProps: {
+                        min: 20,
+                        max: 30
+                    }
+                });
+
+            const expectedPlotOptions = {
+                    getExtremesFromAll: true
+            };
+            expect(result.plotOptions.series).toEqual(expectedPlotOptions);
         });
     });
 
