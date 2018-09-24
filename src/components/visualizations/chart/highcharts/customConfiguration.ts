@@ -828,8 +828,13 @@ function shouldExpandYAxis(chartOptions: any) {
     return min === '' && max === '' ? {} : { getExtremesFromAll: true };
 }
 
+function isAxisLineVisible(isAxisVisible: boolean, isGridEnabled: boolean) {
+    return isAxisVisible && !isGridEnabled;
+}
+
 function getAxesConfiguration(chartOptions: any) {
     const { type } = chartOptions;
+    const gridEnabled = get(chartOptions, 'grid.enabled', true);
 
     return {
         plotOptions: {
@@ -859,6 +864,7 @@ function getAxesConfiguration(chartOptions: any) {
             const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
 
             return {
+                lineWidth: isAxisLineVisible(visible, gridEnabled) ? 1 : 0,
                 labels: {
                     ...labelsEnabled,
                     style: {
@@ -904,6 +910,7 @@ function getAxesConfiguration(chartOptions: any) {
             // for bar chart take y axis options
             return {
                 lineColor: '#d5d5d5',
+                lineWidth: isAxisLineVisible(visible, gridEnabled) ? 1 : 0,
 
                 // hide ticks on x axis
                 minorTickLength: 0,
