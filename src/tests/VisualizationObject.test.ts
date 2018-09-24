@@ -7,6 +7,7 @@ import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObj
 import VisualizationObjectDateFilter = VisualizationObject.VisualizationObjectDateFilter;
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
 import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
+import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
 
 describe('VisualizationObject', () => {
     describe('isMeasure', () => {
@@ -116,6 +117,17 @@ describe('VisualizationObject', () => {
             expect(result).toEqual(true);
         });
 
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measureDefinition: IArithmeticMeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
+                }
+            };
+            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when pop measure definition is tested', () => {
             const measureDefinition: IMeasureDefinitionType = {
                 popMeasureDefinition: {
@@ -146,6 +158,70 @@ describe('VisualizationObject', () => {
         });
     });
 
+    describe('isArithmeticMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isArithmeticMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isArithmeticMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when simple measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                measureDefinition: {
+                    item: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when arithmetic measure definition is tested', () => {
+            const measureDefinition: IArithmeticMeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
+                }
+            };
+            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when pop measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                popMeasureDefinition: {
+                    measureIdentifier: 'm1',
+                    popAttribute: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when previous period measure definition is tested', () => {
+            const measureDefinition: IMeasureDefinitionType = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+    });
+
     describe('isPopMeasureDefinition', () => {
         it('should return false when null is tested', () => {
             const result = VisualizationObject.isPopMeasureDefinition(null);
@@ -163,6 +239,17 @@ describe('VisualizationObject', () => {
                     item: {
                         uri: '/gdc/mock/measure'
                     }
+                }
+            };
+            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measureDefinition: IArithmeticMeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
                 }
             };
             const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
@@ -216,6 +303,17 @@ describe('VisualizationObject', () => {
                     item: {
                         uri: '/gdc/mock/measure'
                     }
+                }
+            };
+            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measureDefinition: IArithmeticMeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
                 }
             };
             const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
