@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -20,6 +21,16 @@ const backendShortcuts = {
 
 const defaultBackend = backendShortcuts.developer;
 
+function SimplestProgressPlugin() {
+    let lastPercent = -10;
+    return new webpack.ProgressPlugin((percent) => {
+        const percentInt = Math.ceil(percent * 100);
+        if (percentInt >= lastPercent + 5) {
+            lastPercent = percentInt;
+            process.stderr.write(`${percentInt}% `);
+        }
+    });
+}
 
 module.exports = async (env) => {
     const basePath = env && env.basePath || ''; // eslint-disable-line no-mixed-operators
@@ -36,7 +47,7 @@ module.exports = async (env) => {
             secure: false,
             cookieDomainRewrite: '',
             onProxyReq: (proxyReq) => {
-                console.log('proxy', '/gdc', proxyReq.path);
+                console.log('proxy', '/gdc', proxyReq.path); // eslint-disable-line no-console
                 if (proxyReq.method === 'DELETE' && !proxyReq.getHeader('content-length')) {
                     // Only set content-length to zero if not already specified
                     proxyReq.setHeader('content-length', '0');
@@ -51,6 +62,7 @@ module.exports = async (env) => {
             target: 'http://localhost:3009',
             secure: false,
             onProxyReq: (req) => {
+                // eslint-disable-next-line no-console
                 console.log(`Proxy ${req.path} to http://localhost:3009 (use: yarn examples-server)`);
             }
         }
@@ -171,15 +183,3 @@ module.exports = async (env) => {
         resolve
     };
 };
-
-
-function SimplestProgressPlugin() {
-    let lastPercent = -10;
-    return new webpack.ProgressPlugin(function (percent, msg) {
-        const percentInt = Math.ceil(percent*100);
-        if (percentInt >= lastPercent + 5) {
-            lastPercent = percentInt;
-            process.stderr.write(`${percentInt}% `);
-        }
-    })
-}

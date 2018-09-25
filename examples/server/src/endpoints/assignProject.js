@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const bodyParser = require('body-parser');
 
 module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {

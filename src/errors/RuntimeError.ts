@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 export class RuntimeError extends Error {
     constructor(public message: string, public cause?: Error) {
         super(message);

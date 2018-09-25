@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const proxy = require('http-proxy-middleware');
 const url = require('url');
 

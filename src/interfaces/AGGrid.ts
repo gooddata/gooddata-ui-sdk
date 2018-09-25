@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { IDrillItem } from '../interfaces/DrillEvents';
 import { ColDef, CellEvent } from 'ag-grid';
 

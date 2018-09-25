@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const express = require('express');
 
 function redirect404ToIndex(req, res, next) {

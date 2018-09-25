@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject, VisualizationClass } from '@gooddata/typings';
 
 export const visualizationObjects: [{ visualizationObject: VisualizationObject.IVisualizationObject }] = [
