@@ -630,10 +630,9 @@ function getStackingConfiguration(chartOptions: any, _config: any, chartConfig?:
     } : {};
 }
 
-function getSeries(series: any, colorPalette: any = []) {
-    return series.map((seriesItem: any, index: number) => {
+function getSeries(series: any) {
+    return series.map((seriesItem: any) => {
         const item = cloneDeep(seriesItem);
-        item.color = colorPalette[index % colorPalette.length];
         // Escaping is handled by highcharts so we don't want to provide escaped input.
         // With one exception, though. Highcharts supports defining styles via
         // for example <b>...</b> and parses that from series name.
@@ -678,7 +677,7 @@ function getHeatmapDataConfiguration(chartOptions: any) {
 
 function getDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
-    const series = getSeries(data.series, chartOptions.colorPalette);
+    const series = getSeries(data.series);
     const { type } = chartOptions;
 
     switch (type) {

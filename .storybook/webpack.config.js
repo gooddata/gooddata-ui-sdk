@@ -32,7 +32,7 @@ module.exports = {
                     path.join(__dirname, '../stories'),
                     path.join(__dirname, '../src')
                 ],
-                loaders: ['awesome-typescript-loader']
+                loaders: ['awesome-typescript-loader?configFileName=./stories/tsconfig.json']
             }
         ]
     },
