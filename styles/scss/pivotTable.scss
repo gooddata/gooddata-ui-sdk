@@ -2,6 +2,8 @@
 @import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/variables';
 
 $ag-icons-path: "~ag-grid/src/styles/balham-icons/";
+$menu-icon-size: 16px;
+$menu-icon-padding: 8px;
 
 $border-color: transparent;
 $font-size: 12px;
@@ -101,12 +103,27 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
     display: flex;
     position: relative;
     margin: 0 -12px;
+    flex-direction: row;
 
     &-label {
         display: flex;
         flex: 1 1 auto;
+        flex-direction: row;
         padding: 0 12px;
         overflow: hidden;
+        justify-content: flex-start;
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--clickable {
+            cursor: pointer;
+        }
 
         &-text {
             flex: 0 1 auto;
@@ -117,22 +134,22 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
         }
     }
 
-    &--numeric {
-        flex-direction: row-reverse;
+     &--numeric {
+         flex-direction: row-reverse;
 
-    }
-    &--numeric &-label {
-        &-text {
-            text-align: right;
-            flex: 1 1 auto;
-        }
-    }
-    &--numeric &-sort {
-        flex: 0 0 auto;
-    }
-    &--numeric &-next-sort {
-        flex: 0 0 auto;
-    }
+     }
+     &--numeric &-label {
+         &-text {
+             text-align: right;
+             flex: 1 1 auto;
+         }
+     }
+     &--numeric &-sort {
+         flex: 0 0 auto;
+     }
+     &--numeric &-next-sort {
+         flex: 0 0 auto;
+     }
 
     &--sorting-enabled &-label {
         cursor: pointer;
@@ -142,38 +159,39 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
         }
     }
 
-    &:hover &-menu {
-        opacity: 1;
-    }
-
     &-sort {
         flex: 1 0 auto;
-    }
-
-    &:hover &-sort {
-        display: none;
-    }
-
-    &-next-sort {
-        flex: 1 0 auto;
-        display: none;
-    }
-
-    &:hover &-next-sort {
-        display: block;
     }
 
     &-menu {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding: 0 12px;
+        align-items: center;
         cursor: pointer;
         opacity: 0;
-        transition: opacity 0.4s;
+        transition: all 200ms;
+        position: relative;
 
         &:hover {
             background-color: rgba(0, 255, 255, 0.1);
+        }
+
+        &--hide {
+            width: 0px;
+            opacity: 0;
+            transition: all 200ms;
+        }
+
+        &--show {
+            opacity: 1;
+            width: ($menu-icon-size + (2 * $menu-icon-padding));
+            transition: all 200ms;
+        }
+
+        & > .menu-icon {
+            padding: $menu-icon-padding;
+            width: $menu-icon-size;
+            height: $menu-icon-size;
         }
     }
 
