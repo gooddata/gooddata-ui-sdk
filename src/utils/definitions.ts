@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { difference, map } from 'lodash';
 
 const IDENTIFIER_REGEX = /{\S+}/g;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2017 GoodData Corporation
 import { getIn, handlePolling } from './util';
 import { ITimezone, IColor } from './interfaces';
 import { XhrModule, ApiResponse } from './xhr';

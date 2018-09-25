@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { get, find, omit, cloneDeep } from 'lodash';
 import { XhrModule } from './xhr';
 import { ExecutionModule } from './execution';

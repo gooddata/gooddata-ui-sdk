@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { queryString } from '../util';
 
 export const ROOT = '/gdc/admin';

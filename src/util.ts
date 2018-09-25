@@ -1,5 +1,4 @@
-// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
-
+// (C) 2007-2017 GoodData Corporation
 import { get } from 'lodash';
 import { delay } from './utils/promise';
 

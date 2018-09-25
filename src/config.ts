@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2014 GoodData Corporation
 import { set as _set, get as _get } from 'lodash';
 
 /**
@@ -78,7 +78,7 @@ export class ConfigModule {
      * @method setCustomDomain
      */
     public setCustomDomain(domain: string) {
-        this.configStorage.domain = sanitizeDomain(domain); // eslint-disable-line no-param-reassign
+        this.configStorage.domain = sanitizeDomain(domain);
     }
 
     /**
@@ -100,7 +100,7 @@ export class ConfigModule {
      */
     public setJsPackage(name: string, version: string) {
         if (!this.configStorage.originPackage) { // only set the first (topmost) package
-            this.configStorage.originPackage = { name, version }; // eslint-disable-line no-param-reassign
+            this.configStorage.originPackage = { name, version };
         }
     }
 

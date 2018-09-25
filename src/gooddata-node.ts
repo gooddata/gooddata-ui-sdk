@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2014 GoodData Corporation
 const fetchCookie = require('fetch-cookie'); // tslint:disable-line:no-var-requires
 import nodeFetch from 'node-fetch';
 

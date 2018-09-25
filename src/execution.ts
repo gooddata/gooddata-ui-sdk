@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2018 GoodData Corporation
 import { ExperimentalExecutionsModule } from './execution/experimental-executions';
 import { AttributesMapLoaderModule } from './utils/attributesMapLoader';
 import { ExecuteAfmModule } from './execution/execute-afm';

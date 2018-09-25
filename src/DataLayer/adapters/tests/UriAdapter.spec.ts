@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import 'isomorphic-fetch';
 import { charts } from '../../converters/tests/fixtures/VisObj.fixtures';
 import { UriAdapter } from '../UriAdapter';

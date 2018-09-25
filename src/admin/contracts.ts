@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as routes from './routes';
 import { XhrModule } from '../xhr';
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2014 GoodData Corporation
 import { getIn, queryString, thisPackage } from '../src/util';
 
 describe('util', () => {

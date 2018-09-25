@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2013, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2013 GoodData Corporation
 import {
     isPlainObject,
     isFunction,
@@ -252,7 +252,7 @@ export class XhrModule {
             }
             this.tokenRequest = null;
 
-            return this.ajax(url, settings); // eslint-disable-line no-use-before-define
+            return this.ajax(url, settings);
         }, (reason: any) => {
             this.tokenRequest = null;
             return reason;

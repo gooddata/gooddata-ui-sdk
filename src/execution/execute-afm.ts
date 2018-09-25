@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2018 GoodData Corporation
 import * as invariant from 'invariant';
 import * as qs from 'qs';
 import { get, range } from 'lodash';
