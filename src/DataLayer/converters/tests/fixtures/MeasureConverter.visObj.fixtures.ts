@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
 import IMeasure = VisualizationObject.IMeasure;
 

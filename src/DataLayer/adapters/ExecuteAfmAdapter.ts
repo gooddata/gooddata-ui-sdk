@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { SDK } from '../../gooddata';
 import { AFM, Execution } from '@gooddata/typings';
 import { IAdapter } from '../interfaces/Adapter';

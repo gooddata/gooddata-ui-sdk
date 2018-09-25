@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2017 GoodData Corporation
 import { XhrModule, ApiResponseError, ApiResponse } from './xhr';
 import { ProjectModule } from './project';
 
@@ -108,7 +108,7 @@ export class UserModule {
                     .then((result: any) => {
                         const data = result.getData();
                         const userUri = data.bootstrapResource.accountSetting.links.self;
-                        const userId = userUri.match(/([^\/]+)\/?$/)[1]; // eslint-disable-line no-useless-escape
+                        const userId = userUri.match(/([^\/]+)\/?$/)[1];
 
                         return this.xhr.del(`/gdc/account/login/${userId}`);
                     });

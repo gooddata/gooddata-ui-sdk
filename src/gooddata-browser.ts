@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2014 GoodData Corporation
 import 'isomorphic-fetch';
 import { factory, SDK } from './gooddata';
 import { ApiResponse, ApiResponseError, ApiNetworkError } from './xhr';

@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2017 GoodData Corporation
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
 

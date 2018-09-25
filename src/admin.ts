@@ -1,5 +1,4 @@
-// Copyright (C) 2007-2014, GoodData(R) Corporation. All rights reserved.
-
+// (C) 2007-2014 GoodData Corporation
 import { DataProductsModule } from './admin/dataProducts';
 import { DomainDataProductModule } from './admin/domainDataProducts';
 import { DomainsModule } from './admin/domains';

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { isPlainObject } from 'lodash';
 import { MockRequest } from 'fetch-mock';
 

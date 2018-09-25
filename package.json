@@ -14,7 +14,7 @@
     "LICENSE"
   ],
   "config": {
-    "tslint": "'./{src,test}/**/*.ts'"
+    "tslint": "./{src,test}/**/*.ts"
   },
   "scripts": {
     "dev": "tsc --watch",
@@ -57,8 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@gooddata/eslint-config": "0.0.19",
-    "@gooddata/tslint-config": "0.0.11",
+    "@gooddata/tslint-config": "0.0.13",
     "@types/es6-promise": "3.3.0",
     "@types/fast-levenshtein": "0.0.1",
     "@types/fetch-mock": "5.*",

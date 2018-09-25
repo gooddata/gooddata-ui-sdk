@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { interpolate, CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_LOG } from './routes';
 import { XhrModule } from '../xhr';
 
