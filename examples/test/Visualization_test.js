@@ -15,7 +15,7 @@ test('Chart visualization should render', async (t) => {
         .expect(chart.exists)
         .ok()
         .expect(chart.textContent)
-        .eql('Created with Highcharts 4.2.5Month/Year (Date)$ Total Sales$2,621,884$2,625,589$984,801Oct 2017Nov 2017Dec 20170M1M2M3M');
+        .eql('Created with Highcharts 4.2.5Month/Year (Date)$ Total Sales$2,707,184$2,625,617$2,579,553Jan 2016Feb 2016Mar 20160M1M2M3M');
 });
 
 test('Custom visualization should render', async (t) => {
