@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { IObjectMeta } from './Meta';
 
 export namespace VisualizationClass {

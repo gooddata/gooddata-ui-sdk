@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import isEmpty = require('lodash/isEmpty');
 
 export namespace AFM {

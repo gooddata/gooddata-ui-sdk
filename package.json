@@ -17,7 +17,7 @@
     "validate-ci": "tsc --noEmit && yarn tslint-ci"
   },
   "config": {
-    "tslint": "'./{src,test}/**/*.ts'"
+    "tslint": "./src/**/*.ts"
   },
   "files": [
     "dist",
@@ -59,7 +59,7 @@
   },
   "homepage": "https://github.com/gooddata/gooddata-typings#readme",
   "devDependencies": {
-    "@gooddata/tslint-config": "0.0.10",
+    "@gooddata/tslint-config": "0.0.13",
     "@types/jest": "22.2.0",
     "@types/lodash": "4.14.105",
     "jest": "21.2.1",

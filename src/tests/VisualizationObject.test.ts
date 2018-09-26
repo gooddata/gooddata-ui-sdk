@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject } from '../VisualizationObject';
 import IMeasure = VisualizationObject.IMeasure;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
