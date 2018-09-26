@@ -2,6 +2,7 @@
 export const WHITE = 'rgb(255, 255, 255)';
 export const BLACK = 'rgb(0, 0, 0)';
 export const GRAY = 'rgb(201, 213, 223)';
+export const AXIS_LINE_COLOR = '#d5d5d5';
 
 export const DEFAULT_COLOR_PALETTE = [
     'rgb(20,178,226)',
