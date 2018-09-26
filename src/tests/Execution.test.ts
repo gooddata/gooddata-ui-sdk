@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Execution } from '../Execution';
 import isAttributeHeaderItem = Execution.isAttributeHeaderItem;
 import IResultHeaderItem = Execution.IResultHeaderItem;

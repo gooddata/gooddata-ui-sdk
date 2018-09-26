@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { IObjectMeta } from '../Meta';
 import isEmpty = require('lodash/isEmpty');
 
