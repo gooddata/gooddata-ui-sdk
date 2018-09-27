@@ -29,7 +29,7 @@ export const PivotTableDemo = () => (
         <hr className="separator" />
 
         <h2 id="measures-row-attributes-and-column-attributes">
-            Example of Presorted Pivot Table with Totals
+            Example of Pivot Table with Totals
         </h2>
         <ExampleWithSource
             for={() => (

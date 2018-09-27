@@ -4,7 +4,7 @@ import { loginUsingGreyPages, checkCellValue } from './utils/helpers';
 
 fixture('Pivot Table') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/next/pivot-table`));
+    .beforeEach(loginUsingGreyPages(`${config.url}/hidden/pivot-table`));
 
 test('should render all tables', async (t) => {
     await checkCellValue(t, '.s-measures-row-attributes-and-column-attributes', 'Alabama');
