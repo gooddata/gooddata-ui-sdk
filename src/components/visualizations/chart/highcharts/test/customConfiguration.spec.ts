@@ -306,7 +306,7 @@ describe('getCustomizedConfiguration', () => {
             expect(result.plotOptions.series).toEqual(expectedPlotOptions);
         });
 
-        it('should set axis line width to 1 when axis is enabled and gridline disabled', () => {
+        it('should set axis line width to 1 in scatter plot when axis is enabled', () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
@@ -315,25 +315,14 @@ describe('getCustomizedConfiguration', () => {
                 xAxisProps: {
                     visible: true
                 },
-                grid: {
-                    enabled: false
-                }
+                type: VisualizationTypes.SCATTER
             });
 
-            const expectedXAxisResult = {
-                ...result.xAxis[0],
-                lineWidth: 1
-            };
-            const expectedYAxisResult = {
-                ...result.yAxis[0],
-                lineWidth: 1
-            };
-
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis[0].lineWidth).toEqual(1);
+            expect(result.yAxis[0].lineWidth).toEqual(1);
         });
 
-        it('should set axis line width to 0 when axis and gridline are visible', () => {
+        it('should not set axis line when in column and axis is enabled', () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
@@ -342,22 +331,11 @@ describe('getCustomizedConfiguration', () => {
                 xAxisProps: {
                     visible: true
                 },
-                grid: {
-                    enabled: true
-                }
+                type: VisualizationTypes.COLUMN
             });
 
-            const expectedXAxisResult = {
-                ...result.xAxis[0],
-                lineWidth: 0
-            };
-            const expectedYAxisResult = {
-                ...result.yAxis[0],
-                lineWidth: 0
-            };
-
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis[0].lineWidth).toBeUndefined();
+            expect(result.yAxis[0].lineWidth).toBeUndefined();
         });
 
         it('should set axis line width to 0 when axis is disabled', () => {
@@ -371,17 +349,8 @@ describe('getCustomizedConfiguration', () => {
                 }
             });
 
-            const expectedXAxisResult = {
-                ...result.xAxis[0],
-                lineWidth: 0
-            };
-            const expectedYAxisResult = {
-                ...result.yAxis[0],
-                lineWidth: 0
-            };
-
-            expect(result.xAxis[0]).toEqual(expectedXAxisResult);
-            expect(result.yAxis[0]).toEqual(expectedYAxisResult);
+            expect(result.xAxis[0].lineWidth).toEqual(0);
+            expect(result.yAxis[0].lineWidth).toEqual(0);
         });
     });
 

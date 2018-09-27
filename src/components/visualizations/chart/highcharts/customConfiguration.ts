@@ -11,15 +11,19 @@ import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
 import isNil = require('lodash/isNil');
+import pickBy = require('lodash/pickBy');
+import * as numberJS from '@gooddata/numberjs';
+
 import { styleVariables } from '../../styles/variables';
 import { IAxis, IChartOptions } from '../chartOptionsBuilder';
 import { IChartConfig } from '../Chart';
-
-import * as numberJS from '@gooddata/numberjs';
-import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
 import { IDataLabelsVisibile } from '../../../../interfaces/Config';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
-import { getLighterColor } from '../../utils/color';
+import {
+    AXIS_LINE_COLOR,
+    getLighterColor
+} from '../../utils/color';
 import {
     isBarChart,
     isColumnChart,
@@ -827,13 +831,21 @@ function shouldExpandYAxis(chartOptions: any) {
     return min === '' && max === '' ? {} : { getExtremesFromAll: true };
 }
 
-function isAxisLineVisible(isAxisVisible: boolean, isGridEnabled: boolean) {
-    return isAxisVisible && !isGridEnabled;
+function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) {
+    let lineWidth;
+
+    // tslint:disable-next-line prefer-conditional-expression
+    if (isAxisVisible === false) {
+        lineWidth = 0;
+    } else {
+        lineWidth = isScatterPlot(chartType) || isBubbleChart(chartType) ? 1 : undefined;
+    }
+
+    return pickBy({ AXIS_LINE_COLOR, lineWidth }, (item: any) => item !== undefined);
 }
 
 function getAxesConfiguration(chartOptions: any) {
     const { type } = chartOptions;
-    const gridEnabled = get(chartOptions, 'grid.enabled', true);
 
     return {
         plotOptions: {
@@ -863,7 +875,7 @@ function getAxesConfiguration(chartOptions: any) {
             const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
 
             return {
-                lineWidth: isAxisLineVisible(visible, gridEnabled) ? 1 : 0,
+                ...getAxisLineConfiguration(type, visible),
                 labels: {
                     ...labelsEnabled,
                     style: {
@@ -908,8 +920,7 @@ function getAxesConfiguration(chartOptions: any) {
 
             // for bar chart take y axis options
             return {
-                lineColor: '#d5d5d5',
-                lineWidth: isAxisLineVisible(visible, gridEnabled) ? 1 : 0,
+                ...getAxisLineConfiguration(type, visible),
 
                 // hide ticks on x axis
                 minorTickLength: 0,
