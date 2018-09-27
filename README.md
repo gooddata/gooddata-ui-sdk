@@ -1,5 +1,5 @@
 # GoodData Typings
-> TypeScript interfaces used in UI SDK describing executeAfm API
+> TypeScript interfaces used in UI SDK
 
 ## Getting started
 
@@ -16,7 +16,7 @@ $ npm install --save-dev @gooddata/typings
 ```
 
 ## Documentation
-[Documentation](https://help.gooddata.com/display/bHsp5IhQjuz0e6HS0s76/React+Components)
+[Documentation](https://sdk.gooddata.com/gooddata-ui/)
 
 ## Develop
 
@@ -28,19 +28,22 @@ $ cd gooddata-typings
 $ yarn dev
 ```
 
+### Running tests
+
+To run tests (including watch mode), use `yarn test`.
+```sh
+$ yarn test
+```
+
 
 ### Deployment
-```
-git checkout master && git pull upstream master --tags
-npm version [major|minor|patch] -m "Release v%s"
-npm publish
-git push upstream master --tags
-```
+
+Use [gooddata-typings CI job](https://checklist.intgdc.com/job/client-libs/job/gooddata-typings-release/).
 
 ## Contributing
 Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-typings/issues).
 
 ## License
-Copyright (C) 2007-2017, GoodData(R) Corporation. All rights reserved.
+Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
 
 For more information, please see [LICENSE](https://github.com/gooddata/gooddata-typings/blob/master/LICENSE)

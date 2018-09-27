@@ -34,10 +34,17 @@ export namespace AFM {
         format?: string;
     }
 
-    export type MeasureDefinition = ISimpleMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
+    export type MeasureDefinition = ISimpleMeasureDefinition
+        | IArithmeticMeasureDefinition
+        | IPopMeasureDefinition
+        | IPreviousPeriodMeasureDefinition;
 
     export interface ISimpleMeasureDefinition {
         measure: ISimpleMeasure;
+    }
+
+    export interface IArithmeticMeasureDefinition {
+        arithmeticMeasure: IArithmeticMeasure;
     }
 
     export interface IPopMeasureDefinition {
@@ -48,11 +55,20 @@ export namespace AFM {
         previousPeriodMeasure: IPreviousPeriodMeasure;
     }
 
+    export type SimpleMeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+
     export interface ISimpleMeasure {
         item: ObjQualifier;
-        aggregation?: 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+        aggregation?: SimpleMeasureAggregation;
         filters?: FilterItem[];
         computeRatio?: boolean;
+    }
+
+    export type ArithmeticMeasureOperator = 'sum' | 'difference' | 'multiplication' | 'ratio' | 'change';
+
+    export interface IArithmeticMeasure {
+        measureIdentifiers: Identifier[];
+        operator: ArithmeticMeasureOperator;
     }
 
     export interface IPopMeasure {
@@ -199,6 +215,12 @@ export namespace AFM {
         definition: AFM.MeasureDefinition
     ): definition is AFM.ISimpleMeasureDefinition {
         return !isEmpty(definition) && (definition as AFM.ISimpleMeasureDefinition).measure !== undefined;
+    }
+
+    export function isArithmeticMeasureDefinition(
+        definition: AFM.MeasureDefinition
+    ): definition is AFM.IArithmeticMeasureDefinition {
+        return !isEmpty(definition) && (definition as AFM.IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
     }
 
     export function isPopMeasureDefinition(

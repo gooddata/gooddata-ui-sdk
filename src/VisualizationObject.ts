@@ -8,6 +8,7 @@ export namespace VisualizationObject {
     export type MeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
     export type TotalType = 'sum' | 'avg' | 'max' | 'min' | 'nat' | 'med';
     export type VisualizationType = 'table' | 'line' | 'column' | 'bar' | 'pie' | 'doughnut' | 'combo' | 'area';
+    export type ArithmeticMeasureOperator = 'sum' | 'difference' | 'multiplication' | 'ratio' | 'change';
 
     export type BucketItem = IMeasure | IVisualizationAttribute;
 
@@ -86,6 +87,7 @@ export namespace VisualizationObject {
     }
 
     export type IMeasureDefinitionType = IMeasureDefinition
+        | IArithmeticMeasureDefinition
         | IPoPMeasureDefinition
         | IPreviousPeriodMeasureDefinition;
 
@@ -113,6 +115,13 @@ export namespace VisualizationObject {
             aggregation?: MeasureAggregation;
             filters?: VisualizationObjectFilter[];
             computeRatio?: boolean;
+        };
+    }
+
+    export interface IArithmeticMeasureDefinition {
+        arithmeticMeasure: {
+            measureIdentifiers: Identifier[];
+            operator: ArithmeticMeasureOperator;
         };
     }
 
@@ -162,6 +171,12 @@ export namespace VisualizationObject {
         definition: IMeasureDefinitionType
     ): definition is IMeasureDefinition {
         return !isEmpty(definition) && (definition as IMeasureDefinition).measureDefinition !== undefined;
+    }
+
+    export function isArithmeticMeasureDefinition(
+        definition: IMeasureDefinitionType
+    ): definition is IMeasureDefinition {
+        return !isEmpty(definition) && (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
     }
 
     export function isPopMeasureDefinition(

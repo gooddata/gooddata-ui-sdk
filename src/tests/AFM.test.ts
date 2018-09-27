@@ -58,6 +58,17 @@ describe('AFM', () => {
             expect(result).toEqual(true);
         });
 
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
+                }
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
         it('should return false when pop measure definition is tested', () => {
             const measure: MeasureDefinition = {
                 popMeasure: {
@@ -88,6 +99,70 @@ describe('AFM', () => {
         });
     });
 
+    describe('isArithmeticMeasureDefinition', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isArithmeticMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isArithmeticMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when simple measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when arithmetic measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
+                }
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when pop measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: 'm1',
+                    popAttribute: {
+                        uri: '/gdc/mock/measure'
+                    }
+                }
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when previous period measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'm1',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/gdc/mock/date'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+    });
+
     describe('isPopMeasureDefinition', () => {
         it('should return false when null is tested', () => {
             const result = AFM.isPopMeasureDefinition(null);
@@ -105,6 +180,17 @@ describe('AFM', () => {
                     item: {
                         uri: '/gdc/mock/measure'
                     }
+                }
+            };
+            const result = AFM.isPopMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
                 }
             };
             const result = AFM.isPopMeasureDefinition(measure);
@@ -158,6 +244,17 @@ describe('AFM', () => {
                     item: {
                         uri: '/gdc/mock/measure'
                     }
+                }
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when arithmetic measure definition is tested', () => {
+            const measure: MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ['/gdc/mock/measure'],
+                    operator: 'sum'
                 }
             };
             const result = AFM.isPreviousPeriodMeasureDefinition(measure);
