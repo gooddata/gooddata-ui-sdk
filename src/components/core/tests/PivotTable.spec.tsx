@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';

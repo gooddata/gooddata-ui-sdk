@@ -1,3 +1,5 @@
+// (C) 2007-2018 GoodData Corporation
+
 // put production translations to gooddata-react-components translation files with 'visualizations' prefix
 
 export default {

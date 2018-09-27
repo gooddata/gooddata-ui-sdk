@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
 import range = require('lodash/range');

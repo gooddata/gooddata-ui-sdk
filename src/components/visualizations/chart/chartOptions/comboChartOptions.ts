@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { MEASURES, SECONDARY_MEASURES } from '../../../../constants/bucketNames';
 
 export function getComboChartOptions(

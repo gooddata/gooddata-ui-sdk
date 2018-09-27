@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { DataLayer } from '@gooddata/gooddata-js';
 import { chunk } from 'lodash';
 

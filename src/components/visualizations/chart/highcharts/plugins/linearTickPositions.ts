@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 export function linearTickPositions(Highcharts: any) {
     const wrap = Highcharts.wrap;
     const YAXIS = 'yAxis';

@@ -1,4 +1,92 @@
 // (C) 2007-2018 GoodData Corporation
+import {
+    totalSalesIdentifier,
+    franchiseFeesIdentifier,
+    locationStateDisplayFormIdentifier,
+    locationNameDisplayFormIdentifier,
+    yearDateIdentifier,
+    quarterDateIdentifier
+} from './fixtures';
+
+export const afm = {
+    measures: [
+        {
+            localIdentifier: 'totalSales',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: totalSalesIdentifier
+                    }
+                }
+            },
+            alias: '$ Total Sales'
+        },
+        {
+            localIdentifier: 'franchiseFees',
+            definition: {
+                measure: {
+                    item: {
+                        identifier: franchiseFeesIdentifier
+                    }
+                }
+            },
+            alias: 'Franchise fees'
+        }
+    ],
+    attributes: [
+        {
+            displayForm: {
+                identifier: locationStateDisplayFormIdentifier
+            },
+            localIdentifier: 'locationState'
+        },
+        {
+            displayForm: {
+                identifier: locationNameDisplayFormIdentifier
+            },
+            localIdentifier: 'locationName'
+        },
+        {
+            displayForm: {
+                identifier: yearDateIdentifier
+            },
+            localIdentifier: 'year'
+        },
+        {
+            displayForm: {
+                identifier: quarterDateIdentifier
+            },
+            localIdentifier: 'quarter'
+        }
+    ]
+};
+
+export const resultSpec = {
+    sorts: [
+        {
+            attributeSortItem: {
+                direction: 'asc',
+                attributeIdentifier: 'locationState'
+            }
+        }
+    ],
+    dimensions: [
+        {
+            itemIdentifiers: [
+                'locationState',
+                'locationName'
+            ]
+        },
+        {
+            itemIdentifiers: [
+                'year',
+                'quarter',
+                'measureGroup'
+            ]
+        }
+    ]
+};
+
 export const executionResult = {
     result: {
         executionResponse: {
@@ -89,7 +177,6 @@ export const executionResult = {
                 }
             ],
             links: {
-                // tslint:disable-next-line:max-line-length
                 executionResult: '/gdc/app/projects/xms7ga4tf3g3nzucd8380o2bev8oeknp/executionResults/6702535957456288768?q=eAGtVV9v0zAQ%2FyqRu4chZYrjtFsYDDSpFE1CSKPbA4ry4MbXEurYkeMwxtTvznlpAqTwQNI3%2B%2Byc%0A735%2FLk%2FEQKmN%2FcgLIJfkXtncShDEJ5mWdaEqcpk8EZFXpeSPC22KG4HXgo3IgkIE34vqYsOndh1t%0AIvWjzkQcxVSzFXyLNWxVGejV14BROsN8K17BOwkFKHv%2F6WZAkiiA5vPqbS6uMCO31uSr2sKgmiLM%0AIEwu5Vw%2FqKWF8rpNN1%2F8d3VhFGK6CoHET8utW9dFwc0jbj8DN79Xe%2BcQ3se90zm38AKPn3E%2FjGrL%0ApeMgSf0kTXf%2BWC6aQkdyEbKXx%2BQC0yEAx%2BNiyhz%2Bf%2BXitubGgvG4Ep7jxTu9DVGgIXUUdHpqGdrf%0ADpqbfab%2BcdpnjBSAMs3eG12XJPX328ZXazQUd5JJ3lzR9GTiTyb0VfKapmfN2vXR6Qg3rUhOvDv3%0AjLfkEiqMN08MsEE0Y8SJamghC8NV9iWvwFvDqErOz%2BMZ2SE8Rj802Byw8UFn3OZaeUuLnulDM25E%0AsdD5d6QtWEj7tmgJO6i9624AafiO00JfaGNHAzvGmGZ02sdgVKt0iq3KXG2vh0%2FnKGYuyx9O6opq%0Avd4x9Pwn%2FGW1g3gP9nT3E1A7Yf8%3D%0A&c=d3ae6c3186fa60b93e8cca68cffe2595&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0'
             }
         },
@@ -1015,5 +1102,7 @@ export const executionResult = {
                 ]
             ]
         }
-    }
+    },
+    isLoading: false,
+    error: null
 };
