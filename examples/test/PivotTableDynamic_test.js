@@ -42,7 +42,7 @@ async function checkDrill(t, output, selector = '.s-output') {
 
 fixture('Pivot Table')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/next/pivot-table-dynamic`));
+    .beforeEach(loginUsingGreyPages(`${config.url}/hidden/pivot-table-dynamic`));
 
 test('should add drillable classes and run onFiredDrillEvent with correct params', async (t) => {
     await t.click(Selector('.s-bucket-preset-measures'));
