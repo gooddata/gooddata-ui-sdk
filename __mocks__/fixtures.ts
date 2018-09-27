@@ -557,5 +557,5 @@ export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVi
                 uri: '/gdc/md/myproject/obj/table'
             }
         }
-    },
+    }
 ];
