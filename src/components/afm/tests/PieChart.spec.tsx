@@ -20,7 +20,7 @@ describe('PieChart', () => {
         const wrapper = mount((
             <PieChart
                 projectId="prId"
-                afm={{}}
+                afm={{ measures: [] }}
                 resultSpec={{}}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));

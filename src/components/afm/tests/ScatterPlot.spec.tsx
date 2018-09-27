@@ -8,6 +8,7 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 
 describe('ScatterPlot', () => {
     const afmWithAttr = {
+        measures: [] as any,
         attributes: [
             {
                 localIdentifier: 'a1',
@@ -20,7 +21,7 @@ describe('ScatterPlot', () => {
         const wrapper = mount((
             <ScatterPlot
                 projectId="prId"
-                afm={{}}
+                afm={{ measures: [] }}
                 resultSpec={{}}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));

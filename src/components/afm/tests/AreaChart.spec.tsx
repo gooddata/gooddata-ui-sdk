@@ -9,6 +9,7 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 
 describe('Area chart', () => {
     const afmWithAttr = {
+        measures: [] as any,
         attributes: [
             {
                 localIdentifier: 'area1',

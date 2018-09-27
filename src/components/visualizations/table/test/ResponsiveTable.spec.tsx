@@ -34,7 +34,7 @@ describe('Responsive Table', () => {
     };
 
     function renderTable(tableData: ITableData, customProps: Partial<IResponsiveTableProps> = {}):
-        ReactWrapper<IResponsiveTableProps, IResponsiveTableState> {
+        ReactWrapper<IResponsiveTableProps, any> {
         const props: Partial<IResponsiveTableProps> = {
             onMore: noop,
             onLess: noop,
@@ -61,8 +61,7 @@ describe('Responsive Table', () => {
                 }]
             };
             const wrapper = renderTable(tableDataWithTotals);
-            const componentInstance = wrapper.find(Table).instance();
-            expect(componentInstance.props.containerHeight).toEqual(106);
+            expect(wrapper.find(Table).prop('containerHeight')).toEqual(106);
         });
     });
 

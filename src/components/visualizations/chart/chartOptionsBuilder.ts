@@ -1161,7 +1161,7 @@ function getYAxes(
             yAxes = compact([firstAxis, secondAxis]);
         }
     } else if (isScatterPlot(type) || isBubbleChart(type)) {
-        const hasSecondaryMeasure = mdObject.buckets
+        const hasSecondaryMeasure = get(mdObject, 'buckets', [])
             .find(m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0);
 
         if (hasSecondaryMeasure) {

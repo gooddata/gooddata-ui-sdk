@@ -115,10 +115,11 @@ export default class HighChartsRenderer
             if (this.chartRef) {
                 const chart = this.chartRef.getChart();
 
-                chart.container.style.height = (this.props.height && String(this.props.height)) || '100%';
-                chart.container.style.position = this.props.height ? 'relative' : 'absolute';
-
-                chart.reflow();
+                if (chart.container && chart.container.style) {
+                    chart.container.style.height = (this.props.height && String(this.props.height)) || '100%';
+                    chart.container.style.position = this.props.height ? 'relative' : 'absolute';
+                    chart.reflow();
+                }
             }
         }, 0);
 
