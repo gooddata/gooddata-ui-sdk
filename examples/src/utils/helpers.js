@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataLayer } from '@gooddata/gooddata-js';
+import { chunk } from 'lodash';
 
 const { Uri: { isUri } } = DataLayer;
 
@@ -68,9 +69,9 @@ export const createAttributeBucketItem = (qualifierString, localIdentifier, alia
     return {
         visualizationAttribute: {
             localIdentifier: qualifierString,
-            displayForm: getQualifierObject(qualifierString)
-        },
-        ...aliasProp
+            displayForm: getQualifierObject(qualifierString),
+            ...aliasProp
+        }
     };
 };
 
@@ -116,15 +117,23 @@ export const createAttributeSortItem = (attributeIdentifier, direction = 'asc', 
     };
 };
 
-export const createMeasureSortItem = (measureIdentifier, direction = 'desc', attributeLocatorIdentifier, attributeLocatorValue) => {
-    const attributeLocatorSpread = attributeLocatorIdentifier && attributeLocatorValue
-        ? [{
-            attributeLocatorItem: {
-                attributeIdentifier: attributeLocatorIdentifier,
-                element: attributeLocatorValue
-            }
-        }]
-        : [];
+/* createMeasureSortItem
+ * This helps build measure sort items. This enables sorting data by measure.
+ * If you are sorting data that have measures and attributes in the same dimension,
+ * you need to also specify attribute locators. Attribute locators are pairs of
+ * attributeIdentifiers and attributeValueUris. They need to be in the same order
+ * as defined in the dimension.
+ */
+export const createMeasureSortItem = (measureIdentifier, direction = 'desc', attributeLocators = []) => {
+    const attributeLocatorSpread = chunk(attributeLocators, 2)
+        .map(([attributeLocatorIdentifier, attributeLocatorValue]) => {
+            return {
+                attributeLocatorItem: {
+                    attributeIdentifier: attributeLocatorIdentifier,
+                    element: attributeLocatorValue
+                }
+            };
+        });
 
     return {
         measureSortItem: {
@@ -138,5 +147,13 @@ export const createMeasureSortItem = (measureIdentifier, direction = 'desc', att
                 }
             ]
         }
+    };
+};
+
+export const createColumnTotal = (measureLocalIdentifier, attributeLocalIdentifier, type = 'sum') => {
+    return {
+        measureIdentifier: measureLocalIdentifier,
+        type,
+        attributeIdentifier: attributeLocalIdentifier
     };
 };

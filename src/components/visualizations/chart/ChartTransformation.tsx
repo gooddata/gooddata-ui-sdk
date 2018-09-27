@@ -11,6 +11,8 @@ import {
 import { getChartOptions, validateData, IChartOptions } from './chartOptionsBuilder';
 import { getHighchartsOptions } from './highChartsCreators';
 import getLegend from './legend/legendBuilder';
+import { ILegendOptions } from '../typings/legend';
+
 import HighChartsRenderer, {
     IHighChartsRendererProps,
     renderLegend as legendRenderer,
@@ -45,6 +47,7 @@ export interface IChartTransformationProps {
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
+    pushData?(data: any): void;
     renderer(arg: IHighChartsRendererProps): JSX.Element;
     onDataTooLarge(chartOptions: any): void;
     onNegativeValues(chartOptions: any): void;
@@ -62,12 +65,14 @@ export default class ChartTransformation extends React.Component<IChartTransform
         afterRender: noop,
         onNegativeValues: null as any,
         onFiredDrillEvent: () => true,
+        pushData: noop,
         onLegendReady: noop,
         height: undefined as number,
         width: undefined as number
     };
 
     private chartOptions: IChartOptions;
+    private legendOptions: ILegendOptions;
 
     public componentWillMount() {
         this.assignChartOptions(this.props);
@@ -78,7 +83,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
     }
 
     public getRendererProps() {
-        const { chartOptions } = this;
+        const { chartOptions, legendOptions } = this;
         const {
             executionRequest: { afm },
             height,
@@ -100,7 +105,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
             afterRender,
             onLegendReady,
             locale,
-            legend: getLegend(config.legend, chartOptions)
+            legend: legendOptions
         };
     }
 
@@ -112,7 +117,8 @@ export default class ChartTransformation extends React.Component<IChartTransform
             executionResult: { data, headerItems },
             config,
             onDataTooLarge,
-            onNegativeValues
+            onNegativeValues,
+            pushData
         } = props;
 
         let multiDimensionalData = data;
@@ -143,6 +149,15 @@ export default class ChartTransformation extends React.Component<IChartTransform
                 '"onNegativeValues" callback required for pie chart transformation is missing.');
             onNegativeValues(this.chartOptions);
         }
+
+        this.legendOptions = getLegend(config.legend, this.chartOptions);
+
+        pushData({
+            propertiesMeta: {
+                legend_enabled: this.legendOptions.toggleEnabled
+            }
+        });
+
         this.setState(validationResult);
 
         return this.chartOptions;

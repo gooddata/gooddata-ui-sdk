@@ -5,9 +5,12 @@ import {
     getChartType,
     getVisibleSeries,
     isStacked,
-    getDataLabelAttributes,
     getShapeAttributes
 } from '../helpers';
+
+import {
+    getDataLabelAttributes
+} from '../dataLabelsHelpers';
 import { HEAT_MAP_CATEGORIES_COUNT } from '../../chartOptionsBuilder';
 import get = require('lodash/get');
 
@@ -35,12 +38,21 @@ function setBarDataLabelsColor(chart: any) {
         const labelDimensions = getDataLabelAttributes(point);
         const barDimensions = getShapeAttributes(point);
         const barRight = barDimensions.x + barDimensions.width;
+        const barLeft = barDimensions.x;
         const labelLeft = labelDimensions.x;
 
-        if (labelLeft < barRight) {
-            setWhiteColor(point);
+        if (point.negative) {
+            if (labelLeft > barLeft) { // labelRight is overlapping bar even it is outside of it
+                setWhiteColor(point);
+            } else {
+                setBlackColor(point);
+            }
         } else {
-            setBlackColor(point);
+            if (labelLeft < barRight) {
+                setWhiteColor(point);
+            } else {
+                setBlackColor(point);
+            }
         }
     });
 }

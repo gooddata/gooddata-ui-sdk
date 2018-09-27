@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from '@gooddata/typings';
+import { Execution, VisualizationObject } from '@gooddata/typings';
 import { ApiResponseError } from '@gooddata/gooddata-js';
 import { InjectedIntl } from 'react-intl';
 import { ErrorStates, ErrorCodes } from '../constants/errorStates';
 import { get, includes } from 'lodash';
 import * as HttpStatusCodes from 'http-status-codes';
 import { RuntimeError } from '../errors/RuntimeError';
+import { unwrap } from './utils';
 
 function getJSONFromText(data: string): object {
     try {
@@ -137,3 +138,23 @@ export function checkEmptyResult(responses: Execution.IExecutionResponses) {
 
     return responses;
 }
+
+export const hasDuplicateIdentifiers = (buckets: VisualizationObject.IBucket[]) => {
+    const buffer: string[] = [];
+    const duplicates: string[] = [];
+    buckets.forEach(({ items }) => {
+        items.forEach((bucketItem: VisualizationObject.BucketItem) => {
+            const localIdentifier: string = unwrap(bucketItem).localIdentifier;
+            const isDuplicate = buffer.includes(localIdentifier);
+            buffer.push(localIdentifier);
+            if (isDuplicate && !duplicates.includes(localIdentifier)) {
+                duplicates.push(localIdentifier);
+            }
+        });
+    });
+    if (duplicates.length > 0) {
+        // tslint:disable-next-line:no-console max-line-length
+        console.warn(`Duplicate identifier${duplicates.length > 1 ? 's' : ''} '${duplicates.join(', ')}' detected in PivotTable. Please make sure all localIdentifiers are unique.`);
+    }
+    return duplicates.length > 0;
+};

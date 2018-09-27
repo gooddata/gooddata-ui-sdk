@@ -68,9 +68,9 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-8.0.0.tgz#995c0fa83ffbc33dbef2e86f1d9a58d6eceab97d"
+"@gooddata/gooddata-js@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-8.2.0.tgz#a03e346a013af845f393aaa7c7dce98e9c2bfe35"
   dependencies:
     "@gooddata/typings" "2.3.1"
     es6-promise "3.0.2"
@@ -84,9 +84,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@56.1.3":
-  version "56.1.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.3.tgz#8f514bd0f52853a415aa1805b8e9bbe6d11fa42f"
+"@gooddata/goodstrap@56.1.4":
+  version "56.1.4"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.4.tgz#eff44bd7c362e7fbd381b939dd776201366d5470"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -119,9 +119,9 @@
     js-cookie "^2.1.4"
     lodash "^4.17.4"
 
-"@gooddata/mock-js@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.5.0.tgz#e49824a697ce6ebdc401c1a05023e3cf85fe47ff"
+"@gooddata/mock-js@1.8.3":
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.8.3.tgz#0acc8e4a39627775ec4a88a30785e201f5f79e93"
   dependencies:
     "@gooddata/typings" "2.3.0"
     "@types/seedrandom" "2.4.27"

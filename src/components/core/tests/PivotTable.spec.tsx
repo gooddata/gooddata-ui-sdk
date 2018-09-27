@@ -1,22 +1,29 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import noop = require('lodash/noop');
+import cloneDeep = require('lodash/cloneDeep');
 
 import {
     PivotTable,
     PivotTableInner,
+    getSortItemByColId,
     getGridDataSource,
     RowLoadingElement,
     getDrillRowData,
     getTreeLeaves,
-    getDrillIntersection
+    indexOfTreeNode,
+    getDrillIntersection,
+    getSortsFromModel
 } from '../PivotTable';
 import { oneMeasureDataSource } from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
 import { LoadingComponent } from '../../simple/LoadingComponent';
-import { executionToAGGridAdapter } from '../../../helpers/agGrid';
+import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
+
+const intl = createIntlMock();
 
 describe('PivotTable', () => {
     it('should render PivotTableInner', () => {
@@ -37,9 +44,22 @@ describe('PivotTable', () => {
             const endRow = 0;
             const successCallback = jest.fn();
             const onSuccess = jest.fn();
+            const getGridApi = () => ({
+                setPinnedBottomRowData: jest.fn()
+            });
+            const sortModel: any[] = [];
+            const getExecution = () => pivotTableWithColumnAndRowAttributes;
 
-            const gridDataSource = getGridDataSource(resultSpec, getPage, onSuccess);
-            await gridDataSource.getRows({ startRow, endRow, successCallback } as any);
+            const gridDataSource = getGridDataSource(
+                resultSpec,
+                getPage,
+                getExecution,
+                onSuccess,
+                getGridApi,
+                intl,
+                {}
+            );
+            await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
             expect(successCallback.mock.calls[0]).toMatchSnapshot();
             expect(onSuccess.mock.calls[0]).toMatchSnapshot();
@@ -66,10 +86,14 @@ describe('PivotTable', () => {
 
     describe('getDrillIntersection', () => {
         const afm = pivotTableWithColumnAndRowAttributes.executionRequest.afm;
-        const { columnDefs, rowData } = executionToAGGridAdapter({
-            executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-            executionResult: pivotTableWithColumnAndRowAttributes.executionResult
-        });
+        const { columnDefs, rowData } = executionToAGGridAdapter(
+            {
+                executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
+                executionResult: pivotTableWithColumnAndRowAttributes.executionResult
+            },
+            {},
+            intl
+        );
         it('should return intersection of row attribute and row attribute value for row header cell', async () => {
             const rowColDef = columnDefs[0]; // row header
             const drillItems = [...rowColDef.drillItems, rowData[0].drillItemMap[rowColDef.field]];
@@ -146,10 +170,14 @@ describe('PivotTable', () => {
 
     describe('getDrillRowData', () => {
         it('should return an array of row data', async () => {
-            const { columnDefs, rowData } = executionToAGGridAdapter({
-                executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-                executionResult: pivotTableWithColumnAndRowAttributes.executionResult
-            });
+            const { columnDefs, rowData } = executionToAGGridAdapter(
+                {
+                    executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
+                    executionResult: pivotTableWithColumnAndRowAttributes.executionResult
+                },
+                {},
+                intl
+            );
             const leafColumnDefs = getTreeLeaves(columnDefs);
             const drillRow = getDrillRowData(leafColumnDefs, rowData[0]);
             expect(drillRow).toEqual([
@@ -211,5 +239,142 @@ describe('PivotTable', () => {
                 '53364.1275'
             ]);
         });
+    });
+});
+
+const tree: any = {
+    name: 'A',
+    children: [
+        {
+            name: 'A.A'
+        },
+        {
+            name: 'A.B',
+            children: [
+                {
+                    name: 'A.B.A'
+                },
+                {
+                    name: 'A.B.B'
+                },
+                {
+                    name: 'A.B.C'
+                }
+            ]
+        },
+        {
+            name: 'A.C'
+        }
+    ]
+};
+
+describe('getParsedFields', () => {
+    it('should return last parsed field from colId', () => {
+        expect(getParsedFields('a_2009')).toEqual([['a', '2009']]);
+        expect(getParsedFields('a_2009_4-a_2071_12'))
+            .toEqual([['a', '2009', '4'], ['a', '2071', '12']]);
+        expect(getParsedFields('a_2009_4-a_2071_12-m_3'))
+            .toEqual([['a', '2009', '4'], ['a', '2071', '12'], ['m', '3']]);
+    });
+});
+
+describe('getSortItemByColId', () => {
+    it('should return an attributeSortItem', () => {
+        expect(getSortItemByColId(
+            pivotTableWithColumnAndRowAttributes,
+            'a_2211',
+            'asc'
+        )).toEqual({ attributeSortItem: { attributeIdentifier: 'state', direction: 'asc' } });
+    });
+    it('should return a measureSortItem', () => {
+        expect(getSortItemByColId(
+            pivotTableWithColumnAndRowAttributes,
+            'a_2009_1-a_2071_1-m_0',
+            'asc'
+        )).toEqual({
+            measureSortItem: {
+                direction: 'asc',
+                locators: [
+                    {
+                        attributeLocatorItem: {
+                            attributeIdentifier: 'year',
+                            element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                        }
+                    },
+                    {
+                        attributeLocatorItem: {
+                            attributeIdentifier: 'month',
+                            element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                        }
+                    },
+                    {
+                        measureLocatorItem: {
+                            measureIdentifier: 'franchiseFeesIdentifier'
+                        }
+                    }
+                ]
+            }
+        });
+    });
+});
+
+describe('getSortsFromModel', () => {
+    it('should return sortItems based on sortModel', () => {
+        const sortModel: any[] = [
+            {
+                colId: 'a_2011',
+                sort: 'asc'
+            }
+        ];
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
+            [{
+                attributeSortItem: {
+                    attributeIdentifier: 'year',
+                    direction: 'asc'
+                }
+            }]
+        );
+    });
+});
+
+describe('getTreeleaves', () => {
+    it('should return tree nodes that have no children', () => {
+        expect(getTreeLeaves(tree)).toEqual([
+            {
+                name: 'A.A'
+            },
+            {
+                name: 'A.C'
+            },
+            {
+                name: 'A.B.A'
+            },
+            {
+                name: 'A.B.B'
+            },
+            {
+                name: 'A.B.C'
+            }
+        ]);
+    });
+});
+
+describe('indexOfTreeNode', () => {
+    it('should return an array of indexes that define a matiching node in a tree structure', () => {
+        const node: any = tree.children[1].children[2];
+        expect(indexOfTreeNode(node, tree)).toEqual([0, 1, 2]);
+    });
+    it('should return indexes with custom matchNode function', () => {
+        const clonedTree: any = cloneDeep(tree);
+        const node: any = tree.children[1].children[2];
+        expect(indexOfTreeNode(
+            node,
+            clonedTree,
+            (nodeA, nodeB) => (nodeA.name && nodeA.name === nodeB.name)
+        )).toEqual([0, 1, 2]);
+    });
+    it('should return return null if the node is not found', () => {
+        const node = {};
+        expect(indexOfTreeNode(node, tree)).toEqual(null);
     });
 });

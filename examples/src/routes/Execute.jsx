@@ -4,6 +4,8 @@ import ExampleWithSource from '../components/utils/ExampleWithSource';
 
 import ExecuteExample from '../components/ExecuteExample';
 import ExecuteExampleSRC from '!raw-loader!../components/ExecuteExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ExecuteAttributeValuesExample from '../components/ExecuteAttributeValuesExample';
+import ExecuteAttributeValuesExampleSRC from '!raw-loader!../components/ExecuteAttributeValuesExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 
 export const Execute = () => (
@@ -20,6 +22,15 @@ export const Execute = () => (
         <hr className="separator" />
 
         <ExampleWithSource for={ExecuteExample} source={ExecuteExampleSRC} />
+
+        <hr className="separator" />
+
+        <h2>Execute attribute values only</h2>
+        <p>To get values of a single attribute, use the AttributeElements component instead.</p>
+
+        <hr className="separator" />
+
+        <ExampleWithSource for={ExecuteAttributeValuesExample} source={ExecuteAttributeValuesExampleSRC} />
     </div>
 );
 

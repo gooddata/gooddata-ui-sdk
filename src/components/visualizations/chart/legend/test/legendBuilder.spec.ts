@@ -4,9 +4,9 @@ import { generateChartOptions } from '../../test/helper';
 import * as fixtures from '../../../../../../stories/test_data/fixtures';
 import getLegend, {
     shouldLegendBeEnabled,
-    getLegendItems,
-    DEFAULT_LEGEND_CONFIG
+    getLegendItems
 } from '../legendBuilder';
+import { DEFAULT_LEGEND_CONFIG } from '../../../typings/legend';
 import { VisualizationTypes } from '../../../../..';
 
 describe('shouldLegendBeEnabled', () => {
@@ -27,6 +27,11 @@ describe('shouldLegendBeEnabled', () => {
 
     it('should return true if the chart is stacked and has only one stack item', () => {
         const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, { type: 'bar' });
+        expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
+    });
+
+    it('should return true if the Line chart is stacked and has only one stack item', () => {
+        const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, { type: 'line' });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 

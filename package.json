@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/react-components",
-  "version": "5.3.1",
+  "version": "6.0.0-alpha10",
   "description": "GoodData React Components",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-react-components.git",
@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "@gooddata/eslint-config": "0.0.20",
-    "@gooddata/mock-js": "1.5.0",
+    "@gooddata/mock-js": "1.8.3",
     "@gooddata/test-storybook": "1.3.0",
     "@gooddata/tslint-config": "0.0.13",
     "@storybook/addon-actions": "3.4.8",
@@ -92,8 +92,8 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "8.0.0",
-    "@gooddata/goodstrap": "56.1.3",
+    "@gooddata/gooddata-js": "8.2.0",
+    "@gooddata/goodstrap": "56.1.4",
     "@gooddata/js-utils": "^2.0.1",
     "@gooddata/numberjs": "^3.1.2",
     "@gooddata/typings": "2.3.1",
@@ -154,52 +154,85 @@
     },
     "AFM components/PieChart": {
       "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain"
+        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
+        "delay": 1000
       }
     },
     "AFM components/DonutChart": {
       "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain"
+        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
+        "delay": 1000
       }
     },
     "Core components/AreaChart": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/BubbleChart": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
+      }
+    },
+    "Core components/ColumnChart": {
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
+      }
+    },
+    "Core components/BarChart": {
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/DonutChart": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/Heatmap": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/LineChart": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/PieChart": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     },
     "Core components/ScatterPlot": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
       }
     },
     "Core components/Treemap": {
       "data labels config": {
-        "readySelector": ".screenshot-wrapper .screenshot-container:nth-child(4) .highcharts-container"
+        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
+      },
+      "with different legend positions": {
+        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
       }
     }
   },

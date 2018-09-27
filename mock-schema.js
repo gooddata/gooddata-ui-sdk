@@ -1,3 +1,10 @@
+const heatmapAfmExecutions = [{
+        execution: require('./stories/test_data/heat_map_with_58_rows_mock_request.json'),
+        executionResult: require('./stories/test_data/heat_map_with_58_rows_mock_result.json')
+    }, {
+        execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
+        executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+    }];
 module.exports = {
     project: {
         title: 'Storybook project v1',
@@ -646,6 +653,111 @@ module.exports = {
                         count: [2, 4],
                         offset: [0, 0],
                         total: [2, 4]
+                    }
+                }
+            }
+        },
+        {
+            _description: 'Table with empty values',
+            execution: {
+                execution: {
+                    afm: {
+                        measures: [{
+                            localIdentifier: 'm1',
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: '/gdc/md/storybook/obj/1'
+                                    }
+                                }
+                            }
+                        }, {
+                            localIdentifier: 'm4',
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: '/gdc/md/storybook/obj/9'
+                                    }
+                                }
+                            }
+                        }],
+                        attributes: [{
+                            localIdentifier: 'a1',
+                            displayForm: {
+                                uri: '/gdc/md/storybook/obj/4.df'
+                            }
+                        }]
+                    },
+                    resultSpec: {
+                        dimensions: [
+                            {
+                                itemIdentifiers: ['a1']
+                            },
+                            {
+                                itemIdentifiers: ['measureGroup']
+                            }
+                        ]
+                    }
+                }
+            },
+            executionResult: {
+                executionResult: {
+                    data: [
+                        ['1', '2'],
+                        ['3', null],
+                        ['5', '6'],
+                        ['7', null]
+                    ],
+                    headerItems: [
+                        [
+                            [
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=1',
+                                        name: 'Pink'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=2',
+                                        name: 'Red'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=3',
+                                        name: 'Purple'
+                                    }
+                                },
+                                {
+                                    attributeHeaderItem: {
+                                        uri: '/gdc/md/mockproject/obj/4/elements?id=4',
+                                        name: 'Salmon'
+                                    }
+                                }
+                            ]
+                        ],
+                        [
+                            [
+                                {
+                                    measureHeaderItem: {
+                                        name: 'Saved null',
+                                        order: 0
+                                    }
+                                },
+                                {
+                                    measureHeaderItem: {
+                                        name: 'Amount',
+                                        order: 1
+                                    }
+                                }
+                            ]
+                        ]
+                    ],
+                    paging: {
+                        count: [4, 2],
+                        offset: [0, 0],
+                        total: [4, 2]
                     }
                 }
             }
@@ -1626,7 +1738,7 @@ module.exports = {
                 }
             }
         },
-
+        ...heatmapAfmExecutions
     ],
     visualizationClasses: [{
         title: 'Table',
@@ -1791,6 +1903,34 @@ module.exports = {
                     alias: 'Date'
                 }]
             }]
-        }
+        },
+        {
+            title: 'Chart with disabled gridline',
+            identifier: '1007',
+            type: 'local:bar',
+            filters: [],
+            buckets: [{
+                localIdentifier: 'measures',
+                items: [{
+                    localIdentifier: 'm1',
+                    filters: [],
+                    identifier: '1',
+                    alias: 'Amount'
+                }, {
+                    localIdentifier: 'm2',
+                    filters: [],
+                    identifier: '2',
+                    alias: 'Value'
+                }]
+            }, {
+                localIdentifier: 'view',
+                items: [{
+                    localIdentifier: 'a1',
+                    displayForm: 'attr.closed.year.df',
+                    alias: 'Date'
+                }]
+            }],
+            properties: "{\"controls\":{\"grid\":{\"enabled\":false}}}"
+        },
     ]
 };

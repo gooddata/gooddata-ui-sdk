@@ -70,7 +70,7 @@ describe('AttributeDropdown', () => {
         const wrapper = renderComponent({ attributeDisplayForm });
 
         // wait for the plugin to initialize before click
-        await testUtils.delay(300);
+        await testUtils.delay(600);
         wrapper.find(DropdownButton).simulate('click');
 
         const testItems = () => {
@@ -89,7 +89,7 @@ describe('AttributeDropdown', () => {
         await waitFor(intervalTest, maxDelay, delayOffset, increment).then(testItems, testItems);
     });
 
-    it('should run onApply with current selection', (done) => {
+    it('should run onApply with current selection', async (done) => {
         const attributeDisplayForm = createADF();
         const onApply = jest.fn((filter) => {
             expect(filter).toEqual({
@@ -102,6 +102,8 @@ describe('AttributeDropdown', () => {
             attributeDisplayForm,
             onApply
         });
+        // wait for the plugin to initialize before click
+        await testUtils.delay(600);
         wrapper.find(DropdownButton).simulate('click');
 
         const testItems = () => {

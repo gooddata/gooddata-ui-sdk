@@ -5,7 +5,8 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { AreaChart } from '../../src/index';
 import { onErrorHandler } from '../mocks';
-import { ATTRIBUTE_1,
+import {
+    ATTRIBUTE_1,
     ATTRIBUTE_2,
     ATTRIBUTE_3,
     MEASURE_1,
@@ -30,7 +31,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -44,7 +45,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
@@ -61,7 +62,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: true
@@ -78,8 +79,8 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
-                    viewBy={[ATTRIBUTE_1]}
-                    stackBy={[ATTRIBUTE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    stackBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -93,8 +94,8 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
-                    viewBy={[ATTRIBUTE_1]}
-                    stackBy={[ATTRIBUTE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    stackBy={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
@@ -111,7 +112,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -126,7 +127,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -140,7 +141,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_WITH_NULLS]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -153,7 +154,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_WITH_NULLS]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     config={{
                         stacking: false
@@ -170,7 +171,7 @@ storiesOf('Core components/AreaChart', module)
                 <AreaChart
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1]}
+                    viewBy={ATTRIBUTE_1}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -178,7 +179,130 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
-    )).add('data labels config', () => (
+    ))
+    .add('with disabled legend', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    )).add('with min max configuration', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        yaxis: {
+                            min: '500',
+                            max: '1500'
+                        }
+                    }}
+                />
+            </div>
+        )
+    )).add('with different legend positions', () => (
+        screenshotWrap(
+            <div>
+                <div className="storybook-title">default = auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <AreaChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'auto'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">left</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <AreaChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'left'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">top</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <AreaChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'top'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">right</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <AreaChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'right'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+                <div className="storybook-title">bottom</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <AreaChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        config={{
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                </div>
+            </div>
+        )
+   )).add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = hidden</div>
@@ -186,7 +310,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -197,7 +321,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -209,7 +333,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -221,7 +345,7 @@ storiesOf('Core components/AreaChart', module)
                     <AreaChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_3]}
+                        viewBy={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}

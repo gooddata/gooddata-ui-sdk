@@ -59,7 +59,6 @@ class SimpleTable extends
         totals: [],
         totalsEditAllowed: false,
         onTotalsEdit: noop,
-        visualizationProperties: null,
         onDataTooLarge: noop
     };
 

@@ -1,24 +1,29 @@
 // (C) 2007-2018 GoodData Corporation
 import map = require('lodash/map');
-import get = require('lodash/get');
+
 import {
-    getVisibleSeries,
-    getDataPoints,
+    getDataPointsOfVisibleSeries,
     isStacked,
-    areLabelsStacked,
     toNeighbors,
     isIntersecting,
-    getDataLabelAttributes,
     getShapeAttributes,
-    hasDataLabel,
-    showDataLabelInAxisRange,
-    hideDataLabels,
-    hideDataLabel
+    getAxisRange,
+    IAxisRange
 } from '../../helpers';
+
+import {
+    areLabelsStacked,
+    getDataLabelAttributes,
+    hasDataLabel,
+    hideDataLabels,
+    hideDataLabel,
+    showDataLabelInAxisRange,
+    showStackLabelInAxisRange
+} from '../../dataLabelsHelpers';
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
-    minAxisValue: number,
+    axisRange: IAxisRange,
     shouldCheckShapeIntersection: boolean = false) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
@@ -43,17 +48,20 @@ const toggleNonStackedChartLabels = (
     if (foundIntersection) {
         hideDataLabels(visiblePoints);
     } else {
-        visiblePoints.forEach((point: any) => showDataLabelInAxisRange(point, minAxisValue));
+        visiblePoints.forEach((point: any) => showDataLabelInAxisRange(point, point.y, axisRange));
     }
 };
 
-const toggleStackedChartLabels = (visiblePoints: any, minAxisValue: number) => {
+const toggleStackedChartLabels = (visiblePoints: any, axisRange: IAxisRange) => {
     const toggleLabel = (point: any) => {
         const { dataLabel, shapeArgs } = point;
         if (dataLabel && shapeArgs) {
             const labelHeight = dataLabel.height + (2 * dataLabel.padding || 0);
             const isOverlappingHeight = labelHeight > shapeArgs.height;
-            return isOverlappingHeight ? hideDataLabel(point) : showDataLabelInAxisRange(point, minAxisValue);
+            return isOverlappingHeight ?
+                hideDataLabel(point) :
+                // fix for HCH bug for negative stack labels
+                showStackLabelInAxisRange(point, axisRange);
         }
 
         return null;
@@ -115,21 +123,32 @@ function toggleStackedLabels() {
     }
 }
 
-const autohideColumnLabels = (chart: any) => {
+export const autohideColumnLabels = (chart: any) => {
     const isStackedChart = isStacked(chart);
     const hasLabelsStacked = areLabelsStacked(chart);
-    const visibleSeries = getVisibleSeries(chart);
-    const visiblePoints = getDataPoints(visibleSeries);
-    const minAxisValue = get(chart, ['yAxis', 0, 'min'], 0);
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const axisRange: IAxisRange = getAxisRange(chart);
 
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints, minAxisValue);
+        toggleStackedChartLabels(visiblePoints, axisRange);
     } else {
-        toggleNonStackedChartLabels(visiblePoints, minAxisValue, true);
+        toggleNonStackedChartLabels(visiblePoints, axisRange, true);
     }
     if (hasLabelsStacked) {
         toggleStackedLabels.call(chart);
     }
 };
 
-export default autohideColumnLabels;
+export const handleColumnLabelsOutsideChart = (chart: any) => {
+    const visiblePoints = getDataPointsOfVisibleSeries(chart);
+    const axisRange: IAxisRange = getAxisRange(chart);
+
+    visiblePoints.forEach((point: any) => {
+        if (!isStacked(chart)) {
+            showDataLabelInAxisRange(point, point.y, axisRange);
+        } else {
+            // fix for HCH bug for negative stack labels
+            showStackLabelInAxisRange(point, axisRange);
+        }
+    });
+};

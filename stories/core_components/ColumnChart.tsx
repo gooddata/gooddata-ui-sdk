@@ -107,4 +107,128 @@ storiesOf('Core components/ColumnChart', module)
             </div>
         )
     ))
-;
+    .add('with disabled legend', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with min max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        yaxis: {
+                            min: '200',
+                            max: '750'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with different legend positions', () => (
+        screenshotWrap(
+            <div>
+                <div className="storybook-title">default = auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'auto'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">left</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'left'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">top</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'top'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">right</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'right'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">bottom</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+        )
+    ));

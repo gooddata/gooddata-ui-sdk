@@ -93,6 +93,20 @@ export const MEASURE_WITH_FORMAT: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_2_WITH_FORMAT: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm2',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/2'
+                }
+            }
+        },
+        format: '[green]#,##0.00 €'
+    }
+};
+
 export const MEASURE_WITH_NULLS: VisualizationObject.IMeasure = {
     measure: {
         localIdentifier: 'm4',
@@ -111,6 +125,24 @@ export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute = {
         localIdentifier: 'a1',
         displayForm: {
             uri: '/gdc/md/storybook/obj/4.df'
+        }
+    }
+};
+
+export const ATTRIBUTE_COUNTRY: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'country',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/3.df'
+        }
+    }
+};
+
+export const ATTRIBUTE_POPULARITY: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'Popularity',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/5.df'
         }
     }
 };

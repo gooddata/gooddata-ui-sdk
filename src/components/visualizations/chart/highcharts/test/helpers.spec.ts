@@ -1,83 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     shouldFollowPointer,
-    showDataLabelInAxisRange,
-    shouldStartOrEndOnTick,
-    getDataLabelAttributes,
+    shouldStartOnTick,
+    shouldEndOnTick,
     getChartProperties,
-    isLabelOverlappingItsShape,
-    intersectsParentLabel
+    pointInRange,
+    getStackedMaxValue,
+    getStackedMinValue
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
 
 describe('helpers', () => {
-    describe('getDataLabelAttributes', () => {
-        const hiddenAttributes = {
-            x: 0,
-            y: 0,
-            height: 0,
-            width: 0
-        };
-
-        it('should position data label when in range', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: {
-                        translateX: 0,
-                        translateY: 0
-                    },
-                    x: 1,
-                    y: 1,
-                    width: 100,
-                    height: 100
-                }
-            });
-
-            expect(result).toEqual({
-                x: 1,
-                y: 1,
-                width: 100,
-                height: 100
-            });
-        });
-
-        it('should hide data label when outside range', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: {
-                        translateX: 0,
-                        translateY: 0
-                    },
-                    x: -200,
-                    y: -200,
-                    width: 100,
-                    height: 100
-                }
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-
-        it('should hide label when label not present on point', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: null
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-
-        it('should hide label when label present but parentgroup missing', () => {
-            const result = getDataLabelAttributes({
-                dataLabel: {
-                    parentGroup: null
-                }
-            });
-
-            expect(result).toEqual(hiddenAttributes);
-        });
-    });
-
     describe('getChartProperties', () => {
         const config: IChartConfig = {
             xaxis: {
@@ -94,7 +28,7 @@ describe('helpers', () => {
                 .toEqual({
                     xAxisProps: { rotation: '60', visible: false },
                     yAxisProps: { labelsEnabled: true }
-            });
+                });
         });
 
         it('should return properties from config for bar chart with switched axes', () => {
@@ -102,17 +36,17 @@ describe('helpers', () => {
                 .toEqual({
                     yAxisProps: { rotation: '60', visible: false },
                     xAxisProps: { labelsEnabled: true }
-            });
+                });
         });
     });
 
-    describe ('shouldStartOrEndOnTick', () => {
+    describe('shouldStartOnTick, shouldEndOnTick', () => {
         const nonStackedChartOptions = {
             hasStackByAttribute: false,
             data: {
                 series: [
                     {
-                        data: [ { y: 20 }],
+                        data: [{ y: 20 }],
                         visible: true
                     }
                 ]
@@ -135,127 +69,132 @@ describe('helpers', () => {
             }
         };
 
-        describe('Non stacked chart', () => {
-            it ('should return false when min and max are set', () => {
+        describe('shouldStartOnTick', () => {
+            it('should return false when min and max are set', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '5', max: '10' }
                 };
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return false when min is greater than max', () => {
+            it('should return false when min is greater than max', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: { min: '10', max: '5' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return false if min is set but less than max data value (non stacked)', () => {
+            it('should return false if max is set but greater than min data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
-                    yAxisProps: { min: '10' }
+                    yAxisProps: { max: '40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true if min is set and bigger than max data value (non stacked)', () => {
+            it('should return false if max is set but greater than min data value (stacked)', () => {
                 const chartOptions = {
-                    ...nonStackedChartOptions,
-                    yAxisProps: { min: '22' }
+                    ...stackedChartOptions,
+                    yAxisProps: { max: '40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true when no max or min are set', () => {
+            it('should return true when no max or min are set', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
                     yAxisProps: {}
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true if max is set but less than min data value (non stacked)', () => {
+            it('should return true if max is set but smaller than min data value (non stacked)', () => {
                 const chartOptions = {
                     ...nonStackedChartOptions,
-                    yAxisProps: { max: '-10' }
+                    yAxisProps: { max: '-40' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it('should return true if max is set but smaller than min data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { max: '-40' }
+                };
+
+                expect(shouldStartOnTick(chartOptions)).toBeTruthy();
             });
         });
 
-        describe('Stacked chart', () => {
-            it ('should return false if min is set but less than max data value (stacked)', () => {
+        describe('shouldEndOnTick', () => {
+            it('should return false when min and max are set', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    yAxisProps: { min: '10' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '5', max: '10' }
                 };
-
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeFalsy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true if min is set but serie is not visible (stacked)', () => {
+            it('should return false when min is greater than max', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    data: {
-                        series: [
-                            { ...stackedChartOptions.data.series[0], visible: false }
-                        ]
-                    },
-                    yAxisProps: { min: '10' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '10', max: '5' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
             });
 
-            it ('should return true if min is set and greater than max data value (stacked)', () => {
+            it('should return false if min is set but smaller than max data value (non stacked)', () => {
                 const chartOptions = {
-                    ...stackedChartOptions,
-                    yAxisProps: { min: '22' }
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '1' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
             });
 
-            it ('should return true if max is set but less than min data value (stacked)', () => {
+            it('should return false if min is set but smaller than max data value (stacked)', () => {
                 const chartOptions = {
                     ...stackedChartOptions,
-                    yAxisProps: { max: '-10' }
+                    yAxisProps: { min: '1' }
                 };
 
-                expect(shouldStartOrEndOnTick(chartOptions)).toBeTruthy();
+                expect(shouldEndOnTick(chartOptions)).toBeFalsy();
             });
-        });
-    });
 
-    describe('showDataLabelInAxisRange', () => {
-        let point: any;
-        beforeEach(() => {
-            point = {
-                dataLabel: {
-                    show: jest.fn(),
-                    hide: jest.fn()
-                },
-                y: 100
-            };
-        });
+            it('should return true when no max or min are set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: {}
+                };
 
-        it('should hide data label when below minimum', () => {
-            showDataLabelInAxisRange(point, 200);
-            expect(point.dataLabel.hide).toHaveBeenCalled();
-            expect(point.dataLabel.show).not.toHaveBeenCalled();
-        });
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
 
-        it('should show data label when in range', () => {
-            showDataLabelInAxisRange(point, 0);
-            expect(point.dataLabel.show).toHaveBeenCalled();
-            expect(point.dataLabel.hide).not.toHaveBeenCalled();
+            it('should return true if min is set but bigger than max data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '40' }
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
+
+            it('should return true if min is set but bigger than max data value (stacked)', () => {
+                const chartOptions = {
+                    ...stackedChartOptions,
+                    yAxisProps: { min: '40' }
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
         });
     });
 
@@ -443,76 +382,179 @@ describe('helpers', () => {
         });
     });
 
-    describe('isLabelOverlappingItsShape', () => {
-        const shape = {
-            width: 100,
-            height: 100
-        };
-
-        it('should return false when label smaller than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 50,
-                    height: 50
-                },
-                shapeArgs: shape
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeFalsy();
+    describe('pointInRange', () => {
+        it('should return true when data point is in the axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 2,
+                maxAxisValue: 8
+            })).toBeTruthy();
         });
 
-        it('should return true when label is wider than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 150,
-                    height: 50
-                },
-                shapeArgs: shape
-            };
-
-            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        it('should return true when data point is on the left edge of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 5,
+                maxAxisValue: 8
+            })).toBeTruthy();
         });
 
-        it('should return true when label is higher than shape', () => {
-            const point = {
-                dataLabel: {
-                    width: 50,
-                    height: 150
-                },
-                shapeArgs: shape
-            };
+        it('should return true when data point is on the right edge of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: 2,
+                maxAxisValue: 5
+            })).toBeTruthy();
+        });
 
-            expect(isLabelOverlappingItsShape(point)).toBeTruthy();
+        it('should return false when data point is outside of axis range', () => {
+            expect(pointInRange(5, {
+                minAxisValue: -5,
+                maxAxisValue: 2
+            })).toBeFalsy();
         });
     });
+    describe('getStackedExtremeValues', () => {
 
-    describe('intersectsParentLabel', () => {
-        function createPointWithLabel(parentId: any, dataLabel: any) {
-            return {
-                parent: parentId,
-                dataLabel
-            };
-        }
-
-        const points = [
-            createPointWithLabel(undefined, { x: 0, y: 0, width: 10, height: 10 }),
-            createPointWithLabel('0', { x: 100, y: 100, width: 10, height: 10 }),
-            createPointWithLabel('0', { x: 0, y: 0, width: 10, height: 10 })
+        const seriesNegativeAndPositiveValues = [
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>aaa</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: 25
+                    },
+                    {
+                        name: 'data2',
+                        y: 75
+                    },
+                    {
+                        name: 'data3',
+                        y: 30
+                    }
+                ],
+                visible: true
+            }, {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -25
+                    },
+                    {
+                        name: 'data2',
+                        y: -75
+                    },
+                    {
+                        name: 'data3',
+                        y: -30
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: 15
+                    },
+                    {
+                        name: 'data2',
+                        y: 60
+                    },
+                    {
+                        name: 'data3',
+                        y: 20
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -15
+                    },
+                    {
+                        name: 'data2',
+                        y: -60
+                    },
+                    {
+                        name: 'data3',
+                        y: -20
+                    }
+                ],
+                visible: true
+            }
         ];
 
-        it('should return false if no parent given', () => {
-            const intersects = intersectsParentLabel(points[0], points);
-            expect(intersects).toEqual(false);
+        const negativeValues = [
+                       {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -25
+                    },
+                    {
+                        name: 'data2',
+                        y: -75
+                    },
+                    {
+                        name: 'data3',
+                        y: -30
+                    }
+                ],
+                visible: true
+            },
+            {
+                color: 'rgb(0, 0, 0)',
+                name: '<b>bbb</b>',
+                data: [
+                    {
+                        name: 'data1',
+                        y: -15
+                    },
+                    {
+                        name: 'data2',
+                        y: -60
+                    },
+                    {
+                        name: 'data3',
+                        y: -20
+                    }
+                ],
+                visible: true
+            }
+        ];
+
+        describe('getStackedMaxValue', () => {
+            it('should match output for negative and positive values', () => {
+                const result = getStackedMaxValue(seriesNegativeAndPositiveValues);
+                expect(result).toEqual(135);
+            });
+
+            it('should match output for negative values', () => {
+                const result = getStackedMaxValue(negativeValues);
+                expect(result).toEqual(-15);
+            });
         });
 
-        it('should return false if parent given but no intersection', () => {
-            const intersects = intersectsParentLabel(points[1], points);
-            expect(intersects).toEqual(false);
-        });
+        describe('getStackedMinValue', () => {
 
-        it('should return true if parent given and intersects', () => {
-            const intersects = intersectsParentLabel(points[2], points);
-            expect(intersects).toEqual(true);
+            it('should match output for negative and positive values', () => {
+                const result = getStackedMinValue(seriesNegativeAndPositiveValues);
+                expect(result).toEqual(-135);
+            });
+
+            it('should match output for negative values', () => {
+                const result = getStackedMinValue(negativeValues);
+                expect(result).toEqual(-135);
+            });
         });
     });
 });

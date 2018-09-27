@@ -1843,6 +1843,7 @@ Object {
         },
       ],
       "drillItems": Array [],
+      "field": "columnGroupLabel",
       "headerName": "default (Date)/Short (Jan) (Date)/measures",
       "index": 2,
     },
@@ -2221,6 +2222,7 @@ Object {
       },
     },
   ],
+  "rowTotals": null,
 }
 `;
 
@@ -2259,6 +2261,7 @@ Object {
         },
       ],
       "drillItems": Array [],
+      "field": "columnGroupLabel",
       "headerName": "Department",
       "index": 1,
     },
@@ -2276,6 +2279,7 @@ Object {
       },
     },
   ],
+  "rowTotals": null,
 }
 `;
 

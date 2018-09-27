@@ -263,9 +263,14 @@ export class VisualizationWrapped
             ErrorComponent
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
+        const mdObjectContent =  mdObject && mdObject.content;
+        const properties = mdObjectContent
+            && mdObjectContent.properties
+            && JSON.parse(mdObjectContent.properties).controls;
         const finalConfig = {
+            ...properties,
             ...config,
-            mdObject: mdObject && mdObject.content
+            mdObject: mdObjectContent
         };
 
         if (error) {

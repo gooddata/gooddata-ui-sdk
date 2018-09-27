@@ -67,7 +67,15 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                             }
                         }
                     }
-                ]
+                ],
+                properties:  JSON.stringify({
+                    controls: {
+                        grid: {
+                            enabled: true
+                        }
+                    }
+                })
+
             },
             meta: {
                 isProduction: true,
@@ -549,5 +557,5 @@ export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVi
                 uri: '/gdc/md/myproject/obj/table'
             }
         }
-    }
+    },
 ];

@@ -1,12 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     getDataPoints,
-    getVisibleSeries,
+    getVisibleSeries
+} from '../../helpers';
+
+import {
     intersectsParentLabel,
     isLabelOverlappingItsShape,
     hideDataLabel,
     showDataLabel
-} from '../../helpers';
+} from '../../dataLabelsHelpers';
 
 function autohideLabelsOverlappingItsShape(
     chart: any,

@@ -41,7 +41,7 @@ describe('DerivedMeasureTitleSuffixFactory', () => {
                     }]
                 }
             });
-            expect(suffix).toEqual(' - previous period');
+            expect(suffix).toEqual(' - period ago');
         });
     });
 });

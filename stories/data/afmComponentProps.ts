@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, VisualizationObject } from '@gooddata/typings';
 
-const MEASURE_1: AFM.IMeasure = {
+export const MEASURE_1: AFM.IMeasure = {
     localIdentifier: 'm1',
     definition: {
         measure: {
@@ -93,7 +93,7 @@ const MEASURE_3: AFM.IMeasure = {
     }
 };
 
-const ATTRIBUTE_CITIES: AFM.IAttribute = {
+export const ATTRIBUTE_CITIES: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
         uri: '/gdc/md/storybook/obj/3.df'
@@ -119,6 +119,13 @@ const ATTRIBUTE_POPULARITY: AFM.IAttribute = {
     displayForm: {
         uri: '/gdc/md/storybook/obj/5.df'
     }
+};
+
+export const ATTRIBUTE_COUNTRY = {
+    displayForm: {
+        uri: '/gdc/md/storybook/obj/3.df'
+    },
+    localIdentifier: 'country'
 };
 
 export const AFM_ONE_MEASURE: AFM.IAfm = {
@@ -151,6 +158,28 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
         ATTRIBUTE_POPULARITY,
         ATTRIBUTE_COLOURS
     ]
+};
+
+export const AFM_HEATMAP_58ROWS: AFM.IAfm = {
+    measures: [MEASURE_2],
+    attributes: [{
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
+    }, {
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '58countries'
+    }]
+};
+
+export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
+    measures: [MEASURE_1],
+    attributes: [{
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
+    }, {
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '60countries'
+    }]
 };
 
 export const AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {

@@ -36,7 +36,6 @@ function getResponse(response: string, delay: number): Promise<string> {
     });
 }
 
-// tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
@@ -49,7 +48,6 @@ function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVi
 }
 
 function fetchVisualizationClass(
-    // tslint:disable-next-line:variable-name
     _sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
@@ -62,7 +60,6 @@ function fetchVisualizationClass(
     return Promise.resolve(visClass.visualizationClass);
 }
 
-// tslint:disable-next-line:variable-name
 function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
@@ -307,7 +304,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass mdObject to BaseChart', () => {
+    it('should pass mdObject and properties to BaseChart', () => {
         const wrapper = mount(
             <VisualizationWrapped
                 projectId={projectId}
@@ -323,10 +320,53 @@ describe('VisualizationWrapped', () => {
             />
         );
 
+        const mdObjectContent = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.content;
+        const mdObjectProperties = JSON.parse(mdObjectContent.properties).controls;
+
         const expectedMdObject = {
-            mdObject: visualizationObjects.find(
-                chart => chart.visualizationObject.meta.uri === CHART_URI
-            ).visualizationObject.content
+            mdObject: mdObjectContent,
+            ...mdObjectProperties
+        };
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.config).toEqual(expectedMdObject);
+        });
+    });
+
+    it('should override properties from mdObject by property config', () => {
+        const customConfig = {
+            grid: {
+                enabled: false
+            }
+        };
+        const wrapper = mount(
+            <VisualizationWrapped
+                projectId={projectId}
+                identifier={CHART_IDENTIFIER}
+                uriResolver={uriResolver}
+                fetchVisObject={fetchVisObject}
+                fetchVisualizationClass={fetchVisualizationClass}
+                BaseChartComponent={BaseChart}
+                TableComponent={Table}
+                LoadingComponent={LoadingComponent}
+                ErrorComponent={ErrorComponent}
+                intl={intl}
+                config={customConfig}
+            />
+        );
+
+        const mdObjectContent = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.content;
+
+        const expectedMdObject = {
+            mdObject: mdObjectContent,
+            ...customConfig
         };
 
         return testUtils.delay(SLOW + 1).then(() => {
