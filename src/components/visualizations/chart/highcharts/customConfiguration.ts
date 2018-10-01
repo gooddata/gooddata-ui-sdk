@@ -36,6 +36,12 @@ import {
     isBubbleChart
 } from '../../utils/common';
 import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
+import {
+    shouldStartOnTick,
+    shouldEndOnTick,
+    shouldXAxisStartOnTickOnBubbleScatter,
+    shouldYAxisStartOnTickOnBubbleScatter
+} from '../highcharts/helpers';
 
 const {
     stripColors,
@@ -844,6 +850,32 @@ function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) 
     return pickBy({ AXIS_LINE_COLOR, lineWidth }, (item: any) => item !== undefined);
 }
 
+function getXAxisTickConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+    if (isBubbleChart(type) || isScatterPlot(type)) {
+        return {
+            startOnTick: shouldXAxisStartOnTickOnBubbleScatter(chartOptions),
+            endOnTick: false
+        };
+    }
+
+    return {};
+}
+
+function getYAxisTickConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+    if (isBubbleChart(type) || isScatterPlot(type)) {
+        return {
+            startOnTick: shouldYAxisStartOnTickOnBubbleScatter(chartOptions)
+        };
+    }
+
+    return {
+        startOnTick: shouldStartOnTick(chartOptions),
+        endOnTick: shouldEndOnTick(chartOptions)
+    };
+}
+
 function getAxesConfiguration(chartOptions: any) {
     const { type } = chartOptions;
 
@@ -874,6 +906,8 @@ function getAxesConfiguration(chartOptions: any) {
             const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
             const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
 
+            const tickConfiguration = getYAxisTickConfiguration(chartOptions);
+
             return {
                 ...getAxisLineConfiguration(type, visible),
                 labels: {
@@ -894,7 +928,8 @@ function getAxesConfiguration(chartOptions: any) {
                 },
                 opposite: axis.opposite,
                 ...maxProp,
-                ...minProp
+                ...minProp,
+                ...tickConfiguration
             };
         }),
 
@@ -917,6 +952,8 @@ function getAxesConfiguration(chartOptions: any) {
 
             const shouldCheckForEmptyCategories = (isScatterPlot(type) || isBubbleChart(type)) ? false : true;
             const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'xAxisProps', shouldCheckForEmptyCategories);
+
+            const tickConfiguration = getXAxisTickConfiguration(chartOptions);
 
             // for bar chart take y axis options
             return {
@@ -947,7 +984,8 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 ...maxProp,
-                ...minProp
+                ...minProp,
+                ...tickConfiguration
             };
         })
     };

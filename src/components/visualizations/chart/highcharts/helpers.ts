@@ -287,6 +287,21 @@ export function shouldEndOnTick(chartOptions: any): boolean {
     return false;
 }
 
+export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+    const min = parseFloat(get(chartOptions, 'xAxisProps.min', ''));
+
+    return isNaN(min) ? true : false;
+}
+
+export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const maxDataValue = getNonStackedMaxValue(series);
+
+    return isNaN(min) || min > maxDataValue ? true : false;
+}
+
 export interface IAxisRange {
     minAxisValue: number;
     maxAxisValue: number;
