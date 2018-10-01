@@ -96,11 +96,11 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-8.2.0.tgz#a03e346a013af845f393aaa7c7dce98e9c2bfe35"
+"@gooddata/gooddata-js@8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-8.3.0.tgz#d08a3a105b5870bde3cce9217dd18bd6b9662499"
   dependencies:
-    "@gooddata/typings" "2.3.1"
+    "@gooddata/typings" "2.4.0"
     es6-promise "3.0.2"
     fetch-cookie "0.7.0"
     invariant "2.2.2"
@@ -194,9 +194,9 @@
   dependencies:
     lodash "4.17.4"
 
-"@gooddata/typings@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.1.tgz#b8d1e7819b3ec3dab111dcefbf26e692bdabe41d"
+"@gooddata/typings@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.4.0.tgz#0ad843f5c98cb21c5d3c7f526f8e4bcea9cd0f80"
   dependencies:
     lodash "4.17.4"
 
