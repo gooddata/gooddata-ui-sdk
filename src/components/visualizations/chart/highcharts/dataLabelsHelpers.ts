@@ -120,3 +120,21 @@ export function intersectsParentLabel(point: any, points: any) {
     const parentLabelShape = parentPoint.dataLabel;
     return isIntersecting(pointLabelShape, parentLabelShape);
 }
+
+function isTruncatedByMin(shape: any, chart: any) {
+    return shape.y + shape.height > chart.clipBox.height;
+}
+
+function isTruncatedByMax(shape: any) {
+    return shape.y < 0;
+}
+
+// works for both column/bar chart thanks bar's 90deg rotation
+export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number) {
+    if (isTruncatedByMin(shape, chart)) {
+        return chart.clipBox.height - shape.y;
+    } else if (isTruncatedByMax(shape)) {
+        return shape.y + shape.height;
+    }
+    return wholeSize;
+}

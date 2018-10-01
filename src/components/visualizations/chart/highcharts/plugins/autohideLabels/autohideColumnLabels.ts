@@ -18,7 +18,8 @@ import {
     hideDataLabels,
     hideDataLabel,
     showDataLabelInAxisRange,
-    showStackLabelInAxisRange
+    showStackLabelInAxisRange,
+    getShapeVisiblePart
 } from '../../dataLabelsHelpers';
 
 const toggleNonStackedChartLabels = (
@@ -54,10 +55,11 @@ const toggleNonStackedChartLabels = (
 
 const toggleStackedChartLabels = (visiblePoints: any, axisRange: IAxisRange) => {
     const toggleLabel = (point: any) => {
-        const { dataLabel, shapeArgs } = point;
+        const { dataLabel, shapeArgs, series: { chart } } = point;
         if (dataLabel && shapeArgs) {
             const labelHeight = dataLabel.height + (2 * dataLabel.padding || 0);
-            const isOverlappingHeight = labelHeight > shapeArgs.height;
+            const shapeHeight = getShapeVisiblePart(shapeArgs, chart, shapeArgs.height);
+            const isOverlappingHeight = labelHeight > shapeHeight;
             return isOverlappingHeight ?
                 hideDataLabel(point) :
                 // fix for HCH bug for negative stack labels
