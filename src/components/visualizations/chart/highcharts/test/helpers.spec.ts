@@ -276,6 +276,100 @@ describe('helpers', () => {
             }
         };
 
+        const stackedChartOptionsPositiveValues = {
+            data: {
+                series: [
+                    {
+                        color: 'rgb(20,178,226)',
+                        data: [
+                            {
+                                y: 27,
+                                name: 'AAAA'
+                            }
+                        ],
+                        name: 'AAAA'
+                    },
+                    {
+                        color: 'rgb(0,193,141)',
+                        data: [
+                            {
+                                y: 26,
+                                name: 'BBBB'
+                            }
+                        ],
+                        name: 'BBBB'
+                    },
+                    {
+                        color: 'rgb(229,77,66)',
+                        data: [
+                            {
+                                y: 26,
+                                name: 'CCCC'
+                            }
+                        ],
+                        name: 'CCCC'
+                    },
+                    {
+                        color: 'rgb(241,134,0)',
+                        data: [
+                            {
+                                y: 29,
+                                name: 'DDDD'
+                            }
+                        ],
+                        name: 'DDDD'
+                    }
+                ]
+            }
+        };
+
+        const stackedChartOptionsNegativeValues = {
+            data: {
+                series: [
+                    {
+                        color: 'rgb(20,178,226)',
+                        data: [
+                            {
+                                y: -27,
+                                name: 'AAAA'
+                            }
+                        ],
+                        name: 'AAAA'
+                    },
+                    {
+                        color: 'rgb(0,193,141)',
+                        data: [
+                            {
+                                y: -26,
+                                name: 'BBBB'
+                            }
+                        ],
+                        name: 'BBBB'
+                    },
+                    {
+                        color: 'rgb(229,77,66)',
+                        data: [
+                            {
+                                y: -26,
+                                name: 'CCCC'
+                            }
+                        ],
+                        name: 'CCCC'
+                    },
+                    {
+                        color: 'rgb(241,134,0)',
+                        data: [
+                            {
+                                y: -29,
+                                name: 'DDDD'
+                            }
+                        ],
+                        name: 'DDDD'
+                    }
+                ]
+            }
+        };
+
         describe('Non stacked chart', () => {
             it('should return false when no extremes are defined', () => {
                 const result = shouldFollowPointer({
@@ -332,6 +426,17 @@ describe('helpers', () => {
 
                 expect(result).toBeTruthy();
             });
+
+            it('should return true when min is bigger than minimal value', () => {
+                const result = shouldFollowPointer({
+                    ...nonStackedChartOptions,
+                    yAxisProps: {
+                        min: '0'
+                    }
+                });
+
+                expect(result).toBeTruthy();
+            });
         });
 
         describe('Stacked chart', () => {
@@ -369,11 +474,22 @@ describe('helpers', () => {
                 expect(result).toBeTruthy();
             });
 
-            it('should return true when min is bigger than minimal value', () => {
+            it('should return true when min is bigger 0 and less than min seriesValue', () => {
                 const result = shouldFollowPointer({
-                    ...stackedChartOptions,
+                    ...stackedChartOptionsPositiveValues,
                     yAxisProps: {
-                        min: '0'
+                        min: '20'
+                    }
+                });
+
+                expect(result).toBeTruthy();
+            });
+
+            it('should return true when max is negative and max less than min seriesValue', () => {
+                const result = shouldFollowPointer({
+                    ...stackedChartOptionsNegativeValues,
+                    yAxisProps: {
+                        max: '-20'
                     }
                 });
 
