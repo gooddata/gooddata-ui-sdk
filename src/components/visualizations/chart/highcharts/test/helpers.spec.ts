@@ -6,7 +6,9 @@ import {
     getChartProperties,
     pointInRange,
     getStackedMaxValue,
-    getStackedMinValue
+    getStackedMinValue,
+    shouldXAxisStartOnTickOnBubbleScatter,
+    shouldYAxisStartOnTickOnBubbleScatter
 } from '../helpers';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { IChartConfig } from '../../Chart';
@@ -195,6 +197,54 @@ describe('helpers', () => {
 
                 expect(shouldEndOnTick(chartOptions)).toBeTruthy();
             });
+        });
+
+        describe('shouldXAxisStartOnTickOnBubbleScatter', () => {
+            it('should return true when min is not set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions
+                };
+
+                expect(shouldXAxisStartOnTickOnBubbleScatter(chartOptions)).toBeTruthy();
+            });
+
+            it('should return false when min is set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    xAxisProps: { min: '40' }
+                };
+
+                expect(shouldXAxisStartOnTickOnBubbleScatter(chartOptions)).toBeFalsy();
+            });
+        });
+
+        describe('shouldYAxisStartOnTickOnBubbleScatter', () => {
+            it('should return true when min is not set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions
+                };
+
+                expect(shouldYAxisStartOnTickOnBubbleScatter(chartOptions)).toBeTruthy();
+            });
+
+            it('should return false when min is set', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '10' }
+                };
+
+                expect(shouldYAxisStartOnTickOnBubbleScatter(chartOptions)).toBeFalsy();
+            });
+
+            it('should return true if min is set but bigger than max data value (non stacked)', () => {
+                const chartOptions = {
+                    ...nonStackedChartOptions,
+                    yAxisProps: { min: '40' }
+                };
+
+                expect(shouldEndOnTick(chartOptions)).toBeTruthy();
+            });
+
         });
     });
 

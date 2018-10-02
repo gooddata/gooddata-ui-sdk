@@ -14,7 +14,6 @@ import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 import { isPieOrDonutChart, isOneOfTypes } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
-import { shouldStartOnTick, shouldEndOnTick } from '../chart/highcharts/helpers';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 
@@ -55,13 +54,6 @@ function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
         textOverflow: 'ellipsis',
         overflow: 'hidden'
     });
-}
-
-function setStartOrEndOnTick(axis: Highcharts.AxisOptions, chartOptions: any) {
-    const startOnTick = shouldStartOnTick(chartOptions);
-    const endOnTick = shouldEndOnTick(chartOptions);
-    set(axis, 'startOnTick', startOnTick);
-    set(axis, 'endOnTick', endOnTick);
 }
 
 export default class HighChartsRenderer
@@ -217,10 +209,6 @@ export default class HighChartsRenderer
                 visible
             };
         }));
-
-        const chartOptionsWithProperties = { ...this.props.chartOptions,  data: { series: config.series } };
-        yAxis.forEach((axis: Highcharts.AxisOptions) =>
-            setStartOrEndOnTick(axis, chartOptionsWithProperties));
 
         return config;
     }
