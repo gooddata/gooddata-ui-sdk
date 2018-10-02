@@ -131,10 +131,11 @@ function isTruncatedByMax(shape: any) {
 
 // works for both column/bar chart thanks bar's 90deg rotation
 export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number) {
-    if (isTruncatedByMin(shape, chart)) {
-        return chart.clipBox.height - shape.y;
-    } else if (isTruncatedByMax(shape)) {
+    if (isTruncatedByMax(shape)) {
         return shape.y + shape.height;
+    } else if (isTruncatedByMin(shape, chart)) {
+        return chart.clipBox.height - shape.y;
     }
+
     return wholeSize;
 }
