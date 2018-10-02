@@ -4,7 +4,8 @@ import {
     isLabelOverlappingItsShape,
     intersectsParentLabel,
     showDataLabelInAxisRange,
-    showStackLabelInAxisRange
+    showStackLabelInAxisRange,
+    getShapeVisiblePart
 } from '../dataLabelsHelpers';
 
 import {
@@ -254,6 +255,48 @@ describe('dataLabelsHelpers', () => {
             delete (point.stackY);
             showStackLabelInAxisRange(point, axisRange);
             expect(point.dataLabel.hide).toHaveBeenCalled();
+        });
+    });
+
+    describe('getShapeVisiblePart', () => {
+        const chart = {
+            clipBox: {
+                height: 50,
+                width: 50
+            }
+        };
+
+        it ('should return whole size of shape when it\'s not truncated by min and max', () => {
+            const shape = {
+                x: 0,
+                y: 0,
+                width: 100,
+                height: 50
+            };
+
+            expect(getShapeVisiblePart(shape, chart, shape.height)).toBe(50);
+        });
+
+        it ('should return clipped part of shape when truncated by min', () => {
+            const shape = {
+                x: 0,
+                y: 20,
+                width: 100,
+                height: 50
+            };
+
+            expect(getShapeVisiblePart(shape, chart, shape.height)).toBe(30);
+        });
+
+        it ('should return clipped part of shape when truncated by max', () => {
+            const shape = {
+                x: 0,
+                y: -30,
+                width: 100,
+                height: 50
+            };
+
+            expect(getShapeVisiblePart(shape, chart, shape.height)).toBe(20);
         });
     });
 });

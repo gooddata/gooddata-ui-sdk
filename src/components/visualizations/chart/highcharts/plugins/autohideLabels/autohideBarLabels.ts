@@ -17,7 +17,8 @@ import {
     hasDataLabel,
     getDataLabelAttributes,
     showDataLabelInAxisRange,
-    showStackLabelInAxisRange
+    showStackLabelInAxisRange,
+    getShapeVisiblePart
 } from '../../dataLabelsHelpers';
 
 const toggleStackedChartLabels = (visiblePoints: any, axisRange: IAxisRange) => {
@@ -38,12 +39,14 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRange: IAxisRange) => 
         hideDataLabels(visiblePoints);
     } else {
         visiblePoints.filter(hasDataLabel).forEach((point: any) => {
-            const { dataLabel, shapeArgs } = point;
+            const { dataLabel, shapeArgs, series: { chart } } = point;
             if (dataLabel && shapeArgs) {
                 const dataLabelAttr = getDataLabelAttributes(point);
                 const shapeAttr = getShapeAttributes(point);
                 const labelWidth = dataLabelAttr.width + (2 * dataLabel.padding);
-                const foundIntersection = labelWidth > shapeAttr.width;
+                const shapeWidth = getShapeVisiblePart(shapeArgs, chart, shapeAttr.width);
+
+                const foundIntersection = labelWidth > shapeWidth;
                 // switch axis for bar chart
                 return foundIntersection ?
                     hideDataLabel(point) :
