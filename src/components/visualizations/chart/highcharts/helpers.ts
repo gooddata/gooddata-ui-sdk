@@ -116,6 +116,13 @@ export function getShapeAttributes(point: any): IRectBySize {
     };
 }
 
+function getExtremeOnAxis(min: number, max: number) {
+    const axisMin = min >= 0 ? 0 : min;
+    const axisMax = max < 0 ? 0 : max;
+
+    return { axisMin, axisMax };
+}
+
 export function shouldFollowPointer(chartOptions: any) {
     const yMax = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
     const yMin = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
@@ -125,8 +132,9 @@ export function shouldFollowPointer(chartOptions: any) {
     }
 
     const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
+    const { axisMin, axisMax } = getExtremeOnAxis(minDataValue, maxDataValue);
 
-    return (!isNaN(yMax) && maxDataValue > yMax) || (!isNaN(yMin) && minDataValue < yMin);
+    return (!isNaN(yMax) && axisMax > yMax) || (!isNaN(yMin) && axisMin < yMin);
 }
 
 function isSerieVisible(serie: ISeriesItem): boolean {
