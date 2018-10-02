@@ -19,6 +19,7 @@ import { IAxis, IChartOptions } from '../chartOptionsBuilder';
 import { IChartConfig } from '../Chart';
 import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
 import { IDataLabelsVisibile } from '../../../../interfaces/Config';
+import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import {
     AXIS_LINE_COLOR,
@@ -285,7 +286,8 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
 
     const chartWidth = chart.plotWidth;
     const align = getArrowAlignment(arrowPosition, chartWidth);
-    const arrowPositionForTail = arrowPosition > chartWidth ? chartWidth / 2 : arrowPosition;
+    const defaultArrowPosition = arrowPosition > chartWidth ? chartWidth  : arrowPosition * 2;
+    const arrowPositionForTail = getShapeVisiblePart(this.point.shapeArgs, chart, defaultArrowPosition) / 2;
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : '';
     const tailStyle = showFullscreenTooltip() ?
