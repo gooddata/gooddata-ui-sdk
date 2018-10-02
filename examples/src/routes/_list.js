@@ -4,6 +4,7 @@ import AttributeFilter from './AttributeFilter';
 import Sorting from './Sorting';
 import TimeOverTimeComparison from './TimeOverTimeComparison';
 import BasicComponents from './BasicComponents';
+import ComboChart from './ComboChart';
 import GlobalFilters from './GlobalFilters';
 import Visualization from './Visualization';
 import Execute from './Execute';
@@ -35,8 +36,8 @@ export const advancedUseCasesRoutes = [
 ];
 
 export const nextRoutes = [
-    { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTable },
-    { path: '/next/pivot-table-dynamic', title: 'PivotTable Dynamic', Component: PivotTableDynamic }
+    { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTableDemo },
+    { path: '/next/combo-chart', title: 'Combo chart', Component: ComboChart }
 ];
 
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
@@ -44,7 +45,6 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
-    { path: '/pivot-table-demo', title: 'Pivot Table', Component: PivotTableDemo },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },
@@ -55,9 +55,10 @@ export const sideNavigationRoutes = [
 ];
 
 export const hiddenPaths = [
-    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
-    { path: '/aggregation-test', title: 'Aggregation Test', Component: AggregationTest },
-    { path: '/pivot-table', title: 'Pivot Table', Component: PivotTable }
+    { path: '/hidden/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
+    { path: '/hidden/aggregation-test', title: 'Aggregation Test', Component: AggregationTest },
+    { path: '/hidden/pivot-table', title: 'Pivot Table', Component: PivotTable },
+    { path: '/hidden/pivot-table-dynamic', title: 'Pivot Table Dynamic', Component: PivotTableDynamic }
 ];
 
 export const backendInfoRoutes = [

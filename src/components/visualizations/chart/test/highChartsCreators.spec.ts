@@ -3,10 +3,6 @@ import { getHighchartsOptions } from '../highChartsCreators';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
 const chartOptions = {
-    colorPalette: [
-        'rgb(20,178,226)',
-        'rgb(0,193,141)'
-    ],
     data: {
         series: [
             {
@@ -17,7 +13,8 @@ const chartOptions = {
                         name: 'aa.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(20,178,226)'
             },
             {
                 isDrillable: true,
@@ -27,7 +24,8 @@ const chartOptions = {
                         name: 'bb.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(0,193,141)'
             }
         ]
     }
@@ -60,10 +58,6 @@ const pieChartOrTreemapOptions = {
 
 const comboChartOptions = {
     type: VisualizationTypes.COMBO,
-    colorPalette: [
-        'rgb(20,178,226)',
-        'rgb(0,193,141)'
-    ],
     data: {
         series: [
             {
@@ -74,7 +68,8 @@ const comboChartOptions = {
                         name: 'aa.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(20, 178, 226)'
             },
             {
                 isDrillable: true,
@@ -85,7 +80,8 @@ const comboChartOptions = {
                         name: 'bb.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(0,193,141)'
             }
         ]
     }

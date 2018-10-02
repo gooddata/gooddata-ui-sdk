@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
 import range = require('lodash/range');
@@ -499,4 +500,11 @@ export const executionToAGGridAdapter = (
         rowData,
         rowTotals
     };
+};
+
+export const getParsedFields = (colId: string): string[][] => {
+    // supported colIds are 'a_2009', 'a_2009_4-a_2071_12', 'a_2009_4-a_2071_12-m_3'
+    return colId
+        .split(FIELD_SEPARATOR)
+        .map((field: string) => (field.split(ID_SEPARATOR)));
 };

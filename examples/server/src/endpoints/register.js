@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 const { pick } = require('lodash');
 const bodyParser = require('body-parser');
 

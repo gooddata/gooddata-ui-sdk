@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
@@ -14,13 +15,12 @@ import {
     getTreeLeaves,
     indexOfTreeNode,
     getDrillIntersection,
-    getParsedFields,
     getSortsFromModel
 } from '../PivotTable';
 import { oneMeasureDataSource } from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
 import { LoadingComponent } from '../../simple/LoadingComponent';
-import { executionToAGGridAdapter } from '../../../helpers/agGrid';
+import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
 
 const intl = createIntlMock();

@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
 import { VisualizationObject, AFM } from '@gooddata/typings';
@@ -82,9 +83,9 @@ describe('PivotTable', () => {
             ]
         };
 
-        expect(wrapper.find('WrappedComponent')).toHaveLength(1);
-        expect(wrapper.find('WrappedComponent').prop('afm')).toEqual(expectedAfm);
-        expect(wrapper.find('WrappedComponent').prop('resultSpec')).toEqual(expectedResultSpec);
+        expect(wrapper).toHaveLength(1);
+        expect(wrapper.prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.prop('resultSpec')).toEqual(expectedResultSpec);
     });
     it('should render table and convert the buckets to AFM and resultSpec', () => {
         const wrapper = shallow(
@@ -133,9 +134,9 @@ describe('PivotTable', () => {
             ]
         };
 
-        expect(wrapper.find('WrappedComponent')).toHaveLength(1);
-        expect(wrapper.find('WrappedComponent').prop('afm')).toEqual(expectedAfm);
-        expect(wrapper.find('WrappedComponent').prop('resultSpec')).toEqual(expectedResultSpec);
+        expect(wrapper).toHaveLength(1);
+        expect(wrapper.prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.prop('resultSpec')).toEqual(expectedResultSpec);
     });
 
     it('should render table with pivot buckets and convert the buckets to AFM and resultSpec', () => {
@@ -193,8 +194,8 @@ describe('PivotTable', () => {
             ]
         };
 
-        expect(wrapper.find('WrappedComponent')).toHaveLength(1);
-        expect(wrapper.find('WrappedComponent').prop('afm')).toEqual(expectedAfm);
-        expect(wrapper.find('WrappedComponent').prop('resultSpec')).toEqual(expectedResultSpec);
+        expect(wrapper).toHaveLength(1);
+        expect(wrapper.prop('afm')).toEqual(expectedAfm);
+        expect(wrapper.prop('resultSpec')).toEqual(expectedResultSpec);
     });
 });

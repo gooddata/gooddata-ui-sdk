@@ -158,11 +158,10 @@ describe('HighChartsRenderer', () => {
         };
         const chartRenderer = (props: any) => {
             props.ref(mockRef);
-            return jest.fn().mockReturnValue(<div />);
+            return <div />;
         };
         const wrapper: any = mount(createComponent({
-            chartRenderer,
-            ref: mockRef
+            chartRenderer
         }));
         const { chartRef } = wrapper.instance();
         expect(chartRef).toBe(mockRef);
@@ -182,14 +181,13 @@ describe('HighChartsRenderer', () => {
 
         const chartRenderer = (props: any) => {
             props.ref(mockRef);
-            return jest.fn().mockReturnValue(<div />);
+            return <div />;
         };
 
         jest.useFakeTimers();
         mount(createComponent({
             chartRenderer,
-            height: mockHeight,
-            ref: mockRef
+            height: mockHeight
         }));
         jest.runAllTimers();
 
@@ -208,15 +206,15 @@ describe('HighChartsRenderer', () => {
         const mockRef = {
             getChart: () => chartMock
         };
+
         const chartRenderer = (props: any) => {
             props.ref(mockRef);
-            return jest.fn().mockReturnValue(<div />);
+            return <div />;
         };
 
         jest.useFakeTimers();
         mount(createComponent({
-            chartRenderer,
-            ref: mockRef
+            chartRenderer
         }));
         jest.runAllTimers();
 
@@ -226,9 +224,7 @@ describe('HighChartsRenderer', () => {
     });
 
     it('should not throw if chartRef has not been set', () => {
-        const chartRenderer = () => {
-            return jest.fn().mockReturnValue(<div />);
-        };
+        const chartRenderer = jest.fn().mockReturnValue(<div />);
 
         const doMount = () => {
             jest.useFakeTimers();
@@ -323,7 +319,7 @@ describe('HighChartsRenderer', () => {
             };
 
             const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
-            expect(wrapper.state().showFluidLegend).toBeTruthy();
+            expect(wrapper.state('showFluidLegend')).toBeTruthy();
         });
 
         it('should render StaticLegend on desktop', () => {
@@ -334,18 +330,13 @@ describe('HighChartsRenderer', () => {
             };
 
             const wrapper = shallow(createComponent(customComponentProps({ responsive: true, documentObj })));
-            expect(wrapper.state().showFluidLegend).toBeFalsy();
+            expect(wrapper.state('showFluidLegend')).toBeFalsy();
         });
     });
 
     describe('componentWillReceiveProps', () => {
-        const chartRenderer = () => {
-            return jest.fn().mockReturnValue(<div />);
-        };
-
-        const legendRenderer = () => {
-            return jest.fn().mockReturnValue(<div />);
-        };
+        const chartRenderer = jest.fn().mockReturnValue(<div />);
+        const legendRenderer = jest.fn().mockReturnValue(<div />);
 
         const rendererProps = {
             chartRenderer,
@@ -365,8 +356,8 @@ describe('HighChartsRenderer', () => {
 
         it('should reset legend if legend props change', () => {
             const wrapper = mount(createComponent(rendererProps));
-            const { props } = wrapper.instance();
-            const getLegendItems = () => wrapper.instance().state.legendItemsEnabled;
+            const props = wrapper.props();
+            const getLegendItems = () => wrapper.state('legendItemsEnabled');
 
             const legendItemsEnabledState = getLegendItems();
 
@@ -395,8 +386,8 @@ describe('HighChartsRenderer', () => {
 
         it('should not reset legend if props change but legend items stay the same', () => {
             const wrapper = mount(createComponent(rendererProps));
-            const { props } = wrapper.instance();
-            const getLegendItems = () => wrapper.instance().state.legendItemsEnabled;
+            const props = wrapper.props();
+            const getLegendItems = () => wrapper.state('legendItemsEnabled');
 
             const legendItemsEnabledState = getLegendItems();
 

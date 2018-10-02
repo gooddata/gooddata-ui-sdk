@@ -1,3 +1,4 @@
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject, VisualizationClass } from '@gooddata/typings';
 
 export const visualizationObjects: [{ visualizationObject: VisualizationObject.IVisualizationObject }] = [
@@ -556,5 +557,5 @@ export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVi
                 uri: '/gdc/md/myproject/obj/table'
             }
         }
-    },
+    }
 ];

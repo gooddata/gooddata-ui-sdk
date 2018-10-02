@@ -20,7 +20,7 @@ describe('FunnelChart', () => {
         const wrapper = mount((
             <FunnelChart
                 projectId="prId"
-                afm={{}}
+                afm={{ measures: [] }}
                 resultSpec={{}}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));

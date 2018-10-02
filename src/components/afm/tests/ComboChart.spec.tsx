@@ -8,6 +8,7 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 
 describe('ComboChart', () => {
     const afmWithAttr = {
+        measures: [] as any,
         attributes: [
             {
                 localIdentifier: 'a1',
@@ -20,7 +21,7 @@ describe('ComboChart', () => {
         const wrapper = mount((
             <ComboChart
                 projectId="prId"
-                afm={{}}
+                afm={{ measures: [] }}
                 resultSpec={{}}
                 adapterFactory={dummyExecuteAfmAdapterFactory}
             />));

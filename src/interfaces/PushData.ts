@@ -1,4 +1,4 @@
-
+// (C) 2007-2018 GoodData Corporation
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 
 export interface IPushData {

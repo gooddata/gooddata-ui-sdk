@@ -8,6 +8,7 @@ import { dummyExecuteAfmAdapterFactory } from './utils/DummyExecuteAfmAdapter';
 
 describe('BarChart', () => {
     const afmWithAttr = {
+        measures: [] as any,
         attributes: [
             {
                 localIdentifier: 'a1',
