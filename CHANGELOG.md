@@ -1,4 +1,8 @@
 # Changelog
+## 5.3.2 (September 27, 2018)
+
+- Added description of data used in examples ([commit](https://github.com/gooddata/gooddata-react-components/commit/a0d7c54445325aecfeb5bd898bc3615fb67c2032))
+
 ## 5.3.1 (September 4, 2018)
 
 - Heatmap bugfix ([commit](https://github.com/gooddata/gooddata-react-components/commit/7553681f471748de999430746944573b081ec88b))
