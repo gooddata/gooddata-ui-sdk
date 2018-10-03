@@ -24,7 +24,7 @@ function getChart({
     legendPosition = 'top',
     legendResponsive = false,
     dataSet = fixtures.barChartWithoutAttributes,
-    colors,
+    colorPalette,
     width,
     height,
     minHeight,
@@ -42,7 +42,7 @@ function getChart({
                     position: legendPosition,
                     responsive: legendResponsive
                 },
-                colors
+                colorPalette
             }}
             height={chartHeight}
             width={chartWidth}
@@ -171,7 +171,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'right'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject
                     }}
                     {...dataSet}
@@ -203,7 +203,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'right'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         mdObject: dataSet.mdObject
                     }}
                     {...dataSet}
@@ -236,7 +236,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={dataLarge}
@@ -264,7 +264,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -291,7 +291,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -317,7 +317,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -343,7 +343,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'right'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -370,7 +370,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -397,7 +397,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -424,7 +424,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -451,7 +451,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -478,7 +478,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'bottom'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -505,7 +505,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'right'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -532,7 +532,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -559,7 +559,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -586,7 +586,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -609,7 +609,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                     config={{
                         type: 'funnel',
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -632,7 +632,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                     config={{
                         type: 'funnel',
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -655,7 +655,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                     config={{
                         type: 'funnel',
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -677,7 +677,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                     ]}
                     config={{
                         type: 'treemap',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -696,7 +696,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                 }]}
                 config={{
                     type: 'treemap',
-                    colors: fixtures.customPalette
+                    colorPalette: fixtures.customPalette
                 }}
                 {...dataSet}
                 onDataTooLarge={identity}
@@ -715,7 +715,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                 }]}
                 config={{
                     type: 'treemap',
-                    colors: fixtures.customPalette
+                    colorPalette: fixtures.customPalette
                 }}
                 {...dataSet}
                 onDataTooLarge={identity}
@@ -764,7 +764,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -791,7 +791,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -818,7 +818,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'left'
                         },
                         legendLayout: 'horizontal',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}
@@ -915,14 +915,21 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )}
         </div>
     ))
-    .add('Custom color pallete', () => (
+    .add('Custom color palette', () => (
         screenshotWrap(
             getChart({
                 dataSet: fixtures.barChartWith3MetricsAndViewByAttribute,
-                colors: [
-                    '#000000',
-                    '#ff0000'
-                ]
+                colorPalette: [{
+                    guid: 'black',
+                    fill: {
+                        r: 0, g: 0, b: 0
+                    }
+                }, {
+                    guid: 'red',
+                    fill: {
+                        r: 255, g: 0, b: 0
+                    }
+                }]
             })
         )
     ))
@@ -1000,7 +1007,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         ...GERMAN_SEPARATORS
                     }}
                     {...dataSet}

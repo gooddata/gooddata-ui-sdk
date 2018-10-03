@@ -41,6 +41,7 @@ export interface IChartLimits {
 
 export interface IChartConfig {
     colors?: string[];
+    colorPalette?: IColorPalette;
     type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;
@@ -71,6 +72,20 @@ export interface IChartProps {
     config: IChartConfig;
     domProps: any;
     callback(): void;
+}
+
+export interface IColorPaletteItem {
+    guid: string;
+    fill: {
+        r: number;
+        g: number;
+        b: number;
+    };
+}
+
+export interface IColorPalette {
+    [index: number]: IColorPaletteItem;
+    length: number;
 }
 
 export default class Chart extends React.Component<IChartProps> {

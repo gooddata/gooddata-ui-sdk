@@ -42,7 +42,8 @@ import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
 import { Heatmap } from './components/Heatmap';
-import Chart, { ILegendConfig, IChartConfig } from './components/visualizations/chart/Chart';
+import Chart,
+    { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 
@@ -84,6 +85,8 @@ export {
     IDrillableItem,
     ILegendConfig,
     IChartConfig,
+    IColorPalette,
+    IColorPaletteItem,
     IPushData,
     isEmptyResult,
     Kpi,

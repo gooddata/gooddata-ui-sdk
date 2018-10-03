@@ -5,7 +5,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { BarChart } from '../../src';
 import { onErrorHandler } from '../mocks';
-import { CUSTOM_COLORS } from '../data/colors';
+import { CUSTOM_COLOR_PALETTE, CUSTOM_COLORS } from '../data/colors';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_2,
@@ -64,14 +64,50 @@ storiesOf('Core components/BarChart', module)
             </div>
         )
     ))
-    .add('custom colors', () => (
+    .add('custom colors by palette', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BarChart
                     projectId="storybook"
                     measures={[MEASURE_1]}
-                    viewBy={ATTRIBUTE_1}
+                    viewBy={ATTRIBUTE_2}
+                    stackBy={ATTRIBUTE_1}
+                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('custom colors by colors', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_2}
+                    stackBy={ATTRIBUTE_1}
                     config={{ colors: CUSTOM_COLORS }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('when both color props, prefer palette', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_2}
+                    stackBy={ATTRIBUTE_1}
+                    config={{
+                        colors: ['rgb(255, 0, 0)', 'rgb(0, 255, 0)'],
+                        colorPalette: CUSTOM_COLOR_PALETTE
+                    }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

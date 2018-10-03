@@ -4,8 +4,10 @@ import {
 } from '../dataLabelsColors';
 
 import {
-    DEFAULT_COLOR_PALETTE
+    DEFAULT_COLOR_PALETTE,
+    getRgbString
 } from '../../../../utils/color';
+import { IColorPaletteItem } from '../../../Chart';
 
 describe('dataLabelsColors', () => {
     describe('isWhiteNotContrastEnough', () => {
@@ -19,7 +21,8 @@ describe('dataLabelsColors', () => {
 
         it('should fullfill UX requirement for default color palette', () => {
             const result: boolean[] = DEFAULT_COLOR_PALETTE
-            .map((defaultColor: string) => isWhiteNotContrastEnough(defaultColor));
+                .map((defaultColorPaletteItem: IColorPaletteItem) => getRgbString(defaultColorPaletteItem))
+                .map((defaultColor: string) => isWhiteNotContrastEnough(defaultColor));
 
             // first 17 colors should return false -> have white label
             const expectedValues = new Array(20).fill(false);

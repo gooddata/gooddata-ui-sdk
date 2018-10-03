@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { Treemap } from '../../src';
-import { CUSTOM_COLORS } from '../data/colors';
+import { CUSTOM_COLOR_PALETTE } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -107,8 +107,24 @@ storiesOf('Core components/Treemap', module)
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
-                    config={{ colors: CUSTOM_COLORS }}
+                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
                     onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('custom colors by hexa', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    segmentBy={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    config={{
+                        colors: ['#ff0000', '#00ff00', '#0000ff']
+                    }}
                 />
             </div>
         )

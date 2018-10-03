@@ -37,16 +37,22 @@ import {
 
 import {
     DEFAULT_COLOR_PALETTE,
-    getLighterColor
+    getLighterColor,
+    getRgbString
 } from '../../utils/color';
 
-import { TreeMapColorStrategy,
+import {
+    TreeMapColorStrategy,
     MeasureColorStrategy,
     AttributeColorStrategy,
     HeatMapColorStrategy
 } from '../colorFactory';
+import { IColorPaletteItem } from '../Chart';
 
 export { IPoint };
+
+const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
+const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
 
 function getMVSTreemap(dataSet: any) {
     const {
@@ -584,17 +590,17 @@ describe('chartOptionsBuilder', () => {
                 expect(
                     pieSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1],
-                    DEFAULT_COLOR_PALETTE[2]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
+                    getRgbString(DEFAULT_COLOR_PALETTE[2])
                 ]);
 
                 expect(
                     treemapSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1],
-                    DEFAULT_COLOR_PALETTE[2]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
+                    getRgbString(DEFAULT_COLOR_PALETTE[2])
                 ]);
             });
 
@@ -683,15 +689,15 @@ describe('chartOptionsBuilder', () => {
                 expect(
                     pieSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING
                 ]);
 
                 expect(
                     treemapSeriesItemData.map(pointData => pointData.color)
                 ).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING
                 ]);
             });
 
@@ -755,9 +761,9 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct series color', () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.color)).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1],
-                    DEFAULT_COLOR_PALETTE[2]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
+                    getRgbString(DEFAULT_COLOR_PALETTE[2])
                 ]);
             });
 
@@ -824,8 +830,8 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct series color', () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.color)).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING
                 ]);
             });
 
@@ -899,6 +905,22 @@ describe('chartOptionsBuilder', () => {
                 ]
             };
 
+            const colorPalette = [{
+                guid: 'red',
+                fill: {
+                    r: 255,
+                    g: 0,
+                    b: 0
+                }
+            }, {
+                guid: 'green',
+                fill: {
+                    r: 0,
+                    g: 255,
+                    b: 0
+                }
+            }];
+
             it('should fill X, Y and Z with valid values when measure buckets are not empty', () => {
                 const executionResultData = [
                     [ 1, 2, 3],
@@ -920,24 +942,23 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
-                const colorPallete = ['red', 'green'];
 
                 const expectedSeries = [
                     {
                         name: 'abc',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [{ x: 1, y: 2, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: [{ x: 4, y: 5, z: 6, format: '#.##x' }]
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPalette,
                     dummyMeasureGroup,
                     null,
                     stackByAttribute,
@@ -968,24 +989,23 @@ describe('chartOptionsBuilder', () => {
                         items: [dummyBucketItem]
                     }]
                 };
-                const colorPallete = ['red', 'green'];
 
                 const expectedSeries = [
                     {
                         name: '',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [{ x: 0, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: [{ x: 0, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPalette,
                     dummyMeasureGroup,
                     null,
                     stackByAttribute,
@@ -1021,24 +1041,23 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
-                const colorPallete = ['red', 'green'];
 
                 const expectedSeries = [
                     {
                         name: 'abc',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [{ x: 0, y: 1, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: [{ x: 0, y: 4, z: 6, format: '#.##x' }]
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPalette,
                     dummyMeasureGroup,
                     stackByAttribute,
                     stackByAttribute,
@@ -1074,24 +1093,23 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
-                const colorPallete = ['red', 'green'];
 
                 const expectedSeries = [
                     {
                         name: 'abc',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [{ x: 1, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: [{ x: 4, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPalette,
                     dummyMeasureGroup,
                     stackByAttribute,
                     stackByAttribute,
@@ -1127,24 +1145,23 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
-                const colorPallete = ['red', 'green'];
 
                 const expectedSeries = [
                     {
                         name: 'abc',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [{ x: 1, y: 3, z: NaN, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: [{ x: 4, y: 6, z: NaN, format: '#.##x' }]
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPalette,
                     dummyMeasureGroup,
                     null,
                     stackByAttribute,
@@ -1200,29 +1217,39 @@ describe('chartOptionsBuilder', () => {
                         }
                     ]
                 };
-                const colorPallete = ['red', 'green', 'blue'];
+                const colorPaletteWithBlue = [
+                    ...colorPalette,
+                    {
+                        guid: 'blue',
+                        fill: {
+                            r: 0,
+                            g: 0,
+                            b: 255
+                        }
+                    }
+                ];
 
                 const expectedSeries = [
                     {
                         name: 'abc',
-                        color: 'red',
+                        color: 'rgb(255,0,0)',
                         legendIndex: 0,
                         data: [] as any
                     }, {
                         name: 'def',
-                        color: 'green',
+                        color: 'rgb(0,255,0)',
                         legendIndex: 1,
                         data: []
                     }, {
                         name: 'ghi',
-                        color: 'blue',
+                        color: 'rgb(0,0,255)',
                         legendIndex: 2,
                         data: []
                     }
                 ];
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    colorPallete,
+                    colorPaletteWithBlue,
                     dummyMeasureGroup,
                     null,
                     stackByAttributeWithThreeElements,
@@ -1274,7 +1301,7 @@ describe('chartOptionsBuilder', () => {
                 });
 
                 it('should fill correct series color', () => {
-                    expect(seriesData[0].color).toEqual(DEFAULT_COLOR_PALETTE[0]);
+                    expect(seriesData[0].color).toEqual(FIRST_DEFAULT_COLOR_ITEM_AS_STRING);
                 });
 
                 it('should fill correct series legendIndex', () => {
@@ -1285,7 +1312,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data.length).toBe(1);
                     expect(seriesData[0].data[0]).toMatchObject({
                         value: 116625456.54,
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         legendIndex: 0,
                         name: 'Amount',
@@ -1331,7 +1358,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data.length).toBe(2);
                     expect(seriesData[0].data[0]).toMatchObject({
                         value: 80406324.96,
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         legendIndex: 0,
                         name: 'Direct Sales',
@@ -1340,7 +1367,7 @@ describe('chartOptionsBuilder', () => {
 
                     expect(seriesData[0].data[1]).toMatchObject({
                         value: 36219131.58,
-                        color: DEFAULT_COLOR_PALETTE[1],
+                        color: SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         legendIndex: 1,
                         name: 'Inside Sales',
@@ -1386,7 +1413,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data[0]).toMatchObject({
                         id: '0',
                         name: 'Amount',
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         showInLegend: true,
                         legendIndex: 0,
                         format: '#,##0.00'
@@ -1397,7 +1424,7 @@ describe('chartOptionsBuilder', () => {
                         x: 0,
                         y: 0,
                         value: 80406324.96,
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Direct Sales'
@@ -1408,7 +1435,7 @@ describe('chartOptionsBuilder', () => {
                         x: 0,
                         y: 1,
                         value: 36219131.58,
-                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        color: getLighterColor(FIRST_DEFAULT_COLOR_ITEM_AS_STRING, 0.4),
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Inside Sales'
@@ -1451,7 +1478,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data[0]).toMatchObject({
                         id: '0',
                         name: 'Direct Sales',
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         showInLegend: true,
                         legendIndex: 0,
                         format: '#,##0.00'
@@ -1459,7 +1486,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data[1]).toMatchObject({
                         id: '1',
                         name: 'Inside Sales',
-                        color: DEFAULT_COLOR_PALETTE[1],
+                        color: SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                         showInLegend: true,
                         legendIndex: 1,
                         format: '#,##0.00'
@@ -1470,7 +1497,7 @@ describe('chartOptionsBuilder', () => {
                         x: 0,
                         y: 0,
                         value: 58427629.5,
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'West Coast'
@@ -1481,7 +1508,7 @@ describe('chartOptionsBuilder', () => {
                         x: 1,
                         y: 1,
                         value: 21978695.46,
-                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        color: getLighterColor(FIRST_DEFAULT_COLOR_ITEM_AS_STRING, 0.4),
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'East Coast'
@@ -1492,7 +1519,7 @@ describe('chartOptionsBuilder', () => {
                         x: 2,
                         y: 2,
                         value: 30180730.62,
-                        color: DEFAULT_COLOR_PALETTE[1],
+                        color: SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'West Coast'
@@ -1503,7 +1530,7 @@ describe('chartOptionsBuilder', () => {
                         x: 3,
                         y: 3,
                         value: 6038400.96,
-                        color: getLighterColor(DEFAULT_COLOR_PALETTE[1], 0.4),
+                        color: getLighterColor(SECOND_DEFAULT_COLOR_ITEM_AS_STRING, 0.4),
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'East Coast'
@@ -1546,7 +1573,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data[0]).toMatchObject({
                         id: '0',
                         name: 'Amount',
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         showInLegend: true,
                         legendIndex: 0,
                         format: '#,##0.00'
@@ -1554,7 +1581,7 @@ describe('chartOptionsBuilder', () => {
                     expect(seriesData[0].data[1]).toMatchObject({
                         id: '1',
                         name: '# of Open Opps.',
-                        color: DEFAULT_COLOR_PALETTE[1],
+                        color: SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                         showInLegend: true,
                         legendIndex: 1,
                         format: '#,##0.00'
@@ -1565,7 +1592,7 @@ describe('chartOptionsBuilder', () => {
                         x: 0,
                         y: 0,
                         value: 58427629.5,
-                        color: DEFAULT_COLOR_PALETTE[0],
+                        color: FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Direct Sales'
@@ -1576,7 +1603,7 @@ describe('chartOptionsBuilder', () => {
                         x: 0,
                         y: 1,
                         value: 21978695.46,
-                        color: getLighterColor(DEFAULT_COLOR_PALETTE[0], 0.4),
+                        color: getLighterColor(FIRST_DEFAULT_COLOR_ITEM_AS_STRING, 0.4),
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Inside Sales'
@@ -1587,7 +1614,7 @@ describe('chartOptionsBuilder', () => {
                         x: 1,
                         y: 1,
                         value: 30180730.62,
-                        color: DEFAULT_COLOR_PALETTE[1],
+                        color: SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Inside Sales'
@@ -1598,7 +1625,7 @@ describe('chartOptionsBuilder', () => {
                         x: 1,
                         y: 0,
                         value: 6038400.96,
-                        color: getLighterColor(DEFAULT_COLOR_PALETTE[1], 0.4),
+                        color: getLighterColor(SECOND_DEFAULT_COLOR_ITEM_AS_STRING, 0.4),
                         format: '#,##0.00',
                         showInLegend: false,
                         name: 'Direct Sales'
@@ -2187,8 +2214,8 @@ describe('chartOptionsBuilder', () => {
 
             it('should fill correct series color', () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.color)).toEqual([
-                    DEFAULT_COLOR_PALETTE[0],
-                    DEFAULT_COLOR_PALETTE[1]
+                    FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
+                    SECOND_DEFAULT_COLOR_ITEM_AS_STRING
                 ]);
             });
 
@@ -2587,7 +2614,10 @@ describe('chartOptionsBuilder', () => {
 
             it('should assign 3 colors from default colorPalette', () => {
                 const seriesColors = chartOptions.data.series.map((serie: any) => serie.color);
-                expect(seriesColors).toEqual(DEFAULT_COLOR_PALETTE.slice(0, 3));
+                expect(seriesColors).toEqual(
+                    DEFAULT_COLOR_PALETTE.slice(0, 3)
+                        .map((defaultColor: IColorPaletteItem) => getRgbString(defaultColor))
+                );
             });
 
             it('should assign correct tooltip function', () => {
