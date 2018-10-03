@@ -287,7 +287,10 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     const chartWidth = chart.plotWidth;
     const align = getArrowAlignment(arrowPosition, chartWidth);
     const defaultArrowPosition = arrowPosition > chartWidth ? chartWidth  : arrowPosition * 2;
-    const arrowPositionForTail = getShapeVisiblePart(this.point.shapeArgs, chart, defaultArrowPosition) / 2;
+    let arrowPositionForTail = defaultArrowPosition / 2;
+    if (this.point.shapeArgs && chart) {
+        arrowPositionForTail = getShapeVisiblePart(this.point.shapeArgs, chart, defaultArrowPosition) / 2;
+    }
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : '';
     const tailStyle = showFullscreenTooltip() ?
