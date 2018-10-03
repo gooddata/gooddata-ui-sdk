@@ -276,6 +276,13 @@ export interface IColor {
     b: number;
 }
 
+export type IColorPalette = IColorPaletteItem[];
+
+export interface IColorPaletteItem {
+    guid: string;
+    fill: IColor;
+}
+
 export interface ICreateProjectOptions {
     summary?: string;
     projectTemplate?: string;
@@ -304,4 +311,8 @@ export interface IXhrSettings {
 
 export interface ISdkOptions {
     domain?: string;
+}
+
+export interface IFeatureFlags {
+    [key: string]: number | boolean | string;
 }
