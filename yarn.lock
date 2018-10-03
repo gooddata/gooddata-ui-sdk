@@ -147,11 +147,11 @@
     js-cookie "^2.1.4"
     lodash "^4.17.4"
 
-"@gooddata/mock-js@1.8.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.8.3.tgz#0acc8e4a39627775ec4a88a30785e201f5f79e93"
+"@gooddata/mock-js@1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.9.0.tgz#9be75cedeee7df420ed96384697751fd43352a1c"
   dependencies:
-    "@gooddata/typings" "2.3.0"
+    "@gooddata/typings" "2.4.0"
     "@types/seedrandom" "2.4.27"
     "@types/uuid" "3.4.3"
     body-parser "1.17.1"
@@ -187,12 +187,6 @@
     tslint "5.8.0"
     tslint-eslint-rules "5.1.0"
     tslint-react "3.5.1"
-
-"@gooddata/typings@2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.3.0.tgz#d8768c153d0a198d3665de23cec8cc32068a5096"
-  dependencies:
-    lodash "4.17.4"
 
 "@gooddata/typings@2.4.0":
   version "2.4.0"

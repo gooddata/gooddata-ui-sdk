@@ -1810,7 +1810,7 @@ module.exports = {
                     localIdentifier: 'm1_pop',
                     filters: [],
                     identifier: '1',
-                    showPoP: 'true',
+                    isDerived: true,
                     measureIdentifier: 'm1',
                     popAttribute: 'attr.closed.year'
                 }, {
@@ -1827,7 +1827,7 @@ module.exports = {
                     localIdentifier: 'm2_pop',
                     filters: [],
                     identifier: '2',
-                    showPoP: 'true',
+                    isDerived: true,
                     measureIdentifier: 'm2',
                     popAttribute: 'attr.closed.year'
                 }]
@@ -1864,7 +1864,7 @@ module.exports = {
                     localIdentifier: 'm1_previous_period',
                     filters: [],
                     identifier: '1',
-                    showPoP: 'true',
+                    isDerived: true,
                     measureIdentifier: 'm1',
                     previousPeriod: {
                         dateDataSets: [{
@@ -1886,7 +1886,7 @@ module.exports = {
                     localIdentifier: 'm2_previous_period',
                     filters: [],
                     identifier: '2',
-                    showPoP: 'true',
+                    isDerived: true,
                     measureIdentifier: 'm2',
                     previousPeriod: {
                         dateDataSets: [{
