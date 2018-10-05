@@ -46,6 +46,17 @@ export function unwrapPreviousPeriodMeasure(item: AFM.IMeasure): AFM.IPreviousPe
 }
 
 /**
+ * Unwraps arithmeticMeasure object
+ *
+ * @method unwrapArithmeticMeasure
+ * @param {AFM.IMeasure} item
+ * @returns {AFM.IArithmeticMeasure}
+ */
+export function unwrapArithmeticMeasure(item: AFM.IMeasure): AFM.IArithmeticMeasure {
+    return (item.definition as AFM.IArithmeticMeasureDefinition).arithmeticMeasure;
+}
+
+/**
  * Normalize AFM
  *
  * @method normalizeAfm
@@ -92,6 +103,17 @@ export function isPoP(item: AFM.IMeasure): boolean {
  */
 export function isPreviousPeriodMeasure(item: AFM.IMeasure): boolean {
     return !!unwrapPreviousPeriodMeasure(item);
+}
+
+/**
+ * Returns true if measure is arithmetic measure
+ *
+ * @method isArithmeticMeasure
+ * @param {AFM.IMeasure} item
+ * @returns {boolean}
+ */
+export function isArithmeticMeasure(item: AFM.IMeasure): boolean {
+    return !!unwrapArithmeticMeasure(item);
 }
 
 /**

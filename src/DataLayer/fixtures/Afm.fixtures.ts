@@ -179,6 +179,16 @@ export const previousPeriodMeasure: AFM.IMeasure = {
     }
 };
 
+export const arithmeticMeasure: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_1',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['m1', 'm2'],
+            operator: 'sum'
+        }
+    }
+};
+
 export const simpleMeasureWithAttributeFilters: AFM.IMeasure = {
     localIdentifier: 'm1',
     definition: {
@@ -311,6 +321,16 @@ export const afmWithPreviousPeriodMeasure: INormalizedAFM = {
     filters: []
 };
 
+export const afmWithArithmeticMeasure: INormalizedAFM = {
+    attributes: [],
+    nativeTotals: [],
+    measures: [
+        metricSum,
+        arithmeticMeasure
+    ],
+    filters: []
+};
+
 export const afmWithAllMetricTypesSomeWithFilters: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
@@ -320,7 +340,8 @@ export const afmWithAllMetricTypesSomeWithFilters: INormalizedAFM = {
         metricSum3,
         simpleMeasureWithAttributeFilters,
         popMeasure,
-        previousPeriodMeasure
+        previousPeriodMeasure,
+        arithmeticMeasure
     ],
     filters: [
         absoluteDateFilter1

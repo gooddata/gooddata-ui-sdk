@@ -6,6 +6,7 @@ import IMeasure = VisualizationObject.IMeasure;
 import IMeasureDefinition = VisualizationObject.IMeasureDefinition;
 import IPoPMeasureDefinition = VisualizationObject.IPoPMeasureDefinition;
 import IPreviousPeriodMeasureDefinition = VisualizationObject.IPreviousPeriodMeasureDefinition;
+import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
 import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
 import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
@@ -44,6 +45,8 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): AFM.Measu
         return convertPopMeasureDefinition(definition);
     } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
         return convertPreviousPeriodMeasureDefinition(definition);
+    } else if (VisualizationObject.isArithmeticMeasureDefinition(definition)) {
+        return convertArithmeticMeasureDefinition(definition);
     } else {
         throw Error('The measure definition is not supported: ' + JSON.stringify(definition));
     }
@@ -144,6 +147,17 @@ function convertPreviousPeriodMeasureDefinition(definition: IPreviousPeriodMeasu
                 dataSet: dateDataSet.dataSet,
                 periodsAgo: dateDataSet.periodsAgo
             }))
+        }
+    };
+}
+
+function convertArithmeticMeasureDefinition(definition: IArithmeticMeasureDefinition)
+    : AFM.IArithmeticMeasureDefinition {
+    const { arithmeticMeasure } = definition;
+    return {
+        arithmeticMeasure: {
+            measureIdentifiers: arithmeticMeasure.measureIdentifiers.splice(0),
+            operator: arithmeticMeasure.operator
         }
     };
 }

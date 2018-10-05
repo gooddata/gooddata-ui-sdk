@@ -19,7 +19,9 @@ import {
     getGlobalDateFilters,
     getId,
     getMeasureDateFilters,
-    getDateFilterDateDataSet
+    getDateFilterDateDataSet,
+    unwrapArithmeticMeasure,
+    isArithmeticMeasure
 } from '../AfmUtils';
 import { Granularities } from '../../constants/granularities';
 import * as fixture from '../../fixtures/Afm.fixtures';
@@ -350,6 +352,11 @@ describe('AFM utils', () => {
             const result = unwrapSimpleMeasure(fixture.previousPeriodMeasure);
             expect(result).toEqual(undefined);
         });
+
+        it('should return undefined when arithmetic measure is provided', () => {
+            const result = unwrapSimpleMeasure(fixture.arithmeticMeasure);
+            expect(result).toEqual(undefined);
+        });
     });
 
     describe('unwrapPoPMeasure', () => {
@@ -370,6 +377,11 @@ describe('AFM utils', () => {
 
         it('should return undefined when previous period measure is provided', () => {
             const result = unwrapPoPMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return undefined when arithmetic measure is provided', () => {
+            const result = unwrapPoPMeasure(fixture.arithmeticMeasure);
             expect(result).toEqual(undefined);
         });
     });
@@ -398,6 +410,37 @@ describe('AFM utils', () => {
                 }
             );
         });
+
+        it('should return undefined when arithmetic measure is provided', () => {
+            const result = unwrapPreviousPeriodMeasure(fixture.arithmeticMeasure);
+            expect(result).toEqual(undefined);
+        });
+    });
+
+    describe('unwrapArithmeticMeasure', () => {
+        it('should return undefined when simple measure is provided', () => {
+            const result = unwrapArithmeticMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return undefined when PoP measure is provided', () => {
+            const result = unwrapArithmeticMeasure(fixture.popMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return undefined when previous period measure is provided', () => {
+            const result = unwrapArithmeticMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(undefined);
+        });
+
+        it('should return arithmetic measure content when arithmetic measure is provided', () => {
+            const result = unwrapArithmeticMeasure(fixture.arithmeticMeasure);
+            expect(result).toEqual({
+                    measureIdentifiers: ['m1', 'm2'],
+                    operator: 'sum'
+                }
+            );
+        });
     });
 
     describe('isSimpleMeasure', () => {
@@ -413,6 +456,11 @@ describe('AFM utils', () => {
 
         it('should return false when previous period measure is tested', () => {
             const result = isSimpleMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when arithmetic measure is tested', () => {
+            const result = isSimpleMeasure(fixture.arithmeticMeasure);
             expect(result).toEqual(false);
         });
     });
@@ -432,6 +480,11 @@ describe('AFM utils', () => {
             const result = isPoP(fixture.previousPeriodMeasure);
             expect(result).toEqual(false);
         });
+
+        it('should return false when arithmetic measure is tested', () => {
+            const result = isPoP(fixture.arithmeticMeasure);
+            expect(result).toEqual(false);
+        });
     });
 
     describe('isPreviousPeriodMeasure', () => {
@@ -447,6 +500,33 @@ describe('AFM utils', () => {
 
         it('should return true when previous period measure is tested', () => {
             const result = isPreviousPeriodMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when arithmetic measure is tested', () => {
+            const result = isPreviousPeriodMeasure(fixture.arithmeticMeasure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isArithmeticMeasure', () => {
+        it('should return false when simple measure is tested', () => {
+            const result = isArithmeticMeasure(fixture.simpleMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when pop measure is tested', () => {
+            const result = isArithmeticMeasure(fixture.popMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when previous period measure is tested', () => {
+            const result = isArithmeticMeasure(fixture.previousPeriodMeasure);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when arithmetic measure is tested', () => {
+            const result = isArithmeticMeasure(fixture.arithmeticMeasure);
             expect(result).toEqual(true);
         });
     });
@@ -506,6 +586,12 @@ describe('AFM utils', () => {
 
         it('should return false if AFM does not contain any metric date filter and has previous period measure', () => {
             const normalizedAfm = normalizeAfm(fixture.afmWithPreviousPeriodMeasure);
+            const result = hasMetricDateFilters(normalizedAfm);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false if AFM does not contain any metric date filter and has arithmetic measure', () => {
+            const normalizedAfm = normalizeAfm(fixture.afmWithArithmeticMeasure);
             const result = hasMetricDateFilters(normalizedAfm);
             expect(result).toEqual(false);
         });
