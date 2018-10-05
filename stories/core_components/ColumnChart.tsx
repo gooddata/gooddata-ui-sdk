@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { ColumnChart } from '../../src/index';
+import { ColumnChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
 import {
@@ -12,7 +12,9 @@ import {
     MEASURE_1,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -229,6 +231,25 @@ storiesOf('Core components/ColumnChart', module)
                         }}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

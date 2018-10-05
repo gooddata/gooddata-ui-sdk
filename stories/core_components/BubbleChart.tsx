@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { BubbleChart } from '../../src/index';
+import { BubbleChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -11,7 +11,8 @@ import {
     MEASURE_1,
     MEASURE_2,
     MEASURE_3,
-    ATTRIBUTE_1_SORT_ITEM
+    ATTRIBUTE_1_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -308,6 +309,22 @@ storiesOf('Core components/BubbleChart', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={ARITHMETIC_MEASURE_SIMPLE_OPERANDS}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

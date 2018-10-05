@@ -3,14 +3,17 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { ComboChart } from '../../src/index';
+import { ComboChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
-import { ATTRIBUTE_1,
+import {
+    ATTRIBUTE_1,
     MEASURE_1,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -89,6 +92,21 @@ storiesOf('Core components/ComboChart', module)
                     lineMeasures={[MEASURE_2]}
                     viewBy={ATTRIBUTE_1}
                     config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ComboChart
+                    projectId="storybook"
+                    columnMeasures={[MEASURE_1, MEASURE_2]}
+                    lineMeasures={[ARITHMETIC_MEASURE_SIMPLE_OPERANDS, ARITHMETIC_MEASURE_USING_ARITHMETIC]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

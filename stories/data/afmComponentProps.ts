@@ -93,6 +93,40 @@ const MEASURE_3: AFM.IMeasure = {
     }
 };
 
+const ARITHMETIC_MEASURE_SIMPLE_OPERANDS: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_1',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['m1', 'm2'],
+            operator: 'sum'
+        }
+    },
+    alias: 'Sum of m1 and m2'
+};
+
+const ARITHMETIC_MEASURE_USING_ARITHMETIC: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_2',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['arithmetic_measure_1', 'm2'],
+            operator: 'difference'
+        }
+    },
+    alias: 'Difference of arithmetic_measure_1 and m2'
+};
+
+const ARITHMETIC_MEASURE_WITH_FORMATTING: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_3',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['m1', 'm2'],
+            operator: 'sum'
+        }
+    },
+    format: '[green]#,##0.00 €',
+    alias: 'Formatted sum of m1 and m2'
+};
+
 export const ATTRIBUTE_CITIES: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
@@ -632,4 +666,38 @@ export const AFM_THREE_MEASURES_ONE_ATTRIBUTE_BUBBLE_MD_OBJECT: VisualizationObj
     visualizationClass: {
         uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/76038'
     }
+};
+
+export const AFM_ARITHMETIC_MEASURES: AFM.IAfm = {
+    measures: [
+        ARITHMETIC_MEASURE_USING_ARITHMETIC,
+        MEASURE_1,
+        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+        MEASURE_2,
+        MEASURE_3
+    ]
+};
+
+export const AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        ARITHMETIC_MEASURE_USING_ARITHMETIC,
+        MEASURE_1,
+        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+        MEASURE_2,
+        MEASURE_3
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
+export const AFM_FORMATTED_ARITHMETIC_MEASURE: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2,
+        ARITHMETIC_MEASURE_WITH_FORMATTING
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
 };

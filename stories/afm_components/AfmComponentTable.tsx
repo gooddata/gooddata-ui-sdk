@@ -11,7 +11,7 @@ import {
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
-    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE, AFM_FORMATTED_ARITHMETIC_MEASURE
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
@@ -117,6 +117,20 @@ storiesOf('AFM components/Table', module)
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     maxHeight={223}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measure with formatting', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    afm={AFM_FORMATTED_ARITHMETIC_MEASURE}
+                    maxHeight={223}
+                    onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

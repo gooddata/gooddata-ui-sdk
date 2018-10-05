@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { Table } from '../../src/index';
+import { Table } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -18,7 +18,10 @@ import {
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     MEASURE_2_WITH_FORMAT,
-    MEASURE_WITH_NULLS
+    MEASURE_WITH_NULLS,
+    FORMATTED_ARITHMETIC_MEASURE,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -186,6 +189,39 @@ storiesOf('Core components/Table', module)
                     attributes={[ATTRIBUTE_1]}
                     onError={onErrorHandler}
                     pushData={logTotalsChange}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('formatted arithmetic measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, FORMATTED_ARITHMETIC_MEASURE]}
+                    attributes={[ATTRIBUTE_1]}
+                    onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />

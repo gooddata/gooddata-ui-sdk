@@ -8,7 +8,8 @@ import {
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE,
-    AFM_ONE_MEASURE_TWO_ATTRIBUTES
+    AFM_ONE_MEASURE_TWO_ATTRIBUTES,
+    AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE
 } from '../data/afmComponentProps';
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
@@ -103,6 +104,19 @@ storiesOf('AFM components/Area chart', module)
                             }
                         ]
                     }}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    afm={AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

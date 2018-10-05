@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { LineChart } from '../../src/index';
+import { LineChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
 import {
@@ -14,7 +14,9 @@ import {
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
-    MEASURE_WITH_FORMAT
+    MEASURE_WITH_FORMAT,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -301,6 +303,25 @@ storiesOf('Core components/LineChart', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

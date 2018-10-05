@@ -87,7 +87,7 @@ class DynamicVisualization extends React.Component<any, any> {
     }
 }
 
-storiesOf('URI components/Visualization', module)
+storiesOf('URI components', module)
     .add('table example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -171,6 +171,20 @@ storiesOf('URI components/Visualization', module)
                 <Visualization
                     projectId="myproject"
                     uri={'/gdc/md/myproject/obj/1003'}
+                    onError={onErrorHandler}
+                    locale="en-US"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('chart with arithmetic measures', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="myproject"
+                    uri={'/gdc/md/myproject/obj/1005'}
                     onError={onErrorHandler}
                     locale="en-US"
                     LoadingComponent={null}
@@ -293,7 +307,7 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
-    .add('Headline', () => (
+    .add('headline', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
@@ -306,7 +320,7 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
-    .add('Headline with German number format', () => (
+    .add('headline with German number format', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
