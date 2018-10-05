@@ -5,6 +5,8 @@ import { noop } from 'lodash';
 import { ProjectModule } from '../src/project';
 import { XhrModule } from '../src/xhr';
 import { mockPollingRequest } from './helpers/polling';
+import { IColorPalette, IFeatureFlags } from '../src/interfaces';
+import { IStyleSettingsResponse, IFeatureFlagsResponse } from '../src/apiResponsesInterfaces';
 
 const createProject = () => new ProjectModule(new XhrModule(fetch, {}));
 
@@ -93,6 +95,63 @@ describe('project', () => {
                     expect(result[0].r).toBe(1);
                     expect(result[1].r).toBe(2);
                 });
+            });
+        });
+
+        describe('getColorPaletteWithGuids', () => {
+            it('should reject with 400 when resource fails', () => {
+                fetchMock.mock(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    400
+                );
+                return createProject()
+                    .getColorPaletteWithGuids('myFakeProjectId')
+                    .then(null, (err: any) => expect(err).toBeInstanceOf(Error));
+            });
+            it('should return an array of color objects in the right order', () => {
+                const chartPalette: IColorPalette = [
+                    { guid: 'guid1', fill: { r: 1, b: 1, g: 1 } },
+                    { guid: 'guid2', fill: { r: 2, b: 2, g: 2 } }
+                ];
+
+                const mockResponse: IStyleSettingsResponse = {
+                    styleSettings: {
+                        chartPalette
+                    }
+                };
+
+                fetchMock.mock(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    {
+                        status: 200,
+                        body: JSON.stringify(mockResponse)
+                    }
+                );
+
+                return createProject()
+                    .getColorPaletteWithGuids('myFakeProjectId')
+                    .then((result?: IColorPalette) => {
+                        expect(result).not.toBeUndefined();
+                        if (result) {
+                            expect(result.length).toBe(2);
+                            expect(result[0]).toEqual(chartPalette[0]);
+                            expect(result[1]).toEqual(chartPalette[1]);
+                        }
+                    });
+            });
+            it('should return undefined when resource is empty', () => {
+                fetchMock.mock(
+                    '/gdc/projects/myFakeProjectId/styleSettings',
+                    {
+
+                    }
+                );
+
+                return createProject()
+                    .getColorPaletteWithGuids('myFakeProjectId')
+                        .then((result?: IColorPalette) => {
+                            expect(result).toEqual(undefined);
+                        });
             });
         });
 
@@ -326,6 +385,41 @@ describe('project', () => {
                 );
 
                 return createProject().deleteProject(projectId).then((r: any) => expect(r.response.ok).toBeTruthy());
+            });
+        });
+
+        describe('getFeatureFlags', () => {
+            it('should reject with 400 when resource fails', () => {
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/featureFlags',
+                    400
+                );
+                return createProject()
+                    .getFeatureFlags('myFakeProjectId')
+                    .then(null, (err: any) => expect(err).toBeInstanceOf(Error));
+            });
+            it('should return feature flags for given project', () => {
+                const featureFlags: IFeatureFlags = {
+                    flag1: true,
+                    flag2: true
+                };
+
+                const mockResponse: IFeatureFlagsResponse = {
+                    featureFlags
+                };
+
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/featureFlags',
+                    {
+                        status: 200,
+                        body: JSON.stringify(mockResponse)
+                    }
+                );
+
+                return createProject().getFeatureFlags('myFakeProjectId')
+                    .then((result: IFeatureFlags) => {
+                        expect(result).toEqual(featureFlags);
+                    });
             });
         });
     });

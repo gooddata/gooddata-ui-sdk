@@ -1,14 +1,8 @@
 // (C) 2007-2017 GoodData Corporation
 import { getIn, handlePolling } from './util';
-import { ITimezone, IColor } from './interfaces';
+import { ITimezone, IColor, IColorPalette, IFeatureFlags } from './interfaces';
+import { IStyleSettingsResponse, IFeatureFlagsResponse } from './apiResponsesInterfaces';
 import { XhrModule, ApiResponse } from './xhr';
-
-/**
- * Functions for working with projects
- *
- * @class project
- * @module project
- */
 
 const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },
@@ -38,6 +32,12 @@ const isProjectCreated = (project: any) => { // TODO
         projectState === 'DELETED';
 };
 
+/**
+ * Functions for working with projects
+ *
+ * @class project
+ * @module project
+ */
 export class ProjectModule {
     constructor(private xhr: XhrModule) {
 
@@ -117,6 +117,29 @@ export class ProjectModule {
                 }
 
                 throw new Error(err.statusText);
+            });
+    }
+
+    /**
+     * Fetches a chart color palette for a project represented by the given
+     * projectId parameter.
+     *
+     * @method getColorPaletteWithGuids
+     * @param {String} projectId - A project identifier
+     * @return {Array} An array of objects representing a project's
+     * color palette with color guid or undefined
+     */
+    public getColorPaletteWithGuids(projectId: string): Promise<IColorPalette | undefined> {
+        return this.xhr.get(`/gdc/projects/${projectId}/styleSettings`)
+            .then((apiResponse: ApiResponse) => {
+                return apiResponse.getData();
+            })
+            .then((result: IStyleSettingsResponse) => {
+                if (result && result.styleSettings) {
+                    return result.styleSettings.chartPalette;
+                } else {
+                    return undefined;
+                }
             });
     }
 
@@ -225,5 +248,25 @@ export class ProjectModule {
      */
     public deleteProject(projectId: string) {
         return this.xhr.del(`/gdc/projects/${projectId}`);
+    }
+
+    /**
+     * Gets aggregated feature flags for given project and current user
+     *
+     * @method getFeatureFlags
+     * @param {String} projectId - A project identifier
+     * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
+     */
+    public getFeatureFlags(projectId: string): Promise<IFeatureFlags> {
+        return this.xhr.get(`/gdc/app/projects/${projectId}/featureFlags`)
+            .then((apiResponse: ApiResponse) => {
+                return apiResponse.getData();
+            })
+            .then((result: IFeatureFlagsResponse) => {
+                if (result && result.featureFlags) {
+                    return result.featureFlags;
+                }
+                return {};
+            });
     }
 }
