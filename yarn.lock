@@ -112,9 +112,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@57.1.2":
-  version "57.1.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.1.2.tgz#94c2265bd8ccd78fe4a170999675dd46b5447b84"
+"@gooddata/goodstrap@57.1.3":
+  version "57.1.3"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.1.3.tgz#807793df4ff2f2d2b518b5496b86f968ca0ca17e"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
