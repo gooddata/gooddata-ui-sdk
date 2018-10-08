@@ -99,4 +99,10 @@ describe('convertMeasure', () => {
             ...afm.previousPeriodMeasure
         });
     });
+
+    it('should convert arithmetic measure', () => {
+        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+            ...afm.arithmeticMeasure
+        });
+    });
 });
