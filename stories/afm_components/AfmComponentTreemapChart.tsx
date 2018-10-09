@@ -9,7 +9,8 @@ import { CUSTOM_COLORS } from '../data/colors';
 import {
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES,
-    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE,
+    AFM_ARITHMETIC_MEASURES
 } from '../data/afmComponentProps';
 
 import '../../styles/scss/charts.scss';
@@ -83,6 +84,19 @@ storiesOf('AFM components/Treemap', module)
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    afm={AFM_ARITHMETIC_MEASURES}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>
         )

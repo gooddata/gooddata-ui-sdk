@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { Treemap } from '../../src/index';
+import { Treemap } from '../../src';
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import {
@@ -14,7 +14,9 @@ import {
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
-    MEASURE_3
+    MEASURE_3,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -216,7 +218,8 @@ storiesOf('Core components/Treemap', module)
                 </div>
             </div>
         )
-    )).add('data labels config', () => (
+    ))
+    .add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = auto</div>
@@ -262,6 +265,22 @@ storiesOf('Core components/Treemap', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    onError={onErrorHandler}
+                />
             </div>
         )
     ));

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { AreaChart } from '../../src/index';
+import { AreaChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -13,7 +13,9 @@ import {
     MEASURE_2,
     MEASURE_2_SORT_ITEM,
     MEASURE_WITH_NULLS,
-    ATTRIBUTE_1_SORT_ITEM
+    ATTRIBUTE_1_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -135,7 +137,8 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
-    )).add('undefined values with stacking', () => (
+    ))
+    .add('undefined values with stacking', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <AreaChart
@@ -148,7 +151,8 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
-    )).add('undefined values without stacking', () => (
+    ))
+    .add('undefined values without stacking', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <AreaChart
@@ -198,7 +202,8 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
-    )).add('with min max configuration', () => (
+    ))
+    .add('with min max configuration', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <AreaChart
@@ -217,7 +222,8 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
-    )).add('with different legend positions', () => (
+    ))
+    .add('with different legend positions', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = auto</div>
@@ -302,7 +308,8 @@ storiesOf('Core components/AreaChart', module)
                 </div>
             </div>
         )
-   )).add('data labels config', () => (
+   ))
+    .add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = hidden</div>
@@ -352,6 +359,25 @@ storiesOf('Core components/AreaChart', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+   ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

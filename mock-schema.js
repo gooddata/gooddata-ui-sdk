@@ -1854,6 +1854,49 @@ module.exports = {
             }]
         },
         {
+            title: 'Chart with arithmetic measures',
+            identifier: '1005',
+            type: 'local:bar',
+            filters: [],
+            buckets: [{
+                localIdentifier: 'measures',
+                items: [{
+                    localIdentifier: 'm4',
+                    filters: [],
+                    identifier: '4',
+                    isArithmetic: true,
+                    measureIdentifiers: ['m3', 'm2'],
+                    operator: 'sum',
+                    alias: 'Arithmetic using arithmetic'
+                }, {
+                    localIdentifier: 'm1',
+                    filters: [],
+                    identifier: '1',
+                    alias: 'Amount'
+                },{
+                    localIdentifier: 'm3',
+                    filters: [],
+                    identifier: '3',
+                    isArithmetic: true,
+                    measureIdentifiers: ['m1', 'm2'],
+                    operator: 'sum',
+                    alias: 'Arithmetic using simple'
+                }, {
+                    localIdentifier: 'm2',
+                    filters: [],
+                    identifier: '2',
+                    alias: 'Value'
+                }]
+            }, {
+                localIdentifier: 'view',
+                items: [{
+                    localIdentifier: 'a1',
+                    displayForm: 'attr.closed.year.df',
+                    alias: 'Date'
+                }]
+            }]
+        },
+        {
             title: 'Chart with previous period measures',
             identifier: '1006',
             type: 'local:bar',

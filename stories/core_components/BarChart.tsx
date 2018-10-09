@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { BarChart } from '../../src/index';
+import { BarChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
 import {
@@ -13,7 +13,9 @@ import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_2_SORT_ITEM
+    MEASURE_2_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -121,7 +123,8 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
-    )).add('with dataLabels explicitly hidden', () => (
+    ))
+    .add('with dataLabels explicitly hidden', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BarChart
@@ -139,24 +142,27 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
-    )).add('with disabled legend', () => (
-    screenshotWrap(
-        <div style={wrapperStyle}>
-            <BarChart
-                projectId="storybook"
-                measures={[MEASURE_1, MEASURE_2]}
-                viewBy={ATTRIBUTE_1}
-                config={{
-                    legend: {
-                        enabled: false
-                    }
-                }}
-                onError={onErrorHandler}
-                LoadingComponent={null}
-                ErrorComponent={null}
-            />
-        </div>
-    ))).add('with min max config', () => (
+    ))
+    .add('with disabled legend', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={ATTRIBUTE_1}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with min max config', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BarChart
@@ -175,7 +181,8 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
-    )).add('with different legend positions', () => (
+    ))
+    .add('with different legend positions', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = auto</div>
@@ -259,5 +266,24 @@ storiesOf('Core components/BarChart', module)
                     />
                 </div>
             </div>
-        ))
-    );
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ));

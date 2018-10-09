@@ -111,12 +111,22 @@ const previousPeriodMeasureDefinitionPropTypes = {
     previousPeriodMeasure: PropTypes.shape(previousPeriodMeasurePropTypes).isRequired
 };
 
+const arithmeticMeasurePropTypes = {
+    measureIdentifiers: PropTypes.arrayOf(identifierPropTypes).isRequired,
+    operator: PropTypes.oneOf(['sum', 'difference', 'multiplication', 'ratio', 'change']).isRequired
+};
+
+const arithmeticMeasureDefinitionPropTypes = {
+    arithmeticMeasure: PropTypes.shape(arithmeticMeasurePropTypes).isRequired
+};
+
 const measurePropTypes = {
     localIdentifier: identifierPropTypes.isRequired,
     definition: PropTypes.oneOfType([
         PropTypes.shape(simpleMeasureDefinitionPropTypes),
         PropTypes.shape(popMeasureDefinitionPropTypes),
-        PropTypes.shape(previousPeriodMeasureDefinitionPropTypes)
+        PropTypes.shape(previousPeriodMeasureDefinitionPropTypes),
+        PropTypes.shape(arithmeticMeasureDefinitionPropTypes)
     ]).isRequired,
     alias: PropTypes.string,
     format: PropTypes.string

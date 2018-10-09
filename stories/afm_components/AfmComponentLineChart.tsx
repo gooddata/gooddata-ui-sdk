@@ -5,6 +5,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { LineChart } from '../../src/components/afm/LineChart';
 import {
+    AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE,
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE
@@ -64,6 +65,19 @@ storiesOf('AFM components/LineChart', module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{ colors: CUSTOM_COLORS, ...GERMAN_SEPARATORS }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    afm={AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

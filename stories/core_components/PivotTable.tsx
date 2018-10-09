@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { PivotTable } from '../../src/index';
+import { PivotTable } from '../../src';
 import { onErrorHandler } from '../mocks';
 
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
@@ -18,7 +18,9 @@ import {
     MEASURE_2_WITH_FORMAT,
     MEASURE_WITH_NULLS,
     TOTAL_M1_A1,
-    TOTAL_M2_A1
+    TOTAL_M2_A1,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -243,6 +245,25 @@ storiesOf('Core components/PivotTable', module)
                     columns={[ATTRIBUTE_2]}
                     rows={[ATTRIBUTE_1]}
                     totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC,
+                        MEASURE_1,
+                        MEASURE_2
+                    ]}
+                    rows={[ATTRIBUTE_1]}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
