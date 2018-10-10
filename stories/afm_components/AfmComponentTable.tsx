@@ -11,7 +11,9 @@ import {
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
-    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE, AFM_FORMATTED_ARITHMETIC_MEASURE
+    AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE,
+    AFM_FORMATTED_ARITHMETIC_MEASURE,
+    AFM_ONE_ATTRIBUTE
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
 import '../../styles/scss/charts.scss';
@@ -26,6 +28,19 @@ function logTotalsChange(data: any) {
 const wrapperStyle = { width: 600, height: 300 };
 
 storiesOf('AFM components/Table', module)
+    .add('one attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Table
+                    projectId="storybook"
+                    afm={AFM_ONE_ATTRIBUTE}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
     .add('two measures, one attribute', () => (
         screenshotWrap(
             <div style={wrapperStyle}>

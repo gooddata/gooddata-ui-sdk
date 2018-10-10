@@ -46,6 +46,21 @@ export const executionRequest = {
     }
 };
 
+export const executionRequestWithoutMeasureAndWithoutResultSpec = {
+    execution: {
+        afm: {
+            attributes: [
+                {
+                    displayForm: {
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                    },
+                    localIdentifier: 'departmentAttribute'
+                }
+            ]
+        }
+    }
+};
+
 const executionResponse = {
     dimensions: [
         {

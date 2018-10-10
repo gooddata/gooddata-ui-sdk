@@ -240,6 +240,12 @@ export const AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
     }]
 };
 
+export const AFM_ONE_ATTRIBUTE: AFM.IAfm = {
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
 export const AFM_TWO_MEASURES: AFM.IAfm = {
     measures: [
         MEASURE_1,
