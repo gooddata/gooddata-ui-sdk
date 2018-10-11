@@ -331,13 +331,19 @@ describe('Totals', () => {
 
     describe('getAddTotalDropdownAlignPoints', () => {
         it('should return proper align points for dropdown', () => {
-            const expectedAlignPoints = { align: 'tc bc', offset: { x: 0, y: -3 } };
+            const expectedAlignPoints = [
+                { align: 'tc bc', offset: { x: 0, y: -3 } },
+                { align: 'bc tc', offset: { x: 0, y: 50 } }
+            ];
             expect(getAddTotalDropdownAlignPoints()).toEqual(expectedAlignPoints);
         });
 
         it('should return proper align points for dropdown in last column', () => {
             const isLastColumn = true;
-            const expectedAlignPoints = { align: 'tc br', offset: { x: 30, y: -3 } };
+            const expectedAlignPoints = [
+                { align: 'tc br', offset: { x: 30, y: -3 } },
+                { align: 'bc tr', offset: { x: 30, y: 50 } }
+            ];
             expect(getAddTotalDropdownAlignPoints(isLastColumn)).toEqual(expectedAlignPoints);
         });
     });

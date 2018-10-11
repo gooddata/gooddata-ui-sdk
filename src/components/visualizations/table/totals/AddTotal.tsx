@@ -72,7 +72,7 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
         const wrapperClassNames = classNames('indigo-totals-add-wrapper', {
             'dropdown-active': this.state.dropdownOpened
         });
-        const bodyClassName = classNames('indigo-totals-select-type-list', { 'arrow-align-right': isLastColumn });
+        const bodyClassName = classNames('indigo-totals-select-type-list');
 
         const wrapperEvents = {
             onMouseEnter: () => {
@@ -103,7 +103,7 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
             <div className={wrapperClassNames} {...wrapperEvents}>
                 <Dropdown
                     onOpenStateChanged={onOpenStateChanged}
-                    alignPoints={[dropdownAlignPoint]}
+                    alignPoints={dropdownAlignPoint}
                     button={<AddTotalButton {...addButtonProps} />}
                     body={
                         <DropdownBody
