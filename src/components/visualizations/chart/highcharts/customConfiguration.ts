@@ -287,10 +287,7 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     const chartWidth = chart.plotWidth;
     const align = getArrowAlignment(arrowPosition, chartWidth);
     const defaultArrowPosition = arrowPosition > chartWidth ? chartWidth  : arrowPosition * 2;
-    let arrowPositionForTail = defaultArrowPosition / 2;
-    if (this.point.shapeArgs && chart) {
-        arrowPositionForTail = getShapeVisiblePart(this.point.shapeArgs, chart, defaultArrowPosition) / 2;
-    }
+    const arrowPositionForTail = getArrowPositionForTail(defaultArrowPosition, this.point, chartType, chart);
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : '';
     const tailStyle = showFullscreenTooltip() ?
@@ -314,6 +311,19 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
             <div class="${getTailClasses('tail2')}" ${tailStyle}></div>
         </div>`
     ) : null;
+}
+
+function getArrowPositionForTail(defaultArrowPosition: number, point: any, chartType: any, chart: any) {
+    let arrowPositionForTail = defaultArrowPosition / 2;
+    if (isBarChart(chartType) && point.shapeArgs && chart) {
+        const visiblePart = getShapeVisiblePart(point.shapeArgs, chart, defaultArrowPosition);
+        arrowPositionForTail = visiblePart / 2;
+        // truncated shapes are moved to negative coordinates and tooltip needs compensation
+        if (point.shapeArgs.y < 0) {
+            arrowPositionForTail = chart.plotWidth - arrowPositionForTail;
+        }
+    }
+    return arrowPositionForTail;
 }
 
 function formatLabel(value: any, format: any, config: IChartConfig = {}) {
