@@ -23,8 +23,9 @@ import { AttributeElements } from './components/filters/AttributeFilter/Attribut
 import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
-import * as OverTimeComparisonHelper from './helpers/overTimeComparisonHelper';
+import * as MeasureTitleHelper from './helpers/measureTitleHelper';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
+import ArithmeticMeasureTitleFactory from './factory/ArithmeticMeasureTitleFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
 
 import { BarChart } from './components/BarChart';
@@ -46,6 +47,7 @@ import Chart,
     { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
+import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
 
 /**
  * CoreComponents
@@ -98,8 +100,11 @@ export {
     BubbleChart,
     DonutChart,
     Heatmap,
-    OverTimeComparisonHelper,
+    IMeasureTitleProps,
+    IArithmeticMeasureTitleProps,
+    MeasureTitleHelper,
     DerivedMeasureTitleSuffixFactory,
+    ArithmeticMeasureTitleFactory,
     PropTypes,
     RuntimeError,
     PivotTable,

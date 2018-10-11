@@ -8,7 +8,7 @@ import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
 
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
-import { IChartConfig } from '../visualizations/chart/Chart';
+import { IChartConfig } from '../..';
 import { SortableTable } from '../core/SortableTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';
@@ -17,18 +17,13 @@ import { VisualizationTypes, VisType } from '../../constants/visualizationTypes'
 import { IDataSource } from '../../interfaces/DataSource';
 import { ISubject } from '../../helpers/async';
 import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
-import * as MdObjectHelper from '../../helpers/MdObjectHelper';
-import { fillDerivedMeasuresTitlesAndAliases } from '../../helpers/overTimeComparisonHelper';
+import MdObjectHelper from '../../helpers/MdObjectHelper';
+import { fillMissingTitles } from '../../helpers/measureTitleHelper';
 import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
-import {
-    IDrillableItem,
-    generateDimensions,
-    RuntimeError
-} from '../../';
+import { IDrillableItem, generateDimensions, RuntimeError } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
-import DerivedMeasureTitleSuffixFactory from '../../factory/DerivedMeasureTitleSuffixFactory';
 
 export { Requireable };
 
@@ -263,7 +258,7 @@ export class VisualizationWrapped
             ErrorComponent
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
-        const mdObjectContent =  mdObject && mdObject.content;
+        const mdObjectContent = mdObject && mdObject.content;
         const properties = mdObjectContent
             && mdObjectContent.properties
             && JSON.parse(mdObjectContent.properties).controls;
@@ -289,7 +284,7 @@ export class VisualizationWrapped
         }
         if (isLoading || !dataSource) {
             return LoadingComponent
-                ? <LoadingComponent/>
+                ? <LoadingComponent />
                 : null;
         }
 
@@ -363,10 +358,7 @@ export class VisualizationWrapped
                 return this.props.fetchVisualizationClass(
                     this.sdk, visualizationClassUri
                 ).then((visualizationClass) => {
-
-                    const suffixFactory = new DerivedMeasureTitleSuffixFactory(this.props.locale);
-                    const processedVisualizationObject
-                        = fillDerivedMeasuresTitlesAndAliases(mdObject.content, suffixFactory);
+                    const processedVisualizationObject = fillMissingTitles(mdObject.content, this.props.locale);
                     const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
                     const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
@@ -407,7 +399,7 @@ export class Visualization extends React.PureComponent<IVisualizationProps> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
-                <IntlVisualization {...this.props}/>
+                <IntlVisualization {...this.props} />
             </IntlWrapper>
         );
     }

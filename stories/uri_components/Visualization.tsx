@@ -184,7 +184,7 @@ storiesOf('URI components', module)
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
                     projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1005'}
+                    uri={'/gdc/md/myproject/obj/1008'}
                     onError={onErrorHandler}
                     locale="en-US"
                     LoadingComponent={null}

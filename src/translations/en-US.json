@@ -49,5 +49,10 @@
     "gs.list.noItemsFound": "No items found.",
     "gs.list.error": "Error loading list items",
     "measure.title.suffix.same_period_year_ago": "SP year ago",
-    "measure.title.suffix.previous_period": "period ago"
+    "measure.title.suffix.previous_period": "period ago",
+    "visualizations.measure.arithmetic.sum.title": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
+    "visualizations.measure.arithmetic.difference.title": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
+    "visualizations.measure.arithmetic.multiplication.title": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
+    "visualizations.measure.arithmetic.ratio.title": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
+    "visualizations.measure.arithmetic.change.title": "Change from {secondMeasureTitle} to {firstMeasureTitle}"
 }
