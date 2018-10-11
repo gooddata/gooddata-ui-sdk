@@ -175,7 +175,7 @@ export namespace VisualizationObject {
 
     export function isArithmeticMeasureDefinition(
         definition: IMeasureDefinitionType
-    ): definition is IMeasureDefinition {
+    ): definition is IArithmeticMeasureDefinition {
         return !isEmpty(definition) && (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
     }
 
