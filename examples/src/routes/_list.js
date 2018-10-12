@@ -23,6 +23,7 @@ import PivotTableDemo from './PivotTableDemo';
 import PivotTableDynamic from './PivotTableDynamic';
 import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
+import BarChartDynamic from './BarChartDynamic';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -32,7 +33,8 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
     { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
     { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError },
-    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData }
+    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
+    { path: '/advanced/bar-chart-dynamic', title: 'Chart Configuration', Component: BarChartDynamic }
 ];
 
 export const nextRoutes = [

@@ -1,5 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { getLighterColor, normalizeColorToRGB, getColorPaletteFromColors, DEFAULT_COLOR_PALETTE, getValidColorPalette } from '../color';
+import {
+    getLighterColor,
+    normalizeColorToRGB,
+    getColorPaletteFromColors,
+    DEFAULT_COLOR_PALETTE,
+    getValidColorPalette
+} from '../color';
 
 describe('Transformation', () => {
     describe('Lighten color', () => {
