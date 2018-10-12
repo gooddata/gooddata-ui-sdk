@@ -55,7 +55,7 @@ export class ExampleWithSource extends React.Component {
                 `}</style>
                 <div className="example"><Component /></div>
                 <div className="source">
-                    <button className={`button button-secondary button-dropdown icon-right ${iconClassName}`} onClick={this.toggle}>source</button>
+                    <button className={`button button-secondary button-dropdown icon-right ${iconClassName}`} onClick={this.toggle}>source code</button>
                     {hidden ? '' : (
                         <SyntaxHighlighter language="jsx" style={okaidia}>{this.props.source}</SyntaxHighlighter>
                     )}
