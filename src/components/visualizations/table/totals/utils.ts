@@ -146,10 +146,16 @@ export function updateTotalsRemovePosition(
     removeWrapper.style.top = `${translateY}px`;
 }
 
-export function getAddTotalDropdownAlignPoints(isLastColumn: boolean = false): IAlignPoint {
+export function getAddTotalDropdownAlignPoints(isLastColumn: boolean = false): IAlignPoint[] {
     return isLastColumn ?
-        ({ align: 'tc br', offset: { x: 30, y: -3 } }) :
-        ({ align: 'tc bc', offset: { x: 0, y: -3 } });
+        [
+            { align: 'tc br', offset: { x: 30, y: -3 } }, // top right
+            { align: 'bc tr', offset: { x: 30, y: 50 } } // bottom right
+        ] :
+        [
+            { align: 'tc bc', offset: { x: 0, y: -3 } }, // top center
+            { align: 'bc tc', offset: { x: 0, y: 50 } } // bottom center
+        ];
 }
 
 export function shouldShowAddTotalButton(
