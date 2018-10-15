@@ -3,12 +3,12 @@ import * as React from 'react';
 import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
+import get = require('lodash/get');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
-
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
-import { IChartConfig } from '../..';
+import { IChartConfig, IColorPaletteItem } from '../visualizations/chart/Chart';
 import { SortableTable } from '../core/SortableTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';
@@ -24,7 +24,6 @@ import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import { IDrillableItem, generateDimensions, RuntimeError } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
-
 export { Requireable };
 
 const {
@@ -87,6 +86,8 @@ export interface IVisualizationState {
     totals: VisualizationObject.IVisualizationTotal[];
     error?: RuntimeError;
     mdObject?: VisualizationObject.IVisualizationObject;
+    colorPalette: IColorPaletteItem[];
+    colorPaletteEnabled: boolean;
 }
 
 export interface IVisualizationExecInfo {
@@ -153,6 +154,8 @@ export class VisualizationWrapped
 
     private sdk: SDK;
 
+    private isUnmounted: boolean;
+
     constructor(props: IVisualizationProps & InjectedIntlProps) {
         super(props);
 
@@ -162,11 +165,14 @@ export class VisualizationWrapped
             resultSpec: null,
             totals: [],
             error: null,
-            mdObject: null
+            mdObject: null,
+            colorPalette: null,
+            colorPaletteEnabled: false
         };
 
         const sdk = props.sdk || createSdk();
         this.sdk = sdk.clone();
+        this.isUnmounted = false;
         setTelemetryHeaders(this.sdk, 'Visualization', props);
 
         this.visualizationUri = props.uri;
@@ -176,7 +182,7 @@ export class VisualizationWrapped
         this.subject = createSubject<IVisualizationExecInfo>(
             ({ type, resultSpec, dataSource, totals, mdObject }) => {
                 this.dataSource = dataSource;
-                this.setState({
+                this.setStateWithCheck({
                     type,
                     resultSpec,
                     isLoading: false,
@@ -185,7 +191,7 @@ export class VisualizationWrapped
                 });
             }, (error) => {
                 const runtimeError = convertErrors(error);
-                this.setState({
+                this.setStateWithCheck({
                     isLoading: false,
                     error: runtimeError
                 });
@@ -193,7 +199,7 @@ export class VisualizationWrapped
             });
     }
 
-    public componentDidMount() {
+    public async componentDidMount() {
         const { projectId, uri, identifier, filters } = this.props;
 
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
@@ -204,29 +210,35 @@ export class VisualizationWrapped
             identifier,
             filters
         );
+
+        await this.getIsColorPaletteEnabled();
     }
 
     public componentWillUnmount() {
         this.subject.unsubscribe();
+        this.isUnmounted = true;
     }
 
     public shouldComponentUpdate(nextProps: IVisualizationProps, nextState: IVisualizationState) {
-        return this.hasChangedProps(nextProps) || (this.state.isLoading !== nextState.isLoading);
+        return this.hasChangedProps(nextProps)
+            || (this.state.isLoading !== nextState.isLoading)
+            || (!this.state.colorPalette && nextState.colorPalette !== null);
     }
 
     public hasChangedProps(nextProps: IVisualizationProps, propKeys = Object.keys(VisualizationPropType)): boolean {
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
-    public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
+    public async componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
+            await this.getIsColorPaletteEnabled();
         }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
         if (hasInvalidDatasource) {
-            this.setState({
+            this.setStateWithCheck({
                 isLoading: true
             });
             if (hasInvalidResolvedUri) {
@@ -262,9 +274,15 @@ export class VisualizationWrapped
         const properties = mdObjectContent
             && mdObjectContent.properties
             && JSON.parse(mdObjectContent.properties).controls;
+
+        const colorPalette = this.props.config && this.props.config.colorPalette
+            ? this.props.config.colorPalette
+            : this.state.colorPalette;
+
         const finalConfig = {
             ...properties,
             ...config,
+            colorPalette,
             mdObject: mdObjectContent
         };
 
@@ -386,6 +404,36 @@ export class VisualizationWrapped
                 });
             });
         this.subject.next(promise);
+    }
+
+    private async getColorPalette() {
+        if (!this.isUnmounted
+            && this.state.colorPaletteEnabled
+            && !(this.props.config && this.props.config.colorPalette)) {
+            const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+
+            if (colorPalette) {
+                this.setStateWithCheck({ colorPalette });
+            }
+        }
+    }
+
+    private async getIsColorPaletteEnabled() {
+        if (this.isUnmounted) {
+            return;
+        }
+
+        const featureFlags = await this.sdk.project.getFeatureFlags(this.props.projectId);
+
+        this.setStateWithCheck({
+            colorPaletteEnabled: Boolean(get(featureFlags, 'enableColorPalette'))
+        }, this.getColorPalette);
+    }
+
+    private setStateWithCheck(newState: any, callBack?: () => void) {
+        if (!this.isUnmounted) {
+            this.setState(newState, callBack);
+        }
     }
 }
 
