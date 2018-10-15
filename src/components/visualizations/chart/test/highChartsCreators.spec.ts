@@ -102,7 +102,6 @@ describe('highChartCreators', () => {
             expect(config).not.toHaveProperty('series.1.states.hover.halo.size');
 
             expect(config).toHaveProperty('series.1.marker.states.hover.fillColor', 'rgb(26,199,152)');
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 
@@ -120,7 +119,6 @@ describe('highChartCreators', () => {
             expect(config).not.toHaveProperty('series.1.states.hover.halo.size');
 
             expect(config).toHaveProperty('series.1.marker.states.hover.fillColor', 'rgb(26,199,152)');
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 
@@ -178,7 +176,6 @@ describe('highChartCreators', () => {
         it('contains different hover styles for column and line series', () => {
             expect(config).toHaveProperty('series.0.states.hover.brightness');
             expect(config).toHaveProperty('series.0.states.hover.enabled', false);
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 
