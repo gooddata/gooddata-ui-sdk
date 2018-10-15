@@ -11,13 +11,6 @@ import {
     locationResortIdentifier
 } from '../utils/fixtures';
 
-export const CUSTOM_COLORS = [
-    'rgba(195, 49, 73, 1)',
-    'rgba(168, 194, 86, 1)',
-    'rgba(243, 217, 177, 1)',
-    'rgba(194, 153, 121, 1)'
-];
-
 export class ScatterPlotExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
@@ -76,7 +69,6 @@ export class ScatterPlotExample extends Component {
                     attribute={locationResort}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    config={{ colors: CUSTOM_COLORS }}
                 />
             </div>
         );

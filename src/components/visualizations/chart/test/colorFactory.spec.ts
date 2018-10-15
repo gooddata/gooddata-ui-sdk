@@ -10,9 +10,14 @@ import {
 
 import { getMVS } from './helper';
 
-import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE } from '../../utils/color';
+import {
+    DEFAULT_COLOR_PALETTE,
+    HEATMAP_BLUE_COLOR_PALETTE,
+    getRgbString
+} from '../../utils/color';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
+import { IColorPalette, IColorPaletteItem } from '../Chart';
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -32,12 +37,47 @@ function getColorsFromStrategy(strategy: IColorStrategy): string[] {
 }
 
 describe('ColorFactory', () => {
+    const customPalette = [
+        {
+            guid: '01',
+            fill: {
+                r: 50,
+                g: 50,
+                b: 50
+            }
+        },
+        {
+            guid: '02',
+            fill: {
+                r: 100,
+                g: 100,
+                b: 100
+            }
+        },
+        {
+            guid: '03',
+            fill: {
+                r: 150,
+                g: 150,
+                b: 150
+            }
+        },
+        {
+            guid: '04',
+            fill: {
+                r: 200,
+                g: 200,
+                b: 200
+            }
+        }
+    ];
+
     it('should return AttributeColorStrategy with two colors from default color palette', () => {
         const [measureGroup, viewByAttribute, stackByAttribute] =
             getMVS(fixtures.barChartWithStackByAndViewByAttributes);
         const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
         const type = 'bar';
-        const colorPalette: string[] = undefined;
+        const colorPalette: IColorPalette = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,
@@ -51,7 +91,11 @@ describe('ColorFactory', () => {
         const updatedPalette = getColorsFromStrategy(colorStrategy);
 
         expect(colorStrategy).toBeInstanceOf(AttributeColorStrategy);
-        expect(updatedPalette).toEqual(DEFAULT_COLOR_PALETTE.slice(0, 2));
+        expect(updatedPalette).toEqual(
+            DEFAULT_COLOR_PALETTE
+                .slice(0, 2)
+                .map((defaultColorPaletteItem: IColorPaletteItem) => getRgbString(defaultColorPaletteItem))
+            );
     });
 
     it('should return AttributeColorStrategy with two colors from custom color palette', () => {
@@ -59,7 +103,28 @@ describe('ColorFactory', () => {
             getMVS(fixtures.barChartWithStackByAndViewByAttributes);
         const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
         const type = 'bar';
-        const colorPalette = ['a', 'b', 'c'];
+        const colorPalette = [{
+            guid: 'red',
+            fill: {
+                r: 255,
+                g: 0,
+                b: 0
+            }
+        }, {
+            guid: 'green',
+            fill: {
+                r: 0,
+                g: 255,
+                b: 0
+            }
+        }, {
+            guid: 'blue',
+            fill: {
+                r: 0,
+                g: 0,
+                b: 255
+            }
+        }];
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,
@@ -73,7 +138,11 @@ describe('ColorFactory', () => {
         const updatedPalette = getColorsFromStrategy(colorStrategy);
 
         expect(colorStrategy).toBeInstanceOf(AttributeColorStrategy);
-        expect(updatedPalette).toEqual(colorPalette.slice(0, 2));
+        expect(updatedPalette).toEqual(
+            colorPalette
+                .slice(0, 2)
+                .map((defaultColorPaletteItem: IColorPaletteItem) => getRgbString(defaultColorPaletteItem))
+        );
     });
 
     it('should return TreeMapColorStrategy strategy with two colors from default color palette', () => {
@@ -81,7 +150,7 @@ describe('ColorFactory', () => {
             getMVS(fixtures.treemapWithMetricViewByAndStackByAttribute);
         const { afm } = fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest;
         const type = 'treemap';
-        const colorPalette: string[] = undefined;
+        const colorPalette: IColorPalette = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,
@@ -95,7 +164,11 @@ describe('ColorFactory', () => {
         const updatedPalette = getColorsFromStrategy(colorStrategy);
 
         expect(colorStrategy).toBeInstanceOf(TreeMapColorStrategy);
-        expect(updatedPalette).toEqual(DEFAULT_COLOR_PALETTE.slice(0, 1));
+        expect(updatedPalette).toEqual(
+            DEFAULT_COLOR_PALETTE
+                .slice(0, 1)
+                .map((defaultColorPaletteItem: IColorPaletteItem) => getRgbString(defaultColorPaletteItem))
+        );
     });
 
     it('should return HeatMapColorStrategy strategy with two colors from default color palette', () => {
@@ -103,7 +176,7 @@ describe('ColorFactory', () => {
             getMVS(fixtures.heatmapMetricRowColumn);
         const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
         const type = 'heatmap';
-        const colorPalette: string[] = undefined;
+        const colorPalette: IColorPalette = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
             colorPalette,
@@ -115,13 +188,9 @@ describe('ColorFactory', () => {
         );
 
         expect(colorStrategy).toBeInstanceOf(HeatMapColorStrategy);
-        expect(colorStrategy.getColorByIndex(0)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[0]);
-        expect(colorStrategy.getColorByIndex(1)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[1]);
-        expect(colorStrategy.getColorByIndex(2)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[2]);
-        expect(colorStrategy.getColorByIndex(3)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[3]);
-        expect(colorStrategy.getColorByIndex(4)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[4]);
-        expect(colorStrategy.getColorByIndex(5)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[5]);
-        expect(colorStrategy.getColorByIndex(6)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[6]);
+        [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
+            expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[colorIndex])
+        );
     });
 
     it('should just return the original palette if there are no pop measures shorten to cover all legend items',
@@ -129,7 +198,7 @@ describe('ColorFactory', () => {
             const [measureGroup, viewByAttribute, stackByAttribute] = getMVS(fixtures.barChartWithoutAttributes);
             const { afm } = fixtures.barChartWithoutAttributes.executionRequest;
             const type = 'column';
-            const colorPalette: string[] = undefined;
+            const colorPalette: IColorPalette = undefined;
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 colorPalette,
@@ -151,7 +220,6 @@ describe('ColorFactory', () => {
             getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
         const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
         const type = 'column';
-        const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
 
         const colorStrategy = ColorFactory.getColorStrategy(
             customPalette,
@@ -173,8 +241,6 @@ describe('ColorFactory', () => {
         const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
         const type = 'column';
 
-        const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
-
         const colorStrategy = ColorFactory.getColorStrategy(
             customPalette,
             measureGroup,
@@ -194,8 +260,6 @@ describe('ColorFactory', () => {
             getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
         const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
         const type = 'column';
-
-        const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
 
         const colorStrategy = ColorFactory.getColorStrategy(
             customPalette,
@@ -219,8 +283,6 @@ describe('ColorFactory', () => {
             getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
         const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
         const type = 'column';
-
-        const customPalette = ['rgb(50,50,50)', 'rgb(100,100,100)', 'rgb(150,150,150)', 'rgb(200,200,200)'];
 
         const colorStrategy = ColorFactory.getColorStrategy(
             customPalette,

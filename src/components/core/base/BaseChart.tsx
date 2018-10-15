@@ -22,6 +22,7 @@ import {
 import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
 import { BaseVisualization } from './BaseVisualization';
 import { OnLegendReady } from '../../../interfaces/Events';
+import { getValidColorPalette } from '../../visualizations/utils/color';
 export { Requireable };
 
 export interface ICommonChartProps extends ICommonVisualizationProps {
@@ -61,7 +62,9 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
             pushData
         } = this.props;
 
-        const fullConfig = { ...config, type };
+        const colorPalette = getValidColorPalette(config);
+
+        const fullConfig = { ...config, type, colorPalette };
 
         return (
             <IntlWrapper locale={locale}>

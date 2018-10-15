@@ -33,7 +33,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         grid: {
                             enabled: false
                         }
@@ -63,7 +63,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         xaxis: {
                             rotation: '60'
                         }
@@ -93,7 +93,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         yaxis: {
                             min: '500000',
                             max: '1000000'
@@ -124,7 +124,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         xaxis: {
                             visible: false
                         },
@@ -157,7 +157,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette,
+                        colorPalette: fixtures.customPalette,
                         xaxis: {
                             labelsEnabled: false
                         },

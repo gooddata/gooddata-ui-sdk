@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow, mount } from 'enzyme';
+import noop = require('lodash/noop');
+
 import ChartTransformation from '../ChartTransformation';
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 import { TOP } from '../legend/PositionTypes';
 import HighChartsRenderer from '../HighChartsRenderer';
-import noop = require('lodash/noop');
-import { IChartConfig } from '../Chart';
+import { IChartConfig, IColorPaletteItem } from '../Chart';
+import { getRgbString } from '../../utils/color';
 
 describe('ChartTransformation', () => {
     const defaultProps = {
@@ -35,10 +37,24 @@ describe('ChartTransformation', () => {
     });
 
     it('should use custom color palette', () => {
-        let colorPalette;
-        const customColors = ['#000000', '#ff0000'];
+        let colors: string[] = [];
+        const customColorPalette = [{
+            guid: 'black',
+            fill: {
+                r: 0,
+                g: 0,
+                b: 0
+            }
+        }, {
+            guid: 'red',
+            fill: {
+                r: 255,
+                g: 0,
+                b: 0
+            }
+        }];
         const renderer = (params: any) => {
-            colorPalette = params.chartOptions.data.series.map((serie: any) => serie.color);
+            colors = params.chartOptions.data.series.map((serie: any) => serie.color);
             return <div />;
         };
         const componentProps = {
@@ -46,11 +62,14 @@ describe('ChartTransformation', () => {
             ...fixtures.barChartWithStackByAndViewByAttributes,
             config: {
                 ...defaultProps.config,
-                colors: customColors
+                colorPalette: customColorPalette
             }
         };
         mount(createComponent(componentProps));
-        expect(colorPalette).toEqual(customColors);
+        expect(colors).toEqual(
+            customColorPalette
+                .map((colorPaletteItem: IColorPaletteItem) => getRgbString(colorPaletteItem))
+        );
     });
 
     describe('Stacking config', () => {

@@ -1383,7 +1383,7 @@ export function getChartOptions(
     invariant(measureGroup, 'missing measureGroup');
 
     const colorStrategy = ColorFactory.getColorStrategy(
-        config.colors,
+        config.colorPalette,
         measureGroup,
         viewByAttribute,
         stackByAttribute,

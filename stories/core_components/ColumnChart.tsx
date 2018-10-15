@@ -5,7 +5,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { ColumnChart } from '../../src';
 import { onErrorHandler } from '../mocks';
-import { CUSTOM_COLORS } from '../data/colors';
+import { CUSTOM_COLOR_PALETTE } from '../data/colors';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
@@ -56,7 +56,7 @@ storiesOf('Core components/ColumnChart', module)
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
-                    config={{ colors: CUSTOM_COLORS }}
+                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

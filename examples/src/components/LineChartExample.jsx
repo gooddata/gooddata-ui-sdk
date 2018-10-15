@@ -13,12 +13,7 @@ import {
     franchiseFeesIdentifierOngoingRoyalty
 } from '../utils/fixtures';
 
-export const CUSTOM_COLORS = [
-    'rgba(195, 49, 73, 1)',
-    'rgba(168, 194, 86, 1)',
-    'rgba(243, 217, 177, 1)',
-    'rgba(194, 153, 121, 1)'
-];
+import { CUSTOM_COLOR_PALETTE } from '../utils/colors';
 
 export class LineChartExample extends Component {
     onLoadingChanged(...params) {
@@ -104,7 +99,7 @@ export class LineChartExample extends Component {
                     trendBy={attribute}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                    config={{ colors: CUSTOM_COLORS }}
+                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
                 />
             </div>
         );

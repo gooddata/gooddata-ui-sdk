@@ -60,7 +60,7 @@ storiesOf('Internal/Drilldown', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={noop}
@@ -83,7 +83,7 @@ storiesOf('Internal/Drilldown', module)
                             position: 'top'
                         },
                         legendLayout: 'vertical',
-                        colors: fixtures.customPalette
+                        colorPalette: fixtures.customPalette
                     }}
                     {...dataSet}
                     onDataTooLarge={noop}

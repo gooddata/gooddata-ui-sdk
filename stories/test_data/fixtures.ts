@@ -387,12 +387,42 @@ export const barChartWith6PreviousPeriodMeasures = (() => {
 })();
 
 export const customPalette = [
-    '#FF69B4',
-    '#d40606',
-    '#ee9c00',
-    '#e3ff00',
-    '#06bf00',
-    '#001a98'
+    {
+        guid: '01',
+        fill: {
+            r: 255, g: 105, b: 180
+        }
+    },
+    {
+        guid: '02',
+        fill: {
+            r: 212, g: 6, b: 6
+        }
+    },
+    {
+        guid: '03',
+        fill: {
+            r: 238, g: 156, b: 0
+        }
+    },
+    {
+        guid: '04',
+        fill: {
+            r: 227, g: 255, b: 0
+        }
+    },
+    {
+        guid: '05',
+        fill: {
+            r: 6, g: 191, b: 0
+        }
+    },
+    {
+        guid: '06',
+        fill: {
+            r: 0, g: 26, b: 152
+        }
+    }
 ];
 
 export const heatmapMetricRowColumn: any = {
