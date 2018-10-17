@@ -730,7 +730,6 @@ function lineSeriesMapFn(seriesOrig: any) {
 
     if (series.isDrillable) {
         set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
-        set(series, 'cursor', 'pointer');
     } else {
         set(series, 'states.hover.halo.size', 0);
     }
@@ -805,9 +804,31 @@ function getHoverStyles({ type }: any, config: any) {
             };
             break;
     }
-
     return {
-        series: config.series.map(seriesMapFn)
+        series: config.series.map(seriesMapFn),
+        plotOptions: {
+            ...[
+                VisualizationTypes.LINE,
+                VisualizationTypes.AREA,
+                VisualizationTypes.SCATTER,
+                VisualizationTypes.BUBBLE
+            ].reduce((conf, key) => ({
+                ...conf,
+                [key]: {
+                    point: {
+                        events: {
+                            // Workaround
+                            // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
+                            mouseOver() {
+                                if (this.drilldown) {
+                                    this.graphic.element.style.cursor = 'pointer';
+                                }
+                            }
+                        }
+                    }
+                }
+            }), {})
+        }
     };
 }
 
