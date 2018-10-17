@@ -5,7 +5,6 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { LineChart } from '../../src';
 import { onErrorHandler } from '../mocks';
-import { CUSTOM_COLOR_PALETTE } from '../data/colors';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
@@ -22,7 +21,8 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
+    DATA_LABELS_AUTO_CONFIG,
+    CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
 
 const wrapperStyle = { width: 800, height: 400 };
@@ -77,7 +77,7 @@ storiesOf('Core components/LineChart', module)
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     trendBy={ATTRIBUTE_1}
-                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
+                    config={CUSTOM_COLOR_PALETTE_CONFIG}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
