@@ -105,4 +105,13 @@ describe('convertMeasure', () => {
             ...afm.arithmeticMeasure
         });
     });
+
+    it('should convert arithmetic without modification to the original object', () => {
+        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+            ...afm.arithmeticMeasure
+        });
+        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+            ...afm.arithmeticMeasure
+        });
+    });
 });
