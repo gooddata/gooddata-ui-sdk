@@ -156,7 +156,7 @@ function convertArithmeticMeasureDefinition(definition: IArithmeticMeasureDefini
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {
-            measureIdentifiers: arithmeticMeasure.measureIdentifiers.splice(0),
+            measureIdentifiers: arithmeticMeasure.measureIdentifiers.slice(),
             operator: arithmeticMeasure.operator
         }
     };
