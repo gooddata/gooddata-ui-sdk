@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import isEmpty = require('lodash/isEmpty');
+import isEqual = require('lodash/isEqual');
 import { IColorPalette, IColorPaletteItem, IChartConfig } from '../chart/Chart';
 
 export const WHITE = 'rgb(255, 255, 255)';
@@ -195,4 +196,8 @@ export function getValidColorPalette(config: IChartConfig) {
     return isEmpty(config.colorPalette) ?
             (isEmpty(config.colors) ? DEFAULT_COLOR_PALETTE : getColorPaletteFromColors(config.colors))
             : config.colorPalette;
+}
+
+export function isCustomPalette(palette: IColorPalette) {
+    return !isEqual(palette, DEFAULT_COLOR_PALETTE);
 }

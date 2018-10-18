@@ -15,6 +15,7 @@ import {
     HEATMAP_BLUE_COLOR_PALETTE,
     getRgbString
 } from '../../utils/color';
+import { CUSTOM_COLOR_PALETTE } from '../../../../../stories/data/colors';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 import { IColorPalette, IColorPaletteItem } from '../Chart';
@@ -171,15 +172,14 @@ describe('ColorFactory', () => {
         );
     });
 
-    it('should return HeatMapColorStrategy strategy with two colors from default color palette', () => {
+    it('should return HeatMapColorStrategy strategy with 7 colors from default heatmap color palette', () => {
         const [measureGroup, viewByAttribute, stackByAttribute] =
             getMVS(fixtures.heatmapMetricRowColumn);
         const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
         const type = 'heatmap';
-        const colorPalette: IColorPalette = undefined;
 
         const colorStrategy = ColorFactory.getColorStrategy(
-            colorPalette,
+            undefined,
             measureGroup,
             viewByAttribute,
             stackByAttribute,
@@ -190,6 +190,37 @@ describe('ColorFactory', () => {
         expect(colorStrategy).toBeInstanceOf(HeatMapColorStrategy);
         [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
             expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[colorIndex])
+        );
+    });
+
+    it('should return HeatMapColorStrategy strategy with 7 colors based on the first color from custom palette', () => {
+        const [measureGroup, viewByAttribute, stackByAttribute] =
+            getMVS(fixtures.heatmapMetricRowColumn);
+        const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+        const type = 'heatmap';
+
+        const expectedColors = [
+            'rgb(255,255,255)',
+            'rgb(245,220,224)',
+            'rgb(235,186,194)',
+            'rgb(225,152,164)',
+            'rgb(215,117,133)',
+            'rgb(205,83,103)',
+            'rgb(195,49,73)'
+        ];
+
+        const colorStrategy = ColorFactory.getColorStrategy(
+            CUSTOM_COLOR_PALETTE,
+            measureGroup,
+            viewByAttribute,
+            stackByAttribute,
+            afm,
+            type
+        );
+
+        expect(colorStrategy).toBeInstanceOf(HeatMapColorStrategy);
+        [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
+            expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(expectedColors[colorIndex])
         );
     });
 

@@ -19,7 +19,8 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
+    DATA_LABELS_AUTO_CONFIG,
+    CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
 
 const wrapperStyle = { width: 800, height: 400 };
@@ -314,6 +315,21 @@ storiesOf('Core components/Heatmap', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    )).add('custom colors', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_1}
+                    segmentBy={ATTRIBUTE_1}
+                    trendBy={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={CUSTOM_COLOR_PALETTE_CONFIG}
+                />
             </div>
         )
     ));

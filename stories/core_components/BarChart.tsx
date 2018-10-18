@@ -5,7 +5,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { BarChart } from '../../src';
 import { onErrorHandler } from '../mocks';
-import { CUSTOM_COLOR_PALETTE, CUSTOM_COLORS } from '../data/colors';
+import { CUSTOM_COLORS } from '../data/colors';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_2,
@@ -18,6 +18,7 @@ import {
     ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
+import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -72,7 +73,7 @@ storiesOf('Core components/BarChart', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_2}
                     stackBy={ATTRIBUTE_1}
-                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
+                    config={CUSTOM_COLOR_PALETTE_CONFIG}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -105,8 +106,8 @@ storiesOf('Core components/BarChart', module)
                     viewBy={ATTRIBUTE_2}
                     stackBy={ATTRIBUTE_1}
                     config={{
-                        colors: ['rgb(255, 0, 0)', 'rgb(0, 255, 0)'],
-                        colorPalette: CUSTOM_COLOR_PALETTE
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colors: ['rgb(255, 0, 0)', 'rgb(0, 255, 0)']
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}

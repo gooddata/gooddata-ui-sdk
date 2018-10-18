@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { Treemap } from '../../src';
-import { CUSTOM_COLOR_PALETTE } from '../data/colors';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -22,7 +21,8 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
+    DATA_LABELS_AUTO_CONFIG,
+    CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
 
 const wrapperStyle = { width: 600, height: 300 };
@@ -107,7 +107,7 @@ storiesOf('Core components/Treemap', module)
                     projectId="storybook"
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
-                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
+                    config={CUSTOM_COLOR_PALETTE_CONFIG}
                     onError={onErrorHandler}
                 />
             </div>

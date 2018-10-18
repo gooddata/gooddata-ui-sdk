@@ -7,7 +7,8 @@ import {
     HEATMAP_BLUE_COLOR_PALETTE,
     getLighterColor,
     normalizeColorToRGB,
-    getRgbString
+    getRgbString,
+    isCustomPalette
 } from '../utils/color';
 
 import {
@@ -22,7 +23,7 @@ import {
     isDerivedMeasure,
     findParentMeasureIndex
 } from './chartOptionsBuilder';
-import { IColorPalette } from './Chart';
+import { IColorPalette, IColorPaletteItem } from './Chart';
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;
@@ -120,13 +121,40 @@ export class HeatMapColorStrategy extends ColorStrategy {
     }
 
     protected createPalette(
-        _colorPalette: IColorPalette,
+        colorPalette: IColorPalette,
         _measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
         _afm: AFM.IAfm
     ): HighChartColorPalette {
+        if (colorPalette && isCustomPalette(colorPalette) && colorPalette[0]) {
+            return this.getCustomHeatmapColorPalette(colorPalette[0]);
+        }
         return HEATMAP_BLUE_COLOR_PALETTE;
+    }
+
+    private getCustomHeatmapColorPalette(baseColor: IColorPaletteItem): HighChartColorPalette {
+        const { r, g, b } = baseColor.fill;
+        const colorItemsCount = 6;
+        const channels = [r, g, b];
+        const steps = channels.map(channel => (255 - channel) / colorItemsCount);
+        const generatedColors = this.getCalculatedColors(colorItemsCount, channels, steps);
+        return [
+            'rgb(255,255,255)',
+            ...generatedColors.reverse(),
+            getRgbString(baseColor)
+        ];
+    }
+    private getCalculatedColors(count: number, channels: number[], steps: number[]): HighChartColorPalette {
+        return range(1, count)
+            .map((index: number) =>
+                `rgb(${this.getCalculatedChannel(channels[0], index, steps[0])},` +
+                    `${this.getCalculatedChannel(channels[1], index, steps[1])},` +
+                    `${this.getCalculatedChannel(channels[2], index, steps[2])})`);
+    }
+
+    private getCalculatedChannel(channel: number, index: number, step: number): number {
+        return Math.trunc(channel + index * step);
     }
 }
 

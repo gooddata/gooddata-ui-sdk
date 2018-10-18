@@ -5,7 +5,6 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { ComboChart } from '../../src';
 import { onErrorHandler } from '../mocks';
-import { CUSTOM_COLOR_PALETTE } from '../data/colors';
 import {
     ATTRIBUTE_1,
     MEASURE_1,
@@ -16,6 +15,7 @@ import {
     ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
+import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -46,7 +46,7 @@ storiesOf('Core components/ComboChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    config={{ colorPalette: CUSTOM_COLOR_PALETTE }}
+                    config={CUSTOM_COLOR_PALETTE_CONFIG}
                 />
             </div>
         )
