@@ -46,6 +46,16 @@ describe('IntlStore', () => {
                     expect(result).toBeTruthy();
                 });
             });
+
+            it('should return message in en-US with replaced placeholders for values', () => {
+                localizations.forEach((locale) => {
+                    const result = IntlStore.getTranslation('gs.list.limitExceeded', locale, {
+                        limit: 42
+                    });
+                    expect(result).toBeTruthy();
+                    expect(result.includes('{')).toEqual(false);
+                });
+            });
         });
 
         it('should return default message in production environment when translationId was not found', () => {

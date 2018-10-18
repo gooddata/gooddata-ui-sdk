@@ -1855,7 +1855,7 @@ module.exports = {
         },
         {
             title: 'Chart with arithmetic measures',
-            identifier: '1005',
+            identifier: '1008',
             type: 'local:bar',
             filters: [],
             buckets: [{
@@ -1867,12 +1867,12 @@ module.exports = {
                     isArithmetic: true,
                     measureIdentifiers: ['m3', 'm2'],
                     operator: 'sum',
-                    alias: 'Arithmetic using arithmetic'
+                    title: 'Arithmetic using arithmetic'
                 }, {
                     localIdentifier: 'm1',
                     filters: [],
                     identifier: '1',
-                    alias: 'Amount'
+                    title: 'Amount'
                 },{
                     localIdentifier: 'm3',
                     filters: [],
@@ -1880,19 +1880,19 @@ module.exports = {
                     isArithmetic: true,
                     measureIdentifiers: ['m1', 'm2'],
                     operator: 'sum',
-                    alias: 'Arithmetic using simple'
+                    title: 'Arithmetic using simple'
                 }, {
                     localIdentifier: 'm2',
                     filters: [],
                     identifier: '2',
-                    alias: 'Value'
+                    title: 'Value'
                 }]
             }, {
                 localIdentifier: 'view',
                 items: [{
                     localIdentifier: 'a1',
                     displayForm: 'attr.closed.year.df',
-                    alias: 'Date'
+                    title: 'Date'
                 }]
             }]
         },

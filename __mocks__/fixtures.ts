@@ -68,7 +68,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                         }
                     }
                 ],
-                properties:  JSON.stringify({
+                properties: JSON.stringify({
                     controls: {
                         grid: {
                             enabled: true
@@ -522,6 +522,411 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 summary: '',
                 isProduction: true,
                 title: 'Over time comparison alias',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/johndoe'
+            }
+        }
+    },
+    {
+        visualizationObject: {
+            content: {
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/table'
+                },
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_complicated_arithmetic_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'arithmetic_measure_created_from_arithmetic_measures',
+                                                'arithmetic_measure_created_from_simple_measures'
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1',
+                                    title: '# Accounts with AD Query',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm2',
+                                    title: '# Accounts with KD Query',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/1245'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm3',
+                                    title: '# Accounts with AD Query',
+                                    alias: 'AD Queries',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm4',
+                                    title: '# Accounts with KD Query',
+                                    alias: 'KD Queries',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/1245'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_pop',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'm1',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_pop_renamed',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'm1',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    },
+                                    alias: 'Renamed SP last year M1'
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_previous_period_renamed',
+                                    definition: {
+                                        previousPeriodMeasure: {
+                                            measureIdentifier: 'm1',
+                                            dateDataSets: [{
+                                                dataSet: {
+                                                    uri: '/gdc/md/myproject/obj/921'
+                                                },
+                                                periodsAgo: 1
+                                            }]
+                                        }
+                                    },
+                                    alias: 'Renamed previous period M1'
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_simple_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1', 'm2']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_renamed_simple_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m3', 'm4']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_derived_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1_pop', 'm1_previous_period']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_arithmetic_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'arithmetic_measure_created_from_renamed_simple_measures',
+                                                'arithmetic_measure_created_from_renamed_derived_measures'
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_renamed_derived_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1_pop_renamed', 'm1_previous_period_renamed']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'invalid_arithmetic_measure_with_missing_dependency',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'm1',
+                                                'm666'
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'invalid_arithmetic_measure_with_cyclic_dependency_1',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'm1',
+                                                'invalid_arithmetic_measure_with_cyclic_dependency_2'
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'invalid_arithmetic_measure_with_cyclic_dependency_2',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'm2',
+                                                'invalid_arithmetic_measure_with_cyclic_dependency_1'
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'attribute',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'a1',
+                                    displayForm: {
+                                        uri: '/gdc/md/myproject/obj/1515'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                properties: JSON.stringify({
+                    sortItems: [
+                        {
+                            attributeSortItem: {
+                                direction: 'asc',
+                                attributeIdentifier: 'a1'
+                            }
+                        }
+                    ]
+                })
+            },
+            meta: {
+                author: '/gdc/account/profile/johndoe',
+                uri: '/gdc/md/myproject/obj/2',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aa5CD0OcfSpg',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'Arithmetic measures',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/johndoe'
+            }
+        }
+    },
+    {
+        visualizationObject: {
+            content: {
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/table'
+                },
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'arithmetic_measure_created_from_complicated_arithmetic_measures',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'arithmetic_measure_created_from_arithmetic_measures',
+                                                'arithmetic_measure_created_from_simple_measures'
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1',
+                                    title: 'AD Accounts',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm2',
+                                    title: 'KD Accounts',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/1245'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'tree_level_2',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1', 'tree_level_1']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'tree_level_1',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1', 'tree_level_0']
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'tree_level_0',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: ['m1', 'm2']
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'attribute',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'a1',
+                                    displayForm: {
+                                        uri: '/gdc/md/myproject/obj/1515'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                properties: JSON.stringify({
+                    sortItems: [
+                        {
+                            attributeSortItem: {
+                                direction: 'asc',
+                                attributeIdentifier: 'a1'
+                            }
+                        }
+                    ]
+                })
+            },
+            meta: {
+                author: '/gdc/account/profile/johndoe',
+                uri: '/gdc/md/myproject/obj/2',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aa5CD0OcfSpg',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'Arithmetic measures tree',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/johndoe'
             }
