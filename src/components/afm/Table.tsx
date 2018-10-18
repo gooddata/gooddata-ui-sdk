@@ -17,7 +17,7 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
             itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
         },
         {
-            itemIdentifiers: afm.measures ? ['measureGroup'] : []
+            itemIdentifiers: afm.measures && afm.measures.length > 0 ? ['measureGroup'] : []
         }
     ];
 }
