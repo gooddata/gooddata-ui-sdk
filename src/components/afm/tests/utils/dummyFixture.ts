@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 // from indigo-visualizations/stories/test_data/bar_chart_with_view_by_attribute
 
-import { Execution } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 export const executionRequest = {
     execution: {
@@ -57,6 +57,22 @@ export const executionRequestWithoutMeasureAndWithoutResultSpec = {
                     localIdentifier: 'departmentAttribute'
                 }
             ]
+        }
+    }
+};
+
+export const executionRequestWithEmptyMeasuresArray: AFM.IExecution = {
+    execution: {
+        afm: {
+            attributes: [
+                {
+                    displayForm: {
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                    },
+                    localIdentifier: 'departmentAttribute'
+                }
+            ],
+            measures: []
         }
     }
 };

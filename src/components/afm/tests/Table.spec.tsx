@@ -5,7 +5,11 @@ import { testUtils } from '@gooddata/js-utils';
 import { Table } from '../Table';
 import { SortableTable } from '../../core/SortableTable';
 import { dummyExecuteAfmAdapterFactoryTable } from './utils/DummyExecuteAfmAdapter';
-import { executionRequest, executionRequestWithoutMeasureAndWithoutResultSpec } from './utils/dummyFixture';
+import {
+    executionRequest,
+    executionRequestWithEmptyMeasuresArray,
+    executionRequestWithoutMeasureAndWithoutResultSpec
+} from './utils/dummyFixture';
 
 describe('Table', () => {
     it('should provide default resultSpec to the core Table with attribute and measure', () => {
@@ -33,6 +37,26 @@ describe('Table', () => {
             <Table
                 projectId="projectId"
                 afm={executionRequestWithoutMeasureAndWithoutResultSpec.execution.afm}
+                adapterFactory={dummyExecuteAfmAdapterFactoryTable}
+            />
+        );
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            const dimensions = wrapper.find(SortableTable).props().resultSpec.dimensions;
+
+            expect(dimensions).toEqual([
+                { itemIdentifiers: ['departmentAttribute'] },
+                { itemIdentifiers: [] }
+            ]);
+        });
+    });
+
+    it('should provide default resultSpec to the core Table when afm.measures=[]', () => {
+        const wrapper = mount(
+            <Table
+                projectId="projectId"
+                afm={executionRequestWithEmptyMeasuresArray.execution.afm}
                 adapterFactory={dummyExecuteAfmAdapterFactoryTable}
             />
         );
