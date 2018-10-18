@@ -46,7 +46,7 @@ class TestInnerComponent
     public componentWillMount() {
         const {
             getPage,
-            resultSpec
+            resultSpec = {}
         } = this.props;
         // we get getPage is available, we assume this is a pagable component
         // and therefor should not get autoexecuted datasource
@@ -353,9 +353,10 @@ describe('VisualizationLoadingHOC', () => {
 
             return testUtils.delay().then(() => {
                 expect(pushData).toHaveBeenCalledWith({
-                    result: oneMeasureResponse
+                    result: oneMeasureResponse,
+                    properties: { sortItems: undefined }
                 });
-                expect(onLoadingChanged).not.toHaveBeenCalled();
+                expect(onLoadingChanged).toHaveBeenCalledWith({ isLoading: false });
             });
         });
 
@@ -377,7 +378,7 @@ describe('VisualizationLoadingHOC', () => {
             });
         });
 
-        it('should call onError then when error occured', () => {
+        it('should call onError when error occured', () => {
             const onError = jest.fn();
             createComponent({
                 dataSource: tooLargeDataSource,

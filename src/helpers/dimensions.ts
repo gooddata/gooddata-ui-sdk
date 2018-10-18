@@ -9,7 +9,6 @@ import {
     SEGMENT,
     TREND,
     ATTRIBUTE,
-    ROWS,
     COLUMNS,
     MEASURES
  } from '../constants/bucketNames';
@@ -29,8 +28,8 @@ export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITo
 export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
     const rowAttributes: VisualizationObject.IBucket = buckets
         .find(
-            bucket => bucket.localIdentifier === ROWS
-
+            // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
+            bucket => bucket.localIdentifier === ATTRIBUTE
         );
 
     const columnAttributes: VisualizationObject.IBucket = buckets
@@ -55,15 +54,18 @@ export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]):
     const totals = getDimensionTotals(rowAttributes);
     const totalsProp = totals.length ? { totals } : {};
 
-    return [{
-        itemIdentifiers: rowAttributesItemIdentifiers,
-        ...totalsProp
-    }, {
-        itemIdentifiers: [
-            ...columnAttributesItemIdentifiers,
-            ...measuresItemIdentifiers
-        ]
-    }];
+    return [
+        {
+            itemIdentifiers: rowAttributesItemIdentifiers,
+            ...totalsProp
+        },
+        {
+            itemIdentifiers: [
+                ...columnAttributesItemIdentifiers,
+                ...measuresItemIdentifiers
+            ]
+        }
+    ];
 }
 
 export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
@@ -297,6 +299,9 @@ export function generateDimensions(
     type: VisType
 ): AFM.IDimension[] {
     switch (type) {
+        case VisualizationTypes.PIVOT_TABLE: {
+            return getPivotTableDimensions(mdObject.buckets);
+        }
         case VisualizationTypes.TABLE: {
             return getTableDimensions(mdObject.buckets);
         }

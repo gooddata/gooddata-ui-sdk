@@ -13,6 +13,7 @@ import {
 } from '../dimensions';
 import { visualizationObjects } from '../../../__mocks__/fixtures';
 import { MEASURE_1, ATTRIBUTE_CITIES } from '../../../stories/data/afmComponentProps';
+import { MEASURES, ATTRIBUTE, COLUMNS } from '../../constants/bucketNames';
 
 function getVisualization(name: string): VisualizationObject.IVisualizationObjectContent {
     const uri = `/gdc/md/myproject/obj/${name}`;
@@ -136,7 +137,7 @@ describe('getPivotTableDimensions', () => {
 
         const buckets = [
             {
-                localIdentifier: 'measures',
+                localIdentifier: MEASURES,
                 items: [{
                     measure: {
                         localIdentifier: 'm1',
@@ -152,7 +153,8 @@ describe('getPivotTableDimensions', () => {
                 }]
             },
             {
-                localIdentifier: 'rows',
+                // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
+                localIdentifier: ATTRIBUTE,
                 items: [{
                     visualizationAttribute: {
                         localIdentifier: 'a1',
@@ -163,7 +165,7 @@ describe('getPivotTableDimensions', () => {
                 }]
             },
             {
-                localIdentifier: 'columns',
+                localIdentifier: COLUMNS,
                 items: [{
                     visualizationAttribute: {
                         localIdentifier: 'a2',

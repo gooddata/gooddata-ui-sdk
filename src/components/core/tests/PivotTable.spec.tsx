@@ -37,12 +37,14 @@ describe('PivotTable', () => {
     });
 
     describe('getGridDataSource', () => {
-        it('should return AGGrid dataSource that calls getPage, successCallback and onSuccess', async () => {
+        // tslint:disable-next-line:max-line-length
+        it('should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy', async () => {
             const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
             const getPage = jest.fn().mockReturnValue(Promise.resolve(pivotTableWithColumnAndRowAttributes));
             const startRow = 0;
             const endRow = 0;
             const successCallback = jest.fn();
+            const cancelPagePromises = jest.fn();
             const onSuccess = jest.fn();
             const getGridApi = () => ({
                 setPinnedBottomRowData: jest.fn()
@@ -53,6 +55,7 @@ describe('PivotTable', () => {
             const gridDataSource = getGridDataSource(
                 resultSpec,
                 getPage,
+                cancelPagePromises,
                 getExecution,
                 onSuccess,
                 getGridApi,
@@ -63,6 +66,9 @@ describe('PivotTable', () => {
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
             expect(successCallback.mock.calls[0]).toMatchSnapshot();
             expect(onSuccess.mock.calls[0]).toMatchSnapshot();
+
+            gridDataSource.destroy();
+            expect(cancelPagePromises).toHaveBeenCalledTimes(1);
         });
     });
 

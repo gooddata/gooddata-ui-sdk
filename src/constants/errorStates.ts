@@ -6,6 +6,8 @@ export enum ErrorCodes {
     INVALID_BUCKETS = 2001
 }
 
+export type CANCELLED = 'CANCELLED';
+
 export const ErrorStates = {
     /**
      * This error means that server could not understand the request due to invalid syntax.
@@ -63,5 +65,10 @@ export const ErrorStates = {
     /**
      * This error means that GoodData.UI does not know how to handle such error.
      */
-    UNKNOWN_ERROR: 'UNKNOWN_ERROR'
+    UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+
+    /**
+     * This error means that request has been cancelled usually after component has been unmounted.
+     */
+    CANCELLED: 'CANCELLED'
 };

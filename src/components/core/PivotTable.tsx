@@ -38,7 +38,8 @@ import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import {
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultProps
+    commonDefaultProps,
+    IGetPage
 } from './base/VisualizationLoadingHOC';
 
 import { ICommonChartProps } from './base/BaseChart';
@@ -79,7 +80,8 @@ export interface IPivotTableProps extends ICommonChartProps {
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
     onSortChange?: (sortBy: AFM.SortItem[]) => AFM.SortItem[];
-    getPage: IGetPage;
+    getPage?: IGetPage;
+    cancelPagePromises?: () => void;
     pageSize?: number;
     config?: IPivotTableConfig;
 }
@@ -91,13 +93,7 @@ export interface IPivotTableState {
     execution: Execution.IExecutionResponses;
 }
 
-export type IGetPage = (
-    resultSpec: AFM.IResultSpec,
-    limit: number[],
-    offset: number[]
-) => Promise<Execution.IExecutionResponses | null>;
-
-interface ICustomGridOptions extends GridOptions {
+export interface ICustomGridOptions extends GridOptions {
     enableMenu?: boolean;
 }
 
@@ -252,6 +248,7 @@ export const getSortsFromModel = (
 export const getGridDataSource = (
     resultSpec: AFM.IResultSpec,
     getPage: IGetPage,
+    cancelPagePromises: () => void,
     getExecution: () => Execution.IExecutionResponses,
     onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
     getGridApi: () => any,
@@ -302,6 +299,9 @@ export const getGridDataSource = (
                     return execution;
                 }
             );
+    },
+    destroy: () => {
+        cancelPagePromises();
     }
 });
 
@@ -371,17 +371,17 @@ export class PivotTableInner extends
     }
 
     public componentWillMount() {
-        const { resultSpec, getPage } = this.props;
-        this.createDataSource(resultSpec, getPage);
+        const { resultSpec, getPage, cancelPagePromises } = this.props;
+        this.createDataSource(resultSpec, getPage, cancelPagePromises);
     }
 
     public componentWillReceiveProps(
         nextProps: IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps
     ) {
         const propsRequiringNewDataSource = [
-            'afm',
             'resultSpec',
             'getPage',
+            'dataSource',
             // drillable items need fresh execution because drillable context for row attribute is kept in rowData
             // It could be refactored to assign drillability without execution,
             // but it would suffer a significant performance hit
@@ -389,7 +389,7 @@ export class PivotTableInner extends
         ];
 
         if (propsRequiringNewDataSource.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]))) {
-            this.createDataSource(nextProps.resultSpec, nextProps.getPage);
+            this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
             this.setGridDataSource();
         }
     }
@@ -453,7 +453,7 @@ export class PivotTableInner extends
         return this.state.execution;
     }
 
-    public createDataSource(resultSpec: AFM.IResultSpec, getPage: IGetPage) {
+    public createDataSource(resultSpec: AFM.IResultSpec, getPage: IGetPage, cancelPagePromises: () => void) {
         const onSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
                 this.setState({
@@ -469,6 +469,7 @@ export class PivotTableInner extends
         this.gridDataSource = getGridDataSource(
             resultSpec,
             getPage,
+            cancelPagePromises,
             this.getExecution,
             onSuccess,
             this.getGridApi,

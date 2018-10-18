@@ -8,14 +8,16 @@ const getQualifierObject = qualifierString => ({
     [(isUri(qualifierString) ? 'uri' : 'identifier')]: qualifierString
 });
 
-export const createMeasureBucketItem = (qualifierString, localIdentifier, alias) => {
+export const createMeasureBucketItem = (qualifierString, localIdentifier, alias, filters = []) => {
     const aliasProp = alias ? { alias } : {};
+    const filtersProp = filters.length > 0 ? { filters } : {};
     return {
         measure: {
             localIdentifier: localIdentifier || qualifierString,
             definition: {
                 measureDefinition: {
-                    item: getQualifierObject(qualifierString)
+                    item: getQualifierObject(qualifierString),
+                    ...filtersProp
                 }
             },
             ...aliasProp
@@ -102,6 +104,15 @@ export const createRelativeDateFilter = (dateDataSetQualifier, granularity, from
             granularity,
             from,
             to
+        }
+    };
+};
+
+export const createMeasureAttributeFilter = (qualifierString, values) => {
+    return {
+        positiveAttributeFilter: {
+            displayForm: getQualifierObject(qualifierString),
+            in: values
         }
     };
 };

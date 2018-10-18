@@ -14,14 +14,17 @@ import {
     franchiseFeesAdRoyaltyIdentifier,
     menuCategoryAttributeDFIdentifier,
     locationStateAttributeCaliforniaUri,
-    monthDateIdentifierJanuary
+    monthDateIdentifierJanuary,
+    dateDatasetIdentifier
 } from '../utils/fixtures';
 import {
     createMeasureBucketItem,
     createAttributeBucketItem,
     createAttributeSortItem,
     createMeasureSortItem,
-    createColumnTotal
+    createColumnTotal,
+    createPositiveAttributeFilter,
+    createRelativeDateFilter
 } from '../utils/helpers';
 import { ElementWithParam } from './utils/ElementWithParam';
 
@@ -181,6 +184,34 @@ const totalPresets = {
         totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier, 'max')
     }
 };
+const filterPresets = {
+    attributeCalifornia: {
+        label: 'Attribute (California)',
+        key: 'attributeCalifornia',
+        filterItem: createPositiveAttributeFilter(
+            locationStateDisplayFormIdentifier,
+            [locationStateAttributeCaliforniaUri]
+        )
+    },
+    lastYear: {
+        label: 'Last year',
+        key: 'lastYear',
+        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
+    },
+    noData: {
+        label: 'No Data',
+        key: 'noData',
+        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
+    },
+    franchiseFeesCalifornia: {
+        label: 'Franchise Fees California',
+        key: 'franchiseFeesCalifornia',
+        filterItem: null
+    }
+};
+
+const franchiseFeesCalifornia =
+    createMeasureBucketItem(franchiseFeesIdentifier, 'franchiseFeesCalifornia', 'FranchiseFees (California)', [filterPresets.attributeCalifornia.filterItem]);
 
 const ASC = 'asc';
 const DESC = 'desc';
@@ -251,22 +282,20 @@ export class PivotTableDrillingExample extends Component {
             attributeMenuCategory: true,
             attributeValueJanuary: true
         };
+        const filterPresetKeys = {};
         const totalPresetKeys = {};
         this.state = {
             bucketPresetKey: 'measuresColumnAndRowAttributes',
             drillEvent: null,
             drillingPresetKeys,
+            filterPresetKeys,
             drillableItems: getDrillableItems(drillingPresetKeys),
             totalPresetKeys,
             sortingPresetKey: 'noSort'
         };
-        this.onDrillingPresetChange = this.onDrillingPresetChange.bind(this);
-        this.onTotalPresetChange = this.onTotalPresetChange.bind(this);
-        this.onBucketPresetChange = this.onBucketPresetChange.bind(this);
-        this.onSortingPresetChange = this.onSortingPresetChange.bind(this);
     }
 
-    onDrillingPresetChange(drillingPresetKey) {
+    onDrillingPresetChange = (drillingPresetKey) => {
         const drillingPresetKeys = {
             ...this.state.drillingPresetKeys,
             [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey]
@@ -276,7 +305,7 @@ export class PivotTableDrillingExample extends Component {
             drillableItems: getDrillableItems(drillingPresetKeys)
         });
     }
-    onTotalPresetChange(totalPresetKey) {
+    onTotalPresetChange = (totalPresetKey) => {
         const totalPresetKeys = {
             ...this.state.totalPresetKeys,
             [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey]
@@ -285,14 +314,23 @@ export class PivotTableDrillingExample extends Component {
             totalPresetKeys
         });
     }
+    onFilterPresetChange = (filterPresetKey) => {
+        const filterPresetKeys = {
+            ...this.state.filterPresetKeys,
+            [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey]
+        };
+        this.setState({
+            filterPresetKeys
+        });
+    }
 
-    onBucketPresetChange(bucketPresetKey) {
+    onBucketPresetChange = (bucketPresetKey) => {
         this.setState({
             bucketPresetKey
         });
     }
 
-    onSortingPresetChange(sortingPresetKey) {
+    onSortingPresetChange = (sortingPresetKey) => {
         this.setState({
             sortingPresetKey
         });
@@ -314,18 +352,31 @@ export class PivotTableDrillingExample extends Component {
             drillEvent,
             drillableItems,
             drillingPresetKeys,
+            filterPresetKeys,
             totalPresetKeys
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
 
+        // Exchange FranchiseFees for franchiseFeesCalifornia if filterPresetKeys.franchiseFeesCalifornia === true
+        const bucketPropsWithFilters = (filterPresetKeys.franchiseFeesCalifornia && bucketProps.measures.length > 0)
+            ? {
+                ...bucketProps,
+                measures: [franchiseFeesCalifornia, ...bucketProps.measures.slice(1)]
+            }
+            : bucketProps;
         const tableBucketProps = {
-            ...bucketProps
+            ...bucketPropsWithFilters
         };
         delete tableBucketProps.columns;
-        if (bucketProps.rows) {
-            tableBucketProps.attributes = bucketProps.rows;
+        if (bucketPropsWithFilters.rows) {
+            tableBucketProps.attributes = bucketPropsWithFilters.rows;
         }
+
+        const filters = Object.keys(filterPresets)
+            .filter(itemKey => (filterPresetKeys[itemKey] && filterPresets[itemKey].filterItem))
+            .map(itemKey => filterPresets[itemKey].filterItem);
+        const filtersProp = filters.length > 0 ? { filters } : {};
 
         const totals = getTotalItems(totalPresetKeys);
 
@@ -355,6 +406,19 @@ export class PivotTableDrillingExample extends Component {
                                     {label}
                                 </ElementWithParam>
                             );
+                        })
+                    }
+                </div>
+                <div className="presets">
+                    Filter presets: {
+                        Object.keys(filterPresets).map((presetItemKey) => {
+                            const { key, label } = filterPresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-drilling-preset-${key} ${filterPresetKeys[key] ? ' is-active' : ''}`}
+                                onClick={this.onFilterPresetChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
                         })
                     }
                 </div>
@@ -401,7 +465,8 @@ export class PivotTableDrillingExample extends Component {
                     <PivotTable
                         projectId={projectId}
                         pageSize={20}
-                        {...bucketProps}
+                        {...bucketPropsWithFilters}
+                        {...filtersProp}
                         drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
@@ -413,6 +478,7 @@ export class PivotTableDrillingExample extends Component {
                     <Table
                         projectId={projectId}
                         {...tableBucketProps}
+                        {...filtersProp}
                         drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
@@ -421,7 +487,7 @@ export class PivotTableDrillingExample extends Component {
                 </div>
                 <pre className="s-output">
                     {JSON.stringify(drillEvent || {
-                        ...bucketProps,
+                        ...bucketPropsWithFilters,
                         drillableItems
                     }, null, 4)}
                 </pre>
