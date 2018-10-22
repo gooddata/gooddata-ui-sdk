@@ -7,8 +7,9 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { Heatmap as AfmHeatmap } from './afm/Heatmap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { getStackingResultSpec } from '../helpers/resultSpec';
-import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { getResultSpec } from '../helpers/resultSpec';
+import { getHeatmapDimensionsFromBuckets } from '../helpers/dimensions';
+import { MEASURES, VIEW, STACK } from '../constants/bucketNames';
 
 export interface IHeatmapBucketProps {
     measure: VisualizationObject.BucketItem;
@@ -35,7 +36,7 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
             items: [props.measure] || []
         },
         {
-            localIdentifier: ATTRIBUTE,
+            localIdentifier: VIEW,
             items: props.rows ? [props.rows] : []
         },
         {
@@ -52,7 +53,7 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
+            resultSpec={getResultSpec(buckets, props.sortBy, getHeatmapDimensionsFromBuckets)}
         />
     );
 }

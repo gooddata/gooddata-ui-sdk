@@ -221,11 +221,19 @@ function getScatterDimensions(mdObject: VisualizationObject.IVisualizationObject
     ];
 }
 
-function getHeatmapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-    const view: VisualizationObject.IBucket = mdObject.buckets
-            .find(bucket => bucket.localIdentifier === VIEW);
+// Heatmap
+export function getHeatmapDimensionsFromMdObj(
+    mdObject: VisualizationObject.IVisualizationObjectContent
+): AFM.IDimension[] {
+    const buckets: VisualizationObject.IBucket[] = mdObject.buckets;
+    return getHeatmapDimensionsFromBuckets(buckets);
+}
 
-    const stack: VisualizationObject.IBucket = mdObject.buckets
+export function getHeatmapDimensionsFromBuckets(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = buckets
+        .find(bucket => bucket.localIdentifier === VIEW);
+
+    const stack: VisualizationObject.IBucket = buckets
         .find(bucket => bucket.localIdentifier === STACK);
 
     const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
@@ -331,7 +339,7 @@ export function generateDimensions(
             return getScatterDimensions(mdObject);
         }
         case VisualizationTypes.HEATMAP: {
-            return getHeatmapDimensions(mdObject);
+            return getHeatmapDimensionsFromMdObj(mdObject);
         }
         case VisualizationTypes.BUBBLE: {
             return getBubbleDimensions(mdObject);
