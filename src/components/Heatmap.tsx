@@ -12,8 +12,8 @@ import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IHeatmapBucketProps {
     measure: VisualizationObject.BucketItem;
-    trendBy?: VisualizationObject.IVisualizationAttribute;
-    segmentBy?: VisualizationObject.IVisualizationAttribute;
+    rows?: VisualizationObject.IVisualizationAttribute;
+    columns?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
 }
@@ -36,16 +36,16 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.trendBy ? [props.trendBy] : []
+            items: props.rows ? [props.rows] : []
         },
         {
             localIdentifier: STACK,
-            items: props.segmentBy ? [props.segmentBy] : []
+            items: props.columns ? [props.columns] : []
         }
     ];
 
     const newProps
-        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'trendBy', 'segmentBy', 'filters']);
+        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'rows', 'columns', 'filters']);
 
     return (
         <AfmHeatmap
