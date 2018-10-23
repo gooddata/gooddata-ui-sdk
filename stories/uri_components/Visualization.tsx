@@ -281,6 +281,20 @@ storiesOf('URI components', module)
             </div>
         )
     ))
+    .add('chart with overriden config', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1003'}
+                    onError={onErrorHandler}
+                    locale="en-US"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
     .add('chart with applied filter and custom colors', () => {
         const filter: AFM.IAbsoluteDateFilter = {
             absoluteDateFilter: {

@@ -19,6 +19,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
+import { getMeasureLocalIdentifierPredicate } from '../../src/helpers/predicatesFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -122,6 +123,33 @@ storiesOf('Core components/ScatterPlot', module)
                             min: '500',
                             max: '950'
                         }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ScatterPlot
+                    projectId="storybook"
+                    yAxisMeasure={MEASURE_2}
+                    attribute={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        colorMapping: [{
+                            predicate: getMeasureLocalIdentifierPredicate('m2'),
+                            color: {
+                                type: 'rgb',
+                                value: {
+                                    r: 0,
+                                    g: 0,
+                                    b: 0
+                                }
+                            }}
+                        ]
                     }}
                 />
             </div>

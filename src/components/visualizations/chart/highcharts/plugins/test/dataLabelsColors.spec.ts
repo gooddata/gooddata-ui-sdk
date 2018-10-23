@@ -7,7 +7,7 @@ import {
     DEFAULT_COLOR_PALETTE,
     getRgbString
 } from '../../../../utils/color';
-import { IColorPaletteItem } from '../../../Chart';
+import { IColorPaletteItem } from '../../../../../../interfaces/Config';
 
 describe('dataLabelsColors', () => {
     describe('isWhiteNotContrastEnough', () => {

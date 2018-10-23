@@ -18,7 +18,7 @@ import { LoadingComponent, ILoadingProps } from '../../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../../simple/ErrorComponent';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { IPushData } from '../../../interfaces/PushData';
-import { IChartConfig } from '../../visualizations/chart/Chart';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 

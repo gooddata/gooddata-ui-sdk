@@ -16,10 +16,14 @@ import {
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+    MEASURE_1_POP
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
+import { RGBType } from '../../src/interfaces/Config';
+import { Execution } from '@gooddata/typings';
+import { getAttributeItemNamePredicate } from '../../src/helpers/predicatesFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -359,6 +363,97 @@ storiesOf('Core components/BarChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('one measure, one attribute, with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_1_POP]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: (headerItem: Execution.IMeasureHeaderItem) =>
+                                    headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier
+                                        === 'm1'),
+                                color: {
+                                    type: 'guid',
+                                    value: '04'
+                                }
+                            }, {
+                                predicate:  (headerItem: Execution.IMeasureHeaderItem) =>
+                                    headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier
+                                        === 'm2'),
+                                color: {
+                                    type: 'guid',
+                                    value: '02'
+                                }
+                            }, {
+                                predicate:  (headerItem: Execution.IMeasureHeaderItem) =>
+                                    headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier
+                                        === 'm1_pop'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('stacked with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_2}
+                    stackBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: getAttributeItemNamePredicate('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: '03'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: '02'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
                 />
             </div>
         )

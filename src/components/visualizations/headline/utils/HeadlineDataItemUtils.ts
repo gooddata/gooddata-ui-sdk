@@ -3,7 +3,7 @@ import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
 import isEmpty = require('lodash/isEmpty');
 import isNaN = require('lodash/isNaN');
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from '../../../../interfaces/Headlines';
-import { IChartConfig } from '../../chart/Chart';
+import { IChartConfig } from '../../../../interfaces/Config';
 
 const DEFAULT_VALUE_WHEN_EMPTY = '–';
 const INVALID_VALUE = 'NaN';

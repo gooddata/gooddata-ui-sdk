@@ -2,6 +2,7 @@
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
+import { IColorPalette } from '@gooddata/gooddata-js';
 import * as Highcharts from 'highcharts';
 
 import cloneDeep = require('lodash/cloneDeep');
@@ -17,7 +18,6 @@ import range = require('lodash/range');
 import unescape = require('lodash/unescape');
 import without = require('lodash/without');
 
-import { IChartConfig, IChartLimits } from './Chart';
 import {
     getAttributeElementIdFromAttributeElementUri,
     isAreaChart,
@@ -56,6 +56,7 @@ import { getComboChartOptions } from './chartOptions/comboChartOptions';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 
 import { ColorFactory, IColorStrategy } from './colorFactory';
+import { IColorAssignment, IChartLimits, IChartConfig } from '../../../interfaces/Config';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
@@ -136,6 +137,8 @@ export interface IChartOptions {
     secondary_yAxisProps?: any;
     title?: any;
     colorAxis?: Highcharts.ColorAxisOptions;
+    colorMapping?: IColorAssignment[];
+    colorPalette?: IColorPalette;
 }
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
@@ -1439,6 +1442,7 @@ export function getChartOptions(
 
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,
+        config.colorMapping,
         measureGroup,
         viewByAttribute,
         stackByAttribute,
@@ -1488,7 +1492,7 @@ export function getChartOptions(
             return {
                 // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
                 ...dataPoint,
-                color: get(dataPoints[dataPoint.legendIndex], 'color'),
+                color: get(dataPoints[dataPointIndex], 'color'),
                 legendIndex: dataPointIndex
             };
         });
@@ -1497,6 +1501,9 @@ export function getChartOptions(
             categories[indexSortOrder[dataPointIndex]]);
         series[0].data = sortedDataPoints;
     }
+
+    const colorMapping = colorStrategy.getColorAssignment();
+    const { colorPalette } = config;
 
     if (isComboChart(type)) {
         return {
@@ -1517,7 +1524,9 @@ export function getChartOptions(
                 measureGroup,
                 series,
                 categories
-            )
+            ),
+            colorMapping,
+            colorPalette
         };
     }
 
@@ -1552,7 +1561,9 @@ export function getChartOptions(
                 enabled: gridEnabled
             },
             xAxisProps,
-            yAxisProps
+            yAxisProps,
+            colorMapping,
+            colorPalette
         };
     }
 
@@ -1583,7 +1594,9 @@ export function getChartOptions(
                 dataClasses: getHeatmapDataClasses(series, colorStrategy)
             },
             xAxisProps,
-            yAxisProps
+            yAxisProps,
+            colorMapping,
+            colorPalette
         };
     }
 
@@ -1628,7 +1641,9 @@ export function getChartOptions(
                 enabled: gridEnabled
             },
             xAxisProps,
-            yAxisProps
+            yAxisProps,
+            colorMapping,
+            colorPalette
         };
     }
 
@@ -1658,7 +1673,9 @@ export function getChartOptions(
         xAxisProps,
         yAxisProps,
         secondary_xAxisProps,
-        secondary_yAxisProps
+        secondary_yAxisProps,
+        colorMapping,
+        colorPalette
     };
 
     return chartOptions;

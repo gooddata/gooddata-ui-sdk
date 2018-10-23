@@ -24,6 +24,8 @@ import {
     DATA_LABELS_AUTO_CONFIG,
     CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
+import { RGBType } from '../../src/interfaces/Config';
+import { getAttributeItemNamePredicate } from '../../src/helpers/predicatesFactory';
 
 const wrapperStyle = { width: 600, height: 300 };
 
@@ -108,6 +110,45 @@ storiesOf('Core components/Treemap', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
                     config={CUSTOM_COLOR_PALETTE_CONFIG}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
+    )).add('custom colors and color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: getAttributeItemNamePredicate('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: '03'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: '02'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
                     onError={onErrorHandler}
                 />
             </div>

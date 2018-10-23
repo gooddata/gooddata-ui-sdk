@@ -7,7 +7,7 @@ import { AFM, VisualizationObject, VisualizationClass, Localization } from '@goo
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
-import { IChartConfig, IColorPaletteItem } from '../visualizations/chart/Chart';
+import { IChartConfig, IColorPaletteItem } from '../../interfaces/Config';
 import { SortableTable } from '../core/SortableTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';
@@ -25,6 +25,7 @@ import { setTelemetryHeaders } from '../../helpers/utils';
 import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 import { isTreemap } from '../visualizations/utils/common';
+import { getUniversalPredicate } from '../../helpers/predicatesFactory';
 export { Requireable };
 
 const {
@@ -280,8 +281,21 @@ export class VisualizationWrapped
             ? this.props.config.colorPalette
             : this.state.colorPalette;
 
+        let colorMapping;
+        if (properties && properties.colorMapping) {
+            const { references } = properties;
+            colorMapping = properties.colorMapping.map((mapping: any) => {
+                const predicate = getUniversalPredicate(mapping.id, references);
+                return {
+                    predicate,
+                    color: mapping.color
+                };
+            });
+        }
+
         const finalConfig = {
             ...properties,
+            colorMapping,
             ...config,
             colorPalette,
             mdObject: mdObjectContent

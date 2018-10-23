@@ -11,7 +11,7 @@ import {
     fireDrillEvent,
     getHeadlineData
 } from './utils/HeadlineTransformationUtils';
-import { IChartConfig } from '../chart/Chart';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export interface IHeadlineTransformationProps {
     executionRequest: AFM.IExecution['execution'];

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
-import { IColorPalette, IColorPaletteItem, IChartConfig } from '../chart/Chart';
+import { IColorPalette, IColorPaletteItem, IChartConfig, IRGBColor } from '../../../interfaces/Config';
 
 export const WHITE = 'rgb(255, 255, 255)';
 export const BLACK = 'rgb(0, 0, 0)';
@@ -158,6 +158,16 @@ export function getLighterColor(color: string, percent: number) {
         lighter(G, percent),
         lighter(B, percent)
     );
+}
+
+export function getLighterColorFromRGB(color: IRGBColor, percent: number) {
+    const { r, g, b } = color;
+
+    return {
+        r: lighter(r, percent),
+        g: lighter(g, percent),
+        b: lighter(b, percent)
+    };
 }
 
 export function normalizeColorToRGB(color: string) {

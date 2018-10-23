@@ -22,6 +22,7 @@ import {
     DATA_LABELS_AUTO_CONFIG,
     CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
+import { getMeasureLocalIdentifierPredicate } from '../../src/helpers/predicatesFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 const wrapperWiderStyle = { width: 1000, height: 400 };
@@ -329,6 +330,31 @@ storiesOf('Core components/Heatmap', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     config={CUSTOM_COLOR_PALETTE_CONFIG}
+                />
+            </div>
+        )
+    )).add('custom colors with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_1}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        colorMapping: [
+                            {
+                                predicate: getMeasureLocalIdentifierPredicate('m1'),
+                                color: {
+                                    type: 'guid',
+                                    value: 'green'
+                                }
+                            }
+                        ]
+                    }}
                 />
             </div>
         )
