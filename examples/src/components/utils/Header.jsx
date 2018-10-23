@@ -141,14 +141,15 @@ class Header extends React.Component {
                     }
 
                     .gd-header-menu-section {
-                        padding: 0 20px;
+                        padding: 0 32px;
                     }
 
                     .gd-header-inner :global(.gd-header-menu-item) {
                         height: 62px;
                         margin: 0;
-                        padding: 0 22px;
+                        padding: 0 16px;
                         border-bottom: 2px solid transparent;
+                        opacity: 1;
                         color: rgba(0, 0, 0, 0.7);
                         font-size: 15px;
                         line-height: 62px;
@@ -157,7 +158,7 @@ class Header extends React.Component {
 
                     @media screen and (min-width: 1025px) {
                         .gd-header-inner :global(.gd-header-menu-item) {
-                            margin: 0 23px;
+                            margin: 0 16px;
                         }
                     }
 
