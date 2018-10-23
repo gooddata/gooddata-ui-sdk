@@ -61,8 +61,8 @@ export class HeatmapExample extends Component {
                 <Heatmap
                     projectId={projectId}
                     measure={totalSales}
-                    trendBy={locationState}
-                    segmentBy={menuCategory}
+                    rows={locationState}
+                    columns={menuCategory}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

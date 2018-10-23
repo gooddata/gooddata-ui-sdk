@@ -33,8 +33,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_1}
-                    trendBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -61,7 +61,7 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    trendBy={ATTRIBUTE_2}
+                    rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -75,7 +75,7 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -89,8 +89,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_1_WITH_ALIAS}
-                    trendBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_1_WITH_ALIAS}
+                    rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -104,8 +104,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_2}
-                    trendBy={ATTRIBUTE_1_WITH_ALIAS}
+                    columns={ATTRIBUTE_2}
+                    rows={ATTRIBUTE_1_WITH_ALIAS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -119,8 +119,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_1}
-                    trendBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -135,8 +135,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_COUNTRY}
-                    trendBy={ATTRIBUTE_POPULARITY}
+                    columns={ATTRIBUTE_COUNTRY}
+                    rows={ATTRIBUTE_POPULARITY}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -150,8 +150,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_2}
-                    segmentBy={ATTRIBUTE_COUNTRY}
-                    trendBy={ATTRIBUTE_POPULARITY}
+                    columns={ATTRIBUTE_COUNTRY}
+                    rows={ATTRIBUTE_POPULARITY}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -165,8 +165,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_1}
-                    trendBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -187,8 +187,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_2}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_2}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -204,8 +204,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_2}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_2}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -221,8 +221,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_2}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_2}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -238,8 +238,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_2}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_2}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -255,8 +255,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_2}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_2}
                         onError={onErrorHandler}
                         LoadingComponent={null}
                         ErrorComponent={null}
@@ -277,8 +277,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_3}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_3}
                         onError={onErrorHandler}
                     />
                 </div>
@@ -287,8 +287,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_3}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         config={DATA_LABELS_AUTO_CONFIG}
                     />
@@ -298,8 +298,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_3}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         config={DATA_LABELS_VISIBLE_CONFIG}
                     />
@@ -309,8 +309,8 @@ storiesOf('Core components/Heatmap', module)
                     <Heatmap
                         projectId="storybook"
                         measure={MEASURE_1}
-                        segmentBy={ATTRIBUTE_1}
-                        trendBy={ATTRIBUTE_3}
+                        columns={ATTRIBUTE_1}
+                        rows={ATTRIBUTE_3}
                         onError={onErrorHandler}
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
@@ -323,8 +323,8 @@ storiesOf('Core components/Heatmap', module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_1}
-                    segmentBy={ATTRIBUTE_1}
-                    trendBy={ATTRIBUTE_2}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
