@@ -11,6 +11,7 @@ import { IValidElementsOptions } from '@gooddata/gooddata-js/lib/metadata';
 import { AFM } from '@gooddata/typings';
 import { get, isEqual } from 'lodash';
 import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';
+import { ErrorStates } from '../../../index';
 
 export interface IPaging {
     count: number;
@@ -116,6 +117,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
     };
 
     private uri?: string = null;
+    private getValidElementsPromise?: Promise<any> = null;
 
     private sdk: SDK;
 
@@ -176,7 +178,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         this.getValidElements(this.props, nextOffset);
     }
 
-    public getValidElements(props: IAttributeElementsProps, offset: number) { // IAttributeElementsProps
+    public getValidElements(props: IAttributeElementsProps, offset: number): void {
         const { projectId, options, identifier } = props;
         const optionsWithUpdatedPaging = {
             ...options,
@@ -198,16 +200,26 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                     );
         });
 
+        let currentGetValidElementsPromise: Promise<any> = null;
+        // The promise needs to reset here because we are not setting it synchroneously
+        // and even this small delay is sometimes too late
+        this.getValidElementsPromise = null;
+
         uriPromise
             .then((uri: string) => {
                 const objectId = getObjectIdFromUri(uri);
-                return this.sdk.md.getValidElements(
+                currentGetValidElementsPromise = this.sdk.md.getValidElements(
                     projectId,
                     objectId, // This is misdocumented as identifier, but is in fact objectId
                     optionsWithUpdatedPaging
                 );
+                this.getValidElementsPromise = currentGetValidElementsPromise;
+                return this.getValidElementsPromise;
             })
             .then((response: IValidElementsResponse) => {
+                if (this.getValidElementsPromise !== currentGetValidElementsPromise) {
+                    return Promise.reject(ErrorStates.CANCELLED);
+                }
                 const items = [
                     ...get(this.state, 'validElements.items', []),
                     ...response.validElements.items
@@ -231,12 +243,14 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                     isLoading: false
                 });
             })
-            .catch(error => (
-                this.setState({
-                    error,
-                    isLoading: false
-                })
-            ));
+            .catch((error) => {
+                if (error !== ErrorStates.CANCELLED) {
+                    this.setState({
+                        error,
+                        isLoading: false
+                    });
+                }
+            });
     }
 
     public render() {

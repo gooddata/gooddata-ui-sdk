@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PivotTable getGridDataSource should return AGGrid dataSource that calls getPage, successCallback and onSuccess 1`] = `
+exports[`PivotTable getGridDataSource should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy 1`] = `
 Array [
   Array [
     Object {
@@ -380,7 +380,7 @@ Array [
 ]
 `;
 
-exports[`PivotTable getGridDataSource should return AGGrid dataSource that calls getPage, successCallback and onSuccess 2`] = `
+exports[`PivotTable getGridDataSource should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy 2`] = `
 Array [
   Object {
     "executionRequest": Object {

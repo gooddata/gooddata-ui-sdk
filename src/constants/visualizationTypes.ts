@@ -6,6 +6,7 @@ export const VisualizationTypes = {
     PIE: 'pie' as 'pie',
     DONUT: 'donut' as 'donut',
     TABLE: 'table' as 'table',
+    PIVOT_TABLE: 'pivotTable' as 'pivotTable',
     HEADLINE: 'headline' as 'headline',
     AREA: 'area' as 'area',
     SCATTER: 'scatter' as 'scatter',
@@ -26,6 +27,6 @@ export const VisualizationTypes = {
 export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area' | 'donut' |
     'scatter' | 'bubble' | 'heatmap' | 'geo' | 'combo' | 'dual' | 'histogram' |
     'bullet' | 'treemap' | 'waterfall' | 'funnel' | 'pareto' | 'alluvial';
-export type VisType = ChartType | 'table' | 'headline';
+export type VisType = ChartType | 'table' | 'pivotTable' | 'headline';
 export type ChartElementType = 'slice' | 'bar' | 'point';
 export type VisElementType = ChartElementType | 'cell' | 'primaryValue' | 'secondaryValue';

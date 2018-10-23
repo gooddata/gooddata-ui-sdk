@@ -15,7 +15,7 @@ import { IPivotTableConfig } from '../interfaces/Table';
 
 import {
     MEASURES,
-    ROWS,
+    ATTRIBUTE,
     COLUMNS
  } from '../constants/bucketNames';
 import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
@@ -46,7 +46,8 @@ export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.I
             items: measures || []
         },
         {
-            localIdentifier: ROWS,
+            // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
+            localIdentifier: ATTRIBUTE,
             items: rows || [],
             totals: totals || []
         },
@@ -62,7 +63,7 @@ const DataSourceProvider = dataSourceProvider(CorePivotTable, noop as any, 'Pivo
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 /**
- * TODO: Update link to documentation [PivotTable](http://sdk.gooddata.com/gooddata-ui/docs/table_component.html)
+ * Update link to documentation [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  */
 export class PivotTable extends React.Component<IPivotTableProps> {
@@ -76,9 +77,10 @@ export class PivotTable extends React.Component<IPivotTableProps> {
 
         hasDuplicateIdentifiers(buckets);
 
+        // PivotTable component still has 'rows' prop even though this is translated into ATTRIBUTE bucket
         const newProps
             = omit<IPivotTableProps, IPivotTableNonBucketProps>(this.props,
-                ['measures', 'attributes', 'rows', 'columns', 'totals', 'filters', 'sortBy']);
+                ['measures', 'rows', 'columns', 'totals', 'filters', 'sortBy']);
 
         return (
             <DataSourceProvider

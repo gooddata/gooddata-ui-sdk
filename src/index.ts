@@ -8,6 +8,7 @@ import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
 import { ScatterPlot as CoreScatterPlot } from './components/core/ScatterPlot';
 import { FunnelChart as CoreFunnelChart } from './components/core/FunnelChart';
+import { PivotTable as CorePivotTable, IPivotTableProps } from './components/core/PivotTable';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { ErrorComponent } from './components/simple/ErrorComponent';
 import { LoadingComponent } from './components/simple/LoadingComponent';
@@ -58,6 +59,7 @@ const CoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
     Table: CoreTable,
+    PivotTable: CorePivotTable,
     ScatterPlot: CoreScatterPlot,
     FunnelChart: CoreFunnelChart
 };
@@ -82,6 +84,7 @@ export {
     generateDimensions,
     Headline,
     IBaseChartProps,
+    IPivotTableProps,
     ICommonVisualizationProps,
     IDataSourceProviderInjectedProps,
     IDrillableItem,
