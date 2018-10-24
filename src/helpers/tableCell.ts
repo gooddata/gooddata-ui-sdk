@@ -52,7 +52,7 @@ export function getMeasureCellStyle(
     applyColor: boolean
 ): ITableCellStyle {
     const formattedNumber = getFormattedNumber(cellContent, format, separators);
-    const { color, label } = colors2Object(formattedNumber);
+    const { backgroundColor, color, label } = colors2Object(formattedNumber);
 
     if (label === '') {
         return {
@@ -61,9 +61,14 @@ export function getMeasureCellStyle(
         };
     }
 
-    return (applyColor && color)
-        ? { color }
-        : {};
+    if (!applyColor) {
+        return {};
+    }
+
+    return {
+        ...(color && { color }),
+        ...(backgroundColor && { backgroundColor })
+    };
 }
 
 export function getCellStyleAndFormattedValue(
