@@ -26,7 +26,7 @@ module.exports = (grunt) => {
             test: {
                 cmd: 'yarn',
                 args: [
-                    'test-single-run'
+                    'test-once'
                 ]
             }
         },
