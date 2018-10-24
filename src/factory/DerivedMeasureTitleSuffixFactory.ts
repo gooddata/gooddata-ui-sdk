@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization, VisualizationObject } from '@gooddata/typings';
+import { Localization } from '@gooddata/typings';
 import IntlStore from '../helpers/IntlStore';
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
+import { OverTimeComparisonType, OverTimeComparisonTypes } from '..';
 
 /**
- * Factory that builds formatted localized suffix string for derived measure based on the measure definition type.
+ * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.
  * The suffix is used during AFM execution and for bucket item titles.
  *
  * @internal
@@ -22,25 +22,26 @@ export default class DerivedMeasureTitleSuffixFactory {
     }
 
     /**
-     * Returns formatted localized suffix string for derived measure based on the measure definition type.
-     * In case when simple measure definition is provided the empty string is returned.
+     * Returns formatted localized suffix string for derived measure based on the over time comparison type.
+     * In case when unsupported over time comparison type is provided the empty string is returned.
      *
-     * @param {VisualizationObject.IMeasureDefinitionType} measureDefinition - The measure definition for which the
+     * @param {OverTimeComparisonType} overTimeComparisonType - The over time comparison type for which the
      *      suffix must be obtained.
      * @returns {string}
      */
-    public getSuffix(measureDefinition: IMeasureDefinitionType): string {
-        const localizationKey = this.getSuffixLocalizationKey(measureDefinition);
+    public getSuffix(overTimeComparisonType: OverTimeComparisonType): string {
+        const localizationKey = this.getSuffixLocalizationKey(overTimeComparisonType);
         return localizationKey === null ? '' : ` - ${this.translateKey(localizationKey)}`;
     }
 
-    private getSuffixLocalizationKey(measureDefinition: IMeasureDefinitionType): string {
-        if (VisualizationObject.isPopMeasureDefinition(measureDefinition)) {
-            return 'measure.title.suffix.same_period_year_ago';
-        } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition)) {
-            return 'measure.title.suffix.previous_period';
-        } else {
-            return null;
+    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): string {
+        switch (overTimeComparisonType) {
+            case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
+                return 'measure.title.suffix.same_period_year_ago';
+            case OverTimeComparisonTypes.PREVIOUS_PERIOD:
+                return 'measure.title.suffix.previous_period';
+            default:
+                return null;
         }
     }
 

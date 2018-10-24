@@ -134,6 +134,7 @@
     "build-dev": "bash scripts/build.sh --dev",
     "dev": "bash scripts/build.sh --dev-watch",
     "test": "jest --watch",
+    "test-once": "jest",
     "run-tslint": "tslint -p tsconfig.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",

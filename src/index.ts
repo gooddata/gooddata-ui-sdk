@@ -49,6 +49,7 @@ import Chart,
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
+import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
 
 /**
  * CoreComponents
@@ -117,5 +118,7 @@ export {
     VisualizationEnvironment,
     VisualizationTypes,
     ChartTransformation,
-    Chart
+    Chart,
+    OverTimeComparisonType,
+    OverTimeComparisonTypes
 };

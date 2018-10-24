@@ -2,7 +2,7 @@
 import { VisualizationObject, Localization } from '@gooddata/typings';
 import DerivedMeasureTitleSuffixFactory from '../factory/DerivedMeasureTitleSuffixFactory';
 import ArithmeticMeasureTitleFactory from '../factory/ArithmeticMeasureTitleFactory';
-import { IMeasureTitleProps } from '..';
+import { IMeasureTitleProps, OverTimeComparisonTypes } from '..';
 import MdObjectHelper from './MdObjectHelper';
 import cloneDeep = require('lodash/cloneDeep');
 import get = require('lodash/get');
@@ -33,9 +33,8 @@ function getMasterMeasureIdentifier(definition: IMeasureDefinitionType): string 
         return definition.popMeasureDefinition.measureIdentifier;
     } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
         return definition.previousPeriodMeasure.measureIdentifier;
-    } else {
-        return null;
     }
+    return null;
 }
 
 function getMasterMeasure(bucketItems: IMeasure[], measureIdentifier: string): IMeasure {
@@ -48,18 +47,28 @@ function getDerivedMeasureTitleBase(masterMeasure: VisualizationObject.IMeasure)
     return get<string>(masterMeasure, ['measure', 'alias'], masterMeasureTitle);
 }
 
+function findOverTimeComparisonType(measureDefinitionType: IMeasureDefinitionType) {
+    if (VisualizationObject.isPopMeasureDefinition(measureDefinitionType)) {
+        return OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR;
+    } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinitionType)) {
+        return OverTimeComparisonTypes.PREVIOUS_PERIOD;
+    }
+    return OverTimeComparisonTypes.NOTHING;
+}
+
 function findTitleForDerivedMeasure(
-    definition: IMeasureDefinitionType,
+    measureDefinitionType: IMeasureDefinitionType,
     measureBucketItems: IMeasure[],
     suffixFactory: DerivedMeasureTitleSuffixFactory
 ) {
-    const masterMeasureIdentifier = getMasterMeasureIdentifier(definition);
+    const masterMeasureIdentifier = getMasterMeasureIdentifier(measureDefinitionType);
     if (masterMeasureIdentifier === null) {
         return undefined;
     }
     const masterMeasure = getMasterMeasure(measureBucketItems, masterMeasureIdentifier);
     const derivedMeasureTitleBase = getDerivedMeasureTitleBase(masterMeasure);
-    return derivedMeasureTitleBase + suffixFactory.getSuffix(definition);
+    const overTimeComparisonType = findOverTimeComparisonType(measureDefinitionType);
+    return derivedMeasureTitleBase + suffixFactory.getSuffix(overTimeComparisonType);
 }
 
 function updateMeasureTitle(bucketItem: IMeasure, title: string) {
