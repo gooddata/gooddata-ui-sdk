@@ -8,7 +8,7 @@
     "prepublish": "rm -rf dist && tsc",
     "dev": "tsc --watch --noEmit",
     "test": "jest --watch",
-    "test-single-run": "jest",
+    "test-once": "jest",
     "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
     "run-tslint": "tslint -p tsconfig.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
