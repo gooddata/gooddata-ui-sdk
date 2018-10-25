@@ -37,10 +37,6 @@ export const barChartWith2MetricsAndViewByAttribute: any = {
     executionResult: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult
 };
 
-export const barChartWith2MetricsAndViewByAttributeMd = {
-    mdObject: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_md.json')
-};
-
 export const scatterPlotWith2MetricsAndAttribute: any = {
     executionRequest: require('../test_data/scatter_plot_with_2_metrics_and_attribute_request.json').execution,
     executionResponse:
@@ -274,6 +270,22 @@ export const treemapWithOneMetric: any = {
     executionResult: require('../test_data/treemap_with_one_metric_result.json').executionResult,  // tslint:disable-line:max-line-length
     ...treemapWithOneMetricMd
 };
+
+export const chartWith20MetricsAndViewByAttribute: any = {
+    executionRequest: require('../test_data/chart_with_20_metric_and_view_by_attribute_request.json').execution,
+    executionResponse:
+        require('../test_data/chart_with_20_metric_and_view_by_attribute_reponse.json').executionResponse,
+    executionResult: require('../test_data/chart_with_20_metric_and_view_by_attribute_result.json').executionResult
+};
+
+export const metricsInSecondaryAxis = chartWith20MetricsAndViewByAttribute.executionRequest.afm.measures
+    .map((measure: any, index: number) => {
+        if (index % 2 === 0) {
+            return measure.localIdentifier;
+        }
+        return null;
+    })
+    .filter((localIdentifier: string) => localIdentifier);
 
 export function barChartWithNTimes3MetricsAndViewByAttribute(n = 1) {
     let dataSet: any = immutableSet(

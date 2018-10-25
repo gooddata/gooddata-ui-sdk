@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import noop = require('lodash/noop');
 
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
@@ -16,7 +16,7 @@ describe('FluidLegend', () => {
             containerWidth: 500,
             ...customProps
         };
-        return shallow(
+        return mount(
             <FluidLegend {...props} />
         );
     }

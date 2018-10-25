@@ -12,6 +12,7 @@ import {
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
+    MEASURE_3,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
@@ -316,6 +317,44 @@ storiesOf('Core components/BarChart', module)
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
                         ARITHMETIC_MEASURE_USING_ARITHMETIC
                     ]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('dual axes with two bottom measures, one top measure, one attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_3.measure.localIdentifier]
+                        }
+                    }}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('only top axis with two measures, one attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
+                        }
+                    }}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}

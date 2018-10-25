@@ -3,6 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 import identity = require('lodash/identity');
+import cloneDeep = require('lodash/cloneDeep');
 
 import ChartTransformation from '../../src/components/visualizations/chart/ChartTransformation';
 import { VIEW_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
@@ -138,7 +139,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
             )
         );
     })
-    .add('Column chart without X and Y labels', () => {
+    .add('Dual axes chart with hiding right Y axis', () => {
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
 
         return screenshotWrap(
@@ -158,12 +159,133 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                         },
                         legendLayout: 'vertical',
                         colorPalette: fixtures.customPalette,
-                        xaxis: {
-                            labelsEnabled: false
-                        },
-                        yaxis: {
-                            labelsEnabled: false
+                        secondary_yaxis: {
+                            visible: false,
+                            measures: ['expectedMetric']
                         }
+
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Dual axes chart, right Y axis with text rotation', () => {
+        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            rotation: '45',
+                            measures: ['expectedMetric']
+                        }
+
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Dual axes chart, right Y axis without label', () => {
+        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            labelsEnabled: false,
+                            measures: ['expectedMetric']
+                        }
+
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Dual axes chart, both axes with % format', () => {
+        const dataSet = cloneDeep(fixtures.barChartWith3MetricsAndViewByAttribute);
+
+        const measureItems = dataSet.executionResponse.dimensions[0].headers[0].measureGroupHeader.items;
+        measureItems.forEach((item: any) => {
+            item.measureHeaderItem.format += '%';
+        });
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            measures: ['expectedMetric']
+                        }
+
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Dual axes chart, right Y axis with % format', () => {
+        const dataSet = cloneDeep(fixtures.barChartWith3MetricsAndViewByAttribute);
+
+        const measureItems = dataSet.executionResponse.dimensions[0].headers[0].measureGroupHeader.items;
+        measureItems[2].measureHeaderItem.format += '%';
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'vertical',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            measures: ['expectedMetric']
+                        }
+
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}

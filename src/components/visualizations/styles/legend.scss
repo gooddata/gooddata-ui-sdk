@@ -40,7 +40,7 @@ $responsive-legend: 'only screen and (max-width: 767px)';
         text-align: left;
     }
 
-    .series-item {
+    .series-item, .series-axis-indicator {
         display: flex;
         align-items: center;
         font-family: $gd-font-primary;
@@ -53,7 +53,7 @@ $responsive-legend: 'only screen and (max-width: 767px)';
             margin-right: 5px;
         }
 
-        .series-name {
+        .series-name, .series-text {
             flex: 1 1 auto;
             font-size: 12px;
             line-height: 20px;
@@ -61,6 +61,19 @@ $responsive-legend: 'only screen and (max-width: 767px)';
 
             @include text-overflow();
         }
+    }
+
+    .series-axis-indicator {
+        cursor: default;
+        margin-right: -10px;
+        .series-text {
+          color: $gd-color-text-dimmed;
+        }
+    }
+
+    .legend-separator {
+        width: 20px;
+        height: 15px;
     }
 
     .paging {

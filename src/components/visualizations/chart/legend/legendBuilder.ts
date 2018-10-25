@@ -4,7 +4,6 @@ import set = require('lodash/set');
 import get = require('lodash/get');
 import * as Highcharts from 'highcharts';
 import {
-    isAreaChart,
     isBubbleChart,
     isHeatmap,
     isLineChart,
@@ -14,6 +13,8 @@ import {
 } from '../../utils/common';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from '../../typings/legend';
+import { supportedDualAxesChartTypes } from '../chartOptionsBuilder';
+import { isStackedChart } from './helpers';
 
 function isHeatmapWithMultipleValues(chartOptions: any) {
     const { type } = chartOptions;
@@ -24,12 +25,11 @@ function isHeatmapWithMultipleValues(chartOptions: any) {
 
 export function shouldLegendBeEnabled(chartOptions: any) {
     const seriesLength = get(chartOptions, 'data.series.length');
-    const { type, stacking, hasStackByAttribute, hasViewByAttribute } = chartOptions;
+    const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
     const hasMoreThanOneSeries = seriesLength > 1;
-    const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
-    const isStacked = !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
+    const isStacked = isStackedChart(chartOptions);
     const sliceTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
         isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
@@ -82,11 +82,16 @@ export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
         ? chartOptions.data.series[0].data
         : chartOptions.data.series;
 
+    let pickedProps = ['name', 'color', 'legendIndex'];
+    if (isOneOfTypes(type, supportedDualAxesChartTypes) && !isStackedChart(chartOptions)) {
+        pickedProps = [...pickedProps, 'yAxis'];
+    }
+
     return legendDataSource
         .filter((legendDataSourceItem: any) =>
             legendDataSourceItem.showInLegend !== false)
         .map((legendDataSourceItem: any) =>
-            pick(legendDataSourceItem, ['name', 'color', 'legendIndex']));
+            pick(legendDataSourceItem, pickedProps));
 }
 
 export default function getLegend(legendConfig: any = {}, chartOptions: any): ILegendOptions {

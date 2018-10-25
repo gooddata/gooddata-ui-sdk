@@ -322,7 +322,6 @@ export function generateDimensions(
             return getTreemapDimensionsFromMdObj(mdObject);
         }
 
-        case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE: {
             return getLineDimensions(mdObject);
         }

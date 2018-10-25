@@ -3,12 +3,11 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { screenshotWrap } from '@gooddata/test-storybook';
-import identity = require('lodash/identity');
 
 import ChartTransformation from '../../src/components/visualizations/chart/ChartTransformation';
 import { FLUID_LEGEND_THRESHOLD } from '../../src/components/visualizations/chart/HighChartsRenderer';
 import { immutableSet } from '../../src/components/visualizations/utils/common';
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
+import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
 
 import fixtureDataSets, * as fixtures from '../test_data/fixtures';
 
@@ -17,6 +16,7 @@ import CustomLegend from '../utils/CustomLegend';
 
 import '../../styles/scss/charts.scss';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
+import identity = require('lodash/identity');
 
 function getChart({
     type = 'column',
@@ -31,7 +31,9 @@ function getChart({
     minWidth,
     chartHeight,
     chartWidth,
-    key
+    key,
+    secondary_xaxis = {},
+    secondary_yaxis = {}
 }: any) {
     return wrap((
         <ChartTransformation
@@ -42,7 +44,9 @@ function getChart({
                     position: legendPosition,
                     responsive: legendResponsive
                 },
-                colorPalette
+                colorPalette,
+                secondary_xaxis,
+                secondary_yaxis
             }}
             height={chartHeight}
             width={chartWidth}
@@ -723,29 +727,7 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
             )
         );
     })
-    .add('Dual axis line/line chart with one metric on each axis', () => {
-        const dataSet: any = fixtures.barChartWith2MetricsAndViewByAttribute;
-
-        return screenshotWrap(
-            wrap(
-                <ChartTransformation
-                    drillableItems={[
-                        {
-                            uri: dataSet.executionResponse.dimensions[0]
-                                .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
-                        }
-                    ]}
-                    config={{
-                        type: 'dual',
-                        mdObject: fixtures.barChartWith2MetricsAndViewByAttributeMd.mdObject
-                    }}
-                    {...dataSet}
-                    onDataTooLarge={identity}
-                />
-            )
-        );
-    })
-   .add('Donut chart view viewBy attribute', () => {
+    .add('Donut chart view viewBy attribute', () => {
         const dataSet = fixtures.barChartWithViewByAttribute;
 
         return screenshotWrap(
@@ -1015,4 +997,118 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                 />
             )
         );
-    });
+    })
+    .add('Dual axes with two left measures, one right measure, one attribute', () => {
+        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResponse.dimensions[STACK_BY_DIMENSION_INDEX]
+                                .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'horizontal',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            measures: ['expectedMetric']
+                        }
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Right axis with three right measures, one attribute', () => {
+        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResponse.dimensions[STACK_BY_DIMENSION_INDEX]
+                                .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
+                        }
+                    ]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            enabled: true,
+                            position: 'top'
+                        },
+                        legendLayout: 'horizontal',
+                        colorPalette: fixtures.customPalette,
+                        secondary_yaxis: {
+                            measures: ['lostMetric', 'wonMetric', 'expectedMetric']
+                        }
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                />
+            )
+        );
+    })
+    .add('Dual axes with legend positions', () => (
+        screenshotWrap(
+            <div>
+                {getChart({
+                    legendPosition: 'top',
+                    dataSet: fixtures.chartWith20MetricsAndViewByAttribute,
+                    secondary_yaxis: {
+                        measures: fixtures.metricsInSecondaryAxis
+                    }
+                })}
+                {getChart({
+                    legendPosition: 'right',
+                    dataSet: fixtures.chartWith20MetricsAndViewByAttribute,
+                    secondary_yaxis: {
+                        measures: fixtures.metricsInSecondaryAxis
+                    }
+                })}
+                {getChart({
+                    legendPosition: 'bottom',
+                    dataSet: fixtures.chartWith20MetricsAndViewByAttribute,
+                    secondary_yaxis: {
+                        measures: fixtures.metricsInSecondaryAxis
+                    }
+                })}
+                {getChart({
+                    legendPosition: 'left',
+                    dataSet: fixtures.chartWith20MetricsAndViewByAttribute,
+                    secondary_yaxis: {
+                        measures: fixtures.metricsInSecondaryAxis
+                    }
+                })}
+
+            </div>
+        )
+    ))
+    .add('Dual axes with mobile paging legend', () => (
+        <div>
+            Resize window to {FLUID_LEGEND_THRESHOLD}px or less
+            {screenshotWrap(
+                getChart({
+                    legendPosition: 'right',
+                    legendResponsive: true,
+                    dataSet: fixtures.chartWith20MetricsAndViewByAttribute,
+                    width: '100%',
+                    height: '100%',
+                    minHeight: 300,
+                    chartHeight: 300,
+                    secondary_yaxis: {
+                        measures: fixtures.metricsInSecondaryAxis
+                    }
+                })
+            )}
+        </div>
+    ));

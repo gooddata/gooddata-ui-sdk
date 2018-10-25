@@ -2934,30 +2934,6 @@ describe('chartOptionsBuilder', () => {
                 }];
                 expect(chartOptions.yAxes).toEqual(expectedAxes);
             });
-
-            it('should generate two axes for dual axis chart', () => {
-                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
-                    type: 'dual',
-                    mdObject: {
-                        buckets: [
-                            { localIdentifier: 'measures', items: [ {} ] },
-                            { localIdentifier: 'secondary', items: [ {} ] }
-                        ]
-                    }
-                });
-                const expectedAxes = [{
-                    label: '<button>Lost</button> ...',
-                    format: '#,##0.00',
-                    seriesIndices: [0]
-                }, {
-                    format: '#,##0.00',
-                    label: 'Won',
-                    opposite: true,
-                    seriesIndices: [1, 2]
-                }];
-
-                expect(chartOptions.yAxes).toEqual(expectedAxes);
-            });
         });
 
         describe('generate X axes', () => {
@@ -3292,6 +3268,77 @@ describe('chartOptionsBuilder', () => {
                         expect(dataClasses).toMatchObject(approximatelyExpectedDataClasses);
                     });
                 });
+            });
+        });
+
+        describe('dual axes', () => {
+            const config = {
+                type: 'column',
+                secondary_yaxis: {
+                    measures: ['wonMetric']
+                }
+            };
+
+            const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, config);
+            it('should generate right Y axis with correct properties', () => {
+                const expectedAxes = [{
+                    label: '', // axis label must be empty with 2 metrics
+                    format: '#,##0.00',
+                    opposite: false,
+                    seriesIndices: [0, 2]
+                }, {
+                    label: 'Won', // axis label must present with 1 metric
+                    format: '#,##0.00',
+                    opposite: true,
+                    seriesIndices: [1]
+                }];
+                expect(chartOptions.yAxes).toEqual(expectedAxes);
+            });
+
+            it('should generate right y series with correct yAxis value', () => {
+                const expectedYAxisValues = [0, 1, 0]; // Left: Lost, Expected and Right: Won
+                const yAxisValues = chartOptions.data.series.map(({ yAxis }: any) => yAxis);
+                expect(yAxisValues).toEqual(expectedYAxisValues);
+            });
+
+            it('should generate % format for both Y axes ', () => {
+                const dataSet = cloneDeep(fixtures.barChartWith3MetricsAndViewByAttribute);
+                const measureItems = dataSet.executionResponse.dimensions[0].headers[0].measureGroupHeader.items;
+                measureItems.forEach((item: any) => {
+                    item.measureHeaderItem.format += '%';
+                });
+
+                const chartOptions = generateChartOptions(dataSet, config);
+                const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
+                expect(formatValues).toEqual(['#,##0.00%', '#,##0.00%']);
+            });
+
+            it('should generate % format for right Y axis ', () => {
+                const dataSet = cloneDeep(fixtures.barChartWith3MetricsAndViewByAttribute);
+                const measureItems = dataSet.executionResponse.dimensions[0].headers[0].measureGroupHeader.items;
+                measureItems[1].measureHeaderItem.format += '%';
+
+                const chartOptions = generateChartOptions(dataSet, config);
+                const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
+                expect(formatValues).toEqual(['#,##0.00', '#,##0.00%']);
+            });
+
+            it('should generate one right Y axis', () => {
+                const config = {
+                    type: 'column',
+                    secondary_yaxis: {
+                        measures: ['lostMetric', 'expectedMetric', 'wonMetric']
+                    }
+                };
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, config);
+
+                const expectedAxis = [{
+                    label: '', // axis label must be empty with 3 metrics
+                    format: '#,##0.00',
+                    opposite: true,
+                    seriesIndices: [0, 1, 2]
+                }];
+                expect(chartOptions.yAxes).toEqual(expectedAxis);
             });
         });
     });
