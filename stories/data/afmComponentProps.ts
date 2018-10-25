@@ -197,22 +197,22 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
 export const AFM_HEATMAP_58ROWS: AFM.IAfm = {
     measures: [MEASURE_2],
     attributes: [{
-        ...ATTRIBUTE_POPULARITY,
-        localIdentifier: 'Popularity'
-    }, {
         ...ATTRIBUTE_COUNTRY,
         localIdentifier: '58countries'
+    }, {
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
     }]
 };
 
 export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
     measures: [MEASURE_1],
     attributes: [{
-        ...ATTRIBUTE_POPULARITY,
-        localIdentifier: 'Popularity'
-    }, {
         ...ATTRIBUTE_COUNTRY,
         localIdentifier: '60countries'
+    }, {
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
     }]
 };
 
