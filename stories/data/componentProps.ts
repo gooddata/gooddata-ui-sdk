@@ -103,7 +103,7 @@ export const MEASURE_2_WITH_FORMAT: VisualizationObject.IMeasure = {
                 }
             }
         },
-        format: '[green]#,##0.00 €'
+        format: '[backgroundColor=ffff00][green]#,##0.00 €'
     }
 };
 
@@ -155,7 +155,7 @@ export const FORMATTED_ARITHMETIC_MEASURE: VisualizationObject.IMeasure = {
                 operator: 'sum'
             }
         },
-        format: '[green]#,##0.00 €',
+        format: '[backgroundColor=ffff00][green]#,##0.00 €',
         alias: 'Formatted sum of m1 and m2'
     }
 };

@@ -75,6 +75,7 @@ export interface IAlignPoint {
 }
 
 export interface ITableCellStyle {
+    backgroundColor?: string;
     color?: string;
     fontWeight?: React.CSSProperties['fontWeight'];
 }

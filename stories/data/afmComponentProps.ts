@@ -123,7 +123,7 @@ const ARITHMETIC_MEASURE_WITH_FORMATTING: AFM.IMeasure = {
             operator: 'sum'
         }
     },
-    format: '[green]#,##0.00 €',
+    format: '[backgroundColor=ffff00][green]#,##0.00 €',
     alias: 'Formatted sum of m1 and m2'
 };
 

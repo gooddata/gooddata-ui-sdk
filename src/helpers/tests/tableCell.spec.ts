@@ -12,6 +12,7 @@ import { TABLE_HEADERS_2A_3M } from '../../components/visualizations/table/fixtu
 const ATTRIBUTE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[0];
 const FIRST_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[2];
 const SECOND_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[3];
+const THIRD_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[4];
 
 describe('Table utils - Cell', () => {
     describe('getCellClassNames', () => {
@@ -78,7 +79,20 @@ describe('Table utils - Cell', () => {
             });
         });
 
-        it('should apply color whe the argument applyColor is true', () => {
+        it('should get style and formattedValue for measure with color and backgroundColor', () => {
+            expect(getCellStyleAndFormattedValue(
+                THIRD_MEASURE_HEADER,
+                '9876543.21'
+            )).toEqual({
+                style: {
+                    backgroundColor: '#ffff00',
+                    color: '#FF0000'
+                },
+                formattedValue: '$9,876,543.21'
+            });
+        });
+
+        it('should apply color when the argument applyColor is true', () => {
             expect(getCellStyleAndFormattedValue(
                 SECOND_MEASURE_HEADER,
                 '9876543.21',
@@ -91,9 +105,23 @@ describe('Table utils - Cell', () => {
             });
         });
 
-        it('should NOT apply color whe the argument applyColor is false', () => {
+        it('should apply color and backgroundColor when the argument applyColor is true', () => {
             expect(getCellStyleAndFormattedValue(
-                SECOND_MEASURE_HEADER,
+                THIRD_MEASURE_HEADER,
+                '9876543.21',
+                true
+            )).toEqual({
+                style: {
+                    backgroundColor: '#ffff00',
+                    color: '#FF0000'
+                },
+                formattedValue: '$9,876,543.21'
+            });
+        });
+
+        it('should NOT apply color or backgroundColor whe the argument applyColor is false', () => {
+            expect(getCellStyleAndFormattedValue(
+                THIRD_MEASURE_HEADER,
                 '9876543.21',
                 false
             )).toEqual({
@@ -256,6 +284,29 @@ describe('Table utils - Cell', () => {
             });
         });
 
+        it('should get style for number with backgroundColor in format when applyColor=true', () => {
+            expect(getMeasureCellStyle(
+                '123456789',
+                '[backgroundColor=ffff00]$#,##0.00',
+                undefined,
+                true
+            )).toEqual({
+                backgroundColor: '#ffff00'
+            });
+        });
+
+        it('should get style for number with color and backgroundColor in format when applyColor=true', () => {
+            expect(getMeasureCellStyle(
+                '123456789',
+                '[backgroundColor=ffff00][red]$#,##0.00',
+                undefined,
+                true
+            )).toEqual({
+                backgroundColor: '#ffff00',
+                color: '#FF0000'
+            });
+        });
+
         it('should NOT get style for number with color in format when applyColor=false', () => {
             expect(getMeasureCellStyle(
                 '123456789',
@@ -265,7 +316,16 @@ describe('Table utils - Cell', () => {
             )).toEqual({});
         });
 
-        it('should NOT get style for number without color in format when applyColor=true', () => {
+        it('should NOT get style for number with backgroundColor in format when applyColor=false', () => {
+            expect(getMeasureCellStyle(
+                '123456789',
+                '[backgroundColor=ffff00]$#,##0.00',
+                undefined,
+                false
+            )).toEqual({});
+        });
+
+        it('should NOT get style for number without color or backgroundColor in format when applyColor=true', () => {
             expect(getMeasureCellStyle(
                 '123456789',
                 '$#,##0.00',
