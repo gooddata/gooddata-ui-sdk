@@ -1,4 +1,59 @@
 # Changelog
+
+## Unreleased/planned
+
+- We are working on arithmetic measures support.
+- We are working on the option to add the secondary axis into certain visualizations (line chart, column chart, bar chart).
+- We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major version.
+
+## 6.0.0
+
+November 1, 2018
+
+[Migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_6.html) from version 5.3.
+
+### Added
+
+- Pivot table component ([doc](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html)) that can be used to create both the pivot and the flat tables. In the future, we plan to use this implementation as a base for the TableComponent.
+- Extended capabilities of ChartConfig ([doc](https://sdk.gooddata.com/gooddata-ui/docs/chart_config.html)).
+- Added new way how to define custom colors to enable color mapping in the future ([commit](https://github.com/gooddata/gooddata-react-components/commit/8e968fd2b2b5da5fee6059d35ee7d8ae17278295)).
+- Heatmap can use custom colors ([commit](https://github.com/gooddata/gooddata-react-components/commit/97563afa58fd01d6a18745b8d14f1a01672575ae)).
+- React 16 support ([commit](https://github.com/gooddata/gooddata-react-components/commit/64226babfc81c957bfb6496f69711ddbd54dd49a)).
+
+### Changed
+
+- [breaking] Gooddata.UI license has changed. Now, Gooddata.UI is double licensed. See the license file for details: ([commit](https://github.com/gooddata/gooddata-react-components/commit/b106f79aa2cc23553cf62a0b03955be893a0edd7)).
+- [breaking] Heatmap props were renamed ([commit](https://github.com/gooddata/gooddata-react-components/commit/39fe84c07dc84afd607d405035054d87a5a4a2b4) | [doc](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html#properties) | [migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_6.html)).
+- [breaking] Type definitions of the Area chart "stack by"/"view by" props were changed ([commit](https://github.com/gooddata/gooddata-react-components/commit/02a84754aea64ee7c932b451f6c7463f7a9177cf) | doc | [migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_6.html)).
+- [breaking] Removed RGBA color definitions. Alpha channel didn’t work with derived measures or on treemap ([commit](https://github.com/gooddata/gooddata-react-components/commit/8e968fd2b2b5da5fee6059d35ee7d8ae17278295) | doc | [migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_6.html)).
+
+### Deprecated
+
+- The following AFM components are marked as deprecated and will be removed by the end of September 2019:
+
+  - BarChart
+  - ColumnChart
+  - LineChart
+  - PieChart
+  - DonutChart
+  - Table
+  - Headline
+  - AreaChart
+  - Treemap
+  - Heatmap
+  - ScatterPlot
+
+We recommend that you begin using corresponding visual components with the same name instead. See our [migration guide to v 5.0.0](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_5.md#components-with-buckets-interface) for details.
+
+### Removed
+
+- React 15 support.
+
+### Fixed
+
+- Heatmap with bucket interface had switched the meaning of each bucket prop.
+- Other bug fixes and internal improvements.
+
 ## 5.3.2 (September 27, 2018)
 
 - Added description of data used in examples ([commit](https://github.com/gooddata/gooddata-react-components/commit/a0d7c54445325aecfeb5bd898bc3615fb67c2032))
