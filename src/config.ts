@@ -34,7 +34,7 @@ export function sanitizeDomain(domain: string | null) {
  * Returns sanitized config
  *
  * @method sanitizeConfig
- * @return {object|undefiend} config with sanitized domain
+ * @return {object|undefined} config with sanitized domain
  */
 export function sanitizeConfig(config: any) {
     const sanitized = { ...config };
