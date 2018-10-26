@@ -112,9 +112,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@57.1.7":
-  version "57.1.7"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.1.7.tgz#656effe6fcc068e7c106018b1571a4c383f84be3"
+"@gooddata/goodstrap@57.1.8":
+  version "57.1.8"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.1.8.tgz#f5caaf78b5468a453449e57f0ba5078962eec2ff"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -147,9 +147,9 @@
     js-cookie "^2.1.4"
     lodash "^4.17.4"
 
-"@gooddata/mock-js@1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.10.0.tgz#f842a83591b9f3ecf6fb3ccdf085481abf8c5dd5"
+"@gooddata/mock-js@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.12.0.tgz#aa17026241bc957af041f06dcd69b97b7d61ff5c"
   dependencies:
     "@gooddata/typings" "2.4.0"
     "@types/seedrandom" "2.4.27"
