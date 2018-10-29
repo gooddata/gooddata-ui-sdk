@@ -1,21 +1,14 @@
 // (C) 2007-2013 GoodData Corporation
-import {
-    isPlainObject,
-    isFunction,
-    set as _set,
-    defaults,
-    merge,
-    result
-} from 'lodash';
+import { isPlainObject, isFunction, set as _set, defaults, merge, result } from 'lodash';
 
 import { thisPackage } from './util';
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
- * Inteface is same as original jQuery.ajax.
+ * Interface is the same as original jQuery.ajax.
  *
- * If token is expired, current request is "paused", token is refreshed and request is retried and result.
- * is transparently returned to original call.
+ * If token is expired, current request is "paused", token is refreshed and request is retried and result
+ * is transparently returned to the original call.
  *
  * Additionally polling is handled. Only final result of polling returned.
  * @module xhr
@@ -23,6 +16,12 @@ import { thisPackage } from './util';
  */
 
 const DEFAULT_POLL_DELAY = 1000;
+
+const REST_API_VERSION_HEADER = 'X-GDC-VERSION';
+const REST_API_DEPRECATED_VERSION_HEADER = 'X-GDC-DEPRECATED';
+
+// The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
+const LATEST_REST_API_VERSION = 3;
 
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {
@@ -36,7 +35,7 @@ function simulateBeforeSend(url: string, settings: any) {
     }
 }
 
-function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: any, domain: string) { // TODO any
+function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: any, domain: string): any {
     let url = originalUrl;
     const settings = originalSettings;
     if (domain) {
@@ -114,6 +113,9 @@ export class ApiResponse {
     }
 }
 
+// the variable must be outside of the scope of the XhrModule to not log the message multiple times in SDK and KD
+let shouldLogDeprecatedRestApiCall = true;
+
 export class XhrModule {
     private tokenRequest?: any;
 
@@ -182,6 +184,8 @@ export class XhrModule {
             return handlePolling(finalUrl, finalSettings, this.ajax.bind(this));
         }
 
+        this.verifyRestApiDeprecationStatus(response.headers);
+
         if (response.status >= 200 && response.status <= 399) {
             return new ApiResponse(response, responseBody);
         }
@@ -224,6 +228,7 @@ export class XhrModule {
                 headers: {
                     'Accept': 'application/json; charset=utf-8',
                     'Content-Type': 'application/json',
+                    [REST_API_VERSION_HEADER]: LATEST_REST_API_VERSION,
                     ...originPackageHeaders(this.configStorage.originPackage || thisPackage)
                 }
             },
@@ -289,5 +294,24 @@ export class XhrModule {
         }
 
         return this.ajax(originalUrl, originalSettings);
+    }
+
+    private logDeprecatedRestApiCall(deprecatedVersionDetails: string) {
+        // tslint:disable-next-line:no-console
+        console.warn(`The REST API version ${LATEST_REST_API_VERSION} is deprecated `
+            + `(${deprecatedVersionDetails})! Please migrate your application to use either the latest`
+            + 'GoodData.UI SDK or @gooddata/gooddata-js package!');
+    }
+
+    private isRestApiDeprecated(responseHeaders: any) {
+        return responseHeaders.has(REST_API_DEPRECATED_VERSION_HEADER);
+    }
+
+    private verifyRestApiDeprecationStatus(responseHeaders: any) {
+        if (shouldLogDeprecatedRestApiCall && this.isRestApiDeprecated(responseHeaders)) {
+            const deprecatedVersionDetails = responseHeaders.get(REST_API_DEPRECATED_VERSION_HEADER);
+            this.logDeprecatedRestApiCall(deprecatedVersionDetails);
+            shouldLogDeprecatedRestApiCall = false;
+        }
     }
 }
