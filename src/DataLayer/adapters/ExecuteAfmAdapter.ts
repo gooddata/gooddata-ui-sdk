@@ -4,6 +4,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import { IAdapter } from '..';
 import { IDataSource } from '../interfaces/DataSource';
 import { DataSource } from '../dataSources/DataSource';
+import { handleMeasureDateFilter } from '../helpers/filters';
 import { version as pkgVersion } from '../../../package.json';
 
 export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses> {
@@ -22,7 +23,7 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
         const execFactory = (resultSpec: AFM.IResultSpec) => {
             const execution: AFM.IExecution = {
                 execution: {
-                    afm,
+                    afm: handleMeasureDateFilter(afm),
                     resultSpec
                 }
             };
@@ -32,7 +33,7 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
         const responseFactory = (resultSpec: AFM.IResultSpec) => {
             const execution: AFM.IExecution = {
                 execution: {
-                    afm,
+                    afm: handleMeasureDateFilter(afm),
                     resultSpec
                 }
             };
