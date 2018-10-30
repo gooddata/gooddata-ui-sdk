@@ -727,7 +727,6 @@ function getDataConfiguration(chartOptions: any) {
 
 function lineSeriesMapFn(seriesOrig: any) {
     const series = cloneDeep(seriesOrig);
-
     if (series.isDrillable) {
         set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
     } else {
@@ -744,6 +743,21 @@ function barSeriesMapFn(seriesOrig: any) {
     set(series, 'states.hover.enabled', series.isDrillable);
 
     return series;
+}
+
+function getHeatMapHoverColor(config: any) {
+    const dataClasses = get(config, ['colorAxis', 'dataClasses'], null);
+    let resultColor = 'rgb(210,210,210)';
+
+    if (dataClasses) {
+        if (dataClasses.length === 1) {
+            resultColor = dataClasses[0].color;
+        } else if (dataClasses.length > 1) {
+            resultColor = dataClasses[1].color;
+        }
+    }
+
+    return getLighterColor(resultColor, 0.2);
 }
 
 function getHoverStyles({ type }: any, config: any) {
@@ -764,8 +778,18 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.FUNNEL:
-        case VisualizationTypes.HEATMAP:
             seriesMapFn = barSeriesMapFn;
+            break;
+        case VisualizationTypes.HEATMAP:
+            seriesMapFn = (seriesOrig, config) => {
+                const series = cloneDeep(seriesOrig);
+                const color = getHeatMapHoverColor(config);
+
+                set(series, 'states.hover.color', color);
+                set(series, 'states.hover.enabled', series.isDrillable);
+
+                return series;
+            };
             break;
 
         case VisualizationTypes.COMBO:
@@ -805,7 +829,7 @@ function getHoverStyles({ type }: any, config: any) {
             break;
     }
     return {
-        series: config.series.map(seriesMapFn),
+        series: config.series.map((item: any) => seriesMapFn(item, config)),
         plotOptions: {
             ...[
                 VisualizationTypes.LINE,
@@ -813,7 +837,7 @@ function getHoverStyles({ type }: any, config: any) {
                 VisualizationTypes.SCATTER,
                 VisualizationTypes.BUBBLE
             ].reduce((conf, key) => ({
-                ...conf,
+                ...conf as any,
                 [key]: {
                     point: {
                         events: {
