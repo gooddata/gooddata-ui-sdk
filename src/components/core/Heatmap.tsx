@@ -5,12 +5,8 @@ import { ChartPropTypes, Requireable } from '../../proptypes/Chart';
 
 export { Requireable };
 
-export class Heatmap extends React.Component<IChartProps, null> {
+export class Heatmap extends React.PureComponent<IChartProps, null> {
     public static propTypes = ChartPropTypes;
-
-    constructor(props: IChartProps) {
-        super(props);
-    }
 
     public render() {
         return (

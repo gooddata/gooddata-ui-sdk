@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { FunnelChart } from '../FunnelChart';
 import { FunnelChart as AfmFunnelChart } from '../afm/FunnelChart';
+import { M1 } from './fixtures/buckets';
 
 describe('FunnelChart', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -38,6 +40,17 @@ describe('FunnelChart', () => {
             }]
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <FunnelChart
+                projectId="foo"
+                measures={[M1]}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
+    });
 
     it('should render funnel chart and convert the buckets to AFM', () => {
         const wrapper = shallow(

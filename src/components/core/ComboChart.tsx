@@ -6,7 +6,7 @@ import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
-export class ComboChart extends React.Component<IChartProps, null> {
+export class ComboChart extends React.PureComponent<IChartProps, null> {
     public static propTypes = ChartPropTypes;
 
     constructor(props: IChartProps) {
