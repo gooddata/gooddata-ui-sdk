@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { AreaChart } from '../AreaChart';
+import { DualChart } from '../DualChart';
 import { BaseChart } from '../base/BaseChart';
 import { emptyDataSource } from '../../tests/mocks';
 
-describe('AreaChart', () => {
+describe('DualChart', () => {
     it('should render BaseChart', () => {
-        const wrapper = shallow(<AreaChart dataSource={emptyDataSource} />);
+        const wrapper = shallow(<DualChart dataSource={emptyDataSource} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

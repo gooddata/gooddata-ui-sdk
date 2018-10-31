@@ -1,8 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { PivotTable } from '../PivotTable';
+import { M1 } from './fixtures/buckets';
 
 describe('PivotTable', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -35,6 +37,17 @@ describe('PivotTable', () => {
             }
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <PivotTable
+                projectId="foo"
+                measures={[M1]}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper).toHaveLength(1);
+    });
 
     it('should render table and convert the buckets to AFM and resultSpec', () => {
         const wrapper = shallow(
