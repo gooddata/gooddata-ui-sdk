@@ -6,7 +6,7 @@ import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
-export class FunnelChart extends React.Component<IChartProps, null> {
+export class FunnelChart extends React.PureComponent<IChartProps, null> {
     public static propTypes = ChartPropTypes;
 
     constructor(props: IChartProps) {

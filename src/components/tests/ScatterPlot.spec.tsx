@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { ScatterPlot } from '../ScatterPlot';
 import { ScatterPlot as AfmScatterPlot } from '../afm/ScatterPlot';
+import { M1 } from './fixtures/buckets';
 
 describe('ScatterPlot', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -40,6 +42,17 @@ describe('ScatterPlot', () => {
             }
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <ScatterPlot
+                projectId="foo"
+                xAxisMeasure={M1}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper.find(AfmScatterPlot)).toHaveLength(1);
+    });
 
     it('should render scatter plot and convert the buckets to AFM', () => {
         const wrapper = shallow(

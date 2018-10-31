@@ -34,6 +34,7 @@ export interface ITableProps extends ICommonChartProps, ITableBucketProps {
 }
 
 type ITableNonBucketProps = Subtract<ITableProps, ITableBucketProps>;
+
 /**
  * TODO: Update link to documentation [PivotTable](http://sdk.gooddata.com/gooddata-ui/docs/table_component.html)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
