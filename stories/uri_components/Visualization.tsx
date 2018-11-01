@@ -15,7 +15,7 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 const defaultFilter: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            uri: '/gdc/md/myproject/obj/123'
+            uri: '/gdc/md/storybook/obj/123'
         },
         from: '2017-01-01',
         to: '2017-12-31'
@@ -24,15 +24,15 @@ const defaultFilter: AFM.IAbsoluteDateFilter = {
 
 class DynamicVisualization extends React.Component<any, any> {
     private initialProps: IVisualizationProps = {
-        projectId: 'myproject',
-        uri: '/gdc/md/myproject/obj/1001',
+        projectId: 'storybook',
+        uri: '/gdc/md/storybook/obj/1001',
         config: { colors: CUSTOM_COLORS },
         filters: [defaultFilter]
     };
 
     private alternativeProps: IVisualizationProps = {
-        projectId: 'myproject',
-        uri: '/gdc/md/myproject/obj/1002',
+        projectId: 'storybook',
+        uri: '/gdc/md/storybook/obj/1002',
         config: {},
         filters: []
     };
@@ -87,13 +87,13 @@ class DynamicVisualization extends React.Component<any, any> {
     }
 }
 
-storiesOf('URI components/Visualization', module)
+storiesOf('URI components', module)
     .add('table example', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1001'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1001'}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -105,7 +105,7 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
+                    projectId="storybook"
                     identifier="1001"
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -118,8 +118,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1001'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1001'}
                     drillableItems={[{ identifier: '1' }, { identifier: '3' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
@@ -142,7 +142,7 @@ storiesOf('URI components/Visualization', module)
                 }}
             >
                 <Visualization
-                    projectId="myproject"
+                    projectId="storybook"
                     identifier="1001"
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -155,8 +155,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1001'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1001'}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -169,8 +169,36 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1003'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1003'}
+                    onError={onErrorHandler}
+                    locale="en-US"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('chart with arithmetic measures', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1008'}
+                    onError={onErrorHandler}
+                    locale="en-US"
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('chart with disabled gridline', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1007'}
                     onError={onErrorHandler}
                     locale="en-US"
                     LoadingComponent={null}
@@ -183,8 +211,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1006'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1006'}
                     onError={onErrorHandler}
                     locale="en-US"
                     LoadingComponent={null}
@@ -197,8 +225,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -206,12 +234,26 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
+    .add('custom color palette in style settings', () => (
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                    <Visualization
+                        projectId="colorstorybook"
+                        uri={'/gdc/md/colorstorybook/obj/1007'}
+                        onError={onErrorHandler}
+                        locale="en-US"
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+            </div>
+        )
+    ))
     .add('chart example with German format number', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -224,8 +266,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
                     config={{
                         legend: {
                             enabled: false
@@ -243,7 +285,7 @@ storiesOf('URI components/Visualization', module)
         const filter: AFM.IAbsoluteDateFilter = {
             absoluteDateFilter: {
                 dataSet: {
-                    uri: '/gdc/md/myproject/obj/123'
+                    uri: '/gdc/md/storybook/obj/123'
                 },
                 from: '2017-01-01',
                 to: '2017-12-31'
@@ -253,8 +295,8 @@ storiesOf('URI components/Visualization', module)
         return screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
                     filters={[filter]}
                     config={{ colors: CUSTOM_COLORS }}
                     onError={onErrorHandler}
@@ -268,8 +310,8 @@ storiesOf('URI components/Visualization', module)
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1002'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
                     drillableItems={[{ identifier: '1' }, { identifier: '2' }]}
                     onFiredDrillEvent={action('drill-event fired')}
                     onError={onErrorHandler}
@@ -279,12 +321,12 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
-    .add('Headline', () => (
+    .add('headline', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1004'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1004'}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
@@ -292,12 +334,12 @@ storiesOf('URI components/Visualization', module)
             </div>
         )
     ))
-    .add('Headline with German number format', () => (
+    .add('headline with German number format', () => (
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
                 <Visualization
-                    projectId="myproject"
-                    uri={'/gdc/md/myproject/obj/1004'}
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1004'}
                     config={GERMAN_SEPARATORS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -316,8 +358,8 @@ storiesOf('URI components/Visualization', module)
     .add('error', () => (
         <div style={{ width: 800, height: 400 }}>
             <Visualization
-                projectId="myproject"
-                uri={'/gdc/md/myproject/obj/1005'}
+                projectId="storybook"
+                uri={'/gdc/md/storybook/obj/1005'}
                 onError={onErrorHandler}
                 LoadingComponent={null}
             />

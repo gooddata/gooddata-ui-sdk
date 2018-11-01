@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataLayer } from '@gooddata/gooddata-js';
+import { chunk } from 'lodash';
 
 const { Uri: { isUri } } = DataLayer;
 
@@ -7,14 +8,16 @@ const getQualifierObject = qualifierString => ({
     [(isUri(qualifierString) ? 'uri' : 'identifier')]: qualifierString
 });
 
-export const createMeasureBucketItem = (qualifierString, localIdentifier, alias) => {
+export const createMeasureBucketItem = (qualifierString, localIdentifier, alias, filters = []) => {
     const aliasProp = alias ? { alias } : {};
+    const filtersProp = filters.length > 0 ? { filters } : {};
     return {
         measure: {
             localIdentifier: localIdentifier || qualifierString,
             definition: {
                 measureDefinition: {
-                    item: getQualifierObject(qualifierString)
+                    item: getQualifierObject(qualifierString),
+                    ...filtersProp
                 }
             },
             ...aliasProp
@@ -68,9 +71,9 @@ export const createAttributeBucketItem = (qualifierString, localIdentifier, alia
     return {
         visualizationAttribute: {
             localIdentifier: qualifierString,
-            displayForm: getQualifierObject(qualifierString)
-        },
-        ...aliasProp
+            displayForm: getQualifierObject(qualifierString),
+            ...aliasProp
+        }
     };
 };
 
@@ -105,6 +108,15 @@ export const createRelativeDateFilter = (dateDataSetQualifier, granularity, from
     };
 };
 
+export const createMeasureAttributeFilter = (qualifierString, values) => {
+    return {
+        positiveAttributeFilter: {
+            displayForm: getQualifierObject(qualifierString),
+            in: values
+        }
+    };
+};
+
 export const createAttributeSortItem = (attributeIdentifier, direction = 'asc', aggregation) => {
     const aggregationSpread = aggregation ? { aggregation } : {};
     return {
@@ -116,15 +128,23 @@ export const createAttributeSortItem = (attributeIdentifier, direction = 'asc', 
     };
 };
 
-export const createMeasureSortItem = (measureIdentifier, direction = 'desc', attributeLocatorIdentifier, attributeLocatorValue) => {
-    const attributeLocatorSpread = attributeLocatorIdentifier && attributeLocatorValue
-        ? [{
-            attributeLocatorItem: {
-                attributeIdentifier: attributeLocatorIdentifier,
-                element: attributeLocatorValue
-            }
-        }]
-        : [];
+/* createMeasureSortItem
+ * This helps build measure sort items. This enables sorting data by measure.
+ * If you are sorting data that have measures and attributes in the same dimension,
+ * you need to also specify attribute locators. Attribute locators are pairs of
+ * attributeIdentifiers and attributeValueUris. They need to be in the same order
+ * as defined in the dimension.
+ */
+export const createMeasureSortItem = (measureIdentifier, direction = 'desc', attributeLocators = []) => {
+    const attributeLocatorSpread = chunk(attributeLocators, 2)
+        .map(([attributeLocatorIdentifier, attributeLocatorValue]) => {
+            return {
+                attributeLocatorItem: {
+                    attributeIdentifier: attributeLocatorIdentifier,
+                    element: attributeLocatorValue
+                }
+            };
+        });
 
     return {
         measureSortItem: {
@@ -138,5 +158,13 @@ export const createMeasureSortItem = (measureIdentifier, direction = 'desc', att
                 }
             ]
         }
+    };
+};
+
+export const createColumnTotal = (measureLocalIdentifier, attributeLocalIdentifier, type = 'sum') => {
+    return {
+        measureIdentifier: measureLocalIdentifier,
+        type,
+        attributeIdentifier: attributeLocalIdentifier
     };
 };

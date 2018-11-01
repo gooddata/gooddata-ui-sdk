@@ -4,13 +4,14 @@ import * as classNames from 'classnames';
 import { uniqueId, noop } from 'lodash';
 import { Cell } from 'fixed-data-table-2';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { ISeparators } from '@gooddata/numberjs';
 import { VisualizationObject } from '@gooddata/typings';
 
 import {
     DEFAULT_FOOTER_ROW_HEIGHT,
     TOTALS_ADD_ROW_HEIGHT
 } from '../TableVisualization';
-import { getStyledLabel } from '../utils/cell';
+import { getCellStyleAndFormattedValue } from '../../../../helpers/tableCell';
 import {
     getTotalsDataSource,
     hasTableColumnTotalEnabled,
@@ -20,7 +21,6 @@ import {
 import { AddTotal } from './AddTotal';
 import { ITotalWithData, IIndexedTotalItem } from '../../../../interfaces/Totals';
 import { TableHeader } from '../../../../interfaces/Table';
-import { ISeparators } from '@gooddata/numberjs';
 
 export interface ITotalCellProps {
     totalsWithData: ITotalWithData[];
@@ -176,7 +176,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
     }
 
     private renderMeasureCellContent(
-        label: string,
+        formattedValue: string,
         style: React.CSSProperties,
         total: IIndexedTotalItem,
         header: TableHeader,
@@ -191,7 +191,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
         const columnHasTotal = hasTableColumnTotalEnabled(total.outputMeasureIndexes, columnIndex, firstMeasureIndex);
 
         const labelElement = (
-            <span className={classNames('s-total-value')} title={label} style={style}>{label}</span>
+            <span className={classNames('s-total-value')} title={formattedValue} style={style}>{formattedValue}</span>
         );
 
         if (editAllowed) {
@@ -246,8 +246,8 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
                 ? total.values[measureColumnIndex].toString()
                 : null;
 
-            const { label, style } = getStyledLabel(header, value, false, separators);
-            return this.renderMeasureCellContent(label, style, total, header, columnIndex);
+            const { formattedValue, style } = getCellStyleAndFormattedValue(header, value, false, separators);
+            return this.renderMeasureCellContent(formattedValue, style, total, header, columnIndex);
         }
 
         return '';

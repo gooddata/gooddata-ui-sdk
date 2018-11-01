@@ -26,21 +26,11 @@ const SCATTER_TEMPLATE: any = {
                     }
                 }
             }
-        },
-        xAxis: [{
-            labels: {
-                enabled: true
-            },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
-        }],
-        yAxis: [{
-            labels: {
-                enabled: true
-            }
-        }]
+        }
     },
+    xAxis: [{
+        startOnTick: true
+    }],
     series: {
         lineWidth: LINE_WIDTH,
         fillOpacity: 0.3,

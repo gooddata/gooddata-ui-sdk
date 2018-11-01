@@ -93,6 +93,20 @@ export const MEASURE_WITH_FORMAT: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_2_WITH_FORMAT: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'm2',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/storybook/obj/2'
+                }
+            }
+        },
+        format: '[backgroundColor=ffff00][green]#,##0.00 €'
+    }
+};
+
 export const MEASURE_WITH_NULLS: VisualizationObject.IMeasure = {
     measure: {
         localIdentifier: 'm4',
@@ -106,11 +120,69 @@ export const MEASURE_WITH_NULLS: VisualizationObject.IMeasure = {
     }
 };
 
+export const ARITHMETIC_MEASURE_SIMPLE_OPERANDS: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'arithmetic_measure_1',
+        definition: {
+            arithmeticMeasure: {
+                measureIdentifiers: ['m1', 'm2'],
+                operator: 'sum'
+            }
+        },
+        alias: 'Sum of m1 and m2'
+    }
+};
+
+export const ARITHMETIC_MEASURE_USING_ARITHMETIC: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'arithmetic_measure_2',
+        definition: {
+            arithmeticMeasure: {
+                measureIdentifiers: ['arithmetic_measure_1', 'm2'],
+                operator: 'difference'
+            }
+        },
+        alias: 'Difference of arithmetic_measure_1 and m2'
+    }
+};
+
+export const FORMATTED_ARITHMETIC_MEASURE: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'arithmetic_measure_3',
+        definition: {
+            arithmeticMeasure: {
+                measureIdentifiers: ['m1', 'm2'],
+                operator: 'sum'
+            }
+        },
+        format: '[backgroundColor=ffff00][green]#,##0.00 €',
+        alias: 'Formatted sum of m1 and m2'
+    }
+};
+
 export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute = {
     visualizationAttribute: {
         localIdentifier: 'a1',
         displayForm: {
             uri: '/gdc/md/storybook/obj/4.df'
+        }
+    }
+};
+
+export const ATTRIBUTE_COUNTRY: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'country',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/3.df'
+        }
+    }
+};
+
+export const ATTRIBUTE_POPULARITY: VisualizationObject.IVisualizationAttribute = {
+    visualizationAttribute: {
+        localIdentifier: 'Popularity',
+        displayForm: {
+            uri: '/gdc/md/storybook/obj/5.df'
         }
     }
 };

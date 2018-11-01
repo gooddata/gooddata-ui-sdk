@@ -7,7 +7,7 @@ import '@gooddata/react-components/styles/css/main.css';
 
 import {
     totalSalesIdentifier,
-    yearDateIdentifier,
+    quarterDateIdentifier,
     yearDateDataSetAttributeIdentifier,
     projectId
 } from '../utils/fixtures';
@@ -38,7 +38,7 @@ export class SamePeriodColumnChartExample extends Component {
                             '$ Total Sales - SP year ago'),
                         createMeasureBucketItem(totalSalesIdentifier, 'totalSales', '$ Total Sales')
                     ]}
-                    viewBy={createAttributeBucketItem(yearDateIdentifier)}
+                    viewBy={createAttributeBucketItem(quarterDateIdentifier)}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

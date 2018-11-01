@@ -16,7 +16,6 @@ export const ATTRIBUTE_DISPLAY_FORM_IDENTIFIER_3 = 'bar';
 
 export function createMetadataMock() {
     return {
-        // tslint:disable-next-line:variable-name
         getValidElements: jest.fn((_projectId, objectId, options) => {
             const itemMap = {
                 [ATTRIBUTE_DISPLAY_FORM_IDENTIFIER]: COUNTRIES,
@@ -44,7 +43,7 @@ export function createMetadataMock() {
                 }
             });
         }),
-        getObjectUri: jest.fn((_projectId, identifier) => { // tslint:disable-line:variable-name
+        getObjectUri: jest.fn((_projectId, identifier) => {
             if (identifier === ATTRIBUTE_DISPLAY_FORM_IDENTIFIER) {
                 return Promise.resolve(ATTRIBUTE_DISPLAY_FORM_URI);
             }
@@ -83,7 +82,6 @@ export function createMetadataMock() {
                 }
             });
         }),
-        // tslint:disable-next-line:variable-name
         getIdentifiersFromUris: jest.fn((_projectId, uris: string[]) => {
             const uriMap = {
                 [ATTRIBUTE_DISPLAY_FORM_URI]:
@@ -93,7 +91,6 @@ export function createMetadataMock() {
             };
             return Promise.resolve(uris.map(uri => uriMap[uri]));
         }),
-        // tslint:disable-next-line:variable-name
         getUrisFromIdentifiers: jest.fn((_projectId, identifiers: string[]) => {
             const identifierMap = {
                 [ATTRIBUTE_DISPLAY_FORM_IDENTIFIER]:

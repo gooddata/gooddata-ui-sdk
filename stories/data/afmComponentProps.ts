@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, VisualizationObject } from '@gooddata/typings';
 
-const MEASURE_1: AFM.IMeasure = {
+export const MEASURE_1: AFM.IMeasure = {
     localIdentifier: 'm1',
     definition: {
         measure: {
@@ -93,7 +93,41 @@ const MEASURE_3: AFM.IMeasure = {
     }
 };
 
-const ATTRIBUTE_CITIES: AFM.IAttribute = {
+const ARITHMETIC_MEASURE_SIMPLE_OPERANDS: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_1',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['m1', 'm2'],
+            operator: 'sum'
+        }
+    },
+    alias: 'Sum of m1 and m2'
+};
+
+const ARITHMETIC_MEASURE_USING_ARITHMETIC: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_2',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['arithmetic_measure_1', 'm2'],
+            operator: 'difference'
+        }
+    },
+    alias: 'Difference of arithmetic_measure_1 and m2'
+};
+
+const ARITHMETIC_MEASURE_WITH_FORMATTING: AFM.IMeasure = {
+    localIdentifier: 'arithmetic_measure_3',
+    definition: {
+        arithmeticMeasure: {
+            measureIdentifiers: ['m1', 'm2'],
+            operator: 'sum'
+        }
+    },
+    format: '[backgroundColor=ffff00][green]#,##0.00 €',
+    alias: 'Formatted sum of m1 and m2'
+};
+
+export const ATTRIBUTE_CITIES: AFM.IAttribute = {
     localIdentifier: 'a1',
     displayForm: {
         uri: '/gdc/md/storybook/obj/3.df'
@@ -119,6 +153,13 @@ const ATTRIBUTE_POPULARITY: AFM.IAttribute = {
     displayForm: {
         uri: '/gdc/md/storybook/obj/5.df'
     }
+};
+
+export const ATTRIBUTE_COUNTRY = {
+    displayForm: {
+        uri: '/gdc/md/storybook/obj/3.df'
+    },
+    localIdentifier: 'country'
 };
 
 export const AFM_ONE_MEASURE: AFM.IAfm = {
@@ -153,6 +194,28 @@ export const AFM_ONE_MEASURE_TWO_ATTRIBUTES: AFM.IAfm = {
     ]
 };
 
+export const AFM_HEATMAP_58ROWS: AFM.IAfm = {
+    measures: [MEASURE_2],
+    attributes: [{
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '58countries'
+    }, {
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
+    }]
+};
+
+export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
+    measures: [MEASURE_1],
+    attributes: [{
+        ...ATTRIBUTE_COUNTRY,
+        localIdentifier: '60countries'
+    }, {
+        ...ATTRIBUTE_POPULARITY,
+        localIdentifier: 'Popularity'
+    }]
+};
+
 export const AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
     measures: [
         MEASURE_1
@@ -175,6 +238,12 @@ export const AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {
         ...ATTRIBUTE,
         alias: 'My Attribute Alias'
     }]
+};
+
+export const AFM_ONE_ATTRIBUTE: AFM.IAfm = {
+    attributes: [
+        ATTRIBUTE
+    ]
 };
 
 export const AFM_TWO_MEASURES: AFM.IAfm = {
@@ -603,4 +672,38 @@ export const AFM_THREE_MEASURES_ONE_ATTRIBUTE_BUBBLE_MD_OBJECT: VisualizationObj
     visualizationClass: {
         uri: '/gdc/md/x3k4294x4k00lrz5degxnc6nykynhh52/obj/76038'
     }
+};
+
+export const AFM_ARITHMETIC_MEASURES: AFM.IAfm = {
+    measures: [
+        ARITHMETIC_MEASURE_USING_ARITHMETIC,
+        MEASURE_1,
+        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+        MEASURE_2,
+        MEASURE_3
+    ]
+};
+
+export const AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE: AFM.IAfm = {
+    measures: [
+        ARITHMETIC_MEASURE_USING_ARITHMETIC,
+        MEASURE_1,
+        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+        MEASURE_2,
+        MEASURE_3
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
+};
+
+export const AFM_FORMATTED_ARITHMETIC_MEASURE: AFM.IAfm = {
+    measures: [
+        MEASURE_1,
+        MEASURE_2,
+        ARITHMETIC_MEASURE_WITH_FORMATTING
+    ],
+    attributes: [
+        ATTRIBUTE
+    ]
 };

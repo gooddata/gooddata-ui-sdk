@@ -30,13 +30,29 @@ const TABLE_IDENTIFIER = 'table';
 const SLOW = 20;
 const FAST = 5;
 
+const sdk = {
+    clone: () => sdk,
+    md: {},
+    execution: {
+        getPartialExecutionResult: () => false,
+        executeAfm: () => Promise.resolve(),
+        getExecutionResponse: () => false
+    },
+    config: {
+        setJsPackage: () => false,
+        setRequestHeader: () => false
+    },
+    project: {
+        getFeatureFlags: () => false
+    }
+};
+
 function getResponse(response: string, delay: number): Promise<string> {
     return new Promise((resolve) => {
         setTimeout(() => resolve(response), delay);
     });
 }
 
-// tslint:disable-next-line:variable-name
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
@@ -49,7 +65,6 @@ function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVi
 }
 
 function fetchVisualizationClass(
-    // tslint:disable-next-line:variable-name
     _sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
@@ -62,7 +77,6 @@ function fetchVisualizationClass(
     return Promise.resolve(visClass.visualizationClass);
 }
 
-// tslint:disable-next-line:variable-name
 function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: string): Promise<string> {
     if (identifier === TABLE_IDENTIFIER || uri === TABLE_URI) {
         return getResponse(TABLE_URI, FAST);
@@ -77,15 +91,18 @@ function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: str
 
 describe('Visualization', () => {
     it('should construct and provide intl', () => {
+        const props = {
+            sdk,
+            projectId,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            BaseChartComponent: BaseChart,
+            identifier: CHART_IDENTIFIER
+        };
+
         const wrapper = mount(
-            <Visualization
-                projectId={projectId}
-                identifier={CHART_IDENTIFIER}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                uriResolver={uriResolver}
-                BaseChartComponent={BaseChart}
-            />
+            <Visualization {...props as any} />
         );
 
         return testUtils.delay(FAST + 1).then(() => {
@@ -99,16 +116,19 @@ describe('VisualizationWrapped', () => {
     const intl = createIntlMock();
 
     it('should render chart', () => {
+        const props = {
+            sdk,
+            projectId,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            BaseChartComponent: BaseChart,
+            identifier: CHART_IDENTIFIER
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={CHART_IDENTIFIER}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                uriResolver={uriResolver}
-                BaseChartComponent={BaseChart}
-                intl={intl}
-            />
+            <Visualization {...props as any} />
         );
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -118,15 +138,18 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should render table', () => {
+        const props = {
+            sdk,
+            projectId,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            identifier: TABLE_IDENTIFIER
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={TABLE_IDENTIFIER}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                uriResolver={uriResolver}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         const expectedResultSpec: AFM.IResultSpec = {
@@ -174,16 +197,19 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should render with uri', () => {
+        const props = {
+            sdk,
+            projectId,
+            uri: CHART_URI,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            BaseChartComponent: BaseChart
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                uri={CHART_URI}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                uriResolver={uriResolver}
-                BaseChartComponent={BaseChart}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -198,30 +224,36 @@ describe('VisualizationWrapped', () => {
             done();
         };
 
+        const props = {
+            sdk,
+            projectId,
+            uri: '/invalid/url',
+            fetchVisObject,
+            onError: errorHandler,
+            intl
+        };
+
         mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                fetchVisObject={fetchVisObject}
-                uri={'/invalid/url'}
-                onError={errorHandler}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
     });
 
     it('should handle slow requests', () => {
         // Response from first request comes back later that from the second one
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={CHART_IDENTIFIER}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
@@ -233,21 +265,34 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should handle set state on unmounted component', () => {
+
+        const mutatedSdk = {
+            ...sdk,
+            clone: () => mutatedSdk,
+            project: {
+                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
+                getColorPaletteWithGuids: jest.fn()
+            }
+        };
+
+        const props = {
+            sdk,
+            projectId,
+            identifier: TABLE_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={TABLE_IDENTIFIER}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         const spy = jest.spyOn(wrapper.instance(), 'setState');
-
+        wrapper.setProps({ sdk: mutatedSdk });
         // Would throw an error if not handled properly
         wrapper.unmount();
         return testUtils.delay(FAST + 1).then(() => {
@@ -258,19 +303,22 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should pass LoadingComponent and ErrorComponent to TableComponent', () => {
+        const props = {
+            sdk,
+            projectId,
+            identifier: TABLE_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={TABLE_IDENTIFIER}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-                LoadingComponent={LoadingComponent}
-                ErrorComponent={ErrorComponent}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -283,19 +331,22 @@ describe('VisualizationWrapped', () => {
     });
 
     it('should pass LoadingComponent and ErrorComponent to BaseChart', () => {
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={CHART_IDENTIFIER}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-                LoadingComponent={LoadingComponent}
-                ErrorComponent={ErrorComponent}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -307,26 +358,34 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass mdObject to BaseChart', () => {
+    it('should pass mdObject and properties to BaseChart', () => {
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
         const wrapper = mount(
-            <VisualizationWrapped
-                projectId={projectId}
-                identifier={CHART_IDENTIFIER}
-                uriResolver={uriResolver}
-                fetchVisObject={fetchVisObject}
-                fetchVisualizationClass={fetchVisualizationClass}
-                BaseChartComponent={BaseChart}
-                TableComponent={Table}
-                LoadingComponent={LoadingComponent}
-                ErrorComponent={ErrorComponent}
-                intl={intl}
-            />
+            <VisualizationWrapped {...props as any}/>
         );
 
+        const mdObjectContent = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.content;
+        const mdObjectProperties = JSON.parse(mdObjectContent.properties).controls;
+
         const expectedMdObject = {
-            mdObject: visualizationObjects.find(
-                chart => chart.visualizationObject.meta.uri === CHART_URI
-            ).visualizationObject.content
+            mdObject: mdObjectContent,
+            ...mdObjectProperties,
+            colorPalette: null
         };
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -336,4 +395,115 @@ describe('VisualizationWrapped', () => {
             expect(BaseChartElement.props.config).toEqual(expectedMdObject);
         });
     });
+
+    it('should override properties from mdObject by property config', () => {
+        const customConfig = {
+            grid: {
+                enabled: false
+            }
+        };
+
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            config: customConfig,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any}/>
+        );
+
+        const mdObjectContent = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.content;
+
+        const expectedMdObject = {
+            mdObject: mdObjectContent,
+            ...customConfig,
+            colorPalette: null as any
+        };
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.config).toEqual(expectedMdObject);
+        });
+    });
+
+    it('should call getFeatureFlags and don\'t call getColorPalette', () => {
+        const mutatedSdk = {
+            ...sdk,
+            clone: () => mutatedSdk,
+            project: {
+                getFeatureFlags: jest.fn(),
+                getColorPaletteWithGuids: jest.fn()
+            }
+        };
+
+        const props = {
+            sdk: mutatedSdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any}/>
+        );
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(mutatedSdk.project.getFeatureFlags).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    it('should call getColorPalette when enableColorPalette feature flag is set', () => {
+        const mutatedSdk = {
+            ...sdk,
+            clone: () => mutatedSdk,
+            project: {
+                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
+                getColorPaletteWithGuids: jest.fn()
+            }
+        };
+
+        const props = {
+            sdk: mutatedSdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any}/>
+        );
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+        });
+    });
+
 });

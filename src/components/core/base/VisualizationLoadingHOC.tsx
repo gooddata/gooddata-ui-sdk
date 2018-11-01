@@ -4,12 +4,12 @@ import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
+
 import { ErrorStates } from '../../../constants/errorStates';
 import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
-import { IVisualizationProperties } from '../../../interfaces/VisualizationProperties';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -29,21 +29,22 @@ export interface ICommonVisualizationProps extends IEvents {
     pushData?: (data: IPushData) => void;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
-    visualizationProperties?: IVisualizationProperties;
     config?: IChartConfig;
 }
+
+export type IGetPage = (
+    resultSpec: AFM.IResultSpec,
+    limit: number[],
+    offset: number[]
+) => Promise<Execution.IExecutionResponses | null>;
 
 export interface ILoadingInjectedProps {
     execution: Execution.IExecutionResponses;
     error?: string;
     isLoading: boolean;
     intl: InjectedIntl;
-    // if autoExecuteDataSource is on, this callback is passed to the inner component and handles loading
-    getPage?: (
-        resultSpec: AFM.IResultSpec,
-        limit: number[],
-        offset: number[]
-    ) => Promise<Execution.IExecutionResponses>;
+    // if autoExecuteDataSource is false, this callback is passed to the inner component and handles loading
+    getPage?: IGetPage;
     onDataTooLarge(): void;
     onNegativeValues(): void;
 }
@@ -82,19 +83,25 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps;
 
         protected subject: ISubject<IExecutionDataPromise>;
+        protected pagePromises: IExecutionDataPromise[];
+        protected hasUnmounted: boolean;
 
         constructor(props: T & ILoadingInjectedProps) {
             super(props);
 
             this.state = {
                 isLoading: false,
-                result: null
+                result: null,
+                error: null
             };
+            this.pagePromises = [];
+            this.hasUnmounted = false;
 
             this.onLoadingChanged = this.onLoadingChanged.bind(this);
             this.onDataTooLarge = this.onDataTooLarge.bind(this);
             this.onNegativeValues = this.onNegativeValues.bind(this);
             this.getPage = this.getPage.bind(this);
+            this.cancelPagePromises = this.cancelPagePromises.bind(this);
 
             this.initSubject();
         }
@@ -110,13 +117,16 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             const { result, isLoading, error } = this.state;
             const { intl } = this.props;
 
-            const getPageProperty = autoExecuteDataSource ? {}
+            const getPageProperty = autoExecuteDataSource
+                ? {}
                 : {
-                    getPage: this.getPage
+                    getPage: this.getPage,
+                    cancelPagePromises: this.cancelPagePromises
                 };
 
             return (
                 <InnerComponent
+                    key="InnerComponent"
                     {...this.props}
                     execution={result}
                     onDataTooLarge={this.onDataTooLarge}
@@ -129,22 +139,42 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             );
         }
 
+        public cancelPagePromises() {
+            this.pagePromises = []; // dumping this array of getPage promises will result in effectively cancelling them
+        }
+
         public getPage(
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
         ) {
-            return this.props.dataSource.getPage(resultSpec, limit, offset)
+            if (this.hasUnmounted) {
+                return null;
+            }
+            this.setState({ error: null });
+
+            const pagePromise = this.createPagePromise(resultSpec, limit, offset);
+
+            return pagePromise
                 .then(checkEmptyResult)
-                .then((result) => {
+                .then((result: Execution.IExecutionResponses) => {
                     // This returns only current page,
                     // gooddata-js mergePages doesn't support discontinuous page ranges yet
-                    this.setState({ result });
-                    this.props.pushData({ result });
+                    this.setState({ result, error: null });
+                    this.props.pushData({
+                        result,
+                        properties: {
+                            sortItems: resultSpec ? resultSpec.sorts : []
+                        }
+                    });
+                    this.onLoadingChanged({ isLoading: false });
                     return result;
                 })
-                .catch((error: ApiResponseError) => {
-                    this.onError(convertErrors(error));
+                .catch((error: ApiResponseError | Error) => {
+                    // only trigger errors on non-cancelled promises
+                    if (error.message !== ErrorStates.CANCELLED) {
+                        this.onError(convertErrors(error));
+                    }
                 });
         }
 
@@ -154,16 +184,55 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            if (this.isDataReloadRequired(nextProps) && autoExecuteDataSource) {
-                const { dataSource, resultSpec } = nextProps;
-                this.initDataLoading(dataSource, resultSpec);
+            if (this.isDataReloadRequired(nextProps)) {
+                if (autoExecuteDataSource) {
+                    const { dataSource, resultSpec } = nextProps;
+                    this.initDataLoading(dataSource, resultSpec);
+                } else {
+                    this.onLoadingChanged({ isLoading: true });
+                }
             }
         }
 
         public componentWillUnmount() {
+            this.hasUnmounted = true;
             this.subject.unsubscribe();
+            this.cancelPagePromises();
+            this.getPage = () => Promise.resolve(null);
+            this.cancelPagePromises = noop;
             this.onLoadingChanged = noop;
             this.onError = noop;
+        }
+
+        private createPagePromise(
+            resultSpec: AFM.IResultSpec,
+            limit: number[],
+            offset: number[]
+        ) {
+            const pagePromise = this.props.dataSource.getPage(resultSpec, limit, offset);
+            this.pagePromises.push(pagePromise);
+            return pagePromise.then((result: Execution.IExecutionResponses) => {
+                if (this.isCancelled(pagePromise)) {
+                    this.removePagePromise(pagePromise);
+                    return result;
+                } else {
+                    throw new Error(ErrorStates.CANCELLED);
+                }
+            });
+        }
+
+        private isCancelled(pagePromise: Promise<Execution.IExecutionResponses>) {
+            return this.pagePromises.includes(pagePromise);
+        }
+
+        private removePagePromise =
+        (promise: IExecutionDataPromise) => {
+            const promiseIndex = this.pagePromises.indexOf(promise);
+            if (promiseIndex > -1) {
+                this.pagePromises = this.pagePromises
+                    .slice(0, promiseIndex)
+                    .concat(this.pagePromises.slice(promiseIndex + 1));
+            }
         }
 
         private initSubject() {

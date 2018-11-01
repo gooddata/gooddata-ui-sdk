@@ -3,10 +3,6 @@ import { getHighchartsOptions } from '../highChartsCreators';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
 const chartOptions = {
-    colorPalette: [
-        'rgb(20,178,226)',
-        'rgb(0,193,141)'
-    ],
     data: {
         series: [
             {
@@ -17,7 +13,8 @@ const chartOptions = {
                         name: 'aa.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(20,178,226)'
             },
             {
                 isDrillable: true,
@@ -27,7 +24,8 @@ const chartOptions = {
                         name: 'bb.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(0,193,141)'
             }
         ]
     }
@@ -60,10 +58,6 @@ const pieChartOrTreemapOptions = {
 
 const comboChartOptions = {
     type: VisualizationTypes.COMBO,
-    colorPalette: [
-        'rgb(20,178,226)',
-        'rgb(0,193,141)'
-    ],
     data: {
         series: [
             {
@@ -74,7 +68,8 @@ const comboChartOptions = {
                         name: 'aa.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(20, 178, 226)'
             },
             {
                 isDrillable: true,
@@ -85,7 +80,8 @@ const comboChartOptions = {
                         name: 'bb.0'
                     },
                     null
-                ]
+                ],
+                color: 'rgb(0,193,141)'
             }
         ]
     }
@@ -106,7 +102,6 @@ describe('highChartCreators', () => {
             expect(config).not.toHaveProperty('series.1.states.hover.halo.size');
 
             expect(config).toHaveProperty('series.1.marker.states.hover.fillColor', 'rgb(26,199,152)');
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 
@@ -124,7 +119,6 @@ describe('highChartCreators', () => {
             expect(config).not.toHaveProperty('series.1.states.hover.halo.size');
 
             expect(config).toHaveProperty('series.1.marker.states.hover.fillColor', 'rgb(26,199,152)');
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 
@@ -182,7 +176,6 @@ describe('highChartCreators', () => {
         it('contains different hover styles for column and line series', () => {
             expect(config).toHaveProperty('series.0.states.hover.brightness');
             expect(config).toHaveProperty('series.0.states.hover.enabled', false);
-            expect(config).toHaveProperty('series.1.cursor', 'pointer');
         });
     });
 

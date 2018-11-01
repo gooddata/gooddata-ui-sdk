@@ -1,7 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    getChartOptions
+    getChartOptions,
+    findMeasureGroupInDimensions,
+    findAttributeInDimension,
+    IChartOptions
 } from '../chartOptionsBuilder';
+
+import {
+    VIEW_BY_DIMENSION_INDEX,
+    STACK_BY_DIMENSION_INDEX
+} from '../constants';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 import { IDrillableItem } from '../../../..';
@@ -13,7 +21,7 @@ export function generateChartOptions(
         stacking: false
     },
     drillableItems: IDrillableItem[] = []
-) {
+): IChartOptions {
     const {
         executionRequest: { afm, resultSpec },
         executionResponse: { dimensions },
@@ -28,4 +36,25 @@ export function generateChartOptions(
         config,
         drillableItems
     );
+}
+
+export function getMVS(dataSet: any) {
+    const {
+        executionResponse: { dimensions },
+        executionResult: { headerItems }
+    } = dataSet;
+    const measureGroup = findMeasureGroupInDimensions(dimensions);
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[VIEW_BY_DIMENSION_INDEX],
+        headerItems[VIEW_BY_DIMENSION_INDEX]
+    );
+    const stackByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        headerItems[STACK_BY_DIMENSION_INDEX]
+    );
+    return [
+        measureGroup,
+        viewByAttribute,
+        stackByAttribute
+    ];
 }

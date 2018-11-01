@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { BubbleChart } from '../../src/index';
+import { BubbleChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -11,7 +11,8 @@ import {
     MEASURE_1,
     MEASURE_2,
     MEASURE_3,
-    ATTRIBUTE_1_SORT_ITEM
+    ATTRIBUTE_1_SORT_ITEM,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -75,6 +76,22 @@ storiesOf('Core components/BubbleChart', module)
             </div>
         )
     ))
+    .add('without size measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="screenshot-container">
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={DATA_LABELS_VISIBLE_CONFIG}
+                />
+            </div>
+        )
+    ))
     .add('with German number format', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
@@ -91,7 +108,150 @@ storiesOf('Core components/BubbleChart', module)
                 />
             </div>
         )
-    )).add('data labels config', () => (
+    )).add('with disabled legend', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with min max config', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            min: '600',
+                            max: '1000'
+                        },
+                        yaxis: {
+                            min: '750',
+                            max: '950'
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with different legend positions', () => (
+        screenshotWrap(
+            <div>
+                <div className="storybook-title">default = auto</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BubbleChart
+                        projectId="storybook"
+                        xAxisMeasure={MEASURE_1}
+                        yAxisMeasure={MEASURE_2}
+                        size={MEASURE_3}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'auto'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">left</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BubbleChart
+                        projectId="storybook"
+                        xAxisMeasure={MEASURE_1}
+                        yAxisMeasure={MEASURE_2}
+                        size={MEASURE_3}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'left'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">top</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BubbleChart
+                        projectId="storybook"
+                        xAxisMeasure={MEASURE_1}
+                        yAxisMeasure={MEASURE_2}
+                        size={MEASURE_3}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'top'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">right</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BubbleChart
+                        projectId="storybook"
+                        xAxisMeasure={MEASURE_1}
+                        yAxisMeasure={MEASURE_2}
+                        size={MEASURE_3}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'right'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="storybook-title">bottom</div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <BubbleChart
+                        projectId="storybook"
+                        xAxisMeasure={MEASURE_1}
+                        yAxisMeasure={MEASURE_2}
+                        size={MEASURE_3}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                        config={{
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }}
+                    />
+            </div>
+        </div>
+        )
+    ))
+    .add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = hidden</div>
@@ -149,6 +309,22 @@ storiesOf('Core components/BubbleChart', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={ARITHMETIC_MEASURE_SIMPLE_OPERANDS}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

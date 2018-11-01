@@ -8,7 +8,7 @@
               "items": [
                 {
                   "measureHeaderItem": {
-                    "name": "Primary measure - previous period",
+                    "name": "Primary measure - period ago",
                     "format": "$#,##0.00",
                     "localIdentifier": "m1.pp1"
                   }

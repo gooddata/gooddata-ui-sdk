@@ -12,8 +12,6 @@ const COLUMN_TEMPLATE = {
         column: {
             dataLabels: {
                 enabled: true,
-                crop: false,
-                overflow: 'none',
                 padding: 2
             },
             maxPointWidth: MAX_POINT_WIDTH
@@ -28,7 +26,8 @@ const COLUMN_TEMPLATE = {
     },
     yAxis: [{
         stackLabels: {
-            enabled: true
+            enabled: true,
+            allowOverlap: false
         }
     }]
 };

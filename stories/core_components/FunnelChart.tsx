@@ -3,12 +3,14 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { FunnelChart } from '../../src/index';
+import { FunnelChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
     MEASURE_1,
-    ATTRIBUTE_1_SORT_ITEM
+    ATTRIBUTE_1_SORT_ITEM, MEASURE_2,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
@@ -57,6 +59,24 @@ storiesOf('Core components/FunnelChart', module)
                     measures={[MEASURE_1]}
                     viewBy={ATTRIBUTE_1}
                     config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <FunnelChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

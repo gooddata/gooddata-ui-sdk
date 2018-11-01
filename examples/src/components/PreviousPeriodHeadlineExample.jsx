@@ -34,7 +34,7 @@ export class PreviousPeriodHeadlineExample extends Component {
                     projectId={projectId}
                     primaryMeasure={createMeasureBucketItem(totalSalesIdentifier, 'totalSales', '$ Total Sales')}
                     secondaryMeasure={createPreviousPeriodMeasureBucketItem('totalSales', dateDataSetUri,
-                        '$ Total Sales - previous period')}
+                        '$ Total Sales - period ago')}
                     filters={[createRelativeDateFilter(dateDataSetUri, 'GDC.time.year', -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}

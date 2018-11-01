@@ -6,6 +6,9 @@
     "./*.ts",
     "./*.tsx"
   ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ],
   "compilerOptions": {
     "declaration": false
   }

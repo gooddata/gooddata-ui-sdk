@@ -9,7 +9,6 @@ import {
     SEGMENT,
     TREND,
     ATTRIBUTE,
-    ROWS,
     COLUMNS,
     MEASURES
  } from '../constants/bucketNames';
@@ -29,8 +28,8 @@ export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITo
 export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
     const rowAttributes: VisualizationObject.IBucket = buckets
         .find(
-            bucket => bucket.localIdentifier === ROWS
-
+            // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
+            bucket => bucket.localIdentifier === ATTRIBUTE
         );
 
     const columnAttributes: VisualizationObject.IBucket = buckets
@@ -55,15 +54,18 @@ export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]):
     const totals = getDimensionTotals(rowAttributes);
     const totalsProp = totals.length ? { totals } : {};
 
-    return [{
-        itemIdentifiers: rowAttributesItemIdentifiers,
-        ...totalsProp
-    }, {
-        itemIdentifiers: [
-            ...columnAttributesItemIdentifiers,
-            ...measuresItemIdentifiers
-        ]
-    }];
+    return [
+        {
+            itemIdentifiers: rowAttributesItemIdentifiers,
+            ...totalsProp
+        },
+        {
+            itemIdentifiers: [
+                ...columnAttributesItemIdentifiers,
+                ...measuresItemIdentifiers
+            ]
+        }
+    ];
 }
 
 export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
@@ -219,11 +221,19 @@ function getScatterDimensions(mdObject: VisualizationObject.IVisualizationObject
     ];
 }
 
-function getHeatmapDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-    const view: VisualizationObject.IBucket = mdObject.buckets
-            .find(bucket => bucket.localIdentifier === VIEW);
+// Heatmap
+export function getHeatmapDimensionsFromMdObj(
+    mdObject: VisualizationObject.IVisualizationObjectContent
+): AFM.IDimension[] {
+    const buckets: VisualizationObject.IBucket[] = mdObject.buckets;
+    return getHeatmapDimensionsFromBuckets(buckets);
+}
 
-    const stack: VisualizationObject.IBucket = mdObject.buckets
+export function getHeatmapDimensionsFromBuckets(buckets: VisualizationObject.IBucket[]): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = buckets
+        .find(bucket => bucket.localIdentifier === VIEW);
+
+    const stack: VisualizationObject.IBucket = buckets
         .find(bucket => bucket.localIdentifier === STACK);
 
     const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
@@ -297,6 +307,9 @@ export function generateDimensions(
     type: VisType
 ): AFM.IDimension[] {
     switch (type) {
+        case VisualizationTypes.PIVOT_TABLE: {
+            return getPivotTableDimensions(mdObject.buckets);
+        }
         case VisualizationTypes.TABLE: {
             return getTableDimensions(mdObject.buckets);
         }
@@ -326,7 +339,7 @@ export function generateDimensions(
             return getScatterDimensions(mdObject);
         }
         case VisualizationTypes.HEATMAP: {
-            return getHeatmapDimensions(mdObject);
+            return getHeatmapDimensionsFromMdObj(mdObject);
         }
         case VisualizationTypes.BUBBLE: {
             return getBubbleDimensions(mdObject);
@@ -445,4 +458,23 @@ export function getTreemapDimensionsFromAFM(afm: AFM.IAfm): AFM.IDimension[] {
             itemIdentifiers: [MEASUREGROUP]
         }
     ];
+}
+
+export function getGeneralDimensionsFromAFM(afm: AFM.IAfm): AFM.IDimension[] {
+    const attributes = afm.attributes || [];
+    const measures = afm.measures || [];
+    const dimensions = [];
+    if (attributes.length > 0) {
+        dimensions.push({
+            itemIdentifiers: attributes.map(
+                (attribute: AFM.IAttribute) => attribute.localIdentifier
+            )
+        });
+    }
+    if (measures.length > 0) {
+        dimensions.push({
+            itemIdentifiers: [MEASUREGROUP]
+        });
+    }
+    return dimensions;
 }

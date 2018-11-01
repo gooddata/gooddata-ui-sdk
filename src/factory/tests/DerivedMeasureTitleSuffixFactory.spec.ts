@@ -1,47 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
 import DerivedMeasureTitleSuffixFactory from '../DerivedMeasureTitleSuffixFactory';
+import { OverTimeComparisonTypes } from '../..';
 
 describe('DerivedMeasureTitleSuffixFactory', () => {
     describe('getSuffix', () => {
-        it('should return empty string for simple measure', () => {
+        it('should return empty string for unknown over time comparison type', () => {
             const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            const suffix = suffixFactory.getSuffix({
-                measureDefinition: {
-                    item: {
-                        uri: '/uri'
-                    }
-                }
-            });
+            const suffix = suffixFactory.getSuffix(OverTimeComparisonTypes.NOTHING);
             expect(suffix).toEqual('');
         });
 
-        it('should return correct suffix for PoP measure', () => {
+        it('should return correct suffix for PoP over time comparison type', () => {
             const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            const suffix = suffixFactory.getSuffix({
-                popMeasureDefinition: {
-                    measureIdentifier: 'm1',
-                    popAttribute: {
-                        uri: '/uri'
-                    }
-                }
-            });
+            const suffix = suffixFactory.getSuffix(OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR);
             expect(suffix).toEqual(' - SP year ago');
         });
 
-        it('should return correct suffix for previous period measure', () => {
+        it('should return correct suffix for previous period over time comparison type', () => {
             const suffixFactory = new DerivedMeasureTitleSuffixFactory('en-US');
-            const suffix = suffixFactory.getSuffix({
-                previousPeriodMeasure: {
-                    measureIdentifier: 'm1',
-                    dateDataSets: [{
-                        dataSet: {
-                            uri: '/uri'
-                        },
-                        periodsAgo: 1
-                    }]
-                }
-            });
-            expect(suffix).toEqual(' - previous period');
+            const suffix = suffixFactory.getSuffix(OverTimeComparisonTypes.PREVIOUS_PERIOD);
+            expect(suffix).toEqual(' - period ago');
         });
     });
 });

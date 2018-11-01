@@ -7,6 +7,7 @@ import { initChartPlugins } from './highcharts/chartPlugins';
 import { VisType } from '../../../constants/visualizationTypes';
 import { IDataLabelsConfig } from '../../../interfaces/Config';
 import { ISeparators } from '@gooddata/numberjs';
+import { PositionType } from '../typings/legend';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
@@ -28,7 +29,7 @@ initChartPlugins(Highcharts);
 
 export interface ILegendConfig {
     enabled?: boolean;
-    position?: 'top' | 'left' | 'right' | 'bottom';
+    position?: PositionType;
     responsive?: boolean;
 }
 
@@ -40,6 +41,7 @@ export interface IChartLimits {
 
 export interface IChartConfig {
     colors?: string[];
+    colorPalette?: IColorPalette;
     type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;
@@ -70,6 +72,20 @@ export interface IChartProps {
     config: IChartConfig;
     domProps: any;
     callback(): void;
+}
+
+export interface IColorPaletteItem {
+    guid: string;
+    fill: {
+        r: number;
+        g: number;
+        b: number;
+    };
+}
+
+export interface IColorPalette {
+    [index: number]: IColorPaletteItem;
+    length: number;
 }
 
 export default class Chart extends React.Component<IChartProps> {

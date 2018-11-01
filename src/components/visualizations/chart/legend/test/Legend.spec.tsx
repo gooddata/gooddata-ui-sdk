@@ -3,7 +3,7 @@ import * as React from 'react';
 import noop = require('lodash/noop');
 import { mount } from 'enzyme';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
-import Legend, { FLUID_LEGEND_THRESHOLD } from '../Legend';
+import Legend from '../Legend';
 import HeatmapLegend from '../HeatmapLegend';
 import { withIntl } from '../../../utils/intlUtils';
 
@@ -44,25 +44,15 @@ describe('Legend', () => {
 
     it('should render StaticLegend on desktop', () => {
         const legend = createComponent({
-            documentObj: {
-                documentElement: {
-                    clientWidth: FLUID_LEGEND_THRESHOLD + 10
-                }
-            },
-            position: 'right'
+            showFluidLegend: false
         });
         expect(legend.find('.viz-static-legend-wrap')).toHaveLength(1);
     });
 
     it('should render fluid legend on mobile', () => {
         const legend = createComponent({
-            responsive: true,
-            position: 'right',
-            documentObj: {
-                documentElement: {
-                    clientWidth: FLUID_LEGEND_THRESHOLD - 10
-                }
-            }
+            showFluidLegend: true,
+            responsive: true
         });
         expect(legend.find('.viz-fluid-legend-wrap')).toHaveLength(1);
     });

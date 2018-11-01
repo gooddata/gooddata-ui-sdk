@@ -10,24 +10,39 @@ import isEmpty = require('lodash/isEmpty');
 import compact = require('lodash/compact');
 import cloneDeep = require('lodash/cloneDeep');
 import every = require('lodash/every');
+import isNil = require('lodash/isNil');
+import pickBy = require('lodash/pickBy');
+import * as numberJS from '@gooddata/numberjs';
+
 import { styleVariables } from '../../styles/variables';
 import { IAxis, IChartOptions } from '../chartOptionsBuilder';
 import { IChartConfig } from '../Chart';
-
-import * as numberJS from '@gooddata/numberjs';
-import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
 import { IDataLabelsVisibile } from '../../../../interfaces/Config';
+import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
-import { getLighterColor } from '../../utils/color';
+import {
+    AXIS_LINE_COLOR,
+    getLighterColor
+} from '../../utils/color';
 import {
     isBarChart,
     isColumnChart,
     isOneOfTypes,
     isAreaChart,
     isRotationInRange,
-    isTreemap
+    isTreemap,
+    isHeatmap,
+    isScatterPlot,
+    isBubbleChart
 } from '../../utils/common';
 import { shouldFollowPointer } from '../../../visualizations/chart/highcharts/helpers';
+import {
+    shouldStartOnTick,
+    shouldEndOnTick,
+    shouldXAxisStartOnTickOnBubbleScatter,
+    shouldYAxisStartOnTickOnBubbleScatter
+} from '../highcharts/helpers';
 
 const {
     stripColors,
@@ -271,11 +286,12 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
 
     const chartWidth = chart.plotWidth;
     const align = getArrowAlignment(arrowPosition, chartWidth);
+    const defaultArrowPosition = arrowPosition > chartWidth ? chartWidth  : arrowPosition * 2;
+    const arrowPositionForTail = getArrowPositionForTail(defaultArrowPosition, this.point, chartType, chart);
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : '';
-
     const tailStyle = showFullscreenTooltip() ?
-        `style="left: ${arrowPosition + chart.plotLeft}px;"` : '';
+        `style="left: ${arrowPositionForTail + chart.plotLeft}px;"` : '';
 
     const getTailClasses = (classname: any) => {
         return cx(classname, {
@@ -295,6 +311,19 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
             <div class="${getTailClasses('tail2')}" ${tailStyle}></div>
         </div>`
     ) : null;
+}
+
+function getArrowPositionForTail(defaultArrowPosition: number, point: any, chartType: any, chart: any) {
+    let arrowPositionForTail = defaultArrowPosition / 2;
+    if (isBarChart(chartType) && point.shapeArgs && chart) {
+        const visiblePart = getShapeVisiblePart(point.shapeArgs, chart, defaultArrowPosition);
+        arrowPositionForTail = visiblePart / 2;
+        // truncated shapes are moved to negative coordinates and tooltip needs compensation
+        if (point.shapeArgs.y < 0) {
+            arrowPositionForTail = chart.plotWidth - arrowPositionForTail;
+        }
+    }
+    return arrowPositionForTail;
 }
 
 function formatLabel(value: any, format: any, config: IChartConfig = {}) {
@@ -327,10 +356,25 @@ function level2LabelsFormatter(config?: IChartConfig) {
 
 function labelFormatterBubble(config?: IChartConfig) {
     const value = get<number>(this, 'point.z');
-    if (isNaN(value)) {
+    if (isNil(value) || isNaN(value)) {
         return null;
     }
-    return formatLabel(value, get(this, 'point.format'), config);
+
+    const xAxisMin = get(this, 'series.xAxis.min');
+    const xAxisMax = get(this, 'series.xAxis.max');
+    const yAxisMin = get(this, 'series.yAxis.min');
+    const yAxisMax = get(this, 'series.yAxis.max');
+
+    if (
+        (!isNil(xAxisMax) && this.x > xAxisMax) ||
+        (!isNil(xAxisMin) && this.x < xAxisMin) ||
+        (!isNil(yAxisMax) && this.y > yAxisMax) ||
+        (!isNil(yAxisMin) && this.y < yAxisMin)
+    ) {
+        return null;
+    } else {
+        return formatLabel(value, get(this, 'point.format'), config);
+    }
 }
 
 function labelFormatterScatter() {
@@ -395,6 +439,9 @@ function getTreemapLabelsConfiguration(
     };
     if (isMultiLevel) {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 dataLabels: {
@@ -417,6 +464,9 @@ function getTreemapLabelsConfiguration(
         };
     } else {
         return {
+            dataLabels: {
+                ...labelsConfig
+            },
             levels: [{
                 level: 1,
                 ...smallLabelInCenter
@@ -479,7 +529,7 @@ function getLabelStyle(chartOptions: any) {
     return (stacking || isOneOfTypes(type, whiteDataLabelTypes)) ? WHITE_LABEL : BLACK_LABEL;
 }
 
-function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
+function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
     const {
         stacking,
         yAxes = [],
@@ -490,7 +540,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
         type: string;
     } = chartOptions;
 
-    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(config, 'dataLabels.visible');
+    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -507,7 +557,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
     }));
 
     const DEFAULT_LABELS_CONFIG = {
-        formatter: partial(labelFormatter, config),
+        formatter: partial(labelFormatter, chartConfig),
         style,
         allowOverlap: false,
         ...labelsConfig
@@ -526,7 +576,7 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             },
             column: {
                 dataLabels: {
-                    formatter: partial(labelFormatter, config),
+                    formatter: partial(labelFormatter, chartConfig),
                     style,
                     allowOverlap: false,
                     ...labelsConfig
@@ -535,12 +585,12 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             heatmap: {
                 dataLabels: {
                     formatter: labelFormatterHeatmap,
-                    config,
+                    config: chartConfig,
                     ...labelsConfig
                 }
             },
             treemap: {
-                ...getTreemapLabelsConfiguration(!!stacking, style, config, labelsConfig)
+                ...getTreemapLabelsConfiguration(!!stacking, style, chartConfig, labelsConfig)
             },
             line: {
                 dataLabels: DEFAULT_LABELS_CONFIG
@@ -551,13 +601,13 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
             scatter: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: partial(labelFormatterScatter, config)
+                    formatter: partial(labelFormatterScatter, chartConfig)
                 }
             },
             bubble: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
-                    formatter: partial(labelFormatterBubble, config)
+                    formatter: partial(labelFormatterBubble, chartConfig)
                 }
             },
             pie: {
@@ -571,12 +621,19 @@ function getLabelsConfiguration(chartOptions: any, {}: any, config?: IChartConfi
     };
 }
 
-function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartConfig) {
+function getStackingConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
+    let labelsConfig = {};
+
+    if (isColumnChart(type)) {
+        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
+        labelsConfig = getLabelsVisibilityConfig(labelsVisible);
+    }
 
     const yAxis = yAxes.map(() => ({
         stackLabels: {
-            formatter: partial(stackLabelFormatter, config)
+            ...labelsConfig,
+            formatter: partial(stackLabelFormatter, chartConfig)
         }
     }));
 
@@ -598,10 +655,9 @@ function getStackingConfiguration(chartOptions: any, {}: any, config?: IChartCon
     } : {};
 }
 
-function getSeries(series: any, colorPalette: any = []) {
-    return series.map((seriesItem: any, index: number) => {
+function getSeries(series: any) {
+    return series.map((seriesItem: any) => {
         const item = cloneDeep(seriesItem);
-        item.color = colorPalette[index % colorPalette.length];
         // Escaping is handled by highcharts so we don't want to provide escaped input.
         // With one exception, though. Highcharts supports defining styles via
         // for example <b>...</b> and parses that from series name.
@@ -633,15 +689,9 @@ function getHeatmapDataConfiguration(chartOptions: any) {
     return {
         series,
         xAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories))
-            },
             categories: categories[0] || []
         }],
         yAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories))
-            },
             categories: categories[1] || []
         }],
         colorAxis: {
@@ -652,7 +702,7 @@ function getHeatmapDataConfiguration(chartOptions: any) {
 
 function getDataConfiguration(chartOptions: any) {
     const data = chartOptions.data || EMPTY_DATA;
-    const series = getSeries(data.series, chartOptions.colorPalette);
+    const series = getSeries(data.series);
     const { type } = chartOptions;
 
     switch (type) {
@@ -666,14 +716,10 @@ function getDataConfiguration(chartOptions: any) {
     }
 
     const categories = map(data.categories, escapeAngleBrackets);
-    const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
 
     return {
         series,
         xAxis: [{
-            labels: {
-                enabled: !isEmpty(compact(categories)) && labelsEnabled
-            },
             categories
         }]
     };
@@ -684,7 +730,6 @@ function lineSeriesMapFn(seriesOrig: any) {
 
     if (series.isDrillable) {
         set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
-        set(series, 'cursor', 'pointer');
     } else {
         set(series, 'states.hover.halo.size', 0);
     }
@@ -759,30 +804,123 @@ function getHoverStyles({ type }: any, config: any) {
             };
             break;
     }
-
     return {
-        series: config.series.map(seriesMapFn)
+        series: config.series.map(seriesMapFn),
+        plotOptions: {
+            ...[
+                VisualizationTypes.LINE,
+                VisualizationTypes.AREA,
+                VisualizationTypes.SCATTER,
+                VisualizationTypes.BUBBLE
+            ].reduce((conf, key) => ({
+                ...conf,
+                [key]: {
+                    point: {
+                        events: {
+                            // Workaround
+                            // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
+                            mouseOver() {
+                                if (this.drilldown) {
+                                    this.graphic.element.style.cursor = 'pointer';
+                                }
+                            }
+                        }
+                    }
+                }
+            }), {})
+        }
     };
 }
 
 function getGridConfiguration(chartOptions: any) {
     const gridEnabled = get(chartOptions, 'grid.enabled', true);
-    const { yAxes = [] }: { yAxes: IAxis[] } = chartOptions;
-    const yAxis = yAxes.map(() => ({
-        gridLineWidth: 0
-    }));
+    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
 
-    if (!gridEnabled) {
+    const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: '#ebebeb' } : { gridLineWidth: 0 };
+
+    const yAxis = yAxes.map(() => config);
+
+    const bothAxesGridlineCharts = [VisualizationTypes.BUBBLE, VisualizationTypes.SCATTER];
+    let xAxis = {};
+    if (isOneOfTypes(chartOptions.type, bothAxesGridlineCharts)) {
+        xAxis = xAxes.map(() => config);
+    }
+
+    return {
+        yAxis,
+        xAxis
+    };
+}
+
+export function areAxisLabelsEnabled(chartOptions: any, axisPropsName: string, shouldCheckForEmptyCategories: boolean) {
+    const data = chartOptions.data || EMPTY_DATA;
+    const { type } = chartOptions;
+    const categories = isHeatmap(type) ? data.categories : map(data.categories, escapeAngleBrackets);
+
+    const visible = get(chartOptions, `${axisPropsName}.visible`, true);
+    const labelsEnabled = get(chartOptions, `${axisPropsName}.labelsEnabled`, true);
+
+    const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
+
+    return {
+        enabled: categoriesFlag && visible && labelsEnabled
+    };
+}
+
+function shouldExpandYAxis(chartOptions: any) {
+    const min = get(chartOptions, 'xAxisProps.min', '');
+    const max = get(chartOptions, 'xAxisProps.max', '');
+    return min === '' && max === '' ? {} : { getExtremesFromAll: true };
+}
+
+function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) {
+    let lineWidth;
+
+    // tslint:disable-next-line prefer-conditional-expression
+    if (isAxisVisible === false) {
+        lineWidth = 0;
+    } else {
+        lineWidth = isScatterPlot(chartType) || isBubbleChart(chartType) ? 1 : undefined;
+    }
+
+    return pickBy({ AXIS_LINE_COLOR, lineWidth }, (item: any) => item !== undefined);
+}
+
+function getXAxisTickConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+    if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
-            yAxis
+            startOnTick: shouldXAxisStartOnTickOnBubbleScatter(chartOptions),
+            endOnTick: false
         };
     }
 
     return {};
 }
 
-function getAxesConfiguration(chartOptions: any) {
+function getYAxisTickConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+    if (isBubbleChart(type) || isScatterPlot(type)) {
+        return {
+            startOnTick: shouldYAxisStartOnTickOnBubbleScatter(chartOptions)
+        };
+    }
+
     return {
+        startOnTick: shouldStartOnTick(chartOptions),
+        endOnTick: shouldEndOnTick(chartOptions)
+    };
+}
+
+function getAxesConfiguration(chartOptions: any) {
+    const { type } = chartOptions;
+
+    return {
+        plotOptions: {
+            series: {
+                ...shouldExpandYAxis(chartOptions)
+            }
+        },
         yAxis: get(chartOptions, 'yAxes', []).map((axis: any) => {
             if (!axis) {
                 return {
@@ -794,26 +932,22 @@ function getAxesConfiguration(chartOptions: any) {
             const min = get(chartOptions, 'yAxisProps.min', '');
             const max = get(chartOptions, 'yAxisProps.max', '');
             const visible = get(chartOptions, 'yAxisProps.visible', true);
-            const labelsEnabled = get(chartOptions, 'yAxisProps.labelsEnabled', true);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
-            const visibleProp = visible ? {} : {
-                labels: {
-                    enabled: false
-                },
-                title: {
-                    enabled: false
-                }
-            };
 
             const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
+            const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
+
+            const tickConfiguration = getYAxisTickConfiguration(chartOptions);
+
             return {
-                gridLineColor: '#ebebeb',
+                ...getAxisLineConfiguration(type, visible),
                 labels: {
-                    enabled: labelsEnabled,
+                    ...labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
@@ -821,6 +955,7 @@ function getAxesConfiguration(chartOptions: any) {
                     ...rotationProp
                 },
                 title: {
+                    enabled: visible,
                     margin: 15,
                     style: {
                         color: styleVariables.gdColorLink,
@@ -828,9 +963,9 @@ function getAxesConfiguration(chartOptions: any) {
                     }
                 },
                 opposite: axis.opposite,
-                ...visibleProp,
                 ...maxProp,
-                ...minProp
+                ...minProp,
+                ...tickConfiguration
             };
         }),
 
@@ -841,14 +976,24 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
+            const min = get(chartOptions, 'xAxisProps.min', '');
+            const max = get(chartOptions, 'xAxisProps.max', '');
+
+            const maxProp = max ? { max: Number(max) } : {};
+            const minProp = min ? { min: Number(min) } : {};
+
             const visible = get(chartOptions, 'xAxisProps.visible', true);
             const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
-            const labelsEnabled = get(chartOptions, 'xAxisProps.labelsEnabled', true);
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
+
+            const shouldCheckForEmptyCategories = (isScatterPlot(type) || isBubbleChart(type)) ? false : true;
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'xAxisProps', shouldCheckForEmptyCategories);
+
+            const tickConfiguration = getXAxisTickConfiguration(chartOptions);
 
             // for bar chart take y axis options
             return {
-                lineColor: '#d5d5d5',
+                ...getAxisLineConfiguration(type, visible),
 
                 // hide ticks on x axis
                 minorTickLength: 0,
@@ -858,7 +1003,7 @@ function getAxesConfiguration(chartOptions: any) {
                 maxPadding: 0.05,
 
                 labels: {
-                    enabled: labelsEnabled,
+                    ...labelsEnabled,
                     style: {
                         color: styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif'
@@ -867,13 +1012,16 @@ function getAxesConfiguration(chartOptions: any) {
                     ...rotationProp
                 },
                 title: {
+                    enabled: visible,
                     margin: 10,
                     style: {
                         color: styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                visible
+                ...maxProp,
+                ...minProp,
+                ...tickConfiguration
             };
         })
     };
@@ -886,7 +1034,6 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getStackingConfiguration,
         hideOverlappedLabels,
         getShowInPercentConfiguration,
-        getLabelsConfiguration,
         getDataConfiguration,
         getTooltipConfiguration,
         getHoverStyles,

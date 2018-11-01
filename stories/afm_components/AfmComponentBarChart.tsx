@@ -10,7 +10,8 @@ import {
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
     AFM_ONE_MEASURE_TWO_ATTRIBUTES,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE_POP,
-    AFM_TWO_MEASURES_ONE_ATTRIBUTE_PREVIOUS_PERIOD
+    AFM_TWO_MEASURES_ONE_ATTRIBUTE_PREVIOUS_PERIOD,
+    AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE
 } from '../data/afmComponentProps';
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
@@ -126,6 +127,19 @@ storiesOf('AFM components/BarChart', module)
                         ]
                     }}
                     config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    afm={AFM_ARITHMETIC_MEASURES_ONE_ATTRIBUTE}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

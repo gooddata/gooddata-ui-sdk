@@ -5,13 +5,15 @@ import {
     getChartType,
     getVisibleSeries,
     isStacked,
-    getDataLabelAttributes,
     getShapeAttributes
 } from '../helpers';
-import { HEAT_MAP_CATEGORIES_COUNT } from '../../chartOptionsBuilder';
-import get = require('lodash/get');
+
+import {
+    getDataLabelAttributes
+} from '../dataLabelsHelpers';
 
 import { parseRGBColorCode } from '../../../utils/color';
+import { isOneOfTypes } from '../../../utils/common';
 
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = '#fff';
@@ -35,31 +37,21 @@ function setBarDataLabelsColor(chart: any) {
         const labelDimensions = getDataLabelAttributes(point);
         const barDimensions = getShapeAttributes(point);
         const barRight = barDimensions.x + barDimensions.width;
+        const barLeft = barDimensions.x;
         const labelLeft = labelDimensions.x;
 
-        if (labelLeft < barRight) {
-            setWhiteColor(point);
+        if (point.negative) {
+            if (labelLeft > barLeft) { // labelRight is overlapping bar even it is outside of it
+                setWhiteColor(point);
+            } else {
+                setBlackColor(point);
+            }
         } else {
-            setBlackColor(point);
-        }
-    });
-}
-
-export const START_DARK_COLOR_INDEX = 5;
-
-function setHeatmapDataLabelsColor(chart: any) {
-    const points = getVisiblePointsWithLabel(chart);
-    const dataClasses = get(chart, 'colorAxis.0.dataClasses', []);
-    const hasDarkColor = dataClasses.length === HEAT_MAP_CATEGORIES_COUNT;
-    const colorTickPoints = dataClasses.map(dataClass => (dataClass.from));
-    const darkColorThreshold = hasDarkColor ? colorTickPoints[START_DARK_COLOR_INDEX] : null;
-
-    return points.forEach((point: any) => {
-        const isDarkCell = darkColorThreshold && point.value >= darkColorThreshold;
-        if (isDarkCell) {
-            setWhiteColor(point);
-        } else {
-            setBlackColor(point);
+            if (labelLeft < barRight) {
+                setWhiteColor(point);
+            } else {
+                setBlackColor(point);
+            }
         }
     });
 }
@@ -88,16 +80,14 @@ function setContrastLabelsColor(chart: any) {
 
 export function extendDataLabelColors(Highcharts: any) {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
-        const type = getChartType(chart);
+        const type: string = getChartType(chart);
 
         const changeLabelColor = () => {
             if (type === VisualizationTypes.BAR && !isStacked(chart)) {
                 setTimeout(() => {
                     setBarDataLabelsColor(chart);
                 }, 500);
-            } else if (type === VisualizationTypes.HEATMAP) {
-                setHeatmapDataLabelsColor(chart);
-            } else if (type === VisualizationTypes.TREEMAP) {
+            } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
                 setContrastLabelsColor(chart);
             }
         };

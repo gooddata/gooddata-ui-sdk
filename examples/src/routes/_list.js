@@ -4,6 +4,7 @@ import AttributeFilter from './AttributeFilter';
 import Sorting from './Sorting';
 import TimeOverTimeComparison from './TimeOverTimeComparison';
 import BasicComponents from './BasicComponents';
+import ComboChart from './ComboChart';
 import GlobalFilters from './GlobalFilters';
 import Visualization from './Visualization';
 import Execute from './Execute';
@@ -18,9 +19,11 @@ import DrillWithExternalData from './DrillWithExternalData';
 import Registration from './Registration';
 import Login from './Login';
 import PivotTable from './PivotTable';
-import PivotTableDrilling from './PivotTableDrilling';
+import PivotTableDemo from './PivotTableDemo';
+import PivotTableDynamic from './PivotTableDynamic';
 import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
+import BarChartDynamic from './BarChartDynamic';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -30,12 +33,13 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
     { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
     { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError },
-    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData }
+    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
+    { path: '/advanced/bar-chart-dynamic', title: 'Chart Configuration', Component: BarChartDynamic }
 ];
 
 export const nextRoutes = [
-    { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTable },
-    { path: '/next/pivot-table-drilling', title: 'PivotTable Drilling', Component: PivotTableDrilling }
+    { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTableDemo },
+    { path: '/next/combo-chart', title: 'Combo chart', Component: ComboChart }
 ];
 
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
@@ -53,9 +57,10 @@ export const sideNavigationRoutes = [
 ];
 
 export const hiddenPaths = [
-    { path: '/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
-    { path: '/aggregation-test', title: 'Aggregation Test', Component: AggregationTest },
-    { path: '/pivot-table', title: 'Pivot Table', Component: PivotTable }
+    { path: '/hidden/multiple-domains', title: 'Multiple Domains', Component: MultipleDomains },
+    { path: '/hidden/aggregation-test', title: 'Aggregation Test', Component: AggregationTest },
+    { path: '/hidden/pivot-table', title: 'Pivot Table', Component: PivotTable },
+    { path: '/hidden/pivot-table-dynamic', title: 'Pivot Table Dynamic', Component: PivotTableDynamic }
 ];
 
 export const backendInfoRoutes = [

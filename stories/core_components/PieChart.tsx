@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { PieChart } from '../../src/index';
+import { PieChart } from '../../src';
 import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
@@ -11,7 +11,9 @@ import {
     ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
-    MEASURE_2
+    MEASURE_2,
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+    ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
@@ -64,21 +66,6 @@ storiesOf('Core components/PieChart', module)
             </div>
         )
     ))
-    .add('legend on the bottom', () => (
-        screenshotWrap(
-            <div style={wrapperStyle}>
-                <PieChart
-                    projectId="storybook"
-                    measures={[MEASURE_1]}
-                    viewBy={ATTRIBUTE_1}
-                    config={{ legend: { position: 'bottom' } }}
-                    onError={onErrorHandler}
-                    LoadingComponent={null}
-                    ErrorComponent={null}
-                />
-            </div>
-        )
-    ))
     .add('with German number format in tooltip', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
@@ -93,7 +80,113 @@ storiesOf('Core components/PieChart', module)
                 />
             </div>
         )
-    )).add('data labels config', () => (
+    ))
+    .add('with disabled legend', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            enabled: false
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('with different legend positions', () => (
+        screenshotWrap(
+            <div>
+            <div className="storybook-title">default = auto</div>
+            <div style={wrapperStyle} className="screenshot-container">
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            position: 'auto'
+                        }
+                    }}
+                />
+            </div>
+            <div className="storybook-title">left</div>
+            <div style={wrapperStyle} className="screenshot-container">
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            position: 'left'
+                        }
+                    }}
+                />
+            </div>
+            <div className="storybook-title">top</div>
+            <div style={wrapperStyle} className="screenshot-container">
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            position: 'top'
+                        }
+                    }}
+                />
+            </div>
+            <div className="storybook-title">right</div>
+            <div style={wrapperStyle} className="screenshot-container">
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            position: 'right'
+                        }
+                    }}
+                />
+            </div>
+            <div className="storybook-title">bottom</div>
+            <div style={wrapperStyle} className="screenshot-container">
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }}
+                />
+            </div>
+        </div>
+        )
+    ))
+    .add('data labels config', () => (
         screenshotWrap(
             <div>
                 <div className="storybook-title">default = hidden</div>
@@ -143,6 +236,24 @@ storiesOf('Core components/PieChart', module)
                         config={DATA_LABELS_HIDDEN_CONFIG}
                     />
                 </div>
+            </div>
+        )
+    ))
+    .add('arithmetic measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[
+                        MEASURE_1,
+                        MEASURE_2,
+                        ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                    ]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
             </div>
         )
     ));

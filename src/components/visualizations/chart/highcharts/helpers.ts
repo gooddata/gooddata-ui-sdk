@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import flatten = require('lodash/flatten');
-import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 import map = require('lodash/map');
 import zip = require('lodash/zip');
@@ -12,44 +11,48 @@ import maxBy = require('lodash/maxBy');
 import minBy = require('lodash/minBy');
 import min = require('lodash/min');
 import max = require('lodash/max');
-import sum = require('lodash/sum');
+import isNil = require('lodash/isNil');
 
 import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
 import { VisualizationTypes, VisType } from '../../../../constants/visualizationTypes';
 import { IChartConfig } from '../Chart';
 import { isBarChart } from '../../utils/common';
 
+export interface IRectByPoints {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+}
+
+export interface IRectBySize {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    show?: () => {};
+    hide?: () => {};
+}
+
 // https://silentmatt.com/rectangle-intersection/
-export const rectanglesAreOverlapping = (r1: any, r2: any, padding: any = 0) =>
+export const rectanglesAreOverlapping = (r1: IRectByPoints, r2: IRectByPoints, padding: number = 0) =>
     r1.left - padding < r2.right + padding &&
     r1.right + padding > r2.left - padding &&
     r1.top - padding < r2.bottom + padding &&
     r1.bottom + padding > r2.top - padding;
 
-export const isIntersecting = (o1: any, o2: any) =>
-    o1.x < (o2.x + o2.width) &&
-    (o1.x + o1.width) > o2.x &&
-    o1.y < (o2.y + o2.height) &&
-    (o1.y + o1.height) > o2.y;
-
-export function isLabelOverlappingItsShape(point: any) {
-    const { dataLabel, shapeArgs } = point;
-    if (dataLabel && shapeArgs) { // shapeArgs for point hidden by legend is undefined
-        if (shapeArgs.width === undefined) {
-            return dataLabel.width > (shapeArgs.r * 2) || dataLabel.height > (shapeArgs.r * 2);
-        }
-        return dataLabel.width > shapeArgs.width || dataLabel.height > shapeArgs.height;
-    }
-    return false;
-}
+export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
+    r1.x < (r2.x + r2.width) &&
+    (r1.x + r1.width) > r2.x &&
+    r1.y < (r2.y + r2.height) &&
+    (r1.y + r1.height) > r2.y;
 
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
 export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
 export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
-export const getChartType = (chart: any) => get(chart, 'options.chart.type');
-export const getDataLabelsGdcVisible = (chart: any) =>
-    get(chart, 'options.plotOptions.gdcOptions.dataLabels.visible', 'auto');
+export const getDataPointsOfVisibleSeries = (chart: any) => getDataPoints(getVisibleSeries(chart));
+export const getChartType = (chart: any): string => get<string>(chart, 'options.chart.type');
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
     if (get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
@@ -64,60 +67,13 @@ export const isStacked = (chart: any) => {
 
     return false;
 };
-export const areLabelsStacked = (chart: any) =>
-    (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
-
-export const hasDataLabel = (point: any) => point.dataLabel;
-
-export const minimizeDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.width = 0;
-        dataLabel.height = 0;
-    }
-};
-
-export const hideDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.hide();
-    }
-};
-
-export const showDataLabel = (point: any) => {
-    const { dataLabel } = point;
-    if (dataLabel) {
-        dataLabel.show();
-    }
-};
-
-export const hideDataLabels = (points: any) => {
-    points.filter(hasDataLabel).forEach(hideDataLabel);
-};
-
-export const showDataLabels = (points: any) => {
-    points.filter(hasDataLabel).forEach(showDataLabel);
-};
-
-export const showDataLabelInAxisRange = (point: any, minAxisValue: number) => {
-    const { dataLabel } = point;
-    if (dataLabel && (point.y < minAxisValue)) {
-        dataLabel.hide();
-    } else if (dataLabel) {
-        dataLabel.show();
-    }
-};
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
     return {
-        xAxisProps:  isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
+        xAxisProps: isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
         yAxisProps: isBarChart(type) ? { ...config.xaxis } : { ...config.yaxis }
     };
 }
-
-export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
-
-export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, s => s.points));
 
 export const getPointPositions = (point: any) => {
     const { dataLabel, graphic } = point;
@@ -132,7 +88,7 @@ export const getPointPositions = (point: any) => {
     };
 };
 
-export function getShapeAttributes(point: any) {
+export function getShapeAttributes(point: any): IRectBySize {
     const { series, shapeArgs } = point;
     const { plotSizeX, plotSizeY, options } = series.chart;
 
@@ -160,28 +116,11 @@ export function getShapeAttributes(point: any) {
     };
 }
 
-export function getDataLabelAttributes(point: any) {
-    const dataLabel = get(point, 'dataLabel', null);
-    const parentGroup = get(point, 'dataLabel.parentGroup', null);
+function getExtremeOnAxis(min: number, max: number) {
+    const axisMin = min >= 0 ? 0 : min;
+    const axisMax = max < 0 ? 0 : max;
 
-    const labelSafeOffset = -100; // labels outside axis range have typically -9999, hide them
-    const labelVisible = dataLabel && dataLabel.x > labelSafeOffset && dataLabel.y > labelSafeOffset;
-
-    if (dataLabel && parentGroup && labelVisible) {
-        return {
-            x: dataLabel.x + parentGroup.translateX,
-            y: dataLabel.y + parentGroup.translateY,
-            width: dataLabel.width,
-            height: dataLabel.height
-        };
-    }
-
-    return {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0
-    };
+    return { axisMin, axisMax };
 }
 
 export function shouldFollowPointer(chartOptions: any) {
@@ -193,8 +132,9 @@ export function shouldFollowPointer(chartOptions: any) {
     }
 
     const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
+    const { axisMin, axisMax } = getExtremeOnAxis(minDataValue, maxDataValue);
 
-    return (!isNaN(yMax) && maxDataValue > yMax) || (!isNaN(yMin) && minDataValue < yMin);
+    return (!isNaN(yMax) && axisMax > yMax) || (!isNaN(yMin) && axisMin < yMin);
 }
 
 function isSerieVisible(serie: ISeriesItem): boolean {
@@ -243,41 +183,62 @@ function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
 }
 
 function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
-    const min = minBy(serieData, (item: ISeriesDataItem) =>  item && item.y ? item.y : null);
+    const min = minBy(serieData, (item: ISeriesDataItem) => item && item.y ? item.y : null);
     return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 
-function getStackedMaxValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series
-        .filter(isSerieVisible)
-        .map(serie => serie.data)));
-    const stackSums: number[] = [];
+export function getStackedMaxValue(series: ISeriesItem[]) {
+    const maximumPerColumn = getColumnExtremeValue(series, getMaxFromPositiveNegativeStacks);
 
-    // tslint:disable-next-line:forin
-    for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
-    }
-
-    const maxValue = max(stackSums);
-    return maxValue ? maxValue : Number.MIN_SAFE_INTEGER;
+    const maxValue = max(maximumPerColumn);
+    return !isNil(maxValue) ? maxValue : Number.MIN_SAFE_INTEGER;
 }
 
-function getStackedMinValue(series: ISeriesItem[]) {
-    const seriesData = flatten(zip(series
-        .filter(isSerieVisible)
-        .map(serie => serie.data)));
-    const stackSums: number[] = [];
+export function getStackedMinValue(series: ISeriesItem[]) {
+    const minimumPerColumn = getColumnExtremeValue(series, getMinFromPositiveNegativeStacks);
 
-    // tslint:disable-next-line:forin
-    for (const index in seriesData[0]) {
-        stackSums.push(sum(seriesData.map(data => data[index] ? data[index].y : null)));
-    }
-
-    const minValue = min(stackSums);
-    return minValue ? minValue : Number.MAX_SAFE_INTEGER;
+    const minValue = min(minimumPerColumn);
+    return !isNil(minValue) ? minValue : Number.MAX_SAFE_INTEGER;
 }
 
-export function shouldStartOrEndOnTick(chartOptions: any): boolean {
+function getColumnExtremeValue(series: ISeriesItem[], extremeColumnGetter: (data: number[]) => number): number[] {
+    const seriesDataPerColumn = zip(...series
+        .filter(isSerieVisible)
+        .map(serie => serie.data));
+
+    const seriesDataYValue = seriesDataPerColumn.map(data => data.map(x => x.y));
+    return seriesDataYValue.map(extremeColumnGetter);
+}
+
+function getMaxFromPositiveNegativeStacks(data: number[]): number {
+    return data.reduce((acc: number, current: number) => {
+        if (isNil(current)) {
+            return acc;
+        }
+
+        if ((current < 0) || (acc < 0)) {
+            return Math.max(acc, current);
+        }
+
+        return acc + current;
+    }, Number.MIN_SAFE_INTEGER);
+}
+
+function getMinFromPositiveNegativeStacks(data: number[]): number {
+    return data.reduce((acc: number, current: number) => {
+        if (isNil(current)) {
+            return acc;
+        }
+
+        if ((current > 0) || (acc > 0)) {
+            return Math.min(acc, current);
+        }
+
+        return acc + current;
+    }, Number.MAX_SAFE_INTEGER);
+}
+
+export function shouldStartOnTick(chartOptions: any): boolean {
     const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
     const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
 
@@ -289,35 +250,70 @@ export function shouldStartOrEndOnTick(chartOptions: any): boolean {
         return min > max;
     }
 
-    if (!isNaN(min)) {
-        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
-        const maxDataValue = chartOptions.hasStackByAttribute
-            ? getStackedMaxValue(series)
-            : getNonStackedMaxValue(series);
-        return min > maxDataValue;
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const minDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMinValue(series)
+        : getNonStackedMinValue(series);
+
+    const hasIncorrectMax = !isNaN(max) && max <= minDataValue;
+    if (hasIncorrectMax) {
+        return true;
     }
 
-    if (!isNaN(max)) {
-        const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    return false;
+}
+export function shouldEndOnTick(chartOptions: any): boolean {
+    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+    const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
 
-        const minDataValue = chartOptions.hasStackByAttribute
-            ? getStackedMinValue(series)
-            : getNonStackedMinValue(series);
+    if ((isNaN(min) && isNaN(max))) {
+        return true;
+    }
 
-        return max <= minDataValue;
+    if ((!isNaN(min) && !isNaN(max))) {
+        return min > max;
+    }
+
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const maxDataValue = chartOptions.hasStackByAttribute
+        ? getStackedMaxValue(series)
+        : getNonStackedMaxValue(series);
+
+    const hasIncorrectMin = !isNaN(min) && min >= maxDataValue;
+    if (hasIncorrectMin) {
+        return true;
     }
 
     return false;
 }
 
-export function intersectsParentLabel(point: any, points: any) {
-    const pointParent = parseInt(point.parent, 10);
-    if (isNaN(pointParent)) {
-        return false;
-    }
+export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+    const min = parseFloat(get(chartOptions, 'xAxisProps.min', ''));
 
-    const pointLabelShape = point.dataLabel;
-    const parentPoint = points[pointParent];
-    const parentLabelShape = parentPoint.dataLabel;
-    return isIntersecting(pointLabelShape, parentLabelShape);
+    return isNaN(min) ? true : false;
+}
+
+export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+
+    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const maxDataValue = getNonStackedMaxValue(series);
+
+    return isNaN(min) || min > maxDataValue ? true : false;
+}
+
+export interface IAxisRange {
+    minAxisValue: number;
+    maxAxisValue: number;
+}
+
+export function getAxisRange(chart: any, axisName = 'yAxis'): IAxisRange {
+    return {
+        minAxisValue: get(chart, [axisName, 0, 'min'], 0),
+        maxAxisValue: get(chart, [axisName, 0, 'max'], 0)
+    };
+}
+
+export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {
+    return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
 }

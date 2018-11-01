@@ -160,7 +160,7 @@ export const EXECUTION_RESPONSE_2A_3M: Execution.IExecutionResponse = {
                                     identifier: '3rd_measure_identifier',
                                     localIdentifier: '3rd_measure_local_identifier',
                                     name: 'Expected',
-                                    format: '$#,##0.00'
+                                    format: '[backgroundColor=ffff00][red]$#,##0.00'
                                 }
                             }
                         ]
@@ -365,7 +365,7 @@ export const TABLE_HEADERS_2A_3M: TableHeader[] = [
         identifier: '3rd_measure_identifier',
         localIdentifier: '3rd_measure_local_identifier',
         name: 'Expected',
-        format: '$#,##0.00'
+        format: '[backgroundColor=ffff00][red]$#,##0.00'
     }
 ];
 

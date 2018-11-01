@@ -13,8 +13,8 @@ import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface IAreaChartBucketProps {
     measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute[];
-    stackBy?: VisualizationObject.IVisualizationAttribute[];
+    viewBy?: VisualizationObject.IVisualizationAttribute;
+    stackBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
 }
@@ -37,11 +37,11 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.viewBy ? props.viewBy : []
+            items: props.viewBy ? [props.viewBy] : []
         },
         {
             localIdentifier: STACK,
-            items: props.stackBy ? props.stackBy : []
+            items: props.stackBy ? [props.stackBy] : []
         }
     ];
 

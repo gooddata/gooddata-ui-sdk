@@ -11,8 +11,6 @@ export class ExecuteExample extends Component {
 
         // We need to track error and isLoading states, executionNumber to force remount of execution component
         this.state = {
-            error: null,
-            isLoading: true,
             executionNumber: 0,
             willFail: true
         };
@@ -24,20 +22,11 @@ export class ExecuteExample extends Component {
     onLoadingChanged({ isLoading }) {
         // eslint-disable-next-line no-console
         console.log('isLoading', isLoading);
-        // onLoadingChanged must reset error, so that we are not in error during loading
-        // onError is run after onLoadingChanged, so we do not have to worry about overriding current error
-        this.setState({
-            isLoading,
-            error: null
-        });
     }
 
     onError(error) {
         // eslint-disable-next-line no-console
         console.log('onError', error);
-        this.setState({
-            error
-        });
     }
 
     retry() {
@@ -51,12 +40,24 @@ export class ExecuteExample extends Component {
         });
     }
 
-    executeChildrenFunction({ result, isLoading, error }) {
+    executeChildrenFunction = retry => ({ result, isLoading, error }) => {
+        const retryButton = (<p>
+            <button onClick={retry} className="button button-action s-retry-button">Retry</button>
+            &ensp;(fails every second attempt)
+        </p>);
+
         if (error) {
-            return <ErrorComponent message="There was an error getting your execution" description={JSON.stringify(error, null, '  ')} />;
+            return (<div>
+                {retryButton}
+                <div className="gd-message error"><div className="gd-message-text">Oops, simulated error! Retry?</div></div>
+                <ErrorComponent message="There was an error getting your execution" description={JSON.stringify(error, null, '  ')} />
+            </div>);
         }
         if (isLoading) {
-            return <LoadingComponent />;
+            return (<div>
+                <div className="gd-message progress"><div className="gd-message-text">Loading…</div></div>
+                <LoadingComponent />
+            </div>);
         }
         return (
             <div>
@@ -70,16 +71,30 @@ export class ExecuteExample extends Component {
                         vertical-align: bottom;
                         font-weight: 700;
                     }
-                `}</style>
+                    `}</style>
+                {retryButton}
                 <p className="kpi s-execute-kpi">{result.executionResult.data[0]}</p>
                 <p>Full execution response and result as JSON:</p>
-                <pre>{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
+                <div
+                    style={{
+                        padding: '1rem',
+                        backgroundColor: '#EEE'
+                    }}
+                >
+                    <pre
+                        style={{
+                            maxHeight: 200,
+                            overflow: 'auto',
+                            padding: '1rem'
+                        }}
+                    >{JSON.stringify({ result, isLoading, error }, null, '  ')}</pre>
+                </div>
             </div>
         );
     }
 
     render() {
-        const { error, isLoading, executionNumber, willFail } = this.state;
+        const { executionNumber, willFail } = this.state;
         const afm = {
             measures: [
                 {
@@ -96,22 +111,8 @@ export class ExecuteExample extends Component {
             ]
         };
 
-        let status = null;
-
-        // This is how we render loading and error states
-        if (isLoading) {
-            status = <div className="gd-message progress"><div className="gd-message-text">Loading…</div></div>;
-        } else if (error) {
-            status = <div className="gd-message error"><div className="gd-message-text">Oops, simulated error! Retry?</div></div>;
-        }
-
         return (
             <div>
-                {status}
-                <p>
-                    <button onClick={this.retry} className="button button-action s-retry-button">Retry</button>
-                    &ensp;(fails every second attempt)
-                </p>
                 {/*
                     We need to render the Execute component even in loading
                     otherwise the ongoing request is cancelled
@@ -122,7 +123,7 @@ export class ExecuteExample extends Component {
                     projectId={projectId}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
-                >{this.executeChildrenFunction}
+                >{this.executeChildrenFunction(this.retry)}
                 </Execute>
             </div>
         );

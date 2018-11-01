@@ -8,6 +8,7 @@ import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
 import { ScatterPlot as CoreScatterPlot } from './components/core/ScatterPlot';
 import { FunnelChart as CoreFunnelChart } from './components/core/FunnelChart';
+import { PivotTable as CorePivotTable, IPivotTableProps } from './components/core/PivotTable';
 import { ICommonVisualizationProps } from './components/core/base/VisualizationLoadingHOC';
 import { ErrorComponent } from './components/simple/ErrorComponent';
 import { LoadingComponent } from './components/simple/LoadingComponent';
@@ -18,14 +19,14 @@ import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
 import { IPushData } from './interfaces/PushData';
-import { IVisualizationProperties } from './interfaces/VisualizationProperties';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
-import * as OverTimeComparisonHelper from './helpers/overTimeComparisonHelper';
+import * as MeasureTitleHelper from './helpers/measureTitleHelper';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
+import ArithmeticMeasureTitleFactory from './factory/ArithmeticMeasureTitleFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
 
 import { BarChart } from './components/BarChart';
@@ -43,9 +44,12 @@ import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
 import { Heatmap } from './components/Heatmap';
-import Chart, { ILegendConfig, IChartConfig } from './components/visualizations/chart/Chart';
+import Chart,
+    { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
+import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
+import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
 
 /**
  * CoreComponents
@@ -56,6 +60,7 @@ const CoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
     Table: CoreTable,
+    PivotTable: CorePivotTable,
     ScatterPlot: CoreScatterPlot,
     FunnelChart: CoreFunnelChart
 };
@@ -80,14 +85,16 @@ export {
     generateDimensions,
     Headline,
     IBaseChartProps,
+    IPivotTableProps,
     ICommonVisualizationProps,
     IDataSourceProviderInjectedProps,
     IDrillableItem,
     ILegendConfig,
     IChartConfig,
+    IColorPalette,
+    IColorPaletteItem,
     IPushData,
     isEmptyResult,
-    IVisualizationProperties,
     Kpi,
     LoadingComponent,
     LineChart,
@@ -97,8 +104,11 @@ export {
     BubbleChart,
     DonutChart,
     Heatmap,
-    OverTimeComparisonHelper,
+    IMeasureTitleProps,
+    IArithmeticMeasureTitleProps,
+    MeasureTitleHelper,
     DerivedMeasureTitleSuffixFactory,
+    ArithmeticMeasureTitleFactory,
     PropTypes,
     RuntimeError,
     PivotTable,
@@ -108,5 +118,7 @@ export {
     VisualizationEnvironment,
     VisualizationTypes,
     ChartTransformation,
-    Chart
+    Chart,
+    OverTimeComparisonType,
+    OverTimeComparisonTypes
 };

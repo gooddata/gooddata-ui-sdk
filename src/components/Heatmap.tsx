@@ -7,13 +7,14 @@ import { VisualizationObject, AFM } from '@gooddata/typings';
 import { Heatmap as AfmHeatmap } from './afm/Heatmap';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
-import { getStackingResultSpec } from '../helpers/resultSpec';
-import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { getResultSpec } from '../helpers/resultSpec';
+import { getHeatmapDimensionsFromBuckets } from '../helpers/dimensions';
+import { MEASURES, VIEW, STACK } from '../constants/bucketNames';
 
 export interface IHeatmapBucketProps {
     measure: VisualizationObject.BucketItem;
-    trendBy?: VisualizationObject.IVisualizationAttribute;
-    segmentBy?: VisualizationObject.IVisualizationAttribute;
+    rows?: VisualizationObject.IVisualizationAttribute;
+    columns?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
 }
@@ -31,24 +32,24 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
             items: [props.measure] || []
         },
         {
-            localIdentifier: ATTRIBUTE,
-            items: props.trendBy ? [props.trendBy] : []
+            localIdentifier: VIEW,
+            items: props.rows ? [props.rows] : []
         },
         {
             localIdentifier: STACK,
-            items: props.segmentBy ? [props.segmentBy] : []
+            items: props.columns ? [props.columns] : []
         }
     ];
 
     const newProps
-        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'trendBy', 'segmentBy', 'filters']);
+        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'rows', 'columns', 'filters']);
 
     return (
         <AfmHeatmap
             {...newProps}
             projectId={props.projectId}
             afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
+            resultSpec={getResultSpec(buckets, props.sortBy, getHeatmapDimensionsFromBuckets)}
         />
     );
 }

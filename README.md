@@ -65,9 +65,16 @@ yarn examples
 Then open https://localhost:8999 and login using Live Examples account (you can [create one here](https://gooddata-examples.herokuapp.com/registration)).
 
 ## Changelog
+
 - see [CHANGELOG.md](CHANGELOG.md)
 
 ## License
+
 (C) 2007-2018 GoodData Corporation
+
+This project is dual licensed:
+
+- The ATTRIBUTION-NONCOMMERCIAL 4.0 INTERNATIONAL (CC BY-NC 4.0) is used for purpose of the trial experience and evaluation of GoodData.UI library.
+- The GOODDATA GOODDATA.UI LIBRARY END USER LICENSE AGREEMENT is used for GoodData customers.
 
 For more information, please see [LICENSE](https://github.com/gooddata/gooddata-react-components/blob/master/LICENSE)

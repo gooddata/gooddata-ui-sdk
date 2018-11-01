@@ -56,7 +56,6 @@ describe('PureTable', () => {
             drillableItems: [],
             afterRender: jest.fn(),
             pushData: jest.fn(),
-            visualizationProperties: {},
             height: 200,
             maxHeight: 400,
             environment: 'none',

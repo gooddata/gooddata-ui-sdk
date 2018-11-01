@@ -8,13 +8,13 @@ fixture('Parent filter')
     .beforeEach(loginUsingGreyPages(`${config.url}/advanced/parent-filter`));
 
 test('Check if child filters are restricted by parent filters and visualization is properly filtered', async (t) => {
-    const dropdownState = Selector('.s-select-state');
-    const dropdownStateList = Selector('.s-select-state .Select-menu');
-    const stateCalifornia = Selector('.s-select-state .Select-option').withText('California');
+    const dropdownState = Selector('.s-select-state:not(.is-loading)');
+    const dropdownStateList = Selector('.s-select-state:not(.is-loading) .Select-menu');
+    const stateCalifornia = Selector('.s-select-state:not(.is-loading) .Select-option').withText('California');
 
-    const dropdownCity = Selector('.s-select-city .Select-placeholder');
-    const dropdownCityList = Selector('.s-select-city .Select-menu');
-    const citySanJose = Selector('.s-select-city .Select-option').withText('San Jose');
+    const dropdownCity = Selector('.s-select-city:not(.is-loading)');
+    const dropdownCityList = Selector('.s-select-city:not(.is-loading) .Select-menu');
+    const citySanJose = Selector('.s-select-city:not(.is-loading) .Select-option').withText('San Jose');
 
     const labels = Selector('.highcharts-xaxis-labels');
 

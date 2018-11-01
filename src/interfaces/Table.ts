@@ -75,15 +75,14 @@ export interface IAlignPoint {
 }
 
 export interface ITableCellStyle {
+    backgroundColor?: string;
     color?: string;
     fontWeight?: React.CSSProperties['fontWeight'];
 }
 
-export type TableCellLabel = string;
-
-export interface ITableCellStyledLabel {
+export interface ITableCellStyleAndFormattedValue {
     style: ITableCellStyle;
-    label: TableCellLabel;
+    formattedValue: string;
 }
 
 export interface IPositions {
@@ -130,6 +129,10 @@ export interface ITableTransformationConfig {
     onLess?: Function;
     sortInTooltip?: boolean;
     stickyHeaderOffset?: number;
+    separators?: ISeparators;
+}
+
+export interface IPivotTableConfig {
     separators?: ISeparators;
 }
 
