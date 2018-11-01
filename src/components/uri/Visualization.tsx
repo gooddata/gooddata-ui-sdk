@@ -3,7 +3,6 @@ import * as React from 'react';
 import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import get = require('lodash/get');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
 import { IntlWrapper } from '../core/base/IntlWrapper';
@@ -211,7 +210,7 @@ export class VisualizationWrapped
             filters
         );
 
-        await this.getIsColorPaletteEnabled();
+        await this.getColorPalette();
     }
 
     public componentWillUnmount() {
@@ -233,7 +232,7 @@ export class VisualizationWrapped
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
-            await this.getIsColorPaletteEnabled();
+            await this.getColorPalette();
         }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
@@ -408,7 +407,6 @@ export class VisualizationWrapped
 
     private async getColorPalette() {
         if (!this.isUnmounted
-            && this.state.colorPaletteEnabled
             && !(this.props.config && this.props.config.colorPalette)) {
             const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
 
@@ -416,18 +414,6 @@ export class VisualizationWrapped
                 this.setStateWithCheck({ colorPalette });
             }
         }
-    }
-
-    private async getIsColorPaletteEnabled() {
-        if (this.isUnmounted) {
-            return;
-        }
-
-        const featureFlags = await this.sdk.project.getFeatureFlags(this.props.projectId);
-
-        this.setStateWithCheck({
-            colorPaletteEnabled: Boolean(get(featureFlags, 'enableColorPalette'))
-        }, this.getColorPalette);
     }
 
     private setStateWithCheck(newState: any, callBack?: () => void) {

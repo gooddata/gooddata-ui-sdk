@@ -43,7 +43,7 @@ const sdk = {
         setRequestHeader: () => false
     },
     project: {
-        getFeatureFlags: () => false
+        getColorPaletteWithGuids: jest.fn()
     }
 };
 
@@ -270,7 +270,6 @@ describe('VisualizationWrapped', () => {
             ...sdk,
             clone: () => mutatedSdk,
             project: {
-                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
                 getColorPaletteWithGuids: jest.fn()
             }
         };
@@ -440,45 +439,11 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should call getFeatureFlags and don\'t call getColorPalette', () => {
+    it('should call getColorPalette', () => {
         const mutatedSdk = {
             ...sdk,
             clone: () => mutatedSdk,
             project: {
-                getFeatureFlags: jest.fn(),
-                getColorPaletteWithGuids: jest.fn()
-            }
-        };
-
-        const props = {
-            sdk: mutatedSdk,
-            projectId,
-            identifier: CHART_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            intl
-        };
-
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
-
-        return testUtils.delay(SLOW + 1).then(() => {
-            wrapper.update();
-            expect(mutatedSdk.project.getFeatureFlags).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    it('should call getColorPalette when enableColorPalette feature flag is set', () => {
-        const mutatedSdk = {
-            ...sdk,
-            clone: () => mutatedSdk,
-            project: {
-                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
                 getColorPaletteWithGuids: jest.fn()
             }
         };
@@ -505,5 +470,4 @@ describe('VisualizationWrapped', () => {
             expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
         });
     });
-
 });
