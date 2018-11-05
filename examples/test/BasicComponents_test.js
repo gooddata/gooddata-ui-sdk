@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 async function checkRenderChart(selector, t) {
     const loading = Selector('.s-loading');
@@ -14,7 +14,7 @@ async function checkRenderChart(selector, t) {
 
 fixture('Basic components') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}`));
+    .beforeEach(loginUsingLoginForm(`${config.url}`));
 
 test('Column chart should render', async (t) => {
     await checkRenderChart('.s-column-chart', t);

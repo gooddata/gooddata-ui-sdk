@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Global filter') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/global-filters`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/global-filters`));
 
 test('should filter components according to selected employee', async (t) => {
     const displayedNameSelector = Selector('.additional-info > h1');

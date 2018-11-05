@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import { config } from './utils/config';
-import { loginUsingGreyPages, checkCellValue } from './utils/helpers';
+import { loginUsingLoginForm, checkCellValue } from './utils/helpers';
 
 fixture('Pivot Table') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/hidden/pivot-table`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/hidden/pivot-table`));
 
 test('should render all tables', async (t) => {
     await checkCellValue(t, '.s-measures-row-attributes-and-column-attributes', 'Alabama');
