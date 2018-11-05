@@ -24,6 +24,7 @@ import * as HttpStatusCodes from 'http-status-codes';
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
+const TREEMAP_URI = `/gdc/md/${projectId}/obj/3`;
 const CHART_IDENTIFIER = 'chart';
 const TABLE_IDENTIFIER = 'table';
 
@@ -84,6 +85,10 @@ function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: str
 
     if (identifier === CHART_IDENTIFIER || uri === CHART_URI) {
         return getResponse(CHART_URI, SLOW);
+    }
+
+    if (uri === TREEMAP_URI) {
+        return getResponse(TREEMAP_URI, FAST);
     }
 
     return Promise.reject('Unknown identifier');
@@ -468,6 +473,51 @@ describe('VisualizationWrapped', () => {
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
             expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    it('should add default sorting to the Treemap', () => {
+        const props = {
+            sdk,
+            projectId,
+            uri: TREEMAP_URI,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            BaseChartComponent: BaseChart
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        return testUtils.delay(FAST + 1).then(() => {
+            wrapper.update();
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.resultSpec).toEqual({
+                dimensions: [
+                    {
+                        itemIdentifiers: ['02b7736f6bef48b1849798e430d837df', 'bc5257e06a9342ec99854bd1a53f3262']
+                    },
+                    {
+                        itemIdentifiers: ['measureGroup']
+                    }
+                ],
+                sorts: [
+                    {
+                        attributeSortItem: { attributeIdentifier: '02b7736f6bef48b1849798e430d837df', direction: 'asc' }
+                    },
+                    {
+                        measureSortItem: {
+                            direction: 'desc',
+                            locators: [
+                                { measureLocatorItem: { measureIdentifier: 'b5a12d1bf094469d9b4e7d5d2bb87287' } }
+                            ]
+                        }
+                    }
+                ]
+            });
         });
     });
 });

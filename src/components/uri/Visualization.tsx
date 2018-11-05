@@ -22,7 +22,9 @@ import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import { IDrillableItem, generateDimensions, RuntimeError } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
+import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
+import { isTreemap } from '../visualizations/utils/common';
 export { Requireable };
 
 const {
@@ -385,9 +387,17 @@ export class VisualizationWrapped
                     const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
 
                     const visualizationType: VisType = getVisualizationTypeFromVisualizationClass(visualizationClass);
+                    // keep resultSpec creation in sync with AD
                     const resultSpecWithDimensions = {
                         ...resultSpec,
                         dimensions: generateDimensions(mdObject.content, visualizationType)
+                    };
+                    const treemapDefaultSorting = isTreemap(visualizationType) ? {
+                        sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions)
+                    } : {};
+                    const resultSpecWithDimensionsAndSorting = {
+                        ...resultSpecWithDimensions,
+                        ...treemapDefaultSorting
                     };
 
                     return this.adapter.createDataSource(afmWithFilters)
@@ -395,7 +405,7 @@ export class VisualizationWrapped
                             return {
                                 type: visualizationType,
                                 dataSource,
-                                resultSpec: resultSpecWithDimensions,
+                                resultSpec: resultSpecWithDimensionsAndSorting,
                                 totals: mdObjectTotals,
                                 mdObject
                             };
