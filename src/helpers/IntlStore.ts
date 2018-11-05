@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { InjectedIntl, IntlProvider } from 'react-intl';
 import { Localization } from '@gooddata/typings';
+import { translations } from '@gooddata/js-utils';
 import { DEFAULT_LOCALE } from '../constants/localization';
 
 import * as enUS from '../translations/en-US.json';
@@ -14,7 +15,7 @@ import * as ptPT from '../translations/pt-PT.json';
 import isEmpty = require('lodash/isEmpty');
 
 const messagesMap = {
-    'en-US': enUS,
+    'en-US': translations.removeMetadata(enUS),
     'de-DE': deDE,
     'es-ES': esES,
     'fr-FR': frFR,

@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
+import { translations } from '@gooddata/js-utils';
 
 import * as deLocaleData from 'react-intl/locale-data/de';
 import * as esLocaleData from 'react-intl/locale-data/es';
@@ -30,7 +31,7 @@ import * as ptBR from '../../../translations/pt-BR.json';
 import * as ptPT from '../../../translations/pt-PT.json';
 
 export const messagesMap = {
-    'en-US': enUS,
+    'en-US': translations.removeMetadata(enUS),
     'de-DE': deDE,
     'es-ES': esES,
     'fr-FR': frFR,
@@ -41,7 +42,6 @@ export const messagesMap = {
 };
 
 export const DEFAULT_LOCALE = 'en-US';
-
 export interface IIntlWrapperProps {
     locale: string;
 }
