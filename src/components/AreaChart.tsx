@@ -11,7 +11,7 @@ import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
-export interface IAreaChartBucketProps extends ICommonChartProps {
+export interface IAreaChartBucketProps {
     measures: VisualizationObject.BucketItem[];
     viewBy?: VisualizationObject.IVisualizationAttribute;
     stackBy?: VisualizationObject.IVisualizationAttribute;
@@ -24,10 +24,6 @@ export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProp
 }
 
 type IAreaChartNonBucketProps = Subtract<IAreaChartProps, IAreaChartBucketProps>;
-
-export interface IAreaChartProps extends ICommonChartProps {
-    projectId: string;
-}
 
 /**
  * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)

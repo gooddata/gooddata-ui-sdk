@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { BubbleChart } from '../BubbleChart';
 import { BubbleChart as AfmBubbleChart } from '../afm/BubbleChart';
+import { M1 } from './fixtures/buckets';
 
 describe('BubbleChart', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -60,6 +62,17 @@ describe('BubbleChart', () => {
             attributeIdentifier: 'attribute1'
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <BubbleChart
+                projectId="foo"
+                xAxisMeasure={M1}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper.find(AfmBubbleChart)).toHaveLength(1);
+    });
 
     it('should render scatter plot and convert the buckets to AFM', () => {
         const wrapper = shallow(

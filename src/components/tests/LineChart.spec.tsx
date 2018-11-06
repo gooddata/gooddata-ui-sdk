@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { LineChart } from '../LineChart';
 import { LineChart as AfmLineChart } from '../afm/LineChart';
+import { M1 } from './fixtures/buckets';
 
 describe('LineChart', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -47,6 +49,17 @@ describe('LineChart', () => {
             }]
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <LineChart
+                projectId="foo"
+                measures={[M1]}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper.find(AfmLineChart)).toHaveLength(1);
+    });
 
     it('should render pie chart and convert the buckets to AFM', () => {
         const wrapper = shallow(

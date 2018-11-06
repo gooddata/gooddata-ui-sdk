@@ -6,12 +6,8 @@ import { getDefaultTreemapSort } from '../../helpers/sorts';
 
 export { Requireable };
 
-export class Treemap extends React.Component<IChartProps, null> {
+export class Treemap extends React.PureComponent<IChartProps, null> {
     public static propTypes = ChartPropTypes;
-
-    constructor(props: IChartProps) {
-        super(props);
-    }
 
     public render() {
         const sorts = getDefaultTreemapSort(this.props.dataSource.getAfm(), this.props.resultSpec);

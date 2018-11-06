@@ -6,7 +6,7 @@ import { visualizationIsBetaWarning } from '../../helpers/utils';
 
 export { Requireable };
 
-export class DualChart extends React.Component<IChartProps, null> {
+export class DualChart extends React.PureComponent<IChartProps, null> {
     public static propTypes = ChartPropTypes;
 
     constructor(props: IChartProps) {
