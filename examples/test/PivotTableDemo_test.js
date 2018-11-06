@@ -5,7 +5,7 @@ import { loginUsingGreyPages } from './utils/helpers';
 
 fixture('Pivot Table Demo') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/next/pivot-table`));
+    .beforeEach(loginUsingGreyPages(`${config.url}/pivot-table`));
 
 test('should render all tables', async (t) => {
     const table = Selector('.s-pivot-table-sorting');
