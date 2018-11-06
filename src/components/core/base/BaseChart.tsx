@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import noop = require('lodash/noop');
+import { SDK } from '@gooddata/gooddata-js';
 
 import { Visualization } from '../../visualizations/Visualization';
 import { IChartConfig } from '../../visualizations/chart/Chart';
@@ -29,6 +30,7 @@ export interface ICommonChartProps extends ICommonVisualizationProps {
     config?: IChartConfig;
     height?: number;
     environment?: string;
+    sdk?: SDK;
 }
 
 export type IChartProps = ICommonChartProps & IDataSourceProviderInjectedProps;

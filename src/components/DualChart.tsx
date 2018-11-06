@@ -24,10 +24,6 @@ export interface IDualChartProps extends ICommonChartProps, IDualChartBucketProp
 
 type IDualChartNonBucketProps = Subtract<IDualChartProps, IDualChartBucketProps>;
 
-export interface IDualChartProps extends ICommonChartProps {
-    projectId: string;
-}
-
 /**
  * [DualChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/dual_chart_component.html)
  * is a component with bucket props measures, secondaryMeasures, trendBy, filters

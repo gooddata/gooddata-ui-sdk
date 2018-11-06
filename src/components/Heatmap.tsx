@@ -25,10 +25,6 @@ export interface IHeatmapProps extends ICommonChartProps, IHeatmapBucketProps {
 
 type IHeatmapNonBucketProps = Subtract<IHeatmapProps, IHeatmapBucketProps>;
 
-export interface IHeatmapProps extends ICommonChartProps {
-    projectId: string;
-}
-
 export function Heatmap(props: IHeatmapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {

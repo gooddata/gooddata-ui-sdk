@@ -24,10 +24,6 @@ export interface ILineChartProps extends ICommonChartProps, ILineChartBucketProp
 
 type ILineChartNonBucketProps = Subtract<ILineChartProps, ILineChartBucketProps>;
 
-export interface ILineChartProps extends ICommonChartProps {
-    projectId: string;
-}
-
 /**
  * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
  * is a component with bucket props measures, trendBy, segmentBy, filters

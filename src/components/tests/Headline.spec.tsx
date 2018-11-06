@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { shallow } from 'enzyme';
+import { factory } from '@gooddata/gooddata-js';
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import { Headline } from '../Headline';
 import { Headline as AfmHeadline } from '../afm/Headline';
+import { M1 } from './fixtures/buckets';
 
 describe('Headline', () => {
     const measure: VisualizationObject.IMeasure = {
@@ -18,6 +20,17 @@ describe('Headline', () => {
             }
         }
     };
+
+    it('should render with custom SDK', () => {
+        const wrapper = shallow(
+            <Headline
+                projectId="foo"
+                primaryMeasure={M1}
+                sdk={factory({ domain: 'example.com' })}
+            />
+        );
+        expect(wrapper.find(AfmHeadline)).toHaveLength(1);
+    });
 
     it('should render headline with one measure and convert the bucket to AFM', () => {
         const wrapper = shallow(

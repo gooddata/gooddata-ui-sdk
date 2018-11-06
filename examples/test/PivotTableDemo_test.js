@@ -5,7 +5,7 @@ import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Pivot Table Demo') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/next/pivot-table`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/pivot-table`));
 
 test('should render all tables', async (t) => {
     const table = Selector('.s-pivot-table-sorting');
