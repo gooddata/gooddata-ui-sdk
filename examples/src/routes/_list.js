@@ -38,7 +38,6 @@ export const advancedUseCasesRoutes = [
 ];
 
 export const nextRoutes = [
-    { path: '/next/pivot-table', title: 'Pivot Table', Component: PivotTableDemo },
     { path: '/next/combo-chart', title: 'Combo chart', Component: ComboChart }
 ];
 
@@ -47,6 +46,7 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
+    { path: '/pivot-table', title: 'Pivot Table', Component: PivotTableDemo },
     { path: '/visualization', title: 'Visualization Component', Component: Visualization },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },

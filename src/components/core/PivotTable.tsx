@@ -17,8 +17,6 @@ import {
 } from 'ag-grid';
 import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
 
-import { visualizationIsBetaWarning } from '../../helpers/utils';
-
 import {
     executionToAGGridAdapter,
     ROW_ATTRIBUTE_COLUMN,
@@ -367,7 +365,6 @@ export class PivotTableInner extends
         };
         this.gridDataSource = null;
         this.gridApi = null;
-        visualizationIsBetaWarning();
     }
 
     public componentWillMount() {
