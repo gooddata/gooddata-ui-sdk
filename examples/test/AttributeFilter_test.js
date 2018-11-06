@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Attribute filter components')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/attribute-filter-components`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/attribute-filter-components`));
 
 test('Dropdown filter opens, clears, selects all and applies', async (t) => {
     const dropdownButton = Selector('.button.s-employee_name');

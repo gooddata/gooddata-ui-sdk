@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Parent filter')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/parent-filter`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/parent-filter`));
 
 test('Check if child filters are restricted by parent filters and visualization is properly filtered', async (t) => {
     const dropdownState = Selector('.s-select-state:not(.is-loading)');

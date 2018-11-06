@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Pivot Table Demo') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/next/pivot-table`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/next/pivot-table`));
 
 test('should render all tables', async (t) => {
     const table = Selector('.s-pivot-table-sorting');

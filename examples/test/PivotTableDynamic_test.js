@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages, checkCellValue } from './utils/helpers';
+import { loginUsingLoginForm, checkCellValue } from './utils/helpers';
 import {
     measuresDrillParams,
     rowAttributesDrillParams,
@@ -42,7 +42,7 @@ async function checkDrill(t, output, selector = '.s-output') {
 
 fixture('Pivot Table')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/hidden/pivot-table-dynamic`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/hidden/pivot-table-dynamic`));
 
 test('should add drillable classes and run onFiredDrillEvent with correct params', async (t) => {
     await t.click(Selector('.s-bucket-preset-measures'));
