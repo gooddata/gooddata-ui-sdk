@@ -25,6 +25,7 @@ import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
 import * as MeasureTitleHelper from './helpers/measureTitleHelper';
+import * as SortsHelper from './helpers/sorts';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
 import ArithmeticMeasureTitleFactory from './factory/ArithmeticMeasureTitleFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
@@ -120,5 +121,6 @@ export {
     ChartTransformation,
     Chart,
     OverTimeComparisonType,
-    OverTimeComparisonTypes
+    OverTimeComparisonTypes,
+    SortsHelper
 };

@@ -931,6 +931,72 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 contributor: '/gdc/account/profile/johndoe'
             }
         }
+    },
+    {
+        visualizationObject: {
+            content: {
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'b5a12d1bf094469d9b4e7d5d2bb87287',
+                                    title: 'Avg. Amount',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/jm8bsdakbhujk1a254h25a6mtd6orn9g/obj/62827'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'view',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: '02b7736f6bef48b1849798e430d837df',
+                                    displayForm: {
+                                        uri: '/gdc/md/jm8bsdakbhujk1a254h25a6mtd6orn9g/obj/324'
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'segment',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'bc5257e06a9342ec99854bd1a53f3262',
+                                    displayForm: {
+                                        uri: '/gdc/md/jm8bsdakbhujk1a254h25a6mtd6orn9g/obj/952'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/treemap'
+                }
+            },
+            meta: {
+                author: '/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786',
+                uri: '/gdc/md/myproject/obj/3',
+                tags: '',
+                created: new Date('2018-05-23T09:24:41Z'),
+                identifier: 'aacp5FkYehh3',
+                summary: '',
+                title: 'ONE-3417',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786'
+            }
+        }
     }
 ];
 
@@ -960,6 +1026,20 @@ export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVi
             meta: {
                 title: 'Table chart',
                 uri: '/gdc/md/myproject/obj/table'
+            }
+        }
+    },
+    {
+        visualizationClass: {
+            content: {
+                url: 'local:treemap',
+                icon: '',
+                iconSelected: '',
+                checksum: ''
+            },
+            meta: {
+                title: 'Treemap',
+                uri: '/gdc/md/myproject/obj/treemap'
             }
         }
     }
