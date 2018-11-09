@@ -8,10 +8,8 @@ fixture('Visualization') // eslint-disable-line no-undef
     .beforeEach(loginUsingGreyPages(`${config.url}/visualization`));
 
 test('Chart visualization should render', async (t) => {
-    const loading = Selector('.s-loading');
     const chart = Selector('.s-visualization-chart svg'); // could need timeout ie 20 secs to work
     await t
-        .expect(loading.exists).ok()
         .expect(chart.exists)
         .ok()
         .expect(chart.textContent)
@@ -19,11 +17,9 @@ test('Chart visualization should render', async (t) => {
 });
 
 test('Custom visualization should render', async (t) => {
-    const loading = Selector('.s-loading');
     const chart = Selector('.s-visualization-custom .recharts-surface');
     const legend = Selector('.s-visualization-custom .recharts-legend-wrapper');
     await t
-        .expect(loading.exists).ok()
         .expect(chart.exists)
         .ok()
         .expect(legend.textContent)
@@ -31,11 +27,9 @@ test('Custom visualization should render', async (t) => {
 });
 
 test('Table visualization should render', async (t) => {
-    const loading = Selector('.s-loading');
     const table = Selector('.s-visualization-table .indigo-table-component');
     const tableHeader = Selector('.s-visualization-table .table-header');
     await t
-        .expect(loading.exists).ok()
         .expect(table.exists)
         .ok()
         .expect(tableHeader.textContent)

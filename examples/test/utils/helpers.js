@@ -63,12 +63,14 @@ export const loginUsingLoginForm = (redirectUri = '/', retryCount = 2) => async 
     // wait till s-isWaitingForLoggedInStatus disappears
     // allow long timeout because of page load
     await retry(() => selectorExists('.s-isWaitingForLoggedInStatus', false), 15000).catch((error) => {
+        // eslint-disable-next-line no-console
         console.error('ERROR: s-isWaitingForLoggedInStatus forever. Probably a JS issue', error);
         // no reason to retry, something is most likely broken
     });
 
     // if already logged in, redirect immediately
     if (await Selector(isLoggedInQuery).exists) {
+        // eslint-disable-next-line no-console
         console.warn('already logged in');
         return tc.navigateTo(redirectUri);
     }
@@ -86,11 +88,14 @@ export const loginUsingLoginForm = (redirectUri = '/', retryCount = 2) => async 
             return tc.navigateTo(redirectUri);
         },
         (error) => {
+            // eslint-disable-next-line no-console
             console.warn('failed to log in', error);
             if (retryCount > 0) {
+                // eslint-disable-next-line no-console
                 console.warn('retrying', retryCount, 'times');
                 return loginUsingLoginForm(redirectUri, retryCount - 1)(tc);
             }
+            // eslint-disable-next-line no-console
             console.warn('no more retries, sorry');
             return error;
         }
