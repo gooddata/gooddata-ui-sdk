@@ -191,26 +191,26 @@ export const getColumnHeaders = (
 };
 
 export const getRowHeaders = (
-    rowDimensionHeaders: Execution.IHeader[],
+    rowDimensionHeaders: Execution.IAttributeHeader[],
     columnDefOptions: IColumnDefOptions,
     makeRowGroups: boolean
 ): IGridHeader[] => {
-    return rowDimensionHeaders.map((headerItemWrapped: Execution.IHeader) => {
-        const headerItem = unwrap(headerItemWrapped);
+    return rowDimensionHeaders.map((attributeHeader: Execution.IAttributeHeader) => {
         const rowGroupProps = makeRowGroups ? {
             rowGroup: true,
             hide: true
         } : {};
         // attribute drill item
         const drillableItem: IDrillItem = {
-            uri: headerItem.uri,
-            identifier: headerItem.identifier,
-            localIdentifier: headerItem.localIdentifier,
-            title: headerItem.name
+            uri: attributeHeader.attributeHeader.uri,
+            identifier: attributeHeader.attributeHeader.identifier,
+            localIdentifier: attributeHeader.attributeHeader.localIdentifier,
+            title: attributeHeader.attributeHeader.name
         };
-        const field = identifyResponseHeader(headerItemWrapped);
+        const field = identifyResponseHeader(attributeHeader);
         return {
-            headerName: headerItem.name,
+            // The label should be attribute name (not attribute display form name)
+            headerName: attributeHeader.attributeHeader.formOf.name,
             type: ROW_ATTRIBUTE_COLUMN,
             // Row dimension must contain only attribute headers.
             field,
@@ -426,24 +426,20 @@ export const executionToAGGridAdapter = (
     const columnHeaders: IGridHeader[] = getColumnHeaders(headerItems[1], dimensions[1].headers, columnDefOptions);
     const groupColumnHeaders: IGridHeader[] = columnAttributeHeaderCount > 0 ? [{
         headerName: dimensions[1].headers
-            .map((header: Execution.IHeader) => {
-                if (Execution.isAttributeHeader(header)) {
-                    return header.attributeHeader.name;
-                }
-                if (Execution.isMeasureGroupHeader(header) && header.measureGroupHeader.items.length > 1) {
-                    return 'measures';
-                }
-                return null;
+            .filter(header => Execution.isAttributeHeader(header))
+            .map((header: Execution.IAttributeHeader) => {
+                return header.attributeHeader.formOf.name;
             })
             .filter((item: string) => item !== null)
-            .join('/'),
+            .join(' › '),
         field: 'columnGroupLabel',
         children: columnHeaders,
         drillItems: []
     }] : columnHeaders;
 
     const rowHeaders: IGridHeader[]
-        = getRowHeaders(dimensions[0].headers, columnDefOptions, makeRowGroups);
+        // There are supposed to be only attribute headers on the first dimension
+        = getRowHeaders(dimensions[0].headers as Execution.IAttributeHeader[], columnDefOptions, makeRowGroups);
 
     // build sortingMap from resultSpec.sorts
     const sorting = resultSpec.sorts || [];
