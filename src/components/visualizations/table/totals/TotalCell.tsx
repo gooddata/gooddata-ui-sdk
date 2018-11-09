@@ -6,6 +6,7 @@ import { Cell } from 'fixed-data-table-2';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { ISeparators } from '@gooddata/numberjs';
 import { VisualizationObject } from '@gooddata/typings';
+import { isMappingHeaderMeasureItem, IMappingHeader } from '../../../../interfaces/MappingHeader';
 
 import {
     DEFAULT_FOOTER_ROW_HEIGHT,
@@ -20,12 +21,11 @@ import {
 } from './utils';
 import { AddTotal } from './AddTotal';
 import { ITotalWithData, IIndexedTotalItem } from '../../../../interfaces/Totals';
-import { TableHeader } from '../../../../interfaces/Table';
 
 export interface ITotalCellProps {
     totalsWithData: ITotalWithData[];
     columnIndex: number;
-    header: TableHeader;
+    header: IMappingHeader;
     headersCount: number;
     firstMeasureIndex: number;
     editAllowed?: boolean;
@@ -111,7 +111,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
     }
 
     private renderAddTotalButton(
-        header: TableHeader,
+        header: IMappingHeader,
         columnIndex: number,
         headersCount: number
     ) {
@@ -144,7 +144,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
         );
     }
 
-    private renderEditCell(header: TableHeader, columnIndex: number, headersCount: number) {
+    private renderEditCell(header: IMappingHeader, columnIndex: number, headersCount: number) {
         if (!this.props.editAllowed) {
             return null;
         }
@@ -179,12 +179,12 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
         formattedValue: string,
         style: React.CSSProperties,
         total: IIndexedTotalItem,
-        header: TableHeader,
+        header: IMappingHeader,
         columnIndex: number
     ) {
         const { firstMeasureIndex, editAllowed } = this.props;
 
-        if (header.type !== 'measure') {
+        if (!isMappingHeaderMeasureItem(header)) {
             return null;
         }
 
@@ -234,7 +234,7 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
         columnIndex: number,
         measureColumnIndex: number,
         total: ITotalWithData,
-        header: TableHeader,
+        header: IMappingHeader,
         separators: ISeparators
     ) {
         if (isFirstColumn) {

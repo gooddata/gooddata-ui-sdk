@@ -211,10 +211,10 @@
   dependencies:
     lodash "4.17.4"
 
-"@gooddata/typings@2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.4.2.tgz#53f20e12b7eab24fb7cfffd976ee86af7cb08782"
-  integrity sha512-T1eAnQhgm5YRbV7aDP7SVuM+vQpIbIN2Ved8z5SfJtf6BgCM038WHMN2jYo0RTyNCoR1OvGY5y3hMVNv3oXULA==
+"@gooddata/typings@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.5.0.tgz#06fd69781555ee38febe63cf3e0c3b052b5fb290"
+  integrity sha512-zceS2Q1yJVRhB0KXzxdjWaGZgecdygKk9GFNEo09E4CG7O7LrflZ3AmlCI9u1MlzPlhc4HN0do5cccpPyRAmMg==
   dependencies:
     lodash "4.17.4"
 

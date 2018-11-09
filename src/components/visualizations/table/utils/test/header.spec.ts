@@ -10,7 +10,7 @@ import {
     getTooltipSortAlignPoints
 } from '../header';
 
-import { IAttributeTableHeader, IPositions, ITableDimensions } from '../../../../../interfaces/Table';
+import { IPositions, ITableDimensions } from '../../../../../interfaces/Table';
 
 import { ALIGN_LEFT, ALIGN_RIGHT } from '../../constants/align';
 import { TABLE_HEADERS_2A_3M } from '../../fixtures/2attributes3measures';
@@ -18,7 +18,7 @@ import { TOTALS_DEFINITION_3 } from '../fixtures/totalsWithData';
 import { ITotalWithData } from '../../../../../interfaces/Totals';
 import 'jest';
 
-const ATTRIBUTE_HEADER = TABLE_HEADERS_2A_3M[0] as IAttributeTableHeader;
+const ATTRIBUTE_HEADER = TABLE_HEADERS_2A_3M[0];
 
 function mockGetBoundingClientRect(): ClientRect {
     return {

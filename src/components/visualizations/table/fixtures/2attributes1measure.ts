@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_2A_1M: AFM.IExecution = {
     execution: {
@@ -1127,28 +1128,42 @@ export const EXECUTION_RESULT_2A_1M: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_2A_1M: TableHeader[] = [
+export const TABLE_HEADERS_2A_1M: IMappingHeader[] = [
     {
-        type: 'attribute',
-        uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/1028',
-        identifier: 'label.owner.id.name',
-        localIdentifier: 'owner_name',
-        name: 'Sales Rep (element 1, element 2, element 3, element 4, element 5, element 6, element 7, element 8, element 9, element 10, element 11)' // tslint:disable-line:max-line-length
+        attributeHeader: {
+            uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/1028',
+            identifier: 'label.owner.id.name',
+            localIdentifier: 'owner_name',
+            name: 'Owner Name DF Title',
+            formOf: {
+                uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/12345',
+                identifier: 'owner_name_attr_local_identifier',
+                // tslint:disable-next-line:max-line-length
+                name: 'Sales Rep (element 1, element 2, element 3, element 4, element 5, element 6, element 7, element 8, element 9, element 10, element 11)'
+            }
+        }
     },
     {
-        type: 'attribute',
-        uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/1805',
-        identifier: 'label.stage.name.stagename',
-        localIdentifier: 'stage_name',
-        name: 'Stage Name'
+        attributeHeader: {
+            uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/1805',
+            identifier: 'label.stage.name.stagename',
+            localIdentifier: 'stage_name',
+            name: 'Stage Name DF Title',
+            formOf: {
+                uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/67890',
+                identifier: 'stage_name_attr_local_identifier',
+                name: 'Stage Name'
+            }
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
-        identifier: 'aaYh6Voua2yj',
-        localIdentifier: 'num_of_open_opps',
-        name: '# of Open Opps.',
-        format: '#,##0'
+        measureHeaderItem: {
+            uri: '/gdc/md/tgqkx9leq2tntui4j6fp08tk6epftziu/obj/13465',
+            identifier: 'aaYh6Voua2yj',
+            localIdentifier: 'num_of_open_opps',
+            name: '# of Open Opps.',
+            format: '#,##0'
+        }
     }
 ];
 

@@ -1,6 +1,40 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { VisType, VisElementType } from '../constants/visualizationTypes';
+import { VisElementType, VisType } from '../constants/visualizationTypes';
+
+export interface IDrillableItemUri {
+    uri: string;
+}
+
+export interface IDrillableItemIdentifier {
+    identifier: string;
+}
+
+export type IDrillableItem =
+    IDrillableItemUri |
+    IDrillableItemIdentifier |
+    (IDrillableItemUri & IDrillableItemIdentifier);
+
+export function isDrillableItemUri(item: IDrillableItem): item is IDrillableItemUri {
+    return (item as IDrillableItemUri).uri !== undefined;
+}
+
+export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrillableItemIdentifier {
+    return (item as IDrillableItemIdentifier).identifier !== undefined;
+}
+
+export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
+
+// Internal precursor to IDrillEventIntersectionElement
+// TODO: Refactor internal drilling functions and replace with IDrillEventIntersectionElement
+export interface IDrillIntersection {
+    id: string;
+    title?: string;
+    value?: Execution.DataValue;
+    name?: string;
+    uri: string;
+    identifier: AFM.Identifier;
+}
 
 // IDrillEvent is a parameter of the onFiredDrillEvent is callback
 export interface IDrillEvent {
@@ -33,40 +67,8 @@ export interface IDrillEventPoint {
 export interface IDrillEventIntersectionElement {
     id: string;
     title: string;
-    header: {
+    header?: {
         uri: string;
         identifier: string;
     };
-}
-
-// Internal precursor to IDrillEventIntersectionElement
-// TODO: Refactor internal drilling functions and replace with IDrillEventIntersectionElement
-export interface IDrillableItem {
-    uri?: string;
-    identifier?: string;
-    title?: string;
-}
-
-export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
-
-// Consider refactoring and removing this as a separate type
-export interface IDrillableItemLocalId extends IDrillableItem {
-    localIdentifier: AFM.Identifier;
-}
-
-export type IDrillItem = IDrillableItem | IDrillableItemLocalId;
-
-// Internal precursor to IDrillEventIntersectionElement
-// TODO: Refactor internal drilling functions and replace with IDrillEventIntersectionElement
-export interface IDrillIntersection {
-    id: string;
-    title?: string;
-    value?: Execution.DataValue;
-    name?: string;
-    uri: string;
-    identifier: AFM.Identifier;
-}
-
-export function isDrillableItemLocalId(item: IDrillItem): item is IDrillableItemLocalId {
-    return (item as IDrillableItemLocalId).localIdentifier !== undefined;
 }

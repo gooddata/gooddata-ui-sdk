@@ -170,7 +170,8 @@ export class MeasureColorStrategy extends ColorStrategy {
                 headerItem,
                 currentColorPaletteIndex,
                 colorPalette,
-                colorMapping
+                colorMapping,
+                afm
             );
 
             currentColorPaletteIndex++;
@@ -190,9 +191,10 @@ export class MeasureColorStrategy extends ColorStrategy {
         headerItem: Execution.IMeasureHeaderItem,
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
-        colorAssignment: IColorMapping[]
+        colorAssignment: IColorMapping[],
+        afm: AFM.IAfm
     ): IColorAssignment {
-        const mappedColor = getColorFromMapping(headerItem, colorAssignment);
+        const mappedColor = getColorFromMapping(headerItem, colorAssignment, afm);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -256,14 +258,15 @@ export class MeasureColorStrategy extends ColorStrategy {
 function getAtributeColorAssignment(
         attribute: any,
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping[]
+        colorMapping: IColorMapping[],
+        afm: AFM.IAfm
     ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
     const uniqItems: Execution.IResultAttributeHeaderItem[]
         = uniqBy<any, Execution.IResultAttributeHeaderItem>(attribute.items, 'attributeHeaderItem.uri');
 
     return uniqItems.map((headerItem) => {
-        const mappedColor = getColorFromMapping(headerItem, colorMapping);
+        const mappedColor = getColorFromMapping(headerItem, colorMapping, afm);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -305,10 +308,10 @@ export class AttributeColorStrategy extends ColorStrategy {
         _measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
-        _afm: AFM.IAfm
+        afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         const attribute = stackByAttribute ? stackByAttribute : viewByAttribute;
-        const colorAssignment = getAtributeColorAssignment(attribute, colorPalette, colorMapping);
+        const colorAssignment = getAtributeColorAssignment(attribute, colorPalette, colorMapping, afm);
         return {
             fullColorAssignment: colorAssignment
         };
@@ -326,13 +329,13 @@ export class HeatmapColorStrategy extends ColorStrategy {
         measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
-        _afm: AFM.IAfm
+        afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         let mappedColor;
         let colorAssignment: IColorAssignment[];
         const headerItem = measureGroup && measureGroup.items[0];
         if (colorMapping) {
-            mappedColor = getColorFromMapping(headerItem, colorMapping);
+            mappedColor = getColorFromMapping(headerItem, colorMapping, afm);
             if (mappedColor) {
                 colorAssignment = [{
                     headerItem,
@@ -420,7 +423,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
     ): ICreateColorAssignmentReturnValue {
         let colorAssignment: IColorAssignment[];
         if (viewByAttribute) {
-            colorAssignment = getAtributeColorAssignment(viewByAttribute, colorPalette, colorMapping);
+            colorAssignment = getAtributeColorAssignment(viewByAttribute, colorPalette, colorMapping, afm);
         } else {
             const result = super.createColorAssignment(
                 colorPalette,
@@ -444,10 +447,11 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected singleMeasureColorMapping(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType
+        measureGroup: MeasureGroupType,
+        afm: AFM.IAfm
     ): IColorAssignment[] {
         const measureHeaderItem = measureGroup.items[0];
-        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping);
+        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, afm);
         const color: IColorItem = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping : { type: 'guid', value: colorPalette[0].guid };
         return [{
@@ -488,7 +492,7 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
                 afm
             ).fullColorAssignment;
         } else {
-            colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup);
+            colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup, afm);
         }
 
         return {
@@ -517,9 +521,9 @@ export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
         measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
-        _afm: AFM.IAfm
+        afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
-            const colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup);
+            const colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup, afm);
             return {
                 fullColorAssignment: colorAssignment
             };

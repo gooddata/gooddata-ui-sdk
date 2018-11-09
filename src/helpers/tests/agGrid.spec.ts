@@ -24,7 +24,7 @@ import {
 
 import * as fixtures from '../../../stories/test_data/fixtures';
 import { Execution, AFM } from '@gooddata/typings';
-import { IDrillItem } from '../../interfaces/DrillEvents';
+import { IMappingHeader } from '../../interfaces/MappingHeader';
 import { IGridHeader } from '../../interfaces/AGGrid';
 import { createIntlMock } from '../../components/visualizations/utils/intlUtils';
 
@@ -214,10 +214,17 @@ describe('getRowHeaders', () => {
                     type: 'ROW_ATTRIBUTE_COLUMN',
                     drillItems: [
                         {
-                            identifier: 'label.restaurantlocation.locationstate',
-                            localIdentifier: 'state',
-                            title: 'Location State',
-                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+                            attributeHeader: {
+                                identifier: 'label.restaurantlocation.locationstate',
+                                localIdentifier: 'state',
+                                name: 'Location State',
+                                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211',
+                                formOf: {
+                                    identifier: 'attr.restaurantlocation.locationstate',
+                                    name: 'Location State',
+                                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210'
+                                }
+                            }
                         }
                     ]
                 },
@@ -226,10 +233,17 @@ describe('getRowHeaders', () => {
                     headerName: 'Location Name',
                     type: 'ROW_ATTRIBUTE_COLUMN',
                     drillItems: [{
-                        identifier: 'label.restaurantlocation.locationname',
-                        localIdentifier: 'location',
-                        title: 'Location Name',
-                        uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205'
+                        attributeHeader: {
+                            identifier: 'label.restaurantlocation.locationname',
+                            localIdentifier: 'location',
+                            name: 'Location Name',
+                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205',
+                            formOf: {
+                                identifier: 'attr.restaurantlocation.locationname',
+                                name: 'Location Name',
+                                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204'
+                            }
+                        }
                     }]
                 }
             ]
@@ -252,10 +266,17 @@ describe('getRowHeaders', () => {
                     type: 'custom',
                     drillItems: [
                         {
-                            identifier: 'label.restaurantlocation.locationstate',
-                            localIdentifier: 'state',
-                            title: 'Location State',
-                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+                            attributeHeader: {
+                                identifier: 'label.restaurantlocation.locationstate',
+                                localIdentifier: 'state',
+                                name: 'Location State',
+                                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211',
+                                formOf: {
+                                    identifier: 'attr.restaurantlocation.locationstate',
+                                    name: 'Location State',
+                                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210'
+                                }
+                            }
                         }
                     ]
                 },
@@ -267,10 +288,17 @@ describe('getRowHeaders', () => {
                     type: 'custom',
                     drillItems: [
                         {
-                            identifier: 'label.restaurantlocation.locationname',
-                            localIdentifier: 'location',
-                            title: 'Location Name',
-                            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205'
+                            attributeHeader: {
+                                identifier: 'label.restaurantlocation.locationname',
+                                localIdentifier: 'location',
+                                name: 'Location Name',
+                                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205',
+                                formOf: {
+                                    identifier: 'attr.restaurantlocation.locationname',
+                                    name: 'Location Name',
+                                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204'
+                                }
+                            }
                         }
                     ]
                 }
@@ -410,12 +438,16 @@ describe('getRow', () => {
             'a_2211': 'Alabama',
             'drillItemMap': {
                 a_2205: {
-                    title: 'Montgomery',
-                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340107'
+                    attributeHeaderItem: {
+                        name: 'Montgomery',
+                        uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340107'
+                    }
                 },
                 a_2211: {
-                    title: 'Alabama',
-                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+                    attributeHeaderItem: {
+                        name: 'Alabama',
+                        uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+                    }
                 }
             }
         });
@@ -563,28 +595,38 @@ describe('getMeasureDrillItem', () => {
     it('should return measure drill item based on response headers', () => {
         const responseHeaders: Execution.IHeader[]
             = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
-        const header: Execution.IResultMeasureHeaderItem = { measureHeaderItem: { name: 'not important', order: 0 } };
-        expect(
-            getMeasureDrillItem(responseHeaders, header)
-        ).toEqual({
-            identifier: 'ah1EuQxwaCqs',
-            localIdentifier: 'amountMetric',
-            title: 'Amount',
-            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
-        });
+        const header: Execution.IResultMeasureHeaderItem = {
+            measureHeaderItem: {
+                name: 'not important',
+                order: 0
+            }
+        };
+        const expectedDrillHeader: IMappingHeader = {
+            measureHeaderItem: {
+                identifier: 'ah1EuQxwaCqs',
+                localIdentifier: 'amountMetric',
+                name: 'Amount',
+                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
+                format: '#,##0.00'
+            }
+        };
+
+        expect(getMeasureDrillItem(responseHeaders, header)).toEqual(expectedDrillHeader);
     });
     it('should return null if the header cannot be found', () => {
         const responseHeaders1: Execution.IHeader[]
             = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[0].headers;
         const responseHeaders2: Execution.IHeader[]
             = fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
-        const header: Execution.IResultMeasureHeaderItem = { measureHeaderItem: { name: 'not important', order: 99 } };
-        expect(
-            getMeasureDrillItem(responseHeaders1, header)
-        ).toBe(null);
-        expect(
-            getMeasureDrillItem(responseHeaders2, header)
-        ).toBe(null);
+        const header: Execution.IResultMeasureHeaderItem = {
+            measureHeaderItem: {
+                name: 'not important',
+                order: 99
+            }
+        };
+
+        expect(getMeasureDrillItem(responseHeaders1, header)).toBe(null);
+        expect(getMeasureDrillItem(responseHeaders2, header)).toBe(null);
     });
 });
 
@@ -597,7 +639,7 @@ describe('assignDrillItemsAndType', () => {
         const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0];
         const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[1].headers;
         const headerIndex = 0;
-        const drillItems: IDrillItem[] = [];
+        const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(
             header,
             currentHeader,
@@ -605,13 +647,19 @@ describe('assignDrillItemsAndType', () => {
             headerIndex,
             drillItems
         );
+        const expectedDrillItems: IMappingHeader[] = [
+            {
+                measureHeaderItem: {
+                    identifier: 'aaEGaXAEgB7U',
+                    localIdentifier: 'franchiseFeesIdentifier',
+                    name: '$ Franchise Fees',
+                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685',
+                    format: '[>=0]$#,##0;[<0]-$#,##0'
+                }
+            }
+        ];
         expect(header.type).toEqual('MEASURE_COLUMN');
-        expect(header.drillItems).toEqual([{
-            identifier: 'aaEGaXAEgB7U',
-            localIdentifier: 'franchiseFeesIdentifier',
-            title: '$ Franchise Fees',
-            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685'
-        }]);
+        expect(header.drillItems).toEqual(expectedDrillItems);
     });
     it('should assign attribute header type to header and attribute and attribute value to drillItems', () => {
         const header: IGridHeader = {
@@ -621,7 +669,7 @@ describe('assignDrillItemsAndType', () => {
         const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0];
         const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers;
         const headerIndex = 0;
-        const drillItems: IDrillItem[] = [];
+        const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(
             header,
             currentHeader,
@@ -629,21 +677,29 @@ describe('assignDrillItemsAndType', () => {
             headerIndex,
             drillItems
         );
-        expect(header.type).toEqual('COLUMN_ATTRIBUTE_COLUMN');
-        expect(drillItems).toEqual([
-            // attribute value
+        const expectedDrillItems: IMappingHeader[] = [
             {
-                title: 'Alabama',
-                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+                attributeHeaderItem: {
+                    name: 'Alabama',
+                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
+                }
             },
-            // attribute
             {
-                identifier: 'label.restaurantlocation.locationstate',
-                localIdentifier: 'state',
-                title: 'Location State',
-                uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
+                attributeHeader: {
+                    identifier: 'label.restaurantlocation.locationstate',
+                    localIdentifier: 'state',
+                    name: 'Location State',
+                    uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211',
+                    formOf: {
+                        uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210',
+                        identifier: 'attr.restaurantlocation.locationstate',
+                        name: 'Location State'
+                    }
+                }
             }
-        ]);
+        ];
+        expect(header.type).toEqual('COLUMN_ATTRIBUTE_COLUMN');
+        expect(drillItems).toEqual(expectedDrillItems);
         // assign empty array to drillItems header. Only leaf headers (measures) should have assigned drill items
         expect(header.drillItems).toEqual([]);
     });

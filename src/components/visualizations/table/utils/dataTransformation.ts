@@ -1,62 +1,42 @@
 // (C) 2007-2018 GoodData Corporation
-import * as invariant from 'invariant';
-import { get, has, omit, zip, isEmpty } from 'lodash';
 import { AFM, Execution } from '@gooddata/typings';
-import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
-import { getMeasureUriOrIdentifier } from '../../utils/drilldownEventing';
+import * as invariant from 'invariant';
+import { get, has, isEmpty, zip } from 'lodash';
+import { getMappingHeaderName } from '../../../../helpers/mappingHeader';
 import { IDrillIntersection } from '../../../../interfaces/DrillEvents';
 import {
-    IAttributeTableHeader,
-    IMeasureTableHeader,
-    isAttributeCell,
-    TableCell,
-    TableHeader,
-    TableRow,
-    TableRowForDrilling,
-    isAttributeTableHeader,
+    IMappingHeader,
+    isMappingHeaderAttribute,
+    isMappingHeaderMeasureItem
+} from '../../../../interfaces/MappingHeader';
+import {
     IAttributeCell,
-    MeasureCell
+    isAttributeCell,
+    MeasureCell,
+    TableCell,
+    TableRow,
+    TableRowForDrilling
 } from '../../../../interfaces/Table';
-import { AVAILABLE_TOTALS } from '../totals/utils';
 import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
+import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
+import { getMasterMeasureObjQualifier } from '../../utils/drilldownEventing';
+import { AVAILABLE_TOTALS } from '../totals/utils';
 
-export function getAttributeHeaders(resultDimension: Execution.IResultDimension): IAttributeTableHeader[] {
-    return resultDimension.headers
-        .filter(header => Execution.isAttributeHeader(header))
-        .map((attributeHeader: Execution.IAttributeHeader) => {
-            return {
-                ...omit(attributeHeader.attributeHeader, ['formOf', 'totalItems']) as any,
-                name: attributeHeader.attributeHeader.formOf.name,
-                type: 'attribute'
-            };
-        });
-}
-
-export function getMeasureHeaders(resultDimension: Execution.IResultDimension): IMeasureTableHeader[] {
-    return get(
-        resultDimension.headers.find(header => Execution.isMeasureGroupHeader(header)),
-        ['measureGroupHeader', 'items'],
-        []
-    )
-    .map((measureHeader: Execution.IMeasureHeaderItem) => {
-        return {
-            ...measureHeader.measureHeaderItem,
-            type: 'measure'
-        };
-    });
-}
-
-export function getHeaders(executionResponse: Execution.IExecutionResponse): TableHeader[] {
+export function getHeaders(executionResponse: Execution.IExecutionResponse): IMappingHeader[] {
     const dimensions: Execution.IResultDimension[] = get(executionResponse, 'dimensions', []);
 
     // two dimensions must be always returned (and requested)
     invariant(dimensions.length === 2, 'Number of dimensions must be equal two');
 
     // attributes are always returned (and requested) in 0-th dimension
-    const attributeHeaders: IAttributeTableHeader[] = getAttributeHeaders(dimensions[0]);
+    const attributeHeaders = dimensions[0].headers.filter(Execution.isAttributeHeader) as Execution.IAttributeHeader[];
 
     // measures are always returned (and requested) in 1-st dimension
-    const measureHeaders: IMeasureTableHeader[] = getMeasureHeaders(dimensions[1]);
+    const measureHeaders = get<Execution.IMeasureHeaderItem[]>(
+        dimensions[1].headers.find(Execution.isMeasureGroupHeader),
+        ['measureGroupHeader', 'items'],
+        []
+    );
 
     return [...attributeHeaders, ...measureHeaders];
 }
@@ -158,27 +138,33 @@ export function getTotalsWithData(
     }, []);
 }
 
-export function validateTableProportions(headers: TableHeader[], rows: TableRow[]): void {
+export function validateTableProportions(headers: IMappingHeader[], rows: TableRow[]): void {
     invariant(
         rows.length === 0 || headers.length === rows[0].length,
         'Number of table columns must be equal to number of table headers'
     );
 }
 
-export function getIntersectionForDrilling(afm: AFM.IAfm, header: TableHeader): IDrillIntersection {
-    return isAttributeTableHeader(header)
-        ? {
-            id: header.identifier,
-            identifier: header.identifier,
-            uri: header.uri,
-            title: header.name
-        }
-        : {
-            id: header.localIdentifier,
-            identifier: '',
-            uri: get(getMeasureUriOrIdentifier(afm, header.localIdentifier), 'uri') as string,
-            title: header.name
+export function getIntersectionForDrilling(afm: AFM.IAfm, header: IMappingHeader): IDrillIntersection {
+    if (isMappingHeaderAttribute(header)) {
+        return {
+            id: header.attributeHeader.identifier,
+            identifier: header.attributeHeader.identifier,
+            uri: header.attributeHeader.uri,
+            title: getMappingHeaderName(header)
         };
+    }
+
+    if (isMappingHeaderMeasureItem(header)) {
+        return {
+            id: header.measureHeaderItem.localIdentifier,
+            identifier: '',
+            uri: get<string>(getMasterMeasureObjQualifier(afm, header.measureHeaderItem.localIdentifier), 'uri'),
+            title: getMappingHeaderName(header)
+        };
+    }
+
+    throw new Error(`Unknown mapping header type ${Object.keys(header)}`);
 }
 
 export function getBackwardCompatibleRowForDrilling(row: TableRow): TableRowForDrilling {

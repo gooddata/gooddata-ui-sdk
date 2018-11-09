@@ -27,6 +27,7 @@ import {
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions, getMVS } from './helper';
 
+import * as headerPredicateFactory from '../../../../factory/HeaderPredicateFactory';
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 
 import {
@@ -1745,10 +1746,12 @@ describe('chartOptionsBuilder', () => {
                 metricColorStrategy
             );
 
-            const drillableMeasures = [{
-                uri: dataSet.executionResponse.dimensions[0]
+            const drillableMeasures = [
+                headerPredicateFactory.uriMatch(
+                    dataSet.executionResponse.dimensions[0]
                     .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
-            }];
+                )
+            ];
             const drillableMeasuresSeriesData = getDrillableSeries(
                 seriesWithoutDrillability,
                 drillableMeasures,
@@ -1811,10 +1814,12 @@ describe('chartOptionsBuilder', () => {
                     metricColorStrategy
                 );
 
-                const drillableMeasures = [{
-                    uri: dataSetWithNulls.executionResponse.dimensions[1]
+                const drillableMeasures = [
+                    headerPredicateFactory.uriMatch(
+                        dataSetWithNulls.executionResponse.dimensions[1]
                         .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
-                }];
+                    )
+                ];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
@@ -1853,10 +1858,12 @@ describe('chartOptionsBuilder', () => {
                 dataSet.mdObject,
                 attributeColorStrategy
             );
-            const drillableMeasures = [{
-                uri: dataSet.executionResponse.dimensions[1]
+            const drillableMeasures = [
+                headerPredicateFactory.uriMatch(
+                    dataSet.executionResponse.dimensions[1]
                     .headers[0].measureGroupHeader.items[0].measureHeaderItem.uri
-            }];
+                )
+            ];
             const drillableMeasuresSeriesData = getDrillableSeries(
                 seriesWithoutDrillability,
                 drillableMeasures,
@@ -1938,10 +1945,12 @@ describe('chartOptionsBuilder', () => {
                     attributeColorStrategy
                 );
 
-                const drillableMeasures = [{
-                    uri: dataSetWithNulls.executionResponse.dimensions[1]
+                const drillableMeasures = [
+                    headerPredicateFactory.uriMatch(
+                        dataSetWithNulls.executionResponse.dimensions[1]
                         .headers[0].measureGroupHeader.items[1].measureHeaderItem.uri
-                }];
+                    )
+                ];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
@@ -1982,9 +1991,9 @@ describe('chartOptionsBuilder', () => {
             );
 
             describe('with all drillable measures', () => {
-                const drillableMeasures = [{
-                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
-                }];
+                const drillableMeasures = [
+                    headerPredicateFactory.uriMatch(dataSet.executionRequest.afm.attributes[0].displayForm.uri)
+                ];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
@@ -2032,9 +2041,9 @@ describe('chartOptionsBuilder', () => {
             );
 
             describe('with all drillable measures', () => {
-                const drillableMeasures = [{
-                    uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
-                }];
+                const drillableMeasures = [
+                    headerPredicateFactory.uriMatch(dataSet.executionRequest.afm.attributes[0].displayForm.uri)
+                ];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
@@ -2137,8 +2146,8 @@ describe('chartOptionsBuilder', () => {
 
             describe('with first and last drillable measures', () => {
                 const twoDrillableMeasuresItems = [
-                    { uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283' },
-                    { uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285' }
+                    headerPredicateFactory.uriMatch('/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'),
+                    headerPredicateFactory.uriMatch('/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285')
                 ];
                 const twoDrillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,

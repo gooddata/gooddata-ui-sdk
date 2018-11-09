@@ -23,7 +23,7 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
 import { RGBType } from '../../src/interfaces/Config';
 import { Execution } from '@gooddata/typings';
-import { getAttributeItemNamePredicate } from '../../src/helpers/predicatesFactory';
+import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -430,19 +430,19 @@ storiesOf('Core components/BarChart', module)
                         ...CUSTOM_COLOR_PALETTE_CONFIG,
                         colorMapping: [
                             {
-                                predicate: getAttributeItemNamePredicate('Red'),
+                                predicate: attributeItemNameMatch('Red'),
                                 color: {
                                     type: 'guid',
                                     value: '03'
                                 }
                             }, {
-                                predicate: getAttributeItemNamePredicate('Purple'),
+                                predicate: attributeItemNameMatch('Purple'),
                                 color: {
                                     type: 'guid',
                                     value: '02'
                                 }
                             }, {
-                                predicate: getAttributeItemNamePredicate('Pink'),
+                                predicate: attributeItemNameMatch('Pink'),
                                 color: {
                                     type: 'rgb' as RGBType,
                                     value: {

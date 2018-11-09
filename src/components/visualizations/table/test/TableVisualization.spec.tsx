@@ -14,7 +14,8 @@ import {
     ITableVisualizationProps,
     ITableVisualizationState
 } from '../TableVisualization';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 import { ASC, DESC } from '../../../../constants/sort';
 import { EXECUTION_REQUEST_1A_2M, TABLE_HEADERS_1A_2M, TABLE_ROWS_1A_2M } from '../fixtures/1attribute2measures';
 import { EXECUTION_REQUEST_2M, TABLE_HEADERS_2M, TABLE_ROWS_2M } from '../fixtures/2measures';
@@ -24,6 +25,7 @@ import { TotalCell } from '../totals/TotalCell';
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import { ITotalWithData } from '../../../../interfaces/Totals';
 import { withIntl, wrapWithIntl } from '../../utils/intlUtils';
+import * as headerPredicateFactory from '../../../../factory/HeaderPredicateFactory';
 
 function getInstanceFromWrapper(wrapper: ReactWrapper<any>, component: any): any {
     return wrapper.find(component).childAt(0).instance();
@@ -139,7 +141,11 @@ describe('Table', () => {
 
         it('should bind onclick when cell drillable', () => {
             const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
-                renderTable({ drillableItems: [{ uri: '/gdc/md/project_id/obj/1st_measure_uri_id' }] });
+                renderTable({
+                    drillablePredicates: [
+                        headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/1st_measure_uri_id')
+                    ]
+                });
             const columns = wrapper.find(Table).prop('children');
             const cell = columns[1].props.cell({ rowIndex: 0, columnKey: 1 });
 
@@ -148,7 +154,11 @@ describe('Table', () => {
 
         it('should not bind onclick when cell not drillable', () => {
             const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
-                renderTable({ drillableItems: [{ uri: '/gdc/md/project_id/obj/unknown_measure_uri_id' }] });
+                renderTable({
+                    drillablePredicates: [
+                        headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/unknown_measure_uri_id')
+                    ]
+                });
             const columns = wrapper.find(Table).prop('children');
             const cell = columns[1].props.cell({ rowIndex: 0, columnKey: 1 });
             expect(cell.props).not.toHaveProperty('onClick', expect.any(Function));
@@ -236,7 +246,7 @@ describe('Table', () => {
 
         const DATA_2A_3M: {
             rows: TableRow[];
-            headers: TableHeader[];
+            headers: IMappingHeader[];
             executionRequest: AFM.IExecution;
         } = {
             rows: TABLE_ROWS_2A_3M,

@@ -12,31 +12,31 @@ import 'nodelist-foreach-polyfill';
 import Bubble from '@gooddata/goodstrap/lib/Bubble/Bubble';
 import BubbleHoverTrigger from '@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger';
 import { Subscription } from 'rxjs/Subscription';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
+import { getMappingHeaderLocalIdentifier, getMappingHeaderName } from '../../../helpers/mappingHeader';
+import { IMappingHeader, isMappingHeaderMeasureItem } from '../../../interfaces/MappingHeader';
+
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import {
     Align,
     IAlignPoint,
     IPositions,
     IScrollEvent,
-    isMeasureTableHeader,
-    ISortObj, OnSortChangeWithItem,
+    ISortObj,
+    OnSortChangeWithItem,
     SortDir,
     TableCell,
-    TableHeader,
     TableRow
 } from '../../../interfaces/Table';
-
 import { TableSortBubbleContent } from './TableSortBubbleContent';
-
 import { getColumnAlign } from './utils/column';
 import { subscribeEvents } from '../utils/common';
 import { getCellClassNames, getCellStyleAndFormattedValue } from '../../../helpers/tableCell';
 import {
     getIntersectionForDrilling,
-    getBackwardCompatibleRowForDrilling
-} from './utils/dataTransformation';
-import { cellClick, IDrillConfig, isDrillable } from '../utils/drilldownEventing';
+    getBackwardCompatibleRowForDrilling} from './utils/dataTransformation';
+import { cellClick, IDrillConfig } from '../utils/drilldownEventing';
 import { createSortItem, getHeaderSortClassName, getNextSortDir } from './utils/sort';
 import { getFooterHeight, getFooterPositions, isFooterAtDefaultPosition, isFooterAtEdgePosition } from './utils/footer';
 import { updatePosition } from './utils/row';
@@ -117,10 +117,10 @@ export interface IContainerProps {
 export interface ITableVisualizationProps {
     containerMaxHeight?: number;
     afterRender?: Function;
-    drillableItems?: IDrillableItem[];
+    drillablePredicates?: IHeaderPredicate[];
     executionRequest: AFM.IExecution;
     hasHiddenRows?: boolean;
-    headers?: TableHeader[];
+    headers?: IMappingHeader[];
     rows?: TableRow[];
     onFiredDrillEvent?: OnFiredDrillEvent;
     onSortChange?: OnSortChangeWithItem;
@@ -153,7 +153,7 @@ export class TableVisualizationClass
         afterRender: noop,
         containerHeight: null,
         containerMaxHeight: null,
-        drillableItems: [],
+        drillablePredicates: [],
         hasHiddenRows: false,
         headers: [],
         onFiredDrillEvent: () => true,
@@ -363,14 +363,14 @@ export class TableVisualizationClass
         this.subscribers = subscribeEvents(this.scrolled, scrollEvents);
     }
 
-    private getSortFunc(header: TableHeader, sort: ISortObj): () => void {
+    private getSortFunc(header: IMappingHeader, sort: ISortObj): () => void {
         const { onSortChange } = this.props;
         const sortItem = createSortItem(header, sort);
 
         return () => onSortChange(sortItem);
     }
 
-    private getSortObj(header: TableHeader, index: number): ISortObj {
+    private getSortObj(header: IMappingHeader, index: number): ISortObj {
         const { sortBy, sortDir } = this.props;
         const { hintSortBy } = this.state;
 
@@ -468,7 +468,7 @@ export class TableVisualizationClass
             const rect: ClientRect = this.table.getBoundingClientRect();
 
             if (width !== rect.width || height !== rect.height) {
-                this.setState(pick(rect, 'width', 'height'));
+                this.setState(pick<{ width: number, height: number }, ClientRect>(rect, 'width', 'height'));
             }
         }
     }
@@ -632,20 +632,24 @@ export class TableVisualizationClass
     }
 
     private enableTotalColumn(columnIndex: number, totalType: AFM.TotalType): void {
-        const updatedTotals = addMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
+        const updatedTotals =
+            addMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
 
         this.onTotalsEdit(updatedTotals);
     }
 
     private disableTotalColumn(columnIndex: number, totalType: AFM.TotalType): void {
-        const updatedTotals = removeMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
+        const updatedTotals =
+            removeMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
 
         this.onTotalsEdit(updatedTotals);
     }
 
-    private renderTooltipHeader(header: TableHeader, columnIndex: number, columnWidth: number)
+    private renderTooltipHeader(header: IMappingHeader, columnIndex: number, columnWidth: number)
         : (props: ITableVisualizationProps) => JSX.Element {
+
         const headerClasses: string = getHeaderClassNames(header);
+        const headerName = getMappingHeaderName(header);
         const bubbleClass: string = uniqueId('table-header-');
         const cellClasses: string = classNames(headerClasses, bubbleClass);
         const sort: ISortObj = this.getSortObj(header, columnIndex);
@@ -683,7 +687,7 @@ export class TableVisualizationClass
             <span>
                 <Cell {...props} className={cellClasses} onClick={showSortBubble}>
                     <span className="gd-table-header-title">
-                        {header.name}
+                        {headerName}
                     </span>
                     <span className={sort.sortDirClass} />
                 </Cell>
@@ -711,7 +715,7 @@ export class TableVisualizationClass
                 >
                     <TableSortBubbleContent
                         activeSortDir={sort.dir}
-                        title={header.name}
+                        title={headerName}
                         onClose={this.closeSortBubble}
                         onSortChange={this.getSortFunc(header, sort)}
                     />
@@ -721,9 +725,11 @@ export class TableVisualizationClass
         );
     }
 
-    private renderDefaultHeader(header: TableHeader, columnIndex: number)
+    private renderDefaultHeader(header: IMappingHeader, columnIndex: number)
         : (props: ITableVisualizationProps) => JSX.Element {
+
         const headerClasses = getHeaderClassNames(header);
+        const headerName = getMappingHeaderName(header);
         const onMouseEnter = this.getMouseOverFunc(columnIndex);
         const onMouseLeave = this.getMouseOverFunc(null);
         const sort: ISortObj = this.getSortObj(header, columnIndex);
@@ -740,14 +746,14 @@ export class TableVisualizationClass
                 onMouseLeave={onMouseLeave}
             >
                 <BubbleHoverTrigger className="gd-table-header-title" showDelay={TOOLTIP_DISPLAY_DELAY}>
-                    {header.name}
+                    {headerName}
                     <Bubble
                         closeOnOutsideClick={true}
                         className="bubble-light"
                         overlayClassName="gd-table-header-bubble-overlay"
                         alignPoints={tooltipAlignPoints}
                     >
-                        {header.name}
+                        {headerName}
                     </Bubble>
                 </BubbleHoverTrigger>
                 <span className={sort.sortDirClass} />
@@ -755,11 +761,20 @@ export class TableVisualizationClass
         );
     }
 
-    private renderCell(headers: TableHeader[], columnIndex: number): (cellProps: CellProps) => JSX.Element {
-        const { executionRequest, drillableItems, onFiredDrillEvent, rows, separators } = this.props;
+    private renderCell(
+        headers: IMappingHeader[],
+        columnIndex: number
+    ): (cellProps: CellProps) => JSX.Element {
+        const {
+            executionRequest,
+            drillablePredicates,
+            onFiredDrillEvent,
+            rows,
+            separators
+        } = this.props;
         const afm = executionRequest.execution.afm;
-        const header: TableHeader = headers[columnIndex];
-        const drillable: boolean = isDrillable(drillableItems, header, afm);
+        const header: IMappingHeader = headers[columnIndex];
+        const drillable = isSomeHeaderPredicateMatched(drillablePredicates, header, afm);
 
         return (cellProps: CellProps) => {
             const rowIndex: number = cellProps.rowIndex;
@@ -768,8 +783,9 @@ export class TableVisualizationClass
             const cellContent: TableCell = row[columnKey];
             const classes: string = getCellClassNames(rowIndex, columnKey, drillable);
             const drillConfig: IDrillConfig = { afm, onFiredDrillEvent };
-            const hoverable: boolean = isMeasureTableHeader(header) && this.isTotalsEditAllowed();
-            const { style, formattedValue } = getCellStyleAndFormattedValue(header, cellContent, true, separators);
+            const hoverable: boolean = isMappingHeaderMeasureItem(header) && this.isTotalsEditAllowed();
+            const { style, formattedValue } =
+                getCellStyleAndFormattedValue(header, cellContent, true, separators);
 
             const cellPropsDrill: CellProps = drillable
                 ? {
@@ -805,7 +821,7 @@ export class TableVisualizationClass
         };
     }
 
-    private renderFooter(header: TableHeader, columnIndex: number, headersCount: number): JSX.Element {
+    private renderFooter(header: IMappingHeader, columnIndex: number, headersCount: number): JSX.Element {
         const { headers, totalsWithData, separators } = this.props;
 
         if (!shouldShowTotals(headers)) {
@@ -858,14 +874,17 @@ export class TableVisualizationClass
         );
     }
 
-    private renderColumns(headers: TableHeader[], columnWidth: number): JSX.Element[] {
+    private renderColumns(
+        headers: IMappingHeader[],
+        columnWidth: number
+    ): JSX.Element[] {
         const renderHeader: Function = this.props.sortInTooltip
             ? this.renderTooltipHeader
             : this.renderDefaultHeader;
 
-        return headers.map((header: TableHeader, columnIndex: number) => (
+        return headers.map((header: IMappingHeader, columnIndex: number) => (
             <Column
-                key={`${columnIndex}.${header.localIdentifier}`}
+                key={`${columnIndex}.${getMappingHeaderLocalIdentifier(header)}`}
                 width={columnWidth}
                 align={getColumnAlign(header)}
                 columnKey={columnIndex}

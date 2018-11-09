@@ -5,6 +5,7 @@ import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
+import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
 import { IChartConfig, IColorPaletteItem } from '../../interfaces/Config';
@@ -25,7 +26,7 @@ import { setTelemetryHeaders } from '../../helpers/utils';
 import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 import { isTreemap } from '../visualizations/utils/common';
-import { getUniversalPredicate } from '../../helpers/predicatesFactory';
+import { getColorMappingPredicate } from '../visualizations/utils/color';
 export { Requireable };
 
 const {
@@ -69,7 +70,7 @@ export interface IVisualizationProps extends IEvents {
     locale?: Localization.ILocale;
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     uriResolver?: (sdk: SDK, projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
@@ -285,7 +286,7 @@ export class VisualizationWrapped
         if (properties && properties.colorMapping) {
             const { references } = mdObjectContent;
             colorMapping = properties.colorMapping.map((mapping: any) => {
-                const predicate = getUniversalPredicate(mapping.id, references);
+                const predicate = getColorMappingPredicate(mapping.id, references);
                 return {
                     predicate,
                     color: mapping.color

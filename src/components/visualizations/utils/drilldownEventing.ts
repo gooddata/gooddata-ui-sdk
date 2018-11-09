@@ -1,21 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 import get = require('lodash/get');
 import debounce = require('lodash/debounce');
-import * as invariant from 'invariant';
-import * as CustomEvent from 'custom-event';
 import { AFM } from '@gooddata/typings';
+import * as CustomEvent from 'custom-event';
 import * as Highcharts from 'highcharts';
-import {
-    IDrillableItem,
-    IDrillEventIntersectionElement,
-    IDrillItem,
-    IDrillIntersection,
-    isDrillableItemLocalId
-} from '../../../interfaces/DrillEvents';
+import * as invariant from 'invariant';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
-import { isComboChart, isTreemap, isHeatmap } from './common';
+import { IDrillEventIntersectionElement, IDrillIntersection } from '../../../interfaces/DrillEvents';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
+import { isComboChart, isHeatmap, isTreemap } from './common';
 
 export interface IHighchartsPointObject extends Highcharts.PointObject {
     drillContext: IDrillIntersection[];
@@ -44,7 +38,7 @@ export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEven
     return !!event.points;
 }
 
-function getDerivedMeasureMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
+function getMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
     const measureDefinition = get<string>(measure, ['definition', 'popMeasure'])
         || get<string>(measure, ['definition', 'previousPeriodMeasure']);
     return get<string>(measureDefinition, ['measureIdentifier']);
@@ -54,10 +48,10 @@ function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier)
     return (afm.measures || []).find((m: AFM.IMeasure) => m.localIdentifier === localIdentifier);
 }
 
-export function getMeasureUriOrIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier): IDrillableItem {
+export function getMasterMeasureObjQualifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier) {
     let measure = findMeasureByIdentifier(afm, localIdentifier);
     if (measure) {
-        const masterMeasureIdentifier = getDerivedMeasureMasterMeasureLocalIdentifier(measure);
+        const masterMeasureIdentifier = getMasterMeasureLocalIdentifier(measure);
         if (masterMeasureIdentifier) {
             measure = findMeasureByIdentifier(afm, masterMeasureIdentifier);
         }
@@ -70,27 +64,6 @@ export function getMeasureUriOrIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Id
         };
     }
     return null;
-}
-
-function isHeaderDrillable(drillableItems: IDrillableItem[], header: IDrillableItem) {
-    return drillableItems.some((drillableItem: IDrillableItem) =>
-        // Check for defined values because undefined === undefined
-        (drillableItem.identifier && header.identifier && drillableItem.identifier === header.identifier) ||
-        (drillableItem.uri && header.uri && drillableItem.uri === header.uri)
-    );
-}
-
-export function isDrillable(drillableItems: IDrillableItem[],
-                            header: IDrillItem,
-                            afm: AFM.IAfm) {
-    // This works only for non adhoc metric & attributes
-    // because adhoc metrics don't have uri & identifier
-    const isDrillablePureHeader = isHeaderDrillable(drillableItems, header);
-
-    const afmHeader = isDrillableItemLocalId(header) ? getMeasureUriOrIdentifier(afm, header.localIdentifier) : null;
-    const isDrillableAdhocHeader = afmHeader && isHeaderDrillable(drillableItems, afmHeader);
-
-    return !!(isDrillablePureHeader || isDrillableAdhocHeader);
 }
 
 export function getClickableElementNameByChartType(type: VisType): VisElementType {
@@ -132,14 +105,14 @@ function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: Even
 
 function normalizeIntersectionElements(intersection: IDrillIntersection[]): IDrillEventIntersectionElement[] {
     return intersection.map(({ id, title, value, name, uri, identifier }) => {
-        return {
-            id,
-            title: title || value as string || name,
-            header: {
-                uri,
-                identifier
-            }
-        };
+       const intersection: IDrillEventIntersectionElement = {
+           id,
+           title: title || value as string || name
+       };
+       if (uri || identifier) {
+           intersection.header = { uri, identifier };
+       }
+       return intersection;
     });
 }
 

@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_2M: AFM.IExecution = {
     execution: {
@@ -122,22 +123,24 @@ export const EXECUTION_RESULT_2M: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_2M: TableHeader[] = [
+export const TABLE_HEADERS_2M: IMappingHeader[] = [
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
-        identifier: '1st_measure_identifier',
-        localIdentifier: '1st_measure_local_identifier',
-        name: 'Lost',
-        format: '$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
+            identifier: '1st_measure_identifier',
+            localIdentifier: '1st_measure_local_identifier',
+            name: 'Lost',
+            format: '$#,##0.00'
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
-        identifier: '2nd_measure_identifier',
-        localIdentifier: '2nd_measure_local_identifier',
-        name: 'Won',
-        format: '[red]$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
+            identifier: '2nd_measure_identifier',
+            localIdentifier: '2nd_measure_local_identifier',
+            name: 'Won',
+            format: '[red]$#,##0.00'
+        }
     }
 ];
 

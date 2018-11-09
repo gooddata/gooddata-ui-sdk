@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
+import { getMappingHeaderName } from './mappingHeader';
 import range = require('lodash/range');
 import get = require('lodash/get');
+import clone = require('lodash/clone');
 import zipObject = require('lodash/zipObject');
 
 import { unwrap } from './utils';
-import { IDrillItem } from '../interfaces/DrillEvents';
+import { IMappingHeader } from '../interfaces/MappingHeader';
 import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions } from '../interfaces/AGGrid';
 import { ColDef } from 'ag-grid';
 import { getTreeLeaves } from '../components/core/PivotTable';
@@ -78,19 +80,11 @@ export const getMeasureDrillItem = (
     const measureGroupHeader = responseHeaders.find(
         responseHeader => Execution.isMeasureGroupHeader(responseHeader)
     ) as Execution.IMeasureGroupHeader;
-    const measureHeaderItem = header.measureHeaderItem
-        ? get(
-            measureGroupHeader,
-            ['measureGroupHeader', 'items', header.measureHeaderItem.order, 'measureHeaderItem'], null
-        )
-        : null;
 
-    return measureHeaderItem ? {
-        uri: measureHeaderItem.uri,
-        identifier: measureHeaderItem.identifier,
-        localIdentifier: measureHeaderItem.localIdentifier,
-        title: measureHeaderItem.name
-    } : null;
+    return get(
+        measureGroupHeader,
+        ['measureGroupHeader', 'items', header.measureHeaderItem.order], null
+    );
 };
 
 export const assignDrillItemsAndType = (
@@ -98,25 +92,16 @@ export const assignDrillItemsAndType = (
     currentHeader: Execution.IResultHeaderItem,
     responseHeaders: Execution.IHeader[],
     headerIndex: number,
-    drillItems: IDrillItem[]
+    drillItems: IMappingHeader[]
 ) => {
     if (Execution.isAttributeHeaderItem(currentHeader)) {
         header.type = COLUMN_ATTRIBUTE_COLUMN;
         // attribute value uri
-        drillItems.push({
-            uri: currentHeader.attributeHeaderItem.uri,
-            title: currentHeader.attributeHeaderItem.name
-        });
+        drillItems.push(currentHeader);
         // attribute uri and identifier
         const attributeResponseHeader =
             responseHeaders[headerIndex % responseHeaders.length] as Execution.IAttributeHeader;
-        const { uri, identifier, localIdentifier, name } = attributeResponseHeader.attributeHeader;
-        drillItems.push({
-            uri,
-            identifier,
-            localIdentifier,
-            title: name
-        });
+        drillItems.push(attributeResponseHeader);
         // This is where we could assign drillItems if we want to start drilling on column headers
         // It needs to have an empty array for some edge cases like column attributes without measures
     } else if (Execution.isMeasureHeaderItem(currentHeader)) {
@@ -172,7 +157,7 @@ export const getColumnHeaders = (
     headerItemStartIndex = 0,
     headerValueEnd: number = undefined,
     fieldPrefix = '',
-    parentDrillItems: IDrillItem[] = []
+    parentDrillItems: IMappingHeader[] = []
 ) => {
     if (!resultHeaderDimension.length) {
         return [];
@@ -184,12 +169,12 @@ export const getColumnHeaders = (
 
     for (let headerItemIndex = headerItemStartIndex; (headerItemIndex < lastIndex + 1);) {
         const currentHeader = currentHeaders[headerItemIndex];
-        const drillItems: IDrillItem[] = [...parentDrillItems];
         const header: IGridHeader = {
             drillItems: [],
             ...headerToGrid(currentHeader, fieldPrefix),
             ...columnDefOptions
         };
+        const drillItems: IMappingHeader[] = clone(parentDrillItems);
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
         const headerItemEndIndex = mergeHeaderEndIndex(
             resultHeaderDimension,
@@ -227,21 +212,14 @@ export const getRowHeaders = (
             rowGroup: true,
             hide: true
         } : {};
-        // attribute drill item
-        const drillableItem: IDrillItem = {
-            uri: attributeHeader.attributeHeader.uri,
-            identifier: attributeHeader.attributeHeader.identifier,
-            localIdentifier: attributeHeader.attributeHeader.localIdentifier,
-            title: attributeHeader.attributeHeader.name
-        };
         const field = identifyResponseHeader(attributeHeader);
         return {
             // The label should be attribute name (not attribute display form name)
-            headerName: attributeHeader.attributeHeader.formOf.name,
+            headerName: getMappingHeaderName(attributeHeader),
             type: ROW_ATTRIBUTE_COLUMN,
             // Row dimension must contain only attribute headers.
             field,
-            drillItems: [drillableItem],
+            drillItems: [attributeHeader],
             ...rowGroupProps,
             ...columnDefOptions
         };
@@ -271,12 +249,8 @@ export const getRow = (
         rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
             const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
             // attribute value drill item
-            const rowHeaderDrillItem: IDrillItem = Execution.isAttributeHeaderItem(rowHeaderDataItem)
-                ? {
-                    uri: rowHeaderDataItem.attributeHeaderItem.uri,
-                    title: rowHeaderDataItem.attributeHeaderItem.name
-                }
-                : null;
+            const rowHeaderDrillItem: IMappingHeader =
+                Execution.isAttributeHeaderItem(rowHeaderDataItem) ? rowHeaderDataItem : null;
             // Drilling on row headers supports only attribute headers
             invariant(rowHeaderDrillItem, 'row header is not of type IResultAttributeHeaderItem');
             row[rowHeader.field] = unwrap(rowHeaderDataItem).name;
@@ -455,7 +429,7 @@ export const executionToAGGridAdapter = (
         headerName: dimensions[1].headers
             .filter(header => Execution.isAttributeHeader(header))
             .map((header: Execution.IAttributeHeader) => {
-                return header.attributeHeader.formOf.name;
+                return getMappingHeaderName(header);
             })
             .filter((item: string) => item !== null)
             .join(' › '),

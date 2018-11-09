@@ -44,7 +44,7 @@ const waitTillStopLoading = async (t) => {
     await t.expect(Selector('.s-pivot-table .s-loading').exists).notOk();
 };
 
-fixture('Pivot Table')
+fixture('Pivot Table Dynamic')
     .page(config.url)
     .beforeEach(loginUsingLoginForm(`${config.url}/hidden/pivot-table-dynamic`));
 

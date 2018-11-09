@@ -4,6 +4,8 @@ import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import { IColorPalette } from '@gooddata/gooddata-js';
 import * as Highcharts from 'highcharts';
+import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
 
 import cloneDeep = require('lodash/cloneDeep');
 import compact = require('lodash/compact');
@@ -35,7 +37,7 @@ import {
 import { getChartProperties } from './highcharts/helpers';
 import { unwrap } from '../../../helpers/utils';
 
-import { getMeasureUriOrIdentifier, isDrillable } from '../utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../utils/drilldownEventing';
 import { getLighterColor } from '../utils/color';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import {
@@ -53,7 +55,7 @@ import {
     DEFAULT_DATA_POINTS_LIMIT
 } from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 
 import { ColorFactory, IColorStrategy } from './colorFactory';
 import { IColorAssignment, IChartLimits, IChartConfig } from '../../../interfaces/Config';
@@ -140,6 +142,10 @@ export interface IChartOptions {
     colorAssignments?: IColorAssignment[];
     colorPalette?: IColorPalette;
 }
+
+export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader['attributeHeader'] & {
+    items: Execution.IResultAttributeHeaderItem[];
+};
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
@@ -869,7 +875,7 @@ export function findAttributeInDimension(
     dimension: any,
     attributeHeaderItemsDimension: any,
     indexInDimension?: number
-) {
+): IUnwrappedAttributeHeadersWithItems {
     return findInDimensionHeaders(
         [dimension],
         (headerType: any, header: any, _dimensionIndex: number, headerIndex: number) => {
@@ -909,17 +915,60 @@ export function getDrillContext(stackByItem: any, viewByItem: any, measures: AFM
             identifier: attribute ? attribute.identifier : identifier, // identifier of attribute or measure
             uri: attribute
                 ? attribute.uri // uri of attribute
-                : get(getMeasureUriOrIdentifier(afm, localIdentifier), 'uri') // uri of measure
+                : get(getMasterMeasureObjQualifier(afm, localIdentifier), 'uri') // uri of measure
         };
     });
 }
 
+function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
+    let viewByItemHeader: Execution.IResultAttributeHeaderItem = null;
+    let viewByItem = null;
+    let viewByAttributeHeader: Execution.IAttributeHeader = null;
+
+    if (viewByAttribute) {
+        viewByItemHeader  = viewByAttribute.items[viewByIndex];
+        viewByItem = {
+            ...unwrap(viewByItemHeader),
+            attribute: viewByAttribute
+        };
+        viewByAttributeHeader = { attributeHeader: viewByAttribute };
+    }
+
+    return {
+        viewByItemHeader,
+        viewByItem,
+        viewByAttributeHeader
+    };
+}
+
+function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stackByIndex: number) {
+    let stackByItemHeader: Execution.IResultAttributeHeaderItem  = null;
+    let stackByItem = null;
+    let stackByAttributeHeader: Execution.IAttributeHeader = null;
+
+    if (stackByAttribute) {
+        // stackBy item index is always equal to seriesIndex
+        stackByItemHeader = stackByAttribute.items[stackByIndex];
+        stackByItem = {
+            ...unwrap(stackByItemHeader),
+            attribute: stackByAttribute
+        };
+        stackByAttributeHeader = { attributeHeader: stackByAttribute };
+    }
+
+    return {
+        stackByItemHeader,
+        stackByItem,
+        stackByAttributeHeader
+    };
+}
+
 export function getDrillableSeries(
     series: any,
-    drillableItems: IDrillableItem[],
+    drillableItems: IHeaderPredicate[],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: VisType,
     afm: AFM.IAfm
 ) {
@@ -928,22 +977,19 @@ export function getDrillableSeries(
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
         let data = seriesItem.data && seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
-            let measures = [];
+            let measureHeaders: IMappingHeader[] = [];
 
             const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
             if (isScatterPlot(type)) {
-                measures = get(measureGroup, 'items', []).slice(0, 2).map(unwrap);
+                measureHeaders = get(measureGroup, 'items', []).slice(0, 2);
             } else if (isBubbleChart(type)) {
-                measures = get(measureGroup, 'items', []).slice(0, 3).map(unwrap);
+                measureHeaders = get(measureGroup, 'items', []).slice(0, 3);
             } else if (isStackedTreemap) {
                 if (pointData.id !== undefined) { // not leaf -> can't be drillable
                     return pointData;
                 }
-                let measureIndex = 0;
-                if (!viewByAttribute) {
-                    measureIndex = parseInt(pointData.parent, 10);
-                }
-                measures = [unwrap(measureGroup.items[measureIndex])];
+                const measureIndex = viewByAttribute ? 0 : parseInt(pointData.parent, 10);
+                measureHeaders = [measureGroup.items[measureIndex]];
             } else {
                 // measureIndex is usually seriesIndex,
                 // except for stack by attribute and metricOnly pie or donut chart
@@ -953,8 +999,7 @@ export function getDrillableSeries(
                 // We do not support setups with measureGroup before attributeHeaders
                 const measureIndex = !stackByAttribute && !isMultiMeasureWithOnlyMeasures
                     ? seriesIndex : pointIndex % measureGroup.items.length;
-
-                measures = [unwrap(measureGroup.items[measureIndex])];
+                measureHeaders = [measureGroup.items[measureIndex]];
             }
 
             const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
@@ -963,16 +1008,10 @@ export function getDrillableSeries(
                 stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
             }
 
-            const viewByItem = viewByAttribute ? {
-                ...unwrap(viewByAttribute.items[viewByIndex]),
-                attribute: viewByAttribute
-            } : null;
-
-            // stackBy item index is always equal to seriesIndex
-            const stackByItem = stackByAttribute ? {
-                ...unwrap(stackByAttribute.items[stackByIndex]),
-                attribute: stackByAttribute
-            } : null;
+            const { viewByItemHeader, viewByItem, viewByAttributeHeader } =
+                getViewBy(viewByAttribute, viewByIndex);
+            const { stackByItemHeader, stackByItem, stackByAttributeHeader } =
+                getStackBy(stackByAttribute, stackByIndex);
 
             // point is drillable if a drillableItem matches:
             //   point's measure,
@@ -980,16 +1019,16 @@ export function getDrillableSeries(
             //   point's viewBy attribute item,
             //   point's stackBy attribute,
             //   point's stackBy attribute item,
-            const drillableHooks = without([
-                ...measures,
-                viewByAttribute,
-                viewByItem,
-                stackByAttribute,
-                stackByItem
+            const drillableHooks: IMappingHeader[] = without([
+                ...measureHeaders,
+                viewByAttributeHeader,
+                viewByItemHeader,
+                stackByAttributeHeader,
+                stackByItemHeader
             ], null);
 
             const drilldown = drillableHooks.some(drillableHook =>
-                isDrillable(drillableItems, drillableHook, afm)
+                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm)
             );
 
             const drillableProps: any = {
@@ -997,6 +1036,7 @@ export function getDrillableSeries(
             };
 
             if (drilldown) {
+                const measures = measureHeaders.map(unwrap);
                 drillableProps.drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
                 isSeriesDrillable = true;
             }
@@ -1400,7 +1440,7 @@ export function getChartOptions(
     executionResultData: Execution.DataValue[][],
     unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
-    drillableItems: IDrillableItem[]
+    drillableItems: IHeaderPredicate[]
 ): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible

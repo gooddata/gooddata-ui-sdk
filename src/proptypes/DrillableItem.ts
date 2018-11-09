@@ -10,3 +10,5 @@ export const DrillableItemPropType = PropTypes.shape({
     uri: PropTypes.string,
     identifier: PropTypes.string
 });
+
+export const DrillablePredicatePropType = PropTypes.func;

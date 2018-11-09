@@ -148,7 +148,7 @@ describe('PivotTable', () => {
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011'
                     },
                     id: 'year',
-                    title: 'default (Date)'
+                    title: 'Quarter (Date)'
                 },
                 {
                     header: {
@@ -164,7 +164,7 @@ describe('PivotTable', () => {
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073'
                     },
                     id: 'month',
-                    title: 'Short (Jan) (Date)'
+                    title: 'Month (Date)'
                 },
                 {
                     header: {

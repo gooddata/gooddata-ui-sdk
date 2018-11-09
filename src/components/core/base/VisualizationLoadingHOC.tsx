@@ -10,6 +10,7 @@ import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -24,7 +25,7 @@ export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
 export interface ICommonVisualizationProps extends IEvents {
     locale?: string;
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     afterRender?: () => void;
     pushData?: (data: IPushData) => void;
     ErrorComponent?: React.ComponentType<IErrorProps>;

@@ -1,9 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject, Execution } from '@gooddata/typings';
 import { ISeparators } from '@gooddata/numberjs';
+import { VisualizationObject } from '@gooddata/typings';
+import { PositionType } from '../components/visualizations/typings/legend';
 import { VisType } from '../constants/visualizationTypes';
 import { IDataLabelsConfig } from '../interfaces/Config';
-import { PositionType } from '../components/visualizations/typings/legend';
+import { IHeaderPredicate } from './HeaderPredicate';
+import { IMappingHeader } from './MappingHeader';
 
 export { DEFAULT_COLOR_PALETTE } from '../components/visualizations/utils/color';
 
@@ -34,12 +36,8 @@ export interface IRGBColorItem {
 
 export type IColorItem = IGuidColorItem | IRGBColorItem;
 
-export type IMappingHeader = Execution.IResultAttributeHeaderItem | Execution.IMeasureHeaderItem;
-
-export type ColorMappingPredicate = (mappingHeader: IMappingHeader) => boolean;
-
 export interface IColorMapping { // sent to SDK
-    predicate: ColorMappingPredicate;
+    predicate: IHeaderPredicate;
     color: IColorItem;
 }
 

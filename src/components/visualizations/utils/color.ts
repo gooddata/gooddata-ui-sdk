@@ -1,17 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
+import { AFM, VisualizationObject } from '@gooddata/typings';
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
+import { getMappingHeaderLocalIdentifier } from '../../../helpers/mappingHeader';
 import {
+    IChartConfig,
+    IColorItem,
     IColorPalette,
     IColorPaletteItem,
-    IChartConfig,
-    IRGBColor,
-    IColorItem,
     IGuidColorItem,
-    IMappingHeader,
+    IRGBColor,
     IColorMapping,
     IRGBColorItem
 } from '../../../interfaces/Config';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IMappingHeader, isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
 
 export const WHITE = 'rgb(255, 255, 255)';
 export const BLACK = 'rgb(0, 0, 0)';
@@ -236,14 +239,19 @@ export function isRgbColorItem(color: IColorItem): color is IRGBColorItem {
     return (color as IRGBColorItem).type === 'rgb';
 }
 
-export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[]
-    ): IColorItem {
-        if (!colorMapping) {
-            return undefined;
-        }
+export function getColorFromMapping(
+    mappingHeader: IMappingHeader,
+    colorMapping: IColorMapping[],
+    afm: AFM.IAfm
+): IColorItem {
+    if (!colorMapping) {
+        return undefined;
+    }
 
-        const mapping = colorMapping.find(item => item.predicate(mappingHeader));
-        return mapping && mapping.color;
+    const mapping = colorMapping.find(item =>
+        item.predicate(mappingHeader, afm)
+    );
+    return mapping && mapping.color;
 }
 
 export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number) {
@@ -255,3 +263,25 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
 export function getRgbStringFromRGB(color: IRGBColor) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
+
+export function getColorMappingPredicate(
+    id: string,
+    references: VisualizationObject.IReferenceItems
+): IHeaderPredicate {
+    return (header: IMappingHeader, _afm: AFM.IAfm): boolean => {
+        if (isMappingHeaderAttributeItem(header)) {
+            const attributeItemUri = references && references[id];
+            return attributeItemUri ? attributeItemUri === header.attributeHeaderItem.uri : false;
+        }
+
+        const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
+        return headerLocalIdentifier ? headerLocalIdentifier === id : false;
+    };
+}
+
+// For re-exporting in index.ts
+// Create object here since TSC can't reexport external types used by getColorMappingPredicate
+export default {
+    getColorByGuid,
+    getColorMappingPredicate
+};

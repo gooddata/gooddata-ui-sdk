@@ -11,10 +11,11 @@ describe('AddTotal', () => {
         const props: IAddTotalProps = {
             dataSource: {},
             header: {
-                type: 'measure',
-                localIdentifier: 'foo',
-                name: 'Foo',
-                format: 'bar'
+                measureHeaderItem: {
+                    localIdentifier: 'foo',
+                    name: 'Foo',
+                    format: 'bar'
+                }
             },
             columnIndex: 3,
             headersCount: 5,

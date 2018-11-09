@@ -58,8 +58,9 @@ import ChartTransformation from './components/visualizations/chart/ChartTransfor
 import { RuntimeError } from './errors/RuntimeError';
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
 import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
-import { getColorByGuid } from './components/visualizations/utils/color';
-import * as PredicateUtils from './helpers/predicatesFactory';
+import ColorUtils from './components/visualizations/utils/color';
+import * as HeaderPredicateFactory from './factory/HeaderPredicateFactory';
+import * as MappingHeader from './interfaces/MappingHeader';
 
 /**
  * CoreComponents
@@ -73,10 +74,6 @@ const CoreComponents = {
     PivotTable: CorePivotTable,
     ScatterPlot: CoreScatterPlot,
     FunnelChart: CoreFunnelChart
-};
-
-const gdUtils = {
-    getColorByGuid
 };
 
 export {
@@ -138,6 +135,7 @@ export {
     OverTimeComparisonTypes,
     SortsHelper,
     ChartConfiguration,
-    gdUtils,
-    PredicateUtils
+    ColorUtils,
+    HeaderPredicateFactory,
+    MappingHeader
 };

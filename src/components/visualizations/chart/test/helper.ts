@@ -12,7 +12,7 @@ import {
 } from '../constants';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
-import { IDrillableItem } from '../../../../interfaces/DrillEvents';
+import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
 
 export function generateChartOptions(
     dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,
@@ -20,7 +20,7 @@ export function generateChartOptions(
         type: 'column',
         stacking: false
     },
-    drillableItems: IDrillableItem[] = []
+    drillableItems: IHeaderPredicate[] = []
 ): IChartOptions {
     const {
         executionRequest: { afm, resultSpec },

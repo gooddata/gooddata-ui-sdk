@@ -66,6 +66,14 @@ export const bubbleChartWith3MetricsMd: any = {
     mdObject: require('../test_data/bubble_chart_with_3_metrics_md.json')
 };
 
+export const bubbleChartWith3AMMetricsAndAttribute: any = {
+    executionRequest: require('../test_data/bubble_chart_with_3_am_metrics_and_attribute_request.json').execution,
+    executionResponse:
+    require('../test_data/bubble_chart_with_3_am_metrics_and_attribute_response.json').executionResponse,
+    executionResult: require('../test_data/bubble_chart_with_3_am_metrics_and_attribute_result.json').executionResult,
+    mdObject: require('../test_data/bubble_chart_with_3_am_metrics_and_attribute_md.json')
+};
+
 export const bubbleChartWith3Metrics: any = {
     executionRequest: require('../test_data/bubble_chart_with_3_metrics_request.json').execution,
     executionResponse:

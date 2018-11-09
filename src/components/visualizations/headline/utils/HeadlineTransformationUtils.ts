@@ -7,9 +7,14 @@ import * as CustomEventPolyfill from 'custom-event';
 import * as invariant from 'invariant';
 import { AFM, Execution } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
+import { isSomeHeaderPredicateMatched } from '../../../../helpers/headerPredicate';
+import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
 
-import { getMeasureUriOrIdentifier } from '../../utils/drilldownEventing';
-import { IDrillableItem, IDrillEvent, IDrillEventCallback } from '../../../../interfaces/DrillEvents';
+import { getMasterMeasureObjQualifier } from '../../utils/drilldownEventing';
+import {
+    IDrillEvent,
+    IDrillEventCallback
+} from '../../../../interfaces/DrillEvents';
 import { VisualizationTypes, VisElementType } from '../../../../constants/visualizationTypes';
 import { IHeadlineData, IHeadlineDataItem } from '../../../../interfaces/Headlines';
 
@@ -39,14 +44,14 @@ function createHeadlineDataItem(executionDataItem: IHeadlineExecutionData): IHea
 }
 
 function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: InjectedIntl): IHeadlineDataItem {
-    const secondaryHeaderItem = get(executionData, ['1', 'measureHeaderItem']);
+    const secondaryHeaderItem = get(executionData, [1, 'measureHeaderItem']);
     if (!secondaryHeaderItem) {
         return null;
     }
 
-    const primaryValueString = get(executionData, ['0', 'value']);
+    const primaryValueString = get(executionData, [0, 'value']);
     const primaryValue = primaryValueString !== null ? Number(primaryValueString) : null;
-    const secondaryValueString = get(executionData, ['1', 'value']);
+    const secondaryValueString = get(executionData, [1, 'value']);
     const secondaryValue = secondaryValueString !== null ? Number(secondaryValueString) : null;
 
     const tertiaryTitle = intl.formatMessage({ id: 'visualizations.headline.tertiary.title' });
@@ -65,6 +70,12 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
     };
 }
 
+function getExecutionResponseMeasureHeaders(
+    executionResponse: Execution.IExecutionResponse
+): Execution.IMeasureHeaderItem[] {
+    return get(executionResponse, ['dimensions', 0, 'headers', 0, 'measureGroupHeader', 'items'], []);
+}
+
 /**
  * Get tuple of measure header items with related data value by index position from executionResponse and
  * executionResult.
@@ -75,7 +86,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
  */
 function getExecutionData(executionResponse: Execution.IExecutionResponse,
                           executionResult: Execution.IExecutionResult): IHeadlineExecutionData[] {
-    const headerItems = get(executionResponse, 'dimensions[0].headers[0].measureGroupHeader.items', []);
+    const headerItems = getExecutionResponseMeasureHeaders(executionResponse);
 
     return headerItems.map((item, index) => {
         const value = get<string>(executionResult, ['data', index]);
@@ -120,30 +131,10 @@ export function getHeadlineData(executionResponse: Execution.IExecutionResponse,
 
 function findMeasureHeaderItem(localIdentifier: AFM.Identifier,
                                executionResponse: Execution.IExecutionResponse) {
-    const measureGroupHeaderItems = get(executionResponse, 'dimensions[0].headers[0].measureGroupHeader.items', []);
+    const measureGroupHeaderItems = getExecutionResponseMeasureHeaders(executionResponse);
     return measureGroupHeaderItems
         .map(item => item.measureHeaderItem)
         .find(header => header !== undefined && header.localIdentifier === localIdentifier);
-}
-
-function isItemDrillable(measureLocalIdentifier: AFM.Identifier,
-                         drillableItems: IDrillableItem[],
-                         executionRequest: AFM.IExecution['execution']): boolean {
-    if (measureLocalIdentifier === undefined || measureLocalIdentifier === null) {
-        return false;
-    }
-    const measureIds = getMeasureUriOrIdentifier(executionRequest.afm, measureLocalIdentifier);
-    if (!measureIds) {
-        return false;
-    }
-    return drillableItems.some((drillableItem: IDrillableItem) => {
-        // Check for defined values because undefined === undefined
-        const matchByIdentifier = drillableItem.identifier && measureIds.identifier &&
-            drillableItem.identifier === measureIds.identifier;
-        const matchByUri = drillableItem.uri && measureIds.uri && drillableItem.uri === measureIds.uri;
-
-        return matchByUri || matchByIdentifier;
-    });
 }
 
 /**
@@ -153,20 +144,28 @@ function isItemDrillable(measureLocalIdentifier: AFM.Identifier,
  * @param headlineData - The headline data that we want to change the drillable status.
  * @param drillableItems - list of drillable items {uri, identifier}
  * @param executionRequest - Request with required measure id (uri or identifier) for activation of drill eventing
+ * @param executionResponse - Response headers for drilling predicate matching
  * @returns altered headlineData
  */
 export function applyDrillableItems(headlineData: IHeadlineData,
-                                    drillableItems: IDrillableItem[],
-                                    executionRequest: AFM.IExecution['execution']): IHeadlineData {
+                                    drillableItems: IHeaderPredicate[],
+                                    executionRequest: AFM.IExecution['execution'],
+                                    executionResponse: Execution.IExecutionResponse
+): IHeadlineData {
     const data = cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
+    const [ primaryItemHeader, secondaryItemHeader ] = getExecutionResponseMeasureHeaders(executionResponse);
 
-    if (!isEmpty(primaryItem)) {
-        primaryItem.isDrillable = isItemDrillable(primaryItem.localIdentifier, drillableItems, executionRequest);
+    if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
+        primaryItem.isDrillable = isSomeHeaderPredicateMatched(
+            drillableItems, primaryItemHeader, executionRequest.afm
+        );
     }
 
-    if (!isEmpty(secondaryItem)) {
-        secondaryItem.isDrillable = isItemDrillable(secondaryItem.localIdentifier, drillableItems, executionRequest);
+    if (!isEmpty(secondaryItem) && !isEmpty(secondaryItemHeader)) {
+        secondaryItem.isDrillable = isSomeHeaderPredicateMatched(
+            drillableItems, secondaryItemHeader, executionRequest.afm
+        );
     }
 
     return data;
@@ -189,7 +188,7 @@ export function buildDrillEventData(itemContext: IHeadlineDrillItemContext,
         throw new Error('The metric uri has not been found in execution response!');
     }
 
-    const measureIds = getMeasureUriOrIdentifier(executionRequest.afm, itemContext.localIdentifier);
+    const measureIds = getMasterMeasureObjQualifier(executionRequest.afm, itemContext.localIdentifier);
     if (!measureIds) {
         throw new Error('The metric ids has not been found in execution request!');
     }
