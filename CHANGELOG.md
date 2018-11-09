@@ -6,6 +6,22 @@
 - We are working on the option to add the secondary axis into certain visualizations (line chart, column chart, bar chart).
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major version.
 
+## 6.0.2
+
+November 9, 2018
+
+### Changed
+
+- Use the upgraded GoodStrap library, which now uses the upgraded jQuery library (security update) ([commit](https://github.com/gooddata/gooddata-react-components/commit/65d4dcab487afe8ce55e3632f211067646538056)).
+
+## 6.0.1
+
+November 6, 2018
+
+### Changed
+
+- Pivot tables no longer show the "is-beta" warning ([commit](https://github.com/gooddata/gooddata-react-components/commit/37d6574d1df0091475a2055096ade7ab5a9875eb)).
+
 ## 6.0.0
 
 November 1, 2018
