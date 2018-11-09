@@ -54,5 +54,9 @@
     "visualizations.measure.arithmetic.difference.title": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
     "visualizations.measure.arithmetic.multiplication.title": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
     "visualizations.measure.arithmetic.ratio.title": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.change.title": "Change from {secondMeasureTitle} to {firstMeasureTitle}"
+    "visualizations.measure.arithmetic.change.title": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
+    "visualizations.legend.text.top": "Top:",
+    "visualizations.legend.text.bottom": "Bottom:",
+    "visualizations.legend.text.left": "Left:",
+    "visualizations.legend.text.right": "Right:"
 }

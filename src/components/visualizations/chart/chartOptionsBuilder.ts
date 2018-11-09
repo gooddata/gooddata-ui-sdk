@@ -21,10 +21,10 @@ import { IChartConfig, IChartLimits } from './Chart';
 import {
     getAttributeElementIdFromAttributeElementUri,
     isAreaChart,
+    isBarChart,
     isBubbleChart,
     isChartSupported,
     isComboChart,
-    isDualChart,
     isHeatmap,
     isOneOfTypes,
     isScatterPlot,
@@ -90,9 +90,16 @@ const unsupportedStackingTypes = [
     VisualizationTypes.BUBBLE
 ];
 
+export const supportedDualAxesChartTypes = [
+    VisualizationTypes.COLUMN,
+    VisualizationTypes.BAR,
+    VisualizationTypes.LINE
+];
+
 export interface IAxis {
     label: string;
     format?: string;
+    opposite?: boolean;
     seriesIndices?: number[];
 }
 
@@ -125,6 +132,8 @@ export interface IChartOptions {
     grid?: any;
     xAxisProps?: any;
     yAxisProps?: any;
+    secondary_xAxisProps?: any;
+    secondary_yAxisProps?: any;
     title?: any;
     colorAxis?: Highcharts.ColorAxisOptions;
 }
@@ -657,10 +666,6 @@ export function getSeries(
             data: seriesItemData
         };
 
-        if (isDualChart(type) && seriesIndex > 0) {
-            seriesItemConfig.yAxis = 1;
-        }
-
         if (stackByAttribute) {
             // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
             // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
@@ -1109,6 +1114,15 @@ function getXAxes(
     }];
 }
 
+function getMeasureFormatKey(measureGroupItems: Execution.IMeasureHeaderItem[]) {
+    const percentageFormat = getMeasureFormat(measureGroupItems.find((measure: any) => {
+        return isPercentage(getMeasureFormat(measure));
+    }));
+    return percentageFormat !== '' ? {
+        format: percentageFormat
+    } : {};
+}
+
 function getMeasureFormat(measure: any) {
     return get(measure, 'format', '');
 }
@@ -1127,40 +1141,17 @@ function getYAxes(
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
         { label: config.yLabel, format: config.yFormat });
 
-    const percentageFormat = getMeasureFormat(measureGroupItems.find((measure) => {
-        return isPercentage(getMeasureFormat(measure));
-    }));
-    const percentageFormatKey = percentageFormat !== '' ? {
-        format: percentageFormat
-    } : {};
-
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
     const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
 
+    const { measures : secondaryAxisMeasures = [] as string[] } =
+        (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
+
     let yAxes: IAxis[] = [];
 
-    if (isDualChart(type)) {
-        if (noPrimaryMeasures) {
-            yAxes = [null, {
-                ...firstMeasureGroupItem,
-                opposite: true,
-                seriesIndices: range(measureGroupItems.length)
-            }];
-        } else {
-            const firstAxis = {
-                ...firstMeasureGroupItem,
-                seriesIndices: [0]
-            };
-            const secondAxis = secondMeasureGroupItem ? {
-                ...secondMeasureGroupItem,
-                opposite: true,
-                seriesIndices: range(1, measureGroupItems.length)
-            } : null;
-            yAxes = compact([firstAxis, secondAxis]);
-        }
-    } else if (isScatterPlot(type) || isBubbleChart(type)) {
+    if (isScatterPlot(type) || isBubbleChart(type)) {
         const hasSecondaryMeasure = get(mdObject, 'buckets', [])
             .find(m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0);
 
@@ -1181,6 +1172,33 @@ function getYAxes(
         yAxes = [{
             label: stackByAttribute ? stackByAttribute.formOf.name : ''
         }];
+    } else if (isOneOfTypes(type, supportedDualAxesChartTypes) &&
+                !isEmpty(measureGroupItems) &&
+                !isEmpty(secondaryAxisMeasures)) {
+
+        const {
+            measuresInFirstAxis,
+            measuresInSecondAxis }: IMeasuresInAxes = assignMeasuresToAxes(secondaryAxisMeasures, measureGroup);
+
+        let firstAxis: IAxis = createYAxisItem(measuresInFirstAxis, false);
+        let secondAxis: IAxis = createYAxisItem(measuresInSecondAxis, true);
+
+        if (firstAxis) {
+            firstAxis = {
+                ...firstAxis,
+                ...getMeasureFormatKey(measuresInFirstAxis),
+                seriesIndices: measuresInFirstAxis.map(({ index }: any) => index)
+            };
+        }
+        if (secondAxis) {
+            secondAxis = {
+                ...secondAxis,
+                ...getMeasureFormatKey(measuresInSecondAxis),
+                seriesIndices: measuresInSecondAxis.map(({ index }: any) => index)
+            };
+        }
+
+        yAxes = compact([firstAxis, secondAxis]);
     } else {
         // if more than one measure and NOT dual, then have empty item name
         const nonDualMeasureAxis = hasMoreThanOneMeasure ? {
@@ -1190,11 +1208,48 @@ function getYAxes(
             ...firstMeasureGroupItem,
             ...nonDualMeasureAxis,
             seriesIndices: range(measureGroupItems.length),
-            ...percentageFormatKey
+            ...getMeasureFormatKey(measureGroupItems)
         }];
     }
 
     return yAxes;
+}
+
+interface IMeasuresInAxes {
+    measuresInFirstAxis: any[];
+    measuresInSecondAxis: any[];
+}
+
+function assignMeasuresToAxes(secondMeasures: string[],
+                              measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader']): IMeasuresInAxes {
+    return measureGroup.items
+        .reduce((result: any,
+                 { measureHeaderItem: { name, format, localIdentifier } }: Execution.IMeasureHeaderItem,
+                 index) => {
+
+            if (includes(secondMeasures, localIdentifier)) {
+                result.measuresInSecondAxis.push({ name, format, index });
+            } else {
+                result.measuresInFirstAxis.push({ name, format, index });
+            }
+            return result;
+        }, {
+            measuresInFirstAxis: [],
+            measuresInSecondAxis: []
+        });
+}
+
+function createYAxisItem(measuresInAxis: any[], opposite = false) {
+    const length = measuresInAxis.length;
+    if (length) {
+        const { name, format } = measuresInAxis[0];
+        return  {
+            label: length === 1 ? name : '',
+            format,
+            opposite
+        };
+    }
+    return null;
 }
 
 function assignYAxes(series: any, yAxes: IAxis[]) {
@@ -1577,7 +1632,7 @@ export function getChartOptions(
         };
     }
 
-    const { xAxisProps, yAxisProps } = getChartProperties(config, type);
+    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(config, type);
 
     const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
         generateTooltipFn(viewByAttribute, type, config);
@@ -1601,7 +1656,9 @@ export function getChartOptions(
             enabled: gridEnabled
         },
         xAxisProps,
-        yAxisProps
+        yAxisProps,
+        secondary_xAxisProps,
+        secondary_yAxisProps
     };
 
     return chartOptions;

@@ -56,6 +56,8 @@ export interface IChartConfig {
     chart?: any;
     xaxis?: IAxisConfig;
     yaxis?: IAxisConfig;
+    secondary_xaxis?: IAxisConfig;
+    secondary_yaxis?: IAxisConfig;
     separators?: ISeparators;
     dataLabels?: IDataLabelsConfig;
 }
@@ -66,6 +68,7 @@ export interface IAxisConfig {
     rotation?: string;
     min?: string;
     max?: string;
+    measures?: string[];
 }
 
 export interface IChartProps {

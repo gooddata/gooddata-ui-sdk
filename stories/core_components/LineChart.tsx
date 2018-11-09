@@ -11,6 +11,7 @@ import {
     ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_2,
+    MEASURE_3,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     MEASURE_WITH_FORMAT,
@@ -317,6 +318,44 @@ storiesOf('Core components/LineChart', module)
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
                         ARITHMETIC_MEASURE_USING_ARITHMETIC
                     ]}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('dual axes with two left measures, one right measure, one attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: [MEASURE_3.measure.localIdentifier]
+                        }
+                    }}
+                    trendBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('only right axis with two measures, one attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <LineChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
+                        }
+                    }}
                     trendBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}

@@ -69,10 +69,23 @@ export const isStacked = (chart: any) => {
 };
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
-    return {
-        xAxisProps: isBarChart(type) ? { ...config.yaxis } : { ...config.xaxis },
-        yAxisProps: isBarChart(type) ? { ...config.xaxis } : { ...config.yaxis }
+    const isBarType = isBarChart(type);
+    const chartProps: any = {
+        xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },
+        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis }
     };
+
+    const secondaryXAxisProps = isBarType ? { ...config.secondary_yaxis } : { ...config.secondary_xaxis };
+    const secondaryYAxisProps = isBarType ? { ...config.secondary_xaxis } : { ...config.secondary_yaxis };
+
+    if (!isEmpty(secondaryXAxisProps)) {
+        chartProps.secondary_xAxisProps = secondaryXAxisProps;
+    }
+    if (!isEmpty(secondaryYAxisProps)) {
+        chartProps.secondary_yAxisProps = secondaryYAxisProps;
+    }
+
+    return chartProps;
 }
 
 export const getPointPositions = (point: any) => {
@@ -238,9 +251,9 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-export function shouldStartOnTick(chartOptions: any): boolean {
-    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
-    const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
+export function shouldStartOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'): boolean {
+    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ''));
+    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ''));
 
     if ((isNaN(min) && isNaN(max))) {
         return true;
@@ -262,9 +275,9 @@ export function shouldStartOnTick(chartOptions: any): boolean {
 
     return false;
 }
-export function shouldEndOnTick(chartOptions: any): boolean {
-    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
-    const max = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
+export function shouldEndOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'): boolean {
+    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ''));
+    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ''));
 
     if ((isNaN(min) && isNaN(max))) {
         return true;
