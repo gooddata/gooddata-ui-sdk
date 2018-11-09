@@ -4,11 +4,11 @@ import * as PropTypes from 'prop-types';
 import { IHeaderParams } from 'ag-grid';
 import { AFM } from '@gooddata/typings';
 
-import { getParsedFields } from '../../../helpers/agGrid';
+import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN } from '../../../helpers/agGrid';
 import { IHeaderReactComp } from 'ag-grid-react/lib/interfaces';
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from './HeaderCell';
 
-export interface IPivotHeaderState {
+export interface IColumnHeaderState {
     sorting?: AFM.SortDirection;
 }
 
@@ -16,7 +16,7 @@ export const ASC: AFM.SortDirection = 'asc';
 export const DESC: AFM.SortDirection = 'desc';
 export const ATTRIBUTE_FIELD_TYPE = 'a';
 
-class PivotHeader extends React.Component<IHeaderParams, IPivotHeaderState> implements IHeaderReactComp {
+class ColumnHeader extends React.Component<IHeaderParams, IColumnHeaderState> implements IHeaderReactComp {
     public static propTypes = {
         enableMenu: PropTypes.bool,
         enableSorting: PropTypes.bool,
@@ -27,7 +27,7 @@ class PivotHeader extends React.Component<IHeaderParams, IPivotHeaderState> impl
         setSort: PropTypes.func
     };
 
-    public state: IPivotHeaderState = {
+    public state: IColumnHeaderState = {
         sorting: null
     };
 
@@ -64,15 +64,15 @@ class PivotHeader extends React.Component<IHeaderParams, IPivotHeaderState> impl
     }
 
     public render() {
-        const { displayName, enableSorting, enableMenu } = this.props;
+        const { displayName, enableSorting, enableMenu, column } = this.props;
         const textAlign = this.getFieldType() === ATTRIBUTE_FIELD_TYPE ? ALIGN_LEFT : ALIGN_RIGHT;
-
+        const isColumnAttribute = column.getColDef().type === COLUMN_ATTRIBUTE_COLUMN;
         return (
             <HeaderCell
                 textAlign={textAlign}
                 displayText={displayName}
                 enableMenu={enableMenu}
-                enableSorting={enableSorting}
+                enableSorting={!isColumnAttribute && enableSorting}
                 sortDirection={this.state.sorting}
                 defaultSortDirection={this.getDefaultSortDirection()}
                 onSortClick={this.onSortRequested}
@@ -90,4 +90,4 @@ class PivotHeader extends React.Component<IHeaderParams, IPivotHeaderState> impl
     }
 }
 
-export default PivotHeader;
+export default ColumnHeader;
