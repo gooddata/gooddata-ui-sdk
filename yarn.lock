@@ -140,7 +140,15 @@
     react-transition-group "1.2.1"
     rxjs "^5.5.6"
 
-"@gooddata/js-utils@^2.0.0", "@gooddata/js-utils@^2.0.1":
+"@gooddata/js-utils@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.2.0.tgz#d3b221a30423f8ad2c1f3ac22aa4014f29b83aa0"
+  dependencies:
+    js-cookie "^2.1.4"
+    lodash "^4.17.4"
+    lodash-es "^4.17.4"
+
+"@gooddata/js-utils@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-2.0.1.tgz#46290cba9cb1e5f1c5e97e6860b5b1ef943ee779"
   dependencies:
@@ -6892,6 +6900,10 @@ locate-path@^2.0.0:
   dependencies:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
+
+lodash-es@^4.17.4:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
 
 lodash-es@^4.2.1:
   version "4.17.8"
