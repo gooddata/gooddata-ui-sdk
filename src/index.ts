@@ -18,7 +18,7 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
-import { IPushData } from './interfaces/PushData';
+import { IPushData, IColorsData } from './interfaces/PushData';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
@@ -58,7 +58,8 @@ import ChartTransformation from './components/visualizations/chart/ChartTransfor
 import { RuntimeError } from './errors/RuntimeError';
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
 import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
-import { getColorByGuid } from './components/visualizations/chart/colorFactory';
+import { getColorByGuid } from './components/visualizations/utils/color';
+import * as PredicateUtils from './helpers/predicatesFactory';
 
 /**
  * CoreComponents
@@ -107,6 +108,7 @@ export {
     IColorPalette,
     IColorPaletteItem,
     IPushData,
+    IColorsData,
     isEmptyResult,
     Kpi,
     LoadingComponent,
@@ -136,5 +138,6 @@ export {
     OverTimeComparisonTypes,
     SortsHelper,
     ChartConfiguration,
-    gdUtils
+    gdUtils,
+    PredicateUtils
 };

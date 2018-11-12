@@ -2,6 +2,11 @@
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import { IColorAssignment, IColorPalette } from './Config';
 
+export interface IColorsData {
+    colorAssignments: IColorAssignment[];
+    colorPalette: IColorPalette;
+}
+
 export interface IPushData {
     result?: Execution.IExecutionResponses;
     properties?: {
@@ -9,8 +14,5 @@ export interface IPushData {
         totals?: VisualizationObject.IVisualizationTotal[];
     };
     propertiesMeta?: any;
-    colors?: {
-        colorMapping: IColorAssignment[];
-        colorPalette: IColorPalette;
-    };
+    colors?: IColorsData;
 }

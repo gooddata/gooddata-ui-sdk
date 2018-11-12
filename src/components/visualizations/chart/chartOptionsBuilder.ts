@@ -137,7 +137,7 @@ export interface IChartOptions {
     secondary_yAxisProps?: any;
     title?: any;
     colorAxis?: Highcharts.ColorAxisOptions;
-    colorMapping?: IColorAssignment[];
+    colorAssignments?: IColorAssignment[];
     colorPalette?: IColorPalette;
 }
 
@@ -1502,7 +1502,7 @@ export function getChartOptions(
         series[0].data = sortedDataPoints;
     }
 
-    const colorMapping = colorStrategy.getColorAssignment();
+    const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
 
     if (isComboChart(type)) {
@@ -1525,7 +1525,7 @@ export function getChartOptions(
                 series,
                 categories
             ),
-            colorMapping,
+            colorAssignments,
             colorPalette
         };
     }
@@ -1562,7 +1562,7 @@ export function getChartOptions(
             },
             xAxisProps,
             yAxisProps,
-            colorMapping,
+            colorAssignments,
             colorPalette
         };
     }
@@ -1595,7 +1595,7 @@ export function getChartOptions(
             },
             xAxisProps,
             yAxisProps,
-            colorMapping,
+            colorAssignments,
             colorPalette
         };
     }
@@ -1642,7 +1642,7 @@ export function getChartOptions(
             },
             xAxisProps,
             yAxisProps,
-            colorMapping,
+            colorAssignments,
             colorPalette
         };
     }
@@ -1674,7 +1674,7 @@ export function getChartOptions(
         yAxisProps,
         secondary_xAxisProps,
         secondary_yAxisProps,
-        colorMapping,
+        colorAssignments,
         colorPalette
     };
 

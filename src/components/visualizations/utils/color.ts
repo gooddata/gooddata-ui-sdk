@@ -1,7 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
-import { IColorPalette, IColorPaletteItem, IChartConfig, IRGBColor } from '../../../interfaces/Config';
+import {
+    IColorPalette,
+    IColorPaletteItem,
+    IChartConfig,
+    IRGBColor,
+    IColorItem,
+    IGuidColorItem,
+    IMappingHeader,
+    IColorMapping
+} from '../../../interfaces/Config';
 
 export const WHITE = 'rgb(255, 255, 255)';
 export const BLACK = 'rgb(0, 0, 0)';
@@ -210,4 +219,28 @@ export function getValidColorPalette(config: IChartConfig) {
 
 export function isCustomPalette(palette: IColorPalette) {
     return !isEqual(palette, DEFAULT_COLOR_PALETTE);
+}
+
+export function isGuidColorItem(color: IColorItem): color is IGuidColorItem {
+    return (color as IGuidColorItem).type === 'guid';
+}
+
+export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[]
+    ): IColorItem {
+        if (!colorMapping) {
+            return undefined;
+        }
+
+        const mapping = colorMapping.find(item => item.predicate(mappingHeader));
+        return mapping && mapping.color;
+}
+
+export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number) {
+    const inPalette = colorPalette.find((item: any) => item.guid === guid);
+
+    return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
+}
+
+export function getRgbStringFromRGB(color: IRGBColor) {
+    return `rgb(${color.r},${color.g},${color.b})`;
 }

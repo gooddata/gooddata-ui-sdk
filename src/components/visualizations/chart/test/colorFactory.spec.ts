@@ -32,7 +32,7 @@ import range = require('lodash/range');
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
 
-    for (let i = 0; i < strategy.getColorAssignment().length; i++) {
+    for (let i = 0; i < strategy.getFullColorAssignment().length; i++) {
         res.push(strategy.getColorByIndex(i));
     }
 
@@ -395,6 +395,25 @@ describe('ColorFactory', () => {
                 'rgb(150,150,150)', 'rgb(213,213,213)', 'rgb(150,150,150)', 'rgb(233,233,233)', 'rgb(200,200,200)',
                 'rgb(173,173,173)', 'rgb(50,50,50)', 'rgb(193,193,193)', 'rgb(100,100,100)'
             ]);
+        });
+
+        it('should return only non-derived measures in getColorAssignment', () => {
+            const [measureGroup, viewByAttribute, stackByAttribute] =
+                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const type = 'column';
+
+            const colorStrategy = ColorFactory.getColorStrategy(
+                customPalette,
+                undefined,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                afm,
+                type
+            );
+
+            expect(colorStrategy.getColorAssignment().length).toEqual(6);
         });
     });
 
