@@ -20,6 +20,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
+import { getAttributeItemNamePredicate } from '../../src/helpers/predicatesFactory';
 const wrapperStyle = { width: 800, height: 400 };
 
 storiesOf('Core components/BubbleChart', module)
@@ -102,6 +103,35 @@ storiesOf('Core components/BubbleChart', module)
                     size={MEASURE_3}
                     viewBy={ATTRIBUTE_1}
                     config={GERMAN_SEPARATORS}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    config={{
+                        colorMapping: [{
+                            predicate: getAttributeItemNamePredicate('Pink'),
+                            color: {
+                                type: 'rgb',
+                                value: {
+                                    r: 0,
+                                    g: 0,
+                                    b: 0
+                                }
+                            }}
+                        ]
+                    }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

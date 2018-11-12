@@ -11,7 +11,7 @@ import {
     IHeadlineDataItem
 } from '../../../interfaces/Headlines';
 import { formatItemValue, formatPercentageValue } from './utils/HeadlineDataItemUtils';
-import { IChartConfig } from '../chart/Chart';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: AFM.Identifier;

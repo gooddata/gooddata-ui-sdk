@@ -10,7 +10,7 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
-import { IChartConfig, IChartLimits } from './Chart';
+import { IChartConfig, IChartLimits } from '../../../interfaces/Config';
 import { IChartOptions } from './chartOptionsBuilder';
 
 import { getLineConfiguration } from './highcharts/lineConfiguration';

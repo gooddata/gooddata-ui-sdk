@@ -7,7 +7,7 @@ import ChartTransformation from '../ChartTransformation';
 import * as fixtures from '../../../../../stories/test_data/fixtures';
 import { TOP } from '../legend/PositionTypes';
 import HighChartsRenderer from '../HighChartsRenderer';
-import { IChartConfig, IColorPaletteItem } from '../Chart';
+import { IChartConfig, IColorPaletteItem } from '../../../../interfaces/Config';
 import { getRgbString } from '../../utils/color';
 
 describe('ChartTransformation', () => {
@@ -143,6 +143,24 @@ describe('ChartTransformation', () => {
             const passedProps = createChartRendererProps(fixtures.barChartWithViewByAttribute);
             expect(passedProps.legend.enabled).toEqual(false);
             expect(pushData).toBeCalledWith({
+                colors: {
+                    colorMapping: [{
+                        color: {
+                            type: 'guid',
+                            value: 'blue'
+                        },
+                        headerItem: {
+                            measureHeaderItem: {
+                                format: '#,##0.00',
+                                identifier: 'ah1EuQxwaCqs',
+                                localIdentifier: 'amountMetric',
+                                name: 'Amount',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
+                            }
+                        }
+                    }],
+                    colorPalette: undefined
+                },
                 propertiesMeta: {
                     legend_enabled: false
                 }
@@ -154,6 +172,52 @@ describe('ChartTransformation', () => {
             expect(passedProps.legend.enabled).toEqual(true);
             expect(passedProps.legend.position).toEqual(TOP);
             expect(pushData).toBeCalledWith({
+                colors: {
+                    colorMapping: [{
+                        color: {
+                            type: 'guid',
+                            value: 'blue'
+                        },
+                        headerItem: {
+                            measureHeaderItem: {
+                                format: '#,##0.00',
+                                identifier: 'af2Ewj9Re2vK',
+                                localIdentifier: 'lostMetric',
+                                name: '<button>Lost</button> ...',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                            }
+                        }
+                    }, {
+                        color: {
+                            type: 'guid',
+                            value: 'green'
+                        },
+                        headerItem: {
+                            measureHeaderItem: {
+                                format: '#,##0.00',
+                                identifier: 'afSEwRwdbMeQ',
+                                localIdentifier: 'wonMetric',
+                                name: 'Won',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284'
+                            }
+                        }
+                    }, {
+                        color: {
+                            type: 'guid',
+                            value: 'red'
+                        },
+                        headerItem: {
+                            measureHeaderItem: {
+                                format: '#,##0.00',
+                                identifier: 'alUEwmBtbwSh',
+                                localIdentifier: 'expectedMetric',
+                                name: 'Expected',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285'
+                            }
+                        }
+                    }],
+                    colorPalette: undefined
+                },
                 propertiesMeta: {
                     legend_enabled: true
                 }

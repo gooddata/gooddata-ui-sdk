@@ -18,9 +18,9 @@ import HighChartsRenderer, {
     renderLegend as legendRenderer,
     renderChart as chartRenderer
 } from './HighChartsRenderer';
-import { IChartConfig } from './Chart';
 import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
@@ -155,6 +155,10 @@ export default class ChartTransformation extends React.Component<IChartTransform
         pushData({
             propertiesMeta: {
                 legend_enabled: this.legendOptions.toggleEnabled
+            },
+            colors: {
+                colorMapping: this.chartOptions.colorMapping,
+                colorPalette: this.chartOptions.colorPalette
             }
         });
 

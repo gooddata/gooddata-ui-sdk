@@ -4,7 +4,6 @@ import noop = require('lodash/noop');
 import { SDK } from '@gooddata/gooddata-js';
 
 import { Visualization } from '../../visualizations/Visualization';
-import { IChartConfig } from '../../visualizations/chart/Chart';
 
 import { IntlWrapper } from './IntlWrapper';
 import { ChartType } from '../../../constants/visualizationTypes';
@@ -24,6 +23,7 @@ import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
 import { BaseVisualization } from './BaseVisualization';
 import { OnLegendReady } from '../../../interfaces/Events';
 import { getValidColorPalette } from '../../visualizations/utils/color';
+import { IChartConfig } from '../../../interfaces/Config';
 export { Requireable };
 
 export interface ICommonChartProps extends ICommonVisualizationProps {

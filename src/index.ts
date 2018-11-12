@@ -45,12 +45,20 @@ import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
 import { Heatmap } from './components/Heatmap';
-import Chart,
-    { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from './components/visualizations/chart/Chart';
+import {
+    ILegendConfig,
+    IChartConfig,
+    IColorPalette,
+    IColorPaletteItem
+} from './interfaces/Config';
+// tslint:disable-next-line:no-duplicate-imports
+import * as ChartConfiguration from './interfaces/Config';
+import Chart from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
 import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
+import { getColorByGuid } from './components/visualizations/chart/colorFactory';
 
 /**
  * CoreComponents
@@ -64,6 +72,10 @@ const CoreComponents = {
     PivotTable: CorePivotTable,
     ScatterPlot: CoreScatterPlot,
     FunnelChart: CoreFunnelChart
+};
+
+const gdUtils = {
+    getColorByGuid
 };
 
 export {
@@ -122,5 +134,7 @@ export {
     Chart,
     OverTimeComparisonType,
     OverTimeComparisonTypes,
-    SortsHelper
+    SortsHelper,
+    ChartConfiguration,
+    gdUtils
 };
