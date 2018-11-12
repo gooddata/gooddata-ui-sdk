@@ -83,8 +83,12 @@ describe('PivotTable', () => {
             expect(wrapper.find(LoadingComponent)).toHaveLength(1);
         });
 
-        it('should show value for existing data', async () => {
-            const props: ICellRendererParams = { node: { id: 1 }, data: [3.14, 2], colDef: { field: '0' } } as any;
+        it('should show formatted value for existing data', async () => {
+            const props: ICellRendererParams = {
+                node: { id: 1 },
+                value: Math.PI,
+                formatValue: (value: number) => value.toFixed(2)
+            } as any;
             const wrapper = shallow(<RowLoadingElement {...props} />);
             expect(wrapper.html()).toEqual('<span>3.14</span>');
         });

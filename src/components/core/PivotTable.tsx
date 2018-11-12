@@ -303,10 +303,16 @@ export const getGridDataSource = (
     }
 });
 
-export const RowLoadingElement = (props: ICellRendererParams) =>
-    (props.node.id !== undefined || props.node.rowPinned
-        ? <span>{props.data[props.colDef.field]}</span>
-        : <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />);
+export const RowLoadingElement = (props: ICellRendererParams) => {
+    // rows that are still loading do not have node.id
+    // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
+    if (props.node.id !== undefined || props.node.rowPinned) {
+        // props.value is always unformatted
+        // there is props.formattedValue, but this is null for row attributes for some reason
+        return <span>{props.formatValue(props.value)}</span>;
+    }
+    return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
+};
 
 export const getDrillIntersection = (
     drillItems: IDrillItem[],
