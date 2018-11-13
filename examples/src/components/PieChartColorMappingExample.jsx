@@ -75,13 +75,21 @@ export class PieChartColorMappingExample extends Component {
                     onError={this.onError}
                     config={{
                         colorMapping: [{
-                            id: 'franchiseFeesAdRoyaltyIdentifier',
+                            predicate: (headerItem) => {
+                                return headerItem.measureHeaderItem
+                                    ? headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier === 'franchiseFeesAdRoyaltyIdentifier')
+                                    : false;
+                            },
                             color: {
                                 type: 'guid',
-                                value: 'purple'
+                                value: '5'
                             }
                         }, {
-                            id: 'franchiseFeesIdentifierOngoingRoyalty',
+                            predicate: (headerItem) => {
+                                return headerItem.measureHeaderItem
+                                    ? headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier === 'franchiseFeesIdentifierOngoingRoyalty')
+                                    : false;
+                            },
                             color: {
                                 type: 'rgb',
                                 value: {

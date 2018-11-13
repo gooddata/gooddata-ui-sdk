@@ -147,7 +147,7 @@ describe('ChartTransformation', () => {
                     colorMapping: [{
                         color: {
                             type: 'guid',
-                            value: 'blue'
+                            value: '1'
                         },
                         headerItem: {
                             measureHeaderItem: {
@@ -176,7 +176,7 @@ describe('ChartTransformation', () => {
                     colorMapping: [{
                         color: {
                             type: 'guid',
-                            value: 'blue'
+                            value: '1'
                         },
                         headerItem: {
                             measureHeaderItem: {
@@ -190,7 +190,7 @@ describe('ChartTransformation', () => {
                     }, {
                         color: {
                             type: 'guid',
-                            value: 'green'
+                            value: '2'
                         },
                         headerItem: {
                             measureHeaderItem: {
@@ -204,7 +204,7 @@ describe('ChartTransformation', () => {
                     }, {
                         color: {
                             type: 'guid',
-                            value: 'red'
+                            value: '3'
                         },
                         headerItem: {
                             measureHeaderItem: {

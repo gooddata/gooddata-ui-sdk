@@ -350,7 +350,7 @@ storiesOf('Core components/Heatmap', module)
                                 predicate: getMeasureLocalIdentifierPredicate('m1'),
                                 color: {
                                     type: 'guid',
-                                    value: 'green'
+                                    value: '2'
                                 }
                             }
                         ]
