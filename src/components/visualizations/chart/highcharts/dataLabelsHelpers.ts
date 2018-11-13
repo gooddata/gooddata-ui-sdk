@@ -7,7 +7,7 @@ import {
     IRectBySize,
     isIntersecting,
     pointInRange,
-    IAxisRange
+    IAxisRange, IAxisRangeForAxes
 } from './helpers';
 
 export function isLabelOverlappingItsShape(point: any) {
@@ -64,14 +64,18 @@ export interface IInsideResult {
     horizontally: boolean;
 }
 
-export function showDataLabelInAxisRange(point: any, value: number, axisRange: IAxisRange) {
+export function showDataLabelInAxisRange(point: any, value: number, axisRangeForAxes: IAxisRangeForAxes) {
+    const isSecondAxis = get(point, 'series.yAxis.opposite', false);
+    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? 'second' : 'first'];
     const isInsideAxisRange: boolean = pointInRange(value, axisRange);
     if (!isInsideAxisRange) {
         hideDataLabel(point);
     }
 }
 
-export function showStackLabelInAxisRange(point: any, axisRange: IAxisRange) {
+export function showStackLabelInAxisRange(point: any, axisRangeForAxes: IAxisRangeForAxes) {
+    const isSecondAxis = get(point, 'series.yAxis.opposite', false);
+    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? 'second' : 'first'];
     const end = point.stackY || point.total;
     const start = end - point.y;
     const isWholeUnderMin: boolean = start <= axisRange.minAxisValue && end <= axisRange.minAxisValue;

@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import flatten = require('lodash/flatten');
 import get = require('lodash/get');
+import pick = require('lodash/pick');
 import map = require('lodash/map');
 import zip = require('lodash/zip');
 import unzip = require('lodash/unzip');
@@ -52,6 +53,7 @@ export const getVisibleSeries = (chart: any) => chart.series && chart.series.fil
 export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
 export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
 export const getDataPointsOfVisibleSeries = (chart: any) => getDataPoints(getVisibleSeries(chart));
+
 export const getChartType = (chart: any): string => get<string>(chart, 'options.chart.type');
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
@@ -136,18 +138,40 @@ function getExtremeOnAxis(min: number, max: number) {
     return { axisMin, axisMax };
 }
 
-export function shouldFollowPointer(chartOptions: any) {
-    const yMax = parseFloat(get(chartOptions, 'yAxisProps.max', ''));
-    const yMin = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+export function shouldFollowPointerForDualAxes(chartOptions: any) {
+    const yAxes = get(chartOptions, 'yAxes', []);
+    if (yAxes.length <= 1) {
+        return false;
+    }
 
-    if (isNaN(yMax) && isNaN(yMin)) {
+    const hasMinMaxValue = [
+        'yAxisProps.min', 'yAxisProps.max',
+        'secondary_yAxisProps.min', 'secondary_yAxisProps.max'].reduce((result, key: string) => {
+            const value = get(chartOptions, key, undefined);
+            return isEmpty(value) ? result : value;
+        }, undefined);
+    return yAxes.length > 1 && hasMinMaxValue;
+}
+
+function isMinMaxLimitData(chartOptions: any, key: string) {
+    const yMin = parseFloat(get(chartOptions, `${key}.min`, ''));
+    const yMax = parseFloat(get(chartOptions, `${key}.max`, ''));
+    if (isNaN(yMin) && isNaN(yMax)) {
         return false;
     }
 
     const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
     const { axisMin, axisMax } = getExtremeOnAxis(minDataValue, maxDataValue);
 
-    return (!isNaN(yMax) && axisMax > yMax) || (!isNaN(yMin) && axisMin < yMin);
+    return !isNaN(yMax) && axisMax > yMax || !isNaN(yMin) && axisMin < yMin;
+}
+
+export function shouldFollowPointer(chartOptions: any) {
+    if (shouldFollowPointerForDualAxes(chartOptions)) {
+        return true;
+    }
+    return isMinMaxLimitData(chartOptions, 'yAxisProps') ||
+            isMinMaxLimitData(chartOptions, 'secondary_yAxisProps');
 }
 
 function isSerieVisible(serie: ISeriesItem): boolean {
@@ -320,11 +344,23 @@ export interface IAxisRange {
     maxAxisValue: number;
 }
 
-export function getAxisRange(chart: any, axisName = 'yAxis'): IAxisRange {
-    return {
-        minAxisValue: get(chart, [axisName, 0, 'min'], 0),
-        maxAxisValue: get(chart, [axisName, 0, 'max'], 0)
-    };
+export interface IAxisRangeForAxes {
+    first?: IAxisRange;
+    second?: IAxisRange;
+}
+
+export function getAxisRangeForAxes(chart: any): IAxisRangeForAxes {
+    const yAxis: any = get(chart, 'yAxis', []);
+    return yAxis
+        .map((axis: any) => pick(axis, ['opposite', 'min', 'max']))
+        .map(({ opposite, min, max }: any) => ({ axis: opposite ? 'second' : 'first', min, max }))
+        .reduce((result: IAxisRangeForAxes, { axis, min, max }: any) => {
+            result[axis] = {
+                minAxisValue: min,
+                maxAxisValue: max
+            };
+            return result;
+        }, {});
 }
 
 export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {

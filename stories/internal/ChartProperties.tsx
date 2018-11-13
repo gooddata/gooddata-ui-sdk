@@ -13,6 +13,7 @@ import * as fixtures from '../test_data/fixtures';
 import { wrap } from '../utils/wrap';
 
 import '../../styles/scss/charts.scss';
+import { supportedDualAxesChartTypes } from '../../src/components/visualizations/chart/chartOptionsBuilder';
 
 storiesOf('Internal/HighCharts/ChartProperties', module)
     .add('Column chart without gridline', () => {
@@ -141,16 +142,9 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
     })
     .add('Dual axes chart with hiding right Y axis', () => {
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
-
         return screenshotWrap(
             wrap(
                 <ChartTransformation
-                    drillableItems={[
-                        {
-                            uri: dataSet.executionResult
-                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
-                        }
-                    ]}
                     config={{
                         type: 'column',
                         legend: {
@@ -166,7 +160,6 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
 
                     }}
                     {...dataSet}
-                    onDataTooLarge={identity}
                 />
             )
         );
@@ -177,12 +170,6 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
         return screenshotWrap(
             wrap(
                 <ChartTransformation
-                    drillableItems={[
-                        {
-                            uri: dataSet.executionResult
-                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
-                        }
-                    ]}
                     config={{
                         type: 'column',
                         legend: {
@@ -209,12 +196,6 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
         return screenshotWrap(
             wrap(
                 <ChartTransformation
-                    drillableItems={[
-                        {
-                            uri: dataSet.executionResult
-                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][0].attributeHeaderItem.uri
-                        }
-                    ]}
                     config={{
                         type: 'column',
                         legend: {
@@ -291,5 +272,33 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                     onDataTooLarge={identity}
                 />
             )
+        );
+    })
+    .add('Dual axes chart with data labels enabled', () => {
+        const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+        return screenshotWrap(
+            <div>
+                {supportedDualAxesChartTypes.map(type => wrap(
+                    <ChartTransformation
+                        config={{
+                            type,
+                            legend: {
+                                enabled: true,
+                                position: 'top'
+                            },
+                            legendLayout: 'vertical',
+                            colorPalette: fixtures.customPalette,
+                            secondary_yaxis: {
+                                measures: ['expectedMetric']
+                            },
+                            dataLabels: {
+                                visible: true
+                            }
+
+                        }}
+                        {...dataSet}
+                    />
+            ))}
+            </div>
         );
     });
