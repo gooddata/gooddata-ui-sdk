@@ -915,14 +915,14 @@ describe('chartOptionsBuilder', () => {
             };
 
             const colorPalette = [{
-                guid: 'red',
+                guid: '3',
                 fill: {
                     r: 255,
                     g: 0,
                     b: 0
                 }
             }, {
-                guid: 'green',
+                guid: '2',
                 fill: {
                     r: 0,
                     g: 255,
@@ -1234,7 +1234,7 @@ describe('chartOptionsBuilder', () => {
                 const colorPaletteWithBlue = [
                     ...colorPalette,
                     {
-                        guid: 'blue',
+                        guid: '1',
                         fill: {
                             r: 0,
                             g: 0,

@@ -36,83 +36,83 @@ export const DEFAULT_COLORS = [
 
 export const DEFAULT_COLOR_PALETTE = [
     {
-        guid: 'blue',
+        guid: '1',
         fill: { r: 20, g: 178, b: 226 }
     },
     {
-        guid: 'green',
+        guid: '2',
         fill: { r: 0, g: 193, b: 141 }
     },
     {
-        guid: 'red',
+        guid: '3',
         fill: { r: 229, g: 77, b: 66 }
     },
     {
-        guid: 'orange',
+        guid: '4',
         fill: { r: 241, g: 134, b: 0 }
     },
     {
-        guid: 'purple',
+        guid: '5',
         fill: { r: 171, g: 85, b: 163 }
     },
     {
-        guid: 'yellow',
+        guid: '6',
         fill: { r: 244, g: 213, b: 33 }
     },
     {
-        guid: 'grey',
+        guid: '7',
         fill: { r: 148, g: 161, b: 174 }
     },
     {
-        guid: 'blue-light',
+        guid: '8',
         fill: { r: 107, g: 191, b: 216 }
     },
     {
-        guid: 'violet-light',
+        guid: '9',
         fill: { r: 181, g: 136, b: 177 }
     },
     {
-        guid: 'red-light',
+        guid: '10',
         fill: { r: 238, g: 135, b: 128 }
     },
     {
-        guid: 'orange-light',
+        guid: '11',
         fill: { r: 241, g: 171, b: 84 }
     },
     {
-        guid: 'green-light',
+        guid: '12',
         fill: { r: 133, g: 209, b: 188 }
     },
     {
-        guid: 'blue-dark',
+        guid: '13',
         fill: { r: 41, g: 117, b: 170 }
     },
     {
-        guid: 'green-dark',
+        guid: '14',
         fill: { r: 4, g: 140, b: 103 }
     },
     {
-        guid: 'red-dark',
+        guid: '15',
         fill: { r: 181, g: 60, b: 51 }
     },
     {
-        guid: 'orange-dark',
+        guid: '16',
         fill: { r: 163, g: 101, b: 46 }
     },
     {
-        guid: 'purple-dark',
+        guid: '17',
         fill: { r: 140, g: 57, b: 132 }
     },
     {
-        guid: 'azure',
+        guid: '18',
         fill: { r: 136, g: 219, b: 244 }
     },
     {
-        guid: 'green-celadon',
+        guid: '19',
         fill: { r: 189, g: 234, b: 222 }
     },
     {
-        guid: 'pink-pale',
+        guid: '20',
         fill: { r: 239, g: 197, b: 194 }
     }
 ];
