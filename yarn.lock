@@ -84,9 +84,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@56.1.3":
-  version "56.1.3"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.3.tgz#8f514bd0f52853a415aa1805b8e9bbe6d11fa42f"
+"@gooddata/goodstrap@56.1.3-fix1":
+  version "56.1.3-fix1"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-56.1.3-fix1.tgz#4f43fe8d428d45cd81adcca1e9e99437618f1cec"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -95,7 +95,7 @@
     foundation-sites "5.5.3"
     immutable "3.8.1"
     invariant "2.2.2"
-    jquery "2.1.4"
+    jquery "3.3.1"
     kefir "3.7.1"
     lodash "4.17.4"
     moment "2.18.1"
@@ -6430,9 +6430,9 @@ jpeg-js@0.2.0, jpeg-js@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.2.0.tgz#53e448ec9d263e683266467e9442d2c5a2ef5482"
 
-jquery@2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"
+jquery@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.8:
   version "2.4.1"
