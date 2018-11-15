@@ -1,4 +1,12 @@
 # Changelog
+## 5.3.3 (November 15, 2018)
+
+- Use the upgraded GoodStrap library, which now uses the upgraded jQuery library (backport security update) ([commit](https://github.com/gooddata/gooddata-react-components/commit/49bb1ce5668cc8a778cfef17211a1a4c89944233))
+
+## 5.3.2 (September 27, 2018)
+
+- Added description of data used in examples ([commit](https://github.com/gooddata/gooddata-react-components/commit/a0d7c54445325aecfeb5bd898bc3615fb67c2032))
+
 ## 5.3.1 (September 4, 2018)
 
 - Heatmap bugfix ([commit](https://github.com/gooddata/gooddata-react-components/commit/7553681f471748de999430746944573b081ec88b))
