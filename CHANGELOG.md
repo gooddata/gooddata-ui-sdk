@@ -70,6 +70,10 @@ We recommend that you begin using corresponding visual components with the same 
 - Heatmap with bucket interface had switched the meaning of each bucket prop.
 - Other bug fixes and internal improvements.
 
+## 5.3.3 (November 15, 2018)
+
+- Use the upgraded GoodStrap library, which now uses the upgraded jQuery library (backport security update) ([commit](https://github.com/gooddata/gooddata-react-components/commit/49bb1ce5668cc8a778cfef17211a1a4c89944233))
+
 ## 5.3.2 (September 27, 2018)
 
 - Added description of data used in examples ([commit](https://github.com/gooddata/gooddata-react-components/commit/a0d7c54445325aecfeb5bd898bc3615fb67c2032))
