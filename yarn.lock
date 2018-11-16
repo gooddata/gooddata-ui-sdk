@@ -112,9 +112,10 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@57.4.0":
-  version "57.4.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.4.0.tgz#978ba1ff1754b72839ee5a920b1598694d87df3a"
+"@gooddata/goodstrap@59.0.0":
+  version "59.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-59.0.0.tgz#76e09ecdae1d7d2bd80d163a14ec220f13b44e67"
+  integrity sha512-GsHU4hEC8kVjUmMs0rW+FHF1tAzInOsObyZwonJmcOXy3mbkGc4bjN+WCJ30ahRQeZPb2cKruh2Dn1MwxXRg/Q==
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -123,12 +124,12 @@
     foundation-sites "5.5.3"
     immutable "3.8.1"
     invariant "2.2.2"
-    jquery "3.3.1"
     kefir "3.7.1"
     lodash "4.17.4"
     moment "2.18.1"
     moment-timezone "0.5.11"
     prop-types "15.6.0"
+    querystringify "2.1.0"
     react-day-picker "7.0.7"
     react-dnd "5.0.0"
     react-document-title "2.0.3"
@@ -6578,10 +6579,6 @@ jpeg-js@0.2.0, jpeg-js@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.2.0.tgz#53e448ec9d263e683266467e9442d2c5a2ef5482"
 
-jquery@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-
 js-base64@^2.1.8:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.1.tgz#e02813181cd53002888e918935467acb2910e596"
@@ -8888,6 +8885,11 @@ querystring@0.2.0, querystring@^0.2.0:
 querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
+
+querystringify@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.0.tgz#7ded8dfbf7879dcc60d0a644ac6754b283ad17ef"
+  integrity sha512-sluvZZ1YiTLD5jsqZcDmFyV2EwToyXZBfpoVOmktMmW+VEnhgakFHnasVph65fOjGPTWN0Nw3+XQaSeMayr0kg==
 
 querystringify@~1.0.0:
   version "1.0.0"

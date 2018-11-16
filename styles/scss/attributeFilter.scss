@@ -2,11 +2,11 @@
 $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
 @import './_settings.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/_typo-mixins.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/Overlay.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/Spinner.scss';
-@import '~@gooddata/goodstrap/lib/Button/styles/themes/indigo/Button.scss';
-@import '~@gooddata/goodstrap/lib/List/styles/themes/indigo/List.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/typo-mixins.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/Overlay.scss';
+@import '~@gooddata/goodstrap/lib/core/styles/Spinner.scss';
+@import '~@gooddata/goodstrap/lib/Button/styles/Button.scss';
+@import '~@gooddata/goodstrap/lib/List/styles/List.scss';
 
 .gd-attribute-filter {
     display: inline-block;

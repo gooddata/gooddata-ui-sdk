@@ -14,7 +14,7 @@ import {
 import { createBrowserHistory } from 'history';
 import ReactGA from 'react-ga';
 
-import '@gooddata/goodstrap/lib/theme-indigo.scss';
+import '@gooddata/goodstrap/lib/styles.scss';
 import Header from './components/utils/Header';
 import Menu from './components/utils/Menu';
 import { CustomError } from './components/utils/CustomError';
