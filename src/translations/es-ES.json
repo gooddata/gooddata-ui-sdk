@@ -49,5 +49,14 @@
    "gs.list.noItemsFound": "No se ha encontrado ningún elemento.",
    "gs.list.error": "Error al cargar los elementos de la lista",
    "measure.title.suffix.same_period_year_ago": "MP el año anterior",
-   "measure.title.suffix.previous_period": "periodo atrás"
+   "measure.title.suffix.previous_period": "periodo atrás",
+   "visualizations.measure.arithmetic.sum.title": "Suma de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.difference.title": "Resta de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.multiplication.title": "Multiplicación de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.ratio.title": "División de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.change.title": "Cambio de {secondMeasureTitle} a {firstMeasureTitle}",
+   "visualizations.legend.text.top": "Arriba:",
+   "visualizations.legend.text.bottom": "Abajo:",
+   "visualizations.legend.text.left": "Izquierda:",
+   "visualizations.legend.text.right": "Derecha:"
 }

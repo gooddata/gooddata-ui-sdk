@@ -49,5 +49,14 @@
    "gs.list.noItemsFound": "Keine Elemente gefunden.",
    "gs.list.error": "Fehler beim Laden der Listenobjekte",
    "measure.title.suffix.same_period_year_ago": "vor DZ Jahr",
-   "measure.title.suffix.previous_period": "früherer Zeitraum"
+   "measure.title.suffix.previous_period": "früherer Zeitraum",
+   "visualizations.measure.arithmetic.sum.title": "Summe von {firstMeasureTitle} und {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.difference.title": "Differenz zwischen {firstMeasureTitle} und {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.multiplication.title": "Produkt aus {firstMeasureTitle} und {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.ratio.title": "Verhältnis zwischen {firstMeasureTitle} und {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.change.title": "Veränderung von {secondMeasureTitle} bis {firstMeasureTitle}",
+   "visualizations.legend.text.top": "Oben:",
+   "visualizations.legend.text.bottom": "Unten:",
+   "visualizations.legend.text.left": "Links:",
+   "visualizations.legend.text.right": "Rechts:"
 }
