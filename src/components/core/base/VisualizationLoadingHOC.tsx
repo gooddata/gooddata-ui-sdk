@@ -110,6 +110,10 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             const { dataSource, resultSpec } = this.props;
             if (autoExecuteDataSource) {
                 this.initDataLoading(dataSource, resultSpec);
+            } else {
+                // without this, the ReportVisualization component doesn't assign executionId
+                // and doesn't match results to executions and never stops loading
+                this.onLoadingChanged({ isLoading: true });
             }
         }
 
@@ -147,9 +151,9 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
-        ) {
+        ): Promise<Execution.IExecutionResponses> {
             if (this.hasUnmounted) {
-                return null;
+                return Promise.resolve(null);
             }
             this.setState({ error: null });
 
@@ -208,7 +212,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
-        ) {
+        ): Promise<Execution.IExecutionResponses> {
             const pagePromise = this.props.dataSource.getPage(resultSpec, limit, offset);
             this.pagePromises.push(pagePromise);
             return pagePromise.then((result: Execution.IExecutionResponses) => {

@@ -76,7 +76,8 @@ describe('VisualizationLoadingHOC', () => {
             ...customProps
         };
         const WrappedComponent = visualizationLoadingHOC(TestInnerComponent, autoExecuteDataSource);
-        return mount<ITestInnerComponentProps & IDataSourceProviderInjectedProps>(<WrappedComponent {...props} />);
+        return mount<ITestInnerComponentProps & IDataSourceProviderInjectedProps & ICommonVisualizationProps>
+        (<WrappedComponent {...props} />);
     };
 
     it('should render the inner component passing down all the external properties', () => {
@@ -338,7 +339,6 @@ describe('VisualizationLoadingHOC', () => {
             }, false);
 
             const innerWrapped = wrapper.find(TestInnerComponent);
-            expect(innerWrapped.props().isLoading).toBe(false);
             expect(innerWrapped.props().execution).toBe(null);
         });
 
@@ -390,6 +390,18 @@ describe('VisualizationLoadingHOC', () => {
 
                 expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
             });
+        });
+
+        it('getPage should return promise if component has been unmounted', async () => {
+            const wrapper = createComponent({}, false);
+            const innerWrapped = wrapper.find(TestInnerComponent);
+
+            const okRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);
+            expect(okRes).toBe(oneMeasureResponse);
+
+            wrapper.unmount();
+            const nullRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);
+            expect(nullRes).toBe(null);
         });
     });
 });
