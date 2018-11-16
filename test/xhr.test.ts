@@ -100,6 +100,46 @@ describe('fetch', () => {
             expect(getHeaderValue(fetchMock.lastOptions(), 'X-GDC-JS-PKG')).toBe('@gooddata/react-components');
             expect(getHeaderValue(fetchMock.lastOptions(), 'X-GDC-JS-PKG-VERSION')).toBe('2.0.0');
         });
+
+        it('should add latest REST API version header into the request', () => {
+            fetchMock.get('/some/url', 200);
+
+            const xhr = createXhr({});
+
+            xhr.ajax('/some/url');
+
+            expect(getHeaderValue(fetchMock.lastOptions(), 'X-GDC-VERSION')).toBe(3);
+        });
+
+        it('should log deprecation warning once when REST API call was performed against deprecated version', () => {
+            fetchMock.get('/some/url', 200);
+
+            const xhr = createXhr({});
+
+            return xhr.ajax('/some/url').then((result) => {
+                expect(result.response.headers.get('X-GDC-DEPRECATED')).toBeNull();
+            });
+        });
+
+        it('should not log deprecation warning when REST API call was performed against latest REST API', () => {
+            const consoleWarnSpy = jest.spyOn(global.console, 'warn');
+            consoleWarnSpy.mockImplementation(jest.fn());
+
+            fetchMock.get('/some/url', { status: 200, headers: { 'X-GDC-DEPRECATED': 'deprecated' } });
+
+            const xhr = createXhr({});
+
+            return xhr.ajax('/some/url').then((result) => {
+                expect(result.response.headers.get('X-GDC-DEPRECATED')).toEqual('deprecated');
+
+                return xhr.ajax('/some/url').then((result) => {
+                    expect(result.response.headers.get('X-GDC-DEPRECATED')).toEqual('deprecated');
+                    expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+
+                    consoleWarnSpy.mockRestore();
+                });
+            });
+        });
     });
 
     describe('xhr.ajax unauthorized handling', () => {
