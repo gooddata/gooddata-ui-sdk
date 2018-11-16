@@ -1,5 +1,16 @@
 # Changelog
 
+## Supported REST API versions
+
+This table shows which version of the GoodData.UI introduced support for a particular API version. 
+
+The REST API versions in the table are just for your information as the values are set internally and cannot be overridden. 
+
+|GoodData.UI Version | REST API version
+|:---:|:---:
+|\>= 6.1.0|3
+|<= 6.0.0|2
+
 ## Unreleased/planned
 
 - We are working on arithmetic measures support.
