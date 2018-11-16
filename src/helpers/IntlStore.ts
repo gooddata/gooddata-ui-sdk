@@ -12,6 +12,7 @@ import * as jaJP from '../translations/ja-JP.json';
 import * as nlNL from '../translations/nl-NL.json';
 import * as ptBR from '../translations/pt-BR.json';
 import * as ptPT from '../translations/pt-PT.json';
+import * as zhHans from '../translations/zh-Hans.json';
 import isEmpty = require('lodash/isEmpty');
 
 const messagesMap = {
@@ -22,7 +23,8 @@ const messagesMap = {
     'ja-JP': jaJP,
     'nl-NL': nlNL,
     'pt-BR': ptBR,
-    'pt-PT': ptPT
+    'pt-PT': ptPT,
+    'zh-Hans': zhHans
 };
 
 const intlStore = {};
