@@ -37,7 +37,8 @@ describe('IntlStore', () => {
                 'ja-JP',
                 'nl-NL',
                 'pt-BR',
-                'pt-PT'
+                'pt-PT',
+                'zh-Hans'
             ];
 
             it('should return message in en-US', () => {
