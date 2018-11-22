@@ -112,9 +112,9 @@
     qs "6.5.1"
     rxjs "^5.5.6"
 
-"@gooddata/goodstrap@57.3.0":
-  version "57.3.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.3.0.tgz#4bf0da88fd29b316219d890c2a16f7dac18907dd"
+"@gooddata/goodstrap@57.4.0":
+  version "57.4.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-57.4.0.tgz#978ba1ff1754b72839ee5a920b1598694d87df3a"
   dependencies:
     "@gooddata/js-utils" "^2.0.0"
     classnames "2.2.5"
@@ -139,6 +139,7 @@
     react-textarea-autosize "7.0.4"
     react-transition-group "1.2.1"
     rxjs "^5.5.6"
+    tinycolor2 "1.4.1"
 
 "@gooddata/js-utils@3.2.0":
   version "3.2.0"
@@ -10978,7 +10979,7 @@ tiny-emitter@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.0.2.tgz#82d27468aca5ade8e5fd1e6d22b57dd43ebdfb7c"
 
-tinycolor2@^1.1.2:
+tinycolor2@1.4.1, tinycolor2@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
 
