@@ -45,7 +45,8 @@ import {
     TreemapColorStrategy,
     MeasureColorStrategy,
     AttributeColorStrategy,
-    HeatmapColorStrategy
+    HeatmapColorStrategy,
+    BubbleChartColorStrategy
 } from '../colorFactory';
 import { IColorPaletteItem } from '../../../../interfaces/Config';
 
@@ -960,13 +961,13 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 1, y: 2, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: [{ x: 4, y: 5, z: 6, format: '#.##x' }]
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPalette,
                     undefined,
                     dummyMeasureGroup,
@@ -980,7 +981,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1008,13 +1009,13 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 0, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: '',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: [{ x: 0, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPalette,
                     undefined,
                     dummyMeasureGroup,
@@ -1028,7 +1029,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     null,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1061,13 +1062,13 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 0, y: 1, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: [{ x: 0, y: 4, z: 6, format: '#.##x' }]
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPalette,
                     undefined,
                     dummyMeasureGroup,
@@ -1081,7 +1082,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1114,13 +1115,13 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 1, y: 0, z: 3, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: [{ x: 4, y: 0, z: 6, format: '#.##x' }]
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPalette,
                     undefined,
                     dummyMeasureGroup,
@@ -1134,7 +1135,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1167,13 +1168,13 @@ describe('chartOptionsBuilder', () => {
                         data: [{ x: 1, y: 3, z: NaN, format: '#.##x' }]
                     }, {
                         name: 'def',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: [{ x: 4, y: 6, z: NaN, format: '#.##x' }]
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPalette,
                     undefined,
                     dummyMeasureGroup,
@@ -1187,7 +1188,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     stackByAttribute,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);
@@ -1251,18 +1252,18 @@ describe('chartOptionsBuilder', () => {
                         data: [] as any
                     }, {
                         name: 'def',
-                        color: 'rgb(0,255,0)',
+                        color: undefined,
                         legendIndex: 1,
                         data: []
                     }, {
                         name: 'ghi',
-                        color: 'rgb(0,0,255)',
+                        color: undefined,
                         legendIndex: 2,
                         data: []
                     }
                 ];
 
-                const attributeColorStrategy = new AttributeColorStrategy(
+                const colorStrategy = new BubbleChartColorStrategy(
                     colorPaletteWithBlue,
                     undefined,
                     dummyMeasureGroup,
@@ -1276,7 +1277,7 @@ describe('chartOptionsBuilder', () => {
                     dummyMeasureGroup,
                     stackByAttributeWithThreeElements,
                     mdObject,
-                    attributeColorStrategy
+                    colorStrategy
                 );
 
                 expect(series).toEqual(expectedSeries);

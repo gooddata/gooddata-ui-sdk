@@ -144,7 +144,7 @@ describe('ChartTransformation', () => {
             expect(passedProps.legend.enabled).toEqual(false);
             expect(pushData).toBeCalledWith({
                 colors: {
-                    colorMapping: [{
+                    colorAssignments: [{
                         color: {
                             type: 'guid',
                             value: '1'
@@ -173,7 +173,7 @@ describe('ChartTransformation', () => {
             expect(passedProps.legend.position).toEqual(TOP);
             expect(pushData).toBeCalledWith({
                 colors: {
-                    colorMapping: [{
+                    colorAssignments: [{
                         color: {
                             type: 'guid',
                             value: '1'

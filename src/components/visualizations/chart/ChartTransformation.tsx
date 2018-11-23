@@ -157,7 +157,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
                 legend_enabled: this.legendOptions.toggleEnabled
             },
             colors: {
-                colorMapping: this.chartOptions.colorMapping,
+                colorAssignments: this.chartOptions.colorAssignments,
                 colorPalette: this.chartOptions.colorPalette
             }
         });

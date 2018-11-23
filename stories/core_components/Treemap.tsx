@@ -153,6 +153,46 @@ storiesOf('Core components/Treemap', module)
                 />
             </div>
         )
+    )).add('custom colors and color mapping with segment', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    segmentBy={ATTRIBUTE_2}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: getAttributeItemNamePredicate('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: '03'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: '02'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
+                    onError={onErrorHandler}
+                />
+            </div>
+        )
     ))
     .add('custom colors by hexa', () => (
         screenshotWrap(

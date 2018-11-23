@@ -283,7 +283,7 @@ export class VisualizationWrapped
 
         let colorMapping;
         if (properties && properties.colorMapping) {
-            const { references } = properties;
+            const { references } = mdObjectContent;
             colorMapping = properties.colorMapping.map((mapping: any) => {
                 const predicate = getUniversalPredicate(mapping.id, references);
                 return {
