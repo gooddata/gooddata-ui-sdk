@@ -132,24 +132,37 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        > span {
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
-     &--numeric {
-         flex-direction: row-reverse;
+    &-next-sort {
+        min-width: 12px;
+    }
 
-     }
-     &--numeric &-label {
-         &-text {
-             text-align: right;
-             flex: 1 1 auto;
-         }
-     }
-     &--numeric &-sort {
-         flex: 0 0 auto;
-     }
-     &--numeric &-next-sort {
-         flex: 0 0 auto;
-     }
+    &--numeric {
+        flex-direction: row-reverse;
+
+    }
+
+    &--numeric &-label {
+        &-text {
+            text-align: right;
+            flex: 1 1 auto;
+        }
+    }
+
+    &--numeric &-sort {
+        flex: 0 0 auto;
+    }
+
+    &--numeric &-next-sort {
+        flex: 0 0 auto;
+    }
 
     &--sorting-enabled &-label {
         cursor: pointer;
