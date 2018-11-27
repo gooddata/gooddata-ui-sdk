@@ -29,7 +29,7 @@ function logTotalsChange(data: any) {
     }
 }
 
-const wrapperStyle = { width: 600, height: 300 };
+const wrapperStyle = { width: 1200, height: 300 };
 
 storiesOf('Core components/PivotTable', module)
     .add('two measures, one attribute', () => (
