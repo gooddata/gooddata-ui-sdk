@@ -36,7 +36,8 @@ import {
     IRGBColor,
     IGuidColorItem,
     RGBType,
-    IColorItem
+    IColorItem,
+    IColorPaletteItem
 } from '../../../interfaces/Config';
 
 export interface IColorStrategy {
@@ -190,8 +191,9 @@ export class MeasureColorStrategy extends ColorStrategy {
     ): IColorAssignment {
         const mappedColor = getColorFromMapping(headerItem, colorAssignment);
 
-        const color: IColorItem = mappedColor ? mappedColor :
-            {
+        const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
+            ? mappedColor
+            : {
                 type: 'guid',
                 value: colorPalette[currentColorPaletteIndex % colorPalette.length].guid
             };
@@ -260,7 +262,8 @@ function getAtributeColorAssignment(
     return uniqItems.map((headerItem) => {
         const mappedColor = getColorFromMapping(headerItem, colorMapping);
 
-        const color: IColorItem = mappedColor ? mappedColor
+        const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
+            ? mappedColor
             : {
                 type: 'guid',
                 value: colorPalette[currentColorPaletteIndex % colorPalette.length].guid
@@ -271,6 +274,24 @@ function getAtributeColorAssignment(
             headerItem,
             color
         };
+    });
+}
+
+export function isValidMappedColor(colorItem: IColorItem, colorPalette: IColorPalette) {
+    if (!colorItem) {
+        return false;
+    }
+
+    if (colorItem.type === 'guid') {
+        return isColorItemInPalette(colorItem, colorPalette);
+    }
+
+    return true;
+}
+
+function isColorItemInPalette(colorItem: IColorItem, colorPalette: IColorPalette) {
+    return colorPalette.some((paletteItem: IColorPaletteItem) => {
+        return colorItem.type === 'guid' && colorItem.value === paletteItem.guid;
     });
 }
 
@@ -422,7 +443,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     ): IColorAssignment[] {
         const measureHeaderItem = measureGroup.items[0];
         const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping);
-        const color: IColorItem = measureColorMapping
+        const color: IColorItem = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping : { type: 'guid', value: colorPalette[0].guid };
         return [{
             headerItem: measureHeaderItem,
