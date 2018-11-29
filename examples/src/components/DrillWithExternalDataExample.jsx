@@ -4,7 +4,13 @@ import * as React from 'react';
 import fetch from 'isomorphic-fetch';
 import moment from 'moment';
 import { PropTypes } from 'prop-types';
-import { Table, ColumnChart, LoadingComponent, ErrorComponent } from '@gooddata/react-components';
+import {
+    Table,
+    ColumnChart,
+    LoadingComponent,
+    ErrorComponent,
+    HeaderPredicateFactory
+} from '@gooddata/react-components';
 import {
     projectId,
     employeeNameIdentifier,
@@ -232,9 +238,9 @@ export class DrillWithExternalDataExample extends React.Component {
                     projectId={projectId}
                     measures={[averageDailySalesMeasure]}
                     attributes={[stateAttribute]}
-                    drillableItems={[{
-                        identifier: locationStateDisplayFormIdentifier
-                    }]}
+                    drillableItems={[
+                        HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier)
+                    ]}
                     onFiredDrillEvent={this.onStateDrill}
                 />
             </div>
@@ -249,9 +255,9 @@ export class DrillWithExternalDataExample extends React.Component {
                     projectId={projectId}
                     measures={[averageDailySalesMeasure]}
                     attributes={[employeeNameAttribute]}
-                    drillableItems={[{
-                        identifier: employeeNameIdentifier
-                    }]}
+                    drillableItems={[
+                        HeaderPredicateFactory.identifierMatch(employeeNameIdentifier)
+                    ]}
                     filters={employeeTableFilters}
                     onFiredDrillEvent={this.onEmployeeDrill}
                 />
@@ -267,9 +273,9 @@ export class DrillWithExternalDataExample extends React.Component {
                     measures={[totalSalesMeasure]}
                     viewBy={locationNameAttribute}
                     filters={salesTableFilters}
-                    drillableItems={[{
-                        identifier: locationNameDisplayFormIdentifier
-                    }]}
+                    drillableItems={[
+                        HeaderPredicateFactory.identifierMatch(locationNameDisplayFormIdentifier)
+                    ]}
                     onFiredDrillEvent={this.onLocationDrill}
                 />
             </div>
