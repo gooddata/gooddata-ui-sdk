@@ -318,4 +318,45 @@ storiesOf('Core components/PieChart', module)
                 />
             </div>
         )
+    )).add('measure and attribute with invalid color assignment', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: getAttributeItemNamePredicate('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: 'xx'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: 'xxx'
+                                }
+                            }, {
+                                predicate: getAttributeItemNamePredicate('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
+                />
+            </div>
+        )
     ));
