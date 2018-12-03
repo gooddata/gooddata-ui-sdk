@@ -9,7 +9,8 @@ import {
     IColorItem,
     IGuidColorItem,
     IMappingHeader,
-    IColorMapping
+    IColorMapping,
+    IRGBColorItem
 } from '../../../interfaces/Config';
 
 export const WHITE = 'rgb(255, 255, 255)';
@@ -136,6 +137,12 @@ export const HEATMAP_BLUE_COLOR_PALETTE = [
     'rgb(0,110,145)'
 ];
 
+export const DEFAULT_HEATMAP_BLUE_COLOR: IRGBColor = {
+    r: 0,
+    g: 110,
+    b: 145
+};
+
 function lighter(color: number, percent: number) {
     const t = percent < 0 ? 0 : 255;
     const p = Math.abs(percent);
@@ -223,6 +230,10 @@ export function isCustomPalette(palette: IColorPalette) {
 
 export function isGuidColorItem(color: IColorItem): color is IGuidColorItem {
     return (color as IGuidColorItem).type === 'guid';
+}
+
+export function isRgbColorItem(color: IColorItem): color is IRGBColorItem {
+    return (color as IRGBColorItem).type === 'rgb';
 }
 
 export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[]

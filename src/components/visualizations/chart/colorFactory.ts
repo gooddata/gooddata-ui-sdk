@@ -2,6 +2,7 @@
 import { AFM, Execution } from '@gooddata/typings';
 import range = require('lodash/range');
 import uniqBy = require('lodash/uniqBy');
+import isEqual = require('lodash/isEqual');
 
 import {
     DEFAULT_COLOR_PALETTE,
@@ -11,7 +12,9 @@ import {
     isGuidColorItem,
     getColorByGuid,
     getRgbStringFromRGB,
-    getColorFromMapping
+    getColorFromMapping,
+    isRgbColorItem,
+    DEFAULT_HEATMAP_BLUE_COLOR
 } from '../utils/color';
 
 import {
@@ -350,8 +353,8 @@ export class HeatmapColorStrategy extends ColorStrategy {
             colorAssignment = [{
                 headerItem,
                 color: {
-                    type: 'guid',
-                    value: 'HEATMAP_DEFAULT'
+                    type: 'rgb',
+                    value: DEFAULT_HEATMAP_BLUE_COLOR
                 }
             }];
         }
@@ -366,11 +369,13 @@ export class HeatmapColorStrategy extends ColorStrategy {
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[]
     ): string[] {
-        if (isGuidColorItem(colorAssignment[0].color)) {
-            if (colorAssignment[0].color.value === 'HEATMAP_DEFAULT') {
+        if (isRgbColorItem(colorAssignment[0].color)) {
+            if (isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR)) {
                 return HEATMAP_BLUE_COLOR_PALETTE;
             }
+        }
 
+        if (isGuidColorItem(colorAssignment[0].color)) {
             return this.getCustomHeatmapColorPalette(
                 getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
             );
