@@ -211,6 +211,10 @@ export namespace AFM {
         return !isEmpty(qualifier) && (qualifier as AFM.IObjUriQualifier).uri !== undefined;
     }
 
+    export function isObjIdentifierQualifier(qualifier: AFM.ObjQualifier): qualifier is AFM.IObjIdentifierQualifier {
+        return !isEmpty(qualifier) && (qualifier as AFM.IObjIdentifierQualifier).identifier !== undefined;
+    }
+
     export function isSimpleMeasureDefinition(
         definition: AFM.MeasureDefinition
     ): definition is AFM.ISimpleMeasureDefinition {

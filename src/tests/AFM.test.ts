@@ -35,6 +35,34 @@ describe('AFM', () => {
         });
     });
 
+    describe('isObjIdentifierQualifier', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isObjIdentifierQualifier(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isObjIdentifierQualifier(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when uri object qualifier is tested', () => {
+            const objectQualifier: ObjQualifier = {
+                uri: '/gdc/mock/id'
+            };
+            const result = AFM.isObjIdentifierQualifier(objectQualifier);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when identifier object qualifier is tested', () => {
+            const objectQualifier: ObjQualifier = {
+                identifier: 'id'
+            };
+            const result = AFM.isObjIdentifierQualifier(objectQualifier);
+            expect(result).toEqual(true);
+        });
+    });
+
     describe('isSimpleMeasureDefinition', () => {
         it('should return false when null is tested', () => {
             const result = AFM.isSimpleMeasureDefinition(null);
