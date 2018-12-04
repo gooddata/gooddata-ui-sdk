@@ -15,7 +15,7 @@ import pickBy = require('lodash/pickBy');
 import * as numberJS from '@gooddata/numberjs';
 
 import { styleVariables } from '../../styles/variables';
-import { IAxis, IChartOptions } from '../chartOptionsBuilder';
+import { IAxis, IChartOptions, supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
 import { IDataLabelsVisibile, IChartConfig } from '../../../../interfaces/Config';
 import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
@@ -82,12 +82,12 @@ function getTitleConfiguration(chartOptions: any) {
     };
 }
 
-function formatAsPercent() {
+export function formatAsPercent() {
     const val = parseFloat((this.value * 100).toPrecision(14));
     return `${val}%`;
 }
 
-function isInPercent(format: string = '') {
+export function isInPercent(format: string = '') {
     return format.includes('%');
 }
 
@@ -920,11 +920,16 @@ function getXAxisTickConfiguration(chartOptions: any) {
 }
 
 function getYAxisTickConfiguration(chartOptions: any, axisPropsKey: string) {
-    const { type } = chartOptions;
+    const { type, yAxes } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
             startOnTick: shouldYAxisStartOnTickOnBubbleScatter(chartOptions)
         };
+    }
+
+    if (isOneOfTypes(type, supportedDualAxesChartTypes) && yAxes.length > 1) {
+        // disable { startOnTick, endOnTick } to make gridline sync in both axes
+        return {};
     }
 
     return {

@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import {
     shouldFollowPointer,
+    shouldFollowPointerForDualAxes,
     shouldStartOnTick,
     shouldEndOnTick,
     getChartProperties,
@@ -545,6 +546,110 @@ describe('helpers', () => {
 
                 expect(result).toBeTruthy();
             });
+        });
+    });
+
+    describe('shouldFollowPointerForAxes', () => {
+        const dualAxesChartOptions = {
+            type: VisualizationTypes.COLUMN,
+            yAxes: [{ title: 'atitle' }, { title: 'btitle' }],
+            xAxes: [{ title: 'xtitle' }],
+            data: {
+                series: [
+                    {
+                        color: 'rgb(0, 0, 0)',
+                        name: 'aaa',
+                        data: [
+                            {
+                                name: 'data1',
+                                y: 25
+                            },
+                            {
+                                name: 'data2',
+                                y: 75
+                            },
+                            {
+                                name: 'data3',
+                                y: -12
+                            }
+                        ],
+                        visible: true
+                    }, {
+                        color: 'rgb(0, 0, 0)',
+                        name: 'bbb',
+                        data: [
+                            {
+                                name: 'data1',
+                                y: 25
+                            },
+                            {
+                                name: 'data2',
+                                y: 75
+                            },
+                            {
+                                name: 'data3',
+                                y: -12
+                            }
+                        ],
+                        yAxis: 1,
+                        visible: true
+                    }
+                ]
+            }
+        };
+
+        it('should return false when there is one Y axis', () => {
+            const chartOptions = {
+                ...dualAxesChartOptions,
+                yAxes: [{ title: 'atitle' }]
+            };
+            const result = shouldFollowPointerForDualAxes(chartOptions);
+            expect(result).toBeFalsy();
+        });
+
+        it('should return false when min/max is not set', () => {
+            const result = shouldFollowPointerForDualAxes(dualAxesChartOptions);
+            expect(result).toBeFalsy();
+        });
+
+        it('should return true when min/max is set in left Y axis', () => {
+            const chartOptions = {
+                ...dualAxesChartOptions,
+                yAxisProps: {
+                    min: '10',
+                    max: '20'
+                }
+            };
+            const result = shouldFollowPointerForDualAxes(chartOptions);
+            expect(result).toBeTruthy();
+        });
+
+        it('should return true when min/max is set in right Y axis', () => {
+            const chartOptions = {
+                ...dualAxesChartOptions,
+                secondary_yAxisProps: {
+                    min: '10',
+                    max: '20'
+                }
+            };
+            const result = shouldFollowPointerForDualAxes(chartOptions);
+            expect(result).toBeTruthy();
+        });
+
+        it('should return true when min/max is set in both Y axes', () => {
+            const chartOptions = {
+                ...dualAxesChartOptions,
+                yAxisProps: {
+                    min: '10',
+                    max: '20'
+                },
+                secondary_yAxisProps: {
+                    min: '10',
+                    max: '20'
+                }
+            };
+            const result = shouldFollowPointerForDualAxes(chartOptions);
+            expect(result).toBeTruthy();
         });
     });
 
