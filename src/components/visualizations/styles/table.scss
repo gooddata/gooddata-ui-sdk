@@ -125,15 +125,29 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
     }
 
     .public_fixedDataTableCell_cellContent {
+        display: block;
+        padding: 0;
+    }
+
+    .gd-cell {
+        display: block;
+    }
+
+    .gd-cell,
+    .public_fixedDataTable_header .public_fixedDataTableCell_cellContent {
         overflow: hidden;
+        padding: 8px;
         text-overflow: ellipsis;
     }
 
     .fixedDataTableCellGroupLayout_cellGroup {
         overflow: hidden;
         text-overflow: ellipsis;
+    }
 
-        > .fixedDataTableCellLayout_main:last-child .public_fixedDataTableCell_cellContent {
+    .fixedDataTableCellLayout_main:last-child .public_fixedDataTableCell_cellContent {
+        .gd-cell,
+        .indigo-table-footer-cell {
             padding-right: 20px;
         }
     }
@@ -199,11 +213,13 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
                 flex: 0 1 auto;
                 overflow: hidden;
                 text-overflow: ellipsis;
-            }
 
-            .gd-table-header-title::before { // disable system tooltip in Safari
-                content: '';
-                display: block;
+
+                &::before {
+                    // disable system tooltip in Safari
+                    content: '';
+                    display: block;
+                }
             }
         }
 
@@ -212,6 +228,12 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
             font-weight: normal;
             color: $gd-color-state-blank;
             background: none;
+
+            &:last-child {
+                .public_fixedDataTableCell_cellContent {
+                    padding-right: 20px;
+                }
+            }
         }
 
         .public_fixedDataTableCell_cellContent {
@@ -241,17 +263,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
         color: $gd-color-dark;
         background: none;
 
-        &:last-child {
-            .public_fixedDataTableCell_cellContent {
-                padding-right: 0;
-            }
-
-            .indigo-table-footer-cell {
-                padding-right: 20px;
-            }
-        }
-
-        .public_fixedDataTableCell_cellContent {
+        .gd-cell {
             padding: 0;
         }
 

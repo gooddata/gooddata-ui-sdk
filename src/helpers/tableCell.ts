@@ -27,6 +27,7 @@ export function getCellClassNames(rowIndex: number, columnIndex: number, isDrill
         {
             'gd-cell-drillable': isDrillable
         },
+        'gd-cell',
         `s-cell-${rowIndex}-${columnIndex}`,
         's-table-cell'
     );

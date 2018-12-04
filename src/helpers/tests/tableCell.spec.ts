@@ -21,7 +21,7 @@ describe('Table utils - Cell', () => {
                 3,
                 9,
                 false
-            )).toEqual('s-cell-3-9 s-table-cell');
+            )).toEqual('gd-cell s-cell-3-9 s-table-cell');
         });
 
         it('should get class names for drillable cell', () => {
@@ -29,7 +29,7 @@ describe('Table utils - Cell', () => {
                 3,
                 9,
                 true
-            )).toEqual('gd-cell-drillable s-cell-3-9 s-table-cell');
+            )).toEqual('gd-cell-drillable gd-cell s-cell-3-9 s-table-cell');
         });
     });
 
