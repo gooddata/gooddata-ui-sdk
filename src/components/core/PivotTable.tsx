@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import * as classNames from 'classnames';
+import * as CustomEvent from 'custom-event';
 import noop = require('lodash/noop');
 import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
@@ -525,6 +526,14 @@ export class PivotTableInner extends
         };
 
         if (onFiredDrillEvent(drillEvent)) {
+            // This is needed for /analyze/embedded/ drilling with post message
+            // tslint:disable-next-line:max-line-length
+            // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
+            const event = new CustomEvent('drill', {
+                detail: drillEvent,
+                bubbles: true
+            });
+            cellEvent.event.target.dispatchEvent(event);
             return true;
         }
         return false;
