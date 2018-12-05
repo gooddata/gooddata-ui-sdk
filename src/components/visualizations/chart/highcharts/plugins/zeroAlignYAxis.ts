@@ -16,29 +16,29 @@ import { isOneOfTypes } from '../../../utils/common';
 import { supportedDualAxesChartTypes } from '../../chartOptionsBuilder';
 import { dualAxesLabelFormatter } from './dualAxesLabelFormatter';
 
-interface ICanon {
+export interface ICanon {
     min?: number;
     max?: number;
 }
 
-interface IMinMaxInfo extends ICanon {
+export interface IMinMaxInfo extends ICanon {
     id: number;
     isSetMin: boolean;
     isSetMax: boolean;
 }
 
-interface IMinMaxLookup {
+export interface IMinMaxLookup {
     0?: IMinMaxInfo;
     1?: IMinMaxInfo;
 }
 
 /**
  * Check if user sets min or max
- * @param minmaxLookup
+ * @param minmax
  * @param index
  */
-function isMinMaxConfig(minmaxLookup: IMinMaxLookup, index: number) {
-    return minmaxLookup[index].isSetMin || minmaxLookup[index].isSetMax;
+function isMinMaxConfig(minmax: IMinMaxInfo[], index: number) {
+    return minmax[index].isSetMin || minmax[index].isSetMax;
 }
 
 /**
@@ -47,7 +47,7 @@ function isMinMaxConfig(minmaxLookup: IMinMaxLookup, index: number) {
  * @param end
  * @param ticksNumber
  */
-function createArrayFromRange(start: number, end: number, ticksNumber: number) {
+export function createArrayFromRange(start: number, end: number, ticksNumber: number) {
     const result = [];
     const increase = (end - start) / (ticksNumber - 1);
 
@@ -94,7 +94,7 @@ function handleOutOfRange(negatives: number[], positives: number[], ticksNumber:
  * @param end
  * @param ticksNumber
  */
-function createArrayFromRangeWithMiddleZero(start: number, end: number, ticksNumber: number) {
+export function createArrayFromRangeWithMiddleZero(start: number, end: number, ticksNumber: number) {
     const delta = Math.abs((end - start) / (ticksNumber - 1));
     const [negatives, positives] = handleOutOfRange(
         getRange(start, delta),
@@ -183,10 +183,63 @@ function getNewMax(minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex
     return f * minmaxLookup[axisIndex].min;
 }
 
-export function getTickPositioner() {
-    let minmaxLookup: IMinMaxLookup;
+export function getMinMax(axisIndex: number, min: number, max: number, minmax: IMinMaxInfo[]) {
+    const minmaxLookup: IMinMaxLookup = getMinMaxLookup(minmax);
+    const axesCanon: ICanon[] = minmaxCanon(minmax);
+
+    let newMin = minmaxLookup[axisIndex].min;
+    let newMax = minmaxLookup[axisIndex].max;
+
+    if (axesCanon[0].min <= 0 && axesCanon[0].max <= 0 &&
+        axesCanon[1].min <= 0 && axesCanon[1].max <= 0) {
+        // set 0 at top of chart
+        // ['----', '-0--', '---0']
+        newMax = Math.min(0, max);
+    } else if (axesCanon[0].min >= 0 && axesCanon[0].max >= 0 &&
+        axesCanon[1].min >= 0 && axesCanon[1].max >= 0) {
+        // set 0 at bottom of chart
+        // ['++++', '0+++', '++0+']
+        newMin = Math.max(0, min);
+    } else if (axesCanon[0].max === axesCanon[1].max) {
+        // set min equal to the min/max fraction of smallest axis
+        // ['-+-+', '-+++', '-+0+', '++-+', '0+-+']
+        newMin = getNewMin(minmax, minmaxLookup, axisIndex);
+    } else if (axesCanon[0].min === axesCanon[1].min) {
+        // set max equal to the max/min fraction of largest axis
+        // ['-+--','-+-0',  '---+', '-0-+']
+        newMax = getNewMax(minmax, minmaxLookup, axisIndex);
+    } else {
+        // set 0 at center of chart
+        // ['--++', '-0++', '--0+', '-00+', '++--', '++-0', '0+--', '0+-0']
+        if (minmaxLookup[axisIndex].min < 0) {
+            newMax = Math.abs(newMin);
+        } else {
+            newMin = 0 - newMax;
+        }
+    }
+    return { min: newMin, max: newMax };
+}
+
+function getMinMaxLookup(minmax: IMinMaxInfo[]): IMinMaxLookup {
+    return minmax.reduce((result: IMinMaxLookup, item: IMinMaxInfo) => {
+        result[item.id] = item;
+        return result;
+    }, {});
+}
+
+export function createTickPositions(min: number, max: number, minmax: IMinMaxInfo[], tickAmount: number) {
+    if (min < 0 && max > 0) {
+        if (isMinMaxConfig(minmax, 0) && isMinMaxConfig(minmax, 1)) {
+            // disable zero-align y axis if both min/max are set to axes
+            return createArrayFromRange(min, max, tickAmount);
+        }
+        return createArrayFromRangeWithMiddleZero(min, max, tickAmount);
+    }
+    return createArrayFromRange(min, max, tickAmount);
+}
+
+function getTickPositioner() {
     let minmax: IMinMaxInfo[];
-    let axesCanon: ICanon[];
 
     return function(min: number, max: number) {
         if (typeof min === 'undefined' || min === null || typeof max === 'undefined' || max === null) {
@@ -206,13 +259,11 @@ export function getTickPositioner() {
 
         const chart = this.chart;
 
-        if (!minmaxLookup) {
+        if (!minmax) {
             // ----------------------------
             // Computed once for both axes
             // ----------------------------
-            minmaxLookup = {};
             minmax = [];
-            axesCanon = [];
 
             for (const axis of chart.axes) {
                 if (axis.coll === 'yAxis') {
@@ -220,9 +271,7 @@ export function getTickPositioner() {
                         typeof axis.min === 'undefined' || axis.min === null) {
                         // Don't have min/max values for both axes yet.
                         // Clean up processed values from other axis.
-                        minmaxLookup = undefined;
                         minmax = undefined;
-                        axesCanon = undefined;
                         // Exit. Process in next call.
                         return createArrayFromRange(min, max, this.tickAmount);
                     }
@@ -235,53 +284,10 @@ export function getTickPositioner() {
                     });
                 }
             }
-
-            minmax.forEach((item: IMinMaxInfo) => {
-                minmaxLookup[item.id] = item;
-            });
-            axesCanon = minmaxCanon(minmax);
         }
 
-        const axisIndex = this.options.index;
-        let newMin = minmaxLookup[axisIndex].min;
-        let newMax = minmaxLookup[axisIndex].max;
-
-        if (axesCanon[0].min <= 0 && axesCanon[0].max <= 0 &&
-            axesCanon[1].min <= 0 && axesCanon[1].max <= 0) {
-            // set 0 at top of chart
-            // ['----', '-0--', '---0']
-            newMax = Math.min(0, max);
-        } else if (axesCanon[0].min >= 0 && axesCanon[0].max >= 0 &&
-            axesCanon[1].min >= 0 && axesCanon[1].max >= 0) {
-            // set 0 at bottom of chart
-            // ['++++', '0+++', '++0+']
-            newMin = Math.max(0, min);
-        } else if (axesCanon[0].max === axesCanon[1].max) {
-            // set min equal to the min/max fraction of smallest axis
-            // ['-+-+', '-+++', '-+0+', '++-+', '0+-+']
-            newMin = getNewMin(minmax, minmaxLookup, axisIndex);
-        } else if (axesCanon[0].min === axesCanon[1].min) {
-            // set max equal to the max/min fraction of largest axis
-            // ['-+--','-+-0',  '---+', '-0-+']
-            newMax = getNewMax(minmax, minmaxLookup, axisIndex);
-        } else {
-            // set 0 at center of chart
-            // ['--++', '-0++', '--0+', '-00+', '++--', '++-0', '0+--', '0+-0']
-            if (minmaxLookup[axisIndex].min < 0) {
-                newMax = Math.abs(newMin);
-            } else {
-                newMin = 0 - newMax;
-            }
-        }
-
-        if (newMin < 0 && newMax > 0) {
-            if (isMinMaxConfig(minmaxLookup, 0) && isMinMaxConfig(minmaxLookup, 1)) {
-                // disable zero-align y axis if both min/max are set to axes
-                return createArrayFromRange(newMin, newMax, this.tickAmount);
-            }
-            return createArrayFromRangeWithMiddleZero(newMin, newMax, this.tickAmount);
-        }
-        return createArrayFromRange(newMin, newMax, this.tickAmount);
+        const { min: newMin, max: newMax } = getMinMax(this.options.index, min, max, minmax);
+        return createTickPositions(newMin, newMax, minmax, this.tickAmount);
     };
 }
 
