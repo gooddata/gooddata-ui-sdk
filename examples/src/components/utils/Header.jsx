@@ -44,6 +44,17 @@ class Header extends React.Component {
                     <span className="backendInfoValue">{projectId}</span>
                 </span>
                 <span className="backendInfoItem">
+                    <span className="backendInfoValue">
+                        <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href="https://github.com/gooddata/gooddata-react-components/blob/master/examples/src/utils/fixtures.js#L25"
+                        >
+                            Data Used
+                        </a>
+                    </span>
+                </span>
+                <span className="backendInfoItem">
                     <Link to="/about-this-project">
                         <span>About This Project</span>
                     </Link>
