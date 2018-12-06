@@ -17,7 +17,9 @@ import {
     getMeasureDrillItem,
     assignDrillItemsAndType,
     getAttributeSortItemFieldAndDirection,
-    getMeasureSortItemFieldAndDirection
+    getMeasureSortItemFieldAndDirection,
+    shouldMergeHeaders,
+    mergeHeaderEndIndex
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
@@ -644,5 +646,90 @@ describe('assignDrillItemsAndType', () => {
         ]);
         // assign empty array to drillItems header. Only leaf headers (measures) should have assigned drill items
         expect(header.drillItems).toEqual([]);
+    });
+});
+
+describe('conversion from header matrix to hierarchy', () => {
+    const alabamaHeader = {
+        attributeHeaderItem: {
+            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=1',
+            name: 'Alabama'
+        }
+    };
+
+    const californiaHeader = {
+        attributeHeaderItem: {
+            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=2',
+            name: 'California'
+        }
+    };
+
+    const year2017Header = {
+        attributeHeaderItem: {
+            uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2212/elements?id=3',
+            name: '2017'
+        }
+    };
+
+    const costsHeader = {
+        measureHeaderItem: {
+            name: 'Costs',
+            order: 1
+        }
+    };
+    const revenuesHeader = {
+        measureHeaderItem: {
+            name: 'Revenues',
+            order: 2
+        }
+    };
+
+    const resultHeaderDimension: Execution.IResultHeaderItem[][] = [
+        [
+            alabamaHeader,
+            alabamaHeader,
+            californiaHeader,
+            californiaHeader
+        ],
+        [
+            year2017Header,
+            year2017Header,
+            year2017Header,
+            year2017Header
+        ],
+        [
+            costsHeader,
+            revenuesHeader,
+            costsHeader,
+            revenuesHeader
+        ]
+    ];
+
+    const stateHeaderIndex = 0;
+    const yearHeaderIndex = 1;
+    const measureGroupHeaderIndex = 2;
+
+    describe('shouldMergeHeaders', () => {
+        it('should return true for headers that are identical and have no ancestors', () => {
+            expect(shouldMergeHeaders(resultHeaderDimension, stateHeaderIndex, 0)).toBe(true);
+        });
+        it('should return true for headers that are identical and have identical ancestors', () => {
+            expect(shouldMergeHeaders(resultHeaderDimension, yearHeaderIndex, 0)).toBe(true);
+        });
+        it('should return false for headers that are identical but have at least one non-identical ancestor', () => {
+            expect(shouldMergeHeaders(resultHeaderDimension, yearHeaderIndex, 1)).toBe(false);
+        });
+        it('should return false for headers that are not identical', () => {
+            expect(shouldMergeHeaders(resultHeaderDimension, measureGroupHeaderIndex, 0)).toBe(false);
+        });
+    });
+
+    describe('mergeHeaderCount', () => {
+        it('should return correct index of last header in row that can be merged with the current one', () => {
+            expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 0)).toBe(1);
+            expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 1)).toBe(1);
+            expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 2)).toBe(3);
+            expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 3)).toBe(3);
+        });
     });
 });
