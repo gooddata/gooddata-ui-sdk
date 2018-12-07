@@ -172,11 +172,10 @@ export class VisualizationWrapped
             colorPaletteEnabled: false
         };
 
-        const sdk = props.sdk || createSdk();
-        this.sdk = sdk.clone();
-        this.isUnmounted = false;
+        this.sdk = props.sdk ? props.sdk.clone() : createSdk();
         setTelemetryHeaders(this.sdk, 'Visualization', props);
 
+        this.isUnmounted = false;
         this.visualizationUri = props.uri;
 
         this.errorMap = generateErrorMap(props.intl);
@@ -201,7 +200,7 @@ export class VisualizationWrapped
             });
     }
 
-    public async componentDidMount() {
+    public componentDidMount() {
         const { projectId, uri, identifier, filters } = this.props;
 
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
@@ -213,7 +212,7 @@ export class VisualizationWrapped
             filters
         );
 
-        await this.getColorPalette();
+        this.getColorPalette();
     }
 
     public componentWillUnmount() {
@@ -231,11 +230,11 @@ export class VisualizationWrapped
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
-    public async componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
+    public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
+        if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
-            await this.getColorPalette();
+            this.getColorPalette();
         }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
@@ -429,9 +428,13 @@ export class VisualizationWrapped
         this.subject.next(promise);
     }
 
+    private isExternalColorPalette() {
+        return this.props.config && this.props.config.colorPalette;
+    }
+
     private async getColorPalette() {
         if (!this.isUnmounted
-            && !(this.props.config && this.props.config.colorPalette)) {
+            && !(this.isExternalColorPalette())) {
             const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
 
             if (colorPalette) {
