@@ -2,33 +2,6 @@
 import { AFM } from '@gooddata/typings';
 import { ISeparators } from '@gooddata/numberjs';
 
-export interface IAttributeTableHeader {
-    uri: string;
-    identifier: string;
-    localIdentifier: string;
-    name: string;
-    type: string;
-}
-
-export interface IMeasureTableHeader {
-    uri?: string;
-    identifier?: string;
-    localIdentifier: string;
-    name: string;
-    format: string;
-    type: string;
-}
-
-export type TableHeader = IAttributeTableHeader | IMeasureTableHeader;
-
-export function isAttributeTableHeader(header: TableHeader): header is IAttributeTableHeader {
-    return header.type === 'attribute';
-}
-
-export function isMeasureTableHeader(header: TableHeader): header is IMeasureTableHeader {
-    return header.type === 'measure';
-}
-
 export interface IAttributeCell {
     uri: string;
     name: string;

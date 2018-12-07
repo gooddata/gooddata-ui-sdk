@@ -2,6 +2,8 @@
 import * as classNames from 'classnames';
 import { clamp } from 'lodash';
 import { string } from '@gooddata/js-utils';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { getMappingHeaderLocalIdentifier } from '../../../../helpers/mappingHeader';
 
 import { getHiddenRowsOffset } from './row';
 import { getFooterHeight } from './footer';
@@ -12,8 +14,7 @@ import {
     IHeaderTooltipArrowPosition,
     ITableColumnProperties,
     ITableDimensions,
-    IPositions,
-    TableHeader
+    IPositions
 } from '../../../../interfaces/Table';
 import { ALIGN_LEFT } from '../constants/align';
 import { ITotalWithData } from '../../../../interfaces/Totals';
@@ -53,8 +54,8 @@ export function calculateArrowPosition(
     return { left: `${clamp(left, min, max)}px` };
 }
 
-export function getHeaderClassNames(header: TableHeader): string {
-    return classNames('gd-table-header-ordering', `s-id-${simplifyText(header.localIdentifier)}`);
+export function getHeaderClassNames(header: IMappingHeader): string {
+    return classNames('gd-table-header-ordering', `s-id-${simplifyText(getMappingHeaderLocalIdentifier(header))}`);
 }
 
 export function getHeaderOffset(hasHiddenRows: boolean): number {

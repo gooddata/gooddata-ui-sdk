@@ -2,9 +2,11 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { InjectedIntlProps } from 'react-intl';
+import { AFM } from '@gooddata/typings';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 
 import { withIntl } from '../../utils/intlUtils';
-import { ITableProps } from '../Table';
+import { ITableProps, Table } from '../Table';
 import { ITableTransformationProps, TableTransformation } from '../TableTransformation';
 import {
     EXECUTION_REQUEST_2A_3M,
@@ -48,5 +50,20 @@ describe('TableTransformation', () => {
         const tableRenderer = jest.fn().mockImplementation(() => <div />);
         mount(createComponent({ tableRenderer, width: 700 }));
         expect(tableRenderer.mock.calls[0][0].containerWidth).toEqual(700);
+    });
+
+    it('should accept drillableItems and convert it to drillablePredicates required by Table visualization', () => {
+        const wrapper = mount(createComponent({
+            drillableItems: [
+                { uri: '/uri' },
+                { uri: 'identifier' },
+                (_header: IMappingHeader, _afm: AFM.IAfm) => true
+            ]
+        }));
+        const component = wrapper.find(Table);
+        expect(component.prop('drillablePredicates')).toHaveLength(3);
+        component.prop('drillablePredicates').forEach((predicate) => {
+            expect(typeof predicate).toBe('function');
+        });
     });
 });

@@ -22,7 +22,7 @@ import {
     DATA_LABELS_AUTO_CONFIG,
     CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
-import { getMeasureLocalIdentifierPredicate } from '../../src/helpers/predicatesFactory';
+import { localIdentifierMatch } from '../../src/factory/HeaderPredicateFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 const wrapperWiderStyle = { width: 1000, height: 400 };
@@ -347,7 +347,7 @@ storiesOf('Core components/Heatmap', module)
                     config={{
                         colorMapping: [
                             {
-                                predicate: getMeasureLocalIdentifierPredicate('m1'),
+                                predicate: localIdentifierMatch('m1'),
                                 color: {
                                     type: 'guid',
                                     value: '2'

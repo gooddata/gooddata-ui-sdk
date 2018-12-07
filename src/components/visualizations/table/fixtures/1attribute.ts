@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_1A: AFM.IExecution = {
     execution: {
@@ -92,13 +93,19 @@ export const EXECUTION_RESULT_1A: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_1A: TableHeader[] = [
+export const TABLE_HEADERS_1A: IMappingHeader[] = [
     {
-        type: 'attribute',
-        uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
-        identifier: '1st_attr_df_identifier',
-        localIdentifier: '1st_attr_df_local_identifier',
-        name: 'Product'
+        attributeHeader: {
+            uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
+            identifier: '1st_attr_df_identifier',
+            localIdentifier: '1st_attr_df_local_identifier',
+            name: 'Product Name',
+            formOf: {
+                uri: '/gdc/md/project_id/obj/1st_attr_uri_id',
+                identifier: '1st_attr_local_identifier',
+                name: 'Product'
+            }
+        }
     }
 ];
 

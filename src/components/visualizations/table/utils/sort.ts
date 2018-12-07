@@ -7,21 +7,28 @@ import { AFM } from '@gooddata/typings';
 
 import { ASC, DESC } from '../../../../constants/sort';
 import {
-    isAttributeTableHeader,
-    isMeasureTableHeader,
+    isMappingHeaderAttribute,
+    isMappingHeaderMeasureItem,
+    IMappingHeader
+} from '../../../../interfaces/MappingHeader';
+import {
     ISortInfo,
     ISortObj,
-    SortDir,
-    TableHeader
+    SortDir
 } from '../../../../interfaces/Table';
 import IAttributeSortItem = AFM.IAttributeSortItem;
 import IMeasureSortItem = AFM.IMeasureSortItem;
 import isAttributeSortItem = AFM.isAttributeSortItem;
 
-function getSortBy(tableHeaders: TableHeader[], sortItemLocalIdentifier: string): number {
-    const sortByColumnIndex: number = tableHeaders.findIndex(
-        tableHeader => tableHeader.localIdentifier === sortItemLocalIdentifier
-    );
+function getSortBy(tableHeaders: IMappingHeader[], sortItemLocalIdentifier: string): number {
+    const sortByColumnIndex: number = tableHeaders.findIndex((tableHeader) => {
+        if (isMappingHeaderMeasureItem(tableHeader)) {
+            return tableHeader.measureHeaderItem.localIdentifier === sortItemLocalIdentifier;
+        }
+        if (isMappingHeaderAttribute(tableHeader)) {
+            return tableHeader.attributeHeader.localIdentifier === sortItemLocalIdentifier;
+        }
+    });
 
     invariant(sortByColumnIndex >= 0, `Cannot find sort identifier ${sortItemLocalIdentifier} in table headers`);
 
@@ -51,9 +58,9 @@ export function getHeaderSortClassName(sortDir: SortDir, currentSort: SortDir): 
     });
 }
 
-export function getNextSortDir(header: TableHeader, currentSortDir: SortDir): SortDir {
+export function getNextSortDir(header: IMappingHeader, currentSortDir: SortDir): SortDir {
     if (!currentSortDir) {
-        return isMeasureTableHeader(header) ? DESC : ASC;
+        return isMappingHeaderMeasureItem(header) ? DESC : ASC;
     }
 
     return currentSortDir === ASC ? DESC : ASC;
@@ -71,7 +78,7 @@ export function getSortItem(executionRequest: AFM.IExecution): AFM.SortItem {
     return sorts[0];
 }
 
-export function getSortInfo(sortItem: AFM.SortItem, tableHeaders: TableHeader[]): ISortInfo {
+export function getSortInfo(sortItem: AFM.SortItem, tableHeaders: IMappingHeader[]): ISortInfo {
     if (isAttributeSortItem(sortItem)) {
         const sortItemIdentifier = getSortItemAttributeIdentifier(sortItem as IAttributeSortItem);
         const sortBy: number = getSortBy(tableHeaders, sortItemIdentifier);
@@ -87,24 +94,30 @@ export function getSortInfo(sortItem: AFM.SortItem, tableHeaders: TableHeader[])
     return { sortBy, sortDir };
 }
 
-export function createSortItem(header: TableHeader, sortObj: ISortObj): AFM.SortItem {
-    return isAttributeTableHeader(header)
-        ? {
-            attributeSortItem: {
-                direction: sortObj.nextDir,
-                attributeIdentifier: header.localIdentifier
-            }
-        }
-        : {
+export function createSortItem(header: IMappingHeader, sortObj: ISortObj): AFM.SortItem {
+    if (isMappingHeaderMeasureItem(header)) {
+        return {
             measureSortItem: {
                 direction: sortObj.nextDir,
                 locators: [
                     {
                         measureLocatorItem: {
-                            measureIdentifier: header.localIdentifier
+                            measureIdentifier: header.measureHeaderItem.localIdentifier
                         }
                     }
                 ]
             }
         };
+    }
+
+    if (isMappingHeaderAttribute(header)) {
+        return  {
+            attributeSortItem: {
+                direction: sortObj.nextDir,
+                attributeIdentifier: header.attributeHeader.localIdentifier
+            }
+        };
+    }
+
+    throw new Error(`Unknown mapping header type ${Object.keys(header)}`);
 }

@@ -2,6 +2,7 @@
 import { VisElementType } from '../../../../../constants/visualizationTypes';
 import { IDrillEvent } from '../../../../../interfaces/DrillEvents';
 import { IHeadlineData } from '../../../../../interfaces/Headlines';
+import * as headerPredicateFactory from '../../../../../factory/HeaderPredicateFactory';
 import {
     getHeadlineData,
     applyDrillableItems,
@@ -286,10 +287,11 @@ describe('HeadlineTransformationUtils', () => {
     describe('applyDrillableItems', () => {
         it('should NOT throw any error when drillable items do not match defined headline or execution data', () => {
             const headlineData = {};
-            const data = applyDrillableItems(headlineData as IHeadlineData, [{
-                identifier: 'some-identifier',
-                uri: 'some-uri'
-            }], TWO_MEASURES_WITH_URI_EXECUTION_REQUEST);
+            const data = applyDrillableItems(
+                headlineData as IHeadlineData,
+                [headerPredicateFactory.uriMatch('some-uri')],
+                TWO_MEASURES_WITH_URI_EXECUTION_REQUEST,
+                TWO_MEASURES_EXECUTION_RESPONSE);
             expect(data).toEqual({});
         });
 
@@ -302,10 +304,12 @@ describe('HeadlineTransformationUtils', () => {
                     isDrillable: true
                 }
             };
-            const updatedData = applyDrillableItems(data, [{
-                identifier: 'some-identifier',
-                uri: 'some-uri'
-            }], TWO_MEASURES_WITH_URI_EXECUTION_REQUEST);
+            const updatedData = applyDrillableItems(
+                data,
+                [headerPredicateFactory.uriMatch('some-uri')],
+                TWO_MEASURES_WITH_URI_EXECUTION_REQUEST,
+                TWO_MEASURES_EXECUTION_RESPONSE
+            );
 
             expect(updatedData).toEqual({
                 primaryItem: {
@@ -318,16 +322,19 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should enable drilling of the primary item identified by the drillable item uri', () => {
-            const data = applyDrillableItems({
-                primaryItem: {
-                    localIdentifier: 'm1',
-                    title: 'Lost',
-                    value: '120',
-                    isDrillable: false
-                }
-            }, [{
-                uri: '/gdc/md/project_id/obj/1'
-            }], SINGLE_URI_METRIC_EXECUTION_REQUEST);
+            const data = applyDrillableItems(
+                {
+                    primaryItem: {
+                        localIdentifier: 'm1',
+                        title: 'Lost',
+                        value: '120',
+                        isDrillable: false
+                    }
+                },
+                [headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/1')],
+                SINGLE_URI_METRIC_EXECUTION_REQUEST,
+                SINGLE_METRIC_EXECUTION_RESPONSE
+            );
 
             expect(data).toEqual({
                 primaryItem: {
@@ -340,16 +347,19 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should enable drilling of the primary item identified by the drillable item identifier', () => {
-            const data = applyDrillableItems({
-                primaryItem: {
-                    localIdentifier: 'm1',
-                    title: 'Lost',
-                    value: '120',
-                    isDrillable: false
-                }
-            }, [{
-                identifier: 'metric.lost'
-            }], SINGLE_IDENTIFIER_METRIC_EXECUTION_REQUEST);
+            const data = applyDrillableItems(
+                {
+                    primaryItem: {
+                        localIdentifier: 'm1',
+                        title: 'Lost',
+                        value: '120',
+                        isDrillable: false
+                    }
+                },
+                [headerPredicateFactory.identifierMatch('metric.lost')],
+                SINGLE_IDENTIFIER_METRIC_EXECUTION_REQUEST,
+                SINGLE_METRIC_EXECUTION_RESPONSE
+            );
 
             expect(data).toEqual({
                 primaryItem: {
@@ -370,9 +380,12 @@ describe('HeadlineTransformationUtils', () => {
                     isDrillable: false
                 }
             };
-            const data = applyDrillableItems(headlineData as IHeadlineData, [{
-                uri: '/gdc/md/project_id/obj/2'
-            }], TWO_MEASURES_WITH_URI_EXECUTION_REQUEST);
+            const data = applyDrillableItems(
+                headlineData as IHeadlineData,
+                [headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/2')],
+                TWO_MEASURES_WITH_URI_EXECUTION_REQUEST,
+                TWO_MEASURES_EXECUTION_RESPONSE
+            );
 
             expect(data).toEqual({
                 secondaryItem: {
@@ -393,9 +406,12 @@ describe('HeadlineTransformationUtils', () => {
                     isDrillable: false
                 }
             };
-            const data = applyDrillableItems(headlineData as IHeadlineData, [{
-                identifier: 'measure.found'
-            }], TWO_MEASURES_WITH_IDENTIFIER_EXECUTION_REQUEST);
+            const data = applyDrillableItems(
+                headlineData as IHeadlineData,
+                [headerPredicateFactory.identifierMatch('measure.found')],
+                TWO_MEASURES_WITH_IDENTIFIER_EXECUTION_REQUEST,
+                TWO_MEASURES_EXECUTION_RESPONSE
+            );
 
             expect(data).toEqual({
                 secondaryItem: {
@@ -408,25 +424,29 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should enable drilling of the both items (primary, secondary)', () => {
-            const data = applyDrillableItems({
-                primaryItem: {
-                    localIdentifier: 'm1',
-                    title: 'Lost',
-                    value: '120',
-                    isDrillable: false
+            const data = applyDrillableItems(
+                {
+                    primaryItem: {
+                        localIdentifier: 'm1',
+                        title: 'Lost',
+                        value: '120',
+                        isDrillable: false
+                    },
+                    secondaryItem: {
+                        localIdentifier: 'm2',
+                        title: 'Found',
+                        value: '220',
+                        isDrillable: false
+                    }
                 },
-                secondaryItem: {
-                    localIdentifier: 'm2',
-                    title: 'Found',
-                    value: '220',
-                    isDrillable: false
-                }
-            }, [{
-                identifier: 'measure.lost',
-                uri: '/gdc/md/project_id/obj/1'
-            }, {
-                uri: '/gdc/md/project_id/obj/2'
-            }], TWO_MEASURES_WITH_URI_EXECUTION_REQUEST);
+                [
+                    headerPredicateFactory.identifierMatch('measure.lost'),
+                    headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/1'),
+                    headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/2')
+                ],
+                TWO_MEASURES_WITH_URI_EXECUTION_REQUEST,
+                TWO_MEASURES_EXECUTION_RESPONSE
+            );
 
             expect(data).toEqual({
                 primaryItem: {
@@ -453,10 +473,15 @@ describe('HeadlineTransformationUtils', () => {
                     isDrillable: false
                 }
             };
-            const updatedData = applyDrillableItems(data, [{
-                identifier: 'metric.lost',
-                uri: '/gdc/md/project_id/obj/1'
-            }], SINGLE_URI_METRIC_EXECUTION_REQUEST);
+            const updatedData = applyDrillableItems(
+                data,
+                [
+                    headerPredicateFactory.identifierMatch('metric.lost'),
+                    headerPredicateFactory.uriMatch('/gdc/md/project_id/obj/1')
+                ],
+                SINGLE_URI_METRIC_EXECUTION_REQUEST,
+                SINGLE_METRIC_EXECUTION_RESPONSE
+            );
 
             expect(updatedData).toEqual({
                 primaryItem: {

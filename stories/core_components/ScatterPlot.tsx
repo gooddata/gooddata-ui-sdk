@@ -19,7 +19,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
-import { getMeasureLocalIdentifierPredicate } from '../../src/helpers/predicatesFactory';
+import { localIdentifierMatch } from '../../src/factory/HeaderPredicateFactory';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -140,7 +140,7 @@ storiesOf('Core components/ScatterPlot', module)
                     ErrorComponent={null}
                     config={{
                         colorMapping: [{
-                            predicate: getMeasureLocalIdentifierPredicate('m2'),
+                            predicate: localIdentifierMatch('m2'),
                             color: {
                                 type: 'rgb',
                                 value: {

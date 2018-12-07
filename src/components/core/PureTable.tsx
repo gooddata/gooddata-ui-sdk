@@ -4,7 +4,6 @@ import noop = require('lodash/noop');
 import difference = require('lodash/difference');
 import uniq = require('lodash/uniq');
 import { get } from 'lodash';
-
 import { AFM, VisualizationObject } from '@gooddata/typings';
 
 import { IntlWrapper } from './base/IntlWrapper';
@@ -185,11 +184,11 @@ class SimpleTable extends
         } = this.props;
 
         const separators = get(this.props, 'config.separators', undefined);
+        const onDataTooLarge = environment === 'dashboards' ? this.props.onDataTooLarge : noop;
 
         // Short term solution (See BB-641)
         const indexedTotals = convertToIndexedTotals(totals, dataSource.getAfm(), resultSpec);
 
-        const onDataTooLarge = environment === 'dashboards' ? this.props.onDataTooLarge : noop;
         return (
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>

@@ -56,12 +56,16 @@ Array [
       "a_2211": "Alabama",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "Montgomery",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340107",
+          "attributeHeaderItem": Object {
+            "name": "Montgomery",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340107",
+          },
         },
         "a_2211": Object {
-          "title": "Alabama",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109",
+          "attributeHeaderItem": Object {
+            "name": "Alabama",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109",
+          },
         },
       },
     },
@@ -118,12 +122,16 @@ Array [
       "a_2211": "California",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "Highland Village",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340121",
+          "attributeHeaderItem": Object {
+            "name": "Highland Village",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340121",
+          },
         },
         "a_2211": Object {
-          "title": "California",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          "attributeHeaderItem": Object {
+            "name": "California",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          },
         },
       },
     },
@@ -180,12 +188,16 @@ Array [
       "a_2211": "California",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "San Jose - Blossom Hill",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340125",
+          "attributeHeaderItem": Object {
+            "name": "San Jose - Blossom Hill",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340125",
+          },
         },
         "a_2211": Object {
-          "title": "California",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          "attributeHeaderItem": Object {
+            "name": "California",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          },
         },
       },
     },
@@ -242,12 +254,16 @@ Array [
       "a_2211": "California",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "San Jose - Saratoga",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340127",
+          "attributeHeaderItem": Object {
+            "name": "San Jose - Saratoga",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340127",
+          },
         },
         "a_2211": Object {
-          "title": "California",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          "attributeHeaderItem": Object {
+            "name": "California",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
+          },
         },
       },
     },
@@ -304,12 +320,16 @@ Array [
       "a_2211": "Florida",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "Deerfield Beach",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340117",
+          "attributeHeaderItem": Object {
+            "name": "Deerfield Beach",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340117",
+          },
         },
         "a_2211": Object {
-          "title": "Florida",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340105",
+          "attributeHeaderItem": Object {
+            "name": "Florida",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340105",
+          },
         },
       },
     },
@@ -366,12 +386,16 @@ Array [
       "a_2211": "Texas",
       "drillItemMap": Object {
         "a_2205": Object {
-          "title": "Irving",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340132",
+          "attributeHeaderItem": Object {
+            "name": "Irving",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204/elements?id=6340132",
+          },
         },
         "a_2211": Object {
-          "title": "Texas",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=4436534",
+          "attributeHeaderItem": Object {
+            "name": "Texas",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=4436534",
+          },
         },
       },
     },
@@ -1857,10 +1881,17 @@ Array [
       "cellRenderer": "loadingRenderer",
       "drillItems": Array [
         Object {
-          "identifier": "label.restaurantlocation.locationstate",
-          "localIdentifier": "state",
-          "title": "Location State",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.restaurantlocation.locationstate",
+              "name": "Location State",
+              "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210",
+            },
+            "identifier": "label.restaurantlocation.locationstate",
+            "localIdentifier": "state",
+            "name": "Location State",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
+          },
         },
       ],
       "field": "a_2211",
@@ -1871,10 +1902,17 @@ Array [
     Object {
       "drillItems": Array [
         Object {
-          "identifier": "label.restaurantlocation.locationname",
-          "localIdentifier": "location",
-          "title": "Location Name",
-          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205",
+          "attributeHeader": Object {
+            "formOf": Object {
+              "identifier": "attr.restaurantlocation.locationname",
+              "name": "Location Name",
+              "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204",
+            },
+            "identifier": "label.restaurantlocation.locationname",
+            "localIdentifier": "location",
+            "name": "Location Name",
+            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205",
+          },
         },
       ],
       "field": "a_2205",
@@ -1891,30 +1929,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jan",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Jan",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_1-m_0",
@@ -1926,30 +1985,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jan",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Jan",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_1-m_1",
@@ -1961,30 +2041,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jan",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Jan",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_1-m_2",
@@ -1996,30 +2097,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jan",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Jan",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_1-m_3",
@@ -2039,30 +2161,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Feb",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Feb",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_2-m_0",
@@ -2074,30 +2217,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Feb",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Feb",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_2-m_1",
@@ -2109,30 +2273,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Feb",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Feb",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_2-m_2",
@@ -2144,30 +2329,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Feb",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Feb",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_2-m_3",
@@ -2187,30 +2393,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Mar",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Mar",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_3-m_0",
@@ -2222,30 +2449,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Mar",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Mar",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_3-m_1",
@@ -2257,30 +2505,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Mar",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Mar",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_3-m_2",
@@ -2292,30 +2561,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q1",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      "attributeHeaderItem": Object {
+                        "name": "Q1",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Mar",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Mar",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_1-a_2071_3-m_3",
@@ -2343,30 +2633,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Apr",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Apr",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_4-m_0",
@@ -2378,30 +2689,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Apr",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Apr",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_4-m_1",
@@ -2413,30 +2745,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Apr",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Apr",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_4-m_2",
@@ -2448,30 +2801,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Apr",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Apr",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_4-m_3",
@@ -2491,30 +2865,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "May",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      "attributeHeaderItem": Object {
+                        "name": "May",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_5-m_0",
@@ -2526,30 +2921,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "May",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      "attributeHeaderItem": Object {
+                        "name": "May",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_5-m_1",
@@ -2561,30 +2977,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "May",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      "attributeHeaderItem": Object {
+                        "name": "May",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_5-m_2",
@@ -2596,30 +3033,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "May",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      "attributeHeaderItem": Object {
+                        "name": "May",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=5",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_5-m_3",
@@ -2639,30 +3097,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jun",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      "attributeHeaderItem": Object {
+                        "name": "Jun",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_6-m_0",
@@ -2674,30 +3153,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jun",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      "attributeHeaderItem": Object {
+                        "name": "Jun",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_6-m_1",
@@ -2709,30 +3209,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jun",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      "attributeHeaderItem": Object {
+                        "name": "Jun",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_6-m_2",
@@ -2744,30 +3265,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q2",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      "attributeHeaderItem": Object {
+                        "name": "Q2",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=2",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jun",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      "attributeHeaderItem": Object {
+                        "name": "Jun",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=6",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_2-a_2071_6-m_3",
@@ -2795,30 +3337,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jul",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      "attributeHeaderItem": Object {
+                        "name": "Jul",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_7-m_0",
@@ -2830,30 +3393,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jul",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      "attributeHeaderItem": Object {
+                        "name": "Jul",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_7-m_1",
@@ -2865,30 +3449,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jul",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      "attributeHeaderItem": Object {
+                        "name": "Jul",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_7-m_2",
@@ -2900,30 +3505,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Jul",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      "attributeHeaderItem": Object {
+                        "name": "Jul",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=7",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_7-m_3",
@@ -2943,30 +3569,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Aug",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      "attributeHeaderItem": Object {
+                        "name": "Aug",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_8-m_0",
@@ -2978,30 +3625,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Aug",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      "attributeHeaderItem": Object {
+                        "name": "Aug",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_8-m_1",
@@ -3013,30 +3681,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Aug",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      "attributeHeaderItem": Object {
+                        "name": "Aug",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_8-m_2",
@@ -3048,30 +3737,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Aug",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      "attributeHeaderItem": Object {
+                        "name": "Aug",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=8",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_8-m_3",
@@ -3091,30 +3801,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Sep",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      "attributeHeaderItem": Object {
+                        "name": "Sep",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_9-m_0",
@@ -3126,30 +3857,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Sep",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      "attributeHeaderItem": Object {
+                        "name": "Sep",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_9-m_1",
@@ -3161,30 +3913,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Sep",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      "attributeHeaderItem": Object {
+                        "name": "Sep",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_9-m_2",
@@ -3196,30 +3969,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q3",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      "attributeHeaderItem": Object {
+                        "name": "Q3",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=3",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Sep",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      "attributeHeaderItem": Object {
+                        "name": "Sep",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=9",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_3-a_2071_9-m_3",
@@ -3247,30 +4041,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Oct",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      "attributeHeaderItem": Object {
+                        "name": "Oct",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_10-m_0",
@@ -3282,30 +4097,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Oct",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      "attributeHeaderItem": Object {
+                        "name": "Oct",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_10-m_1",
@@ -3317,30 +4153,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Oct",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      "attributeHeaderItem": Object {
+                        "name": "Oct",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_10-m_2",
@@ -3352,30 +4209,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Oct",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      "attributeHeaderItem": Object {
+                        "name": "Oct",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=10",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_10-m_3",
@@ -3395,30 +4273,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Nov",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      "attributeHeaderItem": Object {
+                        "name": "Nov",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_11-m_0",
@@ -3430,30 +4329,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Nov",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      "attributeHeaderItem": Object {
+                        "name": "Nov",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_11-m_1",
@@ -3465,30 +4385,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Nov",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      "attributeHeaderItem": Object {
+                        "name": "Nov",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_11-m_2",
@@ -3500,30 +4441,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Nov",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      "attributeHeaderItem": Object {
+                        "name": "Nov",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=11",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_11-m_3",
@@ -3543,30 +4505,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Dec",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      "attributeHeaderItem": Object {
+                        "name": "Dec",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaEGaXAEgB7U",
-                      "localIdentifier": "franchiseFeesIdentifier",
-                      "title": "$ Franchise Fees",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaEGaXAEgB7U",
+                        "localIdentifier": "franchiseFeesIdentifier",
+                        "name": "$ Franchise Fees",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_12-m_0",
@@ -3578,30 +4561,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Dec",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      "attributeHeaderItem": Object {
+                        "name": "Dec",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aabHeqImaK0d",
-                      "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
-                      "title": "$ Franchise Fees (Ad Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aabHeqImaK0d",
+                        "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                        "name": "$ Franchise Fees (Ad Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_12-m_1",
@@ -3613,30 +4617,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Dec",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      "attributeHeaderItem": Object {
+                        "name": "Dec",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaDHcv6wevkl",
-                      "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
-                      "title": "$ Franchise Fees (Initial Franchise Fee)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaDHcv6wevkl",
+                        "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                        "name": "$ Franchise Fees (Initial Franchise Fee)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6695",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_12-m_2",
@@ -3648,30 +4673,51 @@ Array [
                 Object {
                   "drillItems": Array [
                     Object {
-                      "title": "Q4",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      "attributeHeaderItem": Object {
+                        "name": "Q4",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=4",
+                      },
                     },
                     Object {
-                      "identifier": "date.aam81lMifn6q",
-                      "localIdentifier": "year",
-                      "title": "default (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.quarter.in.year",
+                          "name": "Quarter (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        "identifier": "date.aam81lMifn6q",
+                        "localIdentifier": "year",
+                        "name": "default (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                      },
                     },
                     Object {
-                      "title": "Dec",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      "attributeHeaderItem": Object {
+                        "name": "Dec",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=12",
+                      },
                     },
                     Object {
-                      "identifier": "date.abm81lMifn6q",
-                      "localIdentifier": "month",
-                      "title": "Short (Jan) (Date)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      "attributeHeader": Object {
+                        "formOf": Object {
+                          "identifier": "date.month.in.year",
+                          "name": "Month (Date)",
+                          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        "identifier": "date.abm81lMifn6q",
+                        "localIdentifier": "month",
+                        "name": "Short (Jan) (Date)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                      },
                     },
                     Object {
-                      "identifier": "aaWGcgnsfxIg",
-                      "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
-                      "title": "$ Franchise Fees (Ongoing Royalty)",
-                      "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      "measureHeaderItem": Object {
+                        "format": "[>=0]$#,##0;[<0]-$#,##0",
+                        "identifier": "aaWGcgnsfxIg",
+                        "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                        "name": "$ Franchise Fees (Ongoing Royalty)",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6693",
+                      },
                     },
                   ],
                   "field": "a_2009_4-a_2071_12-m_3",

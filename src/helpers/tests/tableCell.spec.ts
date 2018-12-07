@@ -1,18 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
-import { TableHeader } from '../../interfaces/Table';
 import {
     getCellClassNames,
     getCellStyleAndFormattedValue,
     getMeasureCellFormattedValue,
     getMeasureCellStyle
 } from '../tableCell';
+import { IMappingHeader } from '../../interfaces/MappingHeader';
 
 import { TABLE_HEADERS_2A_3M } from '../../components/visualizations/table/fixtures/2attributes3measures';
 
-const ATTRIBUTE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[0];
-const FIRST_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[2];
-const SECOND_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[3];
-const THIRD_MEASURE_HEADER: TableHeader = TABLE_HEADERS_2A_3M[4];
+const ATTRIBUTE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[0];
+const FIRST_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[2];
+const SECOND_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[3];
+const THIRD_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[4];
 
 describe('Table utils - Cell', () => {
     describe('getCellClassNames', () => {

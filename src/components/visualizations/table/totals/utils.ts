@@ -2,14 +2,16 @@
 import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy } from 'lodash';
 import { AFM } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
+import {
+    isMappingHeaderAttribute,
+    isMappingHeaderMeasureItem,
+    IMappingHeader
+} from '../../../../interfaces/MappingHeader';
 import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
 import {
     IAlignPoint,
-    isAttributeTableHeader,
-    isMeasureTableHeader,
     ITotalsDataSource,
-    ITotalTypeWithTitle,
-    TableHeader
+    ITotalTypeWithTitle
 } from '../../../../interfaces/Table';
 
 import { getFooterHeight } from '../utils/footer';
@@ -159,15 +161,15 @@ export function getAddTotalDropdownAlignPoints(isLastColumn: boolean = false): I
 }
 
 export function shouldShowAddTotalButton(
-    header: TableHeader,
+    header: IMappingHeader,
     isFirstColumn: boolean,
     addingMoreTotalsEnabled: boolean
 ): boolean {
-    return !isFirstColumn && isMeasureTableHeader(header) && addingMoreTotalsEnabled;
+    return !isFirstColumn && isMappingHeaderMeasureItem(header) && addingMoreTotalsEnabled;
 }
 
-export function getFirstMeasureIndex(headers: TableHeader[]): number {
-    const measureOffset = headers.findIndex(header => isMeasureTableHeader(header));
+export function getFirstMeasureIndex(headers: IMappingHeader[]): number {
+    const measureOffset = headers.findIndex(header => isMappingHeaderMeasureItem(header));
     return measureOffset === -1 ? 0 : measureOffset;
 }
 
@@ -183,7 +185,7 @@ export function hasTableColumnTotalEnabled(
 
 export function addMeasureIndex(
     totals: ITotalWithData[],
-    headers: TableHeader[],
+    headers: IMappingHeader[],
     totalType: AFM.TotalType,
     tableColumnIndex: number
 ): ITotalWithData[] {
@@ -207,7 +209,7 @@ export function addMeasureIndex(
 
 export function removeMeasureIndex(
     totals: ITotalWithData[],
-    headers: TableHeader[],
+    headers: IMappingHeader[],
     totalType: AFM.TotalType,
     tableColumnIndex: number
 ): ITotalWithData[] {
@@ -234,13 +236,13 @@ export function getTotalsDefinition(totalsWithValues: ITotalWithData[]): IIndexe
     return orderTotals(totalsWithoutValues);
 }
 
-export function shouldShowTotals(headers: TableHeader[]): boolean {
+export function shouldShowTotals(headers: IMappingHeader[]): boolean {
     if (headers.length < 1) {
         return false;
     }
 
-    const onlyMeasures: boolean = headers.every((header: TableHeader) => isMeasureTableHeader(header));
-    const onlyAttributes: boolean = headers.every((header: TableHeader) => isAttributeTableHeader(header));
+    const onlyMeasures: boolean = headers.every((header: IMappingHeader) => isMappingHeaderMeasureItem(header));
+    const onlyAttributes: boolean = headers.every((header: IMappingHeader) => isMappingHeaderAttribute(header));
 
     return !(onlyAttributes || onlyMeasures);
 }

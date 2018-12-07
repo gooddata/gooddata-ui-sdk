@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
+import 'jest';
 import { mount } from 'enzyme';
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 import {
     getTotalsDataSource,
@@ -24,8 +25,7 @@ import {
 } from '../utils';
 import { createIntlMock } from '../../../utils/intlUtils';
 import { ITotalWithData } from '../../../../../interfaces/Totals';
-import { TableHeader, IAttributeTableHeader, IMeasureTableHeader } from '../../../../../interfaces/Table';
-import 'jest';
+import { IMappingHeader } from '../../../../../interfaces/MappingHeader';
 
 const intl = createIntlMock();
 
@@ -33,26 +33,33 @@ const DEFAULT_MEASURE_FORMAT = 'JP rikal, ze metrika ma vzdycky format';
 
 type HeaderType = 'measure' | 'attribute';
 
-function createTableHeader(type: HeaderType, identifier: string): TableHeader {
+function createTableHeader(type: HeaderType, identifier: string): IMappingHeader {
     const generateUri = () => `/gdc/md/projectId/${identifier}`;
     if (type === 'attribute') {
-        const attributeHeader: IAttributeTableHeader = {
-            identifier,
-            localIdentifier: identifier,
-            name: identifier,
-            type: 'attribute',
-            uri: generateUri()
+        const attributeHeader: Execution.IAttributeHeader = {
+            attributeHeader: {
+                identifier,
+                localIdentifier: identifier,
+                name: identifier,
+                uri: generateUri(),
+                formOf: {
+                    uri: generateUri(),
+                    identifier: identifier + '-element',
+                    name: identifier
+                }
+            }
         };
         return attributeHeader;
     }
 
-    const measureHeader: IMeasureTableHeader = {
-        format: DEFAULT_MEASURE_FORMAT,
-        identifier,
-        localIdentifier: identifier,
-        name: identifier,
-        type: 'measure',
-        uri: generateUri()
+    const measureHeader: Execution.IMeasureHeaderItem = {
+        measureHeaderItem: {
+            format: DEFAULT_MEASURE_FORMAT,
+            identifier,
+            localIdentifier: identifier,
+            name: identifier,
+            uri: generateUri()
+        }
     };
     return measureHeader;
 }
@@ -371,7 +378,7 @@ describe('Totals', () => {
 
     describe('getFirstMeasureIndex', () => {
         it('should return index of first measure when measure present in headers', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('attribute', 'a1'),
                 createTableHeader('attribute', 'a2'),
                 createTableHeader('measure', 'm1'),
@@ -381,7 +388,7 @@ describe('Totals', () => {
         });
 
         it('should return index of first measure even when headers are wrongly mixed', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('attribute', 'a1'),
                 createTableHeader('measure', 'm1'),
                 createTableHeader('attribute', 'a2'),
@@ -391,14 +398,14 @@ describe('Totals', () => {
         });
 
         it('should return 0 when measure is first header', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('measure', 'm1')
             ];
             expect(getFirstMeasureIndex(headers)).toBe(0);
         });
 
         it('should return 0 when no measure present in headers', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('attribute', 'a1')
             ];
             expect(getFirstMeasureIndex(headers)).toBe(0);
@@ -424,7 +431,7 @@ describe('Totals', () => {
             createTotalItem('sum'),
             createTotalItem('max', [1])
         ];
-        const headers: TableHeader[] = [
+        const headers: IMappingHeader[] = [
             createTableHeader('attribute', 'a1'),
             createTableHeader('measure', 'm1'),
             createTableHeader('measure', 'm2')
@@ -459,7 +466,7 @@ describe('Totals', () => {
             createTotalItem('sum'),
             createTotalItem('max', [1])
         ];
-        const headers: TableHeader[] = [
+        const headers: IMappingHeader[] = [
             createTableHeader('attribute', 'a1'),
             createTableHeader('measure', 'm1'),
             createTableHeader('measure', 'm2')
@@ -498,25 +505,32 @@ describe('Totals', () => {
 
     describe('shouldShowTotals', () => {
         it('should return false when no header', () => {
-            const headers: TableHeader[] = [];
+            const headers: IMappingHeader[] = [];
 
             expect(shouldShowTotals(headers)).toBeFalsy();
         });
 
         it('should return true when mixed attributes and measures', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 {
-                    type: 'attribute',
-                    localIdentifier: 'a1',
-                    name: 'A1',
-                    uri: '/gdc/md/foo',
-                    identifier: 'a1'
+                    attributeHeader: {
+                        localIdentifier: 'a1',
+                        name: 'A1',
+                        uri: '/gdc/md/foo',
+                        identifier: 'a1',
+                        formOf: {
+                            uri: '/gdc/md/foo_element',
+                            identifier: 'a1_element',
+                            name: 'ProdA1uct'
+                        }
+                    }
                 },
                 {
-                    type: 'measure',
-                    localIdentifier: 'm1',
-                    name: 'M1',
-                    format: ''
+                    measureHeaderItem: {
+                        localIdentifier: 'm1',
+                        name: 'M1',
+                        format: ''
+                    }
                 }
             ];
 
@@ -524,7 +538,7 @@ describe('Totals', () => {
         });
 
         it('should return false when attributes used', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('attribute', 'a1'),
                 createTableHeader('attribute', 'a2')
             ];
@@ -533,7 +547,7 @@ describe('Totals', () => {
         });
 
         it('should return false when measures used', () => {
-            const headers: TableHeader[] = [
+            const headers: IMappingHeader[] = [
                 createTableHeader('measure', 'm1'),
                 createTableHeader('measure', 'm2')
             ];

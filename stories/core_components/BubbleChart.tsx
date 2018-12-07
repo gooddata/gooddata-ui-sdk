@@ -20,7 +20,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
-import { getAttributeItemNamePredicate } from '../../src/helpers/predicatesFactory';
+import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
 const wrapperStyle = { width: 800, height: 400 };
 
 storiesOf('Core components/BubbleChart', module)
@@ -121,7 +121,7 @@ storiesOf('Core components/BubbleChart', module)
                     viewBy={ATTRIBUTE_1}
                     config={{
                         colorMapping: [{
-                            predicate: getAttributeItemNamePredicate('Pink'),
+                            predicate: attributeItemNameMatch('Pink'),
                             color: {
                                 type: 'rgb',
                                 value: {

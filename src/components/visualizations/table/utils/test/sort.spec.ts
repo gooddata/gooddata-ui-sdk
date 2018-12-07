@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 import { createSortItem, getHeaderSortClassName, getNextSortDir, getSortInfo, getSortItem } from '../sort';
 import { ASC, DESC } from '../../../../../constants/sort';
 import { TABLE_HEADERS_2A_3M } from '../../fixtures/2attributes3measures';
-import { IAttributeTableHeader, IMeasureTableHeader, ISortInfo, ISortObj } from '../../../../../interfaces/Table';
+import { ISortInfo, ISortObj } from '../../../../../interfaces/Table';
 import IAttributeSortItem = AFM.IAttributeSortItem;
 import 'jest';
 
@@ -53,24 +53,31 @@ const SORT_ITEM_WITH_UNKNOWN_IDENTIFIER: IAttributeSortItem = {
     }
 };
 
-function getMeasureHeader(): IMeasureTableHeader {
+function getMeasureHeader(): Execution.IMeasureHeaderItem {
     return {
-        uri: 'uri',
-        identifier: 'identifier',
-        localIdentifier: 'localIdentifier',
-        name: 'name',
-        format: 'format',
-        type: 'measure'
+        measureHeaderItem: {
+            uri: 'uri',
+            identifier: 'identifier',
+            localIdentifier: 'localIdentifier',
+            name: 'name',
+            format: 'format'
+        }
     };
 }
 
-function getAttributeHeader(): IAttributeTableHeader {
+function getAttributeHeader(): Execution.IAttributeHeader {
     return {
-        uri: 'uri',
-        identifier: 'identifier',
-        localIdentifier: 'localIdentifier',
-        name: 'name',
-        type: 'attribute'
+        attributeHeader: {
+            uri: 'uri',
+            identifier: 'identifier',
+            localIdentifier: 'localIdentifier',
+            name: 'name',
+            formOf: {
+                uri: 'uri_id_element',
+                identifier: 'identifier_element',
+                name: 'name'
+            }
+        }
     };
 }
 

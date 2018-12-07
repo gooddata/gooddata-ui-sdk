@@ -1,24 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { noop, pick } from 'lodash';
 import { AFM, Execution } from '@gooddata/typings';
+import { noop, pick } from 'lodash';
+import * as React from 'react';
+import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
+import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { OnFiredDrillEvent } from '../../../interfaces/Events';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
 
-import {
-    TableHeader,
-    TableRow,
-    ISortInfo,
-    OnSortChangeWithItem,
-    ITableTransformationConfig
-} from '../../../interfaces/Table';
+import { ISortInfo, ITableTransformationConfig, OnSortChangeWithItem, TableRow } from '../../../interfaces/Table';
+
+import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
 
 import { ITableProps, Table } from './Table';
 
-import { getHeaders, getRows, validateTableProportions, getTotalsWithData } from './utils/dataTransformation';
+import { getHeaders, getRows, getTotalsWithData, validateTableProportions } from './utils/dataTransformation';
 import { getSortInfo, getSortItem } from './utils/sort';
-
-import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
-import { OnFiredDrillEvent } from '../../../interfaces/Events';
 
 export interface ITableTransformationProps {
     afterRender?: Function;
@@ -26,7 +23,7 @@ export interface ITableTransformationProps {
     totalsEditAllowed?: boolean;
     onTotalsEdit?: (indexedTotals: IIndexedTotalItem[]) => void;
     config?: ITableTransformationConfig;
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     executionRequest: AFM.IExecution;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
@@ -78,9 +75,11 @@ export class TableTransformation extends React.Component<ITableTransformationPro
             onLastAddedTotalRowHighlightPeriodEnd
         } = this.props;
 
-        const headers: TableHeader[] = getHeaders(executionResponse);
+        const headers: IMappingHeader[] = getHeaders(executionResponse);
         const rows: TableRow[] = getRows(executionResult);
         const totalsWithData: ITotalWithData[] = getTotalsWithData(totals, executionResult);
+
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         validateTableProportions(headers, rows);
 
@@ -95,7 +94,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
             totalsWithData,
             totalsEditAllowed,
             onTotalsEdit,
-            drillableItems,
+            drillablePredicates,
             executionRequest,
             headers,
             onFiredDrillEvent,
