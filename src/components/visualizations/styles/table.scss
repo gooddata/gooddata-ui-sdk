@@ -2,15 +2,15 @@
 $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
 @import '~fixed-data-table-2/dist/fixed-data-table.css';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/colors';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/IndigoFont';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/layout';
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/Overlay';
-@import '~@gooddata/goodstrap/lib/Dialog/styles/themes/indigo/Dialog';
-@import '~@gooddata/goodstrap/lib/Button/styles/themes/indigo/Button';
-@import '~@gooddata/goodstrap/lib/List/styles/themes/indigo/List';
-@import '~@gooddata/goodstrap/lib/Dropdown/styles/themes/indigo/Dropdown';
-@import '~@gooddata/goodstrap/lib/Bubble/styles/themes/indigo/Bubble';
+@import '~@gooddata/goodstrap/lib/core/styles/colors';
+@import '~@gooddata/goodstrap/lib/core/styles/IndigoFont';
+@import '~@gooddata/goodstrap/lib/core/styles/layout';
+@import '~@gooddata/goodstrap/lib/core/styles/Overlay';
+@import '~@gooddata/goodstrap/lib/Dialog/styles/Dialog';
+@import '~@gooddata/goodstrap/lib/Button/styles/Button';
+@import '~@gooddata/goodstrap/lib/List/styles/List';
+@import '~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown';
+@import '~@gooddata/goodstrap/lib/Bubble/styles/Bubble';
 @import 'variables';
 
 .indigo-table-component {
