@@ -128,12 +128,48 @@ export const assignDrillItemsAndType = (
     }
 };
 
+export const shouldMergeHeaders = (
+    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    headerIndex: number,
+    headerItemIndex: number
+) => {
+    for (let ancestorIndex = headerIndex; ancestorIndex >= 0; ancestorIndex--) {
+        const currentAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex];
+        const nextAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex + 1];
+        if (
+            !nextAncestorHeader
+            || identifyHeader(currentAncestorHeader) !== identifyHeader(nextAncestorHeader)
+        ) {
+            return false;
+        }
+    }
+    return true;
+};
+
+export const mergeHeaderEndIndex = (
+    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    headerIndex: number,
+    headerItemStartIndex: number
+) => {
+    const header = resultHeaderDimension[headerIndex];
+    for (let headerItemIndex = headerItemStartIndex; headerItemIndex < header.length; headerItemIndex++) {
+        if (!shouldMergeHeaders(resultHeaderDimension, headerIndex, headerItemIndex)) {
+            return headerItemIndex;
+        }
+    }
+    return headerItemStartIndex;
+};
+
+/*
+ * getColumnHeaders transforms header items from matrix to tree hierarchy
+ * for each span of identical headers in a row, the function is called recursively to assign child items
+ */
 export const getColumnHeaders = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     responseHeaders: Execution.IHeader[],
     columnDefOptions: IColumnDefOptions = {},
     headerIndex = 0,
-    headerValueStart = 0,
+    headerItemStartIndex = 0,
     headerValueEnd: number = undefined,
     fieldPrefix = '',
     parentDrillItems: IDrillItem[] = []
@@ -146,15 +182,8 @@ export const getColumnHeaders = (
     const lastIndex = headerValueEnd !== undefined ? headerValueEnd : currentHeaders.length - 1;
     const hierarchy: IGridHeader[] = [];
 
-    for (let index = headerValueStart; index < lastIndex + 1; index += 1) {
-        let headerCount = 0;
-        const currentHeader = currentHeaders[index];
-        // current header can be either measureHeaderItem defined by order
-        // or attributeHeaderItem defined by uri (attribute value uri)
-        // We need to be able to match column by:
-            // attribute uri or identifier
-            // attribute value uri
-            // measure uri or identifier
+    for (let headerItemIndex = headerItemStartIndex; (headerItemIndex < lastIndex + 1);) {
+        const currentHeader = currentHeaders[headerItemIndex];
         const drillItems: IDrillItem[] = [...parentDrillItems];
         const header: IGridHeader = {
             drillItems: [],
@@ -162,29 +191,27 @@ export const getColumnHeaders = (
             ...columnDefOptions
         };
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
-
-        const isNextHeaderIdentical = () => (
-            currentHeaders[index + 1] && header.field === (fieldPrefix + identifyHeader(currentHeaders[index + 1]))
+        const headerItemEndIndex = mergeHeaderEndIndex(
+            resultHeaderDimension,
+            headerIndex,
+            headerItemIndex
         );
-        while (isNextHeaderIdentical()) {
-            headerCount += 1;
-            index += 1;
-        }
+
         if (headerIndex !== resultHeaderDimension.length - 1) {
             header.children = getColumnHeaders(
                 resultHeaderDimension,
                 responseHeaders,
                 columnDefOptions,
                 headerIndex + 1,
-                index - headerCount,
-                index,
+                headerItemIndex,
+                headerItemEndIndex,
                 header.field + FIELD_SEPARATOR,
                 drillItems
             );
         }
-        // Here we will add custom header renderers when we need them
-        // header.render = 'RowHeader';
         hierarchy.push(header);
+        // We move the pointer manually to skip identical headers
+        headerItemIndex = headerItemEndIndex + 1;
     }
 
     return hierarchy;
