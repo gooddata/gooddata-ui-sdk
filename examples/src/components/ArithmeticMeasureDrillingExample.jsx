@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table, HeaderPredicateFactory } from '@gooddata/react-components';
+import { Table, HeaderPredicateFactory, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -49,59 +49,23 @@ export class ArithmeticMeasureDrillingExample extends Component {
         };
 
         const measures = [
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.numberOfRestaurants,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: numberOfRestaurantsIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.totalSales,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: totalSalesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'averageRestaurantSales',
-                    title: '$ Avg Restaurant Sales',
-                    definition: {
-                        arithmeticMeasure: {
-                            measureIdentifiers: [
-                                localIdentifiers.totalSales,
-                                localIdentifiers.numberOfRestaurants
-                            ],
-                            operator: 'ratio'
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            BucketApi.measure(numberOfRestaurantsIdentifier)
+                .localIdentifier(localIdentifiers.numberOfRestaurants)
+                .format('#,##0'),
+            BucketApi.measure(totalSalesIdentifier)
+                .localIdentifier(localIdentifiers.totalSales)
+                .format('#,##0'),
+            BucketApi.arithmeticMeasure([
+                localIdentifiers.totalSales,
+                localIdentifiers.numberOfRestaurants
+            ], 'ratio')
+                .localIdentifier(localIdentifiers.averageRestaurantSales)
+                .format('#,##0')
+                .title('$ Avg Restaurant Sales')
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         const drillNotificationComponent = () => {

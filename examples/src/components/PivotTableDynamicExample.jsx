@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, Table, HeaderPredicateFactory } from '@gooddata/react-components';
+import { PivotTable, Table, HeaderPredicateFactory, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -17,24 +17,22 @@ import {
     monthDateIdentifierJanuary,
     dateDatasetIdentifier
 } from '../utils/fixtures';
-import {
-    createMeasureBucketItem,
-    createAttributeBucketItem,
-    createAttributeSortItem,
-    createMeasureSortItem,
-    createColumnTotal,
-    createPositiveAttributeFilter,
-    createRelativeDateFilter
-} from '../utils/helpers';
+import { createColumnTotal } from '../utils/helpers';
 import { ElementWithParam } from './utils/ElementWithParam';
 
-const measureFranchiseFees = createMeasureBucketItem(franchiseFeesIdentifier);
-const measureAdRoyalty = createMeasureBucketItem(franchiseFeesAdRoyaltyIdentifier);
-const attributeLocationState = createAttributeBucketItem(locationStateDisplayFormIdentifier);
-const attributeLocationName = createAttributeBucketItem(locationNameDisplayFormIdentifier);
-const attributeMenuCategory = createAttributeBucketItem(menuCategoryAttributeDFIdentifier);
-const attributeQuarter = createAttributeBucketItem(quarterDateIdentifier);
-const attributeMonth = createAttributeBucketItem(monthDateIdentifier);
+const measureFranchiseFees = BucketApi.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
+const measureAdRoyalty = BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+    .localIdentifier(franchiseFeesAdRoyaltyIdentifier);
+const attributeLocationState = BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier)
+    .localIdentifier(locationStateDisplayFormIdentifier);
+const attributeLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+    .localIdentifier(locationNameDisplayFormIdentifier);
+const attributeMenuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+    .localIdentifier(menuCategoryAttributeDFIdentifier);
+const attributeQuarter = BucketApi.visualizationAttribute(quarterDateIdentifier)
+    .localIdentifier(quarterDateIdentifier);
+const attributeMonth = BucketApi.visualizationAttribute(monthDateIdentifier)
+    .localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -174,7 +172,7 @@ const filterPresets = {
     attributeCalifornia: {
         label: 'Attribute (California)',
         key: 'attributeCalifornia',
-        filterItem: createPositiveAttributeFilter(
+        filterItem: BucketApi.positiveAttributeFilter(
             locationStateDisplayFormIdentifier,
             [locationStateAttributeCaliforniaUri]
         )
@@ -182,12 +180,12 @@ const filterPresets = {
     lastYear: {
         label: 'Last year',
         key: 'lastYear',
-        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
+        filterItem: BucketApi.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
     },
     noData: {
         label: 'No Data',
         key: 'noData',
-        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
+        filterItem: BucketApi.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
     },
     franchiseFeesCalifornia: {
         label: 'Franchise Fees California',
@@ -197,10 +195,10 @@ const filterPresets = {
 };
 
 const franchiseFeesCalifornia =
-    createMeasureBucketItem(franchiseFeesIdentifier, 'franchiseFeesCalifornia', 'FranchiseFees (California)', [filterPresets.attributeCalifornia.filterItem]);
-
-const ASC = 'asc';
-const DESC = 'desc';
+    BucketApi.measure(franchiseFeesIdentifier)
+        .localIdentifier('franchiseFeesCalifornia')
+        .alias('FranchiseFees (California)')
+        .filters(filterPresets.attributeCalifornia.filterItem);
 
 const sortingPresets = {
     noSort: {
@@ -211,38 +209,46 @@ const sortingPresets = {
     byMenuCategory: {
         label: 'By Menu Category ASC',
         key: 'byMenuCategory',
-        sortBy: [createAttributeSortItem(menuCategoryAttributeDFIdentifier, ASC)]
+        sortBy: [BucketApi.attributeSortItem(menuCategoryAttributeDFIdentifier, 'asc')]
     },
     byLocationState: {
         label: 'By Location State DESC',
         key: 'byLocationState',
-        sortBy: [createAttributeSortItem(locationStateDisplayFormIdentifier, DESC)]
+        sortBy: [BucketApi.attributeSortItem(locationStateDisplayFormIdentifier, 'desc')]
     },
     byQ1JanFranchiseFees: {
         label: 'by Q1 / Jan / FranchiseFees DESC',
         key: 'byQ1JanFranchiseFees',
-        sortBy: [createMeasureSortItem(
-            franchiseFeesIdentifier,
-            DESC,
-            [
-                quarterDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1',
-                monthDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-            ]
-        )]
+        sortBy: [
+            BucketApi.measureSortItem(franchiseFeesIdentifier, 'desc')
+                .attributeLocators(
+                    {
+                        attributeIdentifier: quarterDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                    },
+                    {
+                        attributeIdentifier: monthDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                    }
+                )
+        ]
     },
     byLocationStateAndQ1JanFranchiseFees: {
         label: 'By Location State ASC And Q1 Jan Franchise Fees DESC',
         key: 'byLocationStateAndQ1JanFranchiseFees',
         sortBy: [
-            createAttributeSortItem(locationStateDisplayFormIdentifier, ASC),
-            createMeasureSortItem(
-                franchiseFeesIdentifier,
-                DESC,
-                [
-                    quarterDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1',
-                    monthDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-                ]
-            )
+            BucketApi.attributeSortItem(locationStateDisplayFormIdentifier, 'asc'),
+            BucketApi.measureSortItem(franchiseFeesIdentifier, 'desc')
+                .attributeLocators(
+                    {
+                        attributeIdentifier: quarterDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                    },
+                    {
+                        attributeIdentifier: monthDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                    }
+                )
         ]
     }
 };

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { BubbleChart } from '@gooddata/react-components';
+import { BubbleChart, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -24,55 +24,13 @@ export class BubbleChartExample extends Component {
     }
 
     render() {
-        const xMeasure = {
-            measure: {
-                localIdentifier: 'franchiseFeesIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchiseFeesIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        const xMeasure = BucketApi.measure(franchiseFeesIdentifier).format('#,##0');
 
-        const yMeasure = {
-            measure: {
-                localIdentifier: 'franchisedSalesIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchisedSalesIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        const yMeasure = BucketApi.measure(franchisedSalesIdentifier).format('#,##0');
 
-        const size = {
-            measure: {
-                localIdentifier: 'averageCheckSizeByServer',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: averageCheckSizeByServer
-                        }
-                    }
-                }
-            }
-        };
+        const size = BucketApi.measure(averageCheckSizeByServer);
 
-        const locationResort = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationResortIdentifier
-                },
-                localIdentifier: 'location_resort'
-            }
-        };
+        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-bubble-chart">

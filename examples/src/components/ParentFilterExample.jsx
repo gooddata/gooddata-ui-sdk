@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AttributeElements, BarChart } from '@gooddata/react-components';
+import { AttributeElements, BarChart, BucketApi } from '@gooddata/react-components';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import '@gooddata/react-components/styles/css/main.css';
@@ -50,49 +50,22 @@ export class ParentFilterExample extends Component {
         const visFilters = [];
 
         if (stateFilterValues.length) {
-            visFilters.push({
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    in: stateFilterValues.map(filter => filter.value)
-                }
-            });
+            visFilters.push(
+                BucketApi.positiveAttributeFilter(
+                    locationStateDisplayFormIdentifier,
+                    stateFilterValues.map(filter => filter.value)));
         }
         if (cityFilterValues.length) {
-            visFilters.push({
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: locationCityDisplayFormIdentifier
-                    },
-                    in: cityFilterValues.map(filter => filter.value)
-                }
-            });
+            visFilters.push(
+                BucketApi.positiveAttributeFilter(
+                    locationCityDisplayFormIdentifier,
+                    cityFilterValues.map(filter => filter.value)));
         }
 
-        const measureTotalSales = {
-            measure: {
-                localIdentifier: 'amount',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: totalSalesIdentifier
-                        }
-                    }
-                },
-                alias: '$ Total Sales',
-                format: '#,##0'
-            }
-        };
+        const measureTotalSales = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const viewByLocationName = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationNameDisplayFormIdentifier
-                },
-                localIdentifier: 'location_name'
-            }
-        };
+        const viewByLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+            .localIdentifier('location_name');
 
         return (
             <div style={{ height: 500 }} >

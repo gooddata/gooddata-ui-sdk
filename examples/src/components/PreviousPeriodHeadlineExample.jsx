@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Headline } from '@gooddata/react-components';
+import { Headline, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -10,11 +10,6 @@ import {
     dateDataSetUri,
     projectId
 } from '../utils/fixtures';
-import {
-    createRelativeDateFilter,
-    createMeasureBucketItem,
-    createPreviousPeriodMeasureBucketItem
-} from '../utils/helpers';
 
 export class PreviousPeriodHeadlineExample extends Component {
     onLoadingChanged(...params) {
@@ -32,10 +27,16 @@ export class PreviousPeriodHeadlineExample extends Component {
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
                     projectId={projectId}
-                    primaryMeasure={createMeasureBucketItem(totalSalesIdentifier, 'totalSales', '$ Total Sales')}
-                    secondaryMeasure={createPreviousPeriodMeasureBucketItem('totalSales', dateDataSetUri,
-                        '$ Total Sales - period ago')}
-                    filters={[createRelativeDateFilter(dateDataSetUri, 'GDC.time.year', -2, -1)]}
+                    primaryMeasure={
+                        BucketApi.measure(totalSalesIdentifier)
+                            .localIdentifier('totalSales')
+                            .alias('$ Total Sales')
+                    }
+                    secondaryMeasure={
+                        BucketApi.previousPeriodMeasure('totalSales', [{ dataSet: dateDataSetUri, periodsAgo: 1 }])
+                            .alias('$ Total Sales - period ago')
+                    }
+                    filters={[BucketApi.relativeDateFilter(dateDataSetUri, 'GDC.time.year', -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />
