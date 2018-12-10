@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import cloneDeep = require('lodash/cloneDeep');
 import { testUtils } from '@gooddata/js-utils';
 import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
@@ -472,6 +473,47 @@ describe('VisualizationWrapped', () => {
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
+            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    it('should not call getColorPalette with unchanged SDK', () => {
+        const mutatedSdk = {
+            ...sdk,
+            clone: () => cloneDeep(mutatedSdk),
+            project: {
+                getColorPaletteWithGuids: jest.fn()
+            }
+        };
+
+        const props = {
+            sdk: mutatedSdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        return testUtils.delay(FAST + 1).then(() => {
+            wrapper.update();
+            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+            wrapper.setProps({
+                config: {
+                    grid: {
+                        enabled: false
+                    }
+                },
+                sdk: mutatedSdk
+            });
             expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
         });
     });
