@@ -49,9 +49,12 @@ export const locationStateDisplayFormIdentifier = 'label.restaurantlocation.loca
 export const menuCategoryAttributeDFIdentifier = 'label.menuitem.menucategory';
 export const menuItemNameAttributeDFIdentifier = 'label.menuitem.menuitemname';
 export const yearDateDataSetAttributeIdentifier = 'date.year';
+export const monthDateDataSetAttributeIdentifier = 'date.month';
 export const quarterDateIdentifier = 'date.aam81lMifn6q';
 export const monthDateIdentifier = 'date.abm81lMifn6q';
 export const monthDateIdentifierJanuary = `/gdc/md/${demoProjectId}/obj/2071/elements?id=1`;
 export const numberOfChecksIdentifier = 'aeOt50ngicOD';
 export const tableVisualizationIdentifier = 'aatFRvXBdilm';
 export const totalSalesIdentifier = 'aa7ulGyKhIE5';
+export const numberOfRestaurantsIdentifier = 'aawAq8YqhM3o';
+export const averageRestaurantDailyCostsIdentifier = 'aaQJzQzoeKwZ';
