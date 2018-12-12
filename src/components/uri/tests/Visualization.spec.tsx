@@ -21,6 +21,7 @@ import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import * as HttpStatusCodes from 'http-status-codes';
+import { IColorPalette } from '../../../interfaces/Config';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -445,76 +446,165 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should call getColorPalette', () => {
-        const mutatedSdk = {
-            ...sdk,
-            clone: () => mutatedSdk,
-            project: {
-                getColorPaletteWithGuids: jest.fn()
+    describe('Color palette', () => {
+        const expectedColorPalette: IColorPalette = [
+            {
+                guid: '0',
+                fill: {
+                    r: 195,
+                    g: 49,
+                    b: 73
+                }
+            }, {
+                guid: '1',
+                fill: {
+                    r: 168,
+                    g: 194,
+                    b: 86
+                }
             }
-        };
+        ];
 
-        const props = {
-            sdk: mutatedSdk,
-            projectId,
-            identifier: CHART_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            intl
-        };
-
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
-
-        return testUtils.delay(SLOW + 1).then(() => {
-            wrapper.update();
-            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    it('should not call getColorPalette with unchanged SDK', () => {
-        const mutatedSdk = {
-            ...sdk,
-            clone: () => cloneDeep(mutatedSdk),
-            project: {
-                getColorPaletteWithGuids: jest.fn()
-            }
-        };
-
-        const props = {
-            sdk: mutatedSdk,
-            projectId,
-            identifier: CHART_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            intl
-        };
-
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any} />
-        );
-
-        return testUtils.delay(FAST + 1).then(() => {
-            wrapper.update();
-            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
-            wrapper.setProps({
+        it('should render BaseChart with colors prop', () => {
+            const props = {
+                sdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                TableComponent: Table,
                 config: {
-                    grid: {
-                        enabled: false
-                    }
+                    colors: ['rgb(195, 49, 73)', 'rgb(168, 194, 86)']
                 },
-                sdk: mutatedSdk
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
+
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
             });
-            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+        });
+
+        it('should render BaseChart with color palette prop', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => mutatedSdk,
+                project: {
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                TableComponent: Table,
+                config: {
+                    colorPalette: expectedColorPalette
+                },
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
+
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(0);
+            });
+        });
+
+        it('should get palette from sdk and render BaseChart with this palette when no colors/palette in props', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => mutatedSdk,
+                project: {
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
+
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
+            });
+        });
+
+        it('should not call getColorPalette with unchanged SDK', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => cloneDeep(mutatedSdk),
+                project: {
+                    getColorPaletteWithGuids: jest.fn()
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any} />
+            );
+
+            return testUtils.delay(FAST + 1).then(() => {
+                wrapper.update();
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+                wrapper.setProps({
+                    config: {
+                        grid: {
+                            enabled: false
+                        }
+                    },
+                    sdk: mutatedSdk
+                });
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+            });
         });
     });
 
