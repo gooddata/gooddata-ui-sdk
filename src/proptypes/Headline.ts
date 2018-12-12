@@ -13,7 +13,7 @@ export const HeadlinePropTypes = {
     ...EventsPropTypes,
     dataSource: DataSourcePropType,
     locale: PropTypes.string,
-    drillableItems: PropTypes.arrayOf(PropTypes.oneOf([DrillableItemPropType, DrillablePredicatePropType])),
+    drillableItems: PropTypes.arrayOf(PropTypes.oneOfType([DrillableItemPropType, DrillablePredicatePropType])),
     onFiredDrillEvent: PropTypes.func,
     stickyHeader: PropTypes.number,
     ErrorComponent: PropTypes.func,

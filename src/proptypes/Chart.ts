@@ -16,7 +16,7 @@ export const ChartPropTypes = {
     dataSource: DataSourcePropType.isRequired,
     locale: PropTypes.string,
     height: PropTypes.number,
-    drillableItems: PropTypes.arrayOf(PropTypes.oneOf([DrillableItemPropType, DrillablePredicatePropType])),
+    drillableItems: PropTypes.arrayOf(PropTypes.oneOfType([DrillableItemPropType, DrillablePredicatePropType])),
     environment: PropTypes.string,
     onLegendReady: PropTypes.func
 };

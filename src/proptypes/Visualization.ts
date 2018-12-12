@@ -14,7 +14,7 @@ export const VisualizationPropType = {
     config: ChartConfigPropType,
     ...EventsPropTypes,
     filters: FiltersPropType,
-    drillableItems: PropTypes.arrayOf(PropTypes.oneOf([DrillableItemPropType, DrillablePredicatePropType])),
+    drillableItems: PropTypes.arrayOf(PropTypes.oneOfType([DrillableItemPropType, DrillablePredicatePropType])),
     projectId: PropTypes.string.isRequired,
     identifier: PropTypes.string,
     uri: PropTypes.string,
