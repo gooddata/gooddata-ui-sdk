@@ -182,7 +182,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         const { enableSorting } = this.props;
         const { currentSortDirection } = this.state;
 
-        const sortClasses = classNames('s-sort-direction-arrow', {
+        const sortClasses = classNames('s-sort-direction-arrow', `s-sorted-${currentSortDirection}`, {
             'gd-pivot-table-header-arrow-up': currentSortDirection === 'asc',
             'gd-pivot-table-header-arrow-down': currentSortDirection === 'desc'
         });
@@ -218,6 +218,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
                 <div
                     className={classNames(
                         'gd-pivot-table-header',
+                        's-pivot-table-header',
                         {
                             'gd-pivot-table-header--open': this.state.isMenuOpen
                         }

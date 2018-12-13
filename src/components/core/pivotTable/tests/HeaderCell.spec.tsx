@@ -47,6 +47,7 @@ describe('HeaderCell renderer', () => {
             component.simulate('mouseEnter');
             expect(component.state('currentSortDirection')).toEqual('asc');
             expect(component.find('.s-sort-direction-arrow')).toHaveLength(1);
+            expect(component.find('.s-sorted-asc')).toHaveLength(1);
         });
 
         it('should call onSortChaged when clicked on label', () => {
