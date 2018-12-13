@@ -26,7 +26,7 @@ import { setTelemetryHeaders } from '../../helpers/utils';
 import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 import { isTreemap } from '../visualizations/utils/common';
-import { getColorMappingPredicate } from '../visualizations/utils/color';
+import { getColorMappingPredicate, getColorPaletteFromColors } from '../visualizations/utils/color';
 export { Requireable };
 
 const {
@@ -429,17 +429,28 @@ export class VisualizationWrapped
         this.subject.next(promise);
     }
 
-    private isExternalColorPalette() {
+    private hasExternalColorPalette() {
         return this.props.config && this.props.config.colorPalette;
     }
 
-    private async getColorPalette() {
-        if (!this.isUnmounted
-            && !(this.isExternalColorPalette())) {
-            const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+    private hasColorsProp() {
+        return this.props.config && this.props.config.colors;
+    }
 
-            if (colorPalette) {
-                this.setStateWithCheck({ colorPalette });
+    private async getColorPalette() {
+        if (!this.isUnmounted) {
+            if (this.hasExternalColorPalette()) {
+                return;
+            } else if (this.hasColorsProp()) {
+                this.setStateWithCheck({
+                    colorPalette: getColorPaletteFromColors(this.props.config.colors)
+                });
+            } else {
+                const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+
+                if (colorPalette) {
+                    this.setStateWithCheck({ colorPalette });
+                }
             }
         }
     }
