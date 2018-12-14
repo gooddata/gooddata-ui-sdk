@@ -13,6 +13,8 @@ The REST API versions in the table are just for your information as the values a
 
 ## Unreleased/planned
 
+- Arithmetic measures
+- Drilling using function predicates
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
 
 ## 6.1.0
@@ -23,8 +25,6 @@ December 17, 2018
 
 - Support for a secondary axis in line charts, bar charts, and column charts ([commit](https://github.com/gooddata/gooddata-react-components/commit/0bc35208b098835d5e86fbe1372f120afa7d5e80))
 - Color mapping ([commit](https://github.com/gooddata/gooddata-react-components/commit/58ad5e43b1d0f262ffd73bec8061673091409a21))
-- Arithmetic measures
-- Drilling using function predicates ([commit](https://github.com/gooddata/gooddata-react-components/commit/e5b55540fb8434662300dfbda95a427adf8096de))
 
 ### Changed
 
