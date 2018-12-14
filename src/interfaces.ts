@@ -1,4 +1,4 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2018 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
 
 export type SortDirection = 'asc' | 'desc';
@@ -265,4 +265,14 @@ export interface ISdkOptions {
 
 export interface IFeatureFlags {
     [key: string]: number | boolean | string;
+}
+
+export interface IExportConfig {
+    title?: string;
+    format?: 'xlsx' | 'csv' | 'raw';
+    mergeHeaders?: boolean;
+}
+
+export interface IExportResponse {
+    uri: string;
 }

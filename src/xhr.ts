@@ -202,6 +202,13 @@ export class XhrModule {
     }
 
     /**
+     * Wrapper for xhr.ajax method HEAD
+     */
+    public head(url: string, settings?: any) {
+        return this.ajax(url, merge({ method: 'HEAD' }, settings));
+    }
+
+    /**
      * Wrapper for xhr.ajax method POST
      */
     public post(url: string, settings?: any) {

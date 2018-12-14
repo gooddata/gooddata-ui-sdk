@@ -36,13 +36,14 @@ export interface IPollingOptions {
 /**
  * Helper for polling
  *
+ * @param xhrRequest xhr module
  * @param {String} uri
  * @param {Function} isPollingDone
  * @param {Object} options for polling (maxAttempts, pollStep)
  * @private
  */
 export const handlePolling = (
-    xhrGet: any,
+    xhrRequest: any,
     uri: string,
     isPollingDone: Function,
     options: IPollingOptions = {}
@@ -53,7 +54,7 @@ export const handlePolling = (
         pollStep = 5000
     } = options;
 
-    return xhrGet(uri)
+    return xhrRequest(uri)
         .then((r: any) => r.getData())
         .then((response: any) => {
             if (attempts > maxAttempts) {
@@ -62,7 +63,7 @@ export const handlePolling = (
             return isPollingDone(response) ?
                 Promise.resolve(response) :
                 delay(pollStep).then(() => {
-                    return handlePolling(xhrGet, uri, isPollingDone, {
+                    return handlePolling(xhrRequest, uri, isPollingDone, {
                         ...options,
                         attempts: attempts + 1
                     });
