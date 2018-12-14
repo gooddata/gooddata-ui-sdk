@@ -81,6 +81,27 @@ export const measureHeaderItemSP: IMappingHeader = {
     }
 };
 
+export const executionResponseWithDerived: Execution.IExecutionResponse = {
+    dimensions: [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: [
+                            measureHeaderItem,
+                            measureHeaderItemPP,
+                            measureHeaderItemSP
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    links: {
+        executionResult: 'foo'
+    }
+};
+
 export const attributeHeader: IMappingHeader = {
     attributeHeader: {
         uri: '/attributeHeader.uri',
@@ -192,5 +213,45 @@ export const amMeasureHeaderItems = {
             name: 'AM3',
             format: '#,##0.00'
         }
+    }
+};
+
+export const executionResponseWithAmMeasures: Execution.IExecutionResponse = {
+    dimensions: [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: [
+                            amMeasureHeaderItems.m1,
+                            amMeasureHeaderItems.m2,
+                            amMeasureHeaderItems.am1,
+                            amMeasureHeaderItems.am2,
+                            amMeasureHeaderItems.am3
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    links: {
+        executionResult: 'foo'
+    }
+};
+
+export const emptyExecutionResponse: Execution.IExecutionResponse = {
+    dimensions: [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: []
+                    }
+                }
+            ]
+        }
+    ],
+    links: {
+        executionResult: 'foo'
     }
 };

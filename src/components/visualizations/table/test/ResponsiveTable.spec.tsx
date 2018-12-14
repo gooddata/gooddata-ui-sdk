@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { noop, range } from 'lodash';
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 import { withIntl } from '../../utils/intlUtils';
 import { TableRow } from '../../../../interfaces/Table';
@@ -11,7 +11,12 @@ import { IResponsiveTableProps, IResponsiveTableState, ResponsiveTable } from '.
 import { Table } from '../Table';
 import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 
-import { EXECUTION_REQUEST_1A_2M, TABLE_HEADERS_1A_2M, TABLE_ROWS_1A_2M } from '../fixtures/1attribute2measures';
+import {
+    EXECUTION_REQUEST_1A_2M,
+    TABLE_HEADERS_1A_2M,
+    TABLE_ROWS_1A_2M,
+    EXECUTION_RESPONSE_1A_2M
+} from '../fixtures/1attribute2measures';
 import 'jest';
 
 const ROWS_PER_PAGE: number = 10;
@@ -22,6 +27,7 @@ const getLess = (wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableSt
 
 interface ITableData {
     executionRequest: AFM.IExecution;
+    executionResponse: Execution.IExecutionResponse;
     headers: IMappingHeader[];
     rows: TableRow[];
     totalsWithData?: ITotalWithData[];
@@ -30,6 +36,7 @@ interface ITableData {
 describe('Responsive Table', () => {
     const TABLE_DATA: ITableData = {
         executionRequest: EXECUTION_REQUEST_1A_2M,
+        executionResponse: EXECUTION_RESPONSE_1A_2M,
         headers: TABLE_HEADERS_1A_2M,
         rows: TABLE_ROWS_1A_2M
     };
@@ -95,6 +102,7 @@ describe('Responsive Table', () => {
     describe('when data contains more than 1 page of rows', () => {
         const tableData: ITableData = {
             executionRequest: EXECUTION_REQUEST_1A_2M,
+            executionResponse: EXECUTION_RESPONSE_1A_2M,
             headers: TABLE_HEADERS_1A_2M,
             rows: range(0, 25).map(() => TABLE_ROWS_1A_2M[0])
         };

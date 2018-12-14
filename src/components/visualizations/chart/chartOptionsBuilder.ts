@@ -859,7 +859,9 @@ export function findInDimensionHeaders(dimensions: Execution.IResultDimension[],
     return returnValue;
 }
 
-export function findMeasureGroupInDimensions(dimensions: Execution.IResultDimension[]) {
+export function findMeasureGroupInDimensions(
+    dimensions: Execution.IResultDimension[]
+): Execution.IMeasureGroupHeader['measureGroupHeader'] {
     return findInDimensionHeaders(dimensions,
         (headerType: string, header: Execution.IMeasureGroupHeader['measureGroupHeader'],
          _dimensionIndex: number, headerIndex: number, headerCount: number) => {
@@ -891,7 +893,7 @@ export function findAttributeInDimension(
         });
 }
 
-export function getDrillContext(stackByItem: any, viewByItem: any, measures: AFM.IMeasure[], afm: AFM.IAfm) {
+export function getDrillContext(stackByItem: any, viewByItem: any, measures: any[], afm: AFM.IAfm) {
     return without([
         ...measures,
         viewByItem,
@@ -966,13 +968,14 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
 export function getDrillableSeries(
     series: any,
     drillableItems: IHeaderPredicate[],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    type: VisType,
-    afm: AFM.IAfm
+    executionResponse: Execution.IExecutionResponse,
+    afm: AFM.IAfm,
+    type: VisType
 ) {
     const isMultiMeasureWithOnlyMeasures = isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
+    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
@@ -1028,7 +1031,7 @@ export function getDrillableSeries(
             ], null);
 
             const drilldown = drillableHooks.some(drillableHook =>
-                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm)
+                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm, executionResponse)
             );
 
             const drillableProps: any = {
@@ -1428,7 +1431,7 @@ export function getTreemapAttributes(
  * @param resultSpec <executionRequest.resultSpec> object defining expected result dimension structure,
  * @param dimensions <executionResponse.dimensions> array defining calculated dimensions and their headers,
  * @param executionResultData <executionResult.data> array with calculated data
- * @param unfilteredHeaderItems <executionResult.headerItems> array of attribute header items mixed with measures
+ * @param unfilteredResultHeaderItems <executionResult.headerItems> array of attribute header items mixed with measures
  * @param config object defining chart display settings
  * @param drillableItems array of items for isPointDrillable matching
  * @return Returns composed chart options object
@@ -1436,15 +1439,15 @@ export function getTreemapAttributes(
 export function getChartOptions(
     afm: AFM.IAfm,
     _resultSpec: AFM.IResultSpec,
-    dimensions: Execution.IResultDimension[],
+    executionResponse: Execution.IExecutionResponse,
     executionResultData: Execution.DataValue[][],
-    unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
+    unfilteredResultHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
     drillableItems: IHeaderPredicate[]
 ): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
-    const attributeHeaderItems = unfilteredHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
+    const attributeHeaderItems = unfilteredResultHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
         return dimension.filter((attributeHeaders: any) => attributeHeaders[0].attributeHeaderItem);
     });
 
@@ -1452,7 +1455,7 @@ export function getChartOptions(
         `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`);
 
     const { type, mdObject } = config;
-    const measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'] = findMeasureGroupInDimensions(dimensions);
+    const { dimensions } = executionResponse;
     let viewByAttribute;
     let stackByAttribute;
 
@@ -1478,20 +1481,19 @@ export function getChartOptions(
         );
     }
 
-    invariant(measureGroup, 'missing measureGroup');
-
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,
         config.colorMapping,
-        measureGroup,
         viewByAttribute,
         stackByAttribute,
+        executionResponse,
         afm,
         type
     );
 
     const gridEnabled = get(config, 'grid.enabled', true);
     const stacking = getStackingConfig(stackByAttribute, config);
+    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
@@ -1508,11 +1510,11 @@ export function getChartOptions(
     const drillableSeries = getDrillableSeries(
         seriesWithoutDrillability,
         drillableItems,
-        measureGroup,
         viewByAttribute,
         stackByAttribute,
-        type,
-        afm
+        executionResponse,
+        afm,
+        type
     );
 
     const series = assignYAxes(drillableSeries, yAxes);

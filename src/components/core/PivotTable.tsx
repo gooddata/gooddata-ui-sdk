@@ -406,7 +406,7 @@ export class PivotTableInner extends
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
     public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
-        const { dataSource } = this.props;
+        const { dataSource, execution: { executionResponse } } = this.props;
         const { rowIndex } = cellClassParams;
         const colDef = cellClassParams.colDef as IGridHeader;
         const drillablePredicates = this.getDrillablePredicates();
@@ -422,10 +422,8 @@ export class PivotTableInner extends
                 get<CellClassParams, IMappingHeader>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
             const headers: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
 
-            hasDrillableHeader = headers
-                .some(
-                    (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
-                );
+            hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
+                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
         }
 
         const className = classNames(
@@ -502,7 +500,7 @@ export class PivotTableInner extends
     }
 
     public cellClicked = (cellEvent: IGridCellEvent) => {
-        const { onFiredDrillEvent } = this.props;
+        const { onFiredDrillEvent, execution: { executionResponse } } = this.props;
         const { columnDefs } = this.state;
         const afm: AFM.IAfm = this.props.dataSource.getAfm();
         const drillablePredicates = this.getDrillablePredicates();
@@ -511,10 +509,8 @@ export class PivotTableInner extends
         const isRowTotal = get<IGridCellEvent, string>(cellEvent, ['data', 'type', ROW_TOTAL]);
         const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'drillItemMap', colDef.field]);
         const drillItems: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
-        const drillableHeaders = drillItems
-            .filter(
-                (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
-            );
+        const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
+            isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
 
         if (isRowTotal || drillableHeaders.length === 0) {
             return false;

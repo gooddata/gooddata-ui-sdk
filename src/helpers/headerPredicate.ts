@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 import { identifierMatch, uriMatch } from '../factory/HeaderPredicateFactory';
 import { IDrillableItem, isDrillableItemIdentifier, isDrillableItemUri } from '../interfaces/DrillEvents';
 import { IHeaderPredicate, isHeaderPredicate } from '../interfaces/HeaderPredicate';
@@ -8,9 +8,11 @@ import { IMappingHeader } from '../interfaces/MappingHeader';
 export function isSomeHeaderPredicateMatched(
     drillablePredicates: IHeaderPredicate[],
     header: IMappingHeader,
-    afm: AFM.IAfm
+    afm: AFM.IAfm,
+    executionResponse: Execution.IExecutionResponse
 ): boolean {
-    return drillablePredicates.some((drillablePredicate: IHeaderPredicate) => drillablePredicate(header, afm));
+    return drillablePredicates.some((drillablePredicate: IHeaderPredicate) =>
+        drillablePredicate(header, { afm, executionResponse }));
 }
 
 export function convertDrillableItemsToPredicates(

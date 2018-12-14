@@ -110,7 +110,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         const {
             drillableItems,
             executionRequest: { afm, resultSpec },
-            executionResponse: { dimensions },
+            executionResponse,
             executionResult: { data, headerItems },
             config,
             onDataTooLarge,
@@ -128,7 +128,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         this.chartOptions = getChartOptions(
             afm,
             resultSpec,
-            dimensions,
+            executionResponse,
             multiDimensionalData as Execution.DataValue[][],
             headerItems,
             config,

@@ -8,7 +8,7 @@ import {
     hasMappingHeaderIndentifier,
     hasMappingHeaderLocalIdentifier
 } from '../helpers/mappingHeader';
-import { IHeaderPredicate } from '../interfaces/HeaderPredicate';
+import { IHeaderPredicate, IHeaderPredicateContext } from '../interfaces/HeaderPredicate';
 import { IMappingHeader, isMappingHeaderAttributeItem, isMappingHeaderMeasureItem } from '../interfaces/MappingHeader';
 
 type IObjectQualifierPredicate = (qualifier: AFM.ObjQualifier) => boolean;
@@ -33,11 +33,12 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
 }
 
 function composedFromQualifier(predicate: IObjectQualifierPredicate): IHeaderPredicate {
-    return (header: IMappingHeader, afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         if (!isMappingHeaderMeasureItem(header)) {
             return false;
         }
 
+        const { afm } = context;
         const measureLocalIdentifier = getMappingHeaderLocalIdentifier(header);
         const arithmeticMeasure = afm.measures.find((measure) => {
             return measure.localIdentifier === measureLocalIdentifier;
@@ -54,7 +55,7 @@ function composedFromQualifier(predicate: IObjectQualifierPredicate): IHeaderPre
 }
 
 export function uriMatch(uri: string): IHeaderPredicate {
-    return (header: IMappingHeader, afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const headerUri = getMappingHeaderUri(header);
         if (headerUri && headerUri === uri) {
             return true;
@@ -66,7 +67,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
         if (headerLocalIdentifier) {
-            const measureHeader = getMasterMeasureObjQualifier(afm, headerLocalIdentifier);
+            const measureHeader = getMasterMeasureObjQualifier(context.afm, headerLocalIdentifier);
             return measureHeader && measureHeader.uri ? measureHeader.uri === uri : false;
         }
 
@@ -75,7 +76,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
 }
 
 export function identifierMatch(identifier: string): IHeaderPredicate {
-    return (header: IMappingHeader, afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderIndentifier(header)) {
             return false;
         }
@@ -87,7 +88,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
         if (headerLocalIdentifier) {
-            const measureHeader = getMasterMeasureObjQualifier(afm, headerLocalIdentifier);
+            const measureHeader = getMasterMeasureObjQualifier(context.afm, headerLocalIdentifier);
             return measureHeader && measureHeader.identifier ? measureHeader.identifier === identifier : false;
         }
 
@@ -96,7 +97,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 }
 
 export function attributeItemNameMatch(name: string): IHeaderPredicate  {
-    return (header: IMappingHeader, _afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         return isMappingHeaderAttributeItem(header)
             ? header.attributeHeaderItem && (header.attributeHeaderItem.name === name)
             : false;
@@ -104,7 +105,7 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate  {
 }
 
 export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate  {
-    return (header: IMappingHeader, _afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
             return false;
         }
