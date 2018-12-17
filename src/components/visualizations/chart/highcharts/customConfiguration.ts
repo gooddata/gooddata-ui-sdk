@@ -15,10 +15,9 @@ import pickBy = require('lodash/pickBy');
 import * as numberJS from '@gooddata/numberjs';
 
 import { styleVariables } from '../../styles/variables';
-import { IAxis, IChartOptions } from '../chartOptionsBuilder';
-import { IChartConfig } from '../Chart';
+import { IAxis, IChartOptions, supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
-import { IDataLabelsVisibile } from '../../../../interfaces/Config';
+import { IDataLabelsVisibile, IChartConfig } from '../../../../interfaces/Config';
 import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import {
@@ -83,12 +82,12 @@ function getTitleConfiguration(chartOptions: any) {
     };
 }
 
-function formatAsPercent() {
+export function formatAsPercent() {
     const val = parseFloat((this.value * 100).toPrecision(14));
     return `${val}%`;
 }
 
-function isInPercent(format: string = '') {
+export function isInPercent(format: string = '') {
     return format.includes('%');
 }
 
@@ -243,7 +242,6 @@ function isPointBasedChart(chartType: string) {
         VisualizationTypes.LINE,
         VisualizationTypes.AREA,
         VisualizationTypes.TREEMAP,
-        VisualizationTypes.DUAL,
         VisualizationTypes.SCATTER
     ];
     return isOneOfTypes(chartType, pointBasedTypes);
@@ -727,7 +725,6 @@ function getDataConfiguration(chartOptions: any) {
 
 function lineSeriesMapFn(seriesOrig: any) {
     const series = cloneDeep(seriesOrig);
-
     if (series.isDrillable) {
         set(series, 'marker.states.hover.fillColor', getLighterColor(series.color, HOVER_BRIGHTNESS));
     } else {
@@ -746,6 +743,21 @@ function barSeriesMapFn(seriesOrig: any) {
     return series;
 }
 
+function getHeatMapHoverColor(config: any) {
+    const dataClasses = get(config, ['colorAxis', 'dataClasses'], null);
+    let resultColor = 'rgb(210,210,210)';
+
+    if (dataClasses) {
+        if (dataClasses.length === 1) {
+            resultColor = dataClasses[0].color;
+        } else if (dataClasses.length > 1) {
+            resultColor = dataClasses[1].color;
+        }
+    }
+
+    return getLighterColor(resultColor, 0.2);
+}
+
 function getHoverStyles({ type }: any, config: any) {
     let seriesMapFn = noop;
 
@@ -753,7 +765,6 @@ function getHoverStyles({ type }: any, config: any) {
         default:
             throw new Error(`Undefined chart type "${type}".`);
 
-        case VisualizationTypes.DUAL:
         case VisualizationTypes.LINE:
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
@@ -764,8 +775,18 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.FUNNEL:
-        case VisualizationTypes.HEATMAP:
             seriesMapFn = barSeriesMapFn;
+            break;
+        case VisualizationTypes.HEATMAP:
+            seriesMapFn = (seriesOrig, config) => {
+                const series = cloneDeep(seriesOrig);
+                const color = getHeatMapHoverColor(config);
+
+                set(series, 'states.hover.color', color);
+                set(series, 'states.hover.enabled', series.isDrillable);
+
+                return series;
+            };
             break;
 
         case VisualizationTypes.COMBO:
@@ -805,14 +826,14 @@ function getHoverStyles({ type }: any, config: any) {
             break;
     }
     return {
-        series: config.series.map(seriesMapFn),
+        series: config.series.map((item: any) => seriesMapFn(item, config)),
         plotOptions: {
             ...[
                 VisualizationTypes.LINE,
                 VisualizationTypes.AREA,
                 VisualizationTypes.SCATTER,
                 VisualizationTypes.BUBBLE
-            ].reduce((conf, key) => ({
+            ].reduce((conf: any, key) => ({
                 ...conf,
                 [key]: {
                     point: {
@@ -898,17 +919,22 @@ function getXAxisTickConfiguration(chartOptions: any) {
     return {};
 }
 
-function getYAxisTickConfiguration(chartOptions: any) {
-    const { type } = chartOptions;
+function getYAxisTickConfiguration(chartOptions: any, axisPropsKey: string) {
+    const { type, yAxes } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
             startOnTick: shouldYAxisStartOnTickOnBubbleScatter(chartOptions)
         };
     }
 
+    if (isOneOfTypes(type, supportedDualAxesChartTypes) && yAxes.length > 1) {
+        // disable { startOnTick, endOnTick } to make gridline sync in both axes
+        return {};
+    }
+
     return {
-        startOnTick: shouldStartOnTick(chartOptions),
-        endOnTick: shouldEndOnTick(chartOptions)
+        startOnTick: shouldStartOnTick(chartOptions, axisPropsKey),
+        endOnTick: shouldEndOnTick(chartOptions, axisPropsKey)
     };
 }
 
@@ -928,21 +954,24 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
+            const opposite = get(axis, 'opposite', false);
+            const axisPropsKey = opposite ? 'secondary_yAxisProps' : 'yAxisProps';
+
             // For bar chart take x axis options
-            const min = get(chartOptions, 'yAxisProps.min', '');
-            const max = get(chartOptions, 'yAxisProps.max', '');
-            const visible = get(chartOptions, 'yAxisProps.visible', true);
+            const min = get(chartOptions, `${axisPropsKey}.min`, '');
+            const max = get(chartOptions, `${axisPropsKey}.max`, '');
+            const visible = get(chartOptions, `${axisPropsKey}.visible`, true);
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
 
-            const rotation = get(chartOptions, 'yAxisProps.rotation', 'auto');
+            const rotation = get(chartOptions, `${axisPropsKey}.rotation`, 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
             const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
-            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'yAxisProps', shouldCheckForEmptyCategories);
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
-            const tickConfiguration = getYAxisTickConfiguration(chartOptions);
+            const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
 
             return {
                 ...getAxisLineConfiguration(type, visible),
@@ -962,7 +991,7 @@ function getAxesConfiguration(chartOptions: any) {
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif'
                     }
                 },
-                opposite: axis.opposite,
+                opposite,
                 ...maxProp,
                 ...minProp,
                 ...tickConfiguration
@@ -976,18 +1005,21 @@ function getAxesConfiguration(chartOptions: any) {
                 };
             }
 
-            const min = get(chartOptions, 'xAxisProps.min', '');
-            const max = get(chartOptions, 'xAxisProps.max', '');
+            const opposite = get(axis, 'opposite', false);
+            const axisPropsKey = opposite ? 'secondary_xAxisProps' : 'xAxisProps';
+
+            const min = get(chartOptions, axisPropsKey.concat('.min'), '');
+            const max = get(chartOptions, axisPropsKey.concat('.max'), '');
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
 
-            const visible = get(chartOptions, 'xAxisProps.visible', true);
-            const rotation = get(chartOptions, 'xAxisProps.rotation', 'auto');
+            const visible = get(chartOptions, axisPropsKey.concat('.visible'), true);
+            const rotation = get(chartOptions, axisPropsKey.concat('.rotation'), 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
 
             const shouldCheckForEmptyCategories = (isScatterPlot(type) || isBubbleChart(type)) ? false : true;
-            const labelsEnabled = areAxisLabelsEnabled(chartOptions, 'xAxisProps', shouldCheckForEmptyCategories);
+            const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
 
             const tickConfiguration = getXAxisTickConfiguration(chartOptions);
 

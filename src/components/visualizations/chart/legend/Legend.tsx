@@ -10,6 +10,7 @@ import { isHeatmap } from '../../utils/common';
 import HeatmapLegend from './HeatmapLegend';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
+import { transformToDualAxesSeries } from './helpers';
 
 export interface ILegendProps {
     responsive?: boolean;
@@ -47,7 +48,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
     }
 
     public getSeries() {
-        const { series, legendItemsEnabled } = this.props;
+        const { series, legendItemsEnabled, chartType } = this.props;
 
         const seriesWithVisibility = series.map((seriesItem: any) => {
             const isVisible = legendItemsEnabled[seriesItem.legendIndex];
@@ -56,7 +57,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
                 isVisible
             };
         });
-        return seriesWithVisibility;
+        return transformToDualAxesSeries(seriesWithVisibility, chartType);
     }
 
     public renderFluid() {

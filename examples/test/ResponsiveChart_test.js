@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Responsive chart')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/responsive`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/responsive`));
 
 test('Responsive chart could be resized', async (t) => {
     const chart = Selector('.s-resizable-vis svg');

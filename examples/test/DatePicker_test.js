@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Detepicker')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/date-picker`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/date-picker`));
 
 test('should be able to set from and to dates', async (t) => {
     const datePickerFrom = Selector('.s-date-picker-from .gd-input-field');

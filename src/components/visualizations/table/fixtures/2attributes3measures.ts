@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_2A_3M: AFM.IExecution = {
     execution: {
@@ -328,44 +329,76 @@ export const EXECUTION_RESULT_2A_3M: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_2A_3M: TableHeader[] = [
+export const TABLE_HEADERS_2A_3M: IMappingHeader[] = [
     {
-        type: 'attribute',
-        uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
-        identifier: '1st_attr_df_identifier',
-        localIdentifier: '1st_attr_df_local_identifier',
-        name: 'Product'
+        attributeHeader: {
+            uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
+            identifier: '1st_attr_df_identifier',
+            localIdentifier: '1st_attr_df_local_identifier',
+            name: 'Product Name',
+            formOf: {
+                uri: '/gdc/md/project_id/obj/1st_attr_uri_id',
+                identifier: '1st_attr_local_identifier',
+                name: 'Product'
+            },
+            totalItems: [
+                {
+                    totalHeaderItem: {
+                        name: 'sum'
+                    }
+                },
+                {
+                    totalHeaderItem: {
+                        name: 'avg'
+                    }
+                },
+                {
+                    totalHeaderItem: {
+                        name: 'nat'
+                    }
+                }
+            ]
+        }
     },
     {
-        type: 'attribute',
-        uri: '/gdc/md/project_id/obj/2nd_attr_df_uri_id',
-        identifier: '2nd_attr_df_identifier',
-        localIdentifier: '2nd_attr_df_local_identifier',
-        name: 'Region'
+        attributeHeader: {
+            uri: '/gdc/md/project_id/obj/2nd_attr_df_uri_id',
+            identifier: '2nd_attr_df_identifier',
+            localIdentifier: '2nd_attr_df_local_identifier',
+            name: 'Region Area',
+            formOf: {
+                uri: '/gdc/md/project_id/obj/2nd_attr_uri_id',
+                identifier: '2nd_attr_local_identifier',
+                name: 'Region'
+            }
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
-        identifier: '1st_measure_identifier',
-        localIdentifier: '1st_measure_local_identifier',
-        name: 'Lost',
-        format: '$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
+            identifier: '1st_measure_identifier',
+            localIdentifier: '1st_measure_local_identifier',
+            name: 'Lost',
+            format: '$#,##0.00'
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
-        identifier: '2nd_measure_identifier',
-        localIdentifier: '2nd_measure_local_identifier',
-        name: 'Won',
-        format: '[red]$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
+            identifier: '2nd_measure_identifier',
+            localIdentifier: '2nd_measure_local_identifier',
+            name: 'Won',
+            format: '[red]$#,##0.00'
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/3rd_measure_uri_id',
-        identifier: '3rd_measure_identifier',
-        localIdentifier: '3rd_measure_local_identifier',
-        name: 'Expected',
-        format: '[backgroundColor=ffff00][red]$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/3rd_measure_uri_id',
+            identifier: '3rd_measure_identifier',
+            localIdentifier: '3rd_measure_local_identifier',
+            name: 'Expected',
+            format: '[backgroundColor=ffff00][red]$#,##0.00'
+        }
     }
 ];
 

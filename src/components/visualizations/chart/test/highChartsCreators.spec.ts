@@ -33,10 +33,6 @@ const chartOptions = {
 
 const pieChartOrTreemapOptions = {
     type: VisualizationTypes.PIE,
-    colorPalette: [
-        'rgb(20,178,226)',
-        'rgb(0,193,141)'
-    ],
     data: {
         series: [
             {

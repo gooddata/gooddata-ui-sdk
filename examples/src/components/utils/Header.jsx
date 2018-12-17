@@ -44,6 +44,17 @@ class Header extends React.Component {
                     <span className="backendInfoValue">{projectId}</span>
                 </span>
                 <span className="backendInfoItem">
+                    <span className="backendInfoValue">
+                        <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href="https://github.com/gooddata/gooddata-react-components/blob/master/examples/src/utils/fixtures.js#L25"
+                        >
+                            Data Used
+                        </a>
+                    </span>
+                </span>
+                <span className="backendInfoItem">
                     <Link to="/about-this-project">
                         <span>About This Project</span>
                     </Link>
@@ -57,7 +68,8 @@ class Header extends React.Component {
         const { isUserLoggedIn } = this.props;
         const redirectUri = typeof window !== 'undefined' && !window.location.pathname.match('/login') ? window.location.pathname : '/';
         if (isUserLoggedIn === null) {
-            return <div className="gd-header-menu-item" ><CustomLoading color="white" imageHeight={19} /></div>;
+            // s-isWaitingForLoggedInStatus is used to check if we are still waiting to determine logged in status
+            return <div className="gd-header-menu-item s-isWaitingForLoggedInStatus" ><CustomLoading color="white" imageHeight={19} /></div>;
         }
         if (isUserLoggedIn === false) {
             return (<div>
@@ -72,7 +84,8 @@ class Header extends React.Component {
                 ><span>Login</span></Link>
             </div>);
         }
-        return <div className="gd-header-menu-item button-logout button-header" onClick={this.props.logoutAction}>Logout</div>;
+        // s-isLoggedIn is used to check the site is logged in
+        return <div className="gd-header-menu-item button-logout button-header s-isLoggedIn" onClick={this.props.logoutAction}>Logout</div>;
     }
 
     render() {

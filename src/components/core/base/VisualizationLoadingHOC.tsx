@@ -10,6 +10,7 @@ import { IEvents, ILoadingState } from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import { IntlWrapper } from '../../core/base/IntlWrapper';
@@ -18,13 +19,13 @@ import { LoadingComponent, ILoadingProps } from '../../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../../simple/ErrorComponent';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { IPushData } from '../../../interfaces/PushData';
-import { IChartConfig } from '../../visualizations/chart/Chart';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
 export interface ICommonVisualizationProps extends IEvents {
     locale?: string;
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     afterRender?: () => void;
     pushData?: (data: IPushData) => void;
     ErrorComponent?: React.ComponentType<IErrorProps>;
@@ -110,6 +111,10 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             const { dataSource, resultSpec } = this.props;
             if (autoExecuteDataSource) {
                 this.initDataLoading(dataSource, resultSpec);
+            } else {
+                // without this, the ReportVisualization component doesn't assign executionId
+                // and doesn't match results to executions and never stops loading
+                this.onLoadingChanged({ isLoading: true });
             }
         }
 
@@ -147,9 +152,9 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
-        ) {
+        ): Promise<Execution.IExecutionResponses> {
             if (this.hasUnmounted) {
-                return null;
+                return Promise.resolve(null);
             }
             this.setState({ error: null });
 
@@ -208,7 +213,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
-        ) {
+        ): Promise<Execution.IExecutionResponses> {
             const pagePromise = this.props.dataSource.getPage(resultSpec, limit, offset);
             this.pagePromises.push(pagePromise);
             return pagePromise.then((result: Execution.IExecutionResponses) => {

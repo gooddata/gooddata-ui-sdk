@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-@import '~@gooddata/goodstrap/lib/core/styles/themes/indigo/variables';
+@import '~@gooddata/goodstrap/lib/core/styles/variables';
 
 $ag-icons-path: "~ag-grid/src/styles/balham-icons/";
 $menu-icon-size: 16px;
@@ -132,24 +132,37 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        > span {
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
-     &--numeric {
-         flex-direction: row-reverse;
+    &-next-sort {
+        min-width: 12px;
+    }
 
-     }
-     &--numeric &-label {
-         &-text {
-             text-align: right;
-             flex: 1 1 auto;
-         }
-     }
-     &--numeric &-sort {
-         flex: 0 0 auto;
-     }
-     &--numeric &-next-sort {
-         flex: 0 0 auto;
-     }
+    &--numeric {
+        flex-direction: row-reverse;
+
+    }
+
+    &--numeric &-label {
+        &-text {
+            text-align: right;
+            flex: 1 1 auto;
+        }
+    }
+
+    &--numeric &-sort {
+        flex: 0 0 auto;
+    }
+
+    &--numeric &-next-sort {
+        flex: 0 0 auto;
+    }
 
     &--sorting-enabled &-label {
         cursor: pointer;

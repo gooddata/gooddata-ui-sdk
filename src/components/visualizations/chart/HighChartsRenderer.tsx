@@ -8,12 +8,13 @@ import noop = require('lodash/noop');
 import partial = require('lodash/partial');
 import throttle = require('lodash/throttle');
 import * as cx from 'classnames';
-import Chart, { IChartConfig, IChartProps } from './Chart';
+import Chart, { IChartProps } from './Chart';
 import Legend, { ILegendProps } from './legend/Legend';
 import { TOP, LEFT, BOTTOM, RIGHT } from './legend/PositionTypes';
 import { isPieOrDonutChart, isOneOfTypes } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { OnLegendReady } from '../../../interfaces/Events';
+import { IChartConfig } from '../../../interfaces/Config';
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 

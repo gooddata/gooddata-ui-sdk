@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Dynamic measures')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/dynamic-measures`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/dynamic-measures`));
 
 test('should be able to set measures and render them', async (t) => {
     const sidebarItems = Selector('.s-dynamic-measures-sidebar .list-item');

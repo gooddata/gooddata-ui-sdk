@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_1A_2M: AFM.IExecution = {
     execution: {
@@ -154,27 +155,35 @@ export const EXECUTION_RESULT_1A_2M: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_1A_2M: TableHeader[] = [
+export const TABLE_HEADERS_1A_2M: IMappingHeader[] = [
     {
-        type: 'attribute',
-        uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
-        identifier: '1st_attr_df_identifier',
-        localIdentifier: '1st_attr_df_local_identifier',
-        name: 'Name'
+        attributeHeader: {
+            uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
+            identifier: '1st_attr_df_identifier',
+            localIdentifier: '1st_attr_df_local_identifier',
+            name: 'Full Name',
+            formOf: {
+                uri: '/gdc/md/project_id/obj/1st_attr_uri_id',
+                identifier: '1st_attr_local_identifier',
+                name: 'Name'
+            }
+        }
     }, {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
-        identifier: '1st_measure_identifier',
-        localIdentifier: '1st_measure_local_identifier',
-        name: '# of Open Opps.',
-        format: '#,##0'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
+            identifier: '1st_measure_identifier',
+            localIdentifier: '1st_measure_local_identifier',
+            name: '# of Open Opps.',
+            format: '#,##0'
+        }
     }, {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
-        identifier: '2nd_measure_identifier',
-        localIdentifier: '2nd_measure_local_identifier',
-        name: '# of Opportunities',
-        format: '[red]#,##0'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/2nd_measure_uri_id',
+            identifier: '2nd_measure_identifier',
+            localIdentifier: '2nd_measure_local_identifier',
+            name: '# of Opportunities',
+            format: '[red]#,##0'
+        }
     }
 ];
 

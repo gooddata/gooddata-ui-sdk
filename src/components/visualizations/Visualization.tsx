@@ -1,11 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import * as invariant from 'invariant';
+import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import isFunction = require('lodash/isFunction');
 import omitBy = require('lodash/omitBy');
-import { Highcharts, IChartConfig } from './chart/Chart';
+import { Highcharts } from './chart/Chart';
+import { IChartConfig } from '../../interfaces/Config';
 import { OnFiredDrillEvent } from '../../interfaces/Events';
 
 import {
@@ -30,7 +32,7 @@ export interface IVisualizationProps {
     executionRequest: IExecutionRequest;
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
-    drillableItems: IDrillableItem[];
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     locale?: string;
 
     onFiredDrillEvent?: OnFiredDrillEvent;

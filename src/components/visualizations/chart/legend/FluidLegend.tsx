@@ -2,7 +2,7 @@
 import * as React from 'react';
 import * as cx from 'classnames';
 
-import LegendItem from './LegendItem';
+import LegendList from './LegendList';
 import { calculateFluidLegend } from './helpers';
 
 export default class FluidLegend extends React.PureComponent<any, any> {
@@ -34,17 +34,7 @@ export default class FluidLegend extends React.PureComponent<any, any> {
 
         return (
             <div className="series">
-                {pagedSeries.map((item: any, index: number) => {
-                    return (
-                        <LegendItem
-                            width={itemWidth}
-                            chartType={chartType}
-                            key={index}
-                            item={item}
-                            onItemClick={onItemClick}
-                        />
-                    );
-                })}
+                <LegendList chartType={chartType} series={pagedSeries} onItemClick={onItemClick} width={itemWidth}/>
             </div>
         );
     }

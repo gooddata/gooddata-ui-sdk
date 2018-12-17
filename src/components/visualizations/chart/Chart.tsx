@@ -2,12 +2,8 @@
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import * as React from 'react';
-import { VisualizationObject } from '@gooddata/typings';
 import { initChartPlugins } from './highcharts/chartPlugins';
-import { VisType } from '../../../constants/visualizationTypes';
-import { IDataLabelsConfig } from '../../../interfaces/Config';
-import { ISeparators } from '@gooddata/numberjs';
-import { PositionType } from '../typings/legend';
+import { IChartConfig } from '../../../interfaces/Config';
 
 // Have only one entrypoint to highcharts and drill module
 // tslint:disable-next-line
@@ -27,65 +23,10 @@ HighchartsMore(Highcharts);
 patternFill(Highcharts);
 initChartPlugins(Highcharts);
 
-export interface ILegendConfig {
-    enabled?: boolean;
-    position?: PositionType;
-    responsive?: boolean;
-}
-
-export interface IChartLimits {
-    series?: number;
-    categories?: number;
-    dataPoints?: number;
-}
-
-export interface IChartConfig {
-    colors?: string[];
-    colorPalette?: IColorPalette;
-    type?: VisType;
-    legend?: ILegendConfig;
-    legendLayout?: string;
-    limits?: IChartLimits;
-    stacking?: boolean;
-    grid?: any;
-    mdObject?: VisualizationObject.IVisualizationObjectContent;
-    yFormat?: string;
-    yLabel?: string;
-    xLabel?: string;
-    xFormat?: string;
-    chart?: any;
-    xaxis?: IAxisConfig;
-    yaxis?: IAxisConfig;
-    separators?: ISeparators;
-    dataLabels?: IDataLabelsConfig;
-}
-
-export interface IAxisConfig {
-    visible?: boolean;
-    labelsEnabled?: boolean;
-    rotation?: string;
-    min?: string;
-    max?: string;
-}
-
 export interface IChartProps {
     config: IChartConfig;
     domProps: any;
     callback(): void;
-}
-
-export interface IColorPaletteItem {
-    guid: string;
-    fill: {
-        r: number;
-        g: number;
-        b: number;
-    };
-}
-
-export interface IColorPalette {
-    [index: number]: IColorPaletteItem;
-    length: number;
 }
 
 export default class Chart extends React.Component<IChartProps> {

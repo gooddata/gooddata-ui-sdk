@@ -298,7 +298,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
             },
             {
                 "id": "date.aam81lMifn6q",
-                "title": "default (Date)",
+                "title": "Quarter (Date)",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
                     "identifier": "date.aam81lMifn6q"
@@ -314,7 +314,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
             },
             {
                 "id": "date.abm81lMifn6q",
-                "title": "Short (Jan) (Date)",
+                "title": "Month (Date)",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
                     "identifier": "date.abm81lMifn6q"
@@ -414,7 +414,7 @@ export const measuresAndColumnAttributesDrillParams = `{
             },
             {
                 "id": "date.aam81lMifn6q",
-                "title": "default (Date)",
+                "title": "Quarter (Date)",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
                     "identifier": "date.aam81lMifn6q"
@@ -430,7 +430,7 @@ export const measuresAndColumnAttributesDrillParams = `{
             },
             {
                 "id": "date.abm81lMifn6q",
-                "title": "Short (Jan) (Date)",
+                "title": "Month (Date)",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
                     "identifier": "date.abm81lMifn6q"

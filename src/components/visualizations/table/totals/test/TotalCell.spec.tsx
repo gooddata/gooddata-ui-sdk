@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import { Execution } from '@gooddata/typings';
 
 import { AddTotal } from '../AddTotal';
 import { RemoveRows } from '../RemoveRows';
 import { ITotalCellProps, TotalCell } from '../TotalCell';
-import { IMeasureTableHeader } from '../../../../../interfaces/Table';
 import { ITotalWithData } from '../../../../../interfaces/Totals';
 import { withIntl } from '../../../utils/intlUtils';
 
@@ -13,13 +13,14 @@ const WrappedTotalCell = withIntl(TotalCell);
 
 describe('TotalCell', () => {
     function render(customProps = {}) {
-        const header: IMeasureTableHeader = {
-            uri: 'uri',
-            identifier: 'identifier',
-            localIdentifier: 'localIdentifier',
-            name: 'name',
-            format: 'format',
-            type: 'measure'
+        const header: Execution.IMeasureHeaderItem = {
+                measureHeaderItem: {
+                uri: 'uri',
+                identifier: 'identifier',
+                localIdentifier: 'localIdentifier',
+                name: 'name',
+                format: 'format'
+            }
         };
 
         const props: ITotalCellProps = {

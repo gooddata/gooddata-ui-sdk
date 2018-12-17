@@ -3,17 +3,16 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { AttributeFilter } from '../../src/components/filters/AttributeFilter/AttributeFilter';
+import { AttributeFilter, IAttributeFilterProps } from '../../src/components/filters/AttributeFilter/AttributeFilter';
 import '../../styles/scss/attributeFilter.scss';
 
-const attributeFilterWithUri = {
+const attributeFilterWithUri: IAttributeFilterProps = {
     uri: '/gdc/md/storybook/obj/3.df',
-    isOpenDefault: true,
     projectId: 'storybook',
     onApply: action('apply')
 };
 
-const attributeFilterWithIdentifier = {
+const attributeFilterWithIdentifier: IAttributeFilterProps = {
     identifier: '3.df',
     projectId: 'storybook',
     fullscreenOnMobile: false,

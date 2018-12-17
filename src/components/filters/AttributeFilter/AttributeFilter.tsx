@@ -20,7 +20,8 @@ export interface IAttributeFilterProps {
         getObjectUri: Function;
         getObjectDetails: Function;
     };
-
+    onApply: Function;
+    fullscreenOnMobile?: boolean;
     locale?: string;
     FilterLoading?: any;
     FilterError?: any;
@@ -50,7 +51,8 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         uri: PropTypes.string,
         identifier: PropTypes.string,
         projectId: PropTypes.string,
-
+        onApply: PropTypes.func.isRequired,
+        fullscreenOnMobile: PropTypes.bool,
         FilterLoading: PropTypes.func,
         FilterError: PropTypes.func,
         locale: PropTypes.string
@@ -63,7 +65,8 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         locale: 'en-US',
 
         FilterLoading: DefaultFilterLoading,
-        FilterError: DefaultFilterError
+        FilterError: DefaultFilterError,
+        fullscreenOnMobile: false
     };
 
     private sdk: SDK;
@@ -109,12 +112,14 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
             this.props,
             Object.keys(AttributeDropdownWrapped.propTypes)
         );
+        const isUsingIdentifier = this.props.identifier !== null;
         const { md } = this.sdk;
         return (
             <AttributeDropdown
                 attributeDisplayForm={attributeDisplayForm}
                 metadata={md}
                 {...dropdownProps}
+                isUsingIdentifier={isUsingIdentifier}
             />
         );
     }

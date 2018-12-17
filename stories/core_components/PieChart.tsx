@@ -19,8 +19,11 @@ import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
+    DATA_LABELS_AUTO_CONFIG,
+    CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
+import { RGBType } from '../../src/interfaces/Config';
+import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
 
 const wrapperStyle = { width: 400, height: 400 };
 
@@ -253,6 +256,106 @@ storiesOf('Core components/PieChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('measure and attribute with custom colors', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('measure and attribute with color mapping', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: attributeItemNameMatch('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: '03'
+                                }
+                            }, {
+                                predicate: attributeItemNameMatch('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: '02'
+                                }
+                            }, {
+                                predicate: attributeItemNameMatch('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
+                />
+            </div>
+        )
+    )).add('measure and attribute with invalid color assignment', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <PieChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        ...CUSTOM_COLOR_PALETTE_CONFIG,
+                        colorMapping: [
+                            {
+                                predicate: attributeItemNameMatch('Red'),
+                                color: {
+                                    type: 'guid',
+                                    value: 'xx'
+                                }
+                            }, {
+                                predicate: attributeItemNameMatch('Purple'),
+                                color: {
+                                    type: 'guid',
+                                    value: 'xxx'
+                                }
+                            }, {
+                                predicate: attributeItemNameMatch('Pink'),
+                                color: {
+                                    type: 'rgb' as RGBType,
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0
+                                    }
+                                }
+                            }
+                        ]
+                    }}
                 />
             </div>
         )

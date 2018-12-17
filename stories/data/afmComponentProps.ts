@@ -44,7 +44,7 @@ const MEASURE_1_DUPLICATE: AFM.IMeasure = {
     localIdentifier: 'm2'
 };
 
-const MEASURE_2: AFM.IMeasure = {
+export const MEASURE_2: AFM.IMeasure = {
     localIdentifier: 'm2',
     definition: {
         measure: {

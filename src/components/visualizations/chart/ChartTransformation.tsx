@@ -1,26 +1,23 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
+import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import * as invariant from 'invariant';
+import * as React from 'react';
 import noop = require('lodash/noop');
-import {
-    AFM,
-    Execution,
-    VisualizationObject
-} from '@gooddata/typings';
 
-import { getChartOptions, validateData, IChartOptions } from './chartOptionsBuilder';
-import { getHighchartsOptions } from './highChartsCreators';
-import getLegend from './legend/legendBuilder';
+import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
+import { IChartConfig } from '../../../interfaces/Config';
+import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { ILegendOptions } from '../typings/legend';
-
+import { getChartOptions, IChartOptions, validateData } from './chartOptionsBuilder';
+import { getHighchartsOptions } from './highChartsCreators';
 import HighChartsRenderer, {
     IHighChartsRendererProps,
-    renderLegend as legendRenderer,
-    renderChart as chartRenderer
+    renderChart as chartRenderer,
+    renderLegend as legendRenderer
 } from './HighChartsRenderer';
-import { IChartConfig } from './Chart';
-import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
+import getLegend from './legend/legendBuilder';
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
@@ -33,7 +30,7 @@ export interface IExecutionRequest {
 
 export interface IChartTransformationProps {
     config: IChartConfig;
-    drillableItems: IDrillableItem[];
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
     width: number;
     locale: string;
@@ -126,6 +123,8 @@ export default class ChartTransformation extends React.Component<IChartTransform
             multiDimensionalData = [data] as Execution.DataValue[][];
         }
 
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+
         this.chartOptions = getChartOptions(
             afm,
             resultSpec,
@@ -133,7 +132,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
             multiDimensionalData as Execution.DataValue[][],
             headerItems,
             config,
-            drillableItems
+            drillablePredicates
         );
         const validationResult = validateData(config.limits, this.chartOptions);
 
@@ -155,6 +154,10 @@ export default class ChartTransformation extends React.Component<IChartTransform
         pushData({
             propertiesMeta: {
                 legend_enabled: this.legendOptions.toggleEnabled
+            },
+            colors: {
+                colorAssignments: this.chartOptions.colorAssignments,
+                colorPalette: this.chartOptions.colorPalette
             }
         });
 

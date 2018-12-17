@@ -5,10 +5,11 @@ import { noop, range } from 'lodash';
 import { AFM } from '@gooddata/typings';
 
 import { withIntl } from '../../utils/intlUtils';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { TableRow } from '../../../../interfaces/Table';
 import { ITotalWithData } from '../../../../interfaces/Totals';
 import { IResponsiveTableProps, IResponsiveTableState, ResponsiveTable } from '../ResponsiveTable';
 import { Table } from '../Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 
 import { EXECUTION_REQUEST_1A_2M, TABLE_HEADERS_1A_2M, TABLE_ROWS_1A_2M } from '../fixtures/1attribute2measures';
 import 'jest';
@@ -21,7 +22,7 @@ const getLess = (wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableSt
 
 interface ITableData {
     executionRequest: AFM.IExecution;
-    headers: TableHeader[];
+    headers: IMappingHeader[];
     rows: TableRow[];
     totalsWithData?: ITotalWithData[];
 }

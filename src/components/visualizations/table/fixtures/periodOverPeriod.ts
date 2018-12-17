@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
-import { TableHeader, TableRow } from '../../../../interfaces/Table';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import { TableRow } from '../../../../interfaces/Table';
 
 export const EXECUTION_REQUEST_POP: AFM.IExecution = {
     execution: {
@@ -186,29 +187,37 @@ export const EXECUTION_RESULT_POP: Execution.IExecutionResult = {
     }
 };
 
-export const TABLE_HEADERS_POP: TableHeader[] = [
+export const TABLE_HEADERS_POP: IMappingHeader[] = [
     {
-        type: 'attribute',
-        uri: '/gdc/md/project_id/obj/date_attr_df_uri_id',
-        identifier: 'date_attr_df_identifier',
-        localIdentifier: 'date_attr_df_local_identifier',
-        name: 'Year (Created)'
+        attributeHeader: {
+            uri: '/gdc/md/project_id/obj/date_attr_df_uri_id',
+            identifier: 'date_attr_df_identifier',
+            localIdentifier: 'date_attr_df_local_identifier',
+            name: 'Year DF Title',
+            formOf: {
+                uri: '/gdc/md/project_id/obj/date_attr_uri_id',
+                identifier: 'date_attr_local_identifier',
+                name: 'Year (Created)'
+            }
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/pop_measure_uri_id',
-        identifier: 'pop_measure_identifier',
-        localIdentifier: 'pop_measure_local_identifier',
-        name: 'Close [BOP] - Previous year',
-        format: '$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/pop_measure_uri_id',
+            identifier: 'pop_measure_identifier',
+            localIdentifier: 'pop_measure_local_identifier',
+            name: 'Close [BOP] - Previous year',
+            format: '$#,##0.00'
+        }
     },
     {
-        type: 'measure',
-        uri: '/gdc/md/project_id/obj/measure_uri_id',
-        identifier: 'measure_identifier',
-        localIdentifier: 'measure_local_identifier',
-        name: 'Close [BOP]',
-        format: '$#,##0.00'
+        measureHeaderItem: {
+            uri: '/gdc/md/project_id/obj/measure_uri_id',
+            identifier: 'measure_identifier',
+            localIdentifier: 'measure_local_identifier',
+            name: 'Close [BOP]',
+            format: '$#,##0.00'
+        }
     }
 ];
 

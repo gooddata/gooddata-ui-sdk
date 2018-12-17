@@ -23,7 +23,8 @@ import PivotTableDemo from './PivotTableDemo';
 import PivotTableDynamic from './PivotTableDynamic';
 import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
-import BarChartDynamic from './BarChartDynamic';
+import ChartConfiguration from './ChartConfiguration';
+import ArithmeticMeasure from './ArithmeticMeasure';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -34,7 +35,7 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
     { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError },
     { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
-    { path: '/advanced/bar-chart-dynamic', title: 'Chart Configuration', Component: BarChartDynamic }
+    { path: '/advanced/chart-configuration', title: 'Chart Configuration', Component: ChartConfiguration }
 ];
 
 export const nextRoutes = [
@@ -51,6 +52,7 @@ export const sideNavigationRoutes = [
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },
     { path: '/attribute-filter-components', title: 'Attribute Filter Components', Component: AttributeFilter },
+    { path: '/arithmetic-measures', title: 'Arithmetic Measures', Component: ArithmeticMeasure },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesRoutes },
     { path: '/next', pathMatch: 'full', redirectTo: nextRoutes[0].path, title: 'Next', Component: NextRoutes }

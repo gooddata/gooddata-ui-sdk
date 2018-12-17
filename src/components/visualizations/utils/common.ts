@@ -58,7 +58,6 @@ export const isTable = isEqual(VisualizationTypes.TABLE);
 export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
 export const isBarChart = isEqual(VisualizationTypes.BAR);
 export const isLineChart = isEqual(VisualizationTypes.LINE);
-export const isDualChart = isEqual(VisualizationTypes.DUAL);
 export const isScatterPlot = isEqual(VisualizationTypes.SCATTER);
 export const isPieChart = isEqual(VisualizationTypes.PIE);
 export const isDonutChart = isEqual(VisualizationTypes.DONUT);

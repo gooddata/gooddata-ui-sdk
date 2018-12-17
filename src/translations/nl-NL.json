@@ -49,5 +49,14 @@
    "gs.list.noItemsFound": "Geen items gevonden.",
    "gs.list.error": "Fout bij inlezen lijstitems",
    "measure.title.suffix.same_period_year_ago": "ZP jaar geleden",
-   "measure.title.suffix.previous_period": "periode geleden"
+   "measure.title.suffix.previous_period": "periode geleden",
+   "visualizations.measure.arithmetic.sum.title": "Som van {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.difference.title": "Verschil tussen {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.multiplication.title": "Product van {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.ratio.title": "Verhouding tussen {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.change.title": "Wijziging van {secondMeasureTitle} naar {firstMeasureTitle}",
+   "visualizations.legend.text.top": "Boven:",
+   "visualizations.legend.text.bottom": "Onder:",
+   "visualizations.legend.text.left": "Links:",
+   "visualizations.legend.text.right": "Rechts:"
 }

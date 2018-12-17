@@ -18,13 +18,14 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
-import { IPushData } from './interfaces/PushData';
+import { IPushData, IColorsData } from './interfaces/PushData';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
 import * as PropTypes from './proptypes/index';
 import { generateDimensions } from './helpers/dimensions';
 import * as BucketNames from './constants/bucketNames';
 import * as MeasureTitleHelper from './helpers/measureTitleHelper';
+import * as SortsHelper from './helpers/sorts';
 import DerivedMeasureTitleSuffixFactory from './factory/DerivedMeasureTitleSuffixFactory';
 import ArithmeticMeasureTitleFactory from './factory/ArithmeticMeasureTitleFactory';
 import { IDataSourceProviderInjectedProps } from './components/afm/DataSourceProvider';
@@ -44,12 +45,22 @@ import { ScatterPlot } from './components/ScatterPlot';
 import { ComboChart } from './components/ComboChart';
 import { FunnelChart } from './components/FunnelChart';
 import { Heatmap } from './components/Heatmap';
-import Chart,
-    { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from './components/visualizations/chart/Chart';
+import {
+    ILegendConfig,
+    IChartConfig,
+    IColorPalette,
+    IColorPaletteItem
+} from './interfaces/Config';
+// tslint:disable-next-line:no-duplicate-imports
+import * as ChartConfiguration from './interfaces/Config';
+import Chart from './components/visualizations/chart/Chart';
 import ChartTransformation from './components/visualizations/chart/ChartTransformation';
 import { RuntimeError } from './errors/RuntimeError';
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from './interfaces/MeasureTitle';
 import { OverTimeComparisonType, OverTimeComparisonTypes } from './interfaces/OverTimeComparison';
+import ColorUtils from './components/visualizations/utils/color';
+import * as HeaderPredicateFactory from './factory/HeaderPredicateFactory';
+import * as MappingHeader from './interfaces/MappingHeader';
 
 /**
  * CoreComponents
@@ -94,6 +105,7 @@ export {
     IColorPalette,
     IColorPaletteItem,
     IPushData,
+    IColorsData,
     isEmptyResult,
     Kpi,
     LoadingComponent,
@@ -120,5 +132,10 @@ export {
     ChartTransformation,
     Chart,
     OverTimeComparisonType,
-    OverTimeComparisonTypes
+    OverTimeComparisonTypes,
+    SortsHelper,
+    ChartConfiguration,
+    ColorUtils,
+    HeaderPredicateFactory,
+    MappingHeader
 };

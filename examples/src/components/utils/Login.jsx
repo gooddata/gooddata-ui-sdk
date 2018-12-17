@@ -62,7 +62,7 @@ export const LoginFormUncontrolled = (props) => {
             }
         `}</style>
         <img src="https://secure.gooddata.com/images/logo-new.png" alt="GoodData" style={{ height: 70 }} className="LoginLogo" />
-        <form className="LoginForm" onSubmit={handleSubmit}>
+        <form className="LoginForm s-loginForm" onSubmit={handleSubmit}>
             <h1>Sign in to the Live&nbsp;Examples</h1>
             <p>Accessing Live Examples requires a unique one-time <Link to="/registration">registration</Link> even if you already have a GoodData account.</p>
 
@@ -322,7 +322,7 @@ class Login extends React.Component {
             if (isProjectAssigned === false) {
                 return <div style={verticalCenterStyle} ><CustomLoading height={null} label="Assigning demo project&hellip;" /></div>;
             }
-            return <div style={verticalCenterStyle} ><CustomLoading height={null} label="Checking demo availability&hellip;" /></div>;
+            return <div style={verticalCenterStyle} className="s-checkingDemoAvailability"><CustomLoading height={null} label="Checking demo availability&hellip;" /></div>;
         }
         return (<LoginForm
             email={email}

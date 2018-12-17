@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, Table } from '@gooddata/react-components';
+import { PivotTable, Table, HeaderPredicateFactory } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -115,51 +115,37 @@ const drillingPresets = {
     measure: {
         label: 'Measure Franchise Fees',
         key: 'measure',
-        drillableItem: {
-            identifier: franchiseFeesIdentifier
-        }
+        drillableItem: HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier)
     },
     attributeMonth: {
         label: 'Attribute Month',
         key: 'attributeMonth',
-        drillableItem: {
-            identifier: monthDateIdentifier
-        }
+        drillableItem: HeaderPredicateFactory.identifierMatch(monthDateIdentifier)
     },
     attributeQuarter: {
         label: 'Attribute Quarter',
         key: 'attributeQuarter',
-        drillableItem: {
-            identifier: quarterDateIdentifier
-        }
+        drillableItem: HeaderPredicateFactory.identifierMatch(quarterDateIdentifier)
     },
     attributeLocationState: {
         label: 'Attribute Location state',
         key: 'attributeLocationState',
-        drillableItem: {
-            identifier: locationStateDisplayFormIdentifier
-        }
+        drillableItem: HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier)
     },
     attributeMenuCategory: {
         label: 'Attribute Menu category',
         key: 'attributeMenuCategory',
-        drillableItem: {
-            identifier: menuCategoryAttributeDFIdentifier
-        }
+        drillableItem: HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier)
     },
     attributeValueCalifornia: {
         label: 'Attribute value California',
         key: 'attributeValueCalifornia',
-        drillableItem: {
-            uri: locationStateAttributeCaliforniaUri
-        }
+        drillableItem: HeaderPredicateFactory.uriMatch(locationStateAttributeCaliforniaUri)
     },
     attributeValueJanuary: {
         label: 'Attribute value January',
         key: 'attributeValueJanuary',
-        drillableItem: {
-            uri: monthDateIdentifierJanuary
-        }
+        drillableItem: HeaderPredicateFactory.uriMatch(monthDateIdentifierJanuary)
     }
 };
 const totalPresets = {

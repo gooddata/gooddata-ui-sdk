@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount } from 'enzyme';
+import cloneDeep = require('lodash/cloneDeep');
 import { testUtils } from '@gooddata/js-utils';
 import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
@@ -20,10 +21,12 @@ import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import * as HttpStatusCodes from 'http-status-codes';
+import { IColorPalette } from '../../../interfaces/Config';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
+const TREEMAP_URI = `/gdc/md/${projectId}/obj/3`;
 const CHART_IDENTIFIER = 'chart';
 const TABLE_IDENTIFIER = 'table';
 
@@ -43,7 +46,7 @@ const sdk = {
         setRequestHeader: () => false
     },
     project: {
-        getFeatureFlags: () => false
+        getColorPaletteWithGuids: jest.fn()
     }
 };
 
@@ -84,6 +87,10 @@ function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: str
 
     if (identifier === CHART_IDENTIFIER || uri === CHART_URI) {
         return getResponse(CHART_URI, SLOW);
+    }
+
+    if (uri === TREEMAP_URI) {
+        return getResponse(TREEMAP_URI, FAST);
     }
 
     return Promise.reject('Unknown identifier');
@@ -270,7 +277,6 @@ describe('VisualizationWrapped', () => {
             ...sdk,
             clone: () => mutatedSdk,
             project: {
-                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
                 getColorPaletteWithGuids: jest.fn()
             }
         };
@@ -440,70 +446,210 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should call getFeatureFlags and don\'t call getColorPalette', () => {
-        const mutatedSdk = {
-            ...sdk,
-            clone: () => mutatedSdk,
-            project: {
-                getFeatureFlags: jest.fn(),
-                getColorPaletteWithGuids: jest.fn()
+    describe('Color palette', () => {
+        const expectedColorPalette: IColorPalette = [
+            {
+                guid: '0',
+                fill: {
+                    r: 195,
+                    g: 49,
+                    b: 73
+                }
+            }, {
+                guid: '1',
+                fill: {
+                    r: 168,
+                    g: 194,
+                    b: 86
+                }
             }
-        };
+        ];
 
-        const props = {
-            sdk: mutatedSdk,
-            projectId,
-            identifier: CHART_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            intl
-        };
+        it('should render BaseChart with colors prop', () => {
+            const props = {
+                sdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                TableComponent: Table,
+                config: {
+                    colors: ['rgb(195, 49, 73)', 'rgb(168, 194, 86)']
+                },
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
 
-        return testUtils.delay(SLOW + 1).then(() => {
-            wrapper.update();
-            expect(mutatedSdk.project.getFeatureFlags).toHaveBeenCalledTimes(1);
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
+            });
+        });
+
+        it('should render BaseChart with color palette prop', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => mutatedSdk,
+                project: {
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                TableComponent: Table,
+                config: {
+                    colorPalette: expectedColorPalette
+                },
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
+
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(0);
+            });
+        });
+
+        it('should get palette from sdk and render BaseChart with this palette when no colors/palette in props', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => mutatedSdk,
+                project: {
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any}/>
+            );
+
+            return testUtils.delay(SLOW + 1).then(() => {
+                wrapper.update();
+                const BaseChartElement = wrapper.find(BaseChart).get(0);
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+                expect(BaseChartElement.props.config.colorPalette).toEqual(expectedColorPalette);
+            });
+        });
+
+        it('should not call getColorPalette with unchanged SDK', () => {
+            const mutatedSdk = {
+                ...sdk,
+                clone: () => cloneDeep(mutatedSdk),
+                project: {
+                    getColorPaletteWithGuids: jest.fn()
+                }
+            };
+
+            const props = {
+                sdk: mutatedSdk,
+                projectId,
+                identifier: CHART_IDENTIFIER,
+                BaseChartComponent: BaseChart,
+                LoadingComponent,
+                ErrorComponent,
+                fetchVisObject,
+                fetchVisualizationClass,
+                uriResolver,
+                intl
+            };
+
+            const wrapper = mount(
+                <VisualizationWrapped {...props as any} />
+            );
+
+            return testUtils.delay(FAST + 1).then(() => {
+                wrapper.update();
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+                wrapper.setProps({
+                    config: {
+                        grid: {
+                            enabled: false
+                        }
+                    },
+                    sdk: mutatedSdk
+                });
+                expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+            });
         });
     });
 
-    it('should call getColorPalette when enableColorPalette feature flag is set', () => {
-        const mutatedSdk = {
-            ...sdk,
-            clone: () => mutatedSdk,
-            project: {
-                getFeatureFlags: jest.fn().mockImplementation(() => ({ enableColorPalette: true })),
-                getColorPaletteWithGuids: jest.fn()
-            }
-        };
-
+    it('should add default sorting to the Treemap', () => {
         const props = {
-            sdk: mutatedSdk,
+            sdk,
             projectId,
-            identifier: CHART_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
+            uri: TREEMAP_URI,
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
+            BaseChartComponent: BaseChart
         };
 
         const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
+            <VisualizationWrapped {...props as any} />
         );
 
-        return testUtils.delay(SLOW + 1).then(() => {
+        return testUtils.delay(FAST + 1).then(() => {
             wrapper.update();
-            expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.resultSpec).toEqual({
+                dimensions: [
+                    {
+                        itemIdentifiers: ['02b7736f6bef48b1849798e430d837df', 'bc5257e06a9342ec99854bd1a53f3262']
+                    },
+                    {
+                        itemIdentifiers: ['measureGroup']
+                    }
+                ],
+                sorts: [
+                    {
+                        attributeSortItem: { attributeIdentifier: '02b7736f6bef48b1849798e430d837df', direction: 'asc' }
+                    },
+                    {
+                        measureSortItem: {
+                            direction: 'desc',
+                            locators: [
+                                { measureLocatorItem: { measureIdentifier: 'b5a12d1bf094469d9b4e7d5d2bb87287' } }
+                            ]
+                        }
+                    }
+                ]
+            });
         });
     });
-
 });

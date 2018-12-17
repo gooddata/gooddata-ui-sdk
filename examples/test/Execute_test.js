@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Execute') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/execute`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/execute`));
 
 test('should display correct result and retry should fail', async (t) => {
     const kpi = Selector('.s-execute-kpi');

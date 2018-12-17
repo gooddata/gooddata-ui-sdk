@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { IDrillItem } from '../interfaces/DrillEvents';
+import { IMappingHeader } from './MappingHeader';
 import { ColDef, CellEvent } from 'ag-grid';
 
 export interface IGridRow {
     drillItemMap: {
-        [key: string]: IDrillItem;
+        [key: string]: IMappingHeader;
     };
     [key: string]: any;
 }
@@ -15,7 +15,7 @@ export interface IGridCellEvent extends CellEvent {
 export interface IGridHeader extends ColDef {
     index?: number;
     measureIndex?: number;
-    drillItems: IDrillItem[];
+    drillItems: IMappingHeader[];
     children?: IGridHeader[];
 }
 

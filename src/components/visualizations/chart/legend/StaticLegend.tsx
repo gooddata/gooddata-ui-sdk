@@ -3,7 +3,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import * as cx from 'classnames';
 
-import LegendItem from './LegendItem';
+import LegendList from './LegendList';
 import { TOP, BOTTOM } from './PositionTypes';
 import { calculateStaticLegend, ITEM_HEIGHT } from './helpers';
 
@@ -66,16 +66,7 @@ export default class StaticLegend extends React.PureComponent<any, any> {
             return (
                 <div className={classNames}>
                     <div className="series">
-                        {series.map((item: any, index: number) => {
-                            return (
-                                <LegendItem
-                                    chartType={chartType}
-                                    key={index}
-                                    item={item}
-                                    onItemClick={onItemClick}
-                                />
-                            );
-                        })}
+                        <LegendList chartType={chartType} series={series} onItemClick={onItemClick}/>
                     </div>
                 </div>
             );
@@ -94,16 +85,7 @@ export default class StaticLegend extends React.PureComponent<any, any> {
         return (
             <div className={classNames}>
                 <div className="series" style={{ height: visibleItemsCount * ITEM_HEIGHT }}>
-                    {pagedSeries.map((item: any, index: number) => {
-                        return (
-                            <LegendItem
-                                chartType={chartType}
-                                key={index}
-                                item={item}
-                                onItemClick={onItemClick}
-                            />
-                        );
-                    })}
+                    <LegendList chartType={chartType} series={pagedSeries} onItemClick={onItemClick}/>
                 </div>
                 {hasPaging && this.renderPaging(visibleItemsCount)}
             </div>

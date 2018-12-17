@@ -1,58 +1,302 @@
 {
-    "visualizations.more": "Show more",
-    "visualizations.less": "Show less",
-    "visualizations.sorting": "Column sorting",
-    "visualizations.asc": "Ascending",
-    "visualizations.desc": "Descending",
-    "visualizations.of": "{page} of {pagesCount}",
-    "visualizations.totals.dropdown.heading": "Add a new row",
-    "visualizations.totals.dropdown.title.sum": "Sum",
-    "visualizations.totals.dropdown.title.avg": "Avg",
-    "visualizations.totals.dropdown.title.min": "Min",
-    "visualizations.totals.dropdown.title.max": "Max",
-    "visualizations.totals.dropdown.title.nat": "Rollup (Total)",
-    "visualizations.totals.dropdown.title.med": "Median",
-    "visualizations.totals.row.title.sum": "Sum",
-    "visualizations.totals.row.title.avg": "Avg",
-    "visualizations.totals.row.title.min": "Min",
-    "visualizations.totals.row.title.max": "Max",
-    "visualizations.totals.row.title.nat": "Total",
-    "visualizations.totals.row.title.med": "Median",
-    "visualizations.headline.tertiary.title": "Versus",
-    "visualization.numericValues.k": "k",
-    "visualization.numericValues.m": "M",
-    "visualization.numericValues.g": "G",
-    "visualization.numericValues.t": "T",
-    "visualization.numericValues.p": "P",
-    "visualization.numericValues.e": "E",
-    "visualization.emptyValue": "empty value",
-    "visualization.ErrorMessageGeneric": "Sorry, we can't display this insight",
-    "visualization.ErrorDescriptionGeneric": "Contact your administrator.",
-    "visualization.ErrorMessageDataTooLarge": "Too many data points to display",
-    "visualization.ErrorDescriptionDataTooLarge": "Try applying filters.",
-    "visualization.ErrorMessageNoData": "No data",
-    "visualization.ErrorDescriptionNoData": "No data for your filter selection.",
-    "visualization.ErrorMessageKpi": "Error",
-    "visualization.ErrorMessageUnauthorized": "Unauthorized",
-    "visualization.ErrorDescriptionUnauthorized": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
-    "visualization.ErrorMessageNotFound": "Sorry, we can't find this insight",
-    "visualization.ErrorDescriptionNotFound": "The insight with this URL does not exist.",
-    "gs.filter.loading": "Loading filter…",
-    "gs.filter.error": "Error loading filter",
-    "gs.list.loading": "Loading list…",
-    "gs.list.clear": "Clear",
-    "gs.list.cancel": "Cancel",
-    "gs.list.apply": "Apply",
-    "gs.list.only": "Only",
-    "gs.list.selectAll": "Select all",
-    "gs.list.limitExceeded": "Sorry, you have exceeded the limit ({limit}).",
-    "gs.list.noItemsFound": "No items found.",
-    "gs.list.error": "Error loading list items",
-    "measure.title.suffix.same_period_year_ago": "SP year ago",
-    "measure.title.suffix.previous_period": "period ago",
-    "visualizations.measure.arithmetic.sum.title": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.difference.title": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.multiplication.title": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.ratio.title": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.change.title": "Change from {secondMeasureTitle} to {firstMeasureTitle}"
+   "visualizations.more": {
+      "value": "Show more",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.less": {
+      "value": "Show less",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.sorting": {
+      "value": "Column sorting",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.asc": {
+      "value": "Ascending",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.desc": {
+      "value": "Descending",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.of": {
+      "value": "{page} of {pagesCount}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.heading": {
+      "value": "Add a new row",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.sum": {
+      "value": "Sum",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.avg": {
+      "value": "Avg",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.min": {
+      "value": "Min",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.max": {
+      "value": "Max",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.nat": {
+      "value": "Rollup (Total)",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.dropdown.title.med": {
+      "value": "Median",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.sum": {
+      "value": "Sum",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.avg": {
+      "value": "Avg",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.min": {
+      "value": "Min",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.max": {
+      "value": "Max",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.nat": {
+      "value": "Total",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.totals.row.title.med": {
+      "value": "Median",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.headline.tertiary.title": {
+      "value": "Versus",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.k": {
+      "value": "k",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.m": {
+      "value": "M",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.g": {
+      "value": "G",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.t": {
+      "value": "T",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.p": {
+      "value": "P",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.numericValues.e": {
+      "value": "E",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.emptyValue": {
+      "value": "empty value",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageGeneric": {
+      "value": "Sorry, we can't display this insight",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorDescriptionGeneric": {
+      "value": "Contact your administrator.",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageDataTooLarge": {
+      "value": "Too many data points to display",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorDescriptionDataTooLarge": {
+      "value": "Try applying filters.",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageNoData": {
+      "value": "No data",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorDescriptionNoData": {
+      "value": "No data for your filter selection.",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageKpi": {
+      "value": "Error",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageUnauthorized": {
+      "value": "Unauthorized",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorDescriptionUnauthorized": {
+      "value": "Sorry you don't have access to this insight. Login or ask your administrator to grant you permissions.",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorMessageNotFound": {
+      "value": "Sorry, we can't find this insight",
+      "comment": "",
+      "limit": 0
+   },
+   "visualization.ErrorDescriptionNotFound": {
+      "value": "The insight with this URL does not exist.",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.filter.loading": {
+      "value": "Loading filter…",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.filter.error": {
+      "value": "Error loading filter",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.loading": {
+      "value": "Loading list…",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.clear": {
+      "value": "Clear",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.cancel": {
+      "value": "Cancel",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.apply": {
+      "value": "Apply",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.only": {
+      "value": "Only",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.selectAll": {
+      "value": "Select all",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.limitExceeded": {
+      "value": "Sorry, you have exceeded the limit ({limit}).",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.noItemsFound": {
+      "value": "No items found.",
+      "comment": "",
+      "limit": 0
+   },
+   "gs.list.error": {
+      "value": "Error loading list items",
+      "comment": "",
+      "limit": 0
+   },
+   "measure.title.suffix.same_period_year_ago": {
+      "value": "SP year ago",
+      "comment": "",
+      "limit": 0
+   },
+   "measure.title.suffix.previous_period": {
+      "value": "period ago",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.measure.arithmetic.sum.title": {
+      "value": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.measure.arithmetic.difference.title": {
+      "value": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.measure.arithmetic.multiplication.title": {
+      "value": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.measure.arithmetic.ratio.title": {
+      "value": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.measure.arithmetic.change.title": {
+      "value": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.legend.text.top": {
+      "value": "Top:",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.legend.text.bottom": {
+      "value": "Bottom:",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.legend.text.left": {
+      "value": "Left:",
+      "comment": "",
+      "limit": 0
+   },
+   "visualizations.legend.text.right": {
+      "value": "Right:",
+      "comment": "",
+      "limit": 0
+   }
 }

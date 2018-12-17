@@ -10,7 +10,7 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 
-import { IChartConfig, IChartLimits } from './Chart';
+import { IChartConfig, IChartLimits } from '../../../interfaces/Config';
 import { IChartOptions } from './chartOptionsBuilder';
 
 import { getLineConfiguration } from './highcharts/lineConfiguration';
@@ -34,7 +34,6 @@ const chartConfigurationMap = {
     [VisualizationTypes.COLUMN]: getColumnConfiguration,
     [VisualizationTypes.PIE]: getPieConfiguration,
     [VisualizationTypes.AREA]: getAreaConfiguration,
-    [VisualizationTypes.DUAL]: getLineConfiguration, // dual chart is line/line chart
     [VisualizationTypes.SCATTER]: getScatterConfiguration,
     [VisualizationTypes.COMBO]: getComboConfiguration,
     [VisualizationTypes.TREEMAP]: getTreemapConfiguration,

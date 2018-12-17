@@ -1,76 +1,75 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import * as classNames from 'classnames';
-import noop = require('lodash/noop');
-import get = require('lodash/get');
-import isEqual = require('lodash/isEqual');
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import {
     ColDef,
-    IDatasource,
-    IGetRowsParams,
     GridApi,
+    GridOptions,
     GridReadyEvent,
     ICellRendererParams,
-    GridOptions
+    IDatasource,
+    IGetRowsParams
 } from 'ag-grid';
+import { AgGridReact } from 'ag-grid-react';
 import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
-
-import {
-    executionToAGGridAdapter,
-    ROW_ATTRIBUTE_COLUMN,
-    COLUMN_ATTRIBUTE_COLUMN,
-    MEASURE_COLUMN,
-    FIELD_SEPARATOR,
-    ID_SEPARATOR,
-    getIdsFromUri,
-    ROW_TOTAL,
-    assortDimensionHeaders,
-    getParsedFields
-} from '../../helpers/agGrid';
-
-import { LoadingComponent } from '../simple/LoadingComponent';
-import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
-
-import {
-    visualizationLoadingHOC,
-    ILoadingInjectedProps,
-    commonDefaultProps,
-    IGetPage
-} from './base/VisualizationLoadingHOC';
-
-import { ICommonChartProps } from './base/BaseChart';
-import { IDataSource } from '../../interfaces/DataSource';
-import { IPivotTableConfig } from '../../interfaces/Table';
-import { BaseVisualization } from './base/BaseVisualization';
-import ColumnHeader from './pivotTable/ColumnHeader';
-
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
-
-import {
-    IDrillableItem,
-    IDrillEvent,
-    IDrillEventIntersectionElement,
-    isDrillableItemLocalId,
-    IDrillItem
-} from '../../interfaces/DrillEvents';
-
-import {
-    isDrillable,
-    getMeasureUriOrIdentifier
-} from '../visualizations/utils/drilldownEventing';
-
-import { VisualizationTypes } from '../../constants/visualizationTypes';
-import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
+import * as classNames from 'classnames';
 import * as invariant from 'invariant';
+import * as React from 'react';
+import * as CustomEvent from 'custom-event';
+import get = require('lodash/get');
+import isEqual = require('lodash/isEqual');
+import noop = require('lodash/noop');
 
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import InjectedIntl = ReactIntl.InjectedIntl;
-import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 import '../../../styles/scss/pivotTable.scss';
+
+import { VisualizationTypes } from '../../constants/visualizationTypes';
+import {
+    assortDimensionHeaders,
+    COLUMN_ATTRIBUTE_COLUMN,
+    executionToAGGridAdapter,
+    FIELD_SEPARATOR,
+    getIdsFromUri,
+    getParsedFields,
+    ID_SEPARATOR,
+    MEASURE_COLUMN,
+    ROW_ATTRIBUTE_COLUMN,
+    ROW_TOTAL
+} from '../../helpers/agGrid';
+import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from '../../helpers/headerPredicate';
+import {
+    getMappingHeaderIndentifier,
+    getMappingHeaderLocalIdentifier,
+    getMappingHeaderName,
+    getMappingHeaderUri
+} from '../../helpers/mappingHeader';
+
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
+import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
+import { IDataSource } from '../../interfaces/DataSource';
+
+import { IDrillEvent, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
+import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
+import { IMappingHeader, isMappingHeaderAttributeItem } from '../../interfaces/MappingHeader';
+import { IPivotTableConfig } from '../../interfaces/Table';
+import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+import { LoadingComponent } from '../simple/LoadingComponent';
+import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
+
+import { getMasterMeasureObjQualifier } from '../visualizations/utils/drilldownEventing';
+
+import { ICommonChartProps } from './base/BaseChart';
+import { BaseVisualization } from './base/BaseVisualization';
+
+import {
+    commonDefaultProps,
+    IGetPage,
+    ILoadingInjectedProps,
+    visualizationLoadingHOC
+} from './base/VisualizationLoadingHOC';
 import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
+import ColumnHeader from './pivotTable/ColumnHeader';
 
 export interface IPivotTableProps extends ICommonChartProps {
     resultSpec?: AFM.IResultSpec;
@@ -106,11 +105,12 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string
             if (type === MEASURE_COLUMN) {
                 return [...drillRow, rowData[colDef.field]];
             }
-            const drillItem = get<any, IDrillableItem>(rowData, ['drillItemMap', colDef.field]);
+            const drillItem = get<any, IMappingHeader>(rowData, ['drillItemMap', colDef.field]);
             if (drillItem && (type === COLUMN_ATTRIBUTE_COLUMN || type === ROW_ATTRIBUTE_COLUMN)) {
+                const drillItemUri = getMappingHeaderUri(drillItem);
                 return [...drillRow, {
                     // Unlike fields, drilling data should not be sanitized, because it is not used in HTML properties
-                    id: getIdsFromUri(drillItem.uri, false)[1],
+                    id: getIdsFromUri(drillItemUri, false)[1],
                     title: rowData[colDef.field]
                 }];
             }
@@ -303,13 +303,19 @@ export const getGridDataSource = (
     }
 });
 
-export const RowLoadingElement = (props: ICellRendererParams) =>
-    (props.node.id !== undefined || props.node.rowPinned
-        ? <span>{props.data[props.colDef.field]}</span>
-        : <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />);
+export const RowLoadingElement = (props: ICellRendererParams) => {
+    // rows that are still loading do not have node.id
+    // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
+    if (props.node.id !== undefined || props.node.rowPinned) {
+        // props.value is always unformatted
+        // there is props.formattedValue, but this is null for row attributes for some reason
+        return <span>{props.formatValue(props.value)}</span>;
+    }
+    return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
+};
 
 export const getDrillIntersection = (
-    drillItems: IDrillItem[],
+    drillItems: IMappingHeader[],
     afm: AFM.IAfm
 ): IDrillEventIntersectionElement[] => {
     // Drilling needs refactoring: all '' should be replaced by null (breaking change)
@@ -317,26 +323,31 @@ export const getDrillIntersection = (
         // 0..1 measure
         // 0..1 row attribute and row attribute value
         // 0..n column attribute and column attribute values
-    return drillItems.map((drillItem: IDrillItem) => {
-        const { identifier, uri, title } = drillItem;
+    return drillItems.map((drillItem: IMappingHeader) => {
+        let headerLocalIdentifier = null;
+        let headerIdentifier = '';
+        let uriAndIdentifier = null;
+
+        if (!isMappingHeaderAttributeItem(drillItem)) {
+            headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
+            headerIdentifier = getMappingHeaderIndentifier(drillItem) || '';
+            uriAndIdentifier = headerLocalIdentifier
+                ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
+                : null;
+        }
+
+        const headerUri = getMappingHeaderUri(drillItem) || '';
+        const uri = uriAndIdentifier && uriAndIdentifier.uri || headerUri;
+        const identifier = uriAndIdentifier && uriAndIdentifier.identifier || headerIdentifier;
+        const id = headerLocalIdentifier || headerIdentifier;
+
         return {
-            // id: Measure localIdentifier or attribute identifier
             // Properties default to empty strings to maintain compatibility
-            id: isDrillableItemLocalId(drillItem) ? drillItem.localIdentifier : (identifier || ''),
-            title,
+            id,
+            title: getMappingHeaderName(drillItem),
             header: {
-                uri: isDrillableItemLocalId(drillItem)
-                    ? get(
-                        getMeasureUriOrIdentifier(afm, drillItem.localIdentifier),
-                        'uri',
-                        uri || ''
-                    ) : uri || '',
-                identifier: isDrillableItemLocalId(drillItem)
-                    ? get(
-                        getMeasureUriOrIdentifier(afm, drillItem.localIdentifier),
-                        'identifier',
-                        identifier || ''
-                    ) : identifier || ''
+                uri,
+                identifier
             }
         };
     });
@@ -395,22 +406,25 @@ export class PivotTableInner extends
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
     public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
-        const { drillableItems, dataSource } = this.props;
+        const { dataSource } = this.props;
         const { rowIndex } = cellClassParams;
         const colDef = cellClassParams.colDef as IGridHeader;
+        const drillablePredicates = this.getDrillablePredicates();
         // return none if no drillableItems are specified
 
         const afm: AFM.IAfm = dataSource.getAfm();
 
         let hasDrillableHeader = false;
         const isRowTotal = get(cellClassParams, ['data', 'type', ROW_TOTAL]);
-        if (drillableItems.length !== 0 && !isRowTotal) {
+        if (drillablePredicates.length !== 0 && !isRowTotal) {
+
             const rowDrillItem =
-                get<CellClassParams, IDrillableItem>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
-            const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
-            hasDrillableHeader = drillItems
+                get<CellClassParams, IMappingHeader>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
+            const headers: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+
+            hasDrillableHeader = headers
                 .some(
-                    (drillItem: IDrillItem) => isDrillable(drillableItems, drillItem, afm)
+                    (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
                 );
         }
 
@@ -488,18 +502,20 @@ export class PivotTableInner extends
     }
 
     public cellClicked = (cellEvent: IGridCellEvent) => {
-        const { drillableItems, onFiredDrillEvent } = this.props;
+        const { onFiredDrillEvent } = this.props;
         const { columnDefs } = this.state;
         const afm: AFM.IAfm = this.props.dataSource.getAfm();
+        const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
         const isRowTotal = get<IGridCellEvent, string>(cellEvent, ['data', 'type', ROW_TOTAL]);
-        const rowDrillItem = get<IGridCellEvent, IDrillableItem>(cellEvent, ['data', 'drillItemMap', colDef.field]);
-        const drillItems = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+        const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'drillItemMap', colDef.field]);
+        const drillItems: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
         const drillableHeaders = drillItems
             .filter(
-                (drillItem: IDrillItem) => isDrillable(drillableItems, drillItem, afm)
+                (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
             );
+
         if (isRowTotal || drillableHeaders.length === 0) {
             return false;
         }
@@ -519,6 +535,14 @@ export class PivotTableInner extends
         };
 
         if (onFiredDrillEvent(drillEvent)) {
+            // This is needed for /analyze/embedded/ drilling with post message
+            // tslint:disable-next-line:max-line-length
+            // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
+            const event = new CustomEvent('drill', {
+                detail: drillEvent,
+                bubbles: true
+            });
+            cellEvent.event.target.dispatchEvent(event);
             return true;
         }
         return false;
@@ -570,10 +594,11 @@ export class PivotTableInner extends
 
             // this provides persistent row selection (if enabled)
             getRowNodeId: (item) => {
-                const id = Object.keys(item.drillItemMap).map(
-                    key => `${key}${ID_SEPARATOR}${getIdsFromUri(item.drillItemMap[key].uri)[1]}`
-                ).join(FIELD_SEPARATOR);
-                return id;
+                return Object.keys(item.drillItemMap).map((key) => {
+                    const drillItem: IMappingHeader = item.drillItemMap[key];
+                    const ids = getIdsFromUri(getMappingHeaderUri(drillItem));
+                    return `${key}${ID_SEPARATOR}${ids[1]}`;
+                }).join(FIELD_SEPARATOR);
             },
 
             // Column types
@@ -662,6 +687,10 @@ export class PivotTableInner extends
         );
     }
 
+    private getDrillablePredicates(): IHeaderPredicate[] {
+        return convertDrillableItemsToPredicates(this.props.drillableItems);
+    }
+
     private getMeasureFormat(params: any): string {
         const headers = this.state.execution.executionResponse.dimensions[1].headers;
         const header = headers[headers.length - 1];
@@ -671,7 +700,7 @@ export class PivotTableInner extends
             return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
         }
 
-        throw new Error(`Cannot get measure format from header ${header}`);
+        throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
     }
 }
 

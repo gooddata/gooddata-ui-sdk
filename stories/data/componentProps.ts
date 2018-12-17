@@ -27,6 +27,18 @@ export const MEASURE_2: VisualizationObject.IMeasure = {
     }
 };
 
+export const MEASURE_AM_1_2: VisualizationObject.IMeasure = {
+    measure: {
+        localIdentifier: 'am1',
+        definition: {
+            arithmeticMeasure: {
+                measureIdentifiers: ['m1', 'm2'],
+                operator: 'sum'
+            }
+        }
+    }
+};
+
 export const MEASURE_3: VisualizationObject.IMeasure = {
     measure: {
         localIdentifier: 'm3',

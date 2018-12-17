@@ -157,21 +157,25 @@ export default class HeaderCell extends React.Component<IProps, IState> {
     }
 
     public onTextClick = (ev: React.MouseEvent<HTMLDivElement>) => {
+        const { sortDirection, onSortClick, enableSorting, defaultSortDirection } = this.props;
         ev.preventDefault();
-        if (this.props.sortDirection === null) {
-            const nextSortDirection = this.props.defaultSortDirection;
+        if (!enableSorting) {
+            return;
+        }
+        if (sortDirection === null) {
+            const nextSortDirection = defaultSortDirection;
             this.setState({
                 currentSortDirection: nextSortDirection
             });
-            this.props.onSortClick(nextSortDirection);
+            onSortClick(nextSortDirection);
             return;
         }
 
-        const nextSort = this.props.sortDirection === 'asc' ? 'desc' : 'asc';
+        const nextSort = sortDirection === 'asc' ? 'desc' : 'asc';
         this.setState({
             currentSortDirection: nextSort
         });
-        this.props.onSortClick(nextSort);
+        onSortClick(nextSort);
     }
 
     public renderSorting() {

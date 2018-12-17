@@ -1,7 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
+import { AFM, VisualizationObject } from '@gooddata/typings';
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
-import { IColorPalette, IColorPaletteItem, IChartConfig } from '../chart/Chart';
+import { getMappingHeaderLocalIdentifier } from '../../../helpers/mappingHeader';
+import {
+    IChartConfig,
+    IColorItem,
+    IColorPalette,
+    IColorPaletteItem,
+    IGuidColorItem,
+    IRGBColor,
+    IColorMapping,
+    IRGBColorItem
+} from '../../../interfaces/Config';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IMappingHeader, isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
 
 export const WHITE = 'rgb(255, 255, 255)';
 export const BLACK = 'rgb(0, 0, 0)';
@@ -36,83 +49,83 @@ export const DEFAULT_COLORS = [
 
 export const DEFAULT_COLOR_PALETTE = [
     {
-        guid: 'blue',
+        guid: '1',
         fill: { r: 20, g: 178, b: 226 }
     },
     {
-        guid: 'green',
+        guid: '2',
         fill: { r: 0, g: 193, b: 141 }
     },
     {
-        guid: 'red',
+        guid: '3',
         fill: { r: 229, g: 77, b: 66 }
     },
     {
-        guid: 'orange',
+        guid: '4',
         fill: { r: 241, g: 134, b: 0 }
     },
     {
-        guid: 'purple',
+        guid: '5',
         fill: { r: 171, g: 85, b: 163 }
     },
     {
-        guid: 'yellow',
+        guid: '6',
         fill: { r: 244, g: 213, b: 33 }
     },
     {
-        guid: 'grey',
+        guid: '7',
         fill: { r: 148, g: 161, b: 174 }
     },
     {
-        guid: 'blue-light',
+        guid: '8',
         fill: { r: 107, g: 191, b: 216 }
     },
     {
-        guid: 'violet-light',
+        guid: '9',
         fill: { r: 181, g: 136, b: 177 }
     },
     {
-        guid: 'red-light',
+        guid: '10',
         fill: { r: 238, g: 135, b: 128 }
     },
     {
-        guid: 'orange-light',
+        guid: '11',
         fill: { r: 241, g: 171, b: 84 }
     },
     {
-        guid: 'green-light',
+        guid: '12',
         fill: { r: 133, g: 209, b: 188 }
     },
     {
-        guid: 'blue-dark',
+        guid: '13',
         fill: { r: 41, g: 117, b: 170 }
     },
     {
-        guid: 'green-dark',
+        guid: '14',
         fill: { r: 4, g: 140, b: 103 }
     },
     {
-        guid: 'red-dark',
+        guid: '15',
         fill: { r: 181, g: 60, b: 51 }
     },
     {
-        guid: 'orange-dark',
+        guid: '16',
         fill: { r: 163, g: 101, b: 46 }
     },
     {
-        guid: 'purple-dark',
+        guid: '17',
         fill: { r: 140, g: 57, b: 132 }
     },
     {
-        guid: 'azure',
+        guid: '18',
         fill: { r: 136, g: 219, b: 244 }
     },
     {
-        guid: 'green-celadon',
+        guid: '19',
         fill: { r: 189, g: 234, b: 222 }
     },
     {
-        guid: 'pink-pale',
+        guid: '20',
         fill: { r: 239, g: 197, b: 194 }
     }
 ];
@@ -126,6 +139,12 @@ export const HEATMAP_BLUE_COLOR_PALETTE = [
     'rgb(22,151,192)',
     'rgb(0,110,145)'
 ];
+
+export const DEFAULT_HEATMAP_BLUE_COLOR: IRGBColor = {
+    r: 0,
+    g: 110,
+    b: 145
+};
 
 function lighter(color: number, percent: number) {
     const t = percent < 0 ? 0 : 255;
@@ -158,6 +177,16 @@ export function getLighterColor(color: string, percent: number) {
         lighter(G, percent),
         lighter(B, percent)
     );
+}
+
+export function getLighterColorFromRGB(color: IRGBColor, percent: number) {
+    const { r, g, b } = color;
+
+    return {
+        r: lighter(r, percent),
+        g: lighter(g, percent),
+        b: lighter(b, percent)
+    };
 }
 
 export function normalizeColorToRGB(color: string) {
@@ -201,3 +230,58 @@ export function getValidColorPalette(config: IChartConfig) {
 export function isCustomPalette(palette: IColorPalette) {
     return !isEqual(palette, DEFAULT_COLOR_PALETTE);
 }
+
+export function isGuidColorItem(color: IColorItem): color is IGuidColorItem {
+    return (color as IGuidColorItem).type === 'guid';
+}
+
+export function isRgbColorItem(color: IColorItem): color is IRGBColorItem {
+    return (color as IRGBColorItem).type === 'rgb';
+}
+
+export function getColorFromMapping(
+    mappingHeader: IMappingHeader,
+    colorMapping: IColorMapping[],
+    afm: AFM.IAfm
+): IColorItem {
+    if (!colorMapping) {
+        return undefined;
+    }
+
+    const mapping = colorMapping.find(item =>
+        item.predicate(mappingHeader, afm)
+    );
+    return mapping && mapping.color;
+}
+
+export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number) {
+    const inPalette = colorPalette.find((item: any) => item.guid === guid);
+
+    return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
+}
+
+export function getRgbStringFromRGB(color: IRGBColor) {
+    return `rgb(${color.r},${color.g},${color.b})`;
+}
+
+export function getColorMappingPredicate(
+    id: string,
+    references: VisualizationObject.IReferenceItems
+): IHeaderPredicate {
+    return (header: IMappingHeader, _afm: AFM.IAfm): boolean => {
+        if (isMappingHeaderAttributeItem(header)) {
+            const attributeItemUri = references && references[id];
+            return attributeItemUri ? attributeItemUri === header.attributeHeaderItem.uri : false;
+        }
+
+        const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
+        return headerLocalIdentifier ? headerLocalIdentifier === id : false;
+    };
+}
+
+// For re-exporting in index.ts
+// Create object here since TSC can't reexport external types used by getColorMappingPredicate
+export default {
+    getColorByGuid,
+    getColorMappingPredicate
+};

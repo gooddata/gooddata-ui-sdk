@@ -40,7 +40,8 @@ $responsive-legend: 'only screen and (max-width: 767px)';
         text-align: left;
     }
 
-    .series-item {
+    .series-item,
+    .series-axis-indicator {
         display: flex;
         align-items: center;
         font-family: $gd-font-primary;
@@ -53,7 +54,8 @@ $responsive-legend: 'only screen and (max-width: 767px)';
             margin-right: 5px;
         }
 
-        .series-name {
+        .series-name,
+        .series-text {
             flex: 1 1 auto;
             font-size: 12px;
             line-height: 20px;
@@ -61,6 +63,19 @@ $responsive-legend: 'only screen and (max-width: 767px)';
 
             @include text-overflow();
         }
+    }
+
+    .series-axis-indicator {
+        cursor: default;
+        margin-right: -10px;
+        .series-text {
+          color: $gd-color-text-dimmed;
+        }
+    }
+
+    .legend-separator {
+        width: 20px;
+        height: 15px;
     }
 
     .paging {
@@ -124,12 +139,11 @@ $responsive-legend: 'only screen and (max-width: 767px)';
                 width: auto;
                 min-width: 0; // hack for FF
                 max-width: 100%; // hack for IE
+            }
 
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .series-item {
-                    margin-left: 15px;
-                }
+            .series-item {
+                max-width: calc(100% - 15px);
+                margin-left: 15px;
             }
         }
 
@@ -147,10 +161,10 @@ $responsive-legend: 'only screen and (max-width: 767px)';
             justify-content: flex-start;
             width: $legend-right-width;
             min-width: $legend-right-width;
+        }
 
-            .series-item {
-                max-width: 100%;
-            }
+        .series-item {
+            max-width: 100%;
         }
 
         .paging {

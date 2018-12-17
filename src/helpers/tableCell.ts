@@ -3,15 +3,14 @@ import * as classNames from 'classnames';
 import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
 
 import { styleVariables } from '../components/visualizations/styles/variables';
+import { isMappingHeaderMeasureItem, IMappingHeader } from '../interfaces/MappingHeader';
 
 import {
-    IMeasureTableHeader,
     isAttributeCell,
     ITableCellStyle,
     ITableCellStyleAndFormattedValue,
     MeasureCell,
-    TableCell,
-    TableHeader
+    TableCell
 } from '../interfaces/Table';
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
@@ -27,6 +26,7 @@ export function getCellClassNames(rowIndex: number, columnIndex: number, isDrill
         {
             'gd-cell-drillable': isDrillable
         },
+        'gd-cell',
         `s-cell-${rowIndex}-${columnIndex}`,
         's-table-cell'
     );
@@ -72,7 +72,7 @@ export function getMeasureCellStyle(
 }
 
 export function getCellStyleAndFormattedValue(
-    header: TableHeader,
+    header: IMappingHeader,
     cellContent: TableCell,
     applyColor: boolean = true,
     separators?: ISeparators
@@ -84,7 +84,7 @@ export function getCellStyleAndFormattedValue(
         };
     }
 
-    const measureFormat = (header as IMeasureTableHeader).format;
+    const measureFormat = isMappingHeaderMeasureItem(header) ? header.measureHeaderItem.format : '';
 
     return {
         style: getMeasureCellStyle(cellContent, measureFormat, separators, applyColor),

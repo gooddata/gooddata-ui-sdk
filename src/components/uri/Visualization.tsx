@@ -3,12 +3,12 @@ import * as React from 'react';
 import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
-import get = require('lodash/get');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
 import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
+import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
 import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
-import { IChartConfig, IColorPaletteItem } from '../visualizations/chart/Chart';
+import { IChartConfig, IColorPaletteItem } from '../../interfaces/Config';
 import { SortableTable } from '../core/SortableTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';
@@ -23,7 +23,10 @@ import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
 import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
 import { IDrillableItem, generateDimensions, RuntimeError } from '../../';
 import { setTelemetryHeaders } from '../../helpers/utils';
+import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
+import { isTreemap } from '../visualizations/utils/common';
+import { getColorMappingPredicate, getColorPaletteFromColors } from '../visualizations/utils/color';
 export { Requireable };
 
 const {
@@ -67,7 +70,7 @@ export interface IVisualizationProps extends IEvents {
     locale?: Localization.ILocale;
     config?: IChartConfig;
     filters?: AFM.FilterItem[];
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     uriResolver?: (sdk: SDK, projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
@@ -170,11 +173,10 @@ export class VisualizationWrapped
             colorPaletteEnabled: false
         };
 
-        const sdk = props.sdk || createSdk();
-        this.sdk = sdk.clone();
-        this.isUnmounted = false;
+        this.sdk = props.sdk ? props.sdk.clone() : createSdk();
         setTelemetryHeaders(this.sdk, 'Visualization', props);
 
+        this.isUnmounted = false;
         this.visualizationUri = props.uri;
 
         this.errorMap = generateErrorMap(props.intl);
@@ -199,7 +201,7 @@ export class VisualizationWrapped
             });
     }
 
-    public async componentDidMount() {
+    public componentDidMount() {
         const { projectId, uri, identifier, filters } = this.props;
 
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
@@ -211,7 +213,7 @@ export class VisualizationWrapped
             filters
         );
 
-        await this.getIsColorPaletteEnabled();
+        this.getColorPalette();
     }
 
     public componentWillUnmount() {
@@ -229,11 +231,11 @@ export class VisualizationWrapped
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
-    public async componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
+    public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
+        if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
-            await this.getIsColorPaletteEnabled();
+            this.getColorPalette();
         }
         const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
         const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
@@ -279,8 +281,21 @@ export class VisualizationWrapped
             ? this.props.config.colorPalette
             : this.state.colorPalette;
 
+        let colorMapping;
+        if (properties && properties.colorMapping) {
+            const { references } = mdObjectContent;
+            colorMapping = properties.colorMapping.map((mapping: any) => {
+                const predicate = getColorMappingPredicate(mapping.id, references);
+                return {
+                    predicate,
+                    color: mapping.color
+                };
+            });
+        }
+
         const finalConfig = {
             ...properties,
+            colorMapping,
             ...config,
             colorPalette,
             mdObject: mdObjectContent
@@ -386,9 +401,17 @@ export class VisualizationWrapped
                     const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
 
                     const visualizationType: VisType = getVisualizationTypeFromVisualizationClass(visualizationClass);
+                    // keep resultSpec creation in sync with AD
                     const resultSpecWithDimensions = {
                         ...resultSpec,
                         dimensions: generateDimensions(mdObject.content, visualizationType)
+                    };
+                    const treemapDefaultSorting = isTreemap(visualizationType) ? {
+                        sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions)
+                    } : {};
+                    const resultSpecWithDimensionsAndSorting = {
+                        ...resultSpecWithDimensions,
+                        ...treemapDefaultSorting
                     };
 
                     return this.adapter.createDataSource(afmWithFilters)
@@ -396,7 +419,7 @@ export class VisualizationWrapped
                             return {
                                 type: visualizationType,
                                 dataSource,
-                                resultSpec: resultSpecWithDimensions,
+                                resultSpec: resultSpecWithDimensionsAndSorting,
                                 totals: mdObjectTotals,
                                 mdObject
                             };
@@ -406,28 +429,30 @@ export class VisualizationWrapped
         this.subject.next(promise);
     }
 
-    private async getColorPalette() {
-        if (!this.isUnmounted
-            && this.state.colorPaletteEnabled
-            && !(this.props.config && this.props.config.colorPalette)) {
-            const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
-
-            if (colorPalette) {
-                this.setStateWithCheck({ colorPalette });
-            }
-        }
+    private hasExternalColorPalette() {
+        return this.props.config && this.props.config.colorPalette;
     }
 
-    private async getIsColorPaletteEnabled() {
-        if (this.isUnmounted) {
-            return;
+    private hasColorsProp() {
+        return this.props.config && this.props.config.colors;
+    }
+
+    private async getColorPalette() {
+        if (!this.isUnmounted) {
+            if (this.hasExternalColorPalette()) {
+                return;
+            } else if (this.hasColorsProp()) {
+                this.setStateWithCheck({
+                    colorPalette: getColorPaletteFromColors(this.props.config.colors)
+                });
+            } else {
+                const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+
+                if (colorPalette) {
+                    this.setStateWithCheck({ colorPalette });
+                }
+            }
         }
-
-        const featureFlags = await this.sdk.project.getFeatureFlags(this.props.projectId);
-
-        this.setStateWithCheck({
-            colorPaletteEnabled: Boolean(get(featureFlags, 'enableColorPalette'))
-        }, this.getColorPalette);
     }
 
     private setStateWithCheck(newState: any, callBack?: () => void) {

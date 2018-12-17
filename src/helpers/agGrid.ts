@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
+import { getMappingHeaderName } from './mappingHeader';
 import range = require('lodash/range');
 import get = require('lodash/get');
+import clone = require('lodash/clone');
 import zipObject = require('lodash/zipObject');
 
 import { unwrap } from './utils';
-import { IDrillItem } from '../interfaces/DrillEvents';
+import { IMappingHeader } from '../interfaces/MappingHeader';
 import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions } from '../interfaces/AGGrid';
 import { ColDef } from 'ag-grid';
 import { getTreeLeaves } from '../components/core/PivotTable';
@@ -78,19 +80,11 @@ export const getMeasureDrillItem = (
     const measureGroupHeader = responseHeaders.find(
         responseHeader => Execution.isMeasureGroupHeader(responseHeader)
     ) as Execution.IMeasureGroupHeader;
-    const measureHeaderItem = header.measureHeaderItem
-        ? get(
-            measureGroupHeader,
-            ['measureGroupHeader', 'items', header.measureHeaderItem.order, 'measureHeaderItem'], null
-        )
-        : null;
 
-    return measureHeaderItem ? {
-        uri: measureHeaderItem.uri,
-        identifier: measureHeaderItem.identifier,
-        localIdentifier: measureHeaderItem.localIdentifier,
-        title: measureHeaderItem.name
-    } : null;
+    return get(
+        measureGroupHeader,
+        ['measureGroupHeader', 'items', header.measureHeaderItem.order], null
+    );
 };
 
 export const assignDrillItemsAndType = (
@@ -98,25 +92,16 @@ export const assignDrillItemsAndType = (
     currentHeader: Execution.IResultHeaderItem,
     responseHeaders: Execution.IHeader[],
     headerIndex: number,
-    drillItems: IDrillItem[]
+    drillItems: IMappingHeader[]
 ) => {
     if (Execution.isAttributeHeaderItem(currentHeader)) {
         header.type = COLUMN_ATTRIBUTE_COLUMN;
         // attribute value uri
-        drillItems.push({
-            uri: currentHeader.attributeHeaderItem.uri,
-            title: currentHeader.attributeHeaderItem.name
-        });
+        drillItems.push(currentHeader);
         // attribute uri and identifier
         const attributeResponseHeader =
             responseHeaders[headerIndex % responseHeaders.length] as Execution.IAttributeHeader;
-        const { uri, identifier, localIdentifier, name } = attributeResponseHeader.attributeHeader;
-        drillItems.push({
-            uri,
-            identifier,
-            localIdentifier,
-            title: name
-        });
+        drillItems.push(attributeResponseHeader);
         // This is where we could assign drillItems if we want to start drilling on column headers
         // It needs to have an empty array for some edge cases like column attributes without measures
     } else if (Execution.isMeasureHeaderItem(currentHeader)) {
@@ -128,15 +113,51 @@ export const assignDrillItemsAndType = (
     }
 };
 
+export const shouldMergeHeaders = (
+    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    headerIndex: number,
+    headerItemIndex: number
+) => {
+    for (let ancestorIndex = headerIndex; ancestorIndex >= 0; ancestorIndex--) {
+        const currentAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex];
+        const nextAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex + 1];
+        if (
+            !nextAncestorHeader
+            || identifyHeader(currentAncestorHeader) !== identifyHeader(nextAncestorHeader)
+        ) {
+            return false;
+        }
+    }
+    return true;
+};
+
+export const mergeHeaderEndIndex = (
+    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    headerIndex: number,
+    headerItemStartIndex: number
+) => {
+    const header = resultHeaderDimension[headerIndex];
+    for (let headerItemIndex = headerItemStartIndex; headerItemIndex < header.length; headerItemIndex++) {
+        if (!shouldMergeHeaders(resultHeaderDimension, headerIndex, headerItemIndex)) {
+            return headerItemIndex;
+        }
+    }
+    return headerItemStartIndex;
+};
+
+/*
+ * getColumnHeaders transforms header items from matrix to tree hierarchy
+ * for each span of identical headers in a row, the function is called recursively to assign child items
+ */
 export const getColumnHeaders = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     responseHeaders: Execution.IHeader[],
     columnDefOptions: IColumnDefOptions = {},
     headerIndex = 0,
-    headerValueStart = 0,
+    headerItemStartIndex = 0,
     headerValueEnd: number = undefined,
     fieldPrefix = '',
-    parentDrillItems: IDrillItem[] = []
+    parentDrillItems: IMappingHeader[] = []
 ) => {
     if (!resultHeaderDimension.length) {
         return [];
@@ -146,75 +167,59 @@ export const getColumnHeaders = (
     const lastIndex = headerValueEnd !== undefined ? headerValueEnd : currentHeaders.length - 1;
     const hierarchy: IGridHeader[] = [];
 
-    for (let index = headerValueStart; index < lastIndex + 1; index += 1) {
-        let headerCount = 0;
-        const currentHeader = currentHeaders[index];
-        // current header can be either measureHeaderItem defined by order
-        // or attributeHeaderItem defined by uri (attribute value uri)
-        // We need to be able to match column by:
-            // attribute uri or identifier
-            // attribute value uri
-            // measure uri or identifier
-        const drillItems: IDrillItem[] = [...parentDrillItems];
+    for (let headerItemIndex = headerItemStartIndex; (headerItemIndex < lastIndex + 1);) {
+        const currentHeader = currentHeaders[headerItemIndex];
         const header: IGridHeader = {
             drillItems: [],
             ...headerToGrid(currentHeader, fieldPrefix),
             ...columnDefOptions
         };
+        const drillItems: IMappingHeader[] = clone(parentDrillItems);
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
-
-        const isNextHeaderIdentical = () => (
-            currentHeaders[index + 1] && header.field === (fieldPrefix + identifyHeader(currentHeaders[index + 1]))
+        const headerItemEndIndex = mergeHeaderEndIndex(
+            resultHeaderDimension,
+            headerIndex,
+            headerItemIndex
         );
-        while (isNextHeaderIdentical()) {
-            headerCount += 1;
-            index += 1;
-        }
+
         if (headerIndex !== resultHeaderDimension.length - 1) {
             header.children = getColumnHeaders(
                 resultHeaderDimension,
                 responseHeaders,
                 columnDefOptions,
                 headerIndex + 1,
-                index - headerCount,
-                index,
+                headerItemIndex,
+                headerItemEndIndex,
                 header.field + FIELD_SEPARATOR,
                 drillItems
             );
         }
-        // Here we will add custom header renderers when we need them
-        // header.render = 'RowHeader';
         hierarchy.push(header);
+        // We move the pointer manually to skip identical headers
+        headerItemIndex = headerItemEndIndex + 1;
     }
 
     return hierarchy;
 };
 
 export const getRowHeaders = (
-    rowDimensionHeaders: Execution.IHeader[],
+    rowDimensionHeaders: Execution.IAttributeHeader[],
     columnDefOptions: IColumnDefOptions,
     makeRowGroups: boolean
 ): IGridHeader[] => {
-    return rowDimensionHeaders.map((headerItemWrapped: Execution.IHeader) => {
-        const headerItem = unwrap(headerItemWrapped);
+    return rowDimensionHeaders.map((attributeHeader: Execution.IAttributeHeader) => {
         const rowGroupProps = makeRowGroups ? {
             rowGroup: true,
             hide: true
         } : {};
-        // attribute drill item
-        const drillableItem: IDrillItem = {
-            uri: headerItem.uri,
-            identifier: headerItem.identifier,
-            localIdentifier: headerItem.localIdentifier,
-            title: headerItem.name
-        };
-        const field = identifyResponseHeader(headerItemWrapped);
+        const field = identifyResponseHeader(attributeHeader);
         return {
-            headerName: headerItem.name,
+            // The label should be attribute name (not attribute display form name)
+            headerName: getMappingHeaderName(attributeHeader),
             type: ROW_ATTRIBUTE_COLUMN,
             // Row dimension must contain only attribute headers.
             field,
-            drillItems: [drillableItem],
+            drillItems: [attributeHeader],
             ...rowGroupProps,
             ...columnDefOptions
         };
@@ -244,12 +249,8 @@ export const getRow = (
         rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
             const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
             // attribute value drill item
-            const rowHeaderDrillItem: IDrillItem = Execution.isAttributeHeaderItem(rowHeaderDataItem)
-                ? {
-                    uri: rowHeaderDataItem.attributeHeaderItem.uri,
-                    title: rowHeaderDataItem.attributeHeaderItem.name
-                }
-                : null;
+            const rowHeaderDrillItem: IMappingHeader =
+                Execution.isAttributeHeaderItem(rowHeaderDataItem) ? rowHeaderDataItem : null;
             // Drilling on row headers supports only attribute headers
             invariant(rowHeaderDrillItem, 'row header is not of type IResultAttributeHeaderItem');
             row[rowHeader.field] = unwrap(rowHeaderDataItem).name;
@@ -426,24 +427,20 @@ export const executionToAGGridAdapter = (
     const columnHeaders: IGridHeader[] = getColumnHeaders(headerItems[1], dimensions[1].headers, columnDefOptions);
     const groupColumnHeaders: IGridHeader[] = columnAttributeHeaderCount > 0 ? [{
         headerName: dimensions[1].headers
-            .map((header: Execution.IHeader) => {
-                if (Execution.isAttributeHeader(header)) {
-                    return header.attributeHeader.name;
-                }
-                if (Execution.isMeasureGroupHeader(header) && header.measureGroupHeader.items.length > 1) {
-                    return 'measures';
-                }
-                return null;
+            .filter(header => Execution.isAttributeHeader(header))
+            .map((header: Execution.IAttributeHeader) => {
+                return getMappingHeaderName(header);
             })
             .filter((item: string) => item !== null)
-            .join('/'),
+            .join(' › '),
         field: 'columnGroupLabel',
         children: columnHeaders,
         drillItems: []
     }] : columnHeaders;
 
     const rowHeaders: IGridHeader[]
-        = getRowHeaders(dimensions[0].headers, columnDefOptions, makeRowGroups);
+        // There are supposed to be only attribute headers on the first dimension
+        = getRowHeaders(dimensions[0].headers as Execution.IAttributeHeader[], columnDefOptions, makeRowGroups);
 
     // build sortingMap from resultSpec.sorts
     const sorting = resultSpec.sorts || [];

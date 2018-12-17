@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Drill With External Data') // eslint-disable-line no-undef
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/advanced/drill-with-external-data`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/drill-with-external-data`));
 
 const stateTableCells = Selector('.s-state-table .s-table-cell');
 const employeeTableCells = Selector('.s-employee-table .s-table-cell');

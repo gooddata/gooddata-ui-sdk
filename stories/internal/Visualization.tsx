@@ -337,4 +337,43 @@ storiesOf('Internal/Visualization', module)
                 />
             )
         );
+    })
+    .add('visualization dual axes with two left measures, one right measure, one attribute', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.barChartWith3MetricsAndViewByAttribute}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            position: 'top'
+                        },
+                        secondary_yaxis: {
+                            measures: ['expectedMetric']
+                        }
+                    }}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
+    })
+    .add('visualization right axis with three right measures, one attribute', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.barChartWith3MetricsAndViewByAttribute}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            position: 'top'
+                        },
+                        secondary_yaxis: {
+                            rotation: '45',
+                            measures: ['lostMetric', 'wonMetric', 'expectedMetric']
+                        }
+                    }}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
     });

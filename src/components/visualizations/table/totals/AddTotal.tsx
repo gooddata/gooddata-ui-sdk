@@ -5,17 +5,17 @@ import { noop } from 'lodash';
 
 import List from '@gooddata/goodstrap/lib/List/List';
 import Dropdown, { DropdownBody } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
+import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 
 import { TOTALS_TYPES_DROPDOWN_WIDTH } from '../TableVisualization';
 import { DropdownItem } from './DropdownItem';
 import { IAddTotalButtonProps, AddTotalButton } from './AddTotalButton';
 import { getAddTotalDropdownAlignPoints, shouldShowAddTotalButton } from './utils';
-import { TableHeader } from '../../../../interfaces/Table';
 import { IIndexedTotalItem } from '../../../../interfaces/Totals';
 
 export interface IAddTotalProps {
     dataSource: object;
-    header: TableHeader;
+    header: IMappingHeader;
     columnIndex: number;
     headersCount: number;
     addingMoreTotalsEnabled: boolean;

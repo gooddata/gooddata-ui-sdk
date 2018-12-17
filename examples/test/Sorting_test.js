@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
-import { loginUsingGreyPages } from './utils/helpers';
+import { loginUsingLoginForm } from './utils/helpers';
 
 fixture('Sorting')
     .page(config.url)
-    .beforeEach(loginUsingGreyPages(`${config.url}/sorting`));
+    .beforeEach(loginUsingLoginForm(`${config.url}/sorting`));
 
 test('should display sorted graphs', async (t) => {
     const measureSortingAxisLabels = Selector('.s-measure-sorting .highcharts-xaxis-labels');

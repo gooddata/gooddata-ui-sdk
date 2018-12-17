@@ -1,9 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution, AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import noop = require('lodash/noop');
+import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
+import { IChartConfig } from '../../../interfaces/Config';
 import { IDrillableItem, IDrillEventCallback } from '../../../interfaces/DrillEvents';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import Headline, { IHeadlineFiredDrillEventItemContext } from './Headline';
 import {
     applyDrillableItems,
@@ -11,14 +14,13 @@ import {
     fireDrillEvent,
     getHeadlineData
 } from './utils/HeadlineTransformationUtils';
-import { IChartConfig } from '../chart/Chart';
 
 export interface IHeadlineTransformationProps {
     executionRequest: AFM.IExecution['execution'];
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
 
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     config?: IChartConfig;
 
     onFiredDrillEvent?: IDrillEventCallback;
@@ -55,7 +57,10 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
         } = this.props;
 
         const data = getHeadlineData(executionResponse, executionResult, intl);
-        const dataWithUpdatedDrilling = applyDrillableItems(data, drillableItems, executionRequest);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+        const dataWithUpdatedDrilling = applyDrillableItems(
+            data, drillablePredicates, executionRequest, executionResponse
+        );
 
         return (
             <Headline

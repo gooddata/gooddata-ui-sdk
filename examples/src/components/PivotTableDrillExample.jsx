@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable } from '@gooddata/react-components';
+import { PivotTable, HeaderPredicateFactory } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -92,9 +92,9 @@ export class PivotTableDrillExample extends Component {
             }
         ];
 
-        const drillableItems = [{
-            identifier: menuCategoryAttributeDFIdentifier
-        }];
+        const drillableItems = [
+            HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier)
+        ];
 
         const attributes = [
             {

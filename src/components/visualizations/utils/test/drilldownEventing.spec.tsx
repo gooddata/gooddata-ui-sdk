@@ -6,170 +6,10 @@ import {
     getClickableElementNameByChartType,
     chartClick,
     cellClick,
-    isDrillable,
     IHighchartsChartDrilldownEvent,
-    getMeasureUriOrIdentifier
+    getMasterMeasureObjQualifier
 } from '../drilldownEventing';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
-
-describe('isDrillable', () => {
-    const PURE_MEASURE_URI = '/gdc/md/projectId/obj/1';
-    const PURE_MEASURE_IDENTIFIER = 'MEASURE.identifier';
-    const ADHOC_MEASURE_LOCAL_IDENTIFIER = 'm1';
-    const ADHOC_MEASURE_URI = '/gdc/md/projectId/obj/2';
-    const DATE_DATA_SET_URI = '/gdc/md/projectId/obj/3';
-    const ADHOC_MEASURE_IDENTIFIER = 'adhoc.measure.identifier';
-    const ADHOC_MEASURE_POP_LOCAL_IDENTIFIER = 'm1_pop';
-    const ADHOC_MEASURE_PREVIOUS_PERIOD_LOCAL_IDENTIFIER = 'm1_previous_period';
-
-    const drillableItems = [
-        {
-            uri: PURE_MEASURE_URI,
-            identifier: PURE_MEASURE_IDENTIFIER
-        },
-        {
-            uri: ADHOC_MEASURE_URI,
-            identifier: ADHOC_MEASURE_IDENTIFIER
-        }
-    ];
-
-    describe('Header with uri or identifier (pure measures & attributes)', () => {
-        it('should be true if uri is found in drillableItems', () => {
-            const header = {
-                uri: PURE_MEASURE_URI
-            };
-            expect(
-                isDrillable(drillableItems, header, {})
-            ).toEqual(true);
-        });
-
-        it('should be true if identifier is found in drillableItems', () => {
-            const header = {
-                identifier: PURE_MEASURE_IDENTIFIER
-            };
-            expect(
-                isDrillable(drillableItems, header, {})
-            ).toEqual(true);
-        });
-    });
-
-    describe('Header without uri & identifier (adhoc measures)', () => {
-        it('should be true if uri based measure in AFM is found in drillableItems', () => {
-            const header = {
-                localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER
-            };
-            const afm = {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI
-                                }
-                            }
-                        }
-                    }
-                ]
-            };
-            expect(
-                isDrillable(drillableItems, header, afm)
-            ).toEqual(true);
-        });
-
-        it('should be true if identifier based measure in AFM is found in drillableItems', () => {
-            const header = {
-                localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER
-            };
-            const afm = {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    identifier: ADHOC_MEASURE_IDENTIFIER
-                                }
-                            }
-                        }
-                    }
-                ]
-            };
-            expect(
-                isDrillable(drillableItems, header, afm)
-            ).toEqual(true);
-        });
-
-        it('should detect PoP in AFM', () => {
-            const header = {
-                localIdentifier: ADHOC_MEASURE_POP_LOCAL_IDENTIFIER
-            };
-            const afm = {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI
-                                }
-                            }
-                        }
-                    }, {
-                        localIdentifier: ADHOC_MEASURE_POP_LOCAL_IDENTIFIER,
-                        definition: {
-                            popMeasure: {
-                                measureIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                                popAttribute: {
-                                    uri: ADHOC_MEASURE_URI
-                                }
-                            }
-                        }
-                    }
-                ]
-            };
-            expect(
-                isDrillable(drillableItems, header, afm)
-            ).toEqual(true);
-        });
-
-        it('should detect previous period in AFM', () => {
-            const header = {
-                localIdentifier: ADHOC_MEASURE_PREVIOUS_PERIOD_LOCAL_IDENTIFIER
-            };
-            const afm = {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI
-                                }
-                            }
-                        }
-                    }, {
-                        localIdentifier: ADHOC_MEASURE_PREVIOUS_PERIOD_LOCAL_IDENTIFIER,
-                        definition: {
-                            previousPeriodMeasure: {
-                                measureIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                                dateDataSets: [{
-                                    dataSet: {
-                                        uri: DATE_DATA_SET_URI
-                                    },
-                                    periodsAgo: 1
-                                }]
-                            }
-                        }
-                    }
-                ]
-            };
-            expect(
-                isDrillable(drillableItems, header, afm)
-            ).toEqual(true);
-        });
-    });
-});
 
 describe('Drilldown Eventing', () => {
     jest.useFakeTimers();
@@ -606,7 +446,7 @@ describe('Drilldown Eventing', () => {
     });
 });
 
-describe('getMeasureUriOrIdentifier', () => {
+describe('getMeasureUriAndIdentifier', () => {
     describe('simple measure', () => {
         function buildAfm(simpleMeasureItem: AFM.ObjQualifier): AFM.IAfm {
             return {
@@ -625,7 +465,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toBeNull();
         });
 
@@ -633,7 +473,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm1');
+            const result = getMasterMeasureObjQualifier(afm, 'm1');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: undefined
@@ -644,7 +484,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 identifier: 'id'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm1');
+            const result = getMasterMeasureObjQualifier(afm, 'm1');
             expect(result).toEqual({
                 uri: undefined,
                 identifier: 'id'
@@ -656,7 +496,7 @@ describe('getMeasureUriOrIdentifier', () => {
                 identifier: 'id',
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm1');
+            const result = getMasterMeasureObjQualifier(afm, 'm1');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: 'id'
@@ -692,7 +532,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm3');
+            const result = getMasterMeasureObjQualifier(afm, 'm3');
             expect(result).toBeNull();
         });
 
@@ -719,7 +559,7 @@ describe('getMeasureUriOrIdentifier', () => {
                     }
                 }]
             };
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toBeNull();
         });
 
@@ -727,7 +567,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: undefined
@@ -738,7 +578,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 identifier: 'id'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: undefined,
                 identifier: 'id'
@@ -750,7 +590,7 @@ describe('getMeasureUriOrIdentifier', () => {
                 identifier: 'id',
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: 'id'
@@ -789,7 +629,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm3');
+            const result = getMasterMeasureObjQualifier(afm, 'm3');
             expect(result).toBeNull();
         });
 
@@ -819,7 +659,7 @@ describe('getMeasureUriOrIdentifier', () => {
                     }
                 }]
             };
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toBeNull();
         });
 
@@ -827,7 +667,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: undefined
@@ -838,7 +678,7 @@ describe('getMeasureUriOrIdentifier', () => {
             const afm = buildAfm({
                 identifier: 'id'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: undefined,
                 identifier: 'id'
@@ -850,7 +690,7 @@ describe('getMeasureUriOrIdentifier', () => {
                 identifier: 'id',
                 uri: '/uri'
             });
-            const result = getMeasureUriOrIdentifier(afm, 'm2');
+            const result = getMasterMeasureObjQualifier(afm, 'm2');
             expect(result).toEqual({
                 uri: '/uri',
                 identifier: 'id'

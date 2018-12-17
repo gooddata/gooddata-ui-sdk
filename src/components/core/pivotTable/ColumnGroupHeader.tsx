@@ -23,7 +23,8 @@ export default class ColumnGroupHeader
       const { enableMenu } = this.props;
       const columnGroupDef = this.props.columnGroup.getColGroupDef();
       const parent = this.props.columnGroup.getParent();
-      const showMenu = enableMenu && !!(parent && columnGroupDef.headerName);
+      // do not show menu for the first group header and empty headers above row attribute column heders
+      const showMenu = enableMenu && !!parent && !!columnGroupDef.headerName;
 
       return (
           <HeaderCell
