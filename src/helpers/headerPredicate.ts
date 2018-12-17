@@ -19,9 +19,7 @@ export function convertDrillableItemsToPredicates(
     drillableItems: Array<IDrillableItem | IHeaderPredicate>
 ): IHeaderPredicate[] {
     return drillableItems.reduce((acc: IHeaderPredicate[], drillableItem: IDrillableItem) => {
-        if (isDrillableItemUri(drillableItem) && isDrillableItemIdentifier(drillableItem)) {
-            return acc.concat([uriMatch(drillableItem.uri), identifierMatch(drillableItem.identifier)]);
-        } else if (isDrillableItemUri(drillableItem)) {
+        if (isDrillableItemUri(drillableItem)) {
             return acc.concat(uriMatch(drillableItem.uri));
         } else if (isDrillableItemIdentifier(drillableItem)) {
             return acc.concat(identifierMatch(drillableItem.identifier));

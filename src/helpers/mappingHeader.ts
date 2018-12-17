@@ -33,11 +33,11 @@ export function getMappingHeaderName(header: IMappingHeader): string {
     }
 }
 
-export function hasMappingHeaderIndentifier(header: IMappingHeader): boolean {
+export function hasMappingHeaderIdentifier(header: IMappingHeader): boolean {
     return isMappingHeaderAttribute(header) || isMappingHeaderMeasureItem(header);
 }
 
-export function getMappingHeaderIndentifier(header: IMappingHeader): string {
+export function getMappingHeaderIdentifier(header: IMappingHeader): string {
     if (isMappingHeaderAttribute(header)) {
         return header.attributeHeader.identifier;
     }

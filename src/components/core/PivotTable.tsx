@@ -39,7 +39,7 @@ import {
 } from '../../helpers/agGrid';
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from '../../helpers/headerPredicate';
 import {
-    getMappingHeaderIndentifier,
+    getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName,
     getMappingHeaderUri
@@ -57,7 +57,7 @@ import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import { LoadingComponent } from '../simple/LoadingComponent';
 import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
 
-import { getMasterMeasureObjQualifier } from '../visualizations/utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
 
 import { ICommonChartProps } from './base/BaseChart';
 import { BaseVisualization } from './base/BaseVisualization';
@@ -330,7 +330,7 @@ export const getDrillIntersection = (
 
         if (!isMappingHeaderAttributeItem(drillItem)) {
             headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
-            headerIdentifier = getMappingHeaderIndentifier(drillItem) || '';
+            headerIdentifier = getMappingHeaderIdentifier(drillItem) || '';
             uriAndIdentifier = headerLocalIdentifier
                 ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
                 : null;

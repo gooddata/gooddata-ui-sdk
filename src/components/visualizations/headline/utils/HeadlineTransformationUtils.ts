@@ -9,8 +9,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
 import { isSomeHeaderPredicateMatched } from '../../../../helpers/headerPredicate';
 import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
-
-import { getMasterMeasureObjQualifier } from '../../utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import {
     IDrillEvent,
     IDrillEventCallback

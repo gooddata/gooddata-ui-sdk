@@ -1,8 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    getChartOptions,
-    findMeasureGroupInDimensions,
     findAttributeInDimension,
+    findMeasureGroupInDimensions
+} from '../../../../helpers/executionResultHelper';
+import {
+    getChartOptions,
     IChartOptions
 } from '../chartOptionsBuilder';
 
