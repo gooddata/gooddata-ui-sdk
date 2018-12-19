@@ -90,6 +90,36 @@ const mixData02 = [
     ]
 ];
 
+const SD160Case01 = [
+    [
+        '250744',
+        '-40914',
+        '2225030',
+        '51180'
+    ],
+    [
+        '30816',
+        '140816',
+        '41102',
+        '-51280'
+    ]
+];
+
+const SD160Case02 = [
+    [
+        '250744',
+        '-4091400',
+        '3341006',
+        '51180'
+    ],
+    [
+        '30816',
+        '140816',
+        '41102',
+        '-51280'
+    ]
+];
+
 // tslint:disable-next-line
 const executionResult = require('./bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult;
 
@@ -130,5 +160,21 @@ export const mixDataset02: any = {
     executionResult: {
         ...executionResult,
         data: mixData02
+    }
+};
+
+export const sd160DataSet01: any = {
+    ...template,
+    executionResult: {
+        ...executionResult,
+        data: SD160Case01
+    }
+};
+
+export const sd160DataSet02: any = {
+    ...template,
+    executionResult: {
+        ...executionResult,
+        data: SD160Case02
     }
 };

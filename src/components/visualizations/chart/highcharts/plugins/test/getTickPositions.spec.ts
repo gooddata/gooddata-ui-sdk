@@ -1,15 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import head = require('lodash/head');
 import last = require('lodash/last');
-import { IMinMaxInfo, getMinMax, createTickPositions } from '../zeroAlignYAxis';
+import { IMinMax, IMinMaxInfo, getMinMax, createTickPositions, getTickAmount } from '../zeroAlignYAxis';
 
 describe('get tick positions for dual axes chart', () => {
 
     describe('test generate min/max values', () => {
-        interface IMinMax {
-            min: number;
-            max: number;
-        }
 
         const minmaxTemplate: IMinMaxInfo[] = [{
             // first axis
@@ -182,6 +178,20 @@ describe('get tick positions for dual axes chart', () => {
                 }];
                 compareMinMax(actual, expected);
             });
+
+            it('calculate min on axis having smaller value', () => {
+                const actual = [{
+                    min: -40000, max: 2000000
+                }, {
+                    min: -50000, max: 150000
+                }];
+                const expected = [{
+                    min: -666666.6666666666, max: 2000000
+                }, {
+                    min: -50000, max: 150000
+                }];
+                compareMinMax(actual, expected);
+            });
         });
 
         describe('dataset with +0 data and 0- data on both axes', () => {
@@ -289,10 +299,11 @@ describe('get tick positions for dual axes chart', () => {
 
         const runTest = (min: number, max: number, expectedMin: number, expectedMax: number,
                          expectedTickNumber: number, minmax: IMinMaxInfo[]) => {
-            const actual = createTickPositions(min, max, minmax, TICK_AMOUNT);
-            expect(actual.length).toEqual(expectedTickNumber);
-            expect(Math.floor(head(actual))).toEqual(expectedMin);
-            expect(Math.floor(last(actual))).toEqual(expectedMax);
+            const tickPositions = createTickPositions(min, max, minmax, TICK_AMOUNT);
+            const newTickAmount = getTickAmount(tickPositions);
+            expect(newTickAmount).toEqual(expectedTickNumber);
+            expect(Math.floor(head(tickPositions))).toEqual(expectedMin);
+            expect(Math.floor(last(tickPositions))).toEqual(expectedMax);
         };
 
         it('start from 0+', () => {
@@ -312,7 +323,7 @@ describe('get tick positions for dual axes chart', () => {
         });
 
         it('start from -0 to 0+ without min/max config', () => {
-            runTest(-500, 500, -556, 555, TICK_AMOUNT + 1, minmaxAuto);
+            runTest(-500, 500, -556, 555, TICK_AMOUNT, minmaxAuto);
         });
 
         it('start from -0 to 0+ with min/max config on both axes', () => {
@@ -320,31 +331,38 @@ describe('get tick positions for dual axes chart', () => {
         });
 
         it('start from -0 to 0+ with min/max config on left axis', () => {
-            runTest(-500, 500, -556, 555, TICK_AMOUNT + 1, minmaxConfigOnLeftAxis);
+            runTest(-500, 500, -556, 555, TICK_AMOUNT, minmaxConfigOnLeftAxis);
         });
 
-        it('sync grid lines between axes with 0+ data', () => {
-            const firstAxisTicks = createTickPositions(0, 10000, minmaxAuto, TICK_AMOUNT);
-            const secondAxisTicks = createTickPositions(0, 500, minmaxAuto, TICK_AMOUNT);
-            expect(firstAxisTicks.length).toEqual(secondAxisTicks.length);
-        });
+        describe('sync grid lines', () => {
 
-        it('sync grid lines between axes with 0- data', () => {
-            const firstAxisTicks = createTickPositions(-10000, 0, minmaxAuto, TICK_AMOUNT);
-            const secondAxisTicks = createTickPositions(-500, 0, minmaxAuto, TICK_AMOUNT);
-            expect(firstAxisTicks.length).toEqual(secondAxisTicks.length);
-        });
+            const runTest = (leftMin: number, leftMax: number,
+                             rightMin: number, rightMax: number,
+                             minmax: IMinMaxInfo[]) => {
+                const leftTickPositions = createTickPositions(leftMin, leftMax, minmax, TICK_AMOUNT);
+                const leftTickAmount = getTickAmount(leftTickPositions);
 
-        it('sync grid lines between axes with -0 and 0+ data - only lef axis configured', () => {
-            const firstAxisTicks = createTickPositions(-10000, 10000, minmaxConfigOnLeftAxis, TICK_AMOUNT);
-            const secondAxisTicks = createTickPositions(-500, 500, minmaxConfigOnLeftAxis, TICK_AMOUNT);
-            expect(firstAxisTicks.length).toEqual(secondAxisTicks.length);
-        });
+                const rightTickPositions = createTickPositions(rightMin, rightMax, minmax, leftTickAmount);
+                const rightTickAmount = getTickAmount(rightTickPositions);
 
-        it('sync grid lines between axes with -0 and 0+ data - both axes configured', () => {
-            const firstAxisTicks = createTickPositions(-10000, 10000, minmaxConfigOnBothAxes, TICK_AMOUNT);
-            const secondAxisTicks = createTickPositions(-500, 500, minmaxConfigOnBothAxes, TICK_AMOUNT);
-            expect(firstAxisTicks.length).toEqual(secondAxisTicks.length);
+                expect(leftTickAmount).toEqual(rightTickAmount);
+            };
+
+            it('between axes with 0+ data', () => {
+                runTest(0, 10000, 0, 500, minmaxAuto);
+            });
+
+            it('between axes with 0- data', () => {
+                runTest(-10000, 0, -500, 0, minmaxAuto);
+            });
+
+            it('between axes with -0 and 0+ data - only lef axis configured', () => {
+                runTest(-10000, 10000, -500, 500, minmaxAuto);
+            });
+
+            it('between axes with -0 and 0+ data - both axes configured', () => {
+                runTest(-10000, 10000, -500, 500, minmaxConfigOnBothAxes);
+            });
         });
     });
 });

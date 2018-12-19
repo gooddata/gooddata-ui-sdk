@@ -265,4 +265,18 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
                 {renderSupportedCharts(barChartWithoutAttributes, config)}
             </div>
         );
+    })
+    .add('Column should not be cut off on right axis', () => {
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.sd160DataSet01)}
+            </div>
+        );
+    })
+    .add('Column should not be cut off on left axis', () => {
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.sd160DataSet02)}
+            </div>
+        );
     });
