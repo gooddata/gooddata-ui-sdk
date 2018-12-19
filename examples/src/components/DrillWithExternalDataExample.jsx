@@ -9,7 +9,8 @@ import {
     ColumnChart,
     LoadingComponent,
     ErrorComponent,
-    HeaderPredicateFactory
+    HeaderPredicateFactory,
+    BucketApi
 } from '@gooddata/react-components';
 import {
     projectId,
@@ -167,43 +168,17 @@ export class DrillWithExternalDataExample extends React.Component {
     getFilters = (state, location) => {
         const filters = [];
         if (state) {
-            filters.push({
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    in: [state.uri]
-                }
-            });
+            filters.push(BucketApi.positiveAttributeFilter(locationStateDisplayFormIdentifier, [state.uri]));
         }
         if (location) {
-            filters.push({
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: locationNameDisplayFormIdentifier
-                    },
-                    in: [location.uri]
-                }
-            });
+            filters.push(BucketApi.positiveAttributeFilter(locationNameDisplayFormIdentifier, [location.uri]));
         }
         return filters;
     }
 
-    getMeasure = (identifier, localIdentifier, alias) => (
-        {
-            measure: {
-                localIdentifier,
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier
-                        }
-                    }
-                },
-                alias
-            }
-        }
-    )
+    getMeasure = (identifier, localIdentifier, alias) => BucketApi.measure(identifier)
+        .localIdentifier(localIdentifier)
+        .alias(alias)
 
     getAttribute = (identifier, localIdentifier) => (
         {

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table } from '@gooddata/react-components';
+import { Table, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -26,63 +26,28 @@ export class ArithmeticMeasureMultiplicationExample extends Component {
     render() {
         const localIdentifiers = {
             numberOfRestaurants: 'numberOfRestaurants',
-            averageRestaurantDailyCosts: 'averageRestaurantDailyCosts'
+            averageRestaurantDailyCosts: 'averageRestaurantDailyCosts',
+            averageStateDailyCosts: 'averageStateDailyCosts'
         };
 
         const measures = [
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.numberOfRestaurants,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: numberOfRestaurantsIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.averageRestaurantDailyCosts,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: averageRestaurantDailyCostsIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'averageStateDailyCosts',
-                    title: '$ Avg State Daily Costs',
-                    definition: {
-                        arithmeticMeasure: {
-                            measureIdentifiers: [
-                                localIdentifiers.numberOfRestaurants,
-                                localIdentifiers.averageRestaurantDailyCosts
-                            ],
-                            operator: 'multiplication'
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            BucketApi.measure(numberOfRestaurantsIdentifier)
+                .localIdentifier(localIdentifiers.numberOfRestaurants)
+                .format('#,##0'),
+            BucketApi.measure(averageRestaurantDailyCostsIdentifier)
+                .localIdentifier(localIdentifiers.averageRestaurantDailyCosts)
+                .format('#,##0'),
+            BucketApi.arithmeticMeasure([
+                localIdentifiers.numberOfRestaurants,
+                localIdentifiers.averageRestaurantDailyCosts
+            ], 'multiplication')
+                .localIdentifier(localIdentifiers.averageStateDailyCosts)
+                .format('#,##0')
+                .title('$ Avg State Daily Costs')
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         return (

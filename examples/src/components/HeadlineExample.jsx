@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Headline } from '@gooddata/react-components';
+import { Headline, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -22,32 +22,9 @@ export class HeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = {
-            measure: {
-                localIdentifier: 'franchiseFeesIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchiseFeesIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
-        const secondaryMeasure = {
-            measure: {
-                localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchiseFeesAdRoyaltyIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        const primaryMeasure = BucketApi.measure(franchiseFeesIdentifier).format('#,##0');
+
+        const secondaryMeasure = BucketApi.measure(franchiseFeesAdRoyaltyIdentifier).format('#,##0');
 
         return (
             <div className="s-headline" style={{ display: 'flex' }}>

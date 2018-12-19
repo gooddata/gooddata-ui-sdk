@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable } from '@gooddata/react-components';
+import { PivotTable, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -20,104 +20,29 @@ import {
 export class PivotTableTotalsExample extends Component {
     render() {
         const measures = [
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            BucketApi.measure(franchiseFeesIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesIdentifier'),
+            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesAdRoyaltyIdentifier'),
+            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier'),
+            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesIdentifierOngoingRoyalty')
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    localIdentifier: 'state'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationNameDisplayFormIdentifier
-                    },
-                    localIdentifier: 'location'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: menuCategoryAttributeDFIdentifier
-                    },
-                    localIdentifier: 'menu'
-                }
-            }
+            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier).localIdentifier('state'),
+            BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier),
+            BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
         ];
 
         const columns = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: quarterDateIdentifier
-                    },
-                    localIdentifier: 'quarter'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            BucketApi.visualizationAttribute(quarterDateIdentifier),
+            BucketApi.visualizationAttribute(monthDateIdentifier)
         ];
 
         const totals = [

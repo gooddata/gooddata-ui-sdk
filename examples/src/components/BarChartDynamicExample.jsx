@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { BarChart } from '@gooddata/react-components';
+import { BarChart, BucketApi } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -47,38 +47,14 @@ export class BarChartDynamicExample extends Component {
             config
         } = this.state;
 
-        const amount = {
-            measure: {
-                localIdentifier: 'amount',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: totalSalesIdentifier
-                        }
-                    }
-                },
-                alias: '$ Total Sales',
-                format: '#,##0'
-            }
-        };
+        const amount = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const locationResort = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationResortIdentifier
-                },
-                localIdentifier: 'location_resort'
-            }
-        };
+        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier)
+            .localIdentifier('location_resort');
 
-        const menuCategory = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: menuCategoryAttributeDFIdentifier
-                },
-                localIdentifier: 'label.menuitem.menucategory'
-            }
-        };
+        const menuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+            .localIdentifier(menuCategoryAttributeDFIdentifier);
+
         return (
             <div>
                 <button onClick={this.onPaletteChange}>
