@@ -125,15 +125,22 @@ describe('user', () => {
                 );
 
                 fetchMock.mock(
-                    `/gdc/account/profile/${profileId}/projects`,
+                    `/gdc/account/profile/${profileId}/projects?offset=0&limit=100`,
                     {
                         status: 200,
                         body: JSON.stringify({
-                            projects: [
-                                { project: { links: { self: '/gdc/projects/differentproject' } } },
-                                { project: { links: { self: `/gdc/projects/${projectId}` } } },
-                                { project: { links: { self: '/gdc/projects/anotherproject' } } }
-                            ]
+                            projects: {
+                                paging: {
+                                    offset: 0,
+                                    limit: 100,
+                                    totalCount: 3
+                                },
+                                items: [
+                                    { project: { links: { self: '/gdc/projects/differentproject' } } },
+                                    { project: { links: { self: `/gdc/projects/${projectId}` } } },
+                                    { project: { links: { self: '/gdc/projects/anotherproject' } } }
+                                ]
+                            }
                         })
                     }
                 );
@@ -161,14 +168,21 @@ describe('user', () => {
                 );
 
                 fetchMock.mock(
-                    `/gdc/account/profile/${profileId}/projects`,
+                    `/gdc/account/profile/${profileId}/projects?offset=0&limit=100`,
                     {
                         status: 200,
                         body: JSON.stringify({
-                            projects: [
-                                { project: { links: { self: '/gdc/projects/differentproject' } } },
-                                { project: { links: { self: '/gdc/projects/anotherproject' } } }
-                            ]
+                            projects: {
+                                paging: {
+                                    offset: 0,
+                                    limit: 100,
+                                    totalCount: 2
+                                },
+                                items: [
+                                    { project: { links: { self: '/gdc/projects/differentproject' } } },
+                                    { project: { links: { self: '/gdc/projects/anotherproject' } } }
+                                ]
+                            }
                         })
                     }
                 );

@@ -1,7 +1,7 @@
 // (C) 2007-2014 GoodData Corporation
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
-import { noop } from 'lodash';
+import { noop, range } from 'lodash';
 import { ProjectModule } from '../src/project';
 import { XhrModule } from '../src/xhr';
 import { mockPollingRequest } from './helpers/polling';
@@ -19,9 +19,13 @@ describe('project', () => {
         });
 
         describe('getProjects', () => {
+            const generateProjects = (n: number) => {
+                return range(1, n + 1).map((i: number) => ({ project: { meta: { title: `p${i}` } } }));
+            };
+
             it('should reject with 400 when resource fails', () => {
                 fetchMock.mock(
-                    '/gdc/account/profile/myProfileId/projects',
+                    '/gdc/account/profile/myProfileId/projects?offset=0&limit=100',
                     400
                 );
                 return createProject()
@@ -30,16 +34,61 @@ describe('project', () => {
             });
             it('should return an array of projects', () => {
                 fetchMock.mock(
-                    '/gdc/account/profile/myProfileId/projects',
+                    '/gdc/account/profile/myProfileId/projects?offset=0&limit=100',
                     {
                         status: 200,
-                        body: JSON.stringify({ projects: [{ project: { meta: { title: 'p1' } } },
-                            { project: { meta: { title: 'p2' } } }] })
+                        body: JSON.stringify({
+                            projects: {
+                                paging: {
+                                    offset: 0,
+                                    limit: 100,
+                                    totalCount: 2
+                                },
+                                items: generateProjects(2)
+                            }
+                        })
                     }
                 );
                 return createProject().getProjects('myProfileId').then((result: any) => {
                     expect(result.length).toBe(2);
                     expect(result[1].meta.title).toBe('p2');
+                });
+            });
+            it('should fetch all pages of data with projects', () => {
+                fetchMock.mock(
+                    '/gdc/account/profile/myProfileId/projects?offset=0&limit=100',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            projects: {
+                                paging: {
+                                    offset: 0,
+                                    limit: 100,
+                                    totalCount: 150
+                                },
+                                items: generateProjects(100)
+                            }
+                        })
+                    }
+                );
+                fetchMock.mock(
+                    '/gdc/account/profile/myProfileId/projects?offset=100&limit=100',
+                    {
+                        status: 200,
+                        body: JSON.stringify({
+                            projects: {
+                                paging: {
+                                    offset: 0,
+                                    limit: 100,
+                                    totalCount: 150
+                                },
+                                items: generateProjects(50)
+                            }
+                        })
+                    }
+                );
+                return createProject().getProjects('myProfileId').then((result: any) => {
+                    expect(result.length).toBe(150);
                 });
             });
         });

@@ -1,5 +1,5 @@
 // (C) 2007-2017 GoodData Corporation
-import { getIn, handlePolling } from './util';
+import { getIn, handlePolling, getAllPagesByOffsetLimit } from './util';
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from './interfaces';
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from './apiResponsesInterfaces';
 import { XhrModule, ApiResponse } from './xhr';
@@ -71,11 +71,8 @@ export class ProjectModule {
      * @return {Array} An Array of projects
      */
     public getProjects(profileId: string) {
-        return this.xhr.get(`/gdc/account/profile/${profileId}/projects`)
-            .then(r => r.getData())
-            .then((r: any) => {
-                return r.projects.map((p: any) => p.project);
-            });
+        return getAllPagesByOffsetLimit(this.xhr, `/gdc/account/profile/${profileId}/projects`, 'projects')
+            .then((result: any) => result.map((p: any) => p.project));
     }
 
     /**
