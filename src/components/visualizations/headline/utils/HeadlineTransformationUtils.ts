@@ -158,13 +158,13 @@ export function applyDrillableItems(headlineData: IHeadlineData,
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(
-            drillableItems, primaryItemHeader, executionRequest.afm
+            drillableItems, primaryItemHeader, executionRequest.afm, executionResponse
         );
     }
 
     if (!isEmpty(secondaryItem) && !isEmpty(secondaryItemHeader)) {
         secondaryItem.isDrillable = isSomeHeaderPredicateMatched(
-            drillableItems, secondaryItemHeader, executionRequest.afm
+            drillableItems, secondaryItemHeader, executionRequest.afm, executionResponse
         );
     }
 

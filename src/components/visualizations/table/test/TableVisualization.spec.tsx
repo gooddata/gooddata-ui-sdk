@@ -17,7 +17,12 @@ import {
 import { TableRow } from '../../../../interfaces/Table';
 import { IMappingHeader } from '../../../../interfaces/MappingHeader';
 import { ASC, DESC } from '../../../../constants/sort';
-import { EXECUTION_REQUEST_1A_2M, TABLE_HEADERS_1A_2M, TABLE_ROWS_1A_2M } from '../fixtures/1attribute2measures';
+import {
+    EXECUTION_REQUEST_1A_2M,
+    EXECUTION_RESPONSE_1A_2M,
+    TABLE_HEADERS_1A_2M,
+    TABLE_ROWS_1A_2M
+} from '../fixtures/1attribute2measures';
 import { EXECUTION_REQUEST_2M, TABLE_HEADERS_2M, TABLE_ROWS_2M } from '../fixtures/2measures';
 import { RemoveRows } from '../totals/RemoveRows';
 import { EXECUTION_REQUEST_2A_3M, TABLE_HEADERS_2A_3M, TABLE_ROWS_2A_3M } from '../fixtures/2attributes3measures';
@@ -49,6 +54,7 @@ describe('Table', () => {
             rows: TABLE_ROWS_1A_2M,
             headers: TABLE_HEADERS_1A_2M,
             executionRequest: EXECUTION_REQUEST_1A_2M,
+            executionResponse: EXECUTION_RESPONSE_1A_2M,
             ...customProps
         };
 

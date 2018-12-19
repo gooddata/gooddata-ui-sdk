@@ -3,7 +3,8 @@ import {
     afmWithDerived,
     measureHeaderItem,
     attributeHeaderItem,
-    attributeHeader
+    attributeHeader,
+    executionResponseWithDerived
 } from '../../../../factory/tests/mocks';
 import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
 import {
@@ -100,14 +101,20 @@ describe('getColorMappingPredicate', () => {
         it('should match predicate when measure local identifier matches and measureHeaderItem tested', () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate('measureHeaderItem.localIdentifier', {});
 
-            expect(predicate(measureHeaderItem, afmWithDerived)).toEqual(true);
+            expect(predicate(measureHeaderItem, {
+                afm: afmWithDerived,
+                executionResponse: executionResponseWithDerived
+            })).toEqual(true);
         });
 
         // tslint:disable-next-line:max-line-length
         it('should not match predicate when measure local identifier does not match and measureHeaderItem tested', () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate('someOtherMeasure.localIdentifier', {});
 
-            expect(predicate(measureHeaderItem, afmWithDerived)).toEqual(false);
+            expect(predicate(measureHeaderItem, {
+                afm: afmWithDerived,
+                executionResponse: executionResponseWithDerived
+            })).toEqual(false);
         });
     });
 
@@ -117,7 +124,7 @@ describe('getColorMappingPredicate', () => {
                 identifier: '/attributeHeaderItem.uri'
             });
 
-            expect(predicate(measureHeaderItem, {})).toEqual(false);
+            expect(predicate(measureHeaderItem, {} as any)).toEqual(false);
         });
 
         it('should not match predicate when referenced uri matches and attributeHeader tested', () => {
@@ -125,7 +132,7 @@ describe('getColorMappingPredicate', () => {
                 identifier: '/attributeHeaderItem.uri'
             });
 
-            expect(predicate(attributeHeader, {})).toEqual(false);
+            expect(predicate(attributeHeader, {} as any)).toEqual(false);
         });
 
         it('should match predicate when referenced uri matches and attributeItemHeader tested', () => {
@@ -133,7 +140,7 @@ describe('getColorMappingPredicate', () => {
                 identifier: '/attributeHeaderItem.uri'
             });
 
-            expect(predicate(attributeHeaderItem, {})).toEqual(true);
+            expect(predicate(attributeHeaderItem, {} as any)).toEqual(true);
         });
 
         // tslint:disable-next-line:max-line-length
@@ -142,7 +149,7 @@ describe('getColorMappingPredicate', () => {
                 identifier: '/attributeHeaderItem.uri'
             });
 
-            expect(predicate(attributeHeaderItem, {})).toEqual(false);
+            expect(predicate(attributeHeaderItem, {} as any)).toEqual(false);
         });
 
         it('should match predicate when measure local identifier matches and measureHeaderItem tested', () => {
@@ -150,7 +157,10 @@ describe('getColorMappingPredicate', () => {
                 identifier: '/attributeHeaderItem.uri'
             });
 
-            expect(predicate(measureHeaderItem, afmWithDerived)).toEqual(true);
+            expect(predicate(measureHeaderItem, {
+                afm: afmWithDerived,
+                executionResponse: executionResponseWithDerived
+            })).toEqual(true);
         });
     });
 });

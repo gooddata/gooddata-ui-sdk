@@ -19,7 +19,7 @@ export interface IDynamicVisualizationState {
     legendOption: any;
 }
 
-class DynamicVisualization extends React.Component<null, IDynamicVisualizationState> {
+class DynamicVisualization extends React.Component<{}, IDynamicVisualizationState> {
     private fixtures: any;
     private legendOptions: any;
     private chartTypes: any;
