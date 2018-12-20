@@ -17,6 +17,14 @@ The REST API versions in the table are just for your information as the values a
 - Drilling using function predicates
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
 
+## 6.1.1
+
+December 20, 2018
+
+### Changed
+
+- Use updated gooddata-js library to fix live examples ([commit](https://github.com/gooddata/gooddata-react-components/commit/145400a62edb640a56c9aff88283f76db5a62f20))
+
 ## 6.1.0
 
 December 17, 2018
