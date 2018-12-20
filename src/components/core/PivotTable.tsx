@@ -496,7 +496,9 @@ export class PivotTableInner extends
 
     public setGridDataSource() {
         this.setState({ execution: null });
-        this.gridApi.setDatasource(this.gridDataSource);
+        if (this.gridApi) {
+            this.gridApi.setDatasource(this.gridDataSource);
+        }
     }
 
     public cellClicked = (cellEvent: IGridCellEvent) => {
