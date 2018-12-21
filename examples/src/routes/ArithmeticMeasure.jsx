@@ -8,11 +8,13 @@ import ArithmeticMeasureSumExample from '../components/ArithmeticMeasureSumExamp
 import ArithmeticMeasureMultiplicationExample from '../components/ArithmeticMeasureMultiplicationExample';
 import ArithmeticMeasureRatioExample from '../components/ArithmeticMeasureRatioExample';
 import ArithmeticMeasureChangeExample from '../components/ArithmeticMeasureChangeExample';
+import ArithmeticMeasureDrillingExample from '../components/ArithmeticMeasureDrillingExample';
 
 import ArithmeticMeasureSumExampleSrc from '!raw-loader!../components/ArithmeticMeasureSumExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ArithmeticMeasureMultiplicationExampleSrc from '!raw-loader!../components/ArithmeticMeasureMultiplicationExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ArithmeticMeasureRatioExampleSrc from '!raw-loader!../components/ArithmeticMeasureRatioExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ArithmeticMeasureChangeExampleSrc from '!raw-loader!../components/ArithmeticMeasureChangeExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ArithmeticMeasureDrillingExampleSrc from '!raw-loader!../components/ArithmeticMeasureDrillingExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const ArithmeticMeasure = () => (
     <div>
@@ -57,6 +59,12 @@ export const ArithmeticMeasure = () => (
         <ExampleWithSource
             for={ArithmeticMeasureMultiplicationExample}
             source={ArithmeticMeasureMultiplicationExampleSrc}
+        />
+
+        <h2>Arithmetic Measures with Drilling</h2>
+        <ExampleWithSource
+            for={ArithmeticMeasureDrillingExample}
+            source={ArithmeticMeasureDrillingExampleSrc}
         />
     </div>
 );
