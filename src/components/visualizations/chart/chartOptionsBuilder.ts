@@ -1,12 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
-import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import { IColorPalette } from '@gooddata/gooddata-js';
 import * as Highcharts from 'highcharts';
-import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
-import { IMappingHeader } from '../../../interfaces/MappingHeader';
-
+import * as invariant from 'invariant';
 import cloneDeep = require('lodash/cloneDeep');
 import compact = require('lodash/compact');
 import escape = require('lodash/escape');
@@ -19,6 +16,18 @@ import last = require('lodash/last');
 import range = require('lodash/range');
 import unescape = require('lodash/unescape');
 import without = require('lodash/without');
+
+import { MEASURES, SECONDARY_MEASURES, SEGMENT, TERTIARY_MEASURES, VIEW } from '../../../constants/bucketNames';
+import { VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
+
+import { getMasterMeasureObjQualifier } from '../../../helpers/afmHelper';
+import { findAttributeInDimension, findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
+import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
+import { unwrap } from '../../../helpers/utils';
+import { IChartConfig, IChartLimits, IColorAssignment } from '../../../interfaces/Config';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
+import { getLighterColor } from '../utils/color';
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -34,31 +43,23 @@ import {
     parseValue,
     stringifyChartTypes
 } from '../utils/common';
-import { getChartProperties } from './highcharts/helpers';
-import { unwrap } from '../../../helpers/utils';
-
-import { getMasterMeasureObjQualifier } from '../utils/drilldownEventing';
-import { getLighterColor } from '../utils/color';
-import { isDataOfReasonableSize } from './highChartsCreators';
-import {
-    VIEW_BY_DIMENSION_INDEX,
-    STACK_BY_DIMENSION_INDEX,
-    PIE_CHART_LIMIT,
-    HEATMAP_DATA_POINTS_LIMIT
-} from './constants';
-import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
-import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
-
-import {
-    DEFAULT_SERIES_LIMIT,
-    DEFAULT_CATEGORIES_LIMIT,
-    DEFAULT_DATA_POINTS_LIMIT
-} from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 
 import { ColorFactory, IColorStrategy } from './colorFactory';
-import { IColorAssignment, IChartLimits, IChartConfig } from '../../../interfaces/Config';
+import {
+    HEATMAP_DATA_POINTS_LIMIT,
+    PIE_CHART_LIMIT,
+    STACK_BY_DIMENSION_INDEX,
+    VIEW_BY_DIMENSION_INDEX
+} from './constants';
+
+import {
+    DEFAULT_CATEGORIES_LIMIT,
+    DEFAULT_DATA_POINTS_LIMIT,
+    DEFAULT_SERIES_LIMIT
+} from './highcharts/commonConfiguration';
+import { getChartProperties } from './highcharts/helpers';
+import { isDataOfReasonableSize } from './highChartsCreators';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
@@ -840,57 +841,6 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
             </tr>`
         )).join('\n')}</table>`;
     };
-}
-
-export function findInDimensionHeaders(dimensions: Execution.IResultDimension[], headerCallback: Function): any {
-    let returnValue: any = null;
-    dimensions.some((dimension: any, dimensionIndex: any) => {
-        dimension.headers.some(
-            (wrappedHeader: Execution.IMeasureGroupHeader | Execution.IAttributeHeader, headerIndex: number) => {
-                const headerType = Object.keys(wrappedHeader)[0];
-                const header = wrappedHeader[headerType];
-                const headerCount = dimension.headers.length;
-                returnValue = headerCallback(headerType, header, dimensionIndex, headerIndex, headerCount);
-                return !!returnValue;
-            }
-        );
-        return !!returnValue;
-    });
-    return returnValue;
-}
-
-export function findMeasureGroupInDimensions(
-    dimensions: Execution.IResultDimension[]
-): Execution.IMeasureGroupHeader['measureGroupHeader'] {
-    return findInDimensionHeaders(dimensions,
-        (headerType: string, header: Execution.IMeasureGroupHeader['measureGroupHeader'],
-         _dimensionIndex: number, headerIndex: number, headerCount: number) => {
-            const measureGroupHeader = headerType === 'measureGroupHeader' ? header : null;
-            if (measureGroupHeader) {
-                invariant(headerIndex === headerCount - 1, 'MeasureGroup must be the last header in it\'s dimension');
-            }
-            return measureGroupHeader;
-        });
-}
-
-export function findAttributeInDimension(
-    dimension: any,
-    attributeHeaderItemsDimension: any,
-    indexInDimension?: number
-): IUnwrappedAttributeHeadersWithItems {
-    return findInDimensionHeaders(
-        [dimension],
-        (headerType: any, header: any, _dimensionIndex: number, headerIndex: number) => {
-            if (headerType === 'attributeHeader'
-                && (indexInDimension === undefined || indexInDimension === headerIndex)) {
-                return {
-                    ...header,
-                    // attribute items are delivered separately from attributeHeaderItems
-                    items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0]
-                };
-            }
-            return null;
-        });
 }
 
 export function getDrillContext(stackByItem: any, viewByItem: any, measures: any[], afm: AFM.IAfm) {

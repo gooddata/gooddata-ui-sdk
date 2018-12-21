@@ -16,7 +16,6 @@ import {
     isRgbColorItem,
     DEFAULT_HEATMAP_BLUE_COLOR
 } from '../utils/color';
-
 import {
     isHeatmap,
     isOneOfTypes,
@@ -24,15 +23,8 @@ import {
     isScatterPlot,
     isBubbleChart
 } from '../utils/common';
-
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
-
-import {
-    isDerivedMeasure,
-    findParentMeasureIndex,
-    findMeasureGroupInDimensions
-} from './chartOptionsBuilder';
-
+import { isDerivedMeasure, findParentMeasureIndex } from './chartOptionsBuilder';
 import {
     IColorPalette,
     IColorMapping,
@@ -43,6 +35,7 @@ import {
     IColorItem,
     IColorPaletteItem
 } from '../../../interfaces/Config';
+import { findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;

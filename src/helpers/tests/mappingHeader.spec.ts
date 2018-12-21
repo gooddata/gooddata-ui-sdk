@@ -1,67 +1,68 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    getMappingHeaderIndentifier,
+    getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName, getMappingHeaderUri
 } from '../mappingHeader';
 import {
     attributeHeader,
     attributeHeaderItem,
-    measureHeaderItem
-} from '../../factory/tests/mocks';
+    measureHeaders
+} from '../../factory/tests/HeaderPredicateFactory.mock';
 
 describe('getMappingHeaderLocalIdentifier', () => {
     it('should return localIdentifier from attributeHeader', () => {
-        expect(getMappingHeaderLocalIdentifier(attributeHeader)).toBe('attributeHeader.localIdentifier');
+        expect(getMappingHeaderLocalIdentifier(attributeHeader)).toBe('attributeLocalIdentifier');
     });
 
     it('should return localIdentifier from measureHeader', () => {
-        expect(getMappingHeaderLocalIdentifier(measureHeaderItem)).toBe('measureHeaderItem.localIdentifier');
+        expect(getMappingHeaderLocalIdentifier(measureHeaders.uriBasedMeasure))
+            .toBe('uriBasedMeasureLocalIdentifier');
     });
 
-    it('should throw error when object is not attributeHeader or measureHeaderItem', () => {
+    it('should throw error when object is not attributeHeader or measureHeaders.uriBasedMeasure', () => {
         expect(() => getMappingHeaderLocalIdentifier(attributeHeaderItem)).toThrowError();
     });
 });
 
 describe('getMappingHeaderName', () => {
     it('should return name from formOf of attributeHeader', () => {
-        expect(getMappingHeaderName(attributeHeader)).toBe('attributeHeader.element.name');
+        expect(getMappingHeaderName(attributeHeader)).toBe('attributeElementName');
     });
 
     it('should return name from attributeHeaderItem', () => {
-        expect(getMappingHeaderName(attributeHeaderItem)).toBe('attributeHeaderItem.name');
+        expect(getMappingHeaderName(attributeHeaderItem)).toBe('attributeItemName');
     });
 
-    it('should return name from measureHeaderItem', () => {
-        expect(getMappingHeaderName(measureHeaderItem)).toBe('measureHeaderItem.name');
+    it('should return name from measureHeaders.uriBasedMeasure', () => {
+        expect(getMappingHeaderName(measureHeaders.uriBasedMeasure)).toBe('uriBasedMeasureName');
     });
 });
 
 describe('getMappingHeaderIndentifier', () => {
     it('should return identifier from attributeHeader', () => {
-        expect(getMappingHeaderIndentifier(attributeHeader)).toBe('attributeHeader.identifier');
+        expect(getMappingHeaderIdentifier(attributeHeader)).toBe('attributeIdentifier');
     });
 
     it('should return identifier from measureHeader', () => {
-        expect(getMappingHeaderIndentifier(measureHeaderItem)).toBe('measureHeaderItem.identifier');
+        expect(getMappingHeaderIdentifier(measureHeaders.uriBasedMeasure)).toBe('uriBasedMeasureIdentifier');
     });
 
-    it('should throw error when object is not attributeHeader or measureHeaderItem', () => {
-        expect(() => getMappingHeaderIndentifier(attributeHeaderItem)).toThrowError();
+    it('should throw error when object is not attributeHeader or measureHeaders.uriBasedMeasure', () => {
+        expect(() => getMappingHeaderIdentifier(attributeHeaderItem)).toThrowError();
     });
 });
 
 describe('getMappingHeaderUri', () => {
     it('should return uri from attributeHeader', () => {
-        expect(getMappingHeaderUri(attributeHeader)).toBe('/attributeHeader.uri');
+        expect(getMappingHeaderUri(attributeHeader)).toBe('/attributeUri');
     });
 
     it('should return uri from attributeHeaderItem', () => {
-        expect(getMappingHeaderUri(attributeHeaderItem)).toBe('/attributeHeaderItem.uri');
+        expect(getMappingHeaderUri(attributeHeaderItem)).toBe('/attributeItemUri');
     });
 
-    it('should return uri from measureHeaderItem', () => {
-        expect(getMappingHeaderUri(measureHeaderItem)).toBe('/measureHeaderItem.uri');
+    it('should return uri from measureHeaders.uriBasedMeasure', () => {
+        expect(getMappingHeaderUri(measureHeaders.uriBasedMeasure)).toBe('/uriBasedMeasureUri');
     });
 });

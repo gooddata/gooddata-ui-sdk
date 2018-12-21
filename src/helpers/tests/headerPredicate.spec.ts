@@ -1,17 +1,34 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 import * as headerPredicateFactory from '../../factory/HeaderPredicateFactory';
 import {
-    afmWithDerived,
-    measureHeaderItem,
-    emptyExecutionResponse,
-    executionResponseWithDerived
-} from '../../factory/tests/mocks';
+    context,
+    measureHeaders
+} from '../../factory/tests/HeaderPredicateFactory.mock';
 import { IMappingHeader } from '../../interfaces/MappingHeader';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
-import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from '../headerPredicate';
+import {
+    convertDrillableItemsToPredicates,
+    isSomeHeaderPredicateMatched
+} from '../headerPredicate';
 
 describe('isSomeHeaderPredicateMatched', () => {
+    const emptyExecutionResponse: Execution.IExecutionResponse = {
+        dimensions: [
+            {
+                headers: [
+                    {
+                        measureGroupHeader: {
+                            items: []
+                        }
+                    }
+                ]
+            }
+        ],
+        links: {
+            executionResult: 'foo'
+        }
+    };
     const emptyAfm: AFM.IAfm = {};
 
     it('should return true when some of predicates match header', () => {
@@ -71,10 +88,7 @@ describe('convertDrillableItemsToPredicates', () => {
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe('function');
-            expect(typeof predicate(measureHeaderItem, {
-                afm: afmWithDerived,
-                executionResponse: executionResponseWithDerived
-            })).toBe('boolean');
+            expect(typeof predicate(measureHeaders.uriBasedMeasure, context)).toBe('boolean');
         });
     });
 
@@ -91,75 +105,39 @@ describe('convertDrillableItemsToPredicates', () => {
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe('function');
-            expect(typeof predicate(measureHeaderItem, {
-                afm: afmWithDerived,
-                executionResponse: executionResponseWithDerived
-            })).toBe('boolean');
-        });
-    });
-
-    it('should convert legacy drillable item with uri and identifier to 2 predicates', () => {
-        const drillableItems = [
-            {
-                uri: '/some-uri',
-                identifier: 'some-identifier'
-            }
-        ];
-
-        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-
-        expect(drillablePredicates).toHaveLength(2);
-        drillablePredicates.forEach((predicate) => {
-            expect(typeof predicate).toBe('function');
-            expect(typeof predicate(measureHeaderItem, {
-                afm: afmWithDerived,
-                executionResponse: executionResponseWithDerived
-            })).toBe('boolean');
+            expect(typeof predicate(measureHeaders.uriBasedMeasure, context)).toBe('boolean');
         });
     });
 
     it('should match converted legacy drillable item with uri', () => {
         const drillableItems = [
-            {
-                uri: '/measureHeaderItem.uri'
-            }
+            { uri: '/uriBasedMeasureUri' }
         ];
 
         const [ predicate ] = convertDrillableItemsToPredicates(drillableItems);
-        expect(predicate(measureHeaderItem, {
-            afm: afmWithDerived,
-            executionResponse: executionResponseWithDerived
-        })).toEqual(true);
+        expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
     });
 
     it('should match converted legacy drillable item with identifier', () => {
         const drillableItems = [
-            {
-                identifier: 'measureHeaderItem.identifier'
-            }
+            { identifier: 'uriBasedMeasureIdentifier' }
         ];
 
         const [ predicate ] = convertDrillableItemsToPredicates(drillableItems);
-        expect(predicate(measureHeaderItem, {
-            afm: afmWithDerived,
-            executionResponse: executionResponseWithDerived
-        })).toEqual(true);
+        expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
     });
 
     it('should match both converted legacy drillable items with identifier and uri', () => {
         const drillableItems = [
             {
-                uri: '/measureHeaderItem.uri',
-                identifier: 'measureHeaderItem.identifier'
+                uri: '/uriBasedMeasureUri',
+                identifier: 'uriBasedMeasureIdentifier'
             }
         ];
 
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         drillablePredicates.forEach((predicate) => {
-            expect(predicate(measureHeaderItem, {
-                afm: afmWithDerived,
-                executionResponse: executionResponseWithDerived
-            })).toEqual(true);
+            expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
         });
     });
 });
