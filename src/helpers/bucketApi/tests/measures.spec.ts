@@ -120,7 +120,7 @@ describe('Measures', () => {
     });
 
     describe('previousPeriodMeasure', () => {
-        it('should return a simple PoP measure when supplied with ObjectQualifiers', () => {
+        it('should return a simple PP measure when supplied with ObjectQualifiers', () => {
             const expected = {
                 measure: {
                     definition: {
@@ -134,7 +134,7 @@ describe('Measures', () => {
             expect(previousPeriodMeasure('foo', [{ dataSet: { identifier: 'bar' }, periodsAgo: 3 }]))
                 .toMatchObject(expected);
         });
-        it('should return a simple PoP measure when supplied with strings', () => {
+        it('should return a simple PP measure when supplied with strings', () => {
             const expected = {
                 measure: {
                     definition: {

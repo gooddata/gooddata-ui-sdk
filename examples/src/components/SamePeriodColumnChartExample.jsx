@@ -35,7 +35,7 @@ export class SamePeriodColumnChartExample extends Component {
                             .localIdentifier('totalSales')
                             .alias('$ Total Sales')
                     ]}
-                    viewBy={BucketApi.visualizationAttribute(quarterDateIdentifier)}
+                    viewBy={BucketApi.attribute(quarterDateIdentifier)}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

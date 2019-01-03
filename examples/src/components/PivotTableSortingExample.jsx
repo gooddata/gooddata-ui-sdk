@@ -31,14 +31,14 @@ export class PivotTableSortingExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier).localIdentifier('menu')
+            BucketApi.attribute(locationStateDisplayFormIdentifier),
+            BucketApi.attribute(locationNameDisplayFormIdentifier),
+            BucketApi.attribute(menuCategoryAttributeDFIdentifier).localIdentifier('menu')
         ];
 
         const columns = [
-            BucketApi.visualizationAttribute(quarterDateIdentifier),
-            BucketApi.visualizationAttribute(monthDateIdentifier)
+            BucketApi.attribute(quarterDateIdentifier),
+            BucketApi.attribute(monthDateIdentifier)
         ];
 
         const sortBy = [

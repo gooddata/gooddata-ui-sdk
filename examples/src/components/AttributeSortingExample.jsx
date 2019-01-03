@@ -15,7 +15,7 @@ export class AttributeSortingExample extends Component {
                     projectId={projectId}
                     measures={[BucketApi.measure(totalSalesIdentifier)]}
                     viewBy={
-                        BucketApi.visualizationAttribute(locationCityDisplayFormIdentifier)
+                        BucketApi.attribute(locationCityDisplayFormIdentifier)
                             .localIdentifier(locationCityDisplayFormIdentifier)
                     }
                     sortBy={[BucketApi.attributeSortItem(locationCityDisplayFormIdentifier, 'desc')]}

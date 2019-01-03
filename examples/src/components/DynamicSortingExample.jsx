@@ -171,11 +171,11 @@ export class DynamicSortingExample extends Component {
                         projectId={projectId}
                         measures={[BucketApi.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
                         viewBy={
-                            BucketApi.visualizationAttribute(monthDateIdentifier)
+                            BucketApi.attribute(monthDateIdentifier)
                                 .localIdentifier(monthDateIdentifier)
                         }
                         stackBy={
-                            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier)
+                            BucketApi.attribute(locationStateDisplayFormIdentifier)
                                 .localIdentifier(locationStateDisplayFormIdentifier)
                         }
                         sortBy={sortOption.sortBy(direction)}

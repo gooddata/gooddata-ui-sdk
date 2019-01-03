@@ -36,7 +36,7 @@ export class AreaChartExample extends Component {
                 .format('#,##0')
         ];
 
-        const viewBy = BucketApi.visualizationAttribute(monthDateIdentifier);
+        const viewBy = BucketApi.attribute(monthDateIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-area-chart">

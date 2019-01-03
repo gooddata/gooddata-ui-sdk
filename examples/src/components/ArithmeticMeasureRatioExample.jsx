@@ -47,7 +47,7 @@ export class ArithmeticMeasureRatioExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier).localIdentifier('month')
+            BucketApi.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         return (

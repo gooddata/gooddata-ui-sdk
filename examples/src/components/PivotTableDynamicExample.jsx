@@ -23,15 +23,15 @@ import { ElementWithParam } from './utils/ElementWithParam';
 const measureFranchiseFees = BucketApi.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
 const measureAdRoyalty = BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
     .localIdentifier(franchiseFeesAdRoyaltyIdentifier);
-const attributeLocationState = BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier)
+const attributeLocationState = BucketApi.attribute(locationStateDisplayFormIdentifier)
     .localIdentifier(locationStateDisplayFormIdentifier);
-const attributeLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+const attributeLocationName = BucketApi.attribute(locationNameDisplayFormIdentifier)
     .localIdentifier(locationNameDisplayFormIdentifier);
-const attributeMenuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+const attributeMenuCategory = BucketApi.attribute(menuCategoryAttributeDFIdentifier)
     .localIdentifier(menuCategoryAttributeDFIdentifier);
-const attributeQuarter = BucketApi.visualizationAttribute(quarterDateIdentifier)
+const attributeQuarter = BucketApi.attribute(quarterDateIdentifier)
     .localIdentifier(quarterDateIdentifier);
-const attributeMonth = BucketApi.visualizationAttribute(monthDateIdentifier)
+const attributeMonth = BucketApi.attribute(monthDateIdentifier)
     .localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];

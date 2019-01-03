@@ -30,7 +30,7 @@ export class BubbleChartExample extends Component {
 
         const size = BucketApi.measure(averageCheckSizeByServer);
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
+        const locationResort = BucketApi.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-bubble-chart">

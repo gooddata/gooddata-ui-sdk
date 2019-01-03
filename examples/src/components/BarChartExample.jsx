@@ -22,7 +22,7 @@ export class BarChartExample extends Component {
             .format('#,##0')
             .alias('$ Total Sales');
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
+        const locationResort = BucketApi.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-bar-chart">

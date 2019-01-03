@@ -23,7 +23,7 @@ export class ColumnChartExample extends Component {
             .format('#,##0')
             .alias('$ Total Sales');
 
-        const month = BucketApi.visualizationAttribute(monthDateIdentifier);
+        const month = BucketApi.attribute(monthDateIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-column-chart">

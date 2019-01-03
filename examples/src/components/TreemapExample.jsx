@@ -20,9 +20,9 @@ export class TreeMapExample extends Component {
     render() {
         const numberOfChecks = BucketApi.measure(numberOfChecksIdentifier).format('#,##0').alias('# Checks');
 
-        const locationState = BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier);
+        const locationState = BucketApi.attribute(locationStateDisplayFormIdentifier);
 
-        const locationCity = BucketApi.visualizationAttribute(locationCityDisplayFormIdentifier);
+        const locationCity = BucketApi.attribute(locationCityDisplayFormIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-tree-map">

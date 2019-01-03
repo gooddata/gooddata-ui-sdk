@@ -19,8 +19,8 @@ const totalSales = BucketApi.measure(totalSalesIdentifier)
     .aggregation('sum')
     .localIdentifier(totalSalesIdentifier);
 
-const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
-const month = BucketApi.visualizationAttribute(monthDateIdentifier);
+const locationResort = BucketApi.attribute(locationResortIdentifier);
+const month = BucketApi.attribute(monthDateIdentifier);
 
 const franchiseFeesMeasures = [
     franchiseFeesIdentifier,

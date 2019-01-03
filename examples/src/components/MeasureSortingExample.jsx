@@ -15,7 +15,7 @@ export class MeasureSortingExample extends Component {
                     projectId={projectId}
                     measures={[BucketApi.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
                     viewBy={
-                        BucketApi.visualizationAttribute(monthDateIdentifier)
+                        BucketApi.attribute(monthDateIdentifier)
                             .localIdentifier(monthDateIdentifier)
                     }
                     sortBy={[BucketApi.measureSortItem(totalSalesIdentifier, 'desc')]}

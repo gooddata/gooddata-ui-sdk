@@ -64,7 +64,7 @@ export class ParentFilterExample extends Component {
 
         const measureTotalSales = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const viewByLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+        const viewByLocationName = BucketApi.attribute(locationNameDisplayFormIdentifier)
             .localIdentifier('location_name');
 
         return (

@@ -1,6 +1,6 @@
 // (C) 2018 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
-import { visualizationAttribute } from '../attributes';
+import { attribute } from '../attributes';
 
 describe('Attributes', () => {
     describe('visualizationAttribute', () => {
@@ -13,7 +13,7 @@ describe('Attributes', () => {
                     localIdentifier: 'va_0'
                 }
             };
-            expect(visualizationAttribute('foo')).toMatchObject(expected);
+            expect(attribute('foo')).toMatchObject(expected);
         });
 
         it('should return a simple attribute with alias', () => {
@@ -26,7 +26,7 @@ describe('Attributes', () => {
                     localIdentifier: 'va_1'
                 }
             };
-            expect(visualizationAttribute('foo').alias('alias')).toMatchObject(expected);
+            expect(attribute('foo').alias('alias')).toMatchObject(expected);
         });
 
         it('should return a simple attribute with custom localIdentifier', () => {
@@ -38,7 +38,7 @@ describe('Attributes', () => {
                     localIdentifier: 'custom'
                 }
             };
-            expect(visualizationAttribute('foo').localIdentifier('custom')).toMatchObject(expected);
+            expect(attribute('foo').localIdentifier('custom')).toMatchObject(expected);
         });
     });
 });

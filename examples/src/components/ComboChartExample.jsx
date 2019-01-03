@@ -36,7 +36,7 @@ export class ComboChartExample extends Component {
                 .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier')
         ];
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier)
+        const locationResort = BucketApi.attribute(locationResortIdentifier)
             .localIdentifier('location_resort');
 
         return (

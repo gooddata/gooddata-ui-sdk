@@ -25,9 +25,9 @@ export class HeatmapExample extends Component {
     render() {
         const totalSales = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const menuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier);
+        const menuCategory = BucketApi.attribute(menuCategoryAttributeDFIdentifier);
 
-        const locationState = BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier);
+        const locationState = BucketApi.attribute(locationStateDisplayFormIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-heat-map">

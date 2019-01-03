@@ -130,7 +130,7 @@ export class DynamicMeasuresExample extends Component {
             const measures = selectedMeasures.map(this.getNewMeasureDefinition);
 
             if (selectedMeasures.length) {
-                const attribute = BucketApi.visualizationAttribute(monthDateIdentifier);
+                const attribute = BucketApi.attribute(monthDateIdentifier);
 
                 content = (
                     <div className="graph-wrapper">

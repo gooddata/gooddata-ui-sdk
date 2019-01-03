@@ -53,14 +53,14 @@ export class PivotTableDrillExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+            BucketApi.attribute(locationStateDisplayFormIdentifier),
+            BucketApi.attribute(locationNameDisplayFormIdentifier),
+            BucketApi.attribute(menuCategoryAttributeDFIdentifier)
         ];
 
         const columns = [
-            BucketApi.visualizationAttribute(quarterDateIdentifier),
-            BucketApi.visualizationAttribute(monthDateIdentifier)
+            BucketApi.attribute(quarterDateIdentifier),
+            BucketApi.attribute(monthDateIdentifier)
         ];
 
         return (

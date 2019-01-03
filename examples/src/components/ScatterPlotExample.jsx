@@ -27,7 +27,7 @@ export class ScatterPlotExample extends Component {
 
         const yMeasure = BucketApi.measure(franchisedSalesIdentifier).format('#,##0');
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
+        const locationResort = BucketApi.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-scatter-plot">

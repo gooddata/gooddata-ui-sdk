@@ -86,8 +86,8 @@ export class EmployeeProfile extends React.Component {
         const measures = [
             BucketApi.measure(averageDailyTotalSales).alias('$ Avg Daily Total Sales')
         ];
-        const menuCategoryAttribute = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier);
-        const menuItemNameAttribute = BucketApi.visualizationAttribute(menuItemNameAttributeDFIdentifier)
+        const menuCategoryAttribute = BucketApi.attribute(menuCategoryAttributeDFIdentifier);
+        const menuItemNameAttribute = BucketApi.attribute(menuItemNameAttributeDFIdentifier)
             .alias('Menu Item name');
 
         const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri).element;

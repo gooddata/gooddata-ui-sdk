@@ -7,7 +7,7 @@ import {
     popMeasure,
     previousPeriodMeasure,
     measure,
-    visualizationAttribute
+    attribute
 } from '../../src/helpers/bucketApi';
 
 export const MEASURE_1: VisualizationObject.IMeasure = measure('/gdc/md/storybook/obj/1').localIdentifier('m1');
@@ -62,15 +62,15 @@ export const FORMATTED_ARITHMETIC_MEASURE: VisualizationObject.IMeasure = arithm
     .alias('Formatted sum of m1 and m2');
 
 export const ATTRIBUTE_1: VisualizationObject.IVisualizationAttribute =
-    visualizationAttribute('/gdc/md/storybook/obj/4.df')
+    attribute('/gdc/md/storybook/obj/4.df')
         .localIdentifier('a1');
 
 export const ATTRIBUTE_COUNTRY: VisualizationObject.IVisualizationAttribute =
-    visualizationAttribute('/gdc/md/storybook/obj/3.df')
+    attribute('/gdc/md/storybook/obj/3.df')
         .localIdentifier('country');
 
 export const ATTRIBUTE_POPULARITY: VisualizationObject.IVisualizationAttribute =
-    visualizationAttribute('/gdc/md/storybook/obj/5.df')
+    attribute('/gdc/md/storybook/obj/5.df')
         .localIdentifier('Popularity');
 
 export const ATTRIBUTE_1_WITH_ALIAS: VisualizationObject.IVisualizationAttribute = {
@@ -81,11 +81,11 @@ export const ATTRIBUTE_1_WITH_ALIAS: VisualizationObject.IVisualizationAttribute
 };
 
 export const ATTRIBUTE_2: VisualizationObject.IVisualizationAttribute =
-    visualizationAttribute('/gdc/md/storybook/obj/5.df')
+    attribute('/gdc/md/storybook/obj/5.df')
         .localIdentifier('a2');
 
 export const ATTRIBUTE_3: VisualizationObject.IVisualizationAttribute =
-    visualizationAttribute('/gdc/md/storybook/obj/6.df')
+    attribute('/gdc/md/storybook/obj/6.df')
         .localIdentifier('a3');
 
 export const TOTAL_M1_A1: VisualizationObject.IVisualizationTotal = {

@@ -49,10 +49,10 @@ export class BarChartDynamicExample extends Component {
 
         const amount = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier)
+        const locationResort = BucketApi.attribute(locationResortIdentifier)
             .localIdentifier('location_resort');
 
-        const menuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+        const menuCategory = BucketApi.attribute(menuCategoryAttributeDFIdentifier)
             .localIdentifier(menuCategoryAttributeDFIdentifier);
 
         return (

@@ -38,7 +38,7 @@ export class LineChartExample extends Component {
                 .format('#,##0')
         ];
 
-        const trendBy = BucketApi.visualizationAttribute(monthDateIdentifier);
+        const trendBy = BucketApi.attribute(monthDateIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-line-chart">

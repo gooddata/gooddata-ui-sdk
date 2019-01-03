@@ -65,7 +65,7 @@ export class ArithmeticMeasureDrillingExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier).localIdentifier('month')
+            BucketApi.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         const drillNotificationComponent = () => {

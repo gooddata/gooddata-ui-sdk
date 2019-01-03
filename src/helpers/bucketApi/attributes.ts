@@ -2,13 +2,13 @@
 import { VisualizationObject } from '@gooddata/typings';
 import { getQualifierObject } from './utils';
 
-export class VisualizationAttributeBuilder implements VisualizationObject.IVisualizationAttribute {
+export class AttributeBuilder implements VisualizationObject.IVisualizationAttribute {
     private static lastAttributeId = 0;
     public visualizationAttribute: VisualizationObject.IVisualizationAttribute['visualizationAttribute'];
     constructor(displayForm: string) {
         this.visualizationAttribute = {
             displayForm: getQualifierObject(displayForm),
-            localIdentifier: `va_${VisualizationAttributeBuilder.lastAttributeId++}`
+            localIdentifier: `va_${AttributeBuilder.lastAttributeId++}`
         };
     }
 
@@ -23,5 +23,4 @@ export class VisualizationAttributeBuilder implements VisualizationObject.IVisua
     }
 }
 
-export const visualizationAttribute = (displayForm: string) =>
-    new VisualizationAttributeBuilder(displayForm);
+export const attribute = (displayForm: string) => new AttributeBuilder(displayForm);

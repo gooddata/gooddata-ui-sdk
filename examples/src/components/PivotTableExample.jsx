@@ -49,14 +49,14 @@ export class PivotTableExample extends Component {
         ] : [];
 
         const attributes = withAttributes ? [
-            BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier),
-            BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+            BucketApi.attribute(locationStateDisplayFormIdentifier),
+            BucketApi.attribute(locationNameDisplayFormIdentifier),
+            BucketApi.attribute(menuCategoryAttributeDFIdentifier)
         ] : [];
 
         const columns = withPivot ? [
-            BucketApi.visualizationAttribute(quarterDateIdentifier),
-            BucketApi.visualizationAttribute(monthDateIdentifier)
+            BucketApi.attribute(quarterDateIdentifier),
+            BucketApi.attribute(monthDateIdentifier)
         ] : [];
 
         return (

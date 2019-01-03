@@ -45,7 +45,7 @@ export class ArithmeticMeasureChangeExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(monthDateIdentifier).localIdentifier('month')
+            BucketApi.attribute(monthDateIdentifier).localIdentifier('month')
         ];
 
         return (
