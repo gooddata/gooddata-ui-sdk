@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { ColumnChart, BucketApi } from '@gooddata/react-components';
+import { ColumnChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -13,12 +13,12 @@ export class MeasureSortingExample extends Component {
             <div style={{ height: 300 }} className="s-measure-sorting">
                 <ColumnChart
                     projectId={projectId}
-                    measures={[BucketApi.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
+                    measures={[Model.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
                     viewBy={
-                        BucketApi.attribute(monthDateIdentifier)
+                        Model.attribute(monthDateIdentifier)
                             .localIdentifier(monthDateIdentifier)
                     }
-                    sortBy={[BucketApi.measureSortItem(totalSalesIdentifier, 'desc')]}
+                    sortBy={[Model.measureSortItem(totalSalesIdentifier, 'desc')]}
                 />
             </div>
         );

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { BarChart, ColumnChart, PieChart, BucketApi } from '@gooddata/react-components';
+import { BarChart, ColumnChart, PieChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -15,19 +15,19 @@ import {
     projectId
 } from '../utils/fixtures';
 
-const totalSales = BucketApi.measure(totalSalesIdentifier)
+const totalSales = Model.measure(totalSalesIdentifier)
     .aggregation('sum')
     .localIdentifier(totalSalesIdentifier);
 
-const locationResort = BucketApi.attribute(locationResortIdentifier);
-const month = BucketApi.attribute(monthDateIdentifier);
+const locationResort = Model.attribute(locationResortIdentifier);
+const month = Model.attribute(monthDateIdentifier);
 
 const franchiseFeesMeasures = [
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty
-].map(identifier => BucketApi.measure(identifier).aggregation('sum').localIdentifier(identifier));
+].map(identifier => Model.measure(identifier).aggregation('sum').localIdentifier(identifier));
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {

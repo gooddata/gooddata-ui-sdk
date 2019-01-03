@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { ComboChart, BucketApi } from '@gooddata/react-components';
+import { ComboChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -25,18 +25,18 @@ export class ComboChartExample extends Component {
 
     render() {
         const columnMeasures = [
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesAdRoyaltyIdentifier')
         ];
 
         const lineMeasures = [
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier')
         ];
 
-        const locationResort = BucketApi.attribute(locationResortIdentifier)
+        const locationResort = Model.attribute(locationResortIdentifier)
             .localIdentifier('location_resort');
 
         return (

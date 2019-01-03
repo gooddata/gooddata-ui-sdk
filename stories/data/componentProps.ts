@@ -8,7 +8,7 @@ import {
     previousPeriodMeasure,
     measure,
     attribute
-} from '../../src/helpers/bucketApi';
+} from '../../src/helpers/model';
 
 export const MEASURE_1: VisualizationObject.IMeasure = measure('/gdc/md/storybook/obj/1').localIdentifier('m1');
 export const MEASURE_2: VisualizationObject.IMeasure = measure('/gdc/md/storybook/obj/2').localIdentifier('m2');

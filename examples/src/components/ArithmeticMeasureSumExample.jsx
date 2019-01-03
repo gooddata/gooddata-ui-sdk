@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table, BucketApi } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -32,20 +32,20 @@ export class ArithmeticMeasureSumExample extends Component {
         };
 
         const measures = [
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .localIdentifier(localIdentifiers.franchiseFeesAdRoyalty)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .localIdentifier(localIdentifiers.franchiseFeesOngoingRoyalty)
                 .format('#,##0'),
-            BucketApi.arithmeticMeasure([
+            Model.arithmeticMeasure([
                 localIdentifiers.franchiseFeesOngoingRoyalty,
                 localIdentifiers.franchiseFeesAdRoyalty
             ], 'sum')
                 .localIdentifier(localIdentifiers.franchiseFeesSum)
                 .format('#,##0')
                 .title('$ Ongoing / Ad Royalty Sum'),
-            BucketApi.arithmeticMeasure([
+            Model.arithmeticMeasure([
                 localIdentifiers.franchiseFeesOngoingRoyalty,
                 localIdentifiers.franchiseFeesAdRoyalty
             ], 'difference')
@@ -55,7 +55,7 @@ export class ArithmeticMeasureSumExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
+            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         return (

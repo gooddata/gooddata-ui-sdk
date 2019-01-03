@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table, BucketApi } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -31,13 +31,13 @@ export class ArithmeticMeasureRatioExample extends Component {
         };
 
         const measures = [
-            BucketApi.measure(numberOfRestaurantsIdentifier)
+            Model.measure(numberOfRestaurantsIdentifier)
                 .localIdentifier(localIdentifiers.numberOfRestaurants)
                 .format('#,##0'),
-            BucketApi.measure(totalSalesIdentifier)
+            Model.measure(totalSalesIdentifier)
                 .localIdentifier(localIdentifiers.averageRestaurantDailyCosts)
                 .format('#,##0'),
-            BucketApi.arithmeticMeasure([
+            Model.arithmeticMeasure([
                 localIdentifiers.numberOfRestaurants,
                 localIdentifiers.averageRestaurantDailyCosts
             ], 'ratio')
@@ -47,7 +47,7 @@ export class ArithmeticMeasureRatioExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
+            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         return (

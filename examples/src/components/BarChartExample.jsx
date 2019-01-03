@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { BarChart, BucketApi } from '@gooddata/react-components';
+import { BarChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -18,11 +18,11 @@ export class BarChartExample extends Component {
     }
 
     render() {
-        const amount = BucketApi.measure(totalSalesIdentifier)
+        const amount = Model.measure(totalSalesIdentifier)
             .format('#,##0')
             .alias('$ Total Sales');
 
-        const locationResort = BucketApi.attribute(locationResortIdentifier);
+        const locationResort = Model.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-bar-chart">

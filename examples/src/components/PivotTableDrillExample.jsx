@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, HeaderPredicateFactory, BucketApi } from '@gooddata/react-components';
+import { PivotTable, HeaderPredicateFactory, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -38,13 +38,13 @@ export class PivotTableDrillExample extends Component {
         const { drillEvent } = this.state;
 
         const measures = [
-            BucketApi.measure(franchiseFeesIdentifier)
+            Model.measure(franchiseFeesIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .format('#,##0')
         ];
 
@@ -53,14 +53,14 @@ export class PivotTableDrillExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.attribute(locationStateDisplayFormIdentifier),
-            BucketApi.attribute(locationNameDisplayFormIdentifier),
-            BucketApi.attribute(menuCategoryAttributeDFIdentifier)
+            Model.attribute(locationStateDisplayFormIdentifier),
+            Model.attribute(locationNameDisplayFormIdentifier),
+            Model.attribute(menuCategoryAttributeDFIdentifier)
         ];
 
         const columns = [
-            BucketApi.attribute(quarterDateIdentifier),
-            BucketApi.attribute(monthDateIdentifier)
+            Model.attribute(quarterDateIdentifier),
+            Model.attribute(monthDateIdentifier)
         ];
 
         return (

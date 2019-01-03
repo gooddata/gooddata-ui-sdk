@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Treemap, BucketApi } from '@gooddata/react-components';
+import { Treemap, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -18,11 +18,11 @@ export class TreeMapExample extends Component {
     }
 
     render() {
-        const numberOfChecks = BucketApi.measure(numberOfChecksIdentifier).format('#,##0').alias('# Checks');
+        const numberOfChecks = Model.measure(numberOfChecksIdentifier).format('#,##0').alias('# Checks');
 
-        const locationState = BucketApi.attribute(locationStateDisplayFormIdentifier);
+        const locationState = Model.attribute(locationStateDisplayFormIdentifier);
 
-        const locationCity = BucketApi.attribute(locationCityDisplayFormIdentifier);
+        const locationCity = Model.attribute(locationCityDisplayFormIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-tree-map">

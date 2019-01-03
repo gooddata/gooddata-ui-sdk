@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Heatmap, BucketApi } from '@gooddata/react-components';
+import { Heatmap, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -23,11 +23,11 @@ export class HeatmapExample extends Component {
     }
 
     render() {
-        const totalSales = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
+        const totalSales = Model.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const menuCategory = BucketApi.attribute(menuCategoryAttributeDFIdentifier);
+        const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier);
 
-        const locationState = BucketApi.attribute(locationStateDisplayFormIdentifier);
+        const locationState = Model.attribute(locationStateDisplayFormIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-heat-map">

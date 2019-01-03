@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, BucketApi } from '@gooddata/react-components';
+import { PivotTable, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -20,29 +20,29 @@ import {
 export class PivotTableSortingExample extends Component {
     render() {
         const measures = [
-            BucketApi.measure(franchiseFeesIdentifier)
+            Model.measure(franchiseFeesIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .format('#,##0')
         ];
 
         const attributes = [
-            BucketApi.attribute(locationStateDisplayFormIdentifier),
-            BucketApi.attribute(locationNameDisplayFormIdentifier),
-            BucketApi.attribute(menuCategoryAttributeDFIdentifier).localIdentifier('menu')
+            Model.attribute(locationStateDisplayFormIdentifier),
+            Model.attribute(locationNameDisplayFormIdentifier),
+            Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier('menu')
         ];
 
         const columns = [
-            BucketApi.attribute(quarterDateIdentifier),
-            BucketApi.attribute(monthDateIdentifier)
+            Model.attribute(quarterDateIdentifier),
+            Model.attribute(monthDateIdentifier)
         ];
 
         const sortBy = [
-            BucketApi.attributeSortItem('menu', 'asc')
+            Model.attributeSortItem('menu', 'asc')
         ];
 
         return (

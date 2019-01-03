@@ -10,7 +10,7 @@ import {
     LoadingComponent,
     ErrorComponent,
     HeaderPredicateFactory,
-    BucketApi
+    Model
 } from '@gooddata/react-components';
 import {
     projectId,
@@ -168,15 +168,15 @@ export class DrillWithExternalDataExample extends React.Component {
     getFilters = (state, location) => {
         const filters = [];
         if (state) {
-            filters.push(BucketApi.positiveAttributeFilter(locationStateDisplayFormIdentifier, [state.uri]));
+            filters.push(Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [state.uri]));
         }
         if (location) {
-            filters.push(BucketApi.positiveAttributeFilter(locationNameDisplayFormIdentifier, [location.uri]));
+            filters.push(Model.positiveAttributeFilter(locationNameDisplayFormIdentifier, [location.uri]));
         }
         return filters;
     }
 
-    getMeasure = (identifier, localIdentifier, alias) => BucketApi.measure(identifier)
+    getMeasure = (identifier, localIdentifier, alias) => Model.measure(identifier)
         .localIdentifier(localIdentifier)
         .alias(alias)
 

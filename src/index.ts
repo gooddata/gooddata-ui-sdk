@@ -3,7 +3,7 @@ import * as AfmComponents from './components/afm/afmComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
 import { isEmptyResult } from './helpers/errorHandlers';
-import * as BucketApi from './helpers/bucketApi';
+import * as Model from './helpers/model';
 import { BaseChart as CoreBaseChart, IBaseChartProps } from './components/core/base/BaseChart';
 import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
@@ -82,9 +82,9 @@ export {
     AttributeElements,
     AttributeFilter,
     BarChart,
-    BucketApi,
     BucketNames,
     CatalogHelper,
+    Model,
     ChartType,
     ColumnChart,
     ScatterPlot,

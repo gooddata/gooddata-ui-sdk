@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Table, BucketApi } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -26,16 +26,16 @@ export class TableExample extends Component {
 
     render() {
         const measures = [
-            BucketApi.measure(franchiseFeesIdentifier)
+            Model.measure(franchiseFeesIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesIdentifier'),
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesAdRoyaltyIdentifier'),
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesIdentifierOngoingRoyalty')
         ];
@@ -64,7 +64,7 @@ export class TableExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.attribute(monthDateIdentifier).localIdentifier('month')
+            Model.attribute(monthDateIdentifier).localIdentifier('month')
         ];
 
         return (
