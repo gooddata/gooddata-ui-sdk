@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, BucketApi } from '@gooddata/react-components';
+import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, Model } from '@gooddata/react-components';
 import sdk from '@gooddata/gooddata-js';
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -68,7 +68,7 @@ export class DynamicMeasuresExample extends Component {
     }
 
     getNewMeasureDefinition(measureItem) {
-        return BucketApi.measure(measureItem.link).format('#,##0');
+        return Model.measure(measureItem.link).format('#,##0');
     }
 
     render() {
@@ -130,7 +130,7 @@ export class DynamicMeasuresExample extends Component {
             const measures = selectedMeasures.map(this.getNewMeasureDefinition);
 
             if (selectedMeasures.length) {
-                const attribute = BucketApi.visualizationAttribute(monthDateIdentifier);
+                const attribute = Model.attribute(monthDateIdentifier);
 
                 content = (
                     <div className="graph-wrapper">

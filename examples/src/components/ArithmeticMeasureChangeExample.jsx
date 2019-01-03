@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table, BucketApi } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -24,18 +24,18 @@ export class ArithmeticMeasureChangeExample extends Component {
     }
 
     render() {
-        const totalSalesYearAgoBucketItem = BucketApi.previousPeriodMeasure(
+        const totalSalesYearAgoBucketItem = Model.previousPeriodMeasure(
             'totalSales', [{ dataSet: monthDateDataSetAttributeIdentifier, periodsAgo: 1 }]
         ).alias('$ Total Sales - year ago').localIdentifier('totalSales_sp');
 
-        const totalSalesBucketItem = BucketApi.measure(totalSalesIdentifier)
+        const totalSalesBucketItem = Model.measure(totalSalesIdentifier)
             .localIdentifier('totalSales')
             .alias('$ Total Sales');
 
         const measures = [
             totalSalesYearAgoBucketItem,
             totalSalesBucketItem,
-            BucketApi.arithmeticMeasure([
+            Model.arithmeticMeasure([
                 totalSalesBucketItem.measure.localIdentifier,
                 totalSalesYearAgoBucketItem.measure.localIdentifier
             ], 'change')
@@ -45,7 +45,7 @@ export class ArithmeticMeasureChangeExample extends Component {
         ];
 
         const attributes = [
-            BucketApi.visualizationAttribute(monthDateIdentifier).localIdentifier('month')
+            Model.attribute(monthDateIdentifier).localIdentifier('month')
         ];
 
         return (

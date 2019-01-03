@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Headline, BucketApi } from '@gooddata/react-components';
+import { Headline, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -28,15 +28,15 @@ export class PreviousPeriodHeadlineExample extends Component {
                 <Headline
                     projectId={projectId}
                     primaryMeasure={
-                        BucketApi.measure(totalSalesIdentifier)
+                        Model.measure(totalSalesIdentifier)
                             .localIdentifier('totalSales')
                             .alias('$ Total Sales')
                     }
                     secondaryMeasure={
-                        BucketApi.previousPeriodMeasure('totalSales', [{ dataSet: dateDataSetUri, periodsAgo: 1 }])
+                        Model.previousPeriodMeasure('totalSales', [{ dataSet: dateDataSetUri, periodsAgo: 1 }])
                             .alias('$ Total Sales - period ago')
                     }
-                    filters={[BucketApi.relativeDateFilter(dateDataSetUri, 'GDC.time.year', -2, -1)]}
+                    filters={[Model.relativeDateFilter(dateDataSetUri, 'GDC.time.year', -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

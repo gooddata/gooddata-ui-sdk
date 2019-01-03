@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { ColumnChart, BucketApi } from '@gooddata/react-components';
+import { ColumnChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -29,13 +29,13 @@ export class SamePeriodColumnChartExample extends Component {
                 <ColumnChart
                     projectId={projectId}
                     measures={[
-                        BucketApi.popMeasure('totalSales', yearDateDataSetAttributeIdentifier)
+                        Model.popMeasure('totalSales', yearDateDataSetAttributeIdentifier)
                             .alias('$ Total Sales - SP year ago'),
-                        BucketApi.measure(totalSalesIdentifier)
+                        Model.measure(totalSalesIdentifier)
                             .localIdentifier('totalSales')
                             .alias('$ Total Sales')
                     ]}
-                    viewBy={BucketApi.visualizationAttribute(quarterDateIdentifier)}
+                    viewBy={Model.attribute(quarterDateIdentifier)}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

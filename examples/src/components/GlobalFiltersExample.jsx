@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from 'react';
 import { PropTypes } from 'prop-types';
-import { AttributeElements, Kpi, BarChart, PieChart, BucketApi } from '@gooddata/react-components';
+import { AttributeElements, Kpi, BarChart, PieChart, Model } from '@gooddata/react-components';
 import { SidebarItem } from '../components/utils/SidebarItem';
 import { EmployeeCard } from '../components/GlobalFiltersComponents/EmployeeCard';
 import { KpiMetricBox } from '../components/GlobalFiltersComponents/KpiMetricBox';
@@ -81,13 +81,13 @@ export class EmployeeProfile extends React.Component {
             </div>
         );
 
-        const employeeFilter = BucketApi.positiveAttributeFilter(employeeNameIdentifier, [selectedEmployeeUri]);
+        const employeeFilter = Model.positiveAttributeFilter(employeeNameIdentifier, [selectedEmployeeUri]);
 
         const measures = [
-            BucketApi.measure(averageDailyTotalSales).alias('$ Avg Daily Total Sales')
+            Model.measure(averageDailyTotalSales).alias('$ Avg Daily Total Sales')
         ];
-        const menuCategoryAttribute = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier);
-        const menuItemNameAttribute = BucketApi.visualizationAttribute(menuItemNameAttributeDFIdentifier)
+        const menuCategoryAttribute = Model.attribute(menuCategoryAttributeDFIdentifier);
+        const menuItemNameAttribute = Model.attribute(menuItemNameAttributeDFIdentifier)
             .alias('Menu Item name');
 
         const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri).element;

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { ScatterPlot, BucketApi } from '@gooddata/react-components';
+import { ScatterPlot, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -23,11 +23,11 @@ export class ScatterPlotExample extends Component {
     }
 
     render() {
-        const xMeasure = BucketApi.measure(franchiseFeesIdentifier).format('#,##0');
+        const xMeasure = Model.measure(franchiseFeesIdentifier).format('#,##0');
 
-        const yMeasure = BucketApi.measure(franchisedSalesIdentifier).format('#,##0');
+        const yMeasure = Model.measure(franchisedSalesIdentifier).format('#,##0');
 
-        const locationResort = BucketApi.visualizationAttribute(locationResortIdentifier);
+        const locationResort = Model.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-scatter-plot">

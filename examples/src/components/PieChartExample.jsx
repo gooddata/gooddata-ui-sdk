@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PieChart, BucketApi } from '@gooddata/react-components';
+import { PieChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -25,11 +25,11 @@ export class PieChartExample extends Component {
 
     render() {
         const measures = [
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .format('#,##0')
         ];
 

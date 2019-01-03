@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, Table, HeaderPredicateFactory, BucketApi } from '@gooddata/react-components';
+import { PivotTable, Table, HeaderPredicateFactory, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -20,18 +20,18 @@ import {
 import { createColumnTotal } from '../utils/helpers';
 import { ElementWithParam } from './utils/ElementWithParam';
 
-const measureFranchiseFees = BucketApi.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
-const measureAdRoyalty = BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
+const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier)
     .localIdentifier(franchiseFeesAdRoyaltyIdentifier);
-const attributeLocationState = BucketApi.visualizationAttribute(locationStateDisplayFormIdentifier)
+const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier)
     .localIdentifier(locationStateDisplayFormIdentifier);
-const attributeLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier)
     .localIdentifier(locationNameDisplayFormIdentifier);
-const attributeMenuCategory = BucketApi.visualizationAttribute(menuCategoryAttributeDFIdentifier)
+const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier)
     .localIdentifier(menuCategoryAttributeDFIdentifier);
-const attributeQuarter = BucketApi.visualizationAttribute(quarterDateIdentifier)
+const attributeQuarter = Model.attribute(quarterDateIdentifier)
     .localIdentifier(quarterDateIdentifier);
-const attributeMonth = BucketApi.visualizationAttribute(monthDateIdentifier)
+const attributeMonth = Model.attribute(monthDateIdentifier)
     .localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
@@ -172,7 +172,7 @@ const filterPresets = {
     attributeCalifornia: {
         label: 'Attribute (California)',
         key: 'attributeCalifornia',
-        filterItem: BucketApi.positiveAttributeFilter(
+        filterItem: Model.positiveAttributeFilter(
             locationStateDisplayFormIdentifier,
             [locationStateAttributeCaliforniaUri]
         )
@@ -180,12 +180,12 @@ const filterPresets = {
     lastYear: {
         label: 'Last year',
         key: 'lastYear',
-        filterItem: BucketApi.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
     },
     noData: {
         label: 'No Data',
         key: 'noData',
-        filterItem: BucketApi.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
     },
     franchiseFeesCalifornia: {
         label: 'Franchise Fees California',
@@ -195,7 +195,7 @@ const filterPresets = {
 };
 
 const franchiseFeesCalifornia =
-    BucketApi.measure(franchiseFeesIdentifier)
+    Model.measure(franchiseFeesIdentifier)
         .localIdentifier('franchiseFeesCalifornia')
         .alias('FranchiseFees (California)')
         .filters(filterPresets.attributeCalifornia.filterItem);
@@ -209,18 +209,18 @@ const sortingPresets = {
     byMenuCategory: {
         label: 'By Menu Category ASC',
         key: 'byMenuCategory',
-        sortBy: [BucketApi.attributeSortItem(menuCategoryAttributeDFIdentifier, 'asc')]
+        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, 'asc')]
     },
     byLocationState: {
         label: 'By Location State DESC',
         key: 'byLocationState',
-        sortBy: [BucketApi.attributeSortItem(locationStateDisplayFormIdentifier, 'desc')]
+        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, 'desc')]
     },
     byQ1JanFranchiseFees: {
         label: 'by Q1 / Jan / FranchiseFees DESC',
         key: 'byQ1JanFranchiseFees',
         sortBy: [
-            BucketApi.measureSortItem(franchiseFeesIdentifier, 'desc')
+            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
                 .attributeLocators(
                     {
                         attributeIdentifier: quarterDateIdentifier,
@@ -237,8 +237,8 @@ const sortingPresets = {
         label: 'By Location State ASC And Q1 Jan Franchise Fees DESC',
         key: 'byLocationStateAndQ1JanFranchiseFees',
         sortBy: [
-            BucketApi.attributeSortItem(locationStateDisplayFormIdentifier, 'asc'),
-            BucketApi.measureSortItem(franchiseFeesIdentifier, 'desc')
+            Model.attributeSortItem(locationStateDisplayFormIdentifier, 'asc'),
+            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
                 .attributeLocators(
                     {
                         attributeIdentifier: quarterDateIdentifier,

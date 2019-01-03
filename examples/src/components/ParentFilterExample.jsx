@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { AttributeElements, BarChart, BucketApi } from '@gooddata/react-components';
+import { AttributeElements, BarChart, Model } from '@gooddata/react-components';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import '@gooddata/react-components/styles/css/main.css';
@@ -51,20 +51,20 @@ export class ParentFilterExample extends Component {
 
         if (stateFilterValues.length) {
             visFilters.push(
-                BucketApi.positiveAttributeFilter(
+                Model.positiveAttributeFilter(
                     locationStateDisplayFormIdentifier,
                     stateFilterValues.map(filter => filter.value)));
         }
         if (cityFilterValues.length) {
             visFilters.push(
-                BucketApi.positiveAttributeFilter(
+                Model.positiveAttributeFilter(
                     locationCityDisplayFormIdentifier,
                     cityFilterValues.map(filter => filter.value)));
         }
 
-        const measureTotalSales = BucketApi.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
+        const measureTotalSales = Model.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
 
-        const viewByLocationName = BucketApi.visualizationAttribute(locationNameDisplayFormIdentifier)
+        const viewByLocationName = Model.attribute(locationNameDisplayFormIdentifier)
             .localIdentifier('location_name');
 
         return (

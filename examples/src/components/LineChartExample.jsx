@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { LineChart, BucketApi } from '@gooddata/react-components';
+import { LineChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -28,17 +28,17 @@ export class LineChartExample extends Component {
 
     render() {
         const measures = [
-            BucketApi.measure(franchiseFeesIdentifier)
+            Model.measure(franchiseFeesIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesAdRoyaltyIdentifier)
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0'),
-            BucketApi.measure(franchiseFeesIdentifierOngoingRoyalty)
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
                 .format('#,##0')
         ];
 
-        const trendBy = BucketApi.visualizationAttribute(monthDateIdentifier);
+        const trendBy = Model.attribute(monthDateIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-line-chart">
