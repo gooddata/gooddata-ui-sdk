@@ -7,10 +7,11 @@ import {
     GridReadyEvent,
     ICellRendererParams,
     IDatasource,
-    IGetRowsParams
+    IGetRowsParams,
+    SortChangedEvent
 } from 'ag-grid';
 import { AgGridReact } from 'ag-grid-react';
-import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
+import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef';
 import * as classNames from 'classnames';
 import * as invariant from 'invariant';
 import * as React from 'react';
@@ -76,7 +77,6 @@ export interface IPivotTableProps extends ICommonChartProps {
     dataSource: IDataSource;
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
-    onSortChange?: (sortBy: AFM.SortItem[]) => AFM.SortItem[];
     getPage?: IGetPage;
     cancelPagePromises?: () => void;
     pageSize?: number;
@@ -546,6 +546,24 @@ export class PivotTableInner extends
         return false;
     }
 
+    public sortChanged = (event: SortChangedEvent): void => {
+        const execution = this.getExecution();
+
+        invariant(execution !== undefined, 'changing sorts without prior execution cannot work');
+
+        const sortModel: ISortModelItem[] = event.columnApi.getAllColumns()
+            .filter(col => col.getSort() !== undefined && col.getSort() !== null)
+            .map(col => ({ colId: col.getColId(), sort: col.getSort() as AFM.SortDirection }));
+
+        const sortItems = getSortsFromModel(sortModel, this.getExecution());
+
+        this.props.pushData({
+            properties: {
+                sortItems
+            }
+        });
+    }
+
     public renderVisualization() {
         const { columnDefs, rowData } = this.state;
         const { pageSize } = this.props;
@@ -573,6 +591,7 @@ export class PivotTableInner extends
                 }
             },
             onCellClicked: this.cellClicked,
+            onSortChanged: this.sortChanged,
 
             // Basic options
             suppressMovableColumns: true,

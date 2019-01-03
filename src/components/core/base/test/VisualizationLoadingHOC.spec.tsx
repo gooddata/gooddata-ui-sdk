@@ -353,8 +353,7 @@ describe('VisualizationLoadingHOC', () => {
 
             return testUtils.delay().then(() => {
                 expect(pushData).toHaveBeenCalledWith({
-                    result: oneMeasureResponse,
-                    properties: { sortItems: undefined }
+                    result: oneMeasureResponse
                 });
                 expect(onLoadingChanged).toHaveBeenCalledWith({ isLoading: false });
             });
