@@ -35,6 +35,7 @@ import {
     IColorItem,
     IColorPaletteItem
 } from '../../../interfaces/Config';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
 
 export interface IColorStrategy {
@@ -342,25 +343,9 @@ export class HeatmapColorStrategy extends ColorStrategy {
                     color: mappedColor
                 }];
             }
-        } else if (colorPalette && isCustomPalette(colorPalette) && colorPalette[0]) {
-            colorAssignment = [{
-                headerItem,
-                color: {
-                    type: 'guid',
-                    value: colorPalette[0].guid
-                }
-            }];
         }
 
-        if (!colorAssignment) {
-            colorAssignment = [{
-                headerItem,
-                color: {
-                    type: 'rgb',
-                    value: DEFAULT_HEATMAP_BLUE_COLOR
-                }
-            }];
-        }
+        colorAssignment = colorAssignment || this.getDefaultColorAssignment(colorPalette, headerItem);
 
         return {
             fullColorAssignment: colorAssignment,
@@ -409,6 +394,27 @@ export class HeatmapColorStrategy extends ColorStrategy {
 
     private getCalculatedChannel(channel: number, index: number, step: number): number {
         return Math.trunc(channel + index * step);
+    }
+
+    private getDefaultColorAssignment(colorPalette: IColorPalette, headerItem: IMappingHeader): IColorAssignment[] {
+        const hasCustomPaletteWithColors = colorPalette && isCustomPalette(colorPalette) && colorPalette[0];
+        if (hasCustomPaletteWithColors) {
+            return [{
+                headerItem,
+                color: {
+                    type: 'guid',
+                    value: colorPalette[0].guid
+                }
+            }];
+        }
+
+        return [{
+            headerItem,
+            color: {
+                type: 'rgb',
+                value: DEFAULT_HEATMAP_BLUE_COLOR
+            }
+        }];
     }
 }
 

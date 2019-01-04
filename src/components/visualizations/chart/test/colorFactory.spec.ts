@@ -533,7 +533,7 @@ describe('ColorFactory', () => {
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
                 undefined,
                 undefined,
                 viewByAttribute,
@@ -544,7 +544,7 @@ describe('ColorFactory', () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
+            range(7).map((colorIndex: number) =>
                 expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[colorIndex])
             );
         });
@@ -556,7 +556,7 @@ describe('ColorFactory', () => {
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const expectedColors = [
+            const expectedColors: string[] = [
                 'rgb(255,255,255)',
                 'rgb(245,220,224)',
                 'rgb(235,186,194)',
@@ -566,7 +566,7 @@ describe('ColorFactory', () => {
                 'rgb(195,49,73)'
             ];
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy  = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 undefined,
                 viewByAttribute,
@@ -577,9 +577,50 @@ describe('ColorFactory', () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
-                expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(expectedColors[colorIndex])
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
+        });
+
+        it('should return HeatmapColorStrategy strategy with 7 colors'
+            + ' based on the first color from custom palette when color mapping given but not applicable', () => {
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
+            const { executionResponse } = fixtures.heatmapMetricRowColumn;
+            const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+            const type = 'heatmap';
+
+            const expectedColors: string[] = [
+                'rgb(255,255,255)',
+                'rgb(245,220,224)',
+                'rgb(235,186,194)',
+                'rgb(225,152,164)',
+                'rgb(215,117,133)',
+                'rgb(205,83,103)',
+                'rgb(195,49,73)'
+            ];
+
+            const inapplicableColorMapping: IColorMapping[] = [
+                {
+                    predicate: () => false,
+                    color: {
+                        type: 'guid',
+                        value: '02'
+                    }
+                }
+            ];
+
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
+                CUSTOM_COLOR_PALETTE,
+                inapplicableColorMapping,
+                viewByAttribute,
+                stackByAttribute,
+                executionResponse,
+                afm,
+                type
             );
+
+            expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
         });
 
         it('should return HeatmapColorStrategy with properly applied mapping', () => {
@@ -588,7 +629,7 @@ describe('ColorFactory', () => {
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const expectedColors = [
+            const expectedColors: string[] = [
                 'rgb(255,255,255)',
                 'rgb(240,244,226)',
                 'rgb(226,234,198)',
@@ -619,9 +660,8 @@ describe('ColorFactory', () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
-                expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(expectedColors[colorIndex])
-            );
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
         });
     });
 
@@ -726,7 +766,7 @@ describe('ColorFactory', () => {
                 }
             ];
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 colorMapping,
                 viewByAttribute,
