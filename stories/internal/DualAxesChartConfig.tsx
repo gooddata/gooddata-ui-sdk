@@ -82,6 +82,22 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
             </div>
         );
     })
+    .add('Dataset with 0+ data on both axes, with shallow min/max', () => {
+        const { config, info } = getMinMaxConfig('1', '2', '100', '101');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
+    .add('Dataset with 0+ data on both axes, with shallow decimal min/max', () => {
+        const { config, info } = getMinMaxConfig('0.01', '0.021', '100.001', '100.002');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
     .add('Dataset with 0+ data on both axes, with max setting', () => {
         const { config, info } = getMinMaxConfig(undefined, '500', undefined, '4000');
         return screenshotWrap(
