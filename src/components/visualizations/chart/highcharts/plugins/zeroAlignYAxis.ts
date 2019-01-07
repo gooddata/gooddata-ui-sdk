@@ -11,9 +11,10 @@
 import get = require('lodash/get');
 import head = require('lodash/head');
 import last = require('lodash/last');
+import isNil = require('lodash/isNil');
 import partial = require('lodash/partial');
 import { getChartType } from '../helpers';
-import { isOneOfTypes } from '../../../utils/common';
+import { isLineChart, isOneOfTypes } from '../../../utils/common';
 import { supportedDualAxesChartTypes } from '../../chartOptionsBuilder';
 import { dualAxesLabelFormatter } from './dualAxesLabelFormatter';
 
@@ -246,57 +247,74 @@ export function getTickAmount(tickPosition: number[]): number {
     return length;
 }
 
-function getTickPositioner() {
-    let tickAmount: number = 0; // persist tick amount on the axis have larger value, then apply it to opposite axis
-    let minmax: IMinMaxInfo[];
+function handleInvalidMinMax(axisIndex: number, min: number, max: number,
+                             dataMin: number, dataMax: number,
+                             minmax: IMinMaxInfo[], isLineChartType: boolean) {
+    if (isNil(min) || isNil(max)) {
+        // mark current axis invalid
+        minmax[axisIndex] = null;
+        return [];
+    }
+
+    if (isLineChartType && min === max) {
+        // line chart needs one tick position
+        return [min];
+    }
+
+    const valueMin = Math.min(0, dataMin, dataMax);
+    const valueMax = Math.max(0, dataMin, dataMax);
+    // pair of min/max is out of range of data
+    if (min >= max || min >= valueMax || max <= valueMin) {
+        // mark current axis invalid
+        minmax[axisIndex] = null;
+        // nothing to render on this axis, so that hide it
+        return [];
+    }
+
+    return null;
+}
+
+export function getTickPositioner() {
+    // persist tick amount on the axis has larger value, then apply it to opposite axis
+    let tickAmount: number = 0;
+    const minmax: IMinMaxInfo[] = [];
 
     return function(min: number, max: number) {
-        if (typeof min === 'undefined' || min === null || typeof max === 'undefined' || max === null) {
-            return;
-        }
-
-        const dataMin = Math.min(0, this.dataMin, this.dataMax);
-        const dataMax = Math.max(0, this.dataMin, this.dataMax);
-        if (min === max || min >= dataMax || max <= dataMin) {
-            const tickNum = this.tickPositions.length;
-            if (tickNum === 1 && this.tickPositions[0] === 0) {
-                // nothing to render on this axis
-                return [];
-            }
-            return tickNum ? createArrayFromRange(min, max, this.tickAmount) : this.tickPositions;
-        }
-
         const chart = this.chart;
+        const chartType = getChartType(chart);
+        const isLineChartType = isLineChart(chartType);
+        const currentAxisIndex = this.options.index;
 
-        if (!minmax) {
-            // ----------------------------
-            // Computed once for both axes
-            // ----------------------------
-            minmax = [];
+        let tickPositions = handleInvalidMinMax(currentAxisIndex, min, max,
+                                                this.dataMin, this.dataMax,
+                                                minmax, isLineChartType);
+        if (tickPositions) {
+            return tickPositions;
+        }
 
-            for (const axis of chart.axes) {
-                if (axis.coll === 'yAxis') {
-                    if (typeof axis.max === 'undefined' || axis.max === null ||
-                        typeof axis.min === 'undefined' || axis.min === null) {
-                        // Don't have min/max values for both axes yet.
-                        // Clean up processed values from other axis.
-                        minmax = undefined;
-                        // Exit. Process in next call.
-                        return createArrayFromRange(min, max, this.tickAmount);
-                    }
-                    minmax.push({
-                        id: axis.options.index,
-                        min: axis.min,
-                        max: axis.max,
-                        isSetMin: axis.userOptions.min !== undefined,
-                        isSetMax: axis.userOptions.max !== undefined
-                    });
+        const yAxes = chart.axes.filter((axis: any) => axis.coll === 'yAxis');
+        for (const yAxisIndex in yAxes) {
+            if (yAxes.hasOwnProperty(yAxisIndex)) {
+                const axis = yAxes[yAxisIndex];
+                if (isNil(axis.min) || isNil(axis.max)) {
+                    // this axis could be not initiated (undefined) or could be invalid (null)
+                    const isOtherAxisInvalid = minmax[yAxisIndex] === null;
+                    return (isOtherAxisInvalid && !isLineChartType) ? // line chart does not need middle zero
+                        createArrayFromRangeWithMiddleZero(min, max, this.tickAmount) :
+                        createArrayFromRange(min, max, this.tickAmount);
                 }
+                minmax[yAxisIndex] = {
+                    id: axis.options.index,
+                    min: axis.min,
+                    max: axis.max,
+                    isSetMin: axis.userOptions.min !== undefined,
+                    isSetMax: axis.userOptions.max !== undefined
+                };
             }
         }
 
-        const { min: newMin, max: newMax } = getMinMax(this.options.index, min, max, minmax);
-        const tickPositions = createTickPositions(newMin, newMax, minmax, tickAmount || this.tickAmount);
+        const { min: newMin, max: newMax } = getMinMax(currentAxisIndex, min, max, minmax);
+        tickPositions = createTickPositions(newMin, newMax, minmax, tickAmount || this.tickAmount);
 
         // update tick amount to make grid lines synced on both axes
         tickAmount = Math.max(tickAmount, getTickAmount(tickPositions));
