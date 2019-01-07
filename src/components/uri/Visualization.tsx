@@ -10,6 +10,7 @@ import { IntlWrapper } from '../core/base/IntlWrapper';
 import { BaseChart } from '../core/base/BaseChart';
 import { IChartConfig, IColorPaletteItem } from '../../interfaces/Config';
 import { SortableTable } from '../core/SortableTable';
+import { PivotTable } from '../core/PivotTable';
 import { Headline } from '../core/Headline';
 import { IEvents, OnLegendReady } from '../../interfaces/Events';
 import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
@@ -76,6 +77,7 @@ export interface IVisualizationProps extends IEvents {
     fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
     BaseChartComponent?: any;
     TableComponent?: any;
+    PivotTableComponent?: any;
     HeadlineComponent?: any;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
@@ -142,6 +144,7 @@ export class VisualizationWrapped
         fetchVisualizationClass,
         BaseChartComponent: BaseChart,
         TableComponent: SortableTable,
+        PivotTableComponent: PivotTable,
         HeadlineComponent: Headline,
         ErrorComponent,
         LoadingComponent
@@ -263,10 +266,11 @@ export class VisualizationWrapped
             onError,
             onLoadingChanged,
             locale,
-            config,
+            config: baseConfig,
             intl,
             BaseChartComponent,
             TableComponent,
+            PivotTableComponent,
             HeadlineComponent,
             LoadingComponent,
             ErrorComponent
@@ -277,8 +281,8 @@ export class VisualizationWrapped
             && mdObjectContent.properties
             && JSON.parse(mdObjectContent.properties).controls;
 
-        const colorPalette = this.props.config && this.props.config.colorPalette
-            ? this.props.config.colorPalette
+        const colorPalette = baseConfig && baseConfig.colorPalette
+            ? baseConfig.colorPalette
             : this.state.colorPalette;
 
         let colorMapping;
@@ -293,10 +297,10 @@ export class VisualizationWrapped
             });
         }
 
-        const finalConfig = {
+        const config = {
             ...properties,
             colorMapping,
-            ...config,
+            ...baseConfig,
             colorPalette,
             mdObject: mdObjectContent
         };
@@ -321,53 +325,46 @@ export class VisualizationWrapped
                 : null;
         }
 
+        const commonProps = {
+            dataSource,
+            resultSpec,
+            drillableItems,
+            onFiredDrillEvent,
+            onError,
+            onLoadingChanged,
+            LoadingComponent,
+            ErrorComponent,
+            locale,
+            config
+        };
+
         switch (type) {
             case VisualizationTypes.TABLE:
                 return (
                     <TableComponent
-                        dataSource={dataSource}
-                        resultSpec={resultSpec}
-                        drillableItems={drillableItems}
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        {...commonProps}
                         totals={totals}
-                        onError={onError}
-                        onLoadingChanged={onLoadingChanged}
-                        LoadingComponent={LoadingComponent}
-                        ErrorComponent={ErrorComponent}
-                        locale={locale}
-                        config={finalConfig}
+                    />
+                );
+            case VisualizationTypes.PIVOT_TABLE:
+                return (
+                    <PivotTableComponent
+                        {...commonProps}
+                        totals={totals}
                     />
                 );
             case VisualizationTypes.HEADLINE:
                 return (
                     <HeadlineComponent
-                        dataSource={dataSource}
-                        resultSpec={resultSpec}
-                        drillableItems={drillableItems}
-                        onFiredDrillEvent={onFiredDrillEvent}
-                        onError={onError}
-                        onLoadingChanged={onLoadingChanged}
-                        LoadingComponent={LoadingComponent}
-                        ErrorComponent={ErrorComponent}
-                        locale={locale}
-                        config={finalConfig}
+                        {...commonProps}
                     />
                 );
             default:
                 return (
                     <BaseChartComponent
-                        dataSource={dataSource}
-                        resultSpec={resultSpec}
-                        drillableItems={drillableItems}
-                        onFiredDrillEvent={onFiredDrillEvent}
-                        onError={onError}
-                        onLoadingChanged={onLoadingChanged}
+                        {...commonProps}
                         onLegendReady={onLegendReady}
-                        LoadingComponent={LoadingComponent}
-                        ErrorComponent={ErrorComponent}
-                        locale={locale}
                         type={type}
-                        config={finalConfig}
                     />
                 );
         }
@@ -388,9 +385,10 @@ export class VisualizationWrapped
             })
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
                 const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
+                const sdk = this.sdk;
                 return this.props.fetchVisualizationClass(
                     this.sdk, visualizationClassUri
-                ).then((visualizationClass) => {
+                ).then(async (visualizationClass) => {
                     const processedVisualizationObject = fillMissingTitles(mdObject.content, this.props.locale);
                     const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
@@ -400,7 +398,8 @@ export class VisualizationWrapped
                     const attributeFilters = getAttributeFilters(filters);
                     const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
 
-                    const visualizationType: VisType = getVisualizationTypeFromVisualizationClass(visualizationClass);
+                    const visualizationType: VisType =
+                        await getVisualizationTypeFromVisualizationClass(visualizationClass, sdk, projectId);
                     // keep resultSpec creation in sync with AD
                     const resultSpecWithDimensions = {
                         ...resultSpec,
