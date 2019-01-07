@@ -1,12 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
+import assign = require('lodash/assign');
 import noop = require('lodash/noop');
+import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
-import { DataLayer, ApiResponseError } from '@gooddata/gooddata-js';
+import omit = require('lodash/omit');
+import {
+    factory as createSdk,
+    DataLayer,
+    ApiResponseError,
+    IExportConfig,
+    IExportResponse,
+    SDK
+} from '@gooddata/gooddata-js';
 import { AFM, Execution } from '@gooddata/typings';
 
 import { ErrorStates } from '../../../constants/errorStates';
-import { IEvents, ILoadingState } from '../../../interfaces/Events';
+import {
+    IEvents,
+    IExportFunction,
+    ILoadingState
+} from '../../../interfaces/Events';
 import { IDrillableItem } from '../../../interfaces/DrillEvents';
 import { ISubject } from '../../../helpers/async';
 import { convertErrors, checkEmptyResult } from '../../../helpers/errorHandlers';
@@ -20,10 +34,15 @@ import { ErrorComponent, IErrorProps } from '../../simple/ErrorComponent';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { IPushData } from '../../../interfaces/PushData';
 import { IChartConfig } from '../../../interfaces/Config';
+import { setTelemetryHeaders } from '../../../helpers/utils';
+
+const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, '');
 
 export type IExecutionDataPromise = Promise<Execution.IExecutionResponses>;
 
 export interface ICommonVisualizationProps extends IEvents {
+    sdk?: SDK;
+    projectId?: string;
     locale?: string;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     afterRender?: () => void;
@@ -71,6 +90,7 @@ export const commonDefaultProps: Partial<ICommonVisualizationProps & IDataSource
     pushData: noop,
     locale: 'en-US',
     drillableItems: [],
+    onExportReady: noop,
     onFiredDrillEvent: () => true
 };
 
@@ -87,6 +107,8 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         protected pagePromises: IExecutionDataPromise[];
         protected hasUnmounted: boolean;
 
+        private sdk: SDK;
+
         constructor(props: T & ILoadingInjectedProps) {
             super(props);
 
@@ -95,6 +117,10 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                 result: null,
                 error: null
             };
+
+            this.sdk =  props.sdk ? props.sdk.clone() : createSdk();
+            setTelemetryHeaders(this.sdk, 'LoadingHOCWrapped', props);
+
             this.pagePromises = [];
             this.hasUnmounted = false;
 
@@ -103,6 +129,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             this.onNegativeValues = this.onNegativeValues.bind(this);
             this.getPage = this.getPage.bind(this);
             this.cancelPagePromises = this.cancelPagePromises.bind(this);
+            this.createExportFunction = this.createExportFunction.bind(this);
 
             this.initSubject();
         }
@@ -129,10 +156,16 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                     cancelPagePromises: this.cancelPagePromises
                 };
 
+            // lower-level components do not need projectId
+            const props = omit<any, ILoadingInjectedProps>(
+                this.props,
+                ['projectId']
+            );
+
             return (
                 <InnerComponent
                     key="InnerComponent"
-                    {...this.props}
+                    {...props}
                     execution={result}
                     onDataTooLarge={this.onDataTooLarge}
                     onNegativeValues={this.onNegativeValues}
@@ -152,7 +185,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             resultSpec: AFM.IResultSpec,
             limit: number[],
             offset: number[]
-        ): Promise<Execution.IExecutionResponses> {
+        ): Promise<void | Execution.IExecutionResponses> {
             if (this.hasUnmounted) {
                 return Promise.resolve(null);
             }
@@ -170,6 +203,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                         result
                     });
                     this.onLoadingChanged({ isLoading: false });
+                    this.props.onExportReady(this.createExportFunction(result)); // Pivot tables
                     return result;
                 })
                 .catch((error: ApiResponseError | Error) => {
@@ -186,6 +220,11 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
         }
 
         public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
+            if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
+                this.sdk = nextProps.sdk.clone();
+                setTelemetryHeaders(this.sdk, 'LoadingHOCWrapped', nextProps);
+            }
+
             if (this.isDataReloadRequired(nextProps)) {
                 if (autoExecuteDataSource) {
                     const { dataSource, resultSpec } = nextProps;
@@ -242,6 +281,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                 this.setState({ result });
                 this.props.pushData({ result });
                 this.onLoadingChanged({ isLoading: false });
+                this.props.onExportReady(this.createExportFunction(result)); // Charts / Tables
             }, error => this.onError(error));
         }
 
@@ -290,6 +330,28 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                 });
 
             this.subject.next(promise);
+        }
+
+        private createExportFunction(execution: Execution.IExecutionResponses): IExportFunction {
+            return (exportConfig: IExportConfig): Promise<IExportResponse> => {
+                const { exportTitle, projectId } = this.props;
+
+                if (!execution) {
+                    return Promise.reject(new Error('Unknown execution'));
+                }
+
+                if (!projectId) {
+                    return Promise.reject(new Error('Unknown projectId'));
+                }
+
+                const title = exportTitle ? escapeFileName(exportTitle) : 'Untitled';
+
+                return this.sdk.report.exportResult(
+                    projectId,
+                    get<Execution.IExecutionResponses, string>(execution, 'executionResponse.links.executionResult'),
+                    assign({ title }, exportConfig)
+                );
+            };
         }
     }
 

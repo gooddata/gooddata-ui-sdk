@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { SDK, factory as createSdk, DataLayer, ApiResponse, IPropertiesControls } from '@gooddata/gooddata-js';
+import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
@@ -149,7 +150,8 @@ export class VisualizationWrapped
         PivotTableComponent: PivotTable,
         HeadlineComponent: Headline,
         ErrorComponent,
-        LoadingComponent
+        LoadingComponent,
+        onExportReady: noop
     };
 
     private visualizationUri: string;
@@ -159,6 +161,8 @@ export class VisualizationWrapped
     private subject: ISubject<Promise<IVisualizationExecInfo>>;
 
     private errorMap: IErrorMap;
+
+    private exportTitle: string;
 
     private sdk: SDK;
 
@@ -262,6 +266,7 @@ export class VisualizationWrapped
     public render() {
         const { dataSource } = this;
         const {
+            projectId,
             drillableItems,
             onFiredDrillEvent,
             onLegendReady,
@@ -275,7 +280,8 @@ export class VisualizationWrapped
             PivotTableComponent,
             HeadlineComponent,
             LoadingComponent,
-            ErrorComponent
+            ErrorComponent,
+            onExportReady
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
@@ -326,6 +332,7 @@ export class VisualizationWrapped
         }
 
         const commonProps = {
+            projectId,
             dataSource,
             resultSpec,
             drillableItems,
@@ -335,7 +342,9 @@ export class VisualizationWrapped
             LoadingComponent,
             ErrorComponent,
             locale,
-            config
+            config,
+            exportTitle: this.exportTitle,
+            onExportReady
         };
 
         switch (type) {
@@ -386,6 +395,9 @@ export class VisualizationWrapped
             .then((mdObject: VisualizationObject.IVisualizationObject) => {
                 const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
                 const sdk = this.sdk;
+
+                this.exportTitle = get(mdObject, 'meta.title', '');
+
                 return this.props.fetchVisualizationClass(
                     this.sdk, visualizationClassUri
                 ).then(async (visualizationClass) => {
