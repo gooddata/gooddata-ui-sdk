@@ -114,4 +114,18 @@ describe('convertMeasure', () => {
             ...afm.arithmeticMeasure
         });
     });
+
+    describe('getFormat', () => {
+        it('should return default format for arithmetic measure sum operation', () => {
+            const arithmeticMeasure =
+                measures.buildArithmeticMeasure('am1', { operator: 'sum' });
+            expect(MeasureConverter.getFormat(arithmeticMeasure)).toBeUndefined();
+        });
+
+        it('should return percentage format for change operation', () => {
+            const arithmeticMeasure =
+                measures.buildArithmeticMeasure('am1', { operator: 'change' });
+            expect(MeasureConverter.getFormat(arithmeticMeasure)).toEqual('#,##0.00%');
+        });
+    });
 });

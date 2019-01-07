@@ -14,7 +14,8 @@ import IVisualizationObjectRelativeDateFilter = VisualizationObject.IVisualizati
 import IVisualizationObjectAbsoluteDateFilter = VisualizationObject.IVisualizationObjectAbsoluteDateFilter;
 
 const MeasureConverter = {
-    convertMeasure
+    convertMeasure,
+    getFormat
 };
 
 export default MeasureConverter;
@@ -165,6 +166,12 @@ function convertArithmeticMeasureDefinition(definition: IArithmeticMeasureDefini
 function getFormat(measure: IMeasure): string | undefined {
     const { measure: { definition } } = measure;
     const measureFormat = get(measure.measure, 'format');
+
+    if (VisualizationObject.isArithmeticMeasureDefinition(definition)) {
+        if (definition.arithmeticMeasure.operator === 'change') {
+            return '#,##0.00%';
+        }
+    }
 
     const predefinedFormat = VisualizationObject.isMeasureDefinition(definition)
         ? getPredefinedFormat(definition)
