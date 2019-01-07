@@ -10,6 +10,7 @@ export const ALIGN_RIGHT = 'right';
 
 export interface IProps {
     displayText: string;
+    className?: string;
     enableMenu?: boolean;
     enableSorting?: boolean;
     defaultSortDirection?: AFM.SortDirection;
@@ -212,7 +213,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { menuPosition } = this.props;
+        const { menuPosition, className } = this.props;
 
         return (
                 <div
@@ -221,7 +222,8 @@ export default class HeaderCell extends React.Component<IProps, IState> {
                         's-pivot-table-header',
                         {
                             'gd-pivot-table-header--open': this.state.isMenuOpen
-                        }
+                        },
+                        className
                     )}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave}
