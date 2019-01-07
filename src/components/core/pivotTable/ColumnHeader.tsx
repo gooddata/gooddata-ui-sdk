@@ -77,6 +77,7 @@ class ColumnHeader extends React.Component<IHeaderParams, IColumnHeaderState> im
                 defaultSortDirection={this.getDefaultSortDirection()}
                 onSortClick={this.onSortRequested}
                 onMenuClick={this.onMenuClick}
+                className="s-pivot-table-column-header"
             />
         );
     }

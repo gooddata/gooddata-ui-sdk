@@ -23,7 +23,7 @@ export default class ColumnGroupHeader
       const { enableMenu } = this.props;
       const columnGroupDef = this.props.columnGroup.getColGroupDef();
       const parent = this.props.columnGroup.getParent();
-      // do not show menu for the first group header and empty headers above row attribute column heders
+      // do not show menu for the first group header and empty headers above row attribute column headers
       const showMenu = enableMenu && !!parent && !!columnGroupDef.headerName;
 
       return (
@@ -34,6 +34,7 @@ export default class ColumnGroupHeader
               menuPosition={ALIGN_LEFT}
               textAlign={ALIGN_LEFT}
               onMenuClick={this.onMenuClick}
+              className="s-pivot-table-column-group-header"
           />
       );
   }
