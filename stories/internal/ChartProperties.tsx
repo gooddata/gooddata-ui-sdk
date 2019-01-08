@@ -292,7 +292,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
                                 measures: ['expectedMetric']
                             },
                             dataLabels: {
-                                visible: true
+                                visible: type !== 'bar' // disable data label on bar chart to make test stable
                             }
 
                         }}
