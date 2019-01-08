@@ -71,6 +71,11 @@ export class PivotTableTotalsExample extends Component {
         return (
             <div style={{ height: 300 }} className="s-pivot-table-totals">
                 <PivotTable
+                    config={{
+                        menu: {
+                            aggregations: true
+                        }
+                    }}
                     projectId={projectId}
                     measures={measures}
                     rows={attributes}
