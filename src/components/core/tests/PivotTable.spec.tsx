@@ -31,6 +31,7 @@ describe('PivotTable', () => {
             <PivotTable
                 dataSource={oneMeasureDataSource}
                 getPage={noop as any}
+                intl={intl}
             />
         );
         expect(wrapper.find(PivotTableInner)).toHaveLength(1);

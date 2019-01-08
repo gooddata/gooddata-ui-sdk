@@ -9,6 +9,13 @@ const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
     const toggleMenu = () => props.onOpenedChange(!props.opened);
 
     const OutsideClickHandlerWrapped = (props: { children: React.ReactNode }) => (
+        // UseCapture is set to false (default event bubbling). This has the disadvantage that we will not
+        // get notified of click events with preventDefault or stopPropagation methods called on them. On the
+        // other hand it greatly simplifies event handling with toggler elements, for example if we have
+        // opened menu and we used useCapture=true, and somebody clicked togger element, OutsideClickHandler
+        // would get notified, he would set opened state from true to false, and then togger element click
+        // handler would get notified, that would toggle it back to true, so menu would stay opened. This
+        // could be solved by OutsideClickHandler ignoring clicks that are inside togglerWrapped.
         <OutsideClickHandler onOutsideClick={closeMenu} useCapture={false}>
             {props.children}
         </OutsideClickHandler>

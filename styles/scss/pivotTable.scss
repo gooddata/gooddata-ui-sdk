@@ -2,8 +2,6 @@
 @import '~@gooddata/goodstrap/lib/core/styles/variables';
 
 $ag-icons-path: "~ag-grid/src/styles/balham-icons/";
-$menu-icon-size: 16px;
-$menu-icon-padding: 8px;
 
 $border-color: transparent;
 $font-size: 12px;
@@ -178,12 +176,12 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
 
     &-menu {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: 32px;
         cursor: pointer;
         opacity: 0;
-        transition: all 200ms;
-        position: relative;
+        transition: width 200ms, opacity 100ms;
 
         &:hover {
             background-color: rgba(0, 255, 255, 0.1);
@@ -192,19 +190,16 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
         &--hide {
             width: 0px;
             opacity: 0;
-            transition: all 200ms;
         }
 
         &--show {
+            width: 32px;
             opacity: 1;
-            width: ($menu-icon-size + (2 * $menu-icon-padding));
-            transition: all 200ms;
         }
 
         & > .menu-icon {
-            padding: $menu-icon-padding;
-            width: $menu-icon-size;
-            height: $menu-icon-size;
+            width: 16px;
+            height: 16px;
         }
     }
 

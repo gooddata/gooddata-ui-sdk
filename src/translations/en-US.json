@@ -298,5 +298,10 @@
       "value": "Right:",
       "comment": "",
       "limit": 0
+   },
+   "visualizations.menu.aggregations": {
+      "value": "Aggregations",
+      "comment": "",
+      "limit": 0
    }
 }
