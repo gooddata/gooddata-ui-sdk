@@ -96,13 +96,13 @@
     "webpack-dev-server": "1.16.1"
   },
   "dependencies": {
-    "@gooddata/typings": "2.4.1",
+    "@gooddata/typings": "2.6.0",
     "es6-promise": "3.0.2",
     "fetch-cookie": "0.7.0",
     "invariant": "2.2.2",
     "isomorphic-fetch": "2.2.1",
     "json-stable-stringify": "1.0.1",
-    "lodash": "4.17.4",
+    "lodash": "4.17.11",
     "md5": "2.2.1",
     "node-fetch": "1.7.3",
     "qs": "6.5.1",
