@@ -1868,13 +1868,13 @@ const getBaseProjectSchema = (title, identifier) => {
                         identifier: '4',
                         isArithmetic: true,
                         measureIdentifiers: ['m3', 'm2'],
-                        operator: 'sum',
-                        title: 'Arithmetic using arithmetic'
+                        operator: 'sum'
                     }, {
                         localIdentifier: 'm1',
                         filters: [],
                         identifier: '1',
-                        title: 'Amount'
+                        title: 'Amount',
+                        alias: 'Renamed Amount'
                     },{
                         localIdentifier: 'm3',
                         filters: [],
@@ -1882,7 +1882,7 @@ const getBaseProjectSchema = (title, identifier) => {
                         isArithmetic: true,
                         measureIdentifiers: ['m1', 'm2'],
                         operator: 'sum',
-                        title: 'Arithmetic using simple'
+                        alias: 'Arithmetic using simple'
                     }, {
                         localIdentifier: 'm2',
                         filters: [],

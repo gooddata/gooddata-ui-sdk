@@ -16,6 +16,15 @@ describe('measureTitleHelper', () => {
     describe('fillMissingTitles', () => {
         const locale = 'en-US';
 
+        function getTitleOfMeasure(visualizationObject: IVisualizationObjectContent, localIdentifier: string): string {
+            const measureBucketItems = visualizationObject.buckets[0].items;
+            const matchingMeasure: IMeasure = measureBucketItems
+                .map(bucketItem => bucketItem as IMeasure)
+                .find(bucketItem => bucketItem.measure.localIdentifier === localIdentifier);
+
+            return matchingMeasure === undefined ? undefined : matchingMeasure.measure.title;
+        }
+
         it('should set title of derived measures based on master title when master is NOT renamed', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Over time comparison');
             const result = fillMissingTitles(visualizationObjectContent, locale);
@@ -125,6 +134,17 @@ describe('measureTitleHelper', () => {
             );
         });
 
+        it('should ignore title attribute when it is included in derived / arithmetic measure (computed title)', () => {
+            const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic and derived measures');
+            const result = fillMissingTitles(visualizationObjectContent, locale);
+
+            expect(getTitleOfMeasure(result, 'am1'))
+                .toEqual('Sum of AD Accounts and AD Accounts - SP year ago');
+
+            expect(getTitleOfMeasure(result, 'm1_pop'))
+                .toEqual('AD Accounts - SP year ago');
+        });
+
         it('should set title of derived based on master title even when it is located in a different bucket', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Headline over time comparison');
             const result = fillMissingTitles(visualizationObjectContent, locale);
@@ -186,15 +206,6 @@ describe('measureTitleHelper', () => {
             );
         });
 
-        function getTitleOfMeasure(visualizationObject: IVisualizationObjectContent, localIdentifier: string): string {
-            const measureBucketItems = visualizationObject.buckets[0].items;
-            const matchingMeasure: IMeasure = measureBucketItems
-                .map(bucketItem => bucketItem as IMeasure)
-                .find(bucketItem => bucketItem.measure.localIdentifier === localIdentifier);
-
-            return matchingMeasure === undefined ? undefined : matchingMeasure.measure.title;
-        }
-
         it('should set correct titles to arithmetic measures in simple tree', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic measures tree');
             const result = fillMissingTitles(visualizationObjectContent, locale);
@@ -232,6 +243,9 @@ describe('measureTitleHelper', () => {
             expect(getTitleOfMeasure(result, 'arithmetic_measure_created_from_arithmetic_measures'))
                 .toEqual('Sum of Sum of AD Queries and KD Queries and Sum of Renamed SP last year M1 and ' +
                     'Renamed previous period M1');
+
+            expect(getTitleOfMeasure(result, 'derived_measure_from_arithmetic_measure'))
+                .toEqual('Sum of # Accounts with AD Query and # Accounts with KD Query - SP year ago');
 
             expect(getTitleOfMeasure(result, 'invalid_arithmetic_measure_with_missing_dependency'))
                 .toBeUndefined();
