@@ -3,6 +3,7 @@ import get = require('lodash/get');
 import { VisualizationClass } from '@gooddata/typings';
 import { SDK, IFeatureFlags } from '@gooddata/gooddata-js';
 import { VisualizationTypes, VisType } from '../constants/visualizationTypes';
+import { getCachedOrLoad } from './sdkCache';
 
 export function getVisualizationTypeFromUrl(url: string): VisType {
     // known types follow local:<type> pattern
@@ -23,7 +24,9 @@ export function getVisualizationTypeFromVisualizationClass(
     const type: VisType = getVisualizationTypeFromUrlImpl(get(visualizationClass, ['content', 'url'], ''));
     // in case of table, also check featureFlags if we need to switch to 'pivotTable'
     if (type === 'table') {
-        return sdk.project.getFeatureFlags(projectId).then(
+        const apiCallIdentifier = `getFeatureFlags.${projectId}`;
+        const loader = (): Promise<IFeatureFlags> => sdk.project.getFeatureFlags(projectId);
+        return getCachedOrLoad(apiCallIdentifier, loader).then(
             (featureFlags: IFeatureFlags) => {
                 const isPivotTableEnabled = featureFlags.enablePivot;
                 return isPivotTableEnabled ? 'pivotTable' : type;

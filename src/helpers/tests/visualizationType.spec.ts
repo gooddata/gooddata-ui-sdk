@@ -2,6 +2,7 @@
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import { getVisualizationTypeFromVisualizationClass, getVisualizationTypeFromUrl } from '../visualizationType';
 import { factory as createSdk, SDK } from '@gooddata/gooddata-js';
+import { clearSdkCache } from '../sdkCache';
 
 describe('getVisualizationTypeFromUrl', () => {
     it('should be undefined if uri leads to external src', () => {
@@ -59,6 +60,10 @@ describe('getVisualizationTypeFromVisualizationClass', () => {
             checksum: 'local:table'
         }
     };
+
+    afterEach(() => {
+        clearSdkCache();
+    });
 
     it('should return correct type when url is local:pie', () => {
         const getVisualizationTypeFromUrlMock = jest.fn();
