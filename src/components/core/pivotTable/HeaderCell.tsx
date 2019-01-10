@@ -70,13 +70,18 @@ export default class HeaderCell extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { menuPosition } = this.props;
+        const { menuPosition, className } = this.props;
 
         return (
             <div
-                className={classNames('gd-pivot-table-header', 's-pivot-table-header', {
-                    'gd-pivot-table-header--open': this.state.isMenuButtonVisible
-                })}
+                className={classNames(
+                    'gd-pivot-table-header',
+                    's-pivot-table-header',
+                    {
+                        'gd-pivot-table-header--open': this.state.isMenuButtonVisible
+                    },
+                    className
+                )}
                 onMouseEnter={this.onMouseEnter}
                 onMouseLeave={this.onMouseLeave}
             >
