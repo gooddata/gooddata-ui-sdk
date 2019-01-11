@@ -58,5 +58,6 @@
    "visualizations.legend.text.top": "Haut :",
    "visualizations.legend.text.bottom": "Bas :",
    "visualizations.legend.text.left": "Gauche :",
-   "visualizations.legend.text.right": "Droite :"
+   "visualizations.legend.text.right": "Droite :",
+   "visualizations.menu.aggregations": "Agrégations"
 }
