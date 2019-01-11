@@ -14,6 +14,7 @@ const treemapModule = require('highcharts/modules/treemap'); // tslint:disable-l
 const funnelModule = require('highcharts/modules/funnel'); // tslint:disable-line
 const heatmap = require('highcharts/modules/heatmap'); // tslint:disable-line
 const patternFill = require('highcharts-pattern-fill'); // tslint:disable-line
+const groupedCategories = require('highcharts-grouped-categories'); // tslint:disable-line
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
@@ -21,6 +22,7 @@ funnelModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);
 patternFill(Highcharts);
+groupedCategories(Highcharts);
 initChartPlugins(Highcharts);
 
 export interface IChartProps {

@@ -83,7 +83,8 @@ export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
         : chartOptions.data.series;
 
     let pickedProps = ['name', 'color', 'legendIndex'];
-    if (isOneOfTypes(type, supportedDualAxesChartTypes) && !isStackedChart(chartOptions)) {
+    if (isOneOfTypes(type, supportedDualAxesChartTypes)) {
+        // 'yAxis' helps to distinguish primary and secondary axes
         pickedProps = [...pickedProps, 'yAxis'];
     }
 

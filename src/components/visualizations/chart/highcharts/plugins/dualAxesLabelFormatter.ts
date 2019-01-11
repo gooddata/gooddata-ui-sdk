@@ -101,6 +101,14 @@ export function dualAxesLabelFormatter() {
     const tickPositions: number[] = get(this, 'axis.tickPositions', []);
     this.value = formatLabel(this.value, tickPositions);
 
+    const stackMeasuresToPercent = get(this, 'chart.userOptions.stackMeasuresToPercent', false);
+    if (stackMeasuresToPercent) {
+        const opposite = get(this, 'axis.opposite', false);
+        if (opposite === false) {
+            return formatAsPercent.call(this, 1);
+        }
+    }
+
     const format = get(this, 'axis.userOptions.defaultFormat', '');
     const isPercent = isInPercent(format);
 

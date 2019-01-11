@@ -7,7 +7,7 @@ import { getMappingHeaderLocalIdentifier } from './mappingHeader';
 
 export function findInDimensionHeaders(dimensions: Execution.IResultDimension[], headerCallback: Function): any {
     let returnValue: any = null;
-    dimensions.some((dimension: any, dimensionIndex: any) => {
+    dimensions.some((dimension: any, dimensionIndex: number) => {
         dimension.headers.some(
             (wrappedHeader: Execution.IMeasureGroupHeader | Execution.IAttributeHeader, headerIndex: number) => {
                 const headerType = Object.keys(wrappedHeader)[0];
@@ -42,8 +42,12 @@ export function findAttributeInDimension(
     indexInDimension?: number
 ): IUnwrappedAttributeHeadersWithItems {
     return findInDimensionHeaders(
-        [dimension],
-        (headerType: any, header: any, _dimensionIndex: number, headerIndex: number) => {
+        [dimension], (
+            headerType: string,
+            header: Execution.IAttributeHeader['attributeHeader'],
+            _dimensionIndex: number,
+            headerIndex: number
+        ) => {
             if (headerType === 'attributeHeader'
                 && (indexInDimension === undefined || indexInDimension === headerIndex)) {
                 return {

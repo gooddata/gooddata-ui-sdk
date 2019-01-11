@@ -108,6 +108,7 @@
     "custom-event": "^1.0.1",
     "fixed-data-table-2": "0.7.17",
     "highcharts": "4.2.5",
+    "highcharts-grouped-categories": "^1.1.3",
     "highcharts-pattern-fill": "3.0.3",
     "http-status-codes": "^1.3.0",
     "invariant": "^2.2.2",

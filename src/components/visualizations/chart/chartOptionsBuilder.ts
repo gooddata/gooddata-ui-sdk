@@ -52,7 +52,10 @@ import {
     HEATMAP_DATA_POINTS_LIMIT,
     PIE_CHART_LIMIT,
     STACK_BY_DIMENSION_INDEX,
-    VIEW_BY_DIMENSION_INDEX
+    VIEW_BY_ATTRIBUTES_LIMIT,
+    VIEW_BY_DIMENSION_INDEX,
+    PARENT_ATTRIBUTE_INDEX,
+    PRIMARY_ATTRIBUTE_INDEX
 } from './constants';
 
 import {
@@ -62,6 +65,7 @@ import {
 } from './highcharts/commonConfiguration';
 import { getChartProperties } from './highcharts/helpers';
 import { isDataOfReasonableSize } from './highChartsCreators';
+import { NORMAL_STACK, PERCENT_STACK } from './highcharts/getOptionalStackingConfiguration';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
@@ -102,6 +106,11 @@ export const supportedDualAxesChartTypes = [
     VisualizationTypes.LINE
 ];
 
+export const supportedStackingAttributesChartTypes = [
+    VisualizationTypes.COLUMN,
+    VisualizationTypes.BAR
+];
+
 export interface IAxis {
     label: string;
     format?: string;
@@ -129,6 +138,7 @@ export interface IChartOptions {
     stacking?: any;
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;
+    isViewByTwoAttributes?: boolean;
     legendLayout?: string;
     dualAxis?: boolean;
     xAxes?: any;
@@ -149,6 +159,10 @@ export interface IChartOptions {
 export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader['attributeHeader'] & {
     items: Execution.IResultAttributeHeaderItem[];
 };
+
+export interface IViewByTwoAttributes {
+    items: Execution.IResultHeaderItem[];
+}
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
@@ -267,13 +281,18 @@ export interface IPointData {
     parent?: string;
 }
 
+// since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
+export interface ICategory {
+    name: string;
+}
+
 export interface IPoint {
     x?: number;
     y: number;
     z?: number;
     value?: number;
     series: ISeriesItem;
-    category?: string;
+    category?: ICategory;
     format?: string;
     name?: string;
     id?: string;
@@ -284,8 +303,8 @@ export function getSeriesItemData(
     seriesItem: string[],
     seriesIndex: number,
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy
 ) {
@@ -512,8 +531,8 @@ function isLastSerie(seriesIndex: number, dataLength: number) {
 export function getTreemapStackedSeriesDataWithViewBy(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy
 ): any[] {
     const roots: any = [];
@@ -601,8 +620,8 @@ export function getTreemapStackedSeriesDataWithMeasures(
 export function getTreemapStackedSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy
 ) {
     let data = [];
@@ -639,8 +658,8 @@ export function getTreemapStackedSeries(
 export function getSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any,
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorStrategy: IColorStrategy
@@ -703,7 +722,11 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-export function generateTooltipFn(viewByAttribute: any, type: string, config: IChartConfig = {}) {
+export function generateTooltipFn(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    type: string,
+    config: IChartConfig = {}
+) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(numberFormat(val, format, undefined, separators));
@@ -716,7 +739,12 @@ export function generateTooltipFn(viewByAttribute: any, type: string, config: IC
         if (viewByAttribute) {
             // For some reason, highcharts ommit categories for pie charts with attribute. Use point.name instead.
             // use attribute name instead of attribute display form name
-            textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(point.category || point.name)]);
+            textData.unshift([
+                customEscape(viewByAttribute.formOf.name),
+                // since applying 'grouped-categories' plugin,
+                // 'category' type is replaced from string to object in highchart
+                customEscape(point.category && point.category.name || point.name)
+            ]);
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
             textData[0][0] = customEscape(point.name);
@@ -731,7 +759,11 @@ export function generateTooltipFn(viewByAttribute: any, type: string, config: IC
     };
 }
 
-export function generateTooltipXYFn(measures: any, stackByAttribute: any, config: IChartConfig = {}) {
+export function generateTooltipXYFn(
+    measures: any,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {}
+) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(numberFormat(val, format, undefined, separators));
@@ -769,7 +801,11 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any, config
     };
 }
 
-export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+export function generateTooltipHeatmapFn(
+    viewByAttribute: any,
+    stackByAttribute: any,
+    config: IChartConfig = {}
+) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
@@ -833,7 +869,7 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
             ]);
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
-            textData.push([customEscape(point.category), formattedValue]);
+            textData.push([customEscape(point.category && point.category.name), formattedValue]);
         }
 
         return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
@@ -1035,11 +1071,20 @@ export function getDrillableSeries(
     });
 }
 
+export function getDistinctAttributeHeaderName(result: string[], item: Execution.IResultAttributeHeaderItem): string[] {
+    const { attributeHeaderItem: { name } } = item;
+    if (!includes(result, name)) {
+        result.push(name);
+    }
+    return result;
+}
+
 function getCategories(
     type: string,
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any, stackByAttribute: any
-    ) {
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems
+) {
     if (isHeatmap(type)) {
         return [
             viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
@@ -1064,9 +1109,22 @@ function getCategories(
     return [];
 }
 
-function getStackingConfig(stackByAttribute: any, options: any) {
-    const stackingValue = 'normal';
-    const { type, stacking } = options;
+export function getCategoriesForTwoAttributes(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByTwoAttributes: IViewByTwoAttributes
+) {
+    const insideAttributes  = viewByAttribute.items.reduce(getDistinctAttributeHeaderName, []);
+    const outsideAttributes = viewByTwoAttributes.items.reduce(getDistinctAttributeHeaderName, []);
+
+    return outsideAttributes.map((outsideAttribute: string) => ({
+        name: outsideAttribute,
+        categories: insideAttributes
+    }));
+}
+
+function getStackingConfig(stackByAttribute: any, options: IChartConfig): string {
+    const { type, stacking, stackMeasures, stackMeasuresToPercent } = options;
+    const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
 
     const supportsStacking = !(isOneOfTypes(type, unsupportedStackingTypes));
 
@@ -1074,10 +1132,11 @@ function getStackingConfig(stackByAttribute: any, options: any) {
      * we should enable stacking for one of the following cases :
      * 1) If stackby attibute have been set and chart supports stacking
      * 2) If chart is an area chart and stacking is enabled (stackBy attribute doesn't matter)
+     * 3) If chart is column or bar chart and 'Stack Measures' is enabled
      */
     const isStackByChart = stackByAttribute && supportsStacking;
     const isAreaChartWithEnabledStacking = isAreaChart(type) && enableAreaChartStacking(stacking);
-    if (isStackByChart || isAreaChartWithEnabledStacking) {
+    if (isStackByChart || isAreaChartWithEnabledStacking || stackMeasures || stackMeasuresToPercent) {
         return stackingValue;
     }
 
@@ -1104,7 +1163,7 @@ function preprocessMeasureGroupItems(
 function getXAxes(
     config: IChartConfig,
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: any
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems
     ): IAxis[] {
     const { type, mdObject } = config;
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
@@ -1428,8 +1487,10 @@ export function getChartOptions(
 
     const { type, mdObject } = config;
     const { dimensions } = executionResponse;
-    let viewByAttribute;
-    let stackByAttribute;
+    const isViewByTwoAttributes = attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
+    let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
+    let stackByAttribute: IUnwrappedAttributeHeadersWithItems;
+    let viewByTwoAttributes: IViewByTwoAttributes;
 
     if (isTreemap(type)) {
         const {
@@ -1445,12 +1506,17 @@ export function getChartOptions(
     } else {
         viewByAttribute = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
-            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+            isViewByTwoAttributes ? PRIMARY_ATTRIBUTE_INDEX : undefined
         );
         stackByAttribute = findAttributeInDimension(
             dimensions[STACK_BY_DIMENSION_INDEX],
             attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
         );
+    }
+
+    if (isViewByTwoAttributes) {
+        viewByTwoAttributes = { items: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX] };
     }
 
     const colorStrategy = ColorFactory.getColorStrategy(
@@ -1491,7 +1557,9 @@ export function getChartOptions(
 
     const series = assignYAxes(drillableSeries, yAxes);
 
-    let categories = getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
+    let categories = viewByTwoAttributes ?
+                        getCategoriesForTwoAttributes(viewByAttribute, viewByTwoAttributes) :
+                        getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order
     if (isOneOfTypes(type, sortedByMeasureTypes)) {
@@ -1689,7 +1757,8 @@ export function getChartOptions(
         secondary_xAxisProps,
         secondary_yAxisProps,
         colorAssignments,
-        colorPalette
+        colorPalette,
+        isViewByTwoAttributes
     };
 
     return chartOptions;

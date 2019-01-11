@@ -9,6 +9,7 @@ import { CUSTOM_COLORS } from '../data/colors';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_2,
+    ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
@@ -329,7 +330,7 @@ storiesOf('Core components/BarChart', module)
             </div>
         )
     ))
-    .add('dual axes with two bottom measures, one top measure, one attribute', () => (
+    .add('dual axis with two bottom measures, one top measure, one attribute', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BarChart
@@ -457,4 +458,233 @@ storiesOf('Core components/BarChart', module)
                 />
             </div>
         )
-    ));
+    ))
+    .add('optional stacking chart with two bottom measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{yaxis: {
+                        rotation: '0'
+                    }}}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with two top measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with 60-degree rotation setting on X axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        yaxis: {
+                            rotation: '60'
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with hide-axis setting on X axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        yaxis: {
+                            visible: false
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with stacking attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    stackBy={ATTRIBUTE_3}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with \'Stack Measures\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        stackMeasures: true
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with \'Stack to 100%\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        stackMeasuresToPercent: true
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with \'Stack to 100%\' on top axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        stackMeasuresToPercent: true,
+                        secondary_xaxis: {
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with dual axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_2.measure.localIdentifier]
+                        }
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with dual axis and \'Stack Measures\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_3.measure.localIdentifier]
+                        },
+                        stackMeasures: true
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with dual axis and \'Stack to 100%\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_3.measure.localIdentifier]
+                        },
+                        stackMeasuresToPercent: true
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with dual axis and \'Stack to 100%\' with min/max', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        xaxis: {
+                            min: '0.1',
+                            max: '0.9'
+                        },
+                        secondary_xaxis: {
+                            min: '200',
+                            max: '800',
+                            measures: [MEASURE_3.measure.localIdentifier]
+                        },
+                        stackMeasuresToPercent: true
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    ;
