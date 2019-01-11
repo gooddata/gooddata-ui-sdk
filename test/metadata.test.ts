@@ -1,6 +1,7 @@
 // (C) 2007-2014 GoodData Corporation
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
+import { VisualizationObject } from '@gooddata/typings';
 
 import { range, find } from 'lodash';
 import { mockPollingRequest } from './helpers/polling';
@@ -838,6 +839,42 @@ describe('metadata', () => {
                 });
             });
 
+            it('should translate properties using references', () => {
+                const uris = ['/gdc/md/123/obj/456'];
+                const serverResponses = [
+                    { visualizationObject: {
+                         content: { properties: '{"foo":"id_0"}', references: { id_0: '/gdc/md/123/obj/45678' } } }
+                    }
+                ];
+                const expectedResponses = [
+                    {
+                        visualizationObject: {
+                            content: {
+                                properties: '{"foo":"/gdc/md/123/obj/45678"}',
+                                references: { id_0: '/gdc/md/123/obj/45678' }
+                            }
+                        }
+                    }
+                ];
+
+                fetchMock.mock(
+                    getUri,
+                    { status: 200, body: JSON.stringify({ objects: { items: serverResponses } }) }
+                );
+
+                return createMd().getObjects(projectId, uris).then((result: any) => {
+                    const request = fetchMock.lastOptions(getUri) as RequestInit;
+
+                    expect(JSON.parse(request.body!.toString())).toEqual({
+                        get: {
+                            items: uris
+                        }
+                    });
+
+                    expect(result).toEqual(expectedResponses);
+                });
+            });
+
             it('should return rejected promise if 400 returned from backend', () => {
                 const { uris } = generateUrisAndResponse(projectId, 5);
                 fetchMock.mock(getUri, { status: 400, body: JSON.stringify({}) });
@@ -1056,6 +1093,79 @@ describe('metadata', () => {
                             }
                         });
                     });
+            });
+        });
+
+        describe('getVisualization', () => {
+            it('should return visualization with properties translated', () => {
+                const uri = '/gdc/md/123/obj/456';
+                const serverResponse = {
+                    visualizationObject: {
+                        content: { properties: '{"foo":"id_0"}', references: { id_0: '/gdc/md/123/obj/45678' } }
+                    }
+                };
+                const expectedResponse = {
+                    visualizationObject: {
+                        content: {
+                            properties: '{"foo":"/gdc/md/123/obj/45678"}',
+                            references: { id_0: '/gdc/md/123/obj/45678' }
+                        }
+                    }
+                };
+
+                fetchMock.mock(
+                    uri,
+                    { status: 200, body: JSON.stringify(serverResponse) }
+                );
+
+                return createMd().getVisualization(uri).then((result) => {
+                    expect(result).toEqual(expectedResponse);
+                });
+            });
+        });
+
+        describe('saveVisualization', () => {
+            it('should send visualization with properties translated', () => {
+                const uri = '/gdc/md/123/obj/456';
+                const inputObject: VisualizationObject.IVisualization = {
+                    visualizationObject: {
+                        content: {
+                            buckets: [],
+                            properties: '{"foo":"/gdc/md/123/obj/45678"}',
+                            references: { id_0: '/gdc/md/123/obj/45678' },
+                            visualizationClass: {
+                                uri: 'foo'
+                            }
+                        },
+                        meta: {
+                            title: 'foo'
+                        }
+                    }
+                };
+                const sentObject: VisualizationObject.IVisualization = {
+                    visualizationObject: {
+                        content: {
+                            buckets: [],
+                            properties: '{"foo":"id_0"}',
+                            references: { id_0: '/gdc/md/123/obj/45678' },
+                            visualizationClass: {
+                                uri: 'foo'
+                            }
+                        },
+                        meta: {
+                            title: 'foo'
+                        }
+                    }
+                };
+
+                fetchMock.mock(
+                    '/gdc/md//gdc/md/123/obj/456/obj?createAndGet=true',
+                    { status: 200 }
+                );
+
+                return createMd().saveVisualization(uri, inputObject).then(() => {
+                    expect(JSON.parse((fetchMock.lastCall()[1] as any).body)).toEqual(sentObject);
+                });
             });
         });
     });

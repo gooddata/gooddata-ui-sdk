@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
+// (C) 2007-2019 GoodData Corporation
+import { VisualizationObject, AFM } from '@gooddata/typings';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -275,4 +275,33 @@ export interface IExportConfig {
 
 export interface IExportResponse {
     uri: string;
+}
+
+export type GuidType = 'guid';
+export type RGBType = 'rgb';
+
+export interface IGuidColorItem {
+    type: GuidType;
+    value: string;
+}
+
+export interface IRGBColorItem {
+    type: RGBType;
+    value: IColor;
+}
+
+export type IColorItem = IGuidColorItem | IRGBColorItem;
+
+export interface IColorMappingProperty {
+    id: string;
+    color: IColorItem;
+}
+
+export interface IPropertiesControls {
+    colorMapping?: IColorMappingProperty[];
+}
+
+export interface IProperties {
+    controls?: IPropertiesControls;
+    sortItems?: AFM.SortItem[];
 }
