@@ -22,6 +22,10 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
 @import '~ag-grid/src/styles/ag-theme-balham';
 
 .gd-table {
+    .ag-root-wrapper {
+        text-align: left;
+    }
+
     .ag-root {
         border: none;
     }
