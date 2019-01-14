@@ -161,20 +161,24 @@ export default class HeaderCell extends React.Component<IProps, IState> {
             const checked = turnedOnTotals.includes(type);
 
             return (
-                <Item
-                    // Performance impact of this lambda is negligible
-                    // tslint:disable-next-line: jsx-no-lambda
-                    onClick={() => this.menuItemClick({
-                        type,
-                        measureIdentifiers: localIdentifiers,
-                        attributeIdentifier: rowAttributeHeaders[0].attributeHeader.localIdentifier,
-                        include: !checked
-                    })}
-                    checked={checked}
+                <div
+                    className={'s-menu-aggregation-' + type}
                     key={type}
                 >
-                    {this.props.intl.formatMessage({ id: `visualizations.totals.dropdown.title.${type}` })}
-                </Item>
+                    <Item
+                        // Performance impact of this lambda is negligible
+                        // tslint:disable-next-line: jsx-no-lambda
+                        onClick={() => this.menuItemClick({
+                            type,
+                            measureIdentifiers: localIdentifiers,
+                            attributeIdentifier: rowAttributeHeaders[0].attributeHeader.localIdentifier,
+                            include: !checked
+                        })}
+                        checked={checked}
+                    >
+                        {this.props.intl.formatMessage({ id: `visualizations.totals.dropdown.title.${type}` })}
+                    </Item>
+                </div>
             );
         });
 

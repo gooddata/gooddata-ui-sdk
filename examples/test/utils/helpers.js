@@ -101,3 +101,7 @@ export const loginUsingLoginForm = (redirectUri = '/', retryCount = 2) => async 
         }
     );
 };
+
+export const waitForPivotTableStopLoading = async (t) => {
+    await t.expect(Selector('.s-pivot-table .s-loading').exists).notOk();
+};
