@@ -86,6 +86,7 @@
     "styled-jsx": "2.2.1",
     "supertest": "3.0.0",
     "testcafe": "0.20.3",
+    "testcafe-live": "0.1.4",
     "ts-jest": "21.2.4",
     "typescript": "2.3.3",
     "uglifyjs-webpack-plugin": "1.2.0",
@@ -148,6 +149,7 @@
     "examples-build": "bash scripts/build-examples.sh",
     "examples-server": "node examples/server/src/index.js",
     "examples-testcafe": "testcafe chrome --assertion-timeout 60000 -S -s examples/_screenshots examples/test/**/**/*_test* --debug-on-fail",
+    "examples-testcafe-live": "testcafe-live chrome --assertion-timeout 60000 examples/test/**/**/*_test*",
     "examples-testcafe-ci": "testcafe 'chrome:headless --no-sandbox' --assertion-timeout 60000 -S -s examples/_screenshots examples/test/**/**/*_test*",
     "heroku-postbuild": "yarn examples-build developer"
   },

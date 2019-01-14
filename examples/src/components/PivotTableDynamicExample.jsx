@@ -266,6 +266,19 @@ const menuPresets = {
     }
 };
 
+const pivotTableSizePresets = {
+    default: {
+        label: 'Default',
+        key: 'default',
+        styles: { width: '100%', height: 300 }
+    },
+    wide: {
+        label: 'Wide',
+        key: 'wide',
+        styles: { width: 1500, height: 500 }
+    }
+};
+
 export const getDrillableItems = (drillableKeys) => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
@@ -297,7 +310,8 @@ export class PivotTableDrillingExample extends Component {
             drillableItems: getDrillableItems(drillingPresetKeys),
             totalPresetKeys: {},
             sortingPresetKey: 'noSort',
-            menuPresetKey: 'noMenu'
+            menuPresetKey: 'noMenu',
+            pivotTableSizeKey: 'default'
         };
     }
 
@@ -344,6 +358,11 @@ export class PivotTableDrillingExample extends Component {
             menuPresetKey
         });
     }
+    onPivotTableSizeChange = (pivotTableSizeKey) => {
+        this.setState({
+            pivotTableSizeKey
+        });
+    }
 
     onDrill = (drillEvent) => {
         // eslint-disable-next-line no-console
@@ -363,7 +382,8 @@ export class PivotTableDrillingExample extends Component {
             drillingPresetKeys,
             filterPresetKeys,
             totalPresetKeys,
-            menuPresetKey
+            menuPresetKey,
+            pivotTableSizeKey
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
@@ -484,9 +504,31 @@ export class PivotTableDrillingExample extends Component {
                         })
                     }
                 </div>
+                <div className="presets">
+                    Pivot table size: {
+                        Object.keys(pivotTableSizePresets).map((presetItemKey) => {
+                            const { key, label } = pivotTableSizePresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${pivotTableSizeKey === key ? ' is-active' : ''}`}
+                                onClick={this.onPivotTableSizeChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
 
-                <div style={{ height: 300 }} className={`s-pivot-table-${bucketPresetKey}`} >
+                <div
+                    className={`s-pivot-table-${bucketPresetKey}`}
+                    style={pivotTableSizePresets[pivotTableSizeKey].styles}
+                >
                     <PivotTable
+                        // Table components are completely reseted because they
+                        // heavily use JS to compute dimensions and when we just
+                        // change style prop they did not rerender with correct
+                        // width. To get around this problem we completely
+                        // reset both table components.
+                        key={pivotTableSizeKey}
                         projectId={projectId}
                         pageSize={20}
                         {...bucketPropsWithFilters}
@@ -500,9 +542,11 @@ export class PivotTableDrillingExample extends Component {
                         totals={totals}
                     />
                 </div>
+
                 <h2>Table component for reference</h2>
-                <div style={{ height: 300 }} >
+                <div style={{ height: 300 }}>
                     <Table
+                        key={pivotTableSizeKey}
                         projectId={projectId}
                         {...tableBucketProps}
                         {...filtersProp}
@@ -512,6 +556,7 @@ export class PivotTableDrillingExample extends Component {
                         totals={totals}
                     />
                 </div>
+
                 <pre className="s-output">
                     {JSON.stringify(drillEvent || {
                         ...bucketPropsWithFilters,
