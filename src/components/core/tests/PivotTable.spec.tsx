@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import noop = require('lodash/noop');
 import cloneDeep = require('lodash/cloneDeep');
@@ -174,6 +175,24 @@ describe('PivotTable', () => {
                     },
                     id: 'franchiseFeesAdRoyaltyIdentifier',
                     title: '$ Franchise Fees (Ad Royalty)'
+                }
+            ]);
+        });
+
+        // tslint:disable-next-line:max-line-length
+        it('should return intersection without header property when measure has neither uri nor identifier (arithmetic measure)', async () => {
+            const drillItems: IMappingHeader[] = [{
+                measureHeaderItem: {
+                    localIdentifier: 'am1',
+                    name: 'Arithmetic measure',
+                    format: ''
+                }
+            }];
+            const intersection = getDrillIntersection(drillItems, afm);
+            expect(intersection).toEqual([
+                {
+                    id: 'am1',
+                    title: 'Arithmetic measure'
                 }
             ]);
         });

@@ -358,15 +358,23 @@ export const getDrillIntersection = (
         const identifier = uriAndIdentifier && uriAndIdentifier.identifier || headerIdentifier;
         const id = headerLocalIdentifier || headerIdentifier;
 
-        return {
+        const intersection: IDrillEventIntersectionElement = {
             // Properties default to empty strings to maintain compatibility
             id,
-            title: getMappingHeaderName(drillItem),
-            header: {
-                uri,
-                identifier
-            }
+            title: getMappingHeaderName(drillItem)
         };
+
+        if (uri || identifier) {
+            return {
+                ...intersection,
+                header: {
+                    uri,
+                    identifier
+                }
+            };
+        }
+
+        return intersection;
     });
 };
 
