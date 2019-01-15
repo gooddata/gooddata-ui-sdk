@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import React, { Component } from 'react';
 import { ComboChart, Model } from '@gooddata/react-components';
 
@@ -25,15 +25,15 @@ export class ComboChartExample extends Component {
 
     render() {
         const columnMeasures = [
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .format('#,##0')
-                .localIdentifier('franchiseFeesAdRoyaltyIdentifier')
-        ];
-
-        const lineMeasures = [
             Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
                 .format('#,##0')
                 .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier')
+        ];
+
+        const lineMeasures = [
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesAdRoyaltyIdentifier')
         ];
 
         const locationResort = Model.attribute(locationResortIdentifier)
@@ -43,8 +43,8 @@ export class ComboChartExample extends Component {
             <div style={{ height: 300 }} className="s-combo-chart">
                 <ComboChart
                     projectId={projectId}
-                    columnMeasures={columnMeasures}
-                    lineMeasures={lineMeasures}
+                    primaryMeasures={columnMeasures}
+                    secondaryMeasures={lineMeasures}
                     viewBy={locationResort}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}

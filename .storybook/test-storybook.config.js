@@ -84,6 +84,11 @@ const configuration = {
             'with table totals and supplied height of container': {
                 readySelector: '.screenshot-ready-wrapper-done'
             }
+        },
+        'Internal/Drilldown': {
+            'Combo chart with onFiredDrillEvent': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            }
         }
     }
 };

@@ -2,11 +2,12 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
-import LegendList, { LegendAxisIndicatorWrapped, LegendSeparator } from '../LegendList';
+import LegendList, { LegendSeparator } from '../LegendList';
 import { transformToDualAxesSeries } from '../helpers';
 import { withIntl } from '../../../utils/intlUtils';
 import LegendItem from '../LegendItem';
 import noop = require('lodash/noop');
+import { LegendAxisIndicator } from '../LegendAxisIndicator';
 
 describe('LegendList', () => {
     function render(customProps: any = {}) {
@@ -53,7 +54,7 @@ describe('LegendList', () => {
 
         expect(wrapper.find(LegendItem)).toHaveLength(3);
         expect(wrapper.find(LegendSeparator)).toHaveLength(1);
-        expect(wrapper.find(LegendAxisIndicatorWrapped)).toHaveLength(2);
+        expect(wrapper.find(LegendAxisIndicator)).toHaveLength(2);
     });
     it('should render only legend items', () => {
         const series = transformToDualAxesSeries([
@@ -83,6 +84,6 @@ describe('LegendList', () => {
 
         expect(wrapper.find(LegendItem)).toHaveLength(3);
         expect(wrapper.find(LegendSeparator)).toHaveLength(0);
-        expect(wrapper.find(LegendAxisIndicatorWrapped)).toHaveLength(0);
+        expect(wrapper.find(LegendAxisIndicator)).toHaveLength(0);
     });
 });

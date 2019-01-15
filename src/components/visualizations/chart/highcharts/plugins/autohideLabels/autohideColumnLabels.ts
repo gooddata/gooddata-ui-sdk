@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import map = require('lodash/map');
 import zip = require('lodash/zip');
 import values = require('lodash/values');
@@ -22,7 +22,8 @@ import {
     hideDataLabel,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-    getShapeVisiblePart
+    getShapeVisiblePart,
+    hasShape
 } from '../../dataLabelsHelpers';
 
 const toggleNonStackedChartLabels = (
@@ -31,7 +32,9 @@ const toggleNonStackedChartLabels = (
     shouldCheckShapeIntersection: boolean = false) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
-        visiblePoints.filter(hasDataLabel)
+        visiblePoints.filter((point: any) => {
+            return hasDataLabel(point) && hasShape(point);
+        })
     ).some((pointPair) => {
         const [firstPoint, nextPoint]: any[] = pointPair || [];
         const firstDataLabelAttr = getDataLabelAttributes(firstPoint);

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,
@@ -10,8 +10,14 @@ import {
     buildHeatmapLabelsConfig,
     heatmapLegendConfigMatrix,
     heatmapSmallLegendConfigMatrix,
-    verticalHeatmapConfig
+    verticalHeatmapConfig,
+    getComboChartSeries,
+    LEGEND_AXIS_INDICATOR,
+    LEGEND_SEPARATOR,
+    groupSeriesItemsByType
 } from '../helpers';
+import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
+import { ISeriesItem } from '../../../../../interfaces/Config';
 
 describe('helpers', () => {
     describe('calculateFluidLegend', () => {
@@ -298,6 +304,78 @@ describe('helpers', () => {
             }, 0);
 
             expect(width).toEqual(210);
+        });
+    });
+
+    describe('groupSeriesItemsByType', () => {
+        it('should group items which are having same chart type', () => {
+            const { COLUMN, LINE } = VisualizationTypes;
+            const series: ISeriesItem[] = [
+                { type: COLUMN, yAxis: 0, legendIndex: 0 },
+                { type: LINE, yAxis: 1, legendIndex: 2 },
+                { type: COLUMN, yAxis: 0, legendIndex: 1 }
+            ];
+
+            expect(groupSeriesItemsByType(series)).toEqual({
+                primaryItems: [series[0], series[2]],
+                secondaryItems: [series[1]]
+            });
+        });
+
+        it('should return empty groups when there is no series item', () => {
+            expect(groupSeriesItemsByType([])).toEqual({
+                primaryItems: [],
+                secondaryItems: []
+            });
+        });
+    });
+
+    describe('getComboChartSeries', () => {
+        const { COLUMN, LINE, COMBO } = VisualizationTypes;
+
+        it('should indicate which measure belongs to Column(Left) and Line(Right)', () => {
+            const series: ISeriesItem[] = [
+                { type: COLUMN, yAxis: 0, legendIndex: 0 },
+                { type: LINE, yAxis: 1, legendIndex: 1 }
+            ];
+
+            expect(getComboChartSeries(series)).toEqual([
+                { type: LEGEND_AXIS_INDICATOR, labelKey: COMBO, data: [COLUMN, 'left'] },
+                series[0],
+                { type: LEGEND_SEPARATOR },
+                { type: LEGEND_AXIS_INDICATOR, labelKey: COMBO, data: [LINE, 'right'] },
+                series[1]
+            ]);
+        });
+
+        it('should indicate which chart type of each measure when dual axis is off', () => {
+            const series: ISeriesItem[] = [
+                { type: COLUMN, yAxis: 0, legendIndex: 0 },
+                { type: LINE, yAxis: 0, legendIndex: 1 }
+            ];
+
+            expect(getComboChartSeries(series)).toEqual([
+                { type: LEGEND_AXIS_INDICATOR, labelKey: COLUMN },
+                series[0],
+                { type: LEGEND_SEPARATOR },
+                { type: LEGEND_AXIS_INDICATOR, labelKey: LINE },
+                series[1]
+            ]);
+        });
+
+        it('should transform to dual axis series when all measures have same chart type', () => {
+            const series: ISeriesItem[] = [
+                { type: COLUMN, yAxis: 0, legendIndex: 0 },
+                { type: COLUMN, yAxis: 1, legendIndex: 1 }
+            ];
+
+            expect(getComboChartSeries(series)).toEqual([
+                { type: LEGEND_AXIS_INDICATOR, labelKey: 'left' },
+                series[0],
+                { type: LEGEND_SEPARATOR },
+                { type: LEGEND_AXIS_INDICATOR, labelKey: 'right' },
+                series[1]
+            ]);
         });
     });
 });

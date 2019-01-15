@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as cx from 'classnames';
 import noop = require('lodash/noop');
 import isString = require('lodash/isString');
@@ -16,9 +16,9 @@ import pickBy = require('lodash/pickBy');
 import * as numberJS from '@gooddata/numberjs';
 
 import { styleVariables } from '../../styles/variables';
-import { IAxis, IChartOptions, supportedDualAxesChartTypes } from '../chartOptionsBuilder';
+import { IChartOptions, supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
-import { IDataLabelsVisible, IChartConfig } from '../../../../interfaces/Config';
+import { IDataLabelsVisible, IChartConfig, IAxis } from '../../../../interfaces/Config';
 import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import {

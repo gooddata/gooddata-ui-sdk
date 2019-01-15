@@ -1,12 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import partial = require('lodash/partial');
 import merge = require('lodash/merge');
 import includes = require('lodash/includes');
 import isNil = require('lodash/isNil');
 import set = require('lodash/set');
-import { IChartConfig } from '../../../../interfaces/Config';
+import { IAxis, IChartConfig } from '../../../../interfaces/Config';
 import {
-    IAxis,
     IChartOptions,
     supportedStackingAttributesChartTypes
 } from '../chartOptionsBuilder';

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
@@ -7,13 +7,13 @@ import cloneDeep = require('lodash/cloneDeep');
 
 import ChartTransformation from '../../src/components/visualizations/chart/ChartTransformation';
 import { VIEW_BY_DIMENSION_INDEX } from '../../src/components/visualizations/chart/constants';
+import { BASE_DUAL_AXIS_CHARTS } from '../data/dualAxis';
 
 import * as fixtures from '../test_data/fixtures';
 
 import { wrap } from '../utils/wrap';
 
 import '../../styles/scss/charts.scss';
-import { supportedDualAxesChartTypes } from '../../src/components/visualizations/chart/chartOptionsBuilder';
 
 storiesOf('Internal/HighCharts/ChartProperties', module)
     .add('Column chart without gridline', () => {
@@ -278,7 +278,7 @@ storiesOf('Internal/HighCharts/ChartProperties', module)
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
         return screenshotWrap(
             <div>
-                {supportedDualAxesChartTypes.map(type => wrap(
+                {BASE_DUAL_AXIS_CHARTS.map(type => wrap(
                     <ChartTransformation
                         config={{
                             type,

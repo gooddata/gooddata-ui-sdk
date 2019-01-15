@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import noop = require('lodash/noop');
 import { storiesOf } from '@storybook/react';
@@ -375,6 +375,23 @@ storiesOf('Internal/Visualization', module)
                         secondary_yaxis: {
                             rotation: '45',
                             measures: ['lostMetric', 'wonMetric', 'expectedMetric']
+                        }
+                    }}
+                    onDataTooLarge={noop}
+                />
+            )
+        );
+    })
+    .add('visualization combo chart with 2 measures, one attribute', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.comboWithTwoMeasuresAndViewByAttribute}
+                    config={{
+                        type: 'combo',
+                        mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                        secondary_yaxis: {
+                            measures: ['wonMetric']
                         }
                     }}
                     onDataTooLarge={noop}

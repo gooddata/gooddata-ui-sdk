@@ -1,32 +1,33 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import LegendItem from './LegendItem';
+import { LegendAxisIndicator } from './LegendAxisIndicator';
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from './helpers';
-import { injectIntl } from 'react-intl';
 
-const LegendAxisIndicator = ({ axis, width, intl }: any) => {
-    const style = width ? { width: `${width}px` } : {};
-    return (
-        <div style={style} className="series-axis-indicator">
-            <div className="series-text">
-                {intl.formatMessage({ id: `visualizations.legend.text.${axis}` })}
-            </div>
-        </div>
-    );
-};
-
-export const LegendAxisIndicatorWrapped = injectIntl(LegendAxisIndicator);
+export interface ILegendListProps {
+    series: any;
+    chartType: string;
+    width?: number;
+    onItemClick: (item: any) => void;
+}
 
 export const LegendSeparator = () => (<div className="legend-separator"/>);
 
-export default class LegendList extends React.PureComponent<any, any> {
+export default class LegendList extends React.PureComponent<ILegendListProps> {
     public render() {
-        const { series, chartType, onItemClick, width }: any = this.props;
+        const { series, chartType, onItemClick, width } = this.props;
         return (
             series.map((item: any, index: number) => {
-                const { type, axis } = item;
+                const { type, labelKey, data } = item;
                 if (type === LEGEND_AXIS_INDICATOR) {
-                    return (<LegendAxisIndicatorWrapped axis={axis} key={index} width={width}/>);
+                    return (
+                        <LegendAxisIndicator
+                            key={index}
+                            labelKey={labelKey}
+                            data={data}
+                            width={width}
+                        />
+                    );
                 } else if (type === LEGEND_SEPARATOR) {
                     return (<LegendSeparator key={index}/>);
                 } else {

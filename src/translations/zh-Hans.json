@@ -55,9 +55,11 @@
    "visualizations.measure.arithmetic.multiplication.title": "{firstMeasureTitle} 和 {secondMeasureTitle} 之积",
    "visualizations.measure.arithmetic.ratio.title": "{firstMeasureTitle} 和 {secondMeasureTitle} 之比",
    "visualizations.measure.arithmetic.change.title": "从 {secondMeasureTitle} 至 {firstMeasureTitle} 的变化",
-   "visualizations.legend.text.top": "顶部：",
-   "visualizations.legend.text.bottom": "底部：",
-   "visualizations.legend.text.left": "左：",
-   "visualizations.legend.text.right": "右：",
+   "visualizations.legend.text.top": "顶部",
+   "visualizations.legend.text.bottom": "底部",
+   "visualizations.legend.text.left": "左",
+   "visualizations.legend.text.right": "右",
+   "visualizations.legend.text.colon": "：",
+   "visualizations.legend.text.combo": "{0} ({1})",
    "visualizations.menu.aggregations": "聚合"
 }

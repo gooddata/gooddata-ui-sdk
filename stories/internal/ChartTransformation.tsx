@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -816,7 +816,85 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                 <ChartTransformation
                     config={{
                         type: 'combo',
+                        mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                        secondary_yaxis: {
+                            measures: ['wonMetric']
+                        }
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][4].attributeHeaderItem.uri
+                        }
+                    ]}
+                />
+            )
+        );
+    })
+    .add('Combo chart with single y-axis', () => {
+        const dataSet: any = fixtures.comboWithTwoMeasuresAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'combo',
                         mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][4].attributeHeaderItem.uri
+                        }
+                    ]}
+                />
+            )
+        );
+    })
+    .add('Combo chart with column and area chart', () => {
+        const dataSet: any = fixtures.comboWithTwoMeasuresAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'combo',
+                        mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                        secondaryChartType: 'area',
+                        secondary_yaxis: {
+                            measures: ['wonMetric']
+                        }
+                    }}
+                    {...dataSet}
+                    onDataTooLarge={identity}
+                    drillableItems={[
+                        {
+                            uri: dataSet.executionResult
+                                .headerItems[VIEW_BY_DIMENSION_INDEX][0][4].attributeHeaderItem.uri
+                        }
+                    ]}
+                />
+            )
+        );
+    })
+    .add('Combo chart with same chart type', () => {
+        const dataSet: any = fixtures.comboWithTwoMeasuresAndViewByAttribute;
+
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'combo',
+                        mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                        primaryChartType: 'line',
+                        secondaryChartType: 'line',
+                        secondary_yaxis: {
+                            measures: ['wonMetric']
+                        }
                     }}
                     {...dataSet}
                     onDataTooLarge={identity}

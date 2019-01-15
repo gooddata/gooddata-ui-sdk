@@ -1,14 +1,17 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import range = require('lodash/range');
 import get = require('lodash/get');
 import head = require('lodash/head');
 import last = require('lodash/last');
+import isEmpty = require('lodash/isEmpty');
 import inRange = require('lodash/inRange');
 
 import { IHeatmapLegendItem } from '../../typings/legend';
 import { LEFT, RIGHT, TOP, BOTTOM } from './PositionTypes';
 import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from '../../utils/common';
 import { supportedDualAxesChartTypes } from '../chartOptionsBuilder';
+import { ISeriesItem } from '../../../../interfaces/Config';
+import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -381,7 +384,8 @@ export function getHeatmapLegendConfiguration(
 const LEGEND_TEXT_KEYS = {
     column: ['left', 'right'],
     line: ['left', 'right'],
-    bar: ['bottom', 'top']
+    bar: ['bottom', 'top'],
+    combo: ['left', 'right']
 };
 
 export const LEGEND_AXIS_INDICATOR = 'legendAxisIndicator';
@@ -404,6 +408,56 @@ function separateLegendItems(series: any[]) {
     });
 }
 
+export function groupSeriesItemsByType(series: ISeriesItem[]): {[key: string]: ISeriesItem[]} {
+    const primaryType = get(head(series), 'type');
+
+    return series.reduce((result: {[key: string]: ISeriesItem[]}, item: ISeriesItem) => {
+        if (primaryType === item.type) {
+            result.primaryItems.push(item);
+        } else {
+            result.secondaryItems.push(item);
+        }
+
+        return result;
+    }, {
+        primaryItems: [],
+        secondaryItems: []
+    });
+}
+
+export function getComboChartSeries(series: ISeriesItem[]) {
+    const { primaryItems, secondaryItems } = groupSeriesItemsByType(series);
+    const primaryItem: ISeriesItem = head(primaryItems) || {};
+    const secondaryItem: ISeriesItem = head(secondaryItems) || {};
+    const primaryType: string =  primaryItem.type || VisualizationTypes.COLUMN;
+    const secondaryType: string = secondaryItem.type || VisualizationTypes.LINE;
+    const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS.combo;
+
+    // convert to dual axis series when there is only one chart type
+    if (isEmpty(secondaryItems)) {
+        return transformToDualAxesSeries(series, primaryType);
+    }
+
+    // all measures display on same axis
+    if (primaryItem.yAxis === secondaryItem.yAxis) {
+        return [
+            { type: LEGEND_AXIS_INDICATOR, labelKey: primaryType },
+            ...primaryItems,
+            { type: LEGEND_SEPARATOR },
+            { type: LEGEND_AXIS_INDICATOR, labelKey: secondaryType },
+            ...secondaryItems
+        ];
+    }
+
+    return [
+        { type: LEGEND_AXIS_INDICATOR, labelKey: VisualizationTypes.COMBO, data: [primaryType, firstAxisKey] },
+        ...primaryItems,
+        { type: LEGEND_SEPARATOR },
+        { type: LEGEND_AXIS_INDICATOR, labelKey: VisualizationTypes.COMBO, data: [secondaryType, secondAxisKey] },
+        ...secondaryItems
+    ];
+}
+
 export function transformToDualAxesSeries(series: any[], chartType: string) {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 
@@ -415,10 +469,10 @@ export function transformToDualAxesSeries(series: any[], chartType: string) {
     const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS[chartType];
 
     return [
-        { type: LEGEND_AXIS_INDICATOR, axis: firstAxisKey },
+        { type: LEGEND_AXIS_INDICATOR, labelKey: firstAxisKey },
         ...itemsOnFirstAxis,
         { type: LEGEND_SEPARATOR },
-        { type: LEGEND_AXIS_INDICATOR, axis: secondAxisKey },
+        { type: LEGEND_AXIS_INDICATOR, labelKey: secondAxisKey },
         ...itemsOnSecondAxis
     ];
 }

@@ -1,10 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import pick = require('lodash/pick');
 import set = require('lodash/set');
 import get = require('lodash/get');
 import * as Highcharts from 'highcharts';
 import {
     isBubbleChart,
+    isComboChart,
     isHeatmap,
     isLineChart,
     isOneOfTypes,
@@ -86,6 +87,10 @@ export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
     if (isOneOfTypes(type, supportedDualAxesChartTypes)) {
         // 'yAxis' helps to distinguish primary and secondary axes
         pickedProps = [...pickedProps, 'yAxis'];
+    }
+
+    if (isComboChart(type)) {
+        pickedProps = [...pickedProps, 'type'];
     }
 
     return legendDataSource
