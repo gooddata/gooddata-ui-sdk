@@ -300,15 +300,24 @@ export const previousPeriodMeasure: IMeasure = {
     }
 };
 
-export const arithmeticMeasure: IMeasure = {
-    measure: {
-        localIdentifier: 'arithmetic_measure_1',
-        alias: 'Sum of m1 and m2',
-        definition: {
-            arithmeticMeasure: {
-                measureIdentifiers: ['m1', 'm2'],
-                operator: 'sum'
+export function buildArithmeticMeasure(
+    localIdentifier: string = 'arithmetic_measure_1',
+    customDefinition?: Partial<VisualizationObject.IArithmeticMeasureDefinition['arithmeticMeasure']>,
+    alias?: string
+): IMeasure {
+    const arithmeticMeasure: VisualizationObject.IArithmeticMeasureDefinition['arithmeticMeasure'] = {
+        measureIdentifiers: ['m1', 'm2'],
+        operator: 'sum',
+        ...customDefinition
+    };
+
+    return {
+        measure: {
+            localIdentifier,
+            ...(alias && { alias }),
+            definition: {
+                arithmeticMeasure
             }
         }
-    }
-};
+    };
+}
