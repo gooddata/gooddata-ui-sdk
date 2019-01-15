@@ -101,16 +101,22 @@ describe('convertMeasure', () => {
     });
 
     it('should convert arithmetic measure', () => {
-        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+        const arithmeticMeasure = measures.buildArithmeticMeasure(
+            'arithmetic_measure_1', {}, 'Sum of m1 and m2'
+        );
+        expect(MeasureConverter.convertMeasure(arithmeticMeasure)).toEqual({
             ...afm.arithmeticMeasure
         });
     });
 
     it('should convert arithmetic without modification to the original object', () => {
-        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+        const arithmeticMeasure = measures.buildArithmeticMeasure(
+            'arithmetic_measure_1', {}, 'Sum of m1 and m2'
+        );
+        expect(MeasureConverter.convertMeasure(arithmeticMeasure)).toEqual({
             ...afm.arithmeticMeasure
         });
-        expect(MeasureConverter.convertMeasure(measures.arithmeticMeasure)).toEqual({
+        expect(MeasureConverter.convertMeasure(arithmeticMeasure)).toEqual({
             ...afm.arithmeticMeasure
         });
     });

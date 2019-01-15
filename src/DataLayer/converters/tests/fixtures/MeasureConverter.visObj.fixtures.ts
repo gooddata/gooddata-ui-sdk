@@ -321,16 +321,3 @@ export function buildArithmeticMeasure(
         }
     };
 }
-
-export const arithmeticMeasure: IMeasure = {
-    measure: {
-        localIdentifier: 'arithmetic_measure_1',
-        alias: 'Sum of m1 and m2',
-        definition: {
-            arithmeticMeasure: {
-                measureIdentifiers: ['m1', 'm2'],
-                operator: 'sum'
-            }
-        }
-    }
-};
