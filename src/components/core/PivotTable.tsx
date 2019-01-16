@@ -655,7 +655,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     getExecutionResponse: this.getExecutionResponse,
                     getColumnTotals: this.getColumnTotals,
                     intl: this.props.intl
-                }
+                },
+                minWidth: 50
             },
             defaultColGroupDef: {
                 headerClass: this.getHeaderClass(null),
