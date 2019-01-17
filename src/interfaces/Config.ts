@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { ISeparators } from '@gooddata/numberjs';
 import { VisualizationObject } from '@gooddata/typings';
+import { IColorItem, IColor } from '@gooddata/gooddata-js';
 import { PositionType } from '../components/visualizations/typings/legend';
 import { VisType } from '../constants/visualizationTypes';
 import { IDataLabelsConfig } from '../interfaces/Config';
@@ -9,32 +10,11 @@ import { IMappingHeader } from './MappingHeader';
 
 export { DEFAULT_COLOR_PALETTE } from '../components/visualizations/utils/color';
 
-export type IDataLabelsVisibile = string | boolean;
+export type IDataLabelsVisible = string | boolean;
 
 export interface IDataLabelsConfig {
-    visible?: IDataLabelsVisibile;
+    visible?: IDataLabelsVisible;
 }
-
-export type GuidType = 'guid';
-export type RGBType = 'rgb';
-
-export interface IRGBColor {
-    r: number;
-    g: number;
-    b: number;
-}
-
-export interface IGuidColorItem {
-    type: GuidType;
-    value: string;
-}
-
-export interface IRGBColorItem {
-    type: RGBType;
-    value: IRGBColor;
-}
-
-export type IColorItem = IGuidColorItem | IRGBColorItem;
 
 export interface IColorMapping { // sent to SDK
     predicate: IHeaderPredicate;
@@ -48,7 +28,7 @@ export interface IColorAssignment { // << send from SDK up
 
 export interface IColorPaletteItem {
     guid: string;
-    fill: IRGBColor;
+    fill: IColor;
 }
 
 export interface IColorPalette extends Array<IColorPaletteItem> {}

@@ -1,18 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
+import { IColor, IColorItem } from '@gooddata/gooddata-js';
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
 import { getMappingHeaderLocalIdentifier } from '../../../helpers/mappingHeader';
-import {
-    IChartConfig,
-    IColorItem,
-    IColorPalette,
-    IColorPaletteItem,
-    IGuidColorItem,
-    IRGBColor,
-    IColorMapping,
-    IRGBColorItem
-} from '../../../interfaces/Config';
+import { IChartConfig, IColorPalette, IColorPaletteItem, IColorMapping } from '../../../interfaces/Config';
 import { IHeaderPredicate, IHeaderPredicateContext } from '../../../interfaces/HeaderPredicate';
 import { IMappingHeader, isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
 
@@ -140,7 +132,7 @@ export const HEATMAP_BLUE_COLOR_PALETTE = [
     'rgb(0,110,145)'
 ];
 
-export const DEFAULT_HEATMAP_BLUE_COLOR: IRGBColor = {
+export const DEFAULT_HEATMAP_BLUE_COLOR: IColor = {
     r: 0,
     g: 110,
     b: 145
@@ -179,7 +171,7 @@ export function getLighterColor(color: string, percent: number) {
     );
 }
 
-export function getLighterColorFromRGB(color: IRGBColor, percent: number) {
+export function getLighterColorFromRGB(color: IColor, percent: number) {
     const { r, g, b } = color;
 
     return {
@@ -223,20 +215,12 @@ export function getRgbString(color: IColorPaletteItem): string {
 
 export function getValidColorPalette(config: IChartConfig) {
     return isEmpty(config.colorPalette) ?
-            (isEmpty(config.colors) ? DEFAULT_COLOR_PALETTE : getColorPaletteFromColors(config.colors))
-            : config.colorPalette;
+        (isEmpty(config.colors) ? DEFAULT_COLOR_PALETTE : getColorPaletteFromColors(config.colors))
+        : config.colorPalette;
 }
 
 export function isCustomPalette(palette: IColorPalette) {
     return !isEqual(palette, DEFAULT_COLOR_PALETTE);
-}
-
-export function isGuidColorItem(color: IColorItem): color is IGuidColorItem {
-    return (color as IGuidColorItem).type === 'guid';
-}
-
-export function isRgbColorItem(color: IColorItem): color is IRGBColorItem {
-    return (color as IRGBColorItem).type === 'rgb';
 }
 
 export function getColorFromMapping(
@@ -261,22 +245,20 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
     return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
 }
 
-export function getRgbStringFromRGB(color: IRGBColor) {
+export function getRgbStringFromRGB(color: IColor) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 
 export function getColorMappingPredicate(
-    id: string,
-    references: VisualizationObject.IReferenceItems
+    idOrUri: string
 ): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (isMappingHeaderAttributeItem(header)) {
-            const attributeItemUri = references && references[id];
-            return attributeItemUri ? attributeItemUri === header.attributeHeaderItem.uri : false;
+            return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
         }
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        return headerLocalIdentifier ? headerLocalIdentifier === id : false;
+        return headerLocalIdentifier ? headerLocalIdentifier === idOrUri : false;
     };
 }
 

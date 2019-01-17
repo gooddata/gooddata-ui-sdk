@@ -22,8 +22,8 @@ import {
     DATA_LABELS_AUTO_CONFIG,
     CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
-import { RGBType } from '../../src/interfaces/Config';
 import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
+import { RGBType } from '@gooddata/gooddata-js';
 
 const wrapperStyle = { width: 400, height: 400 };
 

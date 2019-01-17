@@ -17,7 +17,7 @@ import * as numberJS from '@gooddata/numberjs';
 import { styleVariables } from '../../styles/variables';
 import { IAxis, IChartOptions, supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 import { VisualizationTypes, ChartType } from '../../../../constants/visualizationTypes';
-import { IDataLabelsVisibile, IChartConfig } from '../../../../interfaces/Config';
+import { IDataLabelsVisible, IChartConfig } from '../../../../interfaces/Config';
 import { getShapeVisiblePart } from '../highcharts/dataLabelsHelpers';
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from './commonConfiguration';
 import {
@@ -473,7 +473,7 @@ function getTreemapLabelsConfiguration(
     }
 }
 
-function getLabelsVisibilityConfig(visible: IDataLabelsVisibile): any {
+function getLabelsVisibilityConfig(visible: IDataLabelsVisible): any {
     switch (visible) {
         case 'auto':
             return {
@@ -538,7 +538,7 @@ function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: I
         type: string;
     } = chartOptions;
 
-    const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
+    const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, 'dataLabels.visible');
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -624,7 +624,7 @@ function getStackingConfiguration(chartOptions: any, _config: any, chartConfig?:
     let labelsConfig = {};
 
     if (isColumnChart(type)) {
-        const labelsVisible: IDataLabelsVisibile = get<IDataLabelsVisibile>(chartConfig, 'dataLabels.visible');
+        const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, 'dataLabels.visible');
         labelsConfig = getLabelsVisibilityConfig(labelsVisible);
     }
 

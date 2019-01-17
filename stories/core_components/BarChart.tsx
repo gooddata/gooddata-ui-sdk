@@ -21,9 +21,9 @@ import {
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
-import { RGBType } from '../../src/interfaces/Config';
 import { Execution } from '@gooddata/typings';
 import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
+import { RGBType } from '@gooddata/gooddata-js';
 
 const wrapperStyle = { width: 800, height: 400 };
 

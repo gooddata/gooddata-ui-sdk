@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from '@gooddata/typings';
+import { TypeGuards, IColor, IColorItem, IGuidColorItem, RGBType } from '@gooddata/gooddata-js';
 import range = require('lodash/range');
 import uniqBy = require('lodash/uniqBy');
 import isEqual = require('lodash/isEqual');
@@ -9,11 +10,9 @@ import {
     HEATMAP_BLUE_COLOR_PALETTE,
     getLighterColorFromRGB,
     isCustomPalette,
-    isGuidColorItem,
     getColorByGuid,
     getRgbStringFromRGB,
     getColorFromMapping,
-    isRgbColorItem,
     DEFAULT_HEATMAP_BLUE_COLOR
 } from '../utils/color';
 import {
@@ -25,16 +24,7 @@ import {
 } from '../utils/common';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { isDerivedMeasure, findParentMeasureIndex } from './chartOptionsBuilder';
-import {
-    IColorPalette,
-    IColorMapping,
-    IColorAssignment,
-    IRGBColor,
-    IGuidColorItem,
-    RGBType,
-    IColorItem,
-    IColorPaletteItem
-} from '../../../interfaces/Config';
+import { IColorPalette, IColorMapping, IColorAssignment, IColorPaletteItem } from '../../../interfaces/Config';
 import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
 
@@ -98,13 +88,13 @@ export abstract class ColorStrategy implements IColorStrategy {
     }
 
     protected createPalette(
-            colorPalette: IColorPalette,
-            colorAssignment: IColorAssignment[],
-            _viewByAttribute: any,
-            _stackByAttribute: any):
+        colorPalette: IColorPalette,
+        colorAssignment: IColorAssignment[],
+        _viewByAttribute: any,
+        _stackByAttribute: any):
         string[] {
         return colorAssignment.map((map, index: number) => {
-            const color = isGuidColorItem(map.color)
+            const color = TypeGuards.isGuidColorItem(map.color)
                 ? getColorByGuid(colorPalette, map.color.value, index) : map.color.value;
             return getRgbStringFromRGB(color);
         });
@@ -240,7 +230,7 @@ export class MeasureColorStrategy extends ColorStrategy {
         measureItemIndex: number,
         mapItem: IColorAssignment
     ) {
-        const rgbColor = isGuidColorItem(sourceMeasureColor)
+        const rgbColor = TypeGuards.isGuidColorItem(sourceMeasureColor)
             ? getColorByGuid(colorPalette, sourceMeasureColor.value, measureItemIndex)
             : sourceMeasureColor.value;
         return {
@@ -254,12 +244,12 @@ export class MeasureColorStrategy extends ColorStrategy {
 }
 
 function getAtributeColorAssignment(
-        attribute: any,
-        colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
-        executionResponse: Execution.IExecutionResponse,
-        afm: AFM.IAfm
-    ): IColorAssignment[] {
+    attribute: any,
+    colorPalette: IColorPalette,
+    colorMapping: IColorMapping[],
+    executionResponse: Execution.IExecutionResponse,
+    afm: AFM.IAfm
+): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
     const uniqItems: Execution.IResultAttributeHeaderItem[]
         = uniqBy<any, Execution.IResultAttributeHeaderItem>(attribute.items, 'attributeHeaderItem.uri');
@@ -357,22 +347,22 @@ export class HeatmapColorStrategy extends ColorStrategy {
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[]
     ): string[] {
-        if (isRgbColorItem(colorAssignment[0].color)) {
+        if (TypeGuards.isRgbColorItem(colorAssignment[0].color)) {
             if (isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR)) {
                 return HEATMAP_BLUE_COLOR_PALETTE;
             }
         }
 
-        if (isGuidColorItem(colorAssignment[0].color)) {
+        if (TypeGuards.isGuidColorItem(colorAssignment[0].color)) {
             return this.getCustomHeatmapColorPalette(
                 getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
             );
         }
 
-        return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IRGBColor);
+        return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IColor);
     }
 
-    private getCustomHeatmapColorPalette(baseColor: IRGBColor): HighChartColorPalette {
+    private getCustomHeatmapColorPalette(baseColor: IColor): HighChartColorPalette {
         const { r, g, b } = baseColor;
         const colorItemsCount = 6;
         const channels = [r, g, b];
@@ -388,8 +378,8 @@ export class HeatmapColorStrategy extends ColorStrategy {
         return range(1, count)
             .map((index: number) =>
                 `rgb(${this.getCalculatedChannel(channels[0], index, steps[0])},` +
-                    `${this.getCalculatedChannel(channels[1], index, steps[1])},` +
-                    `${this.getCalculatedChannel(channels[2], index, steps[2])})`);
+                `${this.getCalculatedChannel(channels[1], index, steps[1])},` +
+                `${this.getCalculatedChannel(channels[2], index, steps[2])})`);
     }
 
     private getCalculatedChannel(channel: number, index: number, step: number): number {
@@ -469,12 +459,12 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     }
 
     protected createSingleColorPalette(
-            colorPalette: IColorPalette, colorAssignment: IColorAssignment[], viewByAttribute: any
-        ): string[] {
+        colorPalette: IColorPalette, colorAssignment: IColorAssignment[], viewByAttribute: any
+    ): string[] {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;
-        const color = isGuidColorItem(colorAssignment[0].color)
+        const color = TypeGuards.isGuidColorItem(colorAssignment[0].color)
             ? getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
-            : colorAssignment[0].color.value as IRGBColor;
+            : colorAssignment[0].color.value as IColor;
         const colorString = getRgbStringFromRGB(color);
         return Array(length).fill(colorString);
     }
@@ -510,11 +500,11 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     }
 
     protected createPalette(
-            colorPalette: IColorPalette,
-            colorAssignment: IColorAssignment[],
-            viewByAttribute: any,
-            stackByAttribute: any
-        ): string[] {
+        colorPalette: IColorPalette,
+        colorAssignment: IColorAssignment[],
+        viewByAttribute: any,
+        stackByAttribute: any
+    ): string[] {
         if (stackByAttribute) {
             return super.createPalette(colorPalette, colorAssignment, viewByAttribute, stackByAttribute);
         }
@@ -532,19 +522,19 @@ export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
         executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
-            const colorAssignment =
-                this.singleMeasureColorMapping(colorPalette, colorMapping, executionResponse, afm);
-            return {
-                fullColorAssignment: colorAssignment
-            };
+        const colorAssignment =
+            this.singleMeasureColorMapping(colorPalette, colorMapping, executionResponse, afm);
+        return {
+            fullColorAssignment: colorAssignment
+        };
     }
 
     protected createPalette(
-            colorPalette: IColorPalette,
-            colorAssignment: IColorAssignment[],
-            _viewByAttribute: any,
-            stackByAttribute: any
-        ): string[] {
+        colorPalette: IColorPalette,
+        colorAssignment: IColorAssignment[],
+        _viewByAttribute: any,
+        stackByAttribute: any
+    ): string[] {
         return super.createSingleColorPalette(colorPalette, colorAssignment, stackByAttribute);
     }
 }
