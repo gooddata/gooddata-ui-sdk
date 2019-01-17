@@ -11,8 +11,23 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.0.0"></a>
+## 2019-01-17 Version [11.0.0](https://github.com/gooddata/gooddata-js/compare/v10.2.0...v11.0.0)
+
+- Remove deprecated interfaces for old visualization object
+
+<a name="10.2.0"></a>
+## 2019-01-15 Version [10.2.0](https://github.com/gooddata/gooddata-js/compare/v10.1.0...v10.2.0)
+
+- Add default value format for arithmetic measures with 'change' as operator type
+
+<a name="10.1.0"></a>
+## 2019-01-08 Version [10.1.0](https://github.com/gooddata/gooddata-js/compare/v10.0.0...v10.1.0)
+
+- Upgrade lodash and momentjs dependencies
+
 <a name="10.0.0"></a>
-## 2018-11-16 Version [10.0.0](https://github.com/gooddata/gooddata-js/compare/v10.0.0...v9.0.1)
+## 2018-11-16 Version [10.0.0](https://github.com/gooddata/gooddata-js/compare/v9.0.1...v10.0.0)
 
 - reintroduction of the changes made in 9.0.0 and reverted in 9.0.1 
 
