@@ -17,6 +17,7 @@ $hover-color: transparentize($gd-color-label, 0.9);
 $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
+$header-cell-resize-width: 20px;
 
 @import '~ag-grid/src/styles/ag-grid';
 @import '~ag-grid/src/styles/ag-theme-balham';
@@ -31,8 +32,7 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
     }
 
     .ag-header-cell,
-    .ag-header-group-cell,
-    .ag-header-cell-resize {
+    .ag-header-group-cell {
         &::after {
             display: none;
         }
@@ -43,10 +43,13 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
     }
 
     .ag-cell {
-        border-top: $cell-border;
-        border-top-color: $cell-border-color;
-        border-right: none;
-        border-left: none;
+        &,
+        &.ag-cell-focus {
+            border-top: $cell-border;
+            border-top-color: $cell-border-color;
+            border-right: none;
+            border-left: none;
+        }
     }
 
     [row-index="0"] {
@@ -85,6 +88,35 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
             .ag-header-group-cell-with-group {
                 border-bottom-style: solid;
             }
+        }
+    }
+
+    .ag-header-group-cell {
+        overflow: visible;
+    }
+
+    .ag-header-cell-resize {
+        right: -$header-cell-resize-width / 2;
+        width: $header-cell-resize-width;
+        opacity: 0;
+
+        &::after {
+            width: $header-cell-resize-width / 2;
+            margin-right: $header-cell-resize-width / 2;
+            border-right-color: $gd-color-highlight;
+            text-indent: $header-cell-resize-width / 2;
+        }
+    }
+
+    .gd-column-group-header:hover {
+        .ag-header-cell-resize {
+            opacity: 1;
+        }
+    }
+
+    .gd-column-group-header--empty {
+        .ag-header-cell-resize {
+            display: none;
         }
     }
 
@@ -192,7 +224,7 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
         }
 
         &--hide {
-            width: 0px;
+            width: 0;
             opacity: 0;
         }
 
