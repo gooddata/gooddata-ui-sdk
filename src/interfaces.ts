@@ -1,4 +1,6 @@
 // (C) 2007-2017 GoodData Corporation
+import { VisualizationObject } from '@gooddata/typings';
+
 export type SortDirection = 'asc' | 'desc';
 
 export interface IAccountInfo {
@@ -60,11 +62,14 @@ export interface IEtlPullResponse {
     };
 }
 
-export interface ILoadCatalogOptions {
-    bucketItems: IVisualizationObjectContent;
+export interface IBaseLoadOptions {
+    bucketItems?: VisualizationObject.IVisualizationObjectContent;
     excludeObjectsWithTags?: string[];
-    filter?: string;
     includeObjectsWithTags?: string[];
+}
+
+export interface ILoadCatalogOptions extends IBaseLoadOptions {
+    filter?: string;
     paging?: {
         limit: number;
         offset: number;
@@ -72,12 +77,9 @@ export interface ILoadCatalogOptions {
     types?: string[];
 }
 
-export interface ILoadDateDataSetOptions {
-    bucketItems: IVisualizationObjectContent;
+export interface ILoadDateDataSetOptions extends IBaseLoadOptions {
     dataSetIdentifier?: string;
-    excludeObjectsWithTags?: string[];
     includeAvailableDateAttributes?: boolean;
-    includeObjectsWithTags?: string[];
     includeUnavailableDateDataSetsCount?: boolean;
     returnAllDateDataSets?: boolean;
     returnAllRelatedDateDataSets?: boolean;
@@ -215,58 +217,6 @@ export interface IMeasure {
         styles?: IVisualizationStyle[];
         title: string;
         type: MeasureType;
-    };
-}
-
-export type CategoryType = 'attribute' | 'date';
-
-export interface ICategory {
-    category: {
-        attribute?: string;
-        collection: CategoryCollection;
-        displayForm: string;
-        sort?: SortDirection;
-        styles?: IVisualizationStyle[];
-        type: CategoryType;
-    };
-}
-
-export type CategoryCollection = 'attribute' | 'stack' | 'view' | 'trend' | 'segment';
-
-export type VisualizationType = 'table' | 'line' | 'column' | 'bar' | 'pie' | 'doughnut' | 'combo';
-
-export interface IBuckets {
-    categories: ICategory[];
-    filters: EmbeddedFilter[];
-    measures: IMeasure[];
-}
-
-export interface IVisualizationObjectContent {
-    buckets: IBuckets;
-    type: VisualizationType;
-}
-
-export interface IVisualizationObject {
-    visualization: {
-        content: IVisualizationObjectContent;
-        meta: {
-            author?: string;
-            category?: string;
-            contributor?: string;
-            created?: Date;
-            deprecated?: boolean;
-            identifier?: string;
-            isProduction?: boolean;
-            locked?: boolean;
-            projectTemplate?: string;
-            sharedWithSomeone?: boolean;
-            summary?: string;
-            tags?: string;
-            title: string;
-            unlisted?: boolean;
-            updated?: Date;
-            uri?: string;
-        };
     };
 }
 
