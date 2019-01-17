@@ -667,6 +667,19 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                             },
                             {
                                 measure: {
+                                    localIdentifier: 'derived_measure_from_arithmetic_measure',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'arithmetic_measure_created_from_simple_measures',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
                                     localIdentifier: 'arithmetic_measure_created_from_simple_measures',
                                     definition: {
                                         arithmeticMeasure: {
@@ -995,6 +1008,90 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 title: 'ONE-3417',
                 category: 'visualizationObject',
                 contributor: '/gdc/account/profile/9a4a028462b504f7ebe71d3c6a6e5786'
+            }
+        }
+    },
+    {
+        visualizationObject: {
+            content: {
+                visualizationClass: {
+                    uri: '/gdc/md/myproject/obj/table'
+                },
+                buckets: [
+                    {
+                        localIdentifier: 'measures',
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: 'am1',
+                                    definition: {
+                                        arithmeticMeasure: {
+                                            operator: 'sum',
+                                            measureIdentifiers: [
+                                                'm1',
+                                                'm1_pop'
+                                            ]
+                                        }
+                                    },
+                                    title: 'ignored title'
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1',
+                                    title: 'AD Accounts',
+                                    definition: {
+                                        measureDefinition: {
+                                            item: {
+                                                uri: '/gdc/md/myproject/obj/8172'
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                measure: {
+                                    localIdentifier: 'm1_pop',
+                                    definition: {
+                                        popMeasureDefinition: {
+                                            measureIdentifier: 'm1',
+                                            popAttribute: {
+                                                uri: '/gdc/md/myproject/obj/1514'
+                                            }
+                                        }
+                                    },
+                                    title: 'ignored title'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        localIdentifier: 'attribute',
+                        items: [
+                            {
+                                visualizationAttribute: {
+                                    localIdentifier: 'a1',
+                                    displayForm: {
+                                        uri: '/gdc/md/myproject/obj/1515'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            meta: {
+                author: '/gdc/account/profile/johndoe',
+                uri: '/gdc/md/myproject/obj/2',
+                tags: '',
+                created: new Date('2015-05-23T09:24:41Z'),
+                identifier: 'aa5CD0OcfSpg',
+                deprecated: false,
+                summary: '',
+                isProduction: true,
+                title: 'Arithmetic and derived measures',
+                category: 'visualizationObject',
+                contributor: '/gdc/account/profile/johndoe'
             }
         }
     }
