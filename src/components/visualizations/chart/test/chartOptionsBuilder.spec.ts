@@ -2351,9 +2351,9 @@ describe('chartOptionsBuilder', () => {
         it('should generate valid tooltip for no measures', () => {
             const measures: any[] = [];
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Sales Rep</td>
-                <td class=\"value\">point name</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2363,12 +2363,12 @@ describe('chartOptionsBuilder', () => {
         it('should generate valid tooltip for 1 measure', () => {
             const measures = [measureGroup.items[0]];
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Sales Rep</td>
-                <td class=\"value\">point name</td>
-            </tr>\n<tr>
-                <td class=\"title\">_Snapshot [EOP-2]</td>
-                <td class=\"value\">10.00</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2378,15 +2378,15 @@ describe('chartOptionsBuilder', () => {
         it('should generate valid tooltip for 2 measures', () => {
             const measures = [measureGroup.items[0], measureGroup.items[1]];
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Sales Rep</td>
-                <td class=\"value\">point name</td>
-            </tr>\n<tr>
-                <td class=\"title\">_Snapshot [EOP-2]</td>
-                <td class=\"value\">10.00</td>
-            </tr>\n<tr>
-                <td class=\"title\"># of Open Opps.</td>
-                <td class=\"value\">20</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2396,18 +2396,18 @@ describe('chartOptionsBuilder', () => {
         it('should generate valid tooltip for 3 measures', () => {
             const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Sales Rep</td>
-                <td class=\"value\">point name</td>
-            </tr>\n<tr>
-                <td class=\"title\">_Snapshot [EOP-2]</td>
-                <td class=\"value\">10.00</td>
-            </tr>\n<tr>
-                <td class=\"title\"># of Open Opps.</td>
-                <td class=\"value\">20</td>
-            </tr>\n<tr>
-                <td class=\"title\">Remaining Quota</td>
-                <td class=\"value\">$30.00</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Remaining Quota</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">$30.00</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2420,18 +2420,18 @@ describe('chartOptionsBuilder', () => {
             pointWithoutName.name = undefined;
 
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Sales Rep</td>
-                <td class=\"value\">serie name</td>
-            </tr>\n<tr>
-                <td class=\"title\">_Snapshot [EOP-2]</td>
-                <td class=\"value\">10.00</td>
-            </tr>\n<tr>
-                <td class=\"title\"># of Open Opps.</td>
-                <td class=\"value\">20</td>
-            </tr>\n<tr>
-                <td class=\"title\">Remaining Quota</td>
-                <td class=\"value\">$30.00</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">serie name</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Remaining Quota</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">$30.00</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2457,9 +2457,9 @@ describe('chartOptionsBuilder', () => {
         };
         it('should generate valid tooltip for 1 measure', () => {
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">category</td>
-                <td class=\"value\">300</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipTreemapFn(null, null);
@@ -2470,9 +2470,9 @@ describe('chartOptionsBuilder', () => {
             const pointWithFormat = cloneDeep(point);
             pointWithFormat.format = 'abcd';
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">category</td>
-                <td class=\"value\">abcd</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">abcd</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipTreemapFn(null, null);
@@ -2483,12 +2483,12 @@ describe('chartOptionsBuilder', () => {
             const dataSet = fixtures.treemapWithMetricAndViewByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Department</td>
-                <td class=\"value\">Direct Sales</td>
-            </tr>\n<tr>
-                <td class=\"title\">serie name</td>
-                <td class=\"value\">300</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">serie name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
@@ -2499,12 +2499,12 @@ describe('chartOptionsBuilder', () => {
             const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Department</td>
-                <td class=\"value\">Direct Sales</td>
-            </tr>\n<tr>
-                <td class=\"title\">category</td>
-                <td class=\"value\">300</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
@@ -2515,15 +2515,15 @@ describe('chartOptionsBuilder', () => {
             const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
             const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">Department</td>
-                <td class=\"value\">Direct Sales</td>
-            </tr>\n<tr>
-                <td class=\"title\">Region</td>
-                <td class=\"value\">West Coast</td>
-            </tr>\n<tr>
-                <td class=\"title\">serie name</td>
-                <td class=\"value\">300</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Region</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">West Coast</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">serie name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
             const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
@@ -3062,15 +3062,15 @@ describe('chartOptionsBuilder', () => {
                 it('should generate correct tooltip', () => {
                     const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
                     const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">stackAttr</td>
-                <td class=\"value\">stackHeader</td>
-            </tr>\n<tr>
-                <td class=\"title\">viewAttr</td>
-                <td class=\"value\">viewHeader</td>
-            </tr>\n<tr>
-                <td class=\"title\">name</td>
-                <td class=\"value\">abcd</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">stackAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">stackHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">viewAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">viewHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">abcd</td>
             </tr></table>`;
 
                     expect(tooltipFn(point)).toEqual(expectedResult);
@@ -3082,15 +3082,15 @@ describe('chartOptionsBuilder', () => {
                         value: null
                     });
                     const expectedResult =
-            `<table class=\"tt-values\"><tr>
-                <td class=\"title\">stackAttr</td>
-                <td class=\"value\">stackHeader</td>
-            </tr>\n<tr>
-                <td class=\"title\">viewAttr</td>
-                <td class=\"value\">viewHeader</td>
-            </tr>\n<tr>
-                <td class=\"title\">name</td>
-                <td class=\"value\">-</td>
+            `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">stackAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">stackHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">viewAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">viewHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">-</td>
             </tr></table>`;
 
                     expect(tooltipValue).toEqual(expectedResult);
