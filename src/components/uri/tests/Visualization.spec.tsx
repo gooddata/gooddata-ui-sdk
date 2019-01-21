@@ -23,6 +23,7 @@ import { RuntimeError } from '../../../errors/RuntimeError';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import * as HttpStatusCodes from 'http-status-codes';
 import { IColorPalette } from '../../../interfaces/Config';
+import { clearSdkCache } from '../../../helpers/sdkCache';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -47,7 +48,7 @@ const sdk = {
         setRequestHeader: () => false
     },
     project: {
-        getColorPaletteWithGuids: jest.fn(),
+        getColorPaletteWithGuids: jest.fn(() => (Promise.resolve())),
         getFeatureFlags: jest.fn(() => (Promise.resolve({})))
     }
 };
@@ -122,6 +123,10 @@ describe('Visualization', () => {
 });
 
 describe('VisualizationWrapped', () => {
+    afterEach(() => {
+        clearSdkCache();
+    });
+
     const intl = createIntlMock();
 
     it('should render chart', () => {
@@ -610,7 +615,7 @@ describe('VisualizationWrapped', () => {
                 clone: () => mutatedSdk,
                 project: {
                     ...sdk.project,
-                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => Promise.resolve(expectedColorPalette))
                 }
             };
 
@@ -645,7 +650,7 @@ describe('VisualizationWrapped', () => {
                 clone: () => cloneDeep(mutatedSdk),
                 project: {
                     ...sdk.project,
-                    getColorPaletteWithGuids: jest.fn()
+                    getColorPaletteWithGuids: jest.fn(() => (Promise.resolve()))
                 }
             };
 

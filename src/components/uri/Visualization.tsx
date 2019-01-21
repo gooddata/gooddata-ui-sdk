@@ -28,6 +28,7 @@ import { getDefaultTreemapSort } from '../../helpers/sorts';
 import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
 import { isTreemap } from '../visualizations/utils/common';
 import { getColorMappingPredicate, getColorPaletteFromColors } from '../visualizations/utils/color';
+import { getCachedOrLoad } from '../../helpers/sdkCache';
 export { Requireable };
 
 const {
@@ -124,7 +125,9 @@ function fetchVisualizationClass(
     sdk: SDK,
     visualizationClassUri: string
 ): Promise<VisualizationClass.IVisualizationClass> {
-    return sdk.xhr.get(visualizationClassUri)
+    const apiCallIdentifier = `get.${visualizationClassUri}`;
+    const loader = () => sdk.xhr.get(visualizationClassUri);
+    return getCachedOrLoad(apiCallIdentifier, loader)
         .then((response: ApiResponse) => response.data.visualizationClass);
 }
 
@@ -436,6 +439,12 @@ export class VisualizationWrapped
         return this.props.config && this.props.config.colors;
     }
 
+    private getColorPaletteFromProject() {
+        const apiCallIdentifier = `getColorPaletteWithGuids.${this.props.projectId}`;
+        const loader = () => this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+        return getCachedOrLoad(apiCallIdentifier, loader);
+    }
+
     private async getColorPalette() {
         if (!this.isUnmounted) {
             if (this.hasExternalColorPalette()) {
@@ -445,7 +454,7 @@ export class VisualizationWrapped
                     colorPalette: getColorPaletteFromColors(this.props.config.colors)
                 });
             } else {
-                const colorPalette = await this.sdk.project.getColorPaletteWithGuids(this.props.projectId);
+                const colorPalette = await this.getColorPaletteFromProject();
 
                 if (colorPalette) {
                     this.setStateWithCheck({ colorPalette });
