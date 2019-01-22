@@ -5,6 +5,7 @@ import { UserModule } from './user';
 import { MetadataModule } from './metadata';
 import { ExecutionModule } from './execution';
 import { ProjectModule } from './project';
+import { ReportModule } from './report';
 import { sanitizeConfig, IConfigStorage, ConfigModule } from './config';
 import { CatalogueModule } from './catalogue';
 import { AdminModule } from './admin';
@@ -36,6 +37,7 @@ export class SDK {
     public md: MetadataModule;
     public execution: ExecutionModule;
     public project: ProjectModule;
+    public report: ReportModule;
     public catalogue: CatalogueModule;
     public admin: AdminModule;
     public utils: any;
@@ -50,6 +52,7 @@ export class SDK {
         this.md = new MetadataModule(this.xhr);
         this.execution = new ExecutionModule(this.xhr, this.md);
         this.project = new ProjectModule(this.xhr);
+        this.report = new ReportModule(this.xhr);
         this.catalogue = new CatalogueModule(this.xhr, this.execution);
         this.admin = new AdminModule(this.xhr);
 
