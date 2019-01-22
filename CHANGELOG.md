@@ -2,14 +2,21 @@
 
 ## Supported REST API versions
 
-This table shows which version of the gooddata-js introduced support for a particular API version. 
+This table shows which version of the gooddata-js introduced support for a particular API version.
 
-The REST API versions in the table are just for your information as the values are set internally and cannot be overridden. 
+The REST API versions in the table are just for your information as the values are set internally and cannot be overridden.
 
 |gooddata-js version | REST API version
 |:---:|:---:
 |\>= 10.0.0|3
 |<= 9.0.1|2
+
+<a name="11.1.0"></a>
+## 2019-01-22 Version [11.1.0](https://github.com/gooddata/gooddata-js/compare/v11.0.0...v11.1.0)
+
+- Add 'head' request to 'xhr' module
+- Add new 'report' module
+- Add 'exportResult' to 'report' module: support exporting data
 
 <a name="11.0.0"></a>
 ## 2019-01-17 Version [11.0.0](https://github.com/gooddata/gooddata-js/compare/v10.2.0...v11.0.0)
@@ -29,7 +36,7 @@ The REST API versions in the table are just for your information as the values a
 <a name="10.0.0"></a>
 ## 2018-11-16 Version [10.0.0](https://github.com/gooddata/gooddata-js/compare/v9.0.1...v10.0.0)
 
-- reintroduction of the changes made in 9.0.0 and reverted in 9.0.1 
+- reintroduction of the changes made in 9.0.0 and reverted in 9.0.1
 
 <a name="9.0.1"></a>
 ## 2018-10-29 Version [9.0.1](https://github.com/gooddata/gooddata-js/compare/v9.0.0...v9.0.1)
@@ -40,7 +47,7 @@ The REST API versions in the table are just for your information as the values a
 ## 2018-10-29 Version [9.0.0](https://github.com/gooddata/gooddata-js/compare/v8.1.1...v9.0.0)
 
 - the support of the GoodData Platform REST API versioning with the initial supported version set to 3
-- the logic of the global AFM date filters merging with measure date filters was moved from gooddata-js to backend 
+- the logic of the global AFM date filters merging with measure date filters was moved from gooddata-js to backend
 
 <a name="8.1.1"></a>
 ## 2018-08-20 Version [8.1.1](https://github.com/gooddata/gooddata-js/compare/v8.1.0...v8.1.1)
@@ -82,4 +89,3 @@ Default SDK instance is no longer returned as the only `module.export` ([see com
    in CommonJS: `const DataLayer = require('@gooddata/gooddata-js').DataLayer` \
    or in ES6: `import { DataLayer } from '@gooddata/gooddata-js'`
 - See [all named exports here](https://github.com/gooddata/gooddata-js/blob/v6.0.0/src/gooddata-browser.ts#L13-L28) or in `gooddata-node.ts`
-
