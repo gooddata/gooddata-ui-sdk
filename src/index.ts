@@ -19,6 +19,7 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
+import { IHeaderPredicate } from './interfaces/HeaderPredicate';
 import { IPushData, IColorsData } from './interfaces/PushData';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
@@ -138,6 +139,7 @@ export {
     SortsHelper,
     ChartConfiguration,
     ColorUtils,
+    IHeaderPredicate,
     HeaderPredicateFactory,
     MappingHeader
 };
