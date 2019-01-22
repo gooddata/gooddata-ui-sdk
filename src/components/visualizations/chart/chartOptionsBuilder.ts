@@ -720,10 +720,10 @@ export function generateTooltipFn(viewByAttribute: any, type: string, config: IC
             textData[0][0] = customEscape(point.name);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -758,10 +758,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any, config
             customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label)]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -794,10 +794,10 @@ export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute:
             ]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -834,10 +834,10 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
             textData.push([customEscape(point.category), formattedValue]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
