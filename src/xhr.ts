@@ -111,6 +111,10 @@ export class ApiResponse {
             return this.responseBody;
         }
     }
+
+    public getHeaders() {
+        return this.response;
+    }
 }
 
 // the variable must be outside of the scope of the XhrModule to not log the message multiple times in SDK and KD

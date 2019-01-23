@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { XhrModule, ApiResponse } from './xhr';
 import { IExportConfig, IExportResponse } from './interfaces';
-import { handlePolling, IPollingOptions } from './util';
+import { handleHeadPolling, IPollingOptions } from './util';
 
 interface IResultExport {
     executionResult: string;
@@ -49,7 +49,7 @@ export class ReportModule {
         return this.xhr.post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
             .then((response: ApiResponse) => response.getData())
             .then((data: IExportResponse) =>
-                handlePolling(this.xhr.head.bind(this.xhr), data.uri, this.isDataExported, pollingOptions));
+                handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, this.isDataExported, pollingOptions));
     }
 
     private isDataExported(response: Response): boolean {
