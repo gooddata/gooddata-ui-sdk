@@ -72,6 +72,43 @@ export const handlePolling = (
 };
 
 /**
+ * Helper for polling using HEAD method
+ *
+ * @param xhrHead xhr module
+ * @param {String} uri
+ * @param {Function} isPollingDone
+ * @param {Object} options for polling (maxAttempts, pollStep)
+ * @private
+ */
+export const handleHeadPolling = (
+    xhrHead: any,
+    uri: string,
+    isPollingDone: Function,
+    options: IPollingOptions = {}
+) => {
+    const {
+        attempts = 0,
+        maxAttempts = 50,
+        pollStep = 5000
+    } = options;
+
+    return xhrHead(uri)
+        .then((response: any) => {
+            if (attempts > maxAttempts) {
+                return Promise.reject(new Error('Export timeout!!!'));
+            }
+            return isPollingDone(response.getHeaders()) ?
+                Promise.resolve({ uri }) :
+                delay(pollStep).then(() => {
+                    return handleHeadPolling(xhrHead, uri, isPollingDone, {
+                        ...options,
+                        attempts: attempts + 1
+                    });
+                });
+        });
+};
+
+/**
  * Builds query string from plain object
  * (Refactored from admin/routes.js)
  *
