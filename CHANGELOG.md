@@ -11,6 +11,11 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.1.1"></a>
+## 2019-01-24 Version [11.1.1](https://github.com/gooddata/gooddata-js/compare/v11.1.0...v11.1.1)
+
+- Fix polling status for Exporting
+
 <a name="11.1.0"></a>
 ## 2019-01-22 Version [11.1.0](https://github.com/gooddata/gooddata-js/compare/v11.0.0...v11.1.0)
 
