@@ -96,10 +96,10 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.0.0.tgz#cea1ce2a21a17dc6fc2593bf6e8ac335c17f7bb1"
-  integrity sha512-WfplkfCK50OBangU3H2nmKTw5BEZsWDYKdmmEZsQXFYAY8ufHRnAW9rWc9/IDgmIG/z8YBhf2IBxeUT5mxt8AA==
+"@gooddata/gooddata-js@11.2.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.2.0.tgz#9ef2566534310609c6844de928670416f6205935"
+  integrity sha512-n5QmKZsK8jG1OpGFBbtiEL3zy6yZAy0UMG8ddedLlcX1oGHYCR6t8MRGGBDCHwtE6g2srYm5zR6FfbMGF/iSUA==
   dependencies:
     "@gooddata/typings" "2.6.0"
     es6-promise "3.0.2"
@@ -112,6 +112,7 @@
     node-fetch "1.7.3"
     qs "6.5.1"
     rxjs "^5.5.6"
+    uuid "3.2.1"
 
 "@gooddata/goodstrap@59.4.1":
   version "59.4.1"
@@ -11525,7 +11526,7 @@ uuid@3.1.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
   integrity sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g==
 
-uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
+uuid@3.2.1, uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 

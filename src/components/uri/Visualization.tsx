@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { SDK, factory as createSdk, DataLayer, ApiResponse } from '@gooddata/gooddata-js';
+import { SDK, factory as createSdk, DataLayer, ApiResponse, IPropertiesControls } from '@gooddata/gooddata-js';
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
 import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
@@ -117,8 +117,7 @@ function uriResolver(sdk: SDK, projectId: string, uri?: string, identifier?: str
 }
 
 function fetchVisObject(sdk: SDK, visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
-    return sdk.xhr.get(visualizationUri)
-        .then((response: ApiResponse) => response.data.visualizationObject);
+    return sdk.md.getVisualization(visualizationUri).then(res => res.visualizationObject);
 }
 
 function fetchVisualizationClass(
@@ -280,7 +279,7 @@ export class VisualizationWrapped
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
-        const properties = mdObjectContent
+        const properties: IPropertiesControls | undefined = mdObjectContent
             && mdObjectContent.properties
             && JSON.parse(mdObjectContent.properties).controls;
 
@@ -288,17 +287,15 @@ export class VisualizationWrapped
             ? baseConfig.colorPalette
             : this.state.colorPalette;
 
-        let colorMapping;
-        if (properties && properties.colorMapping) {
-            const { references } = mdObjectContent;
-            colorMapping = properties.colorMapping.map((mapping: any) => {
-                const predicate = getColorMappingPredicate(mapping.id, references);
+        const colorMapping = properties && properties.colorMapping
+            ? properties.colorMapping.map((mapping) => {
+                const predicate = getColorMappingPredicate(mapping.id);
                 return {
                     predicate,
                     color: mapping.color
                 };
-            });
-        }
+            })
+            : undefined;
 
         const config = {
             ...properties,

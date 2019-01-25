@@ -21,15 +21,10 @@ import {
 import { CUSTOM_COLOR_PALETTE } from '../../../../../stories/data/colors';
 
 import * as fixtures from '../../../../../stories/test_data/fixtures';
-import {
-    IColorPalette,
-    IColorPaletteItem,
-    RGBType,
-    IColorMapping,
-    IColorItem
-} from '../../../../interfaces/Config';
+import { IColorPalette, IColorPaletteItem, IColorMapping } from '../../../../interfaces/Config';
 import { Execution } from '@gooddata/typings';
 import range = require('lodash/range');
+import { IColorItem, RGBType } from '@gooddata/gooddata-js';
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -666,7 +661,7 @@ describe('ColorFactory', () => {
     });
 
     describe('BubbleChartStrategy', () => {
-        it('shouls create palette with color from first measure', () => {
+        it('should create palette with color from first measure', () => {
             const { viewByAttribute, stackByAttribute } = getMVS(fixtures.bubbleChartWith3Metrics);
             const { executionResponse } = fixtures.bubbleChartWith3Metrics;
             const { afm } = fixtures.bubbleChartWith3Metrics.executionRequest;
