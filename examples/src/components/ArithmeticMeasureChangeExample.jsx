@@ -8,8 +8,8 @@ import '@gooddata/react-components/styles/css/main.css';
 import {
     projectId,
     monthDateIdentifier,
-    monthDateDataSetAttributeIdentifier,
-    totalSalesIdentifier
+    totalSalesIdentifier,
+    dateDataSetUri
 } from '../utils/fixtures';
 
 export class ArithmeticMeasureChangeExample extends Component {
@@ -25,7 +25,7 @@ export class ArithmeticMeasureChangeExample extends Component {
 
     render() {
         const totalSalesYearAgoBucketItem = Model.previousPeriodMeasure(
-            'totalSales', [{ dataSet: monthDateDataSetAttributeIdentifier, periodsAgo: 1 }]
+            'totalSales', [{ dataSet: dateDataSetUri, periodsAgo: 1 }]
         ).alias('$ Total Sales - year ago').localIdentifier('totalSales_sp');
 
         const totalSalesBucketItem = Model.measure(totalSalesIdentifier)
@@ -39,7 +39,6 @@ export class ArithmeticMeasureChangeExample extends Component {
                 totalSalesBucketItem.measure.localIdentifier,
                 totalSalesYearAgoBucketItem.measure.localIdentifier
             ], 'change')
-                .format('#,##0%')
                 .title('% Total Sales Change')
                 .localIdentifier('totalSalesChange')
         ];
@@ -48,11 +47,16 @@ export class ArithmeticMeasureChangeExample extends Component {
             Model.attribute(monthDateIdentifier).localIdentifier('month')
         ];
 
+        const filters = [
+            Model.absoluteDateFilter(dateDataSetUri, '2017-01-01', '2017-12-31')
+        ];
+
         return (
             <div style={{ height: 200 }} className="s-table">
                 <Table
                     projectId={projectId}
                     measures={measures}
+                    filters={filters}
                     attributes={attributes}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
