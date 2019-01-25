@@ -6,13 +6,13 @@ import {
     flatten,
     pick
 } from 'lodash';
-import { AFM } from '@gooddata/typings';
+import { AFM, VisualizationObject } from '@gooddata/typings';
 import { getIn, handlePolling, queryString } from './util';
 import { ApiResponse, ApiResponseError, XhrModule } from './xhr';
-
 import {
     IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection
 } from './interfaces';
+import { convertUrisToReferences, convertReferencesToUris } from './referenceHandling';
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -35,7 +35,7 @@ export interface IValidElementsOptions {
  * @module metadata
  */
 export class MetadataModule {
-    constructor(private xhr: XhrModule) {}
+    constructor(private xhr: XhrModule) { }
 
     /**
      * Load all objects with given uris
@@ -67,7 +67,15 @@ export class MetadataModule {
 
                     return r.getData();
                 })
-                .then((result: any) => _get(result, ['objects', 'items']));
+                .then((result: any) =>
+                    _get(result, ['objects', 'items']).map((item: any) => {
+                        if (item.visualizationObject) {
+                            return {
+                                visualizationObject: convertReferencesToUris(item.visualizationObject)
+                            };
+                        }
+                        return item;
+                    }));
         });
 
         return Promise.all(promises).then(flatten);
@@ -251,9 +259,9 @@ export class MetadataModule {
                     getFolderEntries(projectId, 'metric'),
                     this.getDimensions(projectId)
                 ])
-                .then(([facts, metrics, attributes]) => {
-                    return { fact: facts, metric: metrics, attribute: attributes };
-                });
+                    .then(([fact, metric, attribute]) => {
+                        return { fact, metric, attribute };
+                    });
         }
     }
 
@@ -294,7 +302,7 @@ export class MetadataModule {
      * @method getAvailableMetrics
      * @param {String} projectId - Project identifier
      * @param {Array} attrs - An array of attribute uris for which we want to get
-     * availabale metrics
+     * available metrics
      * @return {Array} An array of reachable metrics for the given attrs
      * @see getAvailableAttributes
      * @see getAvailableFacts
@@ -314,7 +322,7 @@ export class MetadataModule {
      * @method getAvailableAttributes
      * @param {String} projectId - Project identifier
      * @param {Array} metrics - An array of metric uris for which we want to get
-     * availabale attributes
+     * available attributes
      * @return {Array} An array of reachable attributes for the given metrics
      * @see getAvailableMetrics
      * @see getAvailableFacts
@@ -332,7 +340,7 @@ export class MetadataModule {
      * @method getAvailableFacts
      * @param {String} projectId - Project identifier
      * @param {Array} items - An array of metric or attribute uris for which we want to get
-     * availabale facts
+     * available facts
      * @return {Array} An array of reachable facts for the given items
      * @see getAvailableAttributes
      * @see getAvailableMetrics
@@ -478,7 +486,7 @@ export class MetadataModule {
                             .then((tree) => { // TODO add map to r.json
                                 // all promises resolved, i.e. details for each metric are available
                                 const structure = tree.map((treeItems, idx) => {
-                                    // if idx is not in foldes list than metric is in "Unsorted" folder
+                                    // if idx is not in folders list than metric is in "Unsorted" folder
                                     return {
                                         title: (foldersTitles[idx] || 'Unsorted'),
                                         items: treeItems
@@ -668,6 +676,58 @@ export class MetadataModule {
     }
 
     /**
+     * Get visualization by Uri and process data
+     *
+     * @method getVisualization
+     * @param {String} visualizationUri
+     */
+    public getVisualization(uri: string): Promise<VisualizationObject.IVisualization> {
+        return this.getObjectDetails(uri)
+            .then((visualizationObject: VisualizationObject.IVisualizationObjectResponse) => {
+                const mdObject = visualizationObject.visualizationObject;
+                return {
+                    visualizationObject: convertReferencesToUris(mdObject)
+                };
+            });
+    }
+
+    /**
+     * Save visualization
+     *
+     * @method saveVisualization
+     * @param {String} visualizationUri
+     */
+    public saveVisualization(projectId: string, visualization: VisualizationObject.IVisualization) {
+        const converted = convertUrisToReferences(visualization.visualizationObject);
+        return this.createObject(projectId, { visualizationObject: converted });
+    }
+
+    /**
+     * Update visualization
+     *
+     * @method updateVisualization
+     * @param {String} visualizationUri
+     */
+    public updateVisualization(
+        projectId: string,
+        visualizationUri: string,
+        visualization: VisualizationObject.IVisualization
+    ) {
+        const converted = convertUrisToReferences(visualization.visualizationObject);
+        return this.updateObject(projectId, visualizationUri, { visualizationObject: converted });
+    }
+
+    /**
+     * Delete visualization
+     *
+     * @method deleteVisualization
+     * @param {String} visualizationUri
+     */
+    public deleteVisualization(visualizationUri: string) {
+        return this.deleteObject(visualizationUri);
+    }
+
+    /**
      * Delete object
      *
      * @experimental
@@ -688,6 +748,21 @@ export class MetadataModule {
      */
     public createObject(projectId: string, obj: any) {
         return this.xhr.post(`/gdc/md/${projectId}/obj?createAndGet=true`, {
+            body: obj
+        }).then(((r: ApiResponse) => r.getData()));
+    }
+
+    /**
+     * Update object
+     *
+     * @experimental
+     * @method updateObject
+     * @param {String} projectId
+     * @param {String} visualizationUri
+     * @param {String} obj object definition
+     */
+    public updateObject(projectId: string, visualizationUri: string, obj: any) {
+        return this.xhr.put(`/gdc/md/${projectId}/obj/${visualizationUri}`, {
             body: obj
         }).then(((r: ApiResponse) => r.getData()));
     }
