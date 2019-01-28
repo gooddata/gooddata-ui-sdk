@@ -2,17 +2,16 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { AFM, Execution } from '@gooddata/typings';
-import { IMenu, PivotTableMenuTotalType, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
+import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
 
 import { ItemsWrapper, Header, Item } from '@gooddata/goodstrap/lib/List/MenuList';
 import Menu from '../../menu/Menu';
 import { getParsedFields } from '../../../helpers/agGrid';
+import { renderedTotalTypesOrder } from '../PivotTable';
 
 export type AlignPositions = 'left' | 'right' | 'center';
 export const ALIGN_LEFT = 'left';
 export const ALIGN_RIGHT = 'right';
-
-const supportedTotalTypes: PivotTableMenuTotalType[] = ['sum', 'max', 'min', 'avg', 'med'];
 
 export interface IProps {
     displayText: string;
@@ -125,7 +124,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         const columnTotals = this.props.getColumnTotals() || [];
         const measureGroupHeaderItems = measureGroupHeader.measureGroupHeader.items;
 
-        let turnedOnTotals: PivotTableMenuTotalType[] = [];
+        let turnedOnTotals: AFM.TotalType[] = [];
         let localIdentifiers: string[] = [];
         if (lastFieldType === 'm') {
             const headerItemData: Execution.IMeasureHeaderItem['measureHeaderItem'] =
@@ -136,7 +135,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
             localIdentifiers = [localIdentifier];
             turnedOnTotals = columnTotals
                 .filter(totalItem => totalItem.measureIdentifier === localIdentifier)
-                .map(totalItem => totalItem.type) as PivotTableMenuTotalType[];
+                .map(totalItem => totalItem.type) as AFM.TotalType[];
         } else if (lastFieldType === 'a') {
             const isColumnAttribute = lastFieldValudId === null;
             if (isColumnAttribute) {
@@ -144,7 +143,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
             }
 
             localIdentifiers = measureGroupHeaderItems.map(i => i.measureHeaderItem.localIdentifier);
-            turnedOnTotals = supportedTotalTypes
+            turnedOnTotals = renderedTotalTypesOrder
                 .filter((type) => {
                     // Show checkmark for attribute aggregation only if all measure
                     // locale identifiers have turned on aggregation
@@ -157,7 +156,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
             return null;
         }
 
-        const menuItems = supportedTotalTypes.map((type) => {
+        const menuItems = renderedTotalTypesOrder.map((type) => {
             const checked = turnedOnTotals.includes(type);
 
             return (
@@ -202,9 +201,11 @@ export default class HeaderCell extends React.Component<IProps, IState> {
                 onOpenedChange={this.handleMenuOpenedChange}
             >
                 <ItemsWrapper>
-                    <Header>{this.props.intl.formatMessage({ id: 'visualizations.menu.aggregations' })}</Header>
+                    <div className="s-table-header-menu-content">
+                        <Header>{this.props.intl.formatMessage({ id: 'visualizations.menu.aggregations' })}</Header>
 
-                    {menuItems}
+                        {menuItems}
+                    </div>
                 </ItemsWrapper>
             </Menu>
         );

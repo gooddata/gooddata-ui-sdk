@@ -10,11 +10,11 @@ const totalValues = {
 };
 
 const getMeasureCell = (column) => {
-    return Selector(`[col-id="a_2009_1-a_2071_1-m_${column}"] .s-pivot-table-column-header`);
+    return Selector(`.s-table-measure-column-header-cell-${column}`);
 };
 
 const getMeasureGroupCell = (column) => {
-    return Selector(`[col-id="2_${column}"]`);
+    return Selector(`.s-table-measure-column-header-group-cell-${column}`);
 };
 
 const getPivotTableFooterCell = (row, column) => {
@@ -36,7 +36,7 @@ const clickOnMenuAggregationItem = async (t, cell, aggregationItemClass) => {
     await waitForPivotTableStopLoading(t);
 };
 
-fixture('Menu')
+fixture('Pivot Table Menu')
     .page(config.url)
     .beforeEach(async (t) => {
         await loginUsingLoginForm(`${config.url}/hidden/pivot-table-dynamic`)(t);
@@ -53,28 +53,31 @@ fixture('Menu')
         await waitForPivotTableStopLoading(t);
     });
 
-test('should show menu button when mouse hovers over the cell', async (t) => {
+test('should show menu toggler button when mouse hovers over the cell', async (t) => {
     const measureCell = getMeasureCell(0);
-    const menu = getMenu(measureCell);
+    const menuToggler = getMenu(measureCell);
 
     await t.hover(measureCell);
-    await t.expect(menu.visible).eql(true);
+    await t.expect(menuToggler.visible).eql(true);
 
     const anotherCell = getMeasureGroupCell(0);
     await t.hover(anotherCell);
-    await t.expect(menu.visible).eql(false);
+    await t.expect(menuToggler.visible).eql(false);
 });
 
-test('should open/close menu when mouse clicks on menu button', async (t) => {
+test('should open/close menu content when mouse clicks on menu toggler', async (t) => {
     const measureCell = getMeasureCell(0);
-    const menu = getMenu(measureCell);
+    const menuToggler = getMenu(measureCell);
+    const menuContentItem = Selector('.s-menu-aggregation-sum');
 
+    await t.expect(menuContentItem.exists).eql(false);
     await t.hover(measureCell);
-    await t.expect(menu.visible).eql(true);
 
-    const anotherCell = getMeasureGroupCell(0);
-    await t.hover(anotherCell);
-    await t.expect(menu.visible).eql(false);
+    await t.click(menuToggler);
+    await t.expect(menuContentItem.visible).eql(true);
+
+    await t.click(menuToggler);
+    await t.expect(menuContentItem.exists).eql(false);
 });
 
 test('should add totals for first measure, when selected from menu in measure', async (t) => {
