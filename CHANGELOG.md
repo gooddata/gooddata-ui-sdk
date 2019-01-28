@@ -13,9 +13,23 @@ The REST API versions in the table are just for your information as the values a
 
 ## Unreleased/planned
 
-- Arithmetic measures
-- Drilling using function predicates
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
+
+## 6.2.0
+
+January 28, 2019
+
+### Added
+
+-   Drilling using function predicates and Arithmetic Measure drilling ([A.M. doc](https://sdk.gooddata.com/gooddata-ui/docs/arithmetic_measure.html),  [drilling doc](https://sdk.gooddata.com/gooddata-ui/docs/drillable_item.html)  | [commit](https://github.com/gooddata/gooddata-react-components/commit/e5b55540fb8434662300dfbda95a427adf8096de),  [commit](https://github.com/gooddata/gooddata-react-components/commit/3a7b8b9b3b223fbea04052ae09ee579fd4848a12),  [commit](https://github.com/gooddata/gooddata-react-components/commit/8e7e5aca98d27aa776c8b57814bd2afaa01688e7))
+-   Model helpers ([doc](https://sdk.gooddata.com/gooddata-ui/docs/model_helpers.html) | [commit](https://github.com/gooddata/gooddata-react-components/commit/f5b96cebeaa7bb886266ddc6463de831c4f24142),  [commit](https://github.com/gooddata/gooddata-react-components/commit/9f6ca5a2f78f41632724f0e7d5acb372edb42975))
+-   SDK request caching in URI Visualization component ([commit](https://github.com/gooddata/gooddata-react-components/commit/387fdb05204b30531bd39193981ad872a8fab3be))
+
+### Changed
+
+-   Upgraded GoodStrap library with fixed import of 'custom-event' polyfill ([commit](https://github.com/gooddata/gooddata-react-components/commit/5545063f7830c043093b8bdd8a80cb1d9c1be00a))
+-   Upgraded Gooddata JS library to version 11.0.0 ([changelog](https://github.com/gooddata/gooddata-js/blob/master/CHANGELOG.md))
+-   Upgraded lodash and moment libraries ([commit](https://github.com/gooddata/gooddata-react-components/commit/e427005650c4aad17221741836edfe35827def6c))
 
 ## 6.1.1
 
