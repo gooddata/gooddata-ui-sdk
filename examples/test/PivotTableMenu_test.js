@@ -5,6 +5,7 @@ import { loginUsingLoginForm, waitForPivotTableStopLoading } from './utils/helpe
 
 const totalValues = {
     sum: ['Sum', '', '', '$1,566,007', '$150,709'],
+    nat: ['Rollup (Total)', '', '', '$406,007', '$150,709'],
     max: ['Max', '', '', '$101,055', '$25,140'],
     empty: '–'
 };
@@ -87,11 +88,23 @@ test('should add totals for first measure, when selected from menu in measure', 
 
     await clickOnMenuAggregationItem(t, measureCell, '.s-menu-aggregation-sum');
 
-    await t.expect(getPivotTableFooterCell(0, 0).exists).eql(true);
     await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
-    await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
     await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
     await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
+    await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
+});
+
+test('should add a native total for first measure, when selected from menu in measure', async (t) => {
+    const measureCell = getMeasureCell(0);
+
+    await t.expect(getPivotTableFooterCell(0, 0).exists).eql(false);
+
+    await clickOnMenuAggregationItem(t, measureCell, '.s-menu-aggregation-nat');
+
+    await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.nat[0]);
+    await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.nat[3]);
+    await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
+    await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
 });
 
 test('should add totals for all measures, when selected from menu in measure group', async (t) => {

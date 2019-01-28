@@ -25,6 +25,33 @@ export const AVAILABLE_TOTALS: AFM.TotalType[] = [
     'nat'
 ];
 
+export const isNativeTotal = (total: AFM.ITotalItem) => {
+    return total && total.type === 'nat';
+};
+
+export const getNativeTotals = (totals: AFM.ITotalItem[]): AFM.INativeTotalItem[] => {
+    if (!totals) {
+        return [];
+    }
+    const afmNativeTotals: AFM.INativeTotalItem[] = totals
+        .filter(total => isNativeTotal(total))
+        .map(nativeTotal => ({
+            measureIdentifier: nativeTotal.measureIdentifier,
+            attributeIdentifiers: []
+        }));
+    return afmNativeTotals;
+};
+
+export const getTotalsFromResultSpec = (resultSpec: AFM.IResultSpec): AFM.ITotalItem[] => {
+    return resultSpec && resultSpec.dimensions
+        ? resultSpec.dimensions.reduce(
+            (totals: AFM.ITotalItem[], dimension) =>
+                dimension && dimension.totals ? totals.concat(dimension.totals) : totals,
+            []
+        )
+        : [];
+};
+
 function getTotalsList(intl: InjectedIntl): ITotalTypeWithTitle[] {
     return AVAILABLE_TOTALS.map(type => ({
         type,

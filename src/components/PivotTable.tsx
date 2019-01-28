@@ -19,6 +19,7 @@ import {
     COLUMNS
  } from '../constants/bucketNames';
 import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
+import { getTotalsFromResultSpec, getNativeTotals } from './visualizations/table/totals/utils';
 
 export interface IPivotTableBucketProps {
     measures?: VisualizationObject.BucketItem[];
@@ -73,7 +74,13 @@ export class PivotTable extends React.Component<IPivotTableProps> {
         const buckets: VisualizationObject.IBucket[] = getBuckets(this.props);
 
         const afm = convertBucketsToAFM(buckets, filters);
+
         const resultSpec = getResultSpec(buckets, sortBy, getPivotTableDimensions);
+        const totals = getTotalsFromResultSpec(resultSpec);
+        const nativeTotals = getNativeTotals(totals);
+        if (nativeTotals && nativeTotals.length) {
+            afm.nativeTotals = nativeTotals;
+        }
 
         hasDuplicateIdentifiers(buckets);
 

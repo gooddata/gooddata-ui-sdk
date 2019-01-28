@@ -21,7 +21,10 @@ import {
     removeMeasureIndex,
     getTotalsDefinition,
     orderTotals,
-    shouldShowTotals
+    shouldShowTotals,
+    isNativeTotal,
+    getNativeTotals,
+    getTotalsFromResultSpec
 } from '../utils';
 import { createIntlMock } from '../../../utils/intlUtils';
 import { ITotalWithData } from '../../../../../interfaces/Totals';
@@ -553,6 +556,86 @@ describe('Totals', () => {
             ];
 
             expect(shouldShowTotals(headers)).toBeFalsy();
+        });
+    });
+
+    describe('isNativeTotal', () => {
+        it('should return true if total is of type "native"', () => {
+            expect(isNativeTotal({
+                attributeIdentifier: 'a1',
+                measureIdentifier: 'm1',
+                type: 'nat'
+            })).toBe(true);
+        });
+        it('should return false if total is NOT of type "native"', () => {
+            expect(isNativeTotal({
+                attributeIdentifier: 'a1',
+                measureIdentifier: 'm1',
+                type: 'sum'
+            })).toBe(false);
+        });
+    });
+
+    describe('getNativeTotals', () => {
+        it('should filter out all but native totals and adapt them to afm.nativeTotal format', () => {
+            expect(getNativeTotals([
+                {
+                    attributeIdentifier: 'a1',
+                    measureIdentifier: 'm1',
+                    type: 'sum'
+                },
+                {
+                    attributeIdentifier: 'a1',
+                    measureIdentifier: 'm1',
+                    type: 'nat'
+                }
+            ])).toEqual([
+                {
+                    attributeIdentifiers: [],
+                    measureIdentifier: 'm1'
+                }
+            ]);
+        });
+        it('should return an empty array if no totals are specified', () => {
+            expect(getNativeTotals(undefined)).toEqual([]);
+        });
+    });
+
+    describe('getTotalsFromResultSpec', () => {
+        it('should collect totals from resultSpec dimensions and return them', () => {
+            expect(getTotalsFromResultSpec({
+                dimensions: [
+                    {
+                        itemIdentifiers: [],
+                        totals: [{
+                            attributeIdentifier: 'a1',
+                            measureIdentifier: 'm1',
+                            type: 'sum'
+                        }]
+                    },
+                    {
+                        itemIdentifiers: [],
+                        totals: [{
+                            attributeIdentifier: 'a2',
+                            measureIdentifier: 'm2',
+                            type: 'nat'
+                        }]
+                    }
+                ]
+            })).toEqual([
+                {
+                    attributeIdentifier: 'a1',
+                    measureIdentifier: 'm1',
+                    type: 'sum'
+                }, {
+                    attributeIdentifier: 'a2',
+                    measureIdentifier: 'm2',
+                    type: 'nat'
+                }
+            ]);
+        });
+        it('should return an empty array if no totals are specified', () => {
+            expect(getTotalsFromResultSpec(undefined)).toEqual([]);
         });
     });
 });
