@@ -10,9 +10,10 @@
     tslint-eslint-rules "5.4.0"
     tslint-react "3.6.0"
 
-"@gooddata/typings@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.6.0.tgz#9246b79920d5c30294e0808a63995cef62738eaa"
+"@gooddata/typings@2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.7.0.tgz#0e16beb641a36754cdc5d275d9f34c3f22b61a01"
+  integrity sha512-ASjXsTi6/f/FT1UCESBZ9IuNRVfPxdGCCTorN+HIY4Jrv7c6gMY7zbLFwy4dI3GhEXUm8DDYYWYB2YeXsCX95w==
   dependencies:
     lodash "4.17.11"
 
