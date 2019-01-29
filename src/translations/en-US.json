@@ -256,27 +256,27 @@
    },
    "visualizations.measure.arithmetic.sum.title": {
       "value": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Sum",
       "limit": 0
    },
    "visualizations.measure.arithmetic.difference.title": {
       "value": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Difference",
       "limit": 0
    },
    "visualizations.measure.arithmetic.multiplication.title": {
       "value": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Product",
       "limit": 0
    },
    "visualizations.measure.arithmetic.ratio.title": {
       "value": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Ratio",
       "limit": 0
    },
    "visualizations.measure.arithmetic.change.title": {
       "value": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Change",
       "limit": 0
    },
    "visualizations.legend.text.top": {
