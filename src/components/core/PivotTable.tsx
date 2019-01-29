@@ -20,6 +20,7 @@ import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import cloneDeep = require('lodash/cloneDeep');
+import sortBy = require('lodash/sortBy');
 
 import InjectedIntl = ReactIntl.InjectedIntl;
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -28,6 +29,7 @@ import '../../../styles/scss/pivotTable.scss';
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import {
+    IColDefExtended,
     assortDimensionHeaders,
     COLUMN_ATTRIBUTE_COLUMN,
     executionToAGGridAdapter,
@@ -99,6 +101,8 @@ export interface ICustomGridOptions extends GridOptions {
 
 const AG_NUMERIC_CELL_CLASSNAME = 'ag-numeric-cell';
 const AG_NUMERIC_HEADER_CLASSNAME = 'ag-numeric-header';
+
+export const renderedTotalTypesOrder: AFM.TotalType[] = ['sum', 'max', 'min', 'avg', 'med'];
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string]: any}) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
@@ -400,7 +404,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             columnDefs: [],
             rowData: [],
             execution: null,
-            columnTotals: cloneDeep(get(this.props, 'resultSpec.dimensions[0].totals', [])),
+            columnTotals: cloneDeep(this.getColumnTotalsFromResultSpec(this.props.resultSpec)),
             agGridRerenderNumber: 1
         };
 
@@ -414,6 +418,16 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public componentWillReceiveProps(nextProps: IPivotTableInnerProps) {
+        const currentTotals = this.getColumnTotalsFromResultSpec(this.props.resultSpec);
+        const newTotals = this.getColumnTotalsFromResultSpec(nextProps.resultSpec);
+        const totalsChanged = !isEqual(currentTotals, newTotals);
+        if (totalsChanged) {
+            this.setState({ columnTotals: newTotals }, () => {
+                this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
+                this.setGridDataSource();
+            });
+        }
+
         const propsRequiringNewDataSource = [
             'resultSpec',
             'getPage',
@@ -424,7 +438,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             'drillableItems'
         ];
 
-        if (propsRequiringNewDataSource.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]))) {
+        // First we need to update totals in state, then we can create new datasource, because some measure might
+        // have been removed and cand send outdated total with measure that no longer exists
+        if (!totalsChanged
+            && propsRequiringNewDataSource.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]))) {
             this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
             this.setGridDataSource();
         }
@@ -436,12 +453,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             this.setState(state => ({
                 agGridRerenderNumber: state.agGridRerenderNumber + 1
             }));
-        }
-
-        const currentTotals = get(this.props, 'resultSpec.dimensions[0].totals', []);
-        const newTotals = get(nextProps, 'resultSpec.dimensions[0].totals', []);
-        if (!isEqual(currentTotals, newTotals)) {
-            this.setState({ columnTotals: newTotals });
         }
     }
 
@@ -487,8 +498,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public getHeaderClass = (classList: string) => (headerClassParams: any): string => {
-        const colDef: ColDef = headerClassParams.colDef;
-        const { field } = colDef;
+        const colDef: IColDefExtended = headerClassParams.colDef;
+        const { field, measureIndex } = colDef;
         const treeIndexes = colDef ? indexOfTreeNode(
             colDef,
             this.state.columnDefs,
@@ -498,10 +509,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             ? treeIndexes[treeIndexes.length - 1]
             : null;
         const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
+
         const className = classNames(
             classList,
             'gd-column-group-header',
             colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
+            colGroupIndex !== null ? `s-table-measure-column-header-group-cell-${colGroupIndex}` : null,
+            measureIndex !== null ? `s-table-measure-column-header-cell-${measureIndex}` : null,
             !field ? 'gd-column-group-header--empty' : null,
             isFirstColumn ? 'gd-column-group-header--first' : null
         );
@@ -603,24 +617,34 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         attributeIdentifier,
         include
     }: IMenuAggregationClickConfig) => {
-        const { columnTotals } = this.state;
+        const columnTotals = this.getColumnTotals();
 
         const columnTotalsChanged: AFM.ITotalItem[] = [];
         for (const measureIdentifier of measureIdentifiers) {
             columnTotalsChanged.push({ type, measureIdentifier, attributeIdentifier });
         }
 
-        let newColumnTotals = [];
+        let updatedColumnTotals = [];
         if (include) {
             const columnTotalsChangedUnique = columnTotalsChanged
                 .filter(totalChanged => !columnTotals.some(total => isEqual(total, totalChanged)));
 
-            newColumnTotals = [...columnTotals, ...columnTotalsChangedUnique];
+            updatedColumnTotals = [...columnTotals, ...columnTotalsChangedUnique];
         } else {
-            newColumnTotals = columnTotals
+            updatedColumnTotals = columnTotals
                 .filter(total => !columnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)));
         }
 
+        const newColumnTotals = sortBy(updatedColumnTotals, (total) => {
+            const totalRankIndex = renderedTotalTypesOrder.findIndex(rankedItem => rankedItem === total.type);
+            return totalRankIndex;
+        });
+
+        this.props.pushData({
+            properties: {
+                totals: newColumnTotals
+            }
+        });
         this.setState({ columnTotals: newColumnTotals });
     }
 
@@ -731,7 +755,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     cellClass: this.getCellClass(classNames(
                         AG_NUMERIC_CELL_CLASSNAME, 'gd-measure-column')),
                     headerClass: this.getHeaderClass(classNames(
-                        AG_NUMERIC_HEADER_CLASSNAME, 'gd-measure-column-header')),
+                        AG_NUMERIC_HEADER_CLASSNAME,
+                        'gd-measure-column-header')),
                     valueFormatter: (params: any) => {
                         return params.value === undefined
                             ? null
@@ -801,6 +826,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private getColumnTotals = () => {
         return this.state.columnTotals;
+    }
+
+    private getColumnTotalsFromResultSpec = (source: AFM.IResultSpec) => {
+        return get(source, 'dimensions[0].totals', []);
     }
 
     private getDrillablePredicates(): IHeaderPredicate[] {

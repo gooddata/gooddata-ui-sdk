@@ -24,6 +24,10 @@ export const ID_SEPARATOR_PLACEHOLDER = 'UNDERSCORE';
 export const DOT_PLACEHOLDER = 'DOT';
 export const ROW_TOTAL = 'rowTotal';
 
+export interface IColDefExtended extends ColDef {
+    measureIndex?: number;
+}
+
 export const sanitizeField = (field: string) => (
     // Identifiers can not contain a dot character, because AGGrid cannot handle it.
     // Alternatively, we could handle it with a custom renderer (works in RowLoadingElement).
