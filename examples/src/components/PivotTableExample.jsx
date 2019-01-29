@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable } from '@gooddata/react-components';
+import { PivotTable, Model } from '@gooddata/react-components';
 import PropTypes from 'prop-types';
 
 import '@gooddata/react-components/styles/css/main.css';
@@ -38,104 +38,25 @@ export class PivotTableExample extends Component {
     render() {
         const { withMeasures, withAttributes, withPivot, hasError, className } = this.props;
         const measures = withMeasures ? [
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            Model.measure(franchiseFeesIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format('#,##0')
         ] : [];
 
         const attributes = withAttributes ? [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    localIdentifier: 'state'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationNameDisplayFormIdentifier
-                    },
-                    localIdentifier: 'location'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: menuCategoryAttributeDFIdentifier
-                    },
-                    localIdentifier: 'menu'
-                }
-            }
+            Model.attribute(locationStateDisplayFormIdentifier),
+            Model.attribute(locationNameDisplayFormIdentifier),
+            Model.attribute(menuCategoryAttributeDFIdentifier)
         ] : [];
 
         const columns = withPivot ? [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: quarterDateIdentifier
-                    },
-                    localIdentifier: 'quarter'
-                }
-            },
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            Model.attribute(quarterDateIdentifier),
+            Model.attribute(monthDateIdentifier)
         ] : [];
 
         return (

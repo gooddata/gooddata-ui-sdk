@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { ColumnChart } from '@gooddata/react-components';
+import { ColumnChart, Model } from '@gooddata/react-components';
 import '@gooddata/react-components/styles/css/main.css';
 
 import {
@@ -12,13 +12,6 @@ import {
     monthDateIdentifierJanuary,
     projectId
 } from '../utils/fixtures';
-
-import {
-    createMeasureBucketItem,
-    createAttributeBucketItem,
-    createAttributeSortItem,
-    createMeasureSortItem
-} from '../utils/helpers';
 
 export class DynamicSortingExample extends Component {
     constructor(props) {
@@ -60,36 +53,36 @@ export class DynamicSortingExample extends Component {
                 key: 'state',
                 label: 'State',
                 description: dir => `The column stacks (states) are sorted alphabetically by the label of the state attribute in ${this.getOrderLabel(dir)} order.`,
-                sortBy: dir => ([createAttributeSortItem(locationStateDisplayFormIdentifier, dir)])
+                sortBy: dir => ([Model.attributeSortItem(locationStateDisplayFormIdentifier, dir)])
             },
             {
                 key: 'date',
                 label: 'Date attribute',
                 description: dir => `The columns (date) are sorted by the value of the date attribute in ${this.getOrderLabel(dir)} order.`,
-                sortBy: dir => ([createAttributeSortItem(monthDateIdentifier, dir)])
+                sortBy: dir => ([Model.attributeSortItem(monthDateIdentifier, dir)])
             },
             {
                 key: 'sum-of-column',
                 label: 'Date attribute by sum of the column',
                 description: dir => `The columns (date) are sorted by the sum of the Total Sales stacks in each column in ${this.getOrderLabel(dir)} order.`,
-                sortBy: dir => ([createAttributeSortItem(monthDateIdentifier, dir, 'sum')])
+                sortBy: dir => ([Model.attributeSortItem(monthDateIdentifier, dir).aggregation('sum')])
             },
             {
                 key: 'sum-of-stacks',
                 label: 'State attribute by sum of individual stacks',
                 description: dir => `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${this.getOrderLabel(dir)} order.`,
-                sortBy: dir => ([createAttributeSortItem(locationStateDisplayFormIdentifier, dir, 'sum')])
+                sortBy: dir => ([Model.attributeSortItem(locationStateDisplayFormIdentifier, dir).aggregation('sum')])
             },
             {
                 key: 'state-element',
                 label: 'Measure of California',
                 description: dir => `The columns (date) are sorted by the value of the Total Sales of California stack in ${this.getOrderLabel(dir)} order.`,
                 sortBy: dir => ([
-                    createMeasureSortItem(
-                        totalSalesIdentifier,
-                        dir,
-                        [locationStateDisplayFormIdentifier, locationStateAttributeCaliforniaUri]
-                    )
+                    Model.measureSortItem(totalSalesIdentifier, dir)
+                        .attributeLocators({
+                            attributeIdentifier: locationStateDisplayFormIdentifier,
+                            element: locationStateAttributeCaliforniaUri
+                        })
                 ])
             },
             {
@@ -97,11 +90,11 @@ export class DynamicSortingExample extends Component {
                 label: 'Measure of January',
                 description: dir => `The column stacks (states) are sorted by the value of Total Sales in the January column in ${this.getOrderLabel(dir)} order.`,
                 sortBy: dir => ([
-                    createMeasureSortItem(
-                        totalSalesIdentifier,
-                        dir,
-                        [monthDateIdentifier, monthDateIdentifierJanuary]
-                    )
+                    Model.measureSortItem(totalSalesIdentifier, dir)
+                        .attributeLocators({
+                            attributeIdentifier: monthDateIdentifier,
+                            element: monthDateIdentifierJanuary
+                        })
                 ])
             },
             {
@@ -110,16 +103,16 @@ export class DynamicSortingExample extends Component {
                 overrideDirection: 'niether',
                 description: () => 'You can combine multiple sortItems together, even mix different directions.',
                 sortBy: () => ([
-                    createMeasureSortItem(
-                        totalSalesIdentifier,
-                        'asc',
-                        [locationStateDisplayFormIdentifier, locationStateAttributeCaliforniaUri]
-                    ),
-                    createMeasureSortItem(
-                        totalSalesIdentifier,
-                        'desc',
-                        [monthDateIdentifier, monthDateIdentifierJanuary]
-                    )
+                    Model.measureSortItem(totalSalesIdentifier, 'asc')
+                        .attributeLocators({
+                            attributeIdentifier: locationStateDisplayFormIdentifier,
+                            element: locationStateAttributeCaliforniaUri
+                        }),
+                    Model.measureSortItem(totalSalesIdentifier, 'desc')
+                        .attributeLocators({
+                            attributeIdentifier: monthDateIdentifier,
+                            element: monthDateIdentifierJanuary
+                        })
                 ])
             }
         ];
@@ -176,9 +169,15 @@ export class DynamicSortingExample extends Component {
                 <div style={{ height: 600 }} className="s-dynamic-sorting-chart" >
                     <ColumnChart
                         projectId={projectId}
-                        measures={[createMeasureBucketItem(totalSalesIdentifier)]}
-                        viewBy={createAttributeBucketItem(monthDateIdentifier)}
-                        stackBy={createAttributeBucketItem(locationStateDisplayFormIdentifier)}
+                        measures={[Model.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
+                        viewBy={
+                            Model.attribute(monthDateIdentifier)
+                                .localIdentifier(monthDateIdentifier)
+                        }
+                        stackBy={
+                            Model.attribute(locationStateDisplayFormIdentifier)
+                                .localIdentifier(locationStateDisplayFormIdentifier)
+                        }
                         sortBy={sortOption.sortBy(direction)}
                     />
                 </div>

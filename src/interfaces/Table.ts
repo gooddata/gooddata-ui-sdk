@@ -105,10 +105,6 @@ export interface ITableTransformationConfig {
     separators?: ISeparators;
 }
 
-export interface IPivotTableConfig {
-    separators?: ISeparators;
-}
-
 export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
     return cell && (cell as IAttributeCell).uri !== undefined;
 }

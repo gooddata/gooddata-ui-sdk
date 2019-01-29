@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { noop } from 'lodash';
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 import { ITableProps, Table } from './Table';
 import { TableControls } from './TableControls';
@@ -22,6 +22,7 @@ export interface IResponsiveTableProps {
     onLess?: (onLessObj: { rows: number }) => void;
     onSortChange?: OnSortChangeWithItem;
     executionRequest: AFM.IExecution;
+    executionResponse: Execution.IExecutionResponse;
 }
 
 export interface IResponsiveTableState {

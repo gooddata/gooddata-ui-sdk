@@ -4,6 +4,42 @@ import head = require('lodash/head');
 import last = require('lodash/last');
 import { formatAsPercent, isInPercent } from '../customConfiguration';
 
+const DEFAULT_LIMIT_LENGTH = 4; // length of '0.00' is 4
+const DEFAULT_PADDING = 2;
+const DEFAULT_SHALLOW_RANGE = 10;
+
+/**
+ * Get limit length to cut off value less than one
+ * @param value
+ */
+function getLimitLength(value: number): number {
+    const valueStr = value.toString();
+    const isFloat = valueStr.indexOf('.') > 0;
+    const length = isFloat ? valueStr.length : valueStr.length + 1;
+    return length + DEFAULT_PADDING;
+}
+
+function isValueInShallowRange(min: number, max: number): boolean {
+    return min !== max && Math.abs(max - min) < DEFAULT_SHALLOW_RANGE;
+}
+
+/**
+ * Format value in shallow range
+ * value=0.000375, min=0,   max=0.001  => 0.00037 (length = length of max + padding)
+ * value=0.0125,   min=0,   max=0.1    => 0.012   (length = length of max + padding)
+ * value=0.13125,  min=0,   max=1      => 0.13    (length = default length)
+ * value=11.13125, min=11,  max=12     => 11.13   (length = length of max + padding + 1)
+ *
+ * @param value
+ * @param min
+ * @param max
+ */
+export function formatValueInShallowRange(value: number, min: number, max: number): number {
+    const limitLength = Math.max(getLimitLength(min), getLimitLength(max), DEFAULT_LIMIT_LENGTH);
+    const newValue = value.toString().substr(0, limitLength);
+    return parseFloat(newValue);
+}
+
 export function removeDecimal(value: string): string {
     const decimalPos = value.indexOf('.');
     if (decimalPos === -1) {
@@ -51,8 +87,14 @@ function getZeroLength(min: number, max: number): number {
 }
 
 function formatLabel(value: number, tickPositions: number[]): number {
+    const min = head(tickPositions);
+    const max = last(tickPositions);
+
+    if (isValueInShallowRange(min, max)) {
+        return formatValueInShallowRange(value, min, max);
+    }
     const numberStr = removeDecimal(value.toString());
-    return roundNumber(numberStr, head(tickPositions), last(tickPositions));
+    return roundNumber(numberStr, min, max);
 }
 
 export function dualAxesLabelFormatter() {

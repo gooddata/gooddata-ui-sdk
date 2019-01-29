@@ -137,13 +137,15 @@ $responsive-legend: 'only screen and (max-width: 767px)';
                 flex-flow: row wrap;
                 justify-content: flex-start;
                 width: auto;
+                box-sizing: border-box;
+                overflow-x: hidden;
                 min-width: 0; // hack for FF
                 max-width: 100%; // hack for IE
             }
 
             .series-item {
-                max-width: calc(100% - 15px);
                 margin-left: 15px;
+                overflow-x: auto;
             }
         }
 

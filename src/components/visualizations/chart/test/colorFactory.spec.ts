@@ -121,8 +121,8 @@ describe('ColorFactory', () => {
 
     describe('AttributeColorStrategy', () => {
         it('should return AttributeColorStrategy with two colors from default color palette', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
             const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
             const type = 'bar';
             const colorPalette: IColorPalette = undefined;
@@ -130,9 +130,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 colorPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -148,8 +148,8 @@ describe('ColorFactory', () => {
         });
 
         it('should return AttributeColorStrategy with two colors from custom color palette', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
             const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
             const type = 'bar';
             const colorPalette = [{
@@ -178,9 +178,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 colorPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -196,8 +196,8 @@ describe('ColorFactory', () => {
         });
 
         it('should return AttributeColorStrategy with properly applied mapping', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
             const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
             const type = 'bar';
             const colorPalette = [{
@@ -261,9 +261,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -279,17 +279,17 @@ describe('ColorFactory', () => {
 
     describe('MeasureColorStrategy', () => {
         it('should return a palette with a lighter color for each pop measure based on it`s source measure', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
+            const { executionResponse } = fixtures.barChartWithPopMeasureAndViewByAttribute;
             const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
             const type = 'column';
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -300,17 +300,17 @@ describe('ColorFactory', () => {
         });
 
         it('should return a palette with a lighter color for each previous period based on it`s source measure', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWithPreviousPeriodMeasure);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithPreviousPeriodMeasure);
+            const { executionResponse } = fixtures.barChartWithPreviousPeriodMeasure;
             const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
             const type = 'column';
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -321,17 +321,17 @@ describe('ColorFactory', () => {
         });
 
         it('should rotate colors from original palette and generate lighter PoP colors', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
             const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
             const type = 'column';
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -345,17 +345,17 @@ describe('ColorFactory', () => {
         });
 
         it('should rotate colors from original palette and generate lighter previous period measures', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWith6PreviousPeriodMeasures);
+            const { executionResponse } = fixtures.barChartWith6PreviousPeriodMeasures;
             const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
             const type = 'column';
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -371,7 +371,8 @@ describe('ColorFactory', () => {
 
         it('should just return the original palette if there are no pop measures shorten to cover all legend items',
             () => {
-                const [measureGroup, viewByAttribute, stackByAttribute] = getMVS(fixtures.barChartWithoutAttributes);
+                const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithoutAttributes);
+                const { executionResponse } = fixtures.barChartWithoutAttributes;
                 const { afm } = fixtures.barChartWithoutAttributes.executionRequest;
                 const type = 'column';
                 const colorPalette: IColorPalette = undefined;
@@ -379,9 +380,9 @@ describe('ColorFactory', () => {
                 const colorStrategy = ColorFactory.getColorStrategy(
                     colorPalette,
                     undefined,
-                    measureGroup,
                     viewByAttribute,
                     stackByAttribute,
+                    executionResponse,
                     afm,
                     type
                 );
@@ -393,8 +394,8 @@ describe('ColorFactory', () => {
             });
 
         it('should return MeasureColorStrategy with properly applied mapping', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
             const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
             const type = 'column';
             const colorMapping: IColorMapping[] = [
@@ -425,9 +426,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -442,17 +443,17 @@ describe('ColorFactory', () => {
         });
 
         it('should return only non-derived measures in getColorAssignment', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWith6PopMeasuresAndViewByAttribute);
+            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
             const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
             const type = 'column';
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -463,8 +464,8 @@ describe('ColorFactory', () => {
 
     describe('TreemapColorStrategy', () => {
         it('should return TreemapColorStrategy strategy with two colors from default color palette', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.treemapWithMetricViewByAndStackByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.treemapWithMetricViewByAndStackByAttribute);
+            const { executionResponse } = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { afm } = fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest;
             const type = 'treemap';
             const colorPalette: IColorPalette = undefined;
@@ -472,9 +473,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 colorPalette,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -490,8 +491,8 @@ describe('ColorFactory', () => {
         });
 
         it('should return TreemapColorStrategy with properly applied mapping', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.treemapWithMetricViewByAndStackByAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.treemapWithMetricViewByAndStackByAttribute);
+            const { executionResponse } = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { afm } = fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest;
             const type = 'treemap';
 
@@ -509,9 +510,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -527,35 +528,35 @@ describe('ColorFactory', () => {
 
     describe('HeatmapColorStrategy', () => {
         it('should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.heatmapMetricRowColumn);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
+            const { executionResponse } = fixtures.heatmapMetricRowColumn;
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
                 undefined,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
+            range(7).map((colorIndex: number) =>
                 expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[colorIndex])
             );
         });
 
         it('should return HeatmapColorStrategy strategy with 7 colors'
             + ' based on the first color from custom palette', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.heatmapMetricRowColumn);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
+            const { executionResponse } = fixtures.heatmapMetricRowColumn;
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const expectedColors = [
+            const expectedColors: string[] = [
                 'rgb(255,255,255)',
                 'rgb(245,220,224)',
                 'rgb(235,186,194)',
@@ -565,29 +566,70 @@ describe('ColorFactory', () => {
                 'rgb(195,49,73)'
             ];
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy  = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 undefined,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
-                expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(expectedColors[colorIndex])
-            );
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
         });
 
-        it('should return HeatmapColorStrategy with properly applied mapping', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.heatmapMetricRowColumn);
+        it('should return HeatmapColorStrategy strategy with 7 colors'
+            + ' based on the first color from custom palette when color mapping given but not applicable', () => {
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
+            const { executionResponse } = fixtures.heatmapMetricRowColumn;
             const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
             const type = 'heatmap';
 
-            const expectedColors = [
+            const expectedColors: string[] = [
+                'rgb(255,255,255)',
+                'rgb(245,220,224)',
+                'rgb(235,186,194)',
+                'rgb(225,152,164)',
+                'rgb(215,117,133)',
+                'rgb(205,83,103)',
+                'rgb(195,49,73)'
+            ];
+
+            const inapplicableColorMapping: IColorMapping[] = [
+                {
+                    predicate: () => false,
+                    color: {
+                        type: 'guid',
+                        value: '02'
+                    }
+                }
+            ];
+
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
+                CUSTOM_COLOR_PALETTE,
+                inapplicableColorMapping,
+                viewByAttribute,
+                stackByAttribute,
+                executionResponse,
+                afm,
+                type
+            );
+
+            expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
+        });
+
+        it('should return HeatmapColorStrategy with properly applied mapping', () => {
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
+            const { executionResponse } = fixtures.heatmapMetricRowColumn;
+            const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+            const type = 'heatmap';
+
+            const expectedColors: string[] = [
                 'rgb(255,255,255)',
                 'rgb(240,244,226)',
                 'rgb(226,234,198)',
@@ -610,24 +652,23 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            [0, 1, 2, 3, 4, 5, 6].map((colorIndex: number) =>
-                expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(expectedColors[colorIndex])
-            );
+            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            expect(colors).toEqual(expectedColors);
         });
     });
 
     describe('BubbleChartStrategy', () => {
         it('shouls create palette with color from first measure', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.bubbleChartWith3Metrics);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.bubbleChartWith3Metrics);
+            const { executionResponse } = fixtures.bubbleChartWith3Metrics;
             const { afm } = fixtures.bubbleChartWith3Metrics.executionRequest;
             const type = 'bubble';
 
@@ -650,9 +691,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -663,8 +704,8 @@ describe('ColorFactory', () => {
         });
 
         it('should create palette with color for each attribute element', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.bubbleChartWith3MetricsAndAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.bubbleChartWith3MetricsAndAttribute);
+            const { executionResponse } = fixtures.bubbleChartWith3MetricsAndAttribute;
             const { afm } = fixtures.bubbleChartWith3MetricsAndAttribute.executionRequest;
             const type = 'bubble';
 
@@ -688,9 +729,9 @@ describe('ColorFactory', () => {
             const colorStrategy = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );
@@ -703,8 +744,8 @@ describe('ColorFactory', () => {
 
     describe('ScatterPlotColorStrategy', () => {
         it('should create palette with same color from first measure for all attribute elements', () => {
-            const [measureGroup, viewByAttribute, stackByAttribute] =
-                getMVS(fixtures.scatterPlotWith2MetricsAndAttribute);
+            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.scatterPlotWith2MetricsAndAttribute);
+            const { executionResponse } = fixtures.scatterPlotWith2MetricsAndAttribute;
             const { afm } = fixtures.scatterPlotWith2MetricsAndAttribute.executionRequest;
             const type = 'scatter';
 
@@ -725,12 +766,12 @@ describe('ColorFactory', () => {
                 }
             ];
 
-            const colorStrategy = ColorFactory.getColorStrategy(
+            const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
                 CUSTOM_COLOR_PALETTE,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm,
                 type
             );

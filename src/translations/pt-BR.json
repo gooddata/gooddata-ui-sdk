@@ -58,5 +58,6 @@
    "visualizations.legend.text.top": "Superior:",
    "visualizations.legend.text.bottom": "Inferior:",
    "visualizations.legend.text.left": "Esquerda:",
-   "visualizations.legend.text.right": "Direita:"
+   "visualizations.legend.text.right": "Direita:",
+   "visualizations.menu.aggregations": "Agregações"
 }

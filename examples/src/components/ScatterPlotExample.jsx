@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { ScatterPlot } from '@gooddata/react-components';
+import { ScatterPlot, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -23,42 +23,11 @@ export class ScatterPlotExample extends Component {
     }
 
     render() {
-        const xMeasure = {
-            measure: {
-                localIdentifier: 'franchiseFeesIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchiseFeesIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        const xMeasure = Model.measure(franchiseFeesIdentifier).format('#,##0');
 
-        const yMeasure = {
-            measure: {
-                localIdentifier: 'franchisedSalesIdentifier',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: franchisedSalesIdentifier
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        const yMeasure = Model.measure(franchisedSalesIdentifier).format('#,##0');
 
-        const locationResort = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationResortIdentifier
-                },
-                localIdentifier: 'location_resort'
-            }
-        };
+        const locationResort = Model.attribute(locationResortIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-scatter-plot">

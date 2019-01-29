@@ -1,12 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
-import * as invariant from 'invariant';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import { IColorPalette } from '@gooddata/gooddata-js';
 import * as Highcharts from 'highcharts';
-import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
-import { IMappingHeader } from '../../../interfaces/MappingHeader';
-
+import * as invariant from 'invariant';
 import cloneDeep = require('lodash/cloneDeep');
 import compact = require('lodash/compact');
 import escape = require('lodash/escape');
@@ -19,6 +16,18 @@ import last = require('lodash/last');
 import range = require('lodash/range');
 import unescape = require('lodash/unescape');
 import without = require('lodash/without');
+
+import { MEASURES, SECONDARY_MEASURES, SEGMENT, TERTIARY_MEASURES, VIEW } from '../../../constants/bucketNames';
+import { VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
+
+import { getMasterMeasureObjQualifier } from '../../../helpers/afmHelper';
+import { findAttributeInDimension, findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
+import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
+import { unwrap } from '../../../helpers/utils';
+import { IChartConfig, IChartLimits, IColorAssignment } from '../../../interfaces/Config';
+import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
+import { getLighterColor } from '../utils/color';
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -34,31 +43,23 @@ import {
     parseValue,
     stringifyChartTypes
 } from '../utils/common';
-import { getChartProperties } from './highcharts/helpers';
-import { unwrap } from '../../../helpers/utils';
-
-import { getMasterMeasureObjQualifier } from '../utils/drilldownEventing';
-import { getLighterColor } from '../utils/color';
-import { isDataOfReasonableSize } from './highChartsCreators';
-import {
-    VIEW_BY_DIMENSION_INDEX,
-    STACK_BY_DIMENSION_INDEX,
-    PIE_CHART_LIMIT,
-    HEATMAP_DATA_POINTS_LIMIT
-} from './constants';
-import { VisualizationTypes, VisType } from '../../../constants/visualizationTypes';
-import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW, SEGMENT } from '../../../constants/bucketNames';
-
-import {
-    DEFAULT_SERIES_LIMIT,
-    DEFAULT_CATEGORIES_LIMIT,
-    DEFAULT_DATA_POINTS_LIMIT
-} from './highcharts/commonConfiguration';
 import { getComboChartOptions } from './chartOptions/comboChartOptions';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 
 import { ColorFactory, IColorStrategy } from './colorFactory';
-import { IColorAssignment, IChartLimits, IChartConfig } from '../../../interfaces/Config';
+import {
+    HEATMAP_DATA_POINTS_LIMIT,
+    PIE_CHART_LIMIT,
+    STACK_BY_DIMENSION_INDEX,
+    VIEW_BY_DIMENSION_INDEX
+} from './constants';
+
+import {
+    DEFAULT_CATEGORIES_LIMIT,
+    DEFAULT_DATA_POINTS_LIMIT,
+    DEFAULT_SERIES_LIMIT
+} from './highcharts/commonConfiguration';
+import { getChartProperties } from './highcharts/helpers';
+import { isDataOfReasonableSize } from './highChartsCreators';
 
 const enableAreaChartStacking = (stacking: any) => {
     return stacking || isUndefined(stacking);
@@ -719,10 +720,10 @@ export function generateTooltipFn(viewByAttribute: any, type: string, config: IC
             textData[0][0] = customEscape(point.name);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -757,10 +758,10 @@ export function generateTooltipXYFn(measures: any, stackByAttribute: any, config
             customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label)]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -793,10 +794,10 @@ export function generateTooltipHeatmapFn(viewByAttribute: any, stackByAttribute:
             ]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
@@ -833,65 +834,16 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
             textData.push([customEscape(point.category), formattedValue]);
         }
 
-        return `<table class="tt-values">${textData.map(line => (
-            `<tr>
-                <td class="title">${line[0]}</td>
-                <td class="value">${line[1]}</td>
+        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
             </tr>`
         )).join('\n')}</table>`;
     };
 }
 
-export function findInDimensionHeaders(dimensions: Execution.IResultDimension[], headerCallback: Function): any {
-    let returnValue: any = null;
-    dimensions.some((dimension: any, dimensionIndex: any) => {
-        dimension.headers.some(
-            (wrappedHeader: Execution.IMeasureGroupHeader | Execution.IAttributeHeader, headerIndex: number) => {
-                const headerType = Object.keys(wrappedHeader)[0];
-                const header = wrappedHeader[headerType];
-                const headerCount = dimension.headers.length;
-                returnValue = headerCallback(headerType, header, dimensionIndex, headerIndex, headerCount);
-                return !!returnValue;
-            }
-        );
-        return !!returnValue;
-    });
-    return returnValue;
-}
-
-export function findMeasureGroupInDimensions(dimensions: Execution.IResultDimension[]) {
-    return findInDimensionHeaders(dimensions,
-        (headerType: string, header: Execution.IMeasureGroupHeader['measureGroupHeader'],
-         _dimensionIndex: number, headerIndex: number, headerCount: number) => {
-            const measureGroupHeader = headerType === 'measureGroupHeader' ? header : null;
-            if (measureGroupHeader) {
-                invariant(headerIndex === headerCount - 1, 'MeasureGroup must be the last header in it\'s dimension');
-            }
-            return measureGroupHeader;
-        });
-}
-
-export function findAttributeInDimension(
-    dimension: any,
-    attributeHeaderItemsDimension: any,
-    indexInDimension?: number
-): IUnwrappedAttributeHeadersWithItems {
-    return findInDimensionHeaders(
-        [dimension],
-        (headerType: any, header: any, _dimensionIndex: number, headerIndex: number) => {
-            if (headerType === 'attributeHeader'
-                && (indexInDimension === undefined || indexInDimension === headerIndex)) {
-                return {
-                    ...header,
-                    // attribute items are delivered separately from attributeHeaderItems
-                    items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0]
-                };
-            }
-            return null;
-        });
-}
-
-export function getDrillContext(stackByItem: any, viewByItem: any, measures: AFM.IMeasure[], afm: AFM.IAfm) {
+export function getDrillContext(stackByItem: any, viewByItem: any, measures: any[], afm: AFM.IAfm) {
     return without([
         ...measures,
         viewByItem,
@@ -966,13 +918,14 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
 export function getDrillableSeries(
     series: any,
     drillableItems: IHeaderPredicate[],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    type: VisType,
-    afm: AFM.IAfm
+    executionResponse: Execution.IExecutionResponse,
+    afm: AFM.IAfm,
+    type: VisType
 ) {
     const isMultiMeasureWithOnlyMeasures = isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
+    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
@@ -1028,7 +981,7 @@ export function getDrillableSeries(
             ], null);
 
             const drilldown = drillableHooks.some(drillableHook =>
-                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm)
+                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm, executionResponse)
             );
 
             const drillableProps: any = {
@@ -1428,7 +1381,7 @@ export function getTreemapAttributes(
  * @param resultSpec <executionRequest.resultSpec> object defining expected result dimension structure,
  * @param dimensions <executionResponse.dimensions> array defining calculated dimensions and their headers,
  * @param executionResultData <executionResult.data> array with calculated data
- * @param unfilteredHeaderItems <executionResult.headerItems> array of attribute header items mixed with measures
+ * @param unfilteredResultHeaderItems <executionResult.headerItems> array of attribute header items mixed with measures
  * @param config object defining chart display settings
  * @param drillableItems array of items for isPointDrillable matching
  * @return Returns composed chart options object
@@ -1436,15 +1389,15 @@ export function getTreemapAttributes(
 export function getChartOptions(
     afm: AFM.IAfm,
     _resultSpec: AFM.IResultSpec,
-    dimensions: Execution.IResultDimension[],
+    executionResponse: Execution.IExecutionResponse,
     executionResultData: Execution.DataValue[][],
-    unfilteredHeaderItems: Execution.IResultHeaderItem[][][],
+    unfilteredResultHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
     drillableItems: IHeaderPredicate[]
 ): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
-    const attributeHeaderItems = unfilteredHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
+    const attributeHeaderItems = unfilteredResultHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
         return dimension.filter((attributeHeaders: any) => attributeHeaders[0].attributeHeaderItem);
     });
 
@@ -1452,7 +1405,7 @@ export function getChartOptions(
         `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`);
 
     const { type, mdObject } = config;
-    const measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'] = findMeasureGroupInDimensions(dimensions);
+    const { dimensions } = executionResponse;
     let viewByAttribute;
     let stackByAttribute;
 
@@ -1478,20 +1431,19 @@ export function getChartOptions(
         );
     }
 
-    invariant(measureGroup, 'missing measureGroup');
-
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,
         config.colorMapping,
-        measureGroup,
         viewByAttribute,
         stackByAttribute,
+        executionResponse,
         afm,
         type
     );
 
     const gridEnabled = get(config, 'grid.enabled', true);
     const stacking = getStackingConfig(stackByAttribute, config);
+    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
@@ -1508,11 +1460,11 @@ export function getChartOptions(
     const drillableSeries = getDrillableSeries(
         seriesWithoutDrillability,
         drillableItems,
-        measureGroup,
         viewByAttribute,
         stackByAttribute,
-        type,
-        afm
+        executionResponse,
+        afm,
+        type
     );
 
     const series = assignYAxes(drillableSeries, yAxes);

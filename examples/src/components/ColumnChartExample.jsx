@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { ColumnChart } from '@gooddata/react-components';
+import { ColumnChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -19,29 +19,11 @@ export class ColumnChartExample extends Component {
     }
 
     render() {
-        const totalSales = {
-            measure: {
-                localIdentifier: 'totalSales',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: totalSalesIdentifier
-                        }
-                    }
-                },
-                alias: '$ Total Sales',
-                format: '#,##0'
-            }
-        };
+        const totalSales = Model.measure(totalSalesIdentifier)
+            .format('#,##0')
+            .alias('$ Total Sales');
 
-        const month = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: monthDateIdentifier
-                },
-                localIdentifier: 'month'
-            }
-        };
+        const month = Model.attribute(monthDateIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-column-chart">

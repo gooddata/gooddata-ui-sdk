@@ -2,8 +2,6 @@
 @import '~@gooddata/goodstrap/lib/core/styles/variables';
 
 $ag-icons-path: "~ag-grid/src/styles/balham-icons/";
-$menu-icon-size: 16px;
-$menu-icon-padding: 8px;
 
 $border-color: transparent;
 $font-size: 12px;
@@ -19,18 +17,22 @@ $hover-color: transparentize($gd-color-label, 0.9);
 $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
+$header-cell-resize-width: 20px;
 
 @import '~ag-grid/src/styles/ag-grid';
 @import '~ag-grid/src/styles/ag-theme-balham';
 
 .gd-table {
+    .ag-root-wrapper {
+        text-align: left;
+    }
+
     .ag-root {
         border: none;
     }
 
     .ag-header-cell,
-    .ag-header-group-cell,
-    .ag-header-cell-resize {
+    .ag-header-group-cell {
         &::after {
             display: none;
         }
@@ -41,10 +43,13 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
     }
 
     .ag-cell {
-        border-top: $cell-border;
-        border-top-color: $cell-border-color;
-        border-right: none;
-        border-left: none;
+        &,
+        &.ag-cell-focus {
+            border-top: $cell-border;
+            border-top-color: $cell-border-color;
+            border-right: none;
+            border-left: none;
+        }
     }
 
     [row-index="0"] {
@@ -62,8 +67,11 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
     .gd-column-group-header-0,
     .gd-column-measure-0,
     .ag-header-group-cell-with-group {
-        border-left: $cell-border;
-        border-left-color: $cell-border-color;
+        &,
+        &.ag-cell-focus {
+            border-left: $cell-border;
+            border-left-color: $cell-border-color;
+        }
     }
 
     .gd-column-index-0,
@@ -83,6 +91,35 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
             .ag-header-group-cell-with-group {
                 border-bottom-style: solid;
             }
+        }
+    }
+
+    .ag-header-group-cell {
+        overflow: visible;
+    }
+
+    .ag-header-cell-resize {
+        right: -$header-cell-resize-width / 2;
+        width: $header-cell-resize-width;
+        opacity: 0;
+
+        &::after {
+            width: $header-cell-resize-width / 2;
+            margin-right: $header-cell-resize-width / 2;
+            border-right-color: $gd-color-highlight;
+            text-indent: $header-cell-resize-width / 2;
+        }
+    }
+
+    .gd-column-group-header:hover {
+        .ag-header-cell-resize {
+            opacity: 1;
+        }
+    }
+
+    .gd-column-group-header--empty {
+        .ag-header-cell-resize {
+            display: none;
         }
     }
 
@@ -178,33 +215,30 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
 
     &-menu {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: 32px;
         cursor: pointer;
         opacity: 0;
-        transition: all 200ms;
-        position: relative;
+        transition: width 200ms, opacity 100ms;
 
         &:hover {
             background-color: rgba(0, 255, 255, 0.1);
         }
 
         &--hide {
-            width: 0px;
+            width: 0;
             opacity: 0;
-            transition: all 200ms;
         }
 
         &--show {
+            width: 32px;
             opacity: 1;
-            width: ($menu-icon-size + (2 * $menu-icon-padding));
-            transition: all 200ms;
         }
 
         & > .menu-icon {
-            padding: $menu-icon-padding;
-            width: $menu-icon-size;
-            height: $menu-icon-size;
+            width: 16px;
+            height: 16px;
         }
     }
 

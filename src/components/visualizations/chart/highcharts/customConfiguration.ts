@@ -300,13 +300,13 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
     const tooltipContent = tooltipCallback(this.point); // null disables whole tooltip
 
     return tooltipContent !== null ? (
-        `<div class="hc-tooltip">
-            <span class="stroke" style="${strokeStyle}"></span>
-            <div class="content">
+        `<div class="hc-tooltip gd-viz-tooltip">
+            <span class="stroke gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
+            <div class="content gd-viz-tooltip-content">
                 ${tooltipContent}
             </div>
-            <div class="${getTailClasses('tail1')}" ${tailStyle}></div>
-            <div class="${getTailClasses('tail2')}" ${tailStyle}></div>
+            <div class="${getTailClasses('gd-viz-tooltip-tail tail1 gd-viz-tooltip-tail1')}" ${tailStyle}></div>
+            <div class="${getTailClasses('gd-viz-tooltip-tail tail2 gd-viz-tooltip-tail2')}" ${tailStyle}></div>
         </div>`
     ) : null;
 }

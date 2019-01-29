@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { ColumnChart } from '@gooddata/react-components';
+import { ColumnChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -11,11 +11,6 @@ import {
     yearDateDataSetAttributeIdentifier,
     projectId
 } from '../utils/fixtures';
-import {
-    createAttributeBucketItem,
-    createSamePeriodMeasureBucketItem,
-    createMeasureBucketItem
-} from '../utils/helpers';
 
 export class SamePeriodColumnChartExample extends Component {
     onLoadingChanged(...params) {
@@ -34,11 +29,13 @@ export class SamePeriodColumnChartExample extends Component {
                 <ColumnChart
                     projectId={projectId}
                     measures={[
-                        createSamePeriodMeasureBucketItem('totalSales', yearDateDataSetAttributeIdentifier,
-                            '$ Total Sales - SP year ago'),
-                        createMeasureBucketItem(totalSalesIdentifier, 'totalSales', '$ Total Sales')
+                        Model.popMeasure('totalSales', yearDateDataSetAttributeIdentifier)
+                            .alias('$ Total Sales - SP year ago'),
+                        Model.measure(totalSalesIdentifier)
+                            .localIdentifier('totalSales')
+                            .alias('$ Total Sales')
                     ]}
-                    viewBy={createAttributeBucketItem(quarterDateIdentifier)}
+                    viewBy={Model.attribute(quarterDateIdentifier)}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

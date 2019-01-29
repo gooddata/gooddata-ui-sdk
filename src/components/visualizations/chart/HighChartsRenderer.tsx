@@ -247,7 +247,7 @@ export default class HighChartsRenderer
     public renderHighcharts() {
         const style = { flex: '1 1 auto', position: 'relative' };
         const chartProps = {
-            domProps: { className: 'viz-react-highchart-wrap', style },
+            domProps: { className: 'viz-react-highchart-wrap gd-viz-highchart-wrap', style },
             ref: this.setChartRef,
             config: this.createChartConfig(this.props.hcOptions, this.state.legendItemsEnabled),
             callback: this.props.afterRender

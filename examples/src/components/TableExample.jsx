@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Table } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -26,58 +26,18 @@ export class TableExample extends Component {
 
     render() {
         const measures = [
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            Model.measure(franchiseFeesIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesIdentifier'),
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesAdRoyaltyIdentifier'),
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier'),
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesIdentifierOngoingRoyalty')
         ];
 
         const totals = [
@@ -104,14 +64,7 @@ export class TableExample extends Component {
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            Model.attribute(monthDateIdentifier).localIdentifier('month')
         ];
 
         return (

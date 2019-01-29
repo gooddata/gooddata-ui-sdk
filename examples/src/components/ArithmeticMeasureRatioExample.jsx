@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -26,63 +26,28 @@ export class ArithmeticMeasureRatioExample extends Component {
     render() {
         const localIdentifiers = {
             numberOfRestaurants: 'numberOfRestaurants',
-            averageRestaurantDailyCosts: 'averageRestaurantDailyCosts'
+            averageRestaurantDailyCosts: 'averageRestaurantDailyCosts',
+            averageRestaurantSales: 'averageRestaurantSales'
         };
 
         const measures = [
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.numberOfRestaurants,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: numberOfRestaurantsIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: localIdentifiers.averageRestaurantDailyCosts,
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: totalSalesIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            },
-            {
-                measure: {
-                    localIdentifier: 'averageRestaurantSales',
-                    title: '$ Avg Restaurant Sales',
-                    definition: {
-                        arithmeticMeasure: {
-                            measureIdentifiers: [
-                                localIdentifiers.averageRestaurantDailyCosts,
-                                localIdentifiers.numberOfRestaurants
-                            ],
-                            operator: 'ratio'
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            Model.measure(numberOfRestaurantsIdentifier)
+                .localIdentifier(localIdentifiers.numberOfRestaurants)
+                .format('#,##0'),
+            Model.measure(totalSalesIdentifier)
+                .localIdentifier(localIdentifiers.averageRestaurantDailyCosts)
+                .format('#,##0'),
+            Model.arithmeticMeasure([
+                localIdentifiers.numberOfRestaurants,
+                localIdentifiers.averageRestaurantDailyCosts
+            ], 'ratio')
+                .localIdentifier(localIdentifiers.averageRestaurantSales)
+                .format('#,##0')
+                .title('$ Avg State Daily Sales')
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: locationStateDisplayFormIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
         ];
 
         return (

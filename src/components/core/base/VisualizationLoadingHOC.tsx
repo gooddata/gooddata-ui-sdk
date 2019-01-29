@@ -167,10 +167,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                     // gooddata-js mergePages doesn't support discontinuous page ranges yet
                     this.setState({ result, error: null });
                     this.props.pushData({
-                        result,
-                        properties: {
-                            sortItems: resultSpec ? resultSpec.sorts : []
-                        }
+                        result
                     });
                     this.onLoadingChanged({ isLoading: false });
                     return result;
