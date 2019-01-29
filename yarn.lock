@@ -96,12 +96,12 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.2.0.tgz#9ef2566534310609c6844de928670416f6205935"
-  integrity sha512-n5QmKZsK8jG1OpGFBbtiEL3zy6yZAy0UMG8ddedLlcX1oGHYCR6t8MRGGBDCHwtE6g2srYm5zR6FfbMGF/iSUA==
+"@gooddata/gooddata-js@11.2.1":
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.2.1.tgz#27885f1dba49264aa97164095326e801a4a0d004"
+  integrity sha512-K3/qQS0ooilXvVVv7psFLyvOMrnJQgeT6i4ayrWEq9uycUPYVebKBoKSW47s6NybiR63Ory7S+utlruk/L/iDQ==
   dependencies:
-    "@gooddata/typings" "2.6.0"
+    "@gooddata/typings" "2.7.0"
     es6-promise "3.0.2"
     fetch-cookie "0.7.0"
     invariant "2.2.2"
@@ -153,12 +153,12 @@
     lodash "4.17.11"
     lodash-es "4.17.11"
 
-"@gooddata/mock-js@1.19.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.19.0.tgz#aae1447185af2a41af75d20fd73508fd3cb98af9"
-  integrity sha512-lVC7etoVmGFk10+aO6tsW3chyaYuFr6dL1HR3U/cMA/gAkMQ+T1HAxnqMtEPjGTMeBAuihwZwhOz9diR3wkRQQ==
+"@gooddata/mock-js@1.19.1":
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.19.1.tgz#e40723c4e1cf94df816d1cb27c75394ab922968e"
+  integrity sha512-jJrSq71aUyJcrShN8j4ikOBw8eFCi9NlRDdQmCQDjT+odeUvw9Q/PjmUwR+klD/gnu+T+5FIZEO9utfe04oFlw==
   dependencies:
-    "@gooddata/typings" "2.4.0"
+    "@gooddata/typings" "2.7.0"
     "@types/seedrandom" "2.4.27"
     "@types/uuid" "3.4.3"
     body-parser "1.17.1"
@@ -168,7 +168,7 @@
     express-session "1.15.2"
     http-status-codes "^1.3.0"
     invariant "2.2.2"
-    lodash "4.17.4"
+    lodash "4.17.11"
     seedrandom "2.4.3"
     uuid "3.1.0"
 
@@ -195,17 +195,10 @@
     tslint-eslint-rules "5.4.0"
     tslint-react "3.6.0"
 
-"@gooddata/typings@2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.4.0.tgz#0ad843f5c98cb21c5d3c7f526f8e4bcea9cd0f80"
-  integrity sha512-6j+l3liakM9K4qx6K4dMOrbilDM7xQhUODk6u04wXp9Cn2sD8dgb/Pv27OA3zXez/vOuoTNy2Qg8H4q1hrXkpQ==
-  dependencies:
-    lodash "4.17.4"
-
-"@gooddata/typings@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.6.0.tgz#9246b79920d5c30294e0808a63995cef62738eaa"
-  integrity sha512-LLIh6KBUYsNpaOrOjmF9GwaM3YQX9j4DBbf9WH0CeqN1C0oe8ELEpoa/EFVftGgTSGi445MuSl7VSmTfzarjZA==
+"@gooddata/typings@2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.7.0.tgz#0e16beb641a36754cdc5d275d9f34c3f22b61a01"
+  integrity sha512-ASjXsTi6/f/FT1UCESBZ9IuNRVfPxdGCCTorN+HIY4Jrv7c6gMY7zbLFwy4dI3GhEXUm8DDYYWYB2YeXsCX95w==
   dependencies:
     lodash "4.17.11"
 
