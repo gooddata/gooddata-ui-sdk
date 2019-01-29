@@ -1887,7 +1887,7 @@ const getBaseProjectSchema = (title, identifier) => {
                         localIdentifier: 'm2',
                         filters: [],
                         identifier: '2',
-                        title: 'Value'
+                        title: 'A measure with long title'
                     }]
                 }, {
                     localIdentifier: 'view',
