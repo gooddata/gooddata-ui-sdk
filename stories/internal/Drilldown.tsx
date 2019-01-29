@@ -484,7 +484,7 @@ storiesOf('Internal/Drilldown', module)
                     onDataTooLarge={noop}
                     onNegativeValues={noop}
                     onLegendReady={noop}
-                    width={600}
+                    width={800}
                     height={400}
                     drillableItems={[
                         { uri: TABLE_HEADERS_AM[0].measureHeaderItem.uri },
@@ -494,7 +494,7 @@ storiesOf('Internal/Drilldown', module)
                         headerPredicateFactory.composedFromIdentifier(
                             TABLE_HEADERS_AM[1].measureHeaderItem.identifier)
                     ]}
-                />
+                />, 400, 800
             )
         )
     ))

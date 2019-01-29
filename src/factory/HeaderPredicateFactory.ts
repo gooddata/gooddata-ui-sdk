@@ -2,7 +2,8 @@
 import { AFM, Execution } from '@gooddata/typings';
 import {
     findMeasureByLocalIdentifier,
-    getMasterMeasureLocalIdentifier
+    getMasterMeasureLocalIdentifier,
+    isDerivedMeasure
 } from '../helpers/afmHelper';
 import {
     findMeasureHeaderByLocalIdentifier,
@@ -51,6 +52,25 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     return predicate(operandHeader, context);
 }
 
+function getMasterMeasureOperandIdentifiers(measure: AFM.IMeasure): string[] {
+    if (AFM.isArithmeticMeasureDefinition(measure.definition)) {
+        return measure.definition.arithmeticMeasure.measureIdentifiers;
+    }
+
+    return null;
+}
+
+function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: AFM.IMeasure, afm: AFM.IAfm): string[] {
+    if (!isDerivedMeasure(measure)) {
+        return null;
+    }
+
+    const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(measure);
+    const masterMeasure = findMeasureByLocalIdentifier(afm, masterMeasureLocalIdentifier);
+
+    return getMasterMeasureOperandIdentifiers(masterMeasure);
+}
+
 function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         if (!isMappingHeaderMeasureItem(header)) {
@@ -63,13 +83,21 @@ function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
             return measure.localIdentifier === measureLocalIdentifier;
         });
 
-        if (!measureInAFM || !AFM.isArithmeticMeasureDefinition(measureInAFM.definition)) {
+        if (!measureInAFM) {
+            return false;
+        }
+
+        const arithmeticMeasureOperands =
+            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, afm)
+            || getMasterMeasureOperandIdentifiers(measureInAFM);
+
+        if (!arithmeticMeasureOperands) {
             return false;
         }
 
         const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
-        return measureInAFM.definition.arithmeticMeasure.measureIdentifiers.some(
+        return arithmeticMeasureOperands.some(
             operandLocalIdentifier =>
                 arithmeticMeasureLocalIdentifierDeepMatch(
                     afm.measures,
