@@ -177,10 +177,15 @@ export const getSortItemByColId = (
     colId: string,
     direction: AFM.SortDirection
 ): AFM.IMeasureSortItem | AFM.IAttributeSortItem => {
-    const dimensions: Execution.IResultDimension[] = execution.executionResponse.dimensions;
-    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const { dimensions } = execution.executionResponse;
+
     const fields = getParsedFields(colId);
     const [lastFieldType, lastFieldId] = fields[fields.length - 1];
+
+    // search columns first when sorting in columns to use the proper header
+    // in case the same attribute is in both rows and columns
+    const searchDimensionIndex = lastFieldType === 'm' ? 1 : 0;
+    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders([dimensions[searchDimensionIndex]]);
 
     if (lastFieldType === 'a') {
         for (const header of attributeHeaders) {

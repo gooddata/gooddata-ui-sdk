@@ -349,20 +349,56 @@ describe('getSortItemByColId', () => {
 });
 
 describe('getSortsFromModel', () => {
-    it('should return sortItems based on sortModel', () => {
+    it('should return sortItems for row attribute sort', () => {
         const sortModel: any[] = [
             {
-                colId: 'a_2011',
+                colId: 'a_2211',
                 sort: 'asc'
             }
         ];
         expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
             [{
                 attributeSortItem: {
-                    attributeIdentifier: 'year',
+                    attributeIdentifier: 'state',
                     direction: 'asc'
                 }
             }]
+        );
+    });
+    it('should return sortItems for measure sort', () => {
+        const sortModel: any[] = [
+            {
+                colId: 'a_2009_1-a_2071_1-m_0',
+                sort: 'asc'
+            }
+        ];
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
+            [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                attributeLocatorItem: {
+                                    attributeIdentifier: 'year',
+                                    element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                                }
+                            },
+                            {
+                                attributeLocatorItem: {
+                                    attributeIdentifier: 'month',
+                                    element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                                }
+                            },
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'franchiseFeesIdentifier'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         );
     });
 });
