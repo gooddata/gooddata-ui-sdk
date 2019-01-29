@@ -5,7 +5,7 @@ import * as classNames from 'classnames';
 import { injectIntl } from 'react-intl';
 import { debounce, isEqual, noop, pick, uniqueId } from 'lodash';
 import { Cell, CellProps, Column, Table } from 'fixed-data-table-2';
-import { AFM } from '@gooddata/typings';
+import { AFM, Execution } from '@gooddata/typings';
 
 import 'nodelist-foreach-polyfill';
 
@@ -119,8 +119,9 @@ export interface ITableVisualizationProps {
     afterRender?: Function;
     drillablePredicates?: IHeaderPredicate[];
     executionRequest: AFM.IExecution;
-    hasHiddenRows?: boolean;
+    executionResponse: Execution.IExecutionResponse;
     headers?: IMappingHeader[];
+    hasHiddenRows?: boolean;
     rows?: TableRow[];
     onFiredDrillEvent?: OnFiredDrillEvent;
     onSortChange?: OnSortChangeWithItem;
@@ -767,6 +768,7 @@ export class TableVisualizationClass
     ): (cellProps: CellProps) => JSX.Element {
         const {
             executionRequest,
+            executionResponse,
             drillablePredicates,
             onFiredDrillEvent,
             rows,
@@ -774,7 +776,7 @@ export class TableVisualizationClass
         } = this.props;
         const afm = executionRequest.execution.afm;
         const header: IMappingHeader = headers[columnIndex];
-        const drillable = isSomeHeaderPredicateMatched(drillablePredicates, header, afm);
+        const drillable = isSomeHeaderPredicateMatched(drillablePredicates, header, afm, executionResponse);
 
         return (cellProps: CellProps) => {
             const rowIndex: number = cellProps.rowIndex;

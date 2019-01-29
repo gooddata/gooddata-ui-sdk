@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, VisualizationObject } from '@gooddata/typings';
+import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import isEmpty = require('lodash/isEmpty');
 import isEqual = require('lodash/isEqual');
 import { getMappingHeaderLocalIdentifier } from '../../../helpers/mappingHeader';
@@ -13,7 +13,7 @@ import {
     IColorMapping,
     IRGBColorItem
 } from '../../../interfaces/Config';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
+import { IHeaderPredicate, IHeaderPredicateContext } from '../../../interfaces/HeaderPredicate';
 import { IMappingHeader, isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
 
 export const WHITE = 'rgb(255, 255, 255)';
@@ -242,6 +242,7 @@ export function isRgbColorItem(color: IColorItem): color is IRGBColorItem {
 export function getColorFromMapping(
     mappingHeader: IMappingHeader,
     colorMapping: IColorMapping[],
+    executionResponse: Execution.IExecutionResponse,
     afm: AFM.IAfm
 ): IColorItem {
     if (!colorMapping) {
@@ -249,7 +250,7 @@ export function getColorFromMapping(
     }
 
     const mapping = colorMapping.find(item =>
-        item.predicate(mappingHeader, afm)
+        item.predicate(mappingHeader, { afm, executionResponse })
     );
     return mapping && mapping.color;
 }
@@ -268,7 +269,7 @@ export function getColorMappingPredicate(
     id: string,
     references: VisualizationObject.IReferenceItems
 ): IHeaderPredicate {
-    return (header: IMappingHeader, _afm: AFM.IAfm): boolean => {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (isMappingHeaderAttributeItem(header)) {
             const attributeItemUri = references && references[id];
             return attributeItemUri ? attributeItemUri === header.attributeHeaderItem.uri : false;

@@ -19,7 +19,7 @@ import {
 } from '../../../../interfaces/Table';
 import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
 import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
-import { getMasterMeasureObjQualifier } from '../../utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import { AVAILABLE_TOTALS } from '../totals/utils';
 
 export function getHeaders(executionResponse: Execution.IExecutionResponse): IMappingHeader[] {

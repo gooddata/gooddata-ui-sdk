@@ -1,20 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
 
 import React, { Component } from 'react';
-import { Table } from '@gooddata/react-components';
+import { Table, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
 import {
     projectId,
     monthDateIdentifier,
-    monthDateDataSetAttributeIdentifier,
-    totalSalesIdentifier
+    totalSalesIdentifier,
+    dateDataSetUri
 } from '../utils/fixtures';
-import {
-    createMeasureBucketItem,
-    createSamePeriodMeasureBucketItem
-} from '../utils/helpers';
 
 export class ArithmeticMeasureChangeExample extends Component {
     onLoadingChanged(...params) {
@@ -28,42 +24,31 @@ export class ArithmeticMeasureChangeExample extends Component {
     }
 
     render() {
-        const totalSalesYearAgoBucketItem = createSamePeriodMeasureBucketItem(
-            'totalSales', monthDateDataSetAttributeIdentifier, '$ Total Sales - year ago'
-        );
-        const totalSalesBucketItem = createMeasureBucketItem(
-            totalSalesIdentifier, 'totalSales', '$ Total Sales'
-        );
+        const totalSalesYearAgoBucketItem = Model.previousPeriodMeasure(
+            'totalSales', [{ dataSet: dateDataSetUri, periodsAgo: 1 }]
+        ).alias('$ Total Sales - year ago').localIdentifier('totalSales_sp');
+
+        const totalSalesBucketItem = Model.measure(totalSalesIdentifier)
+            .localIdentifier('totalSales')
+            .alias('$ Total Sales');
+
         const measures = [
             totalSalesYearAgoBucketItem,
             totalSalesBucketItem,
-            {
-                measure: {
-                    localIdentifier: 'totalSalesChange',
-                    title: '% Total Sales Change',
-                    definition: {
-                        arithmeticMeasure: {
-                            measureIdentifiers: [
-                                totalSalesBucketItem.measure.localIdentifier,
-                                totalSalesYearAgoBucketItem.measure.localIdentifier
-                            ],
-                            operator: 'change'
-                        }
-                    },
-                    format: '#,##0%'
-                }
-            }
+            Model.arithmeticMeasure([
+                totalSalesBucketItem.measure.localIdentifier,
+                totalSalesYearAgoBucketItem.measure.localIdentifier
+            ], 'change')
+                .title('% Total Sales Change')
+                .localIdentifier('totalSalesChange')
         ];
 
         const attributes = [
-            {
-                visualizationAttribute: {
-                    displayForm: {
-                        identifier: monthDateIdentifier
-                    },
-                    localIdentifier: 'month'
-                }
-            }
+            Model.attribute(monthDateIdentifier).localIdentifier('month')
+        ];
+
+        const filters = [
+            Model.absoluteDateFilter(dateDataSetUri, '2017-01-01', '2017-12-31')
         ];
 
         return (
@@ -71,6 +56,7 @@ export class ArithmeticMeasureChangeExample extends Component {
                 <Table
                     projectId={projectId}
                     measures={measures}
+                    filters={filters}
                     attributes={attributes}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}

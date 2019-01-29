@@ -378,4 +378,38 @@ storiesOf('URI components', module)
                 LoadingComponent={null}
             />
         </div>
+    ))
+    .add('Multiple visualizations - sdk caching', () => (
+        <div>
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1001'}
+                />
+            </div>
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1001'}
+                />
+            </div>
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
+                />
+            </div>
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1003'}
+                />
+            </div>
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={'/gdc/md/storybook/obj/1002'}
+                />
+            </div>
+        </div>
     ));

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { ComboChart } from '@gooddata/react-components';
+import { ComboChart, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -15,55 +15,29 @@ import {
 export class ComboChartExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('DonutChartExample onLoadingChanged', ...params);
+        return console.log('ComboChartExample onLoadingChanged', ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('DonutChartExample onError', ...params);
+        return console.log('ComboChartExample onError', ...params);
     }
 
     render() {
         const columnMeasures = [
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesAdRoyaltyIdentifier')
         ];
 
         const lineMeasures = [
-            {
-                measure: {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
-                    },
-                    format: '#,##0'
-                }
-            }
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format('#,##0')
+                .localIdentifier('franchiseFeesInitialFranchiseFeeIdentifier')
         ];
 
-        const locationResort = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationResortIdentifier
-                },
-                localIdentifier: 'location_resort'
-            }
-        };
+        const locationResort = Model.attribute(locationResortIdentifier)
+            .localIdentifier('location_resort');
 
         return (
             <div style={{ height: 300 }} className="s-combo-chart">

@@ -16,12 +16,14 @@ import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings'
 import { Visualization, IntlVisualization, VisualizationWrapped } from '../Visualization';
 import { ErrorStates } from '../../../constants/errorStates';
 import { SortableTable } from '../../core/SortableTable';
+import { PivotTable } from '../../core/PivotTable';
 import { IntlWrapper } from '../../core/base/IntlWrapper';
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
 import { RuntimeError } from '../../../errors/RuntimeError';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import * as HttpStatusCodes from 'http-status-codes';
 import { IColorPalette } from '../../../interfaces/Config';
+import { clearSdkCache } from '../../../helpers/sdkCache';
 
 const projectId = 'myproject';
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
@@ -46,7 +48,8 @@ const sdk = {
         setRequestHeader: () => false
     },
     project: {
-        getColorPaletteWithGuids: jest.fn()
+        getColorPaletteWithGuids: jest.fn(() => (Promise.resolve())),
+        getFeatureFlags: jest.fn(() => (Promise.resolve({})))
     }
 };
 
@@ -120,6 +123,10 @@ describe('Visualization', () => {
 });
 
 describe('VisualizationWrapped', () => {
+    afterEach(() => {
+        clearSdkCache();
+    });
+
     const intl = createIntlMock();
 
     it('should render chart', () => {
@@ -144,7 +151,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should render table', () => {
+    it('should render SortableTable', () => {
         const props = {
             sdk,
             projectId,
@@ -197,6 +204,74 @@ describe('VisualizationWrapped', () => {
             wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
             expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
+            expect(wrapper.state('dataSource')).not.toBeNull();
+            expect(wrapper.state('resultSpec')).toEqual(expectedResultSpec);
+            expect(wrapper.state('totals')).toEqual(expectedTotals);
+        });
+    });
+
+    it('should render PivotTable if FF enablePivot is set', () => {
+        const sdkWithEnablePivot = {
+            ...sdk,
+            clone: () => sdkWithEnablePivot,
+            project: {
+                ...sdk.project,
+                getFeatureFlags: jest.fn(() => Promise.resolve({ enablePivot: true }))
+            }
+        };
+
+        const props = {
+            sdk: sdkWithEnablePivot,
+            projectId,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            identifier: TABLE_IDENTIFIER
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any}/>
+        );
+
+        const expectedResultSpec: AFM.IResultSpec = {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1'],
+                    totals: [
+                        {
+                            attributeIdentifier: 'a1',
+                            measureIdentifier: 'm1',
+                            type: 'avg'
+                        }
+                    ]
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ],
+            sorts: [
+                {
+                    attributeSortItem: {
+                        attributeIdentifier: 'a1', direction: 'asc'
+                    }
+                }
+            ]
+        };
+
+        const expectedTotals: VisualizationObject.IVisualizationTotal[] = [
+            {
+                type: 'avg',
+                alias: 'average',
+                measureIdentifier: 'm1',
+                attributeIdentifier: 'a1'
+            }
+        ];
+
+        return testUtils.delay(SLOW).then(() => {
+            wrapper.update();
+            expect(wrapper.find(PivotTable).length).toBe(1);
+            expect(wrapper.state('type')).toEqual(VisualizationTypes.PIVOT_TABLE);
             expect(wrapper.state('dataSource')).not.toBeNull();
             expect(wrapper.state('resultSpec')).toEqual(expectedResultSpec);
             expect(wrapper.state('totals')).toEqual(expectedTotals);
@@ -277,6 +352,7 @@ describe('VisualizationWrapped', () => {
             ...sdk,
             clone: () => mutatedSdk,
             project: {
+                ...sdk.project,
                 getColorPaletteWithGuids: jest.fn()
             }
         };
@@ -499,6 +575,7 @@ describe('VisualizationWrapped', () => {
                 ...sdk,
                 clone: () => mutatedSdk,
                 project: {
+                    ...sdk.project,
                     getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
                 }
             };
@@ -537,7 +614,8 @@ describe('VisualizationWrapped', () => {
                 ...sdk,
                 clone: () => mutatedSdk,
                 project: {
-                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
+                    ...sdk.project,
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => Promise.resolve(expectedColorPalette))
                 }
             };
 
@@ -571,7 +649,8 @@ describe('VisualizationWrapped', () => {
                 ...sdk,
                 clone: () => cloneDeep(mutatedSdk),
                 project: {
-                    getColorPaletteWithGuids: jest.fn()
+                    ...sdk.project,
+                    getColorPaletteWithGuids: jest.fn(() => (Promise.resolve()))
                 }
             };
 

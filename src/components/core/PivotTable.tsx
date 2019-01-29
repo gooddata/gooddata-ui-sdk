@@ -7,10 +7,11 @@ import {
     GridReadyEvent,
     ICellRendererParams,
     IDatasource,
-    IGetRowsParams
+    IGetRowsParams,
+    SortChangedEvent
 } from 'ag-grid';
 import { AgGridReact } from 'ag-grid-react';
-import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef'; // this is not exported from ag-grid index
+import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef';
 import * as classNames from 'classnames';
 import * as invariant from 'invariant';
 import * as React from 'react';
@@ -18,6 +19,7 @@ import * as CustomEvent from 'custom-event';
 import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
+import cloneDeep = require('lodash/cloneDeep');
 
 import InjectedIntl = ReactIntl.InjectedIntl;
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -39,7 +41,7 @@ import {
 } from '../../helpers/agGrid';
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from '../../helpers/headerPredicate';
 import {
-    getMappingHeaderIndentifier,
+    getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName,
     getMappingHeaderUri
@@ -52,12 +54,12 @@ import { IDataSource } from '../../interfaces/DataSource';
 import { IDrillEvent, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
 import { IMappingHeader, isMappingHeaderAttributeItem } from '../../interfaces/MappingHeader';
-import { IPivotTableConfig } from '../../interfaces/Table';
+import { IPivotTableConfig, IMenuAggregationClickConfig } from '../../interfaces/PivotTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import { LoadingComponent } from '../simple/LoadingComponent';
 import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
 
-import { getMasterMeasureObjQualifier } from '../visualizations/utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
 
 import { ICommonChartProps } from './base/BaseChart';
 import { BaseVisualization } from './base/BaseVisualization';
@@ -76,7 +78,6 @@ export interface IPivotTableProps extends ICommonChartProps {
     dataSource: IDataSource;
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
-    onSortChange?: (sortBy: AFM.SortItem[]) => AFM.SortItem[];
     getPage?: IGetPage;
     cancelPagePromises?: () => void;
     pageSize?: number;
@@ -88,6 +89,8 @@ export interface IPivotTableState {
     // rowData an an array of different objects depending on the content of the table.
     rowData: IGridRow[];
     execution: Execution.IExecutionResponses;
+    columnTotals: AFM.ITotalItem[];
+    agGridRerenderNumber: number;
 }
 
 export interface ICustomGridOptions extends GridOptions {
@@ -193,7 +196,7 @@ export const getSortItemByColId = (
         const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
             // first item is type which should be always 'a'
             const [, fieldId, fieldValueId] = field;
-            const attributeHeaderMatch = attributeHeaders.find((attributeHeader: Execution.IAttributeHeader) => {
+            const attributeHeaderMatch = attributeHeaders.find((attributeHeader: Execution.IAttributeHeader) => {
                 return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
             });
             invariant(
@@ -234,7 +237,7 @@ export interface ISortModelItem {
 export const getSortsFromModel = (
     sortModel: ISortModelItem[], // AgGrid has any, but we can do better
     execution: Execution.IExecutionResponses
-) => {
+) => {
     return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
         const sortHeader = getSortItemByColId(execution, colId, sort);
@@ -251,21 +254,35 @@ export const getGridDataSource = (
     onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
     getGridApi: () => any,
     intl: InjectedIntl,
-    columnDefOptions: IColumnDefOptions = {}
+    columnDefOptions: IColumnDefOptions = {},
+    columnTotals?: AFM.ITotalItem[]
 ): IDatasource => ({
     getRows: ({ startRow, endRow, successCallback, sortModel }: IGetRowsParams) => {
         const execution = getExecution();
+
+        let resultSpecUpdated: AFM.IResultSpec = resultSpec;
         // If execution is null, this means this is a fresh dataSource and we should ignore current sortModel
-        const resultSpecWithSorting = (sortModel.length > 0 && execution)
-            ? {
-                ...resultSpec,
-                // override sorting based on sortModel
+        if (sortModel.length > 0 && execution) {
+            resultSpecUpdated = {
+                ...resultSpecUpdated,
                 sorts: getSortsFromModel(sortModel, execution)
-            }
-            : resultSpec;
+            };
+        }
+        if (columnTotals && columnTotals.length > 0) {
+            resultSpecUpdated = {
+                ...resultSpecUpdated,
+                dimensions: [
+                    {
+                        ...resultSpecUpdated.dimensions[0],
+                        totals: columnTotals
+                    },
+                    ...resultSpecUpdated.dimensions.slice(1)
+                ]
+            };
+        }
 
         const pagePromise = getPage(
-            resultSpecWithSorting,
+            resultSpecUpdated,
             // column limit defaults to SERVERSIDE_COLUMN_LIMIT (1000), because 1000 columns is hopefully enough.
             [endRow - startRow, undefined],
             // column offset defaults to 0, because we do not support horizontal paging yet
@@ -279,7 +296,7 @@ export const getGridDataSource = (
                     }
                     const { columnDefs, rowData, rowTotals } = executionToAGGridAdapter(
                         execution,
-                        resultSpecWithSorting,
+                        resultSpecUpdated,
                         intl,
                         {
                             addLoadingRenderer: 'loadingRenderer',
@@ -330,7 +347,7 @@ export const getDrillIntersection = (
 
         if (!isMappingHeaderAttributeItem(drillItem)) {
             headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
-            headerIdentifier = getMappingHeaderIndentifier(drillItem) || '';
+            headerIdentifier = getMappingHeaderIdentifier(drillItem) || '';
             uriAndIdentifier = headerLocalIdentifier
                 ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
                 : null;
@@ -341,24 +358,33 @@ export const getDrillIntersection = (
         const identifier = uriAndIdentifier && uriAndIdentifier.identifier || headerIdentifier;
         const id = headerLocalIdentifier || headerIdentifier;
 
-        return {
+        const intersection: IDrillEventIntersectionElement = {
             // Properties default to empty strings to maintain compatibility
             id,
-            title: getMappingHeaderName(drillItem),
-            header: {
-                uri,
-                identifier
-            }
+            title: getMappingHeaderName(drillItem)
         };
+
+        if (uri || identifier) {
+            return {
+                ...intersection,
+                header: {
+                    uri,
+                    identifier
+                }
+            };
+        }
+
+        return intersection;
     });
 };
 
-export class PivotTableInner extends
-        BaseVisualization<
-            IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps & InjectedIntlProps,
-            IPivotTableState
-        > {
-    public static defaultProps: Partial<IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
+export type IPivotTableInnerProps = IPivotTableProps &
+    ILoadingInjectedProps &
+    IDataSourceProviderInjectedProps &
+    InjectedIntlProps;
+
+export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
+    public static defaultProps: Partial<IPivotTableInnerProps> = {
         ...commonDefaultProps,
         onDataTooLarge: noop,
         pageSize: 100
@@ -367,13 +393,17 @@ export class PivotTableInner extends
     private gridDataSource: IDatasource;
     private gridApi: GridApi;
 
-    constructor(props: IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps) {
+    constructor(props: IPivotTableInnerProps) {
         super(props);
+
         this.state = {
             columnDefs: [],
             rowData: [],
-            execution: null
+            execution: null,
+            columnTotals: cloneDeep(get(this.props, 'resultSpec.dimensions[0].totals', [])),
+            agGridRerenderNumber: 1
         };
+
         this.gridDataSource = null;
         this.gridApi = null;
     }
@@ -383,9 +413,7 @@ export class PivotTableInner extends
         this.createDataSource(resultSpec, getPage, cancelPagePromises);
     }
 
-    public componentWillReceiveProps(
-        nextProps: IPivotTableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps
-    ) {
+    public componentWillReceiveProps(nextProps: IPivotTableInnerProps) {
         const propsRequiringNewDataSource = [
             'resultSpec',
             'getPage',
@@ -400,13 +428,35 @@ export class PivotTableInner extends
             this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
             this.setGridDataSource();
         }
+
+        const propsRequiringAgGridRerender = [
+            ['config', 'menu']
+        ];
+        if (propsRequiringAgGridRerender.some(propKey => !isEqual(get(this.props, propKey), get(nextProps, propKey)))) {
+            this.setState(state => ({
+                agGridRerenderNumber: state.agGridRerenderNumber + 1
+            }));
+        }
+
+        const currentTotals = get(this.props, 'resultSpec.dimensions[0].totals', []);
+        const newTotals = get(nextProps, 'resultSpec.dimensions[0].totals', []);
+        if (!isEqual(currentTotals, newTotals)) {
+            this.setState({ columnTotals: newTotals });
+        }
+    }
+
+    public componentDidUpdate(_: IPivotTableInnerProps, prevState: IPivotTableState) {
+        if (!isEqual(this.state.columnTotals, prevState.columnTotals)) {
+            this.createDataSource(this.props.resultSpec, this.props.getPage, this.props.cancelPagePromises);
+            this.setGridDataSource();
+        }
     }
 
     /**
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
     public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
-        const { dataSource } = this.props;
+        const { dataSource, execution: { executionResponse } } = this.props;
         const { rowIndex } = cellClassParams;
         const colDef = cellClassParams.colDef as IGridHeader;
         const drillablePredicates = this.getDrillablePredicates();
@@ -422,10 +472,8 @@ export class PivotTableInner extends
                 get<CellClassParams, IMappingHeader>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
             const headers: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
 
-            hasDrillableHeader = headers
-                .some(
-                    (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
-                );
+            hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
+                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
         }
 
         const className = classNames(
@@ -485,7 +533,8 @@ export class PivotTableInner extends
             onSuccess,
             this.getGridApi,
             this.props.intl,
-            {}
+            {},
+            this.state.columnTotals
         );
     }
 
@@ -498,11 +547,13 @@ export class PivotTableInner extends
 
     public setGridDataSource() {
         this.setState({ execution: null });
-        this.gridApi.setDatasource(this.gridDataSource);
+        if (this.gridApi) {
+            this.gridApi.setDatasource(this.gridDataSource);
+        }
     }
 
     public cellClicked = (cellEvent: IGridCellEvent) => {
-        const { onFiredDrillEvent } = this.props;
+        const { onFiredDrillEvent, execution: { executionResponse } } = this.props;
         const { columnDefs } = this.state;
         const afm: AFM.IAfm = this.props.dataSource.getAfm();
         const drillablePredicates = this.getDrillablePredicates();
@@ -511,10 +562,8 @@ export class PivotTableInner extends
         const isRowTotal = get<IGridCellEvent, string>(cellEvent, ['data', 'type', ROW_TOTAL]);
         const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'drillItemMap', colDef.field]);
         const drillItems: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
-        const drillableHeaders = drillItems
-            .filter(
-                (drillItem: IMappingHeader) => isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm)
-            );
+        const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
+            isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
 
         if (isRowTotal || drillableHeaders.length === 0) {
             return false;
@@ -548,11 +597,57 @@ export class PivotTableInner extends
         return false;
     }
 
+    public onMenuAggregationClick = ({
+        type,
+        measureIdentifiers,
+        attributeIdentifier,
+        include
+    }: IMenuAggregationClickConfig) => {
+        const { columnTotals } = this.state;
+
+        const columnTotalsChanged: AFM.ITotalItem[] = [];
+        for (const measureIdentifier of measureIdentifiers) {
+            columnTotalsChanged.push({ type, measureIdentifier, attributeIdentifier });
+        }
+
+        let newColumnTotals = [];
+        if (include) {
+            const columnTotalsChangedUnique = columnTotalsChanged
+                .filter(totalChanged => !columnTotals.some(total => isEqual(total, totalChanged)));
+
+            newColumnTotals = [...columnTotals, ...columnTotalsChangedUnique];
+        } else {
+            newColumnTotals = columnTotals
+                .filter(total => !columnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)));
+        }
+
+        this.setState({ columnTotals: newColumnTotals });
+    }
+
+    public sortChanged = (event: SortChangedEvent): void => {
+        const execution = this.getExecution();
+
+        invariant(execution !== undefined, 'changing sorts without prior execution cannot work');
+
+        const sortModel: ISortModelItem[] = event.columnApi.getAllColumns()
+            .filter(col => col.getSort() !== undefined && col.getSort() !== null)
+            .map(col => ({ colId: col.getColId(), sort: col.getSort() as AFM.SortDirection }));
+
+        const sortItems = getSortsFromModel(sortModel, this.getExecution());
+
+        this.props.pushData({
+            properties: {
+                sortItems
+            }
+        });
+    }
+
     public renderVisualization() {
         const { columnDefs, rowData } = this.state;
         const { pageSize } = this.props;
 
-        const separators = get(this.props, 'config.separators', undefined);
+        const separators = get(this.props, ['config', 'separators'], undefined);
+        const menu = get(this.props, ['config', 'menu']);
 
         const gridOptions: ICustomGridOptions = {
             // Initial data
@@ -563,18 +658,28 @@ export class PivotTableInner extends
                 cellClass: this.getCellClass(null),
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
-                    enableMenu: false
-                }
+                    menu,
+                    onMenuAggregationClick: this.onMenuAggregationClick,
+                    getExecutionResponse: this.getExecutionResponse,
+                    getColumnTotals: this.getColumnTotals,
+                    intl: this.props.intl
+                },
+                minWidth: 50
             },
             defaultColGroupDef: {
                 headerClass: this.getHeaderClass(null),
                 children: [],
                 headerGroupComponentFramework: ColumnGroupHeader as any,
                 headerGroupComponentParams: {
-                    enableMenu: false
+                    menu,
+                    onMenuAggregationClick: this.onMenuAggregationClick,
+                    getExecutionResponse: this.getExecutionResponse,
+                    getColumnTotals: this.getColumnTotals,
+                    intl: this.props.intl
                 }
             },
             onCellClicked: this.cellClicked,
+            onSortChanged: this.sortChanged,
 
             // Basic options
             suppressMovableColumns: true,
@@ -682,9 +787,20 @@ export class PivotTableInner extends
                 {tableLoadingOverlay}
                 <AgGridReact
                     {...gridOptions}
+                    // To force Ag grid rerender because AFAIK there is no way
+                    // to tell Ag grid header cell to rerender
+                    key={this.state.agGridRerenderNumber}
                 />
             </div>
         );
+    }
+
+    private getExecutionResponse = () => {
+        return this.state.execution ? this.state.execution.executionResponse : null;
+    }
+
+    private getColumnTotals = () => {
+        return this.state.columnTotals;
     }
 
     private getDrillablePredicates(): IHeaderPredicate[] {

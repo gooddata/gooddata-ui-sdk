@@ -1,8 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    getChartOptions,
-    findMeasureGroupInDimensions,
     findAttributeInDimension,
+    findMeasureGroupInDimensions
+} from '../../../../helpers/executionResultHelper';
+import {
+    getChartOptions,
     IChartOptions
 } from '../chartOptionsBuilder';
 
@@ -24,13 +26,13 @@ export function generateChartOptions(
 ): IChartOptions {
     const {
         executionRequest: { afm, resultSpec },
-        executionResponse: { dimensions },
+        executionResponse,
         executionResult: { data, headerItems }
     } = dataSet;
     return getChartOptions(
         afm,
         resultSpec,
-        dimensions,
+        executionResponse,
         data,
         headerItems,
         config,
@@ -52,9 +54,9 @@ export function getMVS(dataSet: any) {
         dimensions[STACK_BY_DIMENSION_INDEX],
         headerItems[STACK_BY_DIMENSION_INDEX]
     );
-    return [
+    return {
         measureGroup,
         viewByAttribute,
         stackByAttribute
-    ];
+    };
 }

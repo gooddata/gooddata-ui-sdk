@@ -38,34 +38,6 @@ export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEven
     return !!event.points;
 }
 
-function getMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
-    const measureDefinition = get<string>(measure, ['definition', 'popMeasure'])
-        || get<string>(measure, ['definition', 'previousPeriodMeasure']);
-    return get<string>(measureDefinition, ['measureIdentifier']);
-}
-
-function findMeasureByIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier) {
-    return (afm.measures || []).find((m: AFM.IMeasure) => m.localIdentifier === localIdentifier);
-}
-
-export function getMasterMeasureObjQualifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier) {
-    let measure = findMeasureByIdentifier(afm, localIdentifier);
-    if (measure) {
-        const masterMeasureIdentifier = getMasterMeasureLocalIdentifier(measure);
-        if (masterMeasureIdentifier) {
-            measure = findMeasureByIdentifier(afm, masterMeasureIdentifier);
-        }
-        if (!measure) {
-            return null;
-        }
-        return {
-            uri: get<string>(measure, ['definition', 'measure', 'item', 'uri']),
-            identifier: get<string>(measure, ['definition', 'measure', 'item', 'identifier'])
-        };
-    }
-    return null;
-}
-
 export function getClickableElementNameByChartType(type: VisType): VisElementType {
     switch (type) {
         case VisualizationTypes.LINE:

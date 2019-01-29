@@ -16,7 +16,6 @@ import {
     isRgbColorItem,
     DEFAULT_HEATMAP_BLUE_COLOR
 } from '../utils/color';
-
 import {
     isHeatmap,
     isOneOfTypes,
@@ -24,14 +23,8 @@ import {
     isScatterPlot,
     isBubbleChart
 } from '../utils/common';
-
 import { VisualizationTypes } from '../../../constants/visualizationTypes';
-
-import {
-    isDerivedMeasure,
-    findParentMeasureIndex
-} from './chartOptionsBuilder';
-
+import { isDerivedMeasure, findParentMeasureIndex } from './chartOptionsBuilder';
 import {
     IColorPalette,
     IColorMapping,
@@ -42,6 +35,8 @@ import {
     IColorItem,
     IColorPaletteItem
 } from '../../../interfaces/Config';
+import { IMappingHeader } from '../../../interfaces/MappingHeader';
+import { findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;
@@ -55,7 +50,6 @@ export interface ICreateColorAssignmentReturnValue {
 }
 
 export type HighChartColorPalette = string[];
-export type MeasureGroupType = Execution.IMeasureGroupHeader['measureGroupHeader'];
 export const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
@@ -72,17 +66,17 @@ export abstract class ColorStrategy implements IColorStrategy {
     constructor(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ) {
         const { fullColorAssignment, outputColorAssignment } = this.createColorAssignment(
             colorPalette,
             colorMapping,
-            measureGroup,
             viewByAttribute,
             stackByAttribute,
+            executionResponse,
             afm
         );
         this.fullColorAssignment = fullColorAssignment;
@@ -119,9 +113,9 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected abstract createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue;
 }
@@ -132,25 +126,25 @@ export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         const {
             allMeasuresAssignment,
             nonDerivedMeasuresAssignment
-        } = this.mapColorsFromMeasures(measureGroup, afm, colorMapping, colorPalette);
+        } = this.mapColorsFromMeasures(executionResponse, afm, colorMapping, colorPalette);
 
         return {
             fullColorAssignment: this.mapColorsFromDerivedMeasure(
-                measureGroup, afm, allMeasuresAssignment, colorPalette),
+                executionResponse, afm, allMeasuresAssignment, colorPalette),
             outputColorAssignment: nonDerivedMeasuresAssignment
         };
     }
 
     private mapColorsFromMeasures(
-        measureGroup: MeasureGroupType,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm,
         colorMapping: IColorMapping[],
         colorPalette: IColorPalette
@@ -158,6 +152,7 @@ export class MeasureColorStrategy extends ColorStrategy {
         let currentColorPaletteIndex = 0;
 
         const nonDerivedMeasuresAssignment: IColorAssignment[] = [];
+        const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
         const allMeasuresAssignment = measureGroup.items.map((headerItem, index) => {
             if (isDerivedMeasure(measureGroup.items[index], afm)) {
                 return {
@@ -171,6 +166,7 @@ export class MeasureColorStrategy extends ColorStrategy {
                 currentColorPaletteIndex,
                 colorPalette,
                 colorMapping,
+                executionResponse,
                 afm
             );
 
@@ -192,9 +188,10 @@ export class MeasureColorStrategy extends ColorStrategy {
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
         colorAssignment: IColorMapping[],
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): IColorAssignment {
-        const mappedColor = getColorFromMapping(headerItem, colorAssignment, afm);
+        const mappedColor = getColorFromMapping(headerItem, colorAssignment, executionResponse, afm);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -210,12 +207,13 @@ export class MeasureColorStrategy extends ColorStrategy {
     }
 
     private mapColorsFromDerivedMeasure(
-        measureGroup: MeasureGroupType,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm,
         measuresColorAssignment: IColorAssignment[],
         colorPalette: IColorPalette
     ): IColorAssignment[] {
         return measuresColorAssignment.map((mapItem, measureItemIndex) => {
+            const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
             if (!isDerivedMeasure(measureGroup.items[measureItemIndex], afm)) {
                 return mapItem;
             }
@@ -259,6 +257,7 @@ function getAtributeColorAssignment(
         attribute: any,
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
@@ -266,7 +265,7 @@ function getAtributeColorAssignment(
         = uniqBy<any, Execution.IResultAttributeHeaderItem>(attribute.items, 'attributeHeaderItem.uri');
 
     return uniqItems.map((headerItem) => {
-        const mappedColor = getColorFromMapping(headerItem, colorMapping, afm);
+        const mappedColor = getColorFromMapping(headerItem, colorMapping, executionResponse, afm);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -305,13 +304,14 @@ export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        _measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         const attribute = stackByAttribute ? stackByAttribute : viewByAttribute;
-        const colorAssignment = getAtributeColorAssignment(attribute, colorPalette, colorMapping, afm);
+        const colorAssignment =
+            getAtributeColorAssignment(attribute, colorPalette, colorMapping, executionResponse, afm);
         return {
             fullColorAssignment: colorAssignment
         };
@@ -326,41 +326,26 @@ export class HeatmapColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         let mappedColor;
         let colorAssignment: IColorAssignment[];
+        const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
         const headerItem = measureGroup && measureGroup.items[0];
         if (colorMapping) {
-            mappedColor = getColorFromMapping(headerItem, colorMapping, afm);
+            mappedColor = getColorFromMapping(headerItem, colorMapping, executionResponse, afm);
             if (mappedColor) {
                 colorAssignment = [{
                     headerItem,
                     color: mappedColor
                 }];
             }
-        } else if (colorPalette && isCustomPalette(colorPalette) && colorPalette[0]) {
-            colorAssignment = [{
-                headerItem,
-                color: {
-                    type: 'guid',
-                    value: colorPalette[0].guid
-                }
-            }];
         }
 
-        if (!colorAssignment) {
-            colorAssignment = [{
-                headerItem,
-                color: {
-                    type: 'rgb',
-                    value: DEFAULT_HEATMAP_BLUE_COLOR
-                }
-            }];
-        }
+        colorAssignment = colorAssignment || this.getDefaultColorAssignment(colorPalette, headerItem);
 
         return {
             fullColorAssignment: colorAssignment,
@@ -410,27 +395,49 @@ export class HeatmapColorStrategy extends ColorStrategy {
     private getCalculatedChannel(channel: number, index: number, step: number): number {
         return Math.trunc(channel + index * step);
     }
+
+    private getDefaultColorAssignment(colorPalette: IColorPalette, headerItem: IMappingHeader): IColorAssignment[] {
+        const hasCustomPaletteWithColors = colorPalette && isCustomPalette(colorPalette) && colorPalette[0];
+        if (hasCustomPaletteWithColors) {
+            return [{
+                headerItem,
+                color: {
+                    type: 'guid',
+                    value: colorPalette[0].guid
+                }
+            }];
+        }
+
+        return [{
+            headerItem,
+            color: {
+                type: 'rgb',
+                value: DEFAULT_HEATMAP_BLUE_COLOR
+            }
+        }];
+    }
 }
 
 export class TreemapColorStrategy extends MeasureColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         let colorAssignment: IColorAssignment[];
         if (viewByAttribute) {
-            colorAssignment = getAtributeColorAssignment(viewByAttribute, colorPalette, colorMapping, afm);
+            colorAssignment =
+                getAtributeColorAssignment(viewByAttribute, colorPalette, colorMapping, executionResponse, afm);
         } else {
             const result = super.createColorAssignment(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm
             );
             colorAssignment = result.outputColorAssignment;
@@ -447,11 +454,12 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected singleMeasureColorMapping(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): IColorAssignment[] {
+        const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
         const measureHeaderItem = measureGroup.items[0];
-        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, afm);
+        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, executionResponse, afm);
         const color: IColorItem = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping : { type: 'guid', value: colorPalette[0].guid };
         return [{
@@ -476,9 +484,9 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
         let colorAssignment;
@@ -486,13 +494,14 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
             colorAssignment = super.createColorAssignment(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
+                executionResponse,
                 afm
             ).fullColorAssignment;
         } else {
-            colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup, afm);
+            colorAssignment =
+                this.singleMeasureColorMapping(colorPalette, colorMapping, executionResponse, afm);
         }
 
         return {
@@ -518,12 +527,13 @@ export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         _viewByAttribute: any,
         _stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm
     ): ICreateColorAssignmentReturnValue {
-            const colorAssignment = this.singleMeasureColorMapping(colorPalette, colorMapping, measureGroup, afm);
+            const colorAssignment =
+                this.singleMeasureColorMapping(colorPalette, colorMapping, executionResponse, afm);
             return {
                 fullColorAssignment: colorAssignment
             };
@@ -548,9 +558,9 @@ export class ColorFactory {
     public static getColorStrategy(
         colorPalette: IColorPalette = DEFAULT_COLOR_PALETTE,
         colorMapping: IColorMapping[],
-        measureGroup: MeasureGroupType,
         viewByAttribute: any,
         stackByAttribute: any,
+        executionResponse: Execution.IExecutionResponse,
         afm: AFM.IAfm,
         type: string
     ): IColorStrategy {
@@ -559,58 +569,64 @@ export class ColorFactory {
             return new HeatmapColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
-                afm);
+                executionResponse,
+                afm
+            );
         }
 
         if (isTreemap(type)) {
             return new TreemapColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
-                afm);
+                executionResponse,
+                afm
+            );
         }
 
         if (isScatterPlot(type)) {
             return new ScatterPlotColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
-                afm);
+                executionResponse,
+                afm
+            );
         }
 
         if (isBubbleChart(type)) {
             return new BubbleChartColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
-                afm);
+                executionResponse,
+                afm
+            );
         }
 
         if (isAttributeColorPalette(type, afm, stackByAttribute)) {
             return new AttributeColorStrategy(
                 colorPalette,
                 colorMapping,
-                measureGroup,
                 viewByAttribute,
                 stackByAttribute,
-                afm);
+                executionResponse,
+                afm
+            );
         }
 
         return new MeasureColorStrategy(
             colorPalette,
             colorMapping,
-            measureGroup,
             viewByAttribute,
             stackByAttribute,
-            afm);
+            executionResponse,
+            afm
+        );
     }
 }

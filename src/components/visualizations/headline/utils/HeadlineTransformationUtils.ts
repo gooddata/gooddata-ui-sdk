@@ -9,8 +9,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
 import { isSomeHeaderPredicateMatched } from '../../../../helpers/headerPredicate';
 import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
-
-import { getMasterMeasureObjQualifier } from '../../utils/drilldownEventing';
+import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import {
     IDrillEvent,
     IDrillEventCallback
@@ -158,13 +157,13 @@ export function applyDrillableItems(headlineData: IHeadlineData,
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(
-            drillableItems, primaryItemHeader, executionRequest.afm
+            drillableItems, primaryItemHeader, executionRequest.afm, executionResponse
         );
     }
 
     if (!isEmpty(secondaryItem) && !isEmpty(secondaryItemHeader)) {
         secondaryItem.isDrillable = isSomeHeaderPredicateMatched(
-            drillableItems, secondaryItemHeader, executionRequest.afm
+            drillableItems, secondaryItemHeader, executionRequest.afm, executionResponse
         );
     }
 

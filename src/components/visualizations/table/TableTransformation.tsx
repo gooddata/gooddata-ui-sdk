@@ -96,6 +96,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
             onTotalsEdit,
             drillablePredicates,
             executionRequest,
+            executionResponse,
             headers,
             onFiredDrillEvent,
             onSortChange,

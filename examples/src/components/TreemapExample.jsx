@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { Treemap } from '@gooddata/react-components';
+import { Treemap, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -18,38 +18,11 @@ export class TreeMapExample extends Component {
     }
 
     render() {
-        const numberOfChecks = {
-            measure: {
-                localIdentifier: 'numberOfChecks',
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: numberOfChecksIdentifier
-                        }
-                    }
-                },
-                alias: '# Checks',
-                format: '#,##0'
-            }
-        };
+        const numberOfChecks = Model.measure(numberOfChecksIdentifier).format('#,##0').alias('# Checks');
 
-        const locationState = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationStateDisplayFormIdentifier
-                },
-                localIdentifier: 'label.restaurantlocation.locationstate'
-            }
-        };
+        const locationState = Model.attribute(locationStateDisplayFormIdentifier);
 
-        const locationCity = {
-            visualizationAttribute: {
-                displayForm: {
-                    identifier: locationCityDisplayFormIdentifier
-                },
-                localIdentifier: 'label.restaurantlocation.locationcity'
-            }
-        };
+        const locationCity = Model.attribute(locationCityDisplayFormIdentifier);
 
         return (
             <div style={{ height: 300 }} className="s-tree-map">

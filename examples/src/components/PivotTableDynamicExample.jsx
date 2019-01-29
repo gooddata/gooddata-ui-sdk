@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from 'react';
-import { PivotTable, Table, HeaderPredicateFactory } from '@gooddata/react-components';
+import { PivotTable, Table, HeaderPredicateFactory, Model } from '@gooddata/react-components';
 
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -17,24 +17,22 @@ import {
     monthDateIdentifierJanuary,
     dateDatasetIdentifier
 } from '../utils/fixtures';
-import {
-    createMeasureBucketItem,
-    createAttributeBucketItem,
-    createAttributeSortItem,
-    createMeasureSortItem,
-    createColumnTotal,
-    createPositiveAttributeFilter,
-    createRelativeDateFilter
-} from '../utils/helpers';
+import { createColumnTotal } from '../utils/helpers';
 import { ElementWithParam } from './utils/ElementWithParam';
 
-const measureFranchiseFees = createMeasureBucketItem(franchiseFeesIdentifier);
-const measureAdRoyalty = createMeasureBucketItem(franchiseFeesAdRoyaltyIdentifier);
-const attributeLocationState = createAttributeBucketItem(locationStateDisplayFormIdentifier);
-const attributeLocationName = createAttributeBucketItem(locationNameDisplayFormIdentifier);
-const attributeMenuCategory = createAttributeBucketItem(menuCategoryAttributeDFIdentifier);
-const attributeQuarter = createAttributeBucketItem(quarterDateIdentifier);
-const attributeMonth = createAttributeBucketItem(monthDateIdentifier);
+const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
+const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier)
+    .localIdentifier(franchiseFeesAdRoyaltyIdentifier);
+const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier)
+    .localIdentifier(locationStateDisplayFormIdentifier);
+const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier)
+    .localIdentifier(locationNameDisplayFormIdentifier);
+const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier)
+    .localIdentifier(menuCategoryAttributeDFIdentifier);
+const attributeQuarter = Model.attribute(quarterDateIdentifier)
+    .localIdentifier(quarterDateIdentifier);
+const attributeMonth = Model.attribute(monthDateIdentifier)
+    .localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -174,7 +172,7 @@ const filterPresets = {
     attributeCalifornia: {
         label: 'Attribute (California)',
         key: 'attributeCalifornia',
-        filterItem: createPositiveAttributeFilter(
+        filterItem: Model.positiveAttributeFilter(
             locationStateDisplayFormIdentifier,
             [locationStateAttributeCaliforniaUri]
         )
@@ -182,12 +180,12 @@ const filterPresets = {
     lastYear: {
         label: 'Last year',
         key: 'lastYear',
-        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
     },
     noData: {
         label: 'No Data',
         key: 'noData',
-        filterItem: createRelativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
     },
     franchiseFeesCalifornia: {
         label: 'Franchise Fees California',
@@ -197,10 +195,10 @@ const filterPresets = {
 };
 
 const franchiseFeesCalifornia =
-    createMeasureBucketItem(franchiseFeesIdentifier, 'franchiseFeesCalifornia', 'FranchiseFees (California)', [filterPresets.attributeCalifornia.filterItem]);
-
-const ASC = 'asc';
-const DESC = 'desc';
+    Model.measure(franchiseFeesIdentifier)
+        .localIdentifier('franchiseFeesCalifornia')
+        .alias('FranchiseFees (California)')
+        .filters(filterPresets.attributeCalifornia.filterItem);
 
 const sortingPresets = {
     noSort: {
@@ -211,39 +209,73 @@ const sortingPresets = {
     byMenuCategory: {
         label: 'By Menu Category ASC',
         key: 'byMenuCategory',
-        sortBy: [createAttributeSortItem(menuCategoryAttributeDFIdentifier, ASC)]
+        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, 'asc')]
     },
     byLocationState: {
         label: 'By Location State DESC',
         key: 'byLocationState',
-        sortBy: [createAttributeSortItem(locationStateDisplayFormIdentifier, DESC)]
+        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, 'desc')]
     },
     byQ1JanFranchiseFees: {
         label: 'by Q1 / Jan / FranchiseFees DESC',
         key: 'byQ1JanFranchiseFees',
-        sortBy: [createMeasureSortItem(
-            franchiseFeesIdentifier,
-            DESC,
-            [
-                quarterDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1',
-                monthDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-            ]
-        )]
+        sortBy: [
+            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
+                .attributeLocators(
+                    {
+                        attributeIdentifier: quarterDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                    },
+                    {
+                        attributeIdentifier: monthDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                    }
+                )
+        ]
     },
     byLocationStateAndQ1JanFranchiseFees: {
         label: 'By Location State ASC And Q1 Jan Franchise Fees DESC',
         key: 'byLocationStateAndQ1JanFranchiseFees',
         sortBy: [
-            createAttributeSortItem(locationStateDisplayFormIdentifier, ASC),
-            createMeasureSortItem(
-                franchiseFeesIdentifier,
-                DESC,
-                [
-                    quarterDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1',
-                    monthDateIdentifier, '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-                ]
-            )
+            Model.attributeSortItem(locationStateDisplayFormIdentifier, 'asc'),
+            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
+                .attributeLocators(
+                    {
+                        attributeIdentifier: quarterDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                    },
+                    {
+                        attributeIdentifier: monthDateIdentifier,
+                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                    }
+                )
         ]
+    }
+};
+
+const menuPresets = {
+    noMenu: {
+        label: 'No menu',
+        key: 'noMenu',
+        menuConfig: null
+    },
+    aggregations: {
+        label: 'Aggregations',
+        key: 'aggregations',
+        menuConfig: { aggregations: true }
+    }
+};
+
+const pivotTableSizePresets = {
+    default: {
+        label: 'Default',
+        key: 'default',
+        styles: { width: '100%', height: 300 }
+    },
+    wide: {
+        label: 'Wide',
+        key: 'wide',
+        styles: { width: 1500, height: 500 }
     }
 };
 
@@ -262,22 +294,24 @@ export const getTotalItems = (totalKeys) => {
 export class PivotTableDrillingExample extends Component {
     constructor(props) {
         super(props);
+
         const drillingPresetKeys = {
             attributeValueCalifornia: true,
             measure: true,
             attributeMenuCategory: true,
             attributeValueJanuary: true
         };
-        const filterPresetKeys = {};
-        const totalPresetKeys = {};
+
         this.state = {
             bucketPresetKey: 'measuresColumnAndRowAttributes',
             drillEvent: null,
             drillingPresetKeys,
-            filterPresetKeys,
+            filterPresetKeys: {},
             drillableItems: getDrillableItems(drillingPresetKeys),
-            totalPresetKeys,
-            sortingPresetKey: 'noSort'
+            totalPresetKeys: {},
+            sortingPresetKey: 'noSort',
+            menuPresetKey: 'noMenu',
+            pivotTableSizeKey: 'default'
         };
     }
 
@@ -309,16 +343,24 @@ export class PivotTableDrillingExample extends Component {
             filterPresetKeys
         });
     }
-
     onBucketPresetChange = (bucketPresetKey) => {
         this.setState({
             bucketPresetKey
         });
     }
-
     onSortingPresetChange = (sortingPresetKey) => {
         this.setState({
             sortingPresetKey
+        });
+    }
+    onMenuPresetChange = (menuPresetKey) => {
+        this.setState({
+            menuPresetKey
+        });
+    }
+    onPivotTableSizeChange = (pivotTableSizeKey) => {
+        this.setState({
+            pivotTableSizeKey
         });
     }
 
@@ -339,7 +381,9 @@ export class PivotTableDrillingExample extends Component {
             drillableItems,
             drillingPresetKeys,
             filterPresetKeys,
-            totalPresetKeys
+            totalPresetKeys,
+            menuPresetKey,
+            pivotTableSizeKey
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
@@ -447,8 +491,44 @@ export class PivotTableDrillingExample extends Component {
                         })
                     }
                 </div>
-                <div style={{ height: 300 }} className={`s-pivot-table-${bucketPresetKey}`} >
+                <div className="presets">
+                    Menu presets: {
+                        Object.keys(menuPresets).map((presetItemKey) => {
+                            const { key, label } = menuPresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${menuPresetKey === key ? ' is-active' : ''}`}
+                                onClick={this.onMenuPresetChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
+                <div className="presets">
+                    Pivot table size: {
+                        Object.keys(pivotTableSizePresets).map((presetItemKey) => {
+                            const { key, label } = pivotTableSizePresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${pivotTableSizeKey === key ? ' is-active' : ''}`}
+                                onClick={this.onPivotTableSizeChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
+
+                <div
+                    className={`s-pivot-table-${bucketPresetKey}`}
+                    style={pivotTableSizePresets[pivotTableSizeKey].styles}
+                >
                     <PivotTable
+                        // Table components are completely reseted because they
+                        // heavily use JS to compute dimensions and when we just
+                        // change style prop they did not rerender with correct
+                        // width. To get around this problem we completely
+                        // reset both table components.
+                        key={pivotTableSizeKey}
                         projectId={projectId}
                         pageSize={20}
                         {...bucketPropsWithFilters}
@@ -456,12 +536,17 @@ export class PivotTableDrillingExample extends Component {
                         drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
+                        config={{
+                            menu: menuPresets[menuPresetKey].menuConfig
+                        }}
                         totals={totals}
                     />
                 </div>
+
                 <h2>Table component for reference</h2>
-                <div style={{ height: 300 }} >
+                <div style={{ height: 300 }}>
                     <Table
+                        key={pivotTableSizeKey}
                         projectId={projectId}
                         {...tableBucketProps}
                         {...filtersProp}
@@ -471,6 +556,7 @@ export class PivotTableDrillingExample extends Component {
                         totals={totals}
                     />
                 </div>
+
                 <pre className="s-output">
                     {JSON.stringify(drillEvent || {
                         ...bucketPropsWithFilters,

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from 'react';
-import { LineChart, ColumnChart, ErrorComponent, LoadingComponent } from '@gooddata/react-components';
+import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, Model } from '@gooddata/react-components';
 import sdk from '@gooddata/gooddata-js';
 import '@gooddata/react-components/styles/css/main.css';
 
@@ -67,34 +67,8 @@ export class DynamicMeasuresExample extends Component {
         });
     }
 
-    getMeasureDefinition(measureItem) {
-        return {
-            localIdentifier: measureItem.link.split('/').reverse()[0],
-            definition: {
-                measure: {
-                    item: {
-                        uri: measureItem.link
-                    }
-                }
-            },
-            format: '#,##0'
-        };
-    }
-
     getNewMeasureDefinition(measureItem) {
-        return {
-            measure: {
-                localIdentifier: measureItem.link.split('/').reverse()[0],
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            uri: measureItem.link
-                        }
-                    }
-                },
-                format: '#,##0'
-            }
-        };
+        return Model.measure(measureItem.link).format('#,##0');
     }
 
     render() {
@@ -156,14 +130,7 @@ export class DynamicMeasuresExample extends Component {
             const measures = selectedMeasures.map(this.getNewMeasureDefinition);
 
             if (selectedMeasures.length) {
-                const attribute = {
-                    visualizationAttribute: {
-                        displayForm: {
-                            identifier: monthDateIdentifier
-                        },
-                        localIdentifier: 'month'
-                    }
-                };
+                const attribute = Model.attribute(monthDateIdentifier);
 
                 content = (
                     <div className="graph-wrapper">

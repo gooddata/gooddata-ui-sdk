@@ -1,12 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import { attributeHeaderItem, measureHeaderItem, attributeHeader } from '../../factory/tests/mocks';
-import { isMappingHeaderAttributeItem, isMappingHeaderMeasureItem, isMappingHeaderAttribute } from '../MappingHeader';
+import {
+    isMappingHeaderAttributeItem,
+    isMappingHeaderMeasureItem,
+    isMappingHeaderAttribute
+} from '../MappingHeader';
 import { isHeaderPredicate } from '../HeaderPredicate';
 import * as headerPredicateFactory from '../../factory/HeaderPredicateFactory';
+import {
+    attributeHeaderItem,
+    measureHeaders,
+    attributeHeader
+} from '../../factory/tests/HeaderPredicateFactory.mock';
 
 describe('isMappingHeaderMeasureItem', () => {
     it('should return true when object contains measureHeaderItem', () => {
-        expect(isMappingHeaderMeasureItem(measureHeaderItem)).toEqual(true);
+        expect(isMappingHeaderMeasureItem(measureHeaders.uriBasedMeasure)).toEqual(true);
     });
 
     it('should return false measureHeaderItem when object does not contain measureHeaderItem', () => {
@@ -30,7 +38,7 @@ describe('isMappingHeaderAttributeItem', () => {
     });
 
     it('should return false when object does not contain attributeHeaderItem', () => {
-        expect(isMappingHeaderAttributeItem(measureHeaderItem)).toEqual(false);
+        expect(isMappingHeaderAttributeItem(measureHeaders.uriBasedMeasure)).toEqual(false);
     });
 });
 

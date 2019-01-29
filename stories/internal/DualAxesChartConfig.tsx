@@ -40,6 +40,9 @@ const renderSupportedCharts = (
                     _config.xaxis = _config.yaxis;
                     _config.secondary_xaxis = _config.secondary_yaxis;
                     _config.yaxis = _config.secondary_yaxis = undefined;
+                    _config.dataLabels = {
+                        visible: false // disable data label on bar chart to make test stable
+                    };
                 }
 
                 return (
@@ -82,6 +85,22 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
             </div>
         );
     })
+    .add('Dataset with 0+ data on both axes, with shallow min/max', () => {
+        const { config, info } = getMinMaxConfig('1', '2', '100', '101');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
+    .add('Dataset with 0+ data on both axes, with shallow decimal min/max', () => {
+        const { config, info } = getMinMaxConfig('0.01', '0.021', '100.001', '100.002');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
     .add('Dataset with 0+ data on both axes, with max setting', () => {
         const { config, info } = getMinMaxConfig(undefined, '500', undefined, '4000');
         return screenshotWrap(
@@ -90,7 +109,31 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
             </div>
         );
     })
-    .add('Dataset with 0+ data on both axes, min >= max', () => {
+    .add('Dataset with 0+ data on both axes, min > max on left axis', () => {
+        const { config, info } = getMinMaxConfig('600', '500', undefined, undefined);
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
+    .add('Dataset with 0+ data on both axes, out-of-range min/max on left axis', () => {
+        const { config, info } = getMinMaxConfig('1000', '2000', undefined, undefined);
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
+    .add('Dataset with 0+ data on both axes, min = max on right axis', () => {
+        const { config, info } = getMinMaxConfig(undefined, undefined, '4000', '4000');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
+    .add('Dataset with 0+ data on both axes, min > max on left axis, min = max on right axis', () => {
         const { config, info } = getMinMaxConfig('600', '500', '4000', '4000');
         return screenshotWrap(
             <div>
@@ -263,6 +306,20 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
         return screenshotWrap(
             <div>
                 {renderSupportedCharts(barChartWithoutAttributes, config)}
+            </div>
+        );
+    })
+    .add('Column should not be cut off on right axis', () => {
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.sd160DataSet01)}
+            </div>
+        );
+    })
+    .add('Column should not be cut off on left axis', () => {
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.sd160DataSet02)}
             </div>
         );
     });

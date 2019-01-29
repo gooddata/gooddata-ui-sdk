@@ -3,6 +3,7 @@ import * as AfmComponents from './components/afm/afmComponents';
 import * as VisEvents from './interfaces/Events';
 import CatalogHelper from './helpers/CatalogHelper';
 import { isEmptyResult } from './helpers/errorHandlers';
+import * as Model from './helpers/model';
 import { BaseChart as CoreBaseChart, IBaseChartProps } from './components/core/base/BaseChart';
 import { Table as CoreTable } from './components/core/Table';
 import { Headline as CoreHeadline } from './components/core/Headline';
@@ -18,6 +19,7 @@ import { ErrorStates, ErrorCodes } from './constants/errorStates';
 import { VisualizationTypes, ChartType } from './constants/visualizationTypes';
 import { Execute } from './execution/Execute';
 import { IDrillableItem } from './interfaces/DrillEvents';
+import { IHeaderPredicate } from './interfaces/HeaderPredicate';
 import { IPushData, IColorsData } from './interfaces/PushData';
 import { AttributeFilter } from './components/filters/AttributeFilter/AttributeFilter';
 import { AttributeElements } from './components/filters/AttributeFilter/AttributeElements';
@@ -83,6 +85,7 @@ export {
     BarChart,
     BucketNames,
     CatalogHelper,
+    Model,
     ChartType,
     ColumnChart,
     ScatterPlot,
@@ -136,6 +139,7 @@ export {
     SortsHelper,
     ChartConfiguration,
     ColorUtils,
+    IHeaderPredicate,
     HeaderPredicateFactory,
     MappingHeader
 };
