@@ -446,6 +446,36 @@ describe('composedFromUri', () => {
             expect(predicate(measureHeaders.identifierBasedCompareArithmeticMeasure, context)).toBe(true);
         });
     });
+
+    describe('derived from AM', () => {
+        it('should match when derived PP from AM matches header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromUri('/uriBasedMeasureUri');
+
+            expect(predicate(measureHeaders.derivedPPFromArithmeticMeasure, context)).toEqual(true);
+        });
+
+        it('should not match when derived PP from AM doesn\'t match header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromUri('/someOtherUri');
+
+            expect(predicate(measureHeaders.derivedPPFromArithmeticMeasure, context)).toEqual(false);
+        });
+
+        it('should match when derived SP from AM matches header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromUri('/uriBasedMeasureUri');
+
+            expect(predicate(measureHeaders.derivedSPFromArithmeticMeasure, context)).toEqual(true);
+        });
+
+        it('should not match when derived SP from AM doesn\'t match header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromUri('/someOtherUri');
+
+            expect(predicate(measureHeaders.derivedSPFromArithmeticMeasure, context)).toEqual(false);
+        });
+    });
 });
 
 describe('composedFromIdentifier', () => {
@@ -549,6 +579,36 @@ describe('composedFromIdentifier', () => {
                 headerPredicateFactory.composedFromIdentifier('identifierBasedMeasureIdentifier');
 
             expect(predicate(measureHeaders.identifierBasedCompareArithmeticMeasure, context)).toBe(true);
+        });
+    });
+
+    describe('derived from AM', () => {
+        it('should match when derived PP from AM matches header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromIdentifier('identifierBasedMeasureIdentifier');
+
+            expect(predicate(measureHeaders.derivedPPFromArithmeticMeasure, context)).toEqual(true);
+        });
+
+        it('should not match when derived PP from AM doesn\'t match header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromIdentifier('someOtherIdentifier');
+
+            expect(predicate(measureHeaders.derivedPPFromArithmeticMeasure, context)).toEqual(false);
+        });
+
+        it('should match when derived SP from AM matches header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromIdentifier('identifierBasedMeasureIdentifier');
+
+            expect(predicate(measureHeaders.derivedSPFromArithmeticMeasure, context)).toEqual(true);
+        });
+
+        it('should not match when derived SP from AM doesn\'t match header uri', () => {
+            const predicate: IHeaderPredicate =
+                headerPredicateFactory.composedFromIdentifier('someOtherIdentifier');
+
+            expect(predicate(measureHeaders.derivedSPFromArithmeticMeasure, context)).toEqual(false);
         });
     });
 });

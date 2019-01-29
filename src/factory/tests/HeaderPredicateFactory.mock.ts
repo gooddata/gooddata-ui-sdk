@@ -254,6 +254,34 @@ export const afm: AFM.IAfm = {
                 }
             },
             localIdentifier: 'identifierBasedCompareArithmeticMeasureLocalIdentifier'
+        },
+        // Derived from AM
+        {
+            alias: 'Compare PP measure derived from AM',
+            definition: {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'arithmeticMeasureLocalIdentifier',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/bar'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            },
+            localIdentifier: 'identifierComparePPDerivedFromAM'
+        },
+        {
+            alias: 'Compare SP measure derived from AM',
+            definition: {
+                popMeasure: {
+                    measureIdentifier: 'arithmeticMeasureLocalIdentifier',
+                    popAttribute: {
+                        uri: '/foo'
+                    }
+                }
+            },
+            localIdentifier: 'identifierCompareSPDerivedFromAM'
         }
     ],
 
@@ -404,6 +432,20 @@ export const measureHeaders: { [key: string]: Execution.IMeasureHeaderItem } = {
         measureHeaderItem: {
             localIdentifier: 'identifierBasedCompareArithmeticMeasureLocalIdentifier',
             name: 'identifierBasedCompareArithmeticMeasureName',
+            format: '#,##0.00'
+        }
+    },
+    derivedPPFromArithmeticMeasure: {
+        measureHeaderItem: {
+            localIdentifier: 'identifierComparePPDerivedFromAM',
+            name: 'identifierComparePPDerivedFromAM',
+            format: '#,##0.00'
+        }
+    },
+    derivedSPFromArithmeticMeasure: {
+        measureHeaderItem: {
+            localIdentifier: 'identifierCompareSPDerivedFromAM',
+            name: 'identifierCompareSPDerivedFromAM',
             format: '#,##0.00'
         }
     }
