@@ -27,116 +27,35 @@ describe('measureTitleHelper', () => {
 
         it('should set title of derived measures based on master title when master is NOT renamed', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Over time comparison');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
-            expect(result.buckets[0].items).toEqual(
-                [
-                    {
-                        measure: {
-                            localIdentifier: 'm1',
-                            title: '# Accounts with AD Query',
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: '/gdc/md/myproject/obj/8172'
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        measure: {
-                            localIdentifier: 'm1_pop',
-                            title: '# Accounts with AD Query - SP year ago',
-                            definition: {
-                                popMeasureDefinition: {
-                                    measureIdentifier: 'm1',
-                                    popAttribute: {
-                                        uri: '/gdc/md/myproject/obj/1514'
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        measure: {
-                            localIdentifier: 'm1_previous_period',
-                            title: '# Accounts with AD Query - period ago',
-                            definition: {
-                                previousPeriodMeasure: {
-                                    measureIdentifier: 'm1',
-                                    dateDataSets: [{
-                                        dataSet: {
-                                            uri: '/gdc/md/myproject/obj/921'
-                                        },
-                                        periodsAgo: 1
-                                    }]
-                                }
-                            }
-                        }
-                    }
-                ]
-            );
+            expect(getTitleOfMeasure(result, 'm1'))
+                .toEqual('# Accounts with AD Query');
+
+            expect(getTitleOfMeasure(result, 'm1_pop'))
+                .toEqual('# Accounts with AD Query - SP year ago');
+
+            expect(getTitleOfMeasure(result, 'm1_previous_period'))
+                .toEqual('# Accounts with AD Query - period ago');
         });
 
         it('should set title of derived measures based on master alias when master is renamed', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Over time comparison alias');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
-            expect(result.buckets[0].items).toEqual(
-                [
-                    {
-                        measure: {
-                            localIdentifier: 'm1',
-                            title: '# Accounts with AD Query',
-                            alias: 'AD Queries',
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: '/gdc/md/myproject/obj/8172'
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        measure: {
-                            localIdentifier: 'm1_pop',
-                            title: 'AD Queries - SP year ago',
-                            definition: {
-                                popMeasureDefinition: {
-                                    measureIdentifier: 'm1',
-                                    popAttribute: {
-                                        uri: '/gdc/md/myproject/obj/1514'
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        measure: {
-                            localIdentifier: 'm1_previous_period',
-                            title: 'AD Queries - period ago',
-                            definition: {
-                                previousPeriodMeasure: {
-                                    measureIdentifier: 'm1',
-                                    dateDataSets: [{
-                                        dataSet: {
-                                            uri: '/gdc/md/myproject/obj/921'
-                                        },
-                                        periodsAgo: 1
-                                    }]
-                                }
-                            }
-                        }
-                    }
-                ]
-            );
+            expect(getTitleOfMeasure(result, 'm1'))
+                .toEqual('# Accounts with AD Query');
+
+            expect(getTitleOfMeasure(result, 'm1_pop'))
+                .toEqual('AD Queries - SP year ago');
+
+            expect(getTitleOfMeasure(result, 'm1_previous_period'))
+                .toEqual('AD Queries - period ago');
         });
 
         it('should ignore title attribute when it is included in derived / arithmetic measure (computed title)', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic and derived measures');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
             expect(getTitleOfMeasure(result, 'am1'))
                 .toEqual('Sum of AD Accounts and AD Accounts - SP year ago');
@@ -147,7 +66,7 @@ describe('measureTitleHelper', () => {
 
         it('should set title of derived based on master title even when it is located in a different bucket', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Headline over time comparison');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
             expect(result.buckets[0].items).toEqual(
                 [
@@ -208,7 +127,7 @@ describe('measureTitleHelper', () => {
 
         it('should set correct titles to arithmetic measures in simple tree', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic measures tree');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
             expect(getTitleOfMeasure(result, 'tree_level_0'))
                 .toEqual('Sum of AD Accounts and KD Accounts');
@@ -220,9 +139,23 @@ describe('measureTitleHelper', () => {
                 .toEqual('Sum of AD Accounts and Sum of AD Accounts and Sum of AD Accounts and KD Accounts');
         });
 
+        it('should respect max arithmetic measure title length', () => {
+            const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic measures tree');
+            const result = fillMissingTitles(visualizationObjectContent, locale, 50);
+
+            expect(getTitleOfMeasure(result, 'tree_level_0'))
+                .toEqual('Sum of AD Accounts and KD Accounts');
+
+            expect(getTitleOfMeasure(result, 'tree_level_1'))
+                .toEqual('Sum of AD Accounts and Sum of AD Accounts and KD A…');
+
+            expect(getTitleOfMeasure(result, 'tree_level_2'))
+                .toEqual('Sum of AD Accounts and Sum of AD Accounts and Sum …');
+        });
+
         it('should set correct titles to arithmetic measures in the complex tree', () => {
             const visualizationObjectContent = findVisualizationObjectFixture('Arithmetic measures');
-            const result = fillMissingTitles(visualizationObjectContent, locale);
+            const result = fillMissingTitles(visualizationObjectContent, locale, 1000);
 
             expect(getTitleOfMeasure(result, 'arithmetic_measure_created_from_complicated_arithmetic_measures'))
                 .toEqual('Sum of Sum of Sum of AD Queries and KD Queries and Sum of Renamed SP last year M1 ' +
