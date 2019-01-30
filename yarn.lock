@@ -114,12 +114,12 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@59.4.1":
-  version "59.4.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-59.4.1.tgz#e95b3e24f05c891f5aebea40e66f32bd1818fff4"
-  integrity sha512-iJsBhUyQmvbOHTt933c6lGe05YaZ6TX9JaRh4nFieZ54PXQZvM0OrjELsZ0/UGZMdvfYKOhX8X5ugQkUZN9MjA==
+"@gooddata/goodstrap@59.4.3":
+  version "59.4.3"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-59.4.3.tgz#90a521449e84fb8c5da6349af746fc72ac89ff1f"
+  integrity sha512-w7HlxwQ8LaTPkbsfsEZiK12wr4N3AFn9yE+G4+SF2OqAxU+YPcpG46RUkBzA6+93ABcvhWclodI6gYSJhct4/w==
   dependencies:
-    "@gooddata/js-utils" "3.3.0"
+    "@gooddata/js-utils" "3.4.0"
     classnames "2.2.5"
     custom-event "1.0.1"
     fixed-data-table-2 "0.7.17"
@@ -144,10 +144,10 @@
     rxjs "^5.5.6"
     tinycolor2 "1.4.1"
 
-"@gooddata/js-utils@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.3.0.tgz#5e6f227be611be5a6d93d1fa8bb5eec7ef357585"
-  integrity sha512-G2GDGZcWj2RbXr197OAc3+XWVf5RLCldzUGxCCaII/osOzZzyelbxJMMnU6qLGtBYJLrVqebnoCn8Pz/rQ48nw==
+"@gooddata/js-utils@3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.4.0.tgz#2ea216bff64b889872aacb38eb7b7f82a638b925"
+  integrity sha512-QkMVVtfhmsu0jGZFaG7Fi0ighZ3Ph9Dpgf4Uepv8XbY1pRtUDUr0JaV17RltGGud5nIQiOxJorEt4a7IJpb3YA==
   dependencies:
     js-cookie "^2.1.4"
     lodash "4.17.11"
