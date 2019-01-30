@@ -15,6 +15,7 @@ describe('BaseChart', () => {
             type: VisualizationTypes.LINE,
             visualizationComponent: Visualization,
             afterRender: jest.fn(),
+            updateTotals: jest.fn(),
             drillableItems: [],
             resultSpec: {},
             config: { colors: ['shiny'] },

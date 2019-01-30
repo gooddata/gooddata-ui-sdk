@@ -9,6 +9,7 @@ import {
     IDataSourceProviderInjectedProps
 } from '../DataSourceProvider';
 import { Table } from '../../tests/mocks';
+import { getNativeTotals } from '../../visualizations/table/totals/utils';
 
 describe('DataSourceProvider', () => {
     const defaultProps = {
@@ -121,6 +122,86 @@ describe('DataSourceProvider', () => {
             return testUtils.delay().then(() => {
                 wrapper.update();
                 expect(prepareDataSourceSpy).toHaveBeenCalledTimes(1);
+            });
+        });
+    });
+
+    const sumTotal: AFM.ITotalItem = {
+        attributeIdentifier: 'a1',
+        measureIdentifier: 'm1',
+        type: 'sum'
+    };
+
+    const nativeTotal: AFM.ITotalItem = {
+        attributeIdentifier: 'a1',
+        measureIdentifier: 'm1',
+        type: 'nat'
+    };
+
+    it('should recreate dataSource only when native totals are updated', () => {
+        const wrapper = createComponent(Table);
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            const originalDataSource = wrapper.find(Table).props().dataSource;
+            // Try updating with a new native total and sum total
+            wrapper.find(Table).props().updateTotals([
+                nativeTotal,
+                sumTotal
+            ]);
+            return testUtils.delay().then(() => {
+                wrapper.update();
+                // expected to update AFM
+                expect(wrapper.find(Table).props().dataSource.getAfm()).toEqual({
+                    nativeTotals: [{
+                        attributeIdentifiers: [],
+                        measureIdentifier: 'm1'
+                    }]});
+                const nextDataSource = wrapper.find(Table).props().dataSource;
+                // expected to update dataSource
+                expect(nextDataSource).not.toBe(originalDataSource);
+            });
+        });
+    });
+
+    it('should NOT recreate dataSource when updated with existing native totals', () => {
+        const wrapper = createComponent(Table, {
+            ...defaultProps,
+            afm: {
+                ...defaultProps.afm,
+                nativeTotals: getNativeTotals([nativeTotal])
+            },
+            totals: [nativeTotal, sumTotal]
+        });
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            const originalDataSource = wrapper.find(Table).props().dataSource;
+            // Try updateTotals with the same native total
+            wrapper.find(Table).props().updateTotals([nativeTotal]);
+            return testUtils.delay().then(() => {
+                wrapper.update();
+                const nextDataSource = wrapper.find(Table).props().dataSource;
+                // expected NOT to update dataSource
+                expect(nextDataSource).toBe(originalDataSource);
+            });
+        });
+    });
+
+    it('should NOT recreate dataSource when updated without native totals', () => {
+        const wrapper = createComponent(Table);
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            const originalDataSource = wrapper.find(Table).props().dataSource;
+
+            // Try updateTotals without native total
+            wrapper.find(Table).props().updateTotals([sumTotal]);
+            return testUtils.delay().then(() => {
+                wrapper.update();
+                const nextDataSource = wrapper.find(Table).props().dataSource;
+                // expected NOT to update dataSource
+                expect(nextDataSource).toBe(originalDataSource);
             });
         });
     });

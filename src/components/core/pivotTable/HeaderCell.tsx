@@ -7,7 +7,7 @@ import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTab
 import { ItemsWrapper, Header, Item } from '@gooddata/goodstrap/lib/List/MenuList';
 import Menu from '../../menu/Menu';
 import { getParsedFields } from '../../../helpers/agGrid';
-import { renderedTotalTypesOrder } from '../PivotTable';
+import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../../visualizations/table/totals/utils';
 
 export type AlignPositions = 'left' | 'right' | 'center';
 export const ALIGN_LEFT = 'left';

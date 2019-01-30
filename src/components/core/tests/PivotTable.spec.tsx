@@ -31,6 +31,7 @@ describe('PivotTable', () => {
         const wrapper = mount(
             <PivotTable
                 dataSource={oneMeasureDataSource}
+                updateTotals={noop as any}
                 getPage={noop as any}
                 intl={intl}
             />

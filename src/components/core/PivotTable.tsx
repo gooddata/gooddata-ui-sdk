@@ -51,7 +51,6 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
 import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
-import { IDataSource } from '../../interfaces/DataSource';
 
 import { IDrillEvent, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
@@ -59,7 +58,7 @@ import { IMappingHeader, isMappingHeaderAttributeItem } from '../../interfaces/M
 import { IPivotTableConfig, IMenuAggregationClickConfig } from '../../interfaces/PivotTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import { LoadingComponent } from '../simple/LoadingComponent';
-import { AVAILABLE_TOTALS } from '../visualizations/table/totals/utils';
+import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../visualizations/table/totals/utils';
 
 import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
 
@@ -75,9 +74,7 @@ import {
 import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
 import ColumnHeader from './pivotTable/ColumnHeader';
 
-export interface IPivotTableProps extends ICommonChartProps {
-    resultSpec?: AFM.IResultSpec;
-    dataSource: IDataSource;
+export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
     totalsEditAllowed?: boolean;
     getPage?: IGetPage;
@@ -101,8 +98,6 @@ export interface ICustomGridOptions extends GridOptions {
 
 const AG_NUMERIC_CELL_CLASSNAME = 'ag-numeric-cell';
 const AG_NUMERIC_HEADER_CLASSNAME = 'ag-numeric-header';
-
-export const renderedTotalTypesOrder: AFM.TotalType[] = ['sum', 'max', 'min', 'avg', 'med'];
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string]: any}) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
@@ -395,6 +390,8 @@ export type IPivotTableInnerProps = IPivotTableProps &
 export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
     public static defaultProps: Partial<IPivotTableInnerProps> = {
         ...commonDefaultProps,
+        // This prop is optional if you handle nativeTotals through pushData like in appComponents PluggablePivotTable
+        updateTotals: noop,
         onDataTooLarge: noop,
         pageSize: 100
     };
@@ -462,7 +459,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public componentDidUpdate(_: IPivotTableInnerProps, prevState: IPivotTableState) {
-        if (!isEqual(this.state.columnTotals, prevState.columnTotals)) {
+        const { columnTotals } = this.state;
+        if (!isEqual(columnTotals, prevState.columnTotals)) {
+            if (columnTotals && columnTotals.length) {
+                this.props.updateTotals(columnTotals);
+            }
+
             this.createDataSource(this.props.resultSpec, this.props.getPage, this.props.cancelPagePromises);
             this.setGridDataSource();
         }
@@ -678,6 +680,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const separators = get(this.props, ['config', 'separators'], undefined);
         const menu = get(this.props, ['config', 'menu']);
 
+        const commonHeaderComponentParams = {
+            onMenuAggregationClick: this.onMenuAggregationClick,
+            getExecutionResponse: this.getExecutionResponse,
+            getColumnTotals: this.getColumnTotals,
+            intl: this.props.intl
+        };
+
         const gridOptions: ICustomGridOptions = {
             // Initial data
             columnDefs,
@@ -688,10 +697,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     menu,
-                    onMenuAggregationClick: this.onMenuAggregationClick,
-                    getExecutionResponse: this.getExecutionResponse,
-                    getColumnTotals: this.getColumnTotals,
-                    intl: this.props.intl
+                    ...commonHeaderComponentParams
                 },
                 minWidth: 50
             },
@@ -701,10 +707,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 headerGroupComponentFramework: ColumnGroupHeader as any,
                 headerGroupComponentParams: {
                     menu,
-                    onMenuAggregationClick: this.onMenuAggregationClick,
-                    getExecutionResponse: this.getExecutionResponse,
-                    getColumnTotals: this.getColumnTotals,
-                    intl: this.props.intl
+                    ...commonHeaderComponentParams
                 }
             },
             onCellClicked: this.cellClicked,
@@ -745,7 +748,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                             // params.data is undefined when rows are in loading state
                             params.data &&
                             params.data.colSpan &&
-                            AVAILABLE_TOTALS.find(item => item === params.data[params.data.colSpan.headerKey])
+                            renderedTotalTypesOrder.find(item => item === params.data[params.data.colSpan.headerKey])
                         ) {
                             return params.data.colSpan.count;
                         }
