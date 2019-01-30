@@ -125,6 +125,14 @@ storiesOf('Internal/DualAxesMinMaxConfig', module)
             </div>
         );
     })
+    .add('Dataset with 0+ data on both axes, left axis is invalid and right axis is without middle 0', () => {
+        const { config, info } = getMinMaxConfig('-1000', '-500', '2000', '8000');
+        return screenshotWrap(
+            <div>
+                {renderSupportedCharts(dataSet.positiveDataset, config, info)}
+            </div>
+        );
+    })
     .add('Dataset with 0+ data on both axes, min = max on right axis', () => {
         const { config, info } = getMinMaxConfig(undefined, undefined, '4000', '4000');
         return screenshotWrap(

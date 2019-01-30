@@ -36,6 +36,10 @@ export interface IMinMaxLookup {
     1?: IMinMaxInfo;
 }
 
+function isMinMaxCoverZero(min: number, max: number): boolean {
+    return min < 0 && 0 < max;
+}
+
 /**
  * Check if user sets min or max
  * @param minmax
@@ -224,7 +228,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
 }
 
 export function createTickPositions(min: number, max: number, minmax: IMinMaxInfo[], tickAmount: number): number[] {
-    if (min < 0 && max > 0) {
+    if (isMinMaxCoverZero(min, max)) {
         if (isMinMaxConfig(minmax, 0) && isMinMaxConfig(minmax, 1)) {
             // disable zero-align y axis if both min/max are set to axes
             return createArrayFromRange(min, max, tickAmount);
@@ -241,7 +245,7 @@ export function getTickAmount(tickPosition: number[]): number {
     const zeroIndex = tickPosition.indexOf(0);
 
     // check min < 0 < max
-    if (min < 0 && 0 < max && 0 < zeroIndex && zeroIndex < length - 1) {
+    if (isMinMaxCoverZero(min, max) && 0 < zeroIndex && zeroIndex < length - 1) {
         return length - 1; // exclude middle zero
     }
     return length;
@@ -299,7 +303,11 @@ export function getTickPositioner() {
                 if (isNil(axis.min) || isNil(axis.max)) {
                     // this axis could be not initiated (undefined) or could be invalid (null)
                     const isOtherAxisInvalid = minmax[yAxisIndex] === null;
-                    return (isOtherAxisInvalid && !isLineChartType) ? // line chart does not need middle zero
+
+                    const isRangeWithMiddleZero = isOtherAxisInvalid &&
+                        !isLineChartType && // line chart does not need middle zero
+                        isMinMaxCoverZero(min, max);
+                    return isRangeWithMiddleZero ?
                         createArrayFromRangeWithMiddleZero(min, max, this.tickAmount) :
                         createArrayFromRange(min, max, this.tickAmount);
                 }
