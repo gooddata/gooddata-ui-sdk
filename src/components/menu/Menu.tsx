@@ -27,7 +27,11 @@ const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
             >
                 {isFunction(props.children)
                     ? props.children({
-                          closeMenu: () => controlledProps.onOpenedChange(false)
+                          closeMenu: () =>
+                              controlledProps.onOpenedChange({
+                                  opened: false,
+                                  source: 'CLOSE_MENU_RENDER_PROP'
+                              })
                       })
                     : props.children}
             </ControlledMenu>

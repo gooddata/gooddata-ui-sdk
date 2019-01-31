@@ -105,24 +105,24 @@ test('should sort PivotTable on column header click', async (t) => {
     await t.click(Selector('.s-sorting-preset-noSort'));
     await waitForPivotTableStopLoading(t);
 
-    await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (initial should be ASC)
+    await t.click(Selector('[col-id=a_2188] .s-header-cell-label')); // Menu Category (initial should be ASC)
     await waitForPivotTableStopLoading(t);
     await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$51,918', '.s-cell-1-3');
 
 
-    await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (toggled should be DESC)
+    await t.click(Selector('[col-id=a_2188] .s-header-cell-label')); // Menu Category (toggled should be DESC)
     await waitForPivotTableStopLoading(t);
     await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$69,105', '.s-cell-1-3');
 
-    await t.click(Selector('[col-id=a_2188] .gd-pivot-table-header-label')); // Menu Category (third state should be ASC again)
+    await t.click(Selector('[col-id=a_2188] .s-header-cell-label')); // Menu Category (third state should be ASC again)
     await waitForPivotTableStopLoading(t);
     await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$51,918', '.s-cell-1-3');
 
-    await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .gd-pivot-table-header-label')); // Franchise fees (initial should be DESC)
+    await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .s-header-cell-label')); // Franchise fees (initial should be DESC)
     await waitForPivotTableStopLoading(t);
     await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$81,350', '.s-cell-1-3');
 
-    await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .gd-pivot-table-header-label')); // Franchise fees (toggled should be ASC)
+    await t.click(Selector('[col-id=a_2009_1-a_2071_1-m_0] .s-header-cell-label')); // Franchise fees (toggled should be ASC)
     await waitForPivotTableStopLoading(t);
     await checkCellValue(t, '.s-pivot-table-measuresColumnAndRowAttributes', '$42,140', '.s-cell-1-3');
 });

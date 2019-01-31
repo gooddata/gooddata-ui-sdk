@@ -1,17 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
+import { OnOpenedChange, IOnOpenedChangeParams } from './MenuSharedTypes';
 
 export interface IMenuStateConfig {
     opened?: boolean;
     defaultOpened?: boolean;
-    onOpenedChange?: (opened: boolean) => void;
+    onOpenedChange?: OnOpenedChange;
 }
 
 export interface IMenuStateProps extends IMenuStateConfig {
     children: (
         props: {
             opened: boolean;
-            onOpenedChange: (opened: boolean) => void;
+            onOpenedChange: OnOpenedChange;
         }
     ) => React.ReactNode;
 }
@@ -36,7 +37,7 @@ export default class MenuState extends React.Component<IMenuStateProps, IMenuSta
     public render() {
         return this.props.children({
             opened: this.isControlled() ? this.props.opened : this.state.opened,
-            onOpenedChange: this.menuVisibilityChange
+            onOpenedChange: this.onOpenedChange
         });
     }
 
@@ -44,10 +45,10 @@ export default class MenuState extends React.Component<IMenuStateProps, IMenuSta
         return typeof this.props.opened === 'boolean';
     }
 
-    private menuVisibilityChange = (opened: boolean) => {
-        this.setState({ opened }, () => {
+    private onOpenedChange = (openedChangeParams: IOnOpenedChangeParams) => {
+        this.setState({ opened: openedChangeParams.opened }, () => {
             if (this.props.onOpenedChange) {
-                this.props.onOpenedChange(opened);
+                this.props.onOpenedChange(openedChangeParams);
             }
         });
     }

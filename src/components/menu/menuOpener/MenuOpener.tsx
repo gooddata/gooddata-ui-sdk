@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { OpenAction, IMenuPositionConfig } from '../MenuSharedTypes';
+import { OpenAction, IMenuPositionConfig, OnOpenedChange } from '../MenuSharedTypes';
 import MenuOpenedByClick from './MenuOpenedByClick';
 import MenuOpenedByHover from './MenuOpenedByHover';
 
 export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     topLevelMenu: boolean;
     opened: boolean;
-    onOpenedChange: (opened: boolean) => void;
+    onOpenedChange: OnOpenedChange;
     openAction?: OpenAction;
     portalTarget?: Element;
     toggler: React.ReactNode;

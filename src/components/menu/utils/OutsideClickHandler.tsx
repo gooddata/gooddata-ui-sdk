@@ -32,17 +32,22 @@ export default class OutsideClickHandler extends React.Component<IOutsideClickHa
 
     public render() {
         return (
-            <div
-                ref={(el: HTMLElement) => {
-                    this.wrapperEl = el;
-                }}
-            >
+            <div ref={this.setWrapperEl}>
                 {this.props.children}
             </div>
         );
     }
 
+    private setWrapperEl = (el: HTMLElement) => {
+        this.wrapperEl = el;
+    }
+
     private handleClick = (e: MouseEvent) => {
+        if (!this.wrapperEl) {
+            // In IE11 the wrapperEl is not initialized for some reason.
+            return;
+        }
+
         if (this.wrapperEl.contains(e.target as HTMLElement)) {
             return;
         }

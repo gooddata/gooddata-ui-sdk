@@ -1,12 +1,12 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import { loginUsingLoginForm, waitForPivotTableStopLoading } from './utils/helpers';
 
 const totalValues = {
     sum: ['Sum', '', '', '$1,566,007', '$150,709'],
-    nat: ['Rollup (Total)', '', '', '$406,007', '$150,709'],
     max: ['Max', '', '', '$101,055', '$25,140'],
+    nat: ['Rollup (Total)', '', '', '$406,007', '$150,709'],
     empty: '–'
 };
 
@@ -193,4 +193,16 @@ test('should turn on/off multiple totals', async (t) => {
 
     await clickOnMenuAggregationItem(t, measureGroup, '.s-menu-aggregation-max');
     await t.expect(getPivotTableFooterCell(0, 0).exists).eql(false);
+});
+
+test('hovering over menu does not show sorting icon', async (t) => {
+    const measureCell = getMeasureCell(0);
+    const menuToggler = getMenu(measureCell);
+    const sortArrow = Selector('.s-sort-direction-arrow');
+
+    await t.hover(measureCell);
+    await t.expect(sortArrow.exists).eql(true);
+
+    await t.hover(menuToggler);
+    await t.expect(sortArrow.exists).eql(false);
 });
