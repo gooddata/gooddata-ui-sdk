@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import cloneDeep = require('lodash/cloneDeep');
+import noop = require('lodash/noop');
 import { testUtils } from '@gooddata/js-utils';
 import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
@@ -437,6 +438,40 @@ describe('VisualizationWrapped', () => {
             const BaseChartElement = wrapper.find(BaseChart).get(0);
             expect(BaseChartElement.props.LoadingComponent).toBe(LoadingComponent);
             expect(BaseChartElement.props.ErrorComponent).toBe(ErrorComponent);
+        });
+    });
+
+    it('should pass exportTitle, projectId and onExportReady to BaseChart', () => {
+        const exportTitle = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.meta.title;
+        const onExportReady = noop;
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            onExportReady
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.exportTitle).toEqual(exportTitle);
+            expect(BaseChartElement.props.projectId).toBe(projectId);
+            expect(BaseChartElement.props.onExportReady).toBe(onExportReady);
         });
     });
 

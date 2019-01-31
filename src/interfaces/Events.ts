@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import { IExportConfig, IExportResponse } from '@gooddata/gooddata-js';
 import { IDrillEventCallback } from './DrillEvents';
 import { RuntimeError } from '../errors/RuntimeError';
 
@@ -10,6 +11,9 @@ export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnLoadingFinish = (result: object) => void;
 export type OnFiredDrillEvent = IDrillEventCallback;
+
+export type IExportFunction = (exportConfig: IExportConfig) => Promise<IExportResponse>;
+export type OnExportReady = (exportFunction: IExportFunction) => void;
 
 export interface ILegendItem {
     name: string;
@@ -25,6 +29,7 @@ export type OnLegendReady = (data: ILegendData) => void;
 
 export interface IEvents {
     onError?: OnError;
+    onExportReady?: OnExportReady;
     onLoadingChanged?: OnLoadingChanged;
     onLoadingFinish?: OnLoadingFinish;
     onFiredDrillEvent?: OnFiredDrillEvent;

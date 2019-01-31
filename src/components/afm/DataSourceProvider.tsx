@@ -26,6 +26,7 @@ export interface IDataSourceProviderProps {
 }
 
 export interface IDataSourceProviderState {
+    exportTitle?: string;
     dataSource: IDataSource;
     resultSpec?: AFM.IResultSpec;
 }
@@ -160,14 +161,16 @@ export function dataSourceProvider<T>(
                 return null;
             }
 
-            const props = omit<T, IDataSourceProviderProps>(
+            // keep projectId in props for exporter
+            const props = omit<T & IDataSourceProviderInjectedProps, IDataSourceProviderProps>(
                 this.props,
-                ['afm', 'projectId', 'resultSpec', 'adapterFactory']
+                ['afm', 'resultSpec', 'adapterFactory']
             );
             const resultSpec = addDefaultDimensions(this.props.afm, this.props.resultSpec, generateDefaultDimensions);
             return (
                 <InnerComponent
                     {...props}
+                    exportTitle={componentName}
                     dataSource={dataSource}
                     updateTotals={this.updateTotals}
                     resultSpec={resultSpec}

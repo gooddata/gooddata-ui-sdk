@@ -25,6 +25,7 @@ import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
 import ChartConfiguration from './ChartConfiguration';
 import ArithmeticMeasure from './ArithmeticMeasure';
+import Export from './Export';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -55,6 +56,7 @@ export const sideNavigationRoutes = [
     { path: '/arithmetic-measures', title: 'Arithmetic Measures', Component: ArithmeticMeasure },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesRoutes },
+    { path: '/export', title: 'Export', Component: Export },
     { path: '/next', pathMatch: 'full', redirectTo: nextRoutes[0].path, title: 'Next', Component: NextRoutes }
 ];
 

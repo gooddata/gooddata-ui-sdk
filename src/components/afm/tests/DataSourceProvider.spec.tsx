@@ -12,11 +12,13 @@ import { Table } from '../../tests/mocks';
 import { getNativeTotals } from '../../visualizations/table/totals/utils';
 
 describe('DataSourceProvider', () => {
+    const PROJECT_ID = 'projid';
     const defaultProps = {
         afm: {},
-        projectId: 'projid',
+        projectId: PROJECT_ID,
         resultSpec: {}
     };
+    const COMPONENT_NAME = 'DummyNameInMocks';
 
     function generateDefaultDimensions(): AFM.IDimension[] {
         return [];
@@ -25,7 +27,7 @@ describe('DataSourceProvider', () => {
         component: any,
         props: IDataSourceProviderProps = defaultProps
     ) {
-        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, 'DummyNameInMocks');
+        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, COMPONENT_NAME);
 
         return mount(
             <WrappedComponent {...props} />
@@ -42,6 +44,18 @@ describe('DataSourceProvider', () => {
 
             const tableProps = table.props() as IDataSourceProviderInjectedProps;
             expect(tableProps.dataSource).toBeDefined();
+        });
+    });
+
+    it('should pass exportTitle and projectId to InnerComponent', () => {
+        const wrapper = createComponent(Table);
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            expect(wrapper.find(Table).length).toBe(1);
+            const TableElement = wrapper.find(Table).get(0);
+            expect(TableElement.props.exportTitle).toEqual(COMPONENT_NAME);
+            expect(TableElement.props.projectId).toEqual(PROJECT_ID);
         });
     });
 
@@ -221,7 +235,7 @@ describe('DataSourceProvider', () => {
 
     it('should provide modified resultSpec to InnerComponent', () => {
         const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
-        const WrappedTable = dataSourceProvider(Table, defaultDimension, 'DummyNameInMocks');
+        const WrappedTable = dataSourceProvider(Table, defaultDimension, COMPONENT_NAME);
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
         return testUtils.delay().then(() => {
@@ -248,13 +262,13 @@ describe('DataSourceProvider', () => {
             sdk
         };
         const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
-        const WrappedTable = dataSourceProvider(Table, defaultDimension, 'DummyNameInMocks');
+        const WrappedTable = dataSourceProvider(Table, defaultDimension, COMPONENT_NAME);
         mount(<WrappedTable {...defaultProps} />);
 
         expect(sdk.clone).toHaveBeenCalledTimes(2);
         expect(sdk.config.setJsPackage.mock.calls[0][0]).toEqual('@gooddata/react-components');
         expect(sdk.config.setJsPackage.mock.calls[1][0]).toEqual('@gooddata/data-layer');
-        expect(sdk.config.setRequestHeader.mock.calls[0]).toEqual(['X-GDC-JS-SDK-COMP', 'DummyNameInMocks']);
+        expect(sdk.config.setRequestHeader.mock.calls[0]).toEqual(['X-GDC-JS-SDK-COMP', COMPONENT_NAME]);
         expect(sdk.config.setRequestHeader.mock.calls[1])
             .toEqual(['X-GDC-JS-SDK-COMP-PROPS', 'afm,projectId,resultSpec,sdk']);
     });
