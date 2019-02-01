@@ -12,6 +12,7 @@ export interface IGridRow {
 export interface IGridCellEvent extends CellEvent {
     colDef: IGridHeader;
 }
+
 export interface IGridHeader extends ColDef {
     index?: number;
     measureIndex?: number;
