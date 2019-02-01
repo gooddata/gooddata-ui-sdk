@@ -3,7 +3,7 @@ import { AFM, Execution } from '@gooddata/typings';
 import * as invariant from 'invariant';
 import { get, has, isEmpty, zip } from 'lodash';
 import { getMappingHeaderName } from '../../../../helpers/mappingHeader';
-import { IDrillIntersection } from '../../../../interfaces/DrillEvents';
+import { ILegacyDrillIntersection } from '../../../../interfaces/DrillEvents';
 import {
     IMappingHeader,
     isMappingHeaderAttribute,
@@ -145,7 +145,7 @@ export function validateTableProportions(headers: IMappingHeader[], rows: TableR
     );
 }
 
-export function getIntersectionForDrilling(afm: AFM.IAfm, header: IMappingHeader): IDrillIntersection {
+export function getIntersectionForDrilling(afm: AFM.IAfm, header: IMappingHeader): ILegacyDrillIntersection {
     if (isMappingHeaderAttribute(header)) {
         return {
             id: header.attributeHeader.identifier,

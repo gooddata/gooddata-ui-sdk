@@ -33,7 +33,7 @@ describe('Drilldown Eventing', () => {
             x: 1,
             y: 2,
             value: 678.00,
-            drillContext: [
+            drillIntersection: [
                 {
                     id: 'id',
                     title: 'title',
@@ -181,7 +181,7 @@ describe('Drilldown Eventing', () => {
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
-        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe('678');
 
         chartClick(
             drillConfig,
@@ -194,7 +194,7 @@ describe('Drilldown Eventing', () => {
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
-        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe('678');
     });
 
     it('should correctly handle z coordinate of point', () => {
@@ -320,7 +320,7 @@ describe('Drilldown Eventing', () => {
             points: [{
                 x: 1,
                 y: 2,
-                drillContext: [
+                drillIntersection: [
                     {
                         id: 'id',
                         title: 'title',

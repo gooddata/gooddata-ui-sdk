@@ -27,5 +27,8 @@ export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area' | 'donut' |
     'scatter' | 'bubble' | 'heatmap' | 'geo' | 'combo' | 'histogram' |
     'bullet' | 'treemap' | 'waterfall' | 'funnel' | 'pareto' | 'alluvial';
 export type VisType = ChartType | 'table' | 'pivotTable' | 'headline';
-export type ChartElementType = 'slice' | 'bar' | 'point';
-export type VisElementType = ChartElementType | 'cell' | 'primaryValue' | 'secondaryValue';
+
+export type ChartElementType = 'slice' | 'bar' | 'point' | 'label';
+export type HeadlineElementType = 'primaryValue' | 'secondaryValue';
+export type TableElementType = 'cell';
+export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;
