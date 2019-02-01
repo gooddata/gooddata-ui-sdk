@@ -5,6 +5,7 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { ItemsWrapper, Header, Separator, Item } from '@gooddata/goodstrap/lib/List/MenuList';
 import Menu from '../../src/components/menu/Menu';
 import SubMenu, { ISubMenuProps } from '../../src/components/menu/SubMenu';
+import { IOnOpenedChangeParams } from '../../src/components/menu/MenuSharedTypes';
 
 const ToggleButton = () => <button>toggle menu</button>;
 
@@ -201,7 +202,7 @@ storiesOf('Helper components/Menu', module)
                 }));
             }
 
-            private onOpenedChange = (opened: boolean) => {
+            private onOpenedChange = ({ opened }: IOnOpenedChangeParams) => {
                 this.setState({ opened });
             }
         }

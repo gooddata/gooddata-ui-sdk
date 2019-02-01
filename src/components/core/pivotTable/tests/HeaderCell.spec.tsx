@@ -18,9 +18,10 @@ describe('HeaderCell renderer', () => {
                     enableSorting={true}
                     defaultSortDirection={'asc'}
                 />);
-            expect(component.find('.s-header-cell-label')).toHaveLength(1);
+            const headerCellLabel = component.find('.s-header-cell-label');
+            expect(headerCellLabel).toHaveLength(1);
 
-            component.simulate('mouseEnter');
+            headerCellLabel.simulate('mouseEnter');
             expect(component.state('currentSortDirection')).toEqual('asc');
             expect(component.find('.s-sort-direction-arrow')).toHaveLength(1);
             expect(component.find('.s-sorted-asc')).toHaveLength(1);

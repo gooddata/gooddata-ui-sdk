@@ -6,6 +6,7 @@ import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTab
 
 import { ItemsWrapper, Header, Item } from '@gooddata/goodstrap/lib/List/MenuList';
 import Menu from '../../menu/Menu';
+import { IOnOpenedChangeParams } from '../../menu/MenuSharedTypes';
 import { getParsedFields } from '../../../helpers/agGrid';
 import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../../visualizations/table/totals/utils';
 
@@ -75,14 +76,13 @@ export default class HeaderCell extends React.Component<IProps, IState> {
             <div
                 className={classNames(
                     'gd-pivot-table-header',
-                    's-pivot-table-header',
                     {
                         'gd-pivot-table-header--open': this.state.isMenuButtonVisible
                     },
                     className
                 )}
-                onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}
+                onMouseEnter={this.onMouseEnterHeaderCell}
+                onMouseLeave={this.onMouseLeaveHeaderCell}
             >
                 {menuPosition === 'left' && this.renderMenu()}
                 {this.renderText()}
@@ -221,7 +221,12 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         });
 
         return (
-            <div className={classes} onClick={this.onTextClick}>
+            <div
+                className={classes}
+                onClick={this.onTextClick}
+                onMouseEnter={this.onMouseEnterHeaderCellText}
+                onMouseLeave={this.onMouseLeaveHeaderCellText}
+            >
                 <span>{displayText}</span>
                 {this.renderSorting()}
             </div>
@@ -244,9 +249,15 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         );
     }
 
-    private onMouseEnter = () => {
+    private onMouseEnterHeaderCell = () => {
         this.showMenuButton();
+    }
 
+    private onMouseLeaveHeaderCell = () => {
+        this.hideMenuButton();
+    }
+
+    private onMouseEnterHeaderCellText = () => {
         if (this.props.enableSorting) {
             const { sortDirection } = this.props;
             if (sortDirection === null) {
@@ -269,8 +280,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         }
     }
 
-    private onMouseLeave = () => {
-        this.hideMenuButton();
+    private onMouseLeaveHeaderCellText = () => {
         this.setState({
             currentSortDirection: this.props.sortDirection
         });
@@ -332,10 +342,18 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         }
     }
 
-    private handleMenuOpenedChange = (visible: boolean) => {
+    private handleMenuOpenedChange = ({ opened, source }: IOnOpenedChangeParams) => {
         this.setState({
-            isMenuOpen: visible,
-            isMenuButtonVisible: visible
+            isMenuOpen: opened
         });
+
+        // When source is 'TOGGLER_BUTTON_CLICK' we do not want to hide menu
+        // button visibility. Because user is hovering over this button
+        // so we do not want to hide it.
+        if (source === 'OUTSIDE_CLICK' || source === 'SCROLL') {
+            this.setState({
+                isMenuButtonVisible: false
+            });
+        }
     }
 }

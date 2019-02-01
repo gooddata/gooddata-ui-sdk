@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { OpenAction, IMenuPositionConfig } from './MenuSharedTypes';
+import { OpenAction, IMenuPositionConfig, OnOpenedChange } from './MenuSharedTypes';
 import MenuOpener from './menuOpener/MenuOpener';
 
 export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
@@ -8,7 +8,7 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     openAction?: OpenAction;
     closeOnScroll: boolean;
     portalTarget: Element;
-    onOpenedChange: (opened: boolean) => void;
+    onOpenedChange: OnOpenedChange;
     toggler: React.ReactNode;
     children: React.ReactNode;
 }
@@ -55,7 +55,7 @@ export default class ControlledMenu extends React.Component<IControlledMenuProps
     }
 
     private closeMenu = () => {
-        this.props.onOpenedChange(false);
+        this.props.onOpenedChange({ opened: false, source: 'SCROLL' });
     }
 
     private addScrollListeners = () => {
