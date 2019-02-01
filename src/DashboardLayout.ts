@@ -1,4 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
+import { VisualizationObject } from './VisualizationObject';
+
 export type Layout = IFluidLayout;
 
 export type Widget = IPersistedWidget;
@@ -7,7 +9,7 @@ export type LayoutContent = Widget | Layout;
 
 export interface IPersistedWidget {
    widget: {
-       qualifier: string;
+       qualifier: VisualizationObject.ObjQualifier;
    };
 }
 
