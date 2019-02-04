@@ -12,7 +12,8 @@ import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
 import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import {
     IDrillEvent,
-    IDrillEventCallback
+    IDrillEventCallback,
+    IDrillEventIntersectionElement
 } from '../../../../interfaces/DrillEvents';
 import { VisualizationTypes, VisElementType } from '../../../../constants/visualizationTypes';
 import { IHeadlineData, IHeadlineDataItem } from '../../../../interfaces/Headlines';
@@ -192,6 +193,17 @@ export function buildDrillEventData(itemContext: IHeadlineDrillItemContext,
         throw new Error('The metric ids has not been found in execution request!');
     }
 
+    const intersection: IDrillEventIntersectionElement = {
+        id: measureHeaderItem.localIdentifier,
+        title: measureHeaderItem.name
+    };
+
+    const { identifier, uri } = measureIds;
+
+    if (identifier || uri) {
+        intersection.header = { identifier, uri };
+    }
+
     return {
         executionContext: executionRequest.afm,
         drillContext: {
@@ -199,14 +211,7 @@ export function buildDrillEventData(itemContext: IHeadlineDrillItemContext,
             element: itemContext.element,
             value: itemContext.value,
             intersection: [
-                {
-                    id: measureHeaderItem.localIdentifier,
-                    title: measureHeaderItem.name,
-                    header: {
-                        identifier: measureIds.identifier || '',
-                        uri: measureIds.uri || ''
-                    }
-                }
+                intersection
             ]
         }
     };
