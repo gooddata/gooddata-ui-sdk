@@ -16,6 +16,7 @@ import * as classNames from 'classnames';
 import * as invariant from 'invariant';
 import * as React from 'react';
 import * as CustomEvent from 'custom-event';
+
 import get = require('lodash/get');
 import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
@@ -29,7 +30,6 @@ import '../../../styles/scss/pivotTable.scss';
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import {
-    IColDefExtended,
     assortDimensionHeaders,
     COLUMN_ATTRIBUTE_COLUMN,
     executionToAGGridAdapter,
@@ -382,6 +382,27 @@ export const getDrillIntersection = (
     });
 };
 
+function isMeasureCoulumnReadyToRender(params: any, execution: Execution.IExecutionResponses): boolean {
+    return Boolean(
+        params
+        && params.value !== undefined
+        && execution
+        && execution.executionResponse
+    );
+}
+
+function getMeasureFormat(gridHeader: IGridHeader, execution: Execution.IExecutionResponses): string {
+    const headers = execution.executionResponse.dimensions[1].headers;
+    const header = headers[headers.length - 1];
+
+    if (!Execution.isMeasureGroupHeader(header)) {
+        throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
+    }
+
+    const measureIndex = gridHeader.measureIndex;
+    return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
+}
+
 export type IPivotTableInnerProps = IPivotTableProps &
     ILoadingInjectedProps &
     IDataSourceProviderInjectedProps &
@@ -505,7 +526,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public getHeaderClass = (classList: string) => (headerClassParams: any): string => {
-        const colDef: IColDefExtended = headerClassParams.colDef;
+        const colDef: IGridHeader = headerClassParams.colDef;
         const { field, measureIndex } = colDef;
         const treeIndexes = colDef ? indexOfTreeNode(
             colDef,
@@ -766,23 +787,23 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                         AG_NUMERIC_HEADER_CLASSNAME,
                         'gd-measure-column-header')),
                     valueFormatter: (params: any) => {
-                        return params.value === undefined
-                            ? null
-                            : getMeasureCellFormattedValue(
+                        return isMeasureCoulumnReadyToRender(params, this.state.execution)
+                            ? getMeasureCellFormattedValue(
                                 params.value,
-                                this.getMeasureFormat(params),
+                                getMeasureFormat(params.colDef, this.state.execution),
                                 separators
-                            );
+                            )
+                            : null;
                     },
                     cellStyle: (params: any) => {
-                        return params.value === undefined
-                            ? null
-                            : getMeasureCellStyle(
+                        return isMeasureCoulumnReadyToRender(params, this.state.execution)
+                            ? getMeasureCellStyle(
                                 params.value,
-                                this.getMeasureFormat(params),
+                                getMeasureFormat(params.colDef, this.state.execution),
                                 separators,
                                 true
-                            );
+                            )
+                            : null;
                     }
                 }
             },
@@ -842,18 +863,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private getDrillablePredicates(): IHeaderPredicate[] {
         return convertDrillableItemsToPredicates(this.props.drillableItems);
-    }
-
-    private getMeasureFormat(params: any): string {
-        const headers = this.state.execution.executionResponse.dimensions[1].headers;
-        const header = headers[headers.length - 1];
-
-        if (Execution.isMeasureGroupHeader(header)) {
-            const measureIndex = params.colDef.measureIndex;
-            return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
-        }
-
-        throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
     }
 }
 
