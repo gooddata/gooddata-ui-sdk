@@ -4,7 +4,6 @@ export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
         element: 'primaryValue',
         intersection: [{
             header: {
-                identifier: '',
                 uri: '/gdc/md/project_id/obj/1'
             },
             id: 'm1',
@@ -32,8 +31,7 @@ export const DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER = {
         element: 'primaryValue',
         intersection: [{
             header: {
-                identifier: 'metric.lost',
-                uri: ''
+                identifier: 'metric.lost'
             },
             id: 'm1',
             title: 'Lost'
@@ -60,8 +58,7 @@ export const DRILL_EVENT_DATA_FOR_SECONDARY_ITEM = {
         element: 'secondaryValue',
         intersection: [{
             header: {
-                identifier: 'measure.found',
-                uri: ''
+                identifier: 'measure.found'
             },
             id: 'm2',
             title: 'Found'
