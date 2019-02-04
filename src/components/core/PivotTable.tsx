@@ -445,34 +445,17 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const newTotals = this.getColumnTotalsFromResultSpec(nextProps.resultSpec);
         const totalsChanged = !isEqual(currentTotals, newTotals);
         if (totalsChanged) {
-            this.setState({ columnTotals: newTotals }, () => {
-                this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
-                this.setGridDataSource();
-            });
+            // First we need to update totals in state, then we can create new datasource, because some measure might
+            // have been removed and can send outdated total with measure that no longer exists
+            this.setState(
+                { columnTotals: newTotals },
+                () => this.updateDataSource(nextProps)
+            );
+        } else if (this.isNewDataSourceNeeded(nextProps)) {
+            this.updateDataSource(nextProps);
         }
 
-        const propsRequiringNewDataSource = [
-            'resultSpec',
-            'getPage',
-            'dataSource',
-            // drillable items need fresh execution because drillable context for row attribute is kept in rowData
-            // It could be refactored to assign drillability without execution,
-            // but it would suffer a significant performance hit
-            'drillableItems'
-        ];
-
-        // First we need to update totals in state, then we can create new datasource, because some measure might
-        // have been removed and cand send outdated total with measure that no longer exists
-        if (!totalsChanged
-            && propsRequiringNewDataSource.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]))) {
-            this.createDataSource(nextProps.resultSpec, nextProps.getPage, nextProps.cancelPagePromises);
-            this.setGridDataSource();
-        }
-
-        const propsRequiringAgGridRerender = [
-            ['config', 'menu']
-        ];
-        if (propsRequiringAgGridRerender.some(propKey => !isEqual(get(this.props, propKey), get(nextProps, propKey)))) {
+        if (this.isAgGridRerenderNeeded(nextProps)) {
             this.setState(state => ({
                 agGridRerenderNumber: state.agGridRerenderNumber + 1
             }));
@@ -486,8 +469,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 this.props.updateTotals(columnTotals);
             }
 
-            this.createDataSource(this.props.resultSpec, this.props.getPage, this.props.cancelPagePromises);
-            this.setGridDataSource();
+            this.updateDataSource(this.props);
         }
     }
 
@@ -863,6 +845,39 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private getDrillablePredicates(): IHeaderPredicate[] {
         return convertDrillableItemsToPredicates(this.props.drillableItems);
+    }
+
+    private isNewDataSourceNeeded(nextProps: IPivotTableInnerProps): boolean {
+        // cannot compare dataSource using deep equal as it stores execution promises that almost always differ
+        const dataSourceChanged = this.props.dataSource.getFingerprint() !== nextProps.dataSource.getFingerprint();
+
+        const dataSourceInvalidatingPropNames = [
+            'resultSpec',
+            'getPage',
+            // drillable items need fresh execution because drillable context for row attribute is kept in rowData
+            // It could be refactored to assign drillability without execution,
+            // but it would suffer a significant performance hit
+            'drillableItems'
+        ];
+
+        const dataSourceInvalidatingPropChanged =
+            dataSourceInvalidatingPropNames.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
+
+        return dataSourceChanged || dataSourceInvalidatingPropChanged;
+    }
+
+    private isAgGridRerenderNeeded(nextProps: IPivotTableInnerProps): boolean {
+        const propsRequiringAgGridRerender = [
+            ['config', 'menu']
+        ];
+        return propsRequiringAgGridRerender.some(
+            propKey => !isEqual(get(this.props, propKey), get(nextProps, propKey))
+        );
+    }
+
+    private updateDataSource(props: IPivotTableInnerProps): void {
+        this.createDataSource(props.resultSpec, props.getPage, props.cancelPagePromises);
+        this.setGridDataSource();
     }
 }
 
