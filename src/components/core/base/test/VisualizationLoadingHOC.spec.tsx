@@ -402,7 +402,7 @@ describe('VisualizationLoadingHOC', () => {
             const innerWrapped = wrapper.find(TestInnerComponent);
 
             const okRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);
-            expect(okRes).toBe(oneMeasureResponse);
+            expect(okRes).toEqual(oneMeasureResponse);
 
             wrapper.unmount();
             const nullRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);

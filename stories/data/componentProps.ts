@@ -15,7 +15,8 @@ export const MEASURE_2: VisualizationObject.IMeasure = measure('/gdc/md/storyboo
 export const MEASURE_3: VisualizationObject.IMeasure = measure('/gdc/md/storybook/obj/3').localIdentifier('m3');
 
 export const MEASURE_AM_1_2: VisualizationObject.IMeasure = arithmeticMeasure(['m1', 'm2'], 'sum')
-    .localIdentifier('am1');
+    .localIdentifier('am1')
+    .alias('M_0');
 
 export const MEASURE_1_POP: VisualizationObject.IMeasure = popMeasure('m1', '/gdc/md/storybook/obj/3.df')
     .localIdentifier('m1_pop')

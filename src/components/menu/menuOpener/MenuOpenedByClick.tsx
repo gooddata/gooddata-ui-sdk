@@ -21,12 +21,20 @@ const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
         </OutsideClickHandler>
     );
 
-    const togglerWrapped = <div onClick={togglerWrapperClick}>{props.toggler}</div>;
+    const togglerWrapped = (
+        <div
+            onClick={togglerWrapperClick}
+            className="gd-menuOpenedByClick-togglerWrapped"
+        >
+            {props.toggler}
+        </div>
+    );
 
     return (
         <MenuPosition
             opened={props.opened}
             toggler={togglerWrapped}
+            togglerWrapperClassName={props.togglerWrapperClassName}
             contentWrapper={OutsideClickHandlerWrapped}
             topLevelMenu={props.topLevelMenu}
             portalTarget={props.portalTarget}

@@ -184,19 +184,16 @@ export default class HeaderCell extends React.Component<IProps, IState> {
         return (
             <Menu
                 toggler={
-                    <div
-                        className={classNames('s-table-header-menu', 'gd-pivot-table-header-menu', {
-                            'gd-pivot-table-header-menu--show': this.state.isMenuButtonVisible,
-                            'gd-pivot-table-header-menu--hide': !this.state.isMenuButtonVisible
-                        })}
-                    >
-                        <svg className="menu-icon">
-                            <g transform="translate(4 3)">
-                                <path d="M0 0h8v2H0V0zm0 4h8v2H0V4zm0 4h8v2H0V8z" fill="currentColor" />
-                            </g>
-                        </svg>
-                    </div>
+                    <svg className="menu-icon">
+                        <g transform="translate(4 3)">
+                            <path d="M0 0h8v2H0V0zm0 4h8v2H0V4zm0 4h8v2H0V8z" fill="currentColor" />
+                        </g>
+                    </svg>
                 }
+                togglerWrapperClassName={classNames('s-table-header-menu', 'gd-pivot-table-header-menu', {
+                    'gd-pivot-table-header-menu--show': this.state.isMenuButtonVisible,
+                    'gd-pivot-table-header-menu--hide': !this.state.isMenuButtonVisible
+                })}
                 opened={this.state.isMenuOpen}
                 onOpenedChange={this.handleMenuOpenedChange}
             >
@@ -227,7 +224,7 @@ export default class HeaderCell extends React.Component<IProps, IState> {
                 onMouseEnter={this.onMouseEnterHeaderCellText}
                 onMouseLeave={this.onMouseLeaveHeaderCellText}
             >
-                <span>{displayText}</span>
+                <span>{displayText ? displayText : ''}</span>
                 {this.renderSorting()}
             </div>
         );

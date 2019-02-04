@@ -141,6 +141,8 @@ $header-cell-resize-width: 20px;
     position: relative;
     margin: 0 -12px;
     flex-direction: row;
+    min-height: 30px;
+    line-height: 28px;
 
     &-label {
         display: flex;
@@ -149,6 +151,7 @@ $header-cell-resize-width: 20px;
         padding: 0 12px;
         overflow: hidden;
         justify-content: flex-start;
+        align-items: flex-end;
 
         &--right {
             justify-content: flex-end;
@@ -214,31 +217,34 @@ $header-cell-resize-width: 20px;
     }
 
     &-menu {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 32px;
-        cursor: pointer;
-        opacity: 0;
-        transition: width 200ms, opacity 100ms;
+        display: inline-flex;
+        align-items: stretch;
 
-        &:hover {
-            background-color: rgba(0, 255, 255, 0.1);
+        & > div {
+            cursor: pointer;
+            opacity: 0;
+            transition: width 200ms, opacity 100ms;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: rgba(0, 255, 255, 0.1);
+            }
+
+            & > .menu-icon {
+                width: 16px;
+                height: 16px;
+            }
         }
-
-        &--hide {
+        &--hide > div {
             width: 0;
             opacity: 0;
         }
 
-        &--show {
+        &--show > div {
             width: 32px;
             opacity: 1;
-        }
-
-        & > .menu-icon {
-            width: 16px;
-            height: 16px;
         }
     }
 

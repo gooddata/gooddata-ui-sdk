@@ -746,7 +746,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 [ROW_ATTRIBUTE_COLUMN]: {
                     cellClass: this.getCellClass('gd-row-attribute-column'),
                     headerClass: this.getHeaderClass('gd-row-attribute-column-header'),
-                    colSpan: (params: any) => {
+                    colSpan: (params) => {
                         if (
                             // params.data is undefined when rows are in loading state
                             params.data &&
@@ -756,6 +756,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                             return params.data.colSpan.count;
                         }
                         return 1;
+                    },
+                    valueFormatter: (params) => {
+                        return params.value === undefined
+                            ? null
+                            : params.value;
                     }
                 },
                 [COLUMN_ATTRIBUTE_COLUMN]: {
@@ -768,6 +773,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     headerClass: this.getHeaderClass(classNames(
                         AG_NUMERIC_HEADER_CLASSNAME,
                         'gd-measure-column-header')),
+                    // wrong params type from ag-grid, we need any
                     valueFormatter: (params: any) => {
                         return isMeasureCoulumnReadyToRender(params, this.state.execution)
                             ? getMeasureCellFormattedValue(
@@ -777,7 +783,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                             )
                             : null;
                     },
-                    cellStyle: (params: any) => {
+                    cellStyle: (params) => {
                         return isMeasureCoulumnReadyToRender(params, this.state.execution)
                             ? getMeasureCellStyle(
                                 params.value,
