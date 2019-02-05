@@ -2,9 +2,9 @@
 
 ## Supported REST API versions
 
-This table shows which version of the GoodData.UI introduced support for a particular API version. 
+This table shows which version of the GoodData.UI introduced support for a particular API version.
 
-The REST API versions in the table are just for your information as the values are set internally and cannot be overridden. 
+The REST API versions in the table are just for your information as the values are set internally and cannot be overridden.
 
 |GoodData.UI Version | REST API version
 |:---:|:---:
@@ -17,10 +17,13 @@ The REST API versions in the table are just for your information as the values a
 
 ## 6.3.0
 
+### Added
+
+-   Pivot table totals can be turned on with menu. (RAIL-990)
+
 ### Changed
 
 -   Treemap and Heatmap visualization now emits drill events with `value` property of type `string` instead of `number` same as other visualizations. (BB-1318)
-
 
 ## 6.2.0
 
