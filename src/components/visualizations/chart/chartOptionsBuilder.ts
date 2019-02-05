@@ -25,6 +25,7 @@ import { findAttributeInDimension, findMeasureGroupInDimensions } from '../../..
 import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
 import { unwrap } from '../../../helpers/utils';
 import { IChartConfig, IChartLimits, IColorAssignment } from '../../../interfaces/Config';
+import { ILegacyDrillIntersection } from '../../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { getLighterColor } from '../utils/color';
@@ -843,33 +844,55 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
     };
 }
 
-export function getDrillContext(stackByItem: any, viewByItem: any, measures: any[], afm: AFM.IAfm) {
-    return without([
-        ...measures,
-        viewByItem,
-        stackByItem
-    ], null).map(({
-        uri, // header attribute value or measure uri
-        identifier = '', // header attribute value or measure identifier
-        name, // header attribute value or measure text label
-        format, // measure format
-        localIdentifier,
-        attribute // attribute header if available
-    }) => {
+export interface ILegacyMeasureHeader {
+    uri: string; // header attribute value or measure uri
+    identifier?: string;
+    localIdentifier: string;
+    name: string; // header attribute value or measure text label
+}
+
+export interface ILegacyAttributeHeader extends ILegacyMeasureHeader {
+    attribute: any;
+}
+
+export type ILegacyHeader = ILegacyAttributeHeader | ILegacyMeasureHeader;
+
+export function isLegacyAttributeHeader(header: ILegacyHeader): header is ILegacyAttributeHeader {
+    return (header as ILegacyAttributeHeader).attribute !== undefined;
+}
+
+function createLegacyDrillIntersectionElement(header: ILegacyHeader, afm: AFM.IAfm): ILegacyDrillIntersection {
+    const { name } = header;
+
+    if (isLegacyAttributeHeader(header)) {
+        const { attribute, uri } = header;
         return {
-            id: attribute
-                ? getAttributeElementIdFromAttributeElementUri(uri)
-                : localIdentifier, // attribute value id or measure localIndentifier
-            ...(attribute ? {} : {
-                format
-            }),
-            value: name, // text label of attribute value or formatted measure value
-            identifier: attribute ? attribute.identifier : identifier, // identifier of attribute or measure
-            uri: attribute
-                ? attribute.uri // uri of attribute
-                : get(getMasterMeasureObjQualifier(afm, localIdentifier), 'uri') // uri of measure
+            id: getAttributeElementIdFromAttributeElementUri(uri),
+            value: name,
+            uri: attribute.uri,
+            identifier: attribute.identifier
         };
-    });
+    }
+
+    const { identifier = '', localIdentifier } = header;
+
+    return {
+        id: localIdentifier,
+        value: name,
+        uri: get<string>(getMasterMeasureObjQualifier(afm, localIdentifier), 'uri'),
+        identifier
+    };
+}
+
+export function getDrillIntersection(
+    stackByItem: any,
+    viewByItem: any,
+    measures: any[],
+    afm: AFM.IAfm
+): ILegacyDrillIntersection[] {
+    const headers = without([...measures, viewByItem, stackByItem], null);
+
+    return headers.map(header => createLegacyDrillIntersectionElement(header, afm));
 }
 
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
@@ -990,7 +1013,7 @@ export function getDrillableSeries(
 
             if (drilldown) {
                 const measures = measureHeaders.map(unwrap);
-                drillableProps.drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
+                drillableProps.drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
                 isSeriesDrillable = true;
             }
             return {

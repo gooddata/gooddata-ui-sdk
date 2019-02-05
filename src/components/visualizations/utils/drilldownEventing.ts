@@ -6,13 +6,19 @@ import * as CustomEvent from 'custom-event';
 import * as Highcharts from 'highcharts';
 import * as invariant from 'invariant';
 import { VisElementType, VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
-import { IDrillEventIntersectionElement, IDrillIntersection } from '../../../interfaces/DrillEvents';
+import {
+    IDrillEvent,
+    DrillEventContext,
+    IDrillEventContextGroup,
+    IDrillEventIntersectionElement,
+    ILegacyDrillIntersection
+} from '../../../interfaces/DrillEvents';
 import { OnFiredDrillEvent } from '../../../interfaces/Events';
 import { TableRowForDrilling } from '../../../interfaces/Table';
 import { isComboChart, isHeatmap, isTreemap } from './common';
 
 export interface IHighchartsPointObject extends Highcharts.PointObject {
-    drillContext: IDrillIntersection[];
+    drillIntersection: ILegacyDrillIntersection[];
     z?: number; // is missing in HCH's interface
     value?: number; // is missing in HCH's interface
 }
@@ -22,20 +28,20 @@ export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldow
     points?: IHighchartsPointObject[];
 }
 
+export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
+    return !!event.points;
+}
+
 export interface ICellDrillEvent {
     columnIndex: number;
     rowIndex: number;
     row: TableRowForDrilling;
-    intersection: IDrillIntersection[];
+    intersection: ILegacyDrillIntersection[];
 }
 
 export interface IDrillConfig {
     afm: AFM.IAfm;
     onFiredDrillEvent: OnFiredDrillEvent;
-}
-
-export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
-    return !!event.points;
 }
 
 export function getClickableElementNameByChartType(type: VisType): VisElementType {
@@ -62,7 +68,7 @@ export function getClickableElementNameByChartType(type: VisType): VisElementTyp
     }
 }
 
-function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: EventTarget) {
+function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: IDrillEvent, target: EventTarget) {
     const returnValue = onFiredDrillEvent(data);
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
@@ -75,7 +81,7 @@ function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: Even
     }
 }
 
-function normalizeIntersectionElements(intersection: IDrillIntersection[]): IDrillEventIntersectionElement[] {
+function normalizeIntersectionElements(intersection: ILegacyDrillIntersection[]): IDrillEventIntersectionElement[] {
     return intersection.map(({ id, title, value, name, uri, identifier }) => {
        const intersection: IDrillEventIntersectionElement = {
            id,
@@ -88,23 +94,29 @@ function normalizeIntersectionElements(intersection: IDrillIntersection[]): IDri
     });
 }
 
-function composeDrillContextGroup({ points }: IHighchartsChartDrilldownEvent, chartType: VisType) {
+function composeDrillContextGroup(
+    { points }: IHighchartsChartDrilldownEvent,
+    chartType: VisType
+): IDrillEventContextGroup {
     return {
         type: chartType,
         element: 'label',
-        points: points.map((p: IHighchartsPointObject) => {
+        points: points.map((point: IHighchartsPointObject) => {
             return {
-                x: p.x,
-                y: p.y,
-                intersection: normalizeIntersectionElements(p.drillContext)
+                x: point.x,
+                y: point.y,
+                intersection: normalizeIntersectionElements(point.drillIntersection)
             };
         })
     };
 }
 
-function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: VisType) {
+function composeDrillContextPoint(
+    { point }: IHighchartsChartDrilldownEvent,
+    chartType: VisType
+): DrillEventContext {
     const zProp = isNaN(point.z) ? {} : { z: point.z };
-    const valueProp = (isTreemap(chartType) || isHeatmap(chartType)) ? { value: point.value } : {};
+    const valueProp = (isTreemap(chartType) || isHeatmap(chartType)) ? { value: point.value.toString() } : {};
     const xyProp = isTreemap(chartType) ? {} : {
         x: point.x,
         y: point.y
@@ -115,7 +127,7 @@ function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, cha
         ...xyProp,
         ...zProp,
         ...valueProp,
-        intersection: normalizeIntersectionElements(point.drillContext)
+        intersection: normalizeIntersectionElements(point.drillIntersection)
     };
 }
 
@@ -128,10 +140,13 @@ const chartClickDebounced = debounce((drillConfig: IDrillConfig, event: IHighcha
         usedChartType = get(event, ['point', 'series', 'options', 'type'], chartType);
     }
 
-    const data = {
+    const drillContext: DrillEventContext = isGroupHighchartsDrillEvent(event)
+        ? composeDrillContextGroup(event, usedChartType)
+        : composeDrillContextPoint(event, usedChartType);
+
+    const data: IDrillEvent = {
         executionContext: afm,
-        drillContext: isGroupHighchartsDrillEvent(event) ?
-            composeDrillContextGroup(event, usedChartType) : composeDrillContextPoint(event, usedChartType)
+        drillContext
     };
 
     fireEvent(onFiredDrillEvent, data, target);
@@ -147,7 +162,7 @@ export function chartClick(drillConfig: IDrillConfig,
 export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {
     const { afm, onFiredDrillEvent } = drillConfig;
     const { columnIndex, rowIndex, row, intersection } = event;
-    const data = {
+    const data: IDrillEvent = {
         executionContext: afm,
         drillContext: {
             type: VisualizationTypes.TABLE,

@@ -10,7 +10,7 @@ import {
     validateData,
     getSeriesItemData,
     getSeries,
-    getDrillContext,
+    getDrillIntersection,
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
@@ -1595,8 +1595,8 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
-    describe('getDrillContext', () => {
-        it('should return correct drillContext for bar chart with stack by and view by attributes', () => {
+    describe('getDrillIntersection', () => {
+        it('should return correct intersection for bar chart with stack by and view by attributes', () => {
             const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dataSet);
             /*
@@ -1607,9 +1607,7 @@ describe('chartOptionsBuilder', () => {
                 "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
                 "identifier": "ah1EuQxwaCqs"
             }
-
-             */
-
+            */
             const measures = [measureGroup.items[0].measureHeaderItem];
 
             const viewByItem = {
@@ -1623,10 +1621,9 @@ describe('chartOptionsBuilder', () => {
             };
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
-            expect(drillContext).toEqual([
+            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            expect(drillIntersection).toEqual([
                 {
-                    format: '#,##0.00',
                     id: 'amountMetric',
                     identifier: 'ah1EuQxwaCqs',
                     uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
@@ -1647,7 +1644,7 @@ describe('chartOptionsBuilder', () => {
             ]);
         });
 
-        it('should return correct drillContex for pie chart measures only', () => {
+        it('should return correct intersection for pie chart measures only', () => {
             const dataSet = fixtures.pieChartWithMetricsOnly;
             const { measureGroup } = getMVS(dataSet);
             const measures = [measureGroup.items[0].measureHeaderItem];
@@ -1656,10 +1653,9 @@ describe('chartOptionsBuilder', () => {
             const stackByItem: any = null;
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
-            expect(drillContext).toEqual([
+            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            expect(drillIntersection).toEqual([
                 {
-                    format: '#,##0.00',
                     id: 'lostMetric',
                     identifier: 'af2Ewj9Re2vK',
                     uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
@@ -1711,19 +1707,17 @@ describe('chartOptionsBuilder', () => {
                 type
             );
 
-            it('should assign correct drillContext to pointData with drilldown true', () => {
+            it('should assign correct drillIntersection to pointData with drilldown true', () => {
                 expect(drillableMeasuresSeriesData
-                    .map((seriesItem: any) => seriesItem.data[0].drillContext)
+                    .map((seriesItem: any) => seriesItem.data[0].drillIntersection)
                 ).toEqual([
                     [
                         {
-                            format: '#,##0.00',
                             id: 'lostMetric',
                             identifier: 'af2Ewj9Re2vK',
                             uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
                             value: '<button>Lost</button> ...'
                         }, {
-                            format: '#,##0.00',
                             id: 'wonMetric',
                             identifier: 'afSEwRwdbMeQ',
                             uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
@@ -1823,7 +1817,7 @@ describe('chartOptionsBuilder', () => {
                 type
             );
 
-            it('should assign correct drillContext to pointData with drilldown true', () => {
+            it('should assign correct drillIntersection to pointData with drilldown true', () => {
                 expect(drillableMeasuresSeriesData.length).toBe(20);
                 expect(drillableMeasuresSeriesData[8].data[0]).toEqual({
                     x: 245,
@@ -1831,24 +1825,21 @@ describe('chartOptionsBuilder', () => {
                     z: 2280481.04,
                     format: '$#,#00.00',
                     drilldown: true,
-                    drillContext: [
+                    drillIntersection: [
                         {
                             id: '784a5018a51049078e8f7e86247e08a3',
-                            format: '#,##0.00',
                             value: '_Snapshot [EOP-2]',
                             identifier: 'ab0bydLaaisS',
                             uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
                         },
                         {
                             id: '9e5c3cd9a93f4476a93d3494cedc6010',
-                            format: '#,##0',
                             value: '# of Open Opps.',
                             identifier: 'aaYh6Voua2yj',
                             uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
                         },
                         {
                             id: '71d50cf1d13746099b7f506576d78e4a',
-                            format: '$#,#00.00',
                             value: 'Remaining Quota',
                             identifier: 'ab4EFOAmhjOx',
                             uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
@@ -1953,13 +1944,13 @@ describe('chartOptionsBuilder', () => {
                     type
                 );
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     const startYear = parseInt(// should be 2008
-                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].value, 10
                     );
                     drillableMeasuresSeriesData.forEach((seriesItem: any) => {
                         seriesItem.data.forEach((point: any, index: number) => {
-                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                            expect(point.drillIntersection[1].value - index).toEqual(startYear);
                         });
                     });
                 });
@@ -2003,13 +1994,13 @@ describe('chartOptionsBuilder', () => {
                     type
                 );
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     const startYear = parseInt(// should be 2008
-                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].value, 10
                     );
                     drillableMeasuresSeriesData.forEach((seriesItem: any) => {
                         seriesItem.data.forEach((point: any, index: number) => {
-                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                            expect(point.drillIntersection[1].value - index).toEqual(startYear);
                         });
                     });
                 });
@@ -2062,32 +2053,32 @@ describe('chartOptionsBuilder', () => {
                         .map((seriesItem: any) => seriesItem.isDrillable)).toEqual([false, false, false]);
                 });
 
-                it('should return new pointData items drilldown false and no drillContext', () => {
+                it('should return new pointData items drilldown false and no drillIntersection', () => {
                     expect(noDrillableSeriesData
-                        .map((seriesItem: any) => seriesItem.data.map(({ drilldown, drillContext }: any) => {
-                            return { drilldown, drillContext };
+                        .map((seriesItem: any) => seriesItem.data.map(({ drilldown, drillIntersection }: any) => {
+                            return { drilldown, drillIntersection };
                         }))
                     ).toEqual([
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ],
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ],
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ]
                     ]);
                 });
@@ -2126,13 +2117,12 @@ describe('chartOptionsBuilder', () => {
                     ]);
                 });
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     expect(twoDrillableMeasuresSeriesData
-                        .map((seriesItem: any) => seriesItem.data[0].drillContext)
+                        .map((seriesItem: any) => seriesItem.data[0].drillIntersection)
                     ).toEqual([
                         [
                             {
-                                format: '#,##0.00',
                                 id: 'lostMetric',
                                 identifier: 'af2Ewj9Re2vK',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
@@ -2147,7 +2137,6 @@ describe('chartOptionsBuilder', () => {
                         undefined,
                         [
                             {
-                                format: '#,##0.00',
                                 id: 'expectedMetric',
                                 identifier: 'alUEwmBtbwSh',
                                 uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285',

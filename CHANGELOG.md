@@ -15,6 +15,13 @@ The REST API versions in the table are just for your information as the values a
 
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
 
+## 6.3.0
+
+### Changed
+
+-   Treemap and Heatmap visualization now emits drill events with `value` property of type `string` instead of `number` same as other visualizations. (BB-1318)
+
+
 ## 6.2.0
 
 January 28, 2019
