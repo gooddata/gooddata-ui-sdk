@@ -11,6 +11,7 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     openAction?: OpenAction;
     portalTarget?: Element;
     toggler: React.ReactNode;
+    togglerWrapperClassName?: string;
     children: React.ReactNode;
 }
 
@@ -37,13 +38,11 @@ export default class MenuOpener extends React.Component<IMenuOpenerProps> {
                 spacing={this.props.spacing}
                 offset={this.props.offset}
                 toggler={this.props.toggler}
+                togglerWrapperClassName={this.props.togglerWrapperClassName}
                 portalTarget={this.props.portalTarget}
             >
                 <div
-                    style={{
-                        position: 'relative',
-                        zIndex: 1
-                    }}
+                    className="gd-menuOpener"
                 >
                     {this.props.children}
                 </div>

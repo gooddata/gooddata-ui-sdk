@@ -5,4 +5,5 @@ import { OnOpenedChange } from '../MenuSharedTypes';
 export interface IMenuOpenedBySharedProps extends IMenuPositionProps {
     portalTarget: Element;
     onOpenedChange: OnOpenedChange;
+    togglerWrapperClassName?: string;
 }

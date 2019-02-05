@@ -20,6 +20,7 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
                         {this.props.toggler}
                     </div>
                 )}
+                togglerWrapperClassName={this.props.togglerWrapperClassName}
                 opened={this.props.opened}
                 topLevelMenu={this.props.topLevelMenu}
                 alignment={this.props.alignment}

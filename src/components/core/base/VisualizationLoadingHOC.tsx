@@ -35,6 +35,7 @@ import { RuntimeError } from '../../../errors/RuntimeError';
 import { IPushData } from '../../../interfaces/PushData';
 import { IChartConfig } from '../../../interfaces/Config';
 import { setTelemetryHeaders } from '../../../helpers/utils';
+import { fixEmptyHeaderItems } from './utils/fixEmptyHeaderItems';
 
 const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, '');
 
@@ -195,7 +196,14 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
 
             return pagePromise
                 .then(checkEmptyResult)
-                .then((result: Execution.IExecutionResponses) => {
+                .then((rawExecution: Execution.IExecutionResponses) => {
+                    const emptyHeaderString = `(${this.props.intl.formatMessage({ id: 'visualization.emptyValue' })})`;
+                    const executionResultWithResolvedEmptyValues =
+                        fixEmptyHeaderItems(rawExecution.executionResult, emptyHeaderString);
+                    const result = {
+                        ...rawExecution,
+                        executionResult: executionResultWithResolvedEmptyValues
+                    };
                     // This returns only current page,
                     // gooddata-js mergePages doesn't support discontinuous page ranges yet
                     this.setState({ result, error: null });

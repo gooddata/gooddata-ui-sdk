@@ -5,9 +5,12 @@ import { ISubMenuProps } from './SubMenu';
 import MenuState from './MenuState';
 import ControlledMenu from './ControlledMenu';
 
+import '../../../styles/scss/menu.scss';
+
 export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;
+    togglerWrapperClassName?: string;
     children: ((props: { closeMenu: () => void }) => React.ReactNode) | React.ReactNode;
 }
 
@@ -22,6 +25,7 @@ const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
                 spacing={props.spacing}
                 offset={props.offset}
                 toggler={props.toggler}
+                togglerWrapperClassName={props.togglerWrapperClassName}
                 portalTarget={props.portalTarget}
                 closeOnScroll={props.closeOnScroll}
             >

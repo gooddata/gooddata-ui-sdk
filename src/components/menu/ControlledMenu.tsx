@@ -10,6 +10,7 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     portalTarget: Element;
     onOpenedChange: OnOpenedChange;
     toggler: React.ReactNode;
+    togglerWrapperClassName?: string;
     children: React.ReactNode;
 }
 
@@ -47,6 +48,7 @@ export default class ControlledMenu extends React.Component<IControlledMenuProps
                 offset={this.props.offset}
                 portalTarget={this.props.portalTarget}
                 toggler={this.props.toggler}
+                togglerWrapperClassName={this.props.togglerWrapperClassName}
                 topLevelMenu={true}
             >
                 {this.props.children}
