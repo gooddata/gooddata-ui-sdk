@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import noop = require('lodash/noop');
 import { AFM } from '@gooddata/typings';
-import { VisElementType } from '../../../constants/visualizationTypes';
+import { HeadlineElementType } from '../../../constants/visualizationTypes';
 import ResponsiveText from '@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText';
 import {
     IFormattedHeadlineDataItem,
@@ -16,12 +16,12 @@ import { IChartConfig } from '../../../interfaces/Config';
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: AFM.Identifier;
     value: string | null;
-    element: VisElementType;
+    element: HeadlineElementType;
 }
 
 export type IHeadlineFiredDrillEvent = (
     itemContext?: IHeadlineFiredDrillEventItemContext,
-    elementTarget?: HTMLElement
+    elementTarget?: EventTarget
 ) => void;
 
 export interface IHeadlineVisualizationProps {
@@ -102,30 +102,30 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         });
     }
 
-    private fireDrillEvent(item: IHeadlineDataItem, elementName: VisElementType, elementTarget: HTMLElement) {
+    private fireDrillEvent(item: IHeadlineDataItem, elementType: HeadlineElementType, elementTarget: EventTarget) {
         const { onFiredDrillEvent } = this.props;
 
         if (onFiredDrillEvent) {
             const itemContext = {
                 localIdentifier: item.localIdentifier,
                 value: item.value,
-                element: elementName
+                element: elementType
             };
 
             onFiredDrillEvent(itemContext, elementTarget);
         }
     }
 
-    private handleClickOnPrimaryItem(event: React.MouseEvent<HTMLElement>) {
+    private handleClickOnPrimaryItem(event: React.MouseEvent<EventTarget>) {
         const { data: { primaryItem } } = this.props;
 
-        this.fireDrillEvent(primaryItem, 'primaryValue', event.target as HTMLElement);
+        this.fireDrillEvent(primaryItem, 'primaryValue', event.target);
     }
 
-    private handleClickOnSecondaryItem(event: React.MouseEvent<HTMLElement>) {
+    private handleClickOnSecondaryItem(event: React.MouseEvent<EventTarget>) {
         const { data: { secondaryItem } } = this.props;
 
-        this.fireDrillEvent(secondaryItem, 'secondaryValue', event.target as HTMLElement);
+        this.fireDrillEvent(secondaryItem, 'secondaryValue', event.target);
     }
 
     private renderTertiaryItem() {

@@ -203,8 +203,6 @@ export const TABLE_HEADERS_POP: IMappingHeader[] = [
     },
     {
         measureHeaderItem: {
-            uri: '/gdc/md/project_id/obj/pop_measure_uri_id',
-            identifier: 'pop_measure_identifier',
             localIdentifier: 'pop_measure_local_identifier',
             name: 'Close [BOP] - Previous year',
             format: '$#,##0.00'

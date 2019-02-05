@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import { VisElementType, VisType } from '../constants/visualizationTypes';
+import { AFM } from '@gooddata/typings';
+import {
+    ChartElementType,
+    ChartType,
+    HeadlineElementType,
+    HeadlineType,
+    TableElementType,
+    TableType
+} from '../constants/visualizationTypes';
 
 export interface IDrillableItemUri {
     uri: string;
@@ -25,56 +32,7 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
 
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 
-// Chart series point with intersection element
-export interface IDrillEventPoint {
-    x: number;
-    y: number;
-    intersection: IDrillEventIntersectionElement[];
-}
-
-// Internal precursor to IDrillEventIntersectionElement
-// TODO: Refactor internal drilling functions and replace with IDrillEventIntersectionElement
-export interface ILegacyDrillIntersection {
-    id: string; // attribute value id or measure localIndentifier
-    title?: string;
-    value?: Execution.DataValue; // text label of attribute value or formatted measure value
-    name?: string;
-    uri: string; // uri of measure
-    identifier: AFM.Identifier; // identifier of attribute or measure
-}
-
-export interface IDrillEventContextBase {
-    type: VisType; // type of visualization
-    element: VisElementType; // type of visualization element drilled
-    x?: number; // chart x coordinate (if supported)
-    y?: number; // chart y coordinate (if supported)
-    columnIndex?: number;
-    rowIndex?: number;
-    row?: any[]; // table row data of the drilled row
-    value?: string; // cell or element value drilled
-}
-
-// Drill context for standard vsualization click
-export interface IDrillEventContextSingle extends IDrillEventContextBase {
-    intersection: IDrillEventIntersectionElement[]; // drill headers relevant for current drill element
-}
-
-// Drill context for group clicks (multiple series chart + click on axis value)
-// Every point has own intersection
-export interface IDrillEventContextGroup extends IDrillEventContextBase {
-    points: IDrillEventPoint[]; // a collection of chart series points
-}
-
-export type DrillEventContext = IDrillEventContextSingle | IDrillEventContextGroup;
-
-// IDrillEvent is a parameter of the onFiredDrillEvent is callback
-export interface IDrillEvent {
-    executionContext: AFM.IAfm;
-    drillContext: DrillEventContext;
-}
-
 // Intersection element
-// Can be a measure, attribute or attribute value. Attribute values have only uri.
 export interface IDrillEventIntersectionElement {
     id: string;
     title: string;
@@ -82,4 +40,61 @@ export interface IDrillEventIntersectionElement {
         uri: string;
         identifier: string;
     };
+}
+
+// Drill context for tables
+export interface IDrillEventContextTable {
+    type: TableType;
+    element: TableElementType;
+    columnIndex: number;
+    rowIndex: number;
+    row: any[];
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for headline
+export interface IDrillEventContextHeadline {
+    type: HeadlineType;
+    element: HeadlineElementType;
+    value: string;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for chart
+export interface IDrillEventContextPoint {
+    type: ChartType;
+    element: ChartElementType;
+    x?: number;
+    y?: number;
+    z?: number;
+    value?: string;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Chart series point with intersection element
+export interface IDrillPoint {
+    x: number;
+    y: number;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for chart element group (multiple series + click on axis value)
+// where every point has own intersection
+export interface IDrillEventContextGroup {
+    type: ChartType;
+    element: ChartElementType;
+    points: IDrillPoint[];
+}
+
+// Drill context for all visualization types
+export type DrillEventContext =
+    IDrillEventContextTable |
+    IDrillEventContextHeadline |
+    IDrillEventContextPoint |
+    IDrillEventContextGroup;
+
+// IDrillEvent is a parameter of the onFiredDrillEvent is callback
+export interface IDrillEvent {
+    executionContext: AFM.IAfm;
+    drillContext: DrillEventContext;
 }
