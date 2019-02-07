@@ -101,16 +101,17 @@ const headlineWithTwoMeasuresExecutionRequest: AFM.IExecution['execution'] = {
                 alias: 'Lost'
             },
             {
+                localIdentifier: 'lostMetric_pop',
                 definition: {
-                    measure: {
-                        item: {
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284'
+                    popMeasure: {
+                        measureIdentifier: 'lostMetric',
+                        popAttribute: {
+                            uri: '/gdc/md/project_id/obj/date_attr_uri_id'
                         }
                     }
                 },
-                localIdentifier: 'wonMetric',
                 format: '#,##0.00',
-                alias: 'Won'
+                alias: 'Lost - Previous year'
             }
         ]
     },
@@ -143,11 +144,9 @@ const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse = {
                             },
                             {
                                 measureHeaderItem: {
-                                    name: 'Won',
+                                    name: 'Lost - Previous year',
                                     format: '#,##0.00',
-                                    localIdentifier: 'wonMetric',
-                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
-                                    identifier: 'afSEwRwdbMeQ'
+                                    localIdentifier: 'lostMetric_pop'
                                 }
                             }
                         ]
@@ -177,7 +176,7 @@ const headlineWithTwoMeasuresExecutionResult: Execution.IExecutionResult = {
                 },
                 {
                     measureHeaderItem: {
-                        name: 'Won',
+                        name: 'Lost - Previous year',
                         order: 1
                     }
                 }

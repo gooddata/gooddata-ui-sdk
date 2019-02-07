@@ -52,7 +52,7 @@ import {
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
 import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
 
-import { IDrillEvent, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
+import { IDrillEvent, IDrillEventContextTable, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
 import { IMappingHeader, isMappingHeaderAttributeItem } from '../../interfaces/MappingHeader';
 import { IPivotTableConfig, IMenuAggregationClickConfig } from '../../interfaces/PivotTable';
@@ -61,6 +61,7 @@ import { LoadingComponent } from '../simple/LoadingComponent';
 import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../visualizations/table/totals/utils';
 
 import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
+import { createDrillIntersectionElement } from '../visualizations/utils/drilldownEventing';
 
 import { ICommonChartProps } from './base/BaseChart';
 import { BaseVisualization } from './base/BaseVisualization';
@@ -362,23 +363,7 @@ export const getDrillIntersection = (
         const identifier = uriAndIdentifier && uriAndIdentifier.identifier || headerIdentifier;
         const id = headerLocalIdentifier || headerIdentifier;
 
-        const intersection: IDrillEventIntersectionElement = {
-            // Properties default to empty strings to maintain compatibility
-            id,
-            title: getMappingHeaderName(drillItem)
-        };
-
-        if (uri || identifier) {
-            return {
-                ...intersection,
-                header: {
-                    uri,
-                    identifier
-                }
-            };
-        }
-
-        return intersection;
+        return createDrillIntersectionElement(id, getMappingHeaderName(drillItem), uri, identifier);
     });
 };
 
@@ -594,17 +579,21 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
 
         const leafColumnDefs = getTreeLeaves(columnDefs);
+        const columnIndex = leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field);
+        const row = getDrillRowData(leafColumnDefs, cellEvent.data);
+        const intersection = getDrillIntersection(drillItems, afm);
+
+        const drillContext: IDrillEventContextTable = {
+            type: VisualizationTypes.TABLE,
+            element: 'cell',
+            columnIndex,
+            rowIndex,
+            row,
+            intersection
+        };
         const drillEvent: IDrillEvent = {
             executionContext: afm,
-            drillContext: {
-                type: VisualizationTypes.TABLE,
-                element: 'cell',
-                columnIndex: leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field),
-                rowIndex,
-                row: getDrillRowData(leafColumnDefs, cellEvent.data),
-                intersection: getDrillIntersection(drillItems, afm),
-                value: cellEvent.value ? cellEvent.value.toString() : null
-            }
+            drillContext
         };
 
         if (onFiredDrillEvent(drillEvent)) {

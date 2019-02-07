@@ -34,9 +34,20 @@ export class PivotTableDrillExample extends Component {
         return true;
     }
 
-    render() {
+    renderDrillValue() {
         const { drillEvent } = this.state;
 
+        if (!drillEvent) {
+            return null;
+        }
+
+        const drillColumn = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
+        const drillValue = typeof drillColumn === 'object' ? drillColumn.title : drillColumn;
+
+        return <h3>You have Clicked <span className="s-drill-value">{drillValue}</span> </h3>;
+    }
+
+    render() {
         const measures = [
             Model.measure(franchiseFeesIdentifier)
                 .format('#,##0'),
@@ -65,7 +76,7 @@ export class PivotTableDrillExample extends Component {
 
         return (
             <div>
-                {drillEvent === null ? null : <h3>You have Clicked <span className="s-drill-value">{drillEvent.drillContext.value}</span> </h3>}
+                {this.renderDrillValue()}
                 <div style={{ height: 300 }} className="s-pivot-table-drill">
                     <PivotTable
                         projectId={projectId}

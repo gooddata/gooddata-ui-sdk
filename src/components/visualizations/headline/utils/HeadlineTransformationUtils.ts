@@ -7,16 +7,17 @@ import * as CustomEventPolyfill from 'custom-event';
 import * as invariant from 'invariant';
 import { AFM, Execution } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
+import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import { isSomeHeaderPredicateMatched } from '../../../../helpers/headerPredicate';
 import { IHeaderPredicate } from '../../../../interfaces/HeaderPredicate';
-import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
 import {
     IDrillEvent,
     IDrillEventCallback,
-    IDrillEventIntersectionElement
+    IDrillEventContextHeadline
 } from '../../../../interfaces/DrillEvents';
-import { VisualizationTypes, VisElementType } from '../../../../constants/visualizationTypes';
+import { VisualizationTypes, HeadlineElementType } from '../../../../constants/visualizationTypes';
 import { IHeadlineData, IHeadlineDataItem } from '../../../../interfaces/Headlines';
+import { createDrillIntersectionElement } from '../../utils/drilldownEventing';
 
 export interface IHeadlineExecutionData {
     measureHeaderItem: Execution.IMeasureHeaderItem['measureHeaderItem'];
@@ -26,7 +27,7 @@ export interface IHeadlineExecutionData {
 export interface IHeadlineDrillItemContext {
     localIdentifier: AFM.Identifier;
     value: string;
-    element: VisElementType;
+    element: HeadlineElementType;
 }
 
 function createHeadlineDataItem(executionDataItem: IHeadlineExecutionData): IHeadlineDataItem {
@@ -188,32 +189,27 @@ export function buildDrillEventData(itemContext: IHeadlineDrillItemContext,
         throw new Error('The metric uri has not been found in execution response!');
     }
 
-    const measureIds = getMasterMeasureObjQualifier(executionRequest.afm, itemContext.localIdentifier);
-    if (!measureIds) {
+    const masterMeasureQualifier = getMasterMeasureObjQualifier(executionRequest.afm, itemContext.localIdentifier);
+    if (!masterMeasureQualifier) {
         throw new Error('The metric ids has not been found in execution request!');
     }
 
-    const intersection: IDrillEventIntersectionElement = {
-        id: measureHeaderItem.localIdentifier,
-        title: measureHeaderItem.name
+    const intersectionElement = createDrillIntersectionElement(
+        measureHeaderItem.localIdentifier,
+        measureHeaderItem.name,
+        masterMeasureQualifier.uri,
+        masterMeasureQualifier.identifier
+    );
+    const drillContext: IDrillEventContextHeadline = {
+        type: VisualizationTypes.HEADLINE,
+        element: itemContext.element,
+        value: itemContext.value,
+        intersection: [ intersectionElement ]
     };
-
-    const { identifier, uri } = measureIds;
-
-    if (identifier || uri) {
-        intersection.header = { identifier, uri };
-    }
 
     return {
         executionContext: executionRequest.afm,
-        drillContext: {
-            type: VisualizationTypes.HEADLINE,
-            element: itemContext.element,
-            value: itemContext.value,
-            intersection: [
-                intersection
-            ]
-        }
+        drillContext
     };
 }
 

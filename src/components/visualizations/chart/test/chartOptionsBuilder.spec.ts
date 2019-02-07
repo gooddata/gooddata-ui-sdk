@@ -1625,21 +1625,27 @@ describe('chartOptionsBuilder', () => {
             expect(drillIntersection).toEqual([
                 {
                     id: 'amountMetric',
-                    identifier: 'ah1EuQxwaCqs',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                    value: 'Amount'
+                    title: 'Amount',
+                    header: {
+                        identifier: 'ah1EuQxwaCqs',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
+                    }
                 },
                 {
                     id: '1226',
-                    identifier: 'label.owner.department',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
-                    value: 'Direct Sales'
+                    title: 'Direct Sales',
+                    header: {
+                        identifier: 'label.owner.department',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                    }
                 },
                 {
                     id: '1225',
-                    identifier: 'label.owner.region',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024',
-                    value: 'East Coast'
+                    title: 'East Coast',
+                    header: {
+                        identifier: 'label.owner.region',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024'
+                    }
                 }
             ]);
         });
@@ -1657,9 +1663,11 @@ describe('chartOptionsBuilder', () => {
             expect(drillIntersection).toEqual([
                 {
                     id: 'lostMetric',
-                    identifier: 'af2Ewj9Re2vK',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                    value: 'Lost'
+                    title: 'Lost',
+                    header: {
+                        identifier: 'af2Ewj9Re2vK',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                    }
                 }
             ]);
         });
@@ -1714,19 +1722,25 @@ describe('chartOptionsBuilder', () => {
                     [
                         {
                             id: 'lostMetric',
-                            identifier: 'af2Ewj9Re2vK',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                            value: '<button>Lost</button> ...'
+                            title: '<button>Lost</button> ...',
+                            header: {
+                                identifier: 'af2Ewj9Re2vK',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                            }
                         }, {
                             id: 'wonMetric',
-                            identifier: 'afSEwRwdbMeQ',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
-                            value: 'Won'
+                            title: 'Won',
+                            header: {
+                                identifier: 'afSEwRwdbMeQ',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284'
+                            }
                         }, {
                             id: '2008',
-                            identifier: 'created.aag81lMifn6q',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                            value: '<button>2008</button>'
+                            title: '<button>2008</button>',
+                            header: {
+                                identifier: 'created.aag81lMifn6q',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                            }
                         }
                     ]
                 ]);
@@ -1828,27 +1842,35 @@ describe('chartOptionsBuilder', () => {
                     drillIntersection: [
                         {
                             id: '784a5018a51049078e8f7e86247e08a3',
-                            value: '_Snapshot [EOP-2]',
-                            identifier: 'ab0bydLaaisS',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                            title: '_Snapshot [EOP-2]',
+                            header: {
+                                identifier: 'ab0bydLaaisS',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                            }
                         },
                         {
                             id: '9e5c3cd9a93f4476a93d3494cedc6010',
-                            value: '# of Open Opps.',
-                            identifier: 'aaYh6Voua2yj',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                            title: '# of Open Opps.',
+                            header: {
+                                identifier: 'aaYh6Voua2yj',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                            }
                         },
                         {
                             id: '71d50cf1d13746099b7f506576d78e4a',
-                            value: 'Remaining Quota',
-                            identifier: 'ab4EFOAmhjOx',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                            title: 'Remaining Quota',
+                            header: {
+                                identifier: 'ab4EFOAmhjOx',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                            }
                         },
                         {
                             id: '1235',
-                            value: 'Jessica Traven',
-                            identifier: 'label.owner.id.name',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                            title: 'Jessica Traven',
+                            header: {
+                                identifier: 'label.owner.id.name',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                            }
                         }
                     ]
                 });
@@ -2124,28 +2146,36 @@ describe('chartOptionsBuilder', () => {
                         [
                             {
                                 id: 'lostMetric',
-                                identifier: 'af2Ewj9Re2vK',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                                value: '<button>Lost</button> ...'
+                                title: '<button>Lost</button> ...',
+                                header: {
+                                    identifier: 'af2Ewj9Re2vK',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                                }
                             }, {
                                 id: '2008',
-                                identifier: 'created.aag81lMifn6q',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                                value: '<button>2008</button>'
+                                title: '<button>2008</button>',
+                                header: {
+                                    identifier: 'created.aag81lMifn6q',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                                }
                             }
                         ],
                         undefined,
                         [
                             {
                                 id: 'expectedMetric',
-                                identifier: 'alUEwmBtbwSh',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285',
-                                value: 'Expected'
+                                title: 'Expected',
+                                header: {
+                                    identifier: 'alUEwmBtbwSh',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285'
+                                }
                             }, {
                                 id: '2008',
-                                identifier: 'created.aag81lMifn6q',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                                value: '<button>2008</button>'
+                                title: '<button>2008</button>',
+                                header: {
+                                    identifier: 'created.aag81lMifn6q',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                                }
                             }
                         ]
                     ]);

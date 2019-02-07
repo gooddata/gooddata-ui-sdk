@@ -2,6 +2,7 @@
 import { set, cloneDeep } from 'lodash';
 import { Execution } from '@gooddata/typings';
 import { TableRow } from '../../../../../interfaces/Table';
+import { EXECUTION_REQUEST_AM, TABLE_HEADERS_AM } from '../../fixtures/arithmericMeasures';
 
 import {
     getIntersectionForDrilling,
@@ -241,40 +242,56 @@ describe('Table utils - Data transformation', () => {
         });
     });
 
-    describe('Intersection for drilling', () => {
-        it('should get intersection for attribute', () => {
+    describe('getIntersectionForDrilling', () => {
+        it('should return intersection for attribute', () => {
             expect(getIntersectionForDrilling(
                 EXECUTION_REQUEST_1M.execution.afm,
                 TABLE_HEADERS_1A[0])
             ).toEqual({
                 id: '1st_attr_df_identifier',
-                identifier: '1st_attr_df_identifier',
-                uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id',
-                title: 'Product'
+                title: 'Product',
+                header: {
+                    identifier: '1st_attr_df_identifier',
+                    uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id'
+                }
             });
         });
 
-        it('should get intersection for simple measure', () => {
+        it('should return intersection for simple measure', () => {
             expect(getIntersectionForDrilling(
                 EXECUTION_REQUEST_1M.execution.afm,
                 TABLE_HEADERS_1M[0])
             ).toEqual({
                 id: '1st_measure_local_identifier',
-                identifier: '',
-                uri: '/gdc/md/project_id/obj/1st_measure_uri_id',
-                title: 'Lost'
+                title: 'Lost',
+                header: {
+                    identifier: '1st_measure_identifier',
+                    uri: '/gdc/md/project_id/obj/1st_measure_uri_id'
+                }
             });
         });
 
-        it('should get intersection for ad hoc measure', () => {
+        it('should return intersection for ad hoc measure', () => {
             expect(getIntersectionForDrilling(
                 EXECUTION_REQUEST_POP.execution.afm,
                 TABLE_HEADERS_POP[1])
             ).toEqual({
                 id: 'pop_measure_local_identifier',
-                identifier: '',
-                uri: '/gdc/md/project_id/obj/measure_uri_id',
-                title: 'Close [BOP] - Previous year'
+                title: 'Close [BOP] - Previous year',
+                header: {
+                    identifier: '',
+                    uri: '/gdc/md/project_id/obj/measure_uri_id'
+                }
+            });
+        });
+
+        it('should return intersection without header for arithmetic measure', () => {
+            expect(getIntersectionForDrilling(
+                EXECUTION_REQUEST_AM.execution.afm,
+                TABLE_HEADERS_AM[3])
+            ).toEqual({
+                id: 'am1',
+                title: 'AM1(M1,M2)'
             });
         });
     });

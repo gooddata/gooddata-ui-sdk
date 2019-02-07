@@ -26,9 +26,11 @@ export const VisualizationTypes = {
 export type ChartType = 'bar' | 'column' | 'pie' | 'line' | 'area' | 'donut' |
     'scatter' | 'bubble' | 'heatmap' | 'geo' | 'combo' | 'histogram' |
     'bullet' | 'treemap' | 'waterfall' | 'funnel' | 'pareto' | 'alluvial';
-export type VisType = ChartType | 'table' | 'pivotTable' | 'headline';
+export type HeadlineType = 'headline';
+export type TableType = 'table' | 'pivotTable';
+export type VisType = ChartType | HeadlineType | TableType;
 
-export type ChartElementType = 'slice' | 'bar' | 'point' | 'label';
+export type ChartElementType = 'slice' | 'bar' | 'point' | 'label' | 'cell'; // 'cell' for heatmap
 export type HeadlineElementType = 'primaryValue' | 'secondaryValue';
 export type TableElementType = 'cell';
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;

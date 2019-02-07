@@ -42,8 +42,7 @@ export const measuresDrillParams = `{
                     "identifier": "aaEGaXAEgB7U"
                 }
             }
-        ],
-        "value": "4214352.77185"
+        ]
     }
 }`;
 
@@ -106,8 +105,7 @@ export const rowAttributesDrillParams = `{
                     "identifier": ""
                 }
             }
-        ],
-        "value": "Alcoholic Beverages"
+        ]
     }
 }`;
 
@@ -182,8 +180,7 @@ export const columnAndRowAttributesDrillParams = `{
                     "identifier": ""
                 }
             }
-        ],
-        "value": "California"
+        ]
     }
 }`;
 
@@ -328,8 +325,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
                     "identifier": "aaEGaXAEgB7U"
                 }
             }
-        ],
-        "value": "71475.721"
+        ]
     }
 }`;
 
@@ -444,8 +440,7 @@ export const measuresAndColumnAttributesDrillParams = `{
                     "identifier": "aabHeqImaK0d"
                 }
             }
-        ],
-        "value": "150708.58845"
+        ]
     }
 }`;
 
@@ -532,7 +527,6 @@ export const measuresAndRowAttributesDrillParams = `{
                     "identifier": ""
                 }
             }
-        ],
-        "value": "California"
+        ]
     }
 }`;

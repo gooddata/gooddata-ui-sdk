@@ -25,6 +25,11 @@ The REST API versions in the table are just for your information as the values a
 
 -   Treemap and Heatmap visualization now emits drill events with `value` property of type `string` instead of `number` same as other visualizations. (BB-1318)
 
+-   Table visualization and all chart visualizations now emits drill events with correct intersection containing also non-empty `header.identifier` properties when executed using `uri`. 
+
+-   Pivot Table visualization now emits drill events without `value` property in `drillContext`. Value can be obtained from `row` property using `columnIndex`.
+
+
 ## 6.2.0
 
 January 28, 2019
