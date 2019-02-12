@@ -436,7 +436,7 @@ describe('getRow', () => {
             'a_2009_4-a_2071_12-m_3': '53364.1275',
             'a_2205': 'Montgomery',
             'a_2211': 'Alabama',
-            'drillItemMap': {
+            'headerItemMap': {
                 a_2205: {
                     attributeHeaderItem: {
                         name: 'Montgomery',

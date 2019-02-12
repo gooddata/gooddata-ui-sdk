@@ -20,7 +20,8 @@ import {
     TOTAL_M1_A1,
     TOTAL_M2_A1,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+    ATTRIBUTE_COUNTRY
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -303,6 +304,21 @@ storiesOf('Core components/PivotTable', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('Data grouping - Group rows in attribute columns', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1, ATTRIBUTE_COUNTRY, ATTRIBUTE_2]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    groupRows={true}
                 />
             </div>
         )

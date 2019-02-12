@@ -76,6 +76,7 @@ import {
 } from './base/VisualizationLoadingHOC';
 import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
 import ColumnHeader from './pivotTable/ColumnHeader';
+import { GroupingProviderFactory, IGroupingProvider } from './pivotTable/GroupingProvider';
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -84,6 +85,7 @@ export interface IPivotTableProps extends ICommonChartProps, IDataSourceProvider
     cancelPagePromises?: () => void;
     pageSize?: number;
     config?: IPivotTableConfig;
+    groupRows?: boolean;
 }
 
 export interface IPivotTableState {
@@ -111,7 +113,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
             if (type === MEASURE_COLUMN) {
                 return [...drillRow, rowData[colDef.field]];
             }
-            const drillItem = get<any, IMappingHeader>(rowData, ['drillItemMap', colDef.field]);
+            const drillItem = get<any, IMappingHeader>(rowData, ['headerItemMap', colDef.field]);
             if (drillItem && (type === COLUMN_ATTRIBUTE_COLUMN || type === ROW_ATTRIBUTE_COLUMN)) {
                 const drillItemUri = getMappingHeaderUri(drillItem);
                 return [...drillRow, {
@@ -263,7 +265,8 @@ export const getAGGridDataSource = (
     getGridApi: () => any,
     intl: InjectedIntl,
     columnDefOptions: IColumnDefOptions = {},
-    columnTotals?: AFM.ITotalItem[]
+    columnTotals: AFM.ITotalItem[],
+    groupingProvider: IGroupingProvider
 ): IDatasource => ({
     getRows: ({ startRow, endRow, successCallback, sortModel }: IGetRowsParams) => {
         const execution = getExecution();
@@ -312,6 +315,11 @@ export const getAGGridDataSource = (
                     }
                 );
                 const { offset, count, total } = execution.executionResult.paging;
+
+                const rowAttributeIds = columnDefs
+                    .filter(columnDef => columnDef.type === ROW_ATTRIBUTE_COLUMN)
+                    .map(columnDef => columnDef.field);
+                groupingProvider.processPage(rowData, offset[0], rowAttributeIds);
                 // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
                 const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
                 onSuccess(execution, columnDefs, rowData);
@@ -402,12 +410,14 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         updateTotals: noop,
         onDataTooLarge: noop,
         pageSize: 100,
-        config: {}
+        config: {},
+        groupRows: false
     };
 
     private agGridDataSource: IDatasource;
     private gridApi: GridApi;
     private containerRef: HTMLDivElement;
+    private groupingProvider: IGroupingProvider;
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -424,6 +434,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
         this.agGridDataSource = null;
         this.gridApi = null;
+        this.groupingProvider = GroupingProviderFactory.createProvider(props.groupRows);
     }
 
     public componentWillMount() {
@@ -454,6 +465,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 agGridDataSourceUpdateNeeded = true;
             }
             if (this.isNewAGGridDataSourceNeeded(prevProps)) {
+                this.groupingProvider.reset();
                 agGridDataSourceUpdateNeeded = true;
             }
             if (agGridDataSourceUpdateNeeded) {
@@ -483,19 +495,26 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         if (drillablePredicates.length !== 0 && !isRowTotal) {
 
             const rowDrillItem =
-                get<CellClassParams, IMappingHeader>(cellClassParams, ['data', 'drillItemMap', colDef.field]);
+                get<CellClassParams, IMappingHeader>(cellClassParams, ['data', 'headerItemMap', colDef.field]);
             const headers: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
 
             hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
                 isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
         }
 
+        const attributeId = colDef.field;
+        const isPinnedRow = cellClassParams.node.isRowPinned();
+        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeated(attributeId, rowIndex);
+        const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
+
         const className = classNames(
             classList,
             getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
             colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
-            isRowTotal ? 'gd-row-total' : null
+            isRowTotal ? 'gd-row-total' : null,
+            hiddenCell ? 'gd-cell-hide' : null,
+            rowSeparator ? 'gd-table-row-separator' : null
         );
         return className;
     }
@@ -557,7 +576,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             this.getGridApi,
             this.props.intl,
             {},
-            this.state.columnTotals
+            this.state.columnTotals,
+            this.groupingProvider
         );
     }
 
@@ -583,7 +603,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
         const { colDef, rowIndex } = cellEvent;
         const isRowTotal = get<IGridCellEvent, string>(cellEvent, ['data', 'type', ROW_TOTAL]);
-        const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'drillItemMap', colDef.field]);
+        const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'headerItemMap', colDef.field]);
         const drillItems: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
         const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
             isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
@@ -721,6 +741,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
             // Basic options
             suppressMovableColumns: true,
+            suppressCellSelection: true,
             enableFilter: false,
             enableColResize: true,
             enableServerSideSorting: true,
@@ -737,8 +758,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
             // this provides persistent row selection (if enabled)
             getRowNodeId: (item) => {
-                return Object.keys(item.drillItemMap).map((key) => {
-                    const drillItem: IMappingHeader = item.drillItemMap[key];
+                return Object.keys(item.headerItemMap).map((key) => {
+                    const drillItem: IMappingHeader = item.headerItemMap[key];
                     const ids = getIdsFromUri(getMappingHeaderUri(drillItem));
                     return `${key}${ID_SEPARATOR}${ids[1]}`;
                 }).join(FIELD_SEPARATOR);

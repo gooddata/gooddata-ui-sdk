@@ -36,6 +36,7 @@ export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketPr
     totalsEditAllowed?: boolean;
     pageSize?: number;
     config?: IPivotTableConfig;
+    groupRows?: boolean;
 }
 
 export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.IBucket[] => {
@@ -68,6 +69,10 @@ type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketPro
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  */
 export class PivotTable extends React.Component<IPivotTableProps> {
+    public static defaultProps: Partial<IPivotTableProps> = {
+        groupRows: false
+    };
+
     public render() {
         const { sortBy, filters } = this.props;
 
