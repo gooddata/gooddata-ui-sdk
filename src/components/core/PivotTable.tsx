@@ -26,7 +26,7 @@ import sortBy = require('lodash/sortBy');
 import InjectedIntl = ReactIntl.InjectedIntl;
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
-import '../../../styles/scss/pivotTable.scss';
+import '../../../styles/css/pivotTable.css';
 
 import { VisualizationTypes } from '../../constants/visualizationTypes';
 import {
