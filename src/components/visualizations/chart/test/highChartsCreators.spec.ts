@@ -1,6 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import { getHighchartsOptions } from '../highChartsCreators';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import handleChartLoad from '../events/load';
+import { supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 
 const chartOptions = {
     data: {
@@ -191,6 +193,23 @@ describe('highChartCreators', () => {
 
         it('defined empty data pattern', () => {
             expect(config.defs.patterns[0].id).toEqual('empty-data-pattern');
+        });
+    });
+
+    describe('Load event configuration', () => {
+        const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, {});
+
+        it('should column/bar/line chart be registered load event', () => {
+            supportedDualAxesChartTypes.forEach((type: string) => {
+                const config = getConfig(type);
+                expect(config.chart.events.load).toBe(handleChartLoad);
+            });
+        });
+
+        it('should other charts not be registered load event', () => {
+            // area chart is an example, as long as it's not column/bar/line chart
+            const config = getConfig(VisualizationTypes.AREA);
+            expect(config.chart.events.load).toBeFalsy();
         });
     });
 });
