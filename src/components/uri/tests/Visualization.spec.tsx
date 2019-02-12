@@ -42,7 +42,7 @@ const sdk = {
     execution: {
         getPartialExecutionResult: () => false,
         executeAfm: () => Promise.resolve(),
-        getExecutionResponse: () => false
+        getExecutionResponse: () => Promise.resolve()
     },
     config: {
         setJsPackage: () => false,

@@ -2,6 +2,7 @@
 import head = require('lodash/head');
 import last = require('lodash/last');
 import {
+    createArrayFromRangeWithMiddleZero,
     createTickPositions,
     getMinMax,
     getTickAmount,
@@ -363,7 +364,7 @@ describe('get tick positions for dual axes chart', () => {
                 runTest(-10000, 0, -500, 0, minmaxAuto);
             });
 
-            it('between axes with -0 and 0+ data - only lef axis configured', () => {
+            it('between axes with -0 and 0+ data - only left axis configured', () => {
                 runTest(-10000, 10000, -500, 500, minmaxAuto);
             });
 
@@ -606,6 +607,18 @@ describe('get tick positions for dual axes chart', () => {
                     expectedTickAmount: 0
                 });
             });
+        });
+    });
+
+    describe('createArrayFromRangeWithMiddleZero', () => {
+        it.each([
+            [-100000, 1000000, 12],
+            [-0.2100000000000003, 2.1, 12]
+        ])('should add zero between %f and %f values', (start: number, end: number, ticksNumber: number) => {
+            const result = createArrayFromRangeWithMiddleZero(start, end, ticksNumber);
+
+            expect(result.indexOf(0)).not.toEqual(-1);
+            expect(result.length).toEqual(ticksNumber);
         });
     });
 });

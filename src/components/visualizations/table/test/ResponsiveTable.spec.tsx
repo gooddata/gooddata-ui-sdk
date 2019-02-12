@@ -41,6 +41,14 @@ describe('Responsive Table', () => {
         rows: TABLE_ROWS_1A_2M
     };
 
+    beforeAll(() => {
+        window.scrollTo = jest.fn();
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+    });
+
     function renderTable(tableData: ITableData, customProps: Partial<IResponsiveTableProps> = {}):
         ReactWrapper<IResponsiveTableProps, any> {
         const props: Partial<IResponsiveTableProps> = {
