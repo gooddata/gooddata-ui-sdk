@@ -16,7 +16,7 @@ import {
     AFM_ONE_ATTRIBUTE
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
-import '../../styles/scss/charts.scss';
+import '../../styles/css/charts.css';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 function logTotalsChange(data: any) {
