@@ -91,6 +91,7 @@ export interface IPivotTableState {
     execution: Execution.IExecutionResponses;
     columnTotals: AFM.ITotalItem[];
     agGridRerenderNumber: number;
+    desiredHeight: number | undefined;
 }
 
 export interface ICustomGridOptions extends GridOptions {
@@ -100,7 +101,7 @@ export interface ICustomGridOptions extends GridOptions {
 const AG_NUMERIC_CELL_CLASSNAME = 'ag-numeric-cell';
 const AG_NUMERIC_HEADER_CLASSNAME = 'ag-numeric-header';
 
-export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: {[key: string]: any}) => {
+export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
         const { type } = colDef;
         // colDef without field is a utility column (e.g. top column label)
@@ -256,7 +257,7 @@ export const getAGGridDataSource = (
     getPage: IGetPage,
     cancelPagePromises: () => void,
     getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
+    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[], rowData: IGridRow[]) => void,
     getGridApi: () => any,
     intl: InjectedIntl,
     columnDefOptions: IColumnDefOptions = {},
@@ -294,31 +295,30 @@ export const getAGGridDataSource = (
             [startRow, undefined]
         );
         return pagePromise
-            .then(
-                (execution: Execution.IExecutionResponses | null) => {
-                    if (!execution) {
-                        return null;
-                    }
-                    const { columnDefs, rowData, rowTotals } = executionToAGGridAdapter(
-                        execution,
-                        resultSpecUpdated,
-                        intl,
-                        {
-                            addLoadingRenderer: 'loadingRenderer',
-                            columnDefOptions
-                        }
-                    );
-                    const { offset, count, total } = execution.executionResult.paging;
-                    // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
-                    const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
-                    onSuccess(execution, columnDefs);
-                    successCallback(rowData, lastRow);
-                    // set totals
-                    getGridApi().setPinnedBottomRowData(rowTotals);
-
-                    return execution;
+            .then((execution: Execution.IExecutionResponses | null) => {
+                if (!execution) {
+                    return null;
                 }
-            );
+
+                const { columnDefs, rowData, rowTotals } = executionToAGGridAdapter(
+                    execution,
+                    resultSpecUpdated,
+                    intl,
+                    {
+                        addLoadingRenderer: 'loadingRenderer',
+                        columnDefOptions
+                    }
+                );
+                const { offset, count, total } = execution.executionResult.paging;
+                // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
+                const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
+                onSuccess(execution, columnDefs, rowData);
+                successCallback(rowData, lastRow);
+                // set totals
+                getGridApi().setPinnedBottomRowData(rowTotals);
+
+                return execution;
+            });
     },
     destroy: () => {
         cancelPagePromises();
@@ -342,9 +342,9 @@ export const getDrillIntersection = (
 ): IDrillEventIntersectionElement[] => {
     // Drilling needs refactoring: all '' should be replaced by null (breaking change)
     // intersection consists of
-        // 0..1 measure
-        // 0..1 row attribute and row attribute value
-        // 0..n column attribute and column attribute values
+    //     0..1 measure
+    //     0..1 row attribute and row attribute value
+    //     0..n column attribute and column attribute values
     return drillItems.map((drillItem: IMappingHeader) => {
         let headerLocalIdentifier = null;
         let headerIdentifier = '';
@@ -367,7 +367,7 @@ export const getDrillIntersection = (
     });
 };
 
-function isMeasureCoulumnReadyToRender(params: any, execution: Execution.IExecutionResponses): boolean {
+function isMeasureColumnReadyToRender(params: any, execution: Execution.IExecutionResponses): boolean {
     return Boolean(
         params
         && params.value !== undefined
@@ -399,7 +399,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         // This prop is optional if you handle nativeTotals through pushData like in appComponents PluggablePivotTable
         updateTotals: noop,
         onDataTooLarge: noop,
-        pageSize: 100
+        pageSize: 100,
+        config: {}
     };
 
     private agGridDataSource: IDatasource;
@@ -411,9 +412,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.state = {
             columnDefs: [],
             rowData: [],
+
             execution: null,
             columnTotals: cloneDeep(this.getColumnTotalsFromResultSpec(this.props.resultSpec)),
-            agGridRerenderNumber: 1
+            agGridRerenderNumber: 1,
+            desiredHeight: props.config.maxHeight
         };
 
         this.agGridDataSource = null;
@@ -456,9 +459,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         });
 
         if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-            this.setState(prevState => ({
-                agGridRerenderNumber: prevState.agGridRerenderNumber + 1
-            }));
+            this.forceRerender();
         }
     }
 
@@ -526,7 +527,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public createAGGridDataSource() {
-        const onSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => {
+        const onSuccess = (
+            execution: Execution.IExecutionResponses,
+            columnDefs: IGridHeader[],
+            rowData: IGridRow[]
+        ) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
                 this.setState({
                     columnDefs
@@ -537,6 +542,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     execution
                 });
             }
+            const aggregationCount = execution.executionResult.totals
+                ? execution.executionResult.totals.filter(total => total.length > 0).length
+                : 0;
+            this.updateDesiredHeight(rowData.length, aggregationCount);
         };
         this.agGridDataSource = getAGGridDataSource(
             this.props.resultSpec,
@@ -670,7 +679,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public renderVisualization() {
-        const { columnDefs, rowData } = this.state;
+        const { columnDefs, rowData, desiredHeight } = this.state;
         const { pageSize } = this.props;
 
         const separators = get(this.props, ['config', 'separators'], undefined);
@@ -768,7 +777,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                         'gd-measure-column-header')),
                     // wrong params type from ag-grid, we need any
                     valueFormatter: (params: any) => {
-                        return isMeasureCoulumnReadyToRender(params, this.state.execution)
+                        return isMeasureColumnReadyToRender(params, this.state.execution)
                             ? getMeasureCellFormattedValue(
                                 params.value,
                                 getMeasureFormat(params.colDef, this.state.execution),
@@ -777,7 +786,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                             : null;
                     },
                     cellStyle: (params) => {
-                        return isMeasureCoulumnReadyToRender(params, this.state.execution)
+                        return isMeasureColumnReadyToRender(params, this.state.execution)
                             ? getMeasureCellStyle(
                                 params.value,
                                 getMeasureFormat(params.colDef, this.state.execution),
@@ -817,7 +826,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return (
             <div
                 className="gd-table ag-theme-balham s-pivot-table"
-                style={{ height: '100%', position: 'relative' }}
+                style={{
+                    height: desiredHeight || '100%',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}
             >
                 {tableLoadingOverlay}
                 <AgGridReact
@@ -877,6 +890,39 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private updateAGGridDataSource(): void {
         this.createAGGridDataSource();
         this.setGridDataSource();
+    }
+
+    private getRowHeight(): number {
+        const DEFAULT_ROW_HEIGHT = 28;
+
+        return this.gridApi
+            ? (this.gridApi.getModel() as any).rowHeight
+            : DEFAULT_ROW_HEIGHT;
+    }
+
+    private updateDesiredHeight(rowCount: number, aggregationCount: number): void {
+        if (!this.gridApi) {
+            return;
+        }
+        const { maxHeight } = this.props.config;
+        if (!maxHeight) {
+            return;
+        }
+        const rowHeight = this.getRowHeight();
+        const headerHeight = (this.gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
+        const bodyHeight = rowCount * rowHeight;
+        const footerHeight = aggregationCount * rowHeight;
+        const totalHeight = headerHeight + bodyHeight + footerHeight;
+
+        this.setState({
+            desiredHeight: Math.min(totalHeight, maxHeight)
+        });
+    }
+
+    private forceRerender() {
+        this.setState(state => ({
+            agGridRerenderNumber: state.agGridRerenderNumber + 1
+        }));
     }
 }
 
