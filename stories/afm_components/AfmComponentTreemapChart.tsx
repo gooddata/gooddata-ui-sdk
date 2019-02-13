@@ -13,7 +13,7 @@ import {
     AFM_ARITHMETIC_MEASURES
 } from '../data/afmComponentProps';
 
-import '../../styles/scss/charts.scss';
+import '../../styles/css/charts.css';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };

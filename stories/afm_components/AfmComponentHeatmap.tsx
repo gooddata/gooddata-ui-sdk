@@ -13,7 +13,7 @@ import {
     AFM_HEATMAP_58ROWS
 } from '../data/afmComponentProps';
 import { onErrorHandler } from '../mocks';
-import '../../styles/scss/charts.scss';
+import '../../styles/css/charts.css';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 800, height: 400 };

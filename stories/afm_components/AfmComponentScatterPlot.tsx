@@ -11,7 +11,7 @@ import {
 } from '../data/afmComponentProps';
 import { CUSTOM_COLORS } from '../data/colors';
 import { onErrorHandler } from '../mocks';
-import '../../styles/scss/charts.scss';
+import '../../styles/css/charts.css';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 storiesOf('AFM components/ScatterPlot', module)

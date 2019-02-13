@@ -7,7 +7,7 @@ import {
     AFM_TWO_MEASURES
 } from '../data/afmComponentProps';
 import { Headline } from '../../src/components/afm/Headline';
-import '../../styles/scss/headline.scss';
+import '../../styles/css/headline.css';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 
 const wrapperStyle = { width: 600, height: 300 };
