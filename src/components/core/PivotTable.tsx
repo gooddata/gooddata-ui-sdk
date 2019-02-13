@@ -251,7 +251,7 @@ export const getSortsFromModel = (
     });
 };
 
-export const getGridDataSource = (
+export const getAGGridDataSource = (
     resultSpec: AFM.IResultSpec,
     getPage: IGetPage,
     cancelPagePromises: () => void,
@@ -402,7 +402,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         pageSize: 100
     };
 
-    private gridDataSource: IDatasource;
+    private agGridDataSource: IDatasource;
     private gridApi: GridApi;
 
     constructor(props: IPivotTableInnerProps) {
@@ -416,45 +416,49 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             agGridRerenderNumber: 1
         };
 
-        this.gridDataSource = null;
+        this.agGridDataSource = null;
         this.gridApi = null;
     }
 
     public componentWillMount() {
-        const { resultSpec, getPage, cancelPagePromises } = this.props;
-        this.createDataSource(resultSpec, getPage, cancelPagePromises);
+        this.createAGGridDataSource();
     }
 
-    public componentWillReceiveProps(nextProps: IPivotTableInnerProps) {
-        const currentTotals = this.getColumnTotalsFromResultSpec(this.props.resultSpec);
-        const newTotals = this.getColumnTotalsFromResultSpec(nextProps.resultSpec);
-        const totalsChanged = !isEqual(currentTotals, newTotals);
-        if (totalsChanged) {
-            // First we need to update totals in state, then we can create new datasource, because some measure might
-            // have been removed and can send outdated total with measure that no longer exists
-            this.setState(
-                { columnTotals: newTotals },
-                () => this.updateDataSource(nextProps)
-            );
-        } else if (this.isNewDataSourceNeeded(nextProps)) {
-            this.updateDataSource(nextProps);
-        }
+    public componentDidUpdate(prevProps: IPivotTableInnerProps, prevState: IPivotTableState) {
+        const prevPropsTotals = this.getColumnTotalsFromResultSpec(prevProps.resultSpec);
+        const currentPropsTotals = this.getColumnTotalsFromResultSpec(this.props.resultSpec);
+        const totalsPropsChanged = !isEqual(prevPropsTotals, currentPropsTotals);
 
-        if (this.isAgGridRerenderNeeded(nextProps)) {
-            this.setState(state => ({
-                agGridRerenderNumber: state.agGridRerenderNumber + 1
-            }));
-        }
-    }
+        const prevStateTotals = prevState.columnTotals;
+        const currentStateTotals = this.state.columnTotals;
+        const totalsStateChanged = !isEqual(prevStateTotals, currentStateTotals);
 
-    public componentDidUpdate(_: IPivotTableInnerProps, prevState: IPivotTableState) {
-        const { columnTotals } = this.state;
-        if (!isEqual(columnTotals, prevState.columnTotals)) {
-            if (columnTotals && columnTotals.length) {
-                this.props.updateTotals(columnTotals);
+        new Promise((resolve) => {
+            if (totalsPropsChanged) {
+                this.setState({
+                    columnTotals: currentPropsTotals
+                }, resolve);
+            } else {
+                resolve();
             }
+        }).then(() => {
+            let agGridDataSourceUpdateNeeded = false;
+            if (totalsStateChanged) {
+                this.props.updateTotals(this.state.columnTotals);
+                agGridDataSourceUpdateNeeded = true;
+            }
+            if (this.isNewAGGridDataSourceNeeded(prevProps)) {
+                agGridDataSourceUpdateNeeded = true;
+            }
+            if (agGridDataSourceUpdateNeeded) {
+                this.updateAGGridDataSource();
+            }
+        });
 
-            this.updateDataSource(this.props);
+        if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
+            this.setState(prevState => ({
+                agGridRerenderNumber: prevState.agGridRerenderNumber + 1
+            }));
         }
     }
 
@@ -521,7 +525,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return this.state.execution;
     }
 
-    public createDataSource(resultSpec: AFM.IResultSpec, getPage: IGetPage, cancelPagePromises: () => void) {
+    public createAGGridDataSource() {
         const onSuccess = (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
                 this.setState({
@@ -534,10 +538,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 });
             }
         };
-        this.gridDataSource = getGridDataSource(
-            resultSpec,
-            getPage,
-            cancelPagePromises,
+        this.agGridDataSource = getAGGridDataSource(
+            this.props.resultSpec,
+            this.props.getPage,
+            this.props.cancelPagePromises,
             this.getExecution,
             onSuccess,
             this.getGridApi,
@@ -557,7 +561,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     public setGridDataSource() {
         this.setState({ execution: null });
         if (this.gridApi) {
-            this.gridApi.setDatasource(this.gridDataSource);
+            this.gridApi.setDatasource(this.agGridDataSource);
         }
     }
 
@@ -842,9 +846,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return convertDrillableItemsToPredicates(this.props.drillableItems);
     }
 
-    private isNewDataSourceNeeded(nextProps: IPivotTableInnerProps): boolean {
+    private isNewAGGridDataSourceNeeded(prevProps: IPivotTableInnerProps): boolean {
         // cannot compare dataSource using deep equal as it stores execution promises that almost always differ
-        const dataSourceChanged = this.props.dataSource.getFingerprint() !== nextProps.dataSource.getFingerprint();
+        const dataSourceChanged = this.props.dataSource.getFingerprint() !== prevProps.dataSource.getFingerprint();
 
         const dataSourceInvalidatingPropNames = [
             'resultSpec',
@@ -856,22 +860,22 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         ];
 
         const dataSourceInvalidatingPropChanged =
-            dataSourceInvalidatingPropNames.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
+            dataSourceInvalidatingPropNames.some(propKey => !isEqual(this.props[propKey], prevProps[propKey]));
 
         return dataSourceChanged || dataSourceInvalidatingPropChanged;
     }
 
-    private isAgGridRerenderNeeded(nextProps: IPivotTableInnerProps): boolean {
+    private isAgGridRerenderNeeded(props: IPivotTableInnerProps, prevProps: IPivotTableInnerProps): boolean {
         const propsRequiringAgGridRerender = [
             ['config', 'menu']
         ];
         return propsRequiringAgGridRerender.some(
-            propKey => !isEqual(get(this.props, propKey), get(nextProps, propKey))
+            propKey => !isEqual(get(props, propKey), get(prevProps, propKey))
         );
     }
 
-    private updateDataSource(props: IPivotTableInnerProps): void {
-        this.createDataSource(props.resultSpec, props.getPage, props.cancelPagePromises);
+    private updateAGGridDataSource(): void {
+        this.createAGGridDataSource();
         this.setGridDataSource();
     }
 }

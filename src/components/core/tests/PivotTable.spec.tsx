@@ -10,7 +10,7 @@ import {
     PivotTable,
     PivotTableInner,
     getSortItemByColId,
-    getGridDataSource,
+    getAGGridDataSource,
     RowLoadingElement,
     getDrillRowData,
     getTreeLeaves,
@@ -55,7 +55,7 @@ describe('PivotTable', () => {
             const sortModel: any[] = [];
             const getExecution = () => pivotTableWithColumnAndRowAttributes;
 
-            const gridDataSource = getGridDataSource(
+            const gridDataSource = getAGGridDataSource(
                 resultSpec,
                 getPage,
                 cancelPagePromises,

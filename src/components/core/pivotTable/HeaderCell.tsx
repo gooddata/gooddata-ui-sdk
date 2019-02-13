@@ -192,7 +192,8 @@ export default class HeaderCell extends React.Component<IProps, IState> {
                 }
                 togglerWrapperClassName={classNames('s-table-header-menu', 'gd-pivot-table-header-menu', {
                     'gd-pivot-table-header-menu--show': this.state.isMenuButtonVisible,
-                    'gd-pivot-table-header-menu--hide': !this.state.isMenuButtonVisible
+                    'gd-pivot-table-header-menu--hide': !this.state.isMenuButtonVisible,
+                    'gd-pivot-table-header-menu--open': this.state.isMenuOpen
                 })}
                 opened={this.state.isMenuOpen}
                 onOpenedChange={this.handleMenuOpenedChange}

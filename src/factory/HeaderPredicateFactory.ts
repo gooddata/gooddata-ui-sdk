@@ -210,6 +210,9 @@ export function uriMatch(uri: string): IHeaderPredicate {
         }
 
         const afmMeasure = findMeasureInAfmByHeader(header, context.afm);
+        if (!afmMeasure) {
+            return false;
+        }
 
         if (matchAfmMeasureUri(uri, afmMeasure)) {
             return true;
@@ -234,6 +237,9 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
         }
 
         const afmMeasure = findMeasureInAfmByHeader(header, context.afm);
+        if (!afmMeasure) {
+            return false;
+        }
 
         if (matchAfmMeasureIdentifier(identifier, afmMeasure)) {
             return true;
