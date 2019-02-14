@@ -266,6 +266,19 @@ describe('AFM utils', () => {
             const enriched = appendFilters(afm, [], fixture.absoluteDateFilter1);
             expect(enriched.filters).toEqual([fixture.absoluteDateFilter1]);
         });
+
+        it('should work without filters in afm', () => {
+            const afm: AFM.IAfm = {};
+            const enriched = appendFilters(afm, [], fixture.absoluteDateFilter1);
+            expect(enriched.filters).toEqual([fixture.absoluteDateFilter1]);
+        });
+
+        it('should not modify afm if there are no filters', () => {
+            const afm: AFM.IAfm = {};
+            const expectedAfm: AFM.IAfm = {};
+            const enriched = appendFilters(afm, [], undefined);
+            expect(enriched).toEqual(expectedAfm);
+        });
     });
 
     describe('dateFiltersDataSetsMatch', () => {

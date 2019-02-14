@@ -11,6 +11,13 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.3.0"></a>
+## 2019-02-15 Version [11.3.0](https://github.com/gooddata/gooddata-js/compare/v11.2.0...v11.3.0)
+
+### Changed
+
+- `appendFilters` utility now doesn't normalize AFM
+
 <a name="11.2.0"></a>
 ## 2019-01-25 Version [11.2.0](https://github.com/gooddata/gooddata-js/compare/v11.1.1...v11.2.0)
 

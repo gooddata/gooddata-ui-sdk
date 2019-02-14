@@ -291,12 +291,11 @@ export function appendFilters(
     attributeFilters: AFM.AttributeFilterItem[],
     dateFilter?: AFM.DateFilterItem
 ): AFM.IAfm {
-    const normalizedAfm = normalizeAfm(afm);
     const dateFilters: AFM.DateFilterItem[] = (dateFilter && !isDateFilterAllTime(dateFilter)) ? [dateFilter] : [];
-    const afmDateFilter: AFM.DateFilterItem = normalizedAfm.filters.filter(isDateFilter)[0];
+    const afmDateFilter = afm.filters ? afm.filters.filter(isDateFilter)[0] : null;
 
     // all-time selected, need to delete date filter from filters
-    let afmFilters = normalizedAfm.filters || [];
+    let afmFilters = afm.filters || [];
     if (dateFilter && isDateFilterAllTime(dateFilter)) {
         afmFilters = afmFilters.filter((filter) => {
             if (isDateFilter(filter)) {
@@ -321,10 +320,14 @@ export function appendFilters(
         ...dateFilters
     ]);
 
-    return {
-        ...normalizedAfm,
-        filters
-    };
+    if (filters.length || afm.filters && afm.filters.length) {
+        return {
+            ...afm,
+            filters
+        };
+    }
+
+    return afm;
 }
 
 /**
