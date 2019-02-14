@@ -36,6 +36,8 @@ export interface IMinMaxLookup {
     1?: IMinMaxInfo;
 }
 
+const FRACTION_DIGITS = 9;
+
 function isMinMaxCoverZero(min: number, max: number): boolean {
     return min < 0 && 0 < max;
 }
@@ -104,7 +106,9 @@ function getRange(targetNumber: number, delta: number): number[] {
     let position = 0;
     const result = [];
 
-    const limit = Math.abs(targetNumber);
+    // Use (+) to convert a string to number
+    // Ref: https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
+    const limit = +Math.abs(targetNumber).toFixed(FRACTION_DIGITS);
     while (position < limit) {
         position += delta;
         result.push(position);
