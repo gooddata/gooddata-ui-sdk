@@ -106,6 +106,14 @@ const bucketPresets = {
                 }
             }))
         }
+    },
+    smallDataSet: {
+        label: 'Small data set',
+        key: 'smallDataSet',
+        bucketProps: {
+            measures,
+            rows: [attributeLocationState]
+        }
     }
 };
 
@@ -279,6 +287,24 @@ const pivotTableSizePresets = {
     }
 };
 
+const maxHeightPresets = {
+    none: {
+        key: 'none',
+        label: 'None',
+        value: undefined
+    },
+    oneHundred: {
+        key: 'oneHundred',
+        label: '100px',
+        value: 100
+    },
+    twoHundredFifty: {
+        key: 'twoHundredFifty',
+        label: '250px',
+        value: 250
+    }
+};
+
 export const getDrillableItems = (drillableKeys) => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
@@ -311,7 +337,8 @@ export class PivotTableDrillingExample extends Component {
             totalPresetKeys: {},
             sortingPresetKey: 'noSort',
             menuPresetKey: 'noMenu',
-            pivotTableSizeKey: 'default'
+            pivotTableSizeKey: 'default',
+            maxHeightPresetKey: 'none'
         };
     }
 
@@ -363,6 +390,11 @@ export class PivotTableDrillingExample extends Component {
             pivotTableSizeKey
         });
     }
+    onMaxHeightPresetChange = (maxHeightPresetKey) => {
+        this.setState({
+            maxHeightPresetKey
+        });
+    }
 
     onDrill = (drillEvent) => {
         // eslint-disable-next-line no-console
@@ -383,7 +415,8 @@ export class PivotTableDrillingExample extends Component {
             filterPresetKeys,
             totalPresetKeys,
             menuPresetKey,
-            pivotTableSizeKey
+            pivotTableSizeKey,
+            maxHeightPresetKey
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
@@ -517,18 +550,31 @@ export class PivotTableDrillingExample extends Component {
                         })
                     }
                 </div>
+                <div className="presets">
+                    Max height: {
+                        Object.keys(maxHeightPresets).map((presetItemKey) => {
+                            const { key, label } = maxHeightPresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-max-height-preset-${key} ${maxHeightPresetKey === key ? ' is-active' : ''}`}
+                                onClick={this.onMaxHeightPresetChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
 
                 <div
                     className={`s-pivot-table-${bucketPresetKey}`}
                     style={pivotTableSizePresets[pivotTableSizeKey].styles}
                 >
                     <PivotTable
-                        // Table components are completely reseted because they
+                        // Table components are completely reset because they
                         // heavily use JS to compute dimensions and when we just
-                        // change style prop they did not rerender with correct
+                        // change style prop they did not re-render with correct
                         // width. To get around this problem we completely
                         // reset both table components.
-                        key={pivotTableSizeKey}
+                        key={`${pivotTableSizeKey}__${maxHeightPresetKey}`}
                         projectId={projectId}
                         pageSize={20}
                         {...bucketPropsWithFilters}
@@ -537,6 +583,7 @@ export class PivotTableDrillingExample extends Component {
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
                         config={{
+                            maxHeight: maxHeightPresets[maxHeightPresetKey].value,
                             menu: menuPresets[menuPresetKey].menuConfig
                         }}
                         totals={totals}
@@ -546,7 +593,7 @@ export class PivotTableDrillingExample extends Component {
                 <h2>Table component for reference</h2>
                 <div style={{ height: 300 }}>
                     <Table
-                        key={pivotTableSizeKey}
+                        key={`${pivotTableSizeKey}__${maxHeightPresetKey}`}
                         projectId={projectId}
                         {...tableBucketProps}
                         {...filtersProp}

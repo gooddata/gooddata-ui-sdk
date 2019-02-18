@@ -252,6 +252,42 @@ storiesOf('Core components/PivotTable', module)
             </div>
         )
     ))
+    .add('totals - two measures, one row attribute, maxHeight 100', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        maxHeight: 100
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('totals - two measures, one row attribute, maxHeight 300', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        maxHeight: 300
+                    }}
+                />
+            </div>
+        )
+    ))
     .add('arithmetic measures', () => (
         screenshotWrap(
             <div style={wrapperStyle} className="s-table">
