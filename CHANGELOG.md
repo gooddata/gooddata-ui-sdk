@@ -11,6 +11,14 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.3.1"></a>
+## 2019-02-19 Version [11.3.1](https://github.com/gooddata/gooddata-js/compare/v11.3.0...v11.3.1)
+
+### Fixed
+
+- Fix loginSso to use POST request method instead of deprecated GET method
+
+
 <a name="11.3.0"></a>
 ## 2019-02-15 Version [11.3.0](https://github.com/gooddata/gooddata-js/compare/v11.2.0...v11.3.0)
 
