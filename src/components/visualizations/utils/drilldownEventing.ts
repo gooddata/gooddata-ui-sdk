@@ -125,7 +125,7 @@ function composeDrillContextPoint(
     }
 
     if (isTreemap(chartType) || isHeatmap(chartType)) {
-        context.value =  point.value.toString();
+        context.value = point.value ? point.value.toString() : '';
     }
 
     return context;
