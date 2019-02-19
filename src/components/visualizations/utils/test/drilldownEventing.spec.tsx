@@ -506,5 +506,30 @@ describe('Drilldown Eventing', () => {
                 }
             });
         });
+
+        it('should fire drill event (non-group) when point value is null and return empty string for value', () => {
+            const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target = { dispatchEvent: jest.fn() };
+            const pointClickEventDataWithPointNullValue: IHighchartsChartDrilldownEvent = {
+                ...pointClickEventData,
+                points: null
+            };
+
+            pointClickEventDataWithPointNullValue.point.value = null;
+
+            chartClick(
+                drillConfig,
+                pointClickEventDataWithPointNullValue,
+                target as any as EventTarget,
+                VisualizationTypes.HEATMAP
+            );
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+            expect(drillContext.value).toEqual('');
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        });
+
     });
 });
