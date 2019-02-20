@@ -61,6 +61,7 @@ import { LoadingComponent } from '../simple/LoadingComponent';
 import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../visualizations/table/totals/utils';
 
 import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
+import { getScrollbarWidth } from '../../helpers/domUtils';
 import { createDrillIntersectionElement } from '../visualizations/utils/drilldownEventing';
 
 import { ICommonChartProps } from './base/BaseChart';
@@ -405,6 +406,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private agGridDataSource: IDatasource;
     private gridApi: GridApi;
+    private containerRef: HTMLDivElement;
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -831,6 +833,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     position: 'relative',
                     overflow: 'hidden'
                 }}
+                ref={this.setContainerRef}
             >
                 {tableLoadingOverlay}
                 <AgGridReact
@@ -842,6 +845,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             </div>
         );
     }
+
+    private setContainerRef = (container: HTMLDivElement): void => { this.containerRef = container; };
 
     private getExecutionResponse = () => {
         return this.state.execution ? this.state.execution.executionResponse : null;
@@ -910,9 +915,17 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
         const rowHeight = this.getRowHeight();
         const headerHeight = (this.gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
-        const bodyHeight = rowCount * rowHeight;
+        const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
+        const bodyHeight = rowCount * rowHeight + leeway;
         const footerHeight = aggregationCount * rowHeight;
-        const totalHeight = headerHeight + bodyHeight + footerHeight;
+
+        // detect horizontal scroll bar and accommodate for it
+        const actualWidth = this.containerRef && this.containerRef.scrollWidth;
+        const preferredWidth = this.gridApi.getPreferredWidth();
+        const hasHorizontalScrollBar = actualWidth < preferredWidth;
+        const scrollBarPadding = hasHorizontalScrollBar ? getScrollbarWidth() : 0;
+
+        const totalHeight = headerHeight + bodyHeight + footerHeight + scrollBarPadding;
 
         this.setState({
             desiredHeight: Math.min(totalHeight, maxHeight)
