@@ -114,6 +114,15 @@ const bucketPresets = {
             measures,
             rows: [attributeLocationState]
         }
+    },
+    smallWideDataSet: {
+        label: 'Small wide data set',
+        key: 'smallWideDataSet',
+        bucketProps: {
+            measures,
+            rows: [attributeLocationState],
+            columns: [attributeQuarter]
+        }
     }
 };
 
