@@ -25,9 +25,10 @@ describe('DataSourceProvider', () => {
     }
     function createComponent(
         component: any,
-        props: IDataSourceProviderProps = defaultProps
+        props: IDataSourceProviderProps = defaultProps,
+        exportTitle?: string
     ) {
-        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, COMPONENT_NAME);
+        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, COMPONENT_NAME, exportTitle);
 
         return mount(
             <WrappedComponent {...props} />
@@ -57,6 +58,17 @@ describe('DataSourceProvider', () => {
             expect(TableElement.props.exportTitle).toEqual(COMPONENT_NAME);
             expect(TableElement.props.projectId).toEqual(PROJECT_ID);
         });
+    });
+
+    it('should pass correct exportTitle to InnerComponent', async () => {
+        const customTitle = 'CustomTitle';
+        const wrapper = createComponent(Table, undefined, customTitle);
+
+        await testUtils.delay();
+        wrapper.update();
+        expect(wrapper.find(Table).length).toBe(1);
+        const TableElement = wrapper.find(Table).get(0);
+        expect(TableElement.props.exportTitle).toEqual(customTitle);
     });
 
     it('should recreate dataSource when projects differ', () => {

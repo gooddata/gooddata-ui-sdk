@@ -22,4 +22,4 @@ function generateDefaultDimensions(): AFM.IDimension[] {
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const Headline = dataSourceProvider(CoreHeadline, generateDefaultDimensions, 'CoreHeadline');
+export const Headline = dataSourceProvider(CoreHeadline, generateDefaultDimensions, 'CoreHeadline', 'Headline');

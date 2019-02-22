@@ -67,7 +67,8 @@ function addDefaultDimensions(
 export function dataSourceProvider<T>(
     InnerComponent: React.ComponentType<T & IDataSourceProviderInjectedProps>,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
-    componentName: string
+    componentName: string,
+    exportTitle?: string
 ): React.ComponentClass<IDataSourceProviderProps> {
 
     return class WrappedComponent
@@ -170,7 +171,7 @@ export function dataSourceProvider<T>(
             return (
                 <InnerComponent
                     {...props}
-                    exportTitle={componentName}
+                    exportTitle={exportTitle || componentName}
                     dataSource={dataSource}
                     updateTotals={this.updateTotals}
                     resultSpec={resultSpec}
