@@ -167,12 +167,13 @@ describe('getLegendItems', () => {
                 color: 'rgb(20,178,226)',
                 legendIndex: 0,
                 name: 'East Coast',
-                yAxis: 0 // only first item matching to one measure
+                yAxis: 0
             },
             {
                 color: 'rgb(0,193,141)',
                 legendIndex: 1,
-                name: 'West Coast'
+                name: 'West Coast',
+                yAxis: 0
             }
         ]);
     });

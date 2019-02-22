@@ -7,13 +7,12 @@ import { wrap } from '../utils/wrap';
 import '../../styles/scss/charts.scss';
 import { barChartWith4MetricsAndViewBy2Attribute } from '../test_data/fixtures';
 import { IChartConfig, VisualizationTypes } from '../../src';
-import { supportedStackingAttributesChartTypes } from '../../src/components/visualizations/chart/chartOptionsBuilder';
 
 const renderSupportedCharts = (
     config: IChartConfig = {}
 ) => (
         <div>
-            {supportedStackingAttributesChartTypes.map((type) => {
+            {[VisualizationTypes.COLUMN, VisualizationTypes.BAR].map((type) => {
                 const newConfig: IChartConfig = {
                     type,
                     legend: {
@@ -49,7 +48,7 @@ const DUAL_AXIS_CONFIG = {
     }
 };
 
-storiesOf('Internal/OptionalStacking', module)
+storiesOf('Internal/OptionalStacking/Column, Bar, DualAxis Chart', module)
     .add('Charts with viewBy 2 attributes', () => {
         return screenshotWrap(
             <div>

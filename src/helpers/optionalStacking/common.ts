@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import isArray = require('lodash/isArray');
 import { VisualizationObject } from '@gooddata/typings';
-import { VIEW_BY_ATTRIBUTES_LIMIT } from '../components/visualizations/chart/constants';
+import { VIEW_BY_ATTRIBUTES_LIMIT } from '../../components/visualizations/chart/constants';
+import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
 export function getViewByTwoAttributes(
-    viewBy: VisualizationObject.IVisualizationAttribute | VisualizationObject.IVisualizationAttribute[]
-) {
+    viewBy: IVisualizationAttribute | IVisualizationAttribute[]
+): IVisualizationAttribute[] {
     if (!viewBy) {
         return [];
     }
