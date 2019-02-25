@@ -75,6 +75,35 @@ describe('dual axes label format', () => {
             value = formatValueInShallowRange(11.7, min , max);
             expect(value).toEqual(11.7);
         });
+
+        it('should format number lower than 1 in exponential notation', () => {
+            const min = 0;
+            const max = 1;
+
+            let value = formatValueInShallowRange(1.3877787807814457e-16, min, max);
+            expect(value).toEqual(0);
+
+            value = formatValueInShallowRange(1.3877787807814457E-16, min, max);
+            expect(value).toEqual(0);
+        });
+
+        it('should format number greater than 1 in exponential notation', () => {
+            const exponentialNumber = 1.3877787807814457e+16;
+            const min = exponentialNumber - 1;
+            const max = exponentialNumber + 1;
+
+            let value = formatValueInShallowRange(exponentialNumber, min, max);
+            expect(value).toEqual(13877787807814456);
+
+            value = formatValueInShallowRange(exponentialNumber, min, max);
+            expect(value).toEqual(13877787807814456);
+
+            value = formatValueInShallowRange(exponentialNumber + 0.001, min, max);
+            expect(value).toEqual(13877787807814456);
+
+            value = formatValueInShallowRange(1.3877787807814457e+10 + 0.001, min, max);
+            expect(value).toEqual(13877787807.815456);
+        });
     });
 
     describe('test round number', () => {
