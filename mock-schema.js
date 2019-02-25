@@ -1977,6 +1977,30 @@ const getBaseProjectSchema = (title, identifier) => {
                 }],
                 properties: "{\"controls\":{\"grid\":{\"enabled\":false}}}"
             },
+            {
+                identifier: '1010',
+                title: 'Table',
+                type: 'local:table',
+                buckets: [{
+                    localIdentifier: 'measures',
+                    items: [{
+                        localIdentifier: '1',
+                        identifier: '1'
+                    }, {
+                        localIdentifier: '2',
+                        identifier: '2'
+                    }]
+                }, {
+                    localIdentifier: 'attribute',
+                    items: [{
+                        localIdentifier: 'a1',
+                        displayForm: '4.df'
+                    }, {
+                        localIdentifier: 'a2',
+                        displayForm: '5.df'
+                    }]
+                }]
+            },
         ]
     }
 };
@@ -2010,5 +2034,12 @@ module.exports = [
                 }
             ]
         },
-    }
+    },
+    {
+        ...getBaseProjectSchema('Storybook project pivot table grouping', 'pivot_grouping_storybook'),
+        featureFlags: {
+            enablePivot: true,
+            enablePivotGrouping: true
+        }
+    },
 ];
