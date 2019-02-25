@@ -22,6 +22,7 @@ import isEqual = require('lodash/isEqual');
 import noop = require('lodash/noop');
 import cloneDeep = require('lodash/cloneDeep');
 import sortBy = require('lodash/sortBy');
+import sumBy = require('lodash/sumBy');
 
 import InjectedIntl = ReactIntl.InjectedIntl;
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -544,9 +545,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     execution
                 });
             }
-            const aggregationCount = execution.executionResult.totals
-                ? execution.executionResult.totals.filter(total => total.length > 0).length
-                : 0;
+            const aggregationCount = sumBy(execution.executionResult.totals, total => total.length);
             this.updateDesiredHeight(rowData.length, aggregationCount);
         };
         this.agGridDataSource = getAGGridDataSource(
