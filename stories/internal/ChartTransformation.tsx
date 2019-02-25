@@ -1111,4 +1111,47 @@ storiesOf('Internal/HighCharts/ChartTransformation', module)
                 })
             )}
         </div>
-    ));
+    ))
+    .add('Optional stacking chart', () => {
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'column'
+                    }}
+                    {...fixtures.barChartWith4MetricsAndViewBy2Attribute}
+                />
+            )
+        );
+    })
+    .add('Optional stacking and dual axis chart', () => {
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'column',
+                        secondary_yaxis: {
+                            measures: ['3b4fc6113ff9452da677ef7842e2302c', '26843260d95c4c9fa0aecc996ffd7829']
+                        }
+                    }}
+                    {...fixtures.barChartWith4MetricsAndViewBy2Attribute}
+                />
+            )
+        );
+    })
+    .add('Optional stacking and dual axis chart with stack config', () => {
+        return screenshotWrap(
+            wrap(
+                <ChartTransformation
+                    config={{
+                        type: 'column',
+                        stackMeasuresToPercent: true,
+                        secondary_yaxis: {
+                            measures: ['3b4fc6113ff9452da677ef7842e2302c', '26843260d95c4c9fa0aecc996ffd7829']
+                        }
+                    }}
+                    {...fixtures.barChartWith4MetricsAndViewBy2Attribute}
+                />
+            )
+        );
+    });

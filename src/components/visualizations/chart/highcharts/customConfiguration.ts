@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as cx from 'classnames';
 import noop = require('lodash/noop');
+import isString = require('lodash/isString');
 import set = require('lodash/set');
 import get = require('lodash/get');
 import merge = require('lodash/merge');
@@ -43,6 +44,8 @@ import {
     shouldYAxisStartOnTickOnBubbleScatter
 } from '../highcharts/helpers';
 
+import getOptionalStackingConfiguration from './getOptionalStackingConfiguration';
+
 const {
     stripColors,
     numberFormat
@@ -62,8 +65,8 @@ const TOOLTIP_VERTICAL_OFFSET = 14;
 
 const escapeAngleBrackets = (str: any) => str && str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-function getTitleConfiguration(chartOptions: any) {
-    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+function getTitleConfiguration(chartOptions: IChartOptions) {
+    const { yAxes = [], xAxes = [] } = chartOptions;
     const yAxis = yAxes.map((axis: IAxis) => (axis ? {
         title: {
             text: escapeAngleBrackets(get(axis, 'label', ''))
@@ -82,8 +85,8 @@ function getTitleConfiguration(chartOptions: any) {
     };
 }
 
-export function formatAsPercent() {
-    const val = parseFloat((this.value * 100).toPrecision(14));
+export function formatAsPercent(unit: number = 100) {
+    const val = parseFloat((this.value * unit).toPrecision(14));
     return `${val}%`;
 }
 
@@ -91,7 +94,25 @@ export function isInPercent(format: string = '') {
     return format.includes('%');
 }
 
-function formatOverlapping() {
+export function formatOverlappingForParentAttribute(category: any) {
+    // category is passed from 'grouped-categories' which is npm highcharts plug-in
+    if (!category) {
+        return formatOverlapping.call(this);
+    }
+
+    const chartHeight = get(this, 'axis.chart.chartHeight', 1);
+    const categoriesCount = get(this, 'axis.categoriesTree', []).length;
+    const width = Math.floor(chartHeight / categoriesCount);
+    const pixelOffset = 40; // parent attribute should have more space than its children
+
+    const finalWidth = Math.max(0, width - pixelOffset);
+
+    return (
+        `<div style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">${this.value}</div>`
+    );
+}
+
+export function formatOverlapping() {
     const chartHeight = get(this, 'chart.chartHeight', 1);
     const categoriesCount = get(this, 'axis.categories', []).length;
     const width = Math.floor(chartHeight / categoriesCount);
@@ -105,18 +126,18 @@ function formatOverlapping() {
     );
 }
 
-function hideOverlappedLabels(chartOptions: any) {
+function hideOverlappedLabels(chartOptions: IChartOptions) {
     const rotation = Number(get(chartOptions, 'xAxisProps.rotation', '0'));
 
     // Set only for bar chart and labels are rotated by 90
     if (isBarChart(chartOptions.type) && isRotationInRange(rotation, 75, 105)) {
-        const { xAxes = [] }: { xAxes: IAxis[]} = chartOptions;
+        const { xAxes = [], isViewByTwoAttributes } = chartOptions;
 
         return {
-            xAxis: xAxes.map(axis => (axis) ? {
+            xAxis: xAxes.map((axis: any) => (axis) ? {
                 labels: {
                     useHTML: true,
-                    formatter: formatOverlapping
+                    formatter: isViewByTwoAttributes ? formatOverlappingForParentAttribute : formatOverlapping
                 }
             } : {})
         };
@@ -125,16 +146,16 @@ function hideOverlappedLabels(chartOptions: any) {
     return {};
 }
 
-function getShowInPercentConfiguration(chartOptions: any) {
-    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+function getShowInPercentConfiguration(chartOptions: IChartOptions) {
+    const { yAxes = [], xAxes = [] } = chartOptions;
 
-    const xAxis = xAxes.map(axis => (axis && isInPercent(axis.format) ? {
+    const xAxis = xAxes.map((axis: any) => (axis && isInPercent(axis.format) ? {
         labels: {
             formatter: formatAsPercent
         }
     } : {}));
 
-    const yAxis = yAxes.map(axis => (axis && isInPercent(axis.format) ? {
+    const yAxis = yAxes.map((axis: any) => (axis && isInPercent(axis.format) ? {
         labels: {
             formatter: formatAsPercent
         }
@@ -339,6 +360,21 @@ function labelFormatter(config?: IChartConfig) {
     return formatLabel(this.y, get(this, 'point.format'), config);
 }
 
+export function percentageDataLabelFormatter(config?: IChartConfig) {
+    // suppose that chart has one Y axis by default
+    const isSingleAxis = get(this, 'series.chart.yAxis.length', 1) === 1;
+    const isPrimaryAxis = !get(this, 'series.yAxis.opposite', false);
+
+    // only format data labels to percentage for
+    //  * left or right axis on single axis chart, or
+    //  * primary axis on dual axis chart
+    if (isSingleAxis || isPrimaryAxis) {
+        const val = parseFloat((this.percentage).toFixed(2));
+        return `${val}%`;
+    }
+    return labelFormatter.call(this, config);
+}
+
 function labelFormatterHeatmap(options: any) {
     return formatLabel(this.point.value, options.formatGD, options.config);
 }
@@ -502,15 +538,8 @@ const whiteDataLabelTypes = [
     VisualizationTypes.BUBBLE
 ];
 
-function getLabelStyle(chartOptions: any) {
-    const {
-        stacking,
-        type
-    }: {
-        stacking: boolean;
-        type: string;
-    } = chartOptions;
-
+function getLabelStyle(chartOptions: IChartOptions) {
+    const { stacking, type } = chartOptions;
     const WHITE_LABEL = {
         color: '#ffffff',
         textShadow: '0 0 1px #000000'
@@ -527,16 +556,8 @@ function getLabelStyle(chartOptions: any) {
     return (stacking || isOneOfTypes(type, whiteDataLabelTypes)) ? WHITE_LABEL : BLACK_LABEL;
 }
 
-function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
-    const {
-        stacking,
-        yAxes = [],
-        type
-    }: {
-        stacking: boolean;
-        yAxes: IAxis[];
-        type: string;
-    } = chartOptions;
+function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+    const { stacking, yAxes = [], type } = chartOptions;
 
     const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, 'dataLabels.visible');
 
@@ -554,6 +575,10 @@ function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: I
         defaultFormat: get(axis, 'format')
     }));
 
+    const { stackMeasuresToPercent = false } = chartConfig || {};
+    // only applied to bar, column and dual axis chart
+    const dataLabelFormatter = stackMeasuresToPercent ? percentageDataLabelFormatter : labelFormatter;
+
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),
         style,
@@ -570,14 +595,15 @@ function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: I
                 }
             },
             bar: {
-                dataLabels: DEFAULT_LABELS_CONFIG
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(dataLabelFormatter, chartConfig)
+                }
             },
             column: {
                 dataLabels: {
-                    formatter: partial(labelFormatter, chartConfig),
-                    style,
-                    allowOverlap: false,
-                    ...labelsConfig
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(dataLabelFormatter, chartConfig)
                 }
             },
             heatmap: {
@@ -619,8 +645,8 @@ function getLabelsConfiguration(chartOptions: any, _config: any, chartConfig?: I
     };
 }
 
-function getStackingConfiguration(chartOptions: any, _config: any, chartConfig?: IChartConfig) {
-    const { stacking, yAxes = [], type }: { stacking: boolean, yAxes: IAxis[], type: any } = chartOptions;
+function getStackingConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+    const { stacking, yAxes = [], type } = chartOptions;
     let labelsConfig = {};
 
     if (isColumnChart(type)) {
@@ -679,7 +705,7 @@ function getSeries(series: any) {
     });
 }
 
-function getHeatmapDataConfiguration(chartOptions: any) {
+function getHeatmapDataConfiguration(chartOptions: IChartOptions) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = data.series;
     const categories = data.categories;
@@ -698,7 +724,16 @@ function getHeatmapDataConfiguration(chartOptions: any) {
     };
 }
 
-function getDataConfiguration(chartOptions: any) {
+export function escapeCategories(dataCategories: any) {
+    return map(dataCategories, (category: any) => {
+        return isString(category) ? escapeAngleBrackets(category) : {
+            ...category,
+            categories: map(category.categories, escapeAngleBrackets)
+        };
+    });
+}
+
+function getDataConfiguration(chartOptions: IChartOptions) {
     const data = chartOptions.data || EMPTY_DATA;
     const series = getSeries(data.series);
     const { type } = chartOptions;
@@ -713,7 +748,7 @@ function getDataConfiguration(chartOptions: any) {
             return getHeatmapDataConfiguration(chartOptions);
     }
 
-    const categories = map(data.categories, escapeAngleBrackets);
+    const categories = escapeCategories(data.categories);
 
     return {
         series,
@@ -853,9 +888,9 @@ function getHoverStyles({ type }: any, config: any) {
     };
 }
 
-function getGridConfiguration(chartOptions: any) {
+function getGridConfiguration(chartOptions: IChartOptions) {
     const gridEnabled = get(chartOptions, 'grid.enabled', true);
-    const { yAxes = [], xAxes = [] }: { yAxes: IAxis[], xAxes: IAxis[] } = chartOptions;
+    const { yAxes = [], xAxes = [] } = chartOptions;
 
     const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: '#ebebeb' } : { gridLineWidth: 0 };
 
@@ -873,12 +908,18 @@ function getGridConfiguration(chartOptions: any) {
     };
 }
 
-export function areAxisLabelsEnabled(chartOptions: any, axisPropsName: string, shouldCheckForEmptyCategories: boolean) {
+export function areAxisLabelsEnabled(
+    chartOptions: IChartOptions,
+    axisPropsName: string,
+    shouldCheckForEmptyCategories: boolean
+) {
     const data = chartOptions.data || EMPTY_DATA;
+
     const { type } = chartOptions;
-    const categories = isHeatmap(type) ? data.categories : map(data.categories, escapeAngleBrackets);
+    const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
 
     const visible = get(chartOptions, `${axisPropsName}.visible`, true);
+
     const labelsEnabled = get(chartOptions, `${axisPropsName}.labelsEnabled`, true);
 
     const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
@@ -888,7 +929,7 @@ export function areAxisLabelsEnabled(chartOptions: any, axisPropsName: string, s
     };
 }
 
-function shouldExpandYAxis(chartOptions: any) {
+function shouldExpandYAxis(chartOptions: IChartOptions) {
     const min = get(chartOptions, 'xAxisProps.min', '');
     const max = get(chartOptions, 'xAxisProps.max', '');
     return min === '' && max === '' ? {} : { getExtremesFromAll: true };
@@ -907,7 +948,7 @@ function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) 
     return pickBy({ AXIS_LINE_COLOR, lineWidth }, (item: any) => item !== undefined);
 }
 
-function getXAxisTickConfiguration(chartOptions: any) {
+function getXAxisTickConfiguration(chartOptions: IChartOptions) {
     const { type } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
@@ -919,7 +960,7 @@ function getXAxisTickConfiguration(chartOptions: any) {
     return {};
 }
 
-function getYAxisTickConfiguration(chartOptions: any, axisPropsKey: string) {
+function getYAxisTickConfiguration(chartOptions: IChartOptions, axisPropsKey: string) {
     const { type, yAxes } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
@@ -938,8 +979,8 @@ function getYAxisTickConfiguration(chartOptions: any, axisPropsKey: string) {
     };
 }
 
-function getAxesConfiguration(chartOptions: any) {
-    const { type } = chartOptions;
+function getAxesConfiguration(chartOptions: IChartOptions) {
+    const type = chartOptions.type as ChartType;
 
     return {
         plotOptions: {
@@ -1014,6 +1055,7 @@ function getAxesConfiguration(chartOptions: any) {
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
 
+            const isViewByTwoAttributes = get(chartOptions, 'isViewByTwoAttributes', false);
             const visible = get(chartOptions, axisPropsKey.concat('.visible'), true);
             const rotation = get(chartOptions, axisPropsKey.concat('.rotation'), 'auto');
             const rotationProp = rotation !== 'auto' ? { rotation: -Number(rotation) } : {};
@@ -1044,7 +1086,8 @@ function getAxesConfiguration(chartOptions: any) {
                     ...rotationProp
                 },
                 title: {
-                    enabled: visible,
+                    // should disable X axis title when 'View By 2 attributes'
+                    enabled: visible && !isViewByTwoAttributes,
                     margin: 10,
                     style: {
                         color: styleVariables.gdColorLink,
@@ -1070,7 +1113,10 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
         getTooltipConfiguration,
         getHoverStyles,
         getGridConfiguration,
-        getLabelsConfiguration
+        getLabelsConfiguration,
+        // should be after 'getDataConfiguration' to modify 'series'
+        // and should be after 'getStackingConfiguration' to get stackLabels config
+        getOptionalStackingConfiguration
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

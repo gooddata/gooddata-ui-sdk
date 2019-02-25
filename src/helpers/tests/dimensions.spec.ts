@@ -689,6 +689,101 @@ describe('generateStackedDimensions', () => {
         expect(generateStackedDimensions(buckets))
             .toEqual(expectedDimensions);
     });
+
+    it('should return 2 attributes along with measureGroup', () => {
+        const buckets = [{
+            localIdentifier: 'measures',
+            items: [{
+                measure: {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                uri: '/gdc/md/storybook/obj/1'
+                            }
+                        }
+                    }
+                }
+            }]
+        }, {
+            localIdentifier: 'attribute',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/1.df'
+                    },
+                    localIdentifier: 'a1'
+                }
+            }, {
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/2.df'
+                    },
+                    localIdentifier: 'a2'
+                }
+            }]
+        }, {
+            localIdentifier: 'stack',
+            items: []
+        }];
+        const expectedDimensions: AFM.IDimension[] = [{
+            itemIdentifiers: []
+        }, {
+            itemIdentifiers: ['a1', 'a2', 'measureGroup']
+        }];
+        expect(generateStackedDimensions(buckets)).toEqual(expectedDimensions);
+    });
+
+    it('should return 2 attributes along with measureGroup and return 1 stack attribute', () => {
+        const buckets = [{
+            localIdentifier: 'measures',
+            items: [{
+                measure: {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                uri: '/gdc/md/storybook/obj/1'
+                            }
+                        }
+                    }
+                }
+            }]
+        }, {
+            localIdentifier: 'attribute',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/1.df'
+                    },
+                    localIdentifier: 'a1'
+                }
+            }, {
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/3.df'
+                    },
+                    localIdentifier: 'a3'
+                }
+            }]
+        }, {
+            localIdentifier: 'stack',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/2.df'
+                    },
+                    localIdentifier: 'a2'
+                }
+            }]
+        }];
+        const expectedDimensions: AFM.IDimension[] = [{
+            itemIdentifiers: ['a2']
+        }, {
+            itemIdentifiers: ['a1', 'a3', 'measureGroup']
+        }];
+        expect(generateStackedDimensions(buckets)).toEqual(expectedDimensions);
+    });
 });
 
 describe('getGeneralDimensionsFromAFM', () => {

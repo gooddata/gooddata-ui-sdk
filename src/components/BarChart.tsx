@@ -9,10 +9,11 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { getViewByTwoAttributes } from '../helpers/optionalStacking';
 
 export interface IBarChartBucketProps {
     measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
+    viewBy?: VisualizationObject.IVisualizationAttribute | VisualizationObject.IVisualizationAttribute[];
     stackBy?: VisualizationObject.IVisualizationAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
@@ -36,7 +37,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.viewBy ? [props.viewBy] : []
+            items: getViewByTwoAttributes(props.viewBy) // could be one or two attributes
         },
         {
             localIdentifier: STACK,

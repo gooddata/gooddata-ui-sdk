@@ -37,6 +37,15 @@ export const barChartWith2MetricsAndViewByAttribute: any = {
     executionResult: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult
 };
 
+export const barChartWith4MetricsAndViewBy2Attribute: any = {
+    executionRequest:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_response.json').executionResponse,
+    executionResult:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_result.json').executionResult
+};
+
 export const scatterPlotWith2MetricsAndAttribute: any = {
     executionRequest: require('../test_data/scatter_plot_with_2_metrics_and_attribute_request.json').execution,
     executionResponse:

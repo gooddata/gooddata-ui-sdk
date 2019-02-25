@@ -351,23 +351,21 @@ export function generateStackedDimensions(buckets: VisualizationObject.IBucket[]
     const viewBucket = buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE);
     const stackBucket = buckets.find(bucket => bucket.localIdentifier === STACK);
 
-    const viewByAttribute = viewBucket && viewBucket.items[0] as
-    VisualizationObject.IVisualizationAttribute;
-    const stackByAttribute = stackBucket && stackBucket.items[0] as
-        VisualizationObject.IVisualizationAttribute;
+    const viewByAttributes = viewBucket && viewBucket.items as VisualizationObject.IVisualizationAttribute[];
+    const stackByAttribute = stackBucket && stackBucket.items[0] as VisualizationObject.IVisualizationAttribute;
 
     const stackByAttributeLocalIdentifier = stackByAttribute ?
         stackByAttribute.visualizationAttribute.localIdentifier : undefined;
-    const viewByAttributeLocalIdentifier = viewByAttribute ?
-        viewByAttribute.visualizationAttribute.localIdentifier : undefined;
+
+    const viewByAttributeLocalIdentifiers = viewByAttributes && viewByAttributes.map(getLocalIdentifierFromAttribute);
 
     return [
         {
             itemIdentifiers: stackByAttributeLocalIdentifier ? [stackByAttributeLocalIdentifier] : []
         },
         {
-            itemIdentifiers: viewByAttributeLocalIdentifier ?
-                [viewByAttributeLocalIdentifier, MEASUREGROUP] : [MEASUREGROUP]
+            itemIdentifiers: viewByAttributeLocalIdentifiers ?
+                [...viewByAttributeLocalIdentifiers, MEASUREGROUP] : [MEASUREGROUP]
         }
     ];
 }

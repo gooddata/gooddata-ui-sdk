@@ -64,11 +64,11 @@ describe('handleChartLoad()', () => {
         const { axisGroupAddClass, labelGroupAddClass } = executeTest(true);
 
         expect(axisGroupAddClass).toHaveBeenCalledTimes(2);
-        expect(axisGroupAddClass).toHaveBeenCalledWith('s-highcharts-primary-yaxis'); // assume 1st time
-        expect(axisGroupAddClass).toHaveBeenLastCalledWith('s-highcharts-secondary-yaxis');
+        expect(axisGroupAddClass).toHaveBeenNthCalledWith(1, 's-highcharts-primary-yaxis'); // assume 1st time
+        expect(axisGroupAddClass).toHaveBeenNthCalledWith(2, 's-highcharts-secondary-yaxis');
 
         expect(labelGroupAddClass).toHaveBeenCalledTimes(2);
-        expect(labelGroupAddClass).toHaveBeenCalledWith('s-highcharts-primary-yaxis-labels'); // assume 1st time
-        expect(labelGroupAddClass).toHaveBeenLastCalledWith('s-highcharts-secondary-yaxis-labels');
+        expect(labelGroupAddClass).toHaveBeenNthCalledWith(1, 's-highcharts-primary-yaxis-labels'); // assume 1st time
+        expect(labelGroupAddClass).toHaveBeenNthCalledWith(2, 's-highcharts-secondary-yaxis-labels');
     });
 });
