@@ -27,7 +27,7 @@ export interface IFluidLayoutRow {
  }
 
 export interface IFluidLayoutColumn {
-    content: LayoutContent;
+    content?: LayoutContent;
     size: IFluidLayoutColSize;
     style?: string;
  }
