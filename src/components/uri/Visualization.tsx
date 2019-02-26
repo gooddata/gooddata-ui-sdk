@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { SDK, factory as createSdk, DataLayer, ApiResponse, IPropertiesControls } from '@gooddata/gooddata-js';
+import {
+    SDK,
+    factory as createSdk,
+    DataLayer,
+    ApiResponse,
+    IPropertiesControls,
+    IFeatureFlags
+} from '@gooddata/gooddata-js';
 import get = require('lodash/get');
 import noop = require('lodash/noop');
 import isEqual = require('lodash/isEqual');
@@ -30,6 +37,7 @@ import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorH
 import { isTreemap } from '../visualizations/utils/common';
 import { getColorMappingPredicate, getColorPaletteFromColors } from '../visualizations/utils/color';
 import { getCachedOrLoad } from '../../helpers/sdkCache';
+import { getFeatureFlags } from '../../helpers/featureFlags';
 export { Requireable };
 
 const {
@@ -77,6 +85,7 @@ export interface IVisualizationProps extends IEvents {
     uriResolver?: (sdk: SDK, projectId: string, uri?: string, identifier?: string) => Promise<string>;
     fetchVisObject?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
     fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
+    getFeatureFlags?: (sdk: SDK, projectId: string) => Promise<IFeatureFlags>;
     BaseChartComponent?: any;
     TableComponent?: any;
     PivotTableComponent?: any;
@@ -95,11 +104,13 @@ export interface IVisualizationState {
     mdObject?: VisualizationObject.IVisualizationObject;
     colorPalette: IColorPaletteItem[];
     colorPaletteEnabled: boolean;
+    featureFlags: IFeatureFlags;
 }
 
 export interface IVisualizationExecInfo {
     dataSource: IDataSource;
     resultSpec: AFM.IResultSpec;
+    featureFlags: IFeatureFlags;
     type: VisType;
     totals: VisualizationObject.IVisualizationTotal[];
     mdObject: VisualizationObject.IVisualizationObject;
@@ -145,6 +156,7 @@ export class VisualizationWrapped
         uriResolver,
         fetchVisObject,
         fetchVisualizationClass,
+        getFeatureFlags,
         BaseChartComponent: BaseChart,
         TableComponent: SortableTable,
         PivotTableComponent: PivotTable,
@@ -179,7 +191,8 @@ export class VisualizationWrapped
             error: null,
             mdObject: null,
             colorPalette: null,
-            colorPaletteEnabled: false
+            colorPaletteEnabled: false,
+            featureFlags: {}
         };
 
         this.sdk = props.sdk ? props.sdk.clone() : createSdk();
@@ -191,14 +204,15 @@ export class VisualizationWrapped
         this.errorMap = generateErrorMap(props.intl);
 
         this.subject = createSubject<IVisualizationExecInfo>(
-            ({ type, resultSpec, dataSource, totals, mdObject }) => {
+            ({ type, resultSpec, dataSource, totals, mdObject, featureFlags }) => {
                 this.dataSource = dataSource;
                 this.setStateWithCheck({
                     type,
                     resultSpec,
                     isLoading: false,
                     totals,
-                    mdObject
+                    mdObject,
+                    featureFlags
                 });
             }, (error) => {
                 const runtimeError = convertErrors(error);
@@ -216,10 +230,12 @@ export class VisualizationWrapped
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
         this.visualizationUri = uri;
 
-        this.prepareDataSources(
-            projectId,
-            identifier,
-            filters
+        this.subject.next(
+            this.prepareDataSources(
+                projectId,
+                identifier,
+                filters
+            )
         );
 
         this.getColorPalette();
@@ -255,10 +271,13 @@ export class VisualizationWrapped
             if (hasInvalidResolvedUri) {
                 this.visualizationUri = nextProps.uri;
             }
-            this.prepareDataSources(
-                nextProps.projectId,
-                nextProps.identifier,
-                nextProps.filters
+
+            this.subject.next(
+                this.prepareDataSources(
+                    nextProps.projectId,
+                    nextProps.identifier,
+                    nextProps.filters
+                )
             );
         }
     }
@@ -283,7 +302,7 @@ export class VisualizationWrapped
             ErrorComponent,
             onExportReady
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
+        const { resultSpec, type, totals, error, isLoading, mdObject, featureFlags } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
         const properties: IPropertiesControls | undefined = mdObjectContent
             && mdObjectContent.properties
@@ -347,6 +366,10 @@ export class VisualizationWrapped
             onExportReady
         };
 
+        const {
+            enablePivotGrouping
+        } = featureFlags;
+
         switch (type) {
             case VisualizationTypes.TABLE:
                 return (
@@ -360,6 +383,7 @@ export class VisualizationWrapped
                     <PivotTableComponent
                         {...commonProps}
                         totals={totals}
+                        groupRows={enablePivotGrouping}
                     />
                 );
             case VisualizationTypes.HEADLINE:
@@ -379,65 +403,65 @@ export class VisualizationWrapped
         }
     }
 
-    private prepareDataSources(
+    private async prepareDataSources(
         projectId: string,
         identifier: string,
         filters: AFM.FilterItem[] = []
-    ) {
-        const promise = this.props.uriResolver(this.sdk, projectId, this.visualizationUri, identifier)
-            .then((visualizationUri: string) => {
-                // Cache uri for next execution
-                return this.visualizationUri = visualizationUri;
-            })
-            .then((visualizationUri: string) => {
-                return this.props.fetchVisObject(this.sdk, visualizationUri);
-            })
-            .then((mdObject: VisualizationObject.IVisualizationObject) => {
-                const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
-                const sdk = this.sdk;
+    ): Promise<IVisualizationExecInfo> {
+        const {
+            uriResolver,
+            fetchVisObject,
+            fetchVisualizationClass,
+            locale,
+            getFeatureFlags
+        } = this.props;
 
-                this.exportTitle = get(mdObject, 'meta.title', '');
+        const visualizationUri = await uriResolver(this.sdk, projectId, this.visualizationUri, identifier);
+        this.visualizationUri = visualizationUri;
 
-                return this.props.fetchVisualizationClass(
-                    this.sdk, visualizationClassUri
-                ).then(async (visualizationClass) => {
-                    const processedVisualizationObject = fillMissingTitles(mdObject.content, this.props.locale);
-                    const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
+        const mdObject = await fetchVisObject(this.sdk, visualizationUri);
 
-                    const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
+        const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
 
-                    const dateFilter = getDateFilter(filters);
-                    const attributeFilters = getAttributeFilters(filters);
-                    const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
+        this.exportTitle = get(mdObject, 'meta.title', '');
 
-                    const visualizationType: VisType =
-                        await getVisualizationTypeFromVisualizationClass(visualizationClass, sdk, projectId);
-                    // keep resultSpec creation in sync with AD
-                    const resultSpecWithDimensions = {
-                        ...resultSpec,
-                        dimensions: generateDimensions(mdObject.content, visualizationType)
-                    };
-                    const treemapDefaultSorting = isTreemap(visualizationType) ? {
-                        sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions)
-                    } : {};
-                    const resultSpecWithDimensionsAndSorting = {
-                        ...resultSpecWithDimensions,
-                        ...treemapDefaultSorting
-                    };
+        const visualizationClass = await fetchVisualizationClass(this.sdk, visualizationClassUri);
+        const processedVisualizationObject = fillMissingTitles(mdObject.content, locale);
+        const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
-                    return this.adapter.createDataSource(afmWithFilters)
-                        .then((dataSource: IDataSource) => {
-                            return {
-                                type: visualizationType,
-                                dataSource,
-                                resultSpec: resultSpecWithDimensionsAndSorting,
-                                totals: mdObjectTotals,
-                                mdObject
-                            };
-                        });
-                });
-            });
-        this.subject.next(promise);
+        const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
+
+        const dateFilter = getDateFilter(filters);
+        const attributeFilters = getAttributeFilters(filters);
+        const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
+
+        const featureFlags = await getFeatureFlags(this.sdk, projectId);
+
+        const visualizationType: VisType =
+            await getVisualizationTypeFromVisualizationClass(visualizationClass, featureFlags);
+        // keep resultSpec creation in sync with AD
+        const resultSpecWithDimensions = {
+            ...resultSpec,
+            dimensions: generateDimensions(mdObject.content, visualizationType)
+        };
+        const treemapDefaultSorting = isTreemap(visualizationType) ? {
+            sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions)
+        } : {};
+        const resultSpecWithDimensionsAndSorting = {
+            ...resultSpecWithDimensions,
+            ...treemapDefaultSorting
+        };
+
+        const dataSource = await this.adapter.createDataSource(afmWithFilters);
+
+        return {
+            type: visualizationType,
+            dataSource,
+            resultSpec: resultSpecWithDimensionsAndSorting,
+            totals: mdObjectTotals,
+            mdObject,
+            featureFlags
+        };
     }
 
     private hasExternalColorPalette() {
