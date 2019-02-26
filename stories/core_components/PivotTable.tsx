@@ -308,7 +308,7 @@ storiesOf('Core components/PivotTable', module)
             </div>
         )
     ))
-    .add('Data grouping - Group rows in attribute columns', () => (
+    .add('data grouping - group rows in attribute columns', () => (
         screenshotWrap(
             <div style={wrapperStyle} className="s-table">
                 <PivotTable
@@ -319,6 +319,33 @@ storiesOf('Core components/PivotTable', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     groupRows={true}
+                />
+            </div>
+        )
+    ))
+    .add('data grouping - do not group rows in attribute columns when not sorted by first attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1, ATTRIBUTE_COUNTRY, ATTRIBUTE_2]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    groupRows={true}
+                    sortBy={[{
+                        measureSortItem: {
+                            direction: 'desc',
+                            locators: [
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: 'm1'
+                                    }
+                                }
+                            ]
+                        }
+                    }]}
                 />
             </div>
         )

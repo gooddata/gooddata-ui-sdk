@@ -86,6 +86,7 @@ export interface IPivotTableProps extends ICommonChartProps, IDataSourceProvider
     pageSize?: number;
     config?: IPivotTableConfig;
     groupRows?: boolean;
+    onDataSourceUpdateSuccess?: () => void;
 }
 
 export interface IPivotTableState {
@@ -96,6 +97,7 @@ export interface IPivotTableState {
     columnTotals: AFM.ITotalItem[];
     agGridRerenderNumber: number;
     desiredHeight: number | undefined;
+    sortedByFirstAttribute: boolean;
 }
 
 export interface ICustomGridOptions extends GridOptions {
@@ -266,10 +268,11 @@ export const getAGGridDataSource = (
     intl: InjectedIntl,
     columnDefOptions: IColumnDefOptions = {},
     columnTotals: AFM.ITotalItem[],
-    groupingProvider: IGroupingProvider
+    getGroupingProvider: () => IGroupingProvider
 ): IDatasource => ({
     getRows: ({ startRow, endRow, successCallback, sortModel }: IGetRowsParams) => {
         const execution = getExecution();
+        const groupingProvider = getGroupingProvider();
 
         let resultSpecUpdated: AFM.IResultSpec = resultSpec;
         // If execution is null, this means this is a fresh dataSource and we should ignore current sortModel
@@ -403,12 +406,18 @@ export type IPivotTableInnerProps = IPivotTableProps &
     IDataSourceProviderInjectedProps &
     InjectedIntlProps;
 
+interface ISortedByColumnIndexes {
+    attributes: number[];
+    all: number[];
+}
+
 export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
     public static defaultProps: Partial<IPivotTableInnerProps> = {
         ...commonDefaultProps,
         // This prop is optional if you handle nativeTotals through pushData like in appComponents PluggablePivotTable
         updateTotals: noop,
         onDataTooLarge: noop,
+        onDataSourceUpdateSuccess: noop,
         pageSize: 100,
         config: {},
         groupRows: false
@@ -429,16 +438,28 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             execution: null,
             columnTotals: cloneDeep(this.getColumnTotalsFromResultSpec(this.props.resultSpec)),
             agGridRerenderNumber: 1,
-            desiredHeight: props.config.maxHeight
+            desiredHeight: props.config.maxHeight,
+
+            sortedByFirstAttribute: true
         };
 
         this.agGridDataSource = null;
         this.gridApi = null;
-        this.groupingProvider = GroupingProviderFactory.createProvider(props.groupRows);
+
+        this.setGroupingProvider(props.groupRows);
     }
 
     public componentWillMount() {
         this.createAGGridDataSource();
+    }
+
+    public componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
+        if (
+            this.props.groupRows !== nextProps.groupRows ||
+            this.state.sortedByFirstAttribute !== nextState.sortedByFirstAttribute
+        ) {
+            this.setGroupingProvider(nextProps.groupRows && nextState.sortedByFirstAttribute);
+        }
     }
 
     public componentDidUpdate(prevProps: IPivotTableInnerProps, prevState: IPivotTableState) {
@@ -555,8 +576,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             rowData: IGridRow[]
         ) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
+                const sortedByFirstAttribute = this.isSortedByFirstAttibute(columnDefs);
                 this.setState({
-                    columnDefs
+                    columnDefs,
+                    sortedByFirstAttribute
                 });
             }
             if (!isEqual(execution, this.state.execution)) {
@@ -566,7 +589,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             }
             const aggregationCount = sumBy(execution.executionResult.totals, total => total.length);
             this.updateDesiredHeight(rowData.length, aggregationCount);
+            this.props.onDataSourceUpdateSuccess();
         };
+
         this.agGridDataSource = getAGGridDataSource(
             this.props.resultSpec,
             this.props.getPage,
@@ -577,7 +602,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             this.props.intl,
             {},
             this.state.columnTotals,
-            this.groupingProvider
+            () => this.groupingProvider
         );
     }
 
@@ -690,7 +715,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             .filter(col => col.getSort() !== undefined && col.getSort() !== null)
             .map(col => ({ colId: col.getColId(), sort: col.getSort() as AFM.SortDirection }));
 
-        const sortItems = getSortsFromModel(sortModel, this.getExecution());
+        const sortItems = getSortsFromModel(sortModel, execution);
 
         this.props.pushData({
             properties: {
@@ -864,6 +889,32 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 />
             </div>
         );
+    }
+
+    private setGroupingProvider(sortedByFirstAttr: boolean) {
+        this.groupingProvider = GroupingProviderFactory.createProvider(sortedByFirstAttr);
+    }
+
+    private isSortedByFirstAttibute(columnDefs: ColDef[]): boolean {
+        const sortedColumnIndexes: ISortedByColumnIndexes = columnDefs.reduce(
+            (
+                sortStack: ISortedByColumnIndexes,
+                columnDef: ColDef,
+                columnIndex: number
+            ) => {
+                if (columnDef.sort) {
+                    sortStack.all.push(columnIndex);
+                    if (columnDef.type === ROW_ATTRIBUTE_COLUMN) {
+                        sortStack.attributes.push(columnIndex);
+                    }
+                }
+                return sortStack;
+            },
+            { attributes: [], all: [] }
+        );
+
+        return sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1 ||
+            sortedColumnIndexes.all.length === 0;
     }
 
     private setContainerRef = (container: HTMLDivElement): void => { this.containerRef = container; };
