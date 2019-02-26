@@ -3,8 +3,19 @@ import { IMappingHeader } from './MappingHeader';
 import { ColDef, CellEvent } from 'ag-grid';
 
 export interface IGridRow {
-    drillItemMap: {
+    headerItemMap: {
         [key: string]: IMappingHeader;
+    };
+    [key: string]: any;
+}
+
+export interface IGridTotalsRow {
+    type: {
+        [key: string]: boolean;
+    };
+    colSpan: {
+        count: number;
+        headerKey: string;
     };
     [key: string]: any;
 }

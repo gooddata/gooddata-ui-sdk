@@ -9,7 +9,7 @@ import zipObject = require('lodash/zipObject');
 
 import { unwrap } from './utils';
 import { IMappingHeader } from '../interfaces/MappingHeader';
-import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions } from '../interfaces/AGGrid';
+import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions, IGridTotalsRow } from '../interfaces/AGGrid';
 import { ColDef } from 'ag-grid';
 import { getTreeLeaves } from '../components/core/PivotTable';
 import InjectedIntl = ReactIntl.InjectedIntl;
@@ -117,7 +117,7 @@ export const shouldMergeHeaders = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     headerIndex: number,
     headerItemIndex: number
-) => {
+): boolean => {
     for (let ancestorIndex = headerIndex; ancestorIndex >= 0; ancestorIndex--) {
         const currentAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex];
         const nextAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex + 1];
@@ -135,7 +135,7 @@ export const mergeHeaderEndIndex = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     headerIndex: number,
     headerItemStartIndex: number
-) => {
+): number => {
     const header = resultHeaderDimension[headerIndex];
     for (let headerItemIndex = headerItemStartIndex; headerItemIndex < header.length; headerItemIndex++) {
         if (!shouldMergeHeaders(resultHeaderDimension, headerIndex, headerItemIndex)) {
@@ -158,7 +158,7 @@ export const getColumnHeaders = (
     headerValueEnd: number = undefined,
     fieldPrefix = '',
     parentDrillItems: IMappingHeader[] = []
-) => {
+): IGridHeader[] => {
     if (!resultHeaderDimension.length) {
         return [];
     }
@@ -241,9 +241,9 @@ export const getRow = (
     columnFields: string[],
     rowHeaders: IGridHeader[],
     rowHeaderData: Execution.IResultHeaderItem[][]
-) => {
+): IGridRow => {
     const row: IGridRow = {
-        drillItemMap: {}
+        headerItemMap: {}
     };
     cellData.forEach((cell: Execution.DataValue, cellIndex: number) => {
         rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
@@ -254,7 +254,7 @@ export const getRow = (
             // Drilling on row headers supports only attribute headers
             invariant(rowHeaderDrillItem, 'row header is not of type IResultAttributeHeaderItem');
             row[rowHeader.field] = unwrap(rowHeaderDataItem).name;
-            row.drillItemMap[rowHeader.field] = rowHeaderDrillItem;
+            row.headerItemMap[rowHeader.field] = rowHeaderDrillItem;
         });
         const columnKey = columnFields[cellIndex];
         // If columnKey doesn't exists, this is a table with attributes only. Do not assign measure value then.
@@ -270,7 +270,7 @@ export const getRowTotals = (
     columnKeys: string[],
     headers: Execution.IHeader[],
     intl: InjectedIntl
-) => {
+): IGridTotalsRow[] => {
     if (!totals) {
         return null;
     }
@@ -396,12 +396,18 @@ export const getMeasureSortItemFieldAndDirection = (
     return [field, direction];
 };
 
+export interface IAgGridPage {
+    columnDefs: IGridHeader[];
+    rowData: IGridRow[];
+    rowTotals: IGridTotalsRow[];
+}
+
 export const executionToAGGridAdapter = (
     executionResponses: Execution.IExecutionResponses,
     resultSpec: AFM.IResultSpec = {},
     intl: InjectedIntl,
     options: IGridAdapterOptions = {}
-) => {
+): IAgGridPage => {
     const {
         makeRowGroups = false,
         addLoadingRenderer = null,

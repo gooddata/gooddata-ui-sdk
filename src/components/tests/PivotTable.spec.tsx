@@ -38,14 +38,19 @@ describe('PivotTable', () => {
         }
     };
 
-    it('should render with custom SDK', () => {
-        const wrapper = shallow(
+    function renderShallowComponent(customProps = {}) {
+        return shallow(
             <PivotTable
                 projectId="foo"
                 measures={[M1]}
                 sdk={factory({ domain: 'example.com' })}
+                {...customProps}
             />
         );
+    }
+
+    it('should render with custom SDK', () => {
+        const wrapper = renderShallowComponent();
         expect(wrapper).toHaveLength(1);
     });
 
@@ -210,5 +215,19 @@ describe('PivotTable', () => {
         expect(wrapper).toHaveLength(1);
         expect(wrapper.prop('afm')).toEqual(expectedAfm);
         expect(wrapper.prop('resultSpec')).toEqual(expectedResultSpec);
+    });
+
+    describe('groupRows for attribute columns', () => {
+        it.each([
+            ['should', true, true],
+            ['should NOT', undefined, false],
+            ['should NOT', false, false]
+        ])('%s group rows for attribute columns when groupRows is %s', (_should, groupRows, expected) => {
+            const component = renderShallowComponent({
+                groupRows
+            });
+
+            expect(component.prop('groupRows')).toEqual(expected);
+        });
     });
 });

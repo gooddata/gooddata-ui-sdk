@@ -23,19 +23,25 @@ import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_d
 import { LoadingComponent } from '../../simple/LoadingComponent';
 import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
+import { GroupingProviderFactory } from '../pivotTable/GroupingProvider';
 
 const intl = createIntlMock();
 
 describe('PivotTable', () => {
-    it('should render PivotTableInner', () => {
-        const wrapper = mount(
+    function renderComponent(customProps = {}) {
+        return mount(
             <PivotTable
                 dataSource={oneMeasureDataSource}
                 updateTotals={noop as any}
                 getPage={noop as any}
                 intl={intl}
+                {...customProps}
             />
         );
+    }
+
+    it('should render PivotTableInner', () => {
+        const wrapper = renderComponent();
         expect(wrapper.find(PivotTableInner)).toHaveLength(1);
     });
 
@@ -54,6 +60,7 @@ describe('PivotTable', () => {
             });
             const sortModel: any[] = [];
             const getExecution = () => pivotTableWithColumnAndRowAttributes;
+            const groupingProvider = GroupingProviderFactory.createProvider(true);
 
             const gridDataSource = getAGGridDataSource(
                 resultSpec,
@@ -63,7 +70,9 @@ describe('PivotTable', () => {
                 onSuccess,
                 getGridApi,
                 intl,
-                {}
+                {},
+                [],
+                groupingProvider
             );
             await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
@@ -109,7 +118,7 @@ describe('PivotTable', () => {
         );
         it('should return intersection of row attribute and row attribute value for row header cell', async () => {
             const rowColDef = columnDefs[0]; // row header
-            const drillItems = [...rowColDef.drillItems, rowData[0].drillItemMap[rowColDef.field]];
+            const drillItems = [...rowColDef.drillItems, rowData[0].headerItemMap[rowColDef.field]];
             const intersection = getDrillIntersection(drillItems, afm);
             expect(intersection).toEqual([
                 {
@@ -269,6 +278,24 @@ describe('PivotTable', () => {
                 '40000',
                 '53364.1275'
             ]);
+        });
+    });
+
+    describe('groupRows for attribute columns', () => {
+        it.each([
+            ['should', true, true],
+            ['should NOT', undefined, false],
+            ['should NOT', false, false]
+        ])('%s group rows for attribute columns when groupRows is %s', (_should, groupRows, expected) => {
+            const createProviderMock = jest.spyOn(GroupingProviderFactory, 'createProvider');
+
+            renderComponent({
+                groupRows
+            });
+
+            expect(createProviderMock).toBeCalledWith(expected);
+
+            createProviderMock.mockRestore();
         });
     });
 });
