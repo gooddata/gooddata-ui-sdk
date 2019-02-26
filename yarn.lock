@@ -50,13 +50,13 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@59.4.5":
-  version "59.4.5"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-59.4.5.tgz#a012a37b1e5b3d7958a17a7b68ad6b22fb245b7d"
-  integrity sha512-qa9tuWLO4OjC7kxsrVtf901Uv/I/NSTNL8NbKepIMj5bdo9v/UdV5VDgwpG7ZbmokMsLqu67FXG2f+F8AiSiYw==
+"@gooddata/goodstrap@60.0.0":
+  version "60.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.0.0.tgz#13171d3d0fc9bc773a65ee70bb899552ea9e2930"
+  integrity sha512-ED+E0FbHkv1pUy03voEPy4hFgID4gdpBXG0W3JwRBl+qHr8xXdPnPLRnLPat2VHs5eyjHeliK9UxtvfTA3pAqQ==
   dependencies:
     "@gooddata/js-utils" "3.4.0"
-    classnames "2.2.5"
+    classnames "2.2.6"
     custom-event "1.0.1"
     fixed-data-table-2 "0.7.17"
     foundation-sites "5.5.3"
@@ -2807,9 +2807,14 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@2.2.5, classnames@^2.2.4, classnames@^2.2.5:
+classnames@2.2.5, classnames@^2.2.4:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
+classnames@2.2.6, classnames@^2.2.5, classnames@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 clean-css@4.1.x:
   version "4.1.11"

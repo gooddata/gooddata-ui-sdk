@@ -5,8 +5,8 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import Button from '@gooddata/goodstrap/lib/Button/Button';
 
 export interface ITableControlsProps {
-    onMore: (page: number, rows: number) => void;
-    onLess: (rows: number) => void;
+    onMore: () => void;
+    onLess: () => void;
     isMoreButtonDisabled?: boolean;
     isMoreButtonVisible?: boolean;
     isLessButtonVisible?: boolean;

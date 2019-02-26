@@ -356,14 +356,14 @@ export class AttributeDropdownWrapped
                     className="button-secondary button-small cancel-button"
                     onClick={this.onClose}
                     value={cancelText}
-                    text={cancelText}
+                    title={cancelText}
                 />
                 <Button
                     disabled={applyDisabled}
                     className="button-action button-small s-apply"
                     onClick={this.onApply}
                     value={applyText}
-                    text={applyText}
+                    title={applyText}
                 />
             </div>
         );
