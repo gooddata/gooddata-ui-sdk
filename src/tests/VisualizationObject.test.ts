@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { VisualizationObject } from '../VisualizationObject';
 import IMeasure = VisualizationObject.IMeasure;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
@@ -478,6 +478,47 @@ describe('VisualizationObject', () => {
                 }
             };
             const result = VisualizationObject.isAbsoluteDateFilter(filter);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe('isRelativeDateFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isRelativeDateFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isRelativeDateFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when absolute date filter is tested', () => {
+            const filter: VisualizationObjectDateFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/date'
+                    },
+                    from: 'beginning',
+                    to: 'to end'
+                }
+            };
+            const result = VisualizationObject.isRelativeDateFilter(filter);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when relative date filter is tested', () => {
+            const filter: VisualizationObjectDateFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/date'
+                    },
+                    granularity: 'GDC.time.year',
+                    from: -1,
+                    to: -1
+                }
+            };
+            const result = VisualizationObject.isRelativeDateFilter(filter);
             expect(result).toEqual(true);
         });
     });
