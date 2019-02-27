@@ -34,7 +34,7 @@ import {
     assortDimensionHeaders,
     COLUMN_ATTRIBUTE_COLUMN,
     executionToAGGridAdapter,
-    FIELD_SEPARATOR,
+    getRowNodeId,
     getIdsFromUri,
     getParsedFields,
     ID_SEPARATOR,
@@ -80,7 +80,6 @@ import { GroupingProviderFactory, IGroupingProvider } from './pivotTable/Groupin
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
-    totalsEditAllowed?: boolean;
     getPage?: IGetPage;
     cancelPagePromises?: () => void;
     pageSize?: number;
@@ -757,13 +756,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             onGridReady: this.onGridReady,
 
             // this provides persistent row selection (if enabled)
-            getRowNodeId: (item) => {
-                return Object.keys(item.headerItemMap).map((key) => {
-                    const drillItem: IMappingHeader = item.headerItemMap[key];
-                    const ids = getIdsFromUri(getMappingHeaderUri(drillItem));
-                    return `${key}${ID_SEPARATOR}${ids[1]}`;
-                }).join(FIELD_SEPARATOR);
-            },
+            getRowNodeId,
 
             // Column types
             columnTypes: {
