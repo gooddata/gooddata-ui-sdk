@@ -122,10 +122,10 @@ export function isArithmeticMeasure(item: AFM.IMeasure): boolean {
  * @method isAttributeFilter
  * @param {AFM.FilterItem} filter
  * @returns {boolean}
+ * @deprecated use AFM.isAttributeFilter instead
  */
 export function isAttributeFilter(filter: AFM.FilterItem): filter is AFM.AttributeFilterItem {
-    return !!(filter as AFM.IPositiveAttributeFilter).positiveAttributeFilter ||
-        !!(filter as AFM.INegativeAttributeFilter).negativeAttributeFilter;
+    return AFM.isAttributeFilter(filter);
 }
 
 /**
@@ -134,10 +134,10 @@ export function isAttributeFilter(filter: AFM.FilterItem): filter is AFM.Attribu
  * @method isDateFilter
  * @param {AFM.CompatibilityFilter} filter
  * @returns {boolean}
+ * @deprecated use AFM.isDateFilter instead
  */
 export function isDateFilter(filter: AFM.CompatibilityFilter): filter is AFM.DateFilterItem {
-    return !!(filter as AFM.IAbsoluteDateFilter).absoluteDateFilter ||
-        !!(filter as AFM.IRelativeDateFilter).relativeDateFilter;
+    return AFM.isDateFilter(filter);
 }
 
 /**
@@ -151,7 +151,7 @@ export function hasMetricDateFilters(normalizedAfm: INormalizedAFM): boolean {
     return normalizedAfm.measures.some((measure) => {
         if (isSimpleMeasure(measure)) {
             const filters = unwrapSimpleMeasure(measure).filters;
-            return !!(filters && filters.some(isDateFilter));
+            return !!(filters && filters.some(AFM.isDateFilter));
         }
         return false;
     });
@@ -165,7 +165,7 @@ export function hasMetricDateFilters(normalizedAfm: INormalizedAFM): boolean {
  * @returns {AFM.DateFilterItem[]}
  */
 export function getGlobalDateFilters(normalizedAfm: INormalizedAFM): AFM.DateFilterItem[] {
-    return normalizedAfm.filters.filter(isDateFilter);
+    return normalizedAfm.filters.filter(AFM.isDateFilter);
 }
 
 /**
@@ -192,7 +192,7 @@ export function getMeasureDateFilters(normalizedAfm: AFM.IAfm): AFM.DateFilterIt
         if (!measure || !hasFilters(measure)) {
             return [];
         }
-        return (measure.filters || []).filter(isDateFilter);
+        return (measure.filters || []).filter(AFM.isDateFilter);
     });
 }
 
@@ -204,15 +204,7 @@ export function getMeasureDateFilters(normalizedAfm: AFM.IAfm): AFM.DateFilterIt
  * @returns {boolean}
  */
 export function hasGlobalDateFilter(afm: INormalizedAFM): boolean {
-    return afm.filters.some(isDateFilter);
-}
-
-function isDateFilterRelative(filter: AFM.DateFilterItem): filter is AFM.IRelativeDateFilter {
-    return filter && !!(filter as AFM.IRelativeDateFilter).relativeDateFilter;
-}
-
-function isDateFilterAbsolute(filter: AFM.DateFilterItem): filter is AFM.IAbsoluteDateFilter {
-    return filter && !!(filter as AFM.IAbsoluteDateFilter).absoluteDateFilter;
+    return afm.filters.some(AFM.isDateFilter);
 }
 
 /**
@@ -240,10 +232,10 @@ export function getId(obj: AFM.ObjQualifier): string | null {
  * @returns {AFM.ObjQualifier | null }
  */
 export function getDateFilterDateDataSet(filter: AFM.DateFilterItem): AFM.ObjQualifier {
-    if (isDateFilterRelative(filter)) {
+    if (AFM.isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
     }
-    if (isDateFilterAbsolute(filter)) {
+    if (AFM.isAbsoluteDateFilter(filter)) {
         return filter.absoluteDateFilter.dataSet;
     }
     throw new Error('Unsupported type of date filter');
@@ -264,7 +256,7 @@ export function dateFiltersDataSetsMatch(f1: AFM.DateFilterItem, f2: AFM.DateFil
 }
 
 function isDateFilterAllTime(dateFilter: AFM.DateFilterItem): boolean {
-    if (dateFilter && isDateFilterRelative(dateFilter)) {
+    if (AFM.isRelativeDateFilter(dateFilter)) {
         return dateFilter.relativeDateFilter.granularity === ALL_TIME_GRANULARITY;
     }
     return false;
@@ -292,13 +284,13 @@ export function appendFilters(
     dateFilter?: AFM.DateFilterItem
 ): AFM.IAfm {
     const dateFilters: AFM.DateFilterItem[] = (dateFilter && !isDateFilterAllTime(dateFilter)) ? [dateFilter] : [];
-    const afmDateFilter = afm.filters ? afm.filters.filter(isDateFilter)[0] : null;
+    const afmDateFilter = afm.filters ? afm.filters.filter(AFM.isDateFilter)[0] : null;
 
     // all-time selected, need to delete date filter from filters
     let afmFilters = afm.filters || [];
     if (dateFilter && isDateFilterAllTime(dateFilter)) {
         afmFilters = afmFilters.filter((filter) => {
-            if (isDateFilter(filter)) {
+            if (AFM.isDateFilter(filter)) {
                 return !dateFiltersDataSetsMatch(filter, dateFilter);
             }
             return true;
@@ -312,7 +304,7 @@ export function appendFilters(
         dateFilters.push(afmDateFilter);
     }
 
-    const afmAttributeFilters = afmFilters.filter(filter => !isDateFilter(filter));
+    const afmAttributeFilters = afmFilters.filter(filter => !AFM.isDateFilter(filter));
 
     const filters = compact([
         ...afmAttributeFilters,
