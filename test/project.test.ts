@@ -2,7 +2,12 @@
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
 import { noop, range } from 'lodash';
-import { ProjectModule } from '../src/project';
+import {
+    ProjectModule,
+    parseSettingItemValue,
+    IProjectConfigSettingItem,
+    IProjectConfigResponse
+} from '../src/project';
 import { XhrModule } from '../src/xhr';
 import { mockPollingRequest } from './helpers/polling';
 import { IColorPalette, IFeatureFlags } from '../src/interfaces';
@@ -470,6 +475,178 @@ describe('project', () => {
                         expect(result).toEqual(featureFlags);
                     });
             });
+        });
+
+        describe('getConfig', () => {
+            it('should reject with 400 when resource fails', () => {
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/config',
+                    400
+                );
+                return createProject()
+                    .getConfig('myFakeProjectId')
+                    .then(null, (err: any) => expect(err).toBeInstanceOf(Error));
+            });
+
+            it('should return feature flags for given project', () => {
+                const items: IProjectConfigSettingItem[] = [
+                    {
+                        settingItem: {
+                            key: 'enablePivot',
+                            value: 'true',
+                            source: 'project',
+                            links: {
+                                self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivot'
+                            }
+                        }
+                    },
+                    {
+                        settingItem: {
+                            key: 'enablePivotGrouping',
+                            value: 'false',
+                            source: 'catalog',
+                            links: {
+                                self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivotGrouping'
+                            }
+                        }
+                    }
+                ];
+
+                const mockResponse: IProjectConfigResponse = {
+                    settings: {
+                        items
+                    }
+                };
+
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/config',
+                    {
+                        status: 200,
+                        body: JSON.stringify(mockResponse)
+                    }
+                );
+
+                return createProject().getConfig('myFakeProjectId')
+                    .then((result: IProjectConfigSettingItem[]) => {
+                        expect(result).toEqual(items);
+                    });
+            });
+        });
+
+        describe('getProjectFeatureFlags', () => {
+            const items: IProjectConfigSettingItem[] = [
+                {
+                    settingItem: {
+                        key: 'enablePivot',
+                        value: 'true',
+                        source: 'project',
+                        links: {
+                            self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivot'
+                        }
+                    }
+                },
+                {
+                    settingItem: {
+                        key: 'enablePivotGrouping',
+                        value: 'false',
+                        source: 'project',
+                        links: {
+                            self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivotGrouping'
+                        }
+                    }
+                },
+                {
+                    settingItem: {
+                        key: 'testNumber',
+                        value: '123',
+                        source: 'catalog',
+                        links: {
+                            self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/testNumber'
+                        }
+                    }
+                },
+                {
+                    settingItem: {
+                        key: 'testString',
+                        value: 'abrakadabra',
+                        source: 'catalog',
+                        links: {
+                            self: '/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/testString'
+                        }
+                    }
+                }
+            ];
+
+            const mockResponse: IProjectConfigResponse = {
+                settings: {
+                    items
+                }
+            };
+
+            it('should reject with 400 when resource fails', () => {
+                fetchMock.mock(
+                    '/gdc/app/projects/nonExistingProject/config',
+                    400
+                );
+
+                return createProject()
+                    .getProjectFeatureFlags('nonExistingProject')
+                    .then(null, (err: any) => expect(err).toBeInstanceOf(Error));
+            });
+
+            it('should return feature flags for given project', () => {
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/config',
+                    {
+                        status: 200,
+                        body: JSON.stringify(mockResponse)
+                    }
+                );
+
+                const expectedFeatureFlags: IFeatureFlags = {
+                    enablePivot: true,
+                    enablePivotGrouping: false,
+                    testNumber: 123,
+                    testString: 'abrakadabra'
+                };
+                return createProject().getProjectFeatureFlags('myFakeProjectId')
+                    .then((result: IFeatureFlags) => {
+                        expect(result).toEqual(expectedFeatureFlags);
+                    });
+            });
+
+            it('should return feature flags for given project filtered by source', () => {
+                fetchMock.mock(
+                    '/gdc/app/projects/myFakeProjectId/config',
+                    {
+                        status: 200,
+                        body: JSON.stringify(mockResponse)
+                    }
+                );
+                const expectedFeatureFlags: IFeatureFlags = {
+                    enablePivot: true,
+                    enablePivotGrouping: false
+                };
+                return createProject().getProjectFeatureFlags('myFakeProjectId', 'project')
+                    .then((result: IFeatureFlags) => {
+                        expect(result).toEqual(expectedFeatureFlags);
+                    });
+            });
+        });
+    });
+
+    describe('parseSettingItemValue', () => {
+        it('should parse boolean string values', () => {
+            expect(parseSettingItemValue('true')).toBe(true);
+            expect(parseSettingItemValue('false')).toBe(false);
+        });
+        it('should parse number values', () => {
+            expect(parseSettingItemValue('123')).toBe(123);
+            expect(parseSettingItemValue('-123.456')).toBe(-123.456);
+        });
+        it('should return string values as is', () => {
+            expect(parseSettingItemValue('abcd')).toBe('abcd');
+            expect(parseSettingItemValue('-123abc456')).toBe('-123abc456');
         });
     });
 });

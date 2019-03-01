@@ -9,7 +9,7 @@ import {
 
 import { IMetricDefinition } from '../../src/interfaces';
 
-interface IReportDefinition {
+export interface IReportDefinition {
     columns: string[];
     definitions: IMetricDefinition[];
 }
