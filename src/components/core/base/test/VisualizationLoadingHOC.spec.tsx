@@ -2,9 +2,11 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import noop = require('lodash/noop');
 import { testUtils } from '@gooddata/js-utils';
 import sdk, { IExportConfig } from '@gooddata/gooddata-js';
 import {
+    emptyDataSource,
     oneMeasureDataSource,
     oneMeasurePagableOnlyDataSource,
     oneMeasureOneDimensionDataSource,
@@ -175,6 +177,23 @@ describe('VisualizationLoadingHOC', () => {
             expect(onError).toHaveBeenCalledTimes(1);
 
             expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
+        });
+    });
+
+    it('should show EmptyResultError when exporting NO DATA result', async (done) => {
+        const onExportReady = async (exportResult: IExportFunction) => {
+            try {
+                await exportResult({ format: 'xlsx' });
+            } catch (error) {
+                expect(error.cause.name).toEqual('EmptyResultError');
+                expect(error).toEqual(new RuntimeError(ErrorStates.NO_DATA));
+            }
+            done();
+        };
+        createComponent({
+            dataSource: emptyDataSource,
+            onExportReady,
+            onError: noop
         });
     });
 

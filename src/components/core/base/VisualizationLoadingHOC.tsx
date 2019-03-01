@@ -311,7 +311,7 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
             if (DataLayer.DataSourceUtils.dataSourcesMatch(this.props.dataSource, dataSource)) {
                 this.setState({ error: error.getMessage() });
                 this.onLoadingChanged({ isLoading: false });
-
+                this.props.onExportReady(this.createExportErrorFunction(error));
                 this.props.onError(error);
             }
         }
@@ -359,6 +359,12 @@ export function visualizationLoadingHOC<T extends ICommonVisualizationProps & ID
                     get<Execution.IExecutionResponses, string>(execution, 'executionResponse.links.executionResult'),
                     assign({ title }, exportConfig)
                 );
+            };
+        }
+
+        private createExportErrorFunction(error: ApiResponseError | Error): IExportFunction {
+            return (_: IExportConfig): Promise<IExportResponse> => {
+                return Promise.reject(error);
             };
         }
     }
