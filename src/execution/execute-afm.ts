@@ -5,6 +5,7 @@ import { get, range } from 'lodash';
 import { Execution, AFM } from '@gooddata/typings';
 
 import { XhrModule } from '../xhr';
+import { convertExecutionToJson } from './execute-afm.convert';
 
 export const DEFAULT_LIMIT = 1000;
 
@@ -47,7 +48,7 @@ export class ExecuteAfmModule {
     public getExecutionResponse(projectId: string, execution: AFM.IExecution)
         : Promise<Execution.IExecutionResponse> {
         validateNumOfDimensions(get(execution, 'execution.resultSpec.dimensions').length);
-        return this.xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: JSON.stringify(execution) })
+        return this.xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
             .then(apiResponse => apiResponse.getData())
             .then(unwrapExecutionResponse);
     }

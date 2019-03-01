@@ -13,6 +13,7 @@ import {
     IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection
 } from './interfaces';
 import { convertUrisToReferences, convertReferencesToUris } from './referenceHandling';
+import { convertAfm } from './execution/execute-afm.convert';
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -652,7 +653,7 @@ export class MetadataModule {
                 .post(`/gdc/app/projects/${projectId}/executeAfm/debug`, {
                     body: {
                         execution: {
-                            afm
+                            afm: convertAfm(afm)
                         }
                     }
                 })
