@@ -61,8 +61,8 @@ class AttributeGroupingProvider implements IGroupingProvider {
     }
 
     public isGroupBoundary(rowIndex: number) {
-        return this.repetitionsCounts &&
-            this.repetitionsCounts[rowIndex] === undefined || this.repetitionsCounts[rowIndex] < this.maxRepetitions;
+        return !!this.repetitionsCounts &&
+            (this.repetitionsCounts[rowIndex] === undefined || this.repetitionsCounts[rowIndex] < this.maxRepetitions);
     }
 
     public processPage(pageRows: IGridRow[], rowOffset: number, rowAttributeIDs: string[]) {

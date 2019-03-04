@@ -7,7 +7,8 @@ import {
     twoAttributesTwoMeasuresUnEvenGroups,
     twoAttributesTwoMeasuresEvenGroups,
     twoAttributesTwoMeasuresEvenGroupsFristPage,
-    twoAttributesTwoMeasuresEvenGroupsSecondPage
+    twoAttributesTwoMeasuresEvenGroupsSecondPage,
+    noAttributesTwoMeasures
 } from './GroupingProvider.mock';
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
@@ -45,6 +46,18 @@ describe('AttributeGroupingProvider', () => {
     function createAttributeGroupingProvider() {
         return GroupingProviderFactory.createProvider(true);
     }
+
+    it('should not group items when there are no attributes', () => {
+        const groupingProvider = createAttributeGroupingProvider();
+
+        groupingProvider.processPage(
+            noAttributesTwoMeasures.rowData,
+            0,
+            noAttributesTwoMeasures.rowAttributeIDs
+        );
+
+        expectBoundaries(groupingProvider, [false, false, false, false]);
+    });
 
     it('should group items by only by URI', () => {
         const groupingProvider = createAttributeGroupingProvider();
