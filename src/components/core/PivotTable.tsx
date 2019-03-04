@@ -77,6 +77,7 @@ import {
 import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
 import ColumnHeader from './pivotTable/ColumnHeader';
 import { GroupingProviderFactory, IGroupingProvider } from './pivotTable/GroupingProvider';
+import ApiWrapper from './pivotTable/agGridApiWrapper';
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -972,7 +973,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const DEFAULT_ROW_HEIGHT = 28;
 
         return this.gridApi
-            ? (this.gridApi.getModel() as any).rowHeight
+            ? ApiWrapper.getRowHeight(this.gridApi)
             : DEFAULT_ROW_HEIGHT;
     }
 
@@ -985,7 +986,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             return;
         }
         const rowHeight = this.getRowHeight();
-        const headerHeight = (this.gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
+        const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
         const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
         const bodyHeight = rowCount * rowHeight + leeway;
         const footerHeight = aggregationCount * rowHeight;
