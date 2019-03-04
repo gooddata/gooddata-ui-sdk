@@ -1,5 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 
+export const noAttributesTwoMeasures: any = {
+    rowData: [{
+        headerItemMap: {},
+        m_0: '678',
+        m_1: '907'
+    }],
+    rowAttributeIDs: []
+};
+
 export const oneAttributeTwoMeasures = {
     rowData: [{
         headerItemMap: {
