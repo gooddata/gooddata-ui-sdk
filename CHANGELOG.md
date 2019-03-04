@@ -11,6 +11,15 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.4.0"></a>
+## 2019-03-01 Version [11.4.0](https://github.com/gooddata/gooddata-js/compare/v11.3.1...v11.4.0)
+
+### Added endpoints
+
+- added sdk.project.getConfig
+- added sdk.project.getProjectFeatureFlags
+
+
 <a name="11.3.1"></a>
 ## 2019-02-19 Version [11.3.1](https://github.com/gooddata/gooddata-js/compare/v11.3.0...v11.3.1)
 

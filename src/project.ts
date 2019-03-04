@@ -32,6 +32,37 @@ const isProjectCreated = (project: any) => { // TODO
         projectState === 'DELETED';
 };
 
+export interface IProjectConfigSettingItem {
+    settingItem: {
+        key: string,
+        links: {
+            self: string
+        },
+        source: string,
+        value: string
+    };
+}
+export interface IProjectConfigResponse {
+    settings: {
+        items: IProjectConfigSettingItem[];
+    };
+}
+
+// Parses string values to boolean, number and string
+export const parseSettingItemValue = (value: string): boolean | number | string => {
+    if (value === 'true') {
+        return true;
+    }
+    if (value === 'false') {
+        return false;
+    }
+    const nr = Number(value);
+    if (nr.toString() === value) {
+        return nr;
+    }
+    return value;
+};
+
 /**
  * Functions for working with projects
  *
@@ -264,6 +295,47 @@ export class ProjectModule {
                     return result.featureFlags;
                 }
                 return {};
+            });
+    }
+
+    /**
+     * Gets project config including project specific feature flags
+     *
+     * @param {String} projectId - A project identifier
+     * @return {IProjectConfigSettingItem[]} An array of project config setting items
+     */
+    public getConfig(projectId: string): Promise<IProjectConfigSettingItem[]> {
+        return this.xhr.get(`/gdc/app/projects/${projectId}/config`)
+            .then((apiResponse: ApiResponse) => {
+                const projectConfig = apiResponse.getData();
+                return projectConfig;
+            })
+            .then((result: IProjectConfigResponse) => {
+                if (result && result.settings && result.settings.items) {
+                    return result.settings.items;
+                }
+                return [];
+            });
+    }
+
+    /**
+     * Gets project specific feature flags
+     *
+     * @param {String} projectId - A project identifier
+     * @param {String} source - optional filter settingItems with specific source
+     * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
+     */
+    public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
+        return this.getConfig(projectId)
+            .then((settingItems: IProjectConfigSettingItem[]) => {
+                const filteredSettingItems = source
+                    ? settingItems.filter(settingItem => settingItem.settingItem.source === source)
+                    : settingItems;
+                const featureFlags: IFeatureFlags = {};
+                filteredSettingItems.forEach((settingItem) => {
+                    featureFlags[settingItem.settingItem.key] = parseSettingItemValue(settingItem.settingItem.value);
+                });
+                return featureFlags;
             });
     }
 }
