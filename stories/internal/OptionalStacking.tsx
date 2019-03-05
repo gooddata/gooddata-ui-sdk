@@ -5,8 +5,11 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 import { Visualization } from '../../src/components/visualizations/Visualization';
 import { wrap } from '../utils/wrap';
 import '../../styles/scss/charts.scss';
-import { barChartWith4MetricsAndViewBy2Attribute } from '../test_data/fixtures';
-import { IChartConfig, VisualizationTypes } from '../../src';
+import {
+    barChartWith4MetricsAndViewBy2Attribute,
+    chartWithTwoAttributesAndSomeNullDatapoints
+} from '../test_data/fixtures';
+import { HeaderPredicateFactory, IChartConfig, VisualizationTypes } from '../../src';
 
 const renderSupportedCharts = (
     config: IChartConfig = {}
@@ -223,5 +226,23 @@ storiesOf('Internal/OptionalStacking/Column, Bar, DualAxis Chart', module)
             <div>
                 {renderSupportedCharts(config)}
             </div>
+        );
+    })
+    .add('Charts with viewBy 2 attributes and some null data points', () => {
+        return screenshotWrap(// sd-313
+            wrap(
+                <Visualization
+                    {...chartWithTwoAttributesAndSomeNullDatapoints}
+                    drillableItems={[HeaderPredicateFactory.uriMatch(
+                        '/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1095/elements?id=966643'
+                    )]}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            position: 'top'
+                        }
+                    }}
+                />,
+            400, '100%')
         );
     });

@@ -169,7 +169,8 @@ export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader['at
 };
 
 export interface IViewByTwoAttributes {
-    items: Execution.IResultHeaderItem[];
+    parent: Execution.IResultHeaderItem[];
+    children: Execution.IResultHeaderItem[];
 }
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
@@ -1079,14 +1080,6 @@ export function getDrillableSeries(
     });
 }
 
-export function getDistinctAttributeHeaderName(result: string[], item: Execution.IResultAttributeHeaderItem): string[] {
-    const { attributeHeaderItem: { name } } = item;
-    if (!includes(result, name)) {
-        result.push(name);
-    }
-    return result;
-}
-
 function getCategories(
     type: string,
     measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
@@ -1117,16 +1110,49 @@ function getCategories(
     return [];
 }
 
-export function getCategoriesForTwoAttributes(
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    viewByTwoAttributes: IViewByTwoAttributes
-) {
-    const insideAttributes  = viewByAttribute.items.reduce(getDistinctAttributeHeaderName, []);
-    const outsideAttributes = viewByTwoAttributes.items.reduce(getDistinctAttributeHeaderName, []);
+/**
+ * Transform
+ *      viewByTwoAttributes: {
+ *          parent: [P1, P1, P2, P2, P3],
+ *          children: [C1, C2, C1, C2, C2]
+ *      }
+ * to
+ *      [{
+ *          name: P1,
+ *          categories: [C1, C2]
+ *       }, {
+ *          name: P2,
+ *          categories: [C1, C2]
+ *       }, {
+ *          name: P3,
+ *          categories: [C2]
+ *       }]
+ * @param viewByTwoAttributes
+ */
+export function getCategoriesForTwoAttributes(viewByTwoAttributes: IViewByTwoAttributes): Array<{
+    name: string,
+    categories: string[]
+}> {
+    const { parent = [], children = [] } = viewByTwoAttributes;
+    const combinedResult = parent.reduce((
+        result: { [property: string]: string[] },
+        parentAttr: Execution.IResultAttributeHeaderItem,
+        index: number
+    ) => {
+        const key: string = get(parentAttr, 'attributeHeaderItem.name', '');
+        const value: string = get(children[index], 'attributeHeaderItem.name', '');
 
-    return outsideAttributes.map((outsideAttribute: string) => ({
-        name: outsideAttribute,
-        categories: insideAttributes
+        const childCategories: string[] = result[key] || [];
+
+        return {
+            ...result,
+            [key]: [...childCategories, value] // append value
+        };
+    }, {});
+
+    return Object.keys(combinedResult).map((name: string) => ({
+        name,
+        categories: combinedResult[name]
     }));
 }
 
@@ -1527,7 +1553,10 @@ export function getChartOptions(
     }
 
     if (isViewByTwoAttributes) {
-        viewByTwoAttributes = { items: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX] };
+        viewByTwoAttributes = {
+            parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
+            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX]
+        };
     }
 
     const colorStrategy = ColorFactory.getColorStrategy(
@@ -1569,7 +1598,7 @@ export function getChartOptions(
     const series = assignYAxes(drillableSeries, yAxes);
 
     let categories = viewByTwoAttributes ?
-                        getCategoriesForTwoAttributes(viewByAttribute, viewByTwoAttributes) :
+                        getCategoriesForTwoAttributes(viewByTwoAttributes) :
                         getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order
