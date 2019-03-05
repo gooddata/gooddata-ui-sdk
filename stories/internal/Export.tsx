@@ -5,7 +5,7 @@ import ExportDialog from '@gooddata/goodstrap/lib/Dialog/ExportDialog';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 
-import { BarChart, PivotTable, Table } from '../../src';
+import { BarChart, Headline, PivotTable, Table } from '../../src';
 import { Visualization } from '../../src/components/uri/Visualization';
 import { IExportFunction, OnExportReady } from '../../src/interfaces/Events';
 
@@ -13,6 +13,7 @@ import { onErrorHandler } from '../mocks';
 import {
     ATTRIBUTE_1,
     MEASURE_1,
+    MEASURE_1_WITH_ALIAS,
     MEASURE_2
 } from '../data/componentProps';
 
@@ -212,6 +213,22 @@ storiesOf('Internal/Export', module)
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         locale="en-US"
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                )}
+            </WrapperComponent>
+        </div>
+    ))
+    .add('export headline data', () => (
+        <div style={WRAPPER_STYLE}>
+            <WrapperComponent>
+                {(onExportReady: OnExportReady) => (
+                    <Headline
+                        projectId="storybook"
+                        primaryMeasure={MEASURE_1_WITH_ALIAS}
+                        secondaryMeasure={MEASURE_2}
+                        onExportReady={onExportReady}
                         LoadingComponent={null}
                         ErrorComponent={null}
                     />

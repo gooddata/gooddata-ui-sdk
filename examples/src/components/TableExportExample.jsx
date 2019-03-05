@@ -18,12 +18,12 @@ import {
 export class TableExportExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ColumnChartExample onLoadingChanged', ...params);
+        return console.log('TableExportExample onLoadingChanged', ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ColumnChartExample onError', ...params);
+        return console.log('TableExportExample onError', ...params);
     }
 
     render() {
