@@ -365,6 +365,9 @@ export function percentageDataLabelFormatter(config?: IChartConfig) {
     const isSingleAxis = get(this, 'series.chart.yAxis.length', 1) === 1;
     const isPrimaryAxis = !get(this, 'series.yAxis.opposite', false);
 
+    if (isNil(this.percentage)) {
+        return '';
+    }
     // only format data labels to percentage for
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
