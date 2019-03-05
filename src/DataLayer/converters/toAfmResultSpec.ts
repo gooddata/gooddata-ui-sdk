@@ -94,14 +94,32 @@ function getMeasures(buckets: VisualizationObject.IBucket[]): VisualizationObjec
     }, []);
 }
 
+function getNativeTotalAttributeIdentifiers(
+    bucket: VisualizationObject.IBucket,
+    total: VisualizationObject.IVisualizationTotal
+): string[] {
+    const attributes = bucket.items.filter(VisualizationObject.isAttribute);
+
+    const totalAttributeIndex = attributes
+        .findIndex(attribute => attribute.visualizationAttribute.localIdentifier === total.attributeIdentifier);
+
+    return attributes
+        .slice(0, totalAttributeIndex)
+        .map(attribute => attribute.visualizationAttribute.localIdentifier);
+}
+
 function convertNativeTotals(visObj: VisualizationObject.IVisualizationObjectContent): AFM.INativeTotalItem[] {
+    const nativeTotalsPerBucket = visObj.buckets.map((bucket) => {
+        const totals = bucket.totals || [];
+        const nativeTotals = totals.filter(total => total.type === 'nat');
 
-    const nativeTotals = flatMap(visObj.buckets, (bucket => bucket.totals || [])).filter(total => total.type === 'nat');
+        return nativeTotals.map(total => ({
+            measureIdentifier: total.measureIdentifier,
+            attributeIdentifiers: getNativeTotalAttributeIdentifiers(bucket, total)
+        }));
+    });
 
-    return nativeTotals.map(total => ({
-        measureIdentifier: total.measureIdentifier,
-        attributeIdentifiers: []
-    }));
+    return flatMap(nativeTotalsPerBucket);
 }
 
 function getAttributes(buckets: VisualizationObject.IBucket[]): VisualizationObject.IVisualizationAttribute[] {

@@ -25,7 +25,9 @@ import {
     dateFilterWithoutInterval,
     oneMeasureOneAttribute,
     oneMeasureOneAttributeWithIdentifiers,
-    reducedMultipleSorts
+    reducedMultipleSorts,
+    nativeSubTotals,
+    nativeSubtotalsInTwoDimensions
 } from './fixtures/Afm.fixtures';
 
 import { charts, tables } from './fixtures/VisObj.fixtures';
@@ -204,5 +206,13 @@ describe('toAfmResultSpec', () => {
         expect(toAfmResultSpec(tables.multipleSorts)).toEqual({
             ...reducedMultipleSorts
         });
+    });
+
+    it('should convert native subtotals', () => {
+        expect(toAfmResultSpec(tables.twoAttributesAndNativeSubtotals)).toEqual(nativeSubTotals);
+    });
+
+    it('should convert native subtotals from multiple dimensions', () => {
+        expect(toAfmResultSpec(tables.twoDimensionsAndNativeSubtotals)).toEqual(nativeSubtotalsInTwoDimensions);
     });
 });
