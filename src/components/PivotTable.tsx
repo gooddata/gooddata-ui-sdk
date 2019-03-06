@@ -19,21 +19,18 @@ import {
     COLUMNS
  } from '../constants/bucketNames';
 import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
-import { getTotalsFromResultSpec, getNativeTotals } from './visualizations/table/totals/utils';
 
 export interface IPivotTableBucketProps {
     measures?: VisualizationObject.BucketItem[];
     rows?: VisualizationObject.IVisualizationAttribute[];
     columns?: VisualizationObject.IVisualizationAttribute[];
     totals?: VisualizationObject.IVisualizationTotal[];
-    totalsEditAllowed?: boolean;
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: AFM.SortItem[];
 }
 
 export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketProps {
     projectId: string;
-    totalsEditAllowed?: boolean;
     pageSize?: number;
     config?: IPivotTableConfig;
     groupRows?: boolean;
@@ -81,11 +78,6 @@ export class PivotTable extends React.Component<IPivotTableProps> {
         const afm = convertBucketsToAFM(buckets, filters);
 
         const resultSpec = getResultSpec(buckets, sortBy, getPivotTableDimensions);
-        const totals = getTotalsFromResultSpec(resultSpec);
-        const nativeTotals = getNativeTotals(totals);
-        if (nativeTotals && nativeTotals.length) {
-            afm.nativeTotals = nativeTotals;
-        }
 
         hasDuplicateIdentifiers(buckets);
 

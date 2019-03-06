@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
-import { getMappingHeaderName } from './mappingHeader';
+import { getMappingHeaderName, getMappingHeaderUri } from './mappingHeader';
 import range = require('lodash/range');
 import get = require('lodash/get');
 import clone = require('lodash/clone');
 import zipObject = require('lodash/zipObject');
 
 import { unwrap } from './utils';
-import { IMappingHeader } from '../interfaces/MappingHeader';
+import { IMappingHeader, isMappingHeaderTotal } from '../interfaces/MappingHeader';
 import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions, IGridTotalsRow } from '../interfaces/AGGrid';
 import { ColDef } from 'ag-grid';
 import { getTreeLeaves } from '../components/core/PivotTable';
@@ -235,31 +235,69 @@ export const getFields = (dataHeaders: Execution.IResultHeaderItem[][]) => {
     }) as string[];
 };
 
+const getSubtotalLabelCellIndex = (resultHeaderItems: Execution.IResultHeaderItem[][], rowIndex: number): number => {
+    return resultHeaderItems.findIndex(headerItem => Execution.isTotalHeaderItem(headerItem[rowIndex]));
+};
+
+const getCell = (
+    rowHeaderData: Execution.IResultHeaderItem[][],
+    rowIndex: number,
+    rowHeader: IGridHeader,
+    rowHeaderIndex: number,
+    intl: InjectedIntl
+): {
+    field: string,
+    value: string,
+    rowHeaderDataItem: Execution.IResultHeaderItem
+} => {
+    const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
+    const cell = {
+        field: rowHeader.field,
+        rowHeaderDataItem
+    };
+
+    if (Execution.isAttributeHeaderItem(rowHeaderDataItem)) {
+        return {
+            ...cell,
+            value: rowHeaderDataItem.attributeHeaderItem.name
+        };
+    }
+
+    if (Execution.isTotalHeaderItem(rowHeaderDataItem)) {
+        const totalName = rowHeaderDataItem.totalHeaderItem.name;
+        return {
+            ...cell,
+            value: getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
+                ? intl.formatMessage({ id: `visualizations.totals.dropdown.title.${totalName}` })
+                : null
+        };
+    }
+
+    invariant(rowHeaderDataItem, 'row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem');
+};
+
 export const getRow = (
     cellData: Execution.DataValue[],
     rowIndex: number,
     columnFields: string[],
     rowHeaders: IGridHeader[],
-    rowHeaderData: Execution.IResultHeaderItem[][]
+    rowHeaderData: Execution.IResultHeaderItem[][],
+    intl: InjectedIntl
 ): IGridRow => {
     const row: IGridRow = {
         headerItemMap: {}
     };
+
+    rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
+        const { field, value, rowHeaderDataItem } = getCell(rowHeaderData, rowIndex, rowHeader, rowHeaderIndex, intl);
+        row[field] = value;
+        row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
+    });
+
     cellData.forEach((cell: Execution.DataValue, cellIndex: number) => {
-        rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
-            const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
-            // attribute value drill item
-            const rowHeaderDrillItem: IMappingHeader =
-                Execution.isAttributeHeaderItem(rowHeaderDataItem) ? rowHeaderDataItem : null;
-            // Drilling on row headers supports only attribute headers
-            invariant(rowHeaderDrillItem, 'row header is not of type IResultAttributeHeaderItem');
-            row[rowHeader.field] = unwrap(rowHeaderDataItem).name;
-            row.headerItemMap[rowHeader.field] = rowHeaderDrillItem;
-        });
-        const columnKey = columnFields[cellIndex];
-        // If columnKey doesn't exists, this is a table with attributes only. Do not assign measure value then.
-        if (columnKey) {
-            row[columnKey] = cell;
+        const field = columnFields[cellIndex];
+        if (field) {
+            row[field] = cell;
         }
     });
     return row;
@@ -492,7 +530,7 @@ export const executionToAGGridAdapter = (
     const minimalRowData: Execution.DataValue[][] = getMinimalRowData(data as Execution.DataValue[][], headerItems[0]);
     const rowData = (minimalRowData).map(
         (dataRow: Execution.DataValue[], dataRowIndex: number) =>
-            getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0])
+            getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0], intl)
     );
 
     const columnKeys = [...rowFields, ...columnFields];
@@ -510,4 +548,18 @@ export const getParsedFields = (colId: string): string[][] => {
     return colId
         .split(FIELD_SEPARATOR)
         .map((field: string) => (field.split(ID_SEPARATOR)));
+};
+
+export const getRowNodeId = (item: any) => {
+    return Object.keys(item.headerItemMap).map((key) => {
+        const mappingHeader: IMappingHeader = item.headerItemMap[key];
+
+        if (isMappingHeaderTotal(mappingHeader)) {
+            return `${key}${ID_SEPARATOR}${mappingHeader.totalHeaderItem.name}`;
+        }
+
+        const uri = getMappingHeaderUri(mappingHeader);
+        const ids = getIdsFromUri(uri);
+        return `${key}${ID_SEPARATOR}${ids[1]}`;
+    }).join(FIELD_SEPARATOR);
 };

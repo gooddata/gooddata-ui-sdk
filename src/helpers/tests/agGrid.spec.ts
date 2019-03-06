@@ -19,7 +19,8 @@ import {
     getAttributeSortItemFieldAndDirection,
     getMeasureSortItemFieldAndDirection,
     shouldMergeHeaders,
-    mergeHeaderEndIndex
+    mergeHeaderEndIndex,
+    getRowNodeId
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
@@ -135,40 +136,40 @@ describe('getRowTotals', () => {
                 }
             },
             {
-              'a_2009_1-a_2071_1-m_0': '52200.219065',
-              'a_2009_1-a_2071_1-m_1': null,
-              'a_2009_1-a_2071_2-m_0': '51856.098435',
-              'a_2009_1-a_2071_2-m_1': null,
-              'a_2009_1-a_2071_3-m_0': '51625.71112',
-              'a_2009_1-a_2071_3-m_1': null,
-              'a_2009_2-a_2071_4-m_0': '52112.59452',
-              'a_2009_2-a_2071_4-m_1': null,
-              'a_2009_2-a_2071_5-m_0': '51483.00717',
-              'a_2009_2-a_2071_5-m_1': null,
-              'a_2009_2-a_2071_6-m_0': '52092.56274',
-              'a_2009_2-a_2071_6-m_1': null,
-              'a_2009_3-a_2071_7-m_0': '51969.225955',
-              'a_2009_3-a_2071_7-m_1': null,
-              'a_2009_3-a_2071_8-m_0': '50898.185495',
-              'a_2009_3-a_2071_8-m_1': null,
-              'a_2009_3-a_2071_9-m_0': '51991.013495',
-              'a_2009_3-a_2071_9-m_1': null,
-              'a_2009_4-a_2071_10-m_0': '51827.00047',
-              'a_2009_4-a_2071_10-m_1': null,
-              'a_2009_4-a_2071_11-m_0': '51867.5538',
-              'a_2009_4-a_2071_11-m_1': null,
-              'a_2009_4-a_2071_12-m_0': '49221.92013',
-              'a_2009_4-a_2071_12-m_1': null,
-              'a_2211': 'Avg',
-              'colSpan': {
-                count: 3,
-                headerKey: 'a_2211'
-              },
-              'type': {
-                rowTotal: true
-              }
+                'a_2009_1-a_2071_1-m_0': '52200.219065',
+                'a_2009_1-a_2071_1-m_1': null,
+                'a_2009_1-a_2071_2-m_0': '51856.098435',
+                'a_2009_1-a_2071_2-m_1': null,
+                'a_2009_1-a_2071_3-m_0': '51625.71112',
+                'a_2009_1-a_2071_3-m_1': null,
+                'a_2009_2-a_2071_4-m_0': '52112.59452',
+                'a_2009_2-a_2071_4-m_1': null,
+                'a_2009_2-a_2071_5-m_0': '51483.00717',
+                'a_2009_2-a_2071_5-m_1': null,
+                'a_2009_2-a_2071_6-m_0': '52092.56274',
+                'a_2009_2-a_2071_6-m_1': null,
+                'a_2009_3-a_2071_7-m_0': '51969.225955',
+                'a_2009_3-a_2071_7-m_1': null,
+                'a_2009_3-a_2071_8-m_0': '50898.185495',
+                'a_2009_3-a_2071_8-m_1': null,
+                'a_2009_3-a_2071_9-m_0': '51991.013495',
+                'a_2009_3-a_2071_9-m_1': null,
+                'a_2009_4-a_2071_10-m_0': '51827.00047',
+                'a_2009_4-a_2071_10-m_1': null,
+                'a_2009_4-a_2071_11-m_0': '51867.5538',
+                'a_2009_4-a_2071_11-m_1': null,
+                'a_2009_4-a_2071_12-m_0': '49221.92013',
+                'a_2009_4-a_2071_12-m_1': null,
+                'a_2211': 'Avg',
+                'colSpan': {
+                    count: 3,
+                    headerKey: 'a_2211'
+                },
+                'type': {
+                    rowTotal: true
+                }
             }
-          ]);
+        ]);
     });
     it('should return null when no totals are defined', () => {
         const fixture = fixtures.pivotTableWithColumnAndRowAttributes;
@@ -383,7 +384,8 @@ describe('getRow', () => {
                 0,
                 columnFields,
                 rowHeaders,
-                headerItems[0]
+                headerItems[0],
+                intl
             )
         ).toEqual({
             'a_2009_1-a_2071_1-m_0': '160104.5665',
@@ -452,6 +454,55 @@ describe('getRow', () => {
             }
         });
     });
+    it('should return subtotal row', () => {
+        const headerItems = fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResult.headerItems;
+        const rowHeaders = getRowHeaders(
+            fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResponse.dimensions[0].headers,
+            {},
+            false
+        );
+
+        const columnFields: string[] = getFields(headerItems[1]);
+
+        expect(
+            getRow(
+                fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResult.data[0],
+                3,
+                columnFields,
+                rowHeaders,
+                headerItems[0],
+                intl
+            )
+        ).toEqual({
+            a_1024: 'East Coast',
+            a_1027: 'Direct Sales',
+            a_1094: 'Rollup (Total)',
+            a_64727: 'Exclude',
+            headerItemMap: {
+                a_1024: {
+                    attributeHeaderItem: {
+                        name: 'East Coast',
+                        uri: '/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1023/elements?id=1225'
+                    }
+                },
+                a_1027: {
+                    attributeHeaderItem: {
+                        name: 'Direct Sales',
+                        uri: '/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1026/elements?id=1226'
+                    }
+                },
+                a_1094: { totalHeaderItem: { name: 'nat', type: 'nat' } },
+                a_64727: {
+                    attributeHeaderItem: {
+                        name: 'Exclude',
+                        uri: '/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/64726/elements?id=966650'
+                    }
+                }
+            },
+            m_0: '40500',
+            m_1: '41142'
+        });
+    });
 });
 
 describe('getMinimalRowData', () => {
@@ -504,7 +555,7 @@ describe('getAttributeSortItemFieldAndDirection', () => {
     };
     it('should return matching key and direction from attributeHeaders', () => {
         expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeHeaders))
-            .toEqual(['a_2211', 'asc' ]);
+            .toEqual(['a_2211', 'asc']);
     });
 });
 
@@ -537,7 +588,7 @@ describe('getMeasureSortItemFieldAndDirection', () => {
     };
     it('should return matching key and direction from attributeHeaders', () => {
         expect(getMeasureSortItemFieldAndDirection(measureSortItem, measureHeaderItems))
-            .toEqual(['a_2009_1-a_2071_1-m_-1', 'desc' ]);
+            .toEqual(['a_2009_1-a_2071_1-m_-1', 'desc']);
     });
 });
 
@@ -787,5 +838,29 @@ describe('conversion from header matrix to hierarchy', () => {
             expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 2)).toBe(3);
             expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 3)).toBe(3);
         });
+    });
+});
+
+describe('getRowNodeId', () => {
+    it('should return correct id for row item', () => {
+        const item = {
+            headerItemMap: {
+                a_1027: {
+                    attributeHeaderItem: {
+                        name: 'Direct Sales',
+                        uri: '/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1026/elements?id=1226'
+                    }
+                },
+                a_1094: { totalHeaderItem: { name: 'nat', type: 'nat' } },
+                a_64727: {
+                    attributeHeaderItem: {
+                        name: 'Exclude',
+                        uri: '/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/64726/elements?id=966650'
+                    }
+                }
+            }
+        };
+
+        expect(getRowNodeId(item)).toEqual('a_1027_1226-a_1094_nat-a_64727_966650');
     });
 });

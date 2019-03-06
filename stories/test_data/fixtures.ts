@@ -472,6 +472,12 @@ export const heatmapMetricRowColumn: any = {
     executionResult: require('./heat_map_with_metric_row_column_result.json').executionResult
 };
 
+export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
+    executionRequest: require('./pivot_table_with_2_metrics_4_attributes_subtotals_request.json').execution,
+    executionResponse: require('./pivot_table_with_2_metrics_4_attributes_subtotals_response.json').executionResponse,
+    executionResult: require('./pivot_table_with_2_metrics_4_attributes_subtotals_result.json').executionResult
+};
+
 export default {
     pivotTableWithColumnAndRowAttributes,
     pivotTableWithColumnRowAttributesAndTotals,
@@ -506,5 +512,6 @@ export default {
     treemapWithMetricAndViewByAndOnlyOneElement,
     treemapWithThreeMetrics,
     treemapWithOneMetric,
-    heatmapMetricRowColumn
+    heatmapMetricRowColumn,
+    pivotTableWithTwoMetricsFourAttributesSubtotals
 };
