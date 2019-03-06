@@ -947,6 +947,158 @@ const oneMeasureOneAttributeWithIdentifiers: VisualizationObject.IVisualizationO
     filters: []
 };
 
+const twoAttributesAndNativeSubtotals: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: 'visClassUri'
+    },
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: 'm1',
+                        alias: 'Sum of Bundle cost',
+                        format: '#,##0.00',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    identifier: METRIC_IDENTIFIER
+                                },
+                                aggregation: 'sum'
+                            }
+                        }
+                    }
+                }
+            ]
+        }, {
+            localIdentifier: 'attributes',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            identifier: '1'
+                        }
+                    }
+                },
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'a2',
+                        displayForm: {
+                            identifier: '2'
+                        }
+                    }
+                }
+            ],
+            totals: [
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a1'
+                },
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a2'
+                }
+            ]
+        }],
+    filters: []
+};
+
+const twoDimensionsAndNativeSubtotals: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: 'visClassUri'
+    },
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: 'm1',
+                        alias: 'Sum of Bundle cost',
+                        format: '#,##0.00',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    identifier: METRIC_IDENTIFIER
+                                },
+                                aggregation: 'sum'
+                            }
+                        }
+                    }
+                }
+            ]
+        }, {
+            localIdentifier: 'attributes',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            identifier: '1'
+                        }
+                    }
+                },
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'a2',
+                        displayForm: {
+                            identifier: '2'
+                        }
+                    }
+                }
+            ],
+            totals: [
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a1'
+                },
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a2'
+                }
+            ]
+        }, {
+            localIdentifier: 'columns',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'col1',
+                        displayForm: {
+                            identifier: '1'
+                        }
+                    }
+                },
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'col2',
+                        displayForm: {
+                            identifier: '2'
+                        }
+                    }
+                }
+            ],
+            totals: [
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'col1'
+                },
+                {
+                    type: 'nat',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'col2'
+                }
+            ]
+        }],
+    filters: []
+};
+
 const multipleSorts: VisualizationObject.IVisualizationObjectContent = {
     visualizationClass: {
         uri: 'visClassUri'
@@ -995,7 +1147,9 @@ const multipleSorts: VisualizationObject.IVisualizationObjectContent = {
 export const tables = {
     oneMeasureOneAttribute,
     oneMeasureOneAttributeWithIdentifiers,
-    multipleSorts
+    multipleSorts,
+    twoAttributesAndNativeSubtotals,
+    twoDimensionsAndNativeSubtotals
 };
 
 export const charts = {

@@ -901,3 +901,113 @@ export const reducedMultipleSorts: IFixture = {
         ]
     }
 };
+
+export const nativeSubTotals: IFixture = {
+    afm: {
+        attributes: [
+            {
+                displayForm: {
+                    identifier: '1'
+                },
+                localIdentifier: 'a1'
+            },
+            {
+                displayForm: {
+                    identifier: '2'
+                },
+                localIdentifier: 'a2'
+            }
+        ],
+        measures: [
+            {
+                alias: 'Sum of Bundle cost',
+                definition: {
+                    measure: {
+                        aggregation: 'sum',
+                        item: {
+                            identifier: 'metric.id'
+                        }
+                    }
+                },
+                format: '#,##0.00',
+                localIdentifier: 'm1'
+            }
+        ],
+        nativeTotals: [
+            {
+                attributeIdentifiers: [],
+                measureIdentifier: 'm1'
+            },
+            {
+                attributeIdentifiers: ['a1'],
+                measureIdentifier: 'm1'
+            }
+        ]
+    },
+    resultSpec: {}
+};
+
+export const nativeSubtotalsInTwoDimensions = {
+    afm: {
+        attributes: [
+            {
+                displayForm: {
+                    identifier: '1'
+                },
+                localIdentifier: 'a1'
+            },
+            {
+                displayForm: {
+                    identifier: '2'
+                },
+                localIdentifier: 'a2'
+            },
+            {
+                displayForm: {
+                    identifier: '1'
+                },
+                localIdentifier: 'col1'
+            },
+            {
+                displayForm: {
+                    identifier: '2'
+                },
+                localIdentifier: 'col2'
+            }
+        ],
+        measures: [
+            {
+                alias: 'Sum of Bundle cost',
+                definition: {
+                    measure: {
+                        aggregation: 'sum',
+                        item: {
+                            identifier: 'metric.id'
+                        }
+                    }
+                },
+                format: '#,##0.00',
+                localIdentifier: 'm1'
+            }
+        ],
+        nativeTotals: [
+            {
+                attributeIdentifiers: [],
+                measureIdentifier: 'm1'
+            },
+            {
+                attributeIdentifiers: ['a1'],
+                measureIdentifier: 'm1'
+            },
+            {
+                attributeIdentifiers: [],
+                measureIdentifier: 'm1'
+            },
+            {
+                attributeIdentifiers: ['col1'],
+                measureIdentifier: 'm1'
+            }
+        ]
+    },
+    resultSpec: {}
+};
