@@ -2,20 +2,33 @@
 import { t as testController, Selector } from 'testcafe';
 import { config } from './config';
 
-export async function checkCellValue(t, selector, cellValue, cellSelector = '.ag-cell') {
+async function getCell(t, selector, cellSelector) {
     const chart = Selector(selector);
-    await t
-        .expect(chart.exists).eql(true, `${selector} not found`);
-    if (cellSelector) {
-        const cell = chart.find(cellSelector);
-        await t
-            .expect(cell.exists).eql(true, `${cellSelector} not found in ${selector}`);
-
-        if (cellValue) {
-            await t
-                .expect(cell.textContent).eql(cellValue, `expected ${cellSelector} to contain text ${cellValue}`);
-        }
+    await t.expect(chart.exists).eql(true, `${selector} not found`);
+    if (!cellSelector) {
+        return null;
     }
+    const cell = await chart.find(cellSelector);
+    await t.expect(cell.exists).eql(true, `${cellSelector} not found in ${selector}`);
+    return cell;
+}
+
+export async function checkCellValue(t, selector, cellValue, cellSelector = '.ag-cell') {
+    const cell = await getCell(t, selector, cellSelector);
+    if (cellValue) {
+        await t
+            .expect(cell.textContent).eql(cellValue, `expected ${cellSelector} to contain text ${cellValue}`);
+    }
+}
+
+export async function checkCellHasClassName(t, selector, expectedClassName, cellSelector) {
+    const cell = await getCell(t, selector, cellSelector);
+    await t.expect(cell.hasClass(expectedClassName)).ok(`expected ${cellSelector} to has class ${expectedClassName}`);
+}
+
+export async function checkCellHasNotClassName(t, selector, expectedClassName, cellSelector) {
+    const cell = await getCell(t, selector, cellSelector);
+    await t.expect(cell.hasClass(expectedClassName)).notOk(`expected ${cellSelector} to has not class ${expectedClassName}`);
 }
 
 export const loginUsingGreyPages = (redirectUri = '/') => {

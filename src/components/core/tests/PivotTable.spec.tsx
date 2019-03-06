@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { oneAttributeOneMeasureSortByMeasureExecutionObject } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import noop = require('lodash/noop');
@@ -16,9 +17,13 @@ import {
     getTreeLeaves,
     indexOfTreeNode,
     getDrillIntersection,
-    getSortsFromModel
+    getSortsFromModel,
+    IPivotTableInnerProps
 } from '../PivotTable';
-import { oneMeasureDataSource } from '../../tests/mocks';
+import {
+    oneMeasureDataSource,
+    oneAttributeOneMeasureDataSource
+} from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
 import { LoadingComponent } from '../../simple/LoadingComponent';
 import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
@@ -28,10 +33,10 @@ import { GroupingProviderFactory } from '../pivotTable/GroupingProvider';
 const intl = createIntlMock();
 
 describe('PivotTable', () => {
-    function renderComponent(customProps = {}) {
+    function renderComponent(customProps: Partial<IPivotTableInnerProps> = {}, dataSource = oneMeasureDataSource) {
         return mount(
             <PivotTable
-                dataSource={oneMeasureDataSource}
+                dataSource={dataSource}
                 updateTotals={noop as any}
                 getPage={noop as any}
                 intl={intl}
@@ -72,7 +77,7 @@ describe('PivotTable', () => {
                 intl,
                 {},
                 [],
-                groupingProvider
+                () => groupingProvider
             );
             await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
             expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
@@ -282,20 +287,68 @@ describe('PivotTable', () => {
     });
 
     describe('groupRows for attribute columns', () => {
+        let createProvider: jest.SpyInstance;
+
+        function renderComponentForGrouping(customProps: Partial<IPivotTableInnerProps> = {}) {
+            return renderComponent(customProps, oneAttributeOneMeasureDataSource);
+        }
+
+        beforeEach(() => {
+            createProvider = jest.spyOn(GroupingProviderFactory, 'createProvider');
+        });
+
+        afterEach(() => {
+            createProvider.mockRestore();
+        });
+
         it.each([
-            ['should', true, true],
             ['should NOT', undefined, false],
             ['should NOT', false, false]
-        ])('%s group rows for attribute columns when groupRows is %s', (_should, groupRows, expected) => {
-            const createProviderMock = jest.spyOn(GroupingProviderFactory, 'createProvider');
-
-            renderComponent({
+        ])('%s group rows when groupRows property is %s', (_should, groupRows, expected) => {
+            renderComponentForGrouping({
                 groupRows
             });
 
-            expect(createProviderMock).toBeCalledWith(expected);
+            expect(createProvider).toHaveBeenCalledTimes(1);
+            expect(createProvider).toBeCalledWith(expected);
+        });
 
-            createProviderMock.mockRestore();
+        // tslint:disable-next-line:max-line-length
+        it('should group rows when grouping turned on and sorted by first attribute (default sort)', () => {
+            renderComponentForGrouping({
+                groupRows: true
+            });
+
+            expect(createProvider).toHaveBeenCalledTimes(1);
+            expect(createProvider).toHaveBeenCalledWith(true);
+        });
+
+        it('should NOT group rows when not sorted by first attribute', (done) => {
+            // check second async invocation since we are waiting for datasource to be updated with specified resultSpec
+            const onDataSourceUpdateSuccess = () => {
+                expect(createProvider).toHaveBeenCalledTimes(2);
+                expect(createProvider).toHaveBeenNthCalledWith(2, false);
+                done();
+            };
+
+            renderComponentForGrouping({
+                groupRows: true,
+                resultSpec: oneAttributeOneMeasureSortByMeasureExecutionObject.execution.resultSpec,
+                onDataSourceUpdateSuccess
+            });
+        });
+
+        it('should NOT group rows when grouping switched by property after render', () => {
+            const wrapper = renderComponentForGrouping({
+                groupRows: true
+            });
+
+            wrapper.setProps({
+                groupRows: false
+            });
+
+            expect(createProvider).toHaveBeenCalledTimes(2);
+            expect(createProvider).toHaveBeenNthCalledWith(2, false);
         });
     });
 });

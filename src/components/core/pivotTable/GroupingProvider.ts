@@ -66,7 +66,6 @@ class AttributeGroupingProvider implements IGroupingProvider {
     }
 
     public processPage(pageRows: IGridRow[], rowOffset: number, rowAttributeIDs: string[]) {
-        let previousAttributeId: string = null;
         rowAttributeIDs.forEach((attributeId) => {
             if (!this.itemUris[attributeId]) {
                 this.itemUris[attributeId] = [];
@@ -79,8 +78,6 @@ class AttributeGroupingProvider implements IGroupingProvider {
                     this.itemUris[attributeId][rowIndex + rowOffset] = attributeItemUri;
                 }
             });
-
-            previousAttributeId = attributeId;
         });
 
         this.update();

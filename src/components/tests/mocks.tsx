@@ -11,7 +11,9 @@ import {
     oneMeasureOneDimensionResponse,
     twoMeasuresOneDimensionResponse,
     twoMeasuresAfm,
-    emptyResponse
+    emptyResponse,
+    oneAttributesOneMeasureResponse,
+    oneAttributeOneMeasureExecutionObject
 } from '../../execution/fixtures/ExecuteAfm.fixtures';
 
 export const initChartDataLoading = jest.fn(() => Promise.resolve({
@@ -78,6 +80,13 @@ export const executionObjectWithTotalsDataSource: IDataSource = {
     getFingerprint: () => JSON.stringify(responseWithTotals)
 };
 
+export const oneAttributeOneMeasureDataSource: IDataSource = {
+    getData: () => Promise.resolve(oneAttributesOneMeasureResponse),
+    getPage: () => Promise.resolve(oneAttributesOneMeasureResponse),
+    getAfm: () => oneAttributeOneMeasureExecutionObject.execution.afm,
+    getFingerprint: () => JSON.stringify(oneAttributesOneMeasureResponse)
+};
+
 export const emptyDataSource: IDataSource = {
     getData: () => Promise.resolve(emptyResponse),
     getPage: () => Promise.resolve(emptyResponse),
@@ -94,10 +103,10 @@ export const tooLargeDataSource: IDataSource = {
 
 export const delayedTooLargeDataSource: IDataSource = {
     getData: () => (new Promise((_resolve, reject) => {
-        setTimeout(reject(tooLargeResponse), 20);
+        setTimeout(() => { reject(tooLargeResponse); }, 20);
     })),
     getPage: () => (new Promise((_resolve, reject) => {
-        setTimeout(reject(tooLargeResponse), 20);
+        setTimeout(() => { reject(tooLargeResponse); }, 20);
     })),
     getAfm: () => ({}),
     getFingerprint: () => JSON.stringify(tooLargeDataSource)
