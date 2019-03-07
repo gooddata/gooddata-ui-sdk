@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import React, { Component } from 'react';
 import { AttributeElements, BarChart, Model } from '@gooddata/react-components';
 import Select from 'react-select';

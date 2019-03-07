@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 
 const demoProject = {
     'https://secure.gooddata.com': 'k26dtejorcqlqf11crn6imbeevp2q4kg',
