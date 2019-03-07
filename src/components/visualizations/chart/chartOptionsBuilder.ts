@@ -67,8 +67,15 @@ import { getChartProperties } from './highcharts/helpers';
 import { isDataOfReasonableSize } from './highChartsCreators';
 import { NORMAL_STACK, PERCENT_STACK } from './highcharts/getOptionalStackingConfiguration';
 
-const enableAreaChartStacking = (stacking: any) => {
-    return stacking || isUndefined(stacking);
+const isAreaChartStackingEnabled = (options: IChartConfig) => {
+    const { type, stacking, stackMeasures } = options;
+    if (!isAreaChart(type)) {
+        return false;
+    }
+    if (isUndefined(stackMeasures)) {
+        return stacking || isUndefined(stacking);
+    }
+    return stackMeasures;
 };
 
 // types with only many measures or one measure and one attribute
@@ -108,7 +115,8 @@ export const supportedDualAxesChartTypes = [
 
 export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
-    VisualizationTypes.BAR
+    VisualizationTypes.BAR,
+    VisualizationTypes.AREA
 ];
 
 export interface IAxis {
@@ -1123,25 +1131,24 @@ export function getCategoriesForTwoAttributes(
 }
 
 function getStackingConfig(stackByAttribute: any, options: IChartConfig): string {
-    const { type, stacking, stackMeasures, stackMeasuresToPercent } = options;
+    const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
 
     const supportsStacking = !(isOneOfTypes(type, unsupportedStackingTypes));
 
     /**
      * we should enable stacking for one of the following cases :
-     * 1) If stackby attibute have been set and chart supports stacking
+     * 1) If stackby attribute have been set and chart supports stacking
      * 2) If chart is an area chart and stacking is enabled (stackBy attribute doesn't matter)
-     * 3) If chart is column or bar chart and 'Stack Measures' is enabled
+     * 3) If chart is column/bar chart and 'Stack Measures' is enabled
      */
     const isStackByChart = stackByAttribute && supportsStacking;
-    const isAreaChartWithEnabledStacking = isAreaChart(type) && enableAreaChartStacking(stacking);
+    const isAreaChartWithEnabledStacking = isAreaChartStackingEnabled(options);
+
     if (isStackByChart || isAreaChartWithEnabledStacking || stackMeasures || stackMeasuresToPercent) {
         return stackingValue;
     }
-
-    // No stacking
-    return null;
+    return null; // no stacking
 }
 
 function preprocessMeasureGroupItems(
@@ -1330,17 +1337,21 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 }
 
 function assignYAxes(series: any, yAxes: IAxis[]) {
-    series.forEach((seriesItem: any, index: number) => {
+    return series.reduce((result: any, item: any, index: number) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
             return includes(get(axis, 'seriesIndices', []), index);
         });
+        // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
+        // then 'yAxis' in other series should follow the first one
+        const firstYAxisIndex = result.lenght > 0 ? result[0].yAxis : 0;
+        const seriesItem = {
+            ...item,
+            yAxis: yAxisIndex !== -1 ? yAxisIndex : firstYAxisIndex
+        };
 
-        if (yAxisIndex !== -1) {
-            seriesItem.yAxis = yAxisIndex;
-        }
-    });
-
-    return series;
+        result.push(seriesItem);
+        return result;
+    }, []);
 }
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;

@@ -9,7 +9,7 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
-import { getViewByTwoAttributes } from '../helpers/optionalStacking';
+import { getViewByTwoAttributes } from '../helpers/optionalStacking/common';
 
 export interface IColumnChartBucketProps {
     measures: VisualizationObject.BucketItem[];

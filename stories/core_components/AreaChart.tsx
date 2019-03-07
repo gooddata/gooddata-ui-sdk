@@ -380,4 +380,72 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
+    ))
+    .add('optional stacking chart with two attributes, one measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with one attributes, two measures', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1]}
+                    config={{
+                        stackMeasures: false
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with one attributes, two measures and \'Stack measures\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1]}
+                    config={{
+                        stackMeasures: true
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with one attributes, two measures and \'Stack to 100%\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1]}
+                    config={{
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with one viewBy, one stackBy, one measure and \'Stack to 100%\'', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1]}
+                    stackBy={ATTRIBUTE_2}
+                    config={{
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            </div>
+        )
     ));
