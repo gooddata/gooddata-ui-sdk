@@ -168,6 +168,11 @@ export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader['at
     items: Execution.IResultAttributeHeaderItem[];
 };
 
+export interface IValidationResult {
+    dataTooLarge: boolean;
+    hasNegativeValue: boolean;
+}
+
 export interface IViewByTwoAttributes {
     parent: Execution.IResultHeaderItem[];
     children: Execution.IResultHeaderItem[];
@@ -229,8 +234,8 @@ function getTreemapDataForValidation(data: any) {
     };
 }
 
-export function validateData(limits: IChartLimits, chartOptions: any) {
-    const { type } = chartOptions;
+export function validateData(limits: IChartLimits, chartOptions: IChartOptions): IValidationResult {
+    const { type, isViewByTwoAttributes } = chartOptions;
     const finalLimits = limits || getChartLimits(type);
     let dataToValidate = chartOptions.data;
     if (isTreemap(type)) {
@@ -238,7 +243,7 @@ export function validateData(limits: IChartLimits, chartOptions: any) {
     }
 
     return {
-        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits),
+        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
         hasNegativeValue: cannotShowNegativeValues(type)
             && isNegativeValueIncluded(chartOptions.data.series)
     };
