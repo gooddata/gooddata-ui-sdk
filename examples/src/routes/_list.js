@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import AboutThisProject from './AboutThisProject';
 import AttributeFilter from './AttributeFilter';
 import Sorting from './Sorting';
