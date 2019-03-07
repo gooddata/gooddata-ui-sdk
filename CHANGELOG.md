@@ -21,6 +21,8 @@ The REST API versions in the table are just for your information as the values a
 
 -   Pivot table totals can be turned on with menu. (RAIL-990)
 
+-   Pivot table supports grouping of attribute cells when sorted by first attribute. (BB-1388, BB-1391)
+
 ### Changed
 
 -   Treemap and Heatmap visualization now emits drill events with `value` property of type `string` instead of `number` same as other visualizations. (BB-1318)
