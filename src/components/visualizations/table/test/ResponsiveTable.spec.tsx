@@ -81,6 +81,60 @@ describe('Responsive Table', () => {
         });
     });
 
+    describe('expand for large container', () => {
+        const largeNumberOfRows = range(0, 4000).map(() => TABLE_ROWS_1A_2M[0]);
+        const BASE_NUMBER_OF_ROWS = 10;
+        describe('container height given', () => {
+            function generateTableData(containerHeight: number): ITableData {
+                return {
+                    ...TABLE_DATA,
+                    containerHeight,
+                    rows: largeNumberOfRows
+                };
+            }
+
+            it('should show more rows if container is large', () => {
+                const largeContainerData = generateTableData(500);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(15);
+            });
+
+            it('should not notify about hidden data (i.e. not show half of the row)', () => {
+                const largeContainerData = generateTableData(500);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('hasHiddenRows')).toEqual(false);
+            });
+
+            it('should show only base rows when container too small', () => {
+                const largeContainerData = generateTableData(100);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(BASE_NUMBER_OF_ROWS);
+            });
+        });
+
+        describe('container height not given', () => {
+            const largeContainerData: ITableData = {
+                ...TABLE_DATA,
+                rows: largeNumberOfRows
+            };
+
+            it('should not show more rows', () => {
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(BASE_NUMBER_OF_ROWS);
+            });
+
+            it('should notify about hidden data (i.e. show half of the row)', () => {
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('hasHiddenRows')).toEqual(true);
+            });
+        });
+    });
+
     describe('page', () => {
         it('should set new page when it is sent in props', () => {
             const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(TABLE_DATA);

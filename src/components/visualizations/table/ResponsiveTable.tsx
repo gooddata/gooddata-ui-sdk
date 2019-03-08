@@ -10,6 +10,7 @@ import { OnSortChangeWithItem, TableRow } from '../../../interfaces/Table';
 import { ITotalWithData } from '../../../interfaces/Totals';
 
 const HEIGHT_PADDING: number = 20;
+const BOTTOM_BUTTONS_HEIGHT: number = 31;
 
 const isTouchDevice: boolean = 'ontouchstart' in document.documentElement;
 
@@ -23,10 +24,12 @@ export interface IResponsiveTableProps {
     onSortChange?: OnSortChangeWithItem;
     executionRequest: AFM.IExecution;
     executionResponse: Execution.IExecutionResponse;
+    containerHeight?: number;
 }
 
 export interface IResponsiveTableState {
     page: number;
+    pageOffset: number;
 }
 
 export class ResponsiveTable extends React.Component<IResponsiveTableProps, IResponsiveTableState> {
@@ -42,7 +45,8 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     constructor(props: IResponsiveTableProps) {
         super(props);
         this.state = {
-            page: props.page || 1
+            page: props.page || 1,
+            pageOffset: 0
         };
 
         this.onMore = this.onMore.bind(this);
@@ -51,9 +55,19 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     }
 
     public componentWillReceiveProps(nextProps: IResponsiveTableProps): void {
-        if (nextProps.page) {
+        if (this.props.containerHeight !== nextProps.containerHeight ||
+            this.props.totalsWithData.length !== nextProps.totalsWithData.length ||
+            this.props.rows.length !== nextProps.rows.length) {
+            const rows = this.getRowCount(
+                nextProps.page,
+                nextProps.rows.length,
+                nextProps.totalsWithData.length,
+                nextProps.containerHeight,
+                nextProps.rowsPerPage
+            );
+            const page = this.getBasePage(rows);
             this.setState({
-                page: nextProps.page
+                page
             });
         }
     }
@@ -63,10 +77,10 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
 
         const tableProps: ITableProps = {
             ...props,
-            rows: props.rows.slice(0, this.getRowCount(this.state.page)),
-            containerHeight: this.getContainerMaxHeight(),
+            rows: props.rows.slice(0, this.getRowCount(this.getPage())),
+            containerHeight: this.getContainerHeight(),
             containerMaxHeight: this.getContainerMaxHeight(),
-            hasHiddenRows: !this.isMoreButtonDisabled(),
+            hasHiddenRows: this.hasHiddenRows(),
             sortInTooltip: isTouchDevice
         };
 
@@ -85,30 +99,68 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     }
 
     private onMore(): void {
-        const page: number = this.state.page + 1;
-        this.setState({ page });
-        this.props.onMore({ page, rows: this.getRowCount(page) });
+        const pageOffset = this.state.pageOffset + 1;
+        this.setState({ pageOffset }, () => {
+            const rows = this.getRowCount(this.getPage());
+            this.props.onMore({ page: this.getPage(), rows });
+        });
     }
 
     private onLess(): void {
-        const page: number = 1;
-        this.setState({ page });
-        this.props.onLess({ rows: this.getRowCount(page) });
+        const pageOffset = 0;
+        this.setState({ pageOffset }, () => {
+            const rows = this.getRowCount(this.getPage());
+            this.props.onLess({ rows });
+        });
 
         const header: ClientRect = this.table.getBoundingClientRect();
         window.scrollTo(window.pageXOffset, window.pageYOffset + header.top);
     }
 
-    private getRowCount(page: number): number {
-        return Math.min(this.props.rows.length, this.props.rowsPerPage * page);
+    private getBasePage(rowsCount: number): number {
+        return Math.ceil(rowsCount / this.props.rowsPerPage);
     }
 
-    private getContainerMaxHeight(): number {
+    private getPage(): number {
+        return this.state.page + this.state.pageOffset;
+    }
+
+    private getRowCount(
+        page: number,
+        rowsLength: number = this.props.rows.length,
+        totalsWithDataLength: number = this.props.totalsWithData.length,
+        containerHeight: number = this.props.containerHeight,
+        rowsPerPage: number = this.props.rowsPerPage
+    ): number {
+        const renderedHeight = (rowsPerPage * page * DEFAULT_ROW_HEIGHT) +
+            (totalsWithDataLength * DEFAULT_FOOTER_ROW_HEIGHT) +
+            DEFAULT_HEADER_HEIGHT + HEIGHT_PADDING;
+        if (renderedHeight < containerHeight) {
+            const heightDiffInWholeRows = Math.floor((containerHeight - renderedHeight) / DEFAULT_ROW_HEIGHT);
+            return Math.min(rowsLength, rowsPerPage * page + heightDiffInWholeRows);
+        }
+        return Math.min(rowsLength, rowsPerPage * page);
+    }
+
+    private getContainerHeight(): number {
         const { rows, totalsWithData } = this.props;
 
         return (rows.length * DEFAULT_ROW_HEIGHT) +
             (totalsWithData.length * DEFAULT_FOOTER_ROW_HEIGHT) +
             DEFAULT_HEADER_HEIGHT + HEIGHT_PADDING;
+    }
+
+    private getContainerMaxHeight(): number {
+        const { rows, totalsWithData, containerHeight } = this.props;
+        const allDataHeight = (rows.length * DEFAULT_ROW_HEIGHT) +
+            (totalsWithData.length * DEFAULT_FOOTER_ROW_HEIGHT) +
+            DEFAULT_HEADER_HEIGHT + HEIGHT_PADDING;
+        if (containerHeight) {
+            const buttonsHeight = this.isMoreButtonVisible() ? (BOTTOM_BUTTONS_HEIGHT + HEIGHT_PADDING) : 0;
+            return Math.min(containerHeight - buttonsHeight, allDataHeight);
+        }
+
+        return allDataHeight;
     }
 
     private setTableRef(table: Element): void {
@@ -120,10 +172,14 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     }
 
     private isMoreButtonDisabled(): boolean {
-        return this.props.rows.length <= this.props.rowsPerPage * this.state.page;
+        return this.props.rows.length <= this.props.rowsPerPage * (this.getPage());
     }
 
     private isLessButtonVisible(): boolean {
-        return this.state.page > 1;
+        return this.state.pageOffset > 0;
+    }
+
+    private hasHiddenRows(): boolean {
+        return !this.isMoreButtonDisabled() && !this.props.containerHeight;
     }
 }
