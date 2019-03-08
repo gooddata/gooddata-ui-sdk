@@ -8,7 +8,7 @@ async function getCell(t, selector, cellSelector) {
     if (!cellSelector) {
         return null;
     }
-    const cell = await chart.find(cellSelector);
+    const cell = await chart.find(`.ag-body-viewport ${cellSelector}`);
     await t.expect(cell.exists).eql(true, `${cellSelector} not found in ${selector}`);
     return cell;
 }

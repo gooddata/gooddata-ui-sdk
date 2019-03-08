@@ -6,7 +6,7 @@ export const noAttributesTwoMeasures: any = {
         m_0: '678',
         m_1: '907'
     }],
-    rowAttributeIDs: []
+    columnIds: []
 };
 
 export const oneAttributeTwoMeasures = {
@@ -59,7 +59,7 @@ export const oneAttributeTwoMeasures = {
         m_0: '201',
         m_1: '482'
     }],
-    rowAttributeIDs: ['a_4DOTdf']
+    columnIds: ['a_4DOTdf']
 };
 
 export const oneAttributeTwoMeasuresSameValuesDifferentURIs = {
@@ -112,7 +112,7 @@ export const oneAttributeTwoMeasuresSameValuesDifferentURIs = {
         m_0: '201',
         m_1: '482'
     }],
-    rowAttributeIDs: ['a_4DOTdf']
+    columnIds: ['a_4DOTdf']
 };
 
 export const oneAttributeTwoMeasuresOneGroupInFirstAttribute = {
@@ -177,7 +177,7 @@ export const oneAttributeTwoMeasuresOneGroupInFirstAttribute = {
         m_0: '201',
         m_1: '482'
     }],
-    rowAttributeIDs: ['a_4DOTdf']
+    columnIds: ['a_4DOTdf']
 };
 
 export const twoAttributesTwoMeasuresUnEvenGroups = {
@@ -350,7 +350,7 @@ export const twoAttributesTwoMeasuresUnEvenGroups = {
         m_0: '278',
         m_1: '267'
     }],
-    rowAttributeIDs: ['a_4DOTdf', 'a_5DOTdf']
+    columnIds: ['a_4DOTdf', 'a_5DOTdf']
 };
 
 export const twoAttributesTwoMeasuresEvenGroupsFristPage = {
@@ -405,7 +405,7 @@ export const twoAttributesTwoMeasuresEvenGroupsFristPage = {
         m_0: '47',
         m_1: '788'
     }],
-    rowAttributeIDs: ['a_4DOTdf', 'a_5DOTdf']
+    columnIds: ['a_4DOTdf', 'a_5DOTdf']
 };
 
 export const twoAttributesTwoMeasuresEvenGroupsSecondPage = {
@@ -473,7 +473,7 @@ export const twoAttributesTwoMeasuresEvenGroupsSecondPage = {
         m_0: '278',
         m_1: '267'
     }],
-    rowAttributeIDs: ['a_4DOTdf', 'a_5DOTdf']
+    columnIds: ['a_4DOTdf', 'a_5DOTdf']
 };
 
 export const twoAttributesTwoMeasuresEvenGroups = {
@@ -481,5 +481,5 @@ export const twoAttributesTwoMeasuresEvenGroups = {
         ...twoAttributesTwoMeasuresEvenGroupsFristPage.rowData,
         ...twoAttributesTwoMeasuresEvenGroupsSecondPage.rowData
     ],
-    rowAttributeIDs: twoAttributesTwoMeasuresEvenGroupsFristPage.rowAttributeIDs
+    columnIds: twoAttributesTwoMeasuresEvenGroupsFristPage.columnIds
 };

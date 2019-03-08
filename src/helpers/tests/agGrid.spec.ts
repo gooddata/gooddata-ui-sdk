@@ -20,7 +20,8 @@ import {
     getMeasureSortItemFieldAndDirection,
     shouldMergeHeaders,
     mergeHeaderEndIndex,
-    getRowNodeId
+    getRowNodeId,
+    getRowIndexByScrollTop
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
@@ -863,4 +864,19 @@ describe('getRowNodeId', () => {
 
         expect(getRowNodeId(item)).toEqual('a_1027_1226-a_1094_nat-a_64727_966650');
     });
+});
+
+describe('getRowIndexByScrollTop', () => {
+    const rowHeight = 20;
+
+    it.each([
+        ['100', 100, 5],
+        ['110', 110, 5],
+        ['99', 99, 4]
+    ])(
+        'should return correct row index when scrolltop is %s',
+        (_: string, scrollTop: number, expectedRowIndex: number) => {
+            expect(getRowIndexByScrollTop(scrollTop, rowHeight)).toEqual(expectedRowIndex);
+        }
+    );
 });

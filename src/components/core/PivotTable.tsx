@@ -7,9 +7,9 @@ import {
     GridReadyEvent,
     ICellRendererParams,
     IDatasource,
-    IGetRowsParams,
     SortChangedEvent,
-    ColumnResizedEvent
+    ColumnResizedEvent,
+    BodyScrollEvent
 } from 'ag-grid';
 import { AgGridReact } from 'ag-grid-react';
 import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef';
@@ -25,7 +25,6 @@ import cloneDeep = require('lodash/cloneDeep');
 import sortBy = require('lodash/sortBy');
 import sumBy = require('lodash/sumBy');
 
-import InjectedIntl = ReactIntl.InjectedIntl;
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 import '../../../styles/css/pivotTable.css';
@@ -34,7 +33,6 @@ import { VisualizationTypes } from '../../constants/visualizationTypes';
 import {
     assortDimensionHeaders,
     COLUMN_ATTRIBUTE_COLUMN,
-    executionToAGGridAdapter,
     getRowNodeId,
     getIdsFromUri,
     getParsedFields,
@@ -54,7 +52,7 @@ import {
 } from '../../helpers/mappingHeader';
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from '../../helpers/tableCell';
-import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
+import { IGridCellEvent, IGridHeader, IGridRow } from '../../interfaces/AGGrid';
 
 import { IDrillEvent, IDrillEventContextTable, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
@@ -65,7 +63,6 @@ import {
 import { IPivotTableConfig, IMenuAggregationClickConfig } from '../../interfaces/PivotTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import { LoadingComponent } from '../simple/LoadingComponent';
-import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../visualizations/table/totals/utils';
 
 import { getMasterMeasureObjQualifier } from '../../helpers/afmHelper';
 import { getScrollbarWidth } from '../../helpers/domUtils';
@@ -85,6 +82,13 @@ import ColumnHeader from './pivotTable/ColumnHeader';
 import { GroupingProviderFactory, IGroupingProvider } from './pivotTable/GroupingProvider';
 import ApiWrapper from './pivotTable/agGridApiWrapper';
 import { getAttributeElementIdFromAttributeElementUri } from '../visualizations/utils/common';
+import {
+    initStickyHeaders,
+    updateStickyHeadersPosition,
+    updateStickyHeaders
+} from './pivotTable/stickyGroupHandler';
+import TotalsUtils, { AVAILABLE_TOTALS as renderedTotalTypesOrder } from '../visualizations/table/totals/utils';
+import { getAGGridDataSource } from './pivotTable/agGridDataSource';
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -262,90 +266,6 @@ export const getSortsFromModel = (
     });
 };
 
-export const getAGGridDataSource = (
-    resultSpec: AFM.IResultSpec,
-    getPage: IGetPage,
-    cancelPagePromises: () => void,
-    getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (
-        execution: Execution.IExecutionResponses,
-        columnDefs: IGridHeader[],
-        resultSpec: AFM.IResultSpec
-    ) => void,
-    getGridApi: () => any,
-    intl: InjectedIntl,
-    columnDefOptions: IColumnDefOptions = {},
-    columnTotals: AFM.ITotalItem[],
-    getGroupingProvider: () => IGroupingProvider
-): IDatasource => ({
-    getRows: ({ startRow, endRow, successCallback, sortModel }: IGetRowsParams) => {
-        const execution = getExecution();
-        const groupingProvider = getGroupingProvider();
-
-        let resultSpecUpdated: AFM.IResultSpec = resultSpec;
-        // If execution is null, this means this is a fresh dataSource and we should ignore current sortModel
-        if (sortModel.length > 0 && execution) {
-            resultSpecUpdated = {
-                ...resultSpecUpdated,
-                sorts: getSortsFromModel(sortModel, execution)
-            };
-        }
-        if (columnTotals && columnTotals.length > 0) {
-            resultSpecUpdated = {
-                ...resultSpecUpdated,
-                dimensions: [
-                    {
-                        ...resultSpecUpdated.dimensions[0],
-                        totals: columnTotals
-                    },
-                    ...resultSpecUpdated.dimensions.slice(1)
-                ]
-            };
-        }
-
-        const pagePromise = getPage(
-            resultSpecUpdated,
-            // column limit defaults to SERVERSIDE_COLUMN_LIMIT (1000), because 1000 columns is hopefully enough.
-            [endRow - startRow, undefined],
-            // column offset defaults to 0, because we do not support horizontal paging yet
-            [startRow, undefined]
-        );
-        return pagePromise
-            .then((execution: Execution.IExecutionResponses | null) => {
-                if (!execution) {
-                    return null;
-                }
-
-                const { columnDefs, rowData, rowTotals } = executionToAGGridAdapter(
-                    execution,
-                    resultSpecUpdated,
-                    intl,
-                    {
-                        addLoadingRenderer: 'loadingRenderer',
-                        columnDefOptions
-                    }
-                );
-                const { offset, count, total } = execution.executionResult.paging;
-
-                const rowAttributeIds = columnDefs
-                    .filter(columnDef => columnDef.type === ROW_ATTRIBUTE_COLUMN)
-                    .map(columnDef => columnDef.field);
-                groupingProvider.processPage(rowData, offset[0], rowAttributeIds);
-                // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
-                const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
-                onSuccess(execution, columnDefs, resultSpecUpdated);
-                successCallback(rowData, lastRow);
-                // set totals
-                getGridApi().setPinnedBottomRowData(rowTotals);
-
-                return execution;
-            });
-    },
-    destroy: () => {
-        cancelPagePromises();
-    }
-});
-
 export const RowLoadingElement = (props: ICellRendererParams) => {
     // rows that are still loading do not have node.id
     // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
@@ -424,6 +344,8 @@ interface ISortedByColumnIndexes {
     all: number[];
 }
 
+const DEFAULT_ROW_HEIGHT = 28;
+
 export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
     public static defaultProps: Partial<IPivotTableInnerProps> = {
         ...commonDefaultProps,
@@ -440,6 +362,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private gridApi: GridApi;
     private containerRef: HTMLDivElement;
     private groupingProvider: IGroupingProvider;
+    private lastScrollTop: number = 0;
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -449,7 +372,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             rowData: [],
 
             execution: null,
-            columnTotals: cloneDeep(this.getColumnTotalsFromResultSpec(this.props.resultSpec)),
+            columnTotals: cloneDeep(TotalsUtils.getColumnTotalsFromResultSpec(this.props.resultSpec)),
             agGridRerenderNumber: 1,
             desiredHeight: props.config.maxHeight,
 
@@ -476,8 +399,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public componentDidUpdate(prevProps: IPivotTableInnerProps, prevState: IPivotTableState) {
-        const prevPropsTotals = this.getColumnTotalsFromResultSpec(prevProps.resultSpec);
-        const currentPropsTotals = this.getColumnTotalsFromResultSpec(this.props.resultSpec);
+        const prevPropsTotals = TotalsUtils.getColumnTotalsFromResultSpec(prevProps.resultSpec);
+        const currentPropsTotals = TotalsUtils.getColumnTotalsFromResultSpec(this.props.resultSpec);
         const totalsPropsChanged = !isEqual(prevPropsTotals, currentPropsTotals);
 
         const prevStateTotals = prevState.columnTotals;
@@ -538,7 +461,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
         const attributeId = colDef.field;
         const isPinnedRow = cellClassParams.node.isRowPinned();
-        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeated(attributeId, rowIndex);
+        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeatedValue(attributeId, rowIndex);
         const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
 
         return classNames(
@@ -605,14 +528,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.agGridDataSource = getAGGridDataSource(
             this.props.resultSpec,
             this.props.getPage,
-            this.props.cancelPagePromises,
             this.getExecution,
             onSuccess,
             this.getGridApi,
             this.props.intl,
-            {},
             this.state.columnTotals,
-            () => this.groupingProvider
+            () => this.groupingProvider,
+            this.props.cancelPagePromises
         );
     }
 
@@ -621,6 +543,19 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     public onGridReady = (params: GridReadyEvent) => {
         this.gridApi = params.api;
         this.setGridDataSource();
+
+        if (this.props.groupRows) {
+            initStickyHeaders(this.gridApi);
+        }
+    }
+
+    public onModelUpdated = () => {
+        if (this.props.groupRows) {
+            updateStickyHeadersPosition(this.gridApi);
+        }
+        const scrollTop = this.lastScrollTop;
+        this.lastScrollTop = 0;
+        this.updateStickyRow(scrollTop);
     }
 
     public setGridDataSource() {
@@ -718,7 +653,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
 
         const newColumnTotals = sortBy(updatedColumnTotals, (total) => {
-            return renderedTotalTypesOrder.findIndex(rankedItem => rankedItem === total.type);
+            return renderedTotalTypesOrder.findIndex((rankedItem: string) => rankedItem === total.type);
         });
 
         this.props.pushData({
@@ -745,6 +680,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 sortItems
             }
         });
+    }
+
+    public onBodyScroll = (event: BodyScrollEvent) => {
+        if (event.direction === 'vertical') {
+            this.updateStickyRow(event.top);
+        }
     }
 
     public renderVisualization() {
@@ -804,6 +745,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             infiniteInitialRowCount: pageSize,
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
+            onModelUpdated: this.onModelUpdated,
+            onBodyScroll: this.onBodyScroll,
 
             // this provides persistent row selection (if enabled)
             getRowNodeId,
@@ -818,7 +761,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                             // params.data is undefined when rows are in loading state
                             params.data &&
                             params.data.colSpan &&
-                            renderedTotalTypesOrder.find(item => item === params.data[params.data.colSpan.headerKey])
+                            renderedTotalTypesOrder.find(
+                                (item: string) => item === params.data[params.data.colSpan.headerKey]
+                            )
                         ) {
                             return params.data.colSpan.count;
                         }
@@ -870,7 +815,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
 
             // Custom CSS classes
-            rowClass: 'gd-table-row'
+            rowClass: 'gd-table-row',
+            rowHeight: DEFAULT_ROW_HEIGHT
         };
 
         // columnDefs are loaded with first page request. Show overlay loading before first page is available.
@@ -947,10 +893,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return this.state.columnTotals;
     }
 
-    private getColumnTotalsFromResultSpec = (source: AFM.IResultSpec) => {
-        return get(source, 'dimensions[0].totals', []);
-    }
-
     private getDrillablePredicates(): IHeaderPredicate[] {
         return convertDrillableItemsToPredicates(this.props.drillableItems);
     }
@@ -988,23 +930,28 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setGridDataSource();
     }
 
-    private getRowHeight(): number {
-        const DEFAULT_ROW_HEIGHT = 28;
-
-        return this.gridApi
-            ? ApiWrapper.getRowHeight(this.gridApi)
-            : DEFAULT_ROW_HEIGHT;
+    private updateStickyRow(scrollTop: number): void {
+        if (this.props.groupRows && this.gridApi) {
+            updateStickyHeaders(
+                scrollTop,
+                this.lastScrollTop,
+                DEFAULT_ROW_HEIGHT,
+                this.gridApi,
+                this.groupingProvider,
+                ApiWrapper
+            );
+        }
+        this.lastScrollTop = scrollTop;
     }
 
     private getTotalBodyHeight(executionResult: Execution.IExecutionResult): number {
         const aggregationCount = sumBy(executionResult.totals, total => total.length);
         const rowCount = executionResult.paging.total[0];
 
-        const rowHeight = this.getRowHeight();
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
         const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
-        const bodyHeight = rowCount * rowHeight + leeway;
-        const footerHeight = aggregationCount * rowHeight;
+        const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
+        const footerHeight = aggregationCount * DEFAULT_ROW_HEIGHT;
 
         return headerHeight + bodyHeight + footerHeight;
     }

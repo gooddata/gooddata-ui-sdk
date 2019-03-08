@@ -17,9 +17,9 @@ function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundarie
     expect(boundaries).toEqual(expectedBoundaries);
 }
 
-function expectRepeats(groupingProvider: IGroupingProvider, attributeId: string, expectedRepeats: boolean[]) {
+function expectRepeats(groupingProvider: IGroupingProvider, columnId: string, expectedRepeats: boolean[]) {
     const repeats = new Array(expectedRepeats.length).fill(null)
-        .reduce((acc, _, index) => acc.concat(groupingProvider.isRepeated(attributeId, index)), []);
+        .reduce((acc, _, index) => acc.concat(groupingProvider.isRepeatedValue(columnId, index)), []);
     expect(repeats).toEqual(expectedRepeats);
 }
 
@@ -30,15 +30,15 @@ describe('DefaultGroupingProvider', () => {
         groupingProvider.processPage(
             twoAttributesTwoMeasuresEvenGroups.rowData,
             0,
-            twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs
+            twoAttributesTwoMeasuresEvenGroups.columnIds
         );
 
         const falses = Array(twoAttributesTwoMeasuresEvenGroups.rowData.length).fill(false);
-        const firstAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[0];
-        const secondAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[1];
+        const firstColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[0];
+        const secondColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[1];
         expectBoundaries(groupingProvider, falses);
-        expectRepeats(groupingProvider, firstAttributeID, falses);
-        expectRepeats(groupingProvider, secondAttributeID, falses);
+        expectRepeats(groupingProvider, firstColumnId, falses);
+        expectRepeats(groupingProvider, secondColumnId, falses);
     });
 });
 
@@ -53,7 +53,7 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             noAttributesTwoMeasures.rowData,
             0,
-            noAttributesTwoMeasures.rowAttributeIDs
+            noAttributesTwoMeasures.columnIds
         );
 
         expectBoundaries(groupingProvider, [false, false, false, false]);
@@ -65,7 +65,7 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             oneAttributeTwoMeasuresSameValuesDifferentURIs.rowData,
             0,
-            oneAttributeTwoMeasuresSameValuesDifferentURIs.rowAttributeIDs
+            oneAttributeTwoMeasuresSameValuesDifferentURIs.columnIds
         );
 
         expectBoundaries(groupingProvider, [false, false, false, false]);
@@ -77,7 +77,7 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             oneAttributeTwoMeasures.rowData,
             0,
-            oneAttributeTwoMeasures.rowAttributeIDs
+            oneAttributeTwoMeasures.columnIds
         );
 
         expectBoundaries(groupingProvider, [false, false, false, false]);
@@ -89,12 +89,12 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             oneAttributeTwoMeasuresOneGroupInFirstAttribute.rowData,
             0,
-            oneAttributeTwoMeasuresOneGroupInFirstAttribute.rowAttributeIDs
+            oneAttributeTwoMeasuresOneGroupInFirstAttribute.columnIds
         );
 
-        const attributeID = oneAttributeTwoMeasuresOneGroupInFirstAttribute.rowAttributeIDs[0];
+        const columnId = oneAttributeTwoMeasuresOneGroupInFirstAttribute.columnIds[0];
         expectBoundaries(groupingProvider, [true, false, false, true, true]);
-        expectRepeats(groupingProvider, attributeID, [false, true, true, false, false]);
+        expectRepeats(groupingProvider, columnId, [false, true, true, false, false]);
     });
 
     it('should group correctly', () => {
@@ -103,25 +103,27 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             twoAttributesTwoMeasuresEvenGroups.rowData,
             0,
-            twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs
+            twoAttributesTwoMeasuresEvenGroups.columnIds
         );
 
-        const firstAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[0];
-        const secondAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[1];
+        const firstColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[0];
+        const secondColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[1];
         expectBoundaries(
             groupingProvider,
             [true, false, false, true, false, false, true, false, false, true, false, false]
         );
         expectRepeats(
             groupingProvider,
-            firstAttributeID,
+            firstColumnId,
             [false, true, true, false, true, true, false, true, true, false, true, true]
         );
         expectRepeats(
             groupingProvider,
-            secondAttributeID,
+            secondColumnId,
             [false, false, false, false, false, false, false, false, false, false, false, false]
         );
+        expect(groupingProvider.isColumnWithGrouping(firstColumnId)).toBe(true);
+        expect(groupingProvider.isColumnWithGrouping(secondColumnId)).toBe(false);
     });
 
     it('should end group on column if previous column group ends', () => {
@@ -130,19 +132,19 @@ describe('AttributeGroupingProvider', () => {
         groupingProvider.processPage(
             twoAttributesTwoMeasuresUnEvenGroups.rowData,
             0,
-            twoAttributesTwoMeasuresUnEvenGroups.rowAttributeIDs
+            twoAttributesTwoMeasuresUnEvenGroups.columnIds
         );
 
-        const firstAttributeID = twoAttributesTwoMeasuresUnEvenGroups.rowAttributeIDs[0];
-        const secondAttributeID = twoAttributesTwoMeasuresUnEvenGroups.rowAttributeIDs[1];
+        const firstColumnId = twoAttributesTwoMeasuresUnEvenGroups.columnIds[0];
+        const secondColumnId = twoAttributesTwoMeasuresUnEvenGroups.columnIds[1];
         expect(groupingProvider.isGroupBoundary(3)).toEqual(true);
-        expect(groupingProvider.isRepeated(firstAttributeID, 3)).toEqual(false);
-        expect(groupingProvider.isRepeated(secondAttributeID, 3)).toEqual(false);
+        expect(groupingProvider.isRepeatedValue(firstColumnId, 3)).toEqual(false);
+        expect(groupingProvider.isRepeatedValue(secondColumnId, 3)).toEqual(false);
     });
 
     describe('paging', () => {
-        const firstAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[0];
-        const secondAttributeID = twoAttributesTwoMeasuresEvenGroups.rowAttributeIDs[1];
+        const firstColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[0];
+        const secondColumnId = twoAttributesTwoMeasuresEvenGroups.columnIds[1];
 
         describe('single page', () => {
             const groupingProvider = createAttributeGroupingProvider();
@@ -150,7 +152,7 @@ describe('AttributeGroupingProvider', () => {
             groupingProvider.processPage(
                 twoAttributesTwoMeasuresEvenGroupsFristPage.rowData,
                 5,
-                twoAttributesTwoMeasuresEvenGroupsFristPage.rowAttributeIDs
+                twoAttributesTwoMeasuresEvenGroupsFristPage.columnIds
             );
 
             it('should return correct boundaries for the page and empty rows around it', () => {
@@ -162,12 +164,12 @@ describe('AttributeGroupingProvider', () => {
             });
 
             it('should return correct repetitions for the page and empty rows around it', () => {
-                expectRepeats(groupingProvider, firstAttributeID, [
+                expectRepeats(groupingProvider, firstColumnId, [
                     false, false, false, false, false, // not defined data
                     false, true, true, false, true, // single data page
                     false, false, false, false, false // not defined data
                 ]);
-                expectRepeats(groupingProvider, secondAttributeID, [
+                expectRepeats(groupingProvider, secondColumnId, [
                     false, false, false, false, false, // not defined data
                     false, false, false, false, false, // single data page
                     false, false, false, false, false // not defined data
@@ -181,12 +183,12 @@ describe('AttributeGroupingProvider', () => {
             groupingProvider.processPage(
                 twoAttributesTwoMeasuresEvenGroupsFristPage.rowData,
                 5,
-                twoAttributesTwoMeasuresEvenGroupsFristPage.rowAttributeIDs
+                twoAttributesTwoMeasuresEvenGroupsFristPage.columnIds
             );
             groupingProvider.processPage(
                 twoAttributesTwoMeasuresEvenGroupsSecondPage.rowData,
                 twoAttributesTwoMeasuresEvenGroupsFristPage.rowData.length + 10,
-                twoAttributesTwoMeasuresEvenGroupsSecondPage.rowAttributeIDs
+                twoAttributesTwoMeasuresEvenGroupsSecondPage.columnIds
             );
 
             it('should return correct boundaries for the page and empty rows around it', () => {
@@ -200,14 +202,14 @@ describe('AttributeGroupingProvider', () => {
             });
 
             it('should return correct repetitions for the page and empty rows around it', () => {
-                expectRepeats(groupingProvider, firstAttributeID, [
+                expectRepeats(groupingProvider, firstColumnId, [
                     false, false, false, false, false, // not defined data
                     false, true, true, false, true, // first page
                     false, false, false, false, false, // not defined data
                     true, false, true, true, false, true, true, // second page
                     false, false, false, false, false // not defined data
                 ]);
-                expectRepeats(groupingProvider, secondAttributeID, [
+                expectRepeats(groupingProvider, secondColumnId, [
                     false, false, false, false, false, // not defined data
                     false, false, false, false, false, // first page
                     false, false, false, false, false, // not defined data

@@ -44,7 +44,7 @@ export const getIdsFromUri = (uri: string, sanitize = true) => {
 
 export const identifyHeader = (header: Execution.IResultHeaderItem) => {
     if (Execution.isAttributeHeaderItem(header)) {
-        return `a_${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
+        return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
     }
     if (Execution.isMeasureHeaderItem(header)) {
         return `m${ID_SEPARATOR}${header.measureHeaderItem.order}`;
@@ -58,7 +58,7 @@ export const identifyHeader = (header: Execution.IResultHeaderItem) => {
 export const identifyResponseHeader = (header: Execution.IHeader) => {
     if (Execution.isAttributeHeader(header)) {
         // response headers have no value id
-        return `a_${getIdsFromUri(header.attributeHeader.uri)[0]}`;
+        return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
     }
     if (Execution.isMeasureGroupHeader(header)) {
         // trying to identify a measure group would be ambiguous
@@ -425,9 +425,9 @@ export const getMeasureSortItemFieldAndDirection = (
             const measureSortHeaderIndex = measureHeaderItems
                 .findIndex(measureHeaderItem => measureHeaderItem.measureHeaderItem.localIdentifier
                     === locator.measureLocatorItem.measureIdentifier);
-            keys.push(`m_${measureSortHeaderIndex}`);
+            keys.push(`m${ID_SEPARATOR}${measureSortHeaderIndex}`);
         } else {
-            const key = `a_${getIdsFromUri(locator.attributeLocatorItem.element).join(ID_SEPARATOR)}`;
+            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element).join(ID_SEPARATOR)}`;
             keys.push(key);
         }
     });
@@ -552,6 +552,11 @@ export const getParsedFields = (colId: string): string[][] => {
         .map((field: string) => (field.split(ID_SEPARATOR)));
 };
 
+export const colIdIsSimpleAttribute = (colId: string) => {
+    const parsedFields = getParsedFields(colId);
+    return parsedFields[0].length === 2 && parsedFields[0][0] === 'a';
+};
+
 export const getRowNodeId = (item: any) => {
     return Object.keys(item.headerItemMap).map((key) => {
         const mappingHeader: IMappingHeader = item.headerItemMap[key];
@@ -564,4 +569,8 @@ export const getRowNodeId = (item: any) => {
         const ids = getIdsFromUri(uri);
         return `${key}${ID_SEPARATOR}${ids[1]}`;
     }).join(FIELD_SEPARATOR);
+};
+
+export const getRowIndexByScrollTop = (scrollTop: number, rowHeight: number) => {
+    return Math.floor(scrollTop / rowHeight);
 };

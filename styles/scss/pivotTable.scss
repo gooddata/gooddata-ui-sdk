@@ -160,10 +160,14 @@ $header-cell-resize-width: 20px;
         display: none;
     }
 
-    .gd-cell-hide {
+    .gd-cell-hide{
         color: transparent;
         border-top: 1px solid transparent;
         background-color: white;
+    }
+
+    .gd-cell-show-hidden {
+        color: initial;
     }
 
     .gd-table-row-separator {
@@ -365,5 +369,31 @@ $header-cell-resize-width: 20px;
     .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {
         color: $is-focused-color;
         background: $is-focused-background;
+    }
+}
+
+.ag-floating-top {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+
+    &.gd-visible-sticky-row {
+        display: inherit;
+    }
+
+    .ag-row {
+        background-color: transparent;
+
+        .ag-cell {
+            background-color: #fff;
+            border-top-color: white;
+
+            &.gd-hidden-sticky-column,
+            &.gd-measure-column {
+                background-color: transparent;
+                color: transparent;
+            }
+        }
     }
 }

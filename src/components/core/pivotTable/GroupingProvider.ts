@@ -4,18 +4,19 @@ import { IGridRow } from '../../../interfaces/AGGrid';
 import { isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
 
 interface IAttributesRowItemUris {
-    [attributeId: string]: string[];
+    [columnId: string]: string[];
 }
 
 interface IAttributesRowItemRepetitions {
-    [attributeId: string]: boolean[];
+    [columnId: string]: boolean[];
 }
 
 export interface IGroupingProvider {
     reset: () => void;
-    isRepeated: (attributeId: string, rowIndex: number) => boolean;
+    isRepeatedValue: (columnId: string, rowIndex: number) => boolean;
     isGroupBoundary: (rowIndex: number) => boolean;
-    processPage: (pageRows: IGridRow[], rowOffset: number, rowAttributeIDs: string[]) => void;
+    isColumnWithGrouping: (columnId: string) => boolean;
+    processPage: (pageRows: IGridRow[], rowOffset: number, columnIds: string[]) => void;
 }
 
 class DefaultGroupingProvider implements IGroupingProvider {
@@ -27,11 +28,15 @@ class DefaultGroupingProvider implements IGroupingProvider {
         return false;
     }
 
-    // tslint:disable-next-line:no-empty
-    public processPage(_pageRows: IGridRow[], _rowOffset: number, _rowAttributeIDs: string[]) {
+    public isColumnWithGrouping(_columnId: string) {
+        return false;
     }
 
-    public isRepeated(_attributeId: string, _rowIndex: number) {
+    // tslint:disable-next-line:no-empty
+    public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {
+    }
+
+    public isRepeatedValue(_columnId: string, _rowIndex: number) {
         return false;
     }
 }
@@ -53,9 +58,9 @@ class AttributeGroupingProvider implements IGroupingProvider {
         this.maxRepetitions = 0;
     }
 
-    public isRepeated(attributeId: string, rowIndex: number) {
-        if (this.itemRepetitions[attributeId]) {
-            return this.itemRepetitions[attributeId][rowIndex] === true;
+    public isRepeatedValue(columnId: string, rowIndex: number) {
+        if (this.itemRepetitions[columnId]) {
+            return this.itemRepetitions[columnId][rowIndex] === true;
         }
         return false;
     }
@@ -65,17 +70,21 @@ class AttributeGroupingProvider implements IGroupingProvider {
             (this.repetitionsCounts[rowIndex] === undefined || this.repetitionsCounts[rowIndex] < this.maxRepetitions);
     }
 
-    public processPage(pageRows: IGridRow[], rowOffset: number, rowAttributeIDs: string[]) {
-        rowAttributeIDs.forEach((attributeId) => {
-            if (!this.itemUris[attributeId]) {
-                this.itemUris[attributeId] = [];
+    public isColumnWithGrouping(columnId: string) {
+        return Object.keys(this.itemRepetitions).indexOf(columnId) < this.maxRepetitions;
+    }
+
+    public processPage(pageRows: IGridRow[], rowOffset: number, columnIds: string[]) {
+        columnIds.forEach((columnId) => {
+            if (!this.itemUris[columnId]) {
+                this.itemUris[columnId] = [];
             }
 
             pageRows.forEach((row: IGridRow, rowIndex: number) => {
-                const headerItem = row.headerItemMap[attributeId];
+                const headerItem = row.headerItemMap[columnId];
                 if (isMappingHeaderAttributeItem(headerItem)) {
                     const attributeItemUri = headerItem.attributeHeaderItem.uri;
-                    this.itemUris[attributeId][rowIndex + rowOffset] = attributeItemUri;
+                    this.itemUris[columnId][rowIndex + rowOffset] = attributeItemUri;
                 }
             });
         });
@@ -86,22 +95,22 @@ class AttributeGroupingProvider implements IGroupingProvider {
     private update() {
         this.repetitionsCounts = null;
         this.maxRepetitions = 0;
-        let previousAttributeId: string = null;
+        let previousColumnId: string = null;
 
-        Object.keys(this.itemUris).forEach((attributeId) => {
-            const rowCount = this.itemUris[attributeId].length;
-            this.itemRepetitions[attributeId] = Array(rowCount).fill(false);
+        Object.keys(this.itemUris).forEach((columnId) => {
+            const rowCount = this.itemUris[columnId].length;
+            this.itemRepetitions[columnId] = Array(rowCount).fill(false);
             if (this.repetitionsCounts === null) {
                 this.repetitionsCounts = Array(rowCount).fill(0);
             }
 
             this.updateAttributeColumn(
-                this.itemUris[attributeId],
-                this.itemRepetitions[attributeId],
-                previousAttributeId !== null ? this.itemRepetitions[previousAttributeId] : null
+                this.itemUris[columnId],
+                this.itemRepetitions[columnId],
+                previousColumnId !== null ? this.itemRepetitions[previousColumnId] : null
             );
 
-            previousAttributeId = attributeId;
+            previousColumnId = columnId;
         });
 
         this.maxRepetitions = max(this.repetitionsCounts);
