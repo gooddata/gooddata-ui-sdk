@@ -18,12 +18,19 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader']
             },
             {
-                test: /.scss$/,
+                test: /\.scss$/,
                 loaders: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(eot|woff|ttf|svg)/,
+                test: /\.svg$/,
                 loader: 'file-loader'
+            },
+            {
+                test: /\.(eot|woff|ttf)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]'
+                }
             },
             {
                 test: /\.tsx?$/,

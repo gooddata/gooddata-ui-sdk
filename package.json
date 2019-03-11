@@ -15,7 +15,7 @@
   "devDependencies": {
     "@gooddata/eslint-config": "0.1.0",
     "@gooddata/mock-js": "1.23.0",
-    "@gooddata/test-storybook": "2.0.0",
+    "@gooddata/test-storybook": "3.0.0",
     "@gooddata/tslint-config": "0.0.16",
     "@storybook/addon-actions": "3.4.10",
     "@storybook/addon-options": "3.4.10",
@@ -155,94 +155,6 @@
     "heroku-postbuild": "yarn examples-build developer"
   },
   "typings": "dist/index.d.ts",
-  "test-storybook": {
-    "_defaults": {
-      "readySelector": ".screenshot-target, .screenshot-wrapper .highcharts-container, .screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, .screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error, .screenshot-wrapper .s-pivot-table .ag-cell"
-    },
-    "AFM components/PieChart": {
-      "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
-        "delay": 1000
-      }
-    },
-    "AFM components/DonutChart": {
-      "error": {
-        "readySelector": ".screenshot-wrapper .s-error .icon-cloud-rain",
-        "delay": 1000
-      }
-    },
-    "Core components/AreaChart": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/BubbleChart": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/ColumnChart": {
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/BarChart": {
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/DonutChart": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/Heatmap": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/LineChart": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/PieChart": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    },
-    "Core components/ScatterPlot": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      }
-    },
-    "Core components/Treemap": {
-      "data labels config": {
-        "readySelector": ".screenshot-wrapper div:nth-child(8) .highcharts-container"
-      },
-      "with different legend positions": {
-        "readySelector": ".screenshot-wrapper div:nth-child(10) .highcharts-container"
-      }
-    }
-  },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
     "transform": {

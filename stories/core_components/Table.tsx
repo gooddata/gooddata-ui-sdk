@@ -82,7 +82,7 @@ storiesOf('Core components/Table', module)
     ))
     .add('with table totals editable', () => (
         screenshotWrap(
-             <div style={wrapperStyle}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -122,7 +122,8 @@ storiesOf('Core components/Table', module)
                 />
             </div>
         )
-    )).add('sorted by attribute', () => (
+    ))
+    .add('sorted by attribute', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -154,7 +155,7 @@ storiesOf('Core components/Table', module)
     ))
     .add('custom number separators', () => (
         screenshotWrap(
-             <div style={wrapperStyle}>
+            <div style={wrapperStyle}>
                 <Table
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
@@ -198,118 +199,6 @@ storiesOf('Core components/Table', module)
             </div>
         )
     ))
-    .add('with supplied height of container', () => (
-        screenshotWrap(
-            <div>
-                <div style={{ width: 600, height: 100 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={100}
-                    />
-                </div>
-                <div style={{ width: 600, height: 200 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={200}
-                    />
-                </div>
-                <div style={{ width: 600, height: 400 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={400}
-                    />
-                </div>
-                <div style={{ width: 600, height: 800 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={800}
-                    />
-                </div>
-            </div>
-        )
-    ))
-    .add('with table totals and supplied height of container', () => (
-        screenshotWrap(
-            <div>
-                <div style={{ width: 600, height: 100 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={100}
-                    />
-                </div>
-                <div style={{ width: 600, height: 200 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={200}
-                    />
-                </div>
-                <div style={{ width: 600, height: 400 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={400}
-                    />
-                </div>
-                <div style={{ width: 600, height: 800 }}>
-                    <Table
-                        environment="dashboards"
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        attributes={[ATTRIBUTE_COUNTRY]}
-                        totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        height={800}
-                    />
-                </div>
-            </div>
-        )
-    ))
     .add('arithmetic measures', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
@@ -341,5 +230,84 @@ storiesOf('Core components/Table', module)
                     ErrorComponent={null}
                 />
             </div>
+        )
+    ));
+
+function createTableWithHeight(height: number) {
+    return (
+        <div style={{ width: 600, height }}>
+            <Table
+                environment="dashboards"
+                projectId="storybook"
+                measures={[MEASURE_1]}
+                attributes={[ATTRIBUTE_COUNTRY]}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                height={height}
+            />
+        </div>
+    );
+}
+
+storiesOf('Core components/Table/with supplied height of container', module)
+    .add('height: 100px', () => (
+        screenshotWrap(
+            createTableWithHeight(100)
+        )
+    ))
+    .add('height: 200px', () => (
+        screenshotWrap(
+            createTableWithHeight(200)
+        )
+    ))
+    .add('height: 400px', () => (
+        screenshotWrap(
+            createTableWithHeight(400)
+        )
+    ))
+    .add('height: 800px', () => (
+        screenshotWrap(
+            createTableWithHeight(800)
+        )
+    ));
+
+function createTableWithHeightAndTotals(height: number) {
+    return (
+        <div style={{ width: 600, height }}>
+            <Table
+                environment="dashboards"
+                projectId="storybook"
+                measures={[MEASURE_1]}
+                attributes={[ATTRIBUTE_COUNTRY]}
+                totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                height={height}
+            />
+        </div>
+    );
+}
+
+storiesOf('Core components/Table/with table totals and supplied height of container', module)
+    .add('height: 100px', () => (
+        screenshotWrap(
+            createTableWithHeightAndTotals(100)
+        )
+    ))
+    .add('height: 200px', () => (
+        screenshotWrap(
+            createTableWithHeightAndTotals(200)
+        )
+    ))
+    .add('height: 400px', () => (
+        screenshotWrap(
+            createTableWithHeightAndTotals(400)
+        )
+    ))
+    .add('height: 800px', () => (
+        screenshotWrap(
+            createTableWithHeightAndTotals(800)
         )
     ));
