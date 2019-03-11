@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 import omit = require('lodash/omit');
 import noop = require('lodash/noop');
 import { Subtract } from 'utility-types';
@@ -21,12 +21,12 @@ import {
 import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
 
 export interface IPivotTableBucketProps {
-    measures?: VisualizationObject.BucketItem[];
-    rows?: VisualizationObject.IVisualizationAttribute[];
-    columns?: VisualizationObject.IVisualizationAttribute[];
-    totals?: VisualizationObject.IVisualizationTotal[];
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures?: VisualizationInput.AttributeOrMeasure[];
+    rows?: VisualizationInput.IAttribute[];
+    columns?: VisualizationInput.IAttribute[];
+    totals?: VisualizationInput.ITotal[];
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketProps {

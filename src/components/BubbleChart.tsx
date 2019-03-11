@@ -3,7 +3,7 @@ import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
 
-import { AFM, VisualizationObject } from '@gooddata/typings';
+import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
 
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
@@ -29,12 +29,12 @@ const generateBubbleDimensionsFromBuckets =
     (buckets: VisualizationObject.IBucket[]) => generateDefaultDimensionsForPointsCharts(convertBucketsToAFM(buckets));
 
 export interface IBubbleChartBucketProps {
-    xAxisMeasure?: VisualizationObject.IMeasure;
-    yAxisMeasure?: VisualizationObject.IMeasure;
-    size?: VisualizationObject.IMeasure;
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    xAxisMeasure?: VisualizationInput.IMeasure;
+    yAxisMeasure?: VisualizationInput.IMeasure;
+    size?: VisualizationInput.IMeasure;
+    viewBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IBubbleChartProps extends ICommonChartProps, IBubbleChartBucketProps {

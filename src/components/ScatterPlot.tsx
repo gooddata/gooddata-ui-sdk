@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 import { ScatterPlot as AfmScatterPlot } from './afm/ScatterPlot';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
@@ -11,11 +11,11 @@ import { getResultSpec } from '../helpers/resultSpec';
 import { MEASURES, SECONDARY_MEASURES, ATTRIBUTE } from '../constants/bucketNames';
 
 export interface IScatterPlotBucketProps {
-    xAxisMeasure?: VisualizationObject.IMeasure;
-    yAxisMeasure?: VisualizationObject.IMeasure;
-    attribute?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[]; // TODO would it be removed? if not dont forget to test
+    xAxisMeasure?: VisualizationInput.IMeasure;
+    yAxisMeasure?: VisualizationInput.IMeasure;
+    attribute?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[]; // TODO would it be removed? if not dont forget to test
 }
 
 export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucketProps {

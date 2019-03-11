@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { Table as AfmTable } from './afm/Table';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -12,12 +12,12 @@ import { getResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE } from '../constants/bucketNames';
 
 export interface ITableBucketProps {
-    measures?: VisualizationObject.BucketItem[];
-    attributes?: VisualizationObject.IVisualizationAttribute[];
-    totals?: VisualizationObject.IVisualizationTotal[];
+    measures?: VisualizationInput.AttributeOrMeasure[];
+    attributes?: VisualizationInput.IAttribute[];
+    totals?: VisualizationInput.ITotal[];
     totalsEditAllowed?: boolean;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface ITableProps extends ICommonChartProps, ITableBucketProps {

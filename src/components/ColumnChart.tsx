@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
 
 import { ColumnChart as AfmColumnChart } from './afm/ColumnChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -12,11 +12,11 @@ import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 import { getSanitizedStackingConfig, getViewByTwoAttributes } from '../helpers/optionalStacking/common';
 
 export interface IColumnChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute | VisualizationObject.IVisualizationAttribute[];
-    stackBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
+    stackBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IColumnChartProps extends ICommonChartProps, IColumnChartBucketProps {

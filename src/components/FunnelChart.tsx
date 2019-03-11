@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { FunnelChart as AfmFunnelChart } from './afm/FunnelChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -12,10 +12,10 @@ import { generateDefaultDimensionsForRoundChart } from '../helpers/dimensions';
 import { MEASURES, VIEW } from '../constants/bucketNames';
 
 export interface IFunnelChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IFunnelChartProps extends ICommonChartProps, IFunnelChartBucketProps {
