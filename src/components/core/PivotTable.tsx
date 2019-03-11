@@ -263,7 +263,7 @@ export const getAGGridDataSource = (
     getPage: IGetPage,
     cancelPagePromises: () => void,
     getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[], rowData: IGridRow[]) => void,
+    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
     getGridApi: () => any,
     intl: InjectedIntl,
     columnDefOptions: IColumnDefOptions = {},
@@ -325,7 +325,7 @@ export const getAGGridDataSource = (
                 groupingProvider.processPage(rowData, offset[0], rowAttributeIds);
                 // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
                 const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
-                onSuccess(execution, columnDefs, rowData);
+                onSuccess(execution, columnDefs);
                 successCallback(rowData, lastRow);
                 // set totals
                 getGridApi().setPinnedBottomRowData(rowTotals);
@@ -572,8 +572,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     public createAGGridDataSource() {
         const onSuccess = (
             execution: Execution.IExecutionResponses,
-            columnDefs: IGridHeader[],
-            rowData: IGridRow[]
+            columnDefs: IGridHeader[]
         ) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
                 const sortedByFirstAttribute = this.isSortedByFirstAttibute(columnDefs);
@@ -588,7 +587,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 });
             }
             const aggregationCount = sumBy(execution.executionResult.totals, total => total.length);
-            this.updateDesiredHeight(rowData.length, aggregationCount);
+            const totalRowCount = execution.executionResult.paging.total[0];
+            this.updateDesiredHeight(totalRowCount, aggregationCount);
             this.props.onDataSourceUpdateSuccess();
         };
 
