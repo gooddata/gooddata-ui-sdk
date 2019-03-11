@@ -94,8 +94,10 @@ function getYAxisConfiguration(
  * @param chartConfig
  */
 export function getStackMeasuresConfiguration(chartOptions: any, config: any, chartConfig: IChartConfig) {
+    const series = config.series || [];
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
-    if (!stackMeasures && !stackMeasuresToPercent) {
+    // disable stacking measure config when there is no stacking setting or one measure/series
+    if ((!stackMeasures && !stackMeasuresToPercent) || series.length <= 1) {
         return {};
     }
 
