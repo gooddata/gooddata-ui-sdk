@@ -90,10 +90,10 @@
     lodash "4.17.11"
     lodash-es "4.17.11"
 
-"@gooddata/mock-js@1.22.0":
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.22.0.tgz#c44e4500d1b9fc354451ca9734c84b27a86bc999"
-  integrity sha512-+gdkExUFdHolAq8aoUqu2NA+VtBkUEWNmFOT2ou5ZNd8ciTSXvZJJFp8Ixi6ziZ4Li5+UshmiJl9Ne+rV2YZyA==
+"@gooddata/mock-js@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.23.0.tgz#f31b38b55650f918784025672625df22e0409cc5"
+  integrity sha512-gC3ZmqVxLgWTHwI/NLhFmzZ6O9SLeZSM5NtCrmnNTunGeDSux7S22EQ5kTinLk3JwDShKoYS+RdoZYTWNB/STA==
   dependencies:
     "@gooddata/typings" "2.8.0"
     "@types/seedrandom" "2.4.27"
