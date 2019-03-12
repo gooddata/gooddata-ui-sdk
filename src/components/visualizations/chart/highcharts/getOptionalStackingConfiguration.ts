@@ -141,34 +141,38 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
 /**
  * Format labels in Y axis from '0 - 100' to '0% - 100%'
  * @param chartOptions
- * @param _
+ * @param _config
  * @param chartConfig
  */
-export function getShowInPercentConfiguration(chartOptions: IChartOptions, _: any, chartConfig: IChartConfig) {
+export function getShowInPercentConfiguration(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
     const { stackMeasuresToPercent = false } = chartConfig;
     if (!stackMeasuresToPercent) {
         return {};
     }
 
     const { yAxes = [] } = chartOptions;
-    const yAxis = yAxes.map((axis: IAxis) => ({
-            ...axis,
+    const percentageFormatter = partial(formatAsPercent, 1);
+
+    // suppose that max number of y axes is 2
+    // percentage format only supports primary axis
+    const yAxis = yAxes.map((_axis: any, index: number) => {
+        return index === 0 ? {
             labels: {
-                formatter: partial(formatAsPercent, 1)
+                formatter: percentageFormatter
             }
-        })
-    );
+        } : {};
+    });
     return { yAxis };
 }
 
 /**
  * Convert [0, 1] to [0, 100], it's needed by highchart
  * Only applied to primary Y axis
- * @param chartOptions
- * @param _
+ * @param _chartOptions
+ * @param config
  * @param chartConfig
  */
-export function convertMinMaxFromPercentToNumber(_: IChartOptions, config: any, chartConfig: IChartConfig) {
+export function convertMinMaxFromPercentToNumber(_chartOptions: IChartOptions, config: any, chartConfig: IChartConfig) {
     const { stackMeasuresToPercent = false } = chartConfig;
     if (!stackMeasuresToPercent) {
         return {};
@@ -177,28 +181,23 @@ export function convertMinMaxFromPercentToNumber(_: IChartOptions, config: any, 
     const { yAxis: yAxes = [] as any[] } = config;
     const yAxis = yAxes.map((axis: any, _: number, axes: IAxis[]) => {
         const { min, max } = axis;
+        const newAxis = {};
 
-        const newMinMax = {};
         if (!isNil(min)) {
-            set(newMinMax, 'min', min * 100);
+            set(newAxis, 'min', min * 100);
         }
 
         if (!isNil(max)) {
-            set(newMinMax, 'max', max * 100);
+            set(newAxis, 'max', max * 100);
         }
 
-        const convertedAxis = {
-            ...axis,
-            ...newMinMax
-        };
-
-        const numberOfAxis = axes.length;
-        if (numberOfAxis === 1) {
-            return convertedAxis;
+        const numberOfAxes = axes.length;
+        if (numberOfAxes === 1) {
+            return newAxis;
         }
 
         const { opposite = false } = axis;
-        return opposite ? axis : convertedAxis;
+        return opposite ? {} : newAxis;
     });
 
     return { yAxis };

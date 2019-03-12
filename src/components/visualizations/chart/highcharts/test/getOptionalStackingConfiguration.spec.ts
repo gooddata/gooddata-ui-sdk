@@ -251,8 +251,7 @@ describe('getOptionalStackingConfiguration', () => {
             }, {
                 yAxis: [{
                     min: 10,
-                    max: 90,
-                    opposite: false
+                    max: 90
                 }]
             }],
             ['right Y axis for single axis chart', {
@@ -264,8 +263,7 @@ describe('getOptionalStackingConfiguration', () => {
             }, {
                 yAxis: [{
                     min: 10,
-                    max: 90,
-                    opposite: true
+                    max: 90
                 }]
             }],
             ['primary Y axis for dual axis chart', {
@@ -281,13 +279,8 @@ describe('getOptionalStackingConfiguration', () => {
             }, {
                 yAxis: [{
                     min: 10,
-                    max: 90,
-                    opposite: false
-                }, {
-                    min: 1000,
-                    max: 9000,
-                    opposite: true
-                }]
+                    max: 90
+                }, {}]
             }]
         ])('should convert min/max for %s', (_: string, config: any, expectedConfig: any) => {
             const result = convertMinMaxFromPercentToNumber(undefined, config, { stackMeasuresToPercent: true });
