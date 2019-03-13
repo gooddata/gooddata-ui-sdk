@@ -4,6 +4,7 @@ import { AFM } from '@gooddata/typings';
 
 export interface IMenu {
     aggregations?: boolean;
+    aggregationsSubMenu?: boolean;
 }
 
 export interface IPivotTableConfig {

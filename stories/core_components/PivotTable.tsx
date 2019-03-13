@@ -6,12 +6,12 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { PivotTable } from '../../src';
 import { onErrorHandler } from '../mocks';
-
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
     ATTRIBUTE_2,
+    ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
@@ -21,7 +21,8 @@ import {
     TOTAL_M2_A1,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
     ARITHMETIC_MEASURE_USING_ARITHMETIC,
-    ATTRIBUTE_COUNTRY
+    ATTRIBUTE_COUNTRY,
+    GRAND_TOTALS_WITH_SUBTOTALS
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -289,6 +290,28 @@ storiesOf('Core components/PivotTable', module)
             </div>
         )
     ))
+    .add('totals - column and row attributes with menu enabled', () => screenshotWrap(
+        <div style={wrapperStyle} className="s-table">
+            <PivotTable
+                projectId="storybook"
+                measures={[MEASURE_1, MEASURE_2]}
+                columns={[ATTRIBUTE_3]}
+                rows={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                groupRows={true}
+                totals={GRAND_TOTALS_WITH_SUBTOTALS}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                config={{
+                    menu: {
+                        aggregations: true,
+                        aggregationsSubMenu: true
+                    }
+                }}
+            />
+        </div>
+        )
+    )
     .add('arithmetic measures', () => (
         screenshotWrap(
             <div style={wrapperStyle} className="s-table">

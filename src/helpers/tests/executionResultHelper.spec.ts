@@ -2,11 +2,16 @@
 import { Execution } from '@gooddata/typings';
 import * as fixtures from '../../../stories/test_data/fixtures';
 import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from '../../components/visualizations/chart/constants';
+import { EXECUTION_RESPONSE_1A_2M } from '../../components/visualizations/table/fixtures/1attribute2measures';
 import {
     findAttributeInDimension,
     findInDimensionHeaders,
     findMeasureGroupInDimensions,
-    findMeasureHeaderByLocalIdentifier
+    findMeasureHeaderByLocalIdentifier,
+    getNthAttributeHeader,
+    getNthAttributeLocalIdentifier,
+    getNthAttributeName,
+    getNthDimensionHeaders
 } from '../executionResultHelper';
 
 describe('findInDimensionHeaders', () => {
@@ -142,5 +147,63 @@ describe('findMeasureHeaderByLocalIdentifier', () => {
             links: { executionResult: '' }
         };
         expect(findMeasureHeaderByLocalIdentifier(emptyExecutionResponse, 'foo')).toBe(null);
+    });
+});
+
+describe('getNthAttributeHeader', () => {
+    it('should return first header', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeHeader(attributeHeaders, 0)).toBe(attributeHeaders[0].attributeHeader);
+    });
+
+    it('should return null if attribute header not found', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeHeader(attributeHeaders, 1)).toBe(null);
+    });
+});
+
+describe('getNthAttributeLocalIdentifier', () => {
+    it('should return local identifier of first header', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeLocalIdentifier(attributeHeaders, 0))
+            .toBe(attributeHeaders[0].attributeHeader.localIdentifier);
+    });
+
+    it('should return null if attribute header not found', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeLocalIdentifier(attributeHeaders, 1)).toBe(null);
+    });
+});
+
+describe('getNthAttributeName', () => {
+    it('should return name of first header', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeName(attributeHeaders, 0))
+            .toBe(attributeHeaders[0].attributeHeader.name);
+    });
+
+    it('should return null if attribute header not found', () => {
+        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
+
+        expect(getNthAttributeName(attributeHeaders, 1)).toBe(null);
+    });
+});
+
+describe('getNthDimensionHeaders', () => {
+    it('should return first header', () => {
+        const executionResponse = EXECUTION_RESPONSE_1A_2M;
+
+        expect(getNthDimensionHeaders(executionResponse, 0)).toBe(executionResponse.dimensions[0].headers);
+    });
+
+    it('should return null if dimension not found', () => {
+        const executionResponse = EXECUTION_RESPONSE_1A_2M;
+
+        expect(getNthDimensionHeaders(executionResponse, 3)).toBe(null);
     });
 });

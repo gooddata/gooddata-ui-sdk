@@ -276,6 +276,7 @@ $header-cell-resize-width: 20px;
             & > .menu-icon {
                 width: 16px;
                 height: 16px;
+                background-image: url('~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg');
             }
         }
 
@@ -330,5 +331,39 @@ $header-cell-resize-width: 20px;
     &-arrow-up::before {
         top: -2px;
         transform: rotate(180deg);
+    }
+}
+
+.gd-aggregation-submenu {
+    .gd-list-item-header:before {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 11px;
+        left: 10px;
+        top: 13px;
+        background-image: url('~@gooddata/goodstrap/lib/core/styles/icons/rows.svg');
+    }
+
+    .gd-list-item.gd-menu-item {
+        padding: 0;
+        cursor: default;
+
+        .gd-aggregation-menu-item-inner {
+            padding: 4px 30px;
+            flex: auto;
+            cursor: pointer;
+        }
+
+        &.is-submenu .gd-aggregation-menu-item-inner {
+            padding-right: 0;
+            margin-right: 30px;
+        }
+    }
+
+    .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {
+        color: $is-focused-color;
+        background: $is-focused-background;
     }
 }
