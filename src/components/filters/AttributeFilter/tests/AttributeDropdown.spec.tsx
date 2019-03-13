@@ -47,6 +47,7 @@ describe('AttributeDropdown', () => {
     }
 
     afterEach(() => {
+        // tslint:disable-next-line:no-inner-html
         document.body.innerHTML = '';
     });
 
