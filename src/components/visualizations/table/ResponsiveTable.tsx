@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { noop } from 'lodash';
+import noop = require('lodash/noop');
+import omit = require('lodash/omit');
 import { AFM, Execution } from '@gooddata/typings';
 
 import { ITableProps, Table } from './Table';
@@ -18,8 +19,9 @@ export interface IResponsiveTableProps {
     rows: TableRow[];
     rowsPerPage: number;
     page?: number;
+    pageOffset?: number;
     totalsWithData?: ITotalWithData[];
-    onMore?: (onMoreObj: { page: number, rows: number }) => void;
+    onMore?: (onMoreObj: { page: number, pageOffset: number, rows: number }) => void;
     onLess?: (onLessObj: { rows: number }) => void;
     onSortChange?: OnSortChangeWithItem;
     executionRequest: AFM.IExecution;
@@ -36,6 +38,7 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     public static defaultProps: Partial<IResponsiveTableProps> = {
         totalsWithData: [],
         page: 1,
+        pageOffset: 0,
         onMore: noop,
         onLess: noop
     };
@@ -46,7 +49,7 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
         super(props);
         this.state = {
             page: props.page || 1,
-            pageOffset: 0
+            pageOffset: props.pageOffset || 0
         };
 
         this.onMore = this.onMore.bind(this);
@@ -57,7 +60,9 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
     public componentWillReceiveProps(nextProps: IResponsiveTableProps): void {
         if (this.props.containerHeight !== nextProps.containerHeight ||
             this.props.totalsWithData.length !== nextProps.totalsWithData.length ||
-            this.props.rows.length !== nextProps.rows.length) {
+            this.props.rows.length !== nextProps.rows.length ||
+            this.props.page !== nextProps.page ||
+            this.props.pageOffset !== nextProps.pageOffset) {
             const rows = this.getRowCount(
                 nextProps.page,
                 nextProps.rows.length,
@@ -76,7 +81,7 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
         const { props } = this;
 
         const tableProps: ITableProps = {
-            ...props,
+            ...omit<ITableProps, IResponsiveTableProps>(props, 'pageOffset'),
             rows: props.rows.slice(0, this.getRowCount(this.getPage())),
             containerHeight: this.getContainerHeight(),
             containerMaxHeight: this.getContainerMaxHeight(),
@@ -102,7 +107,7 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
         const pageOffset = this.state.pageOffset + 1;
         this.setState({ pageOffset }, () => {
             const rows = this.getRowCount(this.getPage());
-            this.props.onMore({ page: this.getPage(), rows });
+            this.props.onMore({ page: this.state.page, pageOffset, rows });
         });
     }
 

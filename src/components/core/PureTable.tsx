@@ -41,6 +41,7 @@ export interface ITableProps extends ICommonVisualizationProps {
 
 export interface ITableState {
     page: number;
+    pageOffset: number;
     lastAddedTotalType: AFM.TotalType;
 }
 
@@ -68,6 +69,7 @@ class SimpleTable extends
 
         this.state = {
             page: 1,
+            pageOffset: 0,
             lastAddedTotalType: null
         };
 
@@ -111,15 +113,17 @@ class SimpleTable extends
         });
     }
 
-    public onMore({ page }: { page: number }) {
+    public onMore({ page, pageOffset }: { page: number, pageOffset: number }) {
         this.setState({
-            page
+            page,
+            pageOffset
         });
     }
 
     public onLess() {
         this.setState({
-            page: 1
+            page: 1,
+            pageOffset: 0
         });
     }
 
@@ -130,7 +134,7 @@ class SimpleTable extends
 
     private getTableRenderer() {
         const { environment, maxHeight } = this.props;
-        const { page } = this.state;
+        const { page, pageOffset } = this.state;
 
         if (environment === 'dashboards') {
             return (props: IIndigoTableProps) => (
@@ -139,6 +143,7 @@ class SimpleTable extends
                     rows={props.rows || []}
                     rowsPerPage={ROWS_PER_PAGE_IN_RESPONSIVE_TABLE}
                     page={page}
+                    pageOffset={pageOffset}
                     onMore={this.onMore}
                     onLess={this.onLess}
                     onSortChange={this.onSortChange}
