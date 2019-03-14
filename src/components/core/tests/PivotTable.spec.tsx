@@ -131,7 +131,7 @@ describe('PivotTable', () => {
                         identifier: 'label.restaurantlocation.locationstate',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
                     },
-                    id: 'state',
+                    id: 'label.restaurantlocation.locationstate',
                     title: 'Location State'
                 },
                 {
@@ -139,7 +139,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
                     },
-                    id: '',
+                    id: '6340109',
                     title: 'Alabama'
                 }
             ]);
@@ -156,7 +156,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
                     },
-                    id: '',
+                    id: '1',
                     title: 'Q1'
                 },
                 {
@@ -164,7 +164,7 @@ describe('PivotTable', () => {
                         identifier: 'date.aam81lMifn6q',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011'
                     },
-                    id: 'year',
+                    id: 'date.aam81lMifn6q',
                     title: 'Quarter (Date)'
                 },
                 {
@@ -172,7 +172,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
                     },
-                    id: '',
+                    id: '1',
                     title: 'Jan'
                 },
                 {
@@ -180,7 +180,7 @@ describe('PivotTable', () => {
                         identifier: 'date.abm81lMifn6q',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073'
                     },
-                    id: 'month',
+                    id: 'date.abm81lMifn6q',
                     title: 'Month (Date)'
                 },
                 {
@@ -188,7 +188,7 @@ describe('PivotTable', () => {
                         identifier: 'aabHeqImaK0d',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694'
                     },
-                    id: 'franchiseFeesAdRoyaltyIdentifier',
+                    id: 'aabHeqImaK0d',
                     title: '$ Franchise Fees (Ad Royalty)'
                 }
             ]);

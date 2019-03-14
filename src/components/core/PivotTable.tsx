@@ -55,7 +55,10 @@ import { IColumnDefOptions, IGridCellEvent, IGridHeader, IGridRow } from '../../
 
 import { IDrillEvent, IDrillEventContextTable, IDrillEventIntersectionElement } from '../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
-import { IMappingHeader, isMappingHeaderAttributeItem } from '../../interfaces/MappingHeader';
+import {
+    IMappingHeader,
+    isMappingHeaderAttributeItem
+} from '../../interfaces/MappingHeader';
 import { IPivotTableConfig, IMenuAggregationClickConfig } from '../../interfaces/PivotTable';
 import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
 import { LoadingComponent } from '../simple/LoadingComponent';
@@ -78,6 +81,7 @@ import ColumnGroupHeader from './pivotTable/ColumnGroupHeader';
 import ColumnHeader from './pivotTable/ColumnHeader';
 import { GroupingProviderFactory, IGroupingProvider } from './pivotTable/GroupingProvider';
 import ApiWrapper from './pivotTable/agGridApiWrapper';
+import { getAttributeElementIdFromAttributeElementUri } from '../visualizations/utils/common';
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -356,22 +360,27 @@ export const getDrillIntersection = (
     //     0..1 row attribute and row attribute value
     //     0..n column attribute and column attribute values
     return drillItems.map((drillItem: IMappingHeader) => {
-        let headerLocalIdentifier = null;
-        let headerIdentifier = '';
-        let uriAndIdentifier = null;
 
-        if (!isMappingHeaderAttributeItem(drillItem)) {
-            headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
-            headerIdentifier = getMappingHeaderIdentifier(drillItem) || '';
-            uriAndIdentifier = headerLocalIdentifier
-                ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
-                : null;
+        if (isMappingHeaderAttributeItem(drillItem)) {
+            const id = getAttributeElementIdFromAttributeElementUri(drillItem.attributeHeaderItem.uri);
+            return createDrillIntersectionElement(
+                id,
+                getMappingHeaderName(drillItem),
+                getMappingHeaderUri(drillItem),
+                ''
+            );
         }
+
+        const headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
+        const headerIdentifier = getMappingHeaderIdentifier(drillItem) || '';
+        const uriAndIdentifier = headerLocalIdentifier
+            ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
+            : null;
 
         const headerUri = getMappingHeaderUri(drillItem) || '';
         const uri = uriAndIdentifier && uriAndIdentifier.uri || headerUri;
         const identifier = uriAndIdentifier && uriAndIdentifier.identifier || headerIdentifier;
-        const id = headerLocalIdentifier || headerIdentifier;
+        const id = headerIdentifier || headerLocalIdentifier;
 
         return createDrillIntersectionElement(id, getMappingHeaderName(drillItem), uri, identifier);
     });
@@ -622,13 +631,20 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
-        const isRowTotal = get<IGridCellEvent, string>(cellEvent, ['data', 'type', ROW_TOTAL]);
+        const type = get<IGridCellEvent, string>(cellEvent, ['colDef', 'type']);
+        if (type === ROW_TOTAL) {
+            return false;
+        }
+
         const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, ['data', 'headerItemMap', colDef.field]);
-        const drillItems: IMappingHeader[] = rowDrillItem ? [...colDef.drillItems, rowDrillItem] : colDef.drillItems;
+        const drillItems: IMappingHeader[] = rowDrillItem
+            ? [...colDef.drillItems, rowDrillItem]
+            : colDef.drillItems;
+
         const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
             isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse));
 
-        if (isRowTotal || drillableHeaders.length === 0) {
+        if (drillableHeaders.length === 0) {
             return false;
         }
 

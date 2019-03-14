@@ -98,7 +98,7 @@ export const rowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6338473",
                 "title": "Alcoholic Beverages",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2187/elements?id=6338473",
@@ -173,7 +173,7 @@ export const columnAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6340116",
                 "title": "California",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
@@ -286,7 +286,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
         ],
         "intersection": [
             {
-                "id": "",
+                "id": "1",
                 "title": "Q1",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -302,7 +302,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "1",
                 "title": "Jan",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
@@ -401,7 +401,7 @@ export const measuresAndColumnAttributesDrillParams = `{
         ],
         "intersection": [
             {
-                "id": "",
+                "id": "1",
                 "title": "Q1",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -417,7 +417,7 @@ export const measuresAndColumnAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "1",
                 "title": "Jan",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
@@ -520,7 +520,7 @@ export const measuresAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6340116",
                 "title": "California",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
