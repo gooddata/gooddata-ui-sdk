@@ -31,7 +31,7 @@ const CELL_2_0 = '.s-cell-2-0';
 const CELL_5_0 = '.s-cell-5-0';
 
 const DRILLABLE_CELL_CLASSNAME = 'gd-cell-drillable';
-const HIDDEN_CELL_CLASSNAME = 'gd-cell-hide';
+const HIDDEN_CELL_CLASSNAME = 's-gd-cell-hide';
 
 const MENU_CATEGORY = '[col-id=a_2188] .s-header-cell-label';
 const FRANCHISE_FEES = '[col-id=a_2009_1-a_2071_1-m_0] .s-header-cell-label';

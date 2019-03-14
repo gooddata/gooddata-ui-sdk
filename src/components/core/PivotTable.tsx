@@ -193,13 +193,12 @@ export const getSortItemByColId = (
     if (lastFieldType === 'a') {
         for (const header of attributeHeaders) {
             if (getIdsFromUri(header.attributeHeader.uri)[0] === lastFieldId) {
-                const attributeSortItem: AFM.IAttributeSortItem = {
+                return {
                     attributeSortItem: {
                         direction,
                         attributeIdentifier: header.attributeHeader.localIdentifier
                     }
                 };
-                return attributeSortItem;
             }
         }
         invariant(false, `could not find attribute header matching ${colId}`);
@@ -215,15 +214,14 @@ export const getSortItemByColId = (
                 attributeHeaderMatch,
                 `Could not find matching attribute header to field ${field.join(ID_SEPARATOR)}`
             );
-            const attributeLocatorItem: AFM.IAttributeLocatorItem = {
+            return {
                 attributeLocatorItem: {
                     attributeIdentifier: attributeHeaderMatch.attributeHeader.localIdentifier,
                     element: `${attributeHeaderMatch.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`
                 }
             };
-            return attributeLocatorItem;
         });
-        const measureSortItem: AFM.IMeasureSortItem = {
+        return {
             measureSortItem: {
                 direction,
                 locators: [
@@ -236,7 +234,6 @@ export const getSortItemByColId = (
                 ]
             }
         };
-        return measureSortItem;
     }
     invariant(false, `could not find header matching ${colId}`);
 };
@@ -528,16 +525,15 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeated(attributeId, rowIndex);
         const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
 
-        const className = classNames(
+        return classNames(
             classList,
             getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
             colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
             isRowTotal ? 'gd-row-total' : null,
-            hiddenCell ? 'gd-cell-hide' : null,
-            rowSeparator ? 'gd-table-row-separator' : null
+            hiddenCell ? 'gd-cell-hide s-gd-cell-hide' : null,
+            rowSeparator ? 'gd-table-row-separator s-gd-table-row-separator' : null
         );
-        return className;
     }
 
     public getHeaderClass = (classList: string) => (headerClassParams: any): string => {
@@ -553,7 +549,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             : null;
         const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
 
-        const className = classNames(
+        return classNames(
             classList,
             'gd-column-group-header',
             colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
@@ -562,7 +558,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             !field ? 'gd-column-group-header--empty' : null,
             isFirstColumn ? 'gd-column-group-header--first' : null
         );
-        return className;
     }
 
     public getExecution = () => {
@@ -694,8 +689,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
 
         const newColumnTotals = sortBy(updatedColumnTotals, (total) => {
-            const totalRankIndex = renderedTotalTypesOrder.findIndex(rankedItem => rankedItem === total.type);
-            return totalRankIndex;
+            return renderedTotalTypesOrder.findIndex(rankedItem => rankedItem === total.type);
         });
 
         this.props.pushData({
