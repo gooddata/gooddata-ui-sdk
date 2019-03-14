@@ -11,6 +11,14 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.7.0"></a>
+## 2019-03-25 Version [11.7.0](https://github.com/gooddata/gooddata-js/compare/v11.6.0...v11.7.0)
+
+- enhance AFM and execute-afm to support values instead of attribute element URIs in positive and negative attribute filters
+- deprecated misplaced type-guards in AfmUtils
+- deprecated double-negative function
+- upgrade GoodData typings
+
 <a name="11.6.0"></a>
 ## 2019-03-07 Version [11.6.0](https://github.com/gooddata/gooddata-js/compare/v11.5.0...v11.6.0)
 
