@@ -180,12 +180,22 @@ describe('Responsive Table', () => {
                 expect(getLess(wrapper)).toHaveLength(0);
             });
 
+            it('should show "Less" button when not on first page during init', () => {
+                const data: ITableData = {
+                    ...tableData,
+                    page: 1,
+                    pageOffset: 3
+                };
+                const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(data);
+                expect(getLess(wrapper)).toHaveLength(1);
+            });
+
             it('should set correct number of rows', () => {
                 const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(tableData);
                 expect(wrapper.find(Table).prop('rows').length).toEqual(ROWS_PER_PAGE);
             });
 
-            it('should call onMore callback with number of rows and page when user clicks "More"', () => {
+            it('should call onMore callback with number of rows, page and pageOffset when user clicks "More"', () => {
                 const onMore = jest.fn();
                 const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(
                     tableData, { onMore }
@@ -193,7 +203,8 @@ describe('Responsive Table', () => {
                 getMore(wrapper).simulate('click');
                 expect(onMore).toBeCalledWith({
                     rows: ROWS_PER_PAGE * 2,
-                    page: 2
+                    pageOffset: 1,
+                    page: 1
                 });
             });
         });

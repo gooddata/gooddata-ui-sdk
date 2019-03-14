@@ -236,19 +236,25 @@ describe('PureTable', () => {
         });
     });
 
-    it('should rerender ResponsiveTable with new page value when ResponsiveTable renderer fired onMore', () => {
+    it('should rerender ResponsiveTable with new page and pageOffset when onMore was fired', () => {
         const props = createProps({ environment: 'dashboards' });
         const wrapper = createComponent(props);
+        const page = 12;
+        const pageOffset = 3;
 
         return testUtils.delay().then(() => {
             wrapper.update();
             const renderer = wrapper.find(TableTransformation).props().tableRenderer({});
-            renderer.props.onMore({ page: 12 });
+            renderer.props.onMore({
+                page,
+                pageOffset
+            });
 
             return testUtils.delay().then(() => {
                 wrapper.update();
                 const renderer = wrapper.find(TableTransformation).props().tableRenderer({});
-                expect(renderer.props.page).toBe(12);
+                expect(renderer.props.page).toBe(page);
+                expect(renderer.props.pageOffset).toBe(pageOffset);
             });
         });
     });
