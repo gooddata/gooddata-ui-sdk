@@ -53,14 +53,14 @@ function getSeriesConfiguration(
     isDualAxes: boolean
 ) {
     const { series } = config;
-    const handlers: Function[] = [
+    const handlers = [
         partial(handleStackMeasure, stackMeasures),
         partial(handleStackMeasuresToPercent, stackMeasuresToPercent),
         partial(handleDualAxes, isDualAxes)
     ];
 
     return {
-        series: series.map((item: any) => (handlers.reduce((result: any, handler: Function) => handler(result), item)))
+        series: series.map((item: any) => (handlers.reduce((result, handler) => handler(result), item)))
     };
 }
 

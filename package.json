@@ -16,7 +16,7 @@
     "@gooddata/eslint-config": "0.1.0",
     "@gooddata/mock-js": "1.22.0",
     "@gooddata/test-storybook": "2.0.0",
-    "@gooddata/tslint-config": "0.0.14",
+    "@gooddata/tslint-config": "0.0.16",
     "@storybook/addon-actions": "3.4.10",
     "@storybook/addon-options": "3.4.10",
     "@storybook/addons": "3.4.10",

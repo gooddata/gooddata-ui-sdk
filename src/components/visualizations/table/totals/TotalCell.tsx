@@ -30,10 +30,10 @@ export interface ITotalCellProps {
     firstMeasureIndex: number;
     editAllowed?: boolean;
     separators?: ISeparators;
-    onCellMouseOver?: Function;
-    onCellMouseLeave?: Function;
-    onEnableColumn?: Function;
-    onDisableColumn?: Function;
+    onCellMouseOver?: (rowIndex: number, columnIndex: number) => void;
+    onCellMouseLeave?: (rowIndex: number, columnIndex: number) => void;
+    onEnableColumn?: (columnIndex: number, totalType: VisualizationObject.TotalType) => void;
+    onDisableColumn?: (columnIndex: number, totalType: VisualizationObject.TotalType) => void;
     onAddDropdownOpenStateChanged?: (columnIndex: number, isOpened: boolean) => void;
     onAddWrapperHover?: (columnIndex: number, isHighlighted: boolean) => void;
     onAddButtonHover?: (columnIndex: number, isHovering: boolean) => void;

@@ -27,7 +27,7 @@ describe('Execute', () => {
         return jest.fn(props => <span>{JSON.stringify(props.result)}</span>);
     }
 
-    function createComponent(child: Function, props = {}): any {
+    function createComponent(child: jest.Mock<JSX.Element>, props = {}): any {
         const defaultProps: IExecuteProps = {
             afm,
             projectId: 'foo',

@@ -179,7 +179,10 @@ function calculateMax(idx: number, minmax: IMinMaxInfo[], minmaxLookup: IMinMaxL
  * @param findExtreme
  */
 function getLimit(minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex: number,
-                  getIndex: Function, calculateLimit: Function, findExtreme: Function): number {
+                  getIndex: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+                  calculateLimit: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+                  findExtreme: (...params: any[]) => any // TODO: make the types more specific (FET-282)
+): number {
     const isMinMaxConfig = isMinMaxConfigOnAnyAxis(minmax);
     if (isMinMaxConfig) {
         const idx = getIndex(minmax);

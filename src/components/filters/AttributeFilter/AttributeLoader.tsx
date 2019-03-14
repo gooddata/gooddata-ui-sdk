@@ -4,8 +4,8 @@ import * as PropTypes from 'prop-types';
 import { IAttributeDisplayForm } from './model';
 
 export interface IAttributeLoaderMetadataProps {
-    getObjectUri: Function;
-    getObjectDetails: Function;
+    getObjectUri: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    getObjectDetails: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
 }
 
 export interface IAttributeLoaderProps {

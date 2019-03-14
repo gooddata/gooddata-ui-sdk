@@ -5,7 +5,16 @@ import { IUnwrappedAttributeHeadersWithItems } from '../components/visualization
 import { IMappingHeader } from '../interfaces/MappingHeader';
 import { getMappingHeaderLocalIdentifier } from './mappingHeader';
 
-export function findInDimensionHeaders(dimensions: Execution.IResultDimension[], headerCallback: Function): any {
+export function findInDimensionHeaders(
+    dimensions: Execution.IResultDimension[],
+    headerCallback: (
+        headerType: string,
+        header: any,
+        dimensionIndex: number,
+        headerIndex: number,
+        headerCount: number
+    ) => any
+): any {
     let returnValue: any = null;
     dimensions.some((dimension: any, dimensionIndex: number) => {
         dimension.headers.some(

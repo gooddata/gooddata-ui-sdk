@@ -17,7 +17,7 @@ export function getVisualizationTypeFromUrl(url: string): VisType {
 export async function getVisualizationTypeFromVisualizationClass(
     visualizationClass: VisualizationClass.IVisualizationClass,
     featureFlags: IFeatureFlags,
-    getVisualizationTypeFromUrlImpl: Function = getVisualizationTypeFromUrl
+    getVisualizationTypeFromUrlImpl = getVisualizationTypeFromUrl
 ): Promise<VisType> {
     const type: VisType = getVisualizationTypeFromUrlImpl(get(visualizationClass, ['content', 'url'], ''));
 

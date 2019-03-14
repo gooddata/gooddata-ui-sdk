@@ -106,7 +106,7 @@ export function createMetadataMock() {
 // Runs supplied 'test' function after 'delayOffset' ms every 'increment' ms
 // until it returns truthy and resolves returned promise
 // or until it reaches maxDelay and rejects the promise
-export function waitFor(test: Function, maxDelay = 1000, delayOffset = 0, increment = 100) {
+export function waitFor(test: () => any, maxDelay = 1000, delayOffset = 0, increment = 100) {
     const start = Date.now();
     return new Promise((resolve, reject) => {
         setTimeout(() => {

@@ -48,7 +48,7 @@ export interface IAttributeElementsState {
 
 export interface IAttributeElementsChildren {
     validElements: IValidElements;
-    loadMore: Function;
+    loadMore: () => void;
     isLoading: boolean;
     error: any;
 }
