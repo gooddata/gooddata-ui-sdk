@@ -124,12 +124,14 @@
     commander "2.11.0"
     lodash "4.17.4"
 
-"@gooddata/tslint-config@0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.13.tgz#1b0cb383929c3fead34d4d3d9f9b9925d5c71fe4"
+"@gooddata/tslint-config@0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.14.tgz#bf5e507221cd99dd011d751d35dd1f6fdd8662bb"
+  integrity sha512-J9jROaisf3ofVuX+DwpZ6ClVp6JCtnJfqjmS9goc6ez0yc4L0pqQuQ/OnmTsqYq8/5/m+LTehL/6p+yRByilCg==
   dependencies:
-    tslint "5.11.0"
+    tslint "5.14.0"
     tslint-eslint-rules "5.4.0"
+    tslint-microsoft-contrib "6.1.0"
     tslint-react "3.6.0"
 
 "@gooddata/typings@2.8.0":
@@ -11360,15 +11362,23 @@ tslint-eslint-rules@5.4.0:
     tslib "1.9.0"
     tsutils "^3.0.0"
 
+tslint-microsoft-contrib@6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/tslint-microsoft-contrib/-/tslint-microsoft-contrib-6.1.0.tgz#cc487575f2cdb8fe3774bf3f2ba61ff61dc7856e"
+  integrity sha512-8DgmiPTgNQSYTjrKKv/h1aHnDd7EkGAjTxatrjfSDp5jUXENGI7Qj7qi7T8xBdTZN9Z3nb80u0NhdBBOMcQFHg==
+  dependencies:
+    tsutils "^2.27.2 <2.29.0"
+
 tslint-react@3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/tslint-react/-/tslint-react-3.6.0.tgz#7f462c95c4a0afaae82507f06517ff02942196a1"
   dependencies:
     tsutils "^2.13.1"
 
-tslint@5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.11.0.tgz#98f30c02eae3cde7006201e4c33cb08b48581eed"
+tslint@5.14.0:
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.14.0.tgz#be62637135ac244fc9b37ed6ea5252c9eba1616e"
+  integrity sha512-IUla/ieHVnB8Le7LdQFRGlVJid2T/gaJe5VkjzRVSRR6pA2ODYrnfR1hmxi+5+au9l50jBwpbBL34txgv4NnTQ==
   dependencies:
     babel-code-frame "^6.22.0"
     builtin-modules "^1.1.1"
@@ -11378,10 +11388,11 @@ tslint@5.11.0:
     glob "^7.1.1"
     js-yaml "^3.7.0"
     minimatch "^3.0.4"
+    mkdirp "^0.5.1"
     resolve "^1.3.2"
     semver "^5.3.0"
     tslib "^1.8.0"
-    tsutils "^2.27.2"
+    tsutils "^2.29.0"
 
 tsutils@^2.13.1:
   version "2.22.2"
@@ -11389,9 +11400,17 @@ tsutils@^2.13.1:
   dependencies:
     tslib "^1.8.1"
 
-tsutils@^2.27.2:
+"tsutils@^2.27.2 <2.29.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.28.0.tgz#6bd71e160828f9d019b6f4e844742228f85169a1"
+  integrity sha512-bh5nAtW0tuhvOJnx1GLRn5ScraRLICGyJV5wJhtRWOLsxW70Kk5tZtpK3O/hW6LDnqKS9mlUMPZj9fEMJ0gxqA==
+  dependencies:
+    tslib "^1.8.1"
+
+tsutils@^2.29.0:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
+  integrity sha512-g5JVHCIJwzfISaXpXE1qvNalca5Jwob6FjI4AoPlqMusJ6ftFE7IkkFoMhVLRgK+4Kx3gkzb8UZK5t5yTTvEmA==
   dependencies:
     tslib "^1.8.1"
 
