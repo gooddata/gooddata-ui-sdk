@@ -23,7 +23,9 @@ import {
     getTreemapAttributes,
     isDerivedMeasure,
     getCategoriesForTwoAttributes,
-    IViewByTwoAttributes
+    IViewByTwoAttributes,
+    IChartOptions,
+    IValidationResult
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions, getMVS } from './helper';
@@ -167,7 +169,7 @@ describe('chartOptionsBuilder', () => {
         });
 
         describe('default limits', () => {
-            it('should be able to validate successfuly', () => {
+            it('should be able to validate successfully', () => {
                 const chartOptions = barChartWithStackByAndViewByAttributesOptions;
                 const validationResult = validateData(undefined, chartOptions);
 
@@ -237,13 +239,13 @@ describe('chartOptionsBuilder', () => {
                 });
             });
             it('should validate with "hasNegativeValue: true" for treemap if its series contains a negative value',
-                () => {
-                    const validationResult = validateData(undefined, treemapOptionsWithNegativeValue);
-                    expect(validationResult).toEqual({
-                        dataTooLarge: false,
-                        hasNegativeValue: true
-                    });
+            () => {
+                const validationResult = validateData(undefined, treemapOptionsWithNegativeValue);
+                expect(validationResult).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: true
                 });
+            });
         });
 
         describe('Treemap filters out root nodes for dataPoints limit', () => {
@@ -287,6 +289,35 @@ describe('chartOptionsBuilder', () => {
                     dataTooLarge: true,
                     hasNegativeValue: false
                 });
+            });
+        });
+
+        describe('optional stacking with viewBy 2 attributes', () => {
+            const chartOptions: IChartOptions = {
+                isViewByTwoAttributes: true,
+                type: 'column'
+            };
+
+            const testData = [
+                ['false', 'less', 3, { dataTooLarge: false, hasNegativeValue: false } ],
+                ['true', 'greater', 31, { dataTooLarge: true, hasNegativeValue: false } ]
+            ];
+
+            it.each(testData)('should validate with "dataTooLarge: %s" when category number is %s than default limit', (
+                _result: string,
+                _operator: string,
+                categoriesNum: number,
+                expected: IValidationResult
+            ) => {
+                const data = {
+                    series: Array(1),
+                    categories: Array(categoriesNum).fill({
+                        name: 'Month',
+                        categories: Array(31)
+                    })
+                };
+                const validationResult = validateData(undefined, { ...chartOptions, data });
+                expect(validationResult).toEqual(expected);
             });
         });
     });

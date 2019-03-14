@@ -330,11 +330,16 @@ storiesOf('Internal/Visualization', module)
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'bar',
-                        separators: GERMAN_NUMBER_FORMAT
+                        type: 'column',
+                        separators: GERMAN_NUMBER_FORMAT,
+                        dataLabels: {
+                            visible: true
+                        }
                     }}
                     onDataTooLarge={noop}
-                />
+                />,
+                600,
+                800
             )
         );
     })

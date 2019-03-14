@@ -54,7 +54,7 @@ export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: a
     );
 }
 
-export function isDataOfReasonableSize(chartData: any, limits: IChartLimits) {
+export function isDataOfReasonableSize(chartData: any, limits: IChartLimits, isViewByTwoAttributes = false) {
     let result = true;
 
     const seriesLimit = get(limits, 'series');
@@ -64,7 +64,14 @@ export function isDataOfReasonableSize(chartData: any, limits: IChartLimits) {
 
     const categoriesLimit = get(limits, 'categories');
     if (categoriesLimit !== undefined) {
-        result = result && (chartData.categories.length <= categoriesLimit);
+        if (isViewByTwoAttributes) {
+            const categoriesLength = chartData.categories.reduce((result: number, category: any) => {
+                return result + category.categories.length;
+            }, 0);
+            result = result && (categoriesLength <= categoriesLimit);
+        } else {
+            result = result && (chartData.categories.length <= categoriesLimit);
+        }
     }
 
     const dataPointsLimit = get(limits, 'dataPoints');
