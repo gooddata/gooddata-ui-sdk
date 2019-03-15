@@ -32,6 +32,10 @@ $header-cell-resize-width: 20px;
         border: none;
     }
 
+    .ag-font-style {
+        user-select: auto;
+    }
+
     .ag-header-cell,
     .ag-header-group-cell {
         &::after {
