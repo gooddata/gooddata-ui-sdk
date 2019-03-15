@@ -16,6 +16,7 @@ import ParentFilter from './ParentFilter';
 import LoadingAndError from './LoadingAndError';
 import MultipleDomains from './MultipleDomains';
 import DrillWithExternalData from './DrillWithExternalData';
+import PivotTableDrilling from './PivotTableDrilling';
 import Registration from './Registration';
 import Login from './Login';
 import PivotTable from './PivotTable';
@@ -34,8 +35,12 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/custom-legend', title: 'Custom Legend', Component: CustomLegend },
     { path: '/advanced/parent-filter', title: 'Parent Filter', Component: ParentFilter },
     { path: '/advanced/loading-and-error', title: 'Loading and Error Components', Component: LoadingAndError },
-    { path: '/advanced/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
     { path: '/advanced/chart-configuration', title: 'Chart Configuration', Component: ChartConfiguration }
+];
+
+export const drillingUseCasesRoutes = [
+    { path: '/drilling/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
+    { path: '/drilling/pivot-table-drilling', title: 'Pivot table drilling', Component: PivotTableDrilling }
 ];
 
 export const nextRoutes = [
@@ -43,6 +48,7 @@ export const nextRoutes = [
 ];
 
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
+const DrillingUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
 const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
@@ -55,6 +61,7 @@ export const sideNavigationRoutes = [
     { path: '/arithmetic-measures', title: 'Arithmetic Measures', Component: ArithmeticMeasure },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesRoutes },
+    { path: '/drilling', pathMatch: 'full', redirectTo: drillingUseCasesRoutes[0].path, title: 'Drilling', Component: DrillingUseCasesRoutes },
     { path: '/next', pathMatch: 'full', redirectTo: nextRoutes[0].path, title: 'Next', Component: NextRoutes }
 ];
 
@@ -81,6 +88,7 @@ export const topNavigationRoutes = [
 export const routes = [
     ...sideNavigationRoutes,
     ...advancedUseCasesRoutes,
+    ...drillingUseCasesRoutes,
     ...nextRoutes,
     ...hiddenPaths,
     ...backendInfoRoutes
@@ -95,6 +103,7 @@ export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
 
 export default {
     advancedUseCasesRoutes,
+    drillingUseCasesRoutes,
     sideNavigationRoutes,
     routes,
     navigation,
