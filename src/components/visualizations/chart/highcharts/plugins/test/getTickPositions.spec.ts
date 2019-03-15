@@ -376,7 +376,7 @@ describe('get tick positions for dual axes chart', () => {
 
     describe('test generate tick positions with highchart', () => {
         const AXIS_PADDING = 0.05;
-        let getTickPositions: Function;
+        let getTickPositions = getTickPositioner();
 
         const getAxis = (index = 0,
                          dataMin: number = undefined, dataMax: number = undefined,

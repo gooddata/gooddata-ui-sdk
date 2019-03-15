@@ -4,7 +4,7 @@ export function linearTickPositions(Highcharts: any) {
     const YAXIS = 'yAxis';
     const HEATMAP = 'heatmap';
 
-    wrap(Highcharts.Axis.prototype, 'getLinearTickPositions', function(proceed: Function) {
+    wrap(Highcharts.Axis.prototype, 'getLinearTickPositions', function(proceed: (...params: any[]) => any) {
         const args = Array.prototype.slice.call(arguments);
         args.shift();
         const { categories, coll, chart: { options: { chart: type } } } = this;

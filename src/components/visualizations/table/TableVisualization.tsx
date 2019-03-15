@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import * as classNames from 'classnames';
 import { injectIntl } from 'react-intl';
 import { debounce, isEqual, noop, pick, uniqueId } from 'lodash';
-import { Cell, CellProps, Column, Table } from 'fixed-data-table-2';
+import { Cell, CellProps, Column, Table, ColumnHeaderProps } from 'fixed-data-table-2';
 import { AFM, Execution } from '@gooddata/typings';
 
 import 'nodelist-foreach-polyfill';
@@ -116,7 +116,7 @@ export interface IContainerProps {
 
 export interface ITableVisualizationProps {
     containerMaxHeight?: number;
-    afterRender?: Function;
+    afterRender?: () => void;
     drillablePredicates?: IHeaderPredicate[];
     executionRequest: AFM.IExecution;
     executionResponse: Execution.IExecutionResponse;
@@ -646,8 +646,7 @@ export class TableVisualizationClass
         this.onTotalsEdit(updatedTotals);
     }
 
-    private renderTooltipHeader(header: IMappingHeader, columnIndex: number, columnWidth: number)
-        : (props: ITableVisualizationProps) => JSX.Element {
+    private renderTooltipHeader(header: IMappingHeader, columnIndex: number, columnWidth: number) {
 
         const headerClasses: string = getHeaderClassNames(header);
         const headerName = getMappingHeaderName(header);
@@ -684,7 +683,7 @@ export class TableVisualizationClass
             });
         };
 
-        return (props: ITableVisualizationProps) => (
+        return (props: ColumnHeaderProps) => (
             <span>
                 <Cell {...props} className={cellClasses} onClick={showSortBubble}>
                     <span className="gd-table-header-title">
@@ -726,8 +725,7 @@ export class TableVisualizationClass
         );
     }
 
-    private renderDefaultHeader(header: IMappingHeader, columnIndex: number)
-        : (props: ITableVisualizationProps) => JSX.Element {
+    private renderDefaultHeader(header: IMappingHeader, columnIndex: number) {
 
         const headerClasses = getHeaderClassNames(header);
         const headerName = getMappingHeaderName(header);
@@ -738,7 +736,7 @@ export class TableVisualizationClass
         const columnAlign: Align = getColumnAlign(header);
         const tooltipAlignPoints: IAlignPoint[] = getTooltipAlignPoints(columnAlign);
 
-        return (props: ITableVisualizationProps) => (
+        return (props: ColumnHeaderProps) => (
             <Cell
                 {...props}
                 className={headerClasses}
@@ -880,7 +878,7 @@ export class TableVisualizationClass
         headers: IMappingHeader[],
         columnWidth: number
     ): JSX.Element[] {
-        const renderHeader: Function = this.props.sortInTooltip
+        const renderHeader = this.props.sortInTooltip
             ? this.renderTooltipHeader
             : this.renderDefaultHeader;
 

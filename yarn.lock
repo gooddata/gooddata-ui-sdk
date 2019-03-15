@@ -124,10 +124,10 @@
     commander "2.11.0"
     lodash "4.17.4"
 
-"@gooddata/tslint-config@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.14.tgz#bf5e507221cd99dd011d751d35dd1f6fdd8662bb"
-  integrity sha512-J9jROaisf3ofVuX+DwpZ6ClVp6JCtnJfqjmS9goc6ez0yc4L0pqQuQ/OnmTsqYq8/5/m+LTehL/6p+yRByilCg==
+"@gooddata/tslint-config@0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-0.0.16.tgz#b3bd93910baa859017d8b1e535562a93aa4524ca"
+  integrity sha512-RQgDiVFTogezcZsoUmoovt2TMQK/yyQcuhOiPEtWKaw/Nj1CLcadCU67RIz1eZ8xEXwd3o8OQeDWZJM3rxx1IA==
   dependencies:
     tslint "5.14.0"
     tslint-eslint-rules "5.4.0"

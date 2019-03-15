@@ -56,14 +56,14 @@ export interface IAttributeMetadata {
 export interface IAttributeDropdownProps {
     attributeDisplayForm: IAttributeDisplayForm;
     projectId: string;
-    onApply: Function;
+    onApply: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     fullscreenOnMobile?: boolean;
     isUsingIdentifier: boolean;
     metadata: IAttributeMetadata;
-    getListItem?: Function;
-    getListLoading?: Function;
-    getListError?: Function;
-    getListNoResults?: Function;
+    getListItem?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    getListLoading?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    getListError?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    getListNoResults?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
 }
 
 export interface IAttributeDropdownStateItem {
@@ -167,7 +167,7 @@ export class AttributeDropdownWrapped
 
     private dataSource: any;
     private dropdownRef: any;
-    private MediaQuery: Function;
+    private MediaQuery: (...params: any[]) => any; // TODO: make the types more specific (FET-282);
 
     constructor(props: IAttributeDropdownProps & InjectedIntlProps) {
         super(props);
@@ -218,7 +218,10 @@ export class AttributeDropdownWrapped
     }
 
     private createMediaQuery(fullscreenOnMobile: boolean) {
-        this.MediaQuery = fullscreenOnMobile ? undefined : ({ children }: { children: Function }) => children(false);
+        this.MediaQuery = fullscreenOnMobile
+        ? undefined
+        : ({ children }: { children: (...params: any[]) => any; /* TODO: make the types more specific (FET-282) */ }) =>
+            children(false);
     }
 
     private onApply() {

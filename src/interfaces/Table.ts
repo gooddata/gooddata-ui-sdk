@@ -98,8 +98,8 @@ export type OnSortChangeWithItem  = (sortItem: AFM.SortItem) => void;
 
 export interface ITableTransformationConfig {
     rowsPerPage?: number;
-    onMore?: Function;
-    onLess?: Function;
+    onMore?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    onLess?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     sortInTooltip?: boolean;
     stickyHeaderOffset?: number;
     separators?: ISeparators;

@@ -17,10 +17,10 @@ export interface IAttributeFilterProps {
     identifier?: string;
     projectId?: string;
     metadata?: {
-        getObjectUri: Function;
-        getObjectDetails: Function;
+        getObjectUri: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+        getObjectDetails: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     };
-    onApply: Function;
+    onApply: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     fullscreenOnMobile?: boolean;
     locale?: string;
     FilterLoading?: any;

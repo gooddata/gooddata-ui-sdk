@@ -18,7 +18,7 @@ import { getHeaders, getRows, getTotalsWithData, validateTableProportions } from
 import { getSortInfo, getSortItem } from './utils/sort';
 
 export interface ITableTransformationProps {
-    afterRender?: Function;
+    afterRender?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     totals?: IIndexedTotalItem[];
     totalsEditAllowed?: boolean;
     onTotalsEdit?: (indexedTotals: IIndexedTotalItem[]) => void;
@@ -31,7 +31,7 @@ export interface ITableTransformationProps {
     maxHeight?: number;
     onFiredDrillEvent?: OnFiredDrillEvent;
     onSortChange?: OnSortChangeWithItem;
-    onDataTooLarge?: Function;
+    onDataTooLarge?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     tableRenderer?: (props: ITableProps) => JSX.Element;
     width?: number;
     lastAddedTotalType?: AFM.TotalType;
