@@ -8,7 +8,8 @@ import {
     ICellRendererParams,
     IDatasource,
     IGetRowsParams,
-    SortChangedEvent
+    SortChangedEvent,
+    ColumnResizedEvent
 } from 'ag-grid';
 import { AgGridReact } from 'ag-grid-react';
 import { CellClassParams } from 'ag-grid/dist/lib/entities/colDef';
@@ -581,9 +582,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     execution
                 });
             }
-            const aggregationCount = sumBy(execution.executionResult.totals, total => total.length);
-            const totalRowCount = execution.executionResult.paging.total[0];
-            this.updateDesiredHeight(totalRowCount, aggregationCount);
+            this.updateDesiredHeight(execution.executionResult);
             this.props.onDataSourceUpdateSuccess();
         };
 
@@ -662,6 +661,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             return true;
         }
         return false;
+    }
+
+    public columnResized = (columnEvent: ColumnResizedEvent) => {
+        if (!columnEvent.finished) {
+            return; // only update the height once the user is done setting the column size
+        }
+        this.updateDesiredHeight(this.state.execution.executionResult);
     }
 
     public onMenuAggregationClick = ({
@@ -757,6 +763,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
             onCellClicked: this.cellClicked,
             onSortChanged: this.sortChanged,
+            onColumnResized: this.columnResized,
 
             // Basic options
             suppressMovableColumns: true,
@@ -905,7 +912,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             sortedColumnIndexes.all.length === 0;
     }
 
-    private setContainerRef = (container: HTMLDivElement): void => { this.containerRef = container; };
+    private setContainerRef = (container: HTMLDivElement): void => { this.containerRef = container; };
 
     private getExecutionResponse = () => {
         return this.state.execution ? this.state.execution.executionResponse : null;
@@ -964,31 +971,41 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             : DEFAULT_ROW_HEIGHT;
     }
 
-    private updateDesiredHeight(rowCount: number, aggregationCount: number): void {
-        if (!this.gridApi) {
-            return;
-        }
-        const { maxHeight } = this.props.config;
-        if (!maxHeight) {
-            return;
-        }
+    private getTotalBodyHeight(executionResult: Execution.IExecutionResult): number {
+        const aggregationCount = sumBy(executionResult.totals, total => total.length);
+        const rowCount = executionResult.paging.total[0];
+
         const rowHeight = this.getRowHeight();
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
         const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
         const bodyHeight = rowCount * rowHeight + leeway;
         const footerHeight = aggregationCount * rowHeight;
 
-        // detect horizontal scroll bar and accommodate for it
+        return headerHeight + bodyHeight + footerHeight;
+    }
+
+    private getScrollBarPadding(): number {
+        if (!this.gridApi) {
+            return 0;
+        }
         const actualWidth = this.containerRef && this.containerRef.scrollWidth;
         const preferredWidth = this.gridApi.getPreferredWidth();
         const hasHorizontalScrollBar = actualWidth < preferredWidth;
-        const scrollBarPadding = hasHorizontalScrollBar ? getScrollbarWidth() : 0;
+        return hasHorizontalScrollBar ? getScrollbarWidth() : 0;
+    }
 
-        const totalHeight = headerHeight + bodyHeight + footerHeight + scrollBarPadding;
+    private updateDesiredHeight(executionResult: Execution.IExecutionResult): void {
+        const { maxHeight } = this.props.config;
+        if (!maxHeight) {
+            return;
+        }
 
-        this.setState({
-            desiredHeight: Math.min(totalHeight, maxHeight)
-        });
+        const totalHeight = this.getTotalBodyHeight(executionResult) + this.getScrollBarPadding();
+        const desiredHeight = Math.min(totalHeight, maxHeight);
+
+        if (this.state.desiredHeight !== desiredHeight) {
+            this.setState({ desiredHeight });
+        }
     }
 
     private forceRerender() {
