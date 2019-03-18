@@ -4745,5 +4745,22 @@ Array [
       "index": 2,
     },
   ],
+  Object {
+    "dimensions": Array [
+      Object {
+        "itemIdentifiers": Array [
+          "state",
+          "location",
+        ],
+      },
+      Object {
+        "itemIdentifiers": Array [
+          "year",
+          "month",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
 ]
 `;

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { Selector } from 'testcafe';
 import { config } from './utils/config';
 import {
@@ -27,8 +27,9 @@ const CELL_0_2 = '.s-cell-0-2';
 const CELL_0_3 = '.s-cell-0-3';
 const CELL_1_0 = '.s-cell-1-0';
 const CELL_1_3 = '.s-cell-1-3';
-const CELL_2_0 = '.s-cell-2-0';
 const CELL_5_0 = '.s-cell-5-0';
+const CELL_8_0 = '.s-cell-8-0';
+const CELL_9_0 = '.s-cell-9-0';
 
 const DRILLABLE_CELL_CLASSNAME = 'gd-cell-drillable';
 const HIDDEN_CELL_CLASSNAME = 's-gd-cell-hide';
@@ -163,11 +164,11 @@ test('should group cells only when sorted by first attribute', async (t) => {
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'Alabama', CELL_1_0);
     await checkCellHasClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_1_0);
 
-    await t.click(Selector(MENU_CATEGORY)); // Menu Category (initial should be ASC)
+    await t.click(Selector(FRANCHISE_FEES)); // Menu Category (initial should be ASC)
     await waitForPivotTableStopLoading(t);
 
-    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'California', CELL_1_0);
-    await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_1_0);
-    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'California', CELL_2_0);
-    await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_2_0);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'California', CELL_8_0);
+    await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_8_0);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'California', CELL_9_0);
+    await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_9_0);
 });

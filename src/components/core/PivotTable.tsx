@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import {
     ColDef,
@@ -261,7 +261,11 @@ export const getAGGridDataSource = (
     getPage: IGetPage,
     cancelPagePromises: () => void,
     getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (execution: Execution.IExecutionResponses, columnDefs: IGridHeader[]) => void,
+    onSuccess: (
+        execution: Execution.IExecutionResponses,
+        columnDefs: IGridHeader[],
+        resultSpec: AFM.IResultSpec
+    ) => void,
     getGridApi: () => any,
     intl: InjectedIntl,
     columnDefOptions: IColumnDefOptions = {},
@@ -323,7 +327,7 @@ export const getAGGridDataSource = (
                 groupingProvider.processPage(rowData, offset[0], rowAttributeIds);
                 // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
                 const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
-                onSuccess(execution, columnDefs);
+                onSuccess(execution, columnDefs, resultSpecUpdated);
                 successCallback(rowData, lastRow);
                 // set totals
                 getGridApi().setPinnedBottomRowData(rowTotals);
@@ -568,10 +572,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     public createAGGridDataSource() {
         const onSuccess = (
             execution: Execution.IExecutionResponses,
-            columnDefs: IGridHeader[]
+            columnDefs: IGridHeader[],
+            resultSpec: AFM.IResultSpec
         ) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
-                const sortedByFirstAttribute = this.isSortedByFirstAttibute(columnDefs);
+                const sortedByFirstAttribute = this.isSortedByFirstAttibute(columnDefs, resultSpec);
                 this.setState({
                     columnDefs,
                     sortedByFirstAttribute
@@ -890,7 +895,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.groupingProvider = GroupingProviderFactory.createProvider(sortedByFirstAttr);
     }
 
-    private isSortedByFirstAttibute(columnDefs: ColDef[]): boolean {
+    private isSortedByFirstAttibute(columnDefs: ColDef[], resultSpec: AFM.IResultSpec): boolean {
         const sortedColumnIndexes: ISortedByColumnIndexes = columnDefs.reduce(
             (
                 sortStack: ISortedByColumnIndexes,
@@ -908,8 +913,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             { attributes: [], all: [] }
         );
 
-        return sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1 ||
-            sortedColumnIndexes.all.length === 0;
+        const sortedByFirstAttribute = sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1;
+        const isSorted = sortedColumnIndexes.all.length > 0 || (resultSpec.sorts && resultSpec.sorts.length > 0);
+
+        return sortedByFirstAttribute || !isSorted;
     }
 
     private setContainerRef = (container: HTMLDivElement): void => { this.containerRef = container; };
