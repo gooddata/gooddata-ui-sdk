@@ -6,7 +6,8 @@ import {
     escapeCategories,
     formatOverlapping,
     formatOverlappingForParentAttribute,
-    getCustomizedConfiguration
+    getCustomizedConfiguration,
+    percentageDataLabelFormatter
 } from '../customConfiguration';
 import { ISeriesDataItem } from '../../chartOptionsBuilder';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
@@ -620,6 +621,66 @@ describe('getCustomizedConfiguration', () => {
             const dataLabelPoint = getDataLabelPoint(opposite, axisNumber);
             const dataLabel = formatter.call(dataLabelPoint);
             expect(dataLabel).toBe(expectation);
+        });
+
+        describe('percentage data label formatter', () => {
+
+            it('should return empty data labels with undefined percentage', () => {
+                const result = percentageDataLabelFormatter.call({});
+                expect(result).toBe('');
+            });
+
+            it('should format data labels to percentage for single axis chart implicitly', () => {
+                const dataLabel = {
+                    percentage: 55.55
+                };
+                const result = percentageDataLabelFormatter.call(dataLabel);
+                expect(result).toBe('55.55%');
+            });
+
+            it.each([
+                ['left', false],
+                ['right', true]
+            ])('should format data labels to percentage for %s single axis chart', (_: string, opposite: boolean) => {
+                const dataLabel = {
+                    percentage: 55.55,
+                    series: {
+                        chart: {
+                            yAxis: [{}]
+                        },
+                        yAxis: {
+                            opposite
+                        }
+                    }
+                };
+                const result = percentageDataLabelFormatter.call(dataLabel);
+                expect(result).toBe('55.55%');
+            });
+
+            it.each([
+                ['', 'primary', false, '55.55%'],
+                [' not', 'secondary', true, '123']
+            ])('should %s format data labels to percentage for dual axis chart on %s axis', (
+                _negation: string,
+                _axis: string,
+                opposite: boolean,
+                expected: string
+            ) => {
+                const dataLabel = {
+                    percentage: 55.55,
+                    y: 123,
+                    series: {
+                        chart: {
+                            yAxis: [{}, {}]
+                        },
+                        yAxis: {
+                            opposite
+                        }
+                    }
+                };
+                const result = percentageDataLabelFormatter.call(dataLabel);
+                expect(result).toBe(expected);
+            });
         });
     });
 });
