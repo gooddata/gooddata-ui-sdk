@@ -107,7 +107,7 @@ describe('PivotTable', () => {
                 formatValue: (value: number) => value.toFixed(2)
             } as any;
             const wrapper = shallow(<RowLoadingElement {...props} />);
-            expect(wrapper.html()).toEqual('<span>3.14</span>');
+            expect(wrapper.html()).toEqual('<span class="s-value">3.14</span>');
         });
     });
 
