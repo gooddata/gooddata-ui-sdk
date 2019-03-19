@@ -25,6 +25,7 @@ import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
 import { Execution } from '@gooddata/typings';
 import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
 import { RGBType } from '@gooddata/gooddata-js';
+import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -227,88 +228,90 @@ storiesOf('Core components/BarChart', module)
     ))
     .add('with different legend positions', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'auto'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <BarChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'auto'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">left</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <BarChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'left'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">top</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <BarChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'top'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">right</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <BarChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'right'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">bottom</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <BarChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">left</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'left'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">top</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'top'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">right</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'right'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">bottom</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
     ))
     .add('arithmetic measures', () => (
@@ -390,7 +393,7 @@ storiesOf('Core components/BarChart', module)
                                     value: '04'
                                 }
                             }, {
-                                predicate:  (headerItem: Execution.IMeasureHeaderItem) =>
+                                predicate: (headerItem: Execution.IMeasureHeaderItem) =>
                                     headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier
                                         === 'm2'),
                                 color: {
@@ -398,7 +401,7 @@ storiesOf('Core components/BarChart', module)
                                     value: '02'
                                 }
                             }, {
-                                predicate:  (headerItem: Execution.IMeasureHeaderItem) =>
+                                predicate: (headerItem: Execution.IMeasureHeaderItem) =>
                                     headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier
                                         === 'm1_pop'),
                                 color: {
@@ -466,9 +469,11 @@ storiesOf('Core components/BarChart', module)
                     projectId="storybook"
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
-                    config={{yaxis: {
-                        rotation: '0'
-                    }}}
+                    config={{
+                        yaxis: {
+                            rotation: '0'
+                        }
+                    }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

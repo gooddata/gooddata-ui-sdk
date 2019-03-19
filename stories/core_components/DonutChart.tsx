@@ -22,6 +22,8 @@ import {
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
 
+import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+
 const wrapperStyle = { width: 400, height: 400 };
 
 storiesOf('Core components/DonutChart', module)
@@ -102,140 +104,144 @@ storiesOf('Core components/DonutChart', module)
     ))
     .add('with different legend positions', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_1}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'auto'
-                            }
-                        }}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'auto'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">left</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'left'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">top</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'top'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">right</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'right'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">bottom</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">left</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_1}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'left'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">top</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_1}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'top'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">right</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_1}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'right'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">bottom</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_1}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
     )).add('data labels config', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = hidden</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
+                <div>
+                    <div className="storybook-title">default = hidden</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_AUTO_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">show</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_VISIBLE_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">hide</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <DonutChart
+                            projectId="storybook"
+                            measures={[MEASURE_1]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_HIDDEN_CONFIG}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_AUTO_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">show</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_VISIBLE_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">hide</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <DonutChart
-                        projectId="storybook"
-                        measures={[MEASURE_1]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_HIDDEN_CONFIG}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
     ))
     .add('arithmetic measures', () => (
