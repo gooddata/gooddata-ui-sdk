@@ -8,65 +8,81 @@ const configuration = {
         },
         'Core components/AreaChart': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/BubbleChart': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/ColumnChart': {
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/BarChart': {
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/DonutChart': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/Heatmap': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/LineChart': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/ScatterPlot': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/Treemap': {
             'data labels config': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
-                'readySelector': '.screenshot-ready-wrapper-done'
+                readySelector: '.screenshot-ready-wrapper-done'
+            }
+        },
+        'Core components/PieChart': {
+            'data labels config': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'with different legend positions': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            }
+        },
+        'Core components/Table': {
+            'with supplied height of container': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'with table totals and supplied height of container': {
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         }
     }

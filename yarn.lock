@@ -113,10 +113,10 @@
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@gooddata/numberjs/-/numberjs-3.1.2.tgz#82dd26486edeb21de37cfe538915f93cd403e801"
 
-"@gooddata/test-storybook@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-3.0.0.tgz#a8e467c6c8cb013b4c1e891e29d7682252edceea"
-  integrity sha512-ZL5gvOFtBoVsVZ+NOdobC1VL4GEsoXHN/GvezcQYCKQ5vGoVOFMoiz5jMPMZul3kDcNgr9D4urg8iBK1kd0hOA==
+"@gooddata/test-storybook@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/test-storybook/-/test-storybook-3.0.1.tgz#ac19d7ee684023da3afa096ff2abc8084abe14b6"
+  integrity sha512-JTWujLM+roPnuUg9+vqF6MzmzHYPlyMI6q7ap/gIWsgczlBl3eyON+v3eogRHfopHCNI79bJwHV8znpKWKlz0g==
   dependencies:
     acorn "5.1.1"
     acorn-jsx "4.0.1"

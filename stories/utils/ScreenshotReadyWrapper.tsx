@@ -73,3 +73,9 @@ export function createHighChartResolver(numOfCharts: number) {
         return element.getElementsByClassName('highcharts-container').length === numOfCharts;
     };
 }
+
+export function createTableResolver(numOfTables: number) {
+    return (element: HTMLElement) => {
+        return element.getElementsByClassName('viz-table-wrap').length === numOfTables;
+    };
+}
