@@ -23,6 +23,7 @@ import {
     CUSTOM_COLOR_PALETTE_CONFIG
 } from '../data/configProps';
 import { localIdentifierMatch } from '../../src/factory/HeaderPredicateFactory';
+import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
 
 const wrapperStyle = { width: 800, height: 400 };
 const wrapperWiderStyle = { width: 1000, height: 400 };
@@ -182,141 +183,145 @@ storiesOf('Core components/Heatmap', module)
     ))
     .add('with different legend positions', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_2}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'auto'
-                            }
-                        }}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_2}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'auto'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">left</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_2}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'left'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">top</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_2}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'top'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">right</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_2}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'right'
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="storybook-title">bottom</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_2}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={{
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">left</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_2}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'left'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">top</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_2}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'top'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">right</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_2}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'right'
-                            }
-                        }}
-                    />
-                </div>
-                <div className="storybook-title">bottom</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_2}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={{
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
     )).add('data labels config', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = auto</div>
-                <div style={wrapperWiderStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <div style={wrapperWiderStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                        />
+                    </div>
+                    <div className="storybook-title">auto</div>
+                    <div style={wrapperWiderStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            config={DATA_LABELS_AUTO_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">show</div>
+                    <div style={wrapperWiderStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            config={DATA_LABELS_VISIBLE_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">hide</div>
+                    <div style={wrapperWiderStyle} className="screenshot-container">
+                        <Heatmap
+                            projectId="storybook"
+                            measure={MEASURE_1}
+                            rows={ATTRIBUTE_1}
+                            columns={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            config={DATA_LABELS_HIDDEN_CONFIG}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">auto</div>
-                <div style={wrapperWiderStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        config={DATA_LABELS_AUTO_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">show</div>
-                <div style={wrapperWiderStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        config={DATA_LABELS_VISIBLE_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">hide</div>
-                <div style={wrapperWiderStyle} className="screenshot-container">
-                    <Heatmap
-                        projectId="storybook"
-                        measure={MEASURE_1}
-                        rows={ATTRIBUTE_1}
-                        columns={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        config={DATA_LABELS_HIDDEN_CONFIG}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
     )).add('custom colors', () => (
         screenshotWrap(

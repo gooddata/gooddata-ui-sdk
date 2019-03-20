@@ -24,6 +24,8 @@ import {
     DATA_LABELS_AUTO_CONFIG
 } from '../data/configProps';
 
+import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+
 const wrapperStyle = { width: 800, height: 400 };
 
 storiesOf('Core components/AreaChart', module)
@@ -225,143 +227,147 @@ storiesOf('Core components/AreaChart', module)
     ))
     .add('with different legend positions', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'auto'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'auto'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">left</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'left'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">top</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'top'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">right</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'right'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">bottom</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            config={{
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">left</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'left'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">top</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'top'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">right</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'right'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-                <div className="storybook-title">bottom</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_1}
-                        config={{
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
-   ))
+    ))
     .add('data labels config', () => (
         screenshotWrap(
-            <div>
-                <div className="storybook-title">default = hidden</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                    />
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
+                <div>
+                    <div className="storybook-title">default = hidden</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                        />
+                    </div>
+                    <div className="storybook-title">auto</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_AUTO_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">show</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_VISIBLE_CONFIG}
+                        />
+                    </div>
+                    <div className="storybook-title">hide</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <AreaChart
+                            projectId="storybook"
+                            measures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_3}
+                            onError={onErrorHandler}
+                            LoadingComponent={null}
+                            ErrorComponent={null}
+                            config={DATA_LABELS_HIDDEN_CONFIG}
+                        />
+                    </div>
                 </div>
-                <div className="storybook-title">auto</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_AUTO_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">show</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_VISIBLE_CONFIG}
-                    />
-                </div>
-                <div className="storybook-title">hide</div>
-                <div style={wrapperStyle} className="screenshot-container">
-                    <AreaChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={ATTRIBUTE_3}
-                        onError={onErrorHandler}
-                        LoadingComponent={null}
-                        ErrorComponent={null}
-                        config={DATA_LABELS_HIDDEN_CONFIG}
-                    />
-                </div>
-            </div>
+            </ScreenshotReadyWrapper>
         )
-   ))
+    ))
     .add('arithmetic measures', () => (
         screenshotWrap(
             <div style={wrapperStyle}>
