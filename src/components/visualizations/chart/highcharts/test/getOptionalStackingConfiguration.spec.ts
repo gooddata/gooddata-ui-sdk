@@ -79,15 +79,6 @@ describe('getOptionalStackingConfiguration', () => {
             });
         });
 
-        it('should return empty series config with single metric', () => {
-            const chartOptions = { yAxes: [{}] };
-            const config = { series: [{}] };
-            const chartConfig = { stackMeasures: true };
-
-            const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
-            expect(result).toEqual({});
-        });
-
         it('should \'stackMeasuresToPercent\' always overwrite \'stackMeasures\' setting', () => {
             const chartOptions = { yAxes: [{}] };
             const config = { series: Array(2).fill({ yAxis: 0 }) };
