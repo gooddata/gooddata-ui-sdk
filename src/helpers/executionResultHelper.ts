@@ -82,3 +82,39 @@ export function findMeasureHeaderByLocalIdentifier(
     );
     return header ? header : null;
 }
+
+export function getNthAttributeHeader(
+    attributeHeaders: Execution.IAttributeHeader[],
+    headerIndex: number
+): Execution.IAttributeHeader['attributeHeader'] {
+    if (attributeHeaders.length  && attributeHeaders[headerIndex]) {
+        return attributeHeaders[headerIndex].attributeHeader;
+    }
+    return null;
+}
+
+export function getNthAttributeLocalIdentifier(
+    rowAttributeHeaders: Execution.IAttributeHeader[],
+    headerIndex: number
+): string {
+    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
+    return attributeHeader && attributeHeader.localIdentifier;
+}
+
+export function getNthAttributeName(
+    rowAttributeHeaders: Execution.IAttributeHeader[],
+    headerIndex: number
+): string {
+    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
+    return attributeHeader && attributeHeader.name;
+}
+
+export function getNthDimensionHeaders(
+    executionResponse: Execution.IExecutionResponse,
+    headerIndex: number
+): Execution.IHeader[] {
+    if (executionResponse.dimensions.length && executionResponse.dimensions[headerIndex]) {
+        return executionResponse.dimensions[headerIndex].headers;
+    }
+    return null;
+}

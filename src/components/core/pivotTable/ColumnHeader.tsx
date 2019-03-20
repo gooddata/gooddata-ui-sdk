@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import { IHeaderParams } from 'ag-grid';
 import { AFM, Execution } from '@gooddata/typings';
 
-import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN } from '../../../helpers/agGrid';
+import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from '../../../helpers/agGrid';
 import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
 import { IHeaderReactComp } from 'ag-grid-react/lib/interfaces';
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from './HeaderCell';
@@ -23,7 +23,6 @@ export interface IColumnHeaderState {
 
 export const ASC: AFM.SortDirection = 'asc';
 export const DESC: AFM.SortDirection = 'desc';
-export const ATTRIBUTE_FIELD_TYPE = 'a';
 
 class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState> implements IHeaderReactComp {
     public static propTypes = {
@@ -63,7 +62,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     }
 
     public getDefaultSortDirection(): AFM.SortDirection {
-        return (this.getFieldType() === ATTRIBUTE_FIELD_TYPE) ? ASC : DESC;
+        return (this.getFieldType() === FIELD_TYPE_ATTRIBUTE) ? ASC : DESC;
     }
 
     public onSortRequested = (sortDir: AFM.SortDirection) => {
@@ -73,7 +72,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
 
     public render() {
         const { displayName, enableSorting, menu, column } = this.props;
-        const textAlign = this.getFieldType() === ATTRIBUTE_FIELD_TYPE ? ALIGN_LEFT : ALIGN_RIGHT;
+        const textAlign = this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = column.getColDef().type === COLUMN_ATTRIBUTE_COLUMN;
 
         return (

@@ -303,5 +303,15 @@
       "value": "Aggregations",
       "comment": "",
       "limit": 0
+   },
+   "visualizations.menu.aggregations.rows": {
+      "value": "Rows",
+      "comment": "Rows of a table",
+      "limit": 25
+   },
+   "visualizations.menu.aggregations.all-rows": {
+     "value": "All rows",
+     "comment": "All rows of a table",
+     "limit": 25
    }
 }

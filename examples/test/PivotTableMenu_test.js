@@ -32,7 +32,7 @@ const clickOnMenuAggregationItem = async (t, cell, aggregationItemClass) => {
     await t.hover(cell);
     await t.click(menu);
 
-    const sumTotal = Selector(aggregationItemClass);
+    const sumTotal = Selector(aggregationItemClass).find('.s-menu-aggregation-inner');
     await t.click(sumTotal);
     await waitForPivotTableStopLoading(t);
 };

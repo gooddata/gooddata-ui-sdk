@@ -41,7 +41,9 @@ import {
     ID_SEPARATOR,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
-    ROW_TOTAL
+    ROW_TOTAL,
+    FIELD_TYPE_MEASURE,
+    FIELD_TYPE_ATTRIBUTE
 } from '../../helpers/agGrid';
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from '../../helpers/headerPredicate';
 import {
@@ -192,10 +194,10 @@ export const getSortItemByColId = (
 
     // search columns first when sorting in columns to use the proper header
     // in case the same attribute is in both rows and columns
-    const searchDimensionIndex = lastFieldType === 'm' ? 1 : 0;
+    const searchDimensionIndex = lastFieldType === FIELD_TYPE_MEASURE ? 1 : 0;
     const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders([dimensions[searchDimensionIndex]]);
 
-    if (lastFieldType === 'a') {
+    if (lastFieldType === FIELD_TYPE_ATTRIBUTE) {
         for (const header of attributeHeaders) {
             if (getIdsFromUri(header.attributeHeader.uri)[0] === lastFieldId) {
                 return {
@@ -207,7 +209,7 @@ export const getSortItemByColId = (
             }
         }
         invariant(false, `could not find attribute header matching ${colId}`);
-    } else if (lastFieldType === 'm') {
+    } else if (lastFieldType === FIELD_TYPE_MEASURE) {
         const headerItem = measureHeaderItems[parseInt(lastFieldId, 10)];
         const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
             // first item is type which should be always 'a'

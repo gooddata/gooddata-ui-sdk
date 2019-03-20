@@ -19,6 +19,8 @@ export const COLUMN_ATTRIBUTE_COLUMN = 'COLUMN_ATTRIBUTE_COLUMN';
 export const MEASURE_COLUMN = 'MEASURE_COLUMN';
 export const FIELD_SEPARATOR = '-';
 export const FIELD_SEPARATOR_PLACEHOLDER = 'DASH';
+export const FIELD_TYPE_MEASURE = 'm';
+export const FIELD_TYPE_ATTRIBUTE = 'a';
 export const ID_SEPARATOR = '_';
 export const ID_SEPARATOR_PLACEHOLDER = 'UNDERSCORE';
 export const DOT_PLACEHOLDER = 'DOT';
@@ -321,10 +323,10 @@ export const getRowTotals = (
         columnKeys.filter((key: any) => {
             const currentKey = key.split(FIELD_SEPARATOR).pop();
             const fieldType = currentKey.split(ID_SEPARATOR)[0];
-            if (fieldType === 'a') {
+            if (fieldType === FIELD_TYPE_ATTRIBUTE) {
                 attributeKeys.push(currentKey);
             }
-            if (fieldType === 'm') {
+            if (fieldType === FIELD_TYPE_MEASURE) {
                 measureKeys.push(key);
             }
         });

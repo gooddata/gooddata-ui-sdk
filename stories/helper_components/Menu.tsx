@@ -1,11 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
+import { action } from '@storybook/addon-actions';
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 import { ItemsWrapper, Header, Separator, Item } from '@gooddata/goodstrap/lib/List/MenuList';
+import noop = require('lodash/noop');
+
+import AggregationsMenu from '../../src/components/core/pivotTable/AggregationsMenu';
+import AggregationsSubMenu from '../../src/components/core/pivotTable/AggregationsSubMenu';
 import Menu from '../../src/components/menu/Menu';
 import SubMenu, { ISubMenuProps } from '../../src/components/menu/SubMenu';
 import { IOnOpenedChangeParams } from '../../src/components/menu/MenuSharedTypes';
+import { EXECUTION_RESPONSE_2A_3M } from '../../src/components/visualizations/table/fixtures/2attributes3measures';
+import { createIntlMock } from '../../src/components/visualizations/utils/intlUtils';
+import { IMenuAggregationClickConfig } from '../../src/interfaces/PivotTable';
+import { ATTRIBUTE_HEADERS_2A, GRAND_TOTALS_WITH_SUBTOTALS } from '../data/componentProps';
 
 const ToggleButton = () => <button>toggle menu</button>;
 
@@ -428,4 +437,50 @@ storiesOf('Helper components/Menu', module)
                 </Menu>
             </div>
         )
-    );
+    )
+    .add('aggregation menus', () => {
+        const intlMock = createIntlMock();
+        const getExecutionResponse = () => EXECUTION_RESPONSE_2A_3M;
+        const getTotals = () => GRAND_TOTALS_WITH_SUBTOTALS;
+        const onAggregationSelect = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
+            action('onAggregationSelect')(menuAggregationClickConfig);
+        };
+
+        return screenshotWrap(
+            <div
+                className="screenshot-target"
+                style={{ minHeight: 500 }}
+            >
+                <AggregationsMenu
+                    intl={intlMock}
+                    isMenuOpened={true}
+                    isMenuButtonVisible={true}
+                    showSubmenu={true}
+                    colId={'a_6_1-m_0'}
+                    getExecutionResponse={getExecutionResponse}
+                    getTotals={getTotals}
+                    onAggregationSelect={onAggregationSelect}
+                    onMenuOpenedChange={noop}
+                />
+
+                <div
+                    className="gd-aggregation-submenu"
+                    style={{ margin: '230px auto 0 0', width: 0 }}
+                >
+                    <AggregationsSubMenu
+                        intl={intlMock}
+                        totalType={'max'}
+                        toggler={null}
+                        rowAttributeHeaders={ATTRIBUTE_HEADERS_2A}
+                        measureLocalIdentifiers={['1st_measure_local_identifier']}
+                        columnTotals={[{
+                            type: 'max',
+                            attributes: ['1st_attr_df_local_identifier', '2nd_attr_df_local_identifier']
+                        }]}
+                        onAggregationSelect={onAggregationSelect}
+                        isMenuOpened={true}
+                    />
+                </div>
+            </div>
+        );
+    });
