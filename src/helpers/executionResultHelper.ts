@@ -101,12 +101,12 @@ export function getNthAttributeLocalIdentifier(
     return attributeHeader && attributeHeader.localIdentifier;
 }
 
-export function getNthAttributeName(
+export function getNthAttributeDisplayFormName(
     rowAttributeHeaders: Execution.IAttributeHeader[],
     headerIndex: number
 ): string {
     const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
-    return attributeHeader && attributeHeader.name;
+    return attributeHeader && attributeHeader.formOf.name;
 }
 
 export function getNthDimensionHeaders(

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AFM, Execution } from '@gooddata/typings';
 import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
 
-import { getNthAttributeLocalIdentifier, getNthAttributeName } from '../../../helpers/executionResultHelper';
+import { getNthAttributeLocalIdentifier, getNthAttributeDisplayFormName } from '../../../helpers/executionResultHelper';
 import SubMenu from '../../menu/SubMenu';
 import { IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
 import { IColumnTotal } from './AggregationsMenu';
@@ -51,17 +51,19 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         rowAttributeHeaders: Execution.IAttributeHeader[],
         attributeHeaderIndex: number
     ): string {
-        return getNthAttributeName(rowAttributeHeaders, attributeHeaderIndex - 1);
+        return getNthAttributeDisplayFormName(rowAttributeHeaders, attributeHeaderIndex - 1);
     }
 
     private getAttributeName(
         rowAttributeHeaders: Execution.IAttributeHeader[],
         afmAttributeHeaderIndex: number
     ): string {
-        return afmAttributeHeaderIndex === 0
-            ? this.props.intl.formatMessage({ id: 'visualizations.menu.aggregations.all-rows' })
-            // subtotals are presented differently to the user and in AFM (menu displays the previous attribute name)
-            : this.getPreviousAttributeName(rowAttributeHeaders, afmAttributeHeaderIndex);
+        const { intl } = this.props;
+        if (afmAttributeHeaderIndex === 0) {
+            return intl.formatMessage({ id: 'visualizations.menu.aggregations.all-rows' });
+        }
+        const attributeName = this.getPreviousAttributeName(rowAttributeHeaders, afmAttributeHeaderIndex);
+        return intl.formatMessage({ id: 'visualizations.menu.aggregations.within-attribute' }, { attributeName });
     }
 
     private renderSubMenuItems() {

@@ -68,7 +68,7 @@ describe('AggregationsSubMenu', () => {
 
         expect(items.length).toBe(2);
         expect(items.at(0).text()).toBe('all rows');
-        expect(items.at(1).text()).toBe('Department Name');
+        expect(items.at(1).text()).toBe('within Department');
     });
 
     it('should render both attributes as selected', () => {

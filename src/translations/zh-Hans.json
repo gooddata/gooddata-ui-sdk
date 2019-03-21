@@ -58,6 +58,5 @@
    "visualizations.legend.text.top": "顶部：",
    "visualizations.legend.text.bottom": "底部：",
    "visualizations.legend.text.left": "左：",
-   "visualizations.legend.text.right": "右：",
-   "visualizations.menu.aggregations": "聚合"
+   "visualizations.legend.text.right": "右："
 }

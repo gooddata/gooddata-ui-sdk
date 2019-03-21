@@ -7,22 +7,27 @@ import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from '../../../helpers/agGri
 import { AVAILABLE_TOTALS } from '../../visualizations/table/totals/utils';
 import { IColumnTotal } from './AggregationsMenu';
 
-const getTotalTypesAppliedOnAllMeasures = (
-    columnTotals: AFM.ITotalItem[],
+const getTotalTypesAppliedOnMeasures = (
+    totals: AFM.ITotalItem[],
     measureLocalIdentifiers: string[]
-): AFM.TotalType[] => AVAILABLE_TOTALS.filter((type) => {
-    const columnTotalsLength = columnTotals.filter((total: AFM.ITotalItem) => total.type === type).length;
-    return columnTotalsLength === measureLocalIdentifiers.length;
-});
+): AFM.TotalType[] => {
+    return AVAILABLE_TOTALS.filter((type) => {
+        const totalsOfType = totals.filter((total: AFM.ITotalItem) => total.type === type);
+        const totalsMeasureIdentifiers = totalsOfType.map((total: AFM.ITotalItem) => total.measureIdentifier);
+        return measureLocalIdentifiers.every((measureIdentfier: string) => {
+            return totalsMeasureIdentifiers.includes(measureIdentfier);
+        });
+    });
+};
 
 function getTotalsForAttributeHeader(
-    columnTotals: AFM.ITotalItem[],
+    totals: AFM.ITotalItem[],
     measureLocalIdentifiers: string[]
 ): IColumnTotal[] {
-    const totalTypesAppliedOnAllMeasures = getTotalTypesAppliedOnAllMeasures(columnTotals, measureLocalIdentifiers);
+    const totalTypesAppliedOnAllMeasures = getTotalTypesAppliedOnMeasures(totals, measureLocalIdentifiers);
 
     return totalTypesAppliedOnAllMeasures.map((totalType: AFM.TotalType) => {
-        const attributeIdentifiers = columnTotals
+        const attributeIdentifiers = totals
             .filter((total: AFM.ITotalItem) => total.type === totalType)
             .map((total: AFM.ITotalItem) => total.attributeIdentifier);
 
@@ -31,10 +36,10 @@ function getTotalsForAttributeHeader(
 }
 
 function getTotalsForMeasureHeader(
-    columnTotals: AFM.ITotalItem[],
+    totals: AFM.ITotalItem[],
     measureLocalIdentifier: string
 ): IColumnTotal[] {
-    return columnTotals.reduce((turnedOnAttributes: IColumnTotal[], total: AFM.ITotalItem) => {
+    return totals.reduce((turnedOnAttributes: IColumnTotal[], total: AFM.ITotalItem) => {
         if (total.measureIdentifier === measureLocalIdentifier) {
             const totalHeaderType = turnedOnAttributes.find(turned => turned.type === total.type);
             if (totalHeaderType === undefined) {
@@ -81,5 +86,6 @@ export default {
     getTotalsForAttributeHeader,
     getTotalsForMeasureHeader,
     getHeaderMeasureLocalIdentifiers,
-    isTotalEnabledForAttribute
+    isTotalEnabledForAttribute,
+    getTotalTypesAppliedOnMeasures
 };

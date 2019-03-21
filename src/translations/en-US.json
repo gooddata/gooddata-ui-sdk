@@ -300,18 +300,23 @@
       "limit": 0
    },
    "visualizations.menu.aggregations": {
-      "value": "Aggregations",
-      "comment": "",
-      "limit": 0
+      "value": "Aggregate",
+      "comment": "Heading showed above menu listing possible aggregations (totals).",
+      "limit": 50
    },
    "visualizations.menu.aggregations.rows": {
       "value": "Rows",
-      "comment": "Rows of a table",
-      "limit": 25
+      "comment": "Heading showed above row attributes of the table you may apply one of aggregation (total) on.",
+      "limit": 50
    },
    "visualizations.menu.aggregations.all-rows": {
-     "value": "All rows",
-     "comment": "All rows of a table",
-     "limit": 25
+     "value": "of all rows",
+     "comment": "Menu option that adds row aggregation (grand total) to the table. Example: 'Sum of all rows'",
+     "limit": 50
+   },
+   "visualizations.menu.aggregations.within-attribute": {
+     "value": "within {attributeName}",
+     "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'",
+     "limit": 50
    }
 }

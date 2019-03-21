@@ -4,6 +4,45 @@ import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from '../../../../helpers/ag
 import aggregationsMenuHelper from '../aggregationsMenuHelper';
 import { IColumnTotal } from '../AggregationsMenu';
 
+describe('getTotalTypesAppliedOnMeasures', () => {
+    const totals: AFM.ITotalItem[] = [
+        {
+            type: 'sum',
+            attributeIdentifier: 'a1',
+            measureIdentifier: 'm1'
+        },
+        {
+            type: 'sum',
+            attributeIdentifier: 'a1',
+            measureIdentifier: 'm2'
+        },
+        {
+            type: 'max',
+            attributeIdentifier: 'a1',
+            measureIdentifier: 'm1'
+        },
+        {
+            type: 'min',
+            attributeIdentifier: 'a1',
+            measureIdentifier: 'm2'
+        }
+    ];
+
+    it('should return sum as only defined type for both m1 and m2', () => {
+        const measures = ['m1', 'm2'];
+
+        expect(aggregationsMenuHelper.getTotalTypesAppliedOnMeasures(totals, measures))
+            .toEqual(['sum']);
+    });
+
+    it('should return sum, max types as they are defined for m1', () => {
+        const measures = ['m1'];
+
+        expect(aggregationsMenuHelper.getTotalTypesAppliedOnMeasures(totals, measures))
+            .toEqual(['sum', 'max']);
+    });
+});
+
 describe('aggregationsMenuHelper', () => {
     describe('getTotalsForMeasureHeader', () => {
         it('should return empty totals for measure when no total defined', () => {
