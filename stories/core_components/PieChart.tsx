@@ -26,13 +26,14 @@ import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory
 import { RGBType } from '@gooddata/gooddata-js';
 import { VisualizationObject } from '@gooddata/typings';
 import { PositionType } from '../../src/components/visualizations/typings/legend';
+import { createHighChartResolver, ScreenshotReadyWrapper } from '../utils/ScreenshotReadyWrapper';
 
 const wrapperStyle = { width: 400, height: 400 };
 
-function createPieChartWithConfig(customProps?: {
-    config?: IChartConfig
-    measures?: VisualizationObject.BucketItem[],
-    viewBy?: VisualizationObject.IVisualizationAttribute
+function PieChartWithConfig(customProps: {
+    config?: IChartConfig;
+    measures?: VisualizationObject.BucketItem[];
+    viewBy?: VisualizationObject.IVisualizationAttribute;
 }) {
     return (
         <div style={wrapperStyle} className="screenshot-container">
@@ -60,69 +61,69 @@ function createLegendConfig(position: PositionType): IChartConfig {
 storiesOf('Core components/PieChart', module)
     .add('two measures', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                measures: [MEASURE_1, MEASURE_2],
-                viewBy: null
-            })
+            <PieChartWithConfig
+                measures={[MEASURE_1, MEASURE_2]}
+                viewBy={null}
+            />
         )
     ))
     .add('measure and attribute', () => (
         screenshotWrap(
-            createPieChartWithConfig()
+            <PieChartWithConfig/>
         )
     ))
     .add('one measure with alias, one attribute with alias', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                measures: [MEASURE_1_WITH_ALIAS],
-                viewBy: ATTRIBUTE_1_WITH_ALIAS
-            })
+            <PieChartWithConfig
+                measures={[MEASURE_1_WITH_ALIAS]}
+                viewBy={ATTRIBUTE_1_WITH_ALIAS}
+            />
         )
     ))
     .add('with German number format in tooltip', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: GERMAN_SEPARATORS
-            })
+            <PieChartWithConfig
+                config={GERMAN_SEPARATORS}
+            />
         )
     ))
     .add('with disabled legend', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: {
+            <PieChartWithConfig
+                config={{
                     legend: {
                         enabled: false
                     }
-                }
-            })
+                }}
+            />
         )
     ))
     .add('arithmetic measures', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                measures: [
+            <PieChartWithConfig
+                measures={[
                     MEASURE_1,
                     MEASURE_2,
                     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
                     ARITHMETIC_MEASURE_USING_ARITHMETIC
-                ],
-                viewBy: null
-            })
+                ]}
+                viewBy={null}
+            />
         )
     ))
     .add('measure and attribute with custom colors', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: {
+            <PieChartWithConfig
+                config={{
                     ...CUSTOM_COLOR_PALETTE_CONFIG
-                }
-            })
+                }}
+            />
         )
     ))
     .add('measure and attribute with color mapping', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: {
+            <PieChartWithConfig
+                config={{
                     ...CUSTOM_COLOR_PALETTE_CONFIG,
                     colorMapping: [
                         {
@@ -149,14 +150,14 @@ storiesOf('Core components/PieChart', module)
                             }
                         }
                     ]
-                }
-            })
+                }}
+            />
         )
     ))
     .add('measure and attribute with invalid color assignment', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: {
+            <PieChartWithConfig
+                config={{
                     ...CUSTOM_COLOR_PALETTE_CONFIG,
                     colorMapping: [
                         {
@@ -183,77 +184,60 @@ storiesOf('Core components/PieChart', module)
                             }
                         }
                     ]
-                }
-            })
-        )
-    ));
-
-storiesOf('Core components/PieChart/with different legend positions', module)
-    .add('auto (default)', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                config: createLegendConfig('auto')
-            })
+                }}
+            />
         )
     ))
-    .add('left', () => (
+    .add('with different legend positions', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: createLegendConfig('left')
-            })
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
+                <div>
+                    <div className="storybook-title">default = auto</div>
+                    <PieChartWithConfig
+                        config={createLegendConfig('auto')}
+                    />
+                    <div className="storybook-title">left</div>
+                    <PieChartWithConfig
+                        config={createLegendConfig('left')}
+                    />
+                    <div className="storybook-title">top</div>
+                    <PieChartWithConfig
+                        config={createLegendConfig('top')}
+                    />
+                    <div className="storybook-title">right</div>
+                    <PieChartWithConfig
+                        config={createLegendConfig('right')}
+                    />
+                    <div className="storybook-title">bottom</div>
+                    <PieChartWithConfig
+                        config={createLegendConfig('bottom')}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>
         )
     ))
-    .add('top', () => (
+    .add('data labels config', () => (
         screenshotWrap(
-            createPieChartWithConfig({
-                config: createLegendConfig('top')
-            })
-        )
-    ))
-    .add('right', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                config: createLegendConfig('right')
-            })
-        )
-    ))
-    .add('bottom', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                config: createLegendConfig('bottom')
-            })
-        )
-    ));
-
-storiesOf('Core components/PieChart/data labels config', module)
-    .add('hidden (default)', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                viewBy: ATTRIBUTE_3
-            })
-        )
-    ))
-    .add('auto', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                viewBy: ATTRIBUTE_3,
-                config: DATA_LABELS_AUTO_CONFIG
-            })
-        )
-    ))
-    .add('show', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                viewBy: ATTRIBUTE_3,
-                config: DATA_LABELS_VISIBLE_CONFIG
-            })
-        )
-    ))
-    .add('hidden', () => (
-        screenshotWrap(
-            createPieChartWithConfig({
-                viewBy: ATTRIBUTE_3,
-                config: DATA_LABELS_HIDDEN_CONFIG
-            })
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
+                <div>
+                    <div className="storybook-title">default = hidden</div>
+                    <PieChartWithConfig viewBy={ATTRIBUTE_3}/>
+                    <div className="storybook-title">auto</div>
+                    <PieChartWithConfig
+                        viewBy={ATTRIBUTE_3}
+                        config={DATA_LABELS_AUTO_CONFIG}
+                    />
+                    <div className="storybook-title">show</div>
+                    <PieChartWithConfig
+                        viewBy={ATTRIBUTE_3}
+                        config={DATA_LABELS_VISIBLE_CONFIG}
+                    />
+                    <div className="storybook-title">hide</div>
+                    <PieChartWithConfig
+                        viewBy={ATTRIBUTE_3}
+                        config={DATA_LABELS_HIDDEN_CONFIG}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>
         )
     ));

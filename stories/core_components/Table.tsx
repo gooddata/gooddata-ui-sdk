@@ -27,11 +27,51 @@ import {
     ARITHMETIC_MEASURE_USING_ARITHMETIC
 } from '../data/componentProps';
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
+import { createTableResolver, ScreenshotReadyWrapper } from '../utils/ScreenshotReadyWrapper';
 
 function logTotalsChange(data: any) {
     if (data.properties && data.properties.totals) {
         action('totals changed')(data.properties.totals);
     }
+}
+
+function TableWithHeightAndTotals(props: {
+    height: number;
+}) {
+    return (
+        <div style={{ width: 600, height: props.height }}>
+            <Table
+                environment="dashboards"
+                projectId="storybook"
+                measures={[MEASURE_1]}
+                attributes={[ATTRIBUTE_COUNTRY]}
+                totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                height={props.height}
+            />
+        </div>
+    );
+}
+
+function TableWithHeight(props: {
+    height: number;
+}) {
+    return (
+        <div style={{ width: 600, height: props.height }}>
+            <Table
+                environment="dashboards"
+                projectId="storybook"
+                measures={[MEASURE_1]}
+                attributes={[ATTRIBUTE_COUNTRY]}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                height={props.height}
+            />
+        </div>
+    );
 }
 
 const wrapperStyle = { width: 600, height: 300 };
@@ -231,83 +271,28 @@ storiesOf('Core components/Table', module)
                 />
             </div>
         )
-    ));
-
-function createTableWithHeight(height: number) {
-    return (
-        <div style={{ width: 600, height }}>
-            <Table
-                environment="dashboards"
-                projectId="storybook"
-                measures={[MEASURE_1]}
-                attributes={[ATTRIBUTE_COUNTRY]}
-                onError={onErrorHandler}
-                LoadingComponent={null}
-                ErrorComponent={null}
-                height={height}
-            />
-        </div>
-    );
-}
-
-storiesOf('Core components/Table/with supplied height of container', module)
-    .add('height: 100px', () => (
+    ))
+    .add('with supplied height of container', () => (
         screenshotWrap(
-            createTableWithHeight(100)
+            <ScreenshotReadyWrapper resolver={createTableResolver(4)}>
+                <div>
+                    <TableWithHeight height={100}/>
+                    <TableWithHeight height={200}/>
+                    <TableWithHeight height={400}/>
+                    <TableWithHeight height={800}/>
+                </div>
+            </ScreenshotReadyWrapper>
         )
     ))
-    .add('height: 200px', () => (
+    .add('with table totals and supplied height of container', () => (
         screenshotWrap(
-            createTableWithHeight(200)
-        )
-    ))
-    .add('height: 400px', () => (
-        screenshotWrap(
-            createTableWithHeight(400)
-        )
-    ))
-    .add('height: 800px', () => (
-        screenshotWrap(
-            createTableWithHeight(800)
-        )
-    ));
-
-function createTableWithHeightAndTotals(height: number) {
-    return (
-        <div style={{ width: 600, height }}>
-            <Table
-                environment="dashboards"
-                projectId="storybook"
-                measures={[MEASURE_1]}
-                attributes={[ATTRIBUTE_COUNTRY]}
-                totals={[TOTAL_M1_ACOUNTRY_AVG, TOTAL_M1_ACOUNTRY_SUM]}
-                onError={onErrorHandler}
-                LoadingComponent={null}
-                ErrorComponent={null}
-                height={height}
-            />
-        </div>
-    );
-}
-
-storiesOf('Core components/Table/with table totals and supplied height of container', module)
-    .add('height: 100px', () => (
-        screenshotWrap(
-            createTableWithHeightAndTotals(100)
-        )
-    ))
-    .add('height: 200px', () => (
-        screenshotWrap(
-            createTableWithHeightAndTotals(200)
-        )
-    ))
-    .add('height: 400px', () => (
-        screenshotWrap(
-            createTableWithHeightAndTotals(400)
-        )
-    ))
-    .add('height: 800px', () => (
-        screenshotWrap(
-            createTableWithHeightAndTotals(800)
+            <ScreenshotReadyWrapper resolver={createTableResolver(4)}>
+                <div>
+                    <TableWithHeightAndTotals height={100}/>
+                    <TableWithHeightAndTotals height={200}/>
+                    <TableWithHeightAndTotals height={400}/>
+                    <TableWithHeightAndTotals height={800}/>
+                </div>
+            </ScreenshotReadyWrapper>
         )
     ));
