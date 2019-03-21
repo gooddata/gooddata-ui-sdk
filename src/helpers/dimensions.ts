@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require('lodash/get');
 import { AFM, VisualizationObject } from '@gooddata/typings';
 import { VisualizationTypes, VisType } from '../constants/visualizationTypes';
@@ -13,6 +13,11 @@ import {
     MEASURES
  } from '../constants/bucketNames';
 import { convertBucketsToAFM } from '../helpers/conversion';
+import { VIEW_BY_ATTRIBUTES_LIMIT } from '../components/visualizations/chart/constants';
+
+function findBucketByLocalIdentifier(buckets: VisualizationObject.IBucket[], bucketName: string) {
+    return (buckets || []).find(bucket => bucket.localIdentifier === bucketName);
+}
 
 export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem[] {
     const bucketTotals = get(bucket, 'totals', []);
@@ -129,6 +134,54 @@ function getBarDimensions(mdObject: VisualizationObject.IVisualizationObjectCont
         .find(bucket => bucket.localIdentifier === STACK);
 
     const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+
+    if (hasNoStacks) {
+        return [
+            {
+                itemIdentifiers: [MEASUREGROUP]
+            },
+            {
+                itemIdentifiers: (view && view.items || [])
+                    .map(getLocalIdentifierFromAttribute)
+            }
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: (stack && stack.items || [])
+                .map(getLocalIdentifierFromAttribute)
+        },
+        {
+            itemIdentifiers: ((view && view.items || [])
+                .map(getLocalIdentifierFromAttribute))
+                .concat([MEASUREGROUP])
+        }
+    ];
+}
+
+function getAreaDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
+    const view: VisualizationObject.IBucket = findBucketByLocalIdentifier(mdObject.buckets, VIEW);
+
+    const stack: VisualizationObject.IBucket = findBucketByLocalIdentifier(mdObject.buckets, STACK);
+
+    const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+    const haveManyViewItems = view && view.items && view.items.length > 1;
+
+    if (haveManyViewItems) {
+        // only take first two view items
+        const [viewItemIdentifier, stackItemIdentifier] = view.items
+            .slice(0, VIEW_BY_ATTRIBUTES_LIMIT)
+            .map(getLocalIdentifierFromAttribute);
+        return [
+            {
+                itemIdentifiers: [stackItemIdentifier]
+            },
+            {
+                itemIdentifiers: [viewItemIdentifier, MEASUREGROUP]
+            }
+        ];
+    }
 
     if (hasNoStacks) {
         return [
@@ -325,8 +378,12 @@ export function generateDimensions(
         case VisualizationTypes.LINE: {
             return getLineDimensions(mdObject);
         }
+
+        case VisualizationTypes.AREA: {
+            return getAreaDimensions(mdObject);
+        }
+
         case VisualizationTypes.BAR:
-        case VisualizationTypes.AREA:
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
