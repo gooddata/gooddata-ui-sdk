@@ -101,7 +101,7 @@ export function getNthAttributeLocalIdentifier(
     return attributeHeader && attributeHeader.localIdentifier;
 }
 
-export function getNthAttributeDisplayFormName(
+export function getNthAttributeName(
     rowAttributeHeaders: Execution.IAttributeHeader[],
     headerIndex: number
 ): string {

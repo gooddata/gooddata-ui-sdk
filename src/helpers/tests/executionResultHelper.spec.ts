@@ -10,7 +10,7 @@ import {
     findMeasureHeaderByLocalIdentifier,
     getNthAttributeHeader,
     getNthAttributeLocalIdentifier,
-    getNthAttributeDisplayFormName,
+    getNthAttributeName,
     getNthDimensionHeaders
 } from '../executionResultHelper';
 
@@ -179,18 +179,18 @@ describe('getNthAttributeLocalIdentifier', () => {
     });
 });
 
-describe('getNthAttributeDisplayFormName', () => {
+describe('getNthAttributeName', () => {
     it('should return name of first header', () => {
         const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
 
-        expect(getNthAttributeDisplayFormName(attributeHeaders, 0))
+        expect(getNthAttributeName(attributeHeaders, 0))
             .toBe(attributeHeaders[0].attributeHeader.formOf.name);
     });
 
     it('should return null if attribute header not found', () => {
         const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0].headers as Execution.IAttributeHeader[];
 
-        expect(getNthAttributeDisplayFormName(attributeHeaders, 1)).toBe(null);
+        expect(getNthAttributeName(attributeHeaders, 1)).toBe(null);
     });
 });
 
