@@ -65,7 +65,12 @@ import {
 } from './highcharts/commonConfiguration';
 import { getChartProperties } from './highcharts/helpers';
 import { isDataOfReasonableSize } from './highChartsCreators';
-import { NORMAL_STACK, PERCENT_STACK } from './highcharts/getOptionalStackingConfiguration';
+import {
+    NORMAL_STACK,
+    PERCENT_STACK
+} from './highcharts/getOptionalStackingConfiguration';
+
+import { getDrillableSeriesWithParentAttribute } from './chartOptions/extendedStackingChartOptions';
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -293,6 +298,8 @@ export interface IPointData {
     legendIndex?: number;
     id?: string;
     parent?: string;
+    drilldown?: boolean;
+    drillIntersection?: any;
 }
 
 // since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
@@ -1052,7 +1059,7 @@ export function getDrillableSeries(
                 stackByItemHeader
             ], null);
 
-            const drilldown = drillableHooks.some(drillableHook =>
+            const drilldown: boolean = drillableHooks.some(drillableHook =>
                 isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm, executionResponse)
             );
 
@@ -1557,13 +1564,6 @@ export function getChartOptions(
         );
     }
 
-    if (isViewByTwoAttributes) {
-        viewByTwoAttributes = {
-            parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
-            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX]
-        };
-    }
-
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,
         config.colorMapping,
@@ -1590,7 +1590,7 @@ export function getChartOptions(
         colorStrategy
     );
 
-    const drillableSeries = getDrillableSeries(
+    let drillableSeries = getDrillableSeries(
         seriesWithoutDrillability,
         drillableItems,
         viewByAttribute,
@@ -1599,6 +1599,22 @@ export function getChartOptions(
         afm,
         type
     );
+
+    if (isViewByTwoAttributes) {
+        viewByTwoAttributes = {
+            parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
+            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX]
+        };
+
+        const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = findAttributeInDimension(
+            dimensions[VIEW_BY_DIMENSION_INDEX],
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+            PARENT_ATTRIBUTE_INDEX
+        );
+        if (viewByParentAttribute) {
+            drillableSeries = getDrillableSeriesWithParentAttribute(drillableSeries, viewByParentAttribute);
+        }
+    }
 
     const series = assignYAxes(drillableSeries, yAxes);
 

@@ -5,7 +5,11 @@ import includes = require('lodash/includes');
 import isNil = require('lodash/isNil');
 import set = require('lodash/set');
 import { IChartConfig } from '../../../../interfaces/Config';
-import { IAxis, IChartOptions, supportedStackingAttributesChartTypes } from '../chartOptionsBuilder';
+import {
+    IAxis,
+    IChartOptions,
+    supportedStackingAttributesChartTypes
+} from '../chartOptionsBuilder';
 import { formatAsPercent } from './customConfiguration';
 import { isBarChart, isColumnChart } from '../../utils/common';
 
