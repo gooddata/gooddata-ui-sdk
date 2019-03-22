@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy } from 'lodash';
+import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy, get } from 'lodash';
 import { AFM } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
 import {
@@ -273,3 +273,11 @@ export function shouldShowTotals(headers: IMappingHeader[]): boolean {
 
     return !(onlyAttributes || onlyMeasures);
 }
+
+export const getColumnTotalsFromResultSpec = (source: AFM.IResultSpec) => {
+    return get(source, 'dimensions[0].totals', []);
+};
+
+export default {
+    getColumnTotalsFromResultSpec
+};

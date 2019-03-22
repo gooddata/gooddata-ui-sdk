@@ -20,11 +20,15 @@ import {
 const PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = '.s-pivot-table-measuresColumnAndRowAttributes';
 const BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = '.s-bucket-preset-measuresColumnAndRowAttributes';
 const SORTING_PRESET_NOSORT = '.s-sorting-preset-noSort';
+const GROUP_ROWS_PRESET_ENABLED = '.s-group-rows-preset-activeGrouping';
+
+const PINNED_TOP_ROW = '.ag-floating-top-container';
 
 const CELL_0_0 = '.s-cell-0-0';
 const CELL_0_1 = '.s-cell-0-1';
 const CELL_0_2 = '.s-cell-0-2';
 const CELL_0_3 = '.s-cell-0-3';
+const CELL_0_4 = '.s-cell-0-4';
 const CELL_1_0 = '.s-cell-1-0';
 const CELL_1_3 = '.s-cell-1-3';
 const CELL_5_0 = '.s-cell-5-0';
@@ -64,6 +68,14 @@ async function checkDrill(t, output, selector = '.s-output') {
     if (outputElement) {
         await t.expect(outputElement.textContent).eql(output);
     }
+}
+
+async function checkNodeIsTransparent(t, selector, isTransparent) {
+    const color = await selector.getStyleProperty('color');
+    const backgroundColor = await selector.getStyleProperty('background-color');
+    const transparentColor = 'rgba(0, 0, 0, 0)';
+    await t.expect(color === transparentColor).eql(isTransparent);
+    await t.expect(backgroundColor === transparentColor).eql(isTransparent);
 }
 
 fixture('Pivot Table Dynamic')
@@ -156,7 +168,7 @@ test('should sort PivotTable on column header click', async (t) => {
 test('should group cells only when sorted by first attribute', async (t) => {
     await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
     await t.click(Selector(SORTING_PRESET_NOSORT));
-    await t.click(Selector('.s-group-rows-preset-activeGrouping'));
+    await t.click(Selector(GROUP_ROWS_PRESET_ENABLED));
     await waitForPivotTableStopLoading(t);
 
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'Alabama', CELL_0_0);
@@ -171,4 +183,17 @@ test('should group cells only when sorted by first attribute', async (t) => {
     await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_8_0);
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'California', CELL_9_0);
     await checkCellHasNotClassName(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, HIDDEN_CELL_CLASSNAME, CELL_9_0);
+});
+
+test('should display sticky header only for grouped attributes', async (t) => {
+    await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
+    await t.click(Selector(SORTING_PRESET_NOSORT));
+    await t.click(Selector(GROUP_ROWS_PRESET_ENABLED));
+    await waitForPivotTableStopLoading(t);
+
+    await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_0}`), false);
+    await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_1}`), false);
+    await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_2}`), true);
+    await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_3}`), true);
+    await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_4}`), true);
 });
