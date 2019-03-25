@@ -1,108 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from '@gooddata/typings';
-import {
-    Granularities
-} from '../../constants/granularities';
-import {
-    isNotEmptyFilter,
-    mergeFilters
-} from '../filters';
+import { isEmptyFilter, mergeFilters } from '../filters';
+import * as input from './filters.input.fixtures';
 
-describe('isNotEmptyFilter', () => {
-    it('should return true for date filter', () => {
-        const dateFilter: AFM.IRelativeDateFilter = {
-            relativeDateFilter: {
-                dataSet: {
-                    identifier: 'date filter'
-                },
-                from: 0,
-                to: 0,
-                granularity: Granularities.MONTH
-            }
-        };
+const EMPTY_FILTER_TESTS = [
+    ['non empty positive filter', input.positiveAttributeFilter, false],
+    ['non empty negative filter', input.negativeAttributeFilter, false],
+    ['empty positive filter', input.positiveAttributeFilterEmpty, true],
+    ['empty negative filter', input.negativeAttributeFilterEmpty, true],
+    ['absolute date filter', input.absoluteDateFilter, false],
+    ['relative date filter', input.relativeDateFilter, false]
+];
 
-        expect(isNotEmptyFilter(dateFilter)).toBe(true);
-    });
-
-    it('should return false for empty positive filter', () => {
-        const attributeFilter: AFM.IPositiveAttributeFilter = {
-            positiveAttributeFilter: {
-                displayForm: {
-                    identifier: 'empty filter'
-                },
-                in: []
-            }
-        };
-
-        expect(isNotEmptyFilter(attributeFilter)).toBe(false);
-    });
-
-    it('should return true for filled positive filter', () => {
-        const attributeFilter: AFM.IPositiveAttributeFilter = {
-            positiveAttributeFilter: {
-                displayForm: {
-                    identifier: 'filled filter'
-                },
-                in: ['1', '2', '3']
-            }
-        };
-
-        expect(isNotEmptyFilter(attributeFilter)).toBe(true);
-    });
-
-    it('should return false for empty negative filter', () => {
-        const attributeFilter: AFM.INegativeAttributeFilter = {
-            negativeAttributeFilter: {
-                displayForm: {
-                    identifier: 'empty filter'
-                },
-                notIn: []
-            }
-        };
-
-        expect(isNotEmptyFilter(attributeFilter)).toBe(false);
-    });
-
-    it('should return true for filled negative filter', () => {
-        const attributeFilter: AFM.INegativeAttributeFilter = {
-            negativeAttributeFilter: {
-                displayForm: {
-                    identifier: 'filled filter'
-                },
-                notIn: ['1', '2', '3']
-            }
-        };
-
-        expect(isNotEmptyFilter(attributeFilter)).toBe(true);
+describe.each(EMPTY_FILTER_TESTS)('isEmptyFilter', (desc, input, expected) => {
+    it(`should return ${expected} for ${desc}`, () => {
+        expect(isEmptyFilter(input)).toEqual(expected);
     });
 });
 
 describe('mergeFilters', () => {
     it('should concat existing filters with user filters', () => {
-        const afm: AFM.IAfm = {
-            filters: [
-                {
-                    positiveAttributeFilter: {
-                        displayForm: {
-                            identifier: 'filter'
-                        },
-                        in: ['1', '2', '3']
-                    }
-                }
-            ]
-        };
-
-        const filters: AFM.FilterItem[] = [
-            {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: 'user filter'
-                    },
-                    in: ['4', '5', '6']
-                }
-            }
-        ];
-
         const expectedAfm: AFM.IAfm = {
             filters: [
                 {
@@ -113,46 +30,34 @@ describe('mergeFilters', () => {
                         in: ['1', '2', '3']
                     }
                 },
-                {
-                    positiveAttributeFilter: {
-                        displayForm: {
-                            identifier: 'user filter'
-                        },
-                        in: ['4', '5', '6']
-                    }
-                }
+                input.positiveAttributeFilter
             ]
         };
 
-        expect(mergeFilters(afm, filters)).toEqual(expectedAfm);
+        expect(mergeFilters(input.afm, [input.positiveAttributeFilter])).toEqual(expectedAfm);
     });
 
     it('should handle AFM without filters', () => {
-        const afm: AFM.IAfm = {};
-
-        const filters: AFM.FilterItem[] = [
-            {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        identifier: 'user filter'
-                    },
-                    in: ['4', '5', '6']
-                }
-            }
-        ];
         const expectedAfm: AFM.IAfm = {
             filters: [
-                {
-                    positiveAttributeFilter: {
-                        displayForm: {
-                            identifier: 'user filter'
-                        },
-                        in: ['4', '5', '6']
-                    }
-                }
+                input.positiveAttributeFilter
             ]
         };
 
-        expect(mergeFilters(afm, filters)).toEqual(expectedAfm);
+        expect(mergeFilters({}, [input.positiveAttributeFilter])).toEqual(expectedAfm);
+    });
+
+    it('should handle AFM with empty filters array', () => {
+        const expectedAfm: AFM.IAfm = {
+            filters: [
+                input.positiveAttributeFilter
+            ]
+        };
+
+        expect(mergeFilters(input.afmEmptyFilters, [input.positiveAttributeFilter])).toEqual(expectedAfm);
+    });
+
+    it('should filter out empty filters', () => {
+        expect(mergeFilters(input.afm, [input.positiveAttributeFilterEmpty])).toEqual(input.afm);
     });
 });

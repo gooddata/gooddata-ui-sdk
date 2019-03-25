@@ -2,16 +2,13 @@
 import compact = require('lodash/compact');
 import get = require('lodash/get');
 import { AFM, VisualizationObject } from '@gooddata/typings';
+import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
 import IMeasure = VisualizationObject.IMeasure;
 import IMeasureDefinition = VisualizationObject.IMeasureDefinition;
+import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
 import IPoPMeasureDefinition = VisualizationObject.IPoPMeasureDefinition;
 import IPreviousPeriodMeasureDefinition = VisualizationObject.IPreviousPeriodMeasureDefinition;
-import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
-import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
-import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
-import IVisualizationObjectRelativeDateFilter = VisualizationObject.IVisualizationObjectRelativeDateFilter;
-import IVisualizationObjectAbsoluteDateFilter = VisualizationObject.IVisualizationObjectAbsoluteDateFilter;
+import { convertVisualizationObjectFilter } from './FilterConverter';
 
 const MeasureConverter = {
     convertMeasure,
@@ -72,58 +69,6 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): AFM.ISi
             ...filtersProp,
             ...aggregationProp,
             ...computeRatioProp
-        }
-    };
-}
-
-function convertVisualizationObjectFilter(filter: VisualizationObjectFilter): AFM.FilterItem | null {
-    if (VisualizationObject.isAttributeFilter(filter)) {
-        return convertAttributeFilter(filter);
-    } else if (VisualizationObject.isAbsoluteDateFilter(filter)) {
-        return convertAbsoluteDateFilter(filter);
-    } else {
-        return convertRelativeDateFilter(filter);
-    }
-}
-
-function convertAttributeFilter(filter: VisualizationObjectAttributeFilter): AFM.FilterItem | null {
-    if (!VisualizationObject.isPositiveAttributeFilter(filter)) {
-        if (!filter.negativeAttributeFilter.notIn.length) {
-            return null;
-        }
-    }
-    return filter;
-}
-
-function convertAbsoluteDateFilter(filter: IVisualizationObjectAbsoluteDateFilter): AFM.FilterItem | null {
-    const { absoluteDateFilter } = filter;
-
-    if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
-        return null;
-    }
-
-    return {
-        absoluteDateFilter: {
-            dataSet: absoluteDateFilter.dataSet,
-            from: String(absoluteDateFilter.from),
-            to: String(absoluteDateFilter.to)
-        }
-    };
-}
-
-function convertRelativeDateFilter(filter: IVisualizationObjectRelativeDateFilter): AFM.FilterItem | null {
-    const { relativeDateFilter } = filter;
-
-    if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
-        return null;
-    }
-
-    return {
-        relativeDateFilter: {
-            dataSet: relativeDateFilter.dataSet,
-            granularity: relativeDateFilter.granularity,
-            from: Number(relativeDateFilter.from),
-            to: Number(relativeDateFilter.to)
         }
     };
 }

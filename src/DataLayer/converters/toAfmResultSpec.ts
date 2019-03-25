@@ -3,6 +3,7 @@ import compact = require('lodash/compact');
 import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 import { AFM, VisualizationObject } from '@gooddata/typings';
+import { convertVisualizationObjectFilter } from './FilterConverter';
 import MeasureConverter from './MeasureConverter';
 
 function convertAttribute(attribute: VisualizationObject.IVisualizationAttribute, idx: number): AFM.IAttribute {
@@ -38,51 +39,6 @@ function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjec
         ...attrProp,
         ...filtersProp,
         ...nativeTotalsProp
-    };
-}
-
-function convertVisualizationObjectFilter(
-    filter: VisualizationObject.VisualizationObjectFilter
-): AFM.FilterItem | null {
-    if (VisualizationObject.isAttributeFilter(filter)) {
-        if (!VisualizationObject.isPositiveAttributeFilter(filter)) {
-            if (!filter.negativeAttributeFilter.notIn.length) {
-                return null;
-            }
-        }
-
-        return filter;
-    }
-
-    if (VisualizationObject.isAbsoluteDateFilter(filter)) {
-        const absoluteDateFilter = filter.absoluteDateFilter;
-
-        if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
-            return null;
-        }
-
-        return {
-            absoluteDateFilter: {
-                dataSet: absoluteDateFilter.dataSet,
-                from: String(absoluteDateFilter.from),
-                to: String(absoluteDateFilter.to)
-            }
-        };
-    }
-
-    const relativeDateFilter = filter.relativeDateFilter;
-
-    if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
-        return null;
-    }
-
-    return {
-        relativeDateFilter: {
-            dataSet: relativeDateFilter.dataSet,
-            granularity: relativeDateFilter.granularity,
-            from: Number(relativeDateFilter.from),
-            to: Number(relativeDateFilter.to)
-        }
     };
 }
 
