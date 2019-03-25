@@ -1,23 +1,23 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationInput } from '@gooddata/typings';
 import { getQualifierObject } from './utils';
 
 export interface IPreviousPeriodDateDataSetSimple {
-    dataSet: VisualizationObject.ObjQualifier | string;
+    dataSet: VisualizationInput.ObjQualifier | string;
     periodsAgo: number;
 }
 
-export interface IMeasureAux<T extends VisualizationObject.IMeasureDefinitionType> {
+export interface IMeasureAux<T extends VisualizationInput.IMeasureDefinitionType> {
     measure: {
         definition: T;
-        localIdentifier: VisualizationObject.IMeasure['measure']['localIdentifier'];
-        alias: VisualizationObject.IMeasure['measure']['alias'];
-        format: VisualizationObject.IMeasure['measure']['format'];
-        title: VisualizationObject.IMeasure['measure']['title'];
+        localIdentifier: VisualizationInput.IMeasure['measure']['localIdentifier'];
+        alias: VisualizationInput.IMeasure['measure']['alias'];
+        format: VisualizationInput.IMeasure['measure']['format'];
+        title: VisualizationInput.IMeasure['measure']['title'];
     };
 }
 
-export class MeasureBuilderBase<T extends VisualizationObject.IMeasureDefinitionType> implements IMeasureAux<T> {
+export class MeasureBuilderBase<T extends VisualizationInput.IMeasureDefinitionType> implements IMeasureAux<T> {
     private static lastMeasureId = 0;
     public measure: IMeasureAux<T>['measure'];
     constructor() {
@@ -47,7 +47,7 @@ export class MeasureBuilderBase<T extends VisualizationObject.IMeasureDefinition
     }
 }
 
-export class MeasureBuilder extends MeasureBuilderBase<VisualizationObject.IMeasureDefinition> {
+export class MeasureBuilder extends MeasureBuilderBase<VisualizationInput.IMeasureDefinition> {
     constructor(identifier: string) {
         super();
         this.measure.definition = {
@@ -57,7 +57,7 @@ export class MeasureBuilder extends MeasureBuilderBase<VisualizationObject.IMeas
         };
     }
 
-    public aggregation = (aggregation: VisualizationObject.MeasureAggregation) => {
+    public aggregation = (aggregation: VisualizationInput.MeasureAggregation) => {
         this.measure.definition.measureDefinition.aggregation = aggregation;
         return this;
     }
@@ -67,14 +67,14 @@ export class MeasureBuilder extends MeasureBuilderBase<VisualizationObject.IMeas
         return this;
     }
 
-    public filters = (...filters: VisualizationObject.VisualizationObjectFilter[]) => {
+    public filters = (...filters: VisualizationInput.IFilter[]) => {
         this.measure.definition.measureDefinition.filters = filters;
         return this;
     }
 }
 
-export class ArithmeticMeasureBuilder extends MeasureBuilderBase<VisualizationObject.IArithmeticMeasureDefinition> {
-    constructor(measureIdentifiers: string[], operator: VisualizationObject.ArithmeticMeasureOperator) {
+export class ArithmeticMeasureBuilder extends MeasureBuilderBase<VisualizationInput.IArithmeticMeasureDefinition> {
+    constructor(measureIdentifiers: string[], operator: VisualizationInput.ArithmeticMeasureOperator) {
         super();
         this.measure.definition = {
             arithmeticMeasure: {
@@ -85,7 +85,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<VisualizationOb
     }
 }
 
-export class PoPMeasureBuilder extends MeasureBuilderBase<VisualizationObject.IPoPMeasureDefinition> {
+export class PoPMeasureBuilder extends MeasureBuilderBase<VisualizationInput.IPoPMeasureDefinition> {
     constructor(measureIdentifier: string, popAttribute: string) {
         super();
         this.measure.definition = {
@@ -98,13 +98,13 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<VisualizationObject.IP
 }
 
 export class PreviousPeriodMeasureBuilder
-    extends MeasureBuilderBase<VisualizationObject.IPreviousPeriodMeasureDefinition> {
+    extends MeasureBuilderBase<VisualizationInput.IPreviousPeriodMeasureDefinition> {
     constructor(measureIdentifier: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]) {
         super();
         this.measure.definition = {
             previousPeriodMeasure: {
                 measureIdentifier,
-                dateDataSets: dateDataSets.map((d): VisualizationObject.IPreviousPeriodDateDataSet =>
+                dateDataSets: dateDataSets.map((d): VisualizationInput.IPreviousPeriodDateDataSet =>
                     ({
                         ...d,
                         dataSet: typeof (d.dataSet) === 'string'
@@ -120,7 +120,7 @@ export const measure = (identifier: string) => new MeasureBuilder(identifier);
 
 export const arithmeticMeasure = (
     measureIdentifiers: string[],
-    operator: VisualizationObject.ArithmeticMeasureOperator
+    operator: VisualizationInput.ArithmeticMeasureOperator
 ) => new ArithmeticMeasureBuilder(measureIdentifiers, operator);
 
 export const popMeasure = (measureIdentifier: string, popAttribute: string) =>

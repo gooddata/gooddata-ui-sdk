@@ -32,12 +32,12 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@11.7.0":
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.7.0.tgz#955afc728619551c1d57722ccfa45a84b38b6376"
-  integrity sha512-mqC2adUjG2mJ31XpJQTa4Sy+aLdwMLd/VBz0atYOgAHfmCgs+FUIyBr/HS6mJ1cQwoLZ2TTsnQpEd+ZceTAvHw==
+"@gooddata/gooddata-js@11.8.0":
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.8.0.tgz#c8355c42b118c7afe85233e8576e123c8a74ce90"
+  integrity sha512-wI3WVinmn8rpU5848E+W0TXhXfqPwrIZKL1j6+HI/dFGooiVaCMdK1h1krUk48wis1T5QlHnOsVODkMUe0QCMg==
   dependencies:
-    "@gooddata/typings" "2.9.0"
+    "@gooddata/typings" "2.10.0"
     es6-promise "3.0.2"
     fetch-cookie "0.7.0"
     invariant "2.2.2"
@@ -89,12 +89,12 @@
     lodash "4.17.11"
     lodash-es "4.17.11"
 
-"@gooddata/mock-js@1.24.0":
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.24.0.tgz#2affe9e1ad5f41115b1018fb274d758372077946"
-  integrity sha512-c6rvUnzRnNomVYWLljVf2Bped7WxcP7HsBWPGztw8nV84G03vZNZj1nOAqRlRXHMorPBYtR8PM8LyV27okhW/A==
+"@gooddata/mock-js@1.25.0":
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/mock-js/-/mock-js-1.25.0.tgz#d32946da8dec23a1b7059ad68148e1bac5f9d4bb"
+  integrity sha512-OUCXOfpjHjlW0XINidnDaj0eEvladXNjk7gJAJyJ9FN0bYfyRfVNs1duR4QIxgzq8hrvUeeiL9UGu8wXwf9chQ==
   dependencies:
-    "@gooddata/typings" "2.9.0"
+    "@gooddata/typings" "2.10.0"
     "@types/seedrandom" "2.4.27"
     "@types/uuid" "3.4.3"
     body-parser "1.17.1"
@@ -134,10 +134,10 @@
     tslint-microsoft-contrib "6.1.0"
     tslint-react "3.6.0"
 
-"@gooddata/typings@2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.9.0.tgz#9ce6497aa867542768c88041d1f4cf0320adf45f"
-  integrity sha512-8s644Jcfl7j03GHBItrgEOKAjo/KpVN8SP7pBw7zwH1aPxYq9THMvpBhRlKw6UewOzGIZb3ocudkx4I7mytU4w==
+"@gooddata/typings@2.10.0":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.10.0.tgz#7ce8ccaabb4125af8af8a1db07c5a95a5de12a65"
+  integrity sha512-5A+4X1e7M18PppAzUcSsPAR2mvdEwqLB6jfldL0a97d0Mabgp4S1/cFPbGDNh6pqeCEASugE2Zcl070ObtEHGg==
   dependencies:
     lodash "4.17.11"
 
