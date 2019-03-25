@@ -338,7 +338,7 @@ $header-cell-resize-width: 20px;
     }
 }
 
-.gd-aggregation-submenu {
+.gd-aggregation-menu-item {
     .gd-list-item-header:before {
         display: block;
         content: '';
@@ -354,16 +354,28 @@ $header-cell-resize-width: 20px;
         padding: 0;
         cursor: default;
 
+        &::before {
+            z-index: 1;
+        }
+
         .gd-aggregation-menu-item-inner {
             padding: 4px 30px;
             flex: auto;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
         }
 
         &.is-submenu .gd-aggregation-menu-item-inner {
             padding-right: 0;
             margin-right: 30px;
         }
+    }
+
+    .gd-aggregation-submenu .gd-aggregation-menu-item-inner {
+        max-width: 190px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {

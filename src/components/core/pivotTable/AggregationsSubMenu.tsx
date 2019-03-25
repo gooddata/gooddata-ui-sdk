@@ -38,7 +38,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
                 {...menuOpenedProp}
             >
                 <ItemsWrapper>
-                    <div className="s-table-header-submenu-content">
+                    <div className="gd-aggregation-submenu s-table-header-submenu-content">
                         <Header>{intl.formatMessage({ id: 'visualizations.menu.aggregations.rows' })}</Header>
                         {this.renderSubMenuItems()}
                     </div>
