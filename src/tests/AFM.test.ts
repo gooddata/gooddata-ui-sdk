@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { AFM } from '../AFM';
 import CompatibilityFilter = AFM.CompatibilityFilter;
 import MeasureDefinition = AFM.MeasureDefinition;
@@ -425,6 +425,222 @@ describe('AFM', () => {
             };
             const result = AFM.isMeasureLocatorItem(locatorItem);
             expect(result).toEqual(true);
+        });
+    });
+
+    describe('isDateFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isDateFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isDateFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when relative date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    granularity: 'gram',
+                    from: -10,
+                    to: 0
+                }
+            };
+            const result = AFM.isDateFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return true when absolute date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    from: '1',
+                    to: '2'
+                }
+            };
+            const result = AFM.isDateFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when negative attribute filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/date'
+                    },
+                    notIn: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = AFM.isDateFilter(filter);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when positive attribute filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/attribute'
+                    },
+                    in: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = AFM.isDateFilter(filter);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isRelativeDateFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isRelativeDateFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isRelativeDateFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when relative date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    granularity: 'gram',
+                    from: -10,
+                    to: 0
+                }
+            };
+            const result = AFM.isRelativeDateFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when absolute date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    from: '1',
+                    to: '2'
+                }
+            };
+            const result = AFM.isRelativeDateFilter(filter);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe('isAbsoluteDateFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isAbsoluteDateFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isAbsoluteDateFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when relative date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    granularity: 'gram',
+                    from: -10,
+                    to: 0
+                }
+            };
+            const result = AFM.isAbsoluteDateFilter(filter);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when absolute date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    from: '1',
+                    to: '2'
+                }
+            };
+            const result = AFM.isAbsoluteDateFilter(filter);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe('isAttributeFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isAttributeFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isAttributeFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when negative attribute filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/date'
+                    },
+                    notIn: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = AFM.isAttributeFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return true when positive attribute filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/attribute'
+                    },
+                    in: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = AFM.isAttributeFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when absolute date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                absoluteDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    from: '1',
+                    to: '2'
+                }
+            };
+            const result = AFM.isAttributeFilter(filter);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when relative date filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        uri: '/gdc/mock/ds'
+                    },
+                    granularity: 'gram',
+                    from: -10,
+                    to: 0
+                }
+            };
+            const result = AFM.isAttributeFilter(filter);
+            expect(result).toEqual(false);
         });
     });
 
