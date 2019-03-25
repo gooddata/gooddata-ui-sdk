@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { LineChart as AfmLineChart } from './afm/LineChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -11,11 +11,11 @@ import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 
 export interface ILineChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    trendBy?: VisualizationObject.IVisualizationAttribute;
-    segmentBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    trendBy?: VisualizationInput.IAttribute;
+    segmentBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface ILineChartProps extends ICommonChartProps, ILineChartBucketProps {

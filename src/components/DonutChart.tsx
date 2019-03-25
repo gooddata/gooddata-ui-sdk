@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
 
 import { DonutChart as AfmDonutChart } from './afm/DonutChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -10,9 +10,9 @@ import { convertBucketsToAFM } from '../helpers/conversion';
 import { MEASURES, VIEW } from '../constants/bucketNames';
 
 export interface IDonutChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
 }
 
 export interface IDonutChartProps extends ICommonChartProps, IDonutChartBucketProps {

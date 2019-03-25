@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { ComboChart as AfmComboChart } from './afm/ComboChart';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -11,11 +11,11 @@ import { getResultSpec } from '../helpers/resultSpec';
 import { MEASURES, SECONDARY_MEASURES, VIEW } from '../constants/bucketNames';
 
 export interface IComboChartBucketProps {
-    columnMeasures: VisualizationObject.IMeasure[];
-    lineMeasures?: VisualizationObject.IMeasure[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
+    columnMeasures: VisualizationInput.IMeasure[];
+    lineMeasures?: VisualizationInput.IMeasure[];
+    viewBy?: VisualizationInput.IAttribute;
     filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IComboChartProps extends ICommonChartProps, IComboChartBucketProps {

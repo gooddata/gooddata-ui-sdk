@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { AreaChart as AfmAreaChart } from './afm/AreaChart';
 
@@ -13,11 +13,11 @@ import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
 import { verifyBuckets, getBucketsProps, getConfigProps } from '../helpers/optionalStacking/areaChart';
 
 export interface IAreaChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute | VisualizationObject.IVisualizationAttribute[];
-    stackBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
+    stackBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProps {
