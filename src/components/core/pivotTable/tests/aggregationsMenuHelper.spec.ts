@@ -4,45 +4,6 @@ import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from '../../../../helpers/ag
 import aggregationsMenuHelper from '../aggregationsMenuHelper';
 import { IColumnTotal } from '../AggregationsMenu';
 
-describe('getTotalTypesAppliedOnMeasures', () => {
-    const totals: AFM.ITotalItem[] = [
-        {
-            type: 'sum',
-            attributeIdentifier: 'a1',
-            measureIdentifier: 'm1'
-        },
-        {
-            type: 'sum',
-            attributeIdentifier: 'a1',
-            measureIdentifier: 'm2'
-        },
-        {
-            type: 'max',
-            attributeIdentifier: 'a1',
-            measureIdentifier: 'm1'
-        },
-        {
-            type: 'min',
-            attributeIdentifier: 'a1',
-            measureIdentifier: 'm2'
-        }
-    ];
-
-    it('should return sum as only defined type for both m1 and m2', () => {
-        const measures = ['m1', 'm2'];
-
-        expect(aggregationsMenuHelper.getTotalTypesAppliedOnMeasures(totals, measures))
-            .toEqual(['sum']);
-    });
-
-    it('should return sum, max types as they are defined for m1', () => {
-        const measures = ['m1'];
-
-        expect(aggregationsMenuHelper.getTotalTypesAppliedOnMeasures(totals, measures))
-            .toEqual(['sum', 'max']);
-    });
-});
-
 describe('aggregationsMenuHelper', () => {
     describe('getTotalsForMeasureHeader', () => {
         it('should return empty totals for measure when no total defined', () => {
@@ -118,13 +79,36 @@ describe('aggregationsMenuHelper', () => {
                     type: 'sum',
                     measureIdentifier: 'm1',
                     attributeIdentifier: 'a1'
+                },
+                {
+                    type: 'min',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a1'
                 }
             ];
 
             expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([]);
         });
 
-        it('should return totals when totals are defined for all measures', () => {
+        it('should return empty totals when totals are defined for all measures but different attributes', () => {
+            const measures = ['m1', 'm2'];
+            const totals: AFM.ITotalItem[] = [
+                {
+                    type: 'sum',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a1'
+                },
+                {
+                    type: 'sum',
+                    measureIdentifier: 'm2',
+                    attributeIdentifier: 'a2'
+                }
+            ];
+
+            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([]);
+        });
+
+        it('should return sum total when totals are defined for all measures and single attribute', () => {
             const measures = ['m1', 'm2'];
             const totals: AFM.ITotalItem[] = [
                 {
@@ -143,6 +127,33 @@ describe('aggregationsMenuHelper', () => {
                 {
                     type: 'sum',
                     attributes: ['a1']
+                }
+            ]);
+        });
+
+        it('should return sum, min totals when totals are defined for single measure', () => {
+            const measures = ['m1'];
+            const totals: AFM.ITotalItem[] = [
+                {
+                    type: 'sum',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a1'
+                },
+                {
+                    type: 'min',
+                    measureIdentifier: 'm1',
+                    attributeIdentifier: 'a2'
+                }
+            ];
+
+            expect(aggregationsMenuHelper.getTotalsForAttributeHeader(totals, measures)).toEqual([
+                {
+                    type: 'sum',
+                    attributes: ['a1']
+                },
+                {
+                    type: 'min',
+                    attributes: ['a2']
                 }
             ]);
         });

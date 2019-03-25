@@ -145,9 +145,9 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         );
     }
 
-    private getItemClassNames(totalType: AFM.TotalType, hasSubmenu: boolean): string {
+    private getItemClassNames(totalType: AFM.TotalType): string {
         return classNames(
-            { 'gd-aggregation-submenu': hasSubmenu },
+            'gd-aggregation-menu-item',
             's-menu-aggregation',
             `s-menu-aggregation-${totalType}`
         );
@@ -170,7 +170,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 include: !isSelected,
                 attributeIdentifier: attributeHeader.localIdentifier
             });
-            const itemClassNames = this.getItemClassNames(totalType, showSubmenu);
+            const itemClassNames = this.getItemClassNames(totalType);
             const renderSubmenu = showSubmenu && rowAttributeHeaders.length > 0;
             const toggler = this.renderMenuItemContent(totalType, onClick, isSelected, renderSubmenu);
 

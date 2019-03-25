@@ -2,37 +2,51 @@
 import { AFM, Execution } from '@gooddata/typings';
 import * as invariant from 'invariant';
 import uniq = require('lodash/uniq');
+import intersection = require('lodash/intersection');
 
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from '../../../helpers/agGrid';
 import { AVAILABLE_TOTALS } from '../../visualizations/table/totals/utils';
 import { IColumnTotal } from './AggregationsMenu';
 
-const getTotalTypesAppliedOnMeasures = (
-    totals: AFM.ITotalItem[],
-    measureLocalIdentifiers: string[]
-): AFM.TotalType[] => {
-    return AVAILABLE_TOTALS.filter((type) => {
-        const totalsOfType = totals.filter((total: AFM.ITotalItem) => total.type === type);
-        const totalsMeasureIdentifiers = totalsOfType.map((total: AFM.ITotalItem) => total.measureIdentifier);
-        return measureLocalIdentifiers.every((measureIdentfier: string) => {
-            return totalsMeasureIdentifiers.includes(measureIdentfier);
-        });
+function getTotalsForMeasureAndType(totals: AFM.ITotalItem[], type: AFM.TotalType, measureLocalIdentifier: string) {
+    return totals.filter(total => total.measureIdentifier === measureLocalIdentifier && total.type === type);
+}
+
+function getAttributeIntersection(totals: AFM.ITotalItem[], type: AFM.TotalType, measureLocalIdentifiers: string[]) {
+    const attributeGroups: string[][] = measureLocalIdentifiers.map((measure: string) => {
+        const filteredTotals = getTotalsForMeasureAndType(totals, type, measure);
+        return filteredTotals.map(total => total.attributeIdentifier);
     });
-};
+    return intersection.apply(null, attributeGroups);
+}
+
+function getUniqueMeasures(totals: AFM.ITotalItem[], type: AFM.TotalType) {
+    const totalsOfType = totals.filter(total => total.type === type);
+    return uniq(totalsOfType.map(total => total.measureIdentifier));
+}
+
+function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentifiers2: string[]) {
+    const sameMeasureLocalIdentifiers: string[] = intersection(measureLocalIdentifiers1, measureLocalIdentifiers2);
+    return sameMeasureLocalIdentifiers.length === measureLocalIdentifiers2.length;
+}
 
 function getTotalsForAttributeHeader(
     totals: AFM.ITotalItem[],
     measureLocalIdentifiers: string[]
 ): IColumnTotal[] {
-    const totalTypesAppliedOnAllMeasures = getTotalTypesAppliedOnMeasures(totals, measureLocalIdentifiers);
-
-    return totalTypesAppliedOnAllMeasures.map((totalType: AFM.TotalType) => {
-        const attributeIdentifiers = totals
-            .filter((total: AFM.ITotalItem) => total.type === totalType)
-            .map((total: AFM.ITotalItem) => total.attributeIdentifier);
-
-        return { type: totalType, attributes: uniq(attributeIdentifiers) };
-    });
+    return AVAILABLE_TOTALS.reduce((columnTotals: IColumnTotal[], type: AFM.TotalType) => {
+        const uniqueMeasureLocalIdentifiers = getUniqueMeasures(totals, type);
+        if (areMeasuresSame(uniqueMeasureLocalIdentifiers, measureLocalIdentifiers)) {
+            const attributeLocalIdentifiers = getAttributeIntersection(totals, type, uniqueMeasureLocalIdentifiers);
+            if (attributeLocalIdentifiers.length) {
+                columnTotals.push({
+                    type,
+                    attributes: attributeLocalIdentifiers
+                });
+            }
+        }
+        return columnTotals;
+    }, []);
 }
 
 function getTotalsForMeasureHeader(
@@ -86,6 +100,5 @@ export default {
     getTotalsForAttributeHeader,
     getTotalsForMeasureHeader,
     getHeaderMeasureLocalIdentifiers,
-    isTotalEnabledForAttribute,
-    getTotalTypesAppliedOnMeasures
+    isTotalEnabledForAttribute
 };

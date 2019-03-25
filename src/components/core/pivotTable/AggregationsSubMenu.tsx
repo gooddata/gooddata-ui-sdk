@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AFM, Execution } from '@gooddata/typings';
 import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
 
-import { getNthAttributeLocalIdentifier, getNthAttributeDisplayFormName } from '../../../helpers/executionResultHelper';
+import { getNthAttributeLocalIdentifier, getNthAttributeName } from '../../../helpers/executionResultHelper';
 import SubMenu from '../../menu/SubMenu';
 import { IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
 import { IColumnTotal } from './AggregationsMenu';
@@ -38,7 +38,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
                 {...menuOpenedProp}
             >
                 <ItemsWrapper>
-                    <div className="s-table-header-submenu-content">
+                    <div className="gd-aggregation-submenu s-table-header-submenu-content">
                         <Header>{intl.formatMessage({ id: 'visualizations.menu.aggregations.rows' })}</Header>
                         {this.renderSubMenuItems()}
                     </div>
@@ -51,7 +51,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         rowAttributeHeaders: Execution.IAttributeHeader[],
         attributeHeaderIndex: number
     ): string {
-        return getNthAttributeDisplayFormName(rowAttributeHeaders, attributeHeaderIndex - 1);
+        return getNthAttributeName(rowAttributeHeaders, attributeHeaderIndex - 1);
     }
 
     private getAttributeName(

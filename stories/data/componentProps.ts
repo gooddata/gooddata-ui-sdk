@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { VisualizationObject, AFM, Execution } from '@gooddata/typings';
+import { IColumnTotal } from '../../src/components/core/pivotTable/AggregationsMenu';
 import {
     arithmeticMeasure,
     attributeSortItem,
@@ -148,7 +149,21 @@ export const GRAND_TOTALS_WITH_SUBTOTALS: AFM.ITotalItem[] = [
     }
 ];
 
-export const ATTRIBUTE_HEADERS_2A: Execution.IAttributeHeader[] = [
+export const GRAND_TOTAL_SUM: AFM.ITotalItem = {
+    type: 'sum',
+    attributeIdentifier: '1st_attr_df_local_identifier',
+    measureIdentifier: '1st_measure_local_identifier'
+};
+
+export const COLUMN_TOTAL_1ST_2ND_ATTR_MAX: IColumnTotal = {
+    type: 'max',
+    attributes: [
+        '1st_attr_df_local_identifier',
+        '2nd_attr_df_local_identifier'
+    ]
+};
+
+export const ATTRIBUTE_HEADERS_3A_LONG_NAME: Execution.IAttributeHeader[] = [
     {
         attributeHeader: {
             formOf: {
@@ -166,13 +181,26 @@ export const ATTRIBUTE_HEADERS_2A: Execution.IAttributeHeader[] = [
         attributeHeader: {
             formOf: {
                 identifier: '2nd_attr_local_identifier',
-                name: 'Region',
+                name: 'Region name is very long to fit the submenu so we limit characters',
                 uri: '/gdc/md/project_id/obj/2nd_attr_uri_id'
             },
             identifier: '2nd_attr_df_identifier',
             localIdentifier: '2nd_attr_df_local_identifier',
             name: 'Region Area',
             uri: '/gdc/md/project_id/obj/2nd_attr_df_uri_id'
+        }
+    },
+    {
+        attributeHeader: {
+            formOf: {
+                identifier: '3rd_attr_local_identifier',
+                name: 'Brand',
+                uri: '/gdc/md/project_id/obj/3rd_attr_uri_id'
+            },
+            identifier: '3rd_attr_df_identifier',
+            localIdentifier: '3rd_attr_df_local_identifier',
+            name: 'Brand name',
+            uri: '/gdc/md/project_id/obj/3rd_attr_df_uri_id'
         }
     }
 ];
