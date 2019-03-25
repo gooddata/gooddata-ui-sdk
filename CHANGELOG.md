@@ -33,6 +33,7 @@ The REST API versions in the table are just for your information as the values a
 
 -   Pivot Table visualization now emits drill events without `value` property in `drillContext`. Value can be obtained from `row` property using `columnIndex`. (BB-1318)
 
+-   Fixed pivot table inconsistency with flat table in drilling row attribute. Flat table has property `name` but pivot table had `title` (BB-1466)
 
 ## 6.2.0
 

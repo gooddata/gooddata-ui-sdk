@@ -132,7 +132,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
                 return [...drillRow, {
                     // Unlike fields, drilling data should not be sanitized, because it is not used in HTML properties
                     id: getIdsFromUri(drillItemUri, false)[1],
-                    title: rowData[colDef.field]
+                    name: rowData[colDef.field]
                 }];
             }
         }
