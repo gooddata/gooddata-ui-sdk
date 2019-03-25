@@ -45,6 +45,28 @@ export const simpleMeasureWithFormat: IMeasure = {
     }
 };
 
+export const simpleMeasureWithFilter: IMeasure = {
+    measure: {
+        localIdentifier: 'm1',
+        definition: {
+            measureDefinition: {
+                item: {
+                    uri: '/gdc/md/project/obj/metric.id'
+                },
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: { identifier: 'foo' },
+                            in: [ 'val1', 'val2' ],
+                            textFilter: true
+                        }
+                    }
+                ]
+            }
+        }
+    }
+};
+
 export const renamedMeasure: IMeasure = {
     measure: {
         localIdentifier: 'm1',

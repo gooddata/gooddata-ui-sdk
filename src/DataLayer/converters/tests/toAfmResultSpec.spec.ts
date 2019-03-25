@@ -1,8 +1,9 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     simpleMeasure,
     simpleMeasureWithFormat,
     simpleMeasureWithIdentifiers,
+    simpleMeasureWithTextFilter,
     renamedMeasure,
     filteredMeasure,
     measureWithAbsoluteDate,
@@ -20,6 +21,7 @@ import {
     stackingAttribute,
     stackingRenamedAttribute,
     attributeFilter,
+    attributeTextFilter,
     attributeFilterWithAll,
     dateFilter,
     dateFilterWithoutInterval,
@@ -49,6 +51,12 @@ describe('toAfmResultSpec', () => {
     it('should convert simple measure with format', () => {
         expect(toAfmResultSpec(charts.simpleMeasureWithFormat)).toEqual({
             ...simpleMeasureWithFormat
+        });
+    });
+
+    it('should convert simple measure with text filter', () => {
+        expect(toAfmResultSpec(charts.simpleMeasureWithTextFilter)).toEqual({
+            ...simpleMeasureWithTextFilter
         });
     });
 
@@ -151,6 +159,12 @@ describe('toAfmResultSpec', () => {
     it('should convert attribute filter', () => {
         expect(toAfmResultSpec(charts.attributeFilter)).toEqual({
             ...attributeFilter
+        });
+    });
+
+    it('should convert attribute filter', () => {
+        expect(toAfmResultSpec(charts.attributeTextFilter)).toEqual({
+            ...attributeTextFilter
         });
     });
 
