@@ -623,7 +623,10 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: DEFAULT_LABELS_CONFIG
             },
             area: {
-                dataLabels: DEFAULT_LABELS_CONFIG
+                dataLabels: {
+                    ...DEFAULT_LABELS_CONFIG,
+                    formatter: partial(dataLabelFormatter, chartConfig)
+                }
             },
             scatter: {
                 dataLabels: {
