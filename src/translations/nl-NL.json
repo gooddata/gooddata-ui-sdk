@@ -10,7 +10,7 @@
    "visualizations.totals.dropdown.title.avg": "Gem",
    "visualizations.totals.dropdown.title.min": "Min",
    "visualizations.totals.dropdown.title.max": "Max",
-   "visualizations.totals.dropdown.title.nat": "Groot (totaal)",
+   "visualizations.totals.dropdown.title.nat": "Groot (Totaal)",
    "visualizations.totals.dropdown.title.med": "Mediaan",
    "visualizations.totals.row.title.sum": "Som",
    "visualizations.totals.row.title.avg": "Gem",
@@ -51,12 +51,13 @@
    "measure.title.suffix.same_period_year_ago": "ZP jaar geleden",
    "measure.title.suffix.previous_period": "periode geleden",
    "visualizations.measure.arithmetic.sum.title": "Som van {firstMeasureTitle} en {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.difference.title": "Verschil tussen {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.difference.title": "Verschil van {firstMeasureTitle} en {secondMeasureTitle}",
    "visualizations.measure.arithmetic.multiplication.title": "Product van {firstMeasureTitle} en {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.ratio.title": "Verhouding tussen {firstMeasureTitle} en {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.ratio.title": "Verhouding van {firstMeasureTitle} en {secondMeasureTitle}",
    "visualizations.measure.arithmetic.change.title": "Wijziging van {secondMeasureTitle} naar {firstMeasureTitle}",
    "visualizations.legend.text.top": "Boven:",
    "visualizations.legend.text.bottom": "Onder:",
    "visualizations.legend.text.left": "Links:",
-   "visualizations.legend.text.right": "Rechts:"
+   "visualizations.legend.text.right": "Rechts:",
+   "visualizations.menu.aggregations": "Samenvoegingen"
 }
