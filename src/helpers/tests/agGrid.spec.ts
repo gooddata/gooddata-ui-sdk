@@ -21,7 +21,7 @@ import {
     shouldMergeHeaders,
     mergeHeaderEndIndex,
     getRowNodeId,
-    getRowIndexByScrollTop
+    getGridIndex
 } from '../agGrid';
 
 import * as fixtures from '../../../stories/test_data/fixtures';
@@ -866,8 +866,8 @@ describe('getRowNodeId', () => {
     });
 });
 
-describe('getRowIndexByScrollTop', () => {
-    const rowHeight = 20;
+describe('getGridIndex', () => {
+    const gridDistance = 20;
 
     it.each([
         ['100', 100, 5],
@@ -876,7 +876,7 @@ describe('getRowIndexByScrollTop', () => {
     ])(
         'should return correct row index when scrolltop is %s',
         (_: string, scrollTop: number, expectedRowIndex: number) => {
-            expect(getRowIndexByScrollTop(scrollTop, rowHeight)).toEqual(expectedRowIndex);
+            expect(getGridIndex(scrollTop, gridDistance)).toEqual(expectedRowIndex);
         }
     );
 });

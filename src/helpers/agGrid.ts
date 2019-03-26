@@ -571,6 +571,6 @@ export const getRowNodeId = (item: any) => {
     }).join(FIELD_SEPARATOR);
 };
 
-export const getRowIndexByScrollTop = (scrollTop: number, rowHeight: number) => {
-    return Math.floor(scrollTop / rowHeight);
+export const getGridIndex = (position: number, gridDistance: number) => {
+    return Math.floor(position / gridDistance);
 };
