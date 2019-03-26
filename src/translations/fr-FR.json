@@ -54,9 +54,10 @@
    "visualizations.measure.arithmetic.difference.title": "Différence de {firstMeasureTitle} et {secondMeasureTitle}",
    "visualizations.measure.arithmetic.multiplication.title": "Produit de {firstMeasureTitle} et {secondMeasureTitle}",
    "visualizations.measure.arithmetic.ratio.title": "Ratio de {firstMeasureTitle} et {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.change.title": "Variation de {secondMeasureTitle} à {firstMeasureTitle}",
+   "visualizations.measure.arithmetic.change.title": "Passer de {secondMeasureTitle} à {firstMeasureTitle}",
    "visualizations.legend.text.top": "Haut :",
    "visualizations.legend.text.bottom": "Bas :",
    "visualizations.legend.text.left": "Gauche :",
-   "visualizations.legend.text.right": "Droite :"
+   "visualizations.legend.text.right": "Droite :",
+   "visualizations.menu.aggregations": "Agrégations"
 }

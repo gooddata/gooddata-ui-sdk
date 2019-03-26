@@ -10,7 +10,7 @@
    "visualizations.totals.dropdown.title.avg": "Méd",
    "visualizations.totals.dropdown.title.min": "Min",
    "visualizations.totals.dropdown.title.max": "Máx",
-   "visualizations.totals.dropdown.title.nat": "Agregação (total)",
+   "visualizations.totals.dropdown.title.nat": "Agregação (Total)",
    "visualizations.totals.dropdown.title.med": "Mediana",
    "visualizations.totals.row.title.sum": "Soma",
    "visualizations.totals.row.title.avg": "Méd",
@@ -58,5 +58,6 @@
    "visualizations.legend.text.top": "Superior:",
    "visualizations.legend.text.bottom": "Inferior:",
    "visualizations.legend.text.left": "Esquerda:",
-   "visualizations.legend.text.right": "Direita:"
+   "visualizations.legend.text.right": "Direita:",
+   "visualizations.menu.aggregations": "Agregações"
 }

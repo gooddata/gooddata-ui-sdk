@@ -10,7 +10,7 @@
    "visualizations.totals.dropdown.title.avg": "Media",
    "visualizations.totals.dropdown.title.min": "Min",
    "visualizations.totals.dropdown.title.max": "Máx",
-   "visualizations.totals.dropdown.title.nat": "Consolidación (total)",
+   "visualizations.totals.dropdown.title.nat": "Consolidación (Total)",
    "visualizations.totals.dropdown.title.med": "Mediana",
    "visualizations.totals.row.title.sum": "Suma",
    "visualizations.totals.row.title.avg": "Media",
@@ -51,12 +51,13 @@
    "measure.title.suffix.same_period_year_ago": "MP el año anterior",
    "measure.title.suffix.previous_period": "periodo atrás",
    "visualizations.measure.arithmetic.sum.title": "Suma de {firstMeasureTitle} y {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.difference.title": "Resta de {firstMeasureTitle} y {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.multiplication.title": "Multiplicación de {firstMeasureTitle} y {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.ratio.title": "División de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.difference.title": "Diferencia de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.multiplication.title": "Producto de {firstMeasureTitle} y {secondMeasureTitle}",
+   "visualizations.measure.arithmetic.ratio.title": "Ratio de {firstMeasureTitle} y {secondMeasureTitle}",
    "visualizations.measure.arithmetic.change.title": "Cambio de {secondMeasureTitle} a {firstMeasureTitle}",
    "visualizations.legend.text.top": "Arriba:",
    "visualizations.legend.text.bottom": "Abajo:",
    "visualizations.legend.text.left": "Izquierda:",
-   "visualizations.legend.text.right": "Derecha:"
+   "visualizations.legend.text.right": "Derecha:",
+   "visualizations.menu.aggregations": "Agregaciones"
 }
