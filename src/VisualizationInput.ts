@@ -5,13 +5,45 @@ import { VisualizationObject } from './VisualizationObject';
 /**
  * This namespace implements types that are used as inputs to various visualization components.
  *
- * At the moment these types are mere aliases to types defined in VisualizationObject and/or AFM. This may change
- * in the future if VisualizationObject and or AFM change incompatibly - in that case we MAY add backward compatible
- * types here in order not to break existing users.
+ * At the moment these most of the types are mere aliases to types in VisualizationObject, AFM, or unions
+ * to different types. There is one notable exception: the measure & (simple) measure definition, this type
+ * is redefined here to allow simple measure filters be defined as text filters; this is not possible with the
+ * standard visualization object.
  */
 export namespace VisualizationInput {
+    export type ObjQualifier = VisualizationObject.ObjQualifier;
+
     export type IAttribute = VisualizationObject.IVisualizationAttribute;
-    export type IMeasure = VisualizationObject.IMeasure;
+
+    export type IPreviousPeriodDateDataSet = VisualizationObject.IPreviousPeriodDateDataSet;
+    export type ArithmeticMeasureOperator = VisualizationObject.ArithmeticMeasureOperator;
+    export type IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
+    export type IPoPMeasureDefinition = VisualizationObject.IPoPMeasureDefinition;
+    export type IPreviousPeriodMeasureDefinition = VisualizationObject.IPreviousPeriodMeasureDefinition;
+    export type MeasureAggregation = VisualizationObject.MeasureAggregation;
+    export type IMeasureDefinitionType = IMeasureDefinition
+        | IArithmeticMeasureDefinition
+        | IPoPMeasureDefinition
+        | IPreviousPeriodMeasureDefinition;
+
+    export interface IMeasureDefinition {
+        measureDefinition: {
+            item: ObjQualifier;
+            aggregation?: MeasureAggregation;
+            filters?: IFilter[];
+            computeRatio?: boolean;
+        };
+    }
+
+    export interface IMeasure {
+        measure: {
+            localIdentifier: VisualizationObject.Identifier;
+            definition: IMeasureDefinitionType;
+            alias?: string;
+            title?: string;
+            format?: string;
+        };
+    }
 
     export type AttributeOrMeasure = IAttribute | IMeasure;
 
@@ -30,7 +62,23 @@ export namespace VisualizationInput {
     export type ITotal = VisualizationObject.IVisualizationTotal;
 
     export function isMeasure(obj: any): obj is IMeasure {
-        return VisualizationObject.isMeasure(obj as VisualizationObject.IMeasure);
+        return VisualizationObject.isMeasure(obj);
+    }
+
+    export function isMeasureDefinition(obj: IMeasureDefinitionType): obj is IMeasureDefinition {
+        return VisualizationObject.isMeasureDefinition(obj);
+    }
+
+    export function isArithmeticMeasureDefinition(obj: IMeasureDefinitionType): obj is IArithmeticMeasureDefinition {
+        return VisualizationObject.isArithmeticMeasureDefinition(obj);
+    }
+
+    export function isPopMeasureDefinition(obj: IMeasureDefinitionType): obj is IPoPMeasureDefinition {
+        return VisualizationObject.isPopMeasureDefinition(obj);
+    }
+
+    export function isPreviousPeriodMeasureDefinition(obj: any): obj is any {
+        return VisualizationObject.isPreviousPeriodMeasureDefinition(obj);
     }
 
     export function isAttribute(obj: any): obj is IAttribute {
