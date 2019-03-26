@@ -74,13 +74,6 @@ function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, clas
     }
 }
 
-function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string) {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
-    if (cellElement !== null) {
-        cellElement.innerText = text;
-    }
-}
-
 export default {
     getHeaderHeight,
     // cell element
@@ -95,6 +88,5 @@ export default {
     // pinned row cell element
     getPinnedTopRowCellElement,
     addPinnedTopRowCellClass,
-    removePinnedTopRowCellClass,
-    setPinnedTopRowCellText
+    removePinnedTopRowCellClass
 };

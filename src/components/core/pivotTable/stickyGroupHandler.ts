@@ -38,6 +38,8 @@ export const updateStickyHeaders = (
 
     // show the pinned row for sticky column headers
     apiWrapper.addPinnedTopRowClass(gridApi, 'gd-visible-sticky-row');
+    // set the sticky header text
+    gridApi.setPinnedTopRowData([firstVisibleNodeData]);
 
     const attributeKeys = Object.keys(firstVisibleNodeData).filter(colIdIsSimpleAttribute);
 
@@ -46,8 +48,6 @@ export const updateStickyHeaders = (
 
         // the following value is the same as the current one
         if (groupingProvider.isRepeatedValue(columnId, firstVisibleRowIndex + 1)) {
-            // set the sticky header text
-            apiWrapper.setPinnedTopRowCellText(gridApi, columnId, firstVisibleNodeData[columnId]);
             // show the sticky header
             apiWrapper.removePinnedTopRowCellClass(gridApi, columnId, 'gd-hidden-sticky-column');
         } else {
