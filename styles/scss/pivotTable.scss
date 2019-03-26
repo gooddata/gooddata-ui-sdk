@@ -402,7 +402,8 @@ $header-cell-resize-width: 20px;
             border-top-color: white;
 
             &.gd-hidden-sticky-column,
-            &.gd-measure-column {
+            &.gd-measure-column,
+            &.gd-column-attribute-column{
                 background-color: transparent;
                 color: transparent;
             }

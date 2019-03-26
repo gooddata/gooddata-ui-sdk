@@ -53,22 +53,48 @@ describe('updateStickyHeaders', () => {
 
     const TEST_ROW_HEIGHT = 10;
 
-    it('should do nothing when scroll top has not changed from last time', () => {
+    it('should do nothing when scroll top and scroll left has not changed from last time', () => {
         const fakeGridApi = getFakeGridApi();
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider();
+        const currentScrollTop = 5;
+        const lastScrollTop = 5;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(5, 5, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         assertOnlyListedMethodsHaveBeenCalled(fakeGridApiWrapper, []);
     });
 
-    it('should do nothing when scroll change has not crossed row line', () => {
+    it('should do nothing when scroll top change has not crossed row line', () => {
         const fakeGridApi = getFakeGridApi();
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider();
+        const currentScrollTop = 6;
+        const lastScrollTop = 5;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(6, 5, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         assertOnlyListedMethodsHaveBeenCalled(fakeGridApiWrapper, []);
     });
@@ -78,20 +104,46 @@ describe('updateStickyHeaders', () => {
         const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider();
+        const currentScrollTop = 5000;
+        const lastScrollTop = 5500;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(5000, 5500, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         expect(fakeGridApiWrapper.removePinnedTopRowClass).toHaveBeenCalledWith(fakeGridApi, 'gd-visible-sticky-row');
         assertOnlyListedMethodsHaveBeenCalled(fakeGridApiWrapper, ['removePinnedTopRowClass']);
     });
 
-    describe('current scroll position belongs to different line than the last one', () => {
+    describe('current scroll top belongs to different line than the last one', () => {
         const fakeGetDisplayedRowAtIndex = (): any => ({ data: { a_123: '123' } });
         const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider(false, false);
+        const currentScrollTop = 100;
+        const lastScrollTop = 50;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(100, 50, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         it('should show the sticky row', () => {
             expect(fakeGridApiWrapper.addPinnedTopRowClass)
@@ -104,13 +156,58 @@ describe('updateStickyHeaders', () => {
         });
     });
 
+    describe('current scroll left change reached update threshold', () => {
+        const fakeGetDisplayedRowAtIndex = (): any => ({ data: { a_123: '123' } });
+        const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
+        const fakeGridApiWrapper = getFakeGridApiWrapper();
+        const fakeGroupingProvider = getFakeGroupingProvider(false, false);
+        const currentScrollTop = 100;
+        const lastScrollTop = 100;
+        const currentScrollLeft = 50;
+        const lastScrollLeft = 70;
+
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
+
+        it('should show the sticky row', () => {
+            expect(fakeGridApiWrapper.addPinnedTopRowClass)
+                .toHaveBeenCalledWith(fakeGridApi, 'gd-visible-sticky-row');
+        });
+
+        it('should hide temporarily shown cell from previous scroll position', () => {
+            expect(fakeGridApiWrapper.removeCellClass)
+                .toHaveBeenCalledWith(fakeGridApi, 'a_123', 10, 'gd-cell-show-hidden');
+        });
+    });
+
     describe('column without repetitions i.e. without grouping', () => {
         const fakeGetDisplayedRowAtIndex = (): any => ({ data: { a_123: '123' } });
         const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider(false, false);
+        const currentScrollTop = 50;
+        const lastScrollTop = 100;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(50, 100, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         it('should hide sticky column header', () => {
             expect(fakeGridApiWrapper.addPinnedTopRowCellClass)
@@ -133,8 +230,21 @@ describe('updateStickyHeaders', () => {
         const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider(false, true);
+        const currentScrollTop = 100;
+        const lastScrollTop = 50;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(100, 50, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         it('should hide sticky column header', () => {
             expect(fakeGridApiWrapper.addPinnedTopRowCellClass)
@@ -157,8 +267,21 @@ describe('updateStickyHeaders', () => {
         const fakeGridApi = getFakeGridApi(fakeGetDisplayedRowAtIndex);
         const fakeGridApiWrapper = getFakeGridApiWrapper();
         const fakeGroupingProvider = getFakeGroupingProvider(true, true);
+        const currentScrollTop = 100;
+        const lastScrollTop = 50;
+        const currentScrollLeft = 0;
+        const lastScrollLeft = 0;
 
-        updateStickyHeaders(100, 50, TEST_ROW_HEIGHT, fakeGridApi, fakeGroupingProvider, fakeGridApiWrapper);
+        updateStickyHeaders(
+            currentScrollTop,
+            currentScrollLeft,
+            lastScrollTop,
+            lastScrollLeft,
+            TEST_ROW_HEIGHT,
+            fakeGridApi,
+            fakeGroupingProvider,
+            fakeGridApiWrapper
+        );
 
         it('should show sticky column header', () => {
             expect(fakeGridApiWrapper.removePinnedTopRowCellClass)

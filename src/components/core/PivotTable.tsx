@@ -363,6 +363,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private containerRef: HTMLDivElement;
     private groupingProvider: IGroupingProvider;
     private lastScrollTop: number = 0;
+    private lastScrollLeft: number = 0;
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -554,8 +555,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             updateStickyHeadersPosition(this.gridApi);
         }
         const scrollTop = this.lastScrollTop;
+        const scrollLeft = this.lastScrollLeft;
         this.lastScrollTop = 0;
-        this.updateStickyRow(scrollTop);
+        this.lastScrollLeft = 0;
+        this.updateStickyRow(scrollTop, scrollLeft);
     }
 
     public setGridDataSource() {
@@ -683,9 +686,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     }
 
     public onBodyScroll = (event: BodyScrollEvent) => {
-        if (event.direction === 'vertical') {
-            this.updateStickyRow(event.top);
-        }
+        this.updateStickyRow(Math.max(event.top, 0), event.left);
     }
 
     public renderVisualization() {
@@ -930,11 +931,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setGridDataSource();
     }
 
-    private updateStickyRow(scrollTop: number): void {
+    private updateStickyRow(scrollTop: number, scrollLeft: number): void {
         if (this.props.groupRows && this.gridApi) {
             updateStickyHeaders(
                 scrollTop,
+                scrollLeft,
                 this.lastScrollTop,
+                this.lastScrollLeft,
                 DEFAULT_ROW_HEIGHT,
                 this.gridApi,
                 this.groupingProvider,
@@ -942,6 +945,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             );
         }
         this.lastScrollTop = scrollTop;
+        this.lastScrollLeft = scrollLeft;
     }
 
     private getTotalBodyHeight(executionResult: Execution.IExecutionResult): number {
