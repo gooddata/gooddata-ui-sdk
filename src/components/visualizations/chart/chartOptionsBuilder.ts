@@ -1153,7 +1153,12 @@ export function getCategoriesForTwoAttributes(viewByTwoAttributes: IViewByTwoAtt
     }));
 }
 
-function getStackingConfig(stackByAttribute: any, options: IChartConfig): string {
+/**
+ * Get stacking config which will be set to 'highchart.plotOptions.series'
+ * @param stackByAttribute
+ * @param options
+ */
+function getStackingConfig(stackByAttribute: IUnwrappedAttributeHeadersWithItems, options: IChartConfig): string {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
 

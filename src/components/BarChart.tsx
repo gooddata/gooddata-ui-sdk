@@ -9,7 +9,7 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
-import { getSanitizedStackingConfig, getViewByTwoAttributes } from '../helpers/optionalStacking/common';
+import { getViewByTwoAttributes } from '../helpers/optionalStacking/common';
 
 export interface IBarChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -47,8 +47,6 @@ export function BarChart(props: IBarChartProps): JSX.Element {
 
     const newProps
         = omit<IBarChartProps, IBarChartNonBucketProps>(props, ['measures', 'viewBy', 'stackBy', 'filters']);
-
-    newProps.config = getSanitizedStackingConfig(props);
 
     return (
         <AfmBarChart

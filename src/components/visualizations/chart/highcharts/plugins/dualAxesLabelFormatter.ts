@@ -123,7 +123,8 @@ export function dualAxesLabelFormatter() {
     this.value = formatLabel(this.value, tickPositions);
 
     const stackMeasuresToPercent = get(this, 'chart.userOptions.stackMeasuresToPercent', false);
-    if (stackMeasuresToPercent) {
+    const seriesInAxis = get(this, 'axis.series', []).length;
+    if (stackMeasuresToPercent && seriesInAxis > 1) {
         const opposite = get(this, 'axis.opposite', false);
         if (opposite === false) {
             return formatAsPercent.call(this, 1);

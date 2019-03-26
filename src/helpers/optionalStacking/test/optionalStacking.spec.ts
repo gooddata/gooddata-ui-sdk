@@ -2,8 +2,8 @@
 import { getBucketsProps, getConfigProps } from '../areaChart';
 import { VisualizationObject } from '@gooddata/typings';
 import { IAreaChartProps } from '../../../components/AreaChart';
-import { IChartConfig } from '../../..';
-import { getViewByTwoAttributes, getSanitizedStackingConfig } from '../common';
+import { IChartConfig } from '../../../interfaces/Config';
+import { getViewByTwoAttributes } from '../common';
 import BucketItem = VisualizationObject.BucketItem;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
@@ -63,47 +63,6 @@ describe('getViewByTwoAttributes', () => {
     }) => {
         const result = getViewByTwoAttributes(viewBy);
         expect(result).toEqual(expectation);
-    });
-});
-
-describe('getSanitizedStackingConfig', () => {
-    it('should return undefined when config is not input', () => {
-        const config = getSanitizedStackingConfig({
-            projectId: 'testProject',
-            measures: [MEASURE_1]
-        });
-        expect(config).toBeFalsy();
-    });
-
-    it('should ignore stacking setting with one measure', () => {
-        const props = {
-            projectId: 'testProject',
-            measures: [MEASURE_1],
-            config: {
-                stackMeasures: true,
-                stackMeasuresToPercent: true
-            }
-        };
-        const config = getSanitizedStackingConfig(props);
-        expect(config).toEqual({
-            stackMeasures: false,
-            stackMeasuresToPercent: false
-        });
-    });
-
-    it('should not ignore stacking setting with one measure and one stackBy', () => {
-        const props = {
-            projectId: 'testProject',
-            measures: [MEASURE_1],
-            stackBy: ATTRIBUTE_1,
-            config: {
-                stackMeasuresToPercent: true
-            }
-        };
-        const config = getSanitizedStackingConfig(props);
-        expect(config).toEqual({
-            stackMeasuresToPercent: true
-        });
     });
 });
 
