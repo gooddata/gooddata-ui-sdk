@@ -190,17 +190,5 @@ describe('agGridApiWrapper', () => {
                 expect(pinnedTopRowElement.classList.contains(newPinnedRowCellClassName)).toBe(false);
             });
         });
-
-        describe('setPinnedTopRowCellText', () => {
-            it('should set innerText of the pinned top row cell element', async () => {
-                const api = await renderGridReady();
-
-                ApiWrapper.setPinnedTopRowCellText(api, firstAttributeColumnId, 'new_text');
-
-                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElement(api, firstAttributeColumnId);
-                expect(pinnedTopRowElement.innerText).toEqual('new_text');
-            });
-        });
-
     });
 });
