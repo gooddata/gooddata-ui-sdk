@@ -33,10 +33,6 @@ export function getMappingHeaderName(header: IMappingHeader): string {
     }
 }
 
-export function hasMappingHeaderIdentifier(header: IMappingHeader): boolean {
-    return isMappingHeaderAttribute(header) || isMappingHeaderMeasureItem(header);
-}
-
 export function getMappingHeaderIdentifier(header: IMappingHeader): string {
     if (isMappingHeaderAttribute(header)) {
         return header.attributeHeader.identifier;
@@ -44,7 +40,6 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string {
     if (isMappingHeaderMeasureItem(header)) {
         return header.measureHeaderItem.identifier;
     }
-
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no identifier`);
 }
 

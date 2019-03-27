@@ -183,6 +183,11 @@ const totalPresets = {
         label: 'Franchise Fees Ad Royalty Max',
         key: 'franchiseFeesAdRoyaltyMax',
         totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier, 'max')
+    },
+    franchiseFeesMaxByLocationState: {
+        label: 'Subtotal Franchise Fees Max by Location State',
+        key: 'franchiseFeesMaxByLocationState',
+        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationNameDisplayFormIdentifier, 'max')
     }
 };
 const filterPresets = {
@@ -476,6 +481,11 @@ export class PivotTableDrillingExample extends Component {
         const filtersProp = filters.length > 0 ? { filters } : {};
 
         const totals = getTotalItems(totalPresetKeys);
+        const grandTotalsOnly = totals.filter((total) => {
+            const firstAttribute = rows[0];
+            return firstAttribute !== undefined &&
+                total.attributeIdentifier === firstAttribute.visualizationAttribute.localIdentifier;
+        });
 
         const groupRows = getGroupRows(groupRowsKey);
 
@@ -650,7 +660,7 @@ export class PivotTableDrillingExample extends Component {
                         drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
-                        totals={totals}
+                        totals={grandTotalsOnly}
                     />
                 </div>
 
