@@ -22,6 +22,12 @@ describe('convertMeasure', () => {
         });
     });
 
+    it('should convert simple measure with filter', () => {
+        expect(MeasureConverter.convertMeasure(measures.simpleMeasureWithFilter)).toEqual({
+            ...afm.simpleMeasureWithFilter
+        });
+    });
+
     it('should convert simple renamed measures', () => {
         expect(MeasureConverter.convertMeasure(measures.renamedMeasure)).toEqual({
             ...afm.renamedMeasure

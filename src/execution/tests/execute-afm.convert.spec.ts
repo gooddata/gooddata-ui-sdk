@@ -23,3 +23,23 @@ describe.each(FILTER_TESTS)('convertAfm', (desc, input, expected) => {
         expect(convertAfm({ filters: input })).toEqual({ filters: expected });
     });
 });
+
+const MEASURE_TESTS = [
+    ['convert simple measure with filters', [ input.simpleMeasureWithFilters ],
+        [ input.simpleMeasureWithFiltersExpected]],
+    ['convert simple measure with mixed filters', [ input.simpleMeasureWithMixedFilters ],
+        [ input.simpleMeasureWithMixedFiltersExpected]],
+    ['convert simple measure with empty filters', [ input.simpleMeasureWithEmptyFilters ],
+        [ input.simpleMeasureWithEmptyFiltersExpected]],
+    ['convert simple measure with undefined filters', [ input.simpleMeasureWithUndefinedFilters ],
+        [ input.simpleMeasureWithUndefinedFiltersExpected]],
+    ['leave arithmetic measure as is', [ input.arithmeticMeasure ], [ input.arithmeticMeasure ]],
+    ['leave PoP measure as is', [ input.popMeasure ], [ input.popMeasure ]],
+    ['leave previousPeriod measure as is', [ input.previousPeriodMeasure ], [ input.previousPeriodMeasure ]]
+];
+
+describe.each(MEASURE_TESTS)('convertAfm', (desc, input, expected) => {
+    it(`should ${desc}`, () => {
+        expect(convertAfm({ measures: input })).toEqual({ measures: expected });
+    });
+});

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { AFM } from '@gooddata/typings';
 import { Granularities } from '../../../constants/granularities';
 
@@ -78,6 +78,34 @@ export const simpleMeasureWithIdentifiers: IFixture = {
                     }
                 },
                 alias: 'Measure M1'
+            }
+        ]
+    },
+    resultSpec: {
+    }
+};
+
+export const simpleMeasureWithTextFilter: IFixture = {
+    afm: {
+        measures: [
+            {
+                localIdentifier: 'm1',
+                definition: {
+                    measure: {
+                        item: {
+                            uri: METRIC_URI
+                        },
+                        filters: [
+                            {
+                                positiveAttributeFilter: {
+                                    displayForm: { identifier: 'foo' },
+                                    in: [ 'val1', 'val2' ],
+                                    textFilter: true
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         ]
     },
@@ -656,6 +684,38 @@ export const attributeFilter: IFixture = {
                     in: [
                         `${ATTRIBUTE_URI_2}?id=a`
                     ]
+                }
+            }
+        ]
+    },
+    resultSpec: {}
+};
+
+export const attributeTextFilter: IFixture = {
+    afm: {
+        filters: [
+            {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    },
+                    in: [
+                        'val1',
+                        'val2',
+                        'val3'
+                    ],
+                    textFilter: true
+                }
+            },
+            {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+                    },
+                    in: [
+                        'valA'
+                    ],
+                    textFilter: true
                 }
             }
         ]

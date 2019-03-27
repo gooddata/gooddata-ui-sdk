@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { VisualizationObject } from '@gooddata/typings';
 import {
     ATTRIBUTE_DISPLAY_FORM_URI,
@@ -79,6 +79,39 @@ const simpleMeasureWithFormat: VisualizationObject.IVisualizationObjectContent =
                                 item: {
                                     uri: '/gdc/md/project/obj/metric.id'
                                 }
+                            }
+                        }
+                    }
+                }
+            ]
+        }]
+};
+
+const simpleMeasureWithTextFilter: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: 'visClassUri'
+    },
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: [
+                {
+                    measure: {
+                        localIdentifier: 'm1',
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    uri: '/gdc/md/project/obj/metric.id'
+                                },
+                                filters: [
+                                    {
+                                        positiveAttributeFilter: {
+                                            displayForm: { identifier: 'foo' },
+                                            in: [ 'val1', 'val2' ],
+                                            textFilter: true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -672,6 +705,39 @@ const attributeFilter: VisualizationObject.IVisualizationObjectContent = {
     ]
 };
 
+const attributeTextFilter: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: 'visClassUri'
+    },
+    buckets: [],
+    filters: [
+        {
+            positiveAttributeFilter: {
+                displayForm: {
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                },
+                in: [
+                    'val1',
+                    'val2',
+                    'val3'
+                ],
+                textFilter: true
+            }
+        },
+        {
+            positiveAttributeFilter: {
+                displayForm: {
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+                },
+                in: [
+                    'valA'
+                ],
+                textFilter: true
+            }
+        }
+    ]
+};
+
 const dateFilter: VisualizationObject.IVisualizationObjectContent = {
     visualizationClass: {
         uri: 'visClassUri'
@@ -1156,6 +1222,7 @@ export const charts = {
     simpleMeasure,
     simpleMeasureWithIdentifiers,
     simpleMeasureWithFormat,
+    simpleMeasureWithTextFilter,
     renamedMeasure,
     filteredMeasure,
     measureWithRelativeDate,
@@ -1176,6 +1243,7 @@ export const charts = {
     dateFilterWithStrings,
     dateFilterWithUndefs,
     attributeFilter,
+    attributeTextFilter,
     attributeFilterWithAll,
     stackingAttribute,
     stackingRenamedAttribute
