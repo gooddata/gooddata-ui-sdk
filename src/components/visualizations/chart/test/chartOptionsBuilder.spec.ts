@@ -17,15 +17,15 @@ import {
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
     generateTooltipTreemapFn,
-    IPoint,
     getBubbleChartSeries,
     getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure,
     getCategoriesForTwoAttributes,
-    IViewByTwoAttributes,
+    IPoint,
     IChartOptions,
-    IValidationResult
+    IValidationResult,
+    IViewByTwoAttributes
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions, getMVS } from './helper';

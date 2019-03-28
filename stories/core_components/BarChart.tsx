@@ -3,7 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { screenshotWrap } from '@gooddata/test-storybook';
 
-import { BarChart } from '../../src';
+import { BarChart, HeaderPredicateFactory } from '../../src';
 import { onErrorHandler } from '../mocks';
 import { CUSTOM_COLORS } from '../data/colors';
 import {
@@ -458,6 +458,69 @@ storiesOf('Core components/BarChart', module)
                             }
                         ]
                     }}
+                />
+            </div>
+        )
+    ))
+    .add('drillable items', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/4/elements?id=1'),
+                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/4/elements?id=3')
+                    ]}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with drillable items', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=1')
+                    ]}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with drillable items and dual axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=1')
+                    ]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: ['m2']
+                        }
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart with drillable items and stackBy', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    stackBy={ATTRIBUTE_3}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=2')
+                    ]}
                 />
             </div>
         )
