@@ -50,15 +50,15 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@60.3.1":
-  version "60.3.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.3.1.tgz#3c19edddf819e3bd6d3101840cdb31972ce08959"
-  integrity sha512-mH7mkFIXK7kRnLLQfQEBhnAuHECJNOLoF+PovGqEpR/pg2r24uO8Gko3+8B9/+cozqv6+KbKAYpFdsnxId2bvQ==
+"@gooddata/goodstrap@60.3.2":
+  version "60.3.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.3.2.tgz#0d931a032ae0aab8e1e3f7eb7fee80055a78a6de"
+  integrity sha512-LKJxC4wAWl7a25GRVHltj9S6isKS6llk0Mkp8D4hV9IxpISYwZhcNnGF1M9YDab7CVn/V4yCW9chrnbDVREPTA==
   dependencies:
     "@gooddata/js-utils" "3.4.0"
     classnames "2.2.6"
     custom-event "1.0.1"
-    element-closest "3.0.1"
+    element-closest-polyfill "1.0.0"
     fixed-data-table-2 "0.7.17"
     foundation-sites "5.5.3"
     immutable "3.8.1"
@@ -3895,10 +3895,10 @@ elegant-spinner@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/elegant-spinner/-/elegant-spinner-1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
 
-element-closest@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/element-closest/-/element-closest-3.0.1.tgz#0b2000266ae43a800274401dc39486f5e4bfbce2"
-  integrity sha512-Wm8B0in+k6GsSCra8vLVnFIjIrff2T1s2b++jU6VL6mqIteP19THxDXwT5JDrmJPlqT3YifOK9cu28+uRGUdew==
+element-closest-polyfill@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/element-closest-polyfill/-/element-closest-polyfill-1.0.0.tgz#66eac5e3055f48a0df6eab2e99fc5640cd2a6f3b"
+  integrity sha512-WNp+gd+xG4JVC6wjeFt8KHoaS4TD0ppDhHjgKdWXmLAUz7KPrxTxxS0SJPBKS3qE/hpl8cNmsA08izLVIItblg==
 
 elliptic@^6.0.0:
   version "6.4.0"
