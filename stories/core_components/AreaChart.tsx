@@ -454,4 +454,23 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
+    ))
+    // tslint:disable-next-line:max-line-length
+    .add('optional stacking chart with one viewBy, one stackBy, one measure and \'Stack to 100%\' and data labels in percent', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1]}
+                    stackBy={ATTRIBUTE_2}
+                    config={{
+                        stackMeasuresToPercent: true,
+                        dataLabels: {
+                            visible: true
+                        }
+                    }}
+                />
+            </div>
+        )
     ));
