@@ -10,6 +10,7 @@ import {
     chartWithTwoAttributesAndSomeNullDatapoints
 } from '../test_data/fixtures';
 import { HeaderPredicateFactory, IChartConfig, VisualizationTypes } from '../../src';
+import { oneNegativeSideDataset } from '../test_data/chart_with_2_metrics_and_view_by_attribute';
 
 const renderSupportedCharts = (
     config: IChartConfig = {}
@@ -228,7 +229,7 @@ storiesOf('Internal/OptionalStacking/Column, Bar, DualAxis Chart', module)
             </div>
         );
     })
-    .add('Charts with viewBy 2 attributes and some null data points', () => {
+    .add('Column chart with viewBy 2 attributes and some null data points', () => {
         return screenshotWrap(// sd-313
             wrap(
                 <Visualization
@@ -244,5 +245,38 @@ storiesOf('Internal/OptionalStacking/Column, Bar, DualAxis Chart', module)
                     }}
                 />,
             400, '100%')
+        );
+    })
+    .add('Column chart with stack label is disable with "Stack to 100%" on and some negative data', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...oneNegativeSideDataset}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            position: 'top'
+                        },
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            )
+        );
+    })
+    // tslint:disable-next-line max-line-length
+    .add('Column chart with top and bottom stack label is enabled with "Stack measures" on and some negative data', () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...oneNegativeSideDataset}
+                    config={{
+                        type: 'column',
+                        legend: {
+                            position: 'top'
+                        },
+                        stackMeasures: true
+                    }}
+                />
+            )
         );
     });

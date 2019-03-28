@@ -171,7 +171,7 @@ export interface IViewByTwoAttributes {
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
         .some((seriesItem: ISeriesItem) => (
-            seriesItem.data.some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
+            (seriesItem.data || []).some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
         ));
 }
 
