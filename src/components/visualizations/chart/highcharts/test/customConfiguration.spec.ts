@@ -699,6 +699,9 @@ describe('escapeCategories', () => {
         const categories = escapeCategories([{
             name: 'Status',
             categories: ['cat1', '<cat2/>', '<cat3></cat3>']
+        }, {
+            name: '<span>Sales</span>',
+            categories: ['<div>sale1</div>', '<sale2/>', '<sale3></sale3>']
         }]);
         expect(categories).toEqual([{
             name: 'Status',
@@ -706,6 +709,13 @@ describe('escapeCategories', () => {
                 'cat1',
                 '&lt;cat2/&gt;',
                 '&lt;cat3&gt;&lt;/cat3&gt;'
+            ]
+        }, {
+            name: '&lt;span&gt;Sales&lt;/span&gt;',
+            categories: [
+                '&lt;div&gt;sale1&lt;/div&gt;',
+                '&lt;sale2/&gt;',
+                '&lt;sale3&gt;&lt;/sale3&gt;'
             ]
         }]);
     });
