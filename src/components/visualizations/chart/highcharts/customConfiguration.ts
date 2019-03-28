@@ -733,7 +733,7 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions) {
 export function escapeCategories(dataCategories: any) {
     return map(dataCategories, (category: any) => {
         return isString(category) ? escapeAngleBrackets(category) : {
-            ...category,
+            name: escapeAngleBrackets(category.name),
             categories: map(category.categories, escapeAngleBrackets)
         };
     });
