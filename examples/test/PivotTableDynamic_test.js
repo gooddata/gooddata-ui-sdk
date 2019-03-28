@@ -20,9 +20,16 @@ import {
 const PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = '.s-pivot-table-measuresColumnAndRowAttributes';
 const BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = '.s-bucket-preset-measuresColumnAndRowAttributes';
 const SORTING_PRESET_NOSORT = '.s-sorting-preset-noSort';
+const SORTING_PRESET_BY_MENU_CATOGORY_ASC = '.s-sorting-preset-byMenuCategory';
+const SORTING_PRESET_BY_LOCATION_STATE_DESC = '.s-sorting-preset-byLocationState';
 const GROUP_ROWS_PRESET_ENABLED = '.s-group-rows-preset-activeGrouping';
-
+const TOTALS_SUBTOTAL = '.s-total-preset-franchiseFeesMaxByLocationState';
 const PINNED_TOP_ROW = '.ag-floating-top-container';
+
+const DRILLING_PRESET_MEASURE_FRANCHISE_FEES = '.s-drilling-preset-measure';
+const DRILLING_PRESET_ATTRIBUTE_MENU_CATEGORY = '.s-drilling-preset-attributeMenuCategory';
+const DRILLING_PRESET_ATTRIBUTE_VALUE_CALIFORNIA = '.s-drilling-preset-attributeValueCalifornia';
+const DRILLING_PRESET_ATTRIBUTE_VALUE_JANUARY = '.s-drilling-preset-attributeValueJanuary';
 
 const CELL_0_0 = '.s-cell-0-0';
 const CELL_0_1 = '.s-cell-0-1';
@@ -196,4 +203,43 @@ test('should display sticky header only for grouped attributes', async (t) => {
     await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_2}`), true);
     await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_3}`), true);
     await checkNodeIsTransparent(t, Selector(`${PINNED_TOP_ROW} ${CELL_0_4}`), true);
+});
+
+// TODO: Delete once drilling on subtotals has been disabled
+async function disableDrilling(t) {
+    await t.click(Selector(DRILLING_PRESET_MEASURE_FRANCHISE_FEES));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_MENU_CATEGORY));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_VALUE_CALIFORNIA));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_VALUE_JANUARY));
+}
+
+test('should render subtotals when sorted by default (first attribute)', async (t) => {
+    await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
+    await t.click(Selector(SORTING_PRESET_NOSORT));
+    await t.click(Selector(GROUP_ROWS_PRESET_ENABLED));
+    await disableDrilling(t);
+    await t.click(Selector(TOTALS_SUBTOTAL));
+    await waitForPivotTableStopLoading(t);
+
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'Max', '.s-cell-5-1');
+});
+
+test('should render subtotals when sorted by the first attribute', async (t) => {
+    await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
+    await t.click(Selector(SORTING_PRESET_BY_LOCATION_STATE_DESC));
+    await disableDrilling(t);
+    await t.click(Selector(TOTALS_SUBTOTAL));
+    await waitForPivotTableStopLoading(t);
+
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'Max', '.s-cell-5-1');
+});
+
+test('should not render subtotals when sorted by other than the first attribute', async (t) => {
+    await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
+    await t.click(Selector(SORTING_PRESET_BY_MENU_CATOGORY_ASC));
+    await disableDrilling(t);
+    await t.click(Selector(TOTALS_SUBTOTAL));
+    await waitForPivotTableStopLoading(t);
+
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, 'Irving', '.s-cell-5-1');
 });
