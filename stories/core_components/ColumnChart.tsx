@@ -329,7 +329,7 @@ storiesOf("Core components/ColumnChart", module)
             </div>,
         ),
     )
-    .add("optional stacking chart with drillable items", () =>
+    .add("optional stacking chart with drillable child items", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -343,7 +343,21 @@ storiesOf("Core components/ColumnChart", module)
             </div>,
         ),
     )
-    .add("optional stacking chart with drillable items and dual axis", () =>
+    .add("optional stacking chart with drillable parent items", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=2"),
+                    ]}
+                />
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable child items and dual axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -351,7 +365,7 @@ storiesOf("Core components/ColumnChart", module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=1"),
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=2"),
                     ]}
                     config={{
                         secondary_yaxis: {
@@ -362,7 +376,46 @@ storiesOf("Core components/ColumnChart", module)
             </div>,
         ),
     )
-    .add("optional stacking chart with drillable items and stackBy", () =>
+    .add("optional stacking chart with drillable parent items and dual axis", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=2"),
+                    ]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: ["m2"],
+                        },
+                    }}
+                />
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable parent and child items and dual axis", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=1"),
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=2"),
+                    ]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: ["m2"],
+                        },
+                    }}
+                />
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable child items and stackBy", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -371,7 +424,22 @@ storiesOf("Core components/ColumnChart", module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     stackBy={ATTRIBUTE_3}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=2"),
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=1"),
+                    ]}
+                />
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable parent items and stackBy", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    stackBy={ATTRIBUTE_3}
+                    drillableItems={[
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=1"),
                     ]}
                 />
             </div>,

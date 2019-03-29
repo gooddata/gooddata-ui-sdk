@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import handleChartLoad from "../events/load";
+// (C) 2007-2019 GoodData Corporation
+import handleChartLoad from "../load";
 
 const buildChart = (
     axisGroupAddClass: () => {},

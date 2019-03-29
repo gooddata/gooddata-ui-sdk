@@ -47,6 +47,7 @@ import {
 } from "../highcharts/helpers";
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
+import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -1158,7 +1159,11 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
     };
 }
 
-export function getCustomizedConfiguration(chartOptions: IChartOptions, chartConfig?: IChartConfig) {
+export function getCustomizedConfiguration(
+    chartOptions: IChartOptions,
+    chartConfig?: IChartConfig,
+    drillConfig?: IDrillConfig,
+) {
     const configurators = [
         getAxesConfiguration,
         getTitleConfiguration,
@@ -1176,7 +1181,7 @@ export function getCustomizedConfiguration(chartOptions: IChartOptions, chartCon
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config, chartConfig));
+        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig));
     }, {});
 
     return merge({}, commonData);

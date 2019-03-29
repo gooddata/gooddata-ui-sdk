@@ -49,7 +49,7 @@ export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: a
         {},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType(),
-        getCustomizedConfiguration(chartOptions, config),
+        getCustomizedConfiguration(chartOptions, config, drillConfig),
     );
 }
 

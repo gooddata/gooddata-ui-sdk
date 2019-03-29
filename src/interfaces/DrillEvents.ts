@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import * as Highcharts from "highcharts";
 import { AFM } from "@gooddata/typings";
 import {
     ChartElementType,
@@ -8,6 +9,8 @@ import {
     TableElementType,
     TableType,
 } from "../constants/visualizationTypes";
+import { TableRowForDrilling } from "./Table";
+import { OnFiredDrillEvent } from "./Events";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -97,4 +100,41 @@ export type DrillEventContext =
 export interface IDrillEvent {
     executionContext: AFM.IAfm;
     drillContext: DrillEventContext;
+}
+
+export interface IHighchartsParentTick {
+    leaves: number;
+    startAt: number;
+    label: any;
+}
+
+export interface IHighchartsCategoriesTree {
+    tick: IHighchartsParentTick;
+}
+
+export interface IHighchartsPointObject extends Highcharts.PointObject {
+    drillIntersection: IDrillEventIntersectionElement[];
+    z?: number; // is missing in HCH's interface
+    value?: number; // is missing in HCH's interface
+}
+
+export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
+    point?: IHighchartsPointObject;
+    points?: IHighchartsPointObject[];
+}
+
+export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
+    return !!event.points;
+}
+
+export interface ICellDrillEvent {
+    columnIndex: number;
+    rowIndex: number;
+    row: TableRowForDrilling;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+export interface IDrillConfig {
+    afm: AFM.IAfm;
+    onFiredDrillEvent: OnFiredDrillEvent;
 }

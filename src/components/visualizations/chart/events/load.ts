@@ -1,5 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { ChartObject } from "highcharts";
+import { setupDrilldown } from "./setupDrilldownToParentAttribute";
 
 // TODO: once Highcharts is upgraded to 7.0.1, 'yAxis.className' can be used to avoid registering 'load' event
 // We can add 'className' to 'yAxis' in 'chartOptionsBuilder.ts' and 'customConfiguration.ts'
@@ -20,4 +21,5 @@ function addClassToYAxis(chart: ChartObject): void {
 
 export default function handleChartLoad() {
     addClassToYAxis(this);
+    setupDrilldown(this);
 }

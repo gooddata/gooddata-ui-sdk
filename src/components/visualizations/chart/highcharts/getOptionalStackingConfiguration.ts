@@ -13,6 +13,7 @@ import {
 } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelsVisibilityConfig } from "./customConfiguration";
 import { isBarChart, isColumnChart } from "../../utils/common";
+import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 
 export const NORMAL_STACK = "normal";
 export const PERCENT_STACK = "percent";
@@ -229,6 +230,10 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
     return { xAxis: [xAxisItem] };
 }
 
+export function setDrillConfigToXAxis(drillConfig: IDrillConfig) {
+    return { xAxis: [{ drillConfig }] };
+}
+
 /**
  * Format labels in Y axis from '0 - 100' to '0% - 100%'
  * Only applied when measure/series in Y axis more than one
@@ -309,11 +314,13 @@ export default function getOptionalStackingConfiguration(
     chartOptions: IChartOptions,
     config: any,
     chartConfig: IChartConfig = {},
+    drillConfig?: IDrillConfig,
 ) {
     const { type } = chartOptions;
     return includes(supportedStackingAttributesChartTypes, type)
         ? merge(
               {},
+              setDrillConfigToXAxis(drillConfig),
               getParentAttributeConfiguration(chartOptions, config),
               getStackMeasuresConfiguration(chartOptions, config, chartConfig),
               getShowInPercentConfiguration(chartOptions, config, chartConfig),

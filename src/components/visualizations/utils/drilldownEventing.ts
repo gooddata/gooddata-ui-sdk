@@ -1,9 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import get = require("lodash/get");
 import debounce = require("lodash/debounce");
-import { AFM } from "@gooddata/typings";
 import * as CustomEvent from "custom-event";
-import * as Highcharts from "highcharts";
 import * as invariant from "invariant";
 import {
     ChartElementType,
@@ -19,37 +17,14 @@ import {
     IDrillEventContextPoint,
     IDrillEventContextTable,
     IDrillPoint,
+    IHighchartsChartDrilldownEvent,
+    IHighchartsPointObject,
+    IDrillConfig,
+    ICellDrillEvent,
+    isGroupHighchartsDrillEvent,
 } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../../interfaces/Events";
-import { TableRowForDrilling } from "../../../interfaces/Table";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
-
-export interface IHighchartsPointObject extends Highcharts.PointObject {
-    drillIntersection: IDrillEventIntersectionElement[];
-    z?: number; // is missing in HCH's interface
-    value?: number; // is missing in HCH's interface
-}
-
-export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
-    point?: IHighchartsPointObject;
-    points?: IHighchartsPointObject[];
-}
-
-export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
-    return !!event.points;
-}
-
-export interface ICellDrillEvent {
-    columnIndex: number;
-    rowIndex: number;
-    row: TableRowForDrilling;
-    intersection: IDrillEventIntersectionElement[];
-}
-
-export interface IDrillConfig {
-    afm: AFM.IAfm;
-    onFiredDrillEvent: OnFiredDrillEvent;
-}
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {

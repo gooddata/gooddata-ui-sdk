@@ -12,7 +12,12 @@ import {
 import { ISeriesDataItem } from "../../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { immutableSet } from "../../../utils/common";
-import { supportedTooltipFollowPointerChartTypes } from "../../chartOptionsBuilder";
+import {
+    supportedStackingAttributesChartTypes,
+    supportedTooltipFollowPointerChartTypes,
+} from "../../chartOptionsBuilder";
+import { AFM } from "@gooddata/typings";
+import { IDrillConfig } from "../../../../../interfaces/DrillEvents";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {
@@ -712,6 +717,30 @@ describe("getCustomizedConfiguration", () => {
                     expect(result).toBe(expected);
                 },
             );
+        });
+    });
+
+    describe("get X axis with drill config", () => {
+        const chartTypes = supportedStackingAttributesChartTypes.map((chartType: string) => [chartType]);
+
+        const afm: AFM.IAfm = {
+            attributes: [],
+            measures: [],
+            filters: [],
+        };
+        const drillConfig: IDrillConfig = {
+            afm,
+            onFiredDrillEvent: () => false,
+        };
+
+        it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
+            const result = getCustomizedConfiguration({ type: chartType }, {}, drillConfig);
+            expect(result.xAxis[0].drillConfig).toEqual(drillConfig);
+        });
+
+        it('should not set "drillConfig" to unsupported chart type', () => {
+            const result = getCustomizedConfiguration({ type: VisualizationTypes.COMBO }, {}, drillConfig);
+            expect(result.xAxis[0].drillConfig).toBeFalsy();
         });
     });
 });

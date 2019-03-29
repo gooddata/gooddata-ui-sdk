@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
@@ -6,17 +6,17 @@ import {
 import { getChartOptions, IChartOptions } from "../chartOptionsBuilder";
 
 import {
-    PARENT_ATTRIBUTE_INDEX,
-    PRIMARY_ATTRIBUTE_INDEX,
     VIEW_BY_DIMENSION_INDEX,
     STACK_BY_DIMENSION_INDEX,
+    PARENT_ATTRIBUTE_INDEX,
+    PRIMARY_ATTRIBUTE_INDEX,
 } from "../constants";
 
-import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { IHeaderPredicate } from "../../../../interfaces/HeaderPredicate";
+import { barChartWithStackByAndViewByAttributes } from "../../../../../stories/test_data/fixtures";
 
 export function generateChartOptions(
-    dataSet: any = fixtures.barChartWithStackByAndViewByAttributes,
+    dataSet: any = barChartWithStackByAndViewByAttributes,
     config: any = {
         type: "column",
         stacking: false,
@@ -52,22 +52,24 @@ export function getMVS(dataSet: any) {
     };
 }
 
-export function getTwoAttributes(dataSet: any) {
+export function getMVSForViewByTwoAttributes(dataSet: any) {
+    const mvs = getMVS(dataSet);
     const {
         executionResponse: { dimensions },
         executionResult: { headerItems },
     } = dataSet;
-    const viewByAttribute = findAttributeInDimension(
-        dimensions[VIEW_BY_DIMENSION_INDEX],
-        headerItems[VIEW_BY_DIMENSION_INDEX],
-        PRIMARY_ATTRIBUTE_INDEX,
-    );
     const viewByParentAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],
         headerItems[VIEW_BY_DIMENSION_INDEX],
         PARENT_ATTRIBUTE_INDEX,
     );
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[VIEW_BY_DIMENSION_INDEX],
+        headerItems[VIEW_BY_DIMENSION_INDEX],
+        PRIMARY_ATTRIBUTE_INDEX,
+    );
     return {
+        ...mvs,
         viewByAttribute,
         viewByParentAttribute,
     };
