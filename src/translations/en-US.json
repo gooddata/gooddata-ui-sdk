@@ -280,24 +280,49 @@
       "limit": 0
    },
    "visualizations.legend.text.top": {
-      "value": "Top:",
+      "value": "Top",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.bottom": {
-      "value": "Bottom:",
+      "value": "Bottom",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.left": {
-      "value": "Left:",
+      "value": "Left",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.right": {
-      "value": "Right:",
+      "value": "Right",
       "comment": "",
       "limit": 0
+   },
+   "visualizations.legend.text.colon": {
+      "value": ":",
+      "comment": "a colon stands right after legend. eg: 'Left:'",
+      "limit": 0
+   },
+   "visualizations.legend.text.column": {
+       "value": "Column",
+       "comment": "column chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.line": {
+       "value": "Line",
+       "comment": "line chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.area": {
+       "value": "Area",
+       "comment": "area chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.combo": {
+       "value": "{0} ({1})",
+       "comment": "combine between chart type & y-axis position. eg: 'Column (Left)'",
+       "limit": 0
    },
    "visualizations.menu.aggregations": {
       "value": "Aggregate",

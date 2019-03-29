@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { MAX_POINT_WIDTH } from './commonConfiguration';
 import { LINE_WIDTH } from './lineConfiguration';
 
@@ -16,7 +16,8 @@ export function getComboConfiguration() {
                     overflow: 'none',
                     padding: 2
                 },
-                maxPointWidth: MAX_POINT_WIDTH
+                maxPointWidth: MAX_POINT_WIDTH,
+                borderColor: '#00000000'
             },
             line: {
                 marker: {
@@ -33,6 +34,19 @@ export function getComboConfiguration() {
                 dataLabels: {
                     style: {
                         fontWeight: 'normal'
+                    }
+                }
+            },
+            area: {
+                marker: {
+                    symbol: 'circle',
+                    radius: 4.5
+                },
+                lineWidth: LINE_WIDTH,
+                fillOpacity: 0.6,
+                states: {
+                    hover: {
+                        lineWidth: LINE_WIDTH + 1
                     }
                 }
             }

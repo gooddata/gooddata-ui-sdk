@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require('lodash/get');
 import set = require('lodash/set');
 import noop = require('lodash/noop');
@@ -9,7 +9,7 @@ import {
     getCustomizedConfiguration,
     percentageDataLabelFormatter
 } from '../customConfiguration';
-import { ISeriesDataItem } from '../../chartOptionsBuilder';
+import { ISeriesDataItem } from '../../../../../interfaces/Config';
 import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
 import { immutableSet } from '../../../utils/common';
 

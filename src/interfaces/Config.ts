@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { ISeparators } from '@gooddata/numberjs';
 import { VisualizationObject } from '@gooddata/typings';
 import { IColorItem, IColor } from '@gooddata/gooddata-js';
@@ -72,6 +72,9 @@ export interface IChartConfig extends IMeasuresStackConfig {
     secondary_yaxis?: IAxisConfig;
     separators?: ISeparators;
     dataLabels?: IDataLabelsConfig;
+    dualAxis?: boolean;
+    primaryChartType?: VisualizationObject.VisualizationType;
+    secondaryChartType?: VisualizationObject.VisualizationType;
 }
 
 export interface IAxisConfig {
@@ -81,4 +84,32 @@ export interface IAxisConfig {
     min?: string;
     max?: string;
     measures?: string[];
+}
+
+export interface IAxis {
+    label: string;
+    format?: string;
+    opposite?: boolean;
+    seriesIndices?: number[];
+}
+
+export interface ISeriesDataItem {
+    x?: number;
+    y: number;
+    value?: number;
+    name?: string;
+}
+
+export interface ISeriesItem {
+    name?: string;
+    data?: ISeriesDataItem[];
+    color?: string;
+    userOptions?: any;
+    visible?: boolean;
+    type?: VisualizationObject.VisualizationType | string;
+    isDrillable?: boolean;
+    legendIndex?: number;
+    yAxis?: number;
+    zIndex?: number;
+    labelKey?: string;
 }

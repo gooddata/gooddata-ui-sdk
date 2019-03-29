@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { colors2Object, numberFormat } from '@gooddata/numberjs';
 import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
 import { IColorPalette } from '@gooddata/gooddata-js';
@@ -24,7 +24,14 @@ import { getMasterMeasureObjQualifier } from '../../../helpers/afmHelper';
 import { findAttributeInDimension, findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
 import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
 import { unwrap } from '../../../helpers/utils';
-import { IChartConfig, IChartLimits, IColorAssignment } from '../../../interfaces/Config';
+import {
+    IAxis,
+    IChartConfig,
+    IChartLimits,
+    IColorAssignment,
+    ISeriesDataItem,
+    ISeriesItem
+} from '../../../interfaces/Config';
 import { IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
 import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
 import { IMappingHeader } from '../../../interfaces/MappingHeader';
@@ -45,7 +52,7 @@ import {
     stringifyChartTypes
 } from '../utils/common';
 import { createDrillIntersectionElement } from '../utils/drilldownEventing';
-import { getComboChartOptions } from './chartOptions/comboChartOptions';
+import { getComboChartSeries } from './chartOptions/comboChartOptions';
 
 import { ColorFactory, IColorStrategy } from './colorFactory';
 import {
@@ -115,7 +122,8 @@ const unsupportedStackingTypes = [
 export const supportedDualAxesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
-    VisualizationTypes.LINE
+    VisualizationTypes.LINE,
+    VisualizationTypes.COMBO
 ];
 
 export const supportedStackingAttributesChartTypes = [
@@ -124,28 +132,6 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.AREA
 ];
 
-export interface IAxis {
-    label: string;
-    format?: string;
-    opposite?: boolean;
-    seriesIndices?: number[];
-}
-
-export interface ISeriesDataItem {
-    x?: number;
-    y: number;
-    value?: number;
-    name?: string;
-}
-
-export interface ISeriesItem {
-    name: string;
-    data?: ISeriesDataItem[];
-    color?: string;
-    userOptions?: any;
-    visible?: boolean;
-}
-
 export interface IChartOptions {
     type?: string;
     stacking?: any;
@@ -153,7 +139,6 @@ export interface IChartOptions {
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;
     legendLayout?: string;
-    dualAxis?: boolean;
     xAxes?: any;
     yAxes?: any;
     data?: any;
@@ -1647,6 +1632,7 @@ export function getChartOptions(
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
+    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(config, type);
 
     if (isComboChart(type)) {
         return {
@@ -1655,19 +1641,19 @@ export function getChartOptions(
             xAxes,
             yAxes,
             legendLayout: config.legendLayout || 'horizontal',
-            dualAxis: false,
             actions: {
                 tooltip: generateTooltipFn(viewByAttribute, type, config)
             },
             grid: {
                 enabled: gridEnabled
             },
-            ...getComboChartOptions(
-                config,
-                measureGroup,
-                series,
+            data: {
+                series: getComboChartSeries(config, measureGroup, series),
                 categories
-            ),
+            },
+            xAxisProps,
+            yAxisProps,
+            secondary_yAxisProps,
             colorAssignments,
             colorPalette
         };
@@ -1789,8 +1775,6 @@ export function getChartOptions(
             colorPalette
         };
     }
-
-    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(config, type);
 
     const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
         generateTooltipFn(viewByAttribute, type, config);

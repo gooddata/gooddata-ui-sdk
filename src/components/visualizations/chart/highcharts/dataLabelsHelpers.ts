@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 
@@ -28,6 +28,7 @@ export const areLabelsStacked = (chart: any) =>
     (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
 
 export const hasDataLabel = (point: any) => point.dataLabel;
+export const hasShape = (point: any) => point.shapeArgs;
 
 export const minimizeDataLabel = (point: any) => {
     const { dataLabel } = point;

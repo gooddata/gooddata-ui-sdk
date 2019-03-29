@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import * as Measure from 'react-measure';
 import * as cx from 'classnames';
@@ -6,11 +6,11 @@ import * as cx from 'classnames';
 import FluidLegend from './FluidLegend';
 import StaticLegend from './StaticLegend';
 import { ChartType } from '../../../../constants/visualizationTypes';
-import { isHeatmap } from '../../utils/common';
+import { isComboChart, isHeatmap } from '../../utils/common';
 import HeatmapLegend from './HeatmapLegend';
 import { IntlWrapper } from '../../../core/base/IntlWrapper';
 import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
-import { transformToDualAxesSeries } from './helpers';
+import { getComboChartSeries, transformToDualAxesSeries } from './helpers';
 
 export interface ILegendProps {
     responsive?: boolean;
@@ -57,6 +57,11 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
                 isVisible
             };
         });
+
+        if (isComboChart(chartType)) {
+            return getComboChartSeries(seriesWithVisibility);
+        }
+
         return transformToDualAxesSeries(seriesWithVisibility, chartType);
     }
 
