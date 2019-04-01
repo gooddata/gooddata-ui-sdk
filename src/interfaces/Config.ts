@@ -112,4 +112,6 @@ export interface ISeriesItem {
     yAxis?: number;
     zIndex?: number;
     labelKey?: string;
+    stack?: number;
+    stacking?: string;
 }

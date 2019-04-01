@@ -699,4 +699,66 @@ storiesOf('Core components/ColumnChart', module)
                 />
             </div>
         )
+    ))
+    .add('optional stacking chart ignores "stackMeasures" setting with one measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_2, ATTRIBUTE_3]}
+                    config={{
+                        stackMeasures: true
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_2, ATTRIBUTE_3]}
+                    config={{
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart ignores "stackMeasures" setting with one measure on each axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: [MEASURE_2.measure.localIdentifier]
+                        },
+                        stackMeasures: true
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure on each axis', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: [MEASURE_2.measure.localIdentifier]
+                        },
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            </div>
+        )
     ));

@@ -473,4 +473,18 @@ storiesOf('Core components/AreaChart', module)
                 />
             </div>
         )
+    ))
+    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure', () => (
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <AreaChart
+                    projectId="storybook"
+                    measures={[MEASURE_1]}
+                    viewBy={[ATTRIBUTE_1]}
+                    config={{
+                        stackMeasuresToPercent: true
+                    }}
+                />
+            </div>
+        )
     ));

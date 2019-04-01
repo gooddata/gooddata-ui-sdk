@@ -512,7 +512,7 @@ function getTreemapLabelsConfiguration(
     }
 }
 
-function getLabelsVisibilityConfig(visible: IDataLabelsVisible): any {
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): any {
     switch (visible) {
         case 'auto':
             return {
@@ -579,7 +579,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     }));
 
     const { stackMeasuresToPercent = false } = chartConfig || {};
-    // only applied to bar, column and dual axis chart
+    // only applied to bar, column, dual axis and area chart
     const dataLabelFormatter = stackMeasuresToPercent ? percentageDataLabelFormatter : labelFormatter;
 
     const DEFAULT_LABELS_CONFIG = {
@@ -677,7 +677,7 @@ function getStackingConfiguration(chartOptions: IChartOptions, _config: any, cha
     return stacking ? {
         plotOptions: {
             series: {
-                stacking,
+                stacking, // this stacking config will be applied to all series
                 ...connectNulls
             }
         },

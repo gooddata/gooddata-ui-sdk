@@ -3,6 +3,7 @@ import map = require('lodash/map');
 import zip = require('lodash/zip');
 import values = require('lodash/values');
 import flatten = require('lodash/flatten');
+import identity = require('lodash/identity');
 
 import {
     isStacked,
@@ -120,13 +121,17 @@ function getStackLabelPointsForDualAxis(stacks: any[]) {
     return flatten(
         // 'column0' is primary axis and 'column1' is secondary axis
         zip(...stacks.map((item: any, index: number) => values(item[`column${index}`])))
-    );
+    ).filter(identity);
+}
+
+function getStackTotalGroups(yAxis: any[]) {
+    return yAxis.map((axis: any) => axis.stackTotalGroup).filter(identity);
 }
 
 function toggleStackedLabelsForDualAxis() {
     const { yAxis } = this;
 
-    const stackTotalGroups = yAxis.map((axis: any) => axis.stackTotalGroup);
+    const stackTotalGroups = getStackTotalGroups(yAxis);
     const stacks = yAxis.map((axis: any) => axis.stacks);
 
     if (stacks && stackTotalGroups) {
@@ -145,7 +150,7 @@ function toggleStackedLabelsForDualAxis() {
     }
 }
 
-function toggleStackedLabelsForDualAxisForSingleAxis() {
+function toggleStackedLabelsForSingleAxis() {
     const { yAxis } = this;
     const { stackTotalGroup, stacks }: any = yAxis[0] || {};
 
@@ -176,7 +181,7 @@ function toggleStackedLabels() {
     if (yAxis.length === 2) {
         return toggleStackedLabelsForDualAxis.call(this);
     }
-    return toggleStackedLabelsForDualAxisForSingleAxis.call(this);
+    return toggleStackedLabelsForSingleAxis.call(this);
 }
 
 export const autohideColumnLabels = (chart: any) => {
