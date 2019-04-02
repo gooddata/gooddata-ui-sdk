@@ -55,11 +55,12 @@
    "visualizations.measure.arithmetic.multiplication.title": "Produkt aus {firstMeasureTitle} und {secondMeasureTitle}",
    "visualizations.measure.arithmetic.ratio.title": "Verhältnis zwischen {firstMeasureTitle} und {secondMeasureTitle}",
    "visualizations.measure.arithmetic.change.title": "Veränderung von {secondMeasureTitle} bis {firstMeasureTitle}",
-   "visualizations.legend.text.top": "Oben",
-   "visualizations.legend.text.bottom": "Unten",
-   "visualizations.legend.text.left": "Links",
-   "visualizations.legend.text.right": "Rechts",
-   "visualizations.legend.text.colon": ":",
-   "visualizations.legend.text.combo": "{0} ({1})",
-   "visualizations.menu.aggregations": "Aggregationen"
+   "visualizations.legend.text.top": "Oben:",
+   "visualizations.legend.text.bottom": "Unten:",
+   "visualizations.legend.text.left": "Links:",
+   "visualizations.legend.text.right": "Rechts:",
+   "visualizations.menu.aggregations": "Ansammeln",
+   "visualizations.menu.aggregations.rows": "Zeilen",
+   "visualizations.menu.aggregations.all-rows": "aller Zeilen",
+   "visualizations.menu.aggregations.within-attribute": "innerhalb von {attributeName}"
 }

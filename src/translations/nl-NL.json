@@ -54,12 +54,13 @@
    "visualizations.measure.arithmetic.difference.title": "Verschil van {firstMeasureTitle} en {secondMeasureTitle}",
    "visualizations.measure.arithmetic.multiplication.title": "Product van {firstMeasureTitle} en {secondMeasureTitle}",
    "visualizations.measure.arithmetic.ratio.title": "Verhouding van {firstMeasureTitle} en {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.change.title": "Wijziging van {secondMeasureTitle} naar {firstMeasureTitle}",
-   "visualizations.legend.text.top": "Boven",
-   "visualizations.legend.text.bottom": "Onder",
-   "visualizations.legend.text.left": "Links",
-   "visualizations.legend.text.right": "Rechts",
-   "visualizations.legend.text.colon": ":",
-   "visualizations.legend.text.combo": "{0} ({1})",
-   "visualizations.menu.aggregations": "Samenvoegingen"
+   "visualizations.measure.arithmetic.change.title": "Wijzigen van {secondMeasureTitle} naar {firstMeasureTitle}",
+   "visualizations.legend.text.top": "Boven:",
+   "visualizations.legend.text.bottom": "Onder:",
+   "visualizations.legend.text.left": "Links:",
+   "visualizations.legend.text.right": "Rechts:",
+   "visualizations.menu.aggregations": "Aggregeren",
+   "visualizations.menu.aggregations.rows": "Rijen",
+   "visualizations.menu.aggregations.all-rows": "van alle rijen",
+   "visualizations.menu.aggregations.within-attribute": "binnen {attributeName}"
 }

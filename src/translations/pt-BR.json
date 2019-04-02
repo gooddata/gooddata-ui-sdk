@@ -54,12 +54,13 @@
    "visualizations.measure.arithmetic.difference.title": "Diferença entre {firstMeasureTitle} e {secondMeasureTitle}",
    "visualizations.measure.arithmetic.multiplication.title": "Produto de {firstMeasureTitle} e {secondMeasureTitle}",
    "visualizations.measure.arithmetic.ratio.title": "Relação de {firstMeasureTitle} e {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.change.title": "Alteração de {secondMeasureTitle} para {firstMeasureTitle}",
-   "visualizations.legend.text.top": "Superior",
-   "visualizations.legend.text.bottom": "Inferior",
-   "visualizations.legend.text.left": "Esquerda",
-   "visualizations.legend.text.right": "Direita",
-   "visualizations.legend.text.colon": ":",
-   "visualizations.legend.text.combo": "{0} ({1})",
-   "visualizations.menu.aggregations": "Agregações"
+   "visualizations.measure.arithmetic.change.title": "Alterar de {secondMeasureTitle} para {firstMeasureTitle}",
+   "visualizations.legend.text.top": "Superior:",
+   "visualizations.legend.text.bottom": "Inferior:",
+   "visualizations.legend.text.left": "Esquerda:",
+   "visualizations.legend.text.right": "Direita:",
+   "visualizations.menu.aggregations": "Agregações",
+   "visualizations.menu.aggregations.rows": "Linhas",
+   "visualizations.menu.aggregations.all-rows": "de todas as linhas",
+   "visualizations.menu.aggregations.within-attribute": "em {attributeName}"
 }
