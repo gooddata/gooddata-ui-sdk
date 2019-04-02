@@ -13,6 +13,7 @@ import {
 } from '../../../../interfaces/Config';
 import {
     IChartOptions,
+    isNegativeValueIncluded,
     supportedStackingAttributesChartTypes
 } from '../chartOptionsBuilder';
 import { formatAsPercent, getLabelsVisibilityConfig } from './customConfiguration';
@@ -113,12 +114,19 @@ function getSeriesConfiguration(
     };
 }
 
-function getYAxisConfiguration(
+function hasNegativeValues(series: ISeriesItem[] = [], index: number) {
+    const matchedSeries = series.filter((seriesItem: ISeriesItem) => seriesItem.yAxis === index);
+    return isNegativeValueIncluded(matchedSeries);
+}
+
+export function getYAxisConfiguration(
+    chartOptions: IChartOptions,
     config: any,
-    type: string,
     chartConfig: IChartConfig
 ) {
-    const { yAxis } = config;
+    const { type } = chartOptions;
+    const { yAxis, series } = config;
+    const { stackMeasuresToPercent = false } = chartConfig;
 
     // only support column char
     // bar chart disables stack labels by default
@@ -127,16 +135,22 @@ function getYAxisConfiguration(
     }
 
     const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, 'dataLabels.visible');
-    const { enabled } = getLabelsVisibilityConfig(labelsVisible);
+    const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
-    const yAxisWithStackLabel = yAxis.map((axis: any) => ({
-        ...axis,
-        stackLabels: {
-            enabled: isNil(enabled)
-                ? true // enable by default
-                : enabled // follow dataLabels.visible config
-        }
-    }));
+    const yAxisWithStackLabel = yAxis.map((axis: any, index: number) => {
+        // enable by default or follow dataLabels.visible config
+        const stackLabelEnabled = isNil(dataLabelEnabled) || dataLabelEnabled;
+
+        // disable stack labels for primary Y axis when there are negative values and 'Stack to 100%' on
+        const shouldDisableStackLabels = stackMeasuresToPercent && index === 0 && hasNegativeValues(series, index);
+
+        return {
+            ...axis,
+            stackLabels: {
+                enabled: !shouldDisableStackLabels && stackLabelEnabled
+            }
+        };
+    });
 
     return { yAxis: yAxisWithStackLabel };
 }
@@ -154,13 +168,13 @@ export function getStackMeasuresConfiguration(chartOptions: IChartOptions, confi
         return {};
     }
 
-    const { yAxes, type } = chartOptions;
+    const { yAxes } = chartOptions;
     const isDualAxis = yAxes.length === 2;
 
     return {
         stackMeasuresToPercent, // this prop is used in 'dualAxesLabelFormatter.ts'
         ...getSeriesConfiguration(config, stackMeasures, stackMeasuresToPercent, isDualAxis),
-        ...getYAxisConfiguration(config, type, chartConfig)
+        ...getYAxisConfiguration(chartOptions, config, chartConfig)
     };
 }
 
