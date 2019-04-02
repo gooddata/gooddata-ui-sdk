@@ -9,6 +9,8 @@ import {
 } from '../chartOptionsBuilder';
 
 import {
+    PARENT_ATTRIBUTE_INDEX,
+    PRIMARY_ATTRIBUTE_INDEX,
     VIEW_BY_DIMENSION_INDEX,
     STACK_BY_DIMENSION_INDEX
 } from '../constants';
@@ -58,5 +60,26 @@ export function getMVS(dataSet: any) {
         measureGroup,
         viewByAttribute,
         stackByAttribute
+    };
+}
+
+export function getTwoAttributes(dataSet: any) {
+    const {
+        executionResponse: { dimensions },
+        executionResult: { headerItems }
+    } = dataSet;
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[VIEW_BY_DIMENSION_INDEX],
+        headerItems[VIEW_BY_DIMENSION_INDEX],
+        PRIMARY_ATTRIBUTE_INDEX
+    );
+    const viewByParentAttribute = findAttributeInDimension(
+        dimensions[VIEW_BY_DIMENSION_INDEX],
+        headerItems[VIEW_BY_DIMENSION_INDEX],
+        PARENT_ATTRIBUTE_INDEX
+    );
+    return {
+        viewByAttribute,
+        viewByParentAttribute
     };
 }
