@@ -16,7 +16,7 @@ Command | Description
 `extended test - examples` | Live examples tests
 `extended test - storybook` | Storybook screenshot tests
 
-See more [options](https://confluence.intgdc.com/display/~petr.dolejsi/How+to+work+with+git+and+Github#HowtoworkwithgitandGithub-Extendedchecks).
+See more [options](https://confluence.intgdc.com/display/kbhr/How+to+work+with+git+and+Github#HowtoworkwithgitandGithub-Extendedchecks).
 
 # PR Checklist
 
