@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 export const measuresDrillParams = `{
     "executionContext": {
         "measures": [

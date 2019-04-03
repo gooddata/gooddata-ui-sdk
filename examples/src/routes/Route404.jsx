@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import React from 'react';
 import { ErrorComponent } from '@gooddata/react-components';
 import { NavLink } from 'react-router-dom';
