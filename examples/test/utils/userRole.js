@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { Role } from 'testcafe';
 import { config } from './config';
 import { loginUsingLoginForm } from './helpers';
