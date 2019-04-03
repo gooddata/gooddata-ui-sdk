@@ -77,15 +77,15 @@ export const rowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340109",
-                "title": "Alabama"
+                "name": "Alabama"
             },
             {
                 "id": "6340107",
-                "title": "Montgomery"
+                "name": "Montgomery"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             }
         ],
         "intersection": [
@@ -152,15 +152,15 @@ export const columnAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340116",
-                "title": "California"
+                "name": "California"
             },
             {
                 "id": "6340114",
-                "title": "Daly City"
+                "name": "Daly City"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             }
         ],
         "intersection": [
@@ -249,15 +249,15 @@ export const measuresColumnAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340109",
-                "title": "Alabama"
+                "name": "Alabama"
             },
             {
                 "id": "6340107",
-                "title": "Montgomery"
+                "name": "Montgomery"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             },
             "71475.721",
             "12960.591",
@@ -497,15 +497,15 @@ export const measuresAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340116",
-                "title": "California"
+                "name": "California"
             },
             {
                 "id": "6340121",
-                "title": "Highland Village"
+                "name": "Highland Village"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             },
             "176265.71085",
             "56109.41035"

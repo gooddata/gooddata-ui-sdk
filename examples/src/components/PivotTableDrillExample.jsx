@@ -42,7 +42,7 @@ export class PivotTableDrillExample extends Component {
         }
 
         const drillColumn = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
-        const drillValue = typeof drillColumn === 'object' ? drillColumn.title : drillColumn;
+        const drillValue = typeof drillColumn === 'object' ? drillColumn.name : drillColumn;
 
         return <h3>You have Clicked <span className="s-drill-value">{drillValue}</span> </h3>;
     }

@@ -188,11 +188,11 @@ describe('PivotTable', () => {
             expect(drillRow).toEqual([
                 {
                   id: '6340109',
-                  title: 'Alabama'
+                  name: 'Alabama'
                 },
                 {
                   id: '6340107',
-                  title: 'Montgomery'
+                  name: 'Montgomery'
                 },
                 '160104.5665',
                 '49454.8215',
