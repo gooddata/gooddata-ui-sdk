@@ -19,6 +19,7 @@ import { styleVariables } from "../../styles/variables";
 import { IChartOptions, supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
 import { IDataLabelsVisible, IChartConfig, IAxis } from "../../../../interfaces/Config";
+import { percentFormatter } from "../../../../helpers/utils";
 import { getShapeVisiblePart } from "../highcharts/dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
@@ -315,7 +316,7 @@ function formatTooltip(chartType: any, stacking: any, tooltipCallback: any) {
         });
     };
 
-    const tooltipContent = tooltipCallback(this.point); // null disables whole tooltip
+    const tooltipContent = tooltipCallback(this.point, this.percentage); // null disables whole tooltip
 
     return tooltipContent !== null
         ? `<div class="hc-tooltip gd-viz-tooltip">
@@ -361,7 +362,7 @@ function labelFormatter(config?: IChartConfig) {
     return formatLabel(this.y, get(this, "point.format"), config);
 }
 
-export function percentageDataLabelFormatter(config?: IChartConfig) {
+export function percentageDataLabelFormatter(config?: IChartConfig): string {
     // suppose that chart has one Y axis by default
     const isSingleAxis = get(this, "series.chart.yAxis.length", 1) === 1;
     const isPrimaryAxis = !get(this, "series.yAxis.opposite", false);
@@ -373,8 +374,7 @@ export function percentageDataLabelFormatter(config?: IChartConfig) {
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
     if (isSingleAxis || isPrimaryAxis) {
-        const val = parseFloat(this.percentage.toFixed(2));
-        return `${val}%`;
+        return percentFormatter(this.percentage);
     }
     return labelFormatter.call(this, config);
 }
