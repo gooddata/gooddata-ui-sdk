@@ -168,6 +168,8 @@ export interface IViewByTwoAttributes {
     children: Execution.IResultHeaderItem[];
 }
 
+export type ITooltipFactory = (point: IPoint) => string;
+
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series
         .some((seriesItem: ISeriesItem) => (
@@ -287,9 +289,14 @@ export interface IPointData {
     drillIntersection?: any;
 }
 
+export interface ICategoryParent {
+    name: string;
+}
+
 // since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
 export interface ICategory {
     name: string;
+    parent?: ICategoryParent;
 }
 
 export interface IPoint {
@@ -728,11 +735,20 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-export function generateTooltipFn(
+const renderTooltipHTML = (textData: string[][]): string => {
+    return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
+            `<tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
+            </tr>`
+    )).join('\n')}</table>`;
+};
+
+export function buildTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     config: IChartConfig = {}
-) {
+): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(numberFormat(val, format, undefined, separators));
@@ -756,12 +772,42 @@ export function generateTooltipFn(
             textData[0][0] = customEscape(point.name);
         }
 
-        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
-            `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
-            </tr>`
-        )).join('\n')}</table>`;
+        return renderTooltipHTML(textData);
+    };
+}
+
+export function buildTooltipForTwoAttributesFactory(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {}
+): ITooltipFactory {
+    const { separators } = config;
+    const formatValue = (val: number, format: string) => {
+        return colors2Object(numberFormat(val, format, undefined, separators));
+    };
+
+    return (point: IPoint) => {
+        const category: ICategory = point.category;
+        const formattedValue = customEscape(formatValue(point.y, point.format).label);
+        const textData = [[customEscape(point.series.name), formattedValue]];
+
+        if (category) {
+            if (viewByAttribute) {
+                textData.unshift([
+                    customEscape(viewByAttribute.formOf.name),
+                    customEscape(category.name)
+                ]);
+            }
+
+            if (viewByParentAttribute && category.parent) {
+                textData.unshift([
+                    customEscape(viewByParentAttribute.formOf.name),
+                    customEscape(category.parent.name)
+                ]);
+            }
+        }
+
+        return renderTooltipHTML(textData);
     };
 }
 
@@ -798,12 +844,7 @@ export function generateTooltipXYFn(
             customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label)]);
         }
 
-        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
-            `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
-            </tr>`
-        )).join('\n')}</table>`;
+        return renderTooltipHTML(textData);
     };
 }
 
@@ -838,16 +879,15 @@ export function generateTooltipHeatmapFn(
             ]);
         }
 
-        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
-            `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
-            </tr>`
-        )).join('\n')}</table>`;
+        return renderTooltipHTML(textData);
     };
 }
 
-export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute: any, config: IChartConfig = {}) {
+export function buildTooltipTreemapFactory(
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {}
+): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(numberFormat(val, format, undefined, separators));
@@ -878,12 +918,7 @@ export function generateTooltipTreemapFn(viewByAttribute: any, stackByAttribute:
             textData.push([customEscape(point.category && point.category.name), formattedValue]);
         }
 
-        return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
-            `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
-            </tr>`
-        )).join('\n')}</table>`;
+        return renderTooltipHTML(textData);
     };
 }
 
@@ -1494,6 +1529,23 @@ export function getTreemapAttributes(
     };
 }
 
+function getTooltipFactory(
+    isViewByTwoAttributes: boolean,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {}
+): ITooltipFactory {
+    const { type } = config;
+    if (isTreemap(type)) {
+        return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, config);
+    }
+    if (isViewByTwoAttributes) {
+        return buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute, config);
+    }
+    return buildTooltipFactory(viewByAttribute, type, config);
+}
+
 /**
  * Creates an object providing data for all you need to render a chart except drillability.
  *
@@ -1590,13 +1642,14 @@ export function getChartOptions(
         type
     );
 
+    let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
     if (isViewByTwoAttributes) {
         viewByTwoAttributes = {
             parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
             children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX]
         };
 
-        const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = findAttributeInDimension(
+        viewByParentAttribute = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
             attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
             PARENT_ATTRIBUTE_INDEX
@@ -1647,7 +1700,7 @@ export function getChartOptions(
             yAxes,
             legendLayout: config.legendLayout || 'horizontal',
             actions: {
-                tooltip: generateTooltipFn(viewByAttribute, type, config)
+                tooltip: buildTooltipFactory(viewByAttribute, type, config)
             },
             grid: {
                 enabled: gridEnabled
@@ -1781,8 +1834,13 @@ export function getChartOptions(
         };
     }
 
-    const tooltipFn = isTreemap(type) ? generateTooltipTreemapFn(viewByAttribute, stackByAttribute, config) :
-        generateTooltipFn(viewByAttribute, type, config);
+    const tooltipFactory: ITooltipFactory = getTooltipFactory(
+        isViewByTwoAttributes,
+        viewByAttribute,
+        viewByParentAttribute,
+        stackByAttribute,
+        config
+    );
 
     const chartOptions = {
         type,
@@ -1797,7 +1855,7 @@ export function getChartOptions(
             categories
         },
         actions: {
-            tooltip: tooltipFn
+            tooltip: tooltipFactory
         },
         grid: {
             enabled: gridEnabled

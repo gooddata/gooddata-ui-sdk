@@ -13,10 +13,11 @@ import {
     getDrillIntersection,
     getDrillableSeries,
     customEscape,
-    generateTooltipFn,
+    buildTooltipFactory,
+    buildTooltipForTwoAttributesFactory,
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
-    generateTooltipTreemapFn,
+    buildTooltipTreemapFactory,
     getBubbleChartSeries,
     getHeatmapDataClasses,
     getTreemapAttributes,
@@ -28,7 +29,7 @@ import {
     IViewByTwoAttributes
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
-import { generateChartOptions, getMVS } from './helper';
+import { generateChartOptions, getTwoAttributes, getMVS } from './helper';
 
 import * as headerPredicateFactory from '../../../../factory/HeaderPredicateFactory';
 import * as fixtures from '../../../../../stories/test_data/fixtures';
@@ -100,6 +101,12 @@ describe('chartOptionsBuilder', () => {
 
     const barChartWith3MetricsAndViewByAttributeOptions =
         generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+
+    function getValues(str: string): string[] {
+        const test = />([^<]+)<\/td>/g;
+        const result = str.match(test).map((match: string) => match.slice(1, -5));
+        return (result && result.length) >= 2 ? result : null;
+    }
 
     const pieAndTreemapDataSet = {
         ...fixtures.pieChartWithMetricsOnly,
@@ -2300,7 +2307,7 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
-    describe('generateTooltipFn', () => {
+    describe('buildTooltipFactory', () => {
         const dataSet = fixtures.barChartWithViewByAttribute;
         const { viewByAttribute } = getMVS(dataSet);
         const pointData = {
@@ -2315,14 +2322,8 @@ describe('chartOptionsBuilder', () => {
             }
         };
 
-        function getValues(str: any) {
-            const test = />([^<]+)<\/td>/g;
-            const result = str.match(test).map((match: any) => match.slice(1, -5));
-            return (result && result.length) >= 2 ? result : null;
-        }
-
         describe('unescaping angle brackets and htmlescaping the whole value', () => {
-            const tooltipFn = generateTooltipFn(viewByAttribute, 'column');
+            const tooltipFn = buildTooltipFactory(viewByAttribute, 'column');
 
             it('should keep &lt; and &gt; untouched (unescape -> escape)', () => {
                 const tooltip = tooltipFn({
@@ -2356,33 +2357,129 @@ describe('chartOptionsBuilder', () => {
         });
 
         it('should render correct values in usecase of bar chart without attribute', () => {
-            const tooltipFn = generateTooltipFn(null, 'column');
+            const tooltipFn = buildTooltipFactory(null, 'column');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['series', ' 1']);
         });
 
         it('should render correct values in usecase of pie chart with an attribute', () => {
-            const tooltipFn = generateTooltipFn(viewByAttribute, 'pie');
+            const tooltipFn = buildTooltipFactory(viewByAttribute, 'pie');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['Department', 'category', 'series', ' 1']);
         });
 
         it('should render correct values in usecase of pie chart with measures', () => {
-            const tooltipFn = generateTooltipFn(null, 'pie');
+            const tooltipFn = buildTooltipFactory(null, 'pie');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['point', ' 1']);
         });
 
         it('should render correct values in usecase of treemap chart with an attribute', () => {
-            const tooltipFn = generateTooltipFn(viewByAttribute, 'treemap');
+            const tooltipFn = buildTooltipFactory(viewByAttribute, 'treemap');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['Department', 'category', 'series', ' 1']);
         });
 
         it('should render correct values in usecase of treemap chart with measures', () => {
-            const tooltipFn = generateTooltipFn(null, 'treemap');
+            const tooltipFn = buildTooltipFactory(null, 'treemap');
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(['point', ' 1']);
+        });
+    });
+
+    describe('buildTooltipForTwoAttributesFactory', () => {
+        const dataSet = fixtures.barChartWith4MetricsAndViewBy2Attribute;
+        const { viewByAttribute, viewByParentAttribute } = getTwoAttributes(dataSet);
+        const pointData = {
+            y: 1,
+            format: '# ###',
+            name: 'point',
+            category: {
+                name: 'category',
+                parent: {
+                    name: 'parent category'
+                }
+            },
+            series: {
+                name: 'series'
+            }
+        };
+
+        it('should render correct values in usecase of bar chart without attribute', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(null, null);
+            const tooltip = tooltipFn(pointData);
+            expect(getValues(tooltip)).toEqual(['series', ' 1']);
+        });
+
+        it('should render correct values in usecase of bar chart with no attribute and no category', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(null, null);
+            const tooltip = tooltipFn({
+                y: 1,
+                format: '# ###',
+                name: 'point',
+                series: {
+                    name: 'series'
+                }
+            });
+            expect(getValues(tooltip)).toEqual(['series', ' 1']);
+        });
+
+        it('should render correct values in usecase of bar chart with one attribute', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, null);
+            const tooltip = tooltipFn(pointData);
+            expect(getValues(tooltip)).toEqual([
+                'Region',
+                'category',
+                'series',
+                ' 1'
+            ]);
+        });
+
+        it('should render correct values in usecase of bar chart with one attribute and no category', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, null);
+            const tooltip = tooltipFn({
+                y: 1,
+                format: '# ###',
+                name: 'point',
+                series: {
+                    name: 'series'
+                }
+            });
+            expect(getValues(tooltip)).toEqual(['series', ' 1']);
+        });
+
+        it('should render correct values in usecase of bar chart with two attributes', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute);
+            const tooltip = tooltipFn(pointData);
+            expect(getValues(tooltip)).toEqual([
+                'Department',
+                'parent category',
+                'Region',
+                'category',
+                'series',
+                ' 1'
+            ]);
+        });
+
+        it('should render correct values in usecase of bar chart with two attributes and no category.parent', () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute);
+            const tooltip = tooltipFn({
+                y: 1,
+                format: '# ###',
+                name: 'point',
+                category: {
+                    name: 'category'
+                },
+                series: {
+                    name: 'series'
+                }
+            });
+            expect(getValues(tooltip)).toEqual([
+                'Region',
+                'category',
+                'series',
+                ' 1'
+            ]);
         });
     });
 
@@ -2496,7 +2593,7 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
-    describe('generateTooltipTreemapFn', () => {
+    describe('buildTooltipTreemapFactory', () => {
         const point: IPoint = {
             category: {
                 name: 'category'
@@ -2521,7 +2618,7 @@ describe('chartOptionsBuilder', () => {
                 <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
-            const tooltipFn = generateTooltipTreemapFn(null, null);
+            const tooltipFn = buildTooltipTreemapFactory(null, null);
             expect(tooltipFn(point)).toEqual(expectedResult);
         });
 
@@ -2534,7 +2631,7 @@ describe('chartOptionsBuilder', () => {
                 <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">abcd</td>
             </tr></table>`;
 
-            const tooltipFn = generateTooltipTreemapFn(null, null);
+            const tooltipFn = buildTooltipTreemapFactory(null, null);
             expect(tooltipFn(pointWithFormat)).toEqual(expectedResult);
         });
 
@@ -2550,7 +2647,7 @@ describe('chartOptionsBuilder', () => {
                 <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
-            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
             expect(tooltipFn(point)).toEqual(expectedResult);
         });
 
@@ -2566,7 +2663,7 @@ describe('chartOptionsBuilder', () => {
                 <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
-            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
             expect(tooltipFn(point)).toEqual(expectedResult);
         });
 
@@ -2585,7 +2682,7 @@ describe('chartOptionsBuilder', () => {
                 <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
             </tr></table>`;
 
-            const tooltipFn = generateTooltipTreemapFn(viewByAttribute, stackByAttribute);
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
             expect(tooltipFn(point)).toEqual(expectedResult);
         });
     });
@@ -2679,7 +2776,7 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, 'column')(pointData);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -2713,7 +2810,7 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, 'column')(pointData);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -2761,12 +2858,12 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
 
-                let expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                let expectedTooltip = buildTooltipFactory(viewByAttribute, 'column')(pointData);
 
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedTooltip);
 
-                expectedTooltip = generateTooltipTreemapFn(viewByAttribute, null)(pointData);
+                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(pointData);
 
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTooltip);
@@ -2806,11 +2903,11 @@ describe('chartOptionsBuilder', () => {
                     value: 2
                 };
 
-                const expectedPieChartTooltip = generateTooltipFn(null, 'pie')(pointData);
+                const expectedPieChartTooltip = buildTooltipFactory(null, 'pie')(pointData);
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
-                const expectedTreemapTooltip = generateTooltipTreemapFn(null, null)(pointData);
+                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(pointData);
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTreemapTooltip);
             });
@@ -2851,7 +2948,7 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, 'column')(pointData);
                 expect(tooltip).toBe(expectedTooltip);
             });
 
@@ -2869,7 +2966,7 @@ describe('chartOptionsBuilder', () => {
                     }
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = generateTooltipFn(viewByAttribute, 'column')(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, 'column')(pointData);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -3440,6 +3537,39 @@ describe('chartOptionsBuilder', () => {
 
                 expect(isViewByTwoAttributes).toBeFalsy();
                 expect(categories).toEqual(['<button>2008</button>', '2009', '2010', '2011', '2012']);
+            });
+
+            it('should return full information in tooltip with viewing by 2 attributes', () => {
+                const {
+                    actions: {
+                        tooltip: tooltipFn
+                    }
+                } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute);
+
+                const pointData = {
+                    y: 1,
+                    format: '# ###',
+                    name: 'point',
+                    category: {
+                        name: 'category',
+                        parent: {
+                            name: 'parent category'
+                        }
+                    },
+                    series: {
+                        name: 'series'
+                    }
+                };
+
+                const tooltip = tooltipFn(pointData);
+                expect(getValues(tooltip)).toEqual([
+                    'Department',
+                    'parent category',
+                    'Region',
+                    'category',
+                    'series',
+                    ' 1'
+                ]);
             });
 
             it.each`
