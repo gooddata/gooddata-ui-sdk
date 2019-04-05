@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-$responsive-legend: 'only screen and (max-width: 767px)';
+$responsive-legend: "only screen and (max-width: 767px)";
 
 @media #{$responsive-legend} {
     .viz-line-family-chart-wrap {
@@ -69,7 +69,7 @@ $responsive-legend: 'only screen and (max-width: 767px)';
         cursor: default;
         margin-right: -10px;
         .series-text {
-          color: $gd-color-text-dimmed;
+            color: $gd-color-text-dimmed;
         }
     }
 
@@ -195,7 +195,6 @@ $responsive-legend: 'only screen and (max-width: 767px)';
                 }
             }
         }
-
     }
 
     &.heatmap-legend {
@@ -257,7 +256,7 @@ $responsive-legend: 'only screen and (max-width: 767px)';
             flex: 0 0 210px;
 
             .labels {
-                display:flex;
+                display: flex;
                 flex-direction: column;
                 margin-left: 4px;
                 text-align: left;

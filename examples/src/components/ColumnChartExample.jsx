@@ -1,27 +1,27 @@
 // (C) 2007-2019 GoodData Corporation
 
-import React, { Component } from 'react';
-import { ColumnChart, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { ColumnChart, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
-import { totalSalesIdentifier, monthDateIdentifier, projectId } from '../utils/fixtures';
+import { totalSalesIdentifier, monthDateIdentifier, projectId } from "../utils/fixtures";
 
 export class ColumnChartExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ColumnChartExample onLoadingChanged', ...params);
+        return console.log("ColumnChartExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ColumnChartExample onError', ...params);
+        return console.log("ColumnChartExample onError", ...params);
     }
 
     render() {
         const totalSales = Model.measure(totalSalesIdentifier)
-            .format('#,##0')
-            .alias('$ Total Sales');
+            .format("#,##0")
+            .alias("$ Total Sales");
 
         const month = Model.attribute(monthDateIdentifier);
 

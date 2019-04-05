@@ -1,28 +1,32 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { Component } from 'react';
-import { AfmComponents, ErrorComponent } from '@gooddata/react-components';
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import React, { Component } from "react";
+import { AfmComponents, ErrorComponent } from "@gooddata/react-components";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
-import '@gooddata/react-components/styles/css/main.css';
-import 'react-datepicker/dist/react-datepicker.css';
+import "@gooddata/react-components/styles/css/main.css";
+import "react-datepicker/dist/react-datepicker.css";
 
-
-import { totalSalesIdentifier, monthDateIdentifier, dateDatasetIdentifier, projectId } from '../utils/fixtures';
+import {
+    totalSalesIdentifier,
+    monthDateIdentifier,
+    dateDatasetIdentifier,
+    projectId,
+} from "../utils/fixtures";
 
 const { ColumnChart } = AfmComponents;
 
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = "YYYY-MM-DD";
 
 export class DatePickerExample extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            from: moment('2017-01-01', dateFormat),
-            to: moment('2017-12-31', dateFormat),
-            error: null
+            from: moment("2017-01-01", dateFormat),
+            to: moment("2017-12-31", dateFormat),
+            error: null,
         };
 
         this.onFromChange = this.onFromChange.bind(this);
@@ -31,11 +35,11 @@ export class DatePickerExample extends Component {
     }
 
     onFromChange(value) {
-        this.onDateChange('from', value);
+        this.onDateChange("from", value);
     }
 
     onToChange(value) {
-        this.onDateChange('to', value);
+        this.onDateChange("to", value);
     }
 
     onDateChange(prop, value) {
@@ -43,7 +47,7 @@ export class DatePickerExample extends Component {
         const newState = {
             from,
             to,
-            error: null
+            error: null,
         };
         newState[prop] = value;
 
@@ -51,19 +55,19 @@ export class DatePickerExample extends Component {
             this.setState(newState);
         } else {
             this.setState({
-                error: '"From" date must come before "To" date.'
+                error: '"From" date must come before "To" date.',
             });
         }
     }
 
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        console.info('DatePickerExample onLoadingChanged', ...params);
+        console.info("DatePickerExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        console.info('DatePickerExample onLoadingChanged', ...params);
+        console.info("DatePickerExample onLoadingChanged", ...params);
     }
 
     render() {
@@ -72,37 +76,37 @@ export class DatePickerExample extends Component {
         const afm = {
             measures: [
                 {
-                    localIdentifier: 'totalSales',
+                    localIdentifier: "totalSales",
                     definition: {
                         measure: {
                             item: {
-                                identifier: totalSalesIdentifier
-                            }
-                        }
+                                identifier: totalSalesIdentifier,
+                            },
+                        },
                     },
-                    alias: '$ Total Sales',
-                    format: '#,##0'
-                }
+                    alias: "$ Total Sales",
+                    format: "#,##0",
+                },
             ],
             attributes: [
                 {
                     displayForm: {
-                        identifier: monthDateIdentifier
+                        identifier: monthDateIdentifier,
                     },
-                    localIdentifier: 'month'
-                }
+                    localIdentifier: "month",
+                },
             ],
             filters: [
                 {
                     absoluteDateFilter: {
                         dataSet: {
-                            identifier: dateDatasetIdentifier
+                            identifier: dateDatasetIdentifier,
                         },
                         from: from.format(dateFormat),
-                        to: to.format(dateFormat)
-                    }
-                }
-            ]
+                        to: to.format(dateFormat),
+                    },
+                },
+            ],
         };
 
         return (
@@ -130,14 +134,16 @@ export class DatePickerExample extends Component {
                 </label>
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-date-picker-chart">
-                    {error
-                        ? <ErrorComponent message={error} />
-                        : (<ColumnChart
+                    {error ? (
+                        <ErrorComponent message={error} />
+                    ) : (
+                        <ColumnChart
                             projectId={projectId}
                             afm={afm}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}
-                        />)}
+                        />
+                    )}
                 </div>
             </div>
         );

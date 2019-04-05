@@ -1,16 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { BubbleChart as CoreBubbleChart } from '../core/BubbleChart';
-import { generateDefaultDimensionsForPointsCharts } from '../../helpers/dimensions';
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { BubbleChart as CoreBubbleChart } from "../core/BubbleChart";
+import { generateDefaultDimensionsForPointsCharts } from "../../helpers/dimensions";
 
 /**
  * AFM BubbleChart
@@ -20,5 +15,5 @@ import { generateDefaultDimensionsForPointsCharts } from '../../helpers/dimensio
 export const BubbleChart = dataSourceProvider<ICommonChartProps>(
     CoreBubbleChart,
     generateDefaultDimensionsForPointsCharts,
-    'BubbleChart'
+    "BubbleChart",
 );

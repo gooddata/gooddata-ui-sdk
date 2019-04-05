@@ -1,16 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { ColumnChart as CoreColumnChart } from '../core/ColumnChart';
-import { generateDefaultDimensions } from '../../helpers/dimensions';
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { ColumnChart as CoreColumnChart } from "../core/ColumnChart";
+import { generateDefaultDimensions } from "../../helpers/dimensions";
 
 /**
  * AFM ColumnChart
@@ -18,4 +13,7 @@ import { generateDefaultDimensions } from '../../helpers/dimensions';
  * @internal
  */
 export const ColumnChart = dataSourceProvider<ICommonChartProps>(
-    CoreColumnChart, generateDefaultDimensions, 'ColumnChart');
+    CoreColumnChart,
+    generateDefaultDimensions,
+    "ColumnChart",
+);

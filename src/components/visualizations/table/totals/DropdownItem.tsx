@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { noop } from 'lodash';
-import { injectIntl, FormattedMessage, InjectedIntlProps } from 'react-intl';
+import * as React from "react";
+import * as classNames from "classnames";
+import { noop } from "lodash";
+import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 
 export interface ITotalItem {
     title: string;
@@ -26,7 +26,7 @@ export class PureDropdownItem extends React.PureComponent<IDropdownItemProps & I
     public render() {
         const { item } = this.props;
 
-        if (item.role === 'header') {
+        if (item.role === "header") {
             return (
                 <div className="gd-list-item gd-list-item-header indigo-totals-select-type-header">
                     <FormattedMessage id={item.title} />
@@ -35,12 +35,12 @@ export class PureDropdownItem extends React.PureComponent<IDropdownItemProps & I
         }
 
         const classes = classNames(
-            'gd-list-item',
-            'gd-list-item-shortened',
+            "gd-list-item",
+            "gd-list-item-shortened",
             `s-totals-select-type-item-${item.type}`,
             {
-                'indigo-totals-select-type-item-disabled': item.disabled
-            }
+                "indigo-totals-select-type-item-disabled": item.disabled,
+            },
         );
 
         const onClick = item.disabled ? noop : this.onSelect;

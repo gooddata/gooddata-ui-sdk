@@ -1,47 +1,47 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
+import React from "react";
 
-import ExampleWithSource from '../components/utils/ExampleWithSource';
+import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import BarChartExample from '../components/BarChartExample';
-import ColumnChartExample from '../components/ColumnChartExample';
-import LineChartExample from '../components/LineChartExample';
-import AreaChartExample from '../components/AreaChartExample';
-import StackedAreaChartExample from '../components/StackedAreaChartExample';
-import PieChartExample from '../components/PieChartExample';
-import DonutChartExample from '../components/DonutChartExample';
-import ComboChartExample from '../components/ComboChartExample';
-import ScatterPlotExample from '../components/ScatterPlotExample';
-import BubbleChartExample from '../components/BubbleChartExample';
-import TreemapExample from '../components/TreemapExample';
-import HeatmapExample from '../components/HeatmapExample';
-import TableExample from '../components/TableExample';
-import HeadlineExample from '../components/HeadlineExample';
-import KpiExample from '../components/KpiExample';
+import BarChartExample from "../components/BarChartExample";
+import ColumnChartExample from "../components/ColumnChartExample";
+import LineChartExample from "../components/LineChartExample";
+import AreaChartExample from "../components/AreaChartExample";
+import StackedAreaChartExample from "../components/StackedAreaChartExample";
+import PieChartExample from "../components/PieChartExample";
+import DonutChartExample from "../components/DonutChartExample";
+import ComboChartExample from "../components/ComboChartExample";
+import ScatterPlotExample from "../components/ScatterPlotExample";
+import BubbleChartExample from "../components/BubbleChartExample";
+import TreemapExample from "../components/TreemapExample";
+import HeatmapExample from "../components/HeatmapExample";
+import TableExample from "../components/TableExample";
+import HeadlineExample from "../components/HeadlineExample";
+import KpiExample from "../components/KpiExample";
 
-import BarChartExampleSRC from '!raw-loader!../components/BarChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ColumnChartExampleSRC from '!raw-loader!../components/ColumnChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import LineChartExampleSRC from '!raw-loader!../components/LineChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import AreaChartExampleSRC from '!raw-loader!../components/AreaChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import StackedAreaChartExampleSRC from '!raw-loader!../components/StackedAreaChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import PieChartExampleSRC from '!raw-loader!../components/PieChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import DonutChartExampleSRC from '!raw-loader!../components/DonutChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ComboChartExampleSRC from '!raw-loader!../components/ComboChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ScatterPlotExampleSRC from '!raw-loader!../components/ScatterPlotExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import BubbleChartExampleSRC from '!raw-loader!../components/BubbleChartExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import TreemapExampleSRC from '!raw-loader!../components/TreemapExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import HeatmapExampleSRC from '!raw-loader!../components/HeatmapExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import TableExampleSRC from '!raw-loader!../components/TableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import HeadlineExampleSRC from '!raw-loader!../components/HeadlineExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import KpiExampleSRC from '!raw-loader!../components/KpiExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import BarChartExampleSRC from "!raw-loader!../components/BarChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ColumnChartExampleSRC from "!raw-loader!../components/ColumnChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import LineChartExampleSRC from "!raw-loader!../components/LineChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import AreaChartExampleSRC from "!raw-loader!../components/AreaChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import StackedAreaChartExampleSRC from "!raw-loader!../components/StackedAreaChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import PieChartExampleSRC from "!raw-loader!../components/PieChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import DonutChartExampleSRC from "!raw-loader!../components/DonutChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ComboChartExampleSRC from "!raw-loader!../components/ComboChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ScatterPlotExampleSRC from "!raw-loader!../components/ScatterPlotExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import BubbleChartExampleSRC from "!raw-loader!../components/BubbleChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import TreemapExampleSRC from "!raw-loader!../components/TreemapExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import HeatmapExampleSRC from "!raw-loader!../components/HeatmapExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import TableExampleSRC from "!raw-loader!../components/TableExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import HeadlineExampleSRC from "!raw-loader!../components/HeadlineExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import KpiExampleSRC from "!raw-loader!../components/KpiExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const BasicComponents = () => (
     <div>
         <h1>Basic Components</h1>
 
         <p>
-            The following components accept measures and attributes,
-            perform the execution, and render data as a chart, table or KPI.
+            The following components accept measures and attributes, perform the execution, and render data as
+            a chart, table or KPI.
         </p>
 
         <hr className="separator" />
@@ -98,8 +98,8 @@ export const BasicComponents = () => (
 
         <h2 id="kpi">KPI</h2>
         <p>
-            The interface of the KPI component is different compared to the components above.
-            It takes only one measure.
+            The interface of the KPI component is different compared to the components above. It takes only
+            one measure.
         </p>
         <ExampleWithSource for={KpiExample} source={KpiExampleSRC} />
     </div>

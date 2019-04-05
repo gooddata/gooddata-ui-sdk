@@ -1,24 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import { AFM } from "@gooddata/typings";
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { SortableTable } from '../core/SortableTable';
+import { SortableTable } from "../core/SortableTable";
 
 function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
     return [
         {
-            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+            itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier),
         },
         {
-            itemIdentifiers: afm.measures && afm.measures.length > 0 ? ['measureGroup'] : []
-        }
+            itemIdentifiers: afm.measures && afm.measures.length > 0 ? ["measureGroup"] : [],
+        },
     ];
 }
 
@@ -27,4 +22,4 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions, 'Table');
+export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions, "Table");

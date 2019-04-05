@@ -1,31 +1,31 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { ScatterPlot } from '../../src/index';
-import { onErrorHandler } from '../mocks';
+import { ScatterPlot } from "../../src/index";
+import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_2,
     ATTRIBUTE_1_SORT_ITEM,
-    MEASURE_WITH_FORMAT
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    MEASURE_WITH_FORMAT,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
-} from '../data/configProps';
-import { localIdentifierMatch } from '../../src/factory/HeaderPredicateFactory';
-import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+    DATA_LABELS_AUTO_CONFIG,
+} from "../data/configProps";
+import { localIdentifierMatch } from "../../src/factory/HeaderPredicateFactory";
+import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('Core components/ScatterPlot', module)
-    .add('basic render', () => (
+storiesOf("Core components/ScatterPlot", module)
+    .add("basic render", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -37,10 +37,10 @@ storiesOf('Core components/ScatterPlot', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('sort by attribute', () => (
+            </div>,
+        ),
+    )
+    .add("sort by attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -51,17 +51,19 @@ storiesOf('Core components/ScatterPlot', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    sortBy={[{
-                        attributeSortItem: {
-                            ...ATTRIBUTE_1_SORT_ITEM.attributeSortItem,
-                            direction: 'desc'
-                        }
-                    }]}
+                    sortBy={[
+                        {
+                            attributeSortItem: {
+                                ...ATTRIBUTE_1_SORT_ITEM.attributeSortItem,
+                                direction: "desc",
+                            },
+                        },
+                    ]}
                 />
-            </div>
-        )
-    ))
-    .add('only secondary measure - tooltip shows y-value', () => (
+            </div>,
+        ),
+    )
+    .add("only secondary measure - tooltip shows y-value", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -72,9 +74,10 @@ storiesOf('Core components/ScatterPlot', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    )).add('% format on y-axes', () => (
+            </div>,
+        ),
+    )
+    .add("% format on y-axes", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -86,10 +89,10 @@ storiesOf('Core components/ScatterPlot', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format in tooltip', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format in tooltip", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -102,10 +105,10 @@ storiesOf('Core components/ScatterPlot', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with min/max config', () => (
+            </div>,
+        ),
+    )
+    .add("with min/max config", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -118,18 +121,18 @@ storiesOf('Core components/ScatterPlot', module)
                     ErrorComponent={null}
                     config={{
                         xaxis: {
-                            min: '600'
+                            min: "600",
                         },
                         yaxis: {
-                            min: '500',
-                            max: '950'
-                        }
+                            min: "500",
+                            max: "950",
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with color mapping', () => (
+            </div>,
+        ),
+    )
+    .add("with color mapping", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ScatterPlot
@@ -140,24 +143,25 @@ storiesOf('Core components/ScatterPlot', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     config={{
-                        colorMapping: [{
-                            predicate: localIdentifierMatch('m2'),
-                            color: {
-                                type: 'rgb',
-                                value: {
-                                    r: 0,
-                                    g: 0,
-                                    b: 0
-                                }
-                            }
-                        }
-                        ]
+                        colorMapping: [
+                            {
+                                predicate: localIdentifierMatch("m2"),
+                                color: {
+                                    type: "rgb",
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0,
+                                    },
+                                },
+                            },
+                        ],
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('data labels config', () => (
+            </div>,
+        ),
+    )
+    .add("data labels config", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
                 <div>
@@ -213,6 +217,6 @@ storiesOf('Core components/ScatterPlot', module)
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    ));
+            </ScreenshotReadyWrapper>,
+        ),
+    );

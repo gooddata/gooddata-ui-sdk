@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-@import '~@gooddata/goodstrap/lib/core/styles/variables';
-@import '~@gooddata/goodstrap/lib/Button/styles/variables';
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/goodstrap/lib/Button/styles/variables";
 
 $ag-icons-path: "~ag-grid/src/styles/balham-icons/";
 
@@ -20,8 +20,8 @@ $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
 $header-cell-resize-width: 20px;
 
-@import '~ag-grid/src/styles/ag-grid';
-@import '~ag-grid/src/styles/ag-theme-balham';
+@import "~ag-grid/src/styles/ag-grid";
+@import "~ag-grid/src/styles/ag-theme-balham";
 
 .gd-table {
     .ag-root-wrapper {
@@ -156,7 +156,7 @@ $header-cell-resize-width: 20px;
         display: none;
     }
 
-    .gd-cell-hide{
+    .gd-cell-hide {
         color: transparent;
         border-top: 1px solid transparent;
         background-color: white;
@@ -225,7 +225,6 @@ $header-cell-resize-width: 20px;
 
     &--numeric {
         flex-direction: row-reverse;
-
     }
 
     &--numeric &-label {
@@ -268,7 +267,7 @@ $header-cell-resize-width: 20px;
             & > .menu-icon {
                 width: 16px;
                 height: 16px;
-                background-image: url('~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg');
+                background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg");
             }
         }
 
@@ -288,13 +287,16 @@ $header-cell-resize-width: 20px;
                 &,
                 &:hover {
                     border-color: $button-normal-border-color;
-                    background-color: $button-normal-hover-bg
+                    background-color: $button-normal-hover-bg;
                 }
 
                 &:active {
                     border-color: $button-normal-active-border-color;
 
-                    @include gradient-linear($button-normal-active-gradient-top, $button-normal-active-gradient-bottom);
+                    @include gradient-linear(
+                        $button-normal-active-gradient-top,
+                        $button-normal-active-gradient-bottom
+                    );
                 }
             }
         }
@@ -310,7 +312,7 @@ $header-cell-resize-width: 20px;
         font-weight: normal;
 
         &::before {
-            content: '\E60D';
+            content: "\E60D";
             position: relative;
             top: 1px;
             display: inherit;
@@ -329,13 +331,13 @@ $header-cell-resize-width: 20px;
 .gd-aggregation-menu-item {
     .gd-list-item-header:before {
         display: block;
-        content: '';
+        content: "";
         position: absolute;
         width: 12px;
         height: 11px;
         left: 10px;
         top: 13px;
-        background-image: url('~@gooddata/goodstrap/lib/core/styles/icons/rows.svg');
+        background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/rows.svg");
     }
 
     .gd-list-item.gd-menu-item {
@@ -391,7 +393,7 @@ $header-cell-resize-width: 20px;
 
             &.gd-hidden-sticky-column,
             &.gd-measure-column,
-            &.gd-column-attribute-column{
+            &.gd-column-attribute-column {
                 background-color: transparent;
                 color: transparent;
             }

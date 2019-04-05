@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import PositionedMenuContent from './PositionedMenuContent';
-import { IMenuPositionConfig } from '../MenuSharedTypes';
-import RenderChildrenInPortal from '../utils/RenderChildrenInPortal';
+import * as React from "react";
+import PositionedMenuContent from "./PositionedMenuContent";
+import { IMenuPositionConfig } from "../MenuSharedTypes";
+import RenderChildrenInPortal from "../utils/RenderChildrenInPortal";
 
 export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;
@@ -19,29 +19,32 @@ export interface IMenuPositionState {
     togglerElInitialized: boolean;
 }
 
-const Wrapper =
-    ({ children }: { children: React.ReactNode }) => <div className="gd-menuPosition-wrapper" >{children}</div>;
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <div className="gd-menuPosition-wrapper">{children}</div>
+);
 
-const PortalIfTopLevelMenu =
-    ({ topLevelMenu, children, portalTarget }: {
-        children: React.ReactNode,
-        portalTarget: Element,
-        topLevelMenu: boolean
-    }) => topLevelMenu
-        ? (
-            <RenderChildrenInPortal targetElement={portalTarget}>
-                {children}
-            </RenderChildrenInPortal>
-        )
-        : <React.Fragment>{children}</React.Fragment>;
+const PortalIfTopLevelMenu = ({
+    topLevelMenu,
+    children,
+    portalTarget,
+}: {
+    children: React.ReactNode;
+    portalTarget: Element;
+    topLevelMenu: boolean;
+}) =>
+    topLevelMenu ? (
+        <RenderChildrenInPortal targetElement={portalTarget}>{children}</RenderChildrenInPortal>
+    ) : (
+        <React.Fragment>{children}</React.Fragment>
+    );
 
 export default class MenuPosition extends React.Component<IMenuPositionProps, IMenuPositionState> {
     public static defaultProps = {
-        contentWrapper: React.Fragment
+        contentWrapper: React.Fragment,
     };
 
     public state = {
-        togglerElInitialized: false
+        togglerElInitialized: false,
     };
 
     private togglerEl: HTMLElement = null;
@@ -62,7 +65,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
             spacing,
             offset,
             togglerWrapperClassName,
-            children
+            children,
         } = this.props;
         // Top level menu uses React portals to be rendered in body element (or
         // any element specified in targetElement prop). Any submenus are rendered
@@ -74,17 +77,11 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
 
         return (
             <MaybeWrapper>
-                <div
-                    className={topLevelMenu ? togglerWrapperClassName : undefined}
-                    ref={this.setTogglerEl}
-                >
+                <div className={topLevelMenu ? togglerWrapperClassName : undefined} ref={this.setTogglerEl}>
                     {toggler}
                 </div>
 
-                <PortalIfTopLevelMenu
-                    portalTarget={portalTarget}
-                    topLevelMenu={topLevelMenu}
-                >
+                <PortalIfTopLevelMenu portalTarget={portalTarget} topLevelMenu={topLevelMenu}>
                     {opened && this.state.togglerElInitialized && (
                         <ContentWrapper>
                             <PositionedMenuContent
@@ -106,7 +103,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
     private setTogglerEl = (el: HTMLElement) => {
         this.togglerEl = el;
         this.setState({
-            togglerElInitialized: true
+            togglerElInitialized: true,
         });
-    }
+    };
 }

@@ -1,49 +1,51 @@
 // (C) 2007-2018 GoodData Corporation
-import cloneDeep = require('lodash/cloneDeep');
+import cloneDeep = require("lodash/cloneDeep");
 
 const BUBBLE_TEMPLATE = {
     chart: {
-        type: 'bubble'
+        type: "bubble",
     },
     plotOptions: {
         bubble: {
             stickyTracking: false,
             marker: {
-                symbol: 'circle',
+                symbol: "circle",
                 radius: 5,
                 states: {
                     hover: {
                         enabled: true,
-                        lineColor: 'white'
-                    }
-                }
+                        lineColor: "white",
+                    },
+                },
             },
             states: {
                 hover: {
                     marker: {
-                        enabled: false
-                    }
-                }
+                        enabled: false,
+                    },
+                },
             },
             dataLabels: {
                 enabled: false, // TODO remove once FF for config panel is removed
-                allowOverlap: false
-            }
-        }
+                allowOverlap: false,
+            },
+        },
     },
-    xAxis: [{
-        startOnTick: true
-    }],
+    xAxis: [
+        {
+            startOnTick: true,
+        },
+    ],
     series: {
         states: {
             hover: {
-                enabled: false
-            }
-        }
+                enabled: false,
+            },
+        },
     },
     legend: {
-        enabled: false
-    }
+        enabled: false,
+    },
 };
 
 export function getBubbleConfiguration() {

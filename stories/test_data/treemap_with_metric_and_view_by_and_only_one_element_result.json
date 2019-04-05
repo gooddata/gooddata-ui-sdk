@@ -1,10 +1,6 @@
 {
     "executionResult": {
-        "data": [
-            [
-                "80406324.96"
-            ]
-        ],
+        "data": [["80406324.96"]],
         "headerItems": [
             [
                 [
@@ -28,18 +24,9 @@
             ]
         ],
         "paging": {
-            "count": [
-                1,
-                1
-            ],
-            "offset": [
-                0,
-                0
-            ],
-            "total": [
-                1,
-                1
-            ]
+            "count": [1, 1],
+            "offset": [0, 0],
+            "total": [1, 1]
         }
     }
 }

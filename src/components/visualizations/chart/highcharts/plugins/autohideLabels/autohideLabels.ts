@@ -1,26 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    getChartType
-} from '../../helpers';
+import { getChartType } from "../../helpers";
 
-import {
-    getDataLabelsGdcVisible,
-    minimizeDataLabel,
-    hideDataLabel
-} from '../../dataLabelsHelpers';
-import { VisualizationTypes } from '../../../../../../constants/visualizationTypes';
-import { autohideColumnLabels, handleColumnLabelsOutsideChart } from './autohideColumnLabels';
-import { autohideBarLabels, handleBarLabelsOutsideChart } from './autohideBarLabels';
-import autohidePieLabels from './autohidePieLabels';
-import autohideLabelsOverlappingItsShape from './autohideLabelsOverlappingItsShape';
+import { getDataLabelsGdcVisible, minimizeDataLabel, hideDataLabel } from "../../dataLabelsHelpers";
+import { VisualizationTypes } from "../../../../../../constants/visualizationTypes";
+import { autohideColumnLabels, handleColumnLabelsOutsideChart } from "./autohideColumnLabels";
+import { autohideBarLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
+import autohidePieLabels from "./autohidePieLabels";
+import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape";
 
 const autohideLabels = (Highcharts: any) => {
-    Highcharts.wrap(Highcharts.Chart.prototype, 'hideOverlappingLabels', function(proceed: any, labels: any) {
+    Highcharts.wrap(Highcharts.Chart.prototype, "hideOverlappingLabels", function(proceed: any, labels: any) {
         const chart = this;
         const chartType = getChartType(this);
         const dataLabelsUserVisibility = getDataLabelsGdcVisible(this);
 
-        if (dataLabelsUserVisibility === 'auto') {
+        if (dataLabelsUserVisibility === "auto") {
             switch (chartType) {
                 case VisualizationTypes.COLUMN:
                     autohideColumnLabels(chart);
@@ -37,7 +31,7 @@ const autohideLabels = (Highcharts: any) => {
                     autohideLabelsOverlappingItsShape(chart);
                     return;
                 case VisualizationTypes.BUBBLE:
-                    autohideLabelsOverlappingItsShape(chart, (point) => {
+                    autohideLabelsOverlappingItsShape(chart, point => {
                         // only hide is not enough for combination with default label collision detection
                         minimizeDataLabel(point);
                         hideDataLabel(point);

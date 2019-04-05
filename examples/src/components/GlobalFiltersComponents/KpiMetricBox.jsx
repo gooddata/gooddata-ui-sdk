@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import PropTypes from "prop-types";
 
 export const KpiMetricBox = ({ title, children }) => {
     return (
@@ -35,17 +35,17 @@ export const KpiMetricBox = ({ title, children }) => {
                     color: #ffffff;
                 }
             `}</style>
-            <div className="value">
-                {children}
-            </div>
-            {title ? (<div className="title">
-                <span>{title}</span>
-            </div>) : null}
+            <div className="value">{children}</div>
+            {title ? (
+                <div className="title">
+                    <span>{title}</span>
+                </div>
+            ) : null}
         </div>
     );
 };
 
 KpiMetricBox.propTypes = {
     title: PropTypes.string.isRequired,
-    children: PropTypes.any.isRequired
+    children: PropTypes.any.isRequired,
 };

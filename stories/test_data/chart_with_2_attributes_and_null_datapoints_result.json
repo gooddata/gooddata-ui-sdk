@@ -42,18 +42,9 @@
             ]
         ],
         "paging": {
-            "count": [
-                1,
-                37
-            ],
-            "offset": [
-                0,
-                0
-            ],
-            "total": [
-                1,
-                37
-            ]
+            "count": [1, 37],
+            "offset": [0, 0],
+            "total": [1, 37]
         },
         "headerItems": [
             [

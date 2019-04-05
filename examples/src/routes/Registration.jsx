@@ -1,18 +1,20 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
+import React from "react";
 
-import RegistrationComponent from '../components/utils/Registration';
+import RegistrationComponent from "../components/utils/Registration";
 
 export const Registration = props => (
     <div>
-        <style jsx>{`
+        <style jsx>
+            {`
                 h1,
                 p {
                     margin-right: auto;
                     margin-left: auto;
                     text-align: center;
                 }
-      `}</style>
+            `}
+        </style>
         <h1>Registration</h1>
 
         <p>Create a GoodData developer account to see GoodData.UI examples.</p>

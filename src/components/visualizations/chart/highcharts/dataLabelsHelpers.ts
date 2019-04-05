@@ -1,20 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
-import flatMap = require('lodash/flatMap');
-import get = require('lodash/get');
+import flatMap = require("lodash/flatMap");
+import get = require("lodash/get");
 
 import {
     isStacked,
     IRectBySize,
     isIntersecting,
     pointInRange,
-    IAxisRange, IAxisRangeForAxes
-} from './helpers';
+    IAxisRange,
+    IAxisRangeForAxes,
+} from "./helpers";
 
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
-    if (dataLabel && shapeArgs) { // shapeArgs for point hidden by legend is undefined
+    if (dataLabel && shapeArgs) {
+        // shapeArgs for point hidden by legend is undefined
         if (shapeArgs.width === undefined) {
-            return dataLabel.width > (shapeArgs.r * 2) || dataLabel.height > (shapeArgs.r * 2);
+            return dataLabel.width > shapeArgs.r * 2 || dataLabel.height > shapeArgs.r * 2;
         }
         return dataLabel.width > shapeArgs.width || dataLabel.height > shapeArgs.height;
     }
@@ -22,16 +24,13 @@ export function isLabelOverlappingItsShape(point: any) {
 }
 
 export const getDataLabelsGdcVisible = (chart: any): boolean | string =>
-    get(chart, 'options.plotOptions.gdcOptions.dataLabels.visible', 'auto');
+    get(chart, "options.plotOptions.gdcOptions.dataLabels.visible", "auto");
 
-const isLabelsStackedFromYAxis = (chart: any) => (
-    get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) ||
-    get(chart, 'userOptions.yAxis.1.stackLabels.enabled', false)
-);
+const isLabelsStackedFromYAxis = (chart: any) =>
+    get(chart, "userOptions.yAxis.0.stackLabels.enabled", false) ||
+    get(chart, "userOptions.yAxis.1.stackLabels.enabled", false);
 
-export const areLabelsStacked = (chart: any) => (
-    isLabelsStackedFromYAxis(chart) && isStacked(chart)
-);
+export const areLabelsStacked = (chart: any) => isLabelsStackedFromYAxis(chart) && isStacked(chart);
 
 export const hasDataLabel = (point: any) => point.dataLabel;
 export const hasShape = (point: any) => point.shapeArgs;
@@ -72,8 +71,8 @@ export interface IInsideResult {
 }
 
 export function showDataLabelInAxisRange(point: any, value: number, axisRangeForAxes: IAxisRangeForAxes) {
-    const isSecondAxis = get(point, 'series.yAxis.opposite', false);
-    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? 'second' : 'first'];
+    const isSecondAxis = get(point, "series.yAxis.opposite", false);
+    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const isInsideAxisRange: boolean = pointInRange(value, axisRange);
     if (!isInsideAxisRange) {
         hideDataLabel(point);
@@ -81,8 +80,8 @@ export function showDataLabelInAxisRange(point: any, value: number, axisRangeFor
 }
 
 export function showStackLabelInAxisRange(point: any, axisRangeForAxes: IAxisRangeForAxes) {
-    const isSecondAxis = get(point, 'series.yAxis.opposite', false);
-    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? 'second' : 'first'];
+    const isSecondAxis = get(point, "series.yAxis.opposite", false);
+    const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const end = point.stackY || point.total;
     const start = end - point.y;
     const isWholeUnderMin: boolean = start <= axisRange.minAxisValue && end <= axisRange.minAxisValue;
@@ -97,8 +96,8 @@ export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series,
 export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, s => s.points));
 
 export function getDataLabelAttributes(point: any): IRectBySize {
-    const dataLabel = get(point, 'dataLabel', null);
-    const parentGroup = get(point, 'dataLabel.parentGroup', null);
+    const dataLabel = get(point, "dataLabel", null);
+    const parentGroup = get(point, "dataLabel.parentGroup", null);
 
     const labelSafeOffset = -100; // labels outside axis range have typically -9999, hide them
     const labelVisible = dataLabel && dataLabel.x > labelSafeOffset && dataLabel.y > labelSafeOffset;
@@ -108,7 +107,7 @@ export function getDataLabelAttributes(point: any): IRectBySize {
             x: dataLabel.x + parentGroup.translateX,
             y: dataLabel.y + parentGroup.translateY,
             width: dataLabel.width,
-            height: dataLabel.height
+            height: dataLabel.height,
         };
     }
 
@@ -116,7 +115,7 @@ export function getDataLabelAttributes(point: any): IRectBySize {
         x: 0,
         y: 0,
         width: 0,
-        height: 0
+        height: 0,
     };
 }
 

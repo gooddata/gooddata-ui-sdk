@@ -1,121 +1,115 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { shallow } from 'enzyme';
-import { factory } from '@gooddata/gooddata-js';
-import { VisualizationObject, AFM } from '@gooddata/typings';
-import { FunnelChart } from '../FunnelChart';
-import { FunnelChart as AfmFunnelChart } from '../afm/FunnelChart';
-import { M1 } from './fixtures/buckets';
+import * as React from "react";
+import { shallow } from "enzyme";
+import { factory } from "@gooddata/gooddata-js";
+import { VisualizationObject, AFM } from "@gooddata/typings";
+import { FunnelChart } from "../FunnelChart";
+import { FunnelChart as AfmFunnelChart } from "../afm/FunnelChart";
+import { M1 } from "./fixtures/buckets";
 
-describe('FunnelChart', () => {
+describe("FunnelChart", () => {
     const measure: VisualizationObject.IMeasure = {
         measure: {
-            localIdentifier: 'm1',
+            localIdentifier: "m1",
             definition: {
                 measureDefinition: {
                     item: {
-                        identifier: 'xyz123'
-                    }
-                }
-            }
-        }
+                        identifier: "xyz123",
+                    },
+                },
+            },
+        },
     };
 
     const attribute: VisualizationObject.IVisualizationAttribute = {
         visualizationAttribute: {
-            localIdentifier: 'a1',
+            localIdentifier: "a1",
             displayForm: {
-                identifier: 'attribute1'
-            }
-        }
+                identifier: "attribute1",
+            },
+        },
     };
 
     const measureSortItem: AFM.IMeasureSortItem = {
         measureSortItem: {
-            direction: 'asc',
-            locators: [{
-                measureLocatorItem: {
-                    measureIdentifier: 'm1'
-                }
-            }]
-        }
+            direction: "asc",
+            locators: [
+                {
+                    measureLocatorItem: {
+                        measureIdentifier: "m1",
+                    },
+                },
+            ],
+        },
     };
 
-    it('should render with custom SDK', () => {
+    it("should render with custom SDK", () => {
         const wrapper = shallow(
-            <FunnelChart
-                projectId="foo"
-                measures={[M1]}
-                sdk={factory({ domain: 'example.com' })}
-            />
+            <FunnelChart projectId="foo" measures={[M1]} sdk={factory({ domain: "example.com" })} />,
         );
         expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
     });
 
-    it('should render funnel chart and convert the buckets to AFM', () => {
+    it("should render funnel chart and convert the buckets to AFM", () => {
         const wrapper = shallow(
             <FunnelChart
                 projectId="foo"
                 measures={[measure]}
                 viewBy={attribute}
                 sortBy={[measureSortItem]}
-            />
+            />,
         );
 
         const expectedAfm: AFM.IAfm = {
             measures: [
                 {
-                    localIdentifier: 'm1',
+                    localIdentifier: "m1",
                     definition: {
                         measure: {
                             item: {
-                                identifier: 'xyz123'
-                            }
-                        }
-                    }
-                }
+                                identifier: "xyz123",
+                            },
+                        },
+                    },
+                },
             ],
             attributes: [
                 {
-                    localIdentifier: 'a1',
+                    localIdentifier: "a1",
                     displayForm: {
-                        identifier: 'attribute1'
-                    }
-                }
-            ]
+                        identifier: "attribute1",
+                    },
+                },
+            ],
         };
 
         const expectedResultSpec = {
             dimensions: [
                 {
-                    itemIdentifiers: [
-                        'measureGroup'
-                    ]
+                    itemIdentifiers: ["measureGroup"],
                 },
                 {
-                    itemIdentifiers: [
-                        'a1'
-                    ]
-                }
+                    itemIdentifiers: ["a1"],
+                },
             ],
             sorts: [
                 {
                     measureSortItem: {
-                        direction: 'asc',
+                        direction: "asc",
                         locators: [
                             {
                                 measureLocatorItem: {
-                                    measureIdentifier: 'm1'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
+                                    measureIdentifier: "m1",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
         };
 
         expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
-        expect(wrapper.find(AfmFunnelChart).prop('afm')).toEqual(expectedAfm);
-        expect(wrapper.find(AfmFunnelChart).prop('resultSpec')).toEqual(expectedResultSpec);
+        expect(wrapper.find(AfmFunnelChart).prop("afm")).toEqual(expectedAfm);
+        expect(wrapper.find(AfmFunnelChart).prop("resultSpec")).toEqual(expectedResultSpec);
     });
 });

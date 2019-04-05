@@ -1,11 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 
 export function groupCategoriesWrapper(Highcharts: any) {
-
     const wrap = Highcharts.wrap;
 
-    wrap(Highcharts.Axis.prototype, 'render', function(proceed: any) {
-
+    wrap(Highcharts.Axis.prototype, "render", function(proceed: any) {
         // default behaviour
         proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 

@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import isNil = require('lodash/isNil');
-import { VisualizationObject } from '@gooddata/typings';
-import { IAreaChartProps } from '../../components/AreaChart';
-import { IChartConfig } from '../..';
+import isNil = require("lodash/isNil");
+import { VisualizationObject } from "@gooddata/typings";
+import { IAreaChartProps } from "../../components/AreaChart";
+import { IChartConfig } from "../..";
 import BucketItem = VisualizationObject.BucketItem;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
-import { getViewByTwoAttributes } from './common';
+import { getViewByTwoAttributes } from "./common";
 
 function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
     const { stackMeasures, stackMeasuresToPercent } = config;
@@ -14,14 +14,16 @@ function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
     }
     return {
         ...config,
-        stacking: Boolean(stackMeasuresToPercent) || Boolean(stackMeasures)
+        stacking: Boolean(stackMeasuresToPercent) || Boolean(stackMeasures),
     };
 }
 
-export function getBucketsProps(props: IAreaChartProps): {
-    measures: BucketItem[],
-    viewBy: IVisualizationAttribute[],
-    stackBy: IVisualizationAttribute[]
+export function getBucketsProps(
+    props: IAreaChartProps,
+): {
+    measures: BucketItem[];
+    viewBy: IVisualizationAttribute[];
+    stackBy: IVisualizationAttribute[];
 } {
     const { measures, stackBy } = props;
     const viewBy = getViewByTwoAttributes(props.viewBy);
@@ -30,7 +32,7 @@ export function getBucketsProps(props: IAreaChartProps): {
         return {
             measures: measures || [],
             viewBy,
-            stackBy: stackBy ? [stackBy] : []
+            stackBy: stackBy ? [stackBy] : [],
         };
     }
 
@@ -41,7 +43,7 @@ export function getBucketsProps(props: IAreaChartProps): {
     return {
         measures: [firstMeasure],
         viewBy: [firstAttribute], // one attribute for viewBy which slices measure vertically
-        stackBy: [secondAttribute] // one attribute for stackBy which slices measure horizontally
+        stackBy: [secondAttribute], // one attribute for stackBy which slices measure horizontally
     };
 }
 
@@ -54,7 +56,7 @@ export function getConfigProps(props: IAreaChartProps): IChartConfig {
     return {
         stacking: false, // area sections are always overlapped with two attributes
         stackMeasures: false,
-        stackMeasuresToPercent: false
+        stackMeasuresToPercent: false,
     };
 }
 
@@ -71,6 +73,8 @@ export function verifyBuckets(props: IAreaChartProps): void {
     const { measures = [], stackBy } = props;
     if (measures.length > 1 || stackBy) {
         // tslint:disable-next-line:no-console max-line-length
-        console.warn('When there are two attributes in viewBy, only first measure is taken and attribute in stackBy is ignored');
+        console.warn(
+            "When there are two attributes in viewBy, only first measure is taken and attribute in stackBy is ignored",
+        );
     }
 }

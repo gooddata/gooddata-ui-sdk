@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { AttributeElements, BarChart, Model } from '@gooddata/react-components';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
-import '@gooddata/react-components/styles/css/main.css';
+import React, { Component } from "react";
+import { AttributeElements, BarChart, Model } from "@gooddata/react-components";
+import Select from "react-select";
+import "react-select/dist/react-select.css";
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
@@ -13,8 +13,8 @@ import {
     locationCityDisplayFormIdentifier,
     locationIdAttributeIdentifier,
     locationNameDisplayFormIdentifier,
-    totalSalesIdentifier
-} from '../utils/fixtures';
+    totalSalesIdentifier,
+} from "../utils/fixtures";
 
 export class ParentFilterExample extends Component {
     constructor(props) {
@@ -23,52 +23,56 @@ export class ParentFilterExample extends Component {
         this.renderFilter = this.renderFilter.bind(this);
         this.state = {
             stateFilterValues: [],
-            cityFilterValues: []
+            cityFilterValues: [],
         };
         this.handlers = {
             state: this.onStateChange,
-            city: this.onCityChange
+            city: this.onCityChange,
         };
     }
 
-    onStateChange = (stateFilterValues) => {
+    onStateChange = stateFilterValues => {
         this.setState({
-            stateFilterValues
+            stateFilterValues,
         });
-    }
+    };
 
-    onCityChange = (cityFilterValues) => {
+    onCityChange = cityFilterValues => {
         this.setState({
-            cityFilterValues
+            cityFilterValues,
         });
-    }
+    };
 
-    renderVisualization(
-        stateFilterValues,
-        cityFilterValues
-    ) {
+    renderVisualization(stateFilterValues, cityFilterValues) {
         const visFilters = [];
 
         if (stateFilterValues.length) {
             visFilters.push(
                 Model.positiveAttributeFilter(
                     locationStateDisplayFormIdentifier,
-                    stateFilterValues.map(filter => filter.value)));
+                    stateFilterValues.map(filter => filter.value),
+                ),
+            );
         }
         if (cityFilterValues.length) {
             visFilters.push(
                 Model.positiveAttributeFilter(
                     locationCityDisplayFormIdentifier,
-                    cityFilterValues.map(filter => filter.value)));
+                    cityFilterValues.map(filter => filter.value),
+                ),
+            );
         }
 
-        const measureTotalSales = Model.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
+        const measureTotalSales = Model.measure(totalSalesIdentifier)
+            .format("#,##0")
+            .alias("$ Total Sales");
 
-        const viewByLocationName = Model.attribute(locationNameDisplayFormIdentifier)
-            .localIdentifier('location_name');
+        const viewByLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
+            "location_name",
+        );
 
         return (
-            <div style={{ height: 500 }} >
+            <div style={{ height: 500 }}>
                 <BarChart
                     measures={[measureTotalSales]}
                     viewBy={viewByLocationName}
@@ -80,14 +84,7 @@ export class ParentFilterExample extends Component {
         );
     }
 
-    renderFilter(
-        key,
-        displayFormIdentifier,
-        filterValues,
-        placeholder,
-        options,
-        onChange
-    ) {
+    renderFilter(key, displayFormIdentifier, filterValues, placeholder, options, onChange) {
         return (
             <AttributeElements
                 key={key}
@@ -99,16 +96,18 @@ export class ParentFilterExample extends Component {
                     if (error) {
                         return <div>{error}</div>;
                     }
-                    const selectOptions = validElements ? validElements.items.map(item => ({
-                        label: item.element.title,
-                        value: item.element.uri
-                    })) : [];
+                    const selectOptions = validElements
+                        ? validElements.items.map(item => ({
+                              label: item.element.title,
+                              value: item.element.uri,
+                          }))
+                        : [];
                     return (
                         <span
                             style={{
-                                display: 'inline-block',
-                                minWidth: '10em',
-                                verticalAlign: 'middle'
+                                display: "inline-block",
+                                minWidth: "10em",
+                                verticalAlign: "middle",
                             }}
                         >
                             <Select
@@ -132,27 +131,29 @@ export class ParentFilterExample extends Component {
 
         // State (parent) filter
         const stateFilter = this.renderFilter(
-            'state',
+            "state",
             locationStateDisplayFormIdentifier,
             stateFilterValues,
-            'all states',
+            "all states",
             { limit: 20 },
-            this.onStateChange
+            this.onStateChange,
         );
 
         // City (child) filter
         const cityOptions = { limit: 20 };
         if (stateFilterValues.length) {
             // parent value uris need to be surrounded by '[]' and separated by ','
-            const selectedParentItems = stateFilterValues.map(parentItem => `[${parentItem.value}]`).join(', ');
+            const selectedParentItems = stateFilterValues
+                .map(parentItem => `[${parentItem.value}]`)
+                .join(", ");
             const afm = {
                 attributes: [
                     {
                         displayForm: {
-                            identifier: locationCityDisplayFormIdentifier
+                            identifier: locationCityDisplayFormIdentifier,
                         },
-                        localIdentifier: 'childAttribute'
-                    }
+                        localIdentifier: "childAttribute",
+                    },
                 ],
                 filters: [
                     {
@@ -166,22 +167,21 @@ export class ParentFilterExample extends Component {
                                 // and child attributes surrounded by '{}'
                                 ` OVER {${locationIdAttributeIdentifier}}` +
                                 // child attribute identifier surrounded by '{}'
-                                ` TO {${locationCityAttributeIdentifier}}`
-                        }
-                    }
-                ]
+                                ` TO {${locationCityAttributeIdentifier}}`,
+                        },
+                    },
+                ],
             };
             cityOptions.afm = afm;
         }
         const cityFilter = this.renderFilter(
-            'city',
+            "city",
             locationCityDisplayFormIdentifier,
             cityFilterValues,
-            'all cities',
+            "all cities",
             cityOptions,
-            this.onCityChange
+            this.onCityChange,
         );
-
 
         return (
             <div>
@@ -189,10 +189,7 @@ export class ParentFilterExample extends Component {
                 {stateFilter}
                 &emsp;and&emsp; {cityFilter}
                 <hr className="separator" />
-                {this.renderVisualization(
-                    stateFilterValues,
-                    cityFilterValues
-                )}
+                {this.renderVisualization(stateFilterValues, cityFilterValues)}
             </div>
         );
     }

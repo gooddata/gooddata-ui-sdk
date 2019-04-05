@@ -1,32 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy, get } from 'lodash';
-import { AFM } from '@gooddata/typings';
-import { InjectedIntl } from 'react-intl';
+import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy, get } from "lodash";
+import { AFM } from "@gooddata/typings";
+import { InjectedIntl } from "react-intl";
 import {
     isMappingHeaderAttribute,
     isMappingHeaderMeasureItem,
-    IMappingHeader
-} from '../../../../interfaces/MappingHeader';
-import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
-import {
-    IAlignPoint,
-    ITotalsDataSource,
-    ITotalTypeWithTitle
-} from '../../../../interfaces/Table';
+    IMappingHeader,
+} from "../../../../interfaces/MappingHeader";
+import { IIndexedTotalItem, ITotalWithData } from "../../../../interfaces/Totals";
+import { IAlignPoint, ITotalsDataSource, ITotalTypeWithTitle } from "../../../../interfaces/Table";
 
-import { getFooterHeight } from '../utils/footer';
+import { getFooterHeight } from "../utils/footer";
 
-export const AVAILABLE_TOTALS: AFM.TotalType[] = [
-    'sum',
-    'max',
-    'min',
-    'avg',
-    'med',
-    'nat'
-];
+export const AVAILABLE_TOTALS: AFM.TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 
 export const isNativeTotal = (total: AFM.ITotalItem) => {
-    return total && total.type === 'nat';
+    return total && total.type === "nat";
 };
 
 export const getNativeTotals = (totals: AFM.ITotalItem[]): AFM.INativeTotalItem[] => {
@@ -37,7 +26,7 @@ export const getNativeTotals = (totals: AFM.ITotalItem[]): AFM.INativeTotalItem[
         .filter(total => isNativeTotal(total))
         .map(nativeTotal => ({
             measureIdentifier: nativeTotal.measureIdentifier,
-            attributeIdentifiers: []
+            attributeIdentifiers: [],
         }));
     return afmNativeTotals;
 };
@@ -45,49 +34,48 @@ export const getNativeTotals = (totals: AFM.ITotalItem[]): AFM.INativeTotalItem[
 export const getTotalsFromResultSpec = (resultSpec: AFM.IResultSpec): AFM.ITotalItem[] => {
     return resultSpec && resultSpec.dimensions
         ? resultSpec.dimensions.reduce(
-            (totals: AFM.ITotalItem[], dimension) =>
-                dimension && dimension.totals ? totals.concat(dimension.totals) : totals,
-            []
-        )
+              (totals: AFM.ITotalItem[], dimension) =>
+                  dimension && dimension.totals ? totals.concat(dimension.totals) : totals,
+              [],
+          )
         : [];
 };
 
 function getTotalsList(intl: InjectedIntl): ITotalTypeWithTitle[] {
     return AVAILABLE_TOTALS.map(type => ({
         type,
-        title: intl.formatMessage({ id: `visualizations.totals.dropdown.title.${type}` })
+        title: intl.formatMessage({ id: `visualizations.totals.dropdown.title.${type}` }),
     }));
 }
 
 export function getTotalsDataSource(usedTotals: ITotalWithData[], intl: InjectedIntl): ITotalsDataSource {
     const usedTotalsTypes: AFM.TotalType[] = usedTotals.map((total: ITotalWithData) => total.type);
 
-    const list: ITotalTypeWithTitle[] = getTotalsList(intl)
-        .map((total: ITotalTypeWithTitle) => ({
-            ...total,
-            disabled: usedTotalsTypes.includes(total.type)
-        }));
+    const list: ITotalTypeWithTitle[] = getTotalsList(intl).map((total: ITotalTypeWithTitle) => ({
+        ...total,
+        disabled: usedTotalsTypes.includes(total.type),
+    }));
 
     list.unshift({
-        title: 'visualizations.totals.dropdown.heading',
-        role: 'header'
+        title: "visualizations.totals.dropdown.heading",
+        role: "header",
     });
 
     return {
         rowsCount: list.length,
-        getObjectAt: (index: number) => list[index]
+        getObjectAt: (index: number) => list[index],
     };
 }
 
 export function createTotalItem(
     type: AFM.TotalType,
     outputMeasureIndexes: number[] = [],
-    values: number[] = []
+    values: number[] = [],
 ): ITotalWithData {
     return {
         type,
         outputMeasureIndexes,
-        values
+        values,
     };
 }
 
@@ -99,7 +87,7 @@ export function toggleCellClass(
     parentReference: Element,
     tableColumnIndex: number,
     isHighlighted: boolean,
-    className: string
+    className: string,
 ): void {
     const cells: NodeListOf<Element> = parentReference.querySelectorAll(`.col-${tableColumnIndex}`);
 
@@ -116,7 +104,7 @@ export function resetRowClass(
     parentReference: Element,
     className: string,
     selector: string,
-    rowIndexToBeSet: number = null
+    rowIndexToBeSet: number = null,
 ): void {
     const rows: NodeListOf<Element> = parentReference.querySelectorAll(selector);
 
@@ -128,7 +116,10 @@ export function resetRowClass(
     }
 }
 
-export function removeTotalsRow(totals: ITotalWithData[], totalItemTypeToRemove: AFM.TotalType): ITotalWithData[] {
+export function removeTotalsRow(
+    totals: ITotalWithData[],
+    totalItemTypeToRemove: AFM.TotalType,
+): ITotalWithData[] {
     const updatedTotals: ITotalWithData[] = cloneDeep(totals);
 
     remove(updatedTotals, total => total.type === totalItemTypeToRemove);
@@ -159,38 +150,35 @@ export function updateTotalsRemovePosition(
     totals: ITotalWithData[],
     isTotalsEditAllowed: boolean,
     totalsAreVisible: boolean,
-    removeWrapper: HTMLElement
+    removeWrapper: HTMLElement,
 ): void {
     if (!isTotalsEditAllowed) {
         return;
     }
 
-    const translateY: number = tableBoundingRect.height - getFooterHeight(
-        totals,
-        isTotalsEditAllowed,
-        totalsAreVisible
-    );
+    const translateY: number =
+        tableBoundingRect.height - getFooterHeight(totals, isTotalsEditAllowed, totalsAreVisible);
 
-    removeWrapper.style.bottom = 'auto';
+    removeWrapper.style.bottom = "auto";
     removeWrapper.style.top = `${translateY}px`;
 }
 
 export function getAddTotalDropdownAlignPoints(isLastColumn: boolean = false): IAlignPoint[] {
-    return isLastColumn ?
-        [
-            { align: 'tc br', offset: { x: 30, y: -3 } }, // top right
-            { align: 'bc tr', offset: { x: 30, y: 50 } } // bottom right
-        ] :
-        [
-            { align: 'tc bc', offset: { x: 0, y: -3 } }, // top center
-            { align: 'bc tc', offset: { x: 0, y: 50 } } // bottom center
-        ];
+    return isLastColumn
+        ? [
+              { align: "tc br", offset: { x: 30, y: -3 } }, // top right
+              { align: "bc tr", offset: { x: 30, y: 50 } }, // bottom right
+          ]
+        : [
+              { align: "tc bc", offset: { x: 0, y: -3 } }, // top center
+              { align: "bc tc", offset: { x: 0, y: 50 } }, // bottom center
+          ];
 }
 
 export function shouldShowAddTotalButton(
     header: IMappingHeader,
     isFirstColumn: boolean,
-    addingMoreTotalsEnabled: boolean
+    addingMoreTotalsEnabled: boolean,
 ): boolean {
     return !isFirstColumn && isMappingHeaderMeasureItem(header) && addingMoreTotalsEnabled;
 }
@@ -203,7 +191,7 @@ export function getFirstMeasureIndex(headers: IMappingHeader[]): number {
 export function hasTableColumnTotalEnabled(
     outputMeasureIndexes: number[],
     tableColumnIndex: number,
-    firstMeasureIndex: number
+    firstMeasureIndex: number,
 ): boolean {
     const index = tableColumnIndex - firstMeasureIndex;
 
@@ -214,7 +202,7 @@ export function addMeasureIndex(
     totals: ITotalWithData[],
     headers: IMappingHeader[],
     totalType: AFM.TotalType,
-    tableColumnIndex: number
+    tableColumnIndex: number,
 ): ITotalWithData[] {
     const index: number = tableColumnIndex - getFirstMeasureIndex(headers);
 
@@ -229,7 +217,7 @@ export function addMeasureIndex(
 
         return {
             ...total,
-            outputMeasureIndexes: sortedUniq(outputMeasureIndexes)
+            outputMeasureIndexes: sortedUniq(outputMeasureIndexes),
         };
     });
 }
@@ -238,7 +226,7 @@ export function removeMeasureIndex(
     totals: ITotalWithData[],
     headers: IMappingHeader[],
     totalType: AFM.TotalType,
-    tableColumnIndex: number
+    tableColumnIndex: number,
 ): ITotalWithData[] {
     const index: number = tableColumnIndex - getFirstMeasureIndex(headers);
 
@@ -251,14 +239,15 @@ export function removeMeasureIndex(
 
         return {
             ...total,
-            outputMeasureIndexes
+            outputMeasureIndexes,
         };
     });
 }
 
 export function getTotalsDefinition(totalsWithValues: ITotalWithData[]): IIndexedTotalItem[] {
-    const totalsWithoutValues: IIndexedTotalItem[] = totalsWithValues
-        .map((total: IIndexedTotalItem) => omit(total, 'values') as IIndexedTotalItem);
+    const totalsWithoutValues: IIndexedTotalItem[] = totalsWithValues.map(
+        (total: IIndexedTotalItem) => omit(total, "values") as IIndexedTotalItem,
+    );
 
     return orderTotals(totalsWithoutValues);
 }
@@ -268,16 +257,20 @@ export function shouldShowTotals(headers: IMappingHeader[]): boolean {
         return false;
     }
 
-    const onlyMeasures: boolean = headers.every((header: IMappingHeader) => isMappingHeaderMeasureItem(header));
-    const onlyAttributes: boolean = headers.every((header: IMappingHeader) => isMappingHeaderAttribute(header));
+    const onlyMeasures: boolean = headers.every((header: IMappingHeader) =>
+        isMappingHeaderMeasureItem(header),
+    );
+    const onlyAttributes: boolean = headers.every((header: IMappingHeader) =>
+        isMappingHeaderAttribute(header),
+    );
 
     return !(onlyAttributes || onlyMeasures);
 }
 
 export const getColumnTotalsFromResultSpec = (source: AFM.IResultSpec) => {
-    return get(source, 'dimensions[0].totals', []);
+    return get(source, "dimensions[0].totals", []);
 };
 
 export default {
-    getColumnTotalsFromResultSpec
+    getColumnTotalsFromResultSpec,
 };

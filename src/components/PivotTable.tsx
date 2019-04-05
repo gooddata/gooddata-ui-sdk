@@ -1,24 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
-import omit = require('lodash/omit');
-import noop = require('lodash/noop');
-import { Subtract } from 'utility-types';
+import * as React from "react";
+import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
+import omit = require("lodash/omit");
+import noop = require("lodash/noop");
+import { Subtract } from "utility-types";
 
-import { PivotTable as CorePivotTable } from './core/PivotTable';
-import { dataSourceProvider } from './afm/DataSourceProvider';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { getPivotTableDimensions } from '../helpers/dimensions';
-import { getResultSpec } from '../helpers/resultSpec';
-import { IPivotTableConfig } from '../interfaces/PivotTable';
+import { PivotTable as CorePivotTable } from "./core/PivotTable";
+import { dataSourceProvider } from "./afm/DataSourceProvider";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { getPivotTableDimensions } from "../helpers/dimensions";
+import { getResultSpec } from "../helpers/resultSpec";
+import { IPivotTableConfig } from "../interfaces/PivotTable";
 
-import {
-    MEASURES,
-    ATTRIBUTE,
-    COLUMNS
- } from '../constants/bucketNames';
-import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
+import { MEASURES, ATTRIBUTE, COLUMNS } from "../constants/bucketNames";
+import { hasDuplicateIdentifiers } from "../helpers/errorHandlers";
 
 export interface IPivotTableBucketProps {
     measures?: VisualizationInput.AttributeOrMeasure[];
@@ -42,23 +38,23 @@ export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.I
     return [
         {
             localIdentifier: MEASURES,
-            items: measures || []
+            items: measures || [],
         },
         {
             // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
             localIdentifier: ATTRIBUTE,
             items: rows || [],
-            totals: totals || []
+            totals: totals || [],
         },
         {
             localIdentifier: COLUMNS,
-            items: columns || []
-        }
+            items: columns || [],
+        },
     ];
 };
 
 // noop is never called because resultSpec is always provided
-const DataSourceProvider = dataSourceProvider(CorePivotTable, noop as any, 'PivotTable');
+const DataSourceProvider = dataSourceProvider(CorePivotTable, noop as any, "PivotTable");
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 /**
@@ -67,7 +63,7 @@ type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketPro
  */
 export class PivotTable extends React.Component<IPivotTableProps> {
     public static defaultProps: Partial<IPivotTableProps> = {
-        groupRows: false
+        groupRows: false,
     };
 
     public render() {
@@ -82,16 +78,15 @@ export class PivotTable extends React.Component<IPivotTableProps> {
         hasDuplicateIdentifiers(buckets);
 
         // PivotTable component still has 'rows' prop even though this is translated into ATTRIBUTE bucket
-        const newProps
-            = omit<IPivotTableProps, IPivotTableNonBucketProps>(this.props,
-                ['measures', 'rows', 'columns', 'totals', 'filters', 'sortBy']);
+        const newProps = omit<IPivotTableProps, IPivotTableNonBucketProps>(this.props, [
+            "measures",
+            "rows",
+            "columns",
+            "totals",
+            "filters",
+            "sortBy",
+        ]);
 
-        return (
-            <DataSourceProvider
-                {...newProps}
-                afm={afm}
-                resultSpec={resultSpec}
-            />
-        );
+        return <DataSourceProvider {...newProps} afm={afm} resultSpec={resultSpec} />;
     }
 }

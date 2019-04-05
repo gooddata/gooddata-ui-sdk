@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { PivotTable, Table, HeaderPredicateFactory, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { PivotTable, Table, HeaderPredicateFactory, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
@@ -15,24 +15,26 @@ import {
     menuCategoryAttributeDFIdentifier,
     locationStateAttributeCaliforniaUri,
     monthDateIdentifierJanuary,
-    dateDatasetIdentifier
-} from '../utils/fixtures';
-import { createColumnTotal } from '../utils/helpers';
-import { ElementWithParam } from './utils/ElementWithParam';
+    dateDatasetIdentifier,
+} from "../utils/fixtures";
+import { createColumnTotal } from "../utils/helpers";
+import { ElementWithParam } from "./utils/ElementWithParam";
 
 const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
-const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier)
-    .localIdentifier(franchiseFeesAdRoyaltyIdentifier);
-const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier)
-    .localIdentifier(locationStateDisplayFormIdentifier);
-const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier)
-    .localIdentifier(locationNameDisplayFormIdentifier);
-const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier)
-    .localIdentifier(menuCategoryAttributeDFIdentifier);
-const attributeQuarter = Model.attribute(quarterDateIdentifier)
-    .localIdentifier(quarterDateIdentifier);
-const attributeMonth = Model.attribute(monthDateIdentifier)
-    .localIdentifier(monthDateIdentifier);
+const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier).localIdentifier(
+    franchiseFeesAdRoyaltyIdentifier,
+);
+const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier(
+    locationStateDisplayFormIdentifier,
+);
+const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
+    locationNameDisplayFormIdentifier,
+);
+const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
+    menuCategoryAttributeDFIdentifier,
+);
+const attributeQuarter = Model.attribute(quarterDateIdentifier).localIdentifier(quarterDateIdentifier);
+const attributeMonth = Model.attribute(monthDateIdentifier).localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -40,311 +42,315 @@ const rows = [attributeLocationState, attributeLocationName, attributeMenuCatego
 
 const bucketPresets = {
     measures: {
-        label: 'Measures',
-        key: 'measures',
+        label: "Measures",
+        key: "measures",
         bucketProps: {
-            measures
-        }
+            measures,
+        },
     },
     columnAttributes: {
-        label: 'Column attributes',
-        key: 'columnAttributes',
+        label: "Column attributes",
+        key: "columnAttributes",
         bucketProps: {
-            columns
-        }
+            columns,
+        },
     },
     rowAttributes: {
-        label: 'Row attributes',
-        key: 'rowAttributes',
+        label: "Row attributes",
+        key: "rowAttributes",
         bucketProps: {
-            rows
-        }
+            rows,
+        },
     },
     columnAndRowAttributes: {
-        label: 'Column and row attributes',
-        key: 'columnAndRowAttributes',
+        label: "Column and row attributes",
+        key: "columnAndRowAttributes",
         bucketProps: {
             columns,
-            rows
-        }
+            rows,
+        },
     },
     measuresColumnAndRowAttributes: {
-        label: 'Measures, column and row attributes',
-        key: 'measuresColumnAndRowAttributes',
+        label: "Measures, column and row attributes",
+        key: "measuresColumnAndRowAttributes",
         bucketProps: {
             measures,
             columns,
-            rows
-        }
+            rows,
+        },
     },
     measuresAndColumnAttributes: {
-        label: 'Measures and column attributes',
-        key: 'measuresAndColumnAttributes',
+        label: "Measures and column attributes",
+        key: "measuresAndColumnAttributes",
         bucketProps: {
             measures,
-            columns
-        }
+            columns,
+        },
     },
     measuresAndRowAttributes: {
-        label: 'Measures and row attributes',
-        key: 'measuresAndRowAttributes',
+        label: "Measures and row attributes",
+        key: "measuresAndRowAttributes",
         bucketProps: {
             measures,
-            rows
-        }
+            rows,
+        },
     },
     measuresAndMirroredAttributes: {
-        label: 'Measures and mirrored attributes',
-        key: 'measuresAndMirroredAttributes',
+        label: "Measures and mirrored attributes",
+        key: "measuresAndMirroredAttributes",
         bucketProps: {
             measures,
             rows,
             columns: rows.map(attribute => ({
                 visualizationAttribute: {
                     ...attribute.visualizationAttribute,
-                    localIdentifier: `${attribute.visualizationAttribute.localIdentifier}_2`
-                }
-            }))
-        }
+                    localIdentifier: `${attribute.visualizationAttribute.localIdentifier}_2`,
+                },
+            })),
+        },
     },
     smallDataSet: {
-        label: 'Small data set',
-        key: 'smallDataSet',
-        bucketProps: {
-            measures,
-            rows: [attributeLocationState]
-        }
-    },
-    smallWideDataSet: {
-        label: 'Small wide data set',
-        key: 'smallWideDataSet',
+        label: "Small data set",
+        key: "smallDataSet",
         bucketProps: {
             measures,
             rows: [attributeLocationState],
-            columns: [attributeQuarter]
-        }
-    }
+        },
+    },
+    smallWideDataSet: {
+        label: "Small wide data set",
+        key: "smallWideDataSet",
+        bucketProps: {
+            measures,
+            rows: [attributeLocationState],
+            columns: [attributeQuarter],
+        },
+    },
 };
 
 const drillingPresets = {
     measure: {
-        label: 'Measure Franchise Fees',
-        key: 'measure',
-        drillableItem: HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier)
+        label: "Measure Franchise Fees",
+        key: "measure",
+        drillableItem: HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier),
     },
     attributeMonth: {
-        label: 'Attribute Month',
-        key: 'attributeMonth',
-        drillableItem: HeaderPredicateFactory.identifierMatch(monthDateIdentifier)
+        label: "Attribute Month",
+        key: "attributeMonth",
+        drillableItem: HeaderPredicateFactory.identifierMatch(monthDateIdentifier),
     },
     attributeQuarter: {
-        label: 'Attribute Quarter',
-        key: 'attributeQuarter',
-        drillableItem: HeaderPredicateFactory.identifierMatch(quarterDateIdentifier)
+        label: "Attribute Quarter",
+        key: "attributeQuarter",
+        drillableItem: HeaderPredicateFactory.identifierMatch(quarterDateIdentifier),
     },
     attributeLocationState: {
-        label: 'Attribute Location state',
-        key: 'attributeLocationState',
-        drillableItem: HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier)
+        label: "Attribute Location state",
+        key: "attributeLocationState",
+        drillableItem: HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier),
     },
     attributeMenuCategory: {
-        label: 'Attribute Menu category',
-        key: 'attributeMenuCategory',
-        drillableItem: HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier)
+        label: "Attribute Menu category",
+        key: "attributeMenuCategory",
+        drillableItem: HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier),
     },
     attributeValueCalifornia: {
-        label: 'Attribute value California',
-        key: 'attributeValueCalifornia',
-        drillableItem: HeaderPredicateFactory.uriMatch(locationStateAttributeCaliforniaUri)
+        label: "Attribute value California",
+        key: "attributeValueCalifornia",
+        drillableItem: HeaderPredicateFactory.uriMatch(locationStateAttributeCaliforniaUri),
     },
     attributeValueJanuary: {
-        label: 'Attribute value January',
-        key: 'attributeValueJanuary',
-        drillableItem: HeaderPredicateFactory.uriMatch(monthDateIdentifierJanuary)
-    }
+        label: "Attribute value January",
+        key: "attributeValueJanuary",
+        drillableItem: HeaderPredicateFactory.uriMatch(monthDateIdentifierJanuary),
+    },
 };
 const totalPresets = {
     franchiseFeesSum: {
-        label: 'Franchise Fees Sum',
-        key: 'franchiseFeesSum',
-        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier)
+        label: "Franchise Fees Sum",
+        key: "franchiseFeesSum",
+        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier),
     },
     franchiseFeesAvg: {
-        label: 'Franchise Fees Average',
-        key: 'franchiseFeesAvg',
-        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier, 'avg')
+        label: "Franchise Fees Average",
+        key: "franchiseFeesAvg",
+        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier, "avg"),
     },
     franchiseFeesAdRoyaltySum: {
-        label: 'Franchise Fees Ad Royalty Sum',
-        key: 'franchiseFeesAdRoyaltySum',
-        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier)
+        label: "Franchise Fees Ad Royalty Sum",
+        key: "franchiseFeesAdRoyaltySum",
+        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier),
     },
     franchiseFeesAdRoyaltyMax: {
-        label: 'Franchise Fees Ad Royalty Max',
-        key: 'franchiseFeesAdRoyaltyMax',
-        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier, 'max')
+        label: "Franchise Fees Ad Royalty Max",
+        key: "franchiseFeesAdRoyaltyMax",
+        totalItem: createColumnTotal(
+            franchiseFeesAdRoyaltyIdentifier,
+            locationStateDisplayFormIdentifier,
+            "max",
+        ),
     },
     franchiseFeesMaxByLocationState: {
-        label: 'Subtotal Franchise Fees Max by Location State',
-        key: 'franchiseFeesMaxByLocationState',
-        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationNameDisplayFormIdentifier, 'max')
-    }
+        label: "Subtotal Franchise Fees Max by Location State",
+        key: "franchiseFeesMaxByLocationState",
+        totalItem: createColumnTotal(
+            franchiseFeesAdRoyaltyIdentifier,
+            locationNameDisplayFormIdentifier,
+            "max",
+        ),
+    },
 };
 const filterPresets = {
     attributeCalifornia: {
-        label: 'Attribute (California)',
-        key: 'attributeCalifornia',
-        filterItem: Model.positiveAttributeFilter(
-            locationStateDisplayFormIdentifier,
-            [locationStateAttributeCaliforniaUri]
-        )
+        label: "Attribute (California)",
+        key: "attributeCalifornia",
+        filterItem: Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [
+            locationStateAttributeCaliforniaUri,
+        ]),
     },
     lastYear: {
-        label: 'Last year',
-        key: 'lastYear',
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', -1, -1)
+        label: "Last year",
+        key: "lastYear",
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
     },
     noData: {
-        label: 'No Data',
-        key: 'noData',
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, 'GDC.time.year', 1, 1)
+        label: "No Data",
+        key: "noData",
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
     },
     franchiseFeesCalifornia: {
-        label: 'Franchise Fees California',
-        key: 'franchiseFeesCalifornia',
-        filterItem: null
-    }
+        label: "Franchise Fees California",
+        key: "franchiseFeesCalifornia",
+        filterItem: null,
+    },
 };
 
-const franchiseFeesCalifornia =
-    Model.measure(franchiseFeesIdentifier)
-        .localIdentifier('franchiseFeesCalifornia')
-        .alias('FranchiseFees (California)')
-        .filters(filterPresets.attributeCalifornia.filterItem);
+const franchiseFeesCalifornia = Model.measure(franchiseFeesIdentifier)
+    .localIdentifier("franchiseFeesCalifornia")
+    .alias("FranchiseFees (California)")
+    .filters(filterPresets.attributeCalifornia.filterItem);
 
 const sortingPresets = {
     noSort: {
-        label: 'No sort',
-        key: 'noSort',
-        sortBy: []
+        label: "No sort",
+        key: "noSort",
+        sortBy: [],
     },
     byMenuCategory: {
-        label: 'By Menu Category ASC',
-        key: 'byMenuCategory',
-        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, 'asc')]
+        label: "By Menu Category ASC",
+        key: "byMenuCategory",
+        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, "asc")],
     },
     byLocationState: {
-        label: 'By Location State DESC',
-        key: 'byLocationState',
-        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, 'desc')]
+        label: "By Location State DESC",
+        key: "byLocationState",
+        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, "desc")],
     },
     byQ1JanFranchiseFees: {
-        label: 'by Q1 / Jan / FranchiseFees DESC',
-        key: 'byQ1JanFranchiseFees',
+        label: "by Q1 / Jan / FranchiseFees DESC",
+        key: "byQ1JanFranchiseFees",
         sortBy: [
-            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
-                .attributeLocators(
-                    {
-                        attributeIdentifier: quarterDateIdentifier,
-                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
-                    },
-                    {
-                        attributeIdentifier: monthDateIdentifier,
-                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-                    }
-                )
-        ]
+            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
+                {
+                    attributeIdentifier: quarterDateIdentifier,
+                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                },
+                {
+                    attributeIdentifier: monthDateIdentifier,
+                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                },
+            ),
+        ],
     },
     byLocationStateAndQ1JanFranchiseFees: {
-        label: 'By Location State ASC And Q1 Jan Franchise Fees DESC',
-        key: 'byLocationStateAndQ1JanFranchiseFees',
+        label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
+        key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            Model.attributeSortItem(locationStateDisplayFormIdentifier, 'asc'),
-            Model.measureSortItem(franchiseFeesIdentifier, 'desc')
-                .attributeLocators(
-                    {
-                        attributeIdentifier: quarterDateIdentifier,
-                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
-                    },
-                    {
-                        attributeIdentifier: monthDateIdentifier,
-                        element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
-                    }
-                )
-        ]
-    }
+            Model.attributeSortItem(locationStateDisplayFormIdentifier, "asc"),
+            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
+                {
+                    attributeIdentifier: quarterDateIdentifier,
+                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                },
+                {
+                    attributeIdentifier: monthDateIdentifier,
+                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                },
+            ),
+        ],
+    },
 };
 
 const menuPresets = {
     noMenu: {
-        label: 'No menu',
-        key: 'noMenu',
-        menuConfig: null
+        label: "No menu",
+        key: "noMenu",
+        menuConfig: null,
     },
     aggregations: {
-        label: 'Aggregations',
-        key: 'aggregations',
-        menuConfig: { aggregations: true }
-    }
+        label: "Aggregations",
+        key: "aggregations",
+        menuConfig: { aggregations: true },
+    },
 };
 
 const pivotTableSizePresets = {
     default: {
-        label: 'Default',
-        key: 'default',
-        styles: { width: '100%', height: 300 }
+        label: "Default",
+        key: "default",
+        styles: { width: "100%", height: 300 },
     },
     wide: {
-        label: 'Wide',
-        key: 'wide',
-        styles: { width: 1500, height: 500 }
-    }
+        label: "Wide",
+        key: "wide",
+        styles: { width: 1500, height: 500 },
+    },
 };
 
 const maxHeightPresets = {
     none: {
-        key: 'none',
-        label: 'None',
-        value: undefined
+        key: "none",
+        label: "None",
+        value: undefined,
     },
     oneHundred: {
-        key: 'oneHundred',
-        label: '100px',
-        value: 100
+        key: "oneHundred",
+        label: "100px",
+        value: 100,
     },
     twoHundredFifty: {
-        key: 'twoHundredFifty',
-        label: '250px',
-        value: 250
-    }
+        key: "twoHundredFifty",
+        label: "250px",
+        value: 250,
+    },
 };
 
 const groupRowsPresets = {
     disabledGrouping: {
-        label: 'Disabled',
-        key: 'disabledGrouping',
-        value: false
+        label: "Disabled",
+        key: "disabledGrouping",
+        value: false,
     },
     activeGrouping: {
-        label: 'Active',
-        key: 'activeGrouping',
-        value: true
-    }
+        label: "Active",
+        key: "activeGrouping",
+        value: true,
+    },
 };
 
-export const getDrillableItems = (drillableKeys) => {
+export const getDrillableItems = drillableKeys => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
         .map(itemKey => drillingPresets[itemKey].drillableItem);
 };
 
-export const getTotalItems = (totalKeys) => {
+export const getTotalItems = totalKeys => {
     return Object.keys(totalKeys)
         .filter(itemKey => totalKeys[itemKey])
         .map(itemKey => totalPresets[itemKey].totalItem);
 };
 
-export const getGroupRows = (groupRowsKey) => {
+export const getGroupRows = groupRowsKey => {
     return groupRowsPresets[groupRowsKey].value;
 };
 
@@ -356,92 +362,96 @@ export class PivotTableDrillingExample extends Component {
             attributeValueCalifornia: true,
             measure: true,
             attributeMenuCategory: true,
-            attributeValueJanuary: true
+            attributeValueJanuary: true,
         };
 
         this.state = {
-            bucketPresetKey: 'measuresColumnAndRowAttributes',
+            bucketPresetKey: "measuresColumnAndRowAttributes",
             drillEvent: null,
             drillingPresetKeys,
             filterPresetKeys: {},
             drillableItems: getDrillableItems(drillingPresetKeys),
             totalPresetKeys: {},
-            sortingPresetKey: 'noSort',
-            menuPresetKey: 'noMenu',
-            pivotTableSizeKey: 'default',
-            maxHeightPresetKey: 'none',
-            groupRowsKey: 'disabledGrouping'
+            sortingPresetKey: "noSort",
+            menuPresetKey: "noMenu",
+            pivotTableSizeKey: "default",
+            maxHeightPresetKey: "none",
+            groupRowsKey: "disabledGrouping",
         };
     }
 
-    onDrillingPresetChange = (drillingPresetKey) => {
+    onDrillingPresetChange = drillingPresetKey => {
         const drillingPresetKeys = {
             ...this.state.drillingPresetKeys,
-            [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey]
+            [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey],
         };
         this.setState({
             drillingPresetKeys,
-            drillableItems: getDrillableItems(drillingPresetKeys)
+            drillableItems: getDrillableItems(drillingPresetKeys),
         });
-    }
-    onTotalPresetChange = (totalPresetKey) => {
+    };
+    onTotalPresetChange = totalPresetKey => {
         const totalPresetKeys = {
             ...this.state.totalPresetKeys,
-            [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey]
+            [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey],
         };
         this.setState({
-            totalPresetKeys
+            totalPresetKeys,
         });
-    }
-    onFilterPresetChange = (filterPresetKey) => {
+    };
+    onFilterPresetChange = filterPresetKey => {
         const filterPresetKeys = {
             ...this.state.filterPresetKeys,
-            [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey]
+            [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey],
         };
         this.setState({
-            filterPresetKeys
+            filterPresetKeys,
         });
-    }
-    onBucketPresetChange = (bucketPresetKey) => {
+    };
+    onBucketPresetChange = bucketPresetKey => {
         this.setState({
-            bucketPresetKey
+            bucketPresetKey,
         });
-    }
-    onSortingPresetChange = (sortingPresetKey) => {
+    };
+    onSortingPresetChange = sortingPresetKey => {
         this.setState({
-            sortingPresetKey
+            sortingPresetKey,
         });
-    }
-    onMenuPresetChange = (menuPresetKey) => {
+    };
+    onMenuPresetChange = menuPresetKey => {
         this.setState({
-            menuPresetKey
+            menuPresetKey,
         });
-    }
-    onPivotTableSizeChange = (pivotTableSizeKey) => {
+    };
+    onPivotTableSizeChange = pivotTableSizeKey => {
         this.setState({
-            pivotTableSizeKey
+            pivotTableSizeKey,
         });
-    }
-    onMaxHeightPresetChange = (maxHeightPresetKey) => {
+    };
+    onMaxHeightPresetChange = maxHeightPresetKey => {
         this.setState({
-            maxHeightPresetKey
+            maxHeightPresetKey,
         });
-    }
+    };
 
-    onGroupRowsPresetChange = (groupRowsKey) => {
+    onGroupRowsPresetChange = groupRowsKey => {
         this.setState({
-            groupRowsKey
+            groupRowsKey,
         });
-    }
+    };
 
-    onDrill = (drillEvent) => {
+    onDrill = drillEvent => {
         // eslint-disable-next-line no-console
-        console.log('onFiredDrillEvent', drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
+        console.log(
+            "onFiredDrillEvent",
+            drillEvent,
+            JSON.stringify(drillEvent.drillContext.intersection, null, 2),
+        );
         this.setState({
-            drillEvent
+            drillEvent,
         });
         return true;
-    }
+    };
 
     render() {
         const {
@@ -455,20 +465,21 @@ export class PivotTableDrillingExample extends Component {
             menuPresetKey,
             pivotTableSizeKey,
             maxHeightPresetKey,
-            groupRowsKey
+            groupRowsKey,
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
 
         // Exchange FranchiseFees for franchiseFeesCalifornia if filterPresetKeys.franchiseFeesCalifornia === true
-        const bucketPropsWithFilters = (filterPresetKeys.franchiseFeesCalifornia && bucketProps.measures.length > 0)
-            ? {
-                ...bucketProps,
-                measures: [franchiseFeesCalifornia, ...bucketProps.measures.slice(1)]
-            }
-            : bucketProps;
+        const bucketPropsWithFilters =
+            filterPresetKeys.franchiseFeesCalifornia && bucketProps.measures.length > 0
+                ? {
+                      ...bucketProps,
+                      measures: [franchiseFeesCalifornia, ...bucketProps.measures.slice(1)],
+                  }
+                : bucketProps;
         const tableBucketProps = {
-            ...bucketPropsWithFilters
+            ...bucketPropsWithFilters,
         };
         delete tableBucketProps.columns;
         if (bucketPropsWithFilters.rows) {
@@ -476,151 +487,196 @@ export class PivotTableDrillingExample extends Component {
         }
 
         const filters = Object.keys(filterPresets)
-            .filter(itemKey => (filterPresetKeys[itemKey] && filterPresets[itemKey].filterItem))
+            .filter(itemKey => filterPresetKeys[itemKey] && filterPresets[itemKey].filterItem)
             .map(itemKey => filterPresets[itemKey].filterItem);
         const filtersProp = filters.length > 0 ? { filters } : {};
 
         const totals = getTotalItems(totalPresetKeys);
-        const grandTotalsOnly = totals.filter((total) => {
+        const grandTotalsOnly = totals.filter(total => {
             const firstAttribute = rows[0];
-            return firstAttribute !== undefined &&
-                total.attributeIdentifier === firstAttribute.visualizationAttribute.localIdentifier;
+            return (
+                firstAttribute !== undefined &&
+                total.attributeIdentifier === firstAttribute.visualizationAttribute.localIdentifier
+            );
         });
 
         const groupRows = getGroupRows(groupRowsKey);
 
         return (
             <div>
-                <style jsx>{`
-                    .presets {
-                        margin: -5px;
-                        margin-top: 0;
-                        margin-bottom: 10px;
-                    }
-                    .presets :global(.preset-option) {
-                        margin: 5px;
-                    }
-              `}</style>
+                <style jsx>
+                    {`
+                        .presets {
+                            margin: -5px;
+                            margin-top: 0;
+                            margin-bottom: 10px;
+                        }
+                        .presets :global(.preset-option) {
+                            margin: 5px;
+                        }
+                    `}
+                </style>
                 <div className="presets">
-                    Data presets: {
-                        Object.keys(bucketPresets).map((presetItemKey) => {
-                            const { key, label } = bucketPresets[presetItemKey];
-                            return (
-                                <ElementWithParam
-                                    key={key}
-                                    className={`preset-option button button-secondary s-bucket-preset-${key} ${bucketPresetKey === key ? ' is-active' : ''}`}
-                                    onClick={this.onBucketPresetChange}
-                                    params={[key]}
-                                >
-                                    {label}
-                                </ElementWithParam>
-                            );
-                        })
-                    }
+                    Data presets:{" "}
+                    {Object.keys(bucketPresets).map(presetItemKey => {
+                        const { key, label } = bucketPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-bucket-preset-${key} ${
+                                    bucketPresetKey === key ? " is-active" : ""
+                                }`}
+                                onClick={this.onBucketPresetChange}
+                                params={[key]}
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Filter presets: {
-                        Object.keys(filterPresets).map((presetItemKey) => {
-                            const { key, label } = filterPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Filter presets:{" "}
+                    {Object.keys(filterPresets).map(presetItemKey => {
+                        const { key, label } = filterPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-drilling-preset-${key} ${filterPresetKeys[key] ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-drilling-preset-${key} ${
+                                    filterPresetKeys[key] ? " is-active" : ""
+                                }`}
                                 onClick={this.onFilterPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Drilling presets: {
-                        Object.keys(drillingPresets).map((presetItemKey) => {
-                            const { key, label } = drillingPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Drilling presets:{" "}
+                    {Object.keys(drillingPresets).map(presetItemKey => {
+                        const { key, label } = drillingPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-drilling-preset-${key} ${drillingPresetKeys[key] ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-drilling-preset-${key} ${
+                                    drillingPresetKeys[key] ? " is-active" : ""
+                                }`}
                                 onClick={this.onDrillingPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Sorting presets: {
-                        Object.keys(sortingPresets).map((presetItemKey) => {
-                            const { key, label } = sortingPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Sorting presets:{" "}
+                    {Object.keys(sortingPresets).map(presetItemKey => {
+                        const { key, label } = sortingPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-sorting-preset-${key} ${sortingPresetKey === key ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-sorting-preset-${key} ${
+                                    sortingPresetKey === key ? " is-active" : ""
+                                }`}
                                 onClick={this.onSortingPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Total presets: {
-                        Object.keys(totalPresets).map((presetItemKey) => {
-                            const { key, label } = totalPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Total presets:{" "}
+                    {Object.keys(totalPresets).map(presetItemKey => {
+                        const { key, label } = totalPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${totalPresetKeys[key] ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                    totalPresetKeys[key] ? " is-active" : ""
+                                }`}
                                 onClick={this.onTotalPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Menu presets: {
-                        Object.keys(menuPresets).map((presetItemKey) => {
-                            const { key, label } = menuPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Menu presets:{" "}
+                    {Object.keys(menuPresets).map(presetItemKey => {
+                        const { key, label } = menuPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${menuPresetKey === key ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                    menuPresetKey === key ? " is-active" : ""
+                                }`}
                                 onClick={this.onMenuPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Pivot table size: {
-                        Object.keys(pivotTableSizePresets).map((presetItemKey) => {
-                            const { key, label } = pivotTableSizePresets[presetItemKey];
-                            return (<ElementWithParam
+                    Pivot table size:{" "}
+                    {Object.keys(pivotTableSizePresets).map(presetItemKey => {
+                        const { key, label } = pivotTableSizePresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${pivotTableSizeKey === key ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                    pivotTableSizeKey === key ? " is-active" : ""
+                                }`}
                                 onClick={this.onPivotTableSizeChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Max height: {
-                        Object.keys(maxHeightPresets).map((presetItemKey) => {
-                            const { key, label } = maxHeightPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Max height:{" "}
+                    {Object.keys(maxHeightPresets).map(presetItemKey => {
+                        const { key, label } = maxHeightPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-max-height-preset-${key} ${maxHeightPresetKey === key ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-max-height-preset-${key} ${
+                                    maxHeightPresetKey === key ? " is-active" : ""
+                                }`}
                                 onClick={this.onMaxHeightPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
                 <div className="presets">
-                    Group rows: {
-                        Object.keys(groupRowsPresets).map((presetItemKey) => {
-                            const { key, label } = groupRowsPresets[presetItemKey];
-                            return (<ElementWithParam
+                    Group rows:{" "}
+                    {Object.keys(groupRowsPresets).map(presetItemKey => {
+                        const { key, label } = groupRowsPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-group-rows-preset-${key} ${groupRowsKey === key ? ' is-active' : ''}`}
+                                className={`preset-option button button-secondary s-group-rows-preset-${key} ${
+                                    groupRowsKey === key ? " is-active" : ""
+                                }`}
                                 onClick={this.onGroupRowsPresetChange}
                                 params={[key]}
-                            >{label}</ElementWithParam>);
-                        })
-                    }
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
                 </div>
 
                 <div
@@ -643,7 +699,7 @@ export class PivotTableDrillingExample extends Component {
                         sortBy={sortBy}
                         config={{
                             maxHeight: maxHeightPresets[maxHeightPresetKey].value,
-                            menu: menuPresets[menuPresetKey].menuConfig
+                            menu: menuPresets[menuPresetKey].menuConfig,
                         }}
                         totals={totals}
                         groupRows={groupRows}
@@ -665,10 +721,14 @@ export class PivotTableDrillingExample extends Component {
                 </div>
 
                 <pre className="s-output">
-                    {JSON.stringify(drillEvent || {
-                        ...bucketPropsWithFilters,
-                        drillableItems
-                    }, null, 4)}
+                    {JSON.stringify(
+                        drillEvent || {
+                            ...bucketPropsWithFilters,
+                            drillableItems,
+                        },
+                        null,
+                        4,
+                    )}
                 </pre>
             </div>
         );

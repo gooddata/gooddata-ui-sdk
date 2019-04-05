@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
+import * as React from "react";
+import { omit } from "lodash";
+import { Subtract } from "utility-types";
+import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
-import { ColumnChart as AfmColumnChart } from './afm/ColumnChart';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { getStackingResultSpec } from '../helpers/resultSpec';
-import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
-import { getViewByTwoAttributes } from '../helpers/optionalStacking/common';
+import { ColumnChart as AfmColumnChart } from "./afm/ColumnChart";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { getStackingResultSpec } from "../helpers/resultSpec";
+import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
+import { getViewByTwoAttributes } from "../helpers/optionalStacking/common";
 
 export interface IColumnChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -33,20 +33,24 @@ export function ColumnChart(props: IColumnChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: props.measures || [],
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: getViewByTwoAttributes(props.viewBy) // could be one or two attributes
+            items: getViewByTwoAttributes(props.viewBy), // could be one or two attributes
         },
         {
             localIdentifier: STACK,
-            items: props.stackBy ? [props.stackBy] : []
-        }
+            items: props.stackBy ? [props.stackBy] : [],
+        },
     ];
 
-    const newProps
-        = omit<IColumnChartProps, IColumnChartNonBucketProps>(props, ['measures', 'viewBy', 'stackBy', 'filters']);
+    const newProps = omit<IColumnChartProps, IColumnChartNonBucketProps>(props, [
+        "measures",
+        "viewBy",
+        "stackBy",
+        "filters",
+    ]);
 
     return (
         <AfmColumnChart

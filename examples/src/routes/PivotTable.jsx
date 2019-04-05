@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
+import React from "react";
 
-import ExampleWithSource from '../components/utils/ExampleWithSource';
-import PivotTableExample from '../components/PivotTableExample';
-import PivotTableExampleSRC from '!raw-loader!../components/PivotTableExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ExampleWithSource from "../components/utils/ExampleWithSource";
+import PivotTableExample from "../components/PivotTableExample";
+import PivotTableExampleSRC from "!raw-loader!../components/PivotTableExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const PivotTable = () => (
     <div>
@@ -16,18 +16,23 @@ export const PivotTable = () => (
         </h2>
         <ExampleWithSource
             for={() => (
-                <PivotTableExample withAttributes withMeasures withPivot className="s-measures-row-attributes-and-column-attributes" />
+                <PivotTableExample
+                    withAttributes
+                    withMeasures
+                    withPivot
+                    className="s-measures-row-attributes-and-column-attributes"
+                />
             )}
             source={PivotTableExampleSRC}
         />
 
         <hr className="separator" />
 
-        <h2 id="measures-and-column-attributes">
-            Measures and column attributes
-        </h2>
+        <h2 id="measures-and-column-attributes">Measures and column attributes</h2>
         <ExampleWithSource
-            for={() => <PivotTableExample withMeasures withPivot className="s-measures-and-column-attributes" />}
+            for={() => (
+                <PivotTableExample withMeasures withPivot className="s-measures-and-column-attributes" />
+            )}
             source={PivotTableExampleSRC}
         />
 
@@ -35,7 +40,9 @@ export const PivotTable = () => (
 
         <h2 id="measures-and-attributes">Measures and row attributes</h2>
         <ExampleWithSource
-            for={() => <PivotTableExample withAttributes withMeasures className="s-measures-and-attributes" />}
+            for={() => (
+                <PivotTableExample withAttributes withMeasures className="s-measures-and-attributes" />
+            )}
             source={PivotTableExampleSRC}
         />
 

@@ -1,20 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
-import { action } from '@storybook/addon-actions';
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
-import { ItemsWrapper, Header, Separator, Item } from '@gooddata/goodstrap/lib/List/MenuList';
-import noop = require('lodash/noop');
+import { action } from "@storybook/addon-actions";
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
+import { ItemsWrapper, Header, Separator, Item } from "@gooddata/goodstrap/lib/List/MenuList";
+import noop = require("lodash/noop");
 
-import AggregationsMenu from '../../src/components/core/pivotTable/AggregationsMenu';
-import AggregationsSubMenu from '../../src/components/core/pivotTable/AggregationsSubMenu';
-import Menu from '../../src/components/menu/Menu';
-import SubMenu, { ISubMenuProps } from '../../src/components/menu/SubMenu';
-import { IOnOpenedChangeParams } from '../../src/components/menu/MenuSharedTypes';
-import { EXECUTION_RESPONSE_2A_3M } from '../../src/components/visualizations/table/fixtures/2attributes3measures';
-import { createIntlMock } from '../../src/components/visualizations/utils/intlUtils';
-import { IMenuAggregationClickConfig } from '../../src/interfaces/PivotTable';
-import { ATTRIBUTE_HEADERS_3A_LONG_NAME, COLUMN_TOTAL_1ST_2ND_ATTR_MAX, GRAND_TOTAL_SUM } from '../data/componentProps';
+import AggregationsMenu from "../../src/components/core/pivotTable/AggregationsMenu";
+import AggregationsSubMenu from "../../src/components/core/pivotTable/AggregationsSubMenu";
+import Menu from "../../src/components/menu/Menu";
+import SubMenu, { ISubMenuProps } from "../../src/components/menu/SubMenu";
+import { IOnOpenedChangeParams } from "../../src/components/menu/MenuSharedTypes";
+import { EXECUTION_RESPONSE_2A_3M } from "../../src/components/visualizations/table/fixtures/2attributes3measures";
+import { createIntlMock } from "../../src/components/visualizations/utils/intlUtils";
+import { IMenuAggregationClickConfig } from "../../src/interfaces/PivotTable";
+import {
+    ATTRIBUTE_HEADERS_3A_LONG_NAME,
+    COLUMN_TOTAL_1ST_2ND_ATTR_MAX,
+    GRAND_TOTAL_SUM,
+} from "../data/componentProps";
 
 const ToggleButton = () => <button>toggle menu</button>;
 
@@ -22,14 +26,14 @@ const TestMenuItem = ({ length = 4, close }: { length?: number; close?: () => vo
     <div
         style={{
             padding: 8,
-            fontFamily: 'monospace',
-            background: close ? 'orange' : 'lightgreen',
-            whiteSpace: 'nowrap',
-            cursor: close ? 'pointer' : null
+            fontFamily: "monospace",
+            background: close ? "orange" : "lightgreen",
+            whiteSpace: "nowrap",
+            cursor: close ? "pointer" : null,
         }}
         onClick={close}
     >
-        {close ? 'close' : 'text '.repeat(length).trim()}
+        {close ? "close" : "text ".repeat(length).trim()}
     </div>
 );
 
@@ -39,8 +43,8 @@ const TestSubMenu = ({ children, ...subMenuProps }: Partial<ISubMenuProps>) => (
             <div
                 style={{
                     padding: 8,
-                    background: 'lightblue',
-                    cursor: subMenuProps.openAction === 'click' ? 'pointer' : null
+                    background: "lightblue",
+                    cursor: subMenuProps.openAction === "click" ? "pointer" : null,
                 }}
             >
                 submenu
@@ -50,8 +54,8 @@ const TestSubMenu = ({ children, ...subMenuProps }: Partial<ISubMenuProps>) => (
     >
         <div
             style={{
-                background: 'tomato',
-                boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.1)'
+                background: "tomato",
+                boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.1)",
             }}
         >
             {children}
@@ -59,15 +63,15 @@ const TestSubMenu = ({ children, ...subMenuProps }: Partial<ISubMenuProps>) => (
     </SubMenu>
 );
 
-storiesOf('Helper components/Menu', module)
-    .add('basic menu', () => (
+storiesOf("Helper components/Menu", module)
+    .add("basic menu", () => (
         <Menu toggler={<ToggleButton />}>
             <TestMenuItem />
             <TestMenuItem />
             <TestMenuItem />
         </Menu>
     ))
-    .add('nested menu', () => (
+    .add("nested menu", () => (
         <Menu toggler={<ToggleButton />}>
             <TestMenuItem />
             <TestMenuItem />
@@ -83,7 +87,7 @@ storiesOf('Helper components/Menu', module)
             <TestMenuItem />
         </Menu>
     ))
-    .add('closing menu with render prop', () => (
+    .add("closing menu with render prop", () => (
         <Menu toggler={<ToggleButton />}>
             {({ closeMenu }) => (
                 <React.Fragment>
@@ -94,21 +98,21 @@ storiesOf('Helper components/Menu', module)
             )}
         </Menu>
     ))
-    .add('alignment', () => (
+    .add("alignment", () => (
         <React.Fragment>
             <p>
-                Prefered alignment where menu is opened can be set. If there is enough space it is positioned to
-                preferred alignment, if not, it is placed to less ideal position.
+                Prefered alignment where menu is opened can be set. If there is enough space it is positioned
+                to preferred alignment, if not, it is placed to less ideal position.
             </p>
-            <Menu toggler={<ToggleButton />} alignment={['bottom', 'right']}>
+            <Menu toggler={<ToggleButton />} alignment={["bottom", "right"]}>
                 <TestMenuItem />
                 <TestMenuItem />
                 <TestMenuItem length={8} />
                 <TestMenuItem />
-                <TestSubMenu alignment={['right', 'top']}>
+                <TestSubMenu alignment={["right", "top"]}>
                     <TestMenuItem length={5} />
                     <TestMenuItem />
-                    <TestSubMenu alignment={['bottom', 'left']}>
+                    <TestSubMenu alignment={["bottom", "left"]}>
                         <TestMenuItem />
                         <TestMenuItem length={8} />
                         <TestMenuItem />
@@ -118,7 +122,7 @@ storiesOf('Helper components/Menu', module)
             </Menu>
         </React.Fragment>
     ))
-    .add('spacing', () => (
+    .add("spacing", () => (
         <React.Fragment>
             <p>Spacing betweem toggler and menu.</p>
             <Menu toggler={<ToggleButton />} spacing={16}>
@@ -132,7 +136,7 @@ storiesOf('Helper components/Menu', module)
             </Menu>
         </React.Fragment>
     ))
-    .add('offset', () => (
+    .add("offset", () => (
         <React.Fragment>
             <p>Alignment/Offset of menu relative to toggler in given alignment.</p>
             <Menu toggler={<ToggleButton />} offset={-4}>
@@ -145,8 +149,11 @@ storiesOf('Helper components/Menu', module)
             </Menu>
         </React.Fragment>
     ))
-    .add('open action', () => (
-        <Menu toggler={<div style={{ background: 'lightblue' }}>Toggle menu by hover</div>} openAction="hover">
+    .add("open action", () => (
+        <Menu
+            toggler={<div style={{ background: "lightblue" }}>Toggle menu by hover</div>}
+            openAction="hover"
+        >
             <TestMenuItem />
             <TestMenuItem />
             <TestSubMenu openAction="click">
@@ -156,7 +163,7 @@ storiesOf('Helper components/Menu', module)
             <TestMenuItem />
         </Menu>
     ))
-    .add('default opened', () => (
+    .add("default opened", () => (
         <Menu toggler={<ToggleButton />} defaultOpened={false}>
             <TestMenuItem />
             <TestMenuItem />
@@ -171,20 +178,20 @@ storiesOf('Helper components/Menu', module)
             <TestMenuItem />
         </Menu>
     ))
-    .add('controlled menu', () => {
+    .add("controlled menu", () => {
         class ControlledMenu extends React.Component<{}, { opened: boolean }> {
             public state = {
-                opened: true
+                opened: true,
             };
 
             public render() {
                 return (
                     <React.Fragment>
                         <p>
-                            Top level menu can be controlled. If you pass prop 'opened' it switches from unconstrolled
-                            to controlled component. If you do this you should also sunscribe to 'onOpenedChange' prop
-                            to get updates about 'closeMenu' render prop calls or clicks from outside of the
-                            MenuTopLevel.
+                            Top level menu can be controlled. If you pass prop 'opened' it switches from
+                            unconstrolled to controlled component. If you do this you should also sunscribe to
+                            'onOpenedChange' prop to get updates about 'closeMenu' render prop calls or clicks
+                            from outside of the MenuTopLevel.
                         </p>
                         <button onClick={this.toggleOpened}>Outside component controlling menu</button>
                         <hr />
@@ -207,18 +214,18 @@ storiesOf('Helper components/Menu', module)
 
             private toggleOpened = () => {
                 this.setState(state => ({
-                    opened: !state.opened
+                    opened: !state.opened,
                 }));
-            }
+            };
 
             private onOpenedChange = ({ opened }: IOnOpenedChangeParams) => {
                 this.setState({ opened });
-            }
+            };
         }
 
         return <ControlledMenu />;
     })
-    .add('close on scroll', () => (
+    .add("close on scroll", () => (
         <React.Fragment>
             <p>
                 Closes the menu whenever user scrolls (can be scrolling of the whole page or some element with
@@ -228,14 +235,14 @@ storiesOf('Helper components/Menu', module)
                 style={{
                     width: 100,
                     height: 100,
-                    overflow: 'auto'
+                    overflow: "auto",
                 }}
             >
                 <div
                     style={{
                         width: 1000,
                         height: 1000,
-                        background: 'lightblue'
+                        background: "lightblue",
                     }}
                 >
                     Scrollable element
@@ -247,21 +254,21 @@ storiesOf('Helper components/Menu', module)
             </Menu>
         </React.Fragment>
     ))
-    .add('portal target', () => {
+    .add("portal target", () => {
         class PortalTargetMenu extends React.Component<{}, { portalReady: boolean }> {
             public elPortalTarget: Element;
 
             public state = {
-                portalReady: false
+                portalReady: false,
             };
 
             public render() {
                 return (
                     <React.Fragment>
                         <p>
-                            Menu uses React portals to render the top level menu inside body element. This is done to
-                            prevent problems with overflow: hidden on parent components. Target element, where menu is
-                            rendered, can be changed with 'portalTarget' prop.
+                            Menu uses React portals to render the top level menu inside body element. This is
+                            done to prevent problems with overflow: hidden on parent components. Target
+                            element, where menu is rendered, can be changed with 'portalTarget' prop.
                         </p>
                         <section
                             ref={(el: HTMLElement) => {
@@ -292,16 +299,16 @@ storiesOf('Helper components/Menu', module)
 
         return <PortalTargetMenu />;
     })
-    .add('presentational menu components', () => (
+    .add("presentational menu components", () => (
         <Menu toggler={<ToggleButton />} spacing={4}>
             {({ closeMenu }) => (
                 <ItemsWrapper>
                     <SubMenu
-                        toggler={(
+                        toggler={
                             <Item subMenu={true} checked={true}>
                                 Sort
                             </Item>
-                        )}
+                        }
                         offset={-8}
                     >
                         <ItemsWrapper>
@@ -316,11 +323,11 @@ storiesOf('Helper components/Menu', module)
 
                     <Header>AGGREGATE</Header>
                     <SubMenu
-                        toggler={(
+                        toggler={
                             <Item subMenu={true} checked={true}>
                                 Total (rollup)
                             </Item>
-                        )}
+                        }
                         offset={-8}
                     >
                         <ItemsWrapper>
@@ -355,13 +362,13 @@ storiesOf('Helper components/Menu', module)
             )}
         </Menu>
     ))
-    .add('presentational menu components - example content', () =>
+    .add("presentational menu components - example content", () =>
         screenshotWrap(
             <div
                 className="screenshot-target"
                 style={{
                     // For screenshot tests
-                    minHeight: 500
+                    minHeight: 500,
                 }}
             >
                 <Menu toggler={<ToggleButton />} opened={true} spacing={4}>
@@ -375,7 +382,11 @@ storiesOf('Helper components/Menu', module)
                         <Item disabled={true} checked={true}>
                             Disabled Item
                         </Item>
-                        <SubMenu toggler={<Item subMenu={true}>Menu with just items</Item>} offset={-8} opened={true}>
+                        <SubMenu
+                            toggler={<Item subMenu={true}>Menu with just items</Item>}
+                            offset={-8}
+                            opened={true}
+                        >
                             <ItemsWrapper smallItemsSpacing={true}>
                                 <Item>Item text text</Item>
                                 <Item>Item text text text</Item>
@@ -387,43 +398,43 @@ storiesOf('Helper components/Menu', module)
                         </SubMenu>
                     </ItemsWrapper>
                 </Menu>
-            </div>
-        )
+            </div>,
+        ),
     )
-    .add('Presentational menu components - alignment', () =>
+    .add("Presentational menu components - alignment", () =>
         screenshotWrap(
             <div
                 className="screenshot-target"
                 style={{
                     // For screenshot tests
-                    boxSizing: 'border-box',
+                    boxSizing: "border-box",
                     width: 600,
                     height: 600,
                     paddingTop: 400,
-                    paddingLeft: 400
+                    paddingLeft: 400,
                 }}
             >
-                <Menu toggler={<ToggleButton />} opened={true} spacing={4} alignment={['left', 'bottom']}>
+                <Menu toggler={<ToggleButton />} opened={true} spacing={4} alignment={["left", "bottom"]}>
                     <ItemsWrapper style={{ height: 100, width: 150 }}>
                         <SubMenu
                             toggler={<Item subMenu={true}>Submenu</Item>}
                             offset={-8}
                             opened={true}
-                            alignment={['left', 'top']}
+                            alignment={["left", "top"]}
                         >
                             <ItemsWrapper style={{ height: 200, width: 150 }}>
                                 <SubMenu
                                     toggler={<Item subMenu={true}>Submenu</Item>}
                                     offset={-8}
                                     opened={true}
-                                    alignment={['right', 'top']}
+                                    alignment={["right", "top"]}
                                 >
                                     <ItemsWrapper style={{ height: 150, width: 150 }}>
                                         <SubMenu
                                             toggler={<Item subMenu={true}>Submenu</Item>}
                                             offset={-8}
                                             opened={true}
-                                            alignment={['right', 'bottom']}
+                                            alignment={["right", "bottom"]}
                                         >
                                             <ItemsWrapper smallItemsSpacing={true} style={{ width: 100 }}>
                                                 <Item>Item text</Item>
@@ -435,49 +446,43 @@ storiesOf('Helper components/Menu', module)
                         </SubMenu>
                     </ItemsWrapper>
                 </Menu>
-            </div>
-        )
+            </div>,
+        ),
     )
-    .add('aggregation menus', () => {
+    .add("aggregation menus", () => {
         const intlMock = createIntlMock();
         const getExecutionResponse = () => EXECUTION_RESPONSE_2A_3M;
         const getTotals = () => [GRAND_TOTAL_SUM];
         const onAggregationSelect = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-            action('onAggregationSelect')(menuAggregationClickConfig);
+            action("onAggregationSelect")(menuAggregationClickConfig);
         };
 
         return screenshotWrap(
-            <div
-                className="screenshot-target"
-                style={{ minHeight: 500 }}
-            >
+            <div className="screenshot-target" style={{ minHeight: 500 }}>
                 <AggregationsMenu
                     intl={intlMock}
                     isMenuOpened={true}
                     isMenuButtonVisible={true}
                     showSubmenu={true}
-                    colId={'a_6_1-m_0'}
+                    colId={"a_6_1-m_0"}
                     getExecutionResponse={getExecutionResponse}
                     getTotals={getTotals}
                     onAggregationSelect={onAggregationSelect}
                     onMenuOpenedChange={noop}
                 />
 
-                <div
-                    className="gd-aggregation-menu-item"
-                    style={{ margin: '230px auto 0 0', width: 0 }}
-                >
+                <div className="gd-aggregation-menu-item" style={{ margin: "230px auto 0 0", width: 0 }}>
                     <AggregationsSubMenu
                         intl={intlMock}
-                        totalType={'max'}
+                        totalType={"max"}
                         toggler={null}
                         rowAttributeHeaders={ATTRIBUTE_HEADERS_3A_LONG_NAME}
-                        measureLocalIdentifiers={['1st_measure_local_identifier']}
+                        measureLocalIdentifiers={["1st_measure_local_identifier"]}
                         columnTotals={[COLUMN_TOTAL_1ST_2ND_ATTR_MAX]}
                         onAggregationSelect={onAggregationSelect}
                         isMenuOpened={true}
                     />
                 </div>
-            </div>
+            </div>,
         );
     });

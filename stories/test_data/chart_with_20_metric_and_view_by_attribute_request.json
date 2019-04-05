@@ -275,14 +275,10 @@
         "resultSpec": {
             "dimensions": [
                 {
-                    "itemIdentifiers": [
-                        "measureGroup"
-                    ]
+                    "itemIdentifiers": ["measureGroup"]
                 },
                 {
-                    "itemIdentifiers": [
-                        "66aac9005da84904b7fb31d73cfe0d09"
-                    ]
+                    "itemIdentifiers": ["66aac9005da84904b7fb31d73cfe0d09"]
                 }
             ],
             "sorts": []

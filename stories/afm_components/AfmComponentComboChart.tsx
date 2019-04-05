@@ -1,26 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { ComboChart } from '../../src/components/afm/ComboChart';
+import { ComboChart } from "../../src/components/afm/ComboChart";
 import {
     AFM_ONE_MEASURE_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
     AFM_ONE_BAR_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
-    AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT
-} from '../data/afmComponentProps';
-import { CUSTOM_COLORS } from '../data/colors';
-import { onErrorHandler } from '../mocks';
-import '../../styles/css/charts.css';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
+} from "../data/afmComponentProps";
+import { CUSTOM_COLORS } from "../data/colors";
+import { onErrorHandler } from "../mocks";
+import "../../styles/css/charts.css";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('AFM components/ComboChart', module)
-    .add('two measures, one attribute', () => (
+storiesOf("AFM components/ComboChart", module)
+    .add("two measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -29,16 +29,14 @@ storiesOf('AFM components/ComboChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    config={
-                        {
-                            mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT
-                        }
-                    }
+                    config={{
+                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
+                    }}
                 />
-            </div>
-        )
-    ))
-    .add('two measures, one renamed attribute', () => (
+            </div>,
+        ),
+    )
+    .add("two measures, one renamed attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -47,16 +45,14 @@ storiesOf('AFM components/ComboChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    config={
-                        {
-                            mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT
-                        }
-                    }
+                    config={{
+                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
+                    }}
                 />
-            </div>
-        )
-    ))
-    .add('custom colors', () => (
+            </div>,
+        ),
+    )
+    .add("custom colors", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -64,48 +60,48 @@ storiesOf('AFM components/ComboChart', module)
                     afm={AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE}
                     config={{
                         colors: CUSTOM_COLORS,
-                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT
+                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('only bar', () => (
+            </div>,
+        ),
+    )
+    .add("only bar", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{
-                        mdObject: AFM_ONE_BAR_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT
+                        mdObject: AFM_ONE_BAR_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('only line', () => (
+            </div>,
+        ),
+    )
+    .add("only line", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{
-                        mdObject: AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT
+                        mdObject: AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -114,13 +110,11 @@ storiesOf('AFM components/ComboChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    config={
-                        {
-                            mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
-                            ...GERMAN_SEPARATORS
-                        }
-                    }
+                    config={{
+                        mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
+                        ...GERMAN_SEPARATORS,
+                    }}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

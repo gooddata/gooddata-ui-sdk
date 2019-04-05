@@ -1,35 +1,30 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import sdk from '@gooddata/gooddata-js';
-import 'babel-polyfill';
+import React from "react";
+import ReactDOM from "react-dom";
+import sdk from "@gooddata/gooddata-js";
+import "babel-polyfill";
 
-import {
-    Router,
-    Route,
-    Redirect,
-    Switch
-} from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import ReactGA from 'react-ga';
+import { Router, Route, Redirect, Switch } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import ReactGA from "react-ga";
 
-import '@gooddata/goodstrap/lib/styles.scss';
-import Header from './components/utils/Header';
-import Menu from './components/utils/Menu';
-import { CustomError } from './components/utils/CustomError';
-import CustomLoading from './components/utils/CustomLoading';
+import "@gooddata/goodstrap/lib/styles.scss";
+import Header from "./components/utils/Header";
+import Menu from "./components/utils/Menu";
+import { CustomError } from "./components/utils/CustomError";
+import CustomLoading from "./components/utils/CustomLoading";
 
-import { routes, userRoutes, sideNavigationRoutes, topNavigationRoutes } from './routes/_list';
+import { routes, userRoutes, sideNavigationRoutes, topNavigationRoutes } from "./routes/_list";
 
-const GA_ID = 'UA-3766725-19';
-const isProduction = process.env.NODE_ENV === 'production';
+const GA_ID = "UA-3766725-19";
+const isProduction = process.env.NODE_ENV === "production";
 ReactGA.initialize(GA_ID, {
-    testMode: !isProduction
+    testMode: !isProduction,
 });
 
 const history = createBrowserHistory();
-history.listen((location) => {
+history.listen(location => {
     ReactGA.pageview(location.pathname + location.search);
 });
 
@@ -39,7 +34,7 @@ export class App extends React.Component {
         this.state = {
             isLoggedIn: null,
             isLoadingUserState: true,
-            errorMessage: null
+            errorMessage: null,
         };
         this.logout = this.logout.bind(this);
     }
@@ -53,89 +48,98 @@ export class App extends React.Component {
         this.setState({
             isLoggedIn,
             isLoadingUserState: false,
-            errorMessage
+            errorMessage,
         });
-    }
+    };
 
     isUserLoggedIn = () => {
         this.setState({
-            isLoadingUserState: true
+            isLoadingUserState: true,
         });
-        return sdk.user.isLoggedIn()
-            .then((isLoggedIn) => {
+        return sdk.user.isLoggedIn().then(
+            isLoggedIn => {
                 this.onUserLogin(isLoggedIn, null);
-            }, (errorMessage) => {
+            },
+            errorMessage => {
                 this.onUserLogin(false, errorMessage);
-            });
-    }
+            },
+        );
+    };
 
     logout() {
         this.setState({
-            isLoadingUserState: true
+            isLoadingUserState: true,
         });
-        sdk.user.logout().then(() => {
-            this.setState({
-                isLoggedIn: false,
-                isLoadingUserState: false
+        sdk.user
+            .logout()
+            .then(() => {
+                this.setState({
+                    isLoggedIn: false,
+                    isLoadingUserState: false,
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    isLoadingUserState: false,
+                });
             });
-        }).catch(() => {
-            this.setState({
-                isLoadingUserState: false
-            });
-        });
     }
 
     renderContent = () => {
         const { isLoggedIn, isLoadingUserState } = this.state;
         const flexWrapperStyles = {
-            flex: '1 0 auto',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'stretch'
+            flex: "1 0 auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "stretch",
         };
         if (isLoadingUserState) {
             return (
                 <div
                     style={{
                         ...flexWrapperStyles,
-                        justifyContent: 'center'
+                        justifyContent: "center",
                     }}
-                ><CustomLoading height={null} label="Checking if user is already logged in&hellip;" /></div>
+                >
+                    <CustomLoading height={null} label="Checking if user is already logged in&hellip;" />
+                </div>
             );
         }
-        return (<div style={flexWrapperStyles}>
-            <Switch>
-                {userRoutes.map(({ title, path, Component, redirectTo, ...routeProps }) => (<Route
-                    key={path}
-                    path={path}
-                    component={() => <Component isLoggedIn={isLoggedIn} onLogin={this.onUserLogin} />}
-                    {...routeProps}
-                />))}
-                {isLoggedIn === false && <Route component={() => (
-                    <Redirect to={{
-                        pathname: '/login',
-                        state: {
-                            redirectUriAfterLogin: '/',
-                            defaultRoute: true
-                        }
-                    }}
-                    />
-                )}
-                />}
-            </Switch>
-            {isLoggedIn === true &&
-                routes.map(({ title, path, Component, redirectTo, ...routeProps }) => (
-                    <Route
-                        key={path}
-                        path={path}
-                        component={Component}
-                        {...routeProps}
-                    />))
-            }
-        </div>
+        return (
+            <div style={flexWrapperStyles}>
+                <Switch>
+                    {userRoutes.map(({ title, path, Component, redirectTo, ...routeProps }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            component={() => <Component isLoggedIn={isLoggedIn} onLogin={this.onUserLogin} />}
+                            {...routeProps}
+                        />
+                    ))}
+                    {isLoggedIn === false && (
+                        <Route
+                            component={() => (
+                                <Redirect
+                                    to={{
+                                        pathname: "/login",
+                                        state: {
+                                            redirectUriAfterLogin: "/",
+                                            defaultRoute: true,
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                </Switch>
+                {isLoggedIn === true &&
+                    routes.map(({ title, path, Component, redirectTo, ...routeProps }) => (
+                        <Route key={path} path={path} component={Component} {...routeProps} />
+                    ))}
+            </div>
         );
-    }
+    };
 
     render() {
         const { isLoggedIn, errorMessage } = this.state;
@@ -161,7 +165,7 @@ export class App extends React.Component {
                         }
 
                         :global(hr.separator) {
-                            border: 1px solid #EEE;
+                            border: 1px solid #eee;
                             border-width: 1px 0 0 0;
                             margin: 20px 0;
                         }
@@ -227,18 +231,12 @@ export class App extends React.Component {
                     />
                     <div className="pageWrapper">
                         {isLoggedIn === true && (
-                            <Menu
-                                sideNavigationRoutes={sideNavigationRoutes}
-                                routes={routes}
-                            />
+                            <Menu sideNavigationRoutes={sideNavigationRoutes} routes={routes} />
                         )}
-                        {errorMessage
-                            ? <CustomError error={{ status: '403', message: errorMessage }} />
-                            : null
-                        }
-                        <main>
-                            {this.renderContent()}
-                        </main>
+                        {errorMessage ? (
+                            <CustomError error={{ status: "403", message: errorMessage }} />
+                        ) : null}
+                        <main>{this.renderContent()}</main>
                     </div>
                 </div>
             </Router>
@@ -246,7 +244,7 @@ export class App extends React.Component {
     }
 }
 
-const root = document.createElement('div');
-root.className = 'root';
+const root = document.createElement("div");
+root.className = "root";
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);

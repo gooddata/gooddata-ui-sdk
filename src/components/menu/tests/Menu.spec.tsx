@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import Menu from '../Menu';
-import SubMenu from '../SubMenu';
+import * as React from "react";
+import { mount } from "enzyme";
+import Menu from "../Menu";
+import SubMenu from "../SubMenu";
 
 // Enzyme object unmount method needs to be called explicitely after each test
 // because top level Menu mounts its content to document.body with React Portals.
@@ -12,7 +12,7 @@ import SubMenu from '../SubMenu';
 const Toggler = () => <button>toggler</button>;
 
 const MenuContent = (props: React.HTMLAttributes<HTMLElement>) => {
-    const { className = 'content', ...restProps } = props;
+    const { className = "content", ...restProps } = props;
     return (
         <ul className={className} {...restProps}>
             <li>1</li>
@@ -22,73 +22,73 @@ const MenuContent = (props: React.HTMLAttributes<HTMLElement>) => {
 };
 const MenuItem = () => <p>Menu Item</p>;
 
-const isContentRenderedInBody = () => Boolean(document.querySelector('body .content'));
+const isContentRenderedInBody = () => Boolean(document.querySelector("body .content"));
 
-describe('Menu renderer', () => {
-    it('should render the toggler', () => {
+describe("Menu renderer", () => {
+    it("should render the toggler", () => {
         const wrapper = mount(
             <Menu toggler={<Toggler />}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
 
         expect(wrapper.contains(<Toggler />)).toBeTruthy();
         wrapper.unmount();
     });
 
-    it('should render the menu content to body', () => {
+    it("should render the menu content to body", () => {
         const wrapper = mount(
             <Menu toggler={<Toggler />} opened={true}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
 
         expect(isContentRenderedInBody()).toBeTruthy();
         wrapper.unmount();
     });
 
-    it('should render the menu content to portal target', () => {
-        const portalTarget = document.createElement('section');
+    it("should render the menu content to portal target", () => {
+        const portalTarget = document.createElement("section");
         const wrapper = mount(
             <Menu toggler={<Toggler />} portalTarget={portalTarget} opened={true}>
                 <MenuContent className="content-portaled" />
-            </Menu>
+            </Menu>,
         );
 
-        expect(portalTarget.querySelector('.content-portaled')).toBeTruthy();
+        expect(portalTarget.querySelector(".content-portaled")).toBeTruthy();
         wrapper.unmount();
     });
 });
 
-describe('Menu toggling', () => {
-    it('should toggle menu when toggler is clicked', () => {
+describe("Menu toggling", () => {
+    it("should toggle menu when toggler is clicked", () => {
         const wrapper = mount(
             <Menu toggler={<Toggler />}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
 
         expect(isContentRenderedInBody()).toBeFalsy();
-        wrapper.find(Toggler).simulate('click');
+        wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeTruthy();
-        wrapper.find(Toggler).simulate('click');
+        wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeFalsy();
 
         wrapper.unmount();
     });
 
-    it('should close when we click outside of menu', () => {
-        const outsideElement = document.createElement('button');
+    it("should close when we click outside of menu", () => {
+        const outsideElement = document.createElement("button");
         document.body.appendChild(outsideElement);
 
         const wrapper = mount(
             <Menu toggler={<Toggler />}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
 
         expect(isContentRenderedInBody()).toBeFalsy();
-        wrapper.find(Toggler).simulate('click');
+        wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeTruthy();
         outsideElement.click();
         expect(isContentRenderedInBody()).toBeFalsy();
@@ -97,11 +97,11 @@ describe('Menu toggling', () => {
         wrapper.unmount();
     });
 
-    it('should open/close when we change opened prop', () => {
+    it("should open/close when we change opened prop", () => {
         const wrapper = mount(
             <Menu toggler={<Toggler />} opened={false}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
 
         expect(isContentRenderedInBody()).toBeFalsy();
@@ -130,26 +130,26 @@ function snapshotComponentAndPortalTarget(Component: React.ReactElement<any>, po
     // - Passing just wrapper.html() into snapshot will have the result unformatted
     //   on one line.
     // - So we do this to have formatted final html in snapshot.
-    const el = document.createElement('div');
+    const el = document.createElement("div");
     // tslint:disable-next-line:no-inner-html
     el.innerHTML = wrapper.html();
 
     expect(el).toMatchSnapshot();
-    expect(portalTarget || document.querySelector('body')).toMatchSnapshot();
+    expect(portalTarget || document.querySelector("body")).toMatchSnapshot();
 
     wrapper.unmount();
 }
 
-describe('Menu snapshot', () => {
-    it('should match snapshot of menu with no config', () => {
+describe("Menu snapshot", () => {
+    it("should match snapshot of menu with no config", () => {
         snapshotComponentAndPortalTarget(
             <Menu toggler={<Toggler />}>
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
     });
 
-    it('should match snapshot of menu with config', () => {
+    it("should match snapshot of menu with config", () => {
         snapshotComponentAndPortalTarget(
             <Menu
                 toggler={<Toggler />}
@@ -157,15 +157,15 @@ describe('Menu snapshot', () => {
                 openAction="click"
                 spacing={16}
                 offset={-8}
-                alignment={['left', 'top']}
+                alignment={["left", "top"]}
                 closeOnScroll={true}
             >
                 <MenuContent />
-            </Menu>
+            </Menu>,
         );
     });
 
-    it('should match snapshot of nested menus', () => {
+    it("should match snapshot of nested menus", () => {
         snapshotComponentAndPortalTarget(
             <Menu toggler={<Toggler />} opened={true}>
                 <MenuItem />
@@ -175,20 +175,20 @@ describe('Menu snapshot', () => {
                     <MenuItem />
                 </SubMenu>
                 <MenuItem />
-            </Menu>
+            </Menu>,
         );
     });
 
-    it('should match snapshot of menu with portalTarget', () => {
-        const portalTarget = document.createElement('section');
-        portalTarget.classList.add('portal-target');
+    it("should match snapshot of menu with portalTarget", () => {
+        const portalTarget = document.createElement("section");
+        portalTarget.classList.add("portal-target");
         document.body.appendChild(portalTarget);
 
         snapshotComponentAndPortalTarget(
             <Menu toggler={<Toggler />} opened={true} portalTarget={portalTarget}>
                 <MenuContent />
             </Menu>,
-            portalTarget
+            portalTarget,
         );
 
         portalTarget.remove();

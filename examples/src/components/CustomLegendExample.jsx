@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { AfmComponents } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { AfmComponents } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty
-} from '../utils/fixtures';
+    franchiseFeesIdentifierOngoingRoyalty,
+} from "../utils/fixtures";
 
 export class CustomChartExample extends Component {
     constructor(props) {
@@ -18,23 +18,23 @@ export class CustomChartExample extends Component {
         this.onLegendReady = this.onLegendReady.bind(this);
 
         this.state = {
-            legendItems: []
+            legendItems: [],
         };
     }
 
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('CustomLegendExample onLoadingChanged', ...params);
+        return console.log("CustomLegendExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('CustomLegendExample onError', ...params);
+        return console.log("CustomLegendExample onError", ...params);
     }
 
     onLegendReady(data) {
         this.setState({
-            legendItems: data.legendItems
+            legendItems: data.legendItems,
         });
     }
 
@@ -42,14 +42,12 @@ export class CustomChartExample extends Component {
         const style = {
             width: 0,
             height: 0,
-            borderTop: '10px solid transparent',
+            borderTop: "10px solid transparent",
             borderLeft: `20px solid ${color}`,
-            borderBottom: '10px solid transparent',
-            marginRight: '5px'
+            borderBottom: "10px solid transparent",
+            marginRight: "5px",
         };
-        return (
-            <div style={style} />
-        );
+        return <div style={style} />;
     }
 
     renderCustomLegend() {
@@ -66,7 +64,7 @@ export class CustomChartExample extends Component {
                         <div
                             key={idx} // eslint-disable-line react/no-array-index-key
                             onClick={item.onClick}
-                            style={{ display: 'flex', margin: '10px 0', cursor: 'pointer' }}
+                            style={{ display: "flex", margin: "10px 0", cursor: "pointer" }}
                         >
                             {this.renderTriangle(item.color)}
                             {item.name}
@@ -81,39 +79,39 @@ export class CustomChartExample extends Component {
         const afm = {
             measures: [
                 {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
+                    localIdentifier: "franchiseFeesAdRoyaltyIdentifier",
                     definition: {
                         measure: {
                             item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
+                                identifier: franchiseFeesAdRoyaltyIdentifier,
+                            },
+                        },
                     },
-                    format: '#,##0'
+                    format: "#,##0",
                 },
                 {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
+                    localIdentifier: "franchiseFeesInitialFranchiseFeeIdentifier",
                     definition: {
                         measure: {
                             item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
+                                identifier: franchiseFeesInitialFranchiseFeeIdentifier,
+                            },
+                        },
                     },
-                    format: '#,##0'
+                    format: "#,##0",
                 },
                 {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
+                    localIdentifier: "franchiseFeesIdentifierOngoingRoyalty",
                     definition: {
                         measure: {
                             item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
+                                identifier: franchiseFeesIdentifierOngoingRoyalty,
+                            },
+                        },
                     },
-                    format: '#,##0'
-                }
-            ]
+                    format: "#,##0",
+                },
+            ],
         };
 
         return (
@@ -126,8 +124,8 @@ export class CustomChartExample extends Component {
                         onLoadingChanged={this.onLoadingChanged}
                         config={{
                             legend: {
-                                enabled: false
-                            }
+                                enabled: false,
+                            },
                         }}
                         onError={this.onError}
                         onLegendReady={this.onLegendReady}

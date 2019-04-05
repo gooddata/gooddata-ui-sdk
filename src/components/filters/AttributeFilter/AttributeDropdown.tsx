@@ -1,24 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import InvertableList from '@gooddata/goodstrap/lib/List/InvertableList';
-import Button from '@gooddata/goodstrap/lib/Button/Button';
-import Dropdown, { DropdownButton } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
-import { string as stringUtils } from '@gooddata/js-utils';
-import DataSource from '@gooddata/goodstrap/lib/DataSource/DataSource';
-import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from 'react-intl';
-import {
-    IValidElementsResponse,
-    IElement
-} from '@gooddata/gooddata-js';
-import * as classNames from 'classnames';
-import last = require('lodash/last');
-import pick = require('lodash/pick');
-import range = require('lodash/range');
-import isEqual = require('lodash/isEqual');
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
+import Button from "@gooddata/goodstrap/lib/Button/Button";
+import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { string as stringUtils } from "@gooddata/js-utils";
+import DataSource from "@gooddata/goodstrap/lib/DataSource/DataSource";
+import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from "react-intl";
+import { IValidElementsResponse, IElement } from "@gooddata/gooddata-js";
+import * as classNames from "classnames";
+import last = require("lodash/last");
+import pick = require("lodash/pick");
+import range = require("lodash/range");
+import isEqual = require("lodash/isEqual");
 
-import { AttributeFilterItem } from './AttributeFilterItem';
-import { IAttributeDisplayForm, IAttributeElement } from './model';
+import { AttributeFilterItem } from "./AttributeFilterItem";
+import { IAttributeDisplayForm, IAttributeElement } from "./model";
 
 const ITEM_HEIGHT = 28;
 const LIST_WIDTH = 208;
@@ -28,18 +25,22 @@ export const VISIBLE_ITEMS_COUNT = 10;
 export const LIMIT = 50;
 const INITIAL_OFFSET = 0;
 
-const getDefaultListLoading = (_listError: any, { intl }: { intl: InjectedIntl}) => {
-    const text = intl.formatMessage({ id: 'gs.list.loading' });
-    return <div><span className="s-attribute-filter-list-loading"/> {text}</div>;
+const getDefaultListLoading = (_listError: any, { intl }: { intl: InjectedIntl }) => {
+    const text = intl.formatMessage({ id: "gs.list.loading" });
+    return (
+        <div>
+            <span className="s-attribute-filter-list-loading" /> {text}
+        </div>
+    );
 };
 
-const getDefaultListError = (_listError: any, { intl }: { intl: InjectedIntl}) => {
-    const text = intl.formatMessage({ id: 'gs.list.error' });
+const getDefaultListError = (_listError: any, { intl }: { intl: InjectedIntl }) => {
+    const text = intl.formatMessage({ id: "gs.list.error" });
     return <div className="gd-message error">{text}</div>;
 };
 
-const getDefaultListNoResults = (_listError: any, { intl }: { intl: InjectedIntl}) => {
-    const text = intl.formatMessage({ id: 'gs.list.noItemsFound' });
+const getDefaultListNoResults = (_listError: any, { intl }: { intl: InjectedIntl }) => {
+    const text = intl.formatMessage({ id: "gs.list.noItemsFound" });
     return <div>{text}</div>;
 };
 
@@ -49,8 +50,11 @@ export interface IValidElementsItem {
 }
 
 export interface IAttributeMetadata {
-    getValidElements: (projectId: string, objectId: string, options: object) =>
-        Promise<IValidElementsResponse>;
+    getValidElements: (
+        projectId: string,
+        objectId: string,
+        options: object,
+    ) => Promise<IValidElementsResponse>;
 }
 
 export interface IAttributeDropdownProps {
@@ -85,11 +89,11 @@ export interface IAttributeDropdownState {
 }
 
 export function getObjectIdFromUri(uri: string) {
-    return last(uri.split('/'));
+    return last(uri.split("/"));
 }
 
 export function getProjectIdFromUri(uri: string) {
-    return uri.split('/')[3];
+    return uri.split("/")[3];
 }
 
 export function loadAttributeElements(
@@ -97,7 +101,7 @@ export function loadAttributeElements(
     uri: string,
     searchString: string,
     offset = INITIAL_OFFSET,
-    limit = LIMIT
+    limit = LIMIT,
 ) {
     const encodedSearchString = encodeURIComponent(searchString);
     const projectId = getProjectIdFromUri(uri);
@@ -105,37 +109,41 @@ export function loadAttributeElements(
     const options = {
         limit,
         offset,
-        filter: encodedSearchString
+        filter: encodedSearchString,
     };
 
-    return metadata.getValidElements(projectId, objectId, options)
-        .then((res: IValidElementsResponse) => {
-            const { items, paging: { total } } = res.validElements;
-            return {
-                data: {
-                    offset,
-                    limit,
-                    items: items.map((item: IElement) => pick(item.element, 'uri', 'title')),
-                    totalCount: total
-                }
-            };
-        });
+    return metadata.getValidElements(projectId, objectId, options).then((res: IValidElementsResponse) => {
+        const {
+            items,
+            paging: { total },
+        } = res.validElements;
+        return {
+            data: {
+                offset,
+                limit,
+                items: items.map((item: IElement) => pick(item.element, "uri", "title")),
+                totalCount: total,
+            },
+        };
+    });
 }
 
 function getElementId(element: IAttributeElement) {
-    return element.uri.split('=')[1];
+    return element.uri.split("=")[1];
 }
 
 export function createAfmFilter(id: string, selection: IAttributeElement[], isInverted: boolean) {
     return {
         id,
-        type: 'attribute',
-        [isInverted ? 'notIn' : 'in']: selection.map(getElementId)
+        type: "attribute",
+        [isInverted ? "notIn" : "in"]: selection.map(getElementId),
     };
 }
 
-export class AttributeDropdownWrapped
-    extends React.PureComponent<IAttributeDropdownProps & InjectedIntlProps, IAttributeDropdownState> {
+export class AttributeDropdownWrapped extends React.PureComponent<
+    IAttributeDropdownProps & InjectedIntlProps,
+    IAttributeDropdownState
+> {
     public static propTypes = {
         attributeDisplayForm: PropTypes.object.isRequired,
         projectId: PropTypes.string.isRequired,
@@ -151,18 +159,18 @@ export class AttributeDropdownWrapped
         getListNoResults: PropTypes.func,
 
         metadata: PropTypes.shape({
-            getValidElements: PropTypes.func.isRequired
-        }).isRequired
+            getValidElements: PropTypes.func.isRequired,
+        }).isRequired,
     };
 
     public static defaultProps = {
         fullscreenOnMobile: false,
         isUsingIdentifier: false,
 
-        getListItem: () => (<AttributeFilterItem />),
+        getListItem: () => <AttributeFilterItem />,
         getListLoading: getDefaultListLoading,
         getListError: getDefaultListError,
-        getListNoResults: getDefaultListNoResults
+        getListNoResults: getDefaultListNoResults,
     };
 
     private dataSource: any;
@@ -179,7 +187,7 @@ export class AttributeDropdownWrapped
             items: [],
             selection: [],
             isInverted: true,
-            searchString: ''
+            searchString: "",
         };
 
         this.createMediaQuery(props.fullscreenOnMobile);
@@ -201,8 +209,8 @@ export class AttributeDropdownWrapped
     public render() {
         const { attributeDisplayForm } = this.props;
         const classes = classNames(
-            'gd-attribute-filter',
-            attributeDisplayForm ? `gd-id-${stringUtils.simplifyText(attributeDisplayForm.meta.title)}` : ''
+            "gd-attribute-filter",
+            attributeDisplayForm ? `gd-id-${stringUtils.simplifyText(attributeDisplayForm.meta.title)}` : "",
         );
 
         return (
@@ -219,15 +227,20 @@ export class AttributeDropdownWrapped
 
     private createMediaQuery(fullscreenOnMobile: boolean) {
         this.MediaQuery = fullscreenOnMobile
-        ? undefined
-        : ({ children }: { children: (...params: any[]) => any; /* TODO: make the types more specific (FET-282) */ }) =>
-            children(false);
+            ? undefined
+            : ({
+                  children,
+              }: {
+                  children: (...params: any[]) => any /* TODO: make the types more specific (FET-282) */;
+              }) => children(false);
     }
 
     private onApply() {
         const { selection, isInverted } = this.state;
         const { attributeDisplayForm, isUsingIdentifier } = this.props;
-        const id: string = isUsingIdentifier ? attributeDisplayForm.meta.identifier : attributeDisplayForm.meta.uri;
+        const id: string = isUsingIdentifier
+            ? attributeDisplayForm.meta.identifier
+            : attributeDisplayForm.meta.uri;
 
         this.props.onApply(createAfmFilter(id, selection, isInverted));
         this.dropdownRef.closeDropdown();
@@ -238,19 +251,14 @@ export class AttributeDropdownWrapped
     }
 
     private getAttributeElements(uri: string, query: any) {
-        const {
-            paging: {
-                offset = 0,
-                limit = LIMIT
-            } = {}
-        } = query;
+        const { paging: { offset = 0, limit = LIMIT } = {} } = query;
         const { metadata } = this.props;
         const { searchString } = this.state;
         return loadAttributeElements(metadata, uri, searchString, offset, limit).catch((error: any) => {
             this.setState({
                 isListInitialising: false,
                 isListReady: false,
-                listError: error
+                listError: error,
             });
             throw error;
         });
@@ -261,11 +269,11 @@ export class AttributeDropdownWrapped
 
         this.setState({
             isListInitialising: true,
-            listError: null
+            listError: null,
         });
 
         this.dataSource = new DataSource(request, request, {
-            pageSize: LIMIT
+            pageSize: LIMIT,
         });
 
         this.dataSource.onChange((result: any) => {
@@ -274,7 +282,7 @@ export class AttributeDropdownWrapped
                 isListReady: true,
                 listError: null,
                 items: result.data.items.map((i: any) => i || { empty: true }),
-                isListInitialising: true
+                isListInitialising: true,
             });
         });
 
@@ -284,17 +292,17 @@ export class AttributeDropdownWrapped
     private onSelect = (selection: IAttributeElement[], isInverted: boolean) => {
         this.setState({
             selection,
-            isInverted
+            isInverted,
         });
-    }
+    };
 
     private onSearch = (searchString: string) => {
         this.setState({ searchString });
-    }
+    };
 
     private onRangeChange = (_searchString: string, from: number, to: number) => {
         range(from, to).forEach(this.dataSource.getRowAt);
-    }
+    };
 
     private onDropdownToggle(isDropdownOpen: boolean) {
         const { isListReady, isListInitialising } = this.state;
@@ -345,14 +353,14 @@ export class AttributeDropdownWrapped
                 onRangeChange={this.onRangeChange}
                 onSearch={this.onSearch}
                 onSelect={this.onSelect}
-            />
+            />,
         );
     }
 
     private renderButtons(applyDisabled: boolean) {
         const { intl } = this.props;
-        const cancelText = intl.formatMessage({ id: 'gs.list.cancel' });
-        const applyText = intl.formatMessage({ id: 'gs.list.apply' });
+        const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
+        const applyText = intl.formatMessage({ id: "gs.list.apply" });
         return (
             <div className="gd-attribute-filter-actions">
                 <Button

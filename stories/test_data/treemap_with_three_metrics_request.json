@@ -25,15 +25,15 @@
                     "alias": "# of Activities"
                 },
                 {
-                  "localIdentifier": "889402a04445430880fd1c8b6d846164",
-                  "definition": {
-                    "measure": {
-                      "item": {
-                        "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1284"
-                      }
-                    }
-                  },
-                  "alias": "Won"
+                    "localIdentifier": "889402a04445430880fd1c8b6d846164",
+                    "definition": {
+                        "measure": {
+                            "item": {
+                                "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1284"
+                            }
+                        }
+                    },
+                    "alias": "Won"
                 }
             ]
         },

@@ -1,16 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from 'react';
-import * as Measure from 'react-measure';
-import * as cx from 'classnames';
+import * as React from "react";
+import * as Measure from "react-measure";
+import * as cx from "classnames";
 
-import FluidLegend from './FluidLegend';
-import StaticLegend from './StaticLegend';
-import { ChartType } from '../../../../constants/visualizationTypes';
-import { isComboChart, isHeatmap } from '../../utils/common';
-import HeatmapLegend from './HeatmapLegend';
-import { IntlWrapper } from '../../../core/base/IntlWrapper';
-import { IntlTranslationsProvider, ITranslationsComponentProps } from '../../../core/base/TranslationsProvider';
-import { getComboChartSeries, transformToDualAxesSeries } from './helpers';
+import FluidLegend from "./FluidLegend";
+import StaticLegend from "./StaticLegend";
+import { ChartType } from "../../../../constants/visualizationTypes";
+import { isComboChart, isHeatmap } from "../../utils/common";
+import HeatmapLegend from "./HeatmapLegend";
+import { IntlWrapper } from "../../../core/base/IntlWrapper";
+import {
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "../../../core/base/TranslationsProvider";
+import { getComboChartSeries, transformToDualAxesSeries } from "./helpers";
 
 export interface ILegendProps {
     responsive?: boolean;
@@ -34,7 +37,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         responsive: false,
         legendItemsEnabled: [] as any,
         height: 0,
-        showFluidLegend: false
+        showFluidLegend: false,
     };
 
     constructor(props: ILegendProps) {
@@ -54,7 +57,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             const isVisible = legendItemsEnabled[seriesItem.legendIndex];
             return {
                 ...seriesItem,
-                isVisible
+                isVisible,
             };
         });
 
@@ -87,7 +90,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
     public renderStatic() {
         const { chartType, position, height, format, locale, responsive } = this.props;
 
-        const classNames = cx('viz-static-legend-wrap', `position-${position}`);
+        const classNames = cx("viz-static-legend-wrap", `position-${position}`);
 
         const props = {
             series: this.getSeries(),
@@ -96,17 +99,14 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
             position,
             format,
             locale,
-            responsive
+            responsive,
         };
 
         return (
             <Measure>
                 {(dimensions: any) => (
                     <div className={classNames}>
-                        <StaticLegend
-                            {...props}
-                            containerHeight={height || dimensions.height}
-                        />
+                        <StaticLegend {...props} containerHeight={height || dimensions.height} />
                     </div>
                 )}
             </Measure>

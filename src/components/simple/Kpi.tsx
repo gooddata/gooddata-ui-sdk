@@ -1,18 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { SDK, DataLayer } from '@gooddata/gooddata-js';
-import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
-import noop = require('lodash/noop');
-import { AFM, Execution } from '@gooddata/typings';
-import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
+import * as React from "react";
+import { SDK, DataLayer } from "@gooddata/gooddata-js";
+import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import noop = require("lodash/noop");
+import { AFM, Execution } from "@gooddata/typings";
+import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
 
-import { Execute, IExecuteChildrenProps, IExecuteProps } from '../../execution/Execute';
-import { LoadingComponent, ILoadingProps } from './LoadingComponent';
-import { IErrorProps } from './ErrorComponent';
-import { IEvents } from '../../interfaces/Events';
-import { KpiPropTypes, Requireable } from '../../proptypes/Kpi';
-import { isEmptyResult } from '../../helpers/errorHandlers';
-import { IntlWrapper } from '../core/base/IntlWrapper';
+import { Execute, IExecuteChildrenProps, IExecuteProps } from "../../execution/Execute";
+import { LoadingComponent, ILoadingProps } from "./LoadingComponent";
+import { IErrorProps } from "./ErrorComponent";
+import { IEvents } from "../../interfaces/Events";
+import { KpiPropTypes, Requireable } from "../../proptypes/Kpi";
+import { isEmptyResult } from "../../helpers/errorHandlers";
+import { IntlWrapper } from "../core/base/IntlWrapper";
 
 export { Requireable };
 
@@ -29,13 +29,14 @@ export interface IKpiProps extends IEvents {
     ErrorComponent?: React.ComponentType<IErrorProps>;
 }
 
-const DEFAULT_FORMAT = '#,#.##';
+const DEFAULT_FORMAT = "#,#.##";
 
 function getFormatFromExecution(result: Execution.IExecutionResponses): string {
     if (isEmptyResult(result)) {
         return null;
     }
-    const measureGroupHeader = result.executionResponse.dimensions[0].headers[0] as Execution.IMeasureGroupHeader;
+    const measureGroupHeader = result.executionResponse.dimensions[0]
+        .headers[0] as Execution.IMeasureGroupHeader;
     return measureGroupHeader.measureGroupHeader.items[0].measureHeaderItem.format;
 }
 
@@ -45,15 +46,15 @@ function buildAFM(measure: string, filters: AFM.FilterItem[] = []): AFM.IAfm {
     return {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
-                        item
-                    }
-                }
-            }
+                        item,
+                    },
+                },
+            },
         ],
-        filters: filters.filter(DataLayer.Filters.isNotEmptyFilter)
+        filters: filters.filter(DataLayer.Filters.isNotEmptyFilter),
     };
 }
 
@@ -64,9 +65,9 @@ const defaultErrorHandler = (error: object) => {
 const resultSpec: AFM.IResultSpec = {
     dimensions: [
         {
-            itemIdentifiers: ['measureGroup']
-        }
-    ]
+            itemIdentifiers: ["measureGroup"],
+        },
+    ],
 };
 
 export const KpiError = (props: IErrorProps) => {
@@ -75,13 +76,13 @@ export const KpiError = (props: IErrorProps) => {
         <span
             className="gdc-kpi-error"
             style={{
-                whiteSpace: 'normal',
-                lineHeight: 'normal',
-                fontSize: '14px',
+                whiteSpace: "normal",
+                lineHeight: "normal",
+                fontSize: "14px",
                 fontWeight: 700,
-                verticalAlign: 'middle',
-                color: '#94a1ad',
-                fontFamily: 'avenir, Helvetica Neue, arial, sans-serif'
+                verticalAlign: "middle",
+                color: "#94a1ad",
+                fontFamily: "avenir, Helvetica Neue, arial, sans-serif",
             }}
         >
             {message}
@@ -96,12 +97,12 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
         onLoadingChanged: noop,
         ExecuteComponent: Execute,
         LoadingComponent: () => <LoadingComponent inline={true} />,
-        ErrorComponent: KpiError
+        ErrorComponent: KpiError,
     };
 
-    public static propTypes =  {
+    public static propTypes = {
         ...KpiPropTypes,
-        intl: intlShape.isRequired
+        intl: intlShape.isRequired,
     };
 
     public render() {
@@ -124,17 +125,21 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
             >
                 {({ result, error, isLoading }: IExecuteChildrenProps) => {
                     if (error) {
-                        return ErrorComponent ? <ErrorComponent
-                            code={error.status}
-                            message={intl.formatMessage({ id: 'visualization.ErrorMessageKpi' })}
-                        /> : null;
+                        return ErrorComponent ? (
+                            <ErrorComponent
+                                code={error.status}
+                                message={intl.formatMessage({ id: "visualization.ErrorMessageKpi" })}
+                            />
+                        ) : null;
                     }
                     if (isLoading || !result) {
                         return LoadingComponent ? <LoadingComponent /> : null;
                     }
-                    return (<span className="gdc-kpi">
-                        {this.getFormattedResult(this.extractNumber(result), result)}
-                    </span>);
+                    return (
+                        <span className="gdc-kpi">
+                            {this.getFormattedResult(this.extractNumber(result), result)}
+                        </span>
+                    );
                 }}
             </ExecuteComponent>
         );
@@ -149,7 +154,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
 
     private extractNumber(result: Execution.IExecutionResponses) {
         if (isEmptyResult(result)) {
-            return '';
+            return "";
         }
         return parseFloat(result.executionResult.data[0].toString());
     }
@@ -165,7 +170,7 @@ export class Kpi extends React.Component<IKpiProps, null> {
     public render() {
         return (
             <IntlWrapper locale={this.props.locale}>
-                <IntlKpi {...this.props}/>
+                <IntlKpi {...this.props} />
             </IntlWrapper>
         );
     }

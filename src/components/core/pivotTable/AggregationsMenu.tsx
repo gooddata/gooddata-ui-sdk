@@ -1,21 +1,21 @@
 // (C) 2019 GoodData Corporation
-import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
-import { AFM, Execution } from '@gooddata/typings';
-import * as classNames from 'classnames';
-import * as React from 'react';
+import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
+import { AFM, Execution } from "@gooddata/typings";
+import * as classNames from "classnames";
+import * as React from "react";
 
 import {
     getNthAttributeHeader,
     getNthAttributeLocalIdentifier,
-    getNthDimensionHeaders
-} from '../../../helpers/executionResultHelper';
-import Menu from '../../menu/Menu';
-import { FIELD_TYPE_ATTRIBUTE, getParsedFields } from '../../../helpers/agGrid';
-import { IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
-import { IOnOpenedChangeParams } from '../../menu/MenuSharedTypes';
-import { AVAILABLE_TOTALS } from '../../visualizations/table/totals/utils';
-import AggregationsSubMenu from './AggregationsSubMenu';
-import menuHelper from './aggregationsMenuHelper';
+    getNthDimensionHeaders,
+} from "../../../helpers/executionResultHelper";
+import Menu from "../../menu/Menu";
+import { FIELD_TYPE_ATTRIBUTE, getParsedFields } from "../../../helpers/agGrid";
+import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IOnOpenedChangeParams } from "../../menu/MenuSharedTypes";
+import { AVAILABLE_TOTALS } from "../../visualizations/table/totals/utils";
+import AggregationsSubMenu from "./AggregationsSubMenu";
+import menuHelper from "./aggregationsMenuHelper";
 
 export interface IColumnTotal {
     type: AFM.TotalType;
@@ -36,13 +36,7 @@ export interface IAggregationsMenuProps {
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
     public render() {
-        const {
-            intl,
-            colId,
-            getExecutionResponse,
-            isMenuOpened,
-            onMenuOpenedChange
-        } = this.props;
+        const { intl, colId, getExecutionResponse, isMenuOpened, onMenuOpenedChange } = this.props;
 
         // Because of Ag-grid react wrapper does not rerender the component when we pass
         // new gridOptions we need to pull the data manually on each render
@@ -51,7 +45,10 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
-        const rowAttributeHeaders = getNthDimensionHeaders(executionResponse, 0) as Execution.IAttributeHeader[];
+        const rowAttributeHeaders = getNthDimensionHeaders(
+            executionResponse,
+            0,
+        ) as Execution.IAttributeHeader[];
         const isOneRowTable = rowAttributeHeaders.length === 0;
         if (isOneRowTable) {
             return null;
@@ -62,7 +59,9 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
-        const measureGroupHeader = dimensionHeader[dimensionHeader.length - 1] as Execution.IMeasureGroupHeader;
+        const measureGroupHeader = dimensionHeader[
+            dimensionHeader.length - 1
+        ] as Execution.IMeasureGroupHeader;
         if (!measureGroupHeader || !Execution.isMeasureGroupHeader(measureGroupHeader)) {
             return null;
         }
@@ -79,25 +78,27 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         const measureLocalIdentifiers = menuHelper.getHeaderMeasureLocalIdentifiers(
             measureGroupHeader.measureGroupHeader.items,
             lastFieldType,
-            lastFieldId
+            lastFieldId,
         );
 
         const totalsForHeader = this.getColumnTotals(measureLocalIdentifiers, isAttributeHeader);
 
         return (
             <Menu
-                toggler={
-                    <div className="menu-icon" />
-                }
+                toggler={<div className="menu-icon" />}
                 togglerWrapperClassName={this.getTogglerClassNames()}
                 opened={isMenuOpened}
                 onOpenedChange={onMenuOpenedChange}
-                openAction={'click'}
+                openAction={"click"}
             >
                 <ItemsWrapper>
                     <div className="s-table-header-menu-content">
-                        <Header>{intl.formatMessage({ id: 'visualizations.menu.aggregations' })}</Header>
-                        {this.renderMainMenuItems(totalsForHeader, measureLocalIdentifiers, rowAttributeHeaders)}
+                        <Header>{intl.formatMessage({ id: "visualizations.menu.aggregations" })}</Header>
+                        {this.renderMainMenuItems(
+                            totalsForHeader,
+                            measureLocalIdentifiers,
+                            rowAttributeHeaders,
+                        )}
                     </div>
                 </ItemsWrapper>
             </Menu>
@@ -117,10 +118,10 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private getTogglerClassNames() {
         const { isMenuButtonVisible, isMenuOpened } = this.props;
 
-        return classNames('s-table-header-menu', 'gd-pivot-table-header-menu', {
-            'gd-pivot-table-header-menu--show': isMenuButtonVisible,
-            'gd-pivot-table-header-menu--hide': !isMenuButtonVisible,
-            'gd-pivot-table-header-menu--open': isMenuOpened
+        return classNames("s-table-header-menu", "gd-pivot-table-header-menu", {
+            "gd-pivot-table-header-menu--show": isMenuButtonVisible,
+            "gd-pivot-table-header-menu--hide": !isMenuButtonVisible,
+            "gd-pivot-table-header-menu--open": isMenuOpened,
         });
     }
 
@@ -128,18 +129,14 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         totalType: AFM.TotalType,
         onClick: () => void,
         isSelected: boolean,
-        hasSubMenu = false
+        hasSubMenu = false,
     ) {
         return (
-            <Item
-                checked={isSelected}
-                subMenu={hasSubMenu}
-            >
-                <div
-                    onClick={onClick}
-                    className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
-                >
-                    {this.props.intl.formatMessage({ id: `visualizations.totals.dropdown.title.${totalType}` })}
+            <Item checked={isSelected} subMenu={hasSubMenu}>
+                <div onClick={onClick} className="gd-aggregation-menu-item-inner s-menu-aggregation-inner">
+                    {this.props.intl.formatMessage({
+                        id: `visualizations.totals.dropdown.title.${totalType}`,
+                    })}
                 </div>
             </Item>
         );
@@ -147,50 +144,53 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
     private getItemClassNames(totalType: AFM.TotalType): string {
         return classNames(
-            'gd-aggregation-menu-item',
-            's-menu-aggregation',
-            `s-menu-aggregation-${totalType}`
+            "gd-aggregation-menu-item",
+            "s-menu-aggregation",
+            `s-menu-aggregation-${totalType}`,
         );
     }
 
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
-        rowAttributeHeaders: Execution.IAttributeHeader[]
+        rowAttributeHeaders: Execution.IAttributeHeader[],
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
         const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, 0);
 
         return AVAILABLE_TOTALS.map((totalType: AFM.TotalType) => {
-            const isSelected = menuHelper.isTotalEnabledForAttribute(firstAttributeIdentifier, totalType, columnTotals);
+            const isSelected = menuHelper.isTotalEnabledForAttribute(
+                firstAttributeIdentifier,
+                totalType,
+                columnTotals,
+            );
             const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, 0);
-            const onClick = () => this.props.onAggregationSelect({
-                type: totalType,
-                measureIdentifiers: measureLocalIdentifiers,
-                include: !isSelected,
-                attributeIdentifier: attributeHeader.localIdentifier
-            });
+            const onClick = () =>
+                this.props.onAggregationSelect({
+                    type: totalType,
+                    measureIdentifiers: measureLocalIdentifiers,
+                    include: !isSelected,
+                    attributeIdentifier: attributeHeader.localIdentifier,
+                });
             const itemClassNames = this.getItemClassNames(totalType);
             const renderSubmenu = showSubmenu && rowAttributeHeaders.length > 0;
             const toggler = this.renderMenuItemContent(totalType, onClick, isSelected, renderSubmenu);
 
             return (
                 <div className={itemClassNames} key={totalType}>
-                    {
-                        renderSubmenu
-                            ? (
-                                <AggregationsSubMenu
-                                    intl={intl}
-                                    totalType={totalType}
-                                    rowAttributeHeaders={rowAttributeHeaders}
-                                    columnTotals={columnTotals}
-                                    measureLocalIdentifiers={measureLocalIdentifiers}
-                                    onAggregationSelect={onAggregationSelect}
-                                    toggler={toggler}
-                                />
-                            )
-                            : toggler
-                    }
+                    {renderSubmenu ? (
+                        <AggregationsSubMenu
+                            intl={intl}
+                            totalType={totalType}
+                            rowAttributeHeaders={rowAttributeHeaders}
+                            columnTotals={columnTotals}
+                            measureLocalIdentifiers={measureLocalIdentifiers}
+                            onAggregationSelect={onAggregationSelect}
+                            toggler={toggler}
+                        />
+                    ) : (
+                        toggler
+                    )}
                 </div>
             );
         });

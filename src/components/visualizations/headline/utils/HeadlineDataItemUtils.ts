@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
-import isEmpty = require('lodash/isEmpty');
-import isNaN = require('lodash/isNaN');
-import { IFormattedHeadlineDataItem, IHeadlineDataItem } from '../../../../interfaces/Headlines';
-import { IChartConfig } from '../../../../interfaces/Config';
+import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import isEmpty = require("lodash/isEmpty");
+import isNaN = require("lodash/isNaN");
+import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../../../interfaces/Headlines";
+import { IChartConfig } from "../../../../interfaces/Config";
 
-const DEFAULT_VALUE_WHEN_EMPTY = '–';
-const INVALID_VALUE = 'NaN';
+const DEFAULT_VALUE_WHEN_EMPTY = "–";
+const INVALID_VALUE = "NaN";
 const PERCENTAGE_VALUE_LIMIT = 999;
 
 function processStringForNumberJs(value: string | null, format: string) {
     return value === null && !isEmpty(format)
-        ? '' // return empty string for null value for number.js to apply [=null] format
+        ? "" // return empty string for null value for number.js to apply [=null] format
         : parseFloat(value as string);
 }
 
@@ -41,17 +41,22 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
  * @param item
  * @returns {{cssStyle: {color, backgroundColor}, value: string, isValueEmpty: boolean}}
  */
-export function formatItemValue(item: IHeadlineDataItem, config: IChartConfig = {}): IFormattedHeadlineDataItem {
+export function formatItemValue(
+    item: IHeadlineDataItem,
+    config: IChartConfig = {},
+): IFormattedHeadlineDataItem {
     const { separators } = config;
-    const { label, color, backgroundColor } = formatValueToLabelWithColors(item.value, item.format, separators);
-    const isValueEmpty = label === INVALID_VALUE || label === '';
-    const value = isValueEmpty
-        ? DEFAULT_VALUE_WHEN_EMPTY
-        : label;
+    const { label, color, backgroundColor } = formatValueToLabelWithColors(
+        item.value,
+        item.format,
+        separators,
+    );
+    const isValueEmpty = label === INVALID_VALUE || label === "";
+    const value = isValueEmpty ? DEFAULT_VALUE_WHEN_EMPTY : label;
     return {
         cssStyle: buildCssStyle(color, backgroundColor),
         value,
-        isValueEmpty
+        isValueEmpty,
     };
 }
 
@@ -71,7 +76,7 @@ export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadli
     if (!item || item.value === null || isNaN(parseFloat(item.value))) {
         return {
             value: DEFAULT_VALUE_WHEN_EMPTY,
-            isValueEmpty: true
+            isValueEmpty: true,
         };
     }
 
@@ -89,6 +94,6 @@ export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadli
 
     return {
         value: formattedValue,
-        isValueEmpty: false
+        isValueEmpty: false,
     };
 }

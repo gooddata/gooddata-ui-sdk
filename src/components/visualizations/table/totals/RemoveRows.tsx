@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { noop } from 'lodash';
-import { VisualizationObject } from '@gooddata/typings';
+import * as React from "react";
+import * as classNames from "classnames";
+import { noop } from "lodash";
+import { VisualizationObject } from "@gooddata/typings";
 
-import Button from '@gooddata/goodstrap/lib/Button/Button';
+import Button from "@gooddata/goodstrap/lib/Button/Button";
 
-import { TOTALS_ADD_ROW_HEIGHT } from '../TableVisualization';
-import { ITotalWithData } from '../../../../interfaces/Totals';
+import { TOTALS_ADD_ROW_HEIGHT } from "../TableVisualization";
+import { ITotalWithData } from "../../../../interfaces/Totals";
 
 const LAST_ADDED_TOTAL_ROW_HIGHLIGHT_PERIOD = 1000;
 
@@ -22,7 +22,7 @@ export class RemoveRows extends React.Component<IRemoveRowsProps> {
     public static defaultProps: Partial<IRemoveRowsProps> = {
         onRemove: noop,
         onLastAddedTotalRowHighlightPeriodEnd: noop,
-        totalsWithData: []
+        totalsWithData: [],
     };
 
     private wrapperRef: HTMLElement;
@@ -39,7 +39,10 @@ export class RemoveRows extends React.Component<IRemoveRowsProps> {
         const style = { bottom: `${TOTALS_ADD_ROW_HEIGHT}px` };
 
         if (lastAddedTotalType) {
-            setTimeout(this.props.onLastAddedTotalRowHighlightPeriodEnd, LAST_ADDED_TOTAL_ROW_HIGHLIGHT_PERIOD);
+            setTimeout(
+                this.props.onLastAddedTotalRowHighlightPeriodEnd,
+                LAST_ADDED_TOTAL_ROW_HIGHLIGHT_PERIOD,
+            );
         }
 
         return (
@@ -62,18 +65,19 @@ export class RemoveRows extends React.Component<IRemoveRowsProps> {
 
         const islastAddedTotalType = total.type === lastAddedTotalType;
 
-        const classes = classNames(
-            'indigo-totals-remove-row',
-            `totals-remove-row-${total.type}`,
-            { 'last-added': islastAddedTotalType }
-        );
+        const classes = classNames("indigo-totals-remove-row", `totals-remove-row-${total.type}`, {
+            "last-added": islastAddedTotalType,
+        });
 
         const onClick = () => onRemove(total.type);
 
         return (
             <div className={classes} key={`totals-row-overlay-${total.type}`}>
                 <Button
-                    className={classNames(`s-totals-rows-remove-${total.type}`, 'indigo-totals-row-remove-button')}
+                    className={classNames(
+                        `s-totals-rows-remove-${total.type}`,
+                        "indigo-totals-row-remove-button",
+                    )}
                     onClick={onClick}
                 />
             </div>

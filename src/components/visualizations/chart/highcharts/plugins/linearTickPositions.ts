@@ -1,13 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
 export function linearTickPositions(Highcharts: any) {
     const wrap = Highcharts.wrap;
-    const YAXIS = 'yAxis';
-    const HEATMAP = 'heatmap';
+    const YAXIS = "yAxis";
+    const HEATMAP = "heatmap";
 
-    wrap(Highcharts.Axis.prototype, 'getLinearTickPositions', function(proceed: (...params: any[]) => any) {
+    wrap(Highcharts.Axis.prototype, "getLinearTickPositions", function(proceed: (...params: any[]) => any) {
         const args = Array.prototype.slice.call(arguments);
         args.shift();
-        const { categories, coll, chart: { options: { chart: type } } } = this;
+        const {
+            categories,
+            coll,
+            chart: {
+                options: { chart: type },
+            },
+        } = this;
         const isYAxis = coll === YAXIS;
         const isHeatmap = type === HEATMAP;
         const tickPositions = proceed.apply(this, args);

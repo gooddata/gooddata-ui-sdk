@@ -1,33 +1,30 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import noop = require('lodash/noop');
-import difference = require('lodash/difference');
-import uniq = require('lodash/uniq');
-import { get } from 'lodash';
-import { AFM, VisualizationObject } from '@gooddata/typings';
+import * as React from "react";
+import noop = require("lodash/noop");
+import difference = require("lodash/difference");
+import uniq = require("lodash/uniq");
+import { get } from "lodash";
+import { AFM, VisualizationObject } from "@gooddata/typings";
 
-import { IntlWrapper } from './base/IntlWrapper';
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps
-} from './base/TranslationsProvider';
-import { fixEmptyHeaderItems } from './base/utils/fixEmptyHeaderItems';
-import { TablePropTypes } from '../../proptypes/Table';
-import { VisualizationEnvironment } from '../uri/Visualization';
-import { IIndexedTotalItem } from '../../interfaces/Totals';
-import { convertToIndexedTotals, convertToTotals } from '../../helpers/TotalsConverter';
-import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+import { IntlWrapper } from "./base/IntlWrapper";
+import { IntlTranslationsProvider, ITranslationsComponentProps } from "./base/TranslationsProvider";
+import { fixEmptyHeaderItems } from "./base/utils/fixEmptyHeaderItems";
+import { TablePropTypes } from "../../proptypes/Table";
+import { VisualizationEnvironment } from "../uri/Visualization";
+import { IIndexedTotalItem } from "../../interfaces/Totals";
+import { convertToIndexedTotals, convertToTotals } from "../../helpers/TotalsConverter";
+import { IDataSourceProviderInjectedProps } from "../afm/DataSourceProvider";
 
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultProps
-} from './base/VisualizationLoadingHOC';
-import { BaseVisualization } from './base/BaseVisualization';
-import { Table as IndigoTable, ITableProps as IIndigoTableProps } from '../visualizations/table/Table';
-import { ResponsiveTable } from '../visualizations/table/ResponsiveTable';
-import { TableTransformation } from '../visualizations/table/TableTransformation';
+    commonDefaultProps,
+} from "./base/VisualizationLoadingHOC";
+import { BaseVisualization } from "./base/BaseVisualization";
+import { Table as IndigoTable, ITableProps as IIndigoTableProps } from "../visualizations/table/Table";
+import { ResponsiveTable } from "../visualizations/table/ResponsiveTable";
+import { TableTransformation } from "../visualizations/table/TableTransformation";
 
 export interface ITableProps extends ICommonVisualizationProps {
     height?: number;
@@ -47,19 +44,22 @@ export interface ITableState {
 
 const ROWS_PER_PAGE_IN_RESPONSIVE_TABLE = 9;
 
-class SimpleTable extends
-    BaseVisualization<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, ITableState> {
-
-    public static defaultProps: Partial<ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps> = {
+class SimpleTable extends BaseVisualization<
+    ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps,
+    ITableState
+> {
+    public static defaultProps: Partial<
+        ITableProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps
+    > = {
         ...commonDefaultProps,
         stickyHeaderOffset: 0,
         height: null,
         maxHeight: null,
-        environment: 'none',
+        environment: "none",
         totals: [],
         totalsEditAllowed: false,
         onTotalsEdit: noop,
-        onDataTooLarge: noop
+        onDataTooLarge: noop,
     };
 
     public static propTypes = TablePropTypes;
@@ -70,7 +70,7 @@ class SimpleTable extends
         this.state = {
             page: 1,
             pageOffset: 0,
-            lastAddedTotalType: null
+            lastAddedTotalType: null,
         };
 
         this.onSortChange = this.onSortChange.bind(this);
@@ -96,8 +96,8 @@ class SimpleTable extends
     public onSortChange(sortItem: AFM.SortItem) {
         this.props.pushData({
             properties: {
-                sortItems: [sortItem]
-            }
+                sortItems: [sortItem],
+            },
         });
     }
 
@@ -108,22 +108,22 @@ class SimpleTable extends
 
         pushData({
             properties: {
-                totals
-            }
+                totals,
+            },
         });
     }
 
-    public onMore({ page, pageOffset }: { page: number, pageOffset: number }) {
+    public onMore({ page, pageOffset }: { page: number; pageOffset: number }) {
         this.setState({
             page,
-            pageOffset
+            pageOffset,
         });
     }
 
     public onLess() {
         this.setState({
             page: 1,
-            pageOffset: 0
+            pageOffset: 0,
         });
     }
 
@@ -136,7 +136,7 @@ class SimpleTable extends
         const { environment, maxHeight } = this.props;
         const { page, pageOffset } = this.state;
 
-        if (environment === 'dashboards') {
+        if (environment === "dashboards") {
             return (props: IIndigoTableProps) => (
                 <ResponsiveTable
                     {...props}
@@ -166,8 +166,8 @@ class SimpleTable extends
         return {
             execution: {
                 afm: this.props.dataSource.getAfm(),
-                resultSpec: this.props.resultSpec
-            }
+                resultSpec: this.props.resultSpec,
+            },
         };
     }
 
@@ -185,11 +185,11 @@ class SimpleTable extends
             onFiredDrillEvent,
             totals,
             totalsEditAllowed,
-            execution
+            execution,
         } = this.props;
 
-        const separators = get(this.props, 'config.separators', undefined);
-        const onDataTooLarge = environment === 'dashboards' ? this.props.onDataTooLarge : noop;
+        const separators = get(this.props, "config.separators", undefined);
+        const onDataTooLarge = environment === "dashboards" ? this.props.onDataTooLarge : noop;
 
         // Short term solution (See BB-641)
         const indexedTotals = convertToIndexedTotals(totals, dataSource.getAfm(), resultSpec);
@@ -201,9 +201,10 @@ class SimpleTable extends
                         <TableTransformation
                             executionRequest={this.getExecutionRequest()}
                             executionResponse={execution.executionResponse}
-                            executionResult={
-                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString)
-                            }
+                            executionResult={fixEmptyHeaderItems(
+                                execution.executionResult,
+                                props.emptyHeaderString,
+                            )}
                             afterRender={afterRender}
                             config={{ stickyHeaderOffset, separators }}
                             drillableItems={drillableItems}

@@ -1,32 +1,30 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM, Execution } from "@gooddata/typings";
 
-const headlineWithOneMeasureExecutionRequest: AFM.IExecution['execution'] = {
+const headlineWithOneMeasureExecutionRequest: AFM.IExecution["execution"] = {
     afm: {
         measures: [
             {
                 definition: {
                     measure: {
                         item: {
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
-                        }
-                    }
+                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                        },
+                    },
                 },
-                localIdentifier: 'lostMetric',
-                format: '#,##0.00',
-                alias: 'Lost'
-            }
-        ]
+                localIdentifier: "lostMetric",
+                format: "#,##0.00",
+                alias: "Lost",
+            },
+        ],
     },
     resultSpec: {
         dimensions: [
             {
-                itemIdentifiers: [
-                    'measureGroup'
-                ]
-            }
-        ]
-    }
+                itemIdentifiers: ["measureGroup"],
+            },
+        ],
+    },
 };
 
 const headlineWithOneMeasureExecutionResponse: Execution.IExecutionResponse = {
@@ -38,92 +36,82 @@ const headlineWithOneMeasureExecutionResponse: Execution.IExecutionResponse = {
                         items: [
                             {
                                 measureHeaderItem: {
-                                    name: 'Lost',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'lostMetric',
-                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                                    identifier: 'af2Ewj9Re2vK'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
+                                    name: "Lost",
+                                    format: "#,##0.00",
+                                    localIdentifier: "lostMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    identifier: "af2Ewj9Re2vK",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
     ],
     links: {
-        executionResult: 'abc'
-    }
+        executionResult: "abc",
+    },
 };
 
 const headlineWithOneMeasureExecutionResult: Execution.IExecutionResult = {
-    data: [
-        9011389.956
-    ],
+    data: [9011389.956],
     headerItems: [
         [
             [
                 {
                     measureHeaderItem: {
-                        name: 'Lost',
-                        order: 0
-                    }
-                }
-            ]
-        ]
+                        name: "Lost",
+                        order: 0,
+                    },
+                },
+            ],
+        ],
     ],
     paging: {
-        count: [
-            1
-        ],
-        offset: [
-            0
-        ],
-        total: [
-            1
-        ]
-    }
+        count: [1],
+        offset: [0],
+        total: [1],
+    },
 };
 
-const headlineWithTwoMeasuresExecutionRequest: AFM.IExecution['execution'] = {
+const headlineWithTwoMeasuresExecutionRequest: AFM.IExecution["execution"] = {
     afm: {
         measures: [
             {
                 definition: {
                     measure: {
                         item: {
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
-                        }
-                    }
+                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                        },
+                    },
                 },
-                localIdentifier: 'lostMetric',
-                format: '#,##0.00',
-                alias: 'Lost'
+                localIdentifier: "lostMetric",
+                format: "#,##0.00",
+                alias: "Lost",
             },
             {
-                localIdentifier: 'lostMetric_pop',
+                localIdentifier: "lostMetric_pop",
                 definition: {
                     popMeasure: {
-                        measureIdentifier: 'lostMetric',
+                        measureIdentifier: "lostMetric",
                         popAttribute: {
-                            uri: '/gdc/md/project_id/obj/date_attr_uri_id'
-                        }
-                    }
+                            uri: "/gdc/md/project_id/obj/date_attr_uri_id",
+                        },
+                    },
                 },
-                format: '#,##0.00',
-                alias: 'Lost - Previous year'
-            }
-        ]
+                format: "#,##0.00",
+                alias: "Lost - Previous year",
+            },
+        ],
     },
     resultSpec: {
         dimensions: [
             {
-                itemIdentifiers: [
-                    'measureGroup'
-                ]
-            }
-        ]
-    }
+                itemIdentifiers: ["measureGroup"],
+            },
+        ],
+    },
 };
 
 const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse = {
@@ -135,104 +123,93 @@ const headlineWithTwoMeasuresExecutionResponse: Execution.IExecutionResponse = {
                         items: [
                             {
                                 measureHeaderItem: {
-                                    name: 'Lost',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'lostMetric',
-                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                                    identifier: 'af2Ewj9Re2vK'
-                                }
+                                    name: "Lost",
+                                    format: "#,##0.00",
+                                    localIdentifier: "lostMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    identifier: "af2Ewj9Re2vK",
+                                },
                             },
                             {
                                 measureHeaderItem: {
-                                    name: 'Lost - Previous year',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'lostMetric_pop'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
+                                    name: "Lost - Previous year",
+                                    format: "#,##0.00",
+                                    localIdentifier: "lostMetric_pop",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
     ],
     links: {
-        executionResult: 'abc'
-    }
+        executionResult: "abc",
+    },
 };
 
 const headlineWithTwoMeasuresExecutionResult: Execution.IExecutionResult = {
-    data: [
-        9011389.956,
-        42470571.16
-    ],
+    data: [9011389.956, 42470571.16],
     headerItems: [
         [
             [
                 {
                     measureHeaderItem: {
-                        name: 'Lost',
-                        order: 0
-                    }
+                        name: "Lost",
+                        order: 0,
+                    },
                 },
                 {
                     measureHeaderItem: {
-                        name: 'Lost - Previous year',
-                        order: 1
-                    }
-                }
-            ]
-        ]
+                        name: "Lost - Previous year",
+                        order: 1,
+                    },
+                },
+            ],
+        ],
     ],
     paging: {
-        count: [
-            2
-        ],
-        offset: [
-            0
-        ],
-        total: [
-            2
-        ]
-    }
+        count: [2],
+        offset: [0],
+        total: [2],
+    },
 };
 
-const headlineWithAMMeasureExecutionRequest: AFM.IExecution['execution'] = {
+const headlineWithAMMeasureExecutionRequest: AFM.IExecution["execution"] = {
     afm: {
         measures: [
             {
                 definition: {
                     measure: {
                         item: {
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
-                        }
-                    }
+                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                        },
+                    },
                 },
-                localIdentifier: 'm1',
-                format: '#,##0.00',
-                alias: 'M1'
+                localIdentifier: "m1",
+                format: "#,##0.00",
+                alias: "M1",
             },
             {
                 definition: {
                     arithmeticMeasure: {
-                        measureIdentifiers: ['m1', 'm1'],
-                        operator: 'sum'
-                    }
+                        measureIdentifiers: ["m1", "m1"],
+                        operator: "sum",
+                    },
                 },
-                localIdentifier: 'am1',
-                format: '#,##0.00',
-                alias: 'AM1'
-            }
-        ]
+                localIdentifier: "am1",
+                format: "#,##0.00",
+                alias: "AM1",
+            },
+        ],
     },
     resultSpec: {
         dimensions: [
             {
-                itemIdentifiers: [
-                    'measureGroup'
-                ]
-            }
-        ]
-    }
+                itemIdentifiers: ["measureGroup"],
+            },
+        ],
+    },
 };
 
 const headlineWithAMMeasureExecutionResponse: Execution.IExecutionResponse = {
@@ -244,81 +221,72 @@ const headlineWithAMMeasureExecutionResponse: Execution.IExecutionResponse = {
                         items: [
                             {
                                 measureHeaderItem: {
-                                    name: 'M1',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'm1',
-                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                                    identifier: 'af2Ewj9Re2vK'
-                                }
+                                    name: "M1",
+                                    format: "#,##0.00",
+                                    localIdentifier: "m1",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    identifier: "af2Ewj9Re2vK",
+                                },
                             },
                             {
                                 measureHeaderItem: {
-                                    name: 'AM1',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'am1'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
+                                    name: "AM1",
+                                    format: "#,##0.00",
+                                    localIdentifier: "am1",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
     ],
     links: {
-        executionResult: 'abc'
-    }
+        executionResult: "abc",
+    },
 };
 
 const headlineWithAMMeasureExecutionResult: Execution.IExecutionResult = {
-    data: [
-        4000.20,
-        8000.40
-    ],
+    data: [4000.2, 8000.4],
     headerItems: [
         [
             [
                 {
                     measureHeaderItem: {
-                        name: 'M1',
-                        order: 0
-                    }
+                        name: "M1",
+                        order: 0,
+                    },
                 },
                 {
                     measureHeaderItem: {
-                        name: 'AM1',
-                        order: 1
-                    }
-                }
-            ]
-        ]
+                        name: "AM1",
+                        order: 1,
+                    },
+                },
+            ],
+        ],
     ],
     paging: {
-        count: [
-            2
-        ],
-        offset: [
-            0
-        ],
-        total: [
-            2
-        ]
-    }
+        count: [2],
+        offset: [0],
+        total: [2],
+    },
 };
 
 export const headlineWithOneMeasure = {
     executionRequest: headlineWithOneMeasureExecutionRequest,
     executionResponse: headlineWithOneMeasureExecutionResponse,
-    executionResult: headlineWithOneMeasureExecutionResult
+    executionResult: headlineWithOneMeasureExecutionResult,
 };
 
 export const headlineWithTwoMeasures = {
     executionRequest: headlineWithTwoMeasuresExecutionRequest,
     executionResponse: headlineWithTwoMeasuresExecutionResponse,
-    executionResult: headlineWithTwoMeasuresExecutionResult
+    executionResult: headlineWithTwoMeasuresExecutionResult,
 };
 
 export const headlineWithAMMeasure = {
     executionRequest: headlineWithAMMeasureExecutionRequest,
     executionResponse: headlineWithAMMeasureExecutionResponse,
-    executionResult: headlineWithAMMeasureExecutionResult
+    executionResult: headlineWithAMMeasureExecutionResult,
 };

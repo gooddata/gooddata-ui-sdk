@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from '@gooddata/typings';
+import { Execution } from "@gooddata/typings";
 
 export type IMappingHeader =
-      Execution.IAttributeHeader
+    | Execution.IAttributeHeader
     | Execution.IResultAttributeHeaderItem
     | Execution.IMeasureHeaderItem
     | Execution.ITotalHeaderItem;
@@ -16,7 +16,7 @@ export function isMappingHeaderAttribute(header: IMappingHeader): header is Exec
 }
 
 export function isMappingHeaderAttributeItem(
-    header: IMappingHeader
+    header: IMappingHeader,
 ): header is Execution.IResultAttributeHeaderItem {
     return (header as Execution.IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
 }

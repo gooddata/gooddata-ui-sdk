@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { OpenAction, IMenuPositionConfig, OnOpenedChange } from '../MenuSharedTypes';
-import MenuOpenedByClick from './MenuOpenedByClick';
-import MenuOpenedByHover from './MenuOpenedByHover';
+import * as React from "react";
+import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes";
+import MenuOpenedByClick from "./MenuOpenedByClick";
+import MenuOpenedByHover from "./MenuOpenedByHover";
 
 export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     topLevelMenu: boolean;
@@ -17,13 +17,13 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
 
 export default class MenuOpener extends React.Component<IMenuOpenerProps> {
     public static defaultProps: Partial<IMenuOpenerProps> = {
-        openAction: 'hover',
+        openAction: "hover",
 
-        alignment: ['right', 'bottom'],
+        alignment: ["right", "bottom"],
         spacing: 0,
         offset: 0,
 
-        portalTarget: document.querySelector('body')
+        portalTarget: document.querySelector("body"),
     };
 
     public render() {
@@ -41,21 +41,17 @@ export default class MenuOpener extends React.Component<IMenuOpenerProps> {
                 togglerWrapperClassName={this.props.togglerWrapperClassName}
                 portalTarget={this.props.portalTarget}
             >
-                <div
-                    className="gd-menuOpener"
-                >
-                    {this.props.children}
-                </div>
+                <div className="gd-menuOpener">{this.props.children}</div>
             </Component>
         );
     }
 
     private getComponentByOpenAction = () => {
         switch (this.props.openAction) {
-            case 'click':
+            case "click":
                 return MenuOpenedByClick;
-            case 'hover':
+            case "hover":
                 return MenuOpenedByHover;
         }
-    }
+    };
 }

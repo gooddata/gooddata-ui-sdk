@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 // from indigo-visualizations/stories/test_data/bar_chart_with_view_by_attribute
 
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM, Execution } from "@gooddata/typings";
 
 export const executionRequest = {
     execution: {
@@ -11,39 +11,35 @@ export const executionRequest = {
                     definition: {
                         measure: {
                             item: {
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
-                            }
-                        }
+                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                            },
+                        },
                     },
-                    localIdentifier: 'amountMetric',
-                    format: '#,##0.00',
-                    alias: 'Amount'
-                }
+                    localIdentifier: "amountMetric",
+                    format: "#,##0.00",
+                    alias: "Amount",
+                },
             ],
             attributes: [
                 {
                     displayForm: {
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
                     },
-                    localIdentifier: 'departmentAttribute'
-                }
-            ]
+                    localIdentifier: "departmentAttribute",
+                },
+            ],
         },
         resultSpec: {
             dimensions: [
                 {
-                    itemIdentifiers: [
-                        'departmentAttribute'
-                    ]
+                    itemIdentifiers: ["departmentAttribute"],
                 },
                 {
-                    itemIdentifiers: [
-                        'measureGroup'
-                    ]
-                }
-            ]
-        }
-    }
+                    itemIdentifiers: ["measureGroup"],
+                },
+            ],
+        },
+    },
 };
 
 export const executionRequestWithoutMeasureAndWithoutResultSpec = {
@@ -52,13 +48,13 @@ export const executionRequestWithoutMeasureAndWithoutResultSpec = {
             attributes: [
                 {
                     displayForm: {
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
                     },
-                    localIdentifier: 'departmentAttribute'
-                }
-            ]
-        }
-    }
+                    localIdentifier: "departmentAttribute",
+                },
+            ],
+        },
+    },
 };
 
 export const executionRequestWithEmptyMeasuresArray: AFM.IExecution = {
@@ -67,14 +63,14 @@ export const executionRequestWithEmptyMeasuresArray: AFM.IExecution = {
             attributes: [
                 {
                     displayForm: {
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
                     },
-                    localIdentifier: 'departmentAttribute'
-                }
+                    localIdentifier: "departmentAttribute",
+                },
             ],
-            measures: []
-        }
-    }
+            measures: [],
+        },
+    },
 };
 
 const executionResponse = {
@@ -86,87 +82,72 @@ const executionResponse = {
                         items: [
                             {
                                 measureHeaderItem: {
-                                    name: 'Amount',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'amountMetric',
-                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                                    identifier: 'ah1EuQxwaCqs'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
+                                    name: "Amount",
+                                    format: "#,##0.00",
+                                    localIdentifier: "amountMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                                    identifier: "ah1EuQxwaCqs",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
         },
         {
             headers: [
                 {
                     attributeHeader: {
-                        name: 'Department',
-                        localIdentifier: 'departmentAttribute',
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
-                        identifier: 'label.owner.department',
+                        name: "Department",
+                        localIdentifier: "departmentAttribute",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
+                        identifier: "label.owner.department",
                         formOf: {
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026',
-                            identifier: 'department',
-                            name: 'Department'
-                        }
-                    }
-                }
-            ]
-        }
+                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026",
+                            identifier: "department",
+                            name: "Department",
+                        },
+                    },
+                },
+            ],
+        },
     ],
     links: {
-        executionResult: 'abc'
-    }
+        executionResult: "abc",
+    },
 };
 
 const executionResult = {
-    data: [
-        [
-            '80406324.96',
-            '36219131.58'
-        ]
-    ],
+    data: [["80406324.96", "36219131.58"]],
     headerItems: [
-        [
-        ],
+        [],
         [
             [
                 {
                     attributeHeaderItem: {
-                        name: 'Direct Sales',
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1226'
-                    }
+                        name: "Direct Sales",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1226",
+                    },
                 },
                 {
                     attributeHeaderItem: {
-                        name: 'Inside Sales',
-                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1234'
-                    }
-                }
-            ]
-        ]
+                        name: "Inside Sales",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027/elements?id=1234",
+                    },
+                },
+            ],
+        ],
     ],
     paging: {
-        count: [
-            1,
-            2
-        ],
-        offset: [
-            0,
-            0
-        ],
-        total: [
-            1,
-            2
-        ]
-    }
+        count: [1, 2],
+        offset: [0, 0],
+        total: [1, 2],
+    },
 };
 
 export const executionResponses: Execution.IExecutionResponses = {
     executionResponse,
-    executionResult
+    executionResult,
 };
 
 // different order of headers for table
@@ -177,18 +158,18 @@ export const executionResponsesTable: Execution.IExecutionResponses = {
                 headers: [
                     {
                         attributeHeader: {
-                            name: 'Department',
-                            localIdentifier: 'departmentAttribute',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
-                            identifier: 'label.owner.department',
+                            name: "Department",
+                            localIdentifier: "departmentAttribute",
+                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
+                            identifier: "label.owner.department",
                             formOf: {
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026',
-                                identifier: 'department',
-                                name: 'Department'
-                            }
-                        }
-                    }
-                ]
+                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1026",
+                                identifier: "department",
+                                name: "Department",
+                            },
+                        },
+                    },
+                ],
             },
             {
                 headers: [
@@ -197,23 +178,22 @@ export const executionResponsesTable: Execution.IExecutionResponses = {
                             items: [
                                 {
                                     measureHeaderItem: {
-                                        name: 'Amount',
-                                        format: '#,##0.00',
-                                        localIdentifier: 'amountMetric',
-                                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                                        identifier: 'ah1EuQxwaCqs'
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
+                                        name: "Amount",
+                                        format: "#,##0.00",
+                                        localIdentifier: "amountMetric",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                                        identifier: "ah1EuQxwaCqs",
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
         ],
         links: {
-            executionResult: 'abc'
-        }
-
+            executionResult: "abc",
+        },
     },
-    executionResult
+    executionResult,
 };

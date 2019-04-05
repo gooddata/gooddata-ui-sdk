@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
+import React from "react";
 
-import ExampleWithSource from '../components/utils/ExampleWithSource';
+import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import LoadingExample from '../components/LoadingExample';
-import LoadingExampleSRC from '!raw-loader!../components/LoadingExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import LoadingExample from "../components/LoadingExample";
+import LoadingExampleSRC from "!raw-loader!../components/LoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-import CustomisedLoadingExample from '../components/CustomisedLoadingExample';
-import CustomisedLoadingExampleSRC from '!raw-loader!../components/CustomisedLoadingExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import CustomisedLoadingExample from "../components/CustomisedLoadingExample";
+import CustomisedLoadingExampleSRC from "!raw-loader!../components/CustomisedLoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-import ErrorExample from '../components/ErrorExample';
-import ErrorExampleSRC from '!raw-loader!../components/ErrorExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ErrorExample from "../components/ErrorExample";
+import ErrorExampleSRC from "!raw-loader!../components/ErrorExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const LoadingAndError = () => (
     <div>

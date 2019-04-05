@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
+import * as React from "react";
 
-import { AFM, Execution } from '@gooddata/typings';
-import { IHeaderGroupParams, ColGroupDef } from 'ag-grid';
-import { IHeaderReactComp  } from 'ag-grid-react/lib/interfaces';
+import { AFM, Execution } from "@gooddata/typings";
+import { IHeaderGroupParams, ColGroupDef } from "ag-grid";
+import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
 
-import HeaderCell, { ALIGN_LEFT } from './HeaderCell';
-import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
+import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
+import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 
 export interface IProps extends IHeaderGroupParams {
     menu?: IMenu;

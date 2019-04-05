@@ -1,33 +1,33 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import * as React from 'react';
-import { PropTypes } from 'prop-types';
-import { AttributeElements, Kpi, BarChart, PieChart, Model } from '@gooddata/react-components';
-import { SidebarItem } from '../components/utils/SidebarItem';
-import { EmployeeCard } from '../components/GlobalFiltersComponents/EmployeeCard';
-import { KpiMetricBox } from '../components/GlobalFiltersComponents/KpiMetricBox';
+import * as React from "react";
+import { PropTypes } from "prop-types";
+import { AttributeElements, Kpi, BarChart, PieChart, Model } from "@gooddata/react-components";
+import { SidebarItem } from "../components/utils/SidebarItem";
+import { EmployeeCard } from "../components/GlobalFiltersComponents/EmployeeCard";
+import { KpiMetricBox } from "../components/GlobalFiltersComponents/KpiMetricBox";
 import {
     projectId,
     employeeNameIdentifier,
     averageDailyTotalSales,
     averageCheckSizeByServer,
     menuItemNameAttributeDFIdentifier,
-    menuCategoryAttributeDFIdentifier
-} from '../utils/fixtures';
-import { Layout } from '../components/utils/Layout';
-import { CustomLoading } from '../components/utils/CustomLoading';
-import { CustomError } from '../components/utils/CustomError';
+    menuCategoryAttributeDFIdentifier,
+} from "../utils/fixtures";
+import { Layout } from "../components/utils/Layout";
+import { CustomLoading } from "../components/utils/CustomLoading";
+import { CustomError } from "../components/utils/CustomError";
 
 export class EmployeeProfile extends React.Component {
     static propTypes = {
-        validElements: PropTypes.object.isRequired
+        validElements: PropTypes.object.isRequired,
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            selectedEmployeeUri: props.validElements.items[0].element.uri
+            selectedEmployeeUri: props.validElements.items[0].element.uri,
         };
 
         this.selectEmployee = this.selectEmployee.bind(this);
@@ -42,14 +42,30 @@ export class EmployeeProfile extends React.Component {
 
     setDefaultSelection(props) {
         this.setState({
-            selectedEmployeeUri: props.validElements.items[0].element.uri
+            selectedEmployeeUri: props.validElements.items[0].element.uri,
         });
     }
 
     selectEmployee(uri) {
         this.setState({
-            selectedEmployeeUri: uri
+            selectedEmployeeUri: uri,
         });
+    }
+
+    buildSidebarItem(item, selectedEmployeeUri) {
+        const {
+            element: { title, uri },
+        } = item;
+
+        return (
+            <SidebarItem
+                key={uri}
+                label={title}
+                id={uri}
+                isSelected={selectedEmployeeUri === uri}
+                onClick={this.selectEmployee}
+            />
+        );
     }
 
     render() {
@@ -68,29 +84,23 @@ export class EmployeeProfile extends React.Component {
                     `}
                 </style>
                 <ul>
-                    {validElements ? validElements.items.map(item => (
-                        <SidebarItem
-                            key={item.element.uri}
-                            label={item.element.title}
-                            id={item.element.uri}
-                            isSelected={selectedEmployeeUri === item.element.uri}
-                            onClick={this.selectEmployee}
-                        />
-                    )) : null}
+                    {validElements
+                        ? validElements.items.map(item => this.buildSidebarItem(item, selectedEmployeeUri))
+                        : null}
                 </ul>
             </div>
         );
 
         const employeeFilter = Model.positiveAttributeFilter(employeeNameIdentifier, [selectedEmployeeUri]);
 
-        const measures = [
-            Model.measure(averageDailyTotalSales).alias('$ Avg Daily Total Sales')
-        ];
+        const measures = [Model.measure(averageDailyTotalSales).alias("$ Avg Daily Total Sales")];
         const menuCategoryAttribute = Model.attribute(menuCategoryAttributeDFIdentifier);
-        const menuItemNameAttribute = Model.attribute(menuItemNameAttributeDFIdentifier)
-            .alias('Menu Item name');
+        const menuItemNameAttribute = Model.attribute(menuItemNameAttributeDFIdentifier).alias(
+            "Menu Item name",
+        );
 
-        const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri).element;
+        const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri)
+            .element;
         const employeeName = selectedEmployee.title;
 
         return (
@@ -122,17 +132,19 @@ export class EmployeeProfile extends React.Component {
                         align-items: flex-start;
                     }
 
-                    .bar-chart-block, .pie-chart-block {
+                    .bar-chart-block,
+                    .pie-chart-block {
                         display: flex;
                         flex-direction: column;
                     }
 
-                    .bar-chart, .pie-chart {
+                    .bar-chart,
+                    .pie-chart {
                         flex: 1 0 400px;
                         height: 400px;
                     }
                 `}</style>
-                <Layout sidebar={sidebar} >
+                <Layout sidebar={sidebar}>
                     <div>
                         <h2>Employee overview</h2>
                         <div className="details">
@@ -146,9 +158,9 @@ export class EmployeeProfile extends React.Component {
                                         measure={averageDailyTotalSales}
                                         projectId={projectId}
                                         format="$#,##0"
-                                        LoadingComponent={
-                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
-                                        }
+                                        LoadingComponent={(...otherProps) => (
+                                            <CustomLoading inline imageHeight={20} {...otherProps} />
+                                        )}
                                         ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
@@ -159,14 +171,14 @@ export class EmployeeProfile extends React.Component {
                                         measure={averageCheckSizeByServer}
                                         projectId={projectId}
                                         format="$#,##0"
-                                        LoadingComponent={
-                                            (...otherProps) => <CustomLoading inline imageHeight={20} {...otherProps} />
-                                        }
+                                        LoadingComponent={(...otherProps) => (
+                                            <CustomLoading inline imageHeight={20} {...otherProps} />
+                                        )}
                                         ErrorComponent={CustomError}
                                     />
                                 </KpiMetricBox>
                             </div>
-                            <div className="pie-chart-block" >
+                            <div className="pie-chart-block">
                                 <h2>Average daily total sales by menu category</h2>
                                 <div className="pie-chart">
                                     <PieChart
@@ -176,7 +188,7 @@ export class EmployeeProfile extends React.Component {
                                         projectId={projectId}
                                         LoadingComponent={CustomLoading}
                                         ErrorComponent={CustomError}
-                                        config={{ legend: { position: 'bottom' } }}
+                                        config={{ legend: { position: "bottom" } }}
                                     />
                                 </div>
                             </div>
@@ -209,7 +221,14 @@ export const GlobalFiltersExample = () => (
             }
             if (isLoading) {
                 return (
-                    <div style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
+                    <div
+                        style={{
+                            flex: "1 0 auto",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                        }}
+                    >
                         <CustomLoading speed={2} color="tomato" imageHeight={100} height={200} />
                     </div>
                 );

@@ -1,22 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import { DataLayer, factory } from '@gooddata/gooddata-js';
-import { AFM } from '@gooddata/typings';
-import { testUtils } from '@gooddata/js-utils';
-import { Execute, IExecuteProps } from '../Execute';
+import * as React from "react";
+import { mount } from "enzyme";
+import { DataLayer, factory } from "@gooddata/gooddata-js";
+import { AFM } from "@gooddata/typings";
+import { testUtils } from "@gooddata/js-utils";
+import { Execute, IExecuteProps } from "../Execute";
 
-describe('Execute', () => {
+describe("Execute", () => {
     const data = [1, 2, 3];
     const afm: AFM.IAfm = {
         attributes: [
             {
-                localIdentifier: 'a1',
+                localIdentifier: "a1",
                 displayForm: {
-                    identifier: 'slow_execution'
-                }
-            }
-        ]
+                    identifier: "slow_execution",
+                },
+            },
+        ],
     };
 
     function dataTableFactory() {
@@ -30,19 +30,15 @@ describe('Execute', () => {
     function createComponent(child: jest.Mock<JSX.Element>, props = {}): any {
         const defaultProps: IExecuteProps = {
             afm,
-            projectId: 'foo',
+            projectId: "foo",
             dataTableFactory,
-            ...props
+            ...props,
         };
 
-        return mount(
-            <Execute {...defaultProps}>
-                {child}
-            </Execute>
-        );
+        return mount(<Execute {...defaultProps}>{child}</Execute>);
     }
 
-    it('should pass execution result, error and isLoading to its child', () => {
+    it("should pass execution result, error and isLoading to its child", () => {
         const child = createStatelessChild();
         createComponent(child);
 
@@ -53,11 +49,11 @@ describe('Execute', () => {
         });
     });
 
-    it('should dispatch onLoadingChanged before and after execution', () => {
+    it("should dispatch onLoadingChanged before and after execution", () => {
         const onLoadingChanged = jest.fn();
         const child = createStatelessChild();
         createComponent(child, {
-            onLoadingChanged
+            onLoadingChanged,
         });
 
         return testUtils.delay().then(() => {
@@ -65,11 +61,11 @@ describe('Execute', () => {
         });
     });
 
-    it('should dispatch onLoadingFinish after execution', () => {
+    it("should dispatch onLoadingFinish after execution", () => {
         const onLoadingFinish = jest.fn();
         const child = createStatelessChild();
         createComponent(child, {
-            onLoadingFinish
+            onLoadingFinish,
         });
 
         return testUtils.delay().then(() => {
@@ -77,12 +73,12 @@ describe('Execute', () => {
         });
     });
 
-    it('should not run execution for same AFM', () => {
+    it("should not run execution for same AFM", () => {
         const child = createStatelessChild();
         const wrapper = createComponent(child);
 
         wrapper.setProps({
-            afm
+            afm,
         });
 
         return testUtils.delay().then(() => {
@@ -90,26 +86,26 @@ describe('Execute', () => {
         });
     });
 
-    it('should be able to override telemetryComponentName', () => {
+    it("should be able to override telemetryComponentName", () => {
         const child = createStatelessChild();
-        const wrapper = createComponent(child, { telemetryComponentName: 'componentName' });
+        const wrapper = createComponent(child, { telemetryComponentName: "componentName" });
         const wrapperInstance = wrapper.instance();
-        expect(wrapperInstance.sdk.config.getRequestHeader('X-GDC-JS-SDK-COMP')).toEqual('componentName');
+        expect(wrapperInstance.sdk.config.getRequestHeader("X-GDC-JS-SDK-COMP")).toEqual("componentName");
     });
 
-    it('should run execution on props change (sdk,projectId,afm,resultSpec)', () => {
+    it("should run execution on props change (sdk,projectId,afm,resultSpec)", () => {
         const child = createStatelessChild();
         const wrapper = createComponent(child);
 
         return testUtils.delay().then(() => {
             expect(child).toHaveBeenCalledTimes(2); // first loading, second result
-            wrapper.setProps({ sdk: factory({ domain: 'example.com' }) });
+            wrapper.setProps({ sdk: factory({ domain: "example.com" }) });
             expect(child).toHaveBeenCalledTimes(3);
-            wrapper.setProps({ projectId: 'dummy' });
+            wrapper.setProps({ projectId: "dummy" });
             expect(child).toHaveBeenCalledTimes(4);
             wrapper.setProps({ afm: {} });
             expect(child).toHaveBeenCalledTimes(5);
-            wrapper.setProps({ resultSpec: { a: 'a' } });
+            wrapper.setProps({ resultSpec: { a: "a" } });
             expect(child).toHaveBeenCalledTimes(6);
         });
     });

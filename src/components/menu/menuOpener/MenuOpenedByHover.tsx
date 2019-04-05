@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { IMenuOpenedBySharedProps } from './MenuOpenedBySharedProps';
-import MenuPosition from '../positioning/MenuPosition';
+import * as React from "react";
+import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
+import MenuPosition from "../positioning/MenuPosition";
 
 export default class MenuOpenedByHover extends React.Component<IMenuOpenedBySharedProps> {
     private static openCloseDelayMs = 200;
@@ -15,11 +15,11 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
     public render() {
         return (
             <MenuPosition
-                toggler={(
+                toggler={
                     <div onMouseEnter={this.hoverStart} onMouseLeave={this.hoverEnd}>
                         {this.props.toggler}
                     </div>
-                )}
+                }
                 togglerWrapperClassName={this.props.togglerWrapperClassName}
                 opened={this.props.opened}
                 topLevelMenu={this.props.topLevelMenu}
@@ -37,19 +37,19 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
 
     private clearCloseDelayTimer = () => {
         window.clearTimeout(this.timerCloseDelay);
-    }
+    };
 
     private hoverStart = () => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange({ opened: true, source: 'HOVER_TIMEOUT' });
+            this.props.onOpenedChange({ opened: true, source: "HOVER_TIMEOUT" });
         }, MenuOpenedByHover.openCloseDelayMs);
-    }
+    };
 
     private hoverEnd = () => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange({ opened: false, source: 'HOVER_TIMEOUT' });
+            this.props.onOpenedChange({ opened: false, source: "HOVER_TIMEOUT" });
         }, MenuOpenedByHover.openCloseDelayMs);
-    }
+    };
 }

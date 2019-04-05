@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { ErrorComponent } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { ErrorComponent } from "@gooddata/react-components";
 
 export class ErrorComponentExample extends Component {
     render() {

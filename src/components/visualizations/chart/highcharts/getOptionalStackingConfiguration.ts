@@ -1,26 +1,21 @@
 // (C) 2007-2019 GoodData Corporation
-import partial = require('lodash/partial');
-import merge = require('lodash/merge');
-import includes = require('lodash/includes');
-import isNil = require('lodash/isNil');
-import set = require('lodash/set');
-import get = require('lodash/get');
-import {
-    IAxis,
-    IChartConfig,
-    ISeriesItem,
-    IDataLabelsVisible
-} from '../../../../interfaces/Config';
+import partial = require("lodash/partial");
+import merge = require("lodash/merge");
+import includes = require("lodash/includes");
+import isNil = require("lodash/isNil");
+import set = require("lodash/set");
+import get = require("lodash/get");
+import { IAxis, IChartConfig, ISeriesItem, IDataLabelsVisible } from "../../../../interfaces/Config";
 import {
     IChartOptions,
     isNegativeValueIncluded,
-    supportedStackingAttributesChartTypes
-} from '../chartOptionsBuilder';
-import { formatAsPercent, getLabelsVisibilityConfig } from './customConfiguration';
-import { isBarChart, isColumnChart } from '../../utils/common';
+    supportedStackingAttributesChartTypes,
+} from "../chartOptionsBuilder";
+import { formatAsPercent, getLabelsVisibilityConfig } from "./customConfiguration";
+import { isBarChart, isColumnChart } from "../../utils/common";
 
-export const NORMAL_STACK = 'normal';
-export const PERCENT_STACK = 'percent';
+export const NORMAL_STACK = "normal";
+export const PERCENT_STACK = "percent";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'
@@ -28,11 +23,13 @@ export const PERCENT_STACK = 'percent';
  * @param seriesItem
  */
 function handleStackMeasure(stackMeasures: boolean, seriesItem: ISeriesItem): ISeriesItem {
-    return stackMeasures ? {
-        ...seriesItem,
-        stacking: NORMAL_STACK,
-        stack: seriesItem.yAxis
-    } : seriesItem;
+    return stackMeasures
+        ? {
+              ...seriesItem,
+              stacking: NORMAL_STACK,
+              stack: seriesItem.yAxis,
+          }
+        : seriesItem;
 }
 
 /**
@@ -41,11 +38,13 @@ function handleStackMeasure(stackMeasures: boolean, seriesItem: ISeriesItem): IS
  * @param seriesItem
  */
 function handleStackMeasuresToPercent(stackMeasuresToPercent: boolean, seriesItem: ISeriesItem): ISeriesItem {
-    return stackMeasuresToPercent ? {
-        ...seriesItem,
-        stacking: PERCENT_STACK,
-        stack: seriesItem.yAxis
-    } : seriesItem;
+    return stackMeasuresToPercent
+        ? {
+              ...seriesItem,
+              stacking: PERCENT_STACK,
+              stack: seriesItem.yAxis,
+          }
+        : seriesItem;
 }
 
 function handleDualAxis(isDualAxis: boolean, seriesItem: ISeriesItem): ISeriesItem {
@@ -62,15 +61,18 @@ function handleDualAxis(isDualAxis: boolean, seriesItem: ISeriesItem): ISeriesIt
 
     return {
         ...seriesItem,
-        ...hcStackingConfig
+        ...hcStackingConfig,
     };
 }
 
 function countMeasuresInSeries(series: ISeriesItem[]): number[] {
-    return series.reduce((result: number[], seriesItem: ISeriesItem) => {
-        result[seriesItem.yAxis] += 1;
-        return result;
-    }, [0, 0]);
+    return series.reduce(
+        (result: number[], seriesItem: ISeriesItem) => {
+            result[seriesItem.yAxis] += 1;
+            return result;
+        },
+        [0, 0],
+    );
 }
 
 /**
@@ -84,7 +86,7 @@ function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesItem[] {
         return series.map((seriesItem: ISeriesItem) => ({
             ...seriesItem,
             stack: null as number,
-            stacking: null as string
+            stacking: null as string,
         }));
     }
     return series;
@@ -94,23 +96,23 @@ function getSeriesConfiguration(
     config: any,
     stackMeasures: boolean,
     stackMeasuresToPercent: boolean,
-    isDualAxis: boolean
+    isDualAxis: boolean,
 ) {
     const { series } = config;
 
     const handlers = [
         partial(handleStackMeasure, stackMeasures),
         partial(handleStackMeasuresToPercent, stackMeasuresToPercent),
-        partial(handleDualAxis, isDualAxis)
+        partial(handleDualAxis, isDualAxis),
     ];
 
     // get series with stacking config
-    const seriesWithStackingConfig = series.map((seriesItem: ISeriesItem) => (
-        handlers.reduce((result, handler) => handler(result), seriesItem))
+    const seriesWithStackingConfig = series.map((seriesItem: ISeriesItem) =>
+        handlers.reduce((result, handler) => handler(result), seriesItem),
     );
 
     return {
-        series: getSanitizedStackingForSeries(seriesWithStackingConfig)
+        series: getSanitizedStackingForSeries(seriesWithStackingConfig),
     };
 }
 
@@ -119,11 +121,7 @@ function hasNegativeValues(series: ISeriesItem[] = [], index: number) {
     return isNegativeValueIncluded(matchedSeries);
 }
 
-export function getYAxisConfiguration(
-    chartOptions: IChartOptions,
-    config: any,
-    chartConfig: IChartConfig
-) {
+export function getYAxisConfiguration(chartOptions: IChartOptions, config: any, chartConfig: IChartConfig) {
     const { type } = chartOptions;
     const { yAxis, series } = config;
     const { stackMeasuresToPercent = false } = chartConfig;
@@ -134,7 +132,7 @@ export function getYAxisConfiguration(
         return {};
     }
 
-    const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, 'dataLabels.visible');
+    const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, "dataLabels.visible");
     const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
     const yAxisWithStackLabel = yAxis.map((axis: any, index: number) => {
@@ -142,13 +140,14 @@ export function getYAxisConfiguration(
         const stackLabelEnabled = isNil(dataLabelEnabled) || dataLabelEnabled;
 
         // disable stack labels for primary Y axis when there are negative values and 'Stack to 100%' on
-        const shouldDisableStackLabels = stackMeasuresToPercent && index === 0 && hasNegativeValues(series, index);
+        const shouldDisableStackLabels =
+            stackMeasuresToPercent && index === 0 && hasNegativeValues(series, index);
 
         return {
             ...axis,
             stackLabels: {
-                enabled: !shouldDisableStackLabels && stackLabelEnabled
-            }
+                enabled: !shouldDisableStackLabels && stackLabelEnabled,
+            },
         };
     });
 
@@ -161,10 +160,14 @@ export function getYAxisConfiguration(
  * @param config
  * @param chartConfig
  */
-export function getStackMeasuresConfiguration(chartOptions: IChartOptions, config: any, chartConfig: IChartConfig) {
+export function getStackMeasuresConfiguration(
+    chartOptions: IChartOptions,
+    config: any,
+    chartConfig: IChartConfig,
+) {
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
 
-    if ((!stackMeasures && !stackMeasuresToPercent)) {
+    if (!stackMeasures && !stackMeasuresToPercent) {
         return {};
     }
 
@@ -174,7 +177,7 @@ export function getStackMeasuresConfiguration(chartOptions: IChartOptions, confi
     return {
         stackMeasuresToPercent, // this prop is used in 'dualAxesLabelFormatter.ts'
         ...getSeriesConfiguration(config, stackMeasures, stackMeasuresToPercent, isDualAxis),
-        ...getYAxisConfiguration(chartOptions, config, chartConfig)
+        ...getYAxisConfiguration(chartOptions, config, chartConfig),
     };
 }
 
@@ -192,17 +195,17 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
     const parentAttributeOptions = {};
 
     // only apply font-weight to parent label
-    set(parentAttributeOptions, 'style', {
-        fontWeight: 'bold'
+    set(parentAttributeOptions, "style", {
+        fontWeight: "bold",
     });
 
     if (isBarChart(type)) {
         // distance more 5px for two groups of attributes for bar chart
-        set(parentAttributeOptions, 'x', -5);
+        set(parentAttributeOptions, "x", -5);
     }
 
     // 'groupedOptions' is custom property in 'grouped-categories' plugin
-    set(xAxisItem, 'labels.groupedOptions', [parentAttributeOptions]);
+    set(xAxisItem, "labels.groupedOptions", [parentAttributeOptions]);
 
     return { xAxis: [xAxisItem] };
 }
@@ -214,9 +217,13 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
  * @param _config
  * @param chartConfig
  */
-export function getShowInPercentConfiguration(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
+export function getShowInPercentConfiguration(
+    chartOptions: IChartOptions,
+    _config: any,
+    chartConfig: IChartConfig,
+) {
     const { stackMeasuresToPercent = false } = chartConfig;
-    const series = get(chartOptions, 'data.series', []);
+    const series = get(chartOptions, "data.series", []);
     const [primaryMeasuresNum] = countMeasuresInSeries(series);
     if (!stackMeasuresToPercent || primaryMeasuresNum <= 1) {
         return {};
@@ -228,11 +235,13 @@ export function getShowInPercentConfiguration(chartOptions: IChartOptions, _conf
     // suppose that max number of y axes is 2
     // percentage format only supports primary axis
     const yAxis = yAxes.map((_axis: any, index: number) => {
-        return index === 0 ? {
-            labels: {
-                formatter: percentageFormatter
-            }
-        } : {};
+        return index === 0
+            ? {
+                  labels: {
+                      formatter: percentageFormatter,
+                  },
+              }
+            : {};
     });
     return { yAxis };
 }
@@ -244,7 +253,11 @@ export function getShowInPercentConfiguration(chartOptions: IChartOptions, _conf
  * @param config
  * @param chartConfig
  */
-export function convertMinMaxFromPercentToNumber(_chartOptions: IChartOptions, config: any, chartConfig: IChartConfig) {
+export function convertMinMaxFromPercentToNumber(
+    _chartOptions: IChartOptions,
+    config: any,
+    chartConfig: IChartConfig,
+) {
     const { stackMeasuresToPercent = false } = chartConfig;
     if (!stackMeasuresToPercent) {
         return {};
@@ -256,11 +269,11 @@ export function convertMinMaxFromPercentToNumber(_chartOptions: IChartOptions, c
         const newAxis = {};
 
         if (!isNil(min)) {
-            set(newAxis, 'min', min * 100);
+            set(newAxis, "min", min * 100);
         }
 
         if (!isNil(max)) {
-            set(newAxis, 'max', max * 100);
+            set(newAxis, "max", max * 100);
         }
 
         const numberOfAxes = axes.length;
@@ -278,14 +291,16 @@ export function convertMinMaxFromPercentToNumber(_chartOptions: IChartOptions, c
 export default function getOptionalStackingConfiguration(
     chartOptions: IChartOptions,
     config: any,
-    chartConfig: IChartConfig = {}
+    chartConfig: IChartConfig = {},
 ) {
     const { type } = chartOptions;
-    return includes(supportedStackingAttributesChartTypes, type) ? merge(
-    {},
-        getParentAttributeConfiguration(chartOptions, config),
-        getStackMeasuresConfiguration(chartOptions, config, chartConfig),
-        getShowInPercentConfiguration(chartOptions, config, chartConfig),
-        convertMinMaxFromPercentToNumber(chartOptions, config, chartConfig)
-    ) : {};
+    return includes(supportedStackingAttributesChartTypes, type)
+        ? merge(
+              {},
+              getParentAttributeConfiguration(chartOptions, config),
+              getStackMeasuresConfiguration(chartOptions, config, chartConfig),
+              getShowInPercentConfiguration(chartOptions, config, chartConfig),
+              convertMinMaxFromPercentToNumber(chartOptions, config, chartConfig),
+          )
+        : {};
 }

@@ -1,33 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
-import flatMap = require('lodash/flatMap');
-import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
-import {
-    getChartType,
-    getVisibleSeries,
-    isStacked,
-    getShapeAttributes
-} from '../helpers';
+import flatMap = require("lodash/flatMap");
+import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { getChartType, getVisibleSeries, isStacked, getShapeAttributes } from "../helpers";
 
-import {
-    getDataLabelAttributes
-} from '../dataLabelsHelpers';
+import { getDataLabelAttributes } from "../dataLabelsHelpers";
 
-import { parseRGBColorCode } from '../../../utils/color';
-import { isOneOfTypes } from '../../../utils/common';
+import { parseRGBColorCode } from "../../../utils/color";
+import { isOneOfTypes } from "../../../utils/common";
 
 const setWhiteColor = (point: any) => {
-    point.dataLabel.element.childNodes[0].style.fill = '#fff';
-    point.dataLabel.element.childNodes[0].style['text-shadow'] = 'rgb(0, 0, 0) 0px 0px 1px';
+    point.dataLabel.element.childNodes[0].style.fill = "#fff";
+    point.dataLabel.element.childNodes[0].style["text-shadow"] = "rgb(0, 0, 0) 0px 0px 1px";
 };
 
 const setBlackColor = (point: any) => {
-    point.dataLabel.element.childNodes[0].style.fill = '#000';
-    point.dataLabel.element.childNodes[0].style['text-shadow'] = 'none';
+    point.dataLabel.element.childNodes[0].style.fill = "#000";
+    point.dataLabel.element.childNodes[0].style["text-shadow"] = "none";
 };
 
 function getVisiblePointsWithLabel(chart: any) {
-    return flatMap(getVisibleSeries(chart), (series: any) => series.points)
-        .filter((point: any) => (point.dataLabel && point.graphic));
+    return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
+        (point: any) => point.dataLabel && point.graphic,
+    );
 }
 
 function setBarDataLabelsColor(chart: any) {
@@ -41,7 +35,8 @@ function setBarDataLabelsColor(chart: any) {
         const labelLeft = labelDimensions.x;
 
         if (point.negative) {
-            if (labelLeft > barLeft) { // labelRight is overlapping bar even it is outside of it
+            if (labelLeft > barLeft) {
+                // labelRight is overlapping bar even it is outside of it
                 setWhiteColor(point);
             } else {
                 setBlackColor(point);
@@ -93,6 +88,6 @@ export function extendDataLabelColors(Highcharts: any) {
         };
 
         changeLabelColor();
-        Highcharts.addEvent(chart, 'redraw', changeLabelColor);
+        Highcharts.addEvent(chart, "redraw", changeLabelColor);
     });
 }

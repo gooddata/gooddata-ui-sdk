@@ -1,41 +1,50 @@
 // (C) 2007-2019 GoodData Corporation
-import { colors2Object, numberFormat } from '@gooddata/numberjs';
-import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
-import { IColorPalette } from '@gooddata/gooddata-js';
-import * as Highcharts from 'highcharts';
-import * as invariant from 'invariant';
-import cloneDeep = require('lodash/cloneDeep');
-import compact = require('lodash/compact');
-import escape = require('lodash/escape');
-import get = require('lodash/get');
-import includes = require('lodash/includes');
-import isEmpty = require('lodash/isEmpty');
-import isEqual = require('lodash/isEqual');
-import isUndefined = require('lodash/isUndefined');
-import last = require('lodash/last');
-import range = require('lodash/range');
-import unescape = require('lodash/unescape');
-import without = require('lodash/without');
+import { colors2Object, numberFormat } from "@gooddata/numberjs";
+import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
+import { IColorPalette } from "@gooddata/gooddata-js";
+import * as Highcharts from "highcharts";
+import * as invariant from "invariant";
+import cloneDeep = require("lodash/cloneDeep");
+import compact = require("lodash/compact");
+import escape = require("lodash/escape");
+import get = require("lodash/get");
+import includes = require("lodash/includes");
+import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
+import isUndefined = require("lodash/isUndefined");
+import last = require("lodash/last");
+import range = require("lodash/range");
+import unescape = require("lodash/unescape");
+import without = require("lodash/without");
 
-import { MEASURES, SECONDARY_MEASURES, SEGMENT, TERTIARY_MEASURES, VIEW } from '../../../constants/bucketNames';
-import { VisType, VisualizationTypes } from '../../../constants/visualizationTypes';
+import {
+    MEASURES,
+    SECONDARY_MEASURES,
+    SEGMENT,
+    TERTIARY_MEASURES,
+    VIEW,
+} from "../../../constants/bucketNames";
+import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
 
-import { getMasterMeasureObjQualifier } from '../../../helpers/afmHelper';
-import { findAttributeInDimension, findMeasureGroupInDimensions } from '../../../helpers/executionResultHelper';
-import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
-import { unwrap } from '../../../helpers/utils';
+import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
+import {
+    findAttributeInDimension,
+    findMeasureGroupInDimensions,
+} from "../../../helpers/executionResultHelper";
+import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
+import { unwrap } from "../../../helpers/utils";
 import {
     IAxis,
     IChartConfig,
     IChartLimits,
     IColorAssignment,
     ISeriesDataItem,
-    ISeriesItem
-} from '../../../interfaces/Config';
-import { IDrillEventIntersectionElement } from '../../../interfaces/DrillEvents';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
-import { IMappingHeader } from '../../../interfaces/MappingHeader';
-import { getLighterColor } from '../utils/color';
+    ISeriesItem,
+} from "../../../interfaces/Config";
+import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
+import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../../interfaces/MappingHeader";
+import { getLighterColor } from "../utils/color";
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -49,12 +58,12 @@ import {
     isScatterPlot,
     isTreemap,
     parseValue,
-    stringifyChartTypes
-} from '../utils/common';
-import { createDrillIntersectionElement } from '../utils/drilldownEventing';
-import { getComboChartSeries } from './chartOptions/comboChartOptions';
+    stringifyChartTypes,
+} from "../utils/common";
+import { createDrillIntersectionElement } from "../utils/drilldownEventing";
+import { getComboChartSeries } from "./chartOptions/comboChartOptions";
 
-import { ColorFactory, IColorStrategy } from './colorFactory';
+import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
     HEATMAP_DATA_POINTS_LIMIT,
     PIE_CHART_LIMIT,
@@ -62,22 +71,19 @@ import {
     VIEW_BY_ATTRIBUTES_LIMIT,
     VIEW_BY_DIMENSION_INDEX,
     PARENT_ATTRIBUTE_INDEX,
-    PRIMARY_ATTRIBUTE_INDEX
-} from './constants';
+    PRIMARY_ATTRIBUTE_INDEX,
+} from "./constants";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
-    DEFAULT_SERIES_LIMIT
-} from './highcharts/commonConfiguration';
-import { getChartProperties } from './highcharts/helpers';
-import { isDataOfReasonableSize } from './highChartsCreators';
-import {
-    NORMAL_STACK,
-    PERCENT_STACK
-} from './highcharts/getOptionalStackingConfiguration';
+    DEFAULT_SERIES_LIMIT,
+} from "./highcharts/commonConfiguration";
+import { getChartProperties } from "./highcharts/helpers";
+import { isDataOfReasonableSize } from "./highChartsCreators";
+import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
 
-import { getDrillableSeriesWithParentAttribute } from './chartOptions/extendedStackingChartOptions';
+import { getDrillableSeriesWithParentAttribute } from "./chartOptions/extendedStackingChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -95,41 +101,37 @@ const multiMeasuresAlternatingTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
-    VisualizationTypes.TREEMAP
+    VisualizationTypes.TREEMAP,
 ];
 
 const unsupportedNegativeValuesTypes = [
     VisualizationTypes.PIE,
     VisualizationTypes.DONUT,
     VisualizationTypes.FUNNEL,
-    VisualizationTypes.TREEMAP
+    VisualizationTypes.TREEMAP,
 ];
 
 // charts sorted by default by measure value
-const sortedByMeasureTypes = [
-    VisualizationTypes.PIE,
-    VisualizationTypes.DONUT,
-    VisualizationTypes.FUNNEL
-];
+const sortedByMeasureTypes = [VisualizationTypes.PIE, VisualizationTypes.DONUT, VisualizationTypes.FUNNEL];
 
 const unsupportedStackingTypes = [
     VisualizationTypes.LINE,
     VisualizationTypes.AREA,
     VisualizationTypes.SCATTER,
-    VisualizationTypes.BUBBLE
+    VisualizationTypes.BUBBLE,
 ];
 
 export const supportedDualAxesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
     VisualizationTypes.LINE,
-    VisualizationTypes.COMBO
+    VisualizationTypes.COMBO,
 ];
 
 export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
-    VisualizationTypes.AREA
+    VisualizationTypes.AREA,
 ];
 
 export interface IChartOptions {
@@ -154,7 +156,7 @@ export interface IChartOptions {
     colorPalette?: IColorPalette;
 }
 
-export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader['attributeHeader'] & {
+export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["attributeHeader"] & {
     items: Execution.IResultAttributeHeaderItem[];
 };
 
@@ -171,10 +173,9 @@ export interface IViewByTwoAttributes {
 export type ITooltipFactory = (point: IPoint) => string;
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
-    return series
-        .some((seriesItem: ISeriesItem) => (
-            (seriesItem.data || []).some(({ y, value }: ISeriesDataItem) => (y < 0 || value < 0))
-        ));
+    return series.some((seriesItem: ISeriesItem) =>
+        (seriesItem.data || []).some(({ y, value }: ISeriesDataItem) => y < 0 || value < 0),
+    );
 }
 
 function getChartLimits(type: string): IChartLimits {
@@ -182,31 +183,31 @@ function getChartLimits(type: string): IChartLimits {
         case VisualizationTypes.SCATTER:
             return {
                 series: DEFAULT_SERIES_LIMIT,
-                categories: DEFAULT_SERIES_LIMIT
+                categories: DEFAULT_SERIES_LIMIT,
             };
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
             return {
                 series: 1,
-                categories: PIE_CHART_LIMIT
+                categories: PIE_CHART_LIMIT,
             };
         case VisualizationTypes.TREEMAP:
             return {
                 series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_DATA_POINTS_LIMIT,
-                dataPoints: DEFAULT_DATA_POINTS_LIMIT
+                dataPoints: DEFAULT_DATA_POINTS_LIMIT,
             };
         case VisualizationTypes.HEATMAP:
             return {
                 series: DEFAULT_SERIES_LIMIT,
                 categories: DEFAULT_CATEGORIES_LIMIT,
-                dataPoints: HEATMAP_DATA_POINTS_LIMIT
+                dataPoints: HEATMAP_DATA_POINTS_LIMIT,
             };
         default:
             return {
                 series: DEFAULT_SERIES_LIMIT,
-                categories: DEFAULT_CATEGORIES_LIMIT
+                categories: DEFAULT_CATEGORIES_LIMIT,
             };
     }
 }
@@ -221,8 +222,8 @@ function getTreemapDataForValidation(data: any) {
         ...data,
         series: data.series.map((serie: any) => ({
             ...serie,
-            data: serie.data.filter((dataItem: any) => dataItem.id === undefined)
-        }))
+            data: serie.data.filter((dataItem: any) => dataItem.id === undefined),
+        })),
     };
 }
 
@@ -236,24 +237,24 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
 
     return {
         dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
-        hasNegativeValue: cannotShowNegativeValues(type)
-            && isNegativeValueIncluded(chartOptions.data.series)
+        hasNegativeValue: cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data.series),
     };
 }
 
 export function isDerivedMeasure(measureItem: Execution.IMeasureHeaderItem, afm: AFM.IAfm) {
     return afm.measures.some((measure: AFM.IMeasure) => {
-        const measureDefinition = get(measure, 'definition.popMeasure')
-            || get(measure, 'definition.previousPeriodMeasure');
+        const measureDefinition =
+            get(measure, "definition.popMeasure") || get(measure, "definition.previousPeriodMeasure");
         const derivedMeasureIdentifier = measureDefinition ? measure.localIdentifier : null;
-        return derivedMeasureIdentifier && derivedMeasureIdentifier === measureItem.measureHeaderItem.localIdentifier;
+        return (
+            derivedMeasureIdentifier &&
+            derivedMeasureIdentifier === measureItem.measureHeaderItem.localIdentifier
+        );
     });
 }
 
 function findMeasureIndex(afm: AFM.IAfm, measureIdentifier: string): number {
-    return afm.measures.findIndex(
-        (measure: AFM.IMeasure) => measure.localIdentifier === measureIdentifier
-    );
+    return afm.measures.findIndex((measure: AFM.IMeasure) => measure.localIdentifier === measureIdentifier);
 }
 
 export function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number): number {
@@ -315,11 +316,11 @@ export interface IPoint {
 export function getSeriesItemData(
     seriesItem: string[],
     seriesIndex: number,
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ) {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
@@ -339,11 +340,11 @@ export function getSeriesItemData(
         }
 
         let valueProp: any = {
-            y: parseValue(pointValue)
+            y: parseValue(pointValue),
         };
         if (isTreemap(type)) {
             valueProp = {
-                value: parseValue(pointValue)
+                value: parseValue(pointValue),
             };
         }
 
@@ -351,8 +352,8 @@ export function getSeriesItemData(
             ...valueProp,
             format: unwrap(measureGroup.items[measureIndex]).format,
             marker: {
-                enabled: pointValue !== null
-            }
+                enabled: pointValue !== null,
+            },
         };
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
@@ -385,7 +386,7 @@ export interface ISeriesItemConfig {
 
 export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader']
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
 ) {
     const data = [] as any;
     executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
@@ -394,23 +395,24 @@ export function getHeatmapSeries(
         });
     });
 
-    return [{
-        name: measureGroup.items[0].measureHeaderItem.name,
-        data,
-        turboThreshold: 0,
-        yAxis: 0,
-        dataLabels: {
-            formatGD: unwrap(measureGroup.items[0]).format
+    return [
+        {
+            name: measureGroup.items[0].measureHeaderItem.name,
+            data,
+            turboThreshold: 0,
+            yAxis: 0,
+            dataLabels: {
+                formatGD: unwrap(measureGroup.items[0]).format,
+            },
+            legendIndex: 0,
         },
-        legendIndex: 0
-    }];
+    ];
 }
 
 function isBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent, bucketName: string) {
-    const bucket = get(mdObject, 'buckets', [])
-        .find(bucket => bucket.localIdentifier === bucketName);
+    const bucket = get(mdObject, "buckets", []).find(bucket => bucket.localIdentifier === bucketName);
 
-    const bucketItems = get(bucket, 'items', []);
+    const bucketItems = get(bucket, "items", []);
     return isEmpty(bucketItems);
 }
 
@@ -418,7 +420,7 @@ export function getScatterPlotSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ) {
     const primaryMeasuresBucketEmpty = isBucketEmpty(mdObject, MEASURES);
     const secondaryMeasuresBucketEmpty = isBucketEmpty(mdObject, SECONDARY_MEASURES);
@@ -431,16 +433,18 @@ export function getScatterPlotSeries(
         return {
             x: !primaryMeasuresBucketEmpty ? values[0] : 0,
             y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
-            name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : ''
+            name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : "",
         };
     });
 
-    return [{
-        turboThreshold: 0,
-        color: colorStrategy.getColorByIndex(0),
-        legendIndex: 0,
-        data
-    }];
+    return [
+        {
+            turboThreshold: 0,
+            color: colorStrategy.getColorByIndex(0),
+            legendIndex: 0,
+            data,
+        },
+    ];
 }
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
@@ -449,38 +453,43 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 
 export function getBubbleChartSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucket = get(mdObject, ['buckets'], [])
-        .find(bucket => bucket.localIdentifier === MEASURES);
-    const secondaryMeasuresBucket = get(mdObject, ['buckets'], [])
-        .find(bucket => bucket.localIdentifier === SECONDARY_MEASURES);
+    const primaryMeasuresBucket = get(mdObject, ["buckets"], []).find(
+        bucket => bucket.localIdentifier === MEASURES,
+    );
+    const secondaryMeasuresBucket = get(mdObject, ["buckets"], []).find(
+        bucket => bucket.localIdentifier === SECONDARY_MEASURES,
+    );
 
-    const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, 'items', []));
-    const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, 'items', []));
+    const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, "items", []));
+    const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, "items", []));
 
     return executionResultData.map((resData: any, index: number) => {
         let data: any = [];
         if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
-            const emptyBucketsCount = getCountOfEmptyBuckets(
-                [primaryMeasuresBucketEmpty, secondaryMeasuresBucketEmpty]
-            );
-            data = [{
-                x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
-                y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
-                // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
-                z: parseFloat(resData[2 - emptyBucketsCount]),
-                format: unwrap(last(measureGroup.items)).format // only for dataLabel format
-            }];
+            const emptyBucketsCount = getCountOfEmptyBuckets([
+                primaryMeasuresBucketEmpty,
+                secondaryMeasuresBucketEmpty,
+            ]);
+            data = [
+                {
+                    x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
+                    y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
+                    // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
+                    z: parseFloat(resData[2 - emptyBucketsCount]),
+                    format: unwrap(last(measureGroup.items)).format, // only for dataLabel format
+                },
+            ];
         }
         return {
-            name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : '',
+            name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : "",
             color: colorStrategy.getColorByIndex(index),
             legendIndex: index,
-            data
+            data,
         };
     });
 }
@@ -488,32 +497,24 @@ export function getBubbleChartSeries(
 function getColorStep(valuesCount: number): number {
     const MAX_COLOR_BRIGHTNESS = 0.8;
     return MAX_COLOR_BRIGHTNESS / valuesCount;
-
 }
 
 function gradientPreviousGroup(solidColorLeafs: any[]): any[] {
     const colorChange = getColorStep(solidColorLeafs.length);
-    return solidColorLeafs.map((leaf: any, index: number) =>
-        ({
-            ...leaf,
-            color: getLighterColor(leaf.color, (colorChange * index))
-        })
-    );
+    return solidColorLeafs.map((leaf: any, index: number) => ({
+        ...leaf,
+        color: getLighterColor(leaf.color, colorChange * index),
+    }));
 }
 
-function getRootPoint(
-    rootName: string,
-    index: number,
-    format: string,
-    colorStrategy: IColorStrategy
-) {
+function getRootPoint(rootName: string, index: number, format: string, colorStrategy: IColorStrategy) {
     return {
         id: `${index}`,
         name: rootName,
         color: colorStrategy.getColorByIndex(index),
         showInLegend: true,
         legendIndex: index,
-        format
+        format,
     };
 }
 
@@ -523,7 +524,7 @@ function getLeafPoint(
     seriesIndex: number,
     data: any,
     format: string,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ) {
     return {
         name: stackByAttribute.items[seriesIndex].attributeHeaderItem.name,
@@ -533,26 +534,26 @@ function getLeafPoint(
         y: seriesIndex,
         showInLegend: false,
         color: colorStrategy.getColorByIndex(parentIndex),
-        format
+        format,
     };
 }
 
 function isLastSerie(seriesIndex: number, dataLength: number) {
-    return seriesIndex === (dataLength - 1);
+    return seriesIndex === dataLength - 1;
 }
 
 export function getTreemapStackedSeriesDataWithViewBy(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ): any[] {
     const roots: any = [];
     const leafs: any = [];
     let rootId = -1;
     let uncoloredLeafs: any = [];
-    let lastRoot: Execution.IResultAttributeHeaderItem['attributeHeaderItem'] = null;
+    let lastRoot: Execution.IResultAttributeHeaderItem["attributeHeaderItem"] = null;
 
     const dataLength = executionResultData.length;
     const format = unwrap(measureGroup.items[0]).format; // this configuration has only one measure
@@ -567,13 +568,15 @@ export function getTreemapStackedSeriesDataWithViewBy(
             lastRoot = currentRoot;
             uncoloredLeafs = [];
             // create parent for pasted leafs
-            const lastRootName: string =
-                get<Execution.IResultAttributeHeaderItem['attributeHeaderItem'], string>(lastRoot, 'name');
+            const lastRootName: string = get<
+                Execution.IResultAttributeHeaderItem["attributeHeaderItem"],
+                string
+            >(lastRoot, "name");
             roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy));
         }
         // create leafs which will be colored at the end of group
         uncoloredLeafs.push(
-            getLeafPoint(stackByAttribute, rootId, seriesIndex, seriesItems[0], format, colorStrategy)
+            getLeafPoint(stackByAttribute, rootId, seriesIndex, seriesItems[0], format, colorStrategy),
         );
 
         if (isLastSerie(seriesIndex, dataLength)) {
@@ -587,9 +590,9 @@ export function getTreemapStackedSeriesDataWithViewBy(
 
 export function getTreemapStackedSeriesDataWithMeasures(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     stackByAttribute: any,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ): any[] {
     let data: any = [];
 
@@ -600,7 +603,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
             format: measureGroupItem.measureHeaderItem.format,
             color: colorStrategy.getColorByIndex(index),
             showInLegend: true,
-            legendIndex: index
+            legendIndex: index,
         });
         return data;
     }, data);
@@ -616,15 +619,21 @@ export function getTreemapStackedSeriesDataWithMeasures(
                 value: parseValue(seriesItem),
                 x: seriesIndex,
                 y: seriesItemIndex,
-                showInLegend: false
+                showInLegend: false,
             });
         });
         const sortedLeafs = unsortedLeafs.sort((a: IPoint, b: IPoint) => b.value - a.value);
 
-        data = [...data, ...sortedLeafs.map((leaf: IPoint, seriesItemIndex: number) => ({
-            ...leaf,
-            color: getLighterColor(colorStrategy.getColorByIndex(seriesIndex), (colorChange * seriesItemIndex))
-        }))];
+        data = [
+            ...data,
+            ...sortedLeafs.map((leaf: IPoint, seriesItemIndex: number) => ({
+                ...leaf,
+                color: getLighterColor(
+                    colorStrategy.getColorByIndex(seriesIndex),
+                    colorChange * seriesItemIndex,
+                ),
+            })),
+        ];
     });
 
     return data;
@@ -632,10 +641,10 @@ export function getTreemapStackedSeriesDataWithMeasures(
 
 export function getTreemapStackedSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ) {
     let data = [];
     if (viewByAttribute) {
@@ -644,52 +653,62 @@ export function getTreemapStackedSeries(
             measureGroup,
             viewByAttribute,
             stackByAttribute,
-            colorStrategy
+            colorStrategy,
         );
     } else {
         data = getTreemapStackedSeriesDataWithMeasures(
             executionResultData,
             measureGroup,
             stackByAttribute,
-            colorStrategy
+            colorStrategy,
         );
     }
 
-    const seriesName = measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
-        return unwrap(wrappedMeasure).name;
-    }).join(', ');
+    const seriesName = measureGroup.items
+        .map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
+            return unwrap(wrappedMeasure).name;
+        })
+        .join(", ");
 
-    return [{
-        name: seriesName,
-        legendType: 'point',
-        showInLegend: true,
-        data,
-        turboThreshold: 0
-    }];
+    return [
+        {
+            name: seriesName,
+            legendType: "point",
+            showInLegend: true,
+            data,
+            turboThreshold: 0,
+        },
+    ];
 }
 
 export function getSeries(
     executionResultData: Execution.DataValue[][],
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     mdObject: VisualizationObject.IVisualizationObjectContent,
-    colorStrategy: IColorStrategy
+    colorStrategy: IColorStrategy,
 ): any {
     if (isHeatmap(type)) {
         return getHeatmapSeries(executionResultData, measureGroup);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(executionResultData, stackByAttribute, mdObject, colorStrategy);
     } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(executionResultData, measureGroup, stackByAttribute, mdObject, colorStrategy);
+        return getBubbleChartSeries(
+            executionResultData,
+            measureGroup,
+            stackByAttribute,
+            mdObject,
+            colorStrategy,
+        );
     } else if (isTreemap(type) && stackByAttribute) {
         return getTreemapStackedSeries(
             executionResultData,
             measureGroup,
             viewByAttribute,
             stackByAttribute,
-            colorStrategy
+            colorStrategy,
         );
     }
 
@@ -701,13 +720,13 @@ export function getSeries(
             viewByAttribute,
             stackByAttribute,
             type,
-            colorStrategy
+            colorStrategy,
         );
 
         const seriesItemConfig: ISeriesItemConfig = {
             color: colorStrategy.getColorByIndex(seriesIndex),
             legendIndex: seriesIndex,
-            data: seriesItemData
+            data: seriesItemData,
         };
 
         if (stackByAttribute) {
@@ -716,9 +735,11 @@ export function getSeries(
             seriesItemConfig.name = stackByAttribute.items[seriesIndex].attributeHeaderItem.name;
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
             // Pie charts with measures only have a single series which name would is ambiguous
-            seriesItemConfig.name = measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
-                return unwrap(wrappedMeasure).name;
-            }).join(', ');
+            seriesItemConfig.name = measureGroup.items
+                .map((wrappedMeasure: Execution.IMeasureHeaderItem) => {
+                    return unwrap(wrappedMeasure).name;
+                })
+                .join(", ");
         } else {
             // otherwise seriesName is a measure name of index seriesIndex
             seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
@@ -728,7 +749,7 @@ export function getSeries(
 
         return {
             ...seriesItemConfig,
-            ...turboThresholdProp
+            ...turboThresholdProp,
         };
     });
 }
@@ -736,18 +757,21 @@ export function getSeries(
 export const customEscape = (str: string) => str && escape(unescape(str));
 
 const renderTooltipHTML = (textData: string[][]): string => {
-    return `<table class="tt-values gd-viz-tooltip-table">${textData.map(line => (
-            `<tr class="gd-viz-tooltip-table-row">
+    return `<table class="tt-values gd-viz-tooltip-table">${textData
+        .map(
+            line =>
+                `<tr class="gd-viz-tooltip-table-row">
                 <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
                 <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
-            </tr>`
-    )).join('\n')}</table>`;
+            </tr>`,
+        )
+        .join("\n")}</table>`;
 };
 
 export function buildTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
@@ -765,7 +789,7 @@ export function buildTooltipFactory(
                 customEscape(viewByAttribute.formOf.name),
                 // since applying 'grouped-categories' plugin,
                 // 'category' type is replaced from string to object in highchart
-                customEscape(point.category && point.category.name || point.name)
+                customEscape((point.category && point.category.name) || point.name),
             ]);
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
@@ -779,7 +803,7 @@ export function buildTooltipFactory(
 export function buildTooltipForTwoAttributesFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
@@ -793,16 +817,13 @@ export function buildTooltipForTwoAttributesFactory(
 
         if (category) {
             if (viewByAttribute) {
-                textData.unshift([
-                    customEscape(viewByAttribute.formOf.name),
-                    customEscape(category.name)
-                ]);
+                textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(category.name)]);
             }
 
             if (viewByParentAttribute && category.parent) {
                 textData.unshift([
                     customEscape(viewByParentAttribute.formOf.name),
-                    customEscape(category.parent.name)
+                    customEscape(category.parent.name),
                 ]);
             }
         }
@@ -814,7 +835,7 @@ export function buildTooltipForTwoAttributesFactory(
 export function generateTooltipXYFn(
     measures: any,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
@@ -830,18 +851,24 @@ export function generateTooltipXYFn(
         }
 
         if (measures[0]) {
-            textData.push([customEscape(measures[0].measureHeaderItem.name),
-            customEscape(formatValue(point.x, measures[0].measureHeaderItem.format).label)]);
+            textData.push([
+                customEscape(measures[0].measureHeaderItem.name),
+                customEscape(formatValue(point.x, measures[0].measureHeaderItem.format).label),
+            ]);
         }
 
         if (measures[1]) {
-            textData.push([customEscape(measures[1].measureHeaderItem.name),
-            customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label)]);
+            textData.push([
+                customEscape(measures[1].measureHeaderItem.name),
+                customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label),
+            ]);
         }
 
         if (measures[2]) {
-            textData.push([customEscape(measures[2].measureHeaderItem.name),
-            customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label)]);
+            textData.push([
+                customEscape(measures[2].measureHeaderItem.name),
+                customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label),
+            ]);
         }
 
         return renderTooltipHTML(textData);
@@ -851,16 +878,16 @@ export function generateTooltipXYFn(
 export function generateTooltipHeatmapFn(
     viewByAttribute: any,
     stackByAttribute: any,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(val === null ? '-' : numberFormat(val, format, undefined, separators));
+        return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
         const formattedValue = customEscape(
-            formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label
+            formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
         );
         const textData = [];
 
@@ -869,13 +896,13 @@ export function generateTooltipHeatmapFn(
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name)
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
             ]);
         }
         if (stackByAttribute) {
             textData.unshift([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name)
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
             ]);
         }
 
@@ -886,7 +913,7 @@ export function generateTooltipHeatmapFn(
 export function buildTooltipTreemapFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
@@ -894,7 +921,8 @@ export function buildTooltipTreemapFactory(
     };
 
     return (point: IPoint) => {
-        if (point.id !== undefined) { // no tooltip for root points
+        if (point.id !== undefined) {
+            // no tooltip for root points
             return null;
         }
         const formattedValue = customEscape(formatValue(point.value, point.format).label);
@@ -904,14 +932,14 @@ export function buildTooltipTreemapFactory(
         if (stackByAttribute) {
             textData.push([
                 customEscape(stackByAttribute.formOf.name),
-                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name)
+                customEscape(stackByAttribute.items[point.y].attributeHeaderItem.name),
             ]);
         }
 
         if (viewByAttribute) {
             textData.unshift([
                 customEscape(viewByAttribute.formOf.name),
-                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name)
+                customEscape(viewByAttribute.items[point.x].attributeHeaderItem.name),
             ]);
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
@@ -949,7 +977,7 @@ function mapDrillIntersectionElement(header: ILegacyHeader, afm: AFM.IAfm): IDri
             getAttributeElementIdFromAttributeElementUri(uri),
             name,
             attribute.uri,
-            attribute.identifier
+            attribute.identifier,
         );
     }
 
@@ -964,7 +992,7 @@ export function getDrillIntersection(
     stackByItem: any,
     viewByItem: any,
     measures: any[],
-    afm: AFM.IAfm
+    afm: AFM.IAfm,
 ): IDrillEventIntersectionElement[] {
     const headers = without([...measures, viewByItem, stackByItem], null);
 
@@ -977,10 +1005,10 @@ function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByI
     let viewByAttributeHeader: Execution.IAttributeHeader = null;
 
     if (viewByAttribute) {
-        viewByItemHeader  = viewByAttribute.items[viewByIndex];
+        viewByItemHeader = viewByAttribute.items[viewByIndex];
         viewByItem = {
             ...unwrap(viewByItemHeader),
-            attribute: viewByAttribute
+            attribute: viewByAttribute,
         };
         viewByAttributeHeader = { attributeHeader: viewByAttribute };
     }
@@ -988,12 +1016,12 @@ function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByI
     return {
         viewByItemHeader,
         viewByItem,
-        viewByAttributeHeader
+        viewByAttributeHeader,
     };
 }
 
 function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stackByIndex: number) {
-    let stackByItemHeader: Execution.IResultAttributeHeaderItem  = null;
+    let stackByItemHeader: Execution.IResultAttributeHeaderItem = null;
     let stackByItem = null;
     let stackByAttributeHeader: Execution.IAttributeHeader = null;
 
@@ -1002,7 +1030,7 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
         stackByItemHeader = stackByAttribute.items[stackByIndex];
         stackByItem = {
             ...unwrap(stackByItemHeader),
-            attribute: stackByAttribute
+            attribute: stackByAttribute,
         };
         stackByAttributeHeader = { attributeHeader: stackByAttribute };
     }
@@ -1010,7 +1038,7 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
     return {
         stackByItemHeader,
         stackByItem,
-        stackByAttributeHeader
+        stackByAttributeHeader,
     };
 }
 
@@ -1021,82 +1049,100 @@ export function getDrillableSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     executionResponse: Execution.IExecutionResponse,
     afm: AFM.IAfm,
-    type: VisType
+    type: VisType,
 ) {
-    const isMultiMeasureWithOnlyMeasures = isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
+    const isMultiMeasureWithOnlyMeasures =
+        isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
     const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
-        let data = seriesItem.data && seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
-            let measureHeaders: IMappingHeader[] = [];
+        let data =
+            seriesItem.data &&
+            seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
+                let measureHeaders: IMappingHeader[] = [];
 
-            const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
-            if (isScatterPlot(type)) {
-                measureHeaders = get(measureGroup, 'items', []).slice(0, 2);
-            } else if (isBubbleChart(type)) {
-                measureHeaders = get(measureGroup, 'items', []).slice(0, 3);
-            } else if (isStackedTreemap) {
-                if (pointData.id !== undefined) { // not leaf -> can't be drillable
-                    return pointData;
+                const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
+                if (isScatterPlot(type)) {
+                    measureHeaders = get(measureGroup, "items", []).slice(0, 2);
+                } else if (isBubbleChart(type)) {
+                    measureHeaders = get(measureGroup, "items", []).slice(0, 3);
+                } else if (isStackedTreemap) {
+                    if (pointData.id !== undefined) {
+                        // not leaf -> can't be drillable
+                        return pointData;
+                    }
+                    const measureIndex = viewByAttribute ? 0 : parseInt(pointData.parent, 10);
+                    measureHeaders = [measureGroup.items[measureIndex]];
+                } else {
+                    // measureIndex is usually seriesIndex,
+                    // except for stack by attribute and metricOnly pie or donut chart
+                    // it is looped-around pointIndex instead
+                    // Looping around the end of items array only works when
+                    // measureGroup is the last header on it's dimension
+                    // We do not support setups with measureGroup before attributeHeaders
+                    const measureIndex =
+                        !stackByAttribute && !isMultiMeasureWithOnlyMeasures
+                            ? seriesIndex
+                            : pointIndex % measureGroup.items.length;
+                    measureHeaders = [measureGroup.items[measureIndex]];
                 }
-                const measureIndex = viewByAttribute ? 0 : parseInt(pointData.parent, 10);
-                measureHeaders = [measureGroup.items[measureIndex]];
-            } else {
-                // measureIndex is usually seriesIndex,
-                // except for stack by attribute and metricOnly pie or donut chart
-                // it is looped-around pointIndex instead
-                // Looping around the end of items array only works when
-                // measureGroup is the last header on it's dimension
-                // We do not support setups with measureGroup before attributeHeaders
-                const measureIndex = !stackByAttribute && !isMultiMeasureWithOnlyMeasures
-                    ? seriesIndex : pointIndex % measureGroup.items.length;
-                measureHeaders = [measureGroup.items[measureIndex]];
-            }
 
-            const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
-            if (isScatterPlot(type)) {
-                stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
-            }
+                const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
+                let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+                if (isScatterPlot(type)) {
+                    stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
+                }
 
-            const { viewByItemHeader, viewByItem, viewByAttributeHeader } =
-                getViewBy(viewByAttribute, viewByIndex);
-            const { stackByItemHeader, stackByItem, stackByAttributeHeader } =
-                getStackBy(stackByAttribute, stackByIndex);
+                const { viewByItemHeader, viewByItem, viewByAttributeHeader } = getViewBy(
+                    viewByAttribute,
+                    viewByIndex,
+                );
+                const { stackByItemHeader, stackByItem, stackByAttributeHeader } = getStackBy(
+                    stackByAttribute,
+                    stackByIndex,
+                );
 
-            // point is drillable if a drillableItem matches:
-            //   point's measure,
-            //   point's viewBy attribute,
-            //   point's viewBy attribute item,
-            //   point's stackBy attribute,
-            //   point's stackBy attribute item,
-            const drillableHooks: IMappingHeader[] = without([
-                ...measureHeaders,
-                viewByAttributeHeader,
-                viewByItemHeader,
-                stackByAttributeHeader,
-                stackByItemHeader
-            ], null);
+                // point is drillable if a drillableItem matches:
+                //   point's measure,
+                //   point's viewBy attribute,
+                //   point's viewBy attribute item,
+                //   point's stackBy attribute,
+                //   point's stackBy attribute item,
+                const drillableHooks: IMappingHeader[] = without(
+                    [
+                        ...measureHeaders,
+                        viewByAttributeHeader,
+                        viewByItemHeader,
+                        stackByAttributeHeader,
+                        stackByItemHeader,
+                    ],
+                    null,
+                );
 
-            const drilldown: boolean = drillableHooks.some(drillableHook =>
-                isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm, executionResponse)
-            );
+                const drilldown: boolean = drillableHooks.some(drillableHook =>
+                    isSomeHeaderPredicateMatched(drillableItems, drillableHook, afm, executionResponse),
+                );
 
-            const drillableProps: any = {
-                drilldown
-            };
+                const drillableProps: any = {
+                    drilldown,
+                };
 
-            if (drilldown) {
-                const measures = measureHeaders.map(unwrap);
-                drillableProps.drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
-                isSeriesDrillable = true;
-            }
-            return {
-                ...pointData,
-                ...drillableProps
-            };
-        });
+                if (drilldown) {
+                    const measures = measureHeaders.map(unwrap);
+                    drillableProps.drillIntersection = getDrillIntersection(
+                        stackByItem,
+                        viewByItem,
+                        measures,
+                        afm,
+                    );
+                    isSeriesDrillable = true;
+                }
+                return {
+                    ...pointData,
+                    ...drillableProps,
+                };
+            });
 
         if (isScatterPlot(type)) {
             data = data.filter((dataItem: ISeriesDataItem) => {
@@ -1107,25 +1153,29 @@ export function getDrillableSeries(
         return {
             ...seriesItem,
             data,
-            isDrillable: isSeriesDrillable
+            isDrillable: isSeriesDrillable,
         };
     });
 }
 
 function getCategories(
     type: string,
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
-    stackByAttribute: IUnwrappedAttributeHeadersWithItems
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
 ) {
     if (isHeatmap(type)) {
         return [
-            viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''],
-            stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : ['']
+            viewByAttribute ? viewByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [""],
+            stackByAttribute
+                ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name)
+                : [""],
         ];
     }
     if (isScatterPlot(type)) {
-        return stackByAttribute ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name) : [''];
+        return stackByAttribute
+            ? stackByAttribute.items.map((item: any) => item.attributeHeaderItem.name)
+            : [""];
     }
 
     // Categories make up bar/slice labels in charts. These usually match view by attribute values.
@@ -1136,7 +1186,9 @@ function getCategories(
 
     if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
         // Pie or Treemap chart with measures only (no viewByAttribute) needs to list
-        return measureGroup.items.map((wrappedMeasure: Execution.IMeasureHeaderItem) => unwrap(wrappedMeasure).name);
+        return measureGroup.items.map(
+            (wrappedMeasure: Execution.IMeasureHeaderItem) => unwrap(wrappedMeasure).name,
+        );
         // Pie chart categories are later sorted by seriesItem pointValue
     }
     return [];
@@ -1161,30 +1213,35 @@ function getCategories(
  *       }]
  * @param viewByTwoAttributes
  */
-export function getCategoriesForTwoAttributes(viewByTwoAttributes: IViewByTwoAttributes): Array<{
-    name: string,
-    categories: string[]
+export function getCategoriesForTwoAttributes(
+    viewByTwoAttributes: IViewByTwoAttributes,
+): Array<{
+    name: string;
+    categories: string[];
 }> {
     const { parent = [], children = [] } = viewByTwoAttributes;
-    const combinedResult = parent.reduce((
-        result: { [property: string]: string[] },
-        parentAttr: Execution.IResultAttributeHeaderItem,
-        index: number
-    ) => {
-        const key: string = get(parentAttr, 'attributeHeaderItem.name', '');
-        const value: string = get(children[index], 'attributeHeaderItem.name', '');
+    const combinedResult = parent.reduce(
+        (
+            result: { [property: string]: string[] },
+            parentAttr: Execution.IResultAttributeHeaderItem,
+            index: number,
+        ) => {
+            const key: string = get(parentAttr, "attributeHeaderItem.name", "");
+            const value: string = get(children[index], "attributeHeaderItem.name", "");
 
-        const childCategories: string[] = result[key] || [];
+            const childCategories: string[] = result[key] || [];
 
-        return {
-            ...result,
-            [key]: [...childCategories, value] // append value
-        };
-    }, {});
+            return {
+                ...result,
+                [key]: [...childCategories, value], // append value
+            };
+        },
+        {},
+    );
 
     return Object.keys(combinedResult).map((name: string) => ({
         name,
-        categories: combinedResult[name]
+        categories: combinedResult[name],
     }));
 }
 
@@ -1193,11 +1250,14 @@ export function getCategoriesForTwoAttributes(viewByTwoAttributes: IViewByTwoAtt
  * @param stackByAttribute
  * @param options
  */
-function getStackingConfig(stackByAttribute: IUnwrappedAttributeHeadersWithItems, options: IChartConfig): string {
+function getStackingConfig(
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    options: IChartConfig,
+): string {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
 
-    const supportsStacking = !(isOneOfTypes(type, unsupportedStackingTypes));
+    const supportsStacking = !isOneOfTypes(type, unsupportedStackingTypes);
 
     /**
      * we should enable stacking for one of the following cases :
@@ -1215,117 +1275,142 @@ function getStackingConfig(stackByAttribute: IUnwrappedAttributeHeadersWithItems
 }
 
 function preprocessMeasureGroupItems(
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    defaultValues: any
-    ): any[] {
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
+    defaultValues: any,
+): any[] {
     return measureGroup.items.map((item: Execution.IMeasureHeaderItem, index: number) => {
         const unwrapped = unwrap(item);
-        return index ? {
-            label: unwrapped.name,
-            format: unwrapped.format
-        } : {
-                label: defaultValues.label || unwrapped.name,
-                format: defaultValues.format || unwrapped.format
-            };
+        return index
+            ? {
+                  label: unwrapped.name,
+                  format: unwrapped.format,
+              }
+            : {
+                  label: defaultValues.label || unwrapped.name,
+                  format: defaultValues.format || unwrapped.format,
+              };
     });
 }
 
 function getXAxes(
     config: IChartConfig,
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems
-    ): IAxis[] {
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+): IAxis[] {
     const { type, mdObject } = config;
-    const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
-        { label: config.xLabel, format: config.xFormat });
+    const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
+        label: config.xLabel,
+        format: config.xFormat,
+    });
 
     const firstMeasureGroupItem = measureGroupItems[0];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
         const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
         if (noPrimaryMeasures) {
-            return [{
-                label: ''
-            }];
+            return [
+                {
+                    label: "",
+                },
+            ];
         } else {
-            return [{
-                label: firstMeasureGroupItem.label || '',
-                format: firstMeasureGroupItem.format || ''
-            }];
+            return [
+                {
+                    label: firstMeasureGroupItem.label || "",
+                    format: firstMeasureGroupItem.format || "",
+                },
+            ];
         }
     }
 
-    const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : '');
-    return [{
-        label: xLabel
-    }];
+    const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : "");
+    return [
+        {
+            label: xLabel,
+        },
+    ];
 }
 
 function getMeasureFormatKey(measureGroupItems: Execution.IMeasureHeaderItem[]) {
-    const percentageFormat = getMeasureFormat(measureGroupItems.find((measure: any) => {
-        return isPercentage(getMeasureFormat(measure));
-    }));
-    return percentageFormat !== '' ? {
-        format: percentageFormat
-    } : {};
+    const percentageFormat = getMeasureFormat(
+        measureGroupItems.find((measure: any) => {
+            return isPercentage(getMeasureFormat(measure));
+        }),
+    );
+    return percentageFormat !== ""
+        ? {
+              format: percentageFormat,
+          }
+        : {};
 }
 
 function getMeasureFormat(measure: any) {
-    return get(measure, 'format', '');
+    return get(measure, "format", "");
 }
 
 function isPercentage(format: string) {
-    return format.includes('%');
+    return format.includes("%");
 }
 
 function getYAxes(
     config: IChartConfig,
-    measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader'],
-    stackByAttribute: any
-    ): IAxis[] {
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
+    stackByAttribute: any,
+): IAxis[] {
     const { type, mdObject } = config;
 
-    const measureGroupItems = preprocessMeasureGroupItems(measureGroup,
-        { label: config.yLabel, format: config.yFormat });
+    const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
+        label: config.yLabel,
+        format: config.yFormat,
+    });
 
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
     const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
 
-    const { measures : secondaryAxisMeasures = [] as string[] } =
+    const { measures: secondaryAxisMeasures = [] as string[] } =
         (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
 
     let yAxes: IAxis[] = [];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const hasSecondaryMeasure = get(mdObject, 'buckets', [])
-            .find(m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0);
+        const hasSecondaryMeasure = get(mdObject, "buckets", []).find(
+            m => m.localIdentifier === SECONDARY_MEASURES && m.items.length > 0,
+        );
 
         if (hasSecondaryMeasure) {
             if (noPrimaryMeasures) {
-                yAxes = [{
-                    ...firstMeasureGroupItem
-                }];
+                yAxes = [
+                    {
+                        ...firstMeasureGroupItem,
+                    },
+                ];
             } else {
-                yAxes = [{
-                    ...secondMeasureGroupItem
-                }];
+                yAxes = [
+                    {
+                        ...secondMeasureGroupItem,
+                    },
+                ];
             }
         } else {
-            yAxes = [{ label: '' }];
+            yAxes = [{ label: "" }];
         }
     } else if (isHeatmap(type)) {
-        yAxes = [{
-            label: stackByAttribute ? stackByAttribute.formOf.name : ''
-        }];
-    } else if (isOneOfTypes(type, supportedDualAxesChartTypes) &&
-                !isEmpty(measureGroupItems) &&
-                !isEmpty(secondaryAxisMeasures)) {
-
-        const {
-            measuresInFirstAxis,
-            measuresInSecondAxis }: IMeasuresInAxes = assignMeasuresToAxes(secondaryAxisMeasures, measureGroup);
+        yAxes = [
+            {
+                label: stackByAttribute ? stackByAttribute.formOf.name : "",
+            },
+        ];
+    } else if (
+        isOneOfTypes(type, supportedDualAxesChartTypes) &&
+        !isEmpty(measureGroupItems) &&
+        !isEmpty(secondaryAxisMeasures)
+    ) {
+        const { measuresInFirstAxis, measuresInSecondAxis }: IMeasuresInAxes = assignMeasuresToAxes(
+            secondaryAxisMeasures,
+            measureGroup,
+        );
 
         let firstAxis: IAxis = createYAxisItem(measuresInFirstAxis, false);
         let secondAxis: IAxis = createYAxisItem(measuresInSecondAxis, true);
@@ -1334,29 +1419,33 @@ function getYAxes(
             firstAxis = {
                 ...firstAxis,
                 ...getMeasureFormatKey(measuresInFirstAxis),
-                seriesIndices: measuresInFirstAxis.map(({ index }: any) => index)
+                seriesIndices: measuresInFirstAxis.map(({ index }: any) => index),
             };
         }
         if (secondAxis) {
             secondAxis = {
                 ...secondAxis,
                 ...getMeasureFormatKey(measuresInSecondAxis),
-                seriesIndices: measuresInSecondAxis.map(({ index }: any) => index)
+                seriesIndices: measuresInSecondAxis.map(({ index }: any) => index),
             };
         }
 
         yAxes = compact([firstAxis, secondAxis]);
     } else {
         // if more than one measure and NOT dual, then have empty item name
-        const nonDualMeasureAxis = hasMoreThanOneMeasure ? {
-            label: ''
-        } : {};
-        yAxes = [{
-            ...firstMeasureGroupItem,
-            ...nonDualMeasureAxis,
-            seriesIndices: range(measureGroupItems.length),
-            ...getMeasureFormatKey(measureGroupItems)
-        }];
+        const nonDualMeasureAxis = hasMoreThanOneMeasure
+            ? {
+                  label: "",
+              }
+            : {};
+        yAxes = [
+            {
+                ...firstMeasureGroupItem,
+                ...nonDualMeasureAxis,
+                seriesIndices: range(measureGroupItems.length),
+                ...getMeasureFormatKey(measureGroupItems),
+            },
+        ];
     }
 
     return yAxes;
@@ -1367,33 +1456,38 @@ interface IMeasuresInAxes {
     measuresInSecondAxis: any[];
 }
 
-function assignMeasuresToAxes(secondMeasures: string[],
-                              measureGroup: Execution.IMeasureGroupHeader['measureGroupHeader']): IMeasuresInAxes {
-    return measureGroup.items
-        .reduce((result: any,
-                 { measureHeaderItem: { name, format, localIdentifier } }: Execution.IMeasureHeaderItem,
-                 index) => {
-
+function assignMeasuresToAxes(
+    secondMeasures: string[],
+    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
+): IMeasuresInAxes {
+    return measureGroup.items.reduce(
+        (
+            result: any,
+            { measureHeaderItem: { name, format, localIdentifier } }: Execution.IMeasureHeaderItem,
+            index,
+        ) => {
             if (includes(secondMeasures, localIdentifier)) {
                 result.measuresInSecondAxis.push({ name, format, index });
             } else {
                 result.measuresInFirstAxis.push({ name, format, index });
             }
             return result;
-        }, {
+        },
+        {
             measuresInFirstAxis: [],
-            measuresInSecondAxis: []
-        });
+            measuresInSecondAxis: [],
+        },
+    );
 }
 
 function createYAxisItem(measuresInAxis: any[], opposite = false) {
     const length = measuresInAxis.length;
     if (length) {
         const { name, format } = measuresInAxis[0];
-        return  {
-            label: length === 1 ? name : '',
+        return {
+            label: length === 1 ? name : "",
             format,
-            opposite
+            opposite,
         };
     }
     return null;
@@ -1402,14 +1496,14 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 function assignYAxes(series: any, yAxes: IAxis[]) {
     return series.reduce((result: any, item: any, index: number) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
-            return includes(get(axis, 'seriesIndices', []), index);
+            return includes(get(axis, "seriesIndices", []), index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one
         const firstYAxisIndex = result.lenght > 0 ? result[0].yAxis : 0;
         const seriesItem = {
             ...item,
-            yAxis: yAxisIndex !== -1 ? yAxisIndex : firstYAxisIndex
+            yAxis: yAxisIndex !== -1 ? yAxisIndex : firstYAxisIndex,
         };
 
         result.push(seriesItem);
@@ -1423,9 +1517,14 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
 export function getHeatmapDataClasses(
     series: any = [],
-    colorStrategy: IColorStrategy
-    ): Highcharts.ColorAxisDataClass[] {
-    const values: number[] = without(get(series, '0.data', []).map((item: any) => item.value), null, undefined, NaN);
+    colorStrategy: IColorStrategy,
+): Highcharts.ColorAxisDataClass[] {
+    const values: number[] = without(
+        get(series, "0.data", []).map((item: any) => item.value),
+        null,
+        undefined,
+        NaN,
+    );
 
     if (isEmpty(values)) {
         return [];
@@ -1441,7 +1540,7 @@ export function getHeatmapDataClasses(
         dataClasses.push({
             from: min,
             to: max,
-            color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX)
+            color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX),
         });
     } else {
         const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
@@ -1450,7 +1549,7 @@ export function getHeatmapDataClasses(
             dataClasses.push({
                 from: currentSum,
                 to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? safeMax : currentSum + step,
-                color: colorStrategy.getColorByIndex(i)
+                color: colorStrategy.getColorByIndex(i),
             });
             currentSum += step;
         }
@@ -1461,50 +1560,51 @@ export function getHeatmapDataClasses(
 
 export function getDefaultTreemapAttributes(
     dimensions: Execution.IResultDimension[],
-    attributeHeaderItems: Execution.IResultHeaderItem[][][]
+    attributeHeaderItems: Execution.IResultHeaderItem[][][],
 ): any {
     let viewByAttribute = findAttributeInDimension(
         dimensions[STACK_BY_DIMENSION_INDEX],
-        attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
     );
     const stackByAttribute = findAttributeInDimension(
         dimensions[STACK_BY_DIMENSION_INDEX],
         attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
-        1
+        1,
     );
     if (!viewByAttribute) {
         viewByAttribute = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
-            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
         );
     }
     return {
         viewByAttribute,
-        stackByAttribute
+        stackByAttribute,
     };
 }
 
 export function getTreemapAttributes(
     dimensions: Execution.IResultDimension[],
     attributeHeaderItems: Execution.IResultHeaderItem[][][],
-    mdObject: VisualizationObject.IVisualizationObjectContent
+    mdObject: VisualizationObject.IVisualizationObjectContent,
 ): any {
-    if (!mdObject) { // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
+    if (!mdObject) {
+        // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
         return getDefaultTreemapAttributes(dimensions, attributeHeaderItems);
     }
     if (isBucketEmpty(mdObject, SEGMENT)) {
         if (isBucketEmpty(mdObject, VIEW)) {
             return {
                 viewByAttribute: null,
-                stackByAttribute: null
+                stackByAttribute: null,
             };
         }
         return {
             viewByAttribute: findAttributeInDimension(
                 dimensions[VIEW_BY_DIMENSION_INDEX],
-                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
+                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
             ),
-            stackByAttribute: null
+            stackByAttribute: null,
         };
     }
     if (isBucketEmpty(mdObject, VIEW)) {
@@ -1512,20 +1612,20 @@ export function getTreemapAttributes(
             viewByAttribute: null,
             stackByAttribute: findAttributeInDimension(
                 dimensions[VIEW_BY_DIMENSION_INDEX],
-                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX]
-            )
+                attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+            ),
         };
     }
     return {
         viewByAttribute: findAttributeInDimension(
             dimensions[STACK_BY_DIMENSION_INDEX],
-            attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+            attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
         ),
         stackByAttribute: findAttributeInDimension(
             dimensions[STACK_BY_DIMENSION_INDEX],
             attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
-            1
-        )
+            1,
+        ),
     };
 }
 
@@ -1534,7 +1634,7 @@ function getTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: IChartConfig = {}
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { type } = config;
     if (isTreemap(type)) {
@@ -1565,20 +1665,25 @@ export function getChartOptions(
     executionResultData: Execution.DataValue[][],
     unfilteredResultHeaderItems: Execution.IResultHeaderItem[][][],
     config: IChartConfig,
-    drillableItems: IHeaderPredicate[]
+    drillableItems: IHeaderPredicate[],
 ): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
     // we need to filter these out in order to stay compatible
-    const attributeHeaderItems = unfilteredResultHeaderItems.map((dimension: Execution.IResultHeaderItem[][]) => {
-        return dimension.filter((attributeHeaders: any) => attributeHeaders[0].attributeHeaderItem);
-    });
+    const attributeHeaderItems = unfilteredResultHeaderItems.map(
+        (dimension: Execution.IResultHeaderItem[][]) => {
+            return dimension.filter((attributeHeaders: any) => attributeHeaders[0].attributeHeaderItem);
+        },
+    );
 
-    invariant(config && isChartSupported(config.type),
-        `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`);
+    invariant(
+        config && isChartSupported(config.type),
+        `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`,
+    );
 
     const { type, mdObject } = config;
     const { dimensions } = executionResponse;
-    const isViewByTwoAttributes = attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
+    const isViewByTwoAttributes =
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
     let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
     let stackByAttribute: IUnwrappedAttributeHeadersWithItems;
     let viewByTwoAttributes: IViewByTwoAttributes;
@@ -1586,23 +1691,19 @@ export function getChartOptions(
     if (isTreemap(type)) {
         const {
             viewByAttribute: treemapViewByAttribute,
-            stackByAttribute: treemapStackByAttribute
-        } = getTreemapAttributes(
-            dimensions,
-            attributeHeaderItems,
-            mdObject
-        );
+            stackByAttribute: treemapStackByAttribute,
+        } = getTreemapAttributes(dimensions, attributeHeaderItems, mdObject);
         viewByAttribute = treemapViewByAttribute;
         stackByAttribute = treemapStackByAttribute;
     } else {
         viewByAttribute = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
             attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
-            isViewByTwoAttributes ? PRIMARY_ATTRIBUTE_INDEX : undefined
+            isViewByTwoAttributes ? PRIMARY_ATTRIBUTE_INDEX : undefined,
         );
         stackByAttribute = findAttributeInDimension(
             dimensions[STACK_BY_DIMENSION_INDEX],
-            attributeHeaderItems[STACK_BY_DIMENSION_INDEX]
+            attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
         );
     }
 
@@ -1613,10 +1714,10 @@ export function getChartOptions(
         stackByAttribute,
         executionResponse,
         afm,
-        type
+        type,
     );
 
-    const gridEnabled = get(config, 'grid.enabled', true);
+    const gridEnabled = get(config, "grid.enabled", true);
     const stacking = getStackingConfig(stackByAttribute, config);
     const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
@@ -1629,7 +1730,7 @@ export function getChartOptions(
         stackByAttribute,
         type,
         mdObject,
-        colorStrategy
+        colorStrategy,
     );
 
     let drillableSeries = getDrillableSeries(
@@ -1639,20 +1740,20 @@ export function getChartOptions(
         stackByAttribute,
         executionResponse,
         afm,
-        type
+        type,
     );
 
     let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
     if (isViewByTwoAttributes) {
         viewByTwoAttributes = {
             parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
-            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX]
+            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX],
         };
 
         viewByParentAttribute = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
             attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
-            PARENT_ATTRIBUTE_INDEX
+            PARENT_ATTRIBUTE_INDEX,
         );
         if (viewByParentAttribute) {
             drillableSeries = getDrillableSeriesWithParentAttribute(drillableSeries, viewByParentAttribute);
@@ -1661,36 +1762,44 @@ export function getChartOptions(
 
     const series = assignYAxes(drillableSeries, yAxes);
 
-    let categories = viewByTwoAttributes ?
-                        getCategoriesForTwoAttributes(viewByTwoAttributes) :
-                        getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
+    let categories = viewByTwoAttributes
+        ? getCategoriesForTwoAttributes(viewByTwoAttributes)
+        : getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order
     if (isOneOfTypes(type, sortedByMeasureTypes)) {
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];
-        const sortedDataPoints = dataPoints.sort((pointDataA: IPointData, pointDataB: IPointData) => {
-            if (pointDataA.y === pointDataB.y) { return 0; }
-            return pointDataB.y - pointDataA.y;
-        }).map((dataPoint: IPointData, dataPointIndex: number) => {
-            // Legend index equals original dataPoint index
-            indexSortOrder.push(dataPoint.legendIndex);
-            return {
-                // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
-                ...dataPoint,
-                color: get(dataPoints[dataPointIndex], 'color'),
-                legendIndex: dataPointIndex
-            };
-        });
+        const sortedDataPoints = dataPoints
+            .sort((pointDataA: IPointData, pointDataB: IPointData) => {
+                if (pointDataA.y === pointDataB.y) {
+                    return 0;
+                }
+                return pointDataB.y - pointDataA.y;
+            })
+            .map((dataPoint: IPointData, dataPointIndex: number) => {
+                // Legend index equals original dataPoint index
+                indexSortOrder.push(dataPoint.legendIndex);
+                return {
+                    // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
+                    ...dataPoint,
+                    color: get(dataPoints[dataPointIndex], "color"),
+                    legendIndex: dataPointIndex,
+                };
+            });
         // categories need to be sorted in exactly the same order as dataPoints
-        categories = categories.map((_category: any, dataPointIndex: number) =>
-            categories[indexSortOrder[dataPointIndex]]);
+        categories = categories.map(
+            (_category: any, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]],
+        );
         series[0].data = sortedDataPoints;
     }
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
-    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(config, type);
+    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(
+        config,
+        type,
+    );
 
     if (isComboChart(type)) {
         return {
@@ -1698,22 +1807,22 @@ export function getChartOptions(
             stacking,
             xAxes,
             yAxes,
-            legendLayout: config.legendLayout || 'horizontal',
+            legendLayout: config.legendLayout || "horizontal",
             actions: {
-                tooltip: buildTooltipFactory(viewByAttribute, type, config)
+                tooltip: buildTooltipFactory(viewByAttribute, type, config),
             },
             grid: {
-                enabled: gridEnabled
+                enabled: gridEnabled,
             },
             data: {
                 series: getComboChartSeries(config, measureGroup, series),
-                categories
+                categories,
             },
             xAxisProps,
             yAxisProps,
             secondary_yAxisProps,
             colorAssignments,
-            colorPalette
+            colorPalette,
         };
     }
 
@@ -1722,35 +1831,32 @@ export function getChartOptions(
 
         let measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
-            measureGroup.items[1] ? measureGroup.items[1] : null
+            measureGroup.items[1] ? measureGroup.items[1] : null,
         ];
         if (isBucketEmpty(mdObject, MEASURES)) {
-            measures = [
-                null,
-                measureGroup.items[0] ? measureGroup.items[0] : null
-            ];
+            measures = [null, measureGroup.items[0] ? measureGroup.items[0] : null];
         }
 
         return {
             type,
             stacking,
-            legendLayout: 'horizontal',
+            legendLayout: "horizontal",
             yAxes,
             xAxes,
             data: {
                 series,
-                categories
+                categories,
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
             },
             grid: {
-                enabled: gridEnabled
+                enabled: gridEnabled,
             },
             xAxisProps,
             yAxisProps,
             colorAssignments,
-            colorPalette
+            colorPalette,
         };
     }
 
@@ -1759,31 +1865,31 @@ export function getChartOptions(
         return {
             type,
             stacking: null,
-            legendLayout: 'horizontal',
+            legendLayout: "horizontal",
             title: {
-                x: (viewByAttribute ? viewByAttribute.name : ''),
-                y: (stackByAttribute ? stackByAttribute.name : ''),
-                format: unwrap(measureGroup.items[0]).format
+                x: viewByAttribute ? viewByAttribute.name : "",
+                y: stackByAttribute ? stackByAttribute.name : "",
+                format: unwrap(measureGroup.items[0]).format,
             },
             xAxes,
             yAxes,
             data: {
                 series,
-                categories
+                categories,
             },
             actions: {
-                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config)
+                tooltip: generateTooltipHeatmapFn(viewByAttribute, stackByAttribute, config),
             },
             grid: {
-                enabled: false
+                enabled: false,
             },
             colorAxis: {
-                dataClasses: getHeatmapDataClasses(series, colorStrategy)
+                dataClasses: getHeatmapDataClasses(series, colorStrategy),
             },
             xAxisProps,
             yAxisProps,
             colorAssignments,
-            colorPalette
+            colorPalette,
         };
     }
 
@@ -1814,23 +1920,23 @@ export function getChartOptions(
             type,
             stacking,
             hasViewByAttribute: Boolean(stackByAttribute),
-            legendLayout: 'horizontal',
+            legendLayout: "horizontal",
             yAxes,
             xAxes,
             data: {
                 series,
-                categories: ['']
+                categories: [""],
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute, config)
+                tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
             },
             grid: {
-                enabled: gridEnabled
+                enabled: gridEnabled,
             },
             xAxisProps,
             yAxisProps,
             colorAssignments,
-            colorPalette
+            colorPalette,
         };
     }
 
@@ -1839,7 +1945,7 @@ export function getChartOptions(
         viewByAttribute,
         viewByParentAttribute,
         stackByAttribute,
-        config
+        config,
     );
 
     const chartOptions = {
@@ -1847,18 +1953,18 @@ export function getChartOptions(
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
         hasViewByAttribute: Boolean(viewByAttribute),
-        legendLayout: config.legendLayout || 'horizontal',
+        legendLayout: config.legendLayout || "horizontal",
         xAxes,
         yAxes,
         data: {
             series,
-            categories
+            categories,
         },
         actions: {
-            tooltip: tooltipFactory
+            tooltip: tooltipFactory,
         },
         grid: {
-            enabled: gridEnabled
+            enabled: gridEnabled,
         },
         xAxisProps,
         yAxisProps,
@@ -1866,7 +1972,7 @@ export function getChartOptions(
         secondary_yAxisProps,
         colorAssignments,
         colorPalette,
-        isViewByTwoAttributes
+        isViewByTwoAttributes,
     };
 
     return chartOptions;

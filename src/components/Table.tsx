@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
+import * as React from "react";
+import { omit } from "lodash";
+import { Subtract } from "utility-types";
+import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
-import { Table as AfmTable } from './afm/Table';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { getTableDimensions } from '../helpers/dimensions';
-import { getResultSpec } from '../helpers/resultSpec';
-import { MEASURES, ATTRIBUTE } from '../constants/bucketNames';
+import { Table as AfmTable } from "./afm/Table";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { getTableDimensions } from "../helpers/dimensions";
+import { getResultSpec } from "../helpers/resultSpec";
+import { MEASURES, ATTRIBUTE } from "../constants/bucketNames";
 
 export interface ITableBucketProps {
     measures?: VisualizationInput.AttributeOrMeasure[];
@@ -35,17 +35,21 @@ export function Table(props: ITableProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: props.measures || [],
         },
         {
             localIdentifier: ATTRIBUTE,
             items: props.attributes || [],
-            totals: props.totals || []
-        }
+            totals: props.totals || [],
+        },
     ];
 
-    const newProps
-        = omit<ITableProps, ITableNonBucketProps>(props, ['measures', 'attributes', 'totals', 'filters']);
+    const newProps = omit<ITableProps, ITableNonBucketProps>(props, [
+        "measures",
+        "attributes",
+        "totals",
+        "filters",
+    ]);
 
     return (
         <AfmTable

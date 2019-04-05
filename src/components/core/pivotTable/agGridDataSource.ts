@@ -1,23 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import isEqual = require('lodash/isEqual');
-import {
-    IDatasource,
-    IGetRowsParams,
-    GridApi
-} from 'ag-grid';
+import { AFM, Execution } from "@gooddata/typings";
+import isEqual = require("lodash/isEqual");
+import { IDatasource, IGetRowsParams, GridApi } from "ag-grid";
 
 import InjectedIntl = ReactIntl.InjectedIntl;
 
-import {
-    executionToAGGridAdapter,
-    ROW_ATTRIBUTE_COLUMN
-} from '../../../helpers/agGrid';
-import { IGridHeader, IGridTotalsRow } from '../../../interfaces/AGGrid';
+import { executionToAGGridAdapter, ROW_ATTRIBUTE_COLUMN } from "../../../helpers/agGrid";
+import { IGridHeader, IGridTotalsRow } from "../../../interfaces/AGGrid";
 
-import { IGetPage } from '../base/VisualizationLoadingHOC';
-import { IGroupingProvider } from '../pivotTable/GroupingProvider';
-import { getSortsFromModel } from '../PivotTable';
+import { IGetPage } from "../base/VisualizationLoadingHOC";
+import { IGroupingProvider } from "../pivotTable/GroupingProvider";
+import { getSortsFromModel } from "../PivotTable";
 
 const areTotalsChanged = (gridApi: GridApi, totals: IGridTotalsRow[]) => {
     const totalsCount = gridApi.getPinnedBottomRowCount();
@@ -41,12 +34,12 @@ export const getDataSourceRowsGetter = (
     onSuccess: (
         execution: Execution.IExecutionResponses,
         columnDefs: IGridHeader[],
-        resultSpec: AFM.IResultSpec
+        resultSpec: AFM.IResultSpec,
     ) => void,
     getGridApi: () => any,
     intl: InjectedIntl,
     columnTotals: AFM.ITotalItem[],
-    getGroupingProvider: () => IGroupingProvider
+    getGroupingProvider: () => IGroupingProvider,
 ) => {
     return (getRowsParams: IGetRowsParams) => {
         const { startRow, endRow, successCallback, sortModel } = getRowsParams;
@@ -59,7 +52,7 @@ export const getDataSourceRowsGetter = (
         if (sortModel.length > 0 && execution) {
             resultSpecUpdated = {
                 ...resultSpecUpdated,
-                sorts: getSortsFromModel(sortModel, execution)
+                sorts: getSortsFromModel(sortModel, execution),
             };
         }
         if (columnTotals && columnTotals.length > 0) {
@@ -68,10 +61,10 @@ export const getDataSourceRowsGetter = (
                 dimensions: [
                     {
                         ...resultSpecUpdated.dimensions[0],
-                        totals: columnTotals
+                        totals: columnTotals,
                     },
-                    ...resultSpecUpdated.dimensions.slice(1)
-                ]
+                    ...resultSpecUpdated.dimensions.slice(1),
+                ],
             };
         }
 
@@ -80,7 +73,7 @@ export const getDataSourceRowsGetter = (
             // column limit defaults to SERVERSIDE_COLUMN_LIMIT (1000), because 1000 columns is hopefully enough.
             [endRow - startRow, undefined],
             // column offset defaults to 0, because we do not support horizontal paging yet
-            [startRow, undefined]
+            [startRow, undefined],
         );
         return pagePromise.then((execution: Execution.IExecutionResponses | null) => {
             if (!execution) {
@@ -92,8 +85,8 @@ export const getDataSourceRowsGetter = (
                 resultSpecUpdated,
                 intl,
                 {
-                    addLoadingRenderer: 'loadingRenderer'
-                }
+                    addLoadingRenderer: "loadingRenderer",
+                },
             );
             const { offset, count, total } = execution.executionResult.paging;
 
@@ -117,31 +110,31 @@ export const getDataSourceRowsGetter = (
 };
 
 export const getAGGridDataSource = (
-           resultSpec: AFM.IResultSpec,
-           getPage: IGetPage,
-           getExecution: () => Execution.IExecutionResponses,
-           onSuccess: (
-               execution: Execution.IExecutionResponses,
-               columnDefs: IGridHeader[],
-               resultSpec: AFM.IResultSpec
-           ) => void,
-           getGridApi: () => any,
-           intl: InjectedIntl,
-           columnTotals: AFM.ITotalItem[],
-           getGroupingProvider: () => IGroupingProvider,
-           cancelPagePromises: () => void
-       ): IDatasource => ({
-           getRows: getDataSourceRowsGetter(
-               resultSpec,
-               getPage,
-               getExecution,
-               onSuccess,
-               getGridApi,
-               intl,
-               columnTotals,
-               getGroupingProvider
-           ),
-           destroy: () => {
-               cancelPagePromises();
-           }
-       });
+    resultSpec: AFM.IResultSpec,
+    getPage: IGetPage,
+    getExecution: () => Execution.IExecutionResponses,
+    onSuccess: (
+        execution: Execution.IExecutionResponses,
+        columnDefs: IGridHeader[],
+        resultSpec: AFM.IResultSpec,
+    ) => void,
+    getGridApi: () => any,
+    intl: InjectedIntl,
+    columnTotals: AFM.ITotalItem[],
+    getGroupingProvider: () => IGroupingProvider,
+    cancelPagePromises: () => void,
+): IDatasource => ({
+    getRows: getDataSourceRowsGetter(
+        resultSpec,
+        getPage,
+        getExecution,
+        onSuccess,
+        getGridApi,
+        intl,
+        columnTotals,
+        getGroupingProvider,
+    ),
+    destroy: () => {
+        cancelPagePromises();
+    },
+});

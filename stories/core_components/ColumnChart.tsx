@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { ColumnChart } from '../../src';
-import { onErrorHandler } from '../mocks';
+import { ColumnChart } from "../../src";
+import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
@@ -16,19 +16,19 @@ import {
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
-import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
+import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
 
-import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
-import * as HeaderPredicateFactory from '../../src/factory/HeaderPredicateFactory';
+import * as HeaderPredicateFactory from "../../src/factory/HeaderPredicateFactory";
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('Core components/ColumnChart', module)
-    .add('two measures, one attribute', () => (
+storiesOf("Core components/ColumnChart", module)
+    .add("two measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -39,10 +39,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('two measures, one attribute with alias', () => (
+            </div>,
+        ),
+    )
+    .add("two measures, one attribute with alias", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -53,10 +53,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('custom colors', () => (
+            </div>,
+        ),
+    )
+    .add("custom colors", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -68,10 +68,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('sorted by attribute', () => (
+            </div>,
+        ),
+    )
+    .add("sorted by attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -83,10 +83,10 @@ storiesOf('Core components/ColumnChart', module)
                     ErrorComponent={null}
                     sortBy={[ATTRIBUTE_1_SORT_ITEM]}
                 />
-            </div>
-        )
-    ))
-    .add('sorted by measure', () => (
+            </div>,
+        ),
+    )
+    .add("sorted by measure", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -98,10 +98,10 @@ storiesOf('Core components/ColumnChart', module)
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -113,10 +113,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with disabled legend', () => (
+            </div>,
+        ),
+    )
+    .add("with disabled legend", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -128,14 +128,14 @@ storiesOf('Core components/ColumnChart', module)
                     ErrorComponent={null}
                     config={{
                         legend: {
-                            enabled: false
-                        }
+                            enabled: false,
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with min max config', () => (
+            </div>,
+        ),
+    )
+    .add("with min max config", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -147,15 +147,15 @@ storiesOf('Core components/ColumnChart', module)
                     ErrorComponent={null}
                     config={{
                         yaxis: {
-                            min: '200',
-                            max: '750'
-                        }
+                            min: "200",
+                            max: "750",
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with different legend positions', () => (
+            </div>,
+        ),
+    )
+    .add("with different legend positions", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
                 <div>
@@ -170,8 +170,8 @@ storiesOf('Core components/ColumnChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'auto'
-                                }
+                                    position: "auto",
+                                },
                             }}
                         />
                     </div>
@@ -186,8 +186,8 @@ storiesOf('Core components/ColumnChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'left'
-                                }
+                                    position: "left",
+                                },
                             }}
                         />
                     </div>
@@ -202,8 +202,8 @@ storiesOf('Core components/ColumnChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'top'
-                                }
+                                    position: "top",
+                                },
                             }}
                         />
                     </div>
@@ -218,8 +218,8 @@ storiesOf('Core components/ColumnChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'right'
-                                }
+                                    position: "right",
+                                },
                             }}
                         />
                     </div>
@@ -234,16 +234,16 @@ storiesOf('Core components/ColumnChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'bottom'
-                                }
+                                    position: "bottom",
+                                },
                             }}
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    ))
-    .add('arithmetic measures', () => (
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("arithmetic measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -252,17 +252,17 @@ storiesOf('Core components/ColumnChart', module)
                         MEASURE_1,
                         MEASURE_2,
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC,
                     ]}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('dual axis with two left measures, one right measure, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("dual axis with two left measures, one right measure, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -270,18 +270,18 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_3.measure.localIdentifier]
-                        }
+                            measures: [MEASURE_3.measure.localIdentifier],
+                        },
                     }}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('only right axis with two measures, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("only right axis with two measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -289,18 +289,18 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
-                        }
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier],
+                        },
                     }}
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with two left measures', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with two left measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -311,10 +311,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('drillable items', () => (
+            </div>,
+        ),
+    )
+    .add("drillable items", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -322,14 +322,14 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1]}
                     viewBy={[ATTRIBUTE_1]}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/4/elements?id=1'),
-                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/4/elements?id=3')
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=1"),
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/4/elements?id=3"),
                     ]}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with drillable items', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable items", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -337,13 +337,13 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=1')
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=1"),
                     ]}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with drillable items and dual axis', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable items and dual axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -351,18 +351,18 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=1')
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=1"),
                     ]}
                     config={{
                         secondary_yaxis: {
-                            measures: ['m2']
-                        }
+                            measures: ["m2"],
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with drillable items and stackBy', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with drillable items and stackBy", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -371,13 +371,13 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     stackBy={ATTRIBUTE_3}
                     drillableItems={[
-                        HeaderPredicateFactory.uriMatch('/gdc/md/storybook/obj/5/elements?id=2')
+                        HeaderPredicateFactory.uriMatch("/gdc/md/storybook/obj/5/elements?id=2"),
                     ]}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with two right measures', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with two right measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -386,17 +386,17 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
-                        }
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier],
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with 60-degree rotation setting on X axis', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 60-degree rotation setting on X axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -405,17 +405,17 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         xaxis: {
-                            rotation: '60'
-                        }
+                            rotation: "60",
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with hide-axis setting on X axis', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with hide-axis setting on X axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -424,17 +424,17 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         xaxis: {
-                            visible: false
-                        }
+                            visible: false,
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with stacking attribute', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with stacking attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -446,10 +446,10 @@ storiesOf('Core components/ColumnChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with \'Stack Measures\'', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 'Stack Measures'", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -457,16 +457,16 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
-                        stackMeasures: true
+                        stackMeasures: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with \'Stack Measures\' and enable data labels', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 'Stack Measures' and enable data labels", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -476,17 +476,17 @@ storiesOf('Core components/ColumnChart', module)
                     config={{
                         stackMeasures: true,
                         dataLabels: {
-                            visible: true
-                        }
+                            visible: true,
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with \'Stack to 100%\'', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 'Stack to 100%'", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -494,16 +494,16 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1, MEASURE_2]}
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
-                        stackMeasuresToPercent: true
+                        stackMeasuresToPercent: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with \'Stack to 100%\' and enabling data labels', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 'Stack to 100%' and enabling data labels", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -513,17 +513,17 @@ storiesOf('Core components/ColumnChart', module)
                     config={{
                         stackMeasuresToPercent: true,
                         dataLabels: {
-                            visible: true
-                        }
+                            visible: true,
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with \'Stack to 100%\' on right axis', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with 'Stack to 100%' on right axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -533,17 +533,17 @@ storiesOf('Core components/ColumnChart', module)
                     config={{
                         stackMeasuresToPercent: true,
                         secondary_yaxis: {
-                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier]
-                        }
+                            measures: [MEASURE_1.measure.localIdentifier, MEASURE_2.measure.localIdentifier],
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -552,37 +552,17 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_2.measure.localIdentifier]
-                        }
-                    }}
-                    onError={onErrorHandler}
-                    LoadingComponent={null}
-                    ErrorComponent={null}
-                />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack Measures\'', () => (
-        screenshotWrap(
-            <div style={wrapperStyle}>
-                <ColumnChart
-                    projectId="storybook"
-                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
-                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
-                    config={{
-                        secondary_yaxis: {
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            measures: [MEASURE_2.measure.localIdentifier],
                         },
-                        stackMeasures: true
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack Measures\' and data labels enabled', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack Measures'", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -591,21 +571,41 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            measures: [MEASURE_3.measure.localIdentifier],
+                        },
+                        stackMeasures: true,
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack Measures' and data labels enabled", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ColumnChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2, MEASURE_3]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_yaxis: {
+                            measures: [MEASURE_3.measure.localIdentifier],
                         },
                         stackMeasures: true,
                         dataLabels: {
-                            visible: true
-                        }
+                            visible: true,
+                        },
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack Measures\' with min/max setting', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack Measures' with min/max setting", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -614,24 +614,24 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         yaxis: {
-                            min: '100',
-                            max: '1000'
+                            min: "100",
+                            max: "1000",
                         },
                         secondary_yaxis: {
-                            min: '200',
-                            max: '800',
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            min: "200",
+                            max: "800",
+                            measures: [MEASURE_3.measure.localIdentifier],
                         },
-                        stackMeasures: true
+                        stackMeasures: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack to 100%\'', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack to 100%'", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -640,18 +640,18 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            measures: [MEASURE_3.measure.localIdentifier],
                         },
-                        stackMeasuresToPercent: true
+                        stackMeasuresToPercent: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack to 100%\' and enabling data labels', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack to 100%' and enabling data labels", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -660,21 +660,21 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         dataLabels: {
-                            visible: true
+                            visible: true,
                         },
                         secondary_yaxis: {
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            measures: [MEASURE_3.measure.localIdentifier],
                         },
-                        stackMeasuresToPercent: true
+                        stackMeasuresToPercent: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart with dual axis and \'Stack to 100%\' with min/max', () => (
+            </div>,
+        ),
+    )
+    .add("optional stacking chart with dual axis and 'Stack to 100%' with min/max", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -683,24 +683,24 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         yaxis: {
-                            min: '0.1',
-                            max: '0.9'
+                            min: "0.1",
+                            max: "0.9",
                         },
                         secondary_yaxis: {
-                            min: '200',
-                            max: '800',
-                            measures: [MEASURE_3.measure.localIdentifier]
+                            min: "200",
+                            max: "800",
+                            measures: [MEASURE_3.measure.localIdentifier],
                         },
-                        stackMeasuresToPercent: true
+                        stackMeasuresToPercent: true,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart ignores "stackMeasures" setting with one measure', () => (
+            </div>,
+        ),
+    )
+    .add('optional stacking chart ignores "stackMeasures" setting with one measure', () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -708,13 +708,13 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1]}
                     viewBy={[ATTRIBUTE_2, ATTRIBUTE_3]}
                     config={{
-                        stackMeasures: true
+                        stackMeasures: true,
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure', () => (
+            </div>,
+        ),
+    )
+    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure', () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -722,13 +722,13 @@ storiesOf('Core components/ColumnChart', module)
                     measures={[MEASURE_1]}
                     viewBy={[ATTRIBUTE_2, ATTRIBUTE_3]}
                     config={{
-                        stackMeasuresToPercent: true
+                        stackMeasuresToPercent: true,
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart ignores "stackMeasures" setting with one measure on each axis', () => (
+            </div>,
+        ),
+    )
+    .add('optional stacking chart ignores "stackMeasures" setting with one measure on each axis', () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ColumnChart
@@ -737,28 +737,30 @@ storiesOf('Core components/ColumnChart', module)
                     viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
                     config={{
                         secondary_yaxis: {
-                            measures: [MEASURE_2.measure.localIdentifier]
+                            measures: [MEASURE_2.measure.localIdentifier],
                         },
-                        stackMeasures: true
+                        stackMeasures: true,
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('optional stacking chart ignores "stackMeasuresToPercent" setting with one measure on each axis', () => (
-        screenshotWrap(
-            <div style={wrapperStyle}>
-                <ColumnChart
-                    projectId="storybook"
-                    measures={[MEASURE_1, MEASURE_2]}
-                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
-                    config={{
-                        secondary_yaxis: {
-                            measures: [MEASURE_2.measure.localIdentifier]
-                        },
-                        stackMeasuresToPercent: true
-                    }}
-                />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    )
+    .add(
+        'optional stacking chart ignores "stackMeasuresToPercent" setting with one measure on each axis',
+        () =>
+            screenshotWrap(
+                <div style={wrapperStyle}>
+                    <ColumnChart
+                        projectId="storybook"
+                        measures={[MEASURE_1, MEASURE_2]}
+                        viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                        config={{
+                            secondary_yaxis: {
+                                measures: [MEASURE_2.measure.localIdentifier],
+                            },
+                            stackMeasuresToPercent: true,
+                        }}
+                    />
+                </div>,
+            ),
+    );

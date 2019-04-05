@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
+import { AFM } from "@gooddata/typings";
 import {
     ChartElementType,
     ChartType,
     HeadlineElementType,
     HeadlineType,
     TableElementType,
-    TableType
-} from '../constants/visualizationTypes';
+    TableType,
+} from "../constants/visualizationTypes";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -18,9 +18,9 @@ export interface IDrillableItemIdentifier {
 }
 
 export type IDrillableItem =
-    IDrillableItemUri |
-    IDrillableItemIdentifier |
-    (IDrillableItemUri & IDrillableItemIdentifier);
+    | IDrillableItemUri
+    | IDrillableItemIdentifier
+    | (IDrillableItemUri & IDrillableItemIdentifier);
 
 export function isDrillableItemUri(item: IDrillableItem): item is IDrillableItemUri {
     return (item as IDrillableItemUri).uri !== undefined;
@@ -88,10 +88,10 @@ export interface IDrillEventContextGroup {
 
 // Drill context for all visualization types
 export type DrillEventContext =
-    IDrillEventContextTable |
-    IDrillEventContextHeadline |
-    IDrillEventContextPoint |
-    IDrillEventContextGroup;
+    | IDrillEventContextTable
+    | IDrillEventContextHeadline
+    | IDrillEventContextPoint
+    | IDrillEventContextGroup;
 
 // IDrillEvent is a parameter of the onFiredDrillEvent is callback
 export interface IDrillEvent {
