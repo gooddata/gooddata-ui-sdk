@@ -30,6 +30,7 @@ These commands may come in handy while developing:
 | ||
 | `yarn dev` | build react-components to `/dist` in watch mode |
 | `yarn test` | run all unit tests |
+| `yarn prettier-write` | format the source code to match the valid codestyle |
 | `yarn validate` | validate codestyle |
 | ||
 | `yarn storybook` | run storybook from `/stories` on http://localhost:9001 |
@@ -63,6 +64,14 @@ yarn install --pure-lockfile
 yarn examples
 ```
 Then open https://localhost:8999 and login using Live Examples account (you can [create one here](https://gooddata-examples.herokuapp.com/registration)).
+
+### Source code formatting
+The source code in the repository is formatted by [Prettier](https://prettier.io/). 
+The format of the code is validated by our Continuous Integration server and is one of the requirements of successful merge.
+
+Prettier is supported by every major IDE. You can find the list of supported editors and how to configure them [here](https://prettier.io/docs/en/editors.html).
+
+In the case, when your editor is not supported or you don't want to setup the integration, you can run the `yarn prettier-write` command to reformat the code before commit.
 
 ## Changelog
 
