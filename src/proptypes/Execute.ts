@@ -1,12 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as PropTypes from 'prop-types';
-import { AfmPropTypesShape, ResultSpecPropTypesShape } from '../components/visualizations/proptypes/execution';
-import { EventsPropTypes } from './Events';
+import * as PropTypes from "prop-types";
+import {
+    AfmPropTypesShape,
+    ResultSpecPropTypesShape,
+} from "../components/visualizations/proptypes/execution";
+import { EventsPropTypes } from "./Events";
 
-import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
-export {
-    Requireable
-};
+import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports
+export { Requireable };
 
 export const ExecutePropType = {
     ...EventsPropTypes,
@@ -16,5 +17,5 @@ export const ExecutePropType = {
     children: PropTypes.func.isRequired,
     LoadingComponent: PropTypes.func,
     ErrorComponent: PropTypes.func,
-    telemetryComponentName: PropTypes.string
+    telemetryComponentName: PropTypes.string,
 };

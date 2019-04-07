@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { BubbleChart } from '../../src';
-import { onErrorHandler } from '../mocks';
+import { BubbleChart } from "../../src";
+import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_3,
@@ -12,22 +12,22 @@ import {
     MEASURE_2,
     MEASURE_3,
     ATTRIBUTE_1_SORT_ITEM,
-    ARITHMETIC_MEASURE_SIMPLE_OPERANDS
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
-} from '../data/configProps';
-import { attributeItemNameMatch } from '../../src/factory/HeaderPredicateFactory';
+    DATA_LABELS_AUTO_CONFIG,
+} from "../data/configProps";
+import { attributeItemNameMatch } from "../../src/factory/HeaderPredicateFactory";
 
-import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 800, height: 400 };
 
-storiesOf('Core components/BubbleChart', module)
-    .add('basic render', () => (
+storiesOf("Core components/BubbleChart", module)
+    .add("basic render", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -40,10 +40,10 @@ storiesOf('Core components/BubbleChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('sort by attribute', () => (
+            </div>,
+        ),
+    )
+    .add("sort by attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -55,17 +55,19 @@ storiesOf('Core components/BubbleChart', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    sortBy={[{
-                        attributeSortItem: {
-                            ...ATTRIBUTE_1_SORT_ITEM.attributeSortItem,
-                            direction: 'desc'
-                        }
-                    }]}
+                    sortBy={[
+                        {
+                            attributeSortItem: {
+                                ...ATTRIBUTE_1_SORT_ITEM.attributeSortItem,
+                                direction: "desc",
+                            },
+                        },
+                    ]}
                 />
-            </div>
-        )
-    ))
-    .add('without y axis measure', () => (
+            </div>,
+        ),
+    )
+    .add("without y axis measure", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -77,10 +79,10 @@ storiesOf('Core components/BubbleChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('without size measure', () => (
+            </div>,
+        ),
+    )
+    .add("without size measure", () =>
         screenshotWrap(
             <div style={wrapperStyle} className="screenshot-container">
                 <BubbleChart
@@ -93,10 +95,10 @@ storiesOf('Core components/BubbleChart', module)
                     ErrorComponent={null}
                     config={DATA_LABELS_VISIBLE_CONFIG}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -110,10 +112,10 @@ storiesOf('Core components/BubbleChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with color mapping', () => (
+            </div>,
+        ),
+    )
+    .add("with color mapping", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -123,26 +125,28 @@ storiesOf('Core components/BubbleChart', module)
                     size={MEASURE_3}
                     viewBy={ATTRIBUTE_1}
                     config={{
-                        colorMapping: [{
-                            predicate: attributeItemNameMatch('Pink'),
-                            color: {
-                                type: 'rgb',
-                                value: {
-                                    r: 0,
-                                    g: 0,
-                                    b: 0
-                                }
-                            }
-                        }
-                        ]
+                        colorMapping: [
+                            {
+                                predicate: attributeItemNameMatch("Pink"),
+                                color: {
+                                    type: "rgb",
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0,
+                                    },
+                                },
+                            },
+                        ],
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    )).add('with disabled legend', () => (
+            </div>,
+        ),
+    )
+    .add("with disabled legend", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -156,14 +160,14 @@ storiesOf('Core components/BubbleChart', module)
                     ErrorComponent={null}
                     config={{
                         legend: {
-                            enabled: false
-                        }
+                            enabled: false,
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with min max config', () => (
+            </div>,
+        ),
+    )
+    .add("with min max config", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -177,19 +181,19 @@ storiesOf('Core components/BubbleChart', module)
                     ErrorComponent={null}
                     config={{
                         xaxis: {
-                            min: '600',
-                            max: '1000'
+                            min: "600",
+                            max: "1000",
                         },
                         yaxis: {
-                            min: '750',
-                            max: '950'
-                        }
+                            min: "750",
+                            max: "950",
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with different legend positions', () => (
+            </div>,
+        ),
+    )
+    .add("with different legend positions", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
                 <div>
@@ -206,8 +210,8 @@ storiesOf('Core components/BubbleChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'auto'
-                                }
+                                    position: "auto",
+                                },
                             }}
                         />
                     </div>
@@ -224,8 +228,8 @@ storiesOf('Core components/BubbleChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'left'
-                                }
+                                    position: "left",
+                                },
                             }}
                         />
                     </div>
@@ -242,8 +246,8 @@ storiesOf('Core components/BubbleChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'top'
-                                }
+                                    position: "top",
+                                },
                             }}
                         />
                     </div>
@@ -260,8 +264,8 @@ storiesOf('Core components/BubbleChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'right'
-                                }
+                                    position: "right",
+                                },
                             }}
                         />
                     </div>
@@ -278,16 +282,16 @@ storiesOf('Core components/BubbleChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'bottom'
-                                }
+                                    position: "bottom",
+                                },
                             }}
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    ))
-    .add('data labels config', () => (
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("data labels config", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
                 <div>
@@ -347,10 +351,10 @@ storiesOf('Core components/BubbleChart', module)
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    ))
-    .add('arithmetic measure', () => (
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("arithmetic measure", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <BubbleChart
@@ -363,6 +367,6 @@ storiesOf('Core components/BubbleChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

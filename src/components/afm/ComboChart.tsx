@@ -1,16 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { ComboChart as CoreComboChart } from '../core/ComboChart';
-import { generateDefaultDimensions } from '../../helpers/dimensions';
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { ComboChart as CoreComboChart } from "../core/ComboChart";
+import { generateDefaultDimensions } from "../../helpers/dimensions";
 
 /**
  * AFM ComboChart
@@ -18,4 +13,7 @@ import { generateDefaultDimensions } from '../../helpers/dimensions';
  * @internal
  */
 export const ComboChart = dataSourceProvider<ICommonChartProps>(
-    CoreComboChart, generateDefaultDimensions, 'ComboChart');
+    CoreComboChart,
+    generateDefaultDimensions,
+    "ComboChart",
+);

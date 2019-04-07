@@ -1,40 +1,40 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Visualization, CoreComponents } from '@gooddata/react-components';
-import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
-import { get, unzip, range } from 'lodash';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Visualization, CoreComponents } from "@gooddata/react-components";
+import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
+import { get, unzip, range } from "lodash";
 
-import { projectId, franchiseFeesVisualizationIdentifier } from '../utils/fixtures';
-import { DEFAULT_COLOR_PALETTE } from '../utils/colors';
+import { projectId, franchiseFeesVisualizationIdentifier } from "../utils/fixtures";
+import { DEFAULT_COLOR_PALETTE } from "../utils/colors";
 
 const { BaseChart } = CoreComponents;
 
 export class CustomVisualization extends Component {
     static propTypes = {
         height: PropTypes.number,
-        executionResult: PropTypes.object.isRequired
+        executionResult: PropTypes.object.isRequired,
     };
 
     static defaultProps = {
-        height: 300
+        height: 300,
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            displayRawData: false
+            displayRawData: false,
         };
         this.toggleDisplayRawData = this.toggleDisplayRawData.bind(this);
     }
 
     getData(executionResult) {
-        const executionData = get(executionResult, 'data', []);
+        const executionData = get(executionResult, "data", []);
 
         const data = unzip(executionData).map((pointArray, valueIndex) => {
             const label = get(executionResult, `headerItems[1][0][${valueIndex}].attributeHeaderItem.name`);
             const pointObject = {
-                label
+                label,
             };
             pointArray.forEach((pointItem, pointItemIndex) => {
                 pointObject[pointItemIndex] = parseFloat(pointItem);
@@ -57,25 +57,25 @@ export class CustomVisualization extends Component {
         const data = this.getData(executionResult);
 
         if (!data.length) {
-            return <h2 style={{ textAlign: 'center' }}>Loading...</h2>;
+            return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
         }
 
-        const measures = get(executionResult, 'headerItems[0][0]');
+        const measures = get(executionResult, "headerItems[0][0]");
 
-        const bars = range(measures.length).map((barIndex) => {
+        const bars = range(measures.length).map(barIndex => {
             return (
                 <Bar
                     key={barIndex}
                     name={measures[barIndex].measureHeaderItem.name}
                     dataKey={barIndex}
                     fill={DEFAULT_COLOR_PALETTE[barIndex]}
-                    label={{ position: 'top' }}
+                    label={{ position: "top" }}
                 />
             );
         });
 
         return (
-            <div className="s-visualization-custom" >
+            <div className="s-visualization-custom">
                 <ResponsiveContainer width="100%" height={height}>
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -86,28 +86,27 @@ export class CustomVisualization extends Component {
                     </BarChart>
                 </ResponsiveContainer>
                 <div>
-                    <p><button className="button button-secondary" onClick={this.toggleDisplayRawData} >Toggle Raw Data</button></p>
-                    {displayRawData
-                        ? (
-                            <div>
-                                <pre>{JSON.stringify(executionResult, null, '  ')}</pre>
-                                <pre>{JSON.stringify(data, null, '  ')}</pre>
-                            </div>
-                        )
-                        : null
-                    }
+                    <p>
+                        <button className="button button-secondary" onClick={this.toggleDisplayRawData}>
+                            Toggle Raw Data
+                        </button>
+                    </p>
+                    {displayRawData ? (
+                        <div>
+                            <pre>{JSON.stringify(executionResult, null, "  ")}</pre>
+                            <pre>{JSON.stringify(data, null, "  ")}</pre>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         );
     }
 }
 
-
-const CustomBaseChart = (props) => {
-    return (<BaseChart
-        {...props}
-        visualizationComponent={visProps => <CustomVisualization {...visProps} />}
-    />);
+const CustomBaseChart = props => {
+    return (
+        <BaseChart {...props} visualizationComponent={visProps => <CustomVisualization {...visProps} />} />
+    );
 };
 
 export class CustomVisualizationExample extends Component {

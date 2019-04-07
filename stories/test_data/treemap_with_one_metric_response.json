@@ -7,18 +7,19 @@
             {
                 "headers": [
                     {
-                      "measureGroupHeader": {
-                        "items": [{
-                            "measureHeaderItem": {
-                              "name": "Amount",
-                              "format": "#,##0.00",
-                              "localIdentifier": "amountMetric",
-                              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
-                              "identifier": "ah1EuQxwaCqs"
-                            }
-                          }
-                        ]
-                      }
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Amount",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "amountMetric",
+                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                                        "identifier": "ah1EuQxwaCqs"
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             }

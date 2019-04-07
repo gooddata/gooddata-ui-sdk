@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react';
-import assign from 'lodash/assign';
-import get from 'lodash/get';
-import ExportDialog from '@gooddata/goodstrap/lib/Dialog/ExportDialog';
-import PropTypes from 'prop-types';
+import React from "react";
+import assign from "lodash/assign";
+import get from "lodash/get";
+import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
+import PropTypes from "prop-types";
 
-const DOWNLOADER_ID = 'downloader';
+const DOWNLOADER_ID = "downloader";
 
 export class ExampleWithExport extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ export class ExampleWithExport extends React.Component {
 
         this.state = {
             showExportDialog: false,
-            errorMessage: null
+            errorMessage: null,
         };
 
         this.onExportReady = this.onExportReady.bind(this);
@@ -40,12 +40,10 @@ export class ExampleWithExport extends React.Component {
                 submitButtonText="Export"
                 isPositive
                 seleniumClass="s-dialog"
-
                 mergeHeaders
                 mergeHeadersDisabled={false}
                 mergeHeadersText="Keep attribute cells merged"
                 mergeHeadersTitle="CELLS"
-
                 onCancel={this.exportDialogCancel}
                 onSubmit={this.exportWithMergeHeaders}
             />
@@ -55,7 +53,7 @@ export class ExampleWithExport extends React.Component {
     downloadFile(uri) {
         let anchor = document.getElementById(DOWNLOADER_ID);
         if (!anchor) {
-            anchor = document.createElement('a');
+            anchor = document.createElement("a");
             anchor.id = DOWNLOADER_ID;
             document.body.appendChild(anchor);
         }
@@ -73,11 +71,11 @@ export class ExampleWithExport extends React.Component {
     }
 
     exportToXLSX() {
-        this.doExport({ format: 'xlsx' });
+        this.doExport({ format: "xlsx" });
     }
 
     exportWithCustomName() {
-        this.doExport({ title: 'CustomName' });
+        this.doExport({ title: "CustomName" });
     }
 
     exportWithDialog() {
@@ -86,7 +84,7 @@ export class ExampleWithExport extends React.Component {
 
     exportWithMergeHeaders(exportConfig) {
         this.setState({ showExportDialog: false });
-        this.doExport(assign({ format: 'xlsx', title: 'CustomName' }, exportConfig));
+        this.doExport(assign({ format: "xlsx", title: "CustomName" }, exportConfig));
     }
 
     async doExport(exportConfig) {
@@ -97,7 +95,7 @@ export class ExampleWithExport extends React.Component {
         } catch (error) {
             let errorMessage = error.message;
             if (error.responseBody) {
-                errorMessage = get(JSON.parse(error.responseBody), 'error.message');
+                errorMessage = get(JSON.parse(error.responseBody), "error.message");
             }
             this.setState({ errorMessage });
         }
@@ -108,11 +106,7 @@ export class ExampleWithExport extends React.Component {
 
         let errorComponent;
         if (errorMessage) {
-            errorComponent = (
-                <div style={{ color: 'red', marginTop: 5 }}>
-                    {errorMessage}
-                </div>
-            );
+            errorComponent = <div style={{ color: "red", marginTop: 5 }}>{errorMessage}</div>;
         }
 
         let exportDialog;
@@ -124,8 +118,12 @@ export class ExampleWithExport extends React.Component {
             <div style={{ height: 367 }}>
                 {this.props.children(this.onExportReady)}
                 <div style={{ marginTop: 15 }}>
-                    <button className="button button-secondary" onClick={this.exportToCSV}>Export CSV</button>
-                    <button className="button button-secondary" onClick={this.exportToXLSX}>Export XLSX</button>
+                    <button className="button button-secondary" onClick={this.exportToCSV}>
+                        Export CSV
+                    </button>
+                    <button className="button button-secondary" onClick={this.exportToXLSX}>
+                        Export XLSX
+                    </button>
                     <button className="button button-secondary" onClick={this.exportWithCustomName}>
                         Export with custom name CustomName
                     </button>
@@ -141,7 +139,7 @@ export class ExampleWithExport extends React.Component {
 }
 
 ExampleWithExport.propTypes = {
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
 };
 
 export default ExampleWithExport;

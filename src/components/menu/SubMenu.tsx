@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { OpenAction, IMenuPositionConfig } from './MenuSharedTypes';
-import MenuState, { IMenuStateConfig } from './MenuState';
-import MenuOpener from './menuOpener/MenuOpener';
+import * as React from "react";
+import { OpenAction, IMenuPositionConfig } from "./MenuSharedTypes";
+import MenuState, { IMenuStateConfig } from "./MenuState";
+import MenuOpener from "./menuOpener/MenuOpener";
 
 export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
     openAction?: OpenAction;
@@ -12,7 +12,11 @@ export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionCo
 }
 
 const SubMenu: React.SFC<ISubMenuProps> = (props: ISubMenuProps) => (
-    <MenuState opened={props.opened} defaultOpened={props.defaultOpened} onOpenedChange={props.onOpenedChange}>
+    <MenuState
+        opened={props.opened}
+        defaultOpened={props.defaultOpened}
+        onOpenedChange={props.onOpenedChange}
+    >
         {({ opened, onOpenedChange }) => (
             <MenuOpener
                 opened={opened}

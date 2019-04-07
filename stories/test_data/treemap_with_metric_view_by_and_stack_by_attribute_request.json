@@ -1,43 +1,44 @@
 {
-  "execution": {
-    "afm": {
-      "measures": [{
-        "definition": {
-          "measure": {
-            "item": {
-              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
-            }
-          }
+    "execution": {
+        "afm": {
+            "measures": [
+                {
+                    "definition": {
+                        "measure": {
+                            "item": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279"
+                            }
+                        }
+                    },
+                    "localIdentifier": "amountMetric",
+                    "format": "#,##0.00",
+                    "alias": "Amount"
+                }
+            ],
+            "attributes": [
+                {
+                    "displayForm": {
+                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027"
+                    },
+                    "localIdentifier": "departmentAttribute"
+                },
+                {
+                    "displayForm": {
+                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024"
+                    },
+                    "localIdentifier": "regionAttribute"
+                }
+            ]
         },
-        "localIdentifier": "amountMetric",
-        "format": "#,##0.00",
-        "alias": "Amount"
-      }],
-      "attributes": [{
-        "displayForm": {
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027"
-        },
-        "localIdentifier": "departmentAttribute"
-      }, {
-        "displayForm": {
-          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024"
-        },
-        "localIdentifier": "regionAttribute"
-      }]
-    },
-    "resultSpec": {
-      "dimensions": [{
-          "itemIdentifiers": [
-            "departmentAttribute",
-            "regionAttribute"
-          ]
-        },
-        {
-          "itemIdentifiers": [
-            "measureGroup"
-          ]
+        "resultSpec": {
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["departmentAttribute", "regionAttribute"]
+                },
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                }
+            ]
         }
-      ]
     }
-  }
 }

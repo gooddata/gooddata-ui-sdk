@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { ISeparators } from '@gooddata/numberjs';
-import { AFM } from '@gooddata/typings';
+import { ISeparators } from "@gooddata/numberjs";
+import { AFM } from "@gooddata/typings";
 
 export interface IMenu {
     aggregations?: boolean;

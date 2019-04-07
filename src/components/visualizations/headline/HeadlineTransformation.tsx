@@ -1,22 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
-import noop = require('lodash/noop');
-import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
-import { IChartConfig } from '../../../interfaces/Config';
-import { IDrillableItem, IDrillEventCallback } from '../../../interfaces/DrillEvents';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
-import Headline, { IHeadlineFiredDrillEventItemContext } from './Headline';
+import { AFM, Execution } from "@gooddata/typings";
+import * as React from "react";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import noop = require("lodash/noop");
+import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
+import { IChartConfig } from "../../../interfaces/Config";
+import { IDrillableItem, IDrillEventCallback } from "../../../interfaces/DrillEvents";
+import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
 import {
     applyDrillableItems,
     buildDrillEventData,
     fireDrillEvent,
-    getHeadlineData
-} from './utils/HeadlineTransformationUtils';
+    getHeadlineData,
+} from "./utils/HeadlineTransformationUtils";
 
 export interface IHeadlineTransformationProps {
-    executionRequest: AFM.IExecution['execution'];
+    executionRequest: AFM.IExecution["execution"];
     executionResponse: Execution.IExecutionResponse;
     executionResult: Execution.IExecutionResult;
 
@@ -36,7 +36,7 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
     public static defaultProps: Partial<IHeadlineTransformationProps> = {
         drillableItems: [],
         onFiredDrillEvent: () => true,
-        onAfterRender: noop
+        onAfterRender: noop,
     };
 
     constructor(props: IHeadlineTransformationProps & InjectedIntlProps) {
@@ -53,13 +53,16 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
             executionResult,
             drillableItems,
             config,
-            onAfterRender
+            onAfterRender,
         } = this.props;
 
         const data = getHeadlineData(executionResponse, executionResult, intl);
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         const dataWithUpdatedDrilling = applyDrillableItems(
-            data, drillablePredicates, executionRequest, executionResponse
+            data,
+            drillablePredicates,
+            executionRequest,
+            executionResponse,
         );
 
         return (

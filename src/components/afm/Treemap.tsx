@@ -1,13 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { dataSourceProvider, IDataSourceProviderProps } from './DataSourceProvider';
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { Treemap as CoreTreemap } from '../core/Treemap';
-import { getTreemapDimensionsFromAFM } from '../../helpers/dimensions';
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { Treemap as CoreTreemap } from "../core/Treemap";
+import { getTreemapDimensionsFromAFM } from "../../helpers/dimensions";
 
 /**
  * AFM Treemap
@@ -17,5 +15,5 @@ import { getTreemapDimensionsFromAFM } from '../../helpers/dimensions';
 export const Treemap = dataSourceProvider<ICommonChartProps>(
     CoreTreemap,
     getTreemapDimensionsFromAFM,
-    'Treemap'
+    "Treemap",
 );

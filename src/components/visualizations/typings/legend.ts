@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { TOP } from '../chart/legend/PositionTypes';
+import { TOP } from "../chart/legend/PositionTypes";
 
-export type PositionType = 'left' | 'right' | 'top' | 'bottom' | 'auto';
+export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 export interface ILegendOptions {
     enabled: boolean;
@@ -34,5 +34,5 @@ export interface IRange {
 
 export const DEFAULT_LEGEND_CONFIG = {
     enabled: true,
-    position: TOP
+    position: TOP,
 };

@@ -1,22 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { DataLayer, SDK, factory as createSdk } from '@gooddata/gooddata-js';
-import isEqual = require('lodash/isEqual');
-import noop = require('lodash/noop');
-import { AFM, Execution } from '@gooddata/typings';
+import * as React from "react";
+import { DataLayer, SDK, factory as createSdk } from "@gooddata/gooddata-js";
+import isEqual = require("lodash/isEqual");
+import noop = require("lodash/noop");
+import { AFM, Execution } from "@gooddata/typings";
 
-import { IEvents } from '../interfaces/Events';
-import { ExecutePropType, Requireable } from '../proptypes/Execute';
-import { setTelemetryHeaders } from '../helpers/utils';
-import { convertErrors } from '../helpers/errorHandlers';
-import { RuntimeError } from '../errors/RuntimeError';
-import { getGeneralDimensionsFromAFM } from '../helpers/dimensions';
+import { IEvents } from "../interfaces/Events";
+import { ExecutePropType, Requireable } from "../proptypes/Execute";
+import { setTelemetryHeaders } from "../helpers/utils";
+import { convertErrors } from "../helpers/errorHandlers";
+import { RuntimeError } from "../errors/RuntimeError";
+import { getGeneralDimensionsFromAFM } from "../helpers/dimensions";
 
 export { Requireable };
 
 const { DataTable, ExecuteAfmAdapter } = DataLayer;
 
-export type IDataTableFactory = (sdk: SDK, projectId: string) => DataLayer.DataTable<Execution.IExecutionResponses>;
+export type IDataTableFactory = (
+    sdk: SDK,
+    projectId: string,
+) => DataLayer.DataTable<Execution.IExecutionResponses>;
 
 function dataTableFactory(sdk: SDK, projectId: string): DataLayer.DataTable<Execution.IExecutionResponses> {
     return new DataTable(new ExecuteAfmAdapter(sdk, projectId));
@@ -58,7 +61,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         onError: noop,
         onLoadingChanged: noop,
         onLoadingFinish: noop,
-        telemetryComponentName: 'Execute'
+        telemetryComponentName: "Execute",
     };
 
     private dataTable: DataLayer.DataTable<Execution.IExecutionResponses>;
@@ -71,7 +74,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         this.state = {
             result: null,
             isLoading: true,
-            error: null
+            error: null,
         };
 
         const sdk = props.sdk || createSdk();
@@ -90,15 +93,17 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             setTelemetryHeaders(this.sdk, this.props.telemetryComponentName, nextProps);
             this.initDataTable(nextProps);
         }
-        if (this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec'])) {
+        if (this.hasPropsChanged(nextProps, ["sdk", "projectId", "afm", "resultSpec"])) {
             this.initDataTable(nextProps);
             this.runExecution(nextProps);
         }
     }
 
     public shouldComponentUpdate(nextProps: IExecuteProps, nextState: IExecuteState) {
-        return !isEqual(this.state, nextState) ||
-            this.hasPropsChanged(nextProps, ['sdk', 'projectId', 'afm', 'resultSpec', 'children']);
+        return (
+            !isEqual(this.state, nextState) ||
+            this.hasPropsChanged(nextProps, ["sdk", "projectId", "afm", "resultSpec", "children"])
+        );
     }
 
     public render() {
@@ -107,7 +112,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
     }
 
     private isPropChanged(nextProps: IExecuteProps, propName: string) {
-        if (propName === 'children') {
+        if (propName === "children") {
             return nextProps.children !== this.props.children;
         }
 
@@ -124,15 +129,15 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         this.setState({
             isLoading: true,
             result: null,
-            error: null
+            error: null,
         });
 
         onLoadingChanged({
-            isLoading: true
+            isLoading: true,
         });
 
         const finalResultSpec = {
-            ...(resultSpec || {})
+            ...(resultSpec || {}),
         };
         if (!finalResultSpec.dimensions) {
             finalResultSpec.dimensions = getGeneralDimensionsFromAFM(afm);
@@ -146,13 +151,13 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         this.dataTable.onData((result: Execution.IExecutionResponses) => {
             this.setState({
                 result,
-                isLoading: false
+                isLoading: false,
             });
             onLoadingChanged({ isLoading: false });
             onLoadingFinish({ result });
         });
 
-        this.dataTable.onError((error) => {
+        this.dataTable.onError(error => {
             const newError = convertErrors(error);
 
             onError(newError);
@@ -162,7 +167,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
             this.setState({
                 result: null,
                 isLoading: false,
-                error: newError
+                error: newError,
             });
         });
     }

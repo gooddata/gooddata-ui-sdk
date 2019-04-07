@@ -1,12 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { IMenuOpenedBySharedProps } from './MenuOpenedBySharedProps';
-import OutsideClickHandler from '../utils/OutsideClickHandler';
-import MenuPosition from '../positioning/MenuPosition';
+import * as React from "react";
+import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
+import OutsideClickHandler from "../utils/OutsideClickHandler";
+import MenuPosition from "../positioning/MenuPosition";
 
 const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
-    const outsideClick = () => props.onOpenedChange({ opened: false, source: 'OUTSIDE_CLICK' });
-    const togglerWrapperClick = () => props.onOpenedChange({ opened: !props.opened, source: 'TOGGLER_BUTTON_CLICK' });
+    const outsideClick = () => props.onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" });
+    const togglerWrapperClick = () =>
+        props.onOpenedChange({ opened: !props.opened, source: "TOGGLER_BUTTON_CLICK" });
 
     const OutsideClickHandlerWrapped = (props: { children: React.ReactNode }) => (
         // UseCapture is set to false (default event bubbling). This has the disadvantage that we will not
@@ -22,10 +23,7 @@ const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
     );
 
     const togglerWrapped = (
-        <div
-            onClick={togglerWrapperClick}
-            className="gd-menuOpenedByClick-togglerWrapped"
-        >
+        <div onClick={togglerWrapperClick} className="gd-menuOpenedByClick-togglerWrapped">
             {props.toggler}
         </div>
     );

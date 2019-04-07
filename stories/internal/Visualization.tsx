@@ -1,17 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from 'react';
-import noop = require('lodash/noop');
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import noop = require("lodash/noop");
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Visualization } from '../../src/components/visualizations/Visualization';
-import fixtureDataSets, * as fixtures from '../test_data/fixtures';
-import { wrap } from '../utils/wrap';
-import { immutableSet } from '../../src/components/visualizations/utils/common';
+import { Visualization } from "../../src/components/visualizations/Visualization";
+import fixtureDataSets, * as fixtures from "../test_data/fixtures";
+import { wrap } from "../utils/wrap";
+import { immutableSet } from "../../src/components/visualizations/utils/common";
 
-import '../../styles/scss/charts.scss';
-import { GERMAN_NUMBER_FORMAT } from '../data/numberFormat';
+import "../../styles/scss/charts.scss";
+import { GERMAN_NUMBER_FORMAT } from "../data/numberFormat";
 
 export interface IDynamicVisualizationState {
     chartType: string;
@@ -28,34 +28,28 @@ class DynamicVisualization extends React.Component<{}, IDynamicVisualizationStat
         super(props);
         this.fixtures = {
             ...fixtureDataSets,
-            updatedBarChartWith3MetricsAndViewByAttribute: (dataSet => immutableSet(
-                dataSet,
-                'executionResult.data[1]',
-                dataSet.executionResult.data[1].map((pointValue: any) => pointValue * 2)
-            ))(fixtures.barChartWith3MetricsAndViewByAttribute)
+            updatedBarChartWith3MetricsAndViewByAttribute: (dataSet =>
+                immutableSet(
+                    dataSet,
+                    "executionResult.data[1]",
+                    dataSet.executionResult.data[1].map((pointValue: any) => pointValue * 2),
+                ))(fixtures.barChartWith3MetricsAndViewByAttribute),
         };
 
         this.legendOptions = {
-            'no legend': { enabled: false },
-            'legend top': { enabled: true, position: 'top' },
-            'legend right': { enabled: true, position: 'right' },
-            'legend bottom': { enabled: true, position: 'bottom' },
-            'legend left': { enabled: true, position: 'left' }
+            "no legend": { enabled: false },
+            "legend top": { enabled: true, position: "top" },
+            "legend right": { enabled: true, position: "right" },
+            "legend bottom": { enabled: true, position: "bottom" },
+            "legend left": { enabled: true, position: "left" },
         };
 
-        this.chartTypes = [
-            'column',
-            'bar',
-            'line',
-            'pie',
-            'area',
-            'heatmap'
-        ];
+        this.chartTypes = ["column", "bar", "line", "pie", "area", "heatmap"];
 
         this.state = {
-            chartType: 'column',
+            chartType: "column",
             dataSet: this.fixtures.barChartWith3MetricsAndViewByAttribute,
-            legendOption: this.legendOptions['legend top']
+            legendOption: this.legendOptions["legend top"],
         };
     }
 
@@ -64,35 +58,42 @@ class DynamicVisualization extends React.Component<{}, IDynamicVisualizationStat
         return (
             <div>
                 <div>
-                    {screenshotWrap(wrap(<Visualization
-                        config={{
-                            type: chartType,
-                            legend: legendOption
-                        }}
-                        {...dataSet}
-                        onDataTooLarge={action('Data too large')}
-                        onNegativeValues={action('Negative values in pie chart')}
-                    />, 600))}
+                    {screenshotWrap(
+                        wrap(
+                            <Visualization
+                                config={{
+                                    type: chartType,
+                                    legend: legendOption,
+                                }}
+                                {...dataSet}
+                                onDataTooLarge={action("Data too large")}
+                                onNegativeValues={action("Negative values in pie chart")}
+                            />,
+                            600,
+                        ),
+                    )}
                 </div>
                 <br />
                 <div>
-                    { Object.keys(this.fixtures).map(dataSetName => (
-                        <button key={dataSetName} onClick={this.setDataSetFn(dataSetName)} >{dataSetName}</button>
-                    )) }
+                    {Object.keys(this.fixtures).map(dataSetName => (
+                        <button key={dataSetName} onClick={this.setDataSetFn(dataSetName)}>
+                            {dataSetName}
+                        </button>
+                    ))}
                 </div>
                 <div>
-                    { Object.keys(this.legendOptions).map(legendOptionsItem => (
-                        <button key={legendOptionsItem} onClick={this.setLegendFn(legendOptionsItem)} >
+                    {Object.keys(this.legendOptions).map(legendOptionsItem => (
+                        <button key={legendOptionsItem} onClick={this.setLegendFn(legendOptionsItem)}>
                             {legendOptionsItem}
                         </button>
-                    )) }
+                    ))}
                 </div>
                 <div>
-                    { this.chartTypes.map((chartTypeOption: any) => (
-                        <button key={chartTypeOption} onClick={this.setChartTypeFn(chartTypeOption)} >
+                    {this.chartTypes.map((chartTypeOption: any) => (
+                        <button key={chartTypeOption} onClick={this.setChartTypeFn(chartTypeOption)}>
                             {chartTypeOption}
                         </button>
-                    )) }
+                    ))}
                 </div>
             </div>
         );
@@ -112,290 +113,290 @@ class DynamicVisualization extends React.Component<{}, IDynamicVisualizationStat
 
     private setDataSet(dataSetName: any) {
         this.setState({
-            dataSet: this.fixtures[dataSetName]
+            dataSet: this.fixtures[dataSetName],
         });
     }
 
     private setLegend(legendOption: any) {
         this.setState({
-            legendOption: this.legendOptions[legendOption]
+            legendOption: this.legendOptions[legendOption],
         });
     }
 
     private setChartType(chartType: any) {
         this.setState({
-            chartType
+            chartType,
         });
     }
 }
 
-storiesOf('Internal/Visualization', module)
-    .add('visualization bar chart without attributes', () => {
+storiesOf("Internal/Visualization", module)
+    .add("visualization bar chart without attributes", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithoutAttributes}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization column chart with 3 metrics and view by attribute', () => {
+    .add("visualization column chart with 3 metrics and view by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'column',
+                        type: "column",
                         legend: {
-                            position: 'top'
-                        }
+                            position: "top",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization bar chart with 3 metrics and view by attribute', () => {
+    .add("visualization bar chart with 3 metrics and view by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization bar chart with view by attribute', () => {
+    .add("visualization bar chart with view by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithViewByAttribute}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization bar chart with stack by and view by attributes', () => {
+    .add("visualization bar chart with stack by and view by attributes", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithStackByAndViewByAttributes}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization bar chart with pop measure and view by attribute', () => {
+    .add("visualization bar chart with pop measure and view by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithPopMeasureAndViewByAttribute}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization bar chart with previous period measure and view by attribute', () => {
+    .add("visualization bar chart with previous period measure and view by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithPreviousPeriodMeasure}
                     config={{
-                        type: 'bar'
+                        type: "bar",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization pie chart with metrics only', () => {
+    .add("visualization pie chart with metrics only", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.pieChartWithMetricsOnly}
                     config={{
-                        type: 'pie'
+                        type: "pie",
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization stacked area chart', () => {
+    .add("visualization stacked area chart", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.areaChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'area',
+                        type: "area",
                         legend: {
-                            position: 'right'
-                        }
+                            position: "right",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization area chart with disabled stacking', () => {
+    .add("visualization area chart with disabled stacking", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.areaChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'area',
+                        type: "area",
                         stacking: false,
                         legend: {
-                            position: 'top'
-                        }
+                            position: "top",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
 
-    .add('visualization stacked area chart with single measure and no attributes', () => {
+    .add("visualization stacked area chart with single measure and no attributes", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWithSingleMeasureAndNoAttributes}
                     config={{
-                        type: 'area',
+                        type: "area",
                         legend: {
-                            position: 'top'
-                        }
+                            position: "top",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
 
-    .add('visualization stacked area chart with negative values', () => {
+    .add("visualization stacked area chart with negative values", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.areaChartWithNegativeValues}
                     config={{
-                        type: 'area',
+                        type: "area",
                         legend: {
-                            position: 'bottom'
-                        }
+                            position: "bottom",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
 
-    .add('visualization stacked area chart with single metric and stack by attribute', () => {
+    .add("visualization stacked area chart with single metric and stack by attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.areaChartWith1MetricsAndStackByAttributeAndFilters}
                     config={{
-                        type: 'area',
+                        type: "area",
                         legend: {
-                            position: 'bottom'
-                        }
+                            position: "bottom",
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('dynamic visualization', () => {
+    .add("dynamic visualization", () => {
         return <DynamicVisualization />;
     })
-    .add('visualization with German number format', () => {
+    .add("visualization with German number format", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'column',
+                        type: "column",
                         separators: GERMAN_NUMBER_FORMAT,
                         dataLabels: {
-                            visible: true
-                        }
+                            visible: true,
+                        },
                     }}
                     onDataTooLarge={noop}
                 />,
                 600,
-                800
-            )
+                800,
+            ),
         );
     })
-    .add('visualization dual axes with two left measures, one right measure, one attribute', () => {
+    .add("visualization dual axes with two left measures, one right measure, one attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'column',
+                        type: "column",
                         legend: {
-                            position: 'top'
+                            position: "top",
                         },
                         secondary_yaxis: {
-                            measures: ['expectedMetric']
-                        }
+                            measures: ["expectedMetric"],
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization right axis with three right measures, one attribute', () => {
+    .add("visualization right axis with three right measures, one attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.barChartWith3MetricsAndViewByAttribute}
                     config={{
-                        type: 'column',
+                        type: "column",
                         legend: {
-                            position: 'top'
+                            position: "top",
                         },
                         secondary_yaxis: {
-                            rotation: '45',
-                            measures: ['lostMetric', 'wonMetric', 'expectedMetric']
-                        }
+                            rotation: "45",
+                            measures: ["lostMetric", "wonMetric", "expectedMetric"],
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     })
-    .add('visualization combo chart with 2 measures, one attribute', () => {
+    .add("visualization combo chart with 2 measures, one attribute", () => {
         return screenshotWrap(
             wrap(
                 <Visualization
                     {...fixtures.comboWithTwoMeasuresAndViewByAttribute}
                     config={{
-                        type: 'combo',
+                        type: "combo",
                         mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                         secondary_yaxis: {
-                            measures: ['wonMetric']
-                        }
+                            measures: ["wonMetric"],
+                        },
                     }}
                     onDataTooLarge={noop}
-                />
-            )
+                />,
+            ),
         );
     });

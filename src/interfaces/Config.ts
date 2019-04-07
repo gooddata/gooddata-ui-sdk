@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-import { ISeparators } from '@gooddata/numberjs';
-import { VisualizationObject } from '@gooddata/typings';
-import { IColorItem, IColor } from '@gooddata/gooddata-js';
-import { PositionType } from '../components/visualizations/typings/legend';
-import { VisType } from '../constants/visualizationTypes';
-import { IDataLabelsConfig } from '../interfaces/Config';
-import { IHeaderPredicate } from './HeaderPredicate';
-import { IMappingHeader } from './MappingHeader';
+import { ISeparators } from "@gooddata/numberjs";
+import { VisualizationObject } from "@gooddata/typings";
+import { IColorItem, IColor } from "@gooddata/gooddata-js";
+import { PositionType } from "../components/visualizations/typings/legend";
+import { VisType } from "../constants/visualizationTypes";
+import { IDataLabelsConfig } from "../interfaces/Config";
+import { IHeaderPredicate } from "./HeaderPredicate";
+import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from '../components/visualizations/utils/color';
+export { DEFAULT_COLOR_PALETTE } from "../components/visualizations/utils/color";
 
 export type IDataLabelsVisible = string | boolean;
 
@@ -16,12 +16,14 @@ export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
 }
 
-export interface IColorMapping { // sent to SDK
+export interface IColorMapping {
+    // sent to SDK
     predicate: IHeaderPredicate;
     color: IColorItem;
 }
 
-export interface IColorAssignment { // << send from SDK up
+export interface IColorAssignment {
+    // << send from SDK up
     headerItem: IMappingHeader;
     color: IColorItem;
 }

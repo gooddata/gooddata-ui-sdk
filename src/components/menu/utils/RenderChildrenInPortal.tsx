@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
     targetElement: Element;
@@ -13,7 +13,7 @@ export default class RenderChildrenInPortal extends React.Component<IRenderChild
     private constructor(props: IRenderChildrenInPortalProps) {
         super(props);
 
-        const wrapperEl = document.createElement('div');
+        const wrapperEl = document.createElement("div");
         this.portalContentWrapperEl = wrapperEl;
     }
 
@@ -30,9 +30,6 @@ export default class RenderChildrenInPortal extends React.Component<IRenderChild
     }
 
     public render() {
-        return ReactDOM.createPortal(
-            this.props.children,
-            this.portalContentWrapperEl
-        );
+        return ReactDOM.createPortal(this.props.children, this.portalContentWrapperEl);
     }
 }

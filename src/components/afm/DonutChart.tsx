@@ -1,16 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-export {
-    IDataSourceProviderProps
-};
+export { IDataSourceProviderProps };
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { DonutChart as CoreDonutChart } from '../core/DonutChart';
-import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions';
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { DonutChart as CoreDonutChart } from "../core/DonutChart";
+import { generateDefaultDimensionsForRoundChart } from "../../helpers/dimensions";
 
 /**
  * AFM DonutChart
@@ -20,5 +15,5 @@ import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions
 export const DonutChart = dataSourceProvider<ICommonChartProps>(
     CoreDonutChart,
     generateDefaultDimensionsForRoundChart,
-    'DonutChart'
+    "DonutChart",
 );

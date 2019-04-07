@@ -1,28 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import noop = require('lodash/noop');
+import * as React from "react";
+import noop = require("lodash/noop");
 
-import { Visualization } from '../../visualizations/Visualization';
+import { Visualization } from "../../visualizations/Visualization";
 
-import { IntlWrapper } from './IntlWrapper';
-import { ChartType } from '../../../constants/visualizationTypes';
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps
-} from './TranslationsProvider';
-import { IDataSourceProviderInjectedProps } from '../../afm/DataSourceProvider';
-import { fixEmptyHeaderItems } from './utils/fixEmptyHeaderItems';
+import { IntlWrapper } from "./IntlWrapper";
+import { ChartType } from "../../../constants/visualizationTypes";
+import { IntlTranslationsProvider, ITranslationsComponentProps } from "./TranslationsProvider";
+import { IDataSourceProviderInjectedProps } from "../../afm/DataSourceProvider";
+import { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultProps
-} from './VisualizationLoadingHOC';
-import { ChartPropTypes, Requireable } from '../../../proptypes/Chart';
-import { BaseVisualization } from './BaseVisualization';
-import { OnLegendReady } from '../../../interfaces/Events';
-import { getValidColorPalette } from '../../visualizations/utils/color';
-import { IChartConfig } from '../../../interfaces/Config';
+    commonDefaultProps,
+} from "./VisualizationLoadingHOC";
+import { ChartPropTypes, Requireable } from "../../../proptypes/Chart";
+import { BaseVisualization } from "./BaseVisualization";
+import { OnLegendReady } from "../../../interfaces/Events";
+import { getValidColorPalette } from "../../visualizations/utils/color";
+import { IChartConfig } from "../../../interfaces/Config";
 export { Requireable };
 
 export interface ICommonChartProps extends ICommonVisualizationProps {
@@ -45,22 +42,13 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
         onDataTooLarge: noop,
         onLegendReady: noop,
         config: {},
-        visualizationComponent: Visualization
+        visualizationComponent: Visualization,
     };
 
     public static propTypes = ChartPropTypes;
 
     public renderVisualization(): JSX.Element {
-        const {
-            afterRender,
-            height,
-            locale,
-            config,
-            type,
-            execution,
-            onDataTooLarge,
-            pushData
-        } = this.props;
+        const { afterRender, height, locale, config, type, execution, onDataTooLarge, pushData } = this.props;
 
         const colorPalette = getValidColorPalette(config);
 
@@ -72,14 +60,14 @@ export class StatelessBaseChart extends BaseVisualization<IBaseChartProps & ILoa
                     {(translationProps: ITranslationsComponentProps) => {
                         const fixedExecutionResult = fixEmptyHeaderItems(
                             execution.executionResult,
-                            translationProps.emptyHeaderString
+                            translationProps.emptyHeaderString,
                         );
 
                         return (
                             <this.props.visualizationComponent
                                 executionRequest={{
                                     afm: this.props.dataSource.getAfm(),
-                                    resultSpec: this.props.resultSpec
+                                    resultSpec: this.props.resultSpec,
                                 }}
                                 executionResponse={execution.executionResponse}
                                 executionResult={fixedExecutionResult}

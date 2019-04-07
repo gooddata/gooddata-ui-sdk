@@ -1,60 +1,59 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { shallow, mount } from 'enzyme';
+import * as React from "react";
+import { shallow, mount } from "enzyme";
 
-import HeaderCell from '../HeaderCell';
+import HeaderCell from "../HeaderCell";
 
-describe('HeaderCell renderer', () => {
-    it('should render text for the cell', () => {
+describe("HeaderCell renderer", () => {
+    it("should render text for the cell", () => {
         const component = shallow(<HeaderCell displayText="Header" />);
-        expect(component.text()).toEqual('Header');
+        expect(component.text()).toEqual("Header");
     });
 
-    describe('Sorting in HeaderCell', () => {
-        it('should render default sorting', () => {
+    describe("Sorting in HeaderCell", () => {
+        it("should render default sorting", () => {
             const component = mount(
-                <HeaderCell
-                    displayText="Header"
-                    enableSorting={true}
-                    defaultSortDirection={'asc'}
-                />);
-            const headerCellLabel = component.find('.s-header-cell-label');
+                <HeaderCell displayText="Header" enableSorting={true} defaultSortDirection={"asc"} />,
+            );
+            const headerCellLabel = component.find(".s-header-cell-label");
             expect(headerCellLabel).toHaveLength(1);
 
-            headerCellLabel.simulate('mouseEnter');
-            expect(component.state('currentSortDirection')).toEqual('asc');
-            expect(component.find('.s-sort-direction-arrow')).toHaveLength(1);
-            expect(component.find('.s-sorted-asc')).toHaveLength(1);
+            headerCellLabel.simulate("mouseEnter");
+            expect(component.state("currentSortDirection")).toEqual("asc");
+            expect(component.find(".s-sort-direction-arrow")).toHaveLength(1);
+            expect(component.find(".s-sorted-asc")).toHaveLength(1);
         });
 
-        it('should call onSortChaged when clicked on label', () => {
+        it("should call onSortChaged when clicked on label", () => {
             const onSortClick = jest.fn();
             const component = mount(
                 <HeaderCell
                     displayText="Header"
                     enableSorting={true}
-                    defaultSortDirection={'asc'}
+                    defaultSortDirection={"asc"}
                     onSortClick={onSortClick}
-                />);
-            const cellLabel = component.find('.s-header-cell-label');
+                />,
+            );
+            const cellLabel = component.find(".s-header-cell-label");
 
-            cellLabel.simulate('click');
-            expect(onSortClick).toHaveBeenCalledWith('asc');
+            cellLabel.simulate("click");
+            expect(onSortClick).toHaveBeenCalledWith("asc");
         });
 
-        it('should call onSortChaged with next sort direction', () => {
+        it("should call onSortChaged with next sort direction", () => {
             const onSortClick = jest.fn();
             const component = mount(
                 <HeaderCell
                     displayText="Header"
                     enableSorting={true}
-                    sortDirection={'asc'}
+                    sortDirection={"asc"}
                     onSortClick={onSortClick}
-                />);
-            const cellLabel = component.find('.s-header-cell-label');
+                />,
+            );
+            const cellLabel = component.find(".s-header-cell-label");
 
-            cellLabel.simulate('click');
-            expect(onSortClick).toHaveBeenCalledWith('desc');
+            cellLabel.simulate("click");
+            expect(onSortClick).toHaveBeenCalledWith("desc");
         });
     });
 });

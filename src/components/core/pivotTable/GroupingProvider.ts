@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import max = require('lodash/max');
-import { IGridRow } from '../../../interfaces/AGGrid';
-import { isMappingHeaderAttributeItem } from '../../../interfaces/MappingHeader';
+import max = require("lodash/max");
+import { IGridRow } from "../../../interfaces/AGGrid";
+import { isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
 
 interface IAttributesRowItemUris {
     [columnId: string]: string[];
@@ -21,8 +21,7 @@ export interface IGroupingProvider {
 
 class DefaultGroupingProvider implements IGroupingProvider {
     // tslint:disable-next-line:no-empty
-    public reset() {
-    }
+    public reset() {}
 
     public isGroupBoundary(_rowIndex: number) {
         return false;
@@ -33,8 +32,7 @@ class DefaultGroupingProvider implements IGroupingProvider {
     }
 
     // tslint:disable-next-line:no-empty
-    public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {
-    }
+    public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {}
 
     public isRepeatedValue(_columnId: string, _rowIndex: number) {
         return false;
@@ -66,8 +64,11 @@ class AttributeGroupingProvider implements IGroupingProvider {
     }
 
     public isGroupBoundary(rowIndex: number) {
-        return !!this.repetitionsCounts &&
-            (this.repetitionsCounts[rowIndex] === undefined || this.repetitionsCounts[rowIndex] < this.maxRepetitions);
+        return (
+            !!this.repetitionsCounts &&
+            (this.repetitionsCounts[rowIndex] === undefined ||
+                this.repetitionsCounts[rowIndex] < this.maxRepetitions)
+        );
     }
 
     public isColumnWithGrouping(columnId: string) {
@@ -75,7 +76,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
     }
 
     public processPage(pageRows: IGridRow[], rowOffset: number, columnIds: string[]) {
-        columnIds.forEach((columnId) => {
+        columnIds.forEach(columnId => {
             if (!this.itemUris[columnId]) {
                 this.itemUris[columnId] = [];
             }
@@ -97,7 +98,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
         this.maxRepetitions = 0;
         let previousColumnId: string = null;
 
-        Object.keys(this.itemUris).forEach((columnId) => {
+        Object.keys(this.itemUris).forEach(columnId => {
             const rowCount = this.itemUris[columnId].length;
             this.itemRepetitions[columnId] = Array(rowCount).fill(false);
             if (this.repetitionsCounts === null) {
@@ -107,7 +108,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
             this.updateAttributeColumn(
                 this.itemUris[columnId],
                 this.itemRepetitions[columnId],
-                previousColumnId !== null ? this.itemRepetitions[previousColumnId] : null
+                previousColumnId !== null ? this.itemRepetitions[previousColumnId] : null,
             );
 
             previousColumnId = columnId;
@@ -119,7 +120,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
     private updateAttributeColumn(
         itemUris: string[],
         itemRepetitions: boolean[],
-        previousAttributeItemRepetitions: boolean[]
+        previousAttributeItemRepetitions: boolean[],
     ) {
         let previousItemUri: string = null;
         itemUris.forEach((itemUri, rowIndex) => {

@@ -1,24 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import { AFM } from '@gooddata/typings';
-import { testUtils } from '@gooddata/js-utils';
+import * as React from "react";
+import { mount } from "enzyme";
+import { AFM } from "@gooddata/typings";
+import { testUtils } from "@gooddata/js-utils";
 import {
     dataSourceProvider,
     IDataSourceProviderProps,
-    IDataSourceProviderInjectedProps
-} from '../DataSourceProvider';
-import { Table } from '../../tests/mocks';
-import { getNativeTotals } from '../../visualizations/table/totals/utils';
+    IDataSourceProviderInjectedProps,
+} from "../DataSourceProvider";
+import { Table } from "../../tests/mocks";
+import { getNativeTotals } from "../../visualizations/table/totals/utils";
 
-describe('DataSourceProvider', () => {
-    const PROJECT_ID = 'projid';
+describe("DataSourceProvider", () => {
+    const PROJECT_ID = "projid";
     const defaultProps = {
         afm: {},
         projectId: PROJECT_ID,
-        resultSpec: {}
+        resultSpec: {},
     };
-    const COMPONENT_NAME = 'DummyNameInMocks';
+    const COMPONENT_NAME = "DummyNameInMocks";
 
     function generateDefaultDimensions(): AFM.IDimension[] {
         return [];
@@ -26,16 +26,19 @@ describe('DataSourceProvider', () => {
     function createComponent(
         component: any,
         props: IDataSourceProviderProps = defaultProps,
-        exportTitle?: string
+        exportTitle?: string,
     ) {
-        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, COMPONENT_NAME, exportTitle);
-
-        return mount(
-            <WrappedComponent {...props} />
+        const WrappedComponent = dataSourceProvider(
+            component,
+            generateDefaultDimensions,
+            COMPONENT_NAME,
+            exportTitle,
         );
+
+        return mount(<WrappedComponent {...props} />);
     }
 
-    it('should prepare datasource', () => {
+    it("should prepare datasource", () => {
         const wrapper = createComponent(Table);
 
         return testUtils.delay().then(() => {
@@ -48,7 +51,7 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should pass exportTitle and projectId to InnerComponent', () => {
+    it("should pass exportTitle and projectId to InnerComponent", () => {
         const wrapper = createComponent(Table);
 
         return testUtils.delay().then(() => {
@@ -60,8 +63,8 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should pass correct exportTitle to InnerComponent', async () => {
-        const customTitle = 'CustomTitle';
+    it("should pass correct exportTitle to InnerComponent", async () => {
+        const customTitle = "CustomTitle";
         const wrapper = createComponent(Table, undefined, customTitle);
 
         await testUtils.delay();
@@ -71,12 +74,12 @@ describe('DataSourceProvider', () => {
         expect(TableElement.props.exportTitle).toEqual(customTitle);
     });
 
-    it('should recreate dataSource when projects differ', () => {
+    it("should recreate dataSource when projects differ", () => {
         const wrapper = createComponent(Table);
         const newProps: IDataSourceProviderProps = {
             afm: {},
-            projectId: 'projid2',
-            resultSpec: {}
+            projectId: "projid2",
+            resultSpec: {},
         };
         return testUtils.delay().then(() => {
             wrapper.update();
@@ -94,13 +97,13 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should recreate datasource when afm changes', () => {
+    it("should recreate datasource when afm changes", () => {
         const wrapper = createComponent(Table);
 
         const newProps: IDataSourceProviderProps = {
             afm: { measures: [], attributes: [] },
-            projectId: 'projid',
-            resultSpec: {}
+            projectId: "projid",
+            resultSpec: {},
         };
 
         return testUtils.delay().then(() => {
@@ -119,31 +122,31 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should recreate dataSource only once when all props change', () => {
+    it("should recreate dataSource only once when all props change", () => {
         const wrapper = createComponent(Table);
 
         const newProps: IDataSourceProviderProps = {
             afm: {
                 measures: [],
-                attributes: []
+                attributes: [],
             },
-            projectId: 'projid2',
+            projectId: "projid2",
             resultSpec: {
                 sorts: [
                     {
                         attributeSortItem: {
-                            attributeIdentifier: 'a1',
-                            direction: 'desc'
-                        }
-                    }
-                ]
-            }
+                            attributeIdentifier: "a1",
+                            direction: "desc",
+                        },
+                    },
+                ],
+            },
         };
 
         return testUtils.delay().then(() => {
             wrapper.update();
             const instance: any = wrapper.instance();
-            const prepareDataSourceSpy = jest.spyOn(instance, 'prepareDataSource');
+            const prepareDataSourceSpy = jest.spyOn(instance, "prepareDataSource");
             wrapper.setProps(newProps);
             return testUtils.delay().then(() => {
                 wrapper.update();
@@ -153,36 +156,44 @@ describe('DataSourceProvider', () => {
     });
 
     const sumTotal: AFM.ITotalItem = {
-        attributeIdentifier: 'a1',
-        measureIdentifier: 'm1',
-        type: 'sum'
+        attributeIdentifier: "a1",
+        measureIdentifier: "m1",
+        type: "sum",
     };
 
     const nativeTotal: AFM.ITotalItem = {
-        attributeIdentifier: 'a1',
-        measureIdentifier: 'm1',
-        type: 'nat'
+        attributeIdentifier: "a1",
+        measureIdentifier: "m1",
+        type: "nat",
     };
 
-    it('should recreate dataSource only when native totals are updated', () => {
+    it("should recreate dataSource only when native totals are updated", () => {
         const wrapper = createComponent(Table);
 
         return testUtils.delay().then(() => {
             wrapper.update();
             const originalDataSource = wrapper.find(Table).props().dataSource;
             // Try updating with a new native total and sum total
-            wrapper.find(Table).props().updateTotals([
-                nativeTotal,
-                sumTotal
-            ]);
+            wrapper
+                .find(Table)
+                .props()
+                .updateTotals([nativeTotal, sumTotal]);
             return testUtils.delay().then(() => {
                 wrapper.update();
                 // expected to update AFM
-                expect(wrapper.find(Table).props().dataSource.getAfm()).toEqual({
-                    nativeTotals: [{
-                        attributeIdentifiers: [],
-                        measureIdentifier: 'm1'
-                    }]});
+                expect(
+                    wrapper
+                        .find(Table)
+                        .props()
+                        .dataSource.getAfm(),
+                ).toEqual({
+                    nativeTotals: [
+                        {
+                            attributeIdentifiers: [],
+                            measureIdentifier: "m1",
+                        },
+                    ],
+                });
                 const nextDataSource = wrapper.find(Table).props().dataSource;
                 // expected to update dataSource
                 expect(nextDataSource).not.toBe(originalDataSource);
@@ -190,21 +201,24 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should NOT recreate dataSource when updated with existing native totals', () => {
+    it("should NOT recreate dataSource when updated with existing native totals", () => {
         const wrapper = createComponent(Table, {
             ...defaultProps,
             afm: {
                 ...defaultProps.afm,
-                nativeTotals: getNativeTotals([nativeTotal])
+                nativeTotals: getNativeTotals([nativeTotal]),
             },
-            totals: [nativeTotal, sumTotal]
+            totals: [nativeTotal, sumTotal],
         });
 
         return testUtils.delay().then(() => {
             wrapper.update();
             const originalDataSource = wrapper.find(Table).props().dataSource;
             // Try updateTotals with the same native total
-            wrapper.find(Table).props().updateTotals([nativeTotal]);
+            wrapper
+                .find(Table)
+                .props()
+                .updateTotals([nativeTotal]);
             return testUtils.delay().then(() => {
                 wrapper.update();
                 const nextDataSource = wrapper.find(Table).props().dataSource;
@@ -214,7 +228,7 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should NOT recreate dataSource when updated without native totals', () => {
+    it("should NOT recreate dataSource when updated without native totals", () => {
         const wrapper = createComponent(Table);
 
         return testUtils.delay().then(() => {
@@ -222,7 +236,10 @@ describe('DataSourceProvider', () => {
             const originalDataSource = wrapper.find(Table).props().dataSource;
 
             // Try updateTotals without native total
-            wrapper.find(Table).props().updateTotals([sumTotal]);
+            wrapper
+                .find(Table)
+                .props()
+                .updateTotals([sumTotal]);
             return testUtils.delay().then(() => {
                 wrapper.update();
                 const nextDataSource = wrapper.find(Table).props().dataSource;
@@ -232,7 +249,7 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should not render component if dataSource is missing', () => {
+    it("should not render component if dataSource is missing", () => {
         const wrapper = createComponent(Table);
 
         return testUtils.delay().then(() => {
@@ -245,8 +262,8 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should provide modified resultSpec to InnerComponent', () => {
-        const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
+    it("should provide modified resultSpec to InnerComponent", () => {
+        const defaultDimension = () => [{ itemIdentifiers: ["x"] }];
         const WrappedTable = dataSourceProvider(Table, defaultDimension, COMPONENT_NAME);
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
@@ -256,32 +273,34 @@ describe('DataSourceProvider', () => {
         });
     });
 
-    it('should use componentName in telemetry', () => {
+    it("should use componentName in telemetry", () => {
         const sdk: any = {
             clone: jest.fn(() => sdk),
             config: {
                 setJsPackage: jest.fn(),
-                setRequestHeader: jest.fn()
+                setRequestHeader: jest.fn(),
             },
             execution: {
-                getPartialExecutionResult: jest.fn()
-            }
+                getPartialExecutionResult: jest.fn(),
+            },
         };
         const defaultProps = {
             afm: {},
-            projectId: 'projid',
+            projectId: "projid",
             resultSpec: {},
-            sdk
+            sdk,
         };
-        const defaultDimension = () => [{ itemIdentifiers: ['x'] }];
+        const defaultDimension = () => [{ itemIdentifiers: ["x"] }];
         const WrappedTable = dataSourceProvider(Table, defaultDimension, COMPONENT_NAME);
         mount(<WrappedTable {...defaultProps} />);
 
         expect(sdk.clone).toHaveBeenCalledTimes(2);
-        expect(sdk.config.setJsPackage.mock.calls[0][0]).toEqual('@gooddata/react-components');
-        expect(sdk.config.setJsPackage.mock.calls[1][0]).toEqual('@gooddata/data-layer');
-        expect(sdk.config.setRequestHeader.mock.calls[0]).toEqual(['X-GDC-JS-SDK-COMP', COMPONENT_NAME]);
-        expect(sdk.config.setRequestHeader.mock.calls[1])
-            .toEqual(['X-GDC-JS-SDK-COMP-PROPS', 'afm,projectId,resultSpec,sdk']);
+        expect(sdk.config.setJsPackage.mock.calls[0][0]).toEqual("@gooddata/react-components");
+        expect(sdk.config.setJsPackage.mock.calls[1][0]).toEqual("@gooddata/data-layer");
+        expect(sdk.config.setRequestHeader.mock.calls[0]).toEqual(["X-GDC-JS-SDK-COMP", COMPONENT_NAME]);
+        expect(sdk.config.setRequestHeader.mock.calls[1]).toEqual([
+            "X-GDC-JS-SDK-COMP-PROPS",
+            "afm,projectId,resultSpec,sdk",
+        ]);
     });
 });

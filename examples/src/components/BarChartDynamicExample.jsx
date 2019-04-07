@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { BarChart, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { BarChart, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     totalSalesIdentifier,
     locationResortIdentifier,
     menuCategoryAttributeDFIdentifier,
-    projectId
-} from '../utils/fixtures';
-import { CUSTOM_COLOR_PALETTE } from '../utils/colors';
+    projectId,
+} from "../utils/fixtures";
+import { CUSTOM_COLOR_PALETTE } from "../utils/colors";
 
 const defaultProperties = {};
 
@@ -20,46 +20,41 @@ export class BarChartDynamicExample extends Component {
 
         this.state = {
             config: defaultProperties,
-            customPaletteUsed: false
+            customPaletteUsed: false,
         };
         this.onPaletteChange = this.onPaletteChange.bind(this);
     }
 
     onPaletteChange() {
-        const {
-            config: currentConfig,
-            customPaletteUsed
-        } = this.state;
+        const { config: currentConfig, customPaletteUsed } = this.state;
         const colorPaletteProp = {
-            colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE
+            colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
         };
         this.setState({
             config: {
                 ...currentConfig,
-                ...colorPaletteProp
+                ...colorPaletteProp,
             },
-            customPaletteUsed: !customPaletteUsed
+            customPaletteUsed: !customPaletteUsed,
         });
     }
 
     render() {
-        const {
-            config
-        } = this.state;
+        const { config } = this.state;
 
-        const amount = Model.measure(totalSalesIdentifier).format('#,##0').alias('$ Total Sales');
+        const amount = Model.measure(totalSalesIdentifier)
+            .format("#,##0")
+            .alias("$ Total Sales");
 
-        const locationResort = Model.attribute(locationResortIdentifier)
-            .localIdentifier('location_resort');
+        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("location_resort");
 
-        const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier)
-            .localIdentifier(menuCategoryAttributeDFIdentifier);
+        const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
+            menuCategoryAttributeDFIdentifier,
+        );
 
         return (
             <div>
-                <button onClick={this.onPaletteChange}>
-                    Change palette
-                </button>
+                <button onClick={this.onPaletteChange}>Change palette</button>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
                         projectId={projectId}

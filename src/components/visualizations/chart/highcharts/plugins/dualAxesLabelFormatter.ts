@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import head = require('lodash/head');
-import last = require('lodash/last');
-import { formatAsPercent, isInPercent } from '../customConfiguration';
+import get = require("lodash/get");
+import head = require("lodash/head");
+import last = require("lodash/last");
+import { formatAsPercent, isInPercent } from "../customConfiguration";
 
 const DEFAULT_LIMIT_LENGTH = 4; // length of '0.00' is 4
 const DEFAULT_PADDING = 2;
@@ -15,7 +15,7 @@ const DEFAULT_FRACTION_DIGITS = 16;
  */
 function getLimitLength(value: number): number {
     const valueStr = convertNumberToString(value);
-    const isFloat = valueStr.indexOf('.') > 0;
+    const isFloat = valueStr.indexOf(".") > 0;
     const length = isFloat ? valueStr.length : valueStr.length + 1;
     return length + DEFAULT_PADDING;
 }
@@ -62,7 +62,7 @@ export function formatValueInShallowRange(value: number, min: number, max: numbe
 }
 
 export function removeDecimal(value: string): string {
-    const decimalPos = value.indexOf('.');
+    const decimalPos = value.indexOf(".");
     if (decimalPos === -1) {
         return value;
     }
@@ -84,8 +84,8 @@ export function roundNumber(value: string, min: number, max: number): number {
     }
 
     const zeros = Array.apply(null, { length: zeroLength - 1 }).reduce((result: string) => {
-        return result + '0';
-    }, '');
+        return result + "0";
+    }, "");
     const numberWithZero = parseInt(`1${zeros}`, 10);
 
     return Math.round(valueNum / numberWithZero) * numberWithZero;
@@ -100,7 +100,8 @@ function getZeroLength(min: number, max: number): number {
         return 0;
     }
 
-    if (length % 3 === 0) { // 100000 -> length = 6, should minus one unit
+    if (length % 3 === 0) {
+        // 100000 -> length = 6, should minus one unit
         length -= 1;
     }
 
@@ -119,22 +120,22 @@ function formatLabel(value: number, tickPositions: number[]): number {
 }
 
 export function dualAxesLabelFormatter() {
-    const tickPositions: number[] = get(this, 'axis.tickPositions', []);
+    const tickPositions: number[] = get(this, "axis.tickPositions", []);
     this.value = formatLabel(this.value, tickPositions);
 
-    const stackMeasuresToPercent = get(this, 'chart.userOptions.stackMeasuresToPercent', false);
-    const seriesInAxis = get(this, 'axis.series', []).length;
+    const stackMeasuresToPercent = get(this, "chart.userOptions.stackMeasuresToPercent", false);
+    const seriesInAxis = get(this, "axis.series", []).length;
     if (stackMeasuresToPercent && seriesInAxis > 1) {
-        const opposite = get(this, 'axis.opposite', false);
+        const opposite = get(this, "axis.opposite", false);
         if (opposite === false) {
             return formatAsPercent.call(this, 1);
         }
     }
 
-    const format = get(this, 'axis.userOptions.defaultFormat', '');
+    const format = get(this, "axis.userOptions.defaultFormat", "");
     const isPercent = isInPercent(format);
 
-    return isPercent ?
-        formatAsPercent.call(this) : // 100%
-        this.axis.defaultLabelFormatter.call(this); // 1000 -> 1k, 1500000 -> 1.5M
+    return isPercent
+        ? formatAsPercent.call(this) // 100%
+        : this.axis.defaultLabelFormatter.call(this); // 1000 -> 1k, 1500000 -> 1.5M
 }

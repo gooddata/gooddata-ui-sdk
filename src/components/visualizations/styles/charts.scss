@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-@import '~@gooddata/goodstrap/lib/Bubble/styles/mixins';
-@import '~@gooddata/goodstrap/lib/core/styles/variables';
-@import '~@gooddata/goodstrap/lib/core/styles/mixins';
-@import 'variables';
+@import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/goodstrap/lib/core/styles/mixins";
+@import "variables";
 
-$font-stack-roman: 'Avenir', 'Helvetica Neue', arial, sans-serif;
+$font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
 $legend-paging-background: #eee;
 $legend-right-width: 190px;
 $paging-button-small-size: 22px;
@@ -24,7 +24,8 @@ $paging-button-small-size: 22px;
     }
 
     &.non-responsive-legend {
-        .viz-react-highchart-wrap { // Hack for Safari, so highchart won't overflow
+        .viz-react-highchart-wrap {
+            // Hack for Safari, so highchart won't overflow
             min-height: 0;
         }
     }
@@ -35,7 +36,8 @@ $paging-button-small-size: 22px;
     min-width: 0; // Hack for FF, so flexbox can shrink
 }
 
-.highcharts-container { // This makes highcharts resizable and shrinkable!
+.highcharts-container {
+    // This makes highcharts resizable and shrinkable!
     // stylelint-disable-next-line declaration-no-important
     width: 100% !important;
 
@@ -52,5 +54,5 @@ $paging-button-small-size: 22px;
     }
 }
 
-@import './legend.scss';
-@import './tooltip.scss';
+@import "./legend.scss";
+@import "./tooltip.scss";

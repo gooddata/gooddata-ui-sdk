@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution, AFM } from '@gooddata/typings';
-import { CSSProperties } from 'react';
+import { Execution, AFM } from "@gooddata/typings";
+import { CSSProperties } from "react";
 
-export interface IHeadlineDataItem  {
+export interface IHeadlineDataItem {
     localIdentifier: AFM.Identifier;
     title?: string;
     value: string;

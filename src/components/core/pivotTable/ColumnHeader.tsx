@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { IHeaderParams } from 'ag-grid';
-import { AFM, Execution } from '@gooddata/typings';
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import { IHeaderParams } from "ag-grid";
+import { AFM, Execution } from "@gooddata/typings";
 
-import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from '../../../helpers/agGrid';
-import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
-import { IHeaderReactComp } from 'ag-grid-react/lib/interfaces';
-import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from './HeaderCell';
+import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "../../../helpers/agGrid";
+import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
+import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
 
 export interface IColumnHeaderProps extends IHeaderParams {
     menu?: IMenu;
@@ -21,10 +21,11 @@ export interface IColumnHeaderState {
     sorting?: AFM.SortDirection;
 }
 
-export const ASC: AFM.SortDirection = 'asc';
-export const DESC: AFM.SortDirection = 'desc';
+export const ASC: AFM.SortDirection = "asc";
+export const DESC: AFM.SortDirection = "desc";
 
-class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState> implements IHeaderReactComp {
+class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState>
+    implements IHeaderReactComp {
     public static propTypes = {
         menu: PropTypes.object,
         getColumnTotals: PropTypes.func,
@@ -36,39 +37,39 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         column: PropTypes.any,
         reactContainer: PropTypes.any,
         showColumnMenu: PropTypes.func,
-        setSort: PropTypes.func
+        setSort: PropTypes.func,
     };
 
     public state: IColumnHeaderState = {
-        sorting: null
+        sorting: null,
     };
 
     public componentWillMount() {
-        this.props.column.addEventListener('sortChanged', this.getCurrentSortDirection);
+        this.props.column.addEventListener("sortChanged", this.getCurrentSortDirection);
         this.setState({
-            sorting: this.props.column.getSort() as AFM.SortDirection
+            sorting: this.props.column.getSort() as AFM.SortDirection,
         });
     }
 
     public componentWillUnmount() {
-        this.props.column.removeEventListener('sortChanged', this.getCurrentSortDirection);
+        this.props.column.removeEventListener("sortChanged", this.getCurrentSortDirection);
     }
 
     public getCurrentSortDirection = () => {
         const currentSort: AFM.SortDirection = this.props.column.getSort() as AFM.SortDirection;
         this.setState({
-            sorting: currentSort
+            sorting: currentSort,
         });
-    }
+    };
 
     public getDefaultSortDirection(): AFM.SortDirection {
-        return (this.getFieldType() === FIELD_TYPE_ATTRIBUTE) ? ASC : DESC;
+        return this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? ASC : DESC;
     }
 
     public onSortRequested = (sortDir: AFM.SortDirection) => {
         const multiSort = false; // Enable support for multisort with CMD key with 'event.shiftKey';
         this.props.setSort(sortDir, multiSort);
-    }
+    };
 
     public render() {
         const { displayName, enableSorting, menu, column } = this.props;

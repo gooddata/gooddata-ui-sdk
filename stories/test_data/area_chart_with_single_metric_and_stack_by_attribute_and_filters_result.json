@@ -1,23 +1,10 @@
 {
     "executionResult": {
-        "data": [
-            [
-                "33920"
-            ]
-        ],
+        "data": [["33920"]],
         "paging": {
-            "count": [
-                1,
-                1
-            ],
-            "offset": [
-                0,
-                0
-            ],
-            "total": [
-                1,
-                1
-            ]
+            "count": [1, 1],
+            "offset": [0, 0],
+            "total": [1, 1]
         },
         "headerItems": [
             [

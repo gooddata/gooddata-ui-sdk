@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 
-import React, { Component } from 'react';
-import { ColumnChart, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { ColumnChart, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
-import { totalSalesIdentifier, locationCityDisplayFormIdentifier, projectId } from '../utils/fixtures';
+import { totalSalesIdentifier, locationCityDisplayFormIdentifier, projectId } from "../utils/fixtures";
 
 export class AttributeSortingExample extends Component {
     render() {
@@ -14,11 +14,10 @@ export class AttributeSortingExample extends Component {
                 <ColumnChart
                     projectId={projectId}
                     measures={[Model.measure(totalSalesIdentifier)]}
-                    viewBy={
-                        Model.attribute(locationCityDisplayFormIdentifier)
-                            .localIdentifier(locationCityDisplayFormIdentifier)
-                    }
-                    sortBy={[Model.attributeSortItem(locationCityDisplayFormIdentifier, 'desc')]}
+                    viewBy={Model.attribute(locationCityDisplayFormIdentifier).localIdentifier(
+                        locationCityDisplayFormIdentifier,
+                    )}
+                    sortBy={[Model.attributeSortItem(locationCityDisplayFormIdentifier, "desc")]}
                 />
             </div>
         );

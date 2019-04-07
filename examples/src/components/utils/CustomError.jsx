@@ -1,22 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 export const CustomError = ({ message, height }) => (
     <div
         className="s-error"
         style={{
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignContent: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'normal',
-            lineHeight: 'normal',
-            height
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "center",
+            justifyContent: "center",
+            whiteSpace: "normal",
+            lineHeight: "normal",
+            height,
         }}
     >
         <div
@@ -24,7 +24,7 @@ export const CustomError = ({ message, height }) => (
             style={{
                 margin: 0,
                 padding: 20,
-                display: 'block'
+                display: "block",
             }}
         >
             <div className="gd-message-text">
@@ -35,10 +35,10 @@ export const CustomError = ({ message, height }) => (
 );
 CustomError.propTypes = {
     message: PropTypes.string.isRequired,
-    height: PropTypes.any
+    height: PropTypes.any,
 };
 CustomError.defaultProps = {
-    height: undefined
+    height: undefined,
 };
 
 export default CustomError;

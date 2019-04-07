@@ -1,67 +1,67 @@
 {
-  "measures": {
-    "Amount [BOP]": {
-      "identifier": "aagV61RmaPTt",
-      "tags": ""
-    },
-    "Amount [Max]": {
-      "identifier": "asFfXEinfJUl",
-      "tags": ""
-    }
-  },
-  "attributes": {
-    "Account": {
-      "identifier": "attr.account.id",
-      "tags": "",
-      "displayForms": {
-        "Account Name": "label.account.id.name",
-        "Account": "label.account.id",
-        "Account Url": "label.account.id.url"
-      }
-    },
-    "Product": {
-      "identifier": "attr.product.id",
-      "tags": "",
-      "displayForms": {
-        "Product Name": "label.product.id.name",
-        "Product": "label.product.id"
-      }
-    }
-  },
-  "visualizations": {
-    "Revenue by Product (%)": {
-      "identifier": "aan1J9TueFZI",
-      "tags": ""
-    },
-    "Win Rate by Year": {
-      "identifier": "aaB3qSo3gDMP",
-      "tags": ""
-    }
-  },
-  "dateDataSets": {
-    "Date (Timeline)": {
-      "identifier": "timeline.dataset.dt",
-      "tags": "",
-      "attributes": {
-        "Month/Year (Timeline)": {
-          "identifier": "timeline.month",
-          "tags": "date month",
-          "displayForms": {
-            "Short (Jan 2010) (Timeline)": {
-              "identifier": "timeline.act81lMifn6q",
-              "tags": ""
-            },
-            "Long (January 2010) (Timeline)": {
-              "identifier": "timeline.acx81lMifn6q",
-              "tags": ""
-            },
-            "Number (1/2010) (Timeline)": {
-              "identifier": "timeline.acv81lMifn6q",
-              "tags": ""
-            }
-          }
+    "measures": {
+        "Amount [BOP]": {
+            "identifier": "aagV61RmaPTt",
+            "tags": ""
+        },
+        "Amount [Max]": {
+            "identifier": "asFfXEinfJUl",
+            "tags": ""
         }
-      }
+    },
+    "attributes": {
+        "Account": {
+            "identifier": "attr.account.id",
+            "tags": "",
+            "displayForms": {
+                "Account Name": "label.account.id.name",
+                "Account": "label.account.id",
+                "Account Url": "label.account.id.url"
+            }
+        },
+        "Product": {
+            "identifier": "attr.product.id",
+            "tags": "",
+            "displayForms": {
+                "Product Name": "label.product.id.name",
+                "Product": "label.product.id"
+            }
+        }
+    },
+    "visualizations": {
+        "Revenue by Product (%)": {
+            "identifier": "aan1J9TueFZI",
+            "tags": ""
+        },
+        "Win Rate by Year": {
+            "identifier": "aaB3qSo3gDMP",
+            "tags": ""
+        }
+    },
+    "dateDataSets": {
+        "Date (Timeline)": {
+            "identifier": "timeline.dataset.dt",
+            "tags": "",
+            "attributes": {
+                "Month/Year (Timeline)": {
+                    "identifier": "timeline.month",
+                    "tags": "date month",
+                    "displayForms": {
+                        "Short (Jan 2010) (Timeline)": {
+                            "identifier": "timeline.act81lMifn6q",
+                            "tags": ""
+                        },
+                        "Long (January 2010) (Timeline)": {
+                            "identifier": "timeline.acx81lMifn6q",
+                            "tags": ""
+                        },
+                        "Number (1/2010) (Timeline)": {
+                            "identifier": "timeline.acv81lMifn6q",
+                            "tags": ""
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 }

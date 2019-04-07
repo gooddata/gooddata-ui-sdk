@@ -1,12 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
-import ExampleWithSource from '../components/utils/ExampleWithSource';
+import React from "react";
+import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import BarChartDynamicExample from '../components/BarChartDynamicExample';
-import BarChartDynamicExampleSRC from '!raw-loader!../components/BarChartDynamicExample'; // eslint-disable-line
-import PieChartColorMappingExample from '../components/PieChartColorMappingExample';
-import PieChartColorMappingExampleSRC from '!raw-loader!../components/PieChartColorMappingExample'; // eslint-disable-line
-
+import BarChartDynamicExample from "../components/BarChartDynamicExample";
+import BarChartDynamicExampleSRC from "!raw-loader!../components/BarChartDynamicExample"; // eslint-disable-line
+import PieChartColorMappingExample from "../components/PieChartColorMappingExample";
+import PieChartColorMappingExampleSRC from "!raw-loader!../components/PieChartColorMappingExample"; // eslint-disable-line
 
 export const BarChartDynamic = () => (
     <div>

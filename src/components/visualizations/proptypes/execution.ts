@@ -1,31 +1,31 @@
 // (C) 2007-2018 GoodData Corporation
-import * as PropTypes from 'prop-types';
+import * as PropTypes from "prop-types";
 
 const identifierPropTypes = PropTypes.string;
 
 const objUriQualifierPropTypes = {
-    identifier: PropTypes.string.isRequired
+    identifier: PropTypes.string.isRequired,
 };
 
 const objIdentifierQualifierPropTypes = {
-    uri: PropTypes.string.isRequired
+    uri: PropTypes.string.isRequired,
 };
 
 const objQualifierPropTypes = PropTypes.oneOfType([
     PropTypes.shape(objUriQualifierPropTypes),
-    PropTypes.shape(objIdentifierQualifierPropTypes)
+    PropTypes.shape(objIdentifierQualifierPropTypes),
 ]);
 
 const expressionFilterPropTypes = {
-    value: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired,
 };
 
 const absoluteDateFilterPropTypes = {
     absoluteDateFilter: PropTypes.shape({
         dataSet: objQualifierPropTypes.isRequired,
         from: PropTypes.string.isRequired,
-        to: PropTypes.string.isRequired
-    }).isRequired
+        to: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 const relativeDateFilterPropTypes = {
@@ -33,91 +33,88 @@ const relativeDateFilterPropTypes = {
         dataSet: objQualifierPropTypes.isRequired,
         granularity: PropTypes.string.isRequired,
         from: PropTypes.number.isRequired,
-        to: PropTypes.number.isRequired
-    }).isRequired
+        to: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 const dateFilterItemPropTypes = PropTypes.oneOfType([
     PropTypes.shape(absoluteDateFilterPropTypes),
-    PropTypes.shape(relativeDateFilterPropTypes)
+    PropTypes.shape(relativeDateFilterPropTypes),
 ]);
 
 const positiveAttributeFilterPropTypes = {
     positiveAttributeFilter: PropTypes.shape({
         displayForm: objQualifierPropTypes.isRequired,
-        in: PropTypes.arrayOf(PropTypes.string).isRequired
-    }).isRequired
+        in: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
 };
 
 const negativeAttributeFilterPropTypes = {
     negativeAttributeFilter: PropTypes.shape({
         displayForm: objQualifierPropTypes.isRequired,
-        notIn: PropTypes.arrayOf(PropTypes.string).isRequired
-    }).isRequired
+        notIn: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
 };
 
 const attributeFilterItemPropTypes = PropTypes.oneOfType([
     PropTypes.shape(positiveAttributeFilterPropTypes),
-    PropTypes.shape(negativeAttributeFilterPropTypes)
+    PropTypes.shape(negativeAttributeFilterPropTypes),
 ]);
 
-const filterItemPropTypes = PropTypes.oneOfType([
-    dateFilterItemPropTypes,
-    attributeFilterItemPropTypes
-]);
+const filterItemPropTypes = PropTypes.oneOfType([dateFilterItemPropTypes, attributeFilterItemPropTypes]);
 
 const compatibilityFilterPropTypes = PropTypes.oneOfType([
     PropTypes.shape(expressionFilterPropTypes),
-    filterItemPropTypes
+    filterItemPropTypes,
 ]);
 
 const attributePropTypes = {
     localIdentifier: identifierPropTypes.isRequired,
     displayForm: objQualifierPropTypes.isRequired,
-    alias: PropTypes.string
+    alias: PropTypes.string,
 };
 
 const simpleMeasurePropTypes = {
     item: objQualifierPropTypes.isRequired,
-    aggregation: PropTypes.oneOf(['sum', 'count', 'avg', 'min', 'max', 'median', 'runsum']),
+    aggregation: PropTypes.oneOf(["sum", "count", "avg", "min", "max", "median", "runsum"]),
     filters: PropTypes.arrayOf(filterItemPropTypes),
-    computeRatio: PropTypes.bool
+    computeRatio: PropTypes.bool,
 };
 
 const simpleMeasureDefinitionPropTypes = {
-    measure: PropTypes.shape(simpleMeasurePropTypes).isRequired
+    measure: PropTypes.shape(simpleMeasurePropTypes).isRequired,
 };
 
 const popMeasurePropTypes = {
     measureIdentifier: identifierPropTypes.isRequired,
-    popAttribute: objQualifierPropTypes.isRequired
+    popAttribute: objQualifierPropTypes.isRequired,
 };
 
 const popMeasureDefinitionPropTypes = {
-    popMeasure: PropTypes.shape(popMeasurePropTypes).isRequired
+    popMeasure: PropTypes.shape(popMeasurePropTypes).isRequired,
 };
 
 const dateDataSetsPropTypes = {
     dataSet: objQualifierPropTypes.isRequired,
-    periodsAgo: PropTypes.number
+    periodsAgo: PropTypes.number,
 };
 
 const previousPeriodMeasurePropTypes = {
     measureIdentifier: identifierPropTypes.isRequired,
-    dateDataSets: PropTypes.arrayOf(PropTypes.shape(dateDataSetsPropTypes)).isRequired
+    dateDataSets: PropTypes.arrayOf(PropTypes.shape(dateDataSetsPropTypes)).isRequired,
 };
 
 const previousPeriodMeasureDefinitionPropTypes = {
-    previousPeriodMeasure: PropTypes.shape(previousPeriodMeasurePropTypes).isRequired
+    previousPeriodMeasure: PropTypes.shape(previousPeriodMeasurePropTypes).isRequired,
 };
 
 const arithmeticMeasurePropTypes = {
     measureIdentifiers: PropTypes.arrayOf(identifierPropTypes).isRequired,
-    operator: PropTypes.oneOf(['sum', 'difference', 'multiplication', 'ratio', 'change']).isRequired
+    operator: PropTypes.oneOf(["sum", "difference", "multiplication", "ratio", "change"]).isRequired,
 };
 
 const arithmeticMeasureDefinitionPropTypes = {
-    arithmeticMeasure: PropTypes.shape(arithmeticMeasurePropTypes).isRequired
+    arithmeticMeasure: PropTypes.shape(arithmeticMeasurePropTypes).isRequired,
 };
 
 const measurePropTypes = {
@@ -126,15 +123,15 @@ const measurePropTypes = {
         PropTypes.shape(simpleMeasureDefinitionPropTypes),
         PropTypes.shape(popMeasureDefinitionPropTypes),
         PropTypes.shape(previousPeriodMeasureDefinitionPropTypes),
-        PropTypes.shape(arithmeticMeasureDefinitionPropTypes)
+        PropTypes.shape(arithmeticMeasureDefinitionPropTypes),
     ]).isRequired,
     alias: PropTypes.string,
-    format: PropTypes.string
+    format: PropTypes.string,
 };
 
 const nativeTotalItemPropTypes = {
     measureIdentifier: identifierPropTypes.isRequired,
-    attributeIdentifiers: PropTypes.arrayOf(identifierPropTypes).isRequired
+    attributeIdentifiers: PropTypes.arrayOf(identifierPropTypes).isRequired,
 };
 
 export const FiltersPropTypesShape = PropTypes.arrayOf(compatibilityFilterPropTypes);
@@ -143,64 +140,64 @@ const afmPropTypes = {
     attributes: PropTypes.arrayOf(PropTypes.shape(attributePropTypes)),
     measures: PropTypes.arrayOf(PropTypes.shape(measurePropTypes)),
     filters: FiltersPropTypesShape,
-    nativeTotals: PropTypes.arrayOf(PropTypes.shape(nativeTotalItemPropTypes))
+    nativeTotals: PropTypes.arrayOf(PropTypes.shape(nativeTotalItemPropTypes)),
 };
 
-const totalTypePropTypes = PropTypes.oneOf(['sum', 'avg', 'max', 'min', 'nat', 'med']);
+const totalTypePropTypes = PropTypes.oneOf(["sum", "avg", "max", "min", "nat", "med"]);
 
 const totalItemPropTypes = {
     measureIdentifier: identifierPropTypes.isRequired,
     type: totalTypePropTypes.isRequired,
-    attributeIdentifier: identifierPropTypes.isRequired
+    attributeIdentifier: identifierPropTypes.isRequired,
 };
 
 const dimensionPropTypes = {
     itemIdentifiers: PropTypes.arrayOf(identifierPropTypes).isRequired,
-    totals: PropTypes.arrayOf(PropTypes.shape(totalItemPropTypes))
+    totals: PropTypes.arrayOf(PropTypes.shape(totalItemPropTypes)),
 };
 
-const sortDirectionPropTypes = PropTypes.oneOf(['asc', 'desc']);
+const sortDirectionPropTypes = PropTypes.oneOf(["asc", "desc"]);
 
 const attributeSortItemPropTypes = {
     attributeSortItem: PropTypes.shape({
         direction: sortDirectionPropTypes.isRequired,
-        attributeIdentifier: identifierPropTypes.isRequired
-    }).isRequired
+        attributeIdentifier: identifierPropTypes.isRequired,
+    }).isRequired,
 };
 
 const attributeLocatorItemPropTypes = {
     attributeLocatorItem: PropTypes.shape({
         attributeIdentifier: identifierPropTypes.isRequired,
-        element: PropTypes.string.isRequired
-    }).isRequired
+        element: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 const measureLocatorItemPropTypes = {
     measureLocatorItem: PropTypes.shape({
-        measureIdentifier: identifierPropTypes.isRequired
-    }).isRequired
+        measureIdentifier: identifierPropTypes.isRequired,
+    }).isRequired,
 };
 
 const locatorItemPropTypes = PropTypes.oneOfType([
     PropTypes.shape(attributeLocatorItemPropTypes),
-    PropTypes.shape(measureLocatorItemPropTypes)
+    PropTypes.shape(measureLocatorItemPropTypes),
 ]);
 
 const measureSortItemPropTypes = {
     measureSortItem: PropTypes.shape({
         direction: sortDirectionPropTypes.isRequired,
-        locators: PropTypes.arrayOf(locatorItemPropTypes).isRequired
-    }).isRequired
+        locators: PropTypes.arrayOf(locatorItemPropTypes).isRequired,
+    }).isRequired,
 };
 
 const sortItemPropTypes = PropTypes.oneOfType([
     PropTypes.shape(attributeSortItemPropTypes),
-    PropTypes.shape(measureSortItemPropTypes)
+    PropTypes.shape(measureSortItemPropTypes),
 ]);
 
 const resultSpecPropTypes = {
     dimension: PropTypes.arrayOf(PropTypes.shape(dimensionPropTypes)),
-    sorts: PropTypes.arrayOf(sortItemPropTypes)
+    sorts: PropTypes.arrayOf(sortItemPropTypes),
 };
 
 const measureHeaderItemPropTypes = {
@@ -209,21 +206,21 @@ const measureHeaderItemPropTypes = {
         identifier: PropTypes.string,
         localIdentifier: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        format: PropTypes.string.isRequired
-    }).isRequired
+        format: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 const totalHeaderItemPropTypes: any = {
     totalHeaderItem: PropTypes.shape({
-        name: PropTypes.string.isRequired
-    }).isRequired
+        name: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 const responseMeasureGroupHeaderPropTypes = {
     measureGroupHeader: PropTypes.shape({
         items: PropTypes.arrayOf(PropTypes.shape(measureHeaderItemPropTypes)).isRequired,
-        totalItems: PropTypes.arrayOf(PropTypes.shape(totalHeaderItemPropTypes))
-    }).isRequired
+        totalItems: PropTypes.arrayOf(PropTypes.shape(totalHeaderItemPropTypes)),
+    }).isRequired,
 };
 
 const responseAttributeHeaderPropTypes = {
@@ -236,57 +233,54 @@ const responseAttributeHeaderPropTypes = {
         formOf: PropTypes.shape({
             name: PropTypes.string.isRequired,
             uri: PropTypes.string.isRequired,
-            identifier: PropTypes.string.isRequired
-        }).isRequired
-    }).isRequired
+            identifier: PropTypes.string.isRequired,
+        }).isRequired,
+    }).isRequired,
 };
 
 const responseHeaderPropTypes = PropTypes.oneOfType([
     PropTypes.shape(responseMeasureGroupHeaderPropTypes),
-    PropTypes.shape(responseAttributeHeaderPropTypes)
+    PropTypes.shape(responseAttributeHeaderPropTypes),
 ]);
 
 const responseDimensionPropTypes = {
-    headers: PropTypes.arrayOf(responseHeaderPropTypes).isRequired
+    headers: PropTypes.arrayOf(responseHeaderPropTypes).isRequired,
 };
 
 const resultAttributeHeaderItemPropTypes = {
     attributeHeaderItem: PropTypes.shape({
         uri: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    }).isRequired
+        name: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 const resultMeasureHeaderItemPropTypes = {
     measureHeaderItem: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired
-    }).isRequired
+        order: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 const resultTotalHeaderItemPropTypes = {
     totalHeaderItem: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired
-    }).isRequired
+        type: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
-const dataValuePropTypes = PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-]);
+const dataValuePropTypes = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 
 export const AfmPropTypesShape = PropTypes.shape(afmPropTypes);
 export const ResultSpecPropTypesShape = PropTypes.shape(resultSpecPropTypes);
 
 export const ExecutionRequestPropTypes = PropTypes.shape({
     afm: AfmPropTypesShape.isRequired,
-    resultSpec: ResultSpecPropTypesShape
+    resultSpec: ResultSpecPropTypesShape,
 });
 
 export const ExecutionResponsePropTypes = PropTypes.shape({
     links: PropTypes.shape({ executionResult: PropTypes.string.isRequired }).isRequired,
-    dimensions: PropTypes.arrayOf(PropTypes.shape(responseDimensionPropTypes)).isRequired
+    dimensions: PropTypes.arrayOf(PropTypes.shape(responseDimensionPropTypes)).isRequired,
 });
 
 export const ExecutionResultPropTypes = PropTypes.shape({
@@ -296,29 +290,21 @@ export const ExecutionResultPropTypes = PropTypes.shape({
                 PropTypes.arrayOf(
                     PropTypes.oneOfType([
                         PropTypes.shape(resultAttributeHeaderItemPropTypes),
-                        PropTypes.shape(resultTotalHeaderItemPropTypes)
-                    ])
+                        PropTypes.shape(resultTotalHeaderItemPropTypes),
+                    ]),
                 ),
-                PropTypes.arrayOf(
-                    PropTypes.shape(resultMeasureHeaderItemPropTypes)
-                )
-            ])
-        )
+                PropTypes.arrayOf(PropTypes.shape(resultMeasureHeaderItemPropTypes)),
+            ]),
+        ),
     ),
     data: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.arrayOf(dataValuePropTypes)),
-        PropTypes.arrayOf(dataValuePropTypes)
+        PropTypes.arrayOf(dataValuePropTypes),
     ]).isRequired,
-    totals: PropTypes.arrayOf(
-        PropTypes.arrayOf(
-            PropTypes.arrayOf(
-                dataValuePropTypes
-            )
-        )
-    ),
+    totals: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(dataValuePropTypes))),
     paging: PropTypes.shape({
         count: PropTypes.arrayOf(PropTypes.number).isRequired,
         offset: PropTypes.arrayOf(PropTypes.number).isRequired,
-        total: PropTypes.arrayOf(PropTypes.number).isRequired
-    }).isRequired
+        total: PropTypes.arrayOf(PropTypes.number).isRequired,
+    }).isRequired,
 });

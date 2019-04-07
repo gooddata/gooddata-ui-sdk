@@ -1,17 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import {
-    SDK,
-    factory as createSdk,
-    IValidElementsResponse,
-    IElement
-} from '@gooddata/gooddata-js';
-import { IValidElementsOptions } from '@gooddata/gooddata-js/lib/metadata';
-import { AFM } from '@gooddata/typings';
-import { get, isEqual } from 'lodash';
-import { getObjectIdFromUri, setTelemetryHeaders } from '../../../helpers/utils';
-import { ErrorStates } from '../../../index';
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import { SDK, factory as createSdk, IValidElementsResponse, IElement } from "@gooddata/gooddata-js";
+import { IValidElementsOptions } from "@gooddata/gooddata-js/lib/metadata";
+import { AFM } from "@gooddata/typings";
+import { get, isEqual } from "lodash";
+import { getObjectIdFromUri, setTelemetryHeaders } from "../../../helpers/utils";
+import { ErrorStates } from "../../../index";
 
 export interface IPaging {
     count: number;
@@ -48,23 +43,14 @@ export interface IAttributeElementsState {
 
 export interface IAttributeElementsChildren {
     validElements: IValidElements;
-    loadMore: () => void;
+    loadMore: () => void;
     isLoading: boolean;
     error: any;
 }
 
-const defaultChildren = ({
-    validElements,
-    loadMore,
-    isLoading,
-    error
-}: IAttributeElementsChildren) => {
+const defaultChildren = ({ validElements, loadMore, isLoading, error }: IAttributeElementsChildren) => {
     const paging: Partial<IPaging> = validElements ? validElements.paging : {};
-    const {
-        offset = 0,
-        count = null,
-        total = null
-    } = paging;
+    const { offset = 0, count = null, total = null } = paging;
     const nextOffset = count + offset;
     if (error) {
         return <div>{error}</div>;
@@ -72,14 +58,15 @@ const defaultChildren = ({
     return (
         <div>
             <p>
-                Use children function to map {'{'} validElements, loadMore, isLoading {'} '}
+                Use children function to map {"{"} validElements, loadMore, isLoading {"} "}
                 to your React components.
             </p>
             <button
                 className="button button-secondary"
                 onClick={loadMore as any}
-                disabled={isLoading || (offset + count === total)}
-            >More
+                disabled={isLoading || offset + count === total}
+            >
+                More
             </button>
             <h2>validElements</h2>
             <pre>
@@ -89,7 +76,7 @@ const defaultChildren = ({
                 total: {total}
                 nextOffset: {nextOffset}
                 validElements:
-                {JSON.stringify(validElements, null, '\t')}
+                {JSON.stringify(validElements, null, "\t")}
             </pre>
         </div>
     );
@@ -100,12 +87,11 @@ const defaultChildren = ({
  * is a component that lists attribute values using a children function
  */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
-
     public static propTypes = {
         projectId: PropTypes.string.isRequired,
         uri: PropTypes.string,
         identifier: PropTypes.string,
-        options: PropTypes.object
+        options: PropTypes.object,
     };
 
     public static defaultProps: Partial<IAttributeElementsProps> = {
@@ -113,7 +99,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         uri: null,
         identifier: null,
         options: null,
-        children: defaultChildren
+        children: defaultChildren,
     };
 
     private uri?: string = null;
@@ -127,27 +113,28 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         this.state = {
             validElements: null,
             isLoading: true,
-            error: null
+            error: null,
         };
 
         const sdk = props.sdk || createSdk();
         this.sdk = sdk.clone();
-        setTelemetryHeaders(this.sdk, 'AttributeElements', props);
+        setTelemetryHeaders(this.sdk, "AttributeElements", props);
 
         this.loadMore = this.loadMore.bind(this);
     }
 
     public componentDidMount() {
-        this.getValidElements(this.props, get(this.props, 'options.offset', 0));
+        this.getValidElements(this.props, get(this.props, "options.offset", 0));
     }
 
     public componentWillReceiveProps(nextProps: IAttributeElementsProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
-            setTelemetryHeaders(this.sdk, 'AttributeElements', nextProps);
+            setTelemetryHeaders(this.sdk, "AttributeElements", nextProps);
         }
 
-        if (this.props.uri !== nextProps.uri ||
+        if (
+            this.props.uri !== nextProps.uri ||
             this.props.identifier !== nextProps.identifier ||
             this.props.projectId !== nextProps.projectId ||
             !isEqual(this.props.options, nextProps.options)
@@ -155,9 +142,9 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             this.uri = null; // invalidate
             this.setState({
                 isLoading: true,
-                validElements: null // invalidate
+                validElements: null, // invalidate
             });
-            this.getValidElements(nextProps, get(nextProps, 'options.offset', 0));
+            this.getValidElements(nextProps, get(nextProps, "options.offset", 0));
         }
     }
 
@@ -170,10 +157,10 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             return;
         }
         this.setState({
-            isLoading: true
+            isLoading: true,
         });
-        const offset = get(this.state, 'validElements.paging.offset', 0);
-        const count = get(this.state, 'validElements.paging.count', 0);
+        const offset = get(this.state, "validElements.paging.offset", 0);
+        const count = get(this.state, "validElements.paging.count", 0);
         const nextOffset = offset + count;
         this.getValidElements(this.props, nextOffset);
     }
@@ -182,22 +169,21 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         const { projectId, options, identifier } = props;
         const optionsWithUpdatedPaging = {
             ...options,
-            offset
+            offset,
         };
 
         const uriPromise = new Promise((resolve, reject) => {
-            return (props.uri || this.uri)
+            return props.uri || this.uri
                 ? resolve(props.uri || this.uri)
-                : this.sdk.md.getUrisFromIdentifiers(projectId, [identifier])
-                    .then(
-                        (result) => {
-                            this.uri = result[0].uri;
-                            resolve(this.uri);
-                        },
-                        (error) => {
-                            reject(error);
-                        }
-                    );
+                : this.sdk.md.getUrisFromIdentifiers(projectId, [identifier]).then(
+                      result => {
+                          this.uri = result[0].uri;
+                          resolve(this.uri);
+                      },
+                      error => {
+                          reject(error);
+                      },
+                  );
         });
 
         let currentGetValidElementsPromise: Promise<any> = null;
@@ -211,7 +197,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                 currentGetValidElementsPromise = this.sdk.md.getValidElements(
                     projectId,
                     objectId, // This is misdocumented as identifier, but is in fact objectId
-                    optionsWithUpdatedPaging
+                    optionsWithUpdatedPaging,
                 );
                 this.getValidElementsPromise = currentGetValidElementsPromise;
                 return this.getValidElementsPromise;
@@ -221,13 +207,13 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                     return Promise.reject(ErrorStates.CANCELLED);
                 }
                 const items = [
-                    ...get(this.state, 'validElements.items', []),
-                    ...response.validElements.items
+                    ...get(this.state, "validElements.items", []),
+                    ...response.validElements.items,
                 ];
                 const offset = get(
                     this.state,
-                    'validElements.paging.offset',
-                    parseInt(response.validElements.paging.offset, 10) || 0
+                    "validElements.paging.offset",
+                    parseInt(response.validElements.paging.offset, 10) || 0,
                 );
                 const mergedResponse = {
                     ...response.validElements,
@@ -235,19 +221,19 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                     paging: {
                         total: parseInt(response.validElements.paging.total, 10),
                         offset,
-                        count: items.length
-                    }
+                        count: items.length,
+                    },
                 };
                 this.setState({
                     validElements: mergedResponse,
-                    isLoading: false
+                    isLoading: false,
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 if (error !== ErrorStates.CANCELLED) {
                     this.setState({
                         error,
-                        isLoading: false
+                        isLoading: false,
                     });
                 }
             });
@@ -259,7 +245,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             validElements,
             loadMore: this.loadMore,
             isLoading,
-            error
+            error,
         });
     }
 }

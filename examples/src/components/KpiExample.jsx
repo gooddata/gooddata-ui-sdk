@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { Component } from 'react';
-import { Kpi } from '@gooddata/react-components';
-import '@gooddata/react-components/styles/css/main.css';
+import React, { Component } from "react";
+import { Kpi } from "@gooddata/react-components";
+import "@gooddata/react-components/styles/css/main.css";
 
-import { totalSalesIdentifier, projectId } from '../utils/fixtures';
+import { totalSalesIdentifier, projectId } from "../utils/fixtures";
 
 export class KpiExample extends Component {
     render() {
@@ -23,10 +23,7 @@ export class KpiExample extends Component {
                         width: 300px;
                     }
                 `}</style>
-                <Kpi
-                    projectId={projectId}
-                    measure={totalSalesIdentifier}
-                />
+                <Kpi projectId={projectId} measure={totalSalesIdentifier} />
             </div>
         );
     }

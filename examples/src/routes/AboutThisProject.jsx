@@ -1,89 +1,88 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
+import React from "react";
 
-import { projectId } from '../utils/fixtures';
+import { projectId } from "../utils/fixtures";
 
-const logicalDataModel = require('../static/logicalDataModel.png');
+const logicalDataModel = require("../static/logicalDataModel.png");
 
 export const AboutThisProject = () => (
     <div>
         <h1>About This Project</h1>
         <p>
-            This project (ID <code>{projectId}</code>) is created specifically for testing
-            purposes. You can use the data from this project for testing or trying out the functionality of GoodData.UI.
+            This project (ID <code>{projectId}</code>) is created specifically for testing purposes. You can
+            use the data from this project for testing or trying out the functionality of GoodData.UI.
         </p>
         <p>
-            The use case that this project describes is a chain of restaurants where some restaurants are franchised. As
-            the owner of the business, you want to make successful business decisions and build a growth strategy.
-            For example, you need to track food and beverage costs and employees&apos; shifts, stuff the restaurants
-            depending on how busy a day is, and look for efficient ways of cutting costs.
+            The use case that this project describes is a chain of restaurants where some restaurants are
+            franchised. As the owner of the business, you want to make successful business decisions and build
+            a growth strategy. For example, you need to track food and beverage costs and employees&apos;
+            shifts, stuff the restaurants depending on how busy a day is, and look for efficient ways of
+            cutting costs.
         </p>
 
         <h2>What Data This Project Contains</h2>
         <p>
-            Your source data comes from sales (meal prices, the number of meals per order) and costs (operational,
-            labor, COG, occupancy).
+            Your source data comes from sales (meal prices, the number of meals per order) and costs
+            (operational, labor, COG, occupancy).
         </p>
         <p>
-            The project stores a set of attributes that describe restaurants themselves (location, category, ownership,
-            franchised or not), staff (employee ID and name), menu (meal category and name, for kids or not) and
-            transactions (transaction ID).
+            The project stores a set of attributes that describe restaurants themselves (location, category,
+            ownership, franchised or not), staff (employee ID and name), menu (meal category and name, for
+            kids or not) and transactions (transaction ID).
         </p>
         <p>
-            By default, the project also provides date attributes that enable aggregation at the day, week, month,
-            quarter, and year level.
+            By default, the project also provides date attributes that enable aggregation at the day, week,
+            month, quarter, and year level.
         </p>
 
         <h2>Logical Data Model</h2>
         <p>
-            The logical data model establishes and represents relationships between different types of data in the
-            project. For more information about logical data models, see <a href="https://help.gooddata.com/display/doc/GoodData+Modeling+Concepts" target="_blank" rel="noopener noreferrer">https://help.gooddata.com/display/doc/GoodData+Modeling+Concepts</a>.
+            The logical data model establishes and represents relationships between different types of data in
+            the project. For more information about logical data models, see{" "}
+            <a
+                href="https://help.gooddata.com/display/doc/GoodData+Modeling+Concepts"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                https://help.gooddata.com/display/doc/GoodData+Modeling+Concepts
+            </a>
+            .
         </p>
         <img src={logicalDataModel} alt="Logical Data Model" />
 
         <h2>Analyzing Data</h2>
         <p>
-            Using the source data, you can create all kinds of measures to reflect different aspects of the business.
-            You can build various reports, slice the data by many types of attributes, and filter out the data that is
-            most relevant to you.
+            Using the source data, you can create all kinds of measures to reflect different aspects of the
+            business. You can build various reports, slice the data by many types of attributes, and filter
+            out the data that is most relevant to you.
         </p>
-        <p>
-            Here are some examples of what you can track and analyze:
-        </p>
+        <p>Here are some examples of what you can track and analyze:</p>
         <ul>
             <li>
-                Total sales for all restaurants in the chain =&gt; compare it to previous years, track how it changes
-                through a year
+                Total sales for all restaurants in the chain =&gt; compare it to previous years, track how it
+                changes through a year
             </li>
             <li>
-                Total sales for owned and franchised restaurants separately =&gt; decide on expanding or shrinking the
-                franchise strategy
+                Total sales for owned and franchised restaurants separately =&gt; decide on expanding or
+                shrinking the franchise strategy
             </li>
             <li>
-                Total sales for each individual restaurant =&gt; discover top 10 restaurants with the highest sales and
-                bottom 10 restaurants with the lowests sales
+                Total sales for each individual restaurant =&gt; discover top 10 restaurants with the highest
+                sales and bottom 10 restaurants with the lowests sales
             </li>
+            <li>Best and worst performing servers =&gt; consider promotions, pay raise, or lay-offs</li>
+            <li>Best and worst performing regions =&gt; consider re-location, closing/opening</li>
             <li>
-                Best and worst performing servers =&gt; consider promotions, pay raise, or lay-offs
+                Average total daily sales =&gt; keep informed that it&apos;s always above a certain number and
+                get notified if it drops below this number
             </li>
+            <li>Schedules and actual labor costs =&gt; assess your cost planning effectiveness</li>
             <li>
-                Best and worst performing regions =&gt; consider re-location, closing/opening
-            </li>
-            <li>
-                Average total daily sales =&gt; keep informed that it&apos;s always above a certain number and get
-                notified if it drops below this number
-            </li>
-            <li>
-                Schedules and actual labor costs =&gt; assess your cost planning effectiveness
-            </li>
-            <li>
-                Sales for a particular restaurant for the last 4 quarters =&gt; if going down, request for more detailed
-                information
+                Sales for a particular restaurant for the last 4 quarters =&gt; if going down, request for
+                more detailed information
             </li>
         </ul>
-        <p>
-            and many more.
-        </p>
+        <p>and many more.</p>
     </div>
 );
 

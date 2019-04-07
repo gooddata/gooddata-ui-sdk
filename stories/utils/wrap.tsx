@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { IntlWrapper } from '../../src/components/core/base/IntlWrapper';
+import * as React from "react";
+import { IntlWrapper } from "../../src/components/core/base/IntlWrapper";
 
 export function wrap(
     component: any,
@@ -8,7 +8,7 @@ export function wrap(
     width: number | string = 600,
     minHeight?: number,
     minWidth?: number,
-    key?: any
+    key?: any,
 ) {
     const keyProp: any = key ? { key } : {};
     const style = {
@@ -16,15 +16,13 @@ export function wrap(
         width,
         minHeight,
         minWidth,
-        border: '1px solid pink',
-        boxSizing: 'border-box'
+        border: "1px solid pink",
+        boxSizing: "border-box",
     };
 
     return (
         <IntlWrapper {...keyProp}>
-            <div style={style}>
-                {component}
-            </div>
+            <div style={style}>{component}</div>
         </IntlWrapper>
     );
 }

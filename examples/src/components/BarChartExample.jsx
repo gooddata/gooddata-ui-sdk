@@ -1,26 +1,26 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { BarChart, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { BarChart, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
-import { totalSalesIdentifier, locationResortIdentifier, projectId } from '../utils/fixtures';
+import { totalSalesIdentifier, locationResortIdentifier, projectId } from "../utils/fixtures";
 
 export class BarChartExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        console.info('BarChartExample onLoadingChanged', ...params);
+        console.info("BarChartExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        console.info('BarChartExample onLoadingChanged', ...params);
+        console.info("BarChartExample onLoadingChanged", ...params);
     }
 
     render() {
         const amount = Model.measure(totalSalesIdentifier)
-            .format('#,##0')
-            .alias('$ Total Sales');
+            .format("#,##0")
+            .alias("$ Total Sales");
 
         const locationResort = Model.attribute(locationResortIdentifier);
 

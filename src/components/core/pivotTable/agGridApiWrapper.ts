@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { GridApi } from 'ag-grid';
+import { GridApi } from "ag-grid";
 
 function getHeaderHeight(gridApi: GridApi): number {
     return (gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
@@ -7,9 +7,7 @@ function getHeaderHeight(gridApi: GridApi): number {
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
     const rowComp = (gridApi as any).rowRenderer.rowCompsByIndex[rowIndex];
-    return rowComp && rowComp.cellComps[attributeId]
-        ? rowComp.cellComps[attributeId].eGui
-        : null;
+    return rowComp && rowComp.cellComps[attributeId] ? rowComp.cellComps[attributeId].eGui : null;
 }
 
 function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string) {
@@ -33,9 +31,7 @@ function getPinnedTopRow(gridApi: GridApi): any | null {
 
 function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
     const pinnedTopRow = getPinnedTopRow(gridApi);
-    return pinnedTopRow
-        ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement
-        : null;
+    return pinnedTopRow ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement : null;
 }
 
 function addPinnedTopRowClass(gridApi: GridApi, className: string) {
@@ -88,5 +84,5 @@ export default {
     // pinned row cell element
     getPinnedTopRowCellElement,
     addPinnedTopRowCellClass,
-    removePinnedTopRowCellClass
+    removePinnedTopRowCellClass,
 };

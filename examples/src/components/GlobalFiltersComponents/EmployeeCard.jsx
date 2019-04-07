@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import PropTypes from "prop-types";
 
 /* We do not actually store gender, avatar nor startDate in the platform, only the name.
  * We enrich employee data with custom data to showcase a trivial
@@ -9,125 +9,125 @@ import PropTypes from 'prop-types';
  */
 const employeeAdditionalInfo = [
     {
-        name: 'Aaron Clements',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-        startDate: '2001'
+        name: "Aaron Clements",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+        startDate: "2001",
     },
     {
-        name: 'Aaron Watson',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/2.jpg',
-        startDate: '2006'
+        name: "Aaron Watson",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/2.jpg",
+        startDate: "2006",
     },
     {
-        name: 'Abbie Adams',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/1.jpg',
-        startDate: '2017'
+        name: "Abbie Adams",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/1.jpg",
+        startDate: "2017",
     },
     {
-        name: 'Adam Kimble',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/3.jpg',
-        startDate: '2015'
+        name: "Adam Kimble",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/3.jpg",
+        startDate: "2015",
     },
     {
-        name: 'Aimee McKenzie',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/2.jpg',
-        startDate: '2015'
+        name: "Aimee McKenzie",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/2.jpg",
+        startDate: "2015",
     },
     {
-        name: 'Alex Gray',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/4.jpg',
-        startDate: '2016'
+        name: "Alex Gray",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/4.jpg",
+        startDate: "2016",
     },
     {
-        name: 'Alex Meyer',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/5.jpg',
-        startDate: '2000'
+        name: "Alex Meyer",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/5.jpg",
+        startDate: "2000",
     },
     {
-        name: 'Allen Garza',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/6.jpg',
-        startDate: '2014'
+        name: "Allen Garza",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/6.jpg",
+        startDate: "2014",
     },
     {
-        name: 'Alvin Moir',
-        gender: 'M',
-        avatarUrl: 'https://randomuser.me/api/portraits/men/7.jpg',
-        startDate: '2003'
+        name: "Alvin Moir",
+        gender: "M",
+        avatarUrl: "https://randomuser.me/api/portraits/men/7.jpg",
+        startDate: "2003",
     },
     {
-        name: 'Amanda Lewis',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/3.jpg',
-        startDate: '2017'
+        name: "Amanda Lewis",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/3.jpg",
+        startDate: "2017",
     },
     {
-        name: 'Amber Young',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/4.jpg',
-        startDate: '2016'
+        name: "Amber Young",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/4.jpg",
+        startDate: "2016",
     },
     {
-        name: 'Amelia Reid',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/5.jpg',
-        startDate: '2008'
+        name: "Amelia Reid",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/5.jpg",
+        startDate: "2008",
     },
     {
-        name: 'Amelia Simpson',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/6.jpg',
-        startDate: '2013'
+        name: "Amelia Simpson",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/6.jpg",
+        startDate: "2013",
     },
     {
-        name: 'Amelie Humphries',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/7.jpg',
-        startDate: '2015'
+        name: "Amelie Humphries",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/7.jpg",
+        startDate: "2015",
     },
     {
-        name: 'Amelie Webster',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/8.jpg',
-        startDate: '2016'
+        name: "Amelie Webster",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/8.jpg",
+        startDate: "2016",
     },
     {
-        name: 'Amy Holt',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/9.jpg',
-        startDate: '2017'
+        name: "Amy Holt",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/9.jpg",
+        startDate: "2017",
     },
     {
-        name: 'Amy McGowen',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/10.jpg',
-        startDate: '2012'
+        name: "Amy McGowen",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/10.jpg",
+        startDate: "2012",
     },
     {
-        name: 'Anamaria Funches',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/11.jpg',
-        startDate: '2018'
+        name: "Anamaria Funches",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/11.jpg",
+        startDate: "2018",
     },
     {
-        name: 'Angel Lawson',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/12.jpg',
-        startDate: '2000'
+        name: "Angel Lawson",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/12.jpg",
+        startDate: "2000",
     },
     {
-        name: 'Ann Howell',
-        gender: 'F',
-        avatarUrl: 'https://randomuser.me/api/portraits/women/13.jpg',
-        startDate: '2005'
-    }
+        name: "Ann Howell",
+        gender: "F",
+        avatarUrl: "https://randomuser.me/api/portraits/women/13.jpg",
+        startDate: "2005",
+    },
 ];
 
 export const EmployeeCard = ({ name }) => {
@@ -183,7 +183,7 @@ export const EmployeeCard = ({ name }) => {
                 </p>
                 <p>
                     <span className="info-title">Job title</span>
-                    <span className="info-text">{gender === 'M' ? 'waiter' : 'waitress'}</span>
+                    <span className="info-text">{gender === "M" ? "waiter" : "waitress"}</span>
                 </p>
             </div>
         </div>
@@ -191,5 +191,5 @@ export const EmployeeCard = ({ name }) => {
 };
 
 EmployeeCard.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
 };

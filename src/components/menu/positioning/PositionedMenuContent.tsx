@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
+import * as React from "react";
 import {
     getViewportDimensionsAndCoords,
     getElementDimensions,
     getElementDimensionsAndCoords,
-    calculateMenuPosition
-} from './positioningCalculations';
-import { IMenuPositionConfig } from '../MenuSharedTypes';
+    calculateMenuPosition,
+} from "./positioningCalculations";
+import { IMenuPositionConfig } from "../MenuSharedTypes";
 
 export interface IPositionedMenuContentProps extends IMenuPositionConfig {
     topLevelMenu: boolean;
@@ -25,7 +25,7 @@ export default class PositionedMenuContent extends React.Component<
 > {
     public state: IPositionedMenuContentState = {
         left: 0,
-        top: 0
+        top: 0,
     };
 
     private menuEl: HTMLElement = null;
@@ -56,9 +56,9 @@ export default class PositionedMenuContent extends React.Component<
         return (
             <div
                 style={{
-                    position: 'absolute',
+                    position: "absolute",
                     left: this.state.left,
-                    top: this.state.top
+                    top: this.state.top,
                 }}
                 ref={this.setElMenu}
             >
@@ -68,18 +68,18 @@ export default class PositionedMenuContent extends React.Component<
     }
 
     private addEventListeners() {
-        window.addEventListener('resize', this.positionMenu);
-        window.addEventListener('scroll', this.positionMenu, true);
+        window.addEventListener("resize", this.positionMenu);
+        window.addEventListener("scroll", this.positionMenu, true);
     }
 
     private removeEventListeners() {
-        window.removeEventListener('resize', this.positionMenu);
-        window.removeEventListener('scroll', this.positionMenu, true);
+        window.removeEventListener("resize", this.positionMenu);
+        window.removeEventListener("scroll", this.positionMenu, true);
     }
 
     private setElMenu = (el: HTMLElement) => {
         this.menuEl = el;
-    }
+    };
 
     private positionMenu = () => {
         if (!this.props.togglerEl || !this.menuEl) {
@@ -93,9 +93,9 @@ export default class PositionedMenuContent extends React.Component<
             alignment: this.props.alignment,
             spacing: this.props.spacing,
             offset: this.props.offset,
-            topLevelMenu: this.props.topLevelMenu
+            topLevelMenu: this.props.topLevelMenu,
         });
 
         this.setState({ left, top });
-    }
+    };
 }

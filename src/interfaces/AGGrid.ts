@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { IMappingHeader } from './MappingHeader';
-import { ColDef, CellEvent } from 'ag-grid';
+import { IMappingHeader } from "./MappingHeader";
+import { ColDef, CellEvent } from "ag-grid";
 
 export interface IGridRow {
     headerItemMap: {

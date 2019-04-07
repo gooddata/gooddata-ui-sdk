@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { noop } from 'lodash';
+import * as React from "react";
+import * as classNames from "classnames";
+import { noop } from "lodash";
 
 export interface IAddTotalButtonProps {
     onClick: () => void;
@@ -15,13 +15,17 @@ export class AddTotalButton extends React.PureComponent<IAddTotalButtonProps> {
         onClick: noop,
         onMouseEnter: noop,
         onMouseLeave: noop,
-        hidden: false
+        hidden: false,
     };
 
     public render() {
-        const className = classNames({
-            hidden: this.props.hidden
-        }, 's-total-add-row', 'indigo-totals-add-row-button');
+        const className = classNames(
+            {
+                hidden: this.props.hidden,
+            },
+            "s-total-add-row",
+            "indigo-totals-add-row-button",
+        );
 
         return (
             <div

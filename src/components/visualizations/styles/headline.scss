@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-@import '~@gooddata/goodstrap/lib/core/styles/typo-mixins';
+@import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
 
 .headline {
     text-align: center;
@@ -66,7 +66,7 @@
     .headline-item-link {
         .headline-value {
             &:not(.headline-value--empty)::after {
-                content: '';
+                content: "";
                 position: absolute;
                 right: 0;
                 bottom: 0;

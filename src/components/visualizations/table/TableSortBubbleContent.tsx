@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
-import { noop } from 'lodash';
+import * as React from "react";
+import * as classNames from "classnames";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { noop } from "lodash";
 
-import { ASC, DESC } from '../../../constants/sort';
-import { OnSortChangeWithDir, SortDir } from '../../../interfaces/Table';
+import { ASC, DESC } from "../../../constants/sort";
+import { OnSortChangeWithDir, SortDir } from "../../../interfaces/Table";
 
 export interface ITableSortBubbleContentProps {
     activeSortDir?: SortDir;
@@ -14,13 +14,13 @@ export interface ITableSortBubbleContentProps {
     title: string;
 }
 
-export class TableSortBubbleContentClass
-    extends React.Component<ITableSortBubbleContentProps & InjectedIntlProps> {
-
+export class TableSortBubbleContentClass extends React.Component<
+    ITableSortBubbleContentProps & InjectedIntlProps
+> {
     public static defaultProps: Partial<ITableSortBubbleContentProps> = {
         activeSortDir: null,
         onClose: noop,
-        onSortChange: noop
+        onSortChange: noop,
     };
 
     private sortAsc: () => void;
@@ -55,19 +55,20 @@ export class TableSortBubbleContentClass
         const { activeSortDir } = this.props;
         const isDisabled = dir === activeSortDir;
         const buttonClasses = classNames(
-            'button',
-            'button-primary',
-            'button-small',
-            'icon-dropdown',
-            'icon-right', {
-                'button-sort-asc': dir === ASC,
-                'button-sort-desc': dir === DESC,
-                'disabled': isDisabled
-            }
+            "button",
+            "button-primary",
+            "button-small",
+            "icon-dropdown",
+            "icon-right",
+            {
+                "button-sort-asc": dir === ASC,
+                "button-sort-desc": dir === DESC,
+                disabled: isDisabled,
+            },
         );
 
         const onClick: () => void = dir === ASC ? this.sortAsc : this.sortDesc;
-        const msg: string = dir === ASC ? 'visualizations.asc' : 'visualizations.desc';
+        const msg: string = dir === ASC ? "visualizations.asc" : "visualizations.desc";
 
         return (
             <button onClick={onClick} disabled={isDisabled} className={buttonClasses}>

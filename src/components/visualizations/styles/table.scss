@@ -1,22 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
-$gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
-@import '~fixed-data-table-2/dist/fixed-data-table.css';
-@import '~@gooddata/goodstrap/lib/core/styles/colors';
-@import '~@gooddata/goodstrap/lib/core/styles/IndigoFont';
-@import '~@gooddata/goodstrap/lib/core/styles/layout';
-@import '~@gooddata/goodstrap/lib/core/styles/Overlay';
-@import '~@gooddata/goodstrap/lib/Dialog/styles/Dialog';
-@import '~@gooddata/goodstrap/lib/Button/styles/Button';
-@import '~@gooddata/goodstrap/lib/List/styles/List';
-@import '~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown';
-@import '~@gooddata/goodstrap/lib/Bubble/styles/Bubble';
-@import 'variables';
+@import "~fixed-data-table-2/dist/fixed-data-table.css";
+@import "~@gooddata/goodstrap/lib/core/styles/colors";
+@import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
+@import "~@gooddata/goodstrap/lib/core/styles/layout";
+@import "~@gooddata/goodstrap/lib/core/styles/Overlay";
+@import "~@gooddata/goodstrap/lib/Dialog/styles/Dialog";
+@import "~@gooddata/goodstrap/lib/Button/styles/Button";
+@import "~@gooddata/goodstrap/lib/List/styles/List";
+@import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
+@import "~@gooddata/goodstrap/lib/Bubble/styles/Bubble";
+@import "variables";
 
 .indigo-table-component {
     position: relative;
     overflow: hidden;
-    font-family: 'Avenir', 'Helvetica Neue', Arial, sans-serif;
+    font-family: "Avenir", "Helvetica Neue", Arial, sans-serif;
     font-size: 12px;
     font-weight: normal;
     line-height: 100%;
@@ -24,7 +24,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
     &.has-hidden-rows {
         &:not(.has-footer) .fixedDataTableLayout_rowsContainer::after {
-            content: '';
+            content: "";
             position: absolute;
             right: 0;
             bottom: 13px;
@@ -193,7 +193,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    content: '\e60d';
+                    content: "\e60d";
                     position: relative;
                     top: 1px;
                     display: inherit;
@@ -214,10 +214,9 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
                 overflow: hidden;
                 text-overflow: ellipsis;
 
-
                 &::before {
                     // disable system tooltip in Safari
-                    content: '';
+                    content: "";
                     display: block;
                 }
             }
@@ -335,7 +334,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
         }
 
         &::before {
-            content: '\03A3';
+            content: "\03A3";
             display: inline-block;
             width: 26px;
             height: 26px;
@@ -351,17 +350,13 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
         &:hover::before {
             border-color: $button-normal-hover-border-color;
-            box-shadow:
-                0 1px 1px 0 $button-shadow-darker,
-                inset 0 -1px 0 0 $button-normal-hover-box-shadow;
+            box-shadow: 0 1px 1px 0 $button-shadow-darker, inset 0 -1px 0 0 $button-normal-hover-box-shadow;
             background: $button-normal-hover-bg;
         }
 
         &:focus::before {
             border-color: transparentize($gd-color-highlight, 0.25);
-            box-shadow:
-                0 0 3px 1px $button-normal-focus-shadow,
-                0 1px 2px 0 $button-shadow-darker,
+            box-shadow: 0 0 3px 1px $button-normal-focus-shadow, 0 1px 2px 0 $button-shadow-darker,
                 inset 0 -1px 0 0 $button-normal-hover-box-shadow;
         }
 
@@ -388,10 +383,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
     .dropdown-active .indigo-totals-add-row-button::before,
     .indigo-totals-add-row-button:active::before {
-        @include gradient-linear(
-            $button-normal-active-gradient-top,
-            $button-normal-active-gradient-bottom
-        );
+        @include gradient-linear($button-normal-active-gradient-top, $button-normal-active-gradient-bottom);
 
         border-color: $button-normal-active-border-color;
         box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
@@ -407,7 +399,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
 
 .indigo-totals-select-type-list {
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         z-index: 1;
         bottom: -8px;
@@ -421,7 +413,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
     }
 
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         z-index: 2;
         right: 10px;
@@ -513,7 +505,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
             pointer-events: auto;
 
             &::before {
-                content: '\E639';
+                content: "\E639";
                 display: block;
                 overflow: hidden;
                 width: 11px;
@@ -521,7 +513,7 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
                 padding: 0;
                 border: 2px solid $gd-color-highlight;
                 border-radius: 50%;
-                font-family: 'Indigo';
+                font-family: "Indigo";
                 font-size: 16px;
                 line-height: 13px;
                 text-indent: -2px;

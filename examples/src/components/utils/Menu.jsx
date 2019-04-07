@@ -1,17 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavLink, withRouter } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { NavLink, withRouter } from "react-router-dom";
 
 class Menu extends React.Component {
     render() {
-        const { location: { pathname }, sideNavigationRoutes, routes } = this.props;
+        const {
+            location: { pathname },
+            sideNavigationRoutes,
+            routes,
+        } = this.props;
         const href = pathname;
-        const currentRoute = (href !== undefined && routes.find(link => (link.path === BASEPATH + href))) || null;
+        const currentRoute =
+            (href !== undefined && routes.find(link => link.path === BASEPATH + href)) || null;
 
         const navigationElements = sideNavigationRoutes.map(({ path, title, exact = false }) => (
-            <li key={path} className={`navListItem${path === currentRoute ? ' navListItemActive' : ''}`}>
+            <li key={path} className={`navListItem${path === currentRoute ? " navListItemActive" : ""}`}>
                 <NavLink to={path} className="navItem" activeClassName="navItemActive" exact={exact}>
                     <span>{title}</span>
                 </NavLink>
@@ -84,9 +89,7 @@ class Menu extends React.Component {
                     }
                 `}</style>
                 <div className="navGroup">
-                    <ul>
-                        {navigationElements}
-                    </ul>
+                    <ul>{navigationElements}</ul>
                 </div>
             </div>
         );
@@ -96,11 +99,11 @@ class Menu extends React.Component {
 Menu.propTypes = {
     location: PropTypes.object.isRequired,
     sideNavigationRoutes: PropTypes.array,
-    routes: PropTypes.array
+    routes: PropTypes.array,
 };
 Menu.defaultProps = {
     sideNavigationRoutes: [],
-    routes: []
+    routes: [],
 };
 
 export default withRouter(Menu);

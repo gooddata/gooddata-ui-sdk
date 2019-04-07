@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { IExportConfig, IExportResponse } from '@gooddata/gooddata-js';
-import { IDrillEventCallback } from './DrillEvents';
-import { RuntimeError } from '../errors/RuntimeError';
+import { IExportConfig, IExportResponse } from "@gooddata/gooddata-js";
+import { IDrillEventCallback } from "./DrillEvents";
+import { RuntimeError } from "../errors/RuntimeError";
 
 export interface ILoadingState {
     isLoading: boolean;

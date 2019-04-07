@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { screenshotWrap } from '@gooddata/test-storybook';
-import identity = require('lodash/identity');
+import * as React from "react";
+import { screenshotWrap } from "@gooddata/test-storybook";
+import identity = require("lodash/identity");
 
-import ChartTransformation from '../../src/components/visualizations/chart/ChartTransformation';
-import { barChartWith3MetricsAndViewByAttribute } from '../test_data/fixtures';
-import { wrap } from './wrap';
+import ChartTransformation from "../../src/components/visualizations/chart/ChartTransformation";
+import { barChartWith3MetricsAndViewByAttribute } from "../test_data/fixtures";
+import { wrap } from "./wrap";
 
 export default class CustomLegend extends React.PureComponent<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            legendItems: null
+            legendItems: null,
         };
     }
 
@@ -19,14 +19,12 @@ export default class CustomLegend extends React.PureComponent<any, any> {
         const style = {
             width: 0,
             height: 0,
-            borderTop: '10px solid transparent',
+            borderTop: "10px solid transparent",
             borderLeft: `20px solid ${color}`,
-            borderBottom: '10px solid transparent',
-            marginRight: '5px'
+            borderBottom: "10px solid transparent",
+            marginRight: "5px",
         };
-        return (
-            <div style={style} />
-        );
+        return <div style={style} />;
     }
 
     public renderLegend() {
@@ -39,7 +37,7 @@ export default class CustomLegend extends React.PureComponent<any, any> {
                         <div
                             key={i} // eslint-disable-line react/no-array-index-key
                             onClick={item.onClick}
-                            style={{ display: 'flex', padding: '5px 0', cursor: 'pointer' }}
+                            style={{ display: "flex", padding: "5px 0", cursor: "pointer" }}
                         >
                             {this.renderTriangle(color)}
                             <span style={{ color }}>{item.name}</span>
@@ -61,17 +59,17 @@ export default class CustomLegend extends React.PureComponent<any, any> {
                 {wrap(
                     <ChartTransformation
                         config={{
-                            type: 'column',
+                            type: "column",
                             legend: {
-                                enabled: false
-                            }
+                                enabled: false,
+                            },
                         }}
                         {...dataSet}
                         onDataTooLarge={identity}
                         onLegendReady={setData}
-                    />
+                    />,
                 )}
-            </div>
+            </div>,
         );
     }
 }

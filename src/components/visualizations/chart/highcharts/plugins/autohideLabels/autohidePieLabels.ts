@@ -1,13 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import fill = require('lodash/fill');
+import get = require("lodash/get");
+import fill = require("lodash/fill");
 
-import {
-    getVisibleSeries,
-    getDataPoints,
-    isIntersecting,
-    IRectBySize
-} from '../../helpers';
+import { getVisibleSeries, getDataPoints, isIntersecting, IRectBySize } from "../../helpers";
 
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour

@@ -1,40 +1,40 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import { testUtils } from '@gooddata/js-utils';
-import { Visualization, oneMeasureDataSource } from '../../../tests/mocks';
-import { BaseChart, IBaseChartProps } from '../BaseChart';
-import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import * as React from "react";
+import { mount } from "enzyme";
+import { testUtils } from "@gooddata/js-utils";
+import { Visualization, oneMeasureDataSource } from "../../../tests/mocks";
+import { BaseChart, IBaseChartProps } from "../BaseChart";
+import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 
-describe('BaseChart', () => {
+describe("BaseChart", () => {
     const createProps = (customProps = {}) => {
         const props: IBaseChartProps = {
             height: 200,
             dataSource: oneMeasureDataSource,
-            locale: 'en-US',
+            locale: "en-US",
             type: VisualizationTypes.LINE,
             visualizationComponent: Visualization,
             afterRender: jest.fn(),
             updateTotals: jest.fn(),
             drillableItems: [],
             resultSpec: {},
-            config: { colors: ['shiny'] },
+            config: { colors: ["shiny"] },
             onFiredDrillEvent: jest.fn(),
-            ...customProps
+            ...customProps,
         };
         return props;
     };
 
     function createComponent(props: IBaseChartProps) {
-        return mount(<BaseChart {...props}/>);
+        return mount(<BaseChart {...props} />);
     }
 
-    it('should render given visualization component', () => {
+    it("should render given visualization component", () => {
         const onLoadingChanged = jest.fn();
         const onError = jest.fn();
         const props = createProps({
             onError,
-            onLoadingChanged
+            onLoadingChanged,
         });
         const wrapper = createComponent(props);
 
@@ -46,7 +46,7 @@ describe('BaseChart', () => {
             expect(visualization.props()).toMatchObject({
                 executionRequest: {
                     afm: props.dataSource.getAfm(),
-                    resultSpec: props.resultSpec
+                    resultSpec: props.resultSpec,
                 },
                 executionResponse: expect.any(Object),
                 executionResult: expect.any(Object),
@@ -56,7 +56,7 @@ describe('BaseChart', () => {
                 height: props.height,
                 config: { ...props.config, type: props.type },
                 onFiredDrillEvent: props.onFiredDrillEvent,
-                numericSymbols: expect.any(Object)
+                numericSymbols: expect.any(Object),
             });
         });
     });
@@ -65,16 +65,14 @@ describe('BaseChart', () => {
         const onLegendReady = jest.fn();
 
         const props = createProps({
-            onLegendReady
+            onLegendReady,
         });
 
         const wrapper = createComponent(props);
         return testUtils.delay().then(() => {
             wrapper.update();
 
-            expect(
-                wrapper.find(Visualization).prop('onLegendReady')
-            ).toEqual(onLegendReady);
+            expect(wrapper.find(Visualization).prop("onLegendReady")).toEqual(onLegendReady);
         });
     });
 });

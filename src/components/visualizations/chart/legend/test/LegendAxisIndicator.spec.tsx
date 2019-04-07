@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import { ILegendAxisIndicatorProps, LegendAxisIndicator } from '../LegendAxisIndicator';
-import { withIntl } from '../../../utils/intlUtils';
+import * as React from "react";
+import { mount } from "enzyme";
+import { ILegendAxisIndicatorProps, LegendAxisIndicator } from "../LegendAxisIndicator";
+import { withIntl } from "../../../utils/intlUtils";
 
-describe('LegendAxisIndicator', () => {
+describe("LegendAxisIndicator", () => {
     function createComponent(props: ILegendAxisIndicatorProps) {
         const Wrapped = withIntl(LegendAxisIndicator);
 
@@ -12,12 +12,15 @@ describe('LegendAxisIndicator', () => {
     }
 
     it.each([
-        ['left', [], 'Left:'],
-        ['right', [], 'Right:'],
-        ['combo',  ['column', 'left'], 'Column (Left):'],
-        ['combo',  ['area', 'right'], 'Area (Right):']
-    ])('should render legend indicator when labelKey=%s', (labelKey: string, data: string[], expected: string) => {
-        const wrapper = createComponent({ labelKey, data });
-        expect(wrapper.find('.series-text').text()).toEqual(expected);
-    });
+        ["left", [], "Left:"],
+        ["right", [], "Right:"],
+        ["combo", ["column", "left"], "Column (Left):"],
+        ["combo", ["area", "right"], "Area (Right):"],
+    ])(
+        "should render legend indicator when labelKey=%s",
+        (labelKey: string, data: string[], expected: string) => {
+            const wrapper = createComponent({ labelKey, data });
+            expect(wrapper.find(".series-text").text()).toEqual(expected);
+        },
+    );
 });

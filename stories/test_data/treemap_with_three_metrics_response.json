@@ -7,35 +7,37 @@
             {
                 "headers": [
                     {
-                      "measureGroupHeader": {
-                        "items": [{
-                            "measureHeaderItem": {
-                              "name": "Amount",
-                              "format": "#,##0.00",
-                              "localIdentifier": "amountMetric",
-                              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
-                              "identifier": "ah1EuQxwaCqs"
-                            }
-                          },
-                          {
-                            "measureHeaderItem": {
-                              "name": "# of Activities",
-                              "format": "#,##0.00",
-                              "localIdentifier": "5a9402a04445430880fd1c8b6d846164",
-                              "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/14636",
-                              "identifier": "881EuQxwaCqs"
-                            }
-                          }, {
-                            "measureHeaderItem": {
-                              "name": "Won",
-                              "format": "#,##0.00",
-                              "localIdentifier": "889402a04445430880fd1c8b6d846164",
-                              "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1284",
-                              "identifier": "ah1dfQxwaCqs"
-                            }
-                          }
-                        ]
-                      }
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Amount",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "amountMetric",
+                                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
+                                        "identifier": "ah1EuQxwaCqs"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "# of Activities",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "5a9402a04445430880fd1c8b6d846164",
+                                        "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/14636",
+                                        "identifier": "881EuQxwaCqs"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "name": "Won",
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "889402a04445430880fd1c8b6d846164",
+                                        "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1284",
+                                        "identifier": "ah1dfQxwaCqs"
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             }

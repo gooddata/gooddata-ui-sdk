@@ -1,24 +1,31 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { Treemap, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { Treemap, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
-import { numberOfChecksIdentifier, locationCityDisplayFormIdentifier, locationStateDisplayFormIdentifier, projectId } from '../utils/fixtures';
+import {
+    numberOfChecksIdentifier,
+    locationCityDisplayFormIdentifier,
+    locationStateDisplayFormIdentifier,
+    projectId,
+} from "../utils/fixtures";
 
 export class TreeMapExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        console.info('TreeMapExample onLoadingChanged', ...params);
+        console.info("TreeMapExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        console.info('TreeMapExample onLoadingChanged', ...params);
+        console.info("TreeMapExample onLoadingChanged", ...params);
     }
 
     render() {
-        const numberOfChecks = Model.measure(numberOfChecksIdentifier).format('#,##0').alias('# Checks');
+        const numberOfChecks = Model.measure(numberOfChecksIdentifier)
+            .format("#,##0")
+            .alias("# Checks");
 
         const locationState = Model.attribute(locationStateDisplayFormIdentifier);
 

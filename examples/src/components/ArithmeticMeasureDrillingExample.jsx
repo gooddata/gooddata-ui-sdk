@@ -1,77 +1,81 @@
 // (C) 2007-2019 GoodData Corporation
 
-import React, { Component } from 'react';
-import { Table, HeaderPredicateFactory, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { Table, HeaderPredicateFactory, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
     locationStateDisplayFormIdentifier,
     numberOfRestaurantsIdentifier,
-    totalSalesIdentifier
-} from '../utils/fixtures';
+    totalSalesIdentifier,
+} from "../utils/fixtures";
 
 export class ArithmeticMeasureDrillingExample extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            drillEvent: null
+            drillEvent: null,
         };
     }
 
-    onDrill = (drillEvent) => {
+    onDrill = drillEvent => {
         // eslint-disable-next-line no-console
-        console.log('onFiredDrillEvent', drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
+        console.log(
+            "onFiredDrillEvent",
+            drillEvent,
+            JSON.stringify(drillEvent.drillContext.intersection, null, 2),
+        );
         this.setState({
-            drillEvent
+            drillEvent,
         });
         return true;
     };
 
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ArithmeticMeasureDrillingExample onLoadingChanged', ...params);
+        return console.log("ArithmeticMeasureDrillingExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('ArithmeticMeasureDrillingExample onError', ...params);
+        return console.log("ArithmeticMeasureDrillingExample onError", ...params);
     }
 
     render() {
         const { drillEvent } = this.state;
 
         const localIdentifiers = {
-            numberOfRestaurants: 'numberOfRestaurants',
-            totalSales: 'totalSales',
-            averageRestaurantSales: 'averageRestaurantSales'
+            numberOfRestaurants: "numberOfRestaurants",
+            totalSales: "totalSales",
+            averageRestaurantSales: "averageRestaurantSales",
         };
 
         const measures = [
             Model.measure(numberOfRestaurantsIdentifier)
                 .localIdentifier(localIdentifiers.numberOfRestaurants)
-                .format('#,##0'),
+                .format("#,##0"),
             Model.measure(totalSalesIdentifier)
                 .localIdentifier(localIdentifiers.totalSales)
-                .format('#,##0'),
-            Model.arithmeticMeasure([
-                localIdentifiers.totalSales,
-                localIdentifiers.numberOfRestaurants
-            ], 'ratio')
+                .format("#,##0"),
+            Model.arithmeticMeasure(
+                [localIdentifiers.totalSales, localIdentifiers.numberOfRestaurants],
+                "ratio",
+            )
                 .localIdentifier(localIdentifiers.averageRestaurantSales)
-                .format('#,##0')
-                .title('$ Avg Restaurant Sales')
+                .format("#,##0")
+                .title("$ Avg Restaurant Sales"),
         ];
 
-        const attributes = [
-            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier('month')
-        ];
+        const attributes = [Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("month")];
 
         const drillNotificationComponent = () => {
             const averageSales = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
             return (
-                <h3>You have clicked <span className="s-drill-value">{averageSales}</span></h3>
+                <h3>
+                    You have clicked <span className="s-drill-value">{averageSales}</span>
+                </h3>
             );
         };
 
@@ -85,9 +89,7 @@ export class ArithmeticMeasureDrillingExample extends Component {
                         attributes={attributes}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
-                        drillableItems={[
-                            HeaderPredicateFactory.composedFromIdentifier(totalSalesIdentifier)
-                        ]}
+                        drillableItems={[HeaderPredicateFactory.composedFromIdentifier(totalSalesIdentifier)]}
                         onFiredDrillEvent={this.onDrill}
                     />
                 </div>

@@ -17,17 +17,17 @@
                         }
                     },
                     {
-                      "attributeHeader": {
-                        "name": "Region",
-                        "localIdentifier": "regionAttribute",
-                        "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024",
-                        "identifier": "label.owner.region",
-                        "formOf": {
-                          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1023",
-                          "identifier": "region",
-                          "name": "Region"
+                        "attributeHeader": {
+                            "name": "Region",
+                            "localIdentifier": "regionAttribute",
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024",
+                            "identifier": "label.owner.region",
+                            "formOf": {
+                                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1023",
+                                "identifier": "region",
+                                "name": "Region"
+                            }
                         }
-                      }
                     }
                 ]
             },

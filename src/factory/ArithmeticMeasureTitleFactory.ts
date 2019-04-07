@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization } from '@gooddata/typings';
-import IntlStore from '../helpers/IntlStore';
-import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from '..';
+import { Localization } from "@gooddata/typings";
+import IntlStore from "../helpers/IntlStore";
+import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "..";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.
@@ -10,7 +10,6 @@ import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from '..';
  * @internal
  */
 export default class ArithmeticMeasureTitleFactory {
-
     private readonly locale: Localization.ILocale;
 
     /**
@@ -33,35 +32,41 @@ export default class ArithmeticMeasureTitleFactory {
      */
     public getTitle(
         arithmeticMeasureProps: IArithmeticMeasureTitleProps,
-        measureTitleProps: IMeasureTitleProps[]
+        measureTitleProps: IMeasureTitleProps[],
     ): string {
         const { operator, masterMeasureLocalIdentifiers } = arithmeticMeasureProps;
         const localizationKey = this.getTitleLocalizationKey(operator);
-        const masterMeasureTitles = this.getMasterMeasureTitles(masterMeasureLocalIdentifiers, measureTitleProps);
+        const masterMeasureTitles = this.getMasterMeasureTitles(
+            masterMeasureLocalIdentifiers,
+            measureTitleProps,
+        );
 
-        return masterMeasureTitles === null
-            ? null
-            : this.translateKey(localizationKey, masterMeasureTitles);
+        return masterMeasureTitles === null ? null : this.translateKey(localizationKey, masterMeasureTitles);
     }
 
     private getTitleLocalizationKey(arithmeticMeasureOperator: string): string {
         switch (arithmeticMeasureOperator) {
-            case 'sum':
-                return 'visualizations.measure.arithmetic.sum.title';
-            case 'difference':
-                return 'visualizations.measure.arithmetic.difference.title';
-            case 'multiplication':
-                return 'visualizations.measure.arithmetic.multiplication.title';
-            case 'ratio':
-                return 'visualizations.measure.arithmetic.ratio.title';
-            case 'change':
-                return 'visualizations.measure.arithmetic.change.title';
+            case "sum":
+                return "visualizations.measure.arithmetic.sum.title";
+            case "difference":
+                return "visualizations.measure.arithmetic.difference.title";
+            case "multiplication":
+                return "visualizations.measure.arithmetic.multiplication.title";
+            case "ratio":
+                return "visualizations.measure.arithmetic.ratio.title";
+            case "change":
+                return "visualizations.measure.arithmetic.change.title";
             default:
-                throw Error(`The arithmetic measure operator '${arithmeticMeasureOperator}' is not supported!`);
+                throw Error(
+                    `The arithmetic measure operator '${arithmeticMeasureOperator}' is not supported!`,
+                );
         }
     }
 
-    private getMasterMeasureTitles(masterMeasureLocalIdentifiers: string[], measureTitles: IMeasureTitleProps[]) {
+    private getMasterMeasureTitles(
+        masterMeasureLocalIdentifiers: string[],
+        measureTitles: IMeasureTitleProps[],
+    ) {
         if (masterMeasureLocalIdentifiers.length < 2) {
             return null;
         }
@@ -75,7 +80,7 @@ export default class ArithmeticMeasureTitleFactory {
 
         return {
             firstMeasureTitle,
-            secondMeasureTitle
+            secondMeasureTitle,
         };
     }
 

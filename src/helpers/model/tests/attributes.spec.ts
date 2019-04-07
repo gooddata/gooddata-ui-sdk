@@ -1,44 +1,44 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationObject } from '@gooddata/typings';
-import { attribute } from '../attributes';
+import { VisualizationObject } from "@gooddata/typings";
+import { attribute } from "../attributes";
 
-describe('Attributes', () => {
-    describe('visualizationAttribute', () => {
-        it('should return a simple attribute', () => {
+describe("Attributes", () => {
+    describe("visualizationAttribute", () => {
+        it("should return a simple attribute", () => {
             const expected: VisualizationObject.IVisualizationAttribute = {
                 visualizationAttribute: {
                     displayForm: {
-                        identifier: 'foo'
+                        identifier: "foo",
                     },
-                    localIdentifier: 'va_0'
-                }
+                    localIdentifier: "va_0",
+                },
             };
-            expect(attribute('foo')).toMatchObject(expected);
+            expect(attribute("foo")).toMatchObject(expected);
         });
 
-        it('should return a simple attribute with alias', () => {
+        it("should return a simple attribute with alias", () => {
             const expected: VisualizationObject.IVisualizationAttribute = {
                 visualizationAttribute: {
-                    alias: 'alias',
+                    alias: "alias",
                     displayForm: {
-                        identifier: 'foo'
+                        identifier: "foo",
                     },
-                    localIdentifier: 'va_1'
-                }
+                    localIdentifier: "va_1",
+                },
             };
-            expect(attribute('foo').alias('alias')).toMatchObject(expected);
+            expect(attribute("foo").alias("alias")).toMatchObject(expected);
         });
 
-        it('should return a simple attribute with custom localIdentifier', () => {
+        it("should return a simple attribute with custom localIdentifier", () => {
             const expected: VisualizationObject.IVisualizationAttribute = {
                 visualizationAttribute: {
                     displayForm: {
-                        identifier: 'foo'
+                        identifier: "foo",
                     },
-                    localIdentifier: 'custom'
-                }
+                    localIdentifier: "custom",
+                },
             };
-            expect(attribute('foo').localIdentifier('custom')).toMatchObject(expected);
+            expect(attribute("foo").localIdentifier("custom")).toMatchObject(expected);
         });
     });
 });

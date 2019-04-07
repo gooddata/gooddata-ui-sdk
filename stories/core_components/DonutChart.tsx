@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { DonutChart } from '../../src';
-import { onErrorHandler } from '../mocks';
+import { DonutChart } from "../../src";
+import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
@@ -13,21 +13,21 @@ import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
     DATA_LABELS_VISIBLE_CONFIG,
     DATA_LABELS_HIDDEN_CONFIG,
-    DATA_LABELS_AUTO_CONFIG
-} from '../data/configProps';
+    DATA_LABELS_AUTO_CONFIG,
+} from "../data/configProps";
 
-import { ScreenshotReadyWrapper, createHighChartResolver } from '../utils/ScreenshotReadyWrapper';
+import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 400, height: 400 };
 
-storiesOf('Core components/DonutChart', module)
-    .add('two measures', () => (
+storiesOf("Core components/DonutChart", module)
+    .add("two measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -37,10 +37,10 @@ storiesOf('Core components/DonutChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('measure and attribute', () => (
+            </div>,
+        ),
+    )
+    .add("measure and attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -51,10 +51,10 @@ storiesOf('Core components/DonutChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('one measure with alias, one attribute with alias', () => (
+            </div>,
+        ),
+    )
+    .add("one measure with alias, one attribute with alias", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -65,10 +65,10 @@ storiesOf('Core components/DonutChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format in tooltip', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format in tooltip", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -80,10 +80,10 @@ storiesOf('Core components/DonutChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with disabled legend', () => (
+            </div>,
+        ),
+    )
+    .add("with disabled legend", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -95,14 +95,14 @@ storiesOf('Core components/DonutChart', module)
                     ErrorComponent={null}
                     config={{
                         legend: {
-                            enabled: false
-                        }
+                            enabled: false,
+                        },
                     }}
                 />
-            </div>
-        )
-    ))
-    .add('with different legend positions', () => (
+            </div>,
+        ),
+    )
+    .add("with different legend positions", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
                 <div>
@@ -117,8 +117,8 @@ storiesOf('Core components/DonutChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'auto'
-                                }
+                                    position: "auto",
+                                },
                             }}
                         />
                     </div>
@@ -133,8 +133,8 @@ storiesOf('Core components/DonutChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'left'
-                                }
+                                    position: "left",
+                                },
                             }}
                         />
                     </div>
@@ -149,8 +149,8 @@ storiesOf('Core components/DonutChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'top'
-                                }
+                                    position: "top",
+                                },
                             }}
                         />
                     </div>
@@ -165,8 +165,8 @@ storiesOf('Core components/DonutChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'right'
-                                }
+                                    position: "right",
+                                },
                             }}
                         />
                     </div>
@@ -181,15 +181,16 @@ storiesOf('Core components/DonutChart', module)
                             ErrorComponent={null}
                             config={{
                                 legend: {
-                                    position: 'bottom'
-                                }
+                                    position: "bottom",
+                                },
                             }}
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    )).add('data labels config', () => (
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("data labels config", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(4)}>
                 <div>
@@ -241,10 +242,10 @@ storiesOf('Core components/DonutChart', module)
                         />
                     </div>
                 </div>
-            </ScreenshotReadyWrapper>
-        )
-    ))
-    .add('arithmetic measures', () => (
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("arithmetic measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <DonutChart
@@ -253,12 +254,12 @@ storiesOf('Core components/DonutChart', module)
                         MEASURE_1,
                         MEASURE_2,
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-                        ARITHMETIC_MEASURE_USING_ARITHMETIC
+                        ARITHMETIC_MEASURE_USING_ARITHMETIC,
                     ]}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

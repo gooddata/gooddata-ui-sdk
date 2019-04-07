@@ -107,11 +107,7 @@
 
 .gd-viz-tooltip-tail1 {
     bottom: -20px;
-    border-color:
-        transparentize($bubble-light-border-base, 0.5)
-        transparent
-        transparent
-        transparent;
+    border-color: transparentize($bubble-light-border-base, 0.5) transparent transparent transparent;
 }
 
 .gd-viz-tooltip-tail2 {
@@ -124,7 +120,7 @@
 }
 
 .gd-viz-tooltip-table-row {
-    &:last-child  .gd-viz-tooltip-table-cell {
+    &:last-child .gd-viz-tooltip-table-cell {
         border-bottom: none;
     }
 }

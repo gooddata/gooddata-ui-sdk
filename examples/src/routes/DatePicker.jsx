@@ -1,10 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import React from 'react';
-import ExampleWithSource from '../components/utils/ExampleWithSource';
+import React from "react";
+import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import DatePickerExample from '../components/DatePickerExample';
-import DatePickerExampleSRC from '!raw-loader!../components/DatePickerExample'; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-
+import DatePickerExample from "../components/DatePickerExample";
+import DatePickerExampleSRC from "!raw-loader!../components/DatePickerExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const DatePicker = () => (
     <div>

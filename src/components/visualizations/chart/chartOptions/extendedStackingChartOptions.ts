@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { IPointData, IUnwrappedAttributeHeadersWithItems } from '../chartOptionsBuilder';
-import { createDrillIntersectionElement } from '../../utils/drilldownEventing';
-import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
+import { IPointData, IUnwrappedAttributeHeadersWithItems } from "../chartOptionsBuilder";
+import { createDrillIntersectionElement } from "../../utils/drilldownEventing";
+import { getAttributeElementIdFromAttributeElementUri } from "../../utils/common";
 
 export function getDrillableSeriesWithParentAttribute(
     series: any,
-    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
 ) {
     return series.map((seriesItem: any) => {
         const { isDrillable, data } = seriesItem;
@@ -17,21 +17,21 @@ export function getDrillableSeriesWithParentAttribute(
                 return pointData;
             }
             const { identifier, uri, items } = viewByParentAttribute;
-            const { name, uri : attributeElementUri } = items[pointIndex].attributeHeaderItem;
+            const { name, uri: attributeElementUri } = items[pointIndex].attributeHeaderItem;
             const parentElement = createDrillIntersectionElement(
                 getAttributeElementIdFromAttributeElementUri(attributeElementUri),
                 name,
                 uri,
-                identifier
+                identifier,
             );
             return {
                 ...pointData,
-                drillIntersection: [...pointData.drillIntersection, parentElement]
+                drillIntersection: [...pointData.drillIntersection, parentElement],
             };
         });
         return {
             ...seriesItem,
-            data: newData
+            data: newData,
         };
     });
 }
