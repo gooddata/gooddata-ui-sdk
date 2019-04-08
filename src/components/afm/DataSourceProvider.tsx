@@ -146,7 +146,7 @@ export function dataSourceProvider<T>(
         // to check if we need to reload datasource to get new native totals
         // @param nextTotals lists all requested totals
         public updateTotals(nextTotals: AFM.ITotalItem[]) {
-            const nativeTotals = getNativeTotals(nextTotals);
+            const nativeTotals = getNativeTotals(nextTotals, this.props.resultSpec);
             const afm: AFM.IAfm = this.state.dataSource.getAfm();
 
             const nativeTotalsRequested = nativeTotals.length > 0;

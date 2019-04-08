@@ -292,6 +292,14 @@ const menuPresets = {
         key: "aggregations",
         menuConfig: { aggregations: true },
     },
+    aggregationsWithSubTotals: {
+        label: "Aggregations with subtotals",
+        key: "aggregationsWithSubTotals",
+        menuConfig: {
+            aggregations: true,
+            aggregationsSubMenu: true,
+        },
+    },
 };
 
 const pivotTableSizePresets = {

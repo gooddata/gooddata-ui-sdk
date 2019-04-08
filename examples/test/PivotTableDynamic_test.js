@@ -25,6 +25,10 @@ const SORTING_PRESET_BY_LOCATION_STATE_DESC = ".s-sorting-preset-byLocationState
 const GROUP_ROWS_PRESET_ENABLED = ".s-group-rows-preset-activeGrouping";
 const TOTALS_SUBTOTAL = ".s-total-preset-franchiseFeesMaxByLocationState";
 const PINNED_TOP_ROW = ".ag-floating-top-container";
+const AGGREGATION_WITH_SUBTOTALS_PRESET = ".s-total-preset-aggregationsWithSubTotals";
+const TOTAL_SELECTOR_FIRST = ".s-pivot-table .gd-row-total.s-cell-0-0 .s-value";
+const TOTAL_SELECTOR_SECOND = ".s-pivot-table .gd-row-total.s-cell-1-0 .s-value";
+const TOTAL_SELECTOR_THIRD = ".s-pivot-table .gd-row-total.s-cell-2-0 .s-value";
 
 const DRILLING_PRESET_MEASURE_FRANCHISE_FEES = ".s-drilling-preset-measure";
 const DRILLING_PRESET_ATTRIBUTE_MENU_CATEGORY = ".s-drilling-preset-attributeMenuCategory";
@@ -47,6 +51,8 @@ const HIDDEN_CELL_CLASSNAME = "s-gd-cell-hide";
 
 const MENU_CATEGORY = "[col-id=a_2188] .s-header-cell-label";
 const FRANCHISE_FEES = "[col-id=a_2009_1-a_2071_1-m_0] .s-header-cell-label";
+
+const SUBTOTAL_ATTRIBUTE_LOCATION_NAME = "label-restaurantlocation-locationname";
 
 async function checkRender(t, selector, cellSelector = ".ag-cell", checkClass, doClick = false) {
     const chart = Selector(selector);
@@ -269,4 +275,149 @@ test("should not render subtotals when sorted by other than the first attribute"
     await waitForPivotTableStopLoading(t);
 
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Irving", ".s-cell-5-1");
+});
+
+async function setupSubTotals(t) {
+    await disableDrilling(t);
+    await t.click(Selector(AGGREGATION_WITH_SUBTOTALS_PRESET));
+    await t.click(Selector(GROUP_ROWS_PRESET_ENABLED));
+    await waitForPivotTableStopLoading(t);
+}
+
+async function toggleTotal(t, measureHeaderIndex, aggregation, attribute) {
+    const firstColumnHeader = Selector(`.s-table-measure-column-header-cell-${measureHeaderIndex}`).with({
+        visibilityCheck: false,
+    });
+
+    // We need to move cursor out of table
+    await t.hover(Selector(GROUP_ROWS_PRESET_ENABLED));
+    await t.wait(500);
+
+    await t.hover(firstColumnHeader);
+    await t.wait(500);
+
+    await t.click(await firstColumnHeader.find(".s-table-header-menu").with({ visibilityCheck: false }));
+
+    const menu = Selector(".s-table-header-menu-content");
+
+    // Total
+    if (!attribute) {
+        await t.click(await menu.find(`.s-menu-aggregation-${aggregation}`));
+        return;
+    }
+
+    // Subtotal
+    await t.hover(await menu.find(`.s-menu-aggregation-${aggregation}`));
+    await t.wait(500);
+    const submenu = Selector(".s-table-header-submenu-content");
+    await t.click(await submenu.find(`.s-aggregation-item-${attribute}`));
+}
+
+test("should be able to add and remove totals via burgermenu", async t => {
+    const total = Selector(TOTAL_SELECTOR_FIRST);
+    await t.click(Selector(AGGREGATION_WITH_SUBTOTALS_PRESET));
+    await toggleTotal(t, 0, "sum");
+    await t.expect(total.textContent).eql("Sum");
+    await toggleTotal(t, 0, "sum");
+    await t.expect(total.exists).eql(false);
+});
+
+test("should be able to add and remove native total", async t => {
+    const total = Selector(TOTAL_SELECTOR_FIRST);
+    await t.click(Selector(AGGREGATION_WITH_SUBTOTALS_PRESET));
+    await toggleTotal(t, 0, "nat");
+    await t.expect(total.textContent).eql("Rollup (Total)");
+    await toggleTotal(t, 0, "nat");
+    await t.expect(total.exists).eql(false);
+});
+
+test("should be able to add and remove multiple totals", async t => {
+    const total1 = Selector(TOTAL_SELECTOR_FIRST);
+    const total2 = Selector(TOTAL_SELECTOR_SECOND);
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "sum");
+    await toggleTotal(t, 0, "max");
+    await t.expect(total1.textContent).eql("Sum");
+    await t.expect(total2.textContent).eql("Max");
+    await toggleTotal(t, 0, "sum");
+    await toggleTotal(t, 0, "max");
+    await t.expect(total1.exists).eql(false);
+    await t.expect(total2.exists).eql(false);
+});
+
+test("should show totals rows in particular order no matter the added totals order", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "med");
+    await toggleTotal(t, 0, "max");
+    await toggleTotal(t, 0, "avg");
+    await t.expect(Selector(TOTAL_SELECTOR_FIRST).textContent).eql("Max");
+    await t.expect(Selector(TOTAL_SELECTOR_SECOND).textContent).eql("Avg");
+    await t.expect(Selector(TOTAL_SELECTOR_THIRD).textContent).eql("Median");
+});
+
+test("should be able to add and remove subtotals via burgermenu", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should remove subtotals when removing grandtotal of same type", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await toggleTotal(t, 0, "sum");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await toggleTotal(t, 0, "sum");
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should be able to add and remove native subtotal", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "nat", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Rollup (Total)", ".s-cell-5-1");
+    await toggleTotal(t, 0, "nat", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should be able to add and remove multiple subtotals", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-6-1");
+    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should show subtotal rows in particular order no matter the added subtotals order", async t => {
+    await setupSubTotals(t);
+    await toggleTotal(t, 0, "med", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await toggleTotal(t, 0, "avg", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-5-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Avg", ".s-cell-6-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Median", ".s-cell-7-1");
 });

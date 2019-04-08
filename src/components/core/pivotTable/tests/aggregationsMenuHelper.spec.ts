@@ -1,8 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../../../../helpers/agGrid";
-import aggregationsMenuHelper from "../aggregationsMenuHelper";
+import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { IColumnTotal } from "../AggregationsMenu";
+import { IMenuAggregationClickConfig } from "../../../../interfaces/PivotTable";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {
@@ -298,6 +299,214 @@ describe("aggregationsMenuHelper", () => {
         it("should return true when the provided total is defined for an attribute", () => {
             const result = aggregationsMenuHelper.isTotalEnabledForAttribute("a1", "sum", columnTotals);
             expect(result).toBe(true);
+        });
+    });
+
+    describe("getUpdatedColumnTotals", () => {
+        const resultSpect: AFM.IResultSpec = {
+            dimensions: [{ itemIdentifiers: ["a1", "a2", "a3"] }],
+        };
+
+        it("should add grandtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: true,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should add grandtotal for every measure", () => {
+            const columnTotals: AFM.ITotalItem[] = [];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: true,
+                measureIdentifiers: ["m1", "m2"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should remove grandtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should remove grandtotal for every measure", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1", "m2"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should not remove other types of grandtotals", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should not remove grandtotals of different measure", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should add subtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a2",
+                include: true,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should remove subtotals of same type when removing grandtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should not remove subtotals of different type when removing grandtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "avg" },
+                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "avg" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "avg" },
+                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "avg" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
+        });
+        it("should not remove subtotals of different measure when removing grandtotal", () => {
+            const columnTotals: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
+                { attributeIdentifier: "a2", measureIdentifier: "m2", type: "sum" },
+                { attributeIdentifier: "a3", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
+                attributeIdentifier: "a1",
+                include: false,
+                measureIdentifiers: ["m1"],
+                type: "sum",
+            };
+
+            const expectedColumns: AFM.ITotalItem[] = [
+                { attributeIdentifier: "a2", measureIdentifier: "m2", type: "sum" },
+                { attributeIdentifier: "a3", measureIdentifier: "m2", type: "sum" },
+            ];
+
+            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+
+            expect(result).toEqual(expectedColumns);
         });
     });
 });

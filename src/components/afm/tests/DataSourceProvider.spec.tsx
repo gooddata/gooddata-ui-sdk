@@ -16,7 +16,9 @@ describe("DataSourceProvider", () => {
     const defaultProps = {
         afm: {},
         projectId: PROJECT_ID,
-        resultSpec: {},
+        resultSpec: {
+            dimensions: [{ itemIdentifiers: ["a1"] }],
+        },
     };
     const COMPONENT_NAME = "DummyNameInMocks";
 
@@ -206,7 +208,7 @@ describe("DataSourceProvider", () => {
             ...defaultProps,
             afm: {
                 ...defaultProps.afm,
-                nativeTotals: getNativeTotals([nativeTotal]),
+                nativeTotals: getNativeTotals([nativeTotal], defaultProps.resultSpec),
             },
             totals: [nativeTotal, sumTotal],
         });
@@ -263,7 +265,7 @@ describe("DataSourceProvider", () => {
     });
 
     it("should provide modified resultSpec to InnerComponent", () => {
-        const defaultDimension = () => [{ itemIdentifiers: ["x"] }];
+        const defaultDimension = () => [{ itemIdentifiers: ["a1"] }];
         const WrappedTable = dataSourceProvider(Table, defaultDimension, COMPONENT_NAME);
         const wrapper = mount(<WrappedTable {...defaultProps} />);
 
