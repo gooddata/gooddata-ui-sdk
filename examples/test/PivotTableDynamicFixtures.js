@@ -42,8 +42,7 @@ export const measuresDrillParams = `{
                     "identifier": "aaEGaXAEgB7U"
                 }
             }
-        ],
-        "value": "4214352.77185"
+        ]
     }
 }`;
 
@@ -78,15 +77,15 @@ export const rowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340109",
-                "title": "Alabama"
+                "name": "Alabama"
             },
             {
                 "id": "6340107",
-                "title": "Montgomery"
+                "name": "Montgomery"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             }
         ],
         "intersection": [
@@ -99,15 +98,14 @@ export const rowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6338473",
                 "title": "Alcoholic Beverages",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2187/elements?id=6338473",
                     "identifier": ""
                 }
             }
-        ],
-        "value": "Alcoholic Beverages"
+        ]
     }
 }`;
 
@@ -154,15 +152,15 @@ export const columnAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340116",
-                "title": "California"
+                "name": "California"
             },
             {
                 "id": "6340114",
-                "title": "Daly City"
+                "name": "Daly City"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             }
         ],
         "intersection": [
@@ -175,15 +173,14 @@ export const columnAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6340116",
                 "title": "California",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
                     "identifier": ""
                 }
             }
-        ],
-        "value": "California"
+        ]
     }
 }`;
 
@@ -252,15 +249,15 @@ export const measuresColumnAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340109",
-                "title": "Alabama"
+                "name": "Alabama"
             },
             {
                 "id": "6340107",
-                "title": "Montgomery"
+                "name": "Montgomery"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             },
             "71475.721",
             "12960.591",
@@ -289,7 +286,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
         ],
         "intersection": [
             {
-                "id": "",
+                "id": "1",
                 "title": "Q1",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -305,7 +302,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "1",
                 "title": "Jan",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
@@ -328,8 +325,7 @@ export const measuresColumnAndRowAttributesDrillParams = `{
                     "identifier": "aaEGaXAEgB7U"
                 }
             }
-        ],
-        "value": "71475.721"
+        ]
     }
 }`;
 
@@ -405,7 +401,7 @@ export const measuresAndColumnAttributesDrillParams = `{
         ],
         "intersection": [
             {
-                "id": "",
+                "id": "1",
                 "title": "Q1",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -421,7 +417,7 @@ export const measuresAndColumnAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "1",
                 "title": "Jan",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
@@ -444,8 +440,7 @@ export const measuresAndColumnAttributesDrillParams = `{
                     "identifier": "aabHeqImaK0d"
                 }
             }
-        ],
-        "value": "150708.58845"
+        ]
     }
 }`;
 
@@ -502,15 +497,15 @@ export const measuresAndRowAttributesDrillParams = `{
         "row": [
             {
                 "id": "6340116",
-                "title": "California"
+                "name": "California"
             },
             {
                 "id": "6340121",
-                "title": "Highland Village"
+                "name": "Highland Village"
             },
             {
                 "id": "6338473",
-                "title": "Alcoholic Beverages"
+                "name": "Alcoholic Beverages"
             },
             "176265.71085",
             "56109.41035"
@@ -525,14 +520,13 @@ export const measuresAndRowAttributesDrillParams = `{
                 }
             },
             {
-                "id": "",
+                "id": "6340116",
                 "title": "California",
                 "header": {
                     "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116",
                     "identifier": ""
                 }
             }
-        ],
-        "value": "California"
+        ]
     }
 }`;

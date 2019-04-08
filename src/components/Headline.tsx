@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationInput } from '@gooddata/typings';
 
 import { Headline as AfmHeadline } from './afm/Headline';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -10,9 +10,9 @@ import { convertBucketsToAFM } from '../helpers/conversion';
 import { MEASURES } from '../constants/bucketNames';
 
 export interface IHeadlineBucketProps {
-    primaryMeasure: VisualizationObject.IMeasure;
-    secondaryMeasure?: VisualizationObject.IMeasure;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
+    primaryMeasure: VisualizationInput.IMeasure;
+    secondaryMeasure?: VisualizationInput.IMeasure;
+    filters?: VisualizationInput.IFilter[];
 }
 
 export interface IHeadlineProps extends ICommonChartProps, IHeadlineBucketProps {

@@ -1,5 +1,11 @@
 // (C) 2018 GoodData Corporation
-import { absoluteDateFilter, negativeAttributeFilter, positiveAttributeFilter, relativeDateFilter } from '../filters';
+import {
+    absoluteDateFilter,
+    attributeFilter,
+    negativeAttributeFilter,
+    positiveAttributeFilter,
+    relativeDateFilter
+} from '../filters';
 
 describe('Filters', () => {
     describe('positiveAttributeFilter', () => {
@@ -13,6 +19,18 @@ describe('Filters', () => {
                 }
             });
         });
+
+        it('should generate correct textual filter', () => {
+            expect(positiveAttributeFilter('foo', ['bar', 'baz'], true)).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    in: ['bar', 'baz'],
+                    textFilter: true
+                }
+            });
+        });
     });
 
     describe('negativeAttributeFilter', () => {
@@ -23,6 +41,64 @@ describe('Filters', () => {
                         identifier: 'foo'
                     },
                     notIn: ['bar', 'baz']
+                }
+            });
+        });
+        it('should generate correct textual filter', () => {
+            expect(negativeAttributeFilter('foo', ['bar', 'baz'], true)).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    notIn: ['bar', 'baz'],
+                    textFilter: true
+                }
+            });
+        });
+    });
+
+    describe('attributeFilter', () => {
+        it('should generate correct positive filter', () => {
+            expect(attributeFilter('foo').inUris('uri1', 'uri2')).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    in: ['uri1', 'uri2'],
+                    textFilter: false
+                }
+            });
+        });
+        it('should generate correct positive textual filter', () => {
+            expect(attributeFilter('foo').in('value1', 'value2')).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    in: ['value1', 'value2'],
+                    textFilter: true
+                }
+            });
+        });
+        it('should generate correct negative positive filter', () => {
+            expect(attributeFilter('foo').notInUris('uri1', 'uri2')).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    notIn: ['uri1', 'uri2'],
+                    textFilter: false
+                }
+            });
+        });
+        it('should generate correct negative textual filter', () => {
+            expect(attributeFilter('foo').notIn('value1', 'value2')).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: 'foo'
+                    },
+                    notIn: ['value1', 'value2'],
+                    textFilter: true
                 }
             });
         });

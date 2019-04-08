@@ -1740,6 +1740,450 @@ const getBaseProjectSchema = (title, identifier) => {
                     }
                 }
             },
+            {
+                _description: 'totals - column and row attributes with menu enabled',
+                execution: {
+                    execution: {
+                        afm: {
+                            measures: [
+                                {
+                                    localIdentifier: 'm1',
+                                    definition: {
+                                        measure: {
+                                            item: {
+                                                uri: '/gdc/md/storybook/obj/1'
+                                            }
+                                        }
+                                    },
+                                    alias: '_Close [BOP]'
+                                },
+                                {
+                                    localIdentifier: 'm2',
+                                    definition: {
+                                        measure: {
+                                            item: {
+                                                uri: '/gdc/md/storybook/obj/2'
+                                            }
+                                        }
+                                    },
+                                    alias: '_Close [EOP]'
+                                }
+                            ],
+                            attributes: [
+                                {
+                                    displayForm: {
+                                        uri: '/gdc/md/storybook/obj/4.df'
+                                    },
+                                    localIdentifier: 'a1'
+                                },
+                                {
+                                    displayForm: {
+                                        uri: '/gdc/md/storybook/obj/5.df'
+                                    },
+                                    localIdentifier: 'a2'
+                                },
+                                {
+                                    displayForm: {
+                                        uri: '/gdc/md/storybook/obj/6.df'
+                                    },
+                                    localIdentifier: 'a3'
+                                }
+                            ]
+                        },
+                        resultSpec: {
+                            dimensions: [
+                                {
+                                    itemIdentifiers: [
+                                        'a1',
+                                        'a2'
+                                    ],
+                                    totals: [
+                                        {
+                                            measureIdentifier: 'm1',
+                                            type: 'sum',
+                                            attributeIdentifier: 'a1'
+                                        },
+                                        {
+                                            measureIdentifier: 'm2',
+                                            type: 'sum',
+                                            attributeIdentifier: 'a1'
+                                        },
+                                        {
+                                            measureIdentifier: 'm1',
+                                            type: 'min',
+                                            attributeIdentifier: 'a2'
+                                        },
+                                        {
+                                            measureIdentifier: 'm1',
+                                            type: 'max',
+                                            attributeIdentifier: 'a2'
+                                        },
+                                        {
+                                            measureIdentifier: 'm2',
+                                            type: 'max',
+                                            attributeIdentifier: 'a2'
+                                        }
+                                    ]
+                                },
+                                {
+                                    itemIdentifiers: [
+                                        'a3',
+                                        'measureGroup'
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                executionResponse: {
+                    executionResponse: {
+                        dimensions: [
+                            {
+                                headers: [
+                                    {
+                                        attributeHeader: {
+                                            name: 'Region',
+                                            localIdentifier: 'a1',
+                                            uri: '/gdc/md/storybook/obj/4.df',
+                                            identifier: '3.df',
+                                            formOf: {
+                                                name: 'Region',
+                                                uri: '/gdc/md/storybook/obj/4',
+                                                identifier: '3'
+                                            },
+                                            totalItems: [
+                                                {
+                                                    totalHeaderItem: {
+                                                        name: 'sum'
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        attributeHeader: {
+                                            name: 'Department',
+                                            localIdentifier: 'a2',
+                                            uri: '/gdc/md/storybook/obj/5.df',
+                                            identifier: '4.df',
+                                            formOf: {
+                                                name: 'Department',
+                                                uri: '/gdc/md/storybook/obj/5',
+                                                identifier: '4'
+                                            },
+                                            totalItems: [
+                                                {
+                                                    totalHeaderItem: {
+                                                        name: 'max'
+                                                    }
+                                                },
+                                                {
+                                                    totalHeaderItem: {
+                                                        name: 'min'
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                headers: [
+                                    {
+                                        attributeHeader: {
+                                            name: 'Is Won?',
+                                            localIdentifier: 'a3',
+                                            uri: '/gdc/md/storybook/obj/6.df',
+                                            identifier: '5.df',
+                                            formOf: {
+                                                name: 'Is Won?',
+                                                uri: '/gdc/md/storybook/obj/6',
+                                                identifier: '5'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        measureGroupHeader: {
+                                            items: [
+                                                {
+                                                    measureHeaderItem: {
+                                                        name: '_Close [BOP]',
+                                                        format: '#,##0.00',
+                                                        localIdentifier: 'm1',
+                                                        uri: '/gdc/md/storybook/obj/1',
+                                                        identifier: '1'
+                                                    }
+                                                },
+                                                {
+                                                    measureHeaderItem: {
+                                                        name: '_Close [EOP]',
+                                                        format: '#,##0.00',
+                                                        localIdentifier: 'm2',
+                                                        uri: '/gdc/md/storybook/obj/2',
+                                                        identifier: '2'
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        links: {
+                            executionResult: '/gdc/app/projects/storybook/executionResults/7191568985292372992?q=eAGtk19LwzAUxb%2FKyF6L%2FadbO5CBOqUvKsPhQymSLtmsNE1MUucc%2Fe7erGxSsQ%2B1eyr35vbk3B8n%0AOySp4FLfY0bRBC0KnemcEmShJc9LVig0iXcIay2ztNT0yZzCXKQGz7yYwpgqGcNyCz0oSKZEjre3%0AXLKIQMtek6XNiK03F2LN%2BIc%2FZiMeuO5GpqoUq%2B3rF3HeA5HaPH2zXSd0QCPFis5yymihF%2FOou0gQ%0A2rT%2BXU0zcgmK%2B5Uapo%2F7%2FMdlEBpNrnFu4MSJFSdJZSFGgdHyTvJSoORQ1vhWwANrcDC0hkPnzDFr%0ANrgdHL5c51zRQXz18JjATC3Z3WPouS6qrB3qfPGs78WOjyrYXvJNS3LmdJ3x4jeAnsHxzkGwb3A8%0Avy04R8%2B9cuP5YPInNyYBEJS4%2FkKC%2FnhmN1Rgqc1TODWw8SmAjdqANXz3gzZqQmP4ExosK%2FboTAWP%0AL6m%2BAZp5loc%3D%0A&c=9c130fe602b1856e1f6e90f17d5f837f&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=1%2C0'
+                        }
+                    }
+                },
+                executionResult: {
+                    executionResult: {
+                        data: [
+                            [
+                                '40652',
+                                '42613',
+                                '40331',
+                                '41053'
+                            ],
+                            [
+                                '40630',
+                                '41380',
+                                null,
+                                '41056'
+                            ],
+                            [
+                                '40652',
+                                '42613',
+                                '40331',
+                                '41056'
+                            ],
+                            [
+                                '40630',
+                                null,
+                                '40331',
+                                null
+                            ],
+                            [
+                                '41013',
+                                '41515',
+                                null,
+                                '41056'
+                            ],
+                            [
+                                '40633',
+                                '42794',
+                                null,
+                                '41052'
+                            ],
+                            [
+                                '41013',
+                                '42794',
+                                null,
+                                '41056'
+                            ],
+                            [
+                                '40633',
+                                null,
+                                null,
+                                null
+                            ]
+                        ],
+                        paging: {
+                            count: [
+                                8,
+                                4
+                            ],
+                            offset: [
+                                0,
+                                0
+                            ],
+                            total: [
+                                8,
+                                4
+                            ]
+                        },
+                        headerItems: [
+                            [
+                                [
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'East Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'East Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'East Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'East Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'West Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'West Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'West Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'West Coast',
+                                            uri: '/gdc/md/storybook/obj/4/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'sum',
+                                            type: 'sum'
+                                        }
+                                    }
+                                ],
+                                [
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'Direct Sales',
+                                            uri: '/gdc/md/storybook/obj/5/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'Inside Sales',
+                                            uri: '/gdc/md/storybook/obj/5/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'max',
+                                            type: 'max'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'min',
+                                            type: 'min'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'Direct Sales',
+                                            uri: '/gdc/md/storybook/obj/5/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'Inside Sales',
+                                            uri: '/gdc/md/storybook/obj/5/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'max',
+                                            type: 'max'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'min',
+                                            type: 'min'
+                                        }
+                                    },
+                                    {
+                                        totalHeaderItem: {
+                                            name: 'sum',
+                                            type: 'sum'
+                                        }
+                                    }
+                                ]
+                            ],
+                            [
+                                [
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'false',
+                                            uri: '/gdc/md/storybook/obj/6/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'false',
+                                            uri: '/gdc/md/storybook/obj/6/elements?id=1'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'true',
+                                            uri: '/gdc/md/storybook/obj/6/elements?id=2'
+                                        }
+                                    },
+                                    {
+                                        attributeHeaderItem: {
+                                            name: 'true',
+                                            uri: '/gdc/md/storybook/obj/6/elements?id=2'
+                                        }
+                                    }
+                                ],
+                                [
+                                    {
+                                        measureHeaderItem: {
+                                            name: '_Close [BOP]',
+                                            order: 0
+                                        }
+                                    },
+                                    {
+                                        measureHeaderItem: {
+                                            name: '_Close [EOP]',
+                                            order: 1
+                                        }
+                                    },
+                                    {
+                                        measureHeaderItem: {
+                                            name: '_Close [BOP]',
+                                            order: 0
+                                        }
+                                    },
+                                    {
+                                        measureHeaderItem: {
+                                            name: '_Close [EOP]',
+                                            order: 1
+                                        }
+                                    }
+                                ]
+                            ]
+                        ],
+                        totals: [
+                            [
+                                [
+                                    '162928',
+                                    '168302',
+                                    '40331',
+                                    '164217'
+                                ]
+                            ],
+                            []
+                        ]
+                    }
+                }
+            },
             ...heatmapAfmExecutions
         ],
         visualizationClasses: [{
@@ -1887,7 +2331,7 @@ const getBaseProjectSchema = (title, identifier) => {
                         localIdentifier: 'm2',
                         filters: [],
                         identifier: '2',
-                        title: 'Value'
+                        title: 'A measure with long title'
                     }]
                 }, {
                     localIdentifier: 'view',
@@ -1977,6 +2421,30 @@ const getBaseProjectSchema = (title, identifier) => {
                 }],
                 properties: "{\"controls\":{\"grid\":{\"enabled\":false}}}"
             },
+            {
+                identifier: '1010',
+                title: 'Table',
+                type: 'local:table',
+                buckets: [{
+                    localIdentifier: 'measures',
+                    items: [{
+                        localIdentifier: '1',
+                        identifier: '1'
+                    }, {
+                        localIdentifier: '2',
+                        identifier: '2'
+                    }]
+                }, {
+                    localIdentifier: 'attribute',
+                    items: [{
+                        localIdentifier: 'a1',
+                        displayForm: '4.df'
+                    }, {
+                        localIdentifier: 'a2',
+                        displayForm: '5.df'
+                    }]
+                }]
+            },
         ]
     }
 };
@@ -2010,5 +2478,12 @@ module.exports = [
                 }
             ]
         },
-    }
+    },
+    {
+        ...getBaseProjectSchema('Storybook project pivot table grouping', 'pivot_grouping_storybook'),
+        featureFlags: {
+            enablePivot: true,
+            enablePivotGrouping: true
+        }
+    },
 ];

@@ -2,20 +2,21 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { BarChart as AfmBarChart } from './afm/BarChart';
 import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { getViewByTwoAttributes } from '../helpers/optionalStacking/common';
 
 export interface IBarChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    stackBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
+    stackBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IBarChartProps extends ICommonChartProps, IBarChartBucketProps {
@@ -36,7 +37,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.viewBy ? [props.viewBy] : []
+            items: getViewByTwoAttributes(props.viewBy) // could be one or two attributes
         },
         {
             localIdentifier: STACK,
@@ -45,7 +46,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
     ];
 
     const newProps
-        = omit<IBarChartBucketProps, IBarChartNonBucketProps>(props, ['measures', 'viewBy', 'stackBy', 'filters']);
+        = omit<IBarChartProps, IBarChartNonBucketProps>(props, ['measures', 'viewBy', 'stackBy', 'filters']);
 
     return (
         <AfmBarChart

@@ -10,18 +10,22 @@ import {
     validateData,
     getSeriesItemData,
     getSeries,
-    getDrillContext,
+    getDrillIntersection,
     getDrillableSeries,
     customEscape,
     generateTooltipFn,
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
     generateTooltipTreemapFn,
-    IPoint,
     getBubbleChartSeries,
     getHeatmapDataClasses,
     getTreemapAttributes,
-    isDerivedMeasure
+    isDerivedMeasure,
+    getCategoriesForTwoAttributes,
+    IPoint,
+    IChartOptions,
+    IValidationResult,
+    IViewByTwoAttributes
 } from '../chartOptionsBuilder';
 import { DEFAULT_CATEGORIES_LIMIT } from '../highcharts/commonConfiguration';
 import { generateChartOptions, getMVS } from './helper';
@@ -49,6 +53,7 @@ import {
     IColorStrategy
 } from '../colorFactory';
 import { IColorPaletteItem } from '../../../../interfaces/Config';
+import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
 export { IPoint };
 
@@ -163,7 +168,7 @@ describe('chartOptionsBuilder', () => {
         });
 
         describe('default limits', () => {
-            it('should be able to validate successfuly', () => {
+            it('should be able to validate successfully', () => {
                 const chartOptions = barChartWithStackByAndViewByAttributesOptions;
                 const validationResult = validateData(undefined, chartOptions);
 
@@ -233,13 +238,13 @@ describe('chartOptionsBuilder', () => {
                 });
             });
             it('should validate with "hasNegativeValue: true" for treemap if its series contains a negative value',
-                () => {
-                    const validationResult = validateData(undefined, treemapOptionsWithNegativeValue);
-                    expect(validationResult).toEqual({
-                        dataTooLarge: false,
-                        hasNegativeValue: true
-                    });
+            () => {
+                const validationResult = validateData(undefined, treemapOptionsWithNegativeValue);
+                expect(validationResult).toEqual({
+                    dataTooLarge: false,
+                    hasNegativeValue: true
                 });
+            });
         });
 
         describe('Treemap filters out root nodes for dataPoints limit', () => {
@@ -283,6 +288,35 @@ describe('chartOptionsBuilder', () => {
                     dataTooLarge: true,
                     hasNegativeValue: false
                 });
+            });
+        });
+
+        describe('optional stacking with viewBy 2 attributes', () => {
+            const chartOptions: IChartOptions = {
+                isViewByTwoAttributes: true,
+                type: 'column'
+            };
+
+            const testData = [
+                ['false', 'less', 3, { dataTooLarge: false, hasNegativeValue: false } ],
+                ['true', 'greater', 31, { dataTooLarge: true, hasNegativeValue: false } ]
+            ];
+
+            it.each(testData)('should validate with "dataTooLarge: %s" when category number is %s than default limit', (
+                _result: string,
+                _operator: string,
+                categoriesNum: number,
+                expected: IValidationResult
+            ) => {
+                const data = {
+                    series: Array(1),
+                    categories: Array(categoriesNum).fill({
+                        name: 'Month',
+                        categories: Array(31)
+                    })
+                };
+                const validationResult = validateData(undefined, { ...chartOptions, data });
+                expect(validationResult).toEqual(expected);
             });
         });
     });
@@ -1595,8 +1629,8 @@ describe('chartOptionsBuilder', () => {
         });
     });
 
-    describe('getDrillContext', () => {
-        it('should return correct drillContext for bar chart with stack by and view by attributes', () => {
+    describe('getDrillIntersection', () => {
+        it('should return correct intersection for bar chart with stack by and view by attributes', () => {
             const dataSet = fixtures.barChartWithStackByAndViewByAttributes;
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dataSet);
             /*
@@ -1607,9 +1641,7 @@ describe('chartOptionsBuilder', () => {
                 "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
                 "identifier": "ah1EuQxwaCqs"
             }
-
-             */
-
+            */
             const measures = [measureGroup.items[0].measureHeaderItem];
 
             const viewByItem = {
@@ -1623,31 +1655,36 @@ describe('chartOptionsBuilder', () => {
             };
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
-            expect(drillContext).toEqual([
+            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            expect(drillIntersection).toEqual([
                 {
-                    format: '#,##0.00',
                     id: 'amountMetric',
-                    identifier: 'ah1EuQxwaCqs',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279',
-                    value: 'Amount'
+                    title: 'Amount',
+                    header: {
+                        identifier: 'ah1EuQxwaCqs',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279'
+                    }
                 },
                 {
                     id: '1226',
-                    identifier: 'label.owner.department',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027',
-                    value: 'Direct Sales'
+                    title: 'Direct Sales',
+                    header: {
+                        identifier: 'label.owner.department',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027'
+                    }
                 },
                 {
                     id: '1225',
-                    identifier: 'label.owner.region',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024',
-                    value: 'East Coast'
+                    title: 'East Coast',
+                    header: {
+                        identifier: 'label.owner.region',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024'
+                    }
                 }
             ]);
         });
 
-        it('should return correct drillContex for pie chart measures only', () => {
+        it('should return correct intersection for pie chart measures only', () => {
             const dataSet = fixtures.pieChartWithMetricsOnly;
             const { measureGroup } = getMVS(dataSet);
             const measures = [measureGroup.items[0].measureHeaderItem];
@@ -1656,14 +1693,15 @@ describe('chartOptionsBuilder', () => {
             const stackByItem: any = null;
 
             const { afm } = dataSet.executionRequest;
-            const drillContext = getDrillContext(stackByItem, viewByItem, measures, afm);
-            expect(drillContext).toEqual([
+            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            expect(drillIntersection).toEqual([
                 {
-                    format: '#,##0.00',
                     id: 'lostMetric',
-                    identifier: 'af2Ewj9Re2vK',
-                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                    value: 'Lost'
+                    title: 'Lost',
+                    header: {
+                        identifier: 'af2Ewj9Re2vK',
+                        uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                    }
                 }
             ]);
         });
@@ -1711,28 +1749,32 @@ describe('chartOptionsBuilder', () => {
                 type
             );
 
-            it('should assign correct drillContext to pointData with drilldown true', () => {
+            it('should assign correct drillIntersection to pointData with drilldown true', () => {
                 expect(drillableMeasuresSeriesData
-                    .map((seriesItem: any) => seriesItem.data[0].drillContext)
+                    .map((seriesItem: any) => seriesItem.data[0].drillIntersection)
                 ).toEqual([
                     [
                         {
-                            format: '#,##0.00',
                             id: 'lostMetric',
-                            identifier: 'af2Ewj9Re2vK',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                            value: '<button>Lost</button> ...'
+                            title: '<button>Lost</button> ...',
+                            header: {
+                                identifier: 'af2Ewj9Re2vK',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                            }
                         }, {
-                            format: '#,##0.00',
                             id: 'wonMetric',
-                            identifier: 'afSEwRwdbMeQ',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284',
-                            value: 'Won'
+                            title: 'Won',
+                            header: {
+                                identifier: 'afSEwRwdbMeQ',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284'
+                            }
                         }, {
                             id: '2008',
-                            identifier: 'created.aag81lMifn6q',
-                            uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                            value: '<button>2008</button>'
+                            title: '<button>2008</button>',
+                            header: {
+                                identifier: 'created.aag81lMifn6q',
+                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                            }
                         }
                     ]
                 ]);
@@ -1823,7 +1865,7 @@ describe('chartOptionsBuilder', () => {
                 type
             );
 
-            it('should assign correct drillContext to pointData with drilldown true', () => {
+            it('should assign correct drillIntersection to pointData with drilldown true', () => {
                 expect(drillableMeasuresSeriesData.length).toBe(20);
                 expect(drillableMeasuresSeriesData[8].data[0]).toEqual({
                     x: 245,
@@ -1831,33 +1873,38 @@ describe('chartOptionsBuilder', () => {
                     z: 2280481.04,
                     format: '$#,#00.00',
                     drilldown: true,
-                    drillContext: [
+                    drillIntersection: [
                         {
                             id: '784a5018a51049078e8f7e86247e08a3',
-                            format: '#,##0.00',
-                            value: '_Snapshot [EOP-2]',
-                            identifier: 'ab0bydLaaisS',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                            title: '_Snapshot [EOP-2]',
+                            header: {
+                                identifier: 'ab0bydLaaisS',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097'
+                            }
                         },
                         {
                             id: '9e5c3cd9a93f4476a93d3494cedc6010',
-                            format: '#,##0',
-                            value: '# of Open Opps.',
-                            identifier: 'aaYh6Voua2yj',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                            title: '# of Open Opps.',
+                            header: {
+                                identifier: 'aaYh6Voua2yj',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465'
+                            }
                         },
                         {
                             id: '71d50cf1d13746099b7f506576d78e4a',
-                            format: '$#,#00.00',
-                            value: 'Remaining Quota',
-                            identifier: 'ab4EFOAmhjOx',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                            title: 'Remaining Quota',
+                            header: {
+                                identifier: 'ab4EFOAmhjOx',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543'
+                            }
                         },
                         {
                             id: '1235',
-                            value: 'Jessica Traven',
-                            identifier: 'label.owner.id.name',
-                            uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                            title: 'Jessica Traven',
+                            header: {
+                                identifier: 'label.owner.id.name',
+                                uri: '/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028'
+                            }
                         }
                     ]
                 });
@@ -1953,13 +2000,13 @@ describe('chartOptionsBuilder', () => {
                     type
                 );
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     const startYear = parseInt(// should be 2008
-                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].value, 10
                     );
                     drillableMeasuresSeriesData.forEach((seriesItem: any) => {
                         seriesItem.data.forEach((point: any, index: number) => {
-                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                            expect(point.drillIntersection[1].value - index).toEqual(startYear);
                         });
                     });
                 });
@@ -2003,13 +2050,13 @@ describe('chartOptionsBuilder', () => {
                     type
                 );
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     const startYear = parseInt(// should be 2008
-                        drillableMeasuresSeriesData[0].data[0].drillContext[1].value, 10
+                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].value, 10
                     );
                     drillableMeasuresSeriesData.forEach((seriesItem: any) => {
                         seriesItem.data.forEach((point: any, index: number) => {
-                            expect(point.drillContext[1].value - index).toEqual(startYear);
+                            expect(point.drillIntersection[1].value - index).toEqual(startYear);
                         });
                     });
                 });
@@ -2062,32 +2109,32 @@ describe('chartOptionsBuilder', () => {
                         .map((seriesItem: any) => seriesItem.isDrillable)).toEqual([false, false, false]);
                 });
 
-                it('should return new pointData items drilldown false and no drillContext', () => {
+                it('should return new pointData items drilldown false and no drillIntersection', () => {
                     expect(noDrillableSeriesData
-                        .map((seriesItem: any) => seriesItem.data.map(({ drilldown, drillContext }: any) => {
-                            return { drilldown, drillContext };
+                        .map((seriesItem: any) => seriesItem.data.map(({ drilldown, drillIntersection }: any) => {
+                            return { drilldown, drillIntersection };
                         }))
                     ).toEqual([
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ],
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ],
                         [
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false },
-                            { drillContext: undefined, drilldown: false }
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false },
+                            { drillIntersection: undefined, drilldown: false }
                         ]
                     ]);
                 });
@@ -2126,37 +2173,43 @@ describe('chartOptionsBuilder', () => {
                     ]);
                 });
 
-                it('should assign correct drillContext to pointData with drilldown true', () => {
+                it('should assign correct drillIntersection to pointData with drilldown true', () => {
                     expect(twoDrillableMeasuresSeriesData
-                        .map((seriesItem: any) => seriesItem.data[0].drillContext)
+                        .map((seriesItem: any) => seriesItem.data[0].drillIntersection)
                     ).toEqual([
                         [
                             {
-                                format: '#,##0.00',
                                 id: 'lostMetric',
-                                identifier: 'af2Ewj9Re2vK',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283',
-                                value: '<button>Lost</button> ...'
+                                title: '<button>Lost</button> ...',
+                                header: {
+                                    identifier: 'af2Ewj9Re2vK',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283'
+                                }
                             }, {
                                 id: '2008',
-                                identifier: 'created.aag81lMifn6q',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                                value: '<button>2008</button>'
+                                title: '<button>2008</button>',
+                                header: {
+                                    identifier: 'created.aag81lMifn6q',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                                }
                             }
                         ],
                         undefined,
                         [
                             {
-                                format: '#,##0.00',
                                 id: 'expectedMetric',
-                                identifier: 'alUEwmBtbwSh',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285',
-                                value: 'Expected'
+                                title: 'Expected',
+                                header: {
+                                    identifier: 'alUEwmBtbwSh',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285'
+                                }
                             }, {
                                 id: '2008',
-                                identifier: 'created.aag81lMifn6q',
-                                uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158',
-                                value: '<button>2008</button>'
+                                title: '<button>2008</button>',
+                                header: {
+                                    identifier: 'created.aag81lMifn6q',
+                                    uri: '/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158'
+                                }
                             }
                         ]
                     ]);
@@ -2254,7 +2307,9 @@ describe('chartOptionsBuilder', () => {
             y: 1,
             format: '# ###',
             name: 'point',
-            category: 'category',
+            category: {
+                name: 'category'
+            },
             series: {
                 name: 'series'
             }
@@ -2292,7 +2347,9 @@ describe('chartOptionsBuilder', () => {
             it('should unescape brackets and htmlescape category', () => {
                 const tooltip = tooltipFn({
                     ...pointData,
-                    category: '&gt;"&\'&lt;'
+                    category: {
+                        name: '&gt;"&\'&lt;'
+                    }
                 });
                 expect(getValues(tooltip)).toEqual(['Department', '&gt;&quot;&amp;&#39;&lt;', 'series', ' 1']);
             });
@@ -2441,7 +2498,9 @@ describe('chartOptionsBuilder', () => {
 
     describe('generateTooltipTreemapFn', () => {
         const point: IPoint = {
-            category: 'category',
+            category: {
+                name: 'category'
+            },
             value: 300,
             name: 'point name',
             x: 0,
@@ -2612,7 +2671,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     }
@@ -2644,7 +2705,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     }
@@ -2690,7 +2753,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     }
@@ -2732,7 +2797,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     },
@@ -2776,7 +2843,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     }
@@ -2792,7 +2861,9 @@ describe('chartOptionsBuilder', () => {
                     y: 1,
                     format: '# ###',
                     name: 'point',
-                    category: 'category',
+                    category: {
+                        name: 'category'
+                    },
                     series: {
                         name: 'series'
                     }
@@ -3337,6 +3408,130 @@ describe('chartOptionsBuilder', () => {
                     seriesIndices: [0, 1, 2]
                 }];
                 expect(chartOptions.yAxes).toEqual(expectedAxis);
+            });
+        });
+
+        describe('optional stacking', () => {
+            it('should return grouped categories with viewing by 2 attributes', () => {
+                const {
+                    data: {
+                        categories
+                    },
+                    isViewByTwoAttributes
+                } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute);
+
+                expect(isViewByTwoAttributes).toBeTruthy();
+                expect(categories).toEqual([{
+                    name: 'Direct Sales',
+                    categories: ['East Coast', 'West Coast']
+                }, {
+                    name: 'Inside Sales',
+                    categories: ['East Coast', 'West Coast']
+                }]);
+            });
+
+            it('should not return grouped categories with viewing by one attribute', () => {
+                const {
+                    data: {
+                        categories
+                    },
+                    isViewByTwoAttributes
+                } = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+
+                expect(isViewByTwoAttributes).toBeFalsy();
+                expect(categories).toEqual(['<button>2008</button>', '2009', '2010', '2011', '2012']);
+            });
+
+            it.each`
+                description | config
+                ${'undefined'} | ${undefined}
+                ${'false'} | ${{ stackMeasures: false, stackMeasuresToPercent: false }}
+            `('should return \'undefined\' stacking with stack options are $description', (
+                { config }: {config: any}
+            ) => {
+                const { stacking } = generateChartOptions(
+                    fixtures.barChartWith3MetricsAndViewByAttribute,
+                    {
+                        type: VisualizationTypes.COLUMN,
+                        ...config
+                    }
+                );
+                expect(stacking).toBeFalsy();
+            });
+
+            describe('getCategoriesForTwoAttributes', () => {
+                it('should return categories for two attributes', () => {
+                    const viewByTwoAttributes: IViewByTwoAttributes = {
+                        parent: [{
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                name: 'Direct Sales'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                name: 'Direct Sales'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                name: 'Inside Sales'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                name: 'Inside Sales'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                                name: 'Common Sales'
+                            }
+                        }],
+                        children: [{
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                name: 'Won'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                name: 'Lost'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/5/elements?id=1',
+                                name: 'Won'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                name: 'Lost'
+                            }
+                        }, {
+                            attributeHeaderItem: {
+                                uri: '/gdc/md/storybook/obj/5/elements?id=2',
+                                name: 'Lost'
+                            }
+                        }]
+                    };
+                    const categories = getCategoriesForTwoAttributes(viewByTwoAttributes);
+                    expect(categories).toEqual([{
+                        name: 'Direct Sales',
+                        categories: ['Won', 'Lost']
+                    }, {
+                        name: 'Inside Sales',
+                        categories: ['Won', 'Lost']
+                    }, {
+                        name: 'Common Sales',
+                        categories: ['Lost']
+                    }]);
+                });
+
+                it('should return empty category', () => {
+                    const categories = getCategoriesForTwoAttributes({ parent: [], children: [] });
+                    expect(categories).toHaveLength(0);
+                });
             });
         });
     });

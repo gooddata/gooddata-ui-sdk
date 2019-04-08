@@ -2,10 +2,14 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import noop = require('lodash/noop');
 import { testUtils } from '@gooddata/js-utils';
+import sdk, { IExportConfig } from '@gooddata/gooddata-js';
 import {
+    emptyDataSource,
     oneMeasureDataSource,
     oneMeasurePagableOnlyDataSource,
+    oneMeasureOneDimensionDataSource,
     tooLargeDataSource,
     executionObjectWithTotalsDataSource,
     LoadingComponent,
@@ -22,6 +26,7 @@ import {
 } from '../VisualizationLoadingHOC';
 import { oneMeasureResponse } from '../../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IDrillableItem } from '../../../../interfaces/DrillEvents';
+import { IExportFunction } from '../../../../interfaces/Events';
 import { IDataSourceProviderInjectedProps } from '../../../afm/DataSourceProvider';
 import { RuntimeError } from '../../../../errors/RuntimeError';
 import { ErrorStates } from '../../../../constants/errorStates';
@@ -66,6 +71,7 @@ class TestInnerComponent
 
 describe('VisualizationLoadingHOC', () => {
 
+    const PROJECT_ID = 'prID';
     const createComponent =
     (
         customProps: Partial<ITestInnerComponentProps & IDataSourceProviderInjectedProps> = {},
@@ -73,6 +79,8 @@ describe('VisualizationLoadingHOC', () => {
     ) => {
         const props = {
             dataSource: oneMeasureDataSource,
+            projectId: PROJECT_ID,
+            sdk,
             ...customProps
         };
         const WrappedComponent = visualizationLoadingHOC(TestInnerComponent, autoExecuteDataSource);
@@ -169,6 +177,23 @@ describe('VisualizationLoadingHOC', () => {
             expect(onError).toHaveBeenCalledTimes(1);
 
             expect(onError).toHaveBeenCalledWith(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE));
+        });
+    });
+
+    it('should show EmptyResultError when exporting NO DATA result', async (done) => {
+        const onExportReady = async (exportResult: IExportFunction) => {
+            try {
+                await exportResult({ format: 'xlsx' });
+            } catch (error) {
+                expect(error.cause.name).toEqual('EmptyResultError');
+                expect(error).toEqual(new RuntimeError(ErrorStates.NO_DATA));
+            }
+            done();
+        };
+        createComponent({
+            dataSource: emptyDataSource,
+            onExportReady,
+            onError: noop
         });
     });
 
@@ -396,11 +421,104 @@ describe('VisualizationLoadingHOC', () => {
             const innerWrapped = wrapper.find(TestInnerComponent);
 
             const okRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);
-            expect(okRes).toBe(oneMeasureResponse);
+            expect(okRes).toEqual(oneMeasureResponse);
 
             wrapper.unmount();
             const nullRes = await innerWrapped.props().getPage({ dimensions: [] }, [], []);
             expect(nullRes).toBe(null);
+        });
+    });
+
+    describe('Exporter', () => {
+        beforeAll(() => {
+            sdk.clone = jest.fn(() => sdk);
+            sdk.report.exportResult = jest.fn((_, __, exportConfig: IExportConfig) => {
+                if (exportConfig.format === 'xlsx') {
+                    return Promise.resolve({ uri: '/bar' });
+                }
+                return Promise.reject(new Error('Error!!!'));
+            });
+        });
+
+        afterAll(() => {
+            jest.resetAllMocks();
+        });
+
+        it('should return URI when call exportResult successfully', (done) => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                const result = await exportResult({ format: 'xlsx' });
+                expect(result.uri).toEqual('/bar');
+                done();
+            };
+            createComponent({
+                onExportReady,
+                dataSource: oneMeasureOneDimensionDataSource
+            });
+        });
+
+        it('should return error when call exportResult fail', (done) => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                try {
+                    await exportResult({ format: 'csv' });
+                } catch (error) {
+                    expect(error.message).toEqual('Error!!!');
+                    done();
+                }
+            };
+            createComponent({
+                onExportReady,
+                dataSource: oneMeasureOneDimensionDataSource
+            });
+        });
+
+        it('should return the default file name', (done) => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                await exportResult({ format: 'xlsx' });
+                expect(sdk.report.exportResult).toBeCalledWith(
+                    PROJECT_ID,
+                    'foo',
+                    { format: 'xlsx', title: 'Untitled' }
+                );
+                done();
+            };
+            createComponent({
+                onExportReady,
+                dataSource: oneMeasureOneDimensionDataSource
+            });
+        });
+
+        it('should return the file name passed', (done) => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                await exportResult({ format: 'xlsx' });
+                expect(sdk.report.exportResult).toBeCalledWith(
+                    PROJECT_ID,
+                    'foo',
+                    { format: 'xlsx', title: 'CustomTitle' }
+                );
+                done();
+            };
+            createComponent({
+                exportTitle: 'CustomTitle',
+                onExportReady,
+                dataSource: oneMeasureOneDimensionDataSource
+            });
+        });
+
+        it('should return the validated file name', (done) => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                await exportResult({ format: 'xlsx' });
+                expect(sdk.report.exportResult).toBeCalledWith(
+                    PROJECT_ID,
+                    'foo',
+                    { format: 'xlsx', title: 'CustomTitle' }
+                );
+                done();
+            };
+            createComponent({
+                exportTitle: 'Custom/\?*:|"<>Title',
+                onExportReady,
+                dataSource: oneMeasureOneDimensionDataSource
+            });
         });
     });
 });

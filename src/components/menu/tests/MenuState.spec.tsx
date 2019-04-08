@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import MenuState from '../MenuState';
+import { OnOpenedChange } from '../MenuSharedTypes';
 
 describe('Menu state', () => {
     it('opened set to false by default', () => {
@@ -22,8 +23,8 @@ describe('Menu state', () => {
     it('opened state is propagated with uncontrolled component', () => {
         const fnOnOpenedChangeProp = jest.fn();
 
-        let fnOnOpenedChange: (opened: boolean) => void;
-        const fnMenuStateChildren = jest.fn(({ onOpenedChange }) => {
+        let fnOnOpenedChange: OnOpenedChange;
+        const fnMenuStateChildren = jest.fn(({ onOpenedChange }: { onOpenedChange: OnOpenedChange }) => {
             fnOnOpenedChange = jest.fn(onOpenedChange);
             return null;
         });
@@ -35,19 +36,19 @@ describe('Menu state', () => {
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(1);
         expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: false, onOpenedChange: expect.any(Function) });
 
-        fnOnOpenedChange(true);
+        fnOnOpenedChange({ opened: true, source: 'TOGGLER_BUTTON_CLICK' });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(2);
         expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: true, onOpenedChange: expect.any(Function) });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(1);
-        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith(true);
+        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: true, source: 'TOGGLER_BUTTON_CLICK' });
 
-        fnOnOpenedChange(false);
+        fnOnOpenedChange({ opened: false, source: 'TOGGLER_BUTTON_CLICK' });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(3);
         expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: false, onOpenedChange: expect.any(Function) });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(2);
-        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith(false);
+        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: false, source: 'TOGGLER_BUTTON_CLICK' });
     });
 
     it('opened state is propagated with controlled component', () => {

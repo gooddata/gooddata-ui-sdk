@@ -6,7 +6,6 @@ import TimeOverTimeComparison from './TimeOverTimeComparison';
 import BasicComponents from './BasicComponents';
 import ComboChart from './ComboChart';
 import GlobalFilters from './GlobalFilters';
-import Visualization from './Visualization';
 import Execute from './Execute';
 import DatePicker from './DatePicker';
 import ResponsiveChart from './ResponsiveChart';
@@ -26,6 +25,9 @@ import AggregationTest from './AggregationTest';
 import WithSubRoutes from './WithSubRoutes';
 import ChartConfiguration from './ChartConfiguration';
 import ArithmeticMeasure from './ArithmeticMeasure';
+import Export from './Export';
+import VisualizationByUri from './VisualizationByUri';
+import VisualizationByIdentifier from './VisualizationByIdentifier';
 
 export const advancedUseCasesRoutes = [
     { path: '/advanced/global-filters', title: 'Global Filters', Component: GlobalFilters },
@@ -38,6 +40,11 @@ export const advancedUseCasesRoutes = [
     { path: '/advanced/chart-configuration', title: 'Chart Configuration', Component: ChartConfiguration }
 ];
 
+export const visualizationUseCasesRoutes = [
+    { path: '/visualization/visualization-by-uri', title: 'Visualization by URI', Component: VisualizationByUri },
+    { path: '/visualization/visualization-by-identifier', title: 'Visualization by identifier', Component: VisualizationByIdentifier }
+];
+
 export const drillingUseCasesRoutes = [
     { path: '/drilling/drill-with-external-data', title: 'Drill With External Data', Component: DrillWithExternalData },
     { path: '/drilling/pivot-table-drilling', title: 'Pivot table drilling', Component: PivotTableDrilling }
@@ -47,6 +54,7 @@ export const nextRoutes = [
     { path: '/next/combo-chart', title: 'Combo chart', Component: ComboChart }
 ];
 
+const VisualizationUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: visualizationUseCasesRoutes });
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 const DrillingUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
 const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
@@ -54,13 +62,14 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 export const sideNavigationRoutes = [
     { path: '/', title: 'Basic Components', Component: BasicComponents, exact: true },
     { path: '/pivot-table', title: 'Pivot Table', Component: PivotTableDemo },
-    { path: '/visualization', title: 'Visualization Component', Component: Visualization },
+    { path: '/visualization', pathMatch: 'full', redirectTo: visualizationUseCasesRoutes[0].path, title: 'Visualization Component', Component: VisualizationUseCasesRoutes },
     { path: '/sorting', title: 'Sorting', Component: Sorting },
     { path: '/time-over-time-comparison', title: 'Time Over Time Comparison', Component: TimeOverTimeComparison },
     { path: '/attribute-filter-components', title: 'Attribute Filter Components', Component: AttributeFilter },
     { path: '/arithmetic-measures', title: 'Arithmetic Measures', Component: ArithmeticMeasure },
     { path: '/execute', title: 'Execute Component', Component: Execute },
     { path: '/advanced', pathMatch: 'full', redirectTo: advancedUseCasesRoutes[0].path, title: 'Advanced Use Cases', Component: AdvancedUseCasesRoutes },
+    { path: '/export', title: 'Export', Component: Export },
     { path: '/drilling', pathMatch: 'full', redirectTo: drillingUseCasesRoutes[0].path, title: 'Drilling', Component: DrillingUseCasesRoutes },
     { path: '/next', pathMatch: 'full', redirectTo: nextRoutes[0].path, title: 'Next', Component: NextRoutes }
 ];
@@ -87,6 +96,7 @@ export const topNavigationRoutes = [
 
 export const routes = [
     ...sideNavigationRoutes,
+    ...visualizationUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...nextRoutes,
@@ -102,6 +112,7 @@ export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
 }));
 
 export default {
+    visualizationUseCasesRoutes,
     advancedUseCasesRoutes,
     drillingUseCasesRoutes,
     sideNavigationRoutes,

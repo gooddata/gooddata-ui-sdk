@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { AreaChart as AfmAreaChart } from './afm/AreaChart';
 
@@ -10,13 +10,14 @@ import { ICommonChartProps } from './core/base/BaseChart';
 import { convertBucketsToAFM } from '../helpers/conversion';
 import { getStackingResultSpec } from '../helpers/resultSpec';
 import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { verifyBuckets, getBucketsProps, getConfigProps } from '../helpers/optionalStacking/areaChart';
 
 export interface IAreaChartBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    stackBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
+    stackBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProps {
@@ -30,23 +31,28 @@ type IAreaChartNonBucketProps = Subtract<IAreaChartProps, IAreaChartBucketProps>
  * is a component with bucket props measures, viewBy, stacksBy, filters
  */
 export function AreaChart(props: IAreaChartProps): JSX.Element {
-    const buckets: VisualizationObject.IBucket[] = [
-        {
-            localIdentifier: MEASURES,
-            items: props.measures || []
-        },
-        {
-            localIdentifier: ATTRIBUTE,
-            items: props.viewBy ? [props.viewBy] : []
-        },
-        {
-            localIdentifier: STACK,
-            items: props.stackBy ? [props.stackBy] : []
-        }
-    ];
+    verifyBuckets(props);
+
+    const { measures, viewBy, stackBy } = getBucketsProps(props);
+    const configProp = getConfigProps(props);
+
+    const buckets: VisualizationObject.IBucket[] = [{
+        localIdentifier: MEASURES,
+        items: measures
+    }, {
+        localIdentifier: ATTRIBUTE,
+        items: viewBy
+    }, {
+        localIdentifier: STACK,
+        items: stackBy
+    }];
 
     const newProps
         = omit<IAreaChartProps, IAreaChartNonBucketProps>(props, ['measures', 'viewBy', 'stackBy', 'filters']);
+    newProps.config = {
+        ...newProps.config,
+        ...configProp
+    };
 
     return (
         <AfmAreaChart

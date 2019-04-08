@@ -4,8 +4,8 @@ export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
         element: 'primaryValue',
         intersection: [{
             header: {
-                identifier: '',
-                uri: '/gdc/md/project_id/obj/1'
+                uri: '/gdc/md/project_id/obj/1',
+                identifier: ''
             },
             id: 'm1',
             title: 'Lost'

@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution, AFM } from '@gooddata/typings';
 import * as invariant from 'invariant';
-import { getMappingHeaderName } from './mappingHeader';
+import { getMappingHeaderName, getMappingHeaderUri } from './mappingHeader';
 import range = require('lodash/range');
 import get = require('lodash/get');
 import clone = require('lodash/clone');
 import zipObject = require('lodash/zipObject');
 
 import { unwrap } from './utils';
-import { IMappingHeader } from '../interfaces/MappingHeader';
-import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions } from '../interfaces/AGGrid';
+import { IMappingHeader, isMappingHeaderTotal } from '../interfaces/MappingHeader';
+import { IGridHeader, IColumnDefOptions, IGridRow, IGridAdapterOptions, IGridTotalsRow } from '../interfaces/AGGrid';
 import { ColDef } from 'ag-grid';
 import { getTreeLeaves } from '../components/core/PivotTable';
 import InjectedIntl = ReactIntl.InjectedIntl;
@@ -19,6 +19,8 @@ export const COLUMN_ATTRIBUTE_COLUMN = 'COLUMN_ATTRIBUTE_COLUMN';
 export const MEASURE_COLUMN = 'MEASURE_COLUMN';
 export const FIELD_SEPARATOR = '-';
 export const FIELD_SEPARATOR_PLACEHOLDER = 'DASH';
+export const FIELD_TYPE_MEASURE = 'm';
+export const FIELD_TYPE_ATTRIBUTE = 'a';
 export const ID_SEPARATOR = '_';
 export const ID_SEPARATOR_PLACEHOLDER = 'UNDERSCORE';
 export const DOT_PLACEHOLDER = 'DOT';
@@ -42,7 +44,7 @@ export const getIdsFromUri = (uri: string, sanitize = true) => {
 
 export const identifyHeader = (header: Execution.IResultHeaderItem) => {
     if (Execution.isAttributeHeaderItem(header)) {
-        return `a_${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
+        return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
     }
     if (Execution.isMeasureHeaderItem(header)) {
         return `m${ID_SEPARATOR}${header.measureHeaderItem.order}`;
@@ -56,7 +58,7 @@ export const identifyHeader = (header: Execution.IResultHeaderItem) => {
 export const identifyResponseHeader = (header: Execution.IHeader) => {
     if (Execution.isAttributeHeader(header)) {
         // response headers have no value id
-        return `a_${getIdsFromUri(header.attributeHeader.uri)[0]}`;
+        return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
     }
     if (Execution.isMeasureGroupHeader(header)) {
         // trying to identify a measure group would be ambiguous
@@ -117,7 +119,7 @@ export const shouldMergeHeaders = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     headerIndex: number,
     headerItemIndex: number
-) => {
+): boolean => {
     for (let ancestorIndex = headerIndex; ancestorIndex >= 0; ancestorIndex--) {
         const currentAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex];
         const nextAncestorHeader = resultHeaderDimension[ancestorIndex][headerItemIndex + 1];
@@ -135,7 +137,7 @@ export const mergeHeaderEndIndex = (
     resultHeaderDimension: Execution.IResultHeaderItem[][],
     headerIndex: number,
     headerItemStartIndex: number
-) => {
+): number => {
     const header = resultHeaderDimension[headerIndex];
     for (let headerItemIndex = headerItemStartIndex; headerItemIndex < header.length; headerItemIndex++) {
         if (!shouldMergeHeaders(resultHeaderDimension, headerIndex, headerItemIndex)) {
@@ -158,7 +160,7 @@ export const getColumnHeaders = (
     headerValueEnd: number = undefined,
     fieldPrefix = '',
     parentDrillItems: IMappingHeader[] = []
-) => {
+): IGridHeader[] => {
     if (!resultHeaderDimension.length) {
         return [];
     }
@@ -235,31 +237,69 @@ export const getFields = (dataHeaders: Execution.IResultHeaderItem[][]) => {
     }) as string[];
 };
 
+const getSubtotalLabelCellIndex = (resultHeaderItems: Execution.IResultHeaderItem[][], rowIndex: number): number => {
+    return resultHeaderItems.findIndex(headerItem => Execution.isTotalHeaderItem(headerItem[rowIndex]));
+};
+
+const getCell = (
+    rowHeaderData: Execution.IResultHeaderItem[][],
+    rowIndex: number,
+    rowHeader: IGridHeader,
+    rowHeaderIndex: number,
+    intl: InjectedIntl
+): {
+    field: string,
+    value: string,
+    rowHeaderDataItem: Execution.IResultHeaderItem
+} => {
+    const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
+    const cell = {
+        field: rowHeader.field,
+        rowHeaderDataItem
+    };
+
+    if (Execution.isAttributeHeaderItem(rowHeaderDataItem)) {
+        return {
+            ...cell,
+            value: rowHeaderDataItem.attributeHeaderItem.name
+        };
+    }
+
+    if (Execution.isTotalHeaderItem(rowHeaderDataItem)) {
+        const totalName = rowHeaderDataItem.totalHeaderItem.name;
+        return {
+            ...cell,
+            value: getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
+                ? intl.formatMessage({ id: `visualizations.totals.dropdown.title.${totalName}` })
+                : null
+        };
+    }
+
+    invariant(rowHeaderDataItem, 'row header is not of type IResultAttributeHeaderItem or IResultTotalHeaderItem');
+};
+
 export const getRow = (
     cellData: Execution.DataValue[],
     rowIndex: number,
     columnFields: string[],
     rowHeaders: IGridHeader[],
-    rowHeaderData: Execution.IResultHeaderItem[][]
-) => {
+    rowHeaderData: Execution.IResultHeaderItem[][],
+    intl: InjectedIntl
+): IGridRow => {
     const row: IGridRow = {
-        drillItemMap: {}
+        headerItemMap: {}
     };
+
+    rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
+        const { field, value, rowHeaderDataItem } = getCell(rowHeaderData, rowIndex, rowHeader, rowHeaderIndex, intl);
+        row[field] = value;
+        row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
+    });
+
     cellData.forEach((cell: Execution.DataValue, cellIndex: number) => {
-        rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
-            const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
-            // attribute value drill item
-            const rowHeaderDrillItem: IMappingHeader =
-                Execution.isAttributeHeaderItem(rowHeaderDataItem) ? rowHeaderDataItem : null;
-            // Drilling on row headers supports only attribute headers
-            invariant(rowHeaderDrillItem, 'row header is not of type IResultAttributeHeaderItem');
-            row[rowHeader.field] = unwrap(rowHeaderDataItem).name;
-            row.drillItemMap[rowHeader.field] = rowHeaderDrillItem;
-        });
-        const columnKey = columnFields[cellIndex];
-        // If columnKey doesn't exists, this is a table with attributes only. Do not assign measure value then.
-        if (columnKey) {
-            row[columnKey] = cell;
+        const field = columnFields[cellIndex];
+        if (field) {
+            row[field] = cell;
         }
     });
     return row;
@@ -270,7 +310,7 @@ export const getRowTotals = (
     columnKeys: string[],
     headers: Execution.IHeader[],
     intl: InjectedIntl
-) => {
+): IGridTotalsRow[] => {
     if (!totals) {
         return null;
     }
@@ -283,10 +323,10 @@ export const getRowTotals = (
         columnKeys.filter((key: any) => {
             const currentKey = key.split(FIELD_SEPARATOR).pop();
             const fieldType = currentKey.split(ID_SEPARATOR)[0];
-            if (fieldType === 'a') {
+            if (fieldType === FIELD_TYPE_ATTRIBUTE) {
                 attributeKeys.push(currentKey);
             }
-            if (fieldType === 'm') {
+            if (fieldType === FIELD_TYPE_MEASURE) {
                 measureKeys.push(key);
             }
         });
@@ -385,9 +425,9 @@ export const getMeasureSortItemFieldAndDirection = (
             const measureSortHeaderIndex = measureHeaderItems
                 .findIndex(measureHeaderItem => measureHeaderItem.measureHeaderItem.localIdentifier
                     === locator.measureLocatorItem.measureIdentifier);
-            keys.push(`m_${measureSortHeaderIndex}`);
+            keys.push(`m${ID_SEPARATOR}${measureSortHeaderIndex}`);
         } else {
-            const key = `a_${getIdsFromUri(locator.attributeLocatorItem.element).join(ID_SEPARATOR)}`;
+            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element).join(ID_SEPARATOR)}`;
             keys.push(key);
         }
     });
@@ -396,12 +436,18 @@ export const getMeasureSortItemFieldAndDirection = (
     return [field, direction];
 };
 
+export interface IAgGridPage {
+    columnDefs: IGridHeader[];
+    rowData: IGridRow[];
+    rowTotals: IGridTotalsRow[];
+}
+
 export const executionToAGGridAdapter = (
     executionResponses: Execution.IExecutionResponses,
     resultSpec: AFM.IResultSpec = {},
     intl: InjectedIntl,
     options: IGridAdapterOptions = {}
-) => {
+): IAgGridPage => {
     const {
         makeRowGroups = false,
         addLoadingRenderer = null,
@@ -486,7 +532,7 @@ export const executionToAGGridAdapter = (
     const minimalRowData: Execution.DataValue[][] = getMinimalRowData(data as Execution.DataValue[][], headerItems[0]);
     const rowData = (minimalRowData).map(
         (dataRow: Execution.DataValue[], dataRowIndex: number) =>
-            getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0])
+            getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0], intl)
     );
 
     const columnKeys = [...rowFields, ...columnFields];
@@ -504,4 +550,27 @@ export const getParsedFields = (colId: string): string[][] => {
     return colId
         .split(FIELD_SEPARATOR)
         .map((field: string) => (field.split(ID_SEPARATOR)));
+};
+
+export const colIdIsSimpleAttribute = (colId: string) => {
+    const parsedFields = getParsedFields(colId);
+    return parsedFields[0].length === 2 && parsedFields[0][0] === 'a';
+};
+
+export const getRowNodeId = (item: any) => {
+    return Object.keys(item.headerItemMap).map((key) => {
+        const mappingHeader: IMappingHeader = item.headerItemMap[key];
+
+        if (isMappingHeaderTotal(mappingHeader)) {
+            return `${key}${ID_SEPARATOR}${mappingHeader.totalHeaderItem.name}`;
+        }
+
+        const uri = getMappingHeaderUri(mappingHeader);
+        const ids = getIdsFromUri(uri);
+        return `${key}${ID_SEPARATOR}${ids[1]}`;
+    }).join(FIELD_SEPARATOR);
+};
+
+export const getGridIndex = (position: number, gridDistance: number) => {
+    return Math.floor(position / gridDistance);
 };

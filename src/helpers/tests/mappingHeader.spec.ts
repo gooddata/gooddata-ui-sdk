@@ -2,7 +2,8 @@
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
-    getMappingHeaderName, getMappingHeaderUri
+    getMappingHeaderName,
+    getMappingHeaderUri
 } from '../mappingHeader';
 import {
     attributeHeader,

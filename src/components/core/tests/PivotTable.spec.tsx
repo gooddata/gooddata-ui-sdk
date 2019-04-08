@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import { mount, shallow } from 'enzyme';
+import { oneAttributeOneMeasureSortByMeasureExecutionObject } from '../../../execution/fixtures/ExecuteAfm.fixtures';
 import { IMappingHeader } from '../../../interfaces/MappingHeader';
 import { createIntlMock } from '../../visualizations/utils/intlUtils';
 import noop = require('lodash/noop');
@@ -10,68 +11,42 @@ import {
     PivotTable,
     PivotTableInner,
     getSortItemByColId,
-    getGridDataSource,
     RowLoadingElement,
     getDrillRowData,
     getTreeLeaves,
     indexOfTreeNode,
     getDrillIntersection,
-    getSortsFromModel
+    getSortsFromModel,
+    IPivotTableInnerProps
 } from '../PivotTable';
-import { oneMeasureDataSource } from '../../tests/mocks';
+import {
+    oneMeasureDataSource,
+    oneAttributeOneMeasureDataSource
+} from '../../tests/mocks';
 import { pivotTableWithColumnAndRowAttributes } from '../../../../stories/test_data/fixtures';
 import { LoadingComponent } from '../../simple/LoadingComponent';
 import { executionToAGGridAdapter, getParsedFields } from '../../../helpers/agGrid';
 import { ICellRendererParams } from 'ag-grid';
+import { GroupingProviderFactory } from '../pivotTable/GroupingProvider';
 
 const intl = createIntlMock();
 
 describe('PivotTable', () => {
-    it('should render PivotTableInner', () => {
-        const wrapper = mount(
+    function renderComponent(customProps: Partial<IPivotTableInnerProps> = {}, dataSource = oneMeasureDataSource) {
+        return mount(
             <PivotTable
-                dataSource={oneMeasureDataSource}
+                dataSource={dataSource}
+                updateTotals={noop as any}
                 getPage={noop as any}
                 intl={intl}
+                {...customProps}
             />
         );
+    }
+
+    it('should render PivotTableInner', () => {
+        const wrapper = renderComponent();
         expect(wrapper.find(PivotTableInner)).toHaveLength(1);
-    });
-
-    describe('getGridDataSource', () => {
-        // tslint:disable-next-line:max-line-length
-        it('should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy', async () => {
-            const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
-            const getPage = jest.fn().mockReturnValue(Promise.resolve(pivotTableWithColumnAndRowAttributes));
-            const startRow = 0;
-            const endRow = 0;
-            const successCallback = jest.fn();
-            const cancelPagePromises = jest.fn();
-            const onSuccess = jest.fn();
-            const getGridApi = () => ({
-                setPinnedBottomRowData: jest.fn()
-            });
-            const sortModel: any[] = [];
-            const getExecution = () => pivotTableWithColumnAndRowAttributes;
-
-            const gridDataSource = getGridDataSource(
-                resultSpec,
-                getPage,
-                cancelPagePromises,
-                getExecution,
-                onSuccess,
-                getGridApi,
-                intl,
-                {}
-            );
-            await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
-            expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
-            expect(successCallback.mock.calls[0]).toMatchSnapshot();
-            expect(onSuccess.mock.calls[0]).toMatchSnapshot();
-
-            gridDataSource.destroy();
-            expect(cancelPagePromises).toHaveBeenCalledTimes(1);
-        });
     });
 
     describe('RowLoadingElement', () => {
@@ -92,7 +67,7 @@ describe('PivotTable', () => {
                 formatValue: (value: number) => value.toFixed(2)
             } as any;
             const wrapper = shallow(<RowLoadingElement {...props} />);
-            expect(wrapper.html()).toEqual('<span>3.14</span>');
+            expect(wrapper.html()).toEqual('<span class="s-value">3.14</span>');
         });
     });
 
@@ -108,7 +83,7 @@ describe('PivotTable', () => {
         );
         it('should return intersection of row attribute and row attribute value for row header cell', async () => {
             const rowColDef = columnDefs[0]; // row header
-            const drillItems = [...rowColDef.drillItems, rowData[0].drillItemMap[rowColDef.field]];
+            const drillItems = [...rowColDef.drillItems, rowData[0].headerItemMap[rowColDef.field]];
             const intersection = getDrillIntersection(drillItems, afm);
             expect(intersection).toEqual([
                 {
@@ -116,7 +91,7 @@ describe('PivotTable', () => {
                         identifier: 'label.restaurantlocation.locationstate',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211'
                     },
-                    id: 'state',
+                    id: 'label.restaurantlocation.locationstate',
                     title: 'Location State'
                 },
                 {
@@ -124,7 +99,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109'
                     },
-                    id: '',
+                    id: '6340109',
                     title: 'Alabama'
                 }
             ]);
@@ -141,7 +116,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
                     },
-                    id: '',
+                    id: '1',
                     title: 'Q1'
                 },
                 {
@@ -149,7 +124,7 @@ describe('PivotTable', () => {
                         identifier: 'date.aam81lMifn6q',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011'
                     },
-                    id: 'year',
+                    id: 'date.aam81lMifn6q',
                     title: 'Quarter (Date)'
                 },
                 {
@@ -157,7 +132,7 @@ describe('PivotTable', () => {
                         identifier: '',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
                     },
-                    id: '',
+                    id: '1',
                     title: 'Jan'
                 },
                 {
@@ -165,7 +140,7 @@ describe('PivotTable', () => {
                         identifier: 'date.abm81lMifn6q',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073'
                     },
-                    id: 'month',
+                    id: 'date.abm81lMifn6q',
                     title: 'Month (Date)'
                 },
                 {
@@ -173,7 +148,7 @@ describe('PivotTable', () => {
                         identifier: 'aabHeqImaK0d',
                         uri: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694'
                     },
-                    id: 'franchiseFeesAdRoyaltyIdentifier',
+                    id: 'aabHeqImaK0d',
                     title: '$ Franchise Fees (Ad Royalty)'
                 }
             ]);
@@ -213,11 +188,11 @@ describe('PivotTable', () => {
             expect(drillRow).toEqual([
                 {
                   id: '6340109',
-                  title: 'Alabama'
+                  name: 'Alabama'
                 },
                 {
                   id: '6340107',
-                  title: 'Montgomery'
+                  name: 'Montgomery'
                 },
                 '160104.5665',
                 '49454.8215',
@@ -268,6 +243,72 @@ describe('PivotTable', () => {
                 '40000',
                 '53364.1275'
             ]);
+        });
+    });
+
+    describe('groupRows for attribute columns', () => {
+        let createProvider: jest.SpyInstance;
+
+        function renderComponentForGrouping(customProps: Partial<IPivotTableInnerProps> = {}) {
+            return renderComponent(customProps, oneAttributeOneMeasureDataSource);
+        }
+
+        beforeEach(() => {
+            createProvider = jest.spyOn(GroupingProviderFactory, 'createProvider');
+        });
+
+        afterEach(() => {
+            createProvider.mockRestore();
+        });
+
+        it.each([
+            ['should NOT', undefined, false],
+            ['should NOT', false, false]
+        ])('%s group rows when groupRows property is %s', (_should, groupRows, expected) => {
+            renderComponentForGrouping({
+                groupRows
+            });
+
+            expect(createProvider).toHaveBeenCalledTimes(1);
+            expect(createProvider).toBeCalledWith(expected);
+        });
+
+        // tslint:disable-next-line:max-line-length
+        it('should group rows when grouping turned on and sorted by first attribute (default sort)', () => {
+            renderComponentForGrouping({
+                groupRows: true
+            });
+
+            expect(createProvider).toHaveBeenCalledTimes(1);
+            expect(createProvider).toHaveBeenCalledWith(true);
+        });
+
+        it('should NOT group rows when not sorted by first attribute', (done) => {
+            // check second async invocation since we are waiting for datasource to be updated with specified resultSpec
+            const onDataSourceUpdateSuccess = () => {
+                expect(createProvider).toHaveBeenCalledTimes(2);
+                expect(createProvider).toHaveBeenNthCalledWith(2, false);
+                done();
+            };
+
+            renderComponentForGrouping({
+                groupRows: true,
+                resultSpec: oneAttributeOneMeasureSortByMeasureExecutionObject.execution.resultSpec,
+                onDataSourceUpdateSuccess
+            });
+        });
+
+        it('should NOT group rows when grouping switched by property after render', () => {
+            const wrapper = renderComponentForGrouping({
+                groupRows: true
+            });
+
+            wrapper.setProps({
+                groupRows: false
+            });
+
+            expect(createProvider).toHaveBeenCalledTimes(2);
+            expect(createProvider).toHaveBeenNthCalledWith(2, false);
         });
     });
 });
@@ -349,20 +390,56 @@ describe('getSortItemByColId', () => {
 });
 
 describe('getSortsFromModel', () => {
-    it('should return sortItems based on sortModel', () => {
+    it('should return sortItems for row attribute sort', () => {
         const sortModel: any[] = [
             {
-                colId: 'a_2011',
+                colId: 'a_2211',
                 sort: 'asc'
             }
         ];
         expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
             [{
                 attributeSortItem: {
-                    attributeIdentifier: 'year',
+                    attributeIdentifier: 'state',
                     direction: 'asc'
                 }
             }]
+        );
+    });
+    it('should return sortItems for measure sort', () => {
+        const sortModel: any[] = [
+            {
+                colId: 'a_2009_1-a_2071_1-m_0',
+                sort: 'asc'
+            }
+        ];
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual(
+            [
+                {
+                    measureSortItem: {
+                        direction: 'asc',
+                        locators: [
+                            {
+                                attributeLocatorItem: {
+                                    attributeIdentifier: 'year',
+                                    element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1'
+                                }
+                            },
+                            {
+                                attributeLocatorItem: {
+                                    attributeIdentifier: 'month',
+                                    element: '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1'
+                                }
+                            },
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'franchiseFeesIdentifier'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         );
     });
 });

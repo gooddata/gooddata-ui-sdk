@@ -228,6 +228,7 @@ describe('Table', () => {
                 expect(bubble).toBeDefined();
 
                 // work-around to handle overlays
+                // tslint:disable-next-line:no-inner-html
                 document.body.innerHTML = '';
             });
         });
@@ -264,8 +265,8 @@ describe('Table', () => {
             it('should not has footer when no totals provided', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    ...DATA_2A_3M
-                });
+                        ...DATA_2A_3M
+                    });
                 const component: any = wrapper.find(TableVisualization).childAt(0).instance();
 
                 expect(component.hasFooterWithTotals()).toBeFalsy();
@@ -274,9 +275,9 @@ describe('Table', () => {
             it('should has footer when some totals provided', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        ...DATA_2A_3M
+                    });
                 const component: any = wrapper.find(TableVisualization).childAt(0).instance();
 
                 expect(component.hasFooterWithTotals()).toBeTruthy();
@@ -285,9 +286,9 @@ describe('Table', () => {
             it('should render total cells when totals are provided', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        ...DATA_2A_3M
+                    });
 
                 expect(wrapper.find(TotalCell).length).toEqual(5);
             });
@@ -302,11 +303,11 @@ describe('Table', () => {
             it('should not render any total cell when totals are provided but data contains only measures', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    headers: TABLE_HEADERS_2M,
-                    rows: TABLE_ROWS_2M,
-                    executionRequest: EXECUTION_REQUEST_2M
-                });
+                        totalsWithData: TOTALS,
+                        headers: TABLE_HEADERS_2M,
+                        rows: TABLE_ROWS_2M,
+                        executionRequest: EXECUTION_REQUEST_2M
+                    });
 
                 expect(wrapper.find(TotalCell).length).toEqual(0);
             });
@@ -314,11 +315,11 @@ describe('Table', () => {
             it('should not render total cell when totals are provided and there is only row in data', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    rows: TABLE_ROWS_1A_2M,
-                    headers: TABLE_HEADERS_1A_2M,
-                    executionRequest: EXECUTION_REQUEST_1A_2M
-                });
+                        totalsWithData: TOTALS,
+                        rows: TABLE_ROWS_1A_2M,
+                        headers: TABLE_HEADERS_1A_2M,
+                        executionRequest: EXECUTION_REQUEST_1A_2M
+                    });
 
                 expect(wrapper.find(TotalCell).length).toEqual(3);
             });
@@ -326,9 +327,9 @@ describe('Table', () => {
             it('should reset footer when component is updated with no totals', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        ...DATA_2A_3M
+                    });
 
                 const { footer } = getInstanceFromWrapper(wrapper, TableVisualization);
 
@@ -342,9 +343,9 @@ describe('Table', () => {
             it('should update footer height when component is updated with different totals', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        ...DATA_2A_3M
+                    });
                 const { footer } = getInstanceFromWrapper(wrapper, TableVisualization);
 
                 const heightBefore: number = TOTALS.length * DEFAULT_FOOTER_ROW_HEIGHT;
@@ -372,9 +373,9 @@ describe('Table', () => {
             it('should has footer even when no totals defined', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsEditAllowed: true,
-                    ...DATA_2A_3M
-                });
+                        totalsEditAllowed: true,
+                        ...DATA_2A_3M
+                    });
                 const component: any = wrapper.find(TableVisualization).childAt(0).instance();
 
                 expect(component.hasFooterWithTotals()).toBeTruthy();
@@ -383,9 +384,9 @@ describe('Table', () => {
             it('should set editable class name to table', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsEditAllowed: true,
-                    ...DATA_2A_3M
-                });
+                        totalsEditAllowed: true,
+                        ...DATA_2A_3M
+                    });
 
                 expect(wrapper.find('.indigo-table-component.has-footer-editable').length).toEqual(1);
             });
@@ -393,10 +394,10 @@ describe('Table', () => {
             it('should render remove buttons block when totals are provided', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    totalsEditAllowed: true,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        totalsEditAllowed: true,
+                        ...DATA_2A_3M
+                    });
 
                 expect(wrapper.find(RemoveRows).length).toEqual(1);
             });
@@ -404,10 +405,10 @@ describe('Table', () => {
             it('should bind mouse events on table body cells', () => {
                 const wrapper: ReactWrapper<ITableVisualizationProps & InjectedIntlProps, ITableVisualizationState> =
                     renderTable({
-                    totalsWithData: TOTALS,
-                    totalsEditAllowed: true,
-                    ...DATA_2A_3M
-                });
+                        totalsWithData: TOTALS,
+                        totalsEditAllowed: true,
+                        ...DATA_2A_3M
+                    });
                 const component: any = wrapper.find(TableVisualization).childAt(0).instance();
                 const cell = wrapper.find('.fixedDataTableCellLayout_wrap1.col-2').at(0);
 

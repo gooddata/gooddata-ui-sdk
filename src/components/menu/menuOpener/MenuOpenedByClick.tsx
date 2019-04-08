@@ -5,8 +5,8 @@ import OutsideClickHandler from '../utils/OutsideClickHandler';
 import MenuPosition from '../positioning/MenuPosition';
 
 const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
-    const closeMenu = () => props.onOpenedChange(false);
-    const toggleMenu = () => props.onOpenedChange(!props.opened);
+    const outsideClick = () => props.onOpenedChange({ opened: false, source: 'OUTSIDE_CLICK' });
+    const togglerWrapperClick = () => props.onOpenedChange({ opened: !props.opened, source: 'TOGGLER_BUTTON_CLICK' });
 
     const OutsideClickHandlerWrapped = (props: { children: React.ReactNode }) => (
         // UseCapture is set to false (default event bubbling). This has the disadvantage that we will not
@@ -16,17 +16,25 @@ const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
         // would get notified, he would set opened state from true to false, and then togger element click
         // handler would get notified, that would toggle it back to true, so menu would stay opened. This
         // could be solved by OutsideClickHandler ignoring clicks that are inside togglerWrapped.
-        <OutsideClickHandler onOutsideClick={closeMenu} useCapture={false}>
+        <OutsideClickHandler onOutsideClick={outsideClick} useCapture={false}>
             {props.children}
         </OutsideClickHandler>
     );
 
-    const togglerWrapped = <div onClick={toggleMenu}>{props.toggler}</div>;
+    const togglerWrapped = (
+        <div
+            onClick={togglerWrapperClick}
+            className="gd-menuOpenedByClick-togglerWrapped"
+        >
+            {props.toggler}
+        </div>
+    );
 
     return (
         <MenuPosition
             opened={props.opened}
             toggler={togglerWrapped}
+            togglerWrapperClassName={props.togglerWrapperClassName}
             contentWrapper={OutsideClickHandlerWrapped}
             topLevelMenu={props.topLevelMenu}
             portalTarget={props.portalTarget}

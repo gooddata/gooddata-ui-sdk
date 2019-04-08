@@ -2,6 +2,11 @@
 import { AFM } from '@gooddata/typings';
 import get = require('lodash/get');
 
+export function isDerivedMeasure(measure: AFM.IMeasure): boolean {
+    return AFM.isPreviousPeriodMeasureDefinition(measure.definition)
+        || AFM.isPopMeasureDefinition(measure.definition);
+}
+
 export function getMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
     const measureDefinition = get<string>(measure, ['definition', 'popMeasure'])
         || get<string>(measure, ['definition', 'previousPeriodMeasure']);

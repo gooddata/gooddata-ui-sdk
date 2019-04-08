@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import flatMap = require('lodash/flatMap');
 import get = require('lodash/get');
 
@@ -24,10 +24,17 @@ export function isLabelOverlappingItsShape(point: any) {
 export const getDataLabelsGdcVisible = (chart: any): boolean | string =>
     get(chart, 'options.plotOptions.gdcOptions.dataLabels.visible', 'auto');
 
-export const areLabelsStacked = (chart: any) =>
-    (get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) && isStacked(chart));
+const isLabelsStackedFromYAxis = (chart: any) => (
+    get(chart, 'userOptions.yAxis.0.stackLabels.enabled', false) ||
+    get(chart, 'userOptions.yAxis.1.stackLabels.enabled', false)
+);
+
+export const areLabelsStacked = (chart: any) => (
+    isLabelsStackedFromYAxis(chart) && isStacked(chart)
+);
 
 export const hasDataLabel = (point: any) => point.dataLabel;
+export const hasShape = (point: any) => point.shapeArgs;
 
 export const minimizeDataLabel = (point: any) => {
     const { dataLabel } = point;

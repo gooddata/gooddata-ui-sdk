@@ -118,17 +118,62 @@ describe('shouldLegendBeEnabled', () => {
 
 describe('getLegendItems', () => {
     it('should return correct legend items for regular charts', () => {
+        const chartOptions = generateChartOptions(fixtures.barChartWith2MetricsAndViewByAttribute);
+        expect(getLegendItems(chartOptions)).toEqual([
+            {
+                color: 'rgb(20,178,226)',
+                legendIndex: 0,
+                name: '<button>Lost</button> ...',
+                yAxis: 0
+            },
+            {
+                color: 'rgb(0,193,141)',
+                legendIndex: 1,
+                name: 'Won',
+                yAxis: 0
+            }
+        ]);
+    });
+
+    it('should return correct legend items for dual axis charts', () => {
+        const config = {
+            type: 'column',
+            secondary_yaxis: {
+                measures: ['wonMetric']
+            }
+        };
+        const chartOptions = generateChartOptions(fixtures.barChartWith2MetricsAndViewByAttribute, config);
+        expect(getLegendItems(chartOptions)).toEqual([
+            {
+                color: 'rgb(20,178,226)',
+                legendIndex: 0,
+                name: '<button>Lost</button> ...',
+                yAxis: 0
+            },
+            {
+                color: 'rgb(0,193,141)',
+                legendIndex: 1,
+                name: 'Won',
+                yAxis: 1
+            }
+        ]);
+    });
+
+    it('should return correct legend items for charts with stackBy and viewBy', () => {
+        // dataset with one measure
         const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndViewByAttributes);
         expect(getLegendItems(chartOptions)).toEqual([
             {
                 color: 'rgb(20,178,226)',
                 legendIndex: 0,
-                name: 'East Coast'
+                name: 'East Coast',
+                yAxis: 0
             },
             {
                 color: 'rgb(0,193,141)',
                 legendIndex: 1,
-                name: 'West Coast'
+                name: 'West Coast',
+                yAxis: 0
             }
         ]);
     });

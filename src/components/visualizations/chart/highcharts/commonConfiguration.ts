@@ -6,6 +6,9 @@ import set = require('lodash/set');
 import isEmpty = require('lodash/isEmpty');
 import { chartClick } from '../../utils/drilldownEventing';
 import { styleVariables } from '../../styles/variables';
+import handleChartLoad from '../events/load';
+import { isOneOfTypes } from '../../utils/common';
+import { supportedDualAxesChartTypes } from '../chartOptionsBuilder';
 
 const isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
@@ -101,8 +104,22 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
     return configuration;
 }
 
+function registerLoadHandler(configuration: any, chartOptions: any) {
+    if (isOneOfTypes(chartOptions.type, supportedDualAxesChartTypes)) {
+        set(configuration, 'chart.events.load', handleChartLoad);
+    }
+    return configuration;
+}
+
 export function getCommonConfiguration(chartOptions: any, drillConfig: any) {
     const commonConfiguration = cloneDeep(BASE_TEMPLATE);
+    const handlers = [
+        registerDrilldownHandler,
+        registerLoadHandler
+    ];
 
-    return registerDrilldownHandler(commonConfiguration, chartOptions, drillConfig);
+    return handlers.reduce(
+        (configuration, handler) => handler(configuration, chartOptions, drillConfig),
+        commonConfiguration
+    );
 }

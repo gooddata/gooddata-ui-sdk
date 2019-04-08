@@ -106,6 +106,23 @@ const bucketPresets = {
                 }
             }))
         }
+    },
+    smallDataSet: {
+        label: 'Small data set',
+        key: 'smallDataSet',
+        bucketProps: {
+            measures,
+            rows: [attributeLocationState]
+        }
+    },
+    smallWideDataSet: {
+        label: 'Small wide data set',
+        key: 'smallWideDataSet',
+        bucketProps: {
+            measures,
+            rows: [attributeLocationState],
+            columns: [attributeQuarter]
+        }
     }
 };
 
@@ -166,6 +183,11 @@ const totalPresets = {
         label: 'Franchise Fees Ad Royalty Max',
         key: 'franchiseFeesAdRoyaltyMax',
         totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier, 'max')
+    },
+    franchiseFeesMaxByLocationState: {
+        label: 'Subtotal Franchise Fees Max by Location State',
+        key: 'franchiseFeesMaxByLocationState',
+        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationNameDisplayFormIdentifier, 'max')
     }
 };
 const filterPresets = {
@@ -279,6 +301,37 @@ const pivotTableSizePresets = {
     }
 };
 
+const maxHeightPresets = {
+    none: {
+        key: 'none',
+        label: 'None',
+        value: undefined
+    },
+    oneHundred: {
+        key: 'oneHundred',
+        label: '100px',
+        value: 100
+    },
+    twoHundredFifty: {
+        key: 'twoHundredFifty',
+        label: '250px',
+        value: 250
+    }
+};
+
+const groupRowsPresets = {
+    disabledGrouping: {
+        label: 'Disabled',
+        key: 'disabledGrouping',
+        value: false
+    },
+    activeGrouping: {
+        label: 'Active',
+        key: 'activeGrouping',
+        value: true
+    }
+};
+
 export const getDrillableItems = (drillableKeys) => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
@@ -289,6 +342,10 @@ export const getTotalItems = (totalKeys) => {
     return Object.keys(totalKeys)
         .filter(itemKey => totalKeys[itemKey])
         .map(itemKey => totalPresets[itemKey].totalItem);
+};
+
+export const getGroupRows = (groupRowsKey) => {
+    return groupRowsPresets[groupRowsKey].value;
 };
 
 export class PivotTableDrillingExample extends Component {
@@ -311,7 +368,9 @@ export class PivotTableDrillingExample extends Component {
             totalPresetKeys: {},
             sortingPresetKey: 'noSort',
             menuPresetKey: 'noMenu',
-            pivotTableSizeKey: 'default'
+            pivotTableSizeKey: 'default',
+            maxHeightPresetKey: 'none',
+            groupRowsKey: 'disabledGrouping'
         };
     }
 
@@ -363,6 +422,17 @@ export class PivotTableDrillingExample extends Component {
             pivotTableSizeKey
         });
     }
+    onMaxHeightPresetChange = (maxHeightPresetKey) => {
+        this.setState({
+            maxHeightPresetKey
+        });
+    }
+
+    onGroupRowsPresetChange = (groupRowsKey) => {
+        this.setState({
+            groupRowsKey
+        });
+    }
 
     onDrill = (drillEvent) => {
         // eslint-disable-next-line no-console
@@ -383,7 +453,9 @@ export class PivotTableDrillingExample extends Component {
             filterPresetKeys,
             totalPresetKeys,
             menuPresetKey,
-            pivotTableSizeKey
+            pivotTableSizeKey,
+            maxHeightPresetKey,
+            groupRowsKey
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
@@ -409,6 +481,13 @@ export class PivotTableDrillingExample extends Component {
         const filtersProp = filters.length > 0 ? { filters } : {};
 
         const totals = getTotalItems(totalPresetKeys);
+        const grandTotalsOnly = totals.filter((total) => {
+            const firstAttribute = rows[0];
+            return firstAttribute !== undefined &&
+                total.attributeIdentifier === firstAttribute.visualizationAttribute.localIdentifier;
+        });
+
+        const groupRows = getGroupRows(groupRowsKey);
 
         return (
             <div>
@@ -517,18 +596,44 @@ export class PivotTableDrillingExample extends Component {
                         })
                     }
                 </div>
+                <div className="presets">
+                    Max height: {
+                        Object.keys(maxHeightPresets).map((presetItemKey) => {
+                            const { key, label } = maxHeightPresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-max-height-preset-${key} ${maxHeightPresetKey === key ? ' is-active' : ''}`}
+                                onClick={this.onMaxHeightPresetChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
+                <div className="presets">
+                    Group rows: {
+                        Object.keys(groupRowsPresets).map((presetItemKey) => {
+                            const { key, label } = groupRowsPresets[presetItemKey];
+                            return (<ElementWithParam
+                                key={key}
+                                className={`preset-option button button-secondary s-group-rows-preset-${key} ${groupRowsKey === key ? ' is-active' : ''}`}
+                                onClick={this.onGroupRowsPresetChange}
+                                params={[key]}
+                            >{label}</ElementWithParam>);
+                        })
+                    }
+                </div>
 
                 <div
                     className={`s-pivot-table-${bucketPresetKey}`}
                     style={pivotTableSizePresets[pivotTableSizeKey].styles}
                 >
                     <PivotTable
-                        // Table components are completely reseted because they
+                        // Table components are completely reset because they
                         // heavily use JS to compute dimensions and when we just
-                        // change style prop they did not rerender with correct
+                        // change style prop they did not re-render with correct
                         // width. To get around this problem we completely
                         // reset both table components.
-                        key={pivotTableSizeKey}
+                        key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
                         projectId={projectId}
                         pageSize={20}
                         {...bucketPropsWithFilters}
@@ -537,23 +642,25 @@ export class PivotTableDrillingExample extends Component {
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
                         config={{
+                            maxHeight: maxHeightPresets[maxHeightPresetKey].value,
                             menu: menuPresets[menuPresetKey].menuConfig
                         }}
                         totals={totals}
+                        groupRows={groupRows}
                     />
                 </div>
 
                 <h2>Table component for reference</h2>
                 <div style={{ height: 300 }}>
                     <Table
-                        key={pivotTableSizeKey}
+                        key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
                         projectId={projectId}
                         {...tableBucketProps}
                         {...filtersProp}
                         drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                         sortBy={sortBy}
-                        totals={totals}
+                        totals={grandTotalsOnly}
                     />
                 </div>
 

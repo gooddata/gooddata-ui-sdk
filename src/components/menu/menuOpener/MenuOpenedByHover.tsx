@@ -20,6 +20,7 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
                         {this.props.toggler}
                     </div>
                 )}
+                togglerWrapperClassName={this.props.togglerWrapperClassName}
                 opened={this.props.opened}
                 topLevelMenu={this.props.topLevelMenu}
                 alignment={this.props.alignment}
@@ -41,14 +42,14 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
     private hoverStart = () => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange(true);
+            this.props.onOpenedChange({ opened: true, source: 'HOVER_TIMEOUT' });
         }, MenuOpenedByHover.openCloseDelayMs);
     }
 
     private hoverEnd = () => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
-            this.props.onOpenedChange(false);
+            this.props.onOpenedChange({ opened: false, source: 'HOVER_TIMEOUT' });
         }, MenuOpenedByHover.openCloseDelayMs);
     }
 }

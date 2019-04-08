@@ -37,6 +37,22 @@ export const barChartWith2MetricsAndViewByAttribute: any = {
     executionResult: require('../test_data/bar_chart_with_2_metrics_and_view_by_attribute_result.json').executionResult
 };
 
+export const barChartWith4MetricsAndViewBy2Attribute: any = {
+    executionRequest:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_request.json').execution,
+    executionResponse:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_response.json').executionResponse,
+    executionResult:
+        require('../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_result.json').executionResult
+};
+
+export const chartWithTwoAttributesAndSomeNullDatapoints: any = {
+    executionRequest: require('../test_data/chart_with_2_attributes_and_null_datapoints_request.json').execution,
+    executionResponse:
+        require('../test_data/chart_with_2_attributes_and_null_datapoints_response.json').executionResponse,
+    executionResult: require('../test_data/chart_with_2_attributes_and_null_datapoints_result.json').executionResult
+};
+
 export const scatterPlotWith2MetricsAndAttribute: any = {
     executionRequest: require('../test_data/scatter_plot_with_2_metrics_and_attribute_request.json').execution,
     executionResponse:
@@ -463,6 +479,12 @@ export const heatmapMetricRowColumn: any = {
     executionResult: require('./heat_map_with_metric_row_column_result.json').executionResult
 };
 
+export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
+    executionRequest: require('./pivot_table_with_2_metrics_4_attributes_subtotals_request.json').execution,
+    executionResponse: require('./pivot_table_with_2_metrics_4_attributes_subtotals_response.json').executionResponse,
+    executionResult: require('./pivot_table_with_2_metrics_4_attributes_subtotals_result.json').executionResult
+};
+
 export default {
     pivotTableWithColumnAndRowAttributes,
     pivotTableWithColumnRowAttributesAndTotals,
@@ -497,5 +519,6 @@ export default {
     treemapWithMetricAndViewByAndOnlyOneElement,
     treemapWithThreeMetrics,
     treemapWithOneMetric,
-    heatmapMetricRowColumn
+    heatmapMetricRowColumn,
+    pivotTableWithTwoMetricsFourAttributesSubtotals
 };

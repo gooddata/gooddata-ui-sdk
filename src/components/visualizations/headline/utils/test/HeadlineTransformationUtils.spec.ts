@@ -1,5 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisElementType } from '../../../../../constants/visualizationTypes';
 import { IDrillEvent } from '../../../../../interfaces/DrillEvents';
 import { IHeadlineData } from '../../../../../interfaces/Headlines';
 import * as headerPredicateFactory from '../../../../../factory/HeaderPredicateFactory';
@@ -7,7 +6,8 @@ import {
     getHeadlineData,
     applyDrillableItems,
     buildDrillEventData,
-    fireDrillEvent
+    fireDrillEvent,
+    IHeadlineDrillItemContext
 } from '../HeadlineTransformationUtils';
 import {
     SINGLE_URI_METRIC_EXECUTION_REQUEST,
@@ -497,9 +497,9 @@ describe('HeadlineTransformationUtils', () => {
 
     describe('buildDrillEventData', () => {
         it('should build expected drill event data from execution request made with metric uri', () => {
-            const itemContext = {
+            const itemContext: IHeadlineDrillItemContext = {
                 localIdentifier: 'm1',
-                element: 'primaryValue' as VisElementType,
+                element: 'primaryValue',
                 value: '42'
             };
             const eventData = buildDrillEventData(
@@ -531,8 +531,8 @@ describe('HeadlineTransformationUtils', () => {
                             id: 'm1',
                             title: 'Lost',
                             header: {
-                                identifier: '',
-                                uri: '/gdc/md/project_id/obj/1'
+                                uri: '/gdc/md/project_id/obj/1',
+                                identifier: ''
                             }
                         }
                     ]
@@ -541,9 +541,9 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should build expected drill event data from execution request made with metric identifier', () => {
-            const itemContext = {
+            const itemContext: IHeadlineDrillItemContext = {
                 localIdentifier: 'm1',
-                element: 'primaryValue' as VisElementType,
+                element: 'primaryValue',
                 value: '42'
             };
             const eventData = buildDrillEventData(
@@ -585,9 +585,9 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should build drill event data from execution for secondary value', () => {
-            const itemContext = {
+            const itemContext: IHeadlineDrillItemContext = {
                 localIdentifier: 'm2',
-                element: 'secondaryValue' as VisElementType,
+                element: 'secondaryValue',
                 value: '12345678'
             };
             const eventData = buildDrillEventData(
@@ -629,8 +629,8 @@ describe('HeadlineTransformationUtils', () => {
                             id: 'm2',
                             title: 'Found',
                             header: {
-                                identifier: '',
-                                uri: '/gdc/md/project_id/obj/2'
+                                uri: '/gdc/md/project_id/obj/2',
+                                identifier: ''
                             }
                         }
                     ]
@@ -639,10 +639,9 @@ describe('HeadlineTransformationUtils', () => {
         });
 
         it('should throw exception when metric from item context is not found in the execution response.', () => {
-            const itemContext = {
+            const itemContext: IHeadlineDrillItemContext = {
                 localIdentifier: 'abc',
-                uri: '/gdc/md/project_id/obj/2',
-                element: 'primaryValue' as VisElementType,
+                element: 'primaryValue',
                 value: '42'
             };
             expect(() => buildDrillEventData(

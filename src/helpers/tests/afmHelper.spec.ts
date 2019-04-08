@@ -3,7 +3,8 @@ import { AFM } from '@gooddata/typings';
 import {
     getMasterMeasureObjQualifier,
     getMasterMeasureLocalIdentifier,
-    findMeasureByLocalIdentifier
+    findMeasureByLocalIdentifier,
+    isDerivedMeasure
 } from '../afmHelper';
 
 describe('getMasterMeasureLocalIdentifier', () => {
@@ -306,5 +307,63 @@ describe('getMeasureUriAndIdentifier', () => {
                 identifier: 'id'
             });
         });
+    });
+});
+
+describe('isDerivedMeasure', () => {
+    const PPMeasure = {
+            definition: {
+                previousPeriodMeasure: {
+                    measureIdentifier: 'masterPP',
+                    dateDataSets: [{
+                        dataSet: {
+                            uri: '/bar'
+                        },
+                        periodsAgo: 1
+                    }]
+                }
+            },
+            localIdentifier: 'pp'
+    };
+
+    const SPMeasure = {
+            definition: {
+                popMeasure: {
+                    measureIdentifier: 'masterSP',
+                    popAttribute: {
+                        uri: '/foo'
+                    }
+                }
+            },
+            localIdentifier: 'sp'
+    };
+
+    const simpleMeasure = {
+        definition: {
+            measure: {
+                item: {
+                    uri: '/uri'
+                }
+            }
+        },
+        localIdentifier: 'simpleMeasure'
+    };
+
+    it('should return true if measure is PP', () => {
+        const result = isDerivedMeasure(PPMeasure);
+
+        expect(result).toEqual(true);
+    });
+
+    it('should return true if measure is SP', () => {
+        const result = isDerivedMeasure(SPMeasure);
+
+        expect(result).toEqual(true);
+    });
+
+    it('should return false if measure is something else', () => {
+        const result = isDerivedMeasure(simpleMeasure);
+
+        expect(result).toEqual(false);
     });
 });

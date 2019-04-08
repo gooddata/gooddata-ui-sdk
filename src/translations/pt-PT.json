@@ -10,7 +10,7 @@
    "visualizations.totals.dropdown.title.avg": "Méd",
    "visualizations.totals.dropdown.title.min": "Min",
    "visualizations.totals.dropdown.title.max": "Máx",
-   "visualizations.totals.dropdown.title.nat": "Agregação (total)",
+   "visualizations.totals.dropdown.title.nat": "Agregação (Total)",
    "visualizations.totals.dropdown.title.med": "Mediana",
    "visualizations.totals.row.title.sum": "Soma",
    "visualizations.totals.row.title.avg": "Méd",
@@ -54,10 +54,13 @@
    "visualizations.measure.arithmetic.difference.title": "Diferença entre {firstMeasureTitle} e {secondMeasureTitle}",
    "visualizations.measure.arithmetic.multiplication.title": "Produto de {firstMeasureTitle} por {secondMeasureTitle}",
    "visualizations.measure.arithmetic.ratio.title": "Rácio entre {firstMeasureTitle} e {secondMeasureTitle}",
-   "visualizations.measure.arithmetic.change.title": "Mudar de {secondMeasureTitle} para {firstMeasureTitle}",
+   "visualizations.measure.arithmetic.change.title": "Alterar de {secondMeasureTitle} para {firstMeasureTitle}",
    "visualizations.legend.text.top": "Superior:",
    "visualizations.legend.text.bottom": "Inferior:",
    "visualizations.legend.text.left": "Esquerda:",
    "visualizations.legend.text.right": "Direita:",
-   "visualizations.menu.aggregations": "Agregações"
+   "visualizations.menu.aggregations": "Agregar",
+   "visualizations.menu.aggregations.rows": "Filas",
+   "visualizations.menu.aggregations.all-rows": "de todas as linhas",
+   "visualizations.menu.aggregations.within-attribute": "em {attributeName}"
 }

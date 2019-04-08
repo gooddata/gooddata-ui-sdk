@@ -7,13 +7,14 @@ import { formatAsPercent, isInPercent } from '../customConfiguration';
 const DEFAULT_LIMIT_LENGTH = 4; // length of '0.00' is 4
 const DEFAULT_PADDING = 2;
 const DEFAULT_SHALLOW_RANGE = 10;
+const DEFAULT_FRACTION_DIGITS = 16;
 
 /**
  * Get limit length to cut off value less than one
  * @param value
  */
 function getLimitLength(value: number): number {
-    const valueStr = value.toString();
+    const valueStr = convertNumberToString(value);
     const isFloat = valueStr.indexOf('.') > 0;
     const length = isFloat ? valueStr.length : valueStr.length + 1;
     return length + DEFAULT_PADDING;
@@ -21,6 +22,26 @@ function getLimitLength(value: number): number {
 
 function isValueInShallowRange(min: number, max: number): boolean {
     return min !== max && Math.abs(max - min) < DEFAULT_SHALLOW_RANGE;
+}
+
+/**
+ * Number: 1234567
+ * Exponential number: 1.234567e+6 or 1.234567E+6
+ * @param num
+ */
+function isExponentialNumber(num: number): boolean {
+    return num.toString().split(/[eE]/).length > 1;
+}
+
+/**
+ * Convert number to string
+ * 0.1      -> '0.1'
+ * 1e-5     -> '0.00001' (not '1e-5')
+ * 1e+5     -> '100000'  (not '1e+5')
+ * @param num
+ */
+function convertNumberToString(num: number): string {
+    return isExponentialNumber(num) ? num.toFixed(DEFAULT_FRACTION_DIGITS) : num.toString();
 }
 
 /**
@@ -36,7 +57,7 @@ function isValueInShallowRange(min: number, max: number): boolean {
  */
 export function formatValueInShallowRange(value: number, min: number, max: number): number {
     const limitLength = Math.max(getLimitLength(min), getLimitLength(max), DEFAULT_LIMIT_LENGTH);
-    const newValue = value.toString().substr(0, limitLength);
+    const newValue = convertNumberToString(value).substr(0, limitLength);
     return parseFloat(newValue);
 }
 
@@ -93,13 +114,22 @@ function formatLabel(value: number, tickPositions: number[]): number {
     if (isValueInShallowRange(min, max)) {
         return formatValueInShallowRange(value, min, max);
     }
-    const numberStr = removeDecimal(value.toString());
+    const numberStr = removeDecimal(convertNumberToString(value));
     return roundNumber(numberStr, min, max);
 }
 
 export function dualAxesLabelFormatter() {
     const tickPositions: number[] = get(this, 'axis.tickPositions', []);
     this.value = formatLabel(this.value, tickPositions);
+
+    const stackMeasuresToPercent = get(this, 'chart.userOptions.stackMeasuresToPercent', false);
+    const seriesInAxis = get(this, 'axis.series', []).length;
+    if (stackMeasuresToPercent && seriesInAxis > 1) {
+        const opposite = get(this, 'axis.opposite', false);
+        if (opposite === false) {
+            return formatAsPercent.call(this, 1);
+        }
+    }
 
     const format = get(this, 'axis.userOptions.defaultFormat', '');
     const isPercent = isInPercent(format);

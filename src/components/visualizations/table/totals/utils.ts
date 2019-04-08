@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy } from 'lodash';
+import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy, get } from 'lodash';
 import { AFM } from '@gooddata/typings';
 import { InjectedIntl } from 'react-intl';
 import {
@@ -24,6 +24,33 @@ export const AVAILABLE_TOTALS: AFM.TotalType[] = [
     'med',
     'nat'
 ];
+
+export const isNativeTotal = (total: AFM.ITotalItem) => {
+    return total && total.type === 'nat';
+};
+
+export const getNativeTotals = (totals: AFM.ITotalItem[]): AFM.INativeTotalItem[] => {
+    if (!totals) {
+        return [];
+    }
+    const afmNativeTotals: AFM.INativeTotalItem[] = totals
+        .filter(total => isNativeTotal(total))
+        .map(nativeTotal => ({
+            measureIdentifier: nativeTotal.measureIdentifier,
+            attributeIdentifiers: []
+        }));
+    return afmNativeTotals;
+};
+
+export const getTotalsFromResultSpec = (resultSpec: AFM.IResultSpec): AFM.ITotalItem[] => {
+    return resultSpec && resultSpec.dimensions
+        ? resultSpec.dimensions.reduce(
+            (totals: AFM.ITotalItem[], dimension) =>
+                dimension && dimension.totals ? totals.concat(dimension.totals) : totals,
+            []
+        )
+        : [];
+};
 
 function getTotalsList(intl: InjectedIntl): ITotalTypeWithTitle[] {
     return AVAILABLE_TOTALS.map(type => ({
@@ -246,3 +273,11 @@ export function shouldShowTotals(headers: IMappingHeader[]): boolean {
 
     return !(onlyAttributes || onlyMeasures);
 }
+
+export const getColumnTotalsFromResultSpec = (source: AFM.IResultSpec) => {
+    return get(source, 'dimensions[0].totals', []);
+};
+
+export default {
+    getColumnTotalsFromResultSpec
+};

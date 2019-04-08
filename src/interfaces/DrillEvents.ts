@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import { VisElementType, VisType } from '../constants/visualizationTypes';
+import { AFM } from '@gooddata/typings';
+import {
+    ChartElementType,
+    ChartType,
+    HeadlineElementType,
+    HeadlineType,
+    TableElementType,
+    TableType
+} from '../constants/visualizationTypes';
 
 export interface IDrillableItemUri {
     uri: string;
@@ -25,45 +32,7 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
 
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 
-// Internal precursor to IDrillEventIntersectionElement
-// TODO: Refactor internal drilling functions and replace with IDrillEventIntersectionElement
-export interface IDrillIntersection {
-    id: string;
-    title?: string;
-    value?: Execution.DataValue;
-    name?: string;
-    uri: string;
-    identifier: AFM.Identifier;
-}
-
-// IDrillEvent is a parameter of the onFiredDrillEvent is callback
-export interface IDrillEvent {
-    executionContext: AFM.IAfm;
-    drillContext: {
-        type: VisType; // type of visualization
-        element: VisElementType; // type of visualization element drilled
-        x?: number; // chart x coordinate (if supported)
-        y?: number; // chart y coordinate (if supported)
-        columnIndex?: number;
-        rowIndex?: number;
-        row?: any[]; // table row data of the drilled row
-        value?: string; // cell or element value drilled
-        // some drill headers that are relevant for current drill element
-        intersection: IDrillEventIntersectionElement[];
-        // A collection of chart series points (if available)
-        points?: IDrillEventPoint[];
-    };
-}
-
-// Chart series point with intersection element
-export interface IDrillEventPoint {
-    x: number;
-    y: number;
-    intersection: IDrillEventIntersectionElement[];
-}
-
 // Intersection element
-// Can be a measure, attribute or attribute value. Attribute values have only uri.
 export interface IDrillEventIntersectionElement {
     id: string;
     title: string;
@@ -71,4 +40,61 @@ export interface IDrillEventIntersectionElement {
         uri: string;
         identifier: string;
     };
+}
+
+// Drill context for tables
+export interface IDrillEventContextTable {
+    type: TableType;
+    element: TableElementType;
+    columnIndex: number;
+    rowIndex: number;
+    row: any[];
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for headline
+export interface IDrillEventContextHeadline {
+    type: HeadlineType;
+    element: HeadlineElementType;
+    value: string;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for chart
+export interface IDrillEventContextPoint {
+    type: ChartType;
+    element: ChartElementType;
+    x?: number;
+    y?: number;
+    z?: number;
+    value?: string;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Chart series point with intersection element
+export interface IDrillPoint {
+    x: number;
+    y: number;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for chart element group (multiple series + click on axis value)
+// where every point has own intersection
+export interface IDrillEventContextGroup {
+    type: ChartType;
+    element: ChartElementType;
+    points: IDrillPoint[];
+}
+
+// Drill context for all visualization types
+export type DrillEventContext =
+    IDrillEventContextTable |
+    IDrillEventContextHeadline |
+    IDrillEventContextPoint |
+    IDrillEventContextGroup;
+
+// IDrillEvent is a parameter of the onFiredDrillEvent is callback
+export interface IDrillEvent {
+    executionContext: AFM.IAfm;
+    drillContext: DrillEventContext;
 }

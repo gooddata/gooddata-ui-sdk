@@ -2,9 +2,9 @@
 
 ## Supported REST API versions
 
-This table shows which version of the GoodData.UI introduced support for a particular API version. 
+This table shows which version of the GoodData.UI introduced support for a particular API version.
 
-The REST API versions in the table are just for your information as the values are set internally and cannot be overridden. 
+The REST API versions in the table are just for your information as the values are set internally and cannot be overridden.
 
 |GoodData.UI Version | REST API version
 |:---:|:---:
@@ -14,6 +14,25 @@ The REST API versions in the table are just for your information as the values a
 ## Unreleased/planned
 
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
+
+## 6.3.0
+
+April 8, 2019
+
+### Added
+
+-   Insight export into CSV or XLSX ([doc](https://sdk.gooddata.com/gooddata-ui/docs/on_export_ready.html))
+-   Support for attribute cell grouping in pivot tables when a table is sorted by first attribute ([doc](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html#grouping))
+-   Turning on/off totals in pivot tables via the totals menu ([doc](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html#totals))
+-   Specifying attribute filters by an attribute element value (see `textFilter` in [filters doc](https://sdk.gooddata.com/gooddata-ui/docs/filter_visual_components.html) and [AFM doc](https://sdk.gooddata.com/gooddata-ui/docs/afm.html))
+-   Optional stacking ([doc](https://sdk.gooddata.com/gooddata-ui/docs/chart_config.html#configure-stacking))
+
+### Changed
+
+-   The Treemap and Heatmap visual components now emit drill events with the `value` property of the `string` type instead of the `number` type to be consistent with the other visual components.
+-   The Table visual component and all chart visual components now emit drill events with the correct intersection that contains a non-empty `header.identifier` property when executed using `uri`.
+-   The Pivot Table visual component now emits drill events without the `value` property in `drillContext`. `value` can be obtained from the `row` property using `columnIndex`.
+-   The inconsistency between pivot tables and flat tables in how row attributes are drilled (the flat tables have the property called `name` while the pivot tables had the same property called `title`) has been fixed. The property is now called `name` in the both pivot and flat tables.
 
 ## 6.2.0
 

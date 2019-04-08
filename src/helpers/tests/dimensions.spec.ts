@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { VisualizationObject, AFM } from '@gooddata/typings';
 import cloneDeep = require('lodash/cloneDeep');
 import update = require('lodash/update');
@@ -258,6 +258,96 @@ describe('generateDimensions', () => {
                 .toEqual(expectedDimensions);
             expect(generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.BAR))
                 .toEqual(expectedDimensions);
+        });
+    });
+    describe('area chart', () => {
+        it('should generate dimensions for area with one measure', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['measureGroup']
+                },
+                {
+                    itemIdentifiers: []
+                }
+            ];
+            const dimensions = generateDimensions(getVisualization('onemeasure'), VisualizationTypes.AREA);
+            expect(dimensions).toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for area with one measure and view attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['measureGroup']
+                },
+                {
+                    itemIdentifiers: ['a1']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, 'view');
+            const dimensions = generateDimensions(visualizationWithViewAttribute, VisualizationTypes.AREA);
+
+            expect(dimensions).toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for area with one measure and stack attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['a1']
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithStackAttribute = addAttribute(visualization, 1, 'stack');
+            const dimensions = generateDimensions(visualizationWithStackAttribute, VisualizationTypes.AREA);
+
+            expect(dimensions).toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for area with one measure, view attribute and stack attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['a2']
+                },
+                {
+                    itemIdentifiers: ['a1', 'measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithViewAndStackAttribute = addAttribute(
+                addAttribute(visualization, 1, 'view'),
+                2,
+                'stack'
+            );
+            const dimensions = generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.AREA);
+
+            expect(dimensions).toEqual(expectedDimensions);
+        });
+
+        it('should generate dimensions for area with one measure, two view attribute', () => {
+            const expectedDimensions: AFM.IDimension[] = [
+                {
+                    itemIdentifiers: ['a2']
+                },
+                {
+                    itemIdentifiers: ['a1', 'measureGroup']
+                }
+            ];
+
+            const visualization = getVisualization('onemeasure');
+            const visualizationWithTwoViewAttributes = addAttribute(
+                addAttribute(visualization, 1, 'view'),
+                2,
+                'view'
+            );
+            const dimensions = generateDimensions(visualizationWithTwoViewAttributes, VisualizationTypes.AREA);
+
+            expect(dimensions).toEqual(expectedDimensions);
         });
     });
     describe('heatmap', () => {
@@ -688,6 +778,101 @@ describe('generateStackedDimensions', () => {
 
         expect(generateStackedDimensions(buckets))
             .toEqual(expectedDimensions);
+    });
+
+    it('should return 2 attributes along with measureGroup', () => {
+        const buckets = [{
+            localIdentifier: 'measures',
+            items: [{
+                measure: {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                uri: '/gdc/md/storybook/obj/1'
+                            }
+                        }
+                    }
+                }
+            }]
+        }, {
+            localIdentifier: 'attribute',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/1.df'
+                    },
+                    localIdentifier: 'a1'
+                }
+            }, {
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/2.df'
+                    },
+                    localIdentifier: 'a2'
+                }
+            }]
+        }, {
+            localIdentifier: 'stack',
+            items: []
+        }];
+        const expectedDimensions: AFM.IDimension[] = [{
+            itemIdentifiers: []
+        }, {
+            itemIdentifiers: ['a1', 'a2', 'measureGroup']
+        }];
+        expect(generateStackedDimensions(buckets)).toEqual(expectedDimensions);
+    });
+
+    it('should return 2 attributes along with measureGroup and return 1 stack attribute', () => {
+        const buckets = [{
+            localIdentifier: 'measures',
+            items: [{
+                measure: {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                uri: '/gdc/md/storybook/obj/1'
+                            }
+                        }
+                    }
+                }
+            }]
+        }, {
+            localIdentifier: 'attribute',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/1.df'
+                    },
+                    localIdentifier: 'a1'
+                }
+            }, {
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/3.df'
+                    },
+                    localIdentifier: 'a3'
+                }
+            }]
+        }, {
+            localIdentifier: 'stack',
+            items: [{
+                visualizationAttribute: {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/2.df'
+                    },
+                    localIdentifier: 'a2'
+                }
+            }]
+        }];
+        const expectedDimensions: AFM.IDimension[] = [{
+            itemIdentifiers: ['a2']
+        }, {
+            itemIdentifiers: ['a1', 'a3', 'measureGroup']
+        }];
+        expect(generateStackedDimensions(buckets)).toEqual(expectedDimensions);
     });
 });
 

@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { mount } from 'enzyme';
 import cloneDeep = require('lodash/cloneDeep');
+import noop = require('lodash/noop');
 import { testUtils } from '@gooddata/js-utils';
 import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
 import {
@@ -41,7 +42,7 @@ const sdk = {
     execution: {
         getPartialExecutionResult: () => false,
         executeAfm: () => Promise.resolve(),
-        getExecutionResponse: () => false
+        getExecutionResponse: () => Promise.resolve()
     },
     config: {
         setJsPackage: () => false,
@@ -440,6 +441,40 @@ describe('VisualizationWrapped', () => {
         });
     });
 
+    it('should pass exportTitle, projectId and onExportReady to BaseChart', () => {
+        const exportTitle = visualizationObjects.find(
+            chart => chart.visualizationObject.meta.uri === CHART_URI
+        ).visualizationObject.meta.title;
+        const onExportReady = noop;
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            TableComponent: Table,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            onExportReady
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+            const BaseChartElement = wrapper.find(BaseChart).get(0);
+            expect(BaseChartElement.props.exportTitle).toEqual(exportTitle);
+            expect(BaseChartElement.props.projectId).toBe(projectId);
+            expect(BaseChartElement.props.onExportReady).toBe(onExportReady);
+        });
+    });
+
     it('should pass mdObject and properties to BaseChart', () => {
         const props = {
             sdk,
@@ -730,5 +765,64 @@ describe('VisualizationWrapped', () => {
                 ]
             });
         });
+    });
+
+    it('should call getFeatureFlags', async () => {
+        const getFeatureFlags = jest.fn(() => Promise.resolve({}));
+
+        const props = {
+            sdk,
+            projectId,
+            identifier: CHART_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            LoadingComponent,
+            ErrorComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            getFeatureFlags,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        await testUtils.delay(SLOW + 1);
+        wrapper.update();
+        expect(getFeatureFlags).toHaveBeenCalledTimes(1);
+    });
+
+    it('should pass feature flag enableGrouping to pivotTable', async () => {
+        const getFeatureFlags = jest.fn(() => Promise.resolve({ enablePivot: true, enablePivotGrouping: true }));
+        const pivotTableComponent = jest.fn().mockReturnValue('pivot');
+
+        const props = {
+            sdk,
+            projectId,
+            identifier: TABLE_IDENTIFIER,
+            BaseChartComponent: BaseChart,
+            LoadingComponent,
+            ErrorComponent,
+            PivotTableComponent: pivotTableComponent,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            getFeatureFlags,
+            intl
+        };
+
+        const wrapper = mount(
+            <VisualizationWrapped {...props as any} />
+        );
+
+        await testUtils.delay(SLOW + 1);
+        wrapper.update();
+        expect(pivotTableComponent).toBeCalledWith(
+            expect.objectContaining({
+                groupRows: true
+            }),
+            {}
+        );
     });
 });

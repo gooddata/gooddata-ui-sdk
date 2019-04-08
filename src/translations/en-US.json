@@ -256,52 +256,92 @@
    },
    "visualizations.measure.arithmetic.sum.title": {
       "value": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Sum",
       "limit": 0
    },
    "visualizations.measure.arithmetic.difference.title": {
       "value": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Difference",
       "limit": 0
    },
    "visualizations.measure.arithmetic.multiplication.title": {
       "value": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Product",
       "limit": 0
    },
    "visualizations.measure.arithmetic.ratio.title": {
       "value": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Ratio",
       "limit": 0
    },
    "visualizations.measure.arithmetic.change.title": {
       "value": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
-      "comment": "",
+      "comment": "Title of an arithmetic measure of type Change",
       "limit": 0
    },
    "visualizations.legend.text.top": {
-      "value": "Top:",
+      "value": "Top",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.bottom": {
-      "value": "Bottom:",
+      "value": "Bottom",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.left": {
-      "value": "Left:",
+      "value": "Left",
       "comment": "",
       "limit": 0
    },
    "visualizations.legend.text.right": {
-      "value": "Right:",
+      "value": "Right",
       "comment": "",
       "limit": 0
    },
-   "visualizations.menu.aggregations": {
-      "value": "Aggregations",
-      "comment": "",
+   "visualizations.legend.text.colon": {
+      "value": ":",
+      "comment": "a colon stands right after legend. eg: 'Left:'",
       "limit": 0
+   },
+   "visualizations.legend.text.column": {
+       "value": "Column",
+       "comment": "column chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.line": {
+       "value": "Line",
+       "comment": "line chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.area": {
+       "value": "Area",
+       "comment": "area chart",
+       "limit": 0
+   },
+   "visualizations.legend.text.combo": {
+       "value": "{0} ({1})",
+       "comment": "combine between chart type & y-axis position. eg: 'Column (Left)'",
+       "limit": 0
+   },
+   "visualizations.menu.aggregations": {
+      "value": "Aggregate",
+      "comment": "Heading showed above menu listing possible aggregations (totals).",
+      "limit": 50
+   },
+   "visualizations.menu.aggregations.rows": {
+      "value": "Rows",
+      "comment": "Heading showed above row attributes of the table you may apply one of aggregation (total) on.",
+      "limit": 50
+   },
+   "visualizations.menu.aggregations.all-rows": {
+     "value": "of all rows",
+     "comment": "Menu option that adds row aggregation (grand total) to the table. Example: 'Sum of all rows'",
+     "limit": 50
+   },
+   "visualizations.menu.aggregations.within-attribute": {
+     "value": "within {attributeName}",
+     "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'",
+     "limit": 50
    }
 }

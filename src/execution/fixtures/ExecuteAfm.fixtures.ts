@@ -370,6 +370,223 @@ const responseWithTotals: Execution.IExecutionResponses = {
     }
 };
 
+const oneAttributeOneMeasureExecutionObject: AFM.IExecution = {
+    execution: {
+        afm: {
+            measures: [
+                {
+                    localIdentifier: 'm1',
+                    definition: {
+                        measure: {
+                            item: {
+                                uri: '/gdc/md/storybook/obj/1'
+                            }
+                        }
+                    }
+                }
+            ],
+            attributes: [
+                {
+                    displayForm: {
+                        uri: '/gdc/md/storybook/obj/4.df'
+                    },
+                    localIdentifier: 'a1'
+                }
+            ]
+        },
+        resultSpec: {
+            dimensions: [
+                {
+                    itemIdentifiers: ['a1']
+                },
+                {
+                    itemIdentifiers: ['measureGroup']
+                }
+            ]
+        }
+    }
+};
+
+const oneAttributeOneMeasureSortByMeasureExecutionObject: AFM.IExecution = {
+    execution: {
+        afm: oneAttributeOneMeasureExecutionObject.execution.afm,
+        resultSpec: {
+            dimensions: oneAttributeOneMeasureExecutionObject.execution.resultSpec.dimensions,
+            sorts: [
+                {
+                    measureSortItem: {
+                        direction: 'desc',
+                        locators: [
+                            {
+                                measureLocatorItem: {
+                                    measureIdentifier: 'm1'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+};
+
+const oneAttributesOneMeasureResponse: Execution.IExecutionResponses = {
+    executionResponse: {
+        dimensions: [
+            {
+                headers: [
+                    {
+                        attributeHeader: {
+                            identifier: '4.df',
+                            uri: '/gdc/md/storybook/obj/4.df',
+                            name: 'Colours',
+                            localIdentifier: 'a1',
+                            formOf: {
+                                uri: '/gdc/md/storybook/obj/4',
+                                identifier: '4',
+                                name: 'Colours'
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                headers: [
+                    {
+                        measureGroupHeader: {
+                            items: [
+                                {
+                                    measureHeaderItem: {
+                                        identifier: '1',
+                                        uri: '/gdc/md/storybook/obj/1',
+                                        localIdentifier: 'm1',
+                                        format: '#,##0.00',
+                                        name: 'Amount'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        links: {
+            executionResult:
+                '/gdc/app/projects/storybook/executionResults/59908ac5f1bf7a4fbbf78b08a7d034ed?dimensions=2'
+        }
+    },
+
+    executionResult: {
+        data: [
+            ['678'],
+            ['37'],
+            ['928'],
+            ['47'],
+            ['958'],
+            ['201'],
+            ['416'],
+            ['897'],
+            ['278'],
+            ['613'],
+            ['864'],
+            ['253']
+        ],
+        headerItems: [
+            [
+                [
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                            name: 'Pink'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                            name: 'Purple'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                            name: 'Pink'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                            name: 'Red'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=1',
+                            name: 'Pink'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                            name: 'Red'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                            name: 'Purple'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                            name: 'Salmon'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                            name: 'Salmon'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=3',
+                            name: 'Purple'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=2',
+                            name: 'Red'
+                        }
+                    },
+                    {
+                        attributeHeaderItem: {
+                            uri: '/gdc/md/storybook/obj/4/elements?id=4',
+                            name: 'Salmon'
+                        }
+                    }
+                ]
+            ],
+            [
+                [
+                    {
+                        measureHeaderItem: {
+                            name: 'Amount',
+                            order: 0
+                        }
+                    }
+                ]
+            ]
+        ],
+        paging: {
+            count: [12, 1],
+            offset: [0, 0],
+            total: [12, 1]
+        }
+    }
+};
+
 const oneMeasureResponse: Execution.IExecutionResponses = {
     executionResponse: {
         dimensions: [
@@ -546,5 +763,8 @@ export {
     responseWithTotals,
     badRequestResponse,
     oneMeasureOneDimensionResponse,
-    twoMeasuresOneDimensionResponse
+    twoMeasuresOneDimensionResponse,
+    oneAttributeOneMeasureExecutionObject,
+    oneAttributesOneMeasureResponse,
+    oneAttributeOneMeasureSortByMeasureExecutionObject
 };

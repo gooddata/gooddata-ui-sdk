@@ -18,7 +18,7 @@ describe('AttributeDropdown', () => {
     function renderComponent(props: any = {}) {
         const {
             projectId = 'storybook',
-            onApply = (f: Function) => f,
+            onApply = (f: (...params: any[]) => any /* TODO: make the types more specific (FET-282) */) => f,
             metadata = createMetadataMock()
         } = props;
         return mount(
@@ -47,6 +47,7 @@ describe('AttributeDropdown', () => {
     }
 
     afterEach(() => {
+        // tslint:disable-next-line:no-inner-html
         document.body.innerHTML = '';
     });
 

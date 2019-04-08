@@ -36,6 +36,12 @@ export interface IMinMaxLookup {
     1?: IMinMaxInfo;
 }
 
+const FRACTION_DIGITS = 9;
+
+function isMinMaxCoverZero(min: number, max: number): boolean {
+    return min < 0 && 0 < max;
+}
+
 /**
  * Check if user sets min or max
  * @param minmax
@@ -100,7 +106,9 @@ function getRange(targetNumber: number, delta: number): number[] {
     let position = 0;
     const result = [];
 
-    const limit = Math.abs(targetNumber);
+    // Use (+) to convert a string to number
+    // Ref: https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
+    const limit = +Math.abs(targetNumber).toFixed(FRACTION_DIGITS);
     while (position < limit) {
         position += delta;
         result.push(position);
@@ -171,7 +179,10 @@ function calculateMax(idx: number, minmax: IMinMaxInfo[], minmaxLookup: IMinMaxL
  * @param findExtreme
  */
 function getLimit(minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex: number,
-                  getIndex: Function, calculateLimit: Function, findExtreme: Function): number {
+                  getIndex: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+                  calculateLimit: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+                  findExtreme: (...params: any[]) => any // TODO: make the types more specific (FET-282)
+): number {
     const isMinMaxConfig = isMinMaxConfigOnAnyAxis(minmax);
     if (isMinMaxConfig) {
         const idx = getIndex(minmax);
@@ -224,7 +235,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
 }
 
 export function createTickPositions(min: number, max: number, minmax: IMinMaxInfo[], tickAmount: number): number[] {
-    if (min < 0 && max > 0) {
+    if (isMinMaxCoverZero(min, max)) {
         if (isMinMaxConfig(minmax, 0) && isMinMaxConfig(minmax, 1)) {
             // disable zero-align y axis if both min/max are set to axes
             return createArrayFromRange(min, max, tickAmount);
@@ -241,7 +252,7 @@ export function getTickAmount(tickPosition: number[]): number {
     const zeroIndex = tickPosition.indexOf(0);
 
     // check min < 0 < max
-    if (min < 0 && 0 < max && 0 < zeroIndex && zeroIndex < length - 1) {
+    if (isMinMaxCoverZero(min, max) && 0 < zeroIndex && zeroIndex < length - 1) {
         return length - 1; // exclude middle zero
     }
     return length;
@@ -299,7 +310,11 @@ export function getTickPositioner() {
                 if (isNil(axis.min) || isNil(axis.max)) {
                     // this axis could be not initiated (undefined) or could be invalid (null)
                     const isOtherAxisInvalid = minmax[yAxisIndex] === null;
-                    return (isOtherAxisInvalid && !isLineChartType) ? // line chart does not need middle zero
+
+                    const isRangeWithMiddleZero = isOtherAxisInvalid &&
+                        !isLineChartType && // line chart does not need middle zero
+                        isMinMaxCoverZero(min, max);
+                    return isRangeWithMiddleZero ?
                         createArrayFromRangeWithMiddleZero(min, max, this.tickAmount) :
                         createArrayFromRange(min, max, this.tickAmount);
                 }

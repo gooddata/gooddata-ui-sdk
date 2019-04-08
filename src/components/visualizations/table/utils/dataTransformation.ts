@@ -2,8 +2,13 @@
 import { AFM, Execution } from '@gooddata/typings';
 import * as invariant from 'invariant';
 import { get, has, isEmpty, zip } from 'lodash';
-import { getMappingHeaderName } from '../../../../helpers/mappingHeader';
-import { IDrillIntersection } from '../../../../interfaces/DrillEvents';
+import {
+    getMappingHeaderIdentifier,
+    getMappingHeaderLocalIdentifier,
+    getMappingHeaderName,
+    getMappingHeaderUri
+} from '../../../../helpers/mappingHeader';
+import { IDrillEventIntersectionElement } from '../../../../interfaces/DrillEvents';
 import {
     IMappingHeader,
     isMappingHeaderAttribute,
@@ -20,6 +25,7 @@ import {
 import { IIndexedTotalItem, ITotalWithData } from '../../../../interfaces/Totals';
 import { getAttributeElementIdFromAttributeElementUri } from '../../utils/common';
 import { getMasterMeasureObjQualifier } from '../../../../helpers/afmHelper';
+import { createDrillIntersectionElement } from '../../utils/drilldownEventing';
 import { AVAILABLE_TOTALS } from '../totals/utils';
 
 export function getHeaders(executionResponse: Execution.IExecutionResponse): IMappingHeader[] {
@@ -145,23 +151,27 @@ export function validateTableProportions(headers: IMappingHeader[], rows: TableR
     );
 }
 
-export function getIntersectionForDrilling(afm: AFM.IAfm, header: IMappingHeader): IDrillIntersection {
+export function getIntersectionForDrilling(afm: AFM.IAfm, header: IMappingHeader): IDrillEventIntersectionElement {
     if (isMappingHeaderAttribute(header)) {
-        return {
-            id: header.attributeHeader.identifier,
-            identifier: header.attributeHeader.identifier,
-            uri: header.attributeHeader.uri,
-            title: getMappingHeaderName(header)
-        };
+        return createDrillIntersectionElement(
+            getMappingHeaderIdentifier(header),
+            getMappingHeaderName(header),
+            getMappingHeaderUri(header),
+            getMappingHeaderIdentifier(header)
+        );
     }
 
     if (isMappingHeaderMeasureItem(header)) {
-        return {
-            id: header.measureHeaderItem.localIdentifier,
-            identifier: '',
-            uri: get<string>(getMasterMeasureObjQualifier(afm, header.measureHeaderItem.localIdentifier), 'uri'),
-            title: getMappingHeaderName(header)
-        };
+        const masterMeasureQualifier = getMasterMeasureObjQualifier(afm, getMappingHeaderLocalIdentifier(header));
+        const uri = masterMeasureQualifier.uri || getMappingHeaderUri(header);
+        const identifier = masterMeasureQualifier.identifier || getMappingHeaderIdentifier(header);
+
+        return createDrillIntersectionElement(
+            getMappingHeaderLocalIdentifier(header),
+            getMappingHeaderName(header),
+            uri,
+            identifier
+        );
     }
 
     throw new Error(`Unknown mapping header type ${Object.keys(header)}`);

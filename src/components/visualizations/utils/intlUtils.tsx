@@ -3,8 +3,14 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import { DEFAULT_LOCALE, messagesMap } from '../../core/base/IntlWrapper';
 
-export function createIntlMock() {
-    const intlProvider = new IntlProvider({ locale: 'en-US', messages: messagesMap['en-US'] }, {});
+export function createIntlMock(customMessages = {}) {
+    const intlProvider = new IntlProvider({
+        locale: 'en-US',
+        messages: {
+            ...messagesMap['en-US'],
+            ...customMessages
+        }
+    }, {});
     const { intl } = intlProvider.getChildContext();
     return intl;
 }

@@ -41,6 +41,14 @@ describe('Responsive Table', () => {
         rows: TABLE_ROWS_1A_2M
     };
 
+    beforeAll(() => {
+        window.scrollTo = jest.fn();
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+    });
+
     function renderTable(tableData: ITableData, customProps: Partial<IResponsiveTableProps> = {}):
         ReactWrapper<IResponsiveTableProps, any> {
         const props: Partial<IResponsiveTableProps> = {
@@ -70,6 +78,60 @@ describe('Responsive Table', () => {
             };
             const wrapper = renderTable(tableDataWithTotals);
             expect(wrapper.find(Table).prop('containerHeight')).toEqual(106);
+        });
+    });
+
+    describe('expand for large container', () => {
+        const largeNumberOfRows = range(0, 4000).map(() => TABLE_ROWS_1A_2M[0]);
+        const BASE_NUMBER_OF_ROWS = 10;
+        describe('container height given', () => {
+            function generateTableData(containerHeight: number): ITableData {
+                return {
+                    ...TABLE_DATA,
+                    containerHeight,
+                    rows: largeNumberOfRows
+                };
+            }
+
+            it('should show more rows if container is large', () => {
+                const largeContainerData = generateTableData(500);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(15);
+            });
+
+            it('should not notify about hidden data (i.e. not show half of the row)', () => {
+                const largeContainerData = generateTableData(500);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('hasHiddenRows')).toEqual(false);
+            });
+
+            it('should show only base rows when container too small', () => {
+                const largeContainerData = generateTableData(100);
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(BASE_NUMBER_OF_ROWS);
+            });
+        });
+
+        describe('container height not given', () => {
+            const largeContainerData: ITableData = {
+                ...TABLE_DATA,
+                rows: largeNumberOfRows
+            };
+
+            it('should not show more rows', () => {
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('rows').length).toEqual(BASE_NUMBER_OF_ROWS);
+            });
+
+            it('should notify about hidden data (i.e. show half of the row)', () => {
+                const wrapper = renderTable(largeContainerData);
+
+                expect(wrapper.find(Table).prop('hasHiddenRows')).toEqual(true);
+            });
         });
     });
 
@@ -118,12 +180,22 @@ describe('Responsive Table', () => {
                 expect(getLess(wrapper)).toHaveLength(0);
             });
 
+            it('should show "Less" button when not on first page during init', () => {
+                const data: ITableData = {
+                    ...tableData,
+                    page: 1,
+                    pageOffset: 3
+                };
+                const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(data);
+                expect(getLess(wrapper)).toHaveLength(1);
+            });
+
             it('should set correct number of rows', () => {
                 const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(tableData);
                 expect(wrapper.find(Table).prop('rows').length).toEqual(ROWS_PER_PAGE);
             });
 
-            it('should call onMore callback with number of rows and page when user clicks "More"', () => {
+            it('should call onMore callback with number of rows, page and pageOffset when user clicks "More"', () => {
                 const onMore = jest.fn();
                 const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(
                     tableData, { onMore }
@@ -131,7 +203,8 @@ describe('Responsive Table', () => {
                 getMore(wrapper).simulate('click');
                 expect(onMore).toBeCalledWith({
                     rows: ROWS_PER_PAGE * 2,
-                    page: 2
+                    pageOffset: 1,
+                    page: 1
                 });
             });
         });

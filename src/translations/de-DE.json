@@ -59,5 +59,8 @@
    "visualizations.legend.text.bottom": "Unten:",
    "visualizations.legend.text.left": "Links:",
    "visualizations.legend.text.right": "Rechts:",
-   "visualizations.menu.aggregations": "Aggregationen"
+   "visualizations.menu.aggregations": "Ansammeln",
+   "visualizations.menu.aggregations.rows": "Zeilen",
+   "visualizations.menu.aggregations.all-rows": "aller Zeilen",
+   "visualizations.menu.aggregations.within-attribute": "innerhalb von {attributeName}"
 }

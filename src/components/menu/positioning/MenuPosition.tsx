@@ -10,12 +10,30 @@ export interface IMenuPositionProps extends IMenuPositionConfig {
     portalTarget: Element;
     contentWrapper?: (props: { children: React.ReactNode }) => JSX.Element;
     toggler: React.ReactNode;
+    togglerWrapperClassName?: string;
     children: React.ReactNode;
+    className?: string;
 }
 
 export interface IMenuPositionState {
     togglerElInitialized: boolean;
 }
+
+const Wrapper =
+    ({ children }: { children: React.ReactNode }) => <div className="gd-menuPosition-wrapper" >{children}</div>;
+
+const PortalIfTopLevelMenu =
+    ({ topLevelMenu, children, portalTarget }: {
+        children: React.ReactNode,
+        portalTarget: Element,
+        topLevelMenu: boolean
+    }) => topLevelMenu
+        ? (
+            <RenderChildrenInPortal targetElement={portalTarget}>
+                {children}
+            </RenderChildrenInPortal>
+        )
+        : <React.Fragment>{children}</React.Fragment>;
 
 export default class MenuPosition extends React.Component<IMenuPositionProps, IMenuPositionState> {
     public static defaultProps = {
@@ -34,41 +52,54 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
     // measurements manually in PositionedMenuContent at the correct time.
 
     public render() {
+        const {
+            portalTarget,
+            topLevelMenu,
+            contentWrapper,
+            toggler,
+            opened,
+            alignment,
+            spacing,
+            offset,
+            togglerWrapperClassName,
+            children
+        } = this.props;
         // Top level menu uses React portals to be rendered in body element (or
         // any element specified in targetElement prop). Any submenus are rendered
         // inside of previous menu, so they do not need any portals.
-        const PortalIfTopLevelMenu = this.props.topLevelMenu
-            ? (props: { children: React.ReactNode }) => (
-                  <RenderChildrenInPortal targetElement={this.props.portalTarget}>
-                      {props.children}
-                  </RenderChildrenInPortal>
-              )
-            : React.Fragment;
 
-        const ContentWrapper = this.props.contentWrapper;
+        const ContentWrapper = contentWrapper;
+
+        const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
 
         return (
-            <div style={this.props.topLevelMenu ? null : { position: 'relative' }}>
-                <div style={this.props.topLevelMenu ? { display: 'inline-block' } : null} ref={this.setTogglerEl}>
-                    {this.props.toggler}
+            <MaybeWrapper>
+                <div
+                    className={topLevelMenu ? togglerWrapperClassName : undefined}
+                    ref={this.setTogglerEl}
+                >
+                    {toggler}
                 </div>
 
-                <PortalIfTopLevelMenu>
-                    {this.props.opened && this.state.togglerElInitialized && (
+                <PortalIfTopLevelMenu
+                    portalTarget={portalTarget}
+                    topLevelMenu={topLevelMenu}
+                >
+                    {opened && this.state.togglerElInitialized && (
                         <ContentWrapper>
                             <PositionedMenuContent
-                                alignment={this.props.alignment}
-                                spacing={this.props.spacing}
-                                offset={this.props.offset}
-                                topLevelMenu={this.props.topLevelMenu}
+                                alignment={alignment}
+                                spacing={spacing}
+                                offset={offset}
+                                topLevelMenu={topLevelMenu}
                                 togglerEl={this.togglerEl}
                             >
-                                {this.props.children}
+                                {children}
                             </PositionedMenuContent>
                         </ContentWrapper>
                     )}
                 </PortalIfTopLevelMenu>
-            </div>
+            </MaybeWrapper>
         );
     }
 

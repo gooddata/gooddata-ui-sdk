@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from 'react';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 import omit = require('lodash/omit');
 import noop = require('lodash/noop');
 import { Subtract } from 'utility-types';
@@ -21,20 +21,19 @@ import {
 import { hasDuplicateIdentifiers } from '../helpers/errorHandlers';
 
 export interface IPivotTableBucketProps {
-    measures?: VisualizationObject.BucketItem[];
-    rows?: VisualizationObject.IVisualizationAttribute[];
-    columns?: VisualizationObject.IVisualizationAttribute[];
-    totals?: VisualizationObject.IVisualizationTotal[];
-    totalsEditAllowed?: boolean;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measures?: VisualizationInput.AttributeOrMeasure[];
+    rows?: VisualizationInput.IAttribute[];
+    columns?: VisualizationInput.IAttribute[];
+    totals?: VisualizationInput.ITotal[];
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketProps {
     projectId: string;
-    totalsEditAllowed?: boolean;
     pageSize?: number;
     config?: IPivotTableConfig;
+    groupRows?: boolean;
 }
 
 export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.IBucket[] => {
@@ -67,12 +66,17 @@ type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketPro
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  */
 export class PivotTable extends React.Component<IPivotTableProps> {
+    public static defaultProps: Partial<IPivotTableProps> = {
+        groupRows: false
+    };
+
     public render() {
         const { sortBy, filters } = this.props;
 
         const buckets: VisualizationObject.IBucket[] = getBuckets(this.props);
 
         const afm = convertBucketsToAFM(buckets, filters);
+
         const resultSpec = getResultSpec(buckets, sortBy, getPivotTableDimensions);
 
         hasDuplicateIdentifiers(buckets);

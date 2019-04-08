@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import flatten = require('lodash/flatten');
 import get = require('lodash/get');
 import pick = require('lodash/pick');
@@ -14,10 +14,9 @@ import min = require('lodash/min');
 import max = require('lodash/max');
 import isNil = require('lodash/isNil');
 
-import { ISeriesItem, ISeriesDataItem } from '../chartOptionsBuilder';
 import { VisualizationTypes, VisType } from '../../../../constants/visualizationTypes';
 import { isBarChart } from '../../utils/common';
-import { IChartConfig } from '../../../../interfaces/Config';
+import { IChartConfig, ISeriesItem, ISeriesDataItem } from '../../../../interfaces/Config';
 
 export interface IRectByPoints {
     left: number;

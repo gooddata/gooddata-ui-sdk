@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { ISeparators } from '@gooddata/numberjs';
 import { VisualizationObject } from '@gooddata/typings';
+import { IColorItem, IColor } from '@gooddata/gooddata-js';
 import { PositionType } from '../components/visualizations/typings/legend';
 import { VisType } from '../constants/visualizationTypes';
 import { IDataLabelsConfig } from '../interfaces/Config';
@@ -9,32 +10,11 @@ import { IMappingHeader } from './MappingHeader';
 
 export { DEFAULT_COLOR_PALETTE } from '../components/visualizations/utils/color';
 
-export type IDataLabelsVisibile = string | boolean;
+export type IDataLabelsVisible = string | boolean;
 
 export interface IDataLabelsConfig {
-    visible?: IDataLabelsVisibile;
+    visible?: IDataLabelsVisible;
 }
-
-export type GuidType = 'guid';
-export type RGBType = 'rgb';
-
-export interface IRGBColor {
-    r: number;
-    g: number;
-    b: number;
-}
-
-export interface IGuidColorItem {
-    type: GuidType;
-    value: string;
-}
-
-export interface IRGBColorItem {
-    type: RGBType;
-    value: IRGBColor;
-}
-
-export type IColorItem = IGuidColorItem | IRGBColorItem;
 
 export interface IColorMapping { // sent to SDK
     predicate: IHeaderPredicate;
@@ -48,7 +28,7 @@ export interface IColorAssignment { // << send from SDK up
 
 export interface IColorPaletteItem {
     guid: string;
-    fill: IRGBColor;
+    fill: IColor;
 }
 
 export interface IColorPalette extends Array<IColorPaletteItem> {}
@@ -65,7 +45,12 @@ export interface IChartLimits {
     dataPoints?: number;
 }
 
-export interface IChartConfig {
+export interface IMeasuresStackConfig {
+    stackMeasures?: boolean;
+    stackMeasuresToPercent?: boolean;
+}
+
+export interface IChartConfig extends IMeasuresStackConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
@@ -87,6 +72,9 @@ export interface IChartConfig {
     secondary_yaxis?: IAxisConfig;
     separators?: ISeparators;
     dataLabels?: IDataLabelsConfig;
+    dualAxis?: boolean;
+    primaryChartType?: VisualizationObject.VisualizationType;
+    secondaryChartType?: VisualizationObject.VisualizationType;
 }
 
 export interface IAxisConfig {
@@ -96,4 +84,34 @@ export interface IAxisConfig {
     min?: string;
     max?: string;
     measures?: string[];
+}
+
+export interface IAxis {
+    label: string;
+    format?: string;
+    opposite?: boolean;
+    seriesIndices?: number[];
+}
+
+export interface ISeriesDataItem {
+    x?: number;
+    y: number;
+    value?: number;
+    name?: string;
+}
+
+export interface ISeriesItem {
+    name?: string;
+    data?: ISeriesDataItem[];
+    color?: string;
+    userOptions?: any;
+    visible?: boolean;
+    type?: VisualizationObject.VisualizationType | string;
+    isDrillable?: boolean;
+    legendIndex?: number;
+    yAxis?: number;
+    zIndex?: number;
+    labelKey?: string;
+    stack?: number;
+    stacking?: string;
 }

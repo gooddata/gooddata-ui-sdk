@@ -5,7 +5,9 @@ import {
     getClickableElementNameByChartType,
     chartClick,
     cellClick,
-    IHighchartsChartDrilldownEvent
+    IHighchartsChartDrilldownEvent,
+    IHighchartsPointObject,
+    createDrillIntersectionElement
 } from '../drilldownEventing';
 import { VisualizationTypes } from '../../../../constants/visualizationTypes';
 
@@ -27,45 +29,38 @@ describe('Drilldown Eventing', () => {
             }
         ]
     };
-
-    const pointClickEventData = {
-        point: {
-            x: 1,
-            y: 2,
-            value: 678.00,
-            drillContext: [
-                {
-                    id: 'id',
-                    title: 'title',
-                    value: '123',
-                    name: 'name1',
+    const point: Partial<IHighchartsPointObject> = {
+        x: 1,
+        y: 2,
+        value: 678.00,
+        drillIntersection: [
+            {
+                id: 'id',
+                title: 'title',
+                header: {
                     identifier: 'identifier1',
-                    uri: 'uri1',
-                    some: 'nonrelevant data'
-                },
-                {
-                    id: 'id',
-                    title: 'title',
-                    value: '123',
-                    name: 'name2',
+                    uri: 'uri1'
+                }
+            },
+            {
+                id: 'id',
+                title: 'title',
+                header: {
                     identifier: 'identifier2',
                     uri: 'uri2'
-                },
-                {
-                    id: 'id',
-                    title: 'title',
-                    value: '123',
-                    name: 'name3',
+                }
+            },
+            {
+                id: 'id',
+                title: 'title',
+                header: {
                     identifier: 'identifier3',
                     uri: 'uri3'
                 }
-            ],
-            some: 'nonrelevant data'
-        }
+            }
+        ]
     };
-
-    const pointClickWitZEventData = cloneDeep(pointClickEventData);
-    (pointClickWitZEventData as any as IHighchartsChartDrilldownEvent).point.z = 12000;
+    const pointClickEventData = { point } as any as IHighchartsChartDrilldownEvent;
 
     it('should get clickable chart element name', () => {
         const fn = getClickableElementNameByChartType;
@@ -75,7 +70,6 @@ describe('Drilldown Eventing', () => {
         expect(fn(VisualizationTypes.PIE)).toBe('slice');
         expect(fn(VisualizationTypes.TREEMAP)).toBe('slice');
         expect(fn(VisualizationTypes.HEATMAP)).toBe('cell');
-        expect(fn(VisualizationTypes.TABLE)).toBe('cell');
         expect(() => {
             fn('headline'); // headline is not defined
         }).toThrowError();
@@ -84,13 +78,14 @@ describe('Drilldown Eventing', () => {
     it('should call point drill context (non-group) when event.points given but null', () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
+        const pointClickEventDataWithNullPoints: IHighchartsChartDrilldownEvent = {
+            ...pointClickEventData,
+            points: null
+        };
 
         chartClick(
             drillConfig,
-            {
-                ...pointClickEventData,
-                points: null
-            } as any as IHighchartsChartDrilldownEvent,
+            pointClickEventDataWithNullPoints,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -107,7 +102,7 @@ describe('Drilldown Eventing', () => {
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData ,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -172,7 +167,7 @@ describe('Drilldown Eventing', () => {
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData,
             target as any as EventTarget,
             VisualizationTypes.TREEMAP
         );
@@ -181,11 +176,11 @@ describe('Drilldown Eventing', () => {
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
-        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe('678');
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData,
             target as any as EventTarget,
             VisualizationTypes.HEATMAP
         );
@@ -194,16 +189,19 @@ describe('Drilldown Eventing', () => {
 
         expect(target.dispatchEvent).toHaveBeenCalled();
 
-        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe(678.00);
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe('678');
     });
 
     it('should correctly handle z coordinate of point', () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
+        const pointClickWitZEventData = cloneDeep(pointClickEventData);
+
+        pointClickWitZEventData.point.z = 12000;
 
         chartClick(
             drillConfig,
-            pointClickWitZEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickWitZEventData,
             target as any as EventTarget,
             VisualizationTypes.BUBBLE
         );
@@ -269,7 +267,7 @@ describe('Drilldown Eventing', () => {
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -285,7 +283,7 @@ describe('Drilldown Eventing', () => {
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -302,7 +300,7 @@ describe('Drilldown Eventing', () => {
 
         chartClick(
             drillConfig,
-            pointClickEventData as any as IHighchartsChartDrilldownEvent,
+            pointClickEventData,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -316,28 +314,27 @@ describe('Drilldown Eventing', () => {
     it('should call fire event on label click', () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
-        const labelClickEventData = {
-            points: [{
-                x: 1,
-                y: 2,
-                drillContext: [
-                    {
-                        id: 'id',
-                        title: 'title',
-                        identifier: 'identifier1',
-                        uri: 'uri1',
-                        value: '123',
-                        name: 'name1',
-                        some: 'nonrelevant data'
-                    }
-                ],
-                some: 'nonrelevant data'
+        const clickedPoint: Partial<IHighchartsPointObject> = {
+            x: 1,
+            y: 2,
+            drillIntersection: [{
+                id: 'id',
+                title: 'title',
+                header: {
+                    identifier: 'identifier1',
+                    uri: 'uri1'
+                }
             }]
         };
+        const labelClickEventData = {
+            points: [
+                clickedPoint
+            ]
+        } as any as IHighchartsChartDrilldownEvent;
 
         chartClick(
             drillConfig,
-            labelClickEventData as any as IHighchartsChartDrilldownEvent,
+            labelClickEventData,
             target as any as EventTarget,
             VisualizationTypes.LINE
         );
@@ -391,15 +388,13 @@ describe('Drilldown Eventing', () => {
             rowIndex: 2,
             row: ['3'],
             intersection: [{
-                title: 'title1',
                 id: 'id1',
-                identifier: 'identifier1',
-                uri: 'uri1',
-                name: 'name1',
-                value: '123',
-                some: 'irrelevant data'
-            }],
-            some: 'nonrelevant data'
+                title: 'title1',
+                header: {
+                    identifier: 'identifier1',
+                    uri: 'uri1'
+                }
+            }]
         };
 
         cellClick(
@@ -441,5 +436,100 @@ describe('Drilldown Eventing', () => {
                 }]
             }
         });
+    });
+
+    describe('createDrillIntersectionElement', () => {
+        it('should return empty id when id not provided', () => {
+            const element = createDrillIntersectionElement(undefined, 'title');
+
+            expect(element).toEqual({
+                id: '',
+                title: 'title'
+            });
+        });
+
+        it('should return empty title when title not provided', () => {
+            const element = createDrillIntersectionElement('id', undefined);
+
+            expect(element).toEqual({
+                id: 'id',
+                title: ''
+            });
+        });
+
+        it('should return intersection element with only id and title when no uri and identifier provided', () => {
+            const element = createDrillIntersectionElement('id', 'title');
+
+            expect(element).toEqual({
+                id: 'id',
+                title: 'title'
+            });
+        });
+
+        it('should return intersection element with header', () => {
+            const element = createDrillIntersectionElement('id', 'title', 'uri', 'identifier');
+
+            expect(element).toEqual({
+                id: 'id',
+                title: 'title',
+                header: {
+                    uri: 'uri',
+                    identifier: 'identifier'
+                }
+            });
+        });
+
+        // tslint:disable-next-line:max-line-length
+        it('should return intersection element with header with uri and empty identifier when only uri provided', () => {
+            const element = createDrillIntersectionElement('id', 'title', 'uri');
+
+            expect(element).toEqual({
+                id: 'id',
+                title: 'title',
+                header: {
+                    uri: 'uri',
+                    identifier: ''
+                }
+            });
+        });
+
+        // tslint:disable-next-line:max-line-length
+        it('should return intersection element with header with identifier and empty uri when only identifier provided', () => {
+            const element = createDrillIntersectionElement('id', 'title', undefined, 'identifier');
+
+            expect(element).toEqual({
+                id: 'id',
+                title: 'title',
+                header: {
+                    uri: '',
+                    identifier: 'identifier'
+                }
+            });
+        });
+
+        it('should fire drill event (non-group) when point value is null and return empty string for value', () => {
+            const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target = { dispatchEvent: jest.fn() };
+            const pointClickEventDataWithPointNullValue: IHighchartsChartDrilldownEvent = {
+                ...pointClickEventData,
+                points: null
+            };
+
+            pointClickEventDataWithPointNullValue.point.value = null;
+
+            chartClick(
+                drillConfig,
+                pointClickEventDataWithPointNullValue,
+                target as any as EventTarget,
+                VisualizationTypes.HEATMAP
+            );
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+            expect(drillContext.value).toEqual('');
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        });
+
     });
 });

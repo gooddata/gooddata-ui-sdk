@@ -59,5 +59,8 @@
    "visualizations.legend.text.bottom": "下： ",
    "visualizations.legend.text.left": "左： ",
    "visualizations.legend.text.right": "右： ",
-   "visualizations.menu.aggregations": "集合"
+   "visualizations.menu.aggregations": "集計する",
+   "visualizations.menu.aggregations.rows": "行",
+   "visualizations.menu.aggregations.all-rows": "全ての行",
+   "visualizations.menu.aggregations.within-attribute": "{attributeName}内"
 }

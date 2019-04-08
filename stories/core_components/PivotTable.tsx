@@ -6,12 +6,12 @@ import { screenshotWrap } from '@gooddata/test-storybook';
 
 import { PivotTable } from '../../src';
 import { onErrorHandler } from '../mocks';
-
 import { GERMAN_SEPARATORS } from '../data/numberFormat';
 import {
     ATTRIBUTE_1,
     ATTRIBUTE_1_WITH_ALIAS,
     ATTRIBUTE_2,
+    ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
@@ -20,7 +20,9 @@ import {
     TOTAL_M1_A1,
     TOTAL_M2_A1,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+    ATTRIBUTE_COUNTRY,
+    GRAND_TOTALS_WITH_SUBTOTALS
 } from '../data/componentProps';
 
 function logTotalsChange(data: any) {
@@ -252,6 +254,64 @@ storiesOf('Core components/PivotTable', module)
             </div>
         )
     ))
+    .add('totals - two measures, one row attribute, maxHeight 100', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        maxHeight: 100
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('totals - two measures, one row attribute, maxHeight 300', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1]}
+                    totals={[TOTAL_M1_A1, TOTAL_M2_A1]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        maxHeight: 300
+                    }}
+                />
+            </div>
+        )
+    ))
+    .add('totals - column and row attributes with menu enabled', () => screenshotWrap(
+        <div style={wrapperStyle} className="s-table">
+            <PivotTable
+                projectId="storybook"
+                measures={[MEASURE_1, MEASURE_2]}
+                columns={[ATTRIBUTE_3]}
+                rows={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                groupRows={true}
+                totals={GRAND_TOTALS_WITH_SUBTOTALS}
+                onError={onErrorHandler}
+                LoadingComponent={null}
+                ErrorComponent={null}
+                config={{
+                    menu: {
+                        aggregations: true,
+                        aggregationsSubMenu: true
+                    }
+                }}
+            />
+        </div>
+        )
+    )
     .add('arithmetic measures', () => (
         screenshotWrap(
             <div style={wrapperStyle} className="s-table">
@@ -267,6 +327,48 @@ storiesOf('Core components/PivotTable', module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>
+        )
+    ))
+    .add('data grouping - group rows in attribute columns', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1, ATTRIBUTE_COUNTRY, ATTRIBUTE_2]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    groupRows={true}
+                />
+            </div>
+        )
+    ))
+    .add('data grouping - do not group rows in attribute columns when not sorted by first attribute', () => (
+        screenshotWrap(
+            <div style={wrapperStyle} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    rows={[ATTRIBUTE_1, ATTRIBUTE_COUNTRY, ATTRIBUTE_2]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    groupRows={true}
+                    sortBy={[{
+                        measureSortItem: {
+                            direction: 'desc',
+                            locators: [
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: 'm1'
+                                    }
+                                }
+                            ]
+                        }
+                    }]}
                 />
             </div>
         )

@@ -2,6 +2,7 @@
 import head = require('lodash/head');
 import last = require('lodash/last');
 import {
+    createArrayFromRangeWithMiddleZero,
     createTickPositions,
     getMinMax,
     getTickAmount,
@@ -363,7 +364,7 @@ describe('get tick positions for dual axes chart', () => {
                 runTest(-10000, 0, -500, 0, minmaxAuto);
             });
 
-            it('between axes with -0 and 0+ data - only lef axis configured', () => {
+            it('between axes with -0 and 0+ data - only left axis configured', () => {
                 runTest(-10000, 10000, -500, 500, minmaxAuto);
             });
 
@@ -375,7 +376,7 @@ describe('get tick positions for dual axes chart', () => {
 
     describe('test generate tick positions with highchart', () => {
         const AXIS_PADDING = 0.05;
-        let getTickPositions: Function;
+        let getTickPositions = getTickPositioner();
 
         const getAxis = (index = 0,
                          dataMin: number = undefined, dataMax: number = undefined,
@@ -502,8 +503,8 @@ describe('get tick positions for dual axes chart', () => {
                 });
             });
 
-            it('left tick position is empty with undefined min/max,' +
-                'right tick positions has data with middle zero', () => {
+            // tslint:disable-next-line:max-line-length
+            it('left tick position is empty with undefined min/max, right tick positions has data with middle zero', () => {
                 runTest({
                     index: 0,
                     dataMin: undefined,
@@ -517,8 +518,41 @@ describe('get tick positions for dual axes chart', () => {
                 });
             });
 
-            it('left tick position is empty with min > max,' +
-                'right tick positions has data with middle zero', () => {
+            // tslint:disable-next-line:max-line-length
+            it('should return empty left tick position if min/max is undefined; and right tick position if data don\'t have middle zero', () => {
+                runTest({
+                    index: 0,
+                    dataMin: undefined,
+                    dataMax: undefined,
+                    expectedTickAmount: 0
+                }, {
+                    index: 1,
+                    dataMin: 1000,
+                    dataMax: 5000,
+                    userMin: 3000,
+                    userMax: 4000,
+                    expectedTickAmount: TICK_AMOUNT
+                });
+            });
+
+            // tslint:disable-next-line:max-line-length
+            it('should return empty left tick position if min/max is undefined; and right tick position if data don\'t have middle zero - case 2', () => {
+                runTest({
+                    index: 0,
+                    dataMin: undefined,
+                    dataMax: undefined,
+                    expectedTickAmount: 0
+                }, {
+                    index: 1,
+                    dataMin: -5000,
+                    dataMax: -1000,
+                    userMin: -4000,
+                    userMax: -3000,
+                    expectedTickAmount: TICK_AMOUNT
+                });
+            });
+
+            it('left tick position is empty with min > max, right tick positions has data with middle zero', () => {
                 runTest({
                     index: 0,
                     dataMin: 100,
@@ -536,8 +570,8 @@ describe('get tick positions for dual axes chart', () => {
                 });
             });
 
-            it('left tick position is empty with out-of-range min/max,' +
-                'right tick positions has data with middle zero', () => {
+            // tslint:disable-next-line:max-line-length
+            it('left tick position is empty with out-of-range min/max, right tick positions has data with middle zero', () => {
                 runTest({
                     index: 0,
                     dataMin: 50,
@@ -555,8 +589,8 @@ describe('get tick positions for dual axes chart', () => {
                 });
             });
 
-            it('left tick position is empty with out-of-range min/max,' +
-                'right tick position is empty with min > max,', () => {
+            // tslint:disable-next-line:max-line-length
+            it('left tick position is empty with out-of-range min/max, right tick position is empty with min > max,', () => {
                 runTest({
                     index: 0,
                     dataMin: 50,
@@ -573,6 +607,18 @@ describe('get tick positions for dual axes chart', () => {
                     expectedTickAmount: 0
                 });
             });
+        });
+    });
+
+    describe('createArrayFromRangeWithMiddleZero', () => {
+        it.each([
+            [-100000, 1000000, 12],
+            [-0.2100000000000003, 2.1, 12]
+        ])('should add zero between %f and %f values', (start: number, end: number, ticksNumber: number) => {
+            const result = createArrayFromRangeWithMiddleZero(start, end, ticksNumber);
+
+            expect(result.indexOf(0)).not.toEqual(-1);
+            expect(result.length).toEqual(ticksNumber);
         });
     });
 });

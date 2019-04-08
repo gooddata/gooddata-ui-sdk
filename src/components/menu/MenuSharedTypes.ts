@@ -12,6 +12,13 @@ export type MenuAlignment =
     | ['left', 'top']
     | ['left', 'bottom'];
 
+export interface IOnOpenedChangeParams {
+    opened: boolean;
+    source: 'TOGGLER_BUTTON_CLICK' | 'OUTSIDE_CLICK' | 'SCROLL' | 'CLOSE_MENU_RENDER_PROP' | 'HOVER_TIMEOUT';
+}
+
+export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;
+
 export interface IMenuPositionConfig {
     alignment: MenuAlignment;
     spacing: number;

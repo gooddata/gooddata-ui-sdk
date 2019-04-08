@@ -1,5 +1,56 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { VisualizationObject, VisualizationClass } from '@gooddata/typings';
+
+export const dummyMeasureGroup = {
+    items: [
+        {
+            measureHeaderItem: {
+                localIdentifier: 'm1',
+                name: 'dummyName1',
+                format: '#.##x'
+            }
+
+        },
+        {
+            measureHeaderItem: {
+                localIdentifier: 'm2',
+                name: 'dummyName2',
+                format: '#.##x'
+            }
+        }
+    ]
+};
+
+export const measures: VisualizationObject.IMeasure[] = [
+    {
+        measure: {
+            localIdentifier: 'm1',
+            title: '# Logged-in Users',
+            definition: {
+                measureDefinition: {
+                    item: {
+                        uri: '/gdc/md/myproject/obj/3276'
+                    },
+                    filters: []
+                }
+            }
+        }
+    },
+    {
+        measure: {
+            localIdentifier: 'm2',
+            title: '# Users Opened AD',
+            definition: {
+                measureDefinition: {
+                    item: {
+                        uri: '/gdc/md/myproject/obj/1995'
+                    },
+                    filters: []
+                }
+            }
+        }
+    }
+];
 
 export const visualizationObjects: [{ visualizationObject: VisualizationObject.IVisualizationObject }] = [
     {
@@ -11,36 +62,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
                 buckets: [
                     {
                         localIdentifier: 'measures',
-                        items: [
-                            {
-                                measure: {
-                                    localIdentifier: 'm1',
-                                    title: '# Logged-in Users',
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                uri: '/gdc/md/myproject/obj/3276'
-                                            },
-                                            filters: []
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                measure: {
-                                    localIdentifier: 'm2',
-                                    title: '# Users Opened AD',
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                uri: '/gdc/md/myproject/obj/1995'
-                                            },
-                                            filters: []
-                                        }
-                                    }
-                                }
-                            }
-                        ]
+                        items: measures
                     },
                     {
                         localIdentifier: 'view',
@@ -1141,3 +1163,32 @@ export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVi
         }
     }
 ];
+
+export const comboVizObjectContent: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: '/gdc/md/myproject/obj/column'
+    },
+    buckets: [
+        {
+            localIdentifier: 'measures',
+            items: measures.slice(0)
+        },
+        {
+            localIdentifier: 'secondary_measures',
+            items: measures.slice(1)
+        },
+        {
+            localIdentifier: 'view',
+            items: [
+                {
+                    visualizationAttribute: {
+                        localIdentifier: 'a1',
+                        displayForm: {
+                            uri: '/gdc/md/myproject/obj/851'
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+};

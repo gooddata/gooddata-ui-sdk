@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, AFM, Execution } from '@gooddata/typings';
+import { IColumnTotal } from '../../src/components/core/pivotTable/AggregationsMenu';
 import {
     arithmeticMeasure,
     attributeSortItem,
@@ -15,7 +16,8 @@ export const MEASURE_2: VisualizationObject.IMeasure = measure('/gdc/md/storyboo
 export const MEASURE_3: VisualizationObject.IMeasure = measure('/gdc/md/storybook/obj/3').localIdentifier('m3');
 
 export const MEASURE_AM_1_2: VisualizationObject.IMeasure = arithmeticMeasure(['m1', 'm2'], 'sum')
-    .localIdentifier('am1');
+    .localIdentifier('am1')
+    .alias('M_0');
 
 export const MEASURE_1_POP: VisualizationObject.IMeasure = popMeasure('m1', '/gdc/md/storybook/obj/3.df')
     .localIdentifier('m1_pop')
@@ -94,6 +96,18 @@ export const TOTAL_M1_A1: VisualizationObject.IVisualizationTotal = {
     attributeIdentifier: ATTRIBUTE_1.visualizationAttribute.localIdentifier
 };
 
+export const TOTAL_M1_ACOUNTRY_SUM: VisualizationObject.IVisualizationTotal = {
+    measureIdentifier: MEASURE_1.measure.localIdentifier,
+    type: 'sum',
+    attributeIdentifier: ATTRIBUTE_COUNTRY.visualizationAttribute.localIdentifier
+};
+
+export const TOTAL_M1_ACOUNTRY_AVG: VisualizationObject.IVisualizationTotal = {
+    measureIdentifier: MEASURE_1.measure.localIdentifier,
+    type: 'avg',
+    attributeIdentifier: ATTRIBUTE_COUNTRY.visualizationAttribute.localIdentifier
+};
+
 export const TOTAL_M2_A1: VisualizationObject.IVisualizationTotal = {
     measureIdentifier: MEASURE_2.measure.localIdentifier,
     type: 'nat',
@@ -104,3 +118,89 @@ export const ATTRIBUTE_1_SORT_ITEM: AFM.IAttributeSortItem =
     attributeSortItem(ATTRIBUTE_1.visualizationAttribute.localIdentifier, 'asc');
 
 export const MEASURE_2_SORT_ITEM: AFM.IMeasureSortItem = measureSortItem(MEASURE_2.measure.localIdentifier, 'asc');
+
+export const GRAND_TOTALS_WITH_SUBTOTALS: AFM.ITotalItem[] = [
+    {
+        type: 'sum',
+        attributeIdentifier: 'a1',
+        measureIdentifier: 'm1'
+    },
+    {
+        type: 'sum',
+        attributeIdentifier: 'a1',
+        measureIdentifier: 'm2'
+    },
+
+    {
+        type: 'min',
+        attributeIdentifier: 'a2',
+        measureIdentifier: 'm1'
+    },
+
+    {
+        type: 'max',
+        attributeIdentifier: 'a2',
+        measureIdentifier: 'm1'
+    },
+    {
+        type: 'max',
+        attributeIdentifier: 'a2',
+        measureIdentifier: 'm2'
+    }
+];
+
+export const GRAND_TOTAL_SUM: AFM.ITotalItem = {
+    type: 'sum',
+    attributeIdentifier: '1st_attr_df_local_identifier',
+    measureIdentifier: '1st_measure_local_identifier'
+};
+
+export const COLUMN_TOTAL_1ST_2ND_ATTR_MAX: IColumnTotal = {
+    type: 'max',
+    attributes: [
+        '1st_attr_df_local_identifier',
+        '2nd_attr_df_local_identifier'
+    ]
+};
+
+export const ATTRIBUTE_HEADERS_3A_LONG_NAME: Execution.IAttributeHeader[] = [
+    {
+        attributeHeader: {
+            formOf: {
+                identifier: '1st_attr_local_identifier',
+                name: 'Department',
+                uri: '/gdc/md/project_id/obj/1st_attr_uri_id'
+            },
+            identifier: '1st_attr_df_identifier',
+            localIdentifier: '1st_attr_df_local_identifier',
+            name: 'Department Name',
+            uri: '/gdc/md/project_id/obj/1st_attr_df_uri_id'
+        }
+    },
+    {
+        attributeHeader: {
+            formOf: {
+                identifier: '2nd_attr_local_identifier',
+                name: 'Region name is very long to fit the submenu so we limit characters',
+                uri: '/gdc/md/project_id/obj/2nd_attr_uri_id'
+            },
+            identifier: '2nd_attr_df_identifier',
+            localIdentifier: '2nd_attr_df_local_identifier',
+            name: 'Region Area',
+            uri: '/gdc/md/project_id/obj/2nd_attr_df_uri_id'
+        }
+    },
+    {
+        attributeHeader: {
+            formOf: {
+                identifier: '3rd_attr_local_identifier',
+                name: 'Brand',
+                uri: '/gdc/md/project_id/obj/3rd_attr_uri_id'
+            },
+            identifier: '3rd_attr_df_identifier',
+            localIdentifier: '3rd_attr_df_local_identifier',
+            name: 'Brand name',
+            uri: '/gdc/md/project_id/obj/3rd_attr_df_uri_id'
+        }
+    }
+];

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from 'react';
 import noop = require('lodash/noop');
 import { storiesOf } from '@storybook/react';
@@ -37,6 +37,10 @@ import {
     headlineWithTwoMeasures,
     headlineWithAMMeasure
 } from '../data/headlineExecutionFixtures';
+import {
+    createHighChartResolver,
+    ScreenshotReadyWrapper
+} from '../utils/ScreenshotReadyWrapper';
 
 const onFiredDrillEvent = (
     { executionContext, drillContext }: { executionContext: any, drillContext: any }
@@ -484,7 +488,7 @@ storiesOf('Internal/Drilldown', module)
                     onDataTooLarge={noop}
                     onNegativeValues={noop}
                     onLegendReady={noop}
-                    width={600}
+                    width={800}
                     height={400}
                     drillableItems={[
                         { uri: TABLE_HEADERS_AM[0].measureHeaderItem.uri },
@@ -494,7 +498,7 @@ storiesOf('Internal/Drilldown', module)
                         headerPredicateFactory.composedFromIdentifier(
                             TABLE_HEADERS_AM[1].measureHeaderItem.identifier)
                     ]}
-                />
+                />, 400, 800
             )
         )
     ))
@@ -533,6 +537,68 @@ storiesOf('Internal/Drilldown', module)
             </div>
         )
     ))
+    .add('Combo chart with onFiredDrillEvent', () => {
+        const dataSet = {
+            ...fixtures.comboWithTwoMeasuresAndViewByAttribute
+        };
+        return screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                <div>
+                    <p>
+                        Combo chart with drilling on measure
+                    </p>
+                    {
+                        wrap(
+                            <Visualization
+                                onFiredDrillEvent={action('onFiredDrillEvent')}
+                                config={{
+                                    type: 'combo',
+                                    mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject
+                                }}
+                                onDataTooLarge={noop}
+                                onNegativeValues={noop}
+                                {...dataSet}
+                                drillableItems={[
+                                    {
+                                        uri: dataSet.executionRequest.afm.measures[0].definition.measure.item.uri
+                                    },
+                                    {
+                                        uri: dataSet.executionRequest.afm.measures[1].definition.measure.item.uri
+                                    }
+                                ]}
+                            />,
+                            500,
+                            '100%'
+                        )
+                    }
+                    <p>
+                        Combo chart with drilling on attribute and logging to console
+                    </p>
+                    {
+                        wrap(
+                            <Visualization
+                                onFiredDrillEvent={onFiredDrillEvent}
+                                config={{
+                                    type: 'combo',
+                                    mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject
+                                }}
+                                onDataTooLarge={noop}
+                                onNegativeValues={noop}
+                                {...dataSet}
+                                drillableItems={[
+                                    {
+                                        uri: dataSet.executionRequest.afm.attributes[0].displayForm.uri
+                                    }
+                                ]}
+                            />,
+                            500,
+                            '100%'
+                        )
+                    }
+                </div>
+            </ScreenshotReadyWrapper>
+        );
+    })
     .add('Scatter plot with onFiredDrillEvent', () => {
         const dataSet = fixtures.scatterPlotWith2MetricsAndAttribute;
         return screenshotWrap(

@@ -4,13 +4,11 @@ exports[`Menu snapshot should match snapshot of menu with config 1`] = `
 <div>
   <div>
     <div
-      style="display: inline-block;"
+      class="gd-menuOpenedByClick-togglerWrapped"
     >
-      <div>
-        <button>
-          toggler
-        </button>
-      </div>
+      <button>
+        toggler
+      </button>
     </div>
   </div>
 </div>
@@ -24,7 +22,7 @@ exports[`Menu snapshot should match snapshot of menu with config 2`] = `
         style="position: absolute; left: -16px; top: 8px;"
       >
         <div
-          style="position: relative; z-index: 1;"
+          class="gd-menuOpener"
         >
           <ul
             class="content"
@@ -47,13 +45,11 @@ exports[`Menu snapshot should match snapshot of menu with no config 1`] = `
 <div>
   <div>
     <div
-      style="display: inline-block;"
+      class="gd-menuOpenedByClick-togglerWrapped"
     >
-      <div>
-        <button>
-          toggler
-        </button>
-      </div>
+      <button>
+        toggler
+      </button>
     </div>
   </div>
 </div>
@@ -69,13 +65,11 @@ exports[`Menu snapshot should match snapshot of menu with portalTarget 1`] = `
 <div>
   <div>
     <div
-      style="display: inline-block;"
+      class="gd-menuOpenedByClick-togglerWrapped"
     >
-      <div>
-        <button>
-          toggler
-        </button>
-      </div>
+      <button>
+        toggler
+      </button>
     </div>
   </div>
 </div>
@@ -91,7 +85,7 @@ exports[`Menu snapshot should match snapshot of menu with portalTarget 2`] = `
         style="position: absolute; left: 0px; top: 0px;"
       >
         <div
-          style="position: relative; z-index: 1;"
+          class="gd-menuOpener"
         >
           <ul
             class="content"
@@ -114,13 +108,11 @@ exports[`Menu snapshot should match snapshot of nested menus 1`] = `
 <div>
   <div>
     <div
-      style="display: inline-block;"
+      class="gd-menuOpenedByClick-togglerWrapped"
     >
-      <div>
-        <button>
-          toggler
-        </button>
-      </div>
+      <button>
+        toggler
+      </button>
     </div>
   </div>
 </div>
@@ -134,7 +126,7 @@ exports[`Menu snapshot should match snapshot of nested menus 2`] = `
         style="position: absolute; left: 0px; top: 0px;"
       >
         <div
-          style="position: relative; z-index: 1;"
+          class="gd-menuOpener"
         >
           <p>
             Menu Item
@@ -143,7 +135,7 @@ exports[`Menu snapshot should match snapshot of nested menus 2`] = `
             Menu Item
           </p>
           <div
-            style="position: relative;"
+            class="gd-menuPosition-wrapper"
           >
             <div>
               <div>
@@ -157,7 +149,7 @@ exports[`Menu snapshot should match snapshot of nested menus 2`] = `
             >
               <div>
                 <div
-                  style="position: relative; z-index: 1;"
+                  class="gd-menuOpener"
                 >
                   <p>
                     Menu Item

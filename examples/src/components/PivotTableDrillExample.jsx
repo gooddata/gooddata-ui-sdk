@@ -34,32 +34,6 @@ export class PivotTableDrillExample extends Component {
         return true;
     }
 
-    measures = [
-        Model.measure(franchiseFeesIdentifier)
-            .format('#,##0'),
-        Model.measure(franchiseFeesAdRoyaltyIdentifier)
-            .format('#,##0'),
-        Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-            .format('#,##0'),
-        Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-            .format('#,##0')
-    ];
-
-    drillableItems = [
-        HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier)
-    ];
-
-    attributes = [
-        Model.attribute(locationStateDisplayFormIdentifier),
-        Model.attribute(locationNameDisplayFormIdentifier),
-        Model.attribute(menuCategoryAttributeDFIdentifier)
-    ];
-
-    columns = [
-        Model.attribute(quarterDateIdentifier),
-        Model.attribute(monthDateIdentifier)
-    ];
-
     renderDrillValue() {
         const { drillEvent } = this.state;
 
@@ -68,24 +42,49 @@ export class PivotTableDrillExample extends Component {
         }
 
         const drillColumn = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
-        const drillValue = typeof drillColumn === 'object' ? drillColumn.title : drillColumn;
+        const drillValue = typeof drillColumn === 'object' ? drillColumn.name : drillColumn;
 
         return <h3>You have Clicked <span className="s-drill-value">{drillValue}</span> </h3>;
     }
 
     render() {
+        const measures = [
+            Model.measure(franchiseFeesIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format('#,##0'),
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format('#,##0')
+        ];
+
+        const drillableItems = [
+            HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier)
+        ];
+
+        const attributes = [
+            Model.attribute(locationStateDisplayFormIdentifier),
+            Model.attribute(locationNameDisplayFormIdentifier),
+            Model.attribute(menuCategoryAttributeDFIdentifier)
+        ];
+
+        const columns = [
+            Model.attribute(quarterDateIdentifier),
+            Model.attribute(monthDateIdentifier)
+        ];
+
         return (
             <div>
                 {this.renderDrillValue()}
                 <div style={{ height: 300 }} className="s-pivot-table-drill">
                     <PivotTable
-                        key={projectId}
                         projectId={projectId}
-                        measures={this.measures}
-                        rows={this.attributes}
-                        columns={this.columns}
+                        measures={measures}
+                        rows={attributes}
+                        columns={columns}
                         pageSize={20}
-                        drillableItems={this.drillableItems}
+                        drillableItems={drillableItems}
                         onFiredDrillEvent={this.onDrill}
                     />
                 </div>

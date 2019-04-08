@@ -1,5 +1,5 @@
 // (C) 2018 GoodData Corporation
-import { positiveAttributeFilter } from '../filters';
+import { positiveAttributeFilter, attributeFilter } from '../filters';
 import { measure, arithmeticMeasure, popMeasure, previousPeriodMeasure } from '../measures';
 
 describe('Measures', () => {
@@ -84,6 +84,30 @@ describe('Measures', () => {
                 }
             };
             expect(measure('foo').filters(positiveAttributeFilter('filter', ['baz']))).toMatchObject(expected);
+        });
+
+        it('should return a measure with a text filter', () => {
+            const expected = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: 'foo'
+                            },
+                            filters: [{
+                                positiveAttributeFilter: {
+                                    displayForm: {
+                                        identifier: 'filter'
+                                    },
+                                    in: ['val1'],
+                                    textFilter: true
+                                }
+                            }]
+                        }
+                    }
+                }
+            };
+            expect(measure('foo').filters(attributeFilter('filter').in('val1'))).toMatchObject(expected);
         });
     });
 

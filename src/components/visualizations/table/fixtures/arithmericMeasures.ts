@@ -61,6 +61,20 @@ export const EXECUTION_REQUEST_AM: AFM.IExecution = {
                             operator: 'sum'
                         }
                     }
+                },
+                {
+                    definition: {
+                        previousPeriodMeasure: {
+                            measureIdentifier: 'am1',
+                            dateDataSets: [{
+                                dataSet: {
+                                    uri: '/m0uri'
+                                },
+                                periodsAgo: 1
+                            }]
+                        }
+                    },
+                    localIdentifier: 'dam1'
                 }
             ]
         },
@@ -107,8 +121,6 @@ export const TABLE_HEADERS_AM: Execution.IMeasureHeaderItem[] = [
     },
     {
         measureHeaderItem: {
-            uri: '/am1uri',
-            identifier: 'am1id',
             localIdentifier: 'am1',
             name: 'AM1(M1,M2)',
             format: '#,##0'
@@ -116,8 +128,6 @@ export const TABLE_HEADERS_AM: Execution.IMeasureHeaderItem[] = [
     },
     {
         measureHeaderItem: {
-            uri: '/am2uri',
-            identifier: 'am2id',
             localIdentifier: 'am2',
             name: 'AM2(AM1,M2)',
             format: '#,##0'
@@ -125,10 +135,15 @@ export const TABLE_HEADERS_AM: Execution.IMeasureHeaderItem[] = [
     },
     {
         measureHeaderItem: {
-            uri: '/am3uri',
-            identifier: 'am3id',
             localIdentifier: 'am3',
             name: 'AM3(M0,M2)',
+            format: '#,##0'
+        }
+    },
+    {
+        measureHeaderItem: {
+            localIdentifier: 'dam1',
+            name: 'DAM1(AM1)',
             format: '#,##0'
         }
     }
@@ -173,8 +188,6 @@ export const EXECUTION_RESPONSE_AM: Execution.IExecutionResponse = {
                             },
                             {
                                 measureHeaderItem: {
-                                    uri: '/am1uri',
-                                    identifier: 'am1id',
                                     localIdentifier: 'am1',
                                     name: 'AM1(M1,M2)',
                                     format: '#,##0'
@@ -182,8 +195,6 @@ export const EXECUTION_RESPONSE_AM: Execution.IExecutionResponse = {
                             },
                             {
                                 measureHeaderItem: {
-                                    uri: '/am2uri',
-                                    identifier: 'am2id',
                                     localIdentifier: 'am2',
                                     name: 'AM2(AM1,M2)',
                                     format: '#,##0'
@@ -191,10 +202,15 @@ export const EXECUTION_RESPONSE_AM: Execution.IExecutionResponse = {
                             },
                             {
                                 measureHeaderItem: {
-                                    uri: '/am3uri',
-                                    identifier: 'am3id',
                                     localIdentifier: 'am3',
                                     name: 'AM3(M0,A2)',
+                                    format: '#,##0'
+                                }
+                            },
+                            {
+                                measureHeaderItem: {
+                                    localIdentifier: 'dam1',
+                                    name: 'DAM1(AM1)',
                                     format: '#,##0'
                                 }
                             }
@@ -217,7 +233,8 @@ export const EXECUTION_RESULT_AM: Execution.IExecutionResult = {
             '2',
             '3',
             '4',
-            '5'
+            '5',
+            '6'
         ]
     ],
     headerItems: [
@@ -258,6 +275,12 @@ export const EXECUTION_RESULT_AM: Execution.IExecutionResult = {
                     measureHeaderItem: {
                         name: TABLE_HEADERS_AM[5].measureHeaderItem.name,
                         order: 5
+                    }
+                },
+                {
+                    measureHeaderItem: {
+                        name: TABLE_HEADERS_AM[6].measureHeaderItem.name,
+                        order: 6
                     }
                 }
             ]

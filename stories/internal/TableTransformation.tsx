@@ -212,7 +212,6 @@ storiesOf('Internal/TableTransformation', module)
                     executionRequest={generateExecutionRequest()}
                     executionResponse={generateExecutionResponse(20)}
                     executionResult={generateExecutionResult(20, 20)}
-                    height={400}
                     onSortChange={action('Sort changed')}
                     tableRenderer={tableRenderer}
                 />

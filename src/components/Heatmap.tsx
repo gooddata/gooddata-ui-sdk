@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
 
 import { Heatmap as AfmHeatmap } from './afm/Heatmap';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -12,11 +12,11 @@ import { getHeatmapDimensionsFromBuckets } from '../helpers/dimensions';
 import { MEASURES, VIEW, STACK } from '../constants/bucketNames';
 
 export interface IHeatmapBucketProps {
-    measure: VisualizationObject.BucketItem;
-    rows?: VisualizationObject.IVisualizationAttribute;
-    columns?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
-    sortBy?: AFM.SortItem[];
+    measure: VisualizationInput.AttributeOrMeasure;
+    rows?: VisualizationInput.IAttribute;
+    columns?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
+    sortBy?: VisualizationInput.ISort[];
 }
 
 export interface IHeatmapProps extends ICommonChartProps, IHeatmapBucketProps {

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { omit } from 'lodash';
 import { Subtract } from 'utility-types';
-import { VisualizationObject } from '@gooddata/typings';
+import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
 
 import { Treemap as AfmTreemap } from './afm/Treemap';
 import { ICommonChartProps } from './core/base/BaseChart';
@@ -12,10 +12,10 @@ import { getResultSpec } from '../helpers/resultSpec';
 import { MEASURES, VIEW, SEGMENT } from '../constants/bucketNames';
 
 export interface ITreemapBucketProps {
-    measures: VisualizationObject.BucketItem[];
-    viewBy?: VisualizationObject.IVisualizationAttribute;
-    segmentBy?: VisualizationObject.IVisualizationAttribute;
-    filters?: VisualizationObject.VisualizationObjectFilter[];
+    measures: VisualizationInput.AttributeOrMeasure[];
+    viewBy?: VisualizationInput.IAttribute;
+    segmentBy?: VisualizationInput.IAttribute;
+    filters?: VisualizationInput.IFilter[];
 }
 
 export interface ITreemapProps extends ICommonChartProps, ITreemapBucketProps {
