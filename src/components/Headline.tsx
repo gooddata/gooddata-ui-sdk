@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { Headline as AfmHeadline } from "./afm/Headline";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -35,7 +35,11 @@ export function Headline(props: IHeadlineProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IHeadlineProps, IHeadlineNonBucketProps>(props, ["measure", "filters"]);
+    const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IHeadlineBucketProps>(props, [
+        "primaryMeasure",
+        "secondaryMeasure",
+        "filters",
+    ]);
 
     return <AfmHeadline {...newProps} afm={convertBucketsToAFM(buckets, props.filters)} />;
 }

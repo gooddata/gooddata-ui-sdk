@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { ColumnChart as AfmColumnChart } from "./afm/ColumnChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -45,12 +45,10 @@ export function ColumnChart(props: IColumnChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IColumnChartProps, IColumnChartNonBucketProps>(props, [
-        "measures",
-        "viewBy",
-        "stackBy",
-        "filters",
-    ]);
+    const newProps: IColumnChartNonBucketProps = omit<IColumnChartProps, keyof IColumnChartBucketProps>(
+        props,
+        ["measures", "viewBy", "stackBy", "filters", "sortBy"],
+    );
 
     return (
         <AfmColumnChart

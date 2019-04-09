@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { Table as AfmTable } from "./afm/Table";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -15,7 +15,6 @@ export interface ITableBucketProps {
     measures?: VisualizationInput.AttributeOrMeasure[];
     attributes?: VisualizationInput.IAttribute[];
     totals?: VisualizationInput.ITotal[];
-    totalsEditAllowed?: boolean;
     filters?: VisualizationInput.IFilter[];
     sortBy?: VisualizationInput.ISort[];
 }
@@ -44,11 +43,12 @@ export function Table(props: ITableProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<ITableProps, ITableNonBucketProps>(props, [
+    const newProps: ITableNonBucketProps = omit<ITableProps, keyof ITableBucketProps>(props, [
         "measures",
         "attributes",
         "totals",
         "filters",
+        "sortBy",
     ]);
 
     return (

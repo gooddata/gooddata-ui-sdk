@@ -404,7 +404,7 @@ function level2LabelsFormatter(config?: IChartConfig) {
 }
 
 function labelFormatterBubble(config?: IChartConfig) {
-    const value = get<number>(this, "point.z");
+    const value = get(this, "point.z");
     if (isNil(value) || isNaN(value)) {
         return null;
     }
@@ -586,7 +586,7 @@ function getLabelStyle(chartOptions: IChartOptions) {
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
 
-    const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, "dataLabels.visible");
+    const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
@@ -683,7 +683,7 @@ function getStackingConfiguration(chartOptions: IChartOptions, _config: any, cha
     let labelsConfig = {};
 
     if (isColumnChart(type)) {
-        const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, "dataLabels.visible");
+        const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
         labelsConfig = getLabelsVisibilityConfig(labelsVisible);
     }
 

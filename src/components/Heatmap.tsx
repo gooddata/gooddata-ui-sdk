@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { Heatmap as AfmHeatmap } from "./afm/Heatmap";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -41,11 +41,12 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, [
+    const newProps: IHeatmapNonBucketProps = omit<IHeatmapProps, keyof IHeatmapBucketProps>(props, [
         "measure",
         "rows",
         "columns",
         "filters",
+        "sortBy",
     ]);
 
     return (

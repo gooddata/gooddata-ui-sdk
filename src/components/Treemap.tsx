@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { Treemap as AfmTreemap } from "./afm/Treemap";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
@@ -44,7 +44,7 @@ export function Treemap(props: ITreemapProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<ITreemapProps, ITreemapNonBucketProps>(props, [
+    const newProps: ITreemapNonBucketProps = omit<ITreemapProps, keyof ITreemapBucketProps>(props, [
         "measures",
         "viewBy",
         "segmentBy",

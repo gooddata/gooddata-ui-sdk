@@ -40,13 +40,19 @@ export function getHeaders(executionResponse: Execution.IExecutionResponse): IMa
     ) as Execution.IAttributeHeader[];
 
     // measures are always returned (and requested) in 1-st dimension
-    const measureHeaders = get<Execution.IMeasureHeaderItem[]>(
+    const measureHeaders = get(
         dimensions[1].headers.find(Execution.isMeasureGroupHeader),
         ["measureGroupHeader", "items"],
         [],
     );
 
     return [...attributeHeaders, ...measureHeaders];
+}
+
+function isMatrix(
+    dataValues: Execution.DataValue[] | Execution.DataValue[][],
+): dataValues is Execution.DataValue[][] {
+    return dataValues[0] instanceof Array;
 }
 
 export function getRows(executionResult: Execution.IExecutionResult): TableRow[] {
@@ -65,21 +71,27 @@ export function getRows(executionResult: Execution.IExecutionResult): TableRow[]
             ),
         );
 
-    const measureValues = get(executionResult, "data", []);
+    const dataValues = get<Execution.IExecutionResult, "data", Execution.DataValue[][]>(
+        executionResult,
+        "data",
+        [],
+    );
 
     const attributeRows = zip(...attributeValues);
 
-    if (measureValues.length === 0) {
+    if (dataValues.length === 0) {
         return attributeRows;
     }
+    if (isMatrix(dataValues)) {
+        const measureValues: TableRow[] = dataValues;
+        if (attributeRows.length === 0) {
+            return measureValues;
+        }
 
-    if (attributeRows.length === 0) {
-        return measureValues;
+        return measureValues.map((measureValue: MeasureCell[], index: number) => {
+            return [...attributeRows[index], ...measureValue];
+        });
     }
-
-    return measureValues.map((measureValue: MeasureCell[], index: number) => {
-        return [...attributeRows[index], ...measureValue];
-    });
 }
 
 function getResultTotalsValues(executionResult: Execution.IExecutionResult): Execution.DataValue[][] {

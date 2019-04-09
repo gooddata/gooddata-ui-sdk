@@ -11,9 +11,8 @@ export function isDerivedMeasure(measure: AFM.IMeasure): boolean {
 
 export function getMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
     const measureDefinition =
-        get<string>(measure, ["definition", "popMeasure"]) ||
-        get<string>(measure, ["definition", "previousPeriodMeasure"]);
-    return get<string>(measureDefinition, ["measureIdentifier"]);
+        get(measure, ["definition", "popMeasure"]) || get(measure, ["definition", "previousPeriodMeasure"]);
+    return get(measureDefinition, ["measureIdentifier"]);
 }
 
 export function findMeasureByLocalIdentifier(afm: AFM.IAfm, localIdentifier: AFM.Identifier): AFM.IMeasure {
@@ -31,8 +30,8 @@ export function getMasterMeasureObjQualifier(afm: AFM.IAfm, localIdentifier: AFM
             return null;
         }
         return {
-            uri: get<string>(measure, ["definition", "measure", "item", "uri"]),
-            identifier: get<string>(measure, ["definition", "measure", "item", "identifier"]),
+            uri: get(measure, ["definition", "measure", "item", "uri"]),
+            identifier: get(measure, ["definition", "measure", "item", "identifier"]),
         };
     }
     return null;

@@ -93,7 +93,7 @@ function getExecutionData(
     const headerItems = getExecutionResponseMeasureHeaders(executionResponse);
 
     return headerItems.map((item, index) => {
-        const value = get<string>(executionResult, ["data", index]);
+        const value = get(executionResult, ["data", index]);
 
         invariant(value !== undefined, "Undefined execution value data for headline transformation");
         invariant(item.measureHeaderItem, "Missing expected measureHeaderItem");

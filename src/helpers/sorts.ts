@@ -29,21 +29,12 @@ function getAttributeSortItems(
     if (!identifier) {
         return [];
     }
-    const base = {
-        attributeIdentifier: identifier,
-        direction,
-    };
 
-    const enrichedAggregation = aggregation
-        ? {
-              aggregation: "sum",
-          }
-        : {};
-
-    const attributeSortItem = {
+    const attributeSortItem: AFM.IAttributeSortItem = {
         attributeSortItem: {
-            ...base,
-            ...enrichedAggregation,
+            attributeIdentifier: identifier,
+            direction,
+            ...(aggregation ? { aggregation: "sum" } : {}),
         },
     };
 
@@ -57,8 +48,8 @@ function getAllMeasuresSorts(afm: AFM.IAfm): AFM.SortItem[] {
 }
 
 export function getDefaultTreemapSort(afm: AFM.IAfm, resultSpec: AFM.IResultSpec): AFM.SortItem[] {
-    const viewByAttributeIdentifier = get<string>(resultSpec, "dimensions.0.itemIdentifiers.0");
-    const stackByAttributeIdentifier = get<string>(resultSpec, "dimensions.0.itemIdentifiers.1");
+    const viewByAttributeIdentifier: string = get(resultSpec, "dimensions[0].itemIdentifiers[0]");
+    const stackByAttributeIdentifier: string = get(resultSpec, "dimensions[0].itemIdentifiers[1]");
 
     if (viewByAttributeIdentifier && stackByAttributeIdentifier) {
         return [...getAttributeSortItems(viewByAttributeIdentifier, ASC, false), ...getAllMeasuresSorts(afm)];

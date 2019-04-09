@@ -261,10 +261,10 @@ function getAtributeColorAssignment(
     afm: AFM.IAfm,
 ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
-    const uniqItems: Execution.IResultAttributeHeaderItem[] = uniqBy<
-        any,
-        Execution.IResultAttributeHeaderItem
-    >(attribute.items, "attributeHeaderItem.uri");
+    const uniqItems: Execution.IResultAttributeHeaderItem[] = uniqBy<Execution.IResultAttributeHeaderItem>(
+        attribute.items,
+        "attributeHeaderItem.uri",
+    );
 
     return uniqItems.map(headerItem => {
         const mappedColor = getColorFromMapping(headerItem, colorMapping, executionResponse, afm);

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { omit } from "lodash";
-import { Subtract } from "utility-types";
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { AreaChart as AfmAreaChart } from "./afm/AreaChart";
 
 import { ICommonChartProps } from "./core/base/BaseChart";
@@ -51,11 +51,12 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IAreaChartProps, IAreaChartNonBucketProps>(props, [
+    const newProps: IAreaChartNonBucketProps = omit<IAreaChartProps, keyof IAreaChartBucketProps>(props, [
         "measures",
         "viewBy",
         "stackBy",
         "filters",
+        "sortBy",
     ]);
     newProps.config = {
         ...newProps.config,

@@ -1,4 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
+import * as React from "react";
+
 import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
 export { IDataSourceProviderProps };
@@ -12,8 +14,6 @@ import { generateDefaultDimensionsForRoundChart } from "../../helpers/dimensions
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const FunnelChart = dataSourceProvider<ICommonChartProps>(
-    CoreFunnelChart,
-    generateDefaultDimensionsForRoundChart,
-    "FunnelChart",
-);
+export const FunnelChart: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider<
+    ICommonChartProps
+>(CoreFunnelChart, generateDefaultDimensionsForRoundChart, "FunnelChart");

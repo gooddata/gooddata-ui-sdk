@@ -85,31 +85,30 @@ describe("Responsive Table", () => {
         const largeNumberOfRows = range(0, 4000).map(() => TABLE_ROWS_1A_2M[0]);
         const BASE_NUMBER_OF_ROWS = 10;
         describe("container height given", () => {
-            function generateTableData(containerHeight: number): ITableData {
+            function generateTableData(): ITableData {
                 return {
                     ...TABLE_DATA,
-                    containerHeight,
                     rows: largeNumberOfRows,
                 };
             }
 
             it("should show more rows if container is large", () => {
-                const largeContainerData = generateTableData(500);
-                const wrapper = renderTable(largeContainerData);
+                const largeContainerData = generateTableData();
+                const wrapper = renderTable(largeContainerData, { containerHeight: 500 });
 
                 expect(wrapper.find(Table).prop("rows").length).toEqual(15);
             });
 
             it("should not notify about hidden data (i.e. not show half of the row)", () => {
-                const largeContainerData = generateTableData(500);
-                const wrapper = renderTable(largeContainerData);
+                const largeContainerData = generateTableData();
+                const wrapper = renderTable(largeContainerData, { containerHeight: 500 });
 
                 expect(wrapper.find(Table).prop("hasHiddenRows")).toEqual(false);
             });
 
             it("should show only base rows when container too small", () => {
-                const largeContainerData = generateTableData(100);
-                const wrapper = renderTable(largeContainerData);
+                const largeContainerData = generateTableData();
+                const wrapper = renderTable(largeContainerData, { containerHeight: 100 });
 
                 expect(wrapper.find(Table).prop("rows").length).toEqual(BASE_NUMBER_OF_ROWS);
             });
@@ -193,12 +192,14 @@ describe("Responsive Table", () => {
             });
 
             it('should show "Less" button when not on first page during init', () => {
-                const data: ITableData = {
-                    ...tableData,
+                const customData = {
                     page: 1,
                     pageOffset: 3,
                 };
-                const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(data);
+                const wrapper: ReactWrapper<IResponsiveTableProps, IResponsiveTableState> = renderTable(
+                    tableData,
+                    customData,
+                );
                 expect(getLess(wrapper)).toHaveLength(1);
             });
 

@@ -480,7 +480,7 @@ export class TableVisualizationClass extends React.Component<
             const rect: ClientRect = this.table.getBoundingClientRect();
 
             if (width !== rect.width || height !== rect.height) {
-                this.setState(pick<{ width: number; height: number }, ClientRect>(rect, "width", "height"));
+                this.setState(pick<ClientRect, "width" | "height">(rect, "width", "height"));
             }
         }
     }

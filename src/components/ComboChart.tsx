@@ -4,9 +4,9 @@ import omit = require("lodash/omit");
 import set = require("lodash/set");
 import cloneDeep = require("lodash/cloneDeep");
 import isArray = require("lodash/isArray");
-import { Subtract } from "utility-types";
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { ComboChart as AfmComboChart } from "./afm/ComboChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
@@ -68,14 +68,18 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IComboChartProps, IComboChartNonBucketProps>(clonedProps, [
-        "columnMeasures",
-        "lineMeasures",
-        "primaryMeasures",
-        "secondaryMeasures",
-        "viewBy",
-        "filters",
-    ]);
+    const newProps: IComboChartNonBucketProps = omit<IComboChartProps, keyof IComboChartBucketProps>(
+        clonedProps,
+        [
+            "primaryMeasures",
+            "secondaryMeasures",
+            "columnMeasures",
+            "lineMeasures",
+            "viewBy",
+            "filters",
+            "sortBy",
+        ],
+    );
     newProps.config = {
         ...setMeasuresToSecondaryAxis(secondaryMeasures, newProps.config),
         mdObject: convertBucketsToMdObject(buckets, props.filters, "local:combo"),

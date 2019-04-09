@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { BarChart as AfmBarChart } from "./afm/BarChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -45,11 +45,12 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IBarChartProps, IBarChartNonBucketProps>(props, [
+    const newProps: IBarChartNonBucketProps = omit<IBarChartProps, keyof IBarChartBucketProps>(props, [
         "measures",
         "viewBy",
         "stackBy",
         "filters",
+        "sortBy",
     ]);
 
     return (

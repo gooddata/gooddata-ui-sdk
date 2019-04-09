@@ -154,7 +154,7 @@ export function visualizationLoadingHOC<
                   };
 
             // lower-level components do not need projectId
-            const props = omit<any, ILoadingInjectedProps>(this.props, ["projectId"]);
+            const props = omit(this.props, ["projectId"]);
 
             return (
                 <InnerComponent
@@ -358,10 +358,7 @@ export function visualizationLoadingHOC<
 
                 return this.sdk.report.exportResult(
                     projectId,
-                    get<Execution.IExecutionResponses, string>(
-                        execution,
-                        "executionResponse.links.executionResult",
-                    ),
+                    get(execution, "executionResponse.links.executionResult"),
                     assign({ title }, exportConfig),
                 );
             };

@@ -127,7 +127,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
                     if (error) {
                         return ErrorComponent ? (
                             <ErrorComponent
-                                code={error.status}
+                                code={error.getMessage()}
                                 message={intl.formatMessage({ id: "visualization.ErrorMessageKpi" })}
                             />
                         ) : null;
