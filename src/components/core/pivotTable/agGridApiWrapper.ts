@@ -49,24 +49,37 @@ function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyVa
     rowElement.style[propertyName] = propertyValue;
 }
 
-function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {
+function getPinnedTopRowCellElementWrapper(gridApi: GridApi, attributeId: string): HTMLElement | null {
     const pinnedTopRow = getPinnedTopRow(gridApi);
     return pinnedTopRow && pinnedTopRow.cellComps[attributeId]
         ? pinnedTopRow.cellComps[attributeId].eGui
         : null;
 }
 
+function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {
+    const pinnedTopRowCellElementWrapper = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
+    return pinnedTopRowCellElementWrapper ? pinnedTopRowCellElementWrapper.querySelector("span") : null;
+}
+
 function addPinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.add(className);
     }
 }
 
 function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.remove(className);
+    }
+}
+
+function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string) {
+    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+
+    if (cellElement !== null) {
+        cellElement.innerText = text;
     }
 }
 
@@ -83,6 +96,8 @@ export default {
     setPinnedTopRowStyle,
     // pinned row cell element
     getPinnedTopRowCellElement,
+    getPinnedTopRowCellElementWrapper,
     addPinnedTopRowCellClass,
     removePinnedTopRowCellClass,
+    setPinnedTopRowCellText,
 };

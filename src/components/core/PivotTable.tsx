@@ -283,9 +283,13 @@ export const getSortsFromModel = (
 };
 
 export const RowLoadingElement = (props: ICellRendererParams) => {
+    if (props.node.rowPinned === "top") {
+        return <span className={"gd-sticky-header-value"}>{props.formatValue(props.value)}</span>;
+    }
+
     // rows that are still loading do not have node.id
     // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
-    if (props.node.id !== undefined || props.node.rowPinned) {
+    if (props.node.id !== undefined || props.node.rowPinned === "bottom") {
         // props.value is always unformatted
         // there is props.formattedValue, but this is null for row attributes for some reason
         return <span className={"s-value"}>{props.formatValue(props.value)}</span>;
@@ -735,6 +739,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             intl: this.props.intl,
         };
 
+        const cellRenderer = (params: ICellRendererParams) => {
+            const formattedValue = params.formatValue(params.value);
+            const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
+            return `<span class="${className}">${formattedValue || ""}</span>`;
+        };
+
         const gridOptions: ICustomGridOptions = {
             // Initial data
             columnDefs,
@@ -805,6 +815,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     valueFormatter: params => {
                         return params.value === undefined ? null : params.value;
                     },
+                    cellRenderer,
                 },
                 [COLUMN_ATTRIBUTE_COLUMN]: {
                     cellClass: this.getCellClass("gd-column-attribute-column"),
@@ -835,6 +846,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                               )
                             : null;
                     },
+                    cellRenderer,
                 },
             },
 
