@@ -21,6 +21,10 @@ The REST API versions in the table are just for your information as the values a
 
 - The source code structure is formatted and validated by [Prettier](https://prettier.io/) (FET-130)
 
+### Changed
+
+- Pivot table prop `groupRows` is true by default, thus grouping is enabled by default (BB-1385)
+
 ## 6.3.0
 
 ### Added

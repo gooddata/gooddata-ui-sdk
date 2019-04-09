@@ -63,7 +63,7 @@ type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketPro
  */
 export class PivotTable extends React.Component<IPivotTableProps> {
     public static defaultProps: Partial<IPivotTableProps> = {
-        groupRows: false,
+        groupRows: true,
     };
 
     public render() {

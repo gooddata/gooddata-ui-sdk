@@ -306,7 +306,7 @@ export class VisualizationWrapped extends React.Component<
             ErrorComponent,
             onExportReady,
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading, mdObject, featureFlags } = this.state;
+        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
         const properties: IPropertiesControls | undefined =
             mdObjectContent && mdObjectContent.properties && JSON.parse(mdObjectContent.properties).controls;
@@ -365,15 +365,11 @@ export class VisualizationWrapped extends React.Component<
             onExportReady,
         };
 
-        const { enablePivotGrouping } = featureFlags;
-
         switch (type) {
             case VisualizationTypes.TABLE:
                 return <TableComponent {...commonProps} totals={totals} />;
             case VisualizationTypes.PIVOT_TABLE:
-                return (
-                    <PivotTableComponent {...commonProps} totals={totals} groupRows={enablePivotGrouping} />
-                );
+                return <PivotTableComponent {...commonProps} totals={totals} />;
             case VisualizationTypes.HEADLINE:
                 return <HeadlineComponent {...commonProps} />;
             default:

@@ -298,7 +298,6 @@ storiesOf("Core components/PivotTable", module)
                     measures={[MEASURE_1, MEASURE_2]}
                     columns={[ATTRIBUTE_3]}
                     rows={[ATTRIBUTE_1, ATTRIBUTE_2]}
-                    groupRows={true}
                     totals={GRAND_TOTALS_WITH_SUBTOTALS}
                     onError={onErrorHandler}
                     LoadingComponent={null}
@@ -342,7 +341,6 @@ storiesOf("Core components/PivotTable", module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    groupRows={true}
                 />
             </div>,
         ),
@@ -357,7 +355,6 @@ storiesOf("Core components/PivotTable", module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                    groupRows={true}
                     sortBy={[
                         {
                             measureSortItem: {

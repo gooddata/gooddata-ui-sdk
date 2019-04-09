@@ -365,7 +365,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         onDataSourceUpdateSuccess: noop,
         pageSize: 100,
         config: {},
-        groupRows: false,
+        groupRows: true,
     };
 
     private agGridDataSource: IDatasource;
