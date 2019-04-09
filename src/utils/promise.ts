@@ -6,7 +6,7 @@
  * @return {Promise}
  */
 export function delay(ms: number) {
-    return new Promise((resolve: Function) => {
+    return new Promise((resolve: () => any) => {
         setTimeout(() => resolve(), ms);
     });
 }

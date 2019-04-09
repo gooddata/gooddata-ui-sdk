@@ -2,6 +2,10 @@
 import * as invariant from 'invariant';
 import { find, every } from 'lodash';
 
+export type RulePredicate = (measureDefinition: any, mdObj: any) => boolean;
+
+export type RuleCallback = (measure: any, mdObj: any, measureIndex: number, attributesMap: any) => any;
+
 export class Rules {
     private rules: any[];
 
@@ -9,7 +13,7 @@ export class Rules {
         this.rules = [];
     }
 
-    public addRule(tests: Function[], callback: Function) {
+    public addRule(tests: RulePredicate[], callback: RuleCallback) {
         this.rules.push([tests, callback]);
     }
 

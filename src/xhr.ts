@@ -50,8 +50,9 @@ function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: an
     return { url, settings };
 }
 
-export function handlePolling(url: string, settings: any, sendRequest: Function): Promise<ApiResponse> {
-    const pollingDelay = result(settings, 'pollDelay');
+export function handlePolling(url: string, settings: any, sendRequest: (url: string, settings: any) => any)
+: Promise<ApiResponse> {
+    const pollingDelay: number = result(settings, 'pollDelay');
 
     return new Promise((resolve, reject) => {
         setTimeout(() => {

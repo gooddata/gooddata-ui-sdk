@@ -34,7 +34,7 @@ import {
 import { IMeasure } from '../interfaces';
 import { XhrModule } from '../xhr';
 
-const notEmpty = negate(isEmpty);
+const notEmpty = negate<Array<string | null>>(isEmpty);
 
 function findHeaderForMappingFn(mapping: any, header: any) {
     return ((mapping.element === header.id || mapping.element === header.uri) &&
@@ -204,7 +204,7 @@ function getMeasureType(measure: any) {
 function getGeneratedMetricIdentifier(
     item: any,
     aggregation: string,
-    expressionCreator: Function,
+    expressionCreator: (item: any, attributesMap: any) => string,
     hasher: any,
     attributesMap: any
 ) {
@@ -343,7 +343,9 @@ function createPoPMetric(popMeasure: any, mdObj: any, measureIndex: number, attr
     const identifier = getGeneratedMetricIdentifier(
         originalMeasure,
         'pop',
-        () => metricExpression, hasher, attributesMap
+        () => metricExpression,
+        hasher,
+        attributesMap
     );
 
     return {
@@ -381,7 +383,9 @@ function createContributionPoPMetric(popMeasure: any, mdObj: any, measureIndex: 
     const identifier = getGeneratedMetricIdentifier(
         originalMeasure,
         'pop',
-        () => metricExpression, hasher, attributesMap
+        () => metricExpression,
+        hasher,
+        attributesMap
     );
 
     return {
