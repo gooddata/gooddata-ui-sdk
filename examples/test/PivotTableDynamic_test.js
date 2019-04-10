@@ -76,8 +76,12 @@ async function checkNodeIsTransparent(t, selector, isTransparent) {
     const color = await selector.getStyleProperty("color");
     const backgroundColor = await selector.getStyleProperty("background-color");
     const transparentColor = "rgba(0, 0, 0, 0)";
-    await t.expect(color === transparentColor).eql(isTransparent);
-    await t.expect(backgroundColor === transparentColor).eql(isTransparent);
+    const display = await selector.getStyleProperty("display");
+
+    if (isTransparent && display !== "none") {
+        await t.expect(color).eql(transparentColor);
+        await t.expect(backgroundColor).eql(transparentColor);
+    }
 }
 
 fixture("Pivot Table Dynamic")

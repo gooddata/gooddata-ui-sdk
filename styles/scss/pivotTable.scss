@@ -391,11 +391,14 @@ $header-cell-resize-width: 20px;
             background-color: #fff;
             border-top-color: white;
 
-            &.gd-hidden-sticky-column,
-            &.gd-measure-column,
-            &.gd-column-attribute-column {
+            &.gd-hidden-sticky-column {
                 background-color: transparent;
                 color: transparent;
+            }
+
+            &.gd-measure-column,
+            &.gd-column-attribute-column {
+                display: none;
             }
         }
     }
