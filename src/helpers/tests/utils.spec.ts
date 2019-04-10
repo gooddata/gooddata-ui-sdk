@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import { getObjectIdFromUri, setTelemetryHeaders, unwrap } from "../utils";
+// (C) 2007-2019 GoodData Corporation
+import { getObjectIdFromUri, setTelemetryHeaders, percentFormatter, unwrap } from "../utils";
 import { factory as createSdk } from "@gooddata/gooddata-js";
 
 describe("getObjectIdFromUri", () => {
@@ -27,6 +27,15 @@ describe("setTelemetryHeaders", () => {
         expect(sdk.config.getRequestHeader("X-GDC-JS-SDK-COMP")).toEqual("componentName");
         expect(sdk.config.getRequestHeader("X-GDC-JS-SDK-COMP-PROPS")).toEqual("prop");
     });
+});
+
+describe("percentFormatter", () => {
+    it.each([["0%", 0], ["49.01%", 49.01], ["100%", 100], ["", null]])(
+        'should return "%s" when input is %s',
+        (formattedValue: string, value: number) => {
+            expect(percentFormatter(value)).toEqual(formattedValue);
+        },
+    );
 });
 
 describe("unwrap", () => {

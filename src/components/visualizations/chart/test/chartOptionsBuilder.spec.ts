@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import range = require("lodash/range");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
@@ -2312,6 +2312,17 @@ describe("chartOptionsBuilder", () => {
             });
         });
 
+        describe("stackMeasuresToPercent", () => {
+            const tooltipFn = buildTooltipFactory(null, "column", { stackMeasuresToPercent: true });
+            it.each([["0%", 0], ["49.01%", 49.0111], ["100%", 100]])(
+                "should render %s when percentageValue is %s",
+                (formattedValue: string, percentageValue: number) => {
+                    const tooltip = tooltipFn(pointData, percentageValue);
+                    expect(getValues(tooltip)).toEqual(["series", formattedValue]);
+                },
+            );
+        });
+
         it("should render correct values in usecase of bar chart without attribute", () => {
             const tooltipFn = buildTooltipFactory(null, "column");
             const tooltip = tooltipFn(pointData);
@@ -2426,6 +2437,26 @@ describe("chartOptionsBuilder", () => {
                 },
             });
             expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
+        });
+
+        describe("stackMeasuresToPercent", () => {
+            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute, {
+                stackMeasuresToPercent: true,
+            });
+            it.each([["0%", 0], ["49.01%", 49.0111], ["100%", 100]])(
+                "should render %s when percentageValue is %s",
+                (formattedValue: string, percentageValue: number) => {
+                    const tooltip = tooltipFn(pointData, percentageValue);
+                    expect(getValues(tooltip)).toEqual([
+                        "Department",
+                        "parent category",
+                        "Region",
+                        "category",
+                        "series",
+                        formattedValue,
+                    ]);
+                },
+            );
         });
     });
 
@@ -3499,6 +3530,21 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("optional stacking", () => {
+            const pointDataForTwoAttributes = {
+                y: 1,
+                format: "# ###",
+                name: "point",
+                category: {
+                    name: "category",
+                    parent: {
+                        name: "parent category",
+                    },
+                },
+                series: {
+                    name: "series",
+                },
+            };
+
             it("should return grouped categories with viewing by 2 attributes", () => {
                 const {
                     data: { categories },
@@ -3533,22 +3579,7 @@ describe("chartOptionsBuilder", () => {
                     actions: { tooltip: tooltipFn },
                 } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute);
 
-                const pointData = {
-                    y: 1,
-                    format: "# ###",
-                    name: "point",
-                    category: {
-                        name: "category",
-                        parent: {
-                            name: "parent category",
-                        },
-                    },
-                    series: {
-                        name: "series",
-                    },
-                };
-
-                const tooltip = tooltipFn(pointData);
+                const tooltip = tooltipFn(pointDataForTwoAttributes);
                 expect(getValues(tooltip)).toEqual([
                     "Department",
                     "parent category",
@@ -3556,6 +3587,25 @@ describe("chartOptionsBuilder", () => {
                     "category",
                     "series",
                     " 1",
+                ]);
+            });
+
+            it("should return percentage values in tooltip when stackMeasuresToPercent is true", () => {
+                const {
+                    actions: { tooltip: tooltipFn },
+                } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute, {
+                    stackMeasuresToPercent: true,
+                    type: VisualizationTypes.COLUMN,
+                });
+
+                const tooltip = tooltipFn(pointDataForTwoAttributes, 49.011);
+                expect(getValues(tooltip)).toEqual([
+                    "Department",
+                    "parent category",
+                    "Region",
+                    "category",
+                    "series",
+                    "49.01%",
                 ]);
             });
 
