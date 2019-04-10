@@ -2,7 +2,7 @@
 import * as React from "react";
 import unescape = require("lodash/unescape");
 
-import { isLineChart, isAreaChart } from "../../utils/common";
+import { isLineChart, isAreaChart, isComboChart } from "../../utils/common";
 
 const VISIBLE_COLOR = "#6D7680";
 const DISABLED_COLOR = "#CCCCCC";
@@ -14,8 +14,8 @@ export default class LegendItem extends React.Component<any, any> {
 
     public render() {
         const { item, chartType, width } = this.props;
-
-        const enableBorderRadius = isLineChart(chartType) || isAreaChart(chartType);
+        const itemChartType = isComboChart(chartType) ? item.type : chartType;
+        const enableBorderRadius = isLineChart(itemChartType) || isAreaChart(itemChartType);
 
         const iconStyle = {
             borderRadius: enableBorderRadius ? "50%" : "none",

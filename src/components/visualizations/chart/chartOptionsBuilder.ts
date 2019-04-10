@@ -73,6 +73,7 @@ import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
 } from "./constants";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -170,7 +171,7 @@ export interface IViewByTwoAttributes {
     children: Execution.IResultHeaderItem[];
 }
 
-export type ITooltipFactory = (point: IPoint) => string;
+export type ITooltipFactory = (point: IPoint, percentageValue?: number) => string;
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series.some((seriesItem: ISeriesItem) =>
@@ -773,13 +774,16 @@ export function buildTooltipFactory(
     type: string,
     config: IChartConfig = {},
 ): ITooltipFactory {
-    const { separators } = config;
-    const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format, undefined, separators));
-    };
+    const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPoint) => {
-        const formattedValue = customEscape(formatValue(point.y, point.format).label);
+    return (point: IPoint, percentageValue?: number): string => {
+        const formattedValue = getFormattedValueForTooltip(
+            stackMeasuresToPercent,
+            point,
+            separators,
+            percentageValue,
+        );
+
         const textData = [[customEscape(point.series.name), formattedValue]];
 
         if (viewByAttribute) {
@@ -805,14 +809,18 @@ export function buildTooltipForTwoAttributesFactory(
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
-    const { separators } = config;
-    const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format, undefined, separators));
-    };
+    const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPoint) => {
+    return (point: IPoint, percentageValue?: number): string => {
         const category: ICategory = point.category;
-        const formattedValue = customEscape(formatValue(point.y, point.format).label);
+
+        const formattedValue = getFormattedValueForTooltip(
+            stackMeasuresToPercent,
+            point,
+            separators,
+            percentageValue,
+        );
+
         const textData = [[customEscape(point.series.name), formattedValue]];
 
         if (category) {
@@ -838,9 +846,6 @@ export function generateTooltipXYFn(
     config: IChartConfig = {},
 ) {
     const { separators } = config;
-    const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format, undefined, separators));
-    };
 
     return (point: IPoint) => {
         const textData = [];
@@ -853,21 +858,21 @@ export function generateTooltipXYFn(
         if (measures[0]) {
             textData.push([
                 customEscape(measures[0].measureHeaderItem.name),
-                customEscape(formatValue(point.x, measures[0].measureHeaderItem.format).label),
+                formatValueForTooltip(point.x, measures[0].measureHeaderItem.format, separators),
             ]);
         }
 
         if (measures[1]) {
             textData.push([
                 customEscape(measures[1].measureHeaderItem.name),
-                customEscape(formatValue(point.y, measures[1].measureHeaderItem.format).label),
+                formatValueForTooltip(point.y, measures[1].measureHeaderItem.format, separators),
             ]);
         }
 
         if (measures[2]) {
             textData.push([
                 customEscape(measures[2].measureHeaderItem.name),
-                customEscape(formatValue(point.z, measures[2].measureHeaderItem.format).label),
+                formatValueForTooltip(point.z, measures[2].measureHeaderItem.format, separators),
             ]);
         }
 
@@ -916,16 +921,13 @@ export function buildTooltipTreemapFactory(
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
-    const formatValue = (val: number, format: string) => {
-        return colors2Object(numberFormat(val, format, undefined, separators));
-    };
 
     return (point: IPoint) => {
         if (point.id !== undefined) {
             // no tooltip for root points
             return null;
         }
-        const formattedValue = customEscape(formatValue(point.value, point.format).label);
+        const formattedValue = formatValueForTooltip(point.value, point.format, separators);
 
         const textData = [];
 

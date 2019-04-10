@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { isObject } from "lodash";
 import { SDK } from "@gooddata/gooddata-js";
+import isNil = require("lodash/isNil");
 import { name as pkgName, version as pkgVersion } from "../../package.json";
 
 export function setTelemetryHeaders(sdk: SDK, componentName: string, props: object) {
@@ -22,6 +23,10 @@ export function visualizationIsBetaWarning() {
     console.warn(
         "This chart is not production-ready and may not provide the full functionality. Use it at your own risk.",
     );
+}
+
+export function percentFormatter(value: number): string {
+    return isNil(value) ? "" : `${parseFloat(value.toFixed(2))}%`;
 }
 
 export const unwrap = (wrappedObject: any) => {
