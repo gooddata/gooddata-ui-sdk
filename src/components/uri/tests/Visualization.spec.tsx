@@ -769,37 +769,4 @@ describe("VisualizationWrapped", () => {
         wrapper.update();
         expect(getFeatureFlags).toHaveBeenCalledTimes(1);
     });
-
-    it("should pass feature flag enableGrouping to pivotTable", async () => {
-        const getFeatureFlags = jest.fn(() =>
-            Promise.resolve({ enablePivot: true, enablePivotGrouping: true }),
-        );
-        const pivotTableComponent = jest.fn().mockReturnValue("pivot");
-
-        const props = {
-            sdk,
-            projectId,
-            identifier: TABLE_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            PivotTableComponent: pivotTableComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            getFeatureFlags,
-            intl,
-        };
-
-        const wrapper = mount(<VisualizationWrapped {...props as any} />);
-
-        await testUtils.delay(SLOW + 1);
-        wrapper.update();
-        expect(pivotTableComponent).toBeCalledWith(
-            expect.objectContaining({
-                groupRows: true,
-            }),
-            {},
-        );
-    });
 });

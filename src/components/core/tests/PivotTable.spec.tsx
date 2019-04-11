@@ -261,23 +261,9 @@ describe("PivotTable", () => {
             createProvider.mockRestore();
         });
 
-        it.each([["should NOT", undefined, false], ["should NOT", false, false]])(
-            "%s group rows when groupRows property is %s",
-            (_should, groupRows, expected) => {
-                renderComponentForGrouping({
-                    groupRows,
-                });
-
-                expect(createProvider).toHaveBeenCalledTimes(1);
-                expect(createProvider).toBeCalledWith(expected);
-            },
-        );
-
         // tslint:disable-next-line:max-line-length
-        it("should group rows when grouping turned on and sorted by first attribute (default sort)", () => {
-            renderComponentForGrouping({
-                groupRows: true,
-            });
+        it("should group rows when sorted by first attribute (default sort)", () => {
+            renderComponentForGrouping();
 
             expect(createProvider).toHaveBeenCalledTimes(1);
             expect(createProvider).toHaveBeenCalledWith(true);
@@ -292,16 +278,13 @@ describe("PivotTable", () => {
             };
 
             renderComponentForGrouping({
-                groupRows: true,
                 resultSpec: oneAttributeOneMeasureSortByMeasureExecutionObject.execution.resultSpec,
                 onDataSourceUpdateSuccess,
             });
         });
 
         it("should NOT group rows when grouping switched by property after render", () => {
-            const wrapper = renderComponentForGrouping({
-                groupRows: true,
-            });
+            const wrapper = renderComponentForGrouping();
 
             wrapper.setProps({
                 groupRows: false,

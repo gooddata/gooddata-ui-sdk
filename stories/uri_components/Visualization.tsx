@@ -398,17 +398,4 @@ storiesOf("URI components", module)
                 <Visualization projectId="storybook" uri={"/gdc/md/storybook/obj/1002"} />
             </div>
         </div>
-    ))
-    .add("Pivot table grouping", () =>
-        screenshotWrap(
-            <div style={{ width: 800, height: 400 }}>
-                <Visualization
-                    projectId="pivot_grouping_storybook"
-                    uri={"/gdc/md/pivot_grouping_storybook/obj/1010"}
-                    onError={onErrorHandler}
-                    LoadingComponent={null}
-                    ErrorComponent={null}
-                />
-            </div>,
-        ),
-    );
+    ));

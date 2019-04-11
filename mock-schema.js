@@ -2479,11 +2479,4 @@ module.exports = [
             ]
         },
     },
-    {
-        ...getBaseProjectSchema('Storybook project pivot table grouping', 'pivot_grouping_storybook'),
-        featureFlags: {
-            enablePivot: true,
-            enablePivotGrouping: true
-        }
-    },
 ];
