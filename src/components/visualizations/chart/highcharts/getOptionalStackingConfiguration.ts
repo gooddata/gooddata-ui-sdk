@@ -79,16 +79,35 @@ function countMeasuresInSeries(series: ISeriesItem[]): number[] {
  * For y axis having one series, this series should be removed stacking config
  * @param series
  */
-function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesItem[] {
+export function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesItem[] {
     const [primaryMeasuresNum, secondaryMeasuresNum] = countMeasuresInSeries(series);
 
-    if (primaryMeasuresNum <= 1 && secondaryMeasuresNum <= 1) {
-        return series.map((seriesItem: ISeriesItem) => ({
-            ...seriesItem,
-            stack: null as number,
-            stacking: null as string,
-        }));
+    /**
+     * stackMeasures is applied for both measures in each axis
+     * stackMeasuresToPercent is applied for
+     * - [measures on primary   y-axis only] or
+     * - [measures on secondary y-axis only] or
+     * - [applied for measures on primary y-axis + ignore for measures on secondary y-axis]
+     */
+
+    // has measures on both [primary y-axis] and [secondary y-axis]
+    if (primaryMeasuresNum > 0 && secondaryMeasuresNum > 0) {
+        return series.map((seriesItem: ISeriesItem) => {
+            // seriesItem is on [secondary y-axis]
+            if (seriesItem.yAxis === 1) {
+                return {
+                    ...seriesItem,
+                    stack: null as number,
+                    // reset stackMeasuresToPercent in this case (stacking: PERCENT_STACK)
+                    stacking: seriesItem.stacking ? NORMAL_STACK : (null as string),
+                };
+            } else {
+                return seriesItem;
+            }
+        });
     }
+
+    // has [measures on primary y-axis only] or [measures on secondary y-axis only]
     return series;
 }
 
@@ -223,9 +242,7 @@ export function getShowInPercentConfiguration(
     chartConfig: IChartConfig,
 ) {
     const { stackMeasuresToPercent = false } = chartConfig;
-    const series = get(chartOptions, "data.series", []);
-    const [primaryMeasuresNum] = countMeasuresInSeries(series);
-    if (!stackMeasuresToPercent || primaryMeasuresNum <= 1) {
+    if (!stackMeasuresToPercent) {
         return {};
     }
 

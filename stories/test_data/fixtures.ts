@@ -203,6 +203,41 @@ export const barChartWithPreviousPeriodMeasure: any = {
         .executionResult,
 };
 
+export const columnChartWithMeasureViewByAndComputeRatio: any = {
+    executionRequest: require("../test_data/column_chart_with_measure_and_view_by_and_computeRatio_request.json")
+        .execution,
+    executionResponse: require("../test_data/column_chart_with_measure_and_view_by_and_computeRatio_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/column_chart_with_measure_and_view_by_and_computeRatio_result.json")
+        .executionResult,
+};
+
+export const columnChartWithMeasureViewBy: any = {
+    executionRequest: require("../test_data/column_chart_with_measure_and_view_by_request.json").execution,
+    executionResponse: require("../test_data/column_chart_with_measure_and_view_by_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/column_chart_with_measure_and_view_by_result.json")
+        .executionResult,
+};
+
+export const columnChartWithMeasureViewBy2AttributesAndComputeRatio: any = {
+    executionRequest: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_and_computeRatio_request.json")
+        .execution,
+    executionResponse: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_and_computeRatio_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_and_computeRatio_result.json")
+        .executionResult,
+};
+
+export const columnChartWithMeasureViewBy2Attributes: any = {
+    executionRequest: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_request.json")
+        .execution,
+    executionResponse: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/column_chart_with_measure_and_view_by_two_attributes_result.json")
+        .executionResult,
+};
+
 export const pieChartWithMetricsOnly: any = {
     executionRequest: require("../test_data/pie_chart_with_metrics_only_request.json").execution,
     executionResponse: require("../test_data/pie_chart_with_metrics_only_response.json").executionResponse,

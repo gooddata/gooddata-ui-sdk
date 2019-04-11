@@ -2,14 +2,17 @@
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
 import * as invariant from "invariant";
 import * as React from "react";
+import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
+import { getSanitizedStackingConfig } from "../../../helpers/optionalStacking/common";
 import { IChartConfig } from "../../../interfaces/Config";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../../interfaces/Events";
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
 import { ILegendOptions } from "../typings/legend";
+import { getStackByAttribute } from "../../../helpers/stackByAttribute";
 import { getChartOptions, IChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
@@ -89,13 +92,15 @@ export default class ChartTransformation extends React.Component<
             height,
             width,
             afterRender,
-            config,
             onFiredDrillEvent,
             onLegendReady,
             locale,
         } = this.props;
+
+        const chartConfig = this.getChartConfig(this.props);
+
         const drillConfig = { afm, onFiredDrillEvent };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig);
 
         return {
             chartOptions,
@@ -115,11 +120,12 @@ export default class ChartTransformation extends React.Component<
             executionRequest: { afm, resultSpec },
             executionResponse,
             executionResult: { data, headerItems },
-            config,
             onDataTooLarge,
             onNegativeValues,
             pushData,
         } = props;
+
+        const chartConfig = this.getChartConfig(props);
 
         let multiDimensionalData = data;
         if (data[0].constructor !== Array) {
@@ -134,10 +140,10 @@ export default class ChartTransformation extends React.Component<
             executionResponse,
             multiDimensionalData as Execution.DataValue[][],
             headerItems,
-            config,
+            chartConfig,
             drillablePredicates,
         );
-        const validationResult = validateData(config.limits, this.chartOptions);
+        const validationResult = validateData(chartConfig.limits, this.chartOptions);
 
         if (validationResult.dataTooLarge) {
             // always force onDataTooLarge error handling
@@ -154,7 +160,7 @@ export default class ChartTransformation extends React.Component<
             onNegativeValues(this.chartOptions);
         }
 
-        this.legendOptions = getLegend(config.legend, this.chartOptions);
+        this.legendOptions = getLegend(chartConfig.legend, this.chartOptions);
 
         pushData({
             propertiesMeta: {
@@ -176,5 +182,29 @@ export default class ChartTransformation extends React.Component<
             return null;
         }
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
+    }
+
+    private getChartConfig(props: IChartTransformationProps): IChartConfig {
+        const {
+            executionRequest: { afm },
+            executionResponse,
+            executionResult: { headerItems },
+            config,
+        } = props;
+
+        const attributeHeaderItems = headerItems.map((dimension: Execution.IResultHeaderItem[][]) => {
+            return dimension.filter(
+                (attributeHeaders: Execution.IResultAttributeHeaderItem[]) =>
+                    attributeHeaders[0].attributeHeaderItem,
+            );
+        });
+
+        const stackByAttribute = getStackByAttribute(
+            config,
+            executionResponse.dimensions,
+            attributeHeaderItems,
+        );
+        const hasStackByAttribute = !isEmpty(stackByAttribute);
+        return getSanitizedStackingConfig(afm, config, hasStackByAttribute);
     }
 }

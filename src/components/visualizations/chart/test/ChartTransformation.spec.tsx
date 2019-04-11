@@ -115,6 +115,36 @@ describe("ChartTransformation", () => {
             });
             expect(passedProps.chartOptions.stacking).toBeNull();
         });
+
+        describe("getChartConfig", () => {
+            it("should keep stack measures configuration", () => {
+                const passedProps = createChartRendererProps(
+                    fixtures.areaChartWith3MetricsAndViewByAttribute,
+                    {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                );
+                expect(passedProps.chartOptions.stacking).toEqual("percent");
+            });
+            it("should sanitized stack measures configuration without stackBy", () => {
+                const passedProps = createChartRendererProps(fixtures.columnChartWithMeasureViewBy, {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
+                });
+                expect(passedProps.chartOptions.stacking).toEqual("normal");
+            });
+            it("should sanitized stack measures configuration with computeRatio", () => {
+                const passedProps = createChartRendererProps(
+                    fixtures.columnChartWithMeasureViewByAndComputeRatio,
+                    {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                );
+                expect(passedProps.chartOptions.stacking).toBeNull();
+            });
+        });
     });
 
     describe("Legend config", () => {
