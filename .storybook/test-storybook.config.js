@@ -22,6 +22,11 @@ const configuration = {
                 readySelector: '.screenshot-ready-wrapper-done'
             }
         },
+        'Core components/ComboChart': {
+            'should override primaryMeasures & secondaryMeasures': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            }
+        },
         'Core components/ColumnChart': {
             'with different legend positions': {
                 readySelector: '.screenshot-ready-wrapper-done'

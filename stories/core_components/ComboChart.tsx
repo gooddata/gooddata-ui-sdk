@@ -9,6 +9,8 @@ import {
     ATTRIBUTE_1,
     MEASURE_1,
     MEASURE_2,
+    MEASURE_3,
+    MEASURE_4,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
@@ -16,10 +18,13 @@ import {
 } from "../data/componentProps";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
+import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 800, height: 400 };
 const primaryMeasure = [MEASURE_1];
 const secondaryMeasure = [MEASURE_2];
+const columnMeasure = [MEASURE_3];
+const lineMeasure = [MEASURE_4];
 const arithmeticMeasures = [ARITHMETIC_MEASURE_SIMPLE_OPERANDS, ARITHMETIC_MEASURE_USING_ARITHMETIC];
 
 storiesOf("Core components/ComboChart", module)
@@ -125,6 +130,43 @@ storiesOf("Core components/ComboChart", module)
                     onError={onErrorHandler}
                 />
             </div>,
+        ),
+    )
+    .add("should override primaryMeasures & secondaryMeasures", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        columnMeasures={columnMeasure}
+                        lineMeasures={lineMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        columnMeasures={columnMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        lineMeasures={lineMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>,
         ),
     )
     .add("custom colors", () =>
