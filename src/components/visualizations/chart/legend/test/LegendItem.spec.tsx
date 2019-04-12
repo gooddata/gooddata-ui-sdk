@@ -32,8 +32,8 @@ describe("LegendItem", () => {
         ["enable", "area", undefined, "50%"],
         ["enable", "combo", "line", "50%"],
         ["enable", "combo", "area", "50%"],
-        ["disable", "column", undefined, "none"],
-        ["disable", "combo", "column", "none"],
+        ["disable", "column", undefined, "0"],
+        ["disable", "combo", "column", "0"],
     ])(
         "should %s border radius for %s chart with itemType=%s",
         (_des: string, chartType: string, type: string, expected: string) => {
