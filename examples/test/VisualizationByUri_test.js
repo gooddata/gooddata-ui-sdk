@@ -30,13 +30,15 @@ test("Chart visualization should render", async t => {
 });
 
 test("Table visualization should render", async t => {
-    const table = Selector(".s-visualization-table .indigo-table-component");
-    const tableHeader = Selector(".s-visualization-table .table-header");
+    const table = Selector(".s-visualization-table");
+    const tableHeader = Selector(
+        ".s-visualization-table .gd-column-group-header--first .s-header-cell-label",
+    );
     await t
         .expect(table.exists)
         .ok()
         .expect(tableHeader.textContent)
-        .eql("Month/Year (Date)$ Total Costs - Labor$ Scheduled Labor Costs");
+        .eql("Month/Year (Date)");
 });
 
 test("Bar chart should render", async t => {
