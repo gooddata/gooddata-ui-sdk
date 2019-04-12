@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { AgGridReact } from "ag-grid-react";
 
 import ApiWrapper from "../agGridApiWrapper";
-import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams } from "ag-grid";
+import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid";
 import { ICustomGridOptions } from "../../PivotTable";
 
 describe("agGridApiWrapper", () => {
@@ -30,8 +30,17 @@ describe("agGridApiWrapper", () => {
             columnDefs: [
                 {
                     children: [
-                        { headerName: "Attr #1", field: firstAttributeColumnId },
-                        { headerName: "Attr #2", field: secondAttributeColumnId },
+                        {
+                            headerName: "Attr #1",
+                            field: firstAttributeColumnId,
+                            cellRenderer: (params: ICellRendererParams) => {
+                                return params.value;
+                            },
+                        },
+                        {
+                            headerName: "Attr #2",
+                            field: secondAttributeColumnId,
+                        },
                     ],
                 },
             ],
@@ -71,7 +80,6 @@ describe("agGridApiWrapper", () => {
 
                 expect(cellElement instanceof HTMLElement).toBe(true);
                 expect(cellElement.classList.contains("ag-cell")).toBe(true);
-                expect(cellElement.innerHTML).toEqual(firstAttributeFirstRowValue);
             });
         });
 
@@ -151,15 +159,25 @@ describe("agGridApiWrapper", () => {
     });
 
     describe("pinned top row cell element", () => {
+        describe("getPinnedTopRowCellElementWrapper", () => {
+            it("should return the pinned top row cell element wrapper", async () => {
+                const api = await renderGridReady();
+
+                const cellElement = ApiWrapper.getPinnedTopRowCellElementWrapper(api, firstAttributeColumnId);
+
+                expect(cellElement instanceof HTMLElement).toBe(true);
+                expect(!!cellElement.querySelector("span")).toEqual(true);
+                expect(cellElement.classList.contains("ag-cell")).toBe(true);
+            });
+        });
+
         describe("getPinnedTopRowCellElement", () => {
             it("should return the pinned top row cell element", async () => {
                 const api = await renderGridReady();
 
                 const cellElement = ApiWrapper.getPinnedTopRowCellElement(api, firstAttributeColumnId);
 
-                expect(cellElement instanceof HTMLElement).toBe(true);
                 expect(cellElement.innerHTML).toEqual(firstAttributePinnedTopValue);
-                expect(cellElement.classList.contains("ag-cell")).toBe(true);
             });
         });
 
@@ -170,7 +188,7 @@ describe("agGridApiWrapper", () => {
 
                 ApiWrapper.addPinnedTopRowCellClass(api, firstAttributeColumnId, newPinnedRowCellClassName);
 
-                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElement(
+                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElementWrapper(
                     api,
                     firstAttributeColumnId,
                 );
@@ -190,11 +208,26 @@ describe("agGridApiWrapper", () => {
                     newPinnedRowCellClassName,
                 );
 
-                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElement(
+                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElementWrapper(
                     api,
                     firstAttributeColumnId,
                 );
                 expect(pinnedTopRowElement.classList.contains(newPinnedRowCellClassName)).toBe(false);
+            });
+        });
+
+        describe("setPinnedTopRowCellText", () => {
+            it("should set innerText of the pinned top row cell element", async () => {
+                const api = await renderGridReady();
+
+                ApiWrapper.setPinnedTopRowCellText(api, firstAttributeColumnId, "new_text");
+
+                const pinnedTopRowElement = ApiWrapper.getPinnedTopRowCellElement(
+                    api,
+                    firstAttributeColumnId,
+                );
+
+                expect(pinnedTopRowElement.innerText).toEqual("new_text");
             });
         });
     });

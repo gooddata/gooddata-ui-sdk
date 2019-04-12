@@ -5,10 +5,8 @@ import { GridApi } from "ag-grid";
 
 describe("updateStickyHeaders", () => {
     function getFakeGridApi(fakeGetDisplayedRowAtIndex: any = jest.fn()): GridApi {
-        const setPinnedTopRowData: any = jest.fn();
         const fakeGridApi = {
             getDisplayedRowAtIndex: fakeGetDisplayedRowAtIndex,
-            setPinnedTopRowData,
         };
         return fakeGridApi as GridApi;
     }
@@ -35,8 +33,10 @@ describe("updateStickyHeaders", () => {
             removePinnedTopRowClass: jest.fn(),
             setPinnedTopRowStyle: jest.fn(),
             getPinnedTopRowCellElement: jest.fn(),
+            getPinnedTopRowCellElementWrapper: jest.fn(),
             addPinnedTopRowCellClass: jest.fn(),
             removePinnedTopRowCellClass: jest.fn(),
+            setPinnedTopRowCellText: jest.fn(),
         };
     }
 
@@ -234,6 +234,10 @@ describe("updateStickyHeaders", () => {
             expect(fakeGridApiWrapper.removePinnedTopRowCellClass).not.toHaveBeenCalled();
         });
 
+        it("should not set pinned group header text", () => {
+            expect(fakeGridApiWrapper.setPinnedTopRowCellText).not.toHaveBeenCalled();
+        });
+
         it("should not temporarily show table cell behind", () => {
             expect(fakeGridApiWrapper.addCellClass).not.toHaveBeenCalled();
         });
@@ -277,6 +281,10 @@ describe("updateStickyHeaders", () => {
                 "gd-cell-show-hidden",
             );
         });
+
+        it("should not set pinned group header text", () => {
+            expect(fakeGridApiWrapper.setPinnedTopRowCellText).not.toHaveBeenCalled();
+        });
     });
 
     describe("column with repetitions and grouping when the current cell IS NOT the end of its group", () => {
@@ -310,7 +318,11 @@ describe("updateStickyHeaders", () => {
         });
 
         it("should set pinned group header text", () => {
-            expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([{ a_123: "123" }]);
+            expect(fakeGridApiWrapper.setPinnedTopRowCellText).toHaveBeenCalledWith(
+                fakeGridApi,
+                "a_123",
+                "123",
+            );
         });
 
         it("should not temporarily show table cell behind", () => {
