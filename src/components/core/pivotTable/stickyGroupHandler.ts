@@ -3,14 +3,16 @@ import { GridApi, RowNode } from "ag-grid";
 import { IGroupingProvider } from "./GroupingProvider";
 import { colIdIsSimpleAttribute, getGridIndex } from "../../../helpers/agGrid";
 import ApiWrapper from "./agGridApiWrapper";
+import { getScrollbarWidth } from "../../../helpers/domUtils";
 
 export const initStickyHeaders = (gridApi: GridApi) => {
     gridApi.setPinnedTopRowData([{}]);
 };
 
-export const updateStickyHeadersPosition = (gridApi: GridApi) => {
-    const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
-    ApiWrapper.setPinnedTopRowStyle(gridApi, "top", `${headerHeight}px`);
+export const updateStickyHeadersPosition = (gridApi: GridApi, apiWrapper: any = ApiWrapper) => {
+    const headerHeight = apiWrapper.getHeaderHeight(gridApi);
+    apiWrapper.setPinnedTopRowStyle(gridApi, "top", `${headerHeight}px`);
+    apiWrapper.setPinnedTopRowStyle(gridApi, "padding-right", `${getScrollbarWidth()}px`);
 };
 
 function shouldUpdate(
