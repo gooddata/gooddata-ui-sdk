@@ -292,7 +292,7 @@ export const RowLoadingElement = (props: ICellRendererParams) => {
     if (props.node.id !== undefined || props.node.rowPinned === "bottom") {
         // props.value is always unformatted
         // there is props.formattedValue, but this is null for row attributes for some reason
-        return <span className={"s-value"}>{props.formatValue(props.value)}</span>;
+        return <span className={"s-value s-loading-done"}>{props.formatValue(props.value)}</span>;
     }
     return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
 };
