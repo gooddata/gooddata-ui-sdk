@@ -5,6 +5,7 @@ import { getMappingHeaderName, getMappingHeaderUri } from "./mappingHeader";
 import range = require("lodash/range");
 import get = require("lodash/get");
 import clone = require("lodash/clone");
+import escape = require("lodash/escape");
 import zipObject = require("lodash/zipObject");
 
 import { unwrap } from "./utils";
@@ -16,7 +17,7 @@ import {
     IGridAdapterOptions,
     IGridTotalsRow,
 } from "../interfaces/AGGrid";
-import { ColDef } from "ag-grid";
+import { ColDef, ICellRendererParams } from "ag-grid";
 import { getTreeLeaves } from "../components/core/PivotTable";
 import InjectedIntl = ReactIntl.InjectedIntl;
 
@@ -595,4 +596,10 @@ export const getRowNodeId = (item: any) => {
 
 export const getGridIndex = (position: number, gridDistance: number) => {
     return Math.floor(position / gridDistance);
+};
+
+export const cellRenderer = (params: ICellRendererParams) => {
+    const formattedValue = escape(params.formatValue(params.value));
+    const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
+    return `<span class="${className}">${formattedValue || ""}</span>`;
 };

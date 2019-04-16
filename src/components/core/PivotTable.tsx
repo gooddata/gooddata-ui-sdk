@@ -42,6 +42,7 @@ import {
     ROW_TOTAL,
     FIELD_TYPE_MEASURE,
     FIELD_TYPE_ATTRIBUTE,
+    cellRenderer,
 } from "../../helpers/agGrid";
 import {
     convertDrillableItemsToPredicates,
@@ -737,12 +738,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             getExecutionResponse: this.getExecutionResponse,
             getColumnTotals: this.getColumnTotals,
             intl: this.props.intl,
-        };
-
-        const cellRenderer = (params: ICellRendererParams) => {
-            const formattedValue = params.formatValue(params.value);
-            const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
-            return `<span class="${className}">${formattedValue || ""}</span>`;
         };
 
         const gridOptions: ICustomGridOptions = {

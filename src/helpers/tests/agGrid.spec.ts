@@ -22,6 +22,7 @@ import {
     mergeHeaderEndIndex,
     getRowNodeId,
     getGridIndex,
+    cellRenderer,
 } from "../agGrid";
 
 import * as fixtures from "../../../stories/test_data/fixtures";
@@ -29,6 +30,7 @@ import { Execution, AFM } from "@gooddata/typings";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { IGridHeader } from "../../interfaces/AGGrid";
 import { createIntlMock } from "../../components/visualizations/utils/intlUtils";
+import identity = require("lodash/identity");
 
 const intl = createIntlMock();
 
@@ -862,4 +864,20 @@ describe("getGridIndex", () => {
             expect(getGridIndex(scrollTop, gridDistance)).toEqual(expectedRowIndex);
         },
     );
+});
+
+describe("cellRenderer", () => {
+    it("should escape value", () => {
+        const fakeParams: any = {
+            formatValue: identity,
+            value: "<button>xss</button>",
+            node: {
+                rowPinned: false,
+            },
+        };
+
+        const value = cellRenderer(fakeParams);
+
+        expect(value).toEqual('<span class="s-value">&lt;button&gt;xss&lt;/button&gt;</span>');
+    });
 });
