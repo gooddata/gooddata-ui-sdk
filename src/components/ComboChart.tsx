@@ -1,6 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import omit = require("lodash/omit");
+import set = require("lodash/set");
+import cloneDeep = require("lodash/cloneDeep");
+import isArray = require("lodash/isArray");
 import { Subtract } from "utility-types";
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
@@ -12,9 +15,11 @@ import { MEASURES, SECONDARY_MEASURES, VIEW } from "../constants/bucketNames";
 import { setMeasuresToSecondaryAxis } from "../helpers/dualAxis";
 
 export interface IComboChartBucketProps {
-    primaryMeasures: VisualizationInput.IMeasure[];
-    secondaryMeasures: VisualizationInput.IMeasure[];
-    viewBy?: VisualizationInput.IAttribute;
+    columnMeasures?: VisualizationInput.IMeasure[];
+    lineMeasures?: VisualizationInput.IMeasure[];
+    primaryMeasures?: VisualizationInput.IMeasure[];
+    secondaryMeasures?: VisualizationInput.IMeasure[];
+    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
     filters?: VisualizationObject.VisualizationObjectFilter[];
     sortBy?: VisualizationInput.ISort[];
 }
@@ -30,8 +35,23 @@ type IComboChartNonBucketProps = Subtract<IComboChartProps, IComboChartBucketPro
  * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
  */
 export function ComboChart(props: IComboChartProps): JSX.Element {
-    const primaryMeasures = props.primaryMeasures || [];
-    const secondaryMeasures = props.secondaryMeasures || [];
+    const clonedProps = cloneDeep(props);
+    const { columnMeasures, lineMeasures, viewBy } = clonedProps;
+    const isOldConfig = Boolean(columnMeasures || lineMeasures);
+    const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
+
+    if (isOldConfig) {
+        set(clonedProps, "primaryMeasures", columnMeasures);
+        set(clonedProps, "secondaryMeasures", lineMeasures);
+        set(clonedProps, "config.dualAxis", false);
+
+        // tslint:disable-next-line:no-console
+        console.warn(
+            "Props columnMeasures and lineMeasures are deprecated. Please migrate to props primaryMeasures and secondaryMeasures.",
+        );
+    }
+
+    const { primaryMeasures = [], secondaryMeasures = [] } = clonedProps;
 
     const buckets: VisualizationObject.IBucket[] = [
         {
@@ -44,11 +64,13 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
         },
         {
             localIdentifier: VIEW,
-            items: props.viewBy ? [props.viewBy] : [],
+            items: categories,
         },
     ];
 
-    const newProps = omit<IComboChartProps, IComboChartNonBucketProps>(props, [
+    const newProps = omit<IComboChartProps, IComboChartNonBucketProps>(clonedProps, [
+        "columnMeasures",
+        "lineMeasures",
         "primaryMeasures",
         "secondaryMeasures",
         "viewBy",
