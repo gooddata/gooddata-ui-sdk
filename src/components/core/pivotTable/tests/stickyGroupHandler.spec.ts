@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { updateStickyHeaders } from "../stickyGroupHandler";
+import { updateStickyHeaders, updateStickyHeadersPosition } from "../stickyGroupHandler";
 import { IGroupingProvider } from "../GroupingProvider";
 import { GridApi } from "ag-grid";
 
@@ -24,7 +24,7 @@ describe("updateStickyHeaders", () => {
 
     function getFakeGridApiWrapper(): any {
         return {
-            getHeaderHeight: jest.fn(),
+            getHeaderHeight: jest.fn().mockReturnValue(0),
             getCellElement: jest.fn(),
             addCellClass: jest.fn(),
             removeCellClass: jest.fn(),
@@ -327,6 +327,20 @@ describe("updateStickyHeaders", () => {
 
         it("should not temporarily show table cell behind", () => {
             expect(fakeGridApiWrapper.addCellClass).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("updateStickyHeadersPosition", () => {
+        const api = getFakeGridApi();
+        const apiWrapper = getFakeGridApiWrapper();
+
+        updateStickyHeadersPosition(api, apiWrapper);
+
+        it("should set top style", () => {
+            expect(apiWrapper.setPinnedTopRowStyle).toHaveBeenNthCalledWith(1, api, "top", "0px");
+        });
+        it("should set padding-right style", () => {
+            expect(apiWrapper.setPinnedTopRowStyle).toHaveBeenNthCalledWith(2, api, "padding-right", "0px");
         });
     });
 });
