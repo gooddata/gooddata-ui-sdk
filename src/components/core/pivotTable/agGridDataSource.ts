@@ -12,14 +12,16 @@ import { IGetPage } from "../base/VisualizationLoadingHOC";
 import { IGroupingProvider } from "../pivotTable/GroupingProvider";
 import { getSortsFromModel } from "../PivotTable";
 
-const areTotalsChanged = (gridApi: GridApi, totals: IGridTotalsRow[]) => {
-    const totalsCount = gridApi.getPinnedBottomRowCount();
-    if (!totals || totalsCount !== totals.length) {
+export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) => {
+    const currentTotalsCount = gridApi.getPinnedBottomRowCount();
+    const newTotalsCount = newTotals === null ? 0 : newTotals.length;
+
+    if (currentTotalsCount !== newTotalsCount) {
         return true;
     }
 
-    for (let i = 0; i < totalsCount; i++) {
-        if (!isEqual(gridApi.getPinnedBottomRow(i).data, totals[i])) {
+    for (let i = 0; i < currentTotalsCount; i++) {
+        if (!isEqual(gridApi.getPinnedBottomRow(i).data, newTotals[i])) {
             return true;
         }
     }

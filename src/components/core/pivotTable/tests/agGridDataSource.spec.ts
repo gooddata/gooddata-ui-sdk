@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { getAGGridDataSource } from "../agGridDataSource";
+import { IGridTotalsRow } from "../../../../interfaces/AGGrid";
+import { areTotalsChanged, getAGGridDataSource } from "../agGridDataSource";
 import { pivotTableWithColumnAndRowAttributes } from "../../../../../stories/test_data/fixtures";
 import { GroupingProviderFactory } from "../GroupingProvider";
 import { createIntlMock } from "../../../visualizations/utils/intlUtils";
@@ -42,5 +43,48 @@ describe("getGridDataSource", () => {
 
         gridDataSource.destroy();
         expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+    });
+
+    describe("areTotalsChanged", () => {
+        function mockGridApi(totals: any[] = []): any {
+            return {
+                getPinnedBottomRowCount: () => totals.length,
+                getPinnedBottomRow: (i: number) => ({ data: totals[i] }),
+            };
+        }
+        const totalSum = {
+            type: {
+                sum: true,
+            },
+            colSpan: {
+                count: 1,
+                headerKey: "foo",
+            },
+        };
+        const emptyTotalRows: IGridTotalsRow[] = [];
+        const noTotalRows: IGridTotalsRow[] = null;
+        const oneTotalRows: IGridTotalsRow[] = [totalSum];
+
+        it.each([
+            [true, "no", "one", noTotalRows, [totalSum]],
+            [false, "no", "no", noTotalRows, []],
+            [true, "empty", "one", emptyTotalRows, [totalSum]],
+            [false, "empty", "no", emptyTotalRows, []],
+            [true, "one", "no", oneTotalRows, []],
+            [false, "one", "one", oneTotalRows, [totalSum]],
+        ])(
+            "should return %s when %s total passed and %s total present in bottom pinned row",
+            (
+                expectedValue: boolean,
+                _passed: string,
+                _table: string,
+                passedTotals: any[],
+                tableTotals: any[],
+            ) => {
+                const gridApi = mockGridApi(tableTotals);
+
+                expect(areTotalsChanged(gridApi, passedTotals)).toBe(expectedValue);
+            },
+        );
     });
 });
