@@ -127,7 +127,8 @@ $header-cell-resize-width: 20px;
     }
 
     .gd-column-group-header:hover {
-        &:not(.gd-column-group-header--empty) .gd-pivot-table-header-label {
+        .gd-pivot-table-header-label--clickable,
+        .gd-pivot-table-header-menu ~ .gd-pivot-table-header-label {
             background-color: $gd-color-highlight-dimmed;
         }
 
@@ -249,6 +250,7 @@ $header-cell-resize-width: 20px;
     &-menu {
         display: inline-flex;
         align-items: stretch;
+        flex: 0 0 auto;
         border-top: 2px solid transparent;
         background-color: $gd-color-highlight-dimmed;
 
