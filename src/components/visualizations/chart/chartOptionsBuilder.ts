@@ -129,6 +129,12 @@ export const supportedDualAxesChartTypes = [
     VisualizationTypes.COMBO,
 ];
 
+export const supportedTooltipFollowPointerChartTypes = [
+    VisualizationTypes.COLUMN,
+    VisualizationTypes.BAR,
+    VisualizationTypes.COMBO,
+];
+
 export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
