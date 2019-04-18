@@ -22,7 +22,6 @@ import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
-import sortBy = require("lodash/sortBy");
 import sumBy = require("lodash/sumBy");
 
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
@@ -100,6 +99,7 @@ import TotalsUtils, {
     AVAILABLE_TOTALS as renderedTotalTypesOrder,
 } from "../visualizations/table/totals/utils";
 import { getAGGridDataSource } from "./pivotTable/agGridDataSource";
+import { getUpdatedColumnTotals } from "./pivotTable/aggregationsMenuHelper";
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -665,35 +665,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.updateDesiredHeight(this.state.execution.executionResult);
     };
 
-    public onMenuAggregationClick = ({
-        type,
-        measureIdentifiers,
-        attributeIdentifier,
-        include,
-    }: IMenuAggregationClickConfig) => {
-        const columnTotals = this.getColumnTotals();
-
-        const columnTotalsChanged: AFM.ITotalItem[] = [];
-        for (const measureIdentifier of measureIdentifiers) {
-            columnTotalsChanged.push({ type, measureIdentifier, attributeIdentifier });
-        }
-
-        let updatedColumnTotals = [];
-        if (include) {
-            const columnTotalsChangedUnique = columnTotalsChanged.filter(
-                totalChanged => !columnTotals.some(total => isEqual(total, totalChanged)),
-            );
-
-            updatedColumnTotals = [...columnTotals, ...columnTotalsChangedUnique];
-        } else {
-            updatedColumnTotals = columnTotals.filter(
-                total => !columnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)),
-            );
-        }
-
-        const newColumnTotals = sortBy(updatedColumnTotals, total => {
-            return renderedTotalTypesOrder.findIndex((rankedItem: string) => rankedItem === total.type);
-        });
+    public onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
+        const newColumnTotals = getUpdatedColumnTotals(
+            this.getColumnTotals(),
+            this.props.resultSpec,
+            menuAggregationClickConfig,
+        );
 
         this.props.pushData({
             properties: {
@@ -701,6 +678,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
         });
         this.setState({ columnTotals: newColumnTotals });
+
+        this.updateGrouping();
     };
 
     public sortChanged = (event: SortChangedEvent): void => {
@@ -720,6 +699,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 sortItems,
             },
         });
+
+        this.updateGrouping();
     };
 
     public onBodyScroll = (event: BodyScrollEvent) => {
@@ -1025,6 +1006,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setState(state => ({
             agGridRerenderNumber: state.agGridRerenderNumber + 1,
         }));
+    }
+
+    private updateGrouping() {
+        this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
     }
 }
 

@@ -25,6 +25,7 @@ import {
     isNativeTotal,
     getNativeTotals,
     getTotalsFromResultSpec,
+    getAttributeDimension,
 } from "../utils";
 import { createIntlMock } from "../../../utils/intlUtils";
 import { ITotalWithData } from "../../../../../interfaces/Totals";
@@ -571,20 +572,24 @@ describe("Totals", () => {
     });
 
     describe("getNativeTotals", () => {
+        const resultSpec = { dimensions: [{ itemIdentifiers: ["a1", "a2", "a3"] }] };
         it("should filter out all but native totals and adapt them to afm.nativeTotal format", () => {
             expect(
-                getNativeTotals([
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "nat",
-                    },
-                ]),
+                getNativeTotals(
+                    [
+                        {
+                            attributeIdentifier: "a1",
+                            measureIdentifier: "m1",
+                            type: "sum",
+                        },
+                        {
+                            attributeIdentifier: "a1",
+                            measureIdentifier: "m1",
+                            type: "nat",
+                        },
+                    ],
+                    resultSpec,
+                ),
             ).toEqual([
                 {
                     attributeIdentifiers: [],
@@ -592,8 +597,36 @@ describe("Totals", () => {
                 },
             ]);
         });
+        it("should return correct native subtotals", () => {
+            expect(
+                getNativeTotals(
+                    [
+                        {
+                            attributeIdentifier: "a2",
+                            measureIdentifier: "m1",
+                            type: "nat",
+                        },
+                        {
+                            attributeIdentifier: "a3",
+                            measureIdentifier: "m1",
+                            type: "nat",
+                        },
+                    ],
+                    resultSpec,
+                ),
+            ).toEqual([
+                {
+                    attributeIdentifiers: ["a1"],
+                    measureIdentifier: "m1",
+                },
+                {
+                    attributeIdentifiers: ["a1", "a2"],
+                    measureIdentifier: "m1",
+                },
+            ]);
+        });
         it("should return an empty array if no totals are specified", () => {
-            expect(getNativeTotals(undefined)).toEqual([]);
+            expect(getNativeTotals(undefined, resultSpec)).toEqual([]);
         });
     });
 
@@ -639,6 +672,14 @@ describe("Totals", () => {
         });
         it("should return an empty array if no totals are specified", () => {
             expect(getTotalsFromResultSpec(undefined)).toEqual([]);
+        });
+    });
+    describe("getAttributeDimension", () => {
+        const resultSpec: AFM.IResultSpec = {
+            dimensions: [{ itemIdentifiers: [] }, { itemIdentifiers: ["a1", "a2"] }],
+        };
+        it("should return correct dimension for attribute", () => {
+            expect(getAttributeDimension("a1", resultSpec)).toEqual(resultSpec.dimensions[1]);
         });
     });
 });

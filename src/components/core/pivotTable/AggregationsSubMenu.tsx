@@ -2,6 +2,7 @@
 import * as React from "react";
 import { AFM, Execution } from "@gooddata/typings";
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
+import * as classNames from "classnames";
 
 import { getNthAttributeLocalIdentifier, getNthAttributeName } from "../../../helpers/executionResultHelper";
 import SubMenu from "../../menu/SubMenu";
@@ -65,6 +66,11 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         );
     }
 
+    private getSubtotalNameTestClass(attributeLocalIdentifier: string) {
+        const attributeClass = attributeLocalIdentifier.replace(/\./g, "-");
+        return `s-aggregation-item-${attributeClass}`;
+    }
+
     private renderSubMenuItems() {
         const { totalType, rowAttributeHeaders, measureLocalIdentifiers, columnTotals } = this.props;
 
@@ -86,13 +92,17 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
                         include: !isSelected,
                         attributeIdentifier: attributeLocalIdentifier,
                     });
-                const attributeName = this.getAttributeName(rowAttributeHeaders, headerIndex);
 
+                const attributeName = this.getAttributeName(rowAttributeHeaders, headerIndex);
                 return (
                     <Item checked={isSelected} key={attributeLocalIdentifier}>
                         <div
                             onClick={onClick}
-                            className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
+                            className={classNames(
+                                "gd-aggregation-menu-item-inner",
+                                "s-menu-aggregation-inner",
+                                this.getSubtotalNameTestClass(attributeLocalIdentifier),
+                            )}
                         >
                             {attributeName}
                         </div>

@@ -3,10 +3,13 @@ import { AFM, Execution } from "@gooddata/typings";
 import * as invariant from "invariant";
 import uniq = require("lodash/uniq");
 import intersection = require("lodash/intersection");
+import isEqual = require("lodash/isEqual");
+import sortBy = require("lodash/sortBy");
 
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../../../helpers/agGrid";
-import { AVAILABLE_TOTALS } from "../../visualizations/table/totals/utils";
+import { AVAILABLE_TOTALS, getAttributeDimension } from "../../visualizations/table/totals/utils";
 import { IColumnTotal } from "./AggregationsMenu";
+import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 
 function getTotalsForMeasureAndType(
     totals: AFM.ITotalItem[],
@@ -110,9 +113,81 @@ function isTotalEnabledForAttribute(
     });
 }
 
+function isGrandTotal(attributeIdentifier: string, dimension: AFM.IDimension): boolean {
+    return dimension.itemIdentifiers.indexOf(attributeIdentifier) === 0;
+}
+
+function getAllSubtotalsOfTypeFromDimension(
+    dimension: AFM.IDimension,
+    type: AFM.TotalType,
+    measureIdentifiers: string[],
+): AFM.ITotalItem[] {
+    const subtotals: AFM.ITotalItem[] = [];
+    dimension.itemIdentifiers.slice(1).forEach(subTotalAttributeIdentifier =>
+        measureIdentifiers.forEach(measureIdentifier =>
+            subtotals.push({
+                type,
+                measureIdentifier,
+                attributeIdentifier: subTotalAttributeIdentifier,
+            }),
+        ),
+    );
+    return subtotals;
+}
+
+function includeTotals(columnTotals: AFM.ITotalItem[], columnTotalsChanged: AFM.ITotalItem[]) {
+    const columnTotalsChangedUnique = columnTotalsChanged.filter(
+        totalChanged => !columnTotals.some(total => isEqual(total, totalChanged)),
+    );
+
+    return [...columnTotals, ...columnTotalsChangedUnique];
+}
+
+function excludeTotals(
+    columnTotals: AFM.ITotalItem[],
+    columnTotalsChanged: AFM.ITotalItem[],
+    resultSpec: AFM.IResultSpec,
+    menuAggregationClickConfig: IMenuAggregationClickConfig,
+): AFM.ITotalItem[] {
+    const { type, measureIdentifiers, attributeIdentifier } = menuAggregationClickConfig;
+
+    const dimension = getAttributeDimension(attributeIdentifier, resultSpec);
+
+    const allColumnTotalsChanged = isGrandTotal(attributeIdentifier, dimension)
+        ? columnTotalsChanged.concat(getAllSubtotalsOfTypeFromDimension(dimension, type, measureIdentifiers))
+        : columnTotalsChanged;
+
+    return columnTotals.filter(
+        total => !allColumnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)),
+    );
+}
+
+export function getUpdatedColumnTotals(
+    columnTotals: AFM.ITotalItem[],
+    resultSpec: AFM.IResultSpec,
+    menuAggregationClickConfig: IMenuAggregationClickConfig,
+): AFM.ITotalItem[] {
+    const { type, measureIdentifiers, attributeIdentifier, include } = menuAggregationClickConfig;
+
+    const columnTotalsChanged = measureIdentifiers.map(measureIdentifier => ({
+        type,
+        measureIdentifier,
+        attributeIdentifier,
+    }));
+
+    const updatedColumnTotals = include
+        ? includeTotals(columnTotals, columnTotalsChanged)
+        : excludeTotals(columnTotals, columnTotalsChanged, resultSpec, menuAggregationClickConfig);
+
+    return sortBy(updatedColumnTotals, total =>
+        AVAILABLE_TOTALS.findIndex((rankedItem: string) => rankedItem === total.type),
+    );
+}
+
 export default {
     getTotalsForAttributeHeader,
     getTotalsForMeasureHeader,
     getHeaderMeasureLocalIdentifiers,
     isTotalEnabledForAttribute,
+    getUpdatedColumnTotals,
 };
