@@ -17,7 +17,7 @@
     "validate-ci": "tsc --noEmit && yarn tslint-ci"
   },
   "config": {
-    "tslint": "./src/**/*.ts"
+    "tslint": "./src/{,**/}*.ts"
   },
   "files": [
     "dist",
@@ -29,9 +29,11 @@
     "url": "git+https://github.com/gooddata/gooddata-typings.git"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
     "collectCoverageFrom": [
@@ -59,13 +61,13 @@
   },
   "homepage": "https://github.com/gooddata/gooddata-typings#readme",
   "devDependencies": {
-    "@gooddata/tslint-config": "0.0.13",
-    "@types/jest": "22.2.0",
-    "@types/lodash": "4.14.105",
-    "jest": "21.2.1",
+    "@gooddata/tslint-config": "1.0.0",
+    "@types/jest": "24.0.6",
+    "@types/lodash": "4.14.121",
+    "jest": "24.7.1",
     "jest-junit": "3.0.0",
-    "ts-jest": "21.2.3",
-    "typescript": "2.5.3"
+    "ts-jest": "24.0.1",
+    "typescript": "3.3.4000"
   },
   "dependencies": {
     "lodash": "4.17.11"
