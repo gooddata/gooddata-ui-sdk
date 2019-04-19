@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import range = require("lodash/range");
 import get = require("lodash/get");
+import set = require("lodash/set");
 import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
 import { findMeasureGroupInDimensions } from "../../../../helpers/executionResultHelper";
@@ -46,7 +47,7 @@ import {
     HeatmapColorStrategy,
     IColorStrategy,
 } from "../colorFactory";
-import { IColorPaletteItem } from "../../../../interfaces/Config";
+import { IChartConfig, IColorPaletteItem } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 
 export { IPoint };
@@ -2312,16 +2313,40 @@ describe("chartOptionsBuilder", () => {
             });
         });
 
-        describe("stackMeasuresToPercent", () => {
-            const tooltipFn = buildTooltipFactory(null, "column", { stackMeasuresToPercent: true });
-            it.each([["0%", 0], ["49.01%", 49.0111], ["100%", 100]])(
-                "should render %s when percentageValue is %s",
-                (formattedValue: string, percentageValue: number) => {
-                    const tooltip = tooltipFn(pointData, percentageValue);
-                    expect(getValues(tooltip)).toEqual(["series", formattedValue]);
-                },
-            );
-        });
+        it.each([
+            ["number", false, false, false, " 1"],
+            ["number", false, false, true, " 1"],
+            ["number", false, true, false, " 1"],
+            ["number", false, true, true, " 1"],
+            ["percent", true, false, false, "49.01%"],
+            ["percent", true, false, true, "49.01%"],
+            ["percent", true, true, false, "49.01%"],
+            ["number", true, true, true, " 1"],
+        ])(
+            "should render %s when stackMeasuresToPercent is %s, isDualAxis is %s and isSecondAxis is %s",
+            (
+                _type: string,
+                stackMeasuresToPercent: boolean,
+                isDualAxis: boolean,
+                isSecondAxis: boolean,
+                formattedValue: string,
+            ) => {
+                const tooltipFn = buildTooltipFactory(
+                    viewByAttribute,
+                    "column",
+                    {
+                        stackMeasuresToPercent,
+                    },
+                    isDualAxis,
+                );
+
+                const testData = { ...pointData };
+                set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
+
+                const tooltip = tooltipFn(testData, 49.0111);
+                expect(getValues(tooltip)).toEqual(["Department", "category", "series", formattedValue]);
+            },
+        );
 
         it("should render correct values in usecase of bar chart without attribute", () => {
             const tooltipFn = buildTooltipFactory(null, "column");
@@ -2439,25 +2464,47 @@ describe("chartOptionsBuilder", () => {
             expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
         });
 
-        describe("stackMeasuresToPercent", () => {
-            const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute, {
-                stackMeasuresToPercent: true,
-            });
-            it.each([["0%", 0], ["49.01%", 49.0111], ["100%", 100]])(
-                "should render %s when percentageValue is %s",
-                (formattedValue: string, percentageValue: number) => {
-                    const tooltip = tooltipFn(pointData, percentageValue);
-                    expect(getValues(tooltip)).toEqual([
-                        "Department",
-                        "parent category",
-                        "Region",
-                        "category",
-                        "series",
-                        formattedValue,
-                    ]);
-                },
-            );
-        });
+        it.each([
+            ["number", false, false, false, " 1"],
+            ["number", false, false, true, " 1"],
+            ["number", false, true, false, " 1"],
+            ["number", false, true, true, " 1"],
+            ["percent", true, false, false, "49.01%"],
+            ["percent", true, false, true, "49.01%"],
+            ["percent", true, true, false, "49.01%"],
+            ["number", true, true, true, " 1"],
+        ])(
+            "should render %s when stackMeasuresToPercent is %s, isDualAxis is %s and isSecondAxis is %s",
+            (
+                _type: string,
+                stackMeasuresToPercent: boolean,
+                isDualAxis: boolean,
+                isSecondAxis: boolean,
+                formattedValue: string,
+            ) => {
+                const tooltipFn = buildTooltipForTwoAttributesFactory(
+                    viewByAttribute,
+                    viewByParentAttribute,
+                    {
+                        stackMeasuresToPercent,
+                    },
+                    isDualAxis,
+                );
+
+                const testData = { ...pointData };
+                set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
+
+                const tooltip = tooltipFn(testData, 49.0111);
+                expect(getValues(tooltip)).toEqual([
+                    "Department",
+                    "parent category",
+                    "Region",
+                    "category",
+                    "series",
+                    formattedValue,
+                ]);
+            },
+        );
     });
 
     describe("generateTooltipXYFn", () => {
@@ -3446,7 +3493,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("dual axes", () => {
-            const config = {
+            const config: IChartConfig = {
                 type: "column",
                 secondary_yaxis: {
                     measures: ["wonMetric"],
@@ -3526,6 +3573,36 @@ describe("chartOptionsBuilder", () => {
                     },
                 ];
                 expect(chartOptions.yAxes).toEqual(expectedAxis);
+            });
+
+            it("should return number values in tooltip when point is on secondary axis", () => {
+                const newConfig = cloneDeep(config);
+                newConfig.stackMeasuresToPercent = true;
+
+                const {
+                    actions: { tooltip: tooltipFn },
+                } = generateChartOptions(dataSet, newConfig);
+
+                const pointDataForDualAxes = {
+                    y: 1,
+                    format: "# ###",
+                    name: "point",
+                    category: {
+                        name: "category",
+                        parent: {
+                            name: "parent category",
+                        },
+                    },
+                    series: {
+                        name: "series",
+                        yAxis: {
+                            opposite: true,
+                        },
+                    },
+                };
+
+                const tooltip = tooltipFn(pointDataForDualAxes, 49.011);
+                expect(getValues(tooltip)).toEqual(["Year created", "category", "series", " 1"]);
             });
         });
 

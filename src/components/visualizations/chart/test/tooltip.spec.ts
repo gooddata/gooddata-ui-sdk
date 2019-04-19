@@ -33,10 +33,15 @@ describe("tooltip", () => {
     });
 
     describe("getFormattedValueForTooltip()", () => {
-        it.each([[false, 45.2490089197225], [true, null]])(
-            "should return formatted number if stackMeasuresToPercent is %s and percentageValue is %s",
-            (stackMeasuresToPercent: boolean, percentageValue: number) => {
+        it.each([
+            [false, false, 45.24], // stackMeasuresToPercent
+            [false, true, null], // percentageValue
+            [true, true, 45.24], // isDualAxis + isSecondAxis
+        ])(
+            "should return number if isDualChartWithRightAxis is %s, stackMeasuresToPercent is %s, percentageValue is %s",
+            (isDualChartWithRightAxis: boolean, stackMeasuresToPercent: boolean, percentageValue: number) => {
                 const formattedValue = getFormattedValueForTooltip(
+                    isDualChartWithRightAxis,
                     stackMeasuresToPercent,
                     testPointData,
                     testSeparators,
@@ -45,16 +50,26 @@ describe("tooltip", () => {
                 expect(formattedValue).toEqual(" 1");
             },
         );
-        it.each([["0%", 0], ["45.25%", 45.2490089197225], ["100%", 100]])(
-            "should return %s if stackMeasuresToPercent is true and percentageValue is %s",
-            (formattedValue: string, percentageValue: number) => {
-                const tooltip = getFormattedValueForTooltip(
-                    true,
+        it.each([
+            ["0%", false, true, 0],
+            ["45.25%", false, true, 45.2490089197225],
+            ["100%", false, true, 100],
+        ])(
+            "should return %s if isDualChartWithRightAxis is %s, stackMeasuresToPercent is %s, percentageValue is %s",
+            (
+                expectedValue: string,
+                isDualChartWithRightAxis: boolean,
+                stackMeasuresToPercent: boolean,
+                percentageValue: number,
+            ) => {
+                const formattedValue = getFormattedValueForTooltip(
+                    isDualChartWithRightAxis,
+                    stackMeasuresToPercent,
                     testPointData,
                     testSeparators,
                     percentageValue,
                 );
-                expect(tooltip).toEqual(formattedValue);
+                expect(formattedValue).toEqual(expectedValue);
             },
         );
     });
