@@ -50,10 +50,10 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@60.3.2":
-  version "60.3.2"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.3.2.tgz#0d931a032ae0aab8e1e3f7eb7fee80055a78a6de"
-  integrity sha512-LKJxC4wAWl7a25GRVHltj9S6isKS6llk0Mkp8D4hV9IxpISYwZhcNnGF1M9YDab7CVn/V4yCW9chrnbDVREPTA==
+"@gooddata/goodstrap@60.5.0":
+  version "60.5.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.5.0.tgz#46b82c4591f5c1d62752dc184357a640da7b8b08"
+  integrity sha512-wOxyysSftXcNM3ZHMcAzvOoDqQJf/Hd9aXZBGdigmoBMHGSw6G9HneZPiOU1qk3h3KGKXg9bUUCDjEZf/eHSjQ==
   dependencies:
     "@gooddata/js-utils" "3.4.0"
     classnames "2.2.6"
