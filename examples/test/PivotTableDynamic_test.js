@@ -331,19 +331,19 @@ test("should be able to add and remove native total", async t => {
     await t.expect(total.exists).eql(false);
 });
 
-test("should be able to add and remove multiple totals", async t => {
-    const total1 = Selector(TOTAL_SELECTOR_FIRST);
-    const total2 = Selector(TOTAL_SELECTOR_SECOND);
-    await setupSubTotals(t);
-    await toggleTotal(t, 0, "sum");
-    await toggleTotal(t, 0, "max");
-    await t.expect(total1.textContent).eql("Sum");
-    await t.expect(total2.textContent).eql("Max");
-    await toggleTotal(t, 0, "sum");
-    await toggleTotal(t, 0, "max");
-    await t.expect(total1.exists).eql(false);
-    await t.expect(total2.exists).eql(false);
-});
+// test("should be able to add and remove multiple totals", async t => {
+//     const total1 = Selector(TOTAL_SELECTOR_FIRST);
+//     const total2 = Selector(TOTAL_SELECTOR_SECOND);
+//     await setupSubTotals(t);
+//     await toggleTotal(t, 0, "sum");
+//     await toggleTotal(t, 0, "max");
+//     await t.expect(total1.textContent).eql("Sum");
+//     await t.expect(total2.textContent).eql("Max");
+//     await toggleTotal(t, 0, "sum");
+//     await toggleTotal(t, 0, "max");
+//     await t.expect(total1.exists).eql(false);
+//     await t.expect(total2.exists).eql(false);
+// });
 
 test("should show totals rows in particular order no matter the added totals order", async t => {
     await setupSubTotals(t);
@@ -396,21 +396,21 @@ test("should be able to add and remove native subtotal", async t => {
     );
 });
 
-test("should be able to add and remove multiple subtotals", async t => {
-    await setupSubTotals(t);
-    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
-    await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
-    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
-    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-6-1");
-    await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
-    await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
-    await checkCellValue(
-        t,
-        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
-        "Highland Village",
-        ".s-cell-5-1",
-    );
-});
+// test("should be able to add and remove multiple subtotals", async t => {
+//     await setupSubTotals(t);
+//     await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+//     await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+//     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+//     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-6-1");
+//     await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+//     await toggleTotal(t, 0, "max", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
+//     await checkCellValue(
+//         t,
+//         PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+//         "Highland Village",
+//         ".s-cell-5-1",
+//     );
+// });
 
 test("should show subtotal rows in particular order no matter the added subtotals order", async t => {
     await setupSubTotals(t);
