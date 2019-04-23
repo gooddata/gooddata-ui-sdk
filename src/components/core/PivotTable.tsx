@@ -577,6 +577,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     public onModelUpdated = () => {
+        if (this.isTableHidden()) {
+            return;
+        }
         if (this.props.groupRows) {
             updateStickyHeadersPosition(this.gridApi);
         }
@@ -838,20 +841,19 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         };
 
         // columnDefs are loaded with first page request. Show overlay loading before first page is available.
-        const tableLoadingOverlay =
-            columnDefs.length === 0 ? (
-                <div
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                    }}
-                >
-                    <LoadingComponent />
-                </div>
-            ) : null;
+        const tableLoadingOverlay = this.isTableHidden() ? (
+            <div
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+            >
+                <LoadingComponent />
+            </div>
+        ) : null;
 
         return (
             <div
@@ -1010,6 +1012,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private updateGrouping() {
         this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
+    }
+
+    private isTableHidden() {
+        return this.state.columnDefs.length === 0;
     }
 }
 
