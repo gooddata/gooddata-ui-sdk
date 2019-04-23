@@ -12,6 +12,7 @@ import {
 import { ISeriesDataItem } from "../../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { immutableSet } from "../../../utils/common";
+import { supportedTooltipFollowPointerChartTypes } from "../../chartOptionsBuilder";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {
@@ -542,33 +543,44 @@ describe("getCustomizedConfiguration", () => {
     });
 
     describe("tooltip followPointer", () => {
-        it("should follow pointer for bar chart when data max is above axis max", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                actions: { tooltip: true },
-                data: getData([{ y: 100 }, { y: 101 }]),
-                type: VisualizationTypes.COLUMN,
-                yAxisProps: {
-                    max: 50,
-                },
-            });
+        // convert [bar, column, combo] to [ [bar] , [column] , [combo] ]
+        const CHART_TYPES = supportedTooltipFollowPointerChartTypes.map(
+            (chartType: string): string[] => [chartType],
+        );
 
-            expect(result.tooltip.followPointer).toBeTruthy();
-        });
+        it.each(CHART_TYPES)(
+            "should follow pointer for %s chart when data max is above axis max",
+            (chartType: string) => {
+                const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    actions: { tooltip: true },
+                    data: getData([{ y: 100 }, { y: 101 }]),
+                    type: chartType,
+                    yAxisProps: {
+                        max: 50,
+                    },
+                });
 
-        it("should not follow pointer for bar chart when data max is below axis max", () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                actions: { tooltip: true },
-                data: getData([{ y: 0 }, { y: 1 }]),
-                type: VisualizationTypes.COLUMN,
-                yAxisProps: {
-                    max: 50,
-                },
-            });
+                expect(result.tooltip.followPointer).toBeTruthy();
+            },
+        );
 
-            expect(result.tooltip.followPointer).toBeFalsy();
-        });
+        it.each(CHART_TYPES)(
+            "should not follow pointer for %s chart when data max is below axis max",
+            (chartType: string) => {
+                const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    actions: { tooltip: true },
+                    data: getData([{ y: 0 }, { y: 1 }]),
+                    type: chartType,
+                    yAxisProps: {
+                        max: 50,
+                    },
+                });
+
+                expect(result.tooltip.followPointer).toBeFalsy();
+            },
+        );
 
         it("should follow pointer for pie chart should be false by default", () => {
             const result = getCustomizedConfiguration({

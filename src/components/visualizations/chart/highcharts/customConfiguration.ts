@@ -16,7 +16,11 @@ import pickBy = require("lodash/pickBy");
 import * as numberJS from "@gooddata/numberjs";
 
 import { styleVariables } from "../../styles/variables";
-import { IChartOptions, supportedDualAxesChartTypes } from "../chartOptionsBuilder";
+import {
+    IChartOptions,
+    supportedDualAxesChartTypes,
+    supportedTooltipFollowPointerChartTypes,
+} from "../chartOptionsBuilder";
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
 import { IDataLabelsVisible, IChartConfig, IAxis } from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
@@ -452,7 +456,7 @@ function getTooltipConfiguration(chartOptions: IChartOptions) {
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
 
-    const followPointer = isOneOfTypes(chartType, [VisualizationTypes.COLUMN, VisualizationTypes.BAR])
+    const followPointer = isOneOfTypes(chartType, supportedTooltipFollowPointerChartTypes)
         ? { followPointer: shouldFollowPointer(chartOptions) }
         : {};
 
