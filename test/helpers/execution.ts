@@ -74,7 +74,7 @@ export function expectColumns(expected: string[], reportDefinition: IReportDefin
 }
 
 export function expectMetricDefinition(expected: IMetricDefinition, reportDefinition: IReportDefinition) {
-    const actualMetricDefinitions = get(reportDefinition, 'definitions')
+    const actualMetricDefinitions: IMetricDefinition[] = get(reportDefinition, 'definitions')
         .map((definition: any) => get(definition, 'metricDefinition'));
 
     const defFound = find(actualMetricDefinitions, expected);

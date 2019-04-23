@@ -45,7 +45,7 @@ export interface IPollingOptions {
 export const handlePolling = (
     xhrRequest: any,
     uri: string,
-    isPollingDone: Function,
+    isPollingDone: (response: any) => boolean,
     options: IPollingOptions = {}
 ) => { // TODO
     const {
@@ -83,7 +83,7 @@ export const handlePolling = (
 export const handleHeadPolling = (
     xhrHead: any,
     uri: string,
-    isPollingDone: Function,
+    isPollingDone: (headers: any) => boolean,
     options: IPollingOptions = {}
 ) => {
     const {
