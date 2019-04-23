@@ -601,6 +601,21 @@ describe("get tick positions for dual axes chart", () => {
                 const tickPosition = getTickPositions.call(axis, axis.max, axis.max);
                 expect(tickPosition.length).toEqual(1);
             });
+
+            it("should generate one tick position if series type is 'line' and min === max", () => {
+                const axis = getAxis(0, 50, 50);
+                axis.chart = {
+                    options: {
+                        index: 0,
+                        chart: {
+                            type: "column",
+                        },
+                    },
+                    series: [{ type: "line" }],
+                };
+                const tickPosition = getTickPositions.call(axis, axis.max, axis.max);
+                expect(tickPosition.length).toEqual(1);
+            });
         });
 
         describe("test on dual axes", () => {

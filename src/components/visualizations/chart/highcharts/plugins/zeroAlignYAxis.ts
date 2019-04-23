@@ -323,9 +323,10 @@ export function getTickPositioner() {
 
     return function(min: number, max: number) {
         const chart = this.chart;
-        const chartType = getChartType(chart);
-        const isLineChartType = isLineChart(chartType);
         const currentAxisIndex = this.options.index;
+        const defaultChartType = getChartType(chart);
+        const seriesChartType = get(chart, `series.${currentAxisIndex}.type`);
+        const isLineChartType = isLineChart(seriesChartType) || isLineChart(defaultChartType);
 
         let tickPositions = handleInvalidMinMax(
             currentAxisIndex,
