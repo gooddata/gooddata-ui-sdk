@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import head = require("lodash/head");
 import last = require("lodash/last");
@@ -125,7 +125,7 @@ export function dualAxesLabelFormatter() {
 
     const stackMeasuresToPercent = get(this, "chart.userOptions.stackMeasuresToPercent", false);
     const seriesInAxis = get(this, "axis.series", []).length;
-    if (stackMeasuresToPercent && seriesInAxis > 1) {
+    if (stackMeasuresToPercent && seriesInAxis > 0) {
         const opposite = get(this, "axis.opposite", false);
         if (opposite === false) {
             return formatAsPercent.call(this, 1);

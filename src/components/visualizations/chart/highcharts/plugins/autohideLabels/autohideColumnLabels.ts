@@ -117,6 +117,10 @@ function areNeighborsOverlapping(neighbors: any[]) {
     });
 }
 
+function findColumnKey(key: string): boolean {
+    return key.indexOf("column") === 0;
+}
+
 /**
  * Merge stack label points from axes to one
  * Primary axis:    [pointP1, pointP2, pointP3]
@@ -124,10 +128,15 @@ function areNeighborsOverlapping(neighbors: any[]) {
  * @param stacks
  * @return [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
-function getStackLabelPointsForDualAxis(stacks: any[]) {
+export function getStackLabelPointsForDualAxis(stacks: any[]) {
     return flatten(
         // 'column0' is primary axis and 'column1' is secondary axis
-        zip(...stacks.map((item: any, index: number) => values(item[`column${index}`]))),
+        zip(
+            ...stacks.map((item: any) => {
+                const columnKey = Object.keys(item).find(findColumnKey);
+                return values(item[columnKey]);
+            }),
+        ),
     ).filter(identity);
 }
 
@@ -162,8 +171,9 @@ function toggleStackedLabelsForSingleAxis() {
     const { stackTotalGroup, stacks }: any = yAxis[0] || {};
 
     if (stacks && stackTotalGroup) {
+        const columnKey = Object.keys(stacks).find(findColumnKey);
         // We need to use Lodash map, because we are iterating through an object
-        const labels = map(stacks.column, (point: any) => point.label);
+        const labels = map(stacks[columnKey], (point: any) => point.label);
         const neighbors = toNeighbors(labels);
         const areOverlapping = areNeighborsOverlapping(neighbors);
 

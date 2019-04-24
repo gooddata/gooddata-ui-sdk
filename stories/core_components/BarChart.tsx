@@ -804,22 +804,21 @@ storiesOf("Core components/BarChart", module)
             </div>,
         ),
     )
-    .add(
-        'optional stacking chart ignores "stackMeasuresToPercent" setting with one measure on each axis',
-        () =>
-            screenshotWrap(
-                <div style={wrapperStyle}>
-                    <BarChart
-                        projectId="storybook"
-                        measures={[MEASURE_1, MEASURE_2]}
-                        viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
-                        config={{
-                            secondary_xaxis: {
-                                measures: [MEASURE_2.measure.localIdentifier],
-                            },
-                            stackMeasuresToPercent: true,
-                        }}
-                    />
-                </div>,
-            ),
+    // case 3-g in BDD - UI SDK
+    .add('optional stacking chart render "stackMeasuresToPercent" setting with measure on top axis', () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BarChart
+                    projectId="storybook"
+                    measures={[MEASURE_1, MEASURE_2]}
+                    viewBy={[ATTRIBUTE_1, ATTRIBUTE_2]}
+                    config={{
+                        secondary_xaxis: {
+                            measures: [MEASURE_2.measure.localIdentifier],
+                        },
+                        stackMeasuresToPercent: true,
+                    }}
+                />
+            </div>,
+        ),
     );

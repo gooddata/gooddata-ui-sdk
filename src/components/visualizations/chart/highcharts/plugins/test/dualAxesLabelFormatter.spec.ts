@@ -1,5 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
-import { removeDecimal, roundNumber, formatValueInShallowRange } from "../dualAxesLabelFormatter";
+// (C) 2007-2019 GoodData Corporation
+import {
+    dualAxesLabelFormatter,
+    removeDecimal,
+    roundNumber,
+    formatValueInShallowRange,
+} from "../dualAxesLabelFormatter";
+import { ISeriesItem } from "../../../../../../interfaces/Config";
 
 describe("dual axes label format", () => {
     it("test remove decimal", () => {
@@ -151,5 +157,49 @@ describe("dual axes label format", () => {
             value = roundNumber("27999", 26000, 27000);
             expect(value).toEqual(28000);
         });
+    });
+
+    describe("dualAxesLabelFormatter", () => {
+        const series: ISeriesItem[] = [];
+        const tickPositions: number[] = [1, 2, 3, 4, 5];
+        const data = {
+            axis: {
+                opposite: false,
+                series,
+                tickPositions,
+                userOptions: { defaultFormat: "" },
+                defaultLabelFormatter() {
+                    return this.value + "";
+                },
+            },
+            chart: { userOptions: { stackMeasuresToPercent: true } },
+            value: 49,
+        };
+
+        it.each([["49", "#.###"], ["4900%", "#.###%"]])(
+            "should return %s if format is %s",
+            (expectedResult: string, format: string) => {
+                const dualAxesLabelData = { ...data };
+                dualAxesLabelData.axis.userOptions.defaultFormat = format;
+                dualAxesLabelData.chart.userOptions.stackMeasuresToPercent = false;
+
+                const result = dualAxesLabelFormatter.call(dualAxesLabelData);
+                expect(result).toEqual(expectedResult);
+            },
+        );
+
+        it.each([["49%", false], ["49", true]])(
+            "should return %s if seriesInAxis > 0 and opposite is %s",
+            (expectedResult: string, opposite: boolean) => {
+                const dualAxesLabelData = { ...data };
+                dualAxesLabelData.axis.userOptions.defaultFormat = "";
+                dualAxesLabelData.chart.userOptions.stackMeasuresToPercent = true;
+                dualAxesLabelData.axis.opposite = opposite;
+                dualAxesLabelData.axis.series = [{}];
+
+                const result = dualAxesLabelFormatter.call(dualAxesLabelData);
+                expect(result).toEqual(expectedResult);
+            },
+        );
     });
 });
