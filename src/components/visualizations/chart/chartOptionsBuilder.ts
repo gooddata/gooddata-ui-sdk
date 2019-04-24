@@ -775,15 +775,22 @@ const renderTooltipHTML = (textData: string[][]): string => {
         .join("\n")}</table>`;
 };
 
+function isPointOnOppositeAxis(point: IPoint): boolean {
+    return get(point, ["series", "yAxis", "opposite"], false);
+}
+
 export function buildTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     config: IChartConfig = {},
+    isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
     return (point: IPoint, percentageValue?: number): string => {
+        const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
+            isDualChartWithRightAxis,
             stackMeasuresToPercent,
             point,
             separators,
@@ -814,13 +821,16 @@ export function buildTooltipForTwoAttributesFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
+    isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
     return (point: IPoint, percentageValue?: number): string => {
         const category: ICategory = point.category;
 
+        const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
+            isDualChartWithRightAxis,
             stackMeasuresToPercent,
             point,
             separators,
@@ -1643,15 +1653,21 @@ function getTooltipFactory(
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
+    isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { type } = config;
     if (isTreemap(type)) {
         return buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, config);
     }
     if (isViewByTwoAttributes) {
-        return buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute, config);
+        return buildTooltipForTwoAttributesFactory(
+            viewByAttribute,
+            viewByParentAttribute,
+            config,
+            isDualAxis,
+        );
     }
-    return buildTooltipFactory(viewByAttribute, type, config);
+    return buildTooltipFactory(viewByAttribute, type, config, isDualAxis);
 }
 
 /**
@@ -1947,12 +1963,15 @@ export function getChartOptions(
         };
     }
 
+    const isDualAxis = yAxes.length === 2;
+
     const tooltipFactory: ITooltipFactory = getTooltipFactory(
         isViewByTwoAttributes,
         viewByAttribute,
         viewByParentAttribute,
         stackByAttribute,
         config,
+        isDualAxis,
     );
 
     const chartOptions = {

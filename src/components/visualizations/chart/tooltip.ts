@@ -14,12 +14,14 @@ export function formatValueForTooltip(
 }
 
 export function getFormattedValueForTooltip(
+    isDualChartWithRightAxis: boolean,
     stackMeasuresToPercent: boolean,
     point: IPoint,
     separators?: ISeparators,
     percentageValue?: number,
 ): string {
-    const isNotStackToPercent = stackMeasuresToPercent === false || isNil(percentageValue);
+    const isNotStackToPercent =
+        stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
     return isNotStackToPercent
         ? formatValueForTooltip(point.y, point.format, separators)
         : percentFormatter(percentageValue);
