@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import * as Measure from "react-measure";
+import Measure from "react-measure";
 import * as cx from "classnames";
 
 import FluidLegend from "./FluidLegend";
@@ -72,17 +72,23 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         const { chartType } = this.props;
 
         return (
-            <Measure>
-                {({ width }: any) => (
-                    <div className="viz-fluid-legend-wrap">
-                        <FluidLegend
-                            series={this.getSeries()}
-                            chartType={chartType}
-                            onItemClick={this.onItemClick}
-                            containerWidth={width}
-                        />
-                    </div>
-                )}
+            <Measure client={true}>
+                {({ measureRef, contentRect }: any) => {
+                    const usedWidth =
+                        contentRect.client && contentRect.client.width
+                            ? Math.floor(contentRect.client.width)
+                            : 0;
+                    return (
+                        <div className="viz-fluid-legend-wrap" ref={measureRef}>
+                            <FluidLegend
+                                series={this.getSeries()}
+                                chartType={chartType}
+                                onItemClick={this.onItemClick}
+                                containerWidth={usedWidth}
+                            />
+                        </div>
+                    );
+                }}
             </Measure>
         );
     }
@@ -103,12 +109,19 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         };
 
         return (
-            <Measure>
-                {(dimensions: any) => (
-                    <div className={classNames}>
-                        <StaticLegend {...props} containerHeight={height || dimensions.height} />
-                    </div>
-                )}
+            <Measure client={true}>
+                {({ measureRef, contentRect }: any) => {
+                    const measuredHeight =
+                        contentRect.client && contentRect.client.height
+                            ? Math.floor(contentRect.client.height)
+                            : 0;
+                    const usedHeight = height || measuredHeight;
+                    return (
+                        <div className={classNames} ref={measureRef}>
+                            <StaticLegend {...props} containerHeight={usedHeight} />
+                        </div>
+                    );
+                }}
             </Measure>
         );
     }

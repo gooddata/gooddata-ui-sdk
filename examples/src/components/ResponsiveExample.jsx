@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { AfmComponents } from "@gooddata/react-components";
 import "@gooddata/react-components/styles/css/main.css";
-import * as Measure from "react-measure";
+import Measure from "react-measure";
 
 import { projectId, totalSalesIdentifier, locationResortIdentifier } from "../utils/fixtures";
 
@@ -61,17 +61,27 @@ export class ResponsiveExample extends Component {
                 <hr className="separator" />
 
                 <div style={{ width, height }} className="s-resizable-vis">
-                    <Measure>
-                        {dimensions => (
-                            <div style={{ width: "100%", height: "100%" }}>
-                                <AfmComponents.BarChart
-                                    width={dimensions.width}
-                                    height={dimensions.height}
-                                    projectId={projectId}
-                                    afm={afm}
-                                />
-                            </div>
-                        )}
+                    <Measure client>
+                        {({ measureRef, contentRect }) => {
+                            const usedHeight =
+                                contentRect.client && contentRect.client.height
+                                    ? Math.floor(contentRect.client.height)
+                                    : 0;
+                            const usedWidth =
+                                contentRect.client && contentRect.client.width
+                                    ? Math.floor(contentRect.client.width)
+                                    : 0;
+                            return (
+                                <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
+                                    <AfmComponents.BarChart
+                                        width={usedWidth}
+                                        height={usedHeight}
+                                        projectId={projectId}
+                                        afm={afm}
+                                    />
+                                </div>
+                            );
+                        }}
                     </Measure>
                 </div>
             </div>
