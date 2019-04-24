@@ -18,7 +18,7 @@ export default class LegendItem extends React.Component<any, any> {
         const enableBorderRadius = isLineChart(itemChartType) || isAreaChart(itemChartType);
 
         const iconStyle = {
-            borderRadius: enableBorderRadius ? "50%" : "none",
+            borderRadius: enableBorderRadius ? "50%" : "0",
             backgroundColor: item.isVisible ? item.color : DISABLED_COLOR,
         };
 

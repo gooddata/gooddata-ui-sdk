@@ -23,6 +23,9 @@ const configuration = {
             }
         },
         'Core components/ComboChart': {
+            'dual axis with same chart type and one attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
             'should override primaryMeasures & secondaryMeasures': {
                 readySelector: '.screenshot-ready-wrapper-done'
             }

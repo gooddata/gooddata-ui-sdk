@@ -388,6 +388,7 @@ const LEGEND_TEXT_KEYS = {
     column: ["left", "right"],
     line: ["left", "right"],
     bar: ["bottom", "top"],
+    area: ["left", "right"],
     combo: ["left", "right"],
 };
 

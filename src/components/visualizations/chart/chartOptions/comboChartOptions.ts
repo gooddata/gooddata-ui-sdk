@@ -13,6 +13,12 @@ export const CHART_ORDER = {
     [VisualizationTypes.LINE]: 3,
 };
 
+export const COMBO_SUPPORTED_CHARTS = [
+    VisualizationTypes.COLUMN,
+    VisualizationTypes.LINE,
+    VisualizationTypes.AREA,
+];
+
 const DEFAULT_COMBO_CHART_TYPES = [VisualizationTypes.COLUMN, VisualizationTypes.LINE];
 
 function getMeasureIndices(bucketItems: VizObject.BucketItem[], measureGroupIdentifiers: string[]): number[] {

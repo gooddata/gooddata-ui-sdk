@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { getHighchartsOptions } from "../highChartsCreators";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import handleChartLoad from "../events/load";
@@ -205,7 +205,7 @@ describe("highChartCreators", () => {
     describe("Load event configuration", () => {
         const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, {});
 
-        it("should column/bar/line chart be registered load event", () => {
+        it("should dual axis charts be registered load event", () => {
             supportedDualAxesChartTypes.forEach((type: string) => {
                 const config = getConfig(type);
                 expect(config.chart.events.load).toBe(handleChartLoad);
@@ -213,8 +213,8 @@ describe("highChartCreators", () => {
         });
 
         it("should other charts not be registered load event", () => {
-            // area chart is an example, as long as it's not column/bar/line chart
-            const config = getConfig(VisualizationTypes.AREA);
+            // Bubble chart is an example, as long as it's not dual axis charts
+            const config = getConfig(VisualizationTypes.BUBBLE);
             expect(config.chart.events.load).toBeFalsy();
         });
     });

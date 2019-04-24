@@ -19,6 +19,7 @@ import {
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
+import { COMBO_SUPPORTED_CHARTS } from "../../src/components/visualizations/chart/chartOptions/comboChartOptions";
 
 const wrapperStyle = { width: 800, height: 400 };
 const primaryMeasure = [MEASURE_1];
@@ -90,20 +91,28 @@ storiesOf("Core components/ComboChart", module)
             </div>,
         ),
     )
-    .add("dual axis with same chart type", () =>
+    .add("dual axis with same chart type and one attribute", () =>
         screenshotWrap(
-            <div style={wrapperStyle}>
-                <ComboChart
-                    projectId="storybook"
-                    primaryMeasures={primaryMeasure}
-                    secondaryMeasures={secondaryMeasure}
-                    viewBy={ATTRIBUTE_1}
-                    config={{
-                        secondaryChartType: VisualizationTypes.COLUMN,
-                    }}
-                    onError={onErrorHandler}
-                />
-            </div>,
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(COMBO_SUPPORTED_CHARTS.length)}>
+                {COMBO_SUPPORTED_CHARTS.map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: chartType,
+                                    secondaryChartType: chartType,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
         ),
     )
     .add("empty secondary measures", () =>
