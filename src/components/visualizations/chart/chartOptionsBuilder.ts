@@ -84,7 +84,7 @@ import { getChartProperties } from "./highcharts/helpers";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
 
-import { getDrillableSeriesWithParentAttribute } from "./chartOptions/extendedStackingChartOptions";
+import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -170,11 +170,6 @@ export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["at
 export interface IValidationResult {
     dataTooLarge: boolean;
     hasNegativeValue: boolean;
-}
-
-export interface IViewByTwoAttributes {
-    parent: Execution.IResultHeaderItem[];
-    children: Execution.IResultHeaderItem[];
 }
 
 export type ITooltipFactory = (point: IPoint, percentageValue?: number) => string;
@@ -1008,11 +1003,11 @@ function mapDrillIntersectionElement(header: ILegacyHeader, afm: AFM.IAfm): IDri
 
 export function getDrillIntersection(
     stackByItem: any,
-    viewByItem: any,
+    viewByItems: any[],
     measures: any[],
     afm: AFM.IAfm,
 ): IDrillEventIntersectionElement[] {
-    const headers = without([...measures, viewByItem, stackByItem], null);
+    const headers = without([...measures, ...viewByItems, stackByItem], null);
 
     return headers.map(header => mapDrillIntersectionElement(header, afm));
 }
@@ -1063,14 +1058,16 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
 export function getDrillableSeries(
     series: any,
     drillableItems: IHeaderPredicate[],
-    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttributes: IUnwrappedAttributeHeadersWithItems[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     executionResponse: Execution.IExecutionResponse,
     afm: AFM.IAfm,
     type: VisType,
 ) {
+    const [viewByChildAttribute, viewByParentAttribute] = viewByAttributes;
+
     const isMultiMeasureWithOnlyMeasures =
-        isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute;
+        isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByChildAttribute;
     const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
     return series.map((seriesItem: any, seriesIndex: number) => {
@@ -1090,7 +1087,7 @@ export function getDrillableSeries(
                         // not leaf -> can't be drillable
                         return pointData;
                     }
-                    const measureIndex = viewByAttribute ? 0 : parseInt(pointData.parent, 10);
+                    const measureIndex = viewByChildAttribute ? 0 : parseInt(pointData.parent, 10);
                     measureHeaders = [measureGroup.items[measureIndex]];
                 } else {
                     // measureIndex is usually seriesIndex,
@@ -1112,14 +1109,22 @@ export function getDrillableSeries(
                     stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
                 }
 
-                const { viewByItemHeader, viewByItem, viewByAttributeHeader } = getViewBy(
-                    viewByAttribute,
-                    viewByIndex,
-                );
                 const { stackByItemHeader, stackByItem, stackByAttributeHeader } = getStackBy(
                     stackByAttribute,
                     stackByIndex,
                 );
+
+                const {
+                    viewByItem: viewByChildItem,
+                    viewByItemHeader: viewByChildItemHeader,
+                    viewByAttributeHeader: viewByChildAttributeHeader,
+                } = getViewBy(viewByChildAttribute, viewByIndex);
+
+                const {
+                    viewByItem: viewByParentItem,
+                    viewByItemHeader: viewByParentItemHeader,
+                    viewByAttributeHeader: viewByParentdAttributeHeader,
+                } = getViewBy(viewByParentAttribute, viewByIndex);
 
                 // point is drillable if a drillableItem matches:
                 //   point's measure,
@@ -1130,8 +1135,10 @@ export function getDrillableSeries(
                 const drillableHooks: IMappingHeader[] = without(
                     [
                         ...measureHeaders,
-                        viewByAttributeHeader,
-                        viewByItemHeader,
+                        viewByChildAttributeHeader,
+                        viewByChildItemHeader,
+                        viewByParentdAttributeHeader,
+                        viewByParentItemHeader,
                         stackByAttributeHeader,
                         stackByItemHeader,
                     ],
@@ -1148,9 +1155,10 @@ export function getDrillableSeries(
 
                 if (drilldown) {
                     const measures = measureHeaders.map(unwrap);
+
                     drillableProps.drillIntersection = getDrillIntersection(
                         stackByItem,
-                        viewByItem,
+                        [viewByChildItem, viewByParentItem],
                         measures,
                         afm,
                     );
@@ -1212,62 +1220,6 @@ function getCategories(
     return [];
 }
 
-/**
- * Transform
- *      viewByTwoAttributes: {
- *          parent: [P1, P1, P2, P2, P3],
- *          children: [C1, C2, C1, C2, C2]
- *      }
- * to
- *      [{
- *          name: P1,
- *          categories: [C1, C2]
- *       }, {
- *          name: P2,
- *          categories: [C1, C2]
- *       }, {
- *          name: P3,
- *          categories: [C2]
- *       }]
- * @param viewByTwoAttributes
- */
-export function getCategoriesForTwoAttributes(
-    viewByTwoAttributes: IViewByTwoAttributes,
-): Array<{
-    name: string;
-    categories: string[];
-}> {
-    const { parent = [], children = [] } = viewByTwoAttributes;
-    const combinedResult = parent.reduce(
-        (
-            result: { [property: string]: string[] },
-            parentAttr: Execution.IResultAttributeHeaderItem,
-            index: number,
-        ) => {
-            const key: string = get(parentAttr, "attributeHeaderItem.name", "");
-            const value: string = get(children[index], "attributeHeaderItem.name", "");
-
-            const childCategories: string[] = result[key] || [];
-
-            return {
-                ...result,
-                [key]: [...childCategories, value], // append value
-            };
-        },
-        {},
-    );
-
-    return Object.keys(combinedResult).map((name: string) => ({
-        name,
-        categories: combinedResult[name],
-    }));
-}
-
-/**
- * Get stacking config which will be set to 'highchart.plotOptions.series'
- * @param stackByAttribute
- * @param options
- */
 function getStackingConfig(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     options: IChartConfig,
@@ -1709,8 +1661,8 @@ export function getChartOptions(
     const isViewByTwoAttributes =
         attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
     let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
+    let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
     let stackByAttribute: IUnwrappedAttributeHeadersWithItems;
-    let viewByTwoAttributes: IViewByTwoAttributes;
 
     if (isTreemap(type)) {
         const {
@@ -1728,6 +1680,14 @@ export function getChartOptions(
         stackByAttribute = findAttributeInDimension(
             dimensions[STACK_BY_DIMENSION_INDEX],
             attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+        );
+    }
+
+    if (isViewByTwoAttributes) {
+        viewByParentAttribute = findAttributeInDimension(
+            dimensions[VIEW_BY_DIMENSION_INDEX],
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+            PARENT_ATTRIBUTE_INDEX,
         );
     }
 
@@ -1757,37 +1717,20 @@ export function getChartOptions(
         colorStrategy,
     );
 
-    let drillableSeries = getDrillableSeries(
+    const drillableSeries = getDrillableSeries(
         seriesWithoutDrillability,
         drillableItems,
-        viewByAttribute,
+        [viewByAttribute, viewByParentAttribute],
         stackByAttribute,
         executionResponse,
         afm,
         type,
     );
 
-    let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
-    if (isViewByTwoAttributes) {
-        viewByTwoAttributes = {
-            parent: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PARENT_ATTRIBUTE_INDEX],
-            children: attributeHeaderItems[VIEW_BY_DIMENSION_INDEX][PRIMARY_ATTRIBUTE_INDEX],
-        };
-
-        viewByParentAttribute = findAttributeInDimension(
-            dimensions[VIEW_BY_DIMENSION_INDEX],
-            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
-            PARENT_ATTRIBUTE_INDEX,
-        );
-        if (viewByParentAttribute) {
-            drillableSeries = getDrillableSeriesWithParentAttribute(drillableSeries, viewByParentAttribute);
-        }
-    }
-
     const series = assignYAxes(drillableSeries, yAxes);
 
-    let categories = viewByTwoAttributes
-        ? getCategoriesForTwoAttributes(viewByTwoAttributes)
+    let categories = viewByParentAttribute
+        ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
     // Pie charts dataPoints are sorted by default by value in descending order

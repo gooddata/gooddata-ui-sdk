@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import { AFM } from "@gooddata/typings";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
     getParentAttributeConfiguration,
@@ -6,15 +7,31 @@ import getOptionalStackingConfiguration, {
     getShowInPercentConfiguration,
     getStackMeasuresConfiguration,
     getYAxisConfiguration,
+    setDrillConfigToXAxis,
     PERCENT_STACK,
     NORMAL_STACK,
 } from "../getOptionalStackingConfiguration";
-import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../..";
+import { IDrillConfig } from "../../../../../interfaces/DrillEvents";
 import { IChartConfig, ISeriesItem } from "../../../../../interfaces/Config";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {
         expect(getOptionalStackingConfiguration({ type: VisualizationTypes.LINE }, undefined)).toEqual({});
+    });
+
+    it("should set drillConfig to X axis", () => {
+        const afm: AFM.IAfm = {
+            attributes: [],
+            measures: [],
+            filters: [],
+        };
+        const drillConfig: IDrillConfig = {
+            afm,
+            onFiredDrillEvent: () => false,
+        };
+        const result = setDrillConfigToXAxis(drillConfig);
+        expect(result.xAxis[0].drillConfig).toEqual(drillConfig);
     });
 
     describe("getParentAttributeConfiguration", () => {
@@ -316,7 +333,7 @@ describe("getOptionalStackingConfiguration", () => {
                 };
                 const chartConfig = {
                     stackMeasuresToPercent: true,
-                    dataLabels: { enabled: true },
+                    dataLabels: { visible: true },
                 };
 
                 const result = getYAxisConfiguration(chartOptions, config, chartConfig);
@@ -349,7 +366,7 @@ describe("getOptionalStackingConfiguration", () => {
                 };
                 const chartConfig = {
                     stackMeasuresToPercent: true,
-                    dataLabels: { enabled: true },
+                    dataLabels: { visible: true },
                 };
 
                 const result = getYAxisConfiguration(chartOptions, config, chartConfig);
@@ -393,7 +410,7 @@ describe("getOptionalStackingConfiguration", () => {
                 };
                 const chartConfig = {
                     stackMeasuresToPercent: true,
-                    dataLabels: { enabled: true },
+                    dataLabels: { visible: true },
                 };
 
                 const result = getYAxisConfiguration(chartOptions, config, chartConfig);

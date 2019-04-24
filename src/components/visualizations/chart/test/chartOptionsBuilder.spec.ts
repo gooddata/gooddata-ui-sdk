@@ -23,14 +23,12 @@ import {
     getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure,
-    getCategoriesForTwoAttributes,
     IPoint,
     IChartOptions,
     IValidationResult,
-    IViewByTwoAttributes,
 } from "../chartOptionsBuilder";
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
-import { generateChartOptions, getTwoAttributes, getMVS } from "./helper";
+import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 
 import * as headerPredicateFactory from "../../../../factory/HeaderPredicateFactory";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
@@ -1591,7 +1589,7 @@ describe("chartOptionsBuilder", () => {
             };
 
             const { afm } = dataSet.executionRequest;
-            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            const drillIntersection = getDrillIntersection(stackByItem, [viewByItem], measures, afm);
             expect(drillIntersection).toEqual([
                 {
                     id: "amountMetric",
@@ -1629,7 +1627,7 @@ describe("chartOptionsBuilder", () => {
             const stackByItem: any = null;
 
             const { afm } = dataSet.executionRequest;
-            const drillIntersection = getDrillIntersection(stackByItem, viewByItem, measures, afm);
+            const drillIntersection = getDrillIntersection(stackByItem, [viewByItem], measures, afm);
             expect(drillIntersection).toEqual([
                 {
                     id: "lostMetric",
@@ -1678,7 +1676,7 @@ describe("chartOptionsBuilder", () => {
             const drillableMeasuresSeriesData = getDrillableSeries(
                 seriesWithoutDrillability,
                 drillableMeasures,
-                viewByAttribute,
+                [viewByAttribute],
                 stackByAttribute,
                 dataSet.executionResponse,
                 afm,
@@ -1754,7 +1752,7 @@ describe("chartOptionsBuilder", () => {
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSetWithNulls.executionResponse,
                     afm,
@@ -1798,7 +1796,7 @@ describe("chartOptionsBuilder", () => {
             const drillableMeasuresSeriesData = getDrillableSeries(
                 seriesWithoutDrillability,
                 drillableMeasures,
-                viewByAttribute,
+                [viewByAttribute],
                 stackByAttribute,
                 dataSet.executionResponse,
                 afm,
@@ -1889,7 +1887,7 @@ describe("chartOptionsBuilder", () => {
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSetWithNulls.executionResponse,
                     afm,
@@ -1934,7 +1932,7 @@ describe("chartOptionsBuilder", () => {
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSet.executionResponse,
                     afm,
@@ -1988,7 +1986,7 @@ describe("chartOptionsBuilder", () => {
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     drillableMeasures,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSet.executionResponse,
                     afm,
@@ -2040,7 +2038,7 @@ describe("chartOptionsBuilder", () => {
                 const noDrillableSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     noDrillableItems,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSet.executionResponse,
                     afm,
@@ -2100,7 +2098,7 @@ describe("chartOptionsBuilder", () => {
                 const twoDrillableMeasuresSeriesData = getDrillableSeries(
                     seriesWithoutDrillability,
                     twoDrillableMeasuresItems,
-                    viewByAttribute,
+                    [viewByAttribute],
                     stackByAttribute,
                     dataSet.executionResponse,
                     afm,
@@ -2381,7 +2379,7 @@ describe("chartOptionsBuilder", () => {
 
     describe("buildTooltipForTwoAttributesFactory", () => {
         const dataSet = fixtures.barChartWith4MetricsAndViewBy2Attribute;
-        const { viewByAttribute, viewByParentAttribute } = getTwoAttributes(dataSet);
+        const { viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dataSet);
         const pointData = {
             y: 1,
             format: "# ###",
@@ -2755,6 +2753,32 @@ describe("chartOptionsBuilder", () => {
         it("should disable grid", () => {
             const chartOptions = generateChartOptions(dataSet, { grid: { enabled: false }, type: "line" });
             expect(chartOptions.grid.enabled).toEqual(false);
+        });
+
+        describe("getCategoriesForTwoAttributes", () => {
+            const chartOptions = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute);
+
+            it("should assign two-level categories", () => {
+                expect(chartOptions.data.categories).toEqual([
+                    {
+                        categories: ["East Coast", "West Coast"],
+                        name: "Direct Sales",
+                    },
+                    {
+                        categories: ["East Coast", "West Coast"],
+                        name: "Inside Sales",
+                    },
+                ]);
+            });
+
+            it('should turn on "isViewByTwoAttributes"', () => {
+                expect(chartOptions.isViewByTwoAttributes).toBeTruthy();
+            });
+
+            it('should turn off "isViewByTwoAttributes"', () => {
+                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+                expect(chartOptions.isViewByTwoAttributes).toBeFalsy();
+            });
         });
 
         describe("in usecase of bar chart with 3 metrics", () => {
@@ -3703,97 +3727,6 @@ describe("chartOptionsBuilder", () => {
                     expect(stacking).toBeFalsy();
                 },
             );
-
-            describe("getCategoriesForTwoAttributes", () => {
-                it("should return categories for two attributes", () => {
-                    const viewByTwoAttributes: IViewByTwoAttributes = {
-                        parent: [
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/4/elements?id=1",
-                                    name: "Direct Sales",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/4/elements?id=1",
-                                    name: "Direct Sales",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/4/elements?id=1",
-                                    name: "Inside Sales",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/4/elements?id=1",
-                                    name: "Inside Sales",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/4/elements?id=1",
-                                    name: "Common Sales",
-                                },
-                            },
-                        ],
-                        children: [
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/5/elements?id=1",
-                                    name: "Won",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/5/elements?id=2",
-                                    name: "Lost",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/5/elements?id=1",
-                                    name: "Won",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/5/elements?id=2",
-                                    name: "Lost",
-                                },
-                            },
-                            {
-                                attributeHeaderItem: {
-                                    uri: "/gdc/md/storybook/obj/5/elements?id=2",
-                                    name: "Lost",
-                                },
-                            },
-                        ],
-                    };
-                    const categories = getCategoriesForTwoAttributes(viewByTwoAttributes);
-                    expect(categories).toEqual([
-                        {
-                            name: "Direct Sales",
-                            categories: ["Won", "Lost"],
-                        },
-                        {
-                            name: "Inside Sales",
-                            categories: ["Won", "Lost"],
-                        },
-                        {
-                            name: "Common Sales",
-                            categories: ["Lost"],
-                        },
-                    ]);
-                });
-
-                it("should return empty category", () => {
-                    const categories = getCategoriesForTwoAttributes({ parent: [], children: [] });
-                    expect(categories).toHaveLength(0);
-                });
-            });
         });
     });
 });

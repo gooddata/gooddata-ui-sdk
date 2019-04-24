@@ -6,7 +6,7 @@ import { injectIntl } from "react-intl";
 import { debounce, isEqual, noop, pick, uniqueId } from "lodash";
 import { Cell, CellProps, Column, Table, ColumnHeaderProps } from "fixed-data-table-2";
 import { AFM, Execution } from "@gooddata/typings";
-
+import { ISeparators } from "@gooddata/numberjs";
 import "nodelist-foreach-polyfill";
 
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
@@ -34,7 +34,7 @@ import { getColumnAlign } from "./utils/column";
 import { subscribeEvents } from "../utils/common";
 import { getCellClassNames, getCellStyleAndFormattedValue } from "../../../helpers/tableCell";
 import { getIntersectionForDrilling, getBackwardCompatibleRowForDrilling } from "./utils/dataTransformation";
-import { cellClick, IDrillConfig } from "../utils/drilldownEventing";
+import { cellClick } from "../utils/drilldownEventing";
 import { createSortItem, getHeaderSortClassName, getNextSortDir } from "./utils/sort";
 import {
     getFooterHeight,
@@ -68,7 +68,7 @@ import {
 import { TotalCell } from "./totals/TotalCell";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import { IIndexedTotalItem, ITotalWithData } from "../../../interfaces/Totals";
-import { ISeparators } from "@gooddata/numberjs";
+import { IDrillConfig } from "../../../interfaces/DrillEvents";
 
 const FULLSCREEN_TOOLTIP_VIEWPORT_THRESHOLD: number = 480;
 const MIN_COLUMN_WIDTH: number = 100;

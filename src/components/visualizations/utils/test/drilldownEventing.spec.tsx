@@ -5,11 +5,10 @@ import {
     getClickableElementNameByChartType,
     chartClick,
     cellClick,
-    IHighchartsChartDrilldownEvent,
-    IHighchartsPointObject,
     createDrillIntersectionElement,
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { IHighchartsChartDrilldownEvent, IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
