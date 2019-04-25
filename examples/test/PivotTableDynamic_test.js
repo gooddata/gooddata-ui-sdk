@@ -285,13 +285,13 @@ async function setupSubTotals(t) {
 }
 
 async function toggleTotal(t, measureHeaderIndex, aggregation, attribute) {
-    const firstColumnHeader = Selector(`.s-table-measure-column-header-cell-${measureHeaderIndex}`).with({
-        visibilityCheck: false,
-    });
-
     // We need to move cursor out of table
     await t.hover(Selector(GROUP_ROWS_PRESET_ENABLED));
     await t.wait(500);
+
+    const firstColumnHeader = Selector(`.s-table-measure-column-header-cell-${measureHeaderIndex}`).with({
+        visibilityCheck: false,
+    });
 
     await t.hover(firstColumnHeader);
     await t.wait(500);
@@ -368,19 +368,14 @@ test("should be able to add and remove subtotals via burgermenu", async t => {
     );
 });
 
-test("should remove subtotals when removing grandtotal of same type", async t => {
+test("should not remove subtotals when removing grandtotal of same type", async t => {
     await setupSubTotals(t);
     await toggleTotal(t, 0, "sum", SUBTOTAL_ATTRIBUTE_LOCATION_NAME);
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
     await toggleTotal(t, 0, "sum");
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
     await toggleTotal(t, 0, "sum");
-    await checkCellValue(
-        t,
-        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
-        "Highland Village",
-        ".s-cell-5-1",
-    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
 });
 
 test("should be able to add and remove native subtotal", async t => {
