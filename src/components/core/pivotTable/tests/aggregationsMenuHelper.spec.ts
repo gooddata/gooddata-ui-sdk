@@ -303,10 +303,6 @@ describe("aggregationsMenuHelper", () => {
     });
 
     describe("getUpdatedColumnTotals", () => {
-        const resultSpect: AFM.IResultSpec = {
-            dimensions: [{ itemIdentifiers: ["a1", "a2", "a3"] }],
-        };
-
         it("should add grandtotal", () => {
             const columnTotals: AFM.ITotalItem[] = [];
 
@@ -321,7 +317,7 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -340,7 +336,7 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -358,7 +354,7 @@ describe("aggregationsMenuHelper", () => {
 
             const expectedColumns: AFM.ITotalItem[] = [];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -377,7 +373,7 @@ describe("aggregationsMenuHelper", () => {
 
             const expectedColumns: AFM.ITotalItem[] = [];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -398,7 +394,7 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -419,7 +415,7 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
@@ -437,35 +433,14 @@ describe("aggregationsMenuHelper", () => {
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
             ];
 
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
-        it("should remove subtotals of same type when removing grandtotal", () => {
+        it("should not remove subtotals of same type when removing grandtotal", () => {
             const columnTotals: AFM.ITotalItem[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
-            ];
-
-            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
-                attributeIdentifier: "a1",
-                include: false,
-                measureIdentifiers: ["m1"],
-                type: "sum",
-            };
-
-            const expectedColumns: AFM.ITotalItem[] = [];
-
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
-
-            expect(result).toEqual(expectedColumns);
-        });
-        it("should not remove subtotals of different type when removing grandtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [
-                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
-                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
-                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "avg" },
-                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "avg" },
             ];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
@@ -476,35 +451,11 @@ describe("aggregationsMenuHelper", () => {
             };
 
             const expectedColumns: AFM.ITotalItem[] = [
-                { attributeIdentifier: "a2", measureIdentifier: "m1", type: "avg" },
-                { attributeIdentifier: "a3", measureIdentifier: "m1", type: "avg" },
-            ];
-
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
-
-            expect(result).toEqual(expectedColumns);
-        });
-        it("should not remove subtotals of different measure when removing grandtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
-                { attributeIdentifier: "a2", measureIdentifier: "m2", type: "sum" },
-                { attributeIdentifier: "a3", measureIdentifier: "m2", type: "sum" },
             ];
 
-            const menuAggregationClickConfig: IMenuAggregationClickConfig = {
-                attributeIdentifier: "a1",
-                include: false,
-                measureIdentifiers: ["m1"],
-                type: "sum",
-            };
-
-            const expectedColumns: AFM.ITotalItem[] = [
-                { attributeIdentifier: "a2", measureIdentifier: "m2", type: "sum" },
-                { attributeIdentifier: "a3", measureIdentifier: "m2", type: "sum" },
-            ];
-
-            const result = getUpdatedColumnTotals(columnTotals, resultSpect, menuAggregationClickConfig);
+            const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });

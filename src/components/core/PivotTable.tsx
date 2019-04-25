@@ -666,11 +666,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     public onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-        const newColumnTotals = getUpdatedColumnTotals(
-            this.getColumnTotals(),
-            this.props.resultSpec,
-            menuAggregationClickConfig,
-        );
+        const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
 
         this.props.pushData({
             properties: {
