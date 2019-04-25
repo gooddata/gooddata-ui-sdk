@@ -64,7 +64,7 @@
     "visualizations.legend.text.line": "Ligne",
     "visualizations.legend.text.area": "Zone",
     "visualizations.legend.text.combo": "{0} ({1})",
-    "visualizations.menu.aggregations": "Agrégations",
+    "visualizations.menu.aggregations": "Agréger",
     "visualizations.menu.aggregations.rows": "Lignes",
     "visualizations.menu.aggregations.all-rows": "de toutes les lignes",
     "visualizations.menu.aggregations.within-attribute": "à l'intérieur de {attributeName}"
