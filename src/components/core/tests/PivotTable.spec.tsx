@@ -25,6 +25,7 @@ import { LoadingComponent } from "../../simple/LoadingComponent";
 import { executionToAGGridAdapter, getParsedFields } from "../../../helpers/agGrid";
 import { ICellRendererParams } from "ag-grid";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
+import * as stickyGroupHandler from "../pivotTable/stickyGroupHandler";
 
 const intl = createIntlMock();
 
@@ -42,6 +43,12 @@ describe("PivotTable", () => {
                 {...customProps}
             />,
         );
+    }
+
+    function getTableInstance() {
+        const wrapper = renderComponent();
+        const table = wrapper.find(PivotTableInner);
+        return table.instance() as any;
     }
 
     it("should render PivotTableInner", () => {
@@ -292,6 +299,52 @@ describe("PivotTable", () => {
 
             expect(createProvider).toHaveBeenCalledTimes(2);
             expect(createProvider).toHaveBeenNthCalledWith(2, false);
+        });
+    });
+
+    describe("isTableHidden", () => {
+        it("should return true if columnDefs are empty", () => {
+            const table = getTableInstance();
+            expect(table.isTableHidden()).toEqual(true);
+        });
+
+        it("should return false if columnDefs are not empty", () => {
+            const table = getTableInstance();
+            table.setState({ columnDefs: [{}] });
+            expect(table.isTableHidden()).toEqual(false);
+        });
+    });
+
+    describe("onModelUpdated", () => {
+        let updateStickyHeadersPosition: jest.SpyInstance;
+
+        beforeEach(() => {
+            updateStickyHeadersPosition = jest.spyOn(stickyGroupHandler, "updateStickyHeadersPosition");
+            updateStickyHeadersPosition.mockImplementation(noop);
+        });
+
+        afterEach(() => {
+            updateStickyHeadersPosition.mockRestore();
+        });
+
+        it("should not update sticky row when table is hidden", () => {
+            const tableInstance = getTableInstance();
+            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+
+            tableInstance.isTableHidden = () => true;
+            tableInstance.onModelUpdated();
+            expect(updateStickyRow).toHaveBeenCalledTimes(0);
+            expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(0);
+        });
+
+        it("should update sticky row when table is visible", () => {
+            const tableInstance = getTableInstance();
+            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+
+            tableInstance.isTableHidden = () => false;
+            tableInstance.onModelUpdated();
+            expect(updateStickyRow).toHaveBeenCalledTimes(1);
+            expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(1);
         });
     });
 });
