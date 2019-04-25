@@ -64,7 +64,7 @@
     "visualizations.legend.text.line": "Linha",
     "visualizations.legend.text.area": "Área",
     "visualizations.legend.text.combo": "{0} ({1})",
-    "visualizations.menu.aggregations": "Agregações",
+    "visualizations.menu.aggregations": "Agregar",
     "visualizations.menu.aggregations.rows": "Linhas",
     "visualizations.menu.aggregations.all-rows": "de todas as linhas",
     "visualizations.menu.aggregations.within-attribute": "em {attributeName}"
