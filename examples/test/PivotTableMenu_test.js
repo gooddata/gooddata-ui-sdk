@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm, waitForPivotTableStopLoading } from "./utils/helpers";
+import { checkCellValue, loginUsingLoginForm, waitForPivotTableStopLoading } from "./utils/helpers";
 
 const totalValues = {
     sum: ["Sum", "", "", "$1,566,007", "$150,709"],
@@ -26,23 +26,51 @@ const getMenu = cell => {
     return cell.find(".s-table-header-menu");
 };
 
-const clickOnMenuAggregationItem = async (t, cell, aggregationItemClass) => {
+const clickOnMenuAggregationItem = async (t, cell, aggregationItemClass, attribute) => {
     const menu = getMenu(cell);
 
     await t.hover(cell);
     await t.click(menu);
 
     const sumTotal = Selector(aggregationItemClass).find(".s-menu-aggregation-inner");
-    await t.click(sumTotal);
+
+    if (attribute) {
+        await t.hover(sumTotal);
+        await t.wait(1000);
+        const submenu = Selector(".s-table-header-submenu-content");
+        await t.click(submenu.find(`.s-aggregation-item-${attribute}`));
+    } else {
+        await t.click(sumTotal);
+    }
+
     await waitForPivotTableStopLoading(t);
 };
+
+const SUBTOTAL_ATTRIBUTE_LOCATION_NAME = "label-restaurantlocation-locationname";
+const PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = ".s-pivot-table-measuresColumnAndRowAttributes";
+const DRILLING_PRESET_MEASURE_FRANCHISE_FEES = ".s-drilling-preset-measure";
+const DRILLING_PRESET_ATTRIBUTE_MENU_CATEGORY = ".s-drilling-preset-attributeMenuCategory";
+const DRILLING_PRESET_ATTRIBUTE_VALUE_CALIFORNIA = ".s-drilling-preset-attributeValueCalifornia";
+const DRILLING_PRESET_ATTRIBUTE_VALUE_JANUARY = ".s-drilling-preset-attributeValueJanuary";
+
+// TODO: Delete once drilling on subtotals has been disabled
+async function disableDrilling(t) {
+    await t.click(Selector(DRILLING_PRESET_MEASURE_FRANCHISE_FEES));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_MENU_CATEGORY));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_VALUE_CALIFORNIA));
+    await t.click(Selector(DRILLING_PRESET_ATTRIBUTE_VALUE_JANUARY));
+}
 
 fixture("Pivot Table Menu")
     .page(config.url)
     .beforeEach(async t => {
         await loginUsingLoginForm(`${config.url}/hidden/pivot-table-dynamic`)(t);
 
-        await t.click(Selector(".s-total-preset-aggregations"));
+        await t.click(Selector(".s-total-preset-aggregationsWithSubTotals"));
+
+        await disableDrilling(t);
+
+        await t.click(Selector(".s-group-rows-preset-activeGrouping"));
 
         // Cells in ag-grid are windowed (only cells that are in the ag-grid
         // viewport are visible). Since we need to click on cells that are not
@@ -158,42 +186,42 @@ test("should add totals for group and then turn them all off with individual mea
     await t.expect(getPivotTableFooterCell(0, 0).exists).eql(false);
 });
 
-// test("should turn on/off multiple totals", async t => {
-//     const measureCell = getMeasureCell(0);
-//     const measureGroup = getMeasureGroupCell(0);
-//
-//     await clickOnMenuAggregationItem(t, measureCell, ".s-menu-aggregation-sum");
-//     await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
-//     await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
-//     await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
-//     await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
-//
-//     await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-max");
-//     await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
-//     await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
-//     await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
-//     await t.expect(getPivotTableFooterCell(1, 0).textContent).eql(totalValues.max[0]);
-//     await t.expect(getPivotTableFooterCell(1, 3).textContent).eql(totalValues.max[3]);
-//     await t.expect(getPivotTableFooterCell(1, 4).textContent).eql(totalValues.max[4]);
-//     await t.expect(getPivotTableFooterCell(2, 0).exists).eql(false);
-//
-//     await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-sum");
-//     await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
-//     await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
-//     await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.sum[4]);
-//     await t.expect(getPivotTableFooterCell(1, 0).textContent).eql(totalValues.max[0]);
-//     await t.expect(getPivotTableFooterCell(1, 3).textContent).eql(totalValues.max[3]);
-//     await t.expect(getPivotTableFooterCell(1, 4).textContent).eql(totalValues.max[4]);
-//
-//     await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-sum");
-//     await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.max[0]);
-//     await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.max[3]);
-//     await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.max[4]);
-//     await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
-//
-//     await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-max");
-//     await t.expect(getPivotTableFooterCell(0, 0).exists).eql(false);
-// });
+test("should turn on/off multiple totals", async t => {
+    const measureCell = getMeasureCell(0);
+    const measureGroup = getMeasureGroupCell(0);
+
+    await clickOnMenuAggregationItem(t, measureCell, ".s-menu-aggregation-sum");
+    await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
+    await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
+    await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
+    await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
+
+    await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-max");
+    await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
+    await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
+    await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.empty);
+    await t.expect(getPivotTableFooterCell(1, 0).textContent).eql(totalValues.max[0]);
+    await t.expect(getPivotTableFooterCell(1, 3).textContent).eql(totalValues.max[3]);
+    await t.expect(getPivotTableFooterCell(1, 4).textContent).eql(totalValues.max[4]);
+    await t.expect(getPivotTableFooterCell(2, 0).exists).eql(false);
+
+    await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-sum");
+    await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.sum[0]);
+    await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.sum[3]);
+    await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.sum[4]);
+    await t.expect(getPivotTableFooterCell(1, 0).textContent).eql(totalValues.max[0]);
+    await t.expect(getPivotTableFooterCell(1, 3).textContent).eql(totalValues.max[3]);
+    await t.expect(getPivotTableFooterCell(1, 4).textContent).eql(totalValues.max[4]);
+
+    await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-sum");
+    await t.expect(getPivotTableFooterCell(0, 0).textContent).eql(totalValues.max[0]);
+    await t.expect(getPivotTableFooterCell(0, 3).textContent).eql(totalValues.max[3]);
+    await t.expect(getPivotTableFooterCell(0, 4).textContent).eql(totalValues.max[4]);
+    await t.expect(getPivotTableFooterCell(1, 0).exists).eql(false);
+
+    await clickOnMenuAggregationItem(t, measureGroup, ".s-menu-aggregation-max");
+    await t.expect(getPivotTableFooterCell(0, 0).exists).eql(false);
+});
 
 test("hovering over menu does not show sorting icon", async t => {
     const measureCell = getMeasureCell(0);
@@ -205,4 +233,126 @@ test("hovering over menu does not show sorting icon", async t => {
 
     await t.hover(menuToggler);
     await t.expect(sortArrow.exists).eql(false);
+});
+
+test("should be able to add and remove subtotals via burgermenu", async t => {
+    const measureCell = getMeasureCell(0);
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-sum",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-sum",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should not remove subtotals when removing grandtotal of same type", async t => {
+    const measureCell = getMeasureCell(0);
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-sum",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await clickOnMenuAggregationItem(t, measureCell, ".s-menu-aggregation-sum");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await clickOnMenuAggregationItem(t, measureCell, ".s-menu-aggregation-sum");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+});
+
+test("should be able to add and remove native subtotal", async t => {
+    const measureCell = getMeasureCell(0);
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-nat",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Rollup (Total)", ".s-cell-5-1");
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-nat",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should be able to add and remove multiple subtotals", async t => {
+    const measureCell = getMeasureCell(0);
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-sum",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-max",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Sum", ".s-cell-5-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-6-1");
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-sum",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-max",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(
+        t,
+        PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES,
+        "Highland Village",
+        ".s-cell-5-1",
+    );
+});
+
+test("should show subtotal rows in particular order no matter the added subtotals order", async t => {
+    const measureCell = getMeasureCell(0);
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-med",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-max",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await clickOnMenuAggregationItem(
+        t,
+        measureCell,
+        ".s-menu-aggregation-avg",
+        SUBTOTAL_ATTRIBUTE_LOCATION_NAME,
+    );
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Max", ".s-cell-5-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Avg", ".s-cell-6-1");
+    await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Median", ".s-cell-7-1");
 });
