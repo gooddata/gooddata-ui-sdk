@@ -23,6 +23,12 @@ const configuration = {
             }
         },
         'Core components/ComboChart': {
+            'dual axis with different chart type and NO attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'dual axis with same chart type and NO attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
             'dual axis with same chart type and one attribute': {
                 readySelector: '.screenshot-ready-wrapper-done'
             },

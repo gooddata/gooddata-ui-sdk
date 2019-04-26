@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import merge = require("lodash/merge");
 import * as invariant from "invariant";
@@ -48,7 +48,7 @@ export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: a
     return merge(
         {},
         getCommonConfiguration(chartOptions, drillConfig),
-        getConfigurationByType(),
+        getConfigurationByType.call(null, config),
         getCustomizedConfiguration(chartOptions, config, drillConfig),
     );
 }

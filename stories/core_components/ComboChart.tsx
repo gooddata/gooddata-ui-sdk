@@ -27,6 +27,7 @@ const secondaryMeasure = [MEASURE_2];
 const columnMeasure = [MEASURE_3];
 const lineMeasure = [MEASURE_4];
 const arithmeticMeasures = [ARITHMETIC_MEASURE_SIMPLE_OPERANDS, ARITHMETIC_MEASURE_USING_ARITHMETIC];
+const { COLUMN, LINE, AREA } = VisualizationTypes;
 
 storiesOf("Core components/ComboChart", module)
     .add("dual axis with one column measure, one line measure, one attribute", () =>
@@ -53,7 +54,7 @@ storiesOf("Core components/ComboChart", module)
                     secondaryMeasures={secondaryMeasure}
                     viewBy={ATTRIBUTE_1}
                     config={{
-                        secondaryChartType: VisualizationTypes.AREA,
+                        secondaryChartType: AREA,
                     }}
                     onError={onErrorHandler}
                 />
@@ -69,8 +70,8 @@ storiesOf("Core components/ComboChart", module)
                     secondaryMeasures={secondaryMeasure}
                     viewBy={ATTRIBUTE_1}
                     config={{
-                        primaryChartType: VisualizationTypes.LINE,
-                        secondaryChartType: VisualizationTypes.AREA,
+                        primaryChartType: LINE,
+                        secondaryChartType: AREA,
                     }}
                     onError={onErrorHandler}
                 />
@@ -89,6 +90,52 @@ storiesOf("Core components/ComboChart", module)
                     onError={onErrorHandler}
                 />
             </div>,
+        ),
+    )
+    .add("dual axis with different chart type and NO attribute", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+                {[[COLUMN, LINE], [COLUMN, AREA], [LINE, AREA]].map((types, index) => (
+                    <div key={index}>
+                        <div className="storybook-title">{`${types[0]} - ${types[1]}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                config={{
+                                    primaryChartType: types[0],
+                                    secondaryChartType: types[1],
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("dual axis with same chart type and NO attribute", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(COMBO_SUPPORTED_CHARTS.length)}>
+                {COMBO_SUPPORTED_CHARTS.map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                config={{
+                                    primaryChartType: chartType,
+                                    secondaryChartType: chartType,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
         ),
     )
     .add("dual axis with same chart type and one attribute", () =>
