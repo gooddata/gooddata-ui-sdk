@@ -7,7 +7,7 @@ import { VIEW, STACK, SEGMENT, TREND, ATTRIBUTE, COLUMNS, MEASURES } from "../co
 import { convertBucketsToAFM } from "../helpers/conversion";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../components/visualizations/chart/constants";
 
-function findBucketByLocalIdentifier(buckets: VisualizationObject.IBucket[], bucketName: string) {
+export function findBucketByLocalIdentifier(buckets: VisualizationObject.IBucket[], bucketName: string) {
     return (buckets || []).find(bucket => bucket.localIdentifier === bucketName);
 }
 

@@ -6,7 +6,7 @@ import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
-import { getSanitizedStackingConfig } from "../../../helpers/optionalStacking/common";
+import { getSanitizedStackingConfigFromAfm } from "../../../helpers/optionalStacking/common";
 import { IChartConfig } from "../../../interfaces/Config";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../../interfaces/Events";
@@ -205,6 +205,6 @@ export default class ChartTransformation extends React.Component<
             attributeHeaderItems,
         );
         const hasStackByAttribute = !isEmpty(stackByAttribute);
-        return getSanitizedStackingConfig(afm, config, hasStackByAttribute);
+        return getSanitizedStackingConfigFromAfm(afm, config, hasStackByAttribute);
     }
 }
