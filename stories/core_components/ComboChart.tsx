@@ -225,6 +225,115 @@ storiesOf("Core components/ComboChart", module)
             </ScreenshotReadyWrapper>,
         ),
     )
+    .add("stack primary measures", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                {[COLUMN, AREA].map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - line`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={[MEASURE_1, MEASURE_3]}
+                                secondaryMeasures={secondaryMeasure}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: chartType,
+                                    stackMeasures: true,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("stack primary measures to percent", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                {[COLUMN, AREA].map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - line`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={[MEASURE_1, MEASURE_3]}
+                                secondaryMeasures={secondaryMeasure}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: chartType,
+                                    stackMeasuresToPercent: true,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("discard stacking measures for line chart and all measures on secondary axis", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                {[COLUMN, AREA].map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`line - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={[MEASURE_1, MEASURE_2]}
+                                secondaryMeasures={[MEASURE_3, ARITHMETIC_MEASURE_SIMPLE_OPERANDS]}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: LINE,
+                                    secondaryChartType: chartType,
+                                    stackMeasures: true,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("empty primary measure & discard stacking", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                <div>
+                    <div className="storybook-title">Discard stacking measures</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <ComboChart
+                            projectId="storybook"
+                            secondaryMeasures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            config={{
+                                secondaryChartType: COLUMN,
+                                stackMeasures: true,
+                            }}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <div className="storybook-title">Discard stacking measures to percent</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <ComboChart
+                            projectId="storybook"
+                            secondaryMeasures={[MEASURE_1, MEASURE_2]}
+                            viewBy={ATTRIBUTE_1}
+                            onError={onErrorHandler}
+                            config={{
+                                secondaryChartType: COLUMN,
+                                stackMeasuresToPercent: true,
+                            }}
+                        />
+                    </div>
+                </div>
+            </ScreenshotReadyWrapper>,
+        ),
+    )
     .add("custom colors", () =>
         screenshotWrap(
             <div style={wrapperStyle}>

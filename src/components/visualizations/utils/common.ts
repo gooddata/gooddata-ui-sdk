@@ -6,6 +6,7 @@ import { Observable } from "rxjs/Rx";
 import { numberFormat } from "@gooddata/numberjs";
 
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { IAxis } from "../../../interfaces/Config";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
@@ -70,6 +71,7 @@ export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
+export const isPrimaryYAxis = (yAxis: IAxis) => !yAxis.opposite;
 export const stringifyChartTypes = () =>
     Object.keys(VisualizationTypes)
         .reduce((acc, type) => {
