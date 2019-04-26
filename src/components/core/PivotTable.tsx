@@ -94,6 +94,7 @@ import {
     initStickyHeaders,
     updateStickyHeadersPosition,
     updateStickyHeaders,
+    stickyRowExists,
 } from "./pivotTable/stickyGroupHandler";
 import TotalsUtils, {
     AVAILABLE_TOTALS as renderedTotalTypesOrder,
@@ -577,7 +578,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     public onModelUpdated = () => {
-        if (this.isTableHidden()) {
+        if (!stickyRowExists(this.gridApi)) {
             return;
         }
         if (this.props.groupRows) {
