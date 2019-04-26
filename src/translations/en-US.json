@@ -326,7 +326,7 @@
     },
     "visualizations.menu.aggregations": {
         "value": "Aggregate",
-        "comment": "Heading showed above menu listing possible aggregations (totals).",
+        "comment": "Heading showed above menu listing possible aggregations (totals). Use imperative.",
         "limit": 50
     },
     "visualizations.menu.aggregations.rows": {
