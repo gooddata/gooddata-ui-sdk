@@ -26,6 +26,7 @@ import { executionToAGGridAdapter, getParsedFields } from "../../../helpers/agGr
 import { ICellRendererParams } from "ag-grid";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
 import * as stickyGroupHandler from "../pivotTable/stickyGroupHandler";
+import agGridApiWrapper from "../pivotTable/agGridApiWrapper";
 
 const intl = createIntlMock();
 
@@ -317,31 +318,34 @@ describe("PivotTable", () => {
 
     describe("onModelUpdated", () => {
         let updateStickyHeadersPosition: jest.SpyInstance;
+        let getPinnedTopRowElement: jest.SpyInstance;
 
         beforeEach(() => {
+            getPinnedTopRowElement = jest.spyOn(agGridApiWrapper, "getPinnedTopRowElement");
             updateStickyHeadersPosition = jest.spyOn(stickyGroupHandler, "updateStickyHeadersPosition");
             updateStickyHeadersPosition.mockImplementation(noop);
         });
 
         afterEach(() => {
             updateStickyHeadersPosition.mockRestore();
+            getPinnedTopRowElement.mockRestore();
         });
 
-        it("should not update sticky row when table is hidden", () => {
+        it("should not update sticky row when sticky element does not exist", () => {
             const tableInstance = getTableInstance();
             const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+            getPinnedTopRowElement.mockImplementation(() => undefined);
 
-            tableInstance.isTableHidden = () => true;
             tableInstance.onModelUpdated();
             expect(updateStickyRow).toHaveBeenCalledTimes(0);
             expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(0);
         });
 
-        it("should update sticky row when table is visible", () => {
+        it("should update sticky row when sticky element exists", () => {
             const tableInstance = getTableInstance();
             const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+            getPinnedTopRowElement.mockImplementation(() => ({}));
 
-            tableInstance.isTableHidden = () => false;
             tableInstance.onModelUpdated();
             expect(updateStickyRow).toHaveBeenCalledTimes(1);
             expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(1);

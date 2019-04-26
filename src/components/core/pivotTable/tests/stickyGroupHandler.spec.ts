@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { updateStickyHeaders, updateStickyHeadersPosition } from "../stickyGroupHandler";
+import { stickyRowExists, updateStickyHeaders, updateStickyHeadersPosition } from "../stickyGroupHandler";
 import { IGroupingProvider } from "../GroupingProvider";
 import { GridApi } from "ag-grid";
 
@@ -341,6 +341,21 @@ describe("updateStickyHeaders", () => {
         });
         it("should set padding-right style", () => {
             expect(apiWrapper.setPinnedTopRowStyle).toHaveBeenNthCalledWith(2, api, "padding-right", "0px");
+        });
+    });
+
+    describe("stickyRowExists", () => {
+        const api = getFakeGridApi();
+
+        it("should return true if sticky row exists", () => {
+            const apiWrapper = getFakeGridApiWrapper();
+            apiWrapper.getPinnedTopRowElement.mockReturnValue({});
+            expect(stickyRowExists(api, apiWrapper)).toEqual(true);
+        });
+        it("should return false if sticky row doesn't exit", () => {
+            const apiWrapper = getFakeGridApiWrapper();
+            apiWrapper.getPinnedTopRowElement.mockReturnValue(undefined);
+            expect(stickyRowExists(api, apiWrapper)).toEqual(false);
         });
     });
 });
