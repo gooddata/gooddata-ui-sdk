@@ -274,6 +274,12 @@ export const pivotTableWithColumnRowAttributesAndTotals: any = {
         .executionResult,
 };
 
+export const pivotTableWithSubtotals: any = {
+    executionRequest: require("../test_data/pivot_table_with_subtotals_request.json").execution,
+    executionResponse: require("../test_data/pivot_table_with_subtotals_response.json").executionResponse,
+    executionResult: require("../test_data/pivot_table_with_subtotals_result.json").executionResult,
+};
+
 export const comboWithTwoMeasuresAndViewByAttribute = barChartWith2MetricsAndViewByAttribute;
 export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
     buckets: require("../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json").buckets,
@@ -580,6 +586,7 @@ export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
 export default {
     pivotTableWithColumnAndRowAttributes,
     pivotTableWithColumnRowAttributesAndTotals,
+    pivotTableWithSubtotals,
     barChartWithSingleMeasureAndNoAttributes,
     barChartWithoutAttributes,
     barChartWith3MetricsAndViewByAttribute,

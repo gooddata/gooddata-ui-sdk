@@ -145,11 +145,22 @@ $header-cell-resize-width: 20px;
         border-bottom-color: transparent;
         color: $gd-color-dark;
         font-weight: bold;
-        background-color: #f7f8f9;
+        background-color: #e7ebef;
 
         &,
         &.ag-cell-focus {
             border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+        }
+    }
+
+    .gd-table-row-subtotal {
+        font-weight: bold;
+        border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+        &-even {
+            background-color: #eff2f4;
+        }
+        &-odd {
+            background-color: #f7f8f9;
         }
     }
 

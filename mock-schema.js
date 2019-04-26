@@ -1,9 +1,18 @@
+// (C) 2007-2019 GoodData Corporation
+
 const heatmapAfmExecutions = [{
         execution: require('./stories/test_data/heat_map_with_58_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_58_rows_mock_result.json')
     }, {
         execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+    }];
+
+const pivotTableAfmExecutions = [
+    {
+        execution: require("./stories/test_data/pivot_table_with_subtotals_request.json"),
+        executionResponse: require("./stories/test_data/pivot_table_with_subtotals_response.json"),
+        executionResult: require("./stories/test_data/pivot_table_with_subtotals_result.json"),
     }];
 
 const getBaseProjectSchema = (title, identifier) => {
@@ -2184,7 +2193,8 @@ const getBaseProjectSchema = (title, identifier) => {
                     }
                 }
             },
-            ...heatmapAfmExecutions
+            ...heatmapAfmExecutions,
+            ...pivotTableAfmExecutions
         ],
         visualizationClasses: [{
             title: 'Table',

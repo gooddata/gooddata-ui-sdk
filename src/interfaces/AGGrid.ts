@@ -6,6 +6,7 @@ export interface IGridRow {
     headerItemMap: {
         [key: string]: IMappingHeader;
     };
+    subtotalStyle?: string;
     [key: string]: any;
 }
 

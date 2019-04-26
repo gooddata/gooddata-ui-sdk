@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { PivotTable } from "../../src";
+import { Model, PivotTable } from "../../src";
 import { onErrorHandler } from "../mocks";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
@@ -24,6 +24,7 @@ import {
     ATTRIBUTE_COUNTRY,
     GRAND_TOTALS_WITH_SUBTOTALS,
 } from "../data/componentProps";
+import { VisualizationInput } from "@gooddata/typings";
 
 function logTotalsChange(data: any) {
     if (data.properties && data.properties.totals) {
@@ -372,4 +373,64 @@ storiesOf("Core components/PivotTable", module)
                 />
             </div>,
         ),
-    );
+    )
+    .add("subtotals - all labels", () => {
+        const measures = [
+            Model.measure("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2352").localIdentifier("m1"),
+        ];
+
+        const attributes = [
+            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2188").localIdentifier("a1"),
+            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2197").localIdentifier("a2"),
+            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211").localIdentifier("a3"),
+            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2005").localIdentifier("a4"),
+            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205").localIdentifier("a5"),
+        ];
+
+        const totals: VisualizationInput.ITotal[] = [
+            {
+                measureIdentifier: "m1",
+                type: "min",
+                attributeIdentifier: "a1",
+            },
+            {
+                measureIdentifier: "m1",
+                type: "sum",
+                attributeIdentifier: "a2",
+            },
+            {
+                measureIdentifier: "m1",
+                type: "max",
+                attributeIdentifier: "a2",
+            },
+            {
+                measureIdentifier: "m1",
+                type: "sum",
+                attributeIdentifier: "a3",
+            },
+            {
+                measureIdentifier: "m1",
+                type: "max",
+                attributeIdentifier: "a3",
+            },
+            {
+                measureIdentifier: "m1",
+                type: "avg",
+                attributeIdentifier: "a5",
+            },
+        ];
+
+        return screenshotWrap(
+            <div style={{ ...wrapperStyle, height: 250 }} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={measures}
+                    rows={attributes}
+                    totals={totals}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        );
+    });
