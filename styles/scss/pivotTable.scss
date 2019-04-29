@@ -394,6 +394,7 @@ $header-cell-resize-width: 20px;
             border-top-color: white;
 
             &.gd-hidden-sticky-column {
+                border-top-color: transparent;
                 background-color: transparent;
                 color: transparent;
             }
