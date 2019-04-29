@@ -67,5 +67,5 @@
     "visualizations.menu.aggregations": "Agregar",
     "visualizations.menu.aggregations.rows": "Linhas",
     "visualizations.menu.aggregations.all-rows": "de todas as linhas",
-    "visualizations.menu.aggregations.within-attribute": "em {attributeName}"
+    "visualizations.menu.aggregations.within-attribute": "dentro de {attributeName}"
 }

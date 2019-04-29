@@ -67,5 +67,5 @@
     "visualizations.menu.aggregations": "Total",
     "visualizations.menu.aggregations.rows": "Filas",
     "visualizations.menu.aggregations.all-rows": "de todas las filas",
-    "visualizations.menu.aggregations.within-attribute": "en {attributeName}"
+    "visualizations.menu.aggregations.within-attribute": "dentro de {attributeName}"
 }
