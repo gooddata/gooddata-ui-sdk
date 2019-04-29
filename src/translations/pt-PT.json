@@ -65,7 +65,7 @@
     "visualizations.legend.text.area": "Área",
     "visualizations.legend.text.combo": "{0} ({1})",
     "visualizations.menu.aggregations": "Agregar",
-    "visualizations.menu.aggregations.rows": "Filas",
+    "visualizations.menu.aggregations.rows": "Linhas",
     "visualizations.menu.aggregations.all-rows": "de todas as linhas",
-    "visualizations.menu.aggregations.within-attribute": "em {attributeName}"
+    "visualizations.menu.aggregations.within-attribute": "dentro de {attributeName}"
 }
