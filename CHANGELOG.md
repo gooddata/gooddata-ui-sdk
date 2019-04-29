@@ -25,6 +25,14 @@ The REST API versions in the table are just for your information as the values a
 
 - Pivot table prop `groupRows` is true by default, thus grouping is enabled by default (BB-1385)
 
+## 6.3.1
+
+April 29, 2019
+
+### Changed
+
+- Use the updated @gooddata/goodstrap library to fix the error that occurs when installing dependencies on MS Windows machines ([commit](https://github.com/gooddata/gooddata-react-components/pull/929/commits/a6e4ab0acf91bb4318d8ffb2c394beae14adb125))
+
 ## 6.3.0
 
 April 8, 2019
