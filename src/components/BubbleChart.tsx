@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 
 import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
 import { getResultSpec } from "../helpers/resultSpec";
@@ -57,13 +57,10 @@ export function BubbleChart(props: IBubbleChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IBubbleChartNonBucketProps, IBubbleChartProps>(props, [
-        "xAxisMeasure",
-        "yAxisMeasure",
-        "size",
-        "viewBy",
-        "filters",
-    ]);
+    const newProps: IBubbleChartNonBucketProps = omit<IBubbleChartProps, keyof IBubbleChartBucketProps>(
+        props,
+        ["xAxisMeasure", "yAxisMeasure", "size", "viewBy", "filters", "sortBy"],
+    );
 
     newProps.config = {
         ...newProps.config,

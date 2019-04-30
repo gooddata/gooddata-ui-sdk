@@ -1,4 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
+import * as React from "react";
+
 import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
 export { IDataSourceProviderProps };
@@ -12,8 +14,6 @@ import { generateDefaultDimensions } from "../../helpers/dimensions";
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const AreaChart = dataSourceProvider<ICommonChartProps>(
-    CoreAreaChart,
-    generateDefaultDimensions,
-    "AreaChart",
-);
+export const AreaChart: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider<
+    ICommonChartProps
+>(CoreAreaChart, generateDefaultDimensions, "AreaChart");

@@ -47,9 +47,9 @@ import { ScatterPlot } from "./components/ScatterPlot";
 import { ComboChart } from "./components/ComboChart";
 import { FunnelChart } from "./components/FunnelChart";
 import { Heatmap } from "./components/Heatmap";
-import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
-// tslint:disable-next-line:no-duplicate-imports
 import * as ChartConfiguration from "./interfaces/Config";
+// tslint:disable-next-line:no-duplicate-imports
+import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
 import Chart from "./components/visualizations/chart/Chart";
 import ChartTransformation from "./components/visualizations/chart/ChartTransformation";
 import { RuntimeError } from "./errors/RuntimeError";
@@ -58,13 +58,14 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/Ov
 import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
+import { ICoreComponents } from "./interfaces/CoreComponents";
 
 /**
  * CoreComponents
  * A collection of BaseChart, Headline, Table, ScatterPlot, FunnelChart
  * @internal
  */
-const CoreComponents = {
+const CoreComponents: ICoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
     Table: CoreTable,

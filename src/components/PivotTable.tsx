@@ -3,8 +3,8 @@ import * as React from "react";
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 import omit = require("lodash/omit");
 import noop = require("lodash/noop");
-import { Subtract } from "utility-types";
 
+import { Subtract } from "../typings/subtract";
 import { PivotTable as CorePivotTable } from "./core/PivotTable";
 import { dataSourceProvider } from "./afm/DataSourceProvider";
 import { ICommonChartProps } from "./core/base/BaseChart";
@@ -78,14 +78,10 @@ export class PivotTable extends React.Component<IPivotTableProps> {
         hasDuplicateIdentifiers(buckets);
 
         // PivotTable component still has 'rows' prop even though this is translated into ATTRIBUTE bucket
-        const newProps = omit<IPivotTableProps, IPivotTableNonBucketProps>(this.props, [
-            "measures",
-            "rows",
-            "columns",
-            "totals",
-            "filters",
-            "sortBy",
-        ]);
+        const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
+            this.props,
+            ["measures", "rows", "columns", "totals", "filters", "sortBy"],
+        );
 
         return <DataSourceProvider {...newProps} afm={afm} resultSpec={resultSpec} />;
     }

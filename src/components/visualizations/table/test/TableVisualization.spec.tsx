@@ -13,6 +13,7 @@ import {
     DEFAULT_FOOTER_ROW_HEIGHT,
     ITableVisualizationProps,
     ITableVisualizationState,
+    IContainerProps,
 } from "../TableVisualization";
 import { TableRow } from "../../../../interfaces/Table";
 import { IMappingHeader } from "../../../../interfaces/MappingHeader";
@@ -51,13 +52,15 @@ function createPortalWrapper(tableWrapper: ReactWrapper<any>): ReactWrapper<any>
     return new ReactWrapper(wrapWithIntl(portalInstance.props.children));
 }
 
-const WrappedTable: React.ComponentClass<ITableVisualizationProps> = withIntl(TableVisualization);
+const WrappedTable: React.ComponentClass<Partial<ITableVisualizationProps & IContainerProps>> = withIntl(
+    TableVisualization,
+);
 
 describe("Table", () => {
     function renderTable(
         customProps: Partial<ITableVisualizationProps> = {},
     ): ReactWrapper<ITableVisualizationProps & InjectedIntlProps, any> {
-        const props: ITableVisualizationProps = {
+        const props: Partial<ITableVisualizationProps & IContainerProps> = {
             containerWidth: 600,
             containerHeight: 400,
             rows: TABLE_ROWS_1A_2M,

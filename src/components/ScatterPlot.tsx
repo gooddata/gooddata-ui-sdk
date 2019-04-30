@@ -1,8 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
+
+import { Subtract } from "../typings/subtract";
 import { ScatterPlot as AfmScatterPlot } from "./afm/ScatterPlot";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
@@ -47,12 +48,10 @@ export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IScatterPlotProps, IScatterPlotNonBucketProps>(props, [
-        "xAxisMeasure",
-        "yAxisMeasure",
-        "attribute",
-        "filters",
-    ]);
+    const newProps: IScatterPlotNonBucketProps = omit<IScatterPlotProps, keyof IScatterPlotBucketProps>(
+        props,
+        ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
+    );
 
     newProps.config = {
         ...newProps.config,

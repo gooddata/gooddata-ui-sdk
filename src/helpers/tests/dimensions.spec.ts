@@ -63,14 +63,10 @@ function addMeasure(
             },
         },
     };
-    return update<VisualizationObject.IVisualizationObjectContent>(
-        newVis,
-        ["buckets", 0, "items"],
-        (measures: VisualizationObject.IMeasure[]) => {
-            measures.push(measure);
-            return measures;
-        },
-    );
+    return update(newVis, ["buckets", 0, "items"], (measures: VisualizationObject.IMeasure[]) => {
+        measures.push(measure);
+        return measures;
+    });
 }
 
 function addAttribute(

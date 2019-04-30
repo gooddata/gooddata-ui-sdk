@@ -2,7 +2,6 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { InjectedIntlProps } from "react-intl";
-import { AFM } from "@gooddata/typings";
 import { IMappingHeader } from "../../../../interfaces/MappingHeader";
 
 import { withIntl } from "../../utils/intlUtils";
@@ -13,6 +12,7 @@ import {
     EXECUTION_RESPONSE_2A_3M,
     EXECUTION_RESULT_2A_3M,
 } from "../fixtures/2attributes3measures";
+import { IHeaderPredicateContext } from "../../../../interfaces/HeaderPredicate";
 
 const WrappedTable = withIntl(TableTransformation);
 
@@ -61,7 +61,7 @@ describe("TableTransformation", () => {
                 drillableItems: [
                     { uri: "/uri" },
                     { uri: "identifier" },
-                    (_header: IMappingHeader, _afm: AFM.IAfm) => true,
+                    (_header: IMappingHeader, _context: IHeaderPredicateContext) => true,
                 ],
             }),
         );

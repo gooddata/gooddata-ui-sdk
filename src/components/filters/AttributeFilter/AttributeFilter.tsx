@@ -6,7 +6,7 @@ import pick = require("lodash/pick");
 
 import { IntlWrapper } from "../../core/base/IntlWrapper";
 import { injectIntl } from "react-intl";
-import { AttributeDropdown, AttributeDropdownWrapped, IAttributeDropdownProps } from "./AttributeDropdown";
+import { AttributeDropdown, AttributeDropdownWrapped } from "./AttributeDropdown";
 import { AttributeLoader } from "./AttributeLoader";
 import { IAttributeDisplayForm } from "./model";
 import { setTelemetryHeaders } from "../../../helpers/utils";
@@ -107,10 +107,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
             return <this.props.FilterLoading />;
         }
 
-        const dropdownProps = pick<IAttributeDropdownProps, IAttributeFilterProps>(
-            this.props,
-            Object.keys(AttributeDropdownWrapped.propTypes),
-        );
+        const dropdownProps: any = pick(this.props, Object.keys(AttributeDropdownWrapped.propTypes));
         const isUsingIdentifier = this.props.identifier !== null;
         const { md } = this.sdk;
         return (

@@ -34,7 +34,7 @@ export function clearSdkCache() {
  */
 export function getCachedOrLoad<T>(cacheKey: string, onCacheMiss: () => Promise<T>): Promise<T> {
     const sdkCache: ISdkCache = getSdkCache();
-    const cachedResponse = get<Promise<T>>(sdkCache, cacheKey);
+    const cachedResponse: Promise<T> = get<ISdkCache, keyof ISdkCache>(sdkCache, cacheKey);
     if (cachedResponse) {
         return cachedResponse;
     }

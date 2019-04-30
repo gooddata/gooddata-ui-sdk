@@ -14,7 +14,8 @@ import {
 } from "../interfaces/Table";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
-    const parsedNumber: string | number = cellContent === null ? "" : parseFloat(cellContent);
+    const parsedNumber: string | number =
+        cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
 
     return numberFormat(parsedNumber, format, undefined, separators);
 }

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { PieChart as AfmPieChart } from "./afm/PieChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -43,7 +43,12 @@ export function PieChart(props: IPieChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IPieChartProps, IPieChartNonBucketProps>(props, ["measures", "viewBy", "filters"]);
+    const newProps: IPieChartNonBucketProps = omit<IPieChartProps, keyof IPieChartBucketProps>(props, [
+        "measures",
+        "viewBy",
+        "filters",
+        "sortBy",
+    ]);
 
     return (
         <AfmPieChart

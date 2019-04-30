@@ -66,7 +66,7 @@ export function setupDrilldown(chart: ChartObject) {
     }
 
     // not support chart without type
-    const chartType = get<ChartType>(chart, "options.chart.type", null);
+    const chartType: ChartType | null = get(chart, "options.chart.type", null);
     if (!chartType) {
         return;
     }

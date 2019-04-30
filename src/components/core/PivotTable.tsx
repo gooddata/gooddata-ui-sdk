@@ -138,7 +138,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
             if (type === MEASURE_COLUMN) {
                 return [...drillRow, rowData[colDef.field]];
             }
-            const drillItem = get<any, IMappingHeader>(rowData, ["headerItemMap", colDef.field]);
+            const drillItem = get(rowData, ["headerItemMap", colDef.field]);
             if (drillItem && (type === COLUMN_ATTRIBUTE_COLUMN || type === ROW_ATTRIBUTE_COLUMN)) {
                 const drillItemUri = getMappingHeaderUri(drillItem);
                 return [
@@ -473,11 +473,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         let hasDrillableHeader = false;
         const isRowTotal = get(cellClassParams, ["data", "type", ROW_TOTAL]);
         if (drillablePredicates.length !== 0 && !isRowTotal) {
-            const rowDrillItem = get<CellClassParams, IMappingHeader>(cellClassParams, [
-                "data",
-                "headerItemMap",
-                colDef.field,
-            ]);
+            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field]);
             const headers: IMappingHeader[] = rowDrillItem
                 ? [...colDef.drillItems, rowDrillItem]
                 : colDef.drillItems;
@@ -608,16 +604,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
-        const type = get<IGridCellEvent, string>(cellEvent, ["colDef", "type"]);
+        const type = get(cellEvent, ["colDef", "type"]);
         if (type === ROW_TOTAL) {
             return false;
         }
 
-        const rowDrillItem = get<IGridCellEvent, IMappingHeader>(cellEvent, [
-            "data",
-            "headerItemMap",
-            colDef.field,
-        ]);
+        const rowDrillItem = get(cellEvent, ["data", "headerItemMap", colDef.field]);
         const drillItems: IMappingHeader[] = rowDrillItem
             ? [...colDef.drillItems, rowDrillItem]
             : colDef.drillItems;

@@ -571,10 +571,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
             lastRoot = currentRoot;
             uncoloredLeafs = [];
             // create parent for pasted leafs
-            const lastRootName: string = get<
-                Execution.IResultAttributeHeaderItem["attributeHeaderItem"],
-                string
-            >(lastRoot, "name");
+            const lastRootName: string = get(lastRoot, "name");
             roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy));
         }
         // create leafs which will be colored at the end of group

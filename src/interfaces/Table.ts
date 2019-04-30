@@ -12,7 +12,7 @@ export interface IAttributeCellForDrilling {
     name: string;
 }
 
-export type MeasureCell = string | null;
+export type MeasureCell = number | string | null;
 
 export type TableCell = IAttributeCell | MeasureCell;
 

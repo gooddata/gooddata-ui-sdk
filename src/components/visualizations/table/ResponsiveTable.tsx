@@ -83,7 +83,7 @@ export class ResponsiveTable extends React.Component<IResponsiveTableProps, IRes
         const { props } = this;
 
         const tableProps: ITableProps = {
-            ...omit<ITableProps, IResponsiveTableProps>(props, "pageOffset"),
+            ...omit<IResponsiveTableProps, "pageOffset">(props, "pageOffset"),
             rows: props.rows.slice(0, this.getRowCount(this.getPage())),
             containerHeight: this.getContainerHeight(),
             containerMaxHeight: this.getContainerMaxHeight(),

@@ -37,7 +37,7 @@ export class SortableTable extends React.Component<
     }
 
     public handlePushData(pushedData: IPushData): void {
-        const sortItems = get<IPushData, AFM.SortItem[]>(pushedData, "properties.sortItems");
+        const sortItems = get(pushedData, "properties.sortItems");
 
         if (sortItems) {
             // TODO save sortItems together with some resultSpec fingerprint

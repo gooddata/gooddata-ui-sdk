@@ -6,36 +6,42 @@ import { set } from "lodash";
 
 import { LoadingComponent, ErrorComponent } from "../../tests/mocks";
 import { Kpi, IKpiProps } from "../Kpi";
+import { IExecuteProps } from "../../../execution/Execute";
 import { ErrorStates } from "../../../constants/errorStates";
+import { RuntimeError } from "../../../errors/RuntimeError";
 import {
     emptyResponse,
     oneMeasureOneDimensionResponse,
 } from "../../../execution/fixtures/ExecuteAfm.fixtures";
 
-class DummyExecute extends React.Component<any, null> {
+class DummyExecute extends React.Component<Partial<IExecuteProps>, null> {
     public render() {
-        return this.props.children({ result: oneMeasureOneDimensionResponse });
+        return this.props.children({
+            result: oneMeasureOneDimensionResponse,
+            isLoading: false,
+            error: null,
+        });
     }
 }
 
-class DummyExecuteEmpty extends React.Component<any, null> {
+class DummyExecuteEmpty extends React.Component<Partial<IExecuteProps>, null> {
     public render() {
-        return this.props.children({ result: emptyResponse });
+        return this.props.children({ result: emptyResponse, isLoading: false, error: null });
     }
 }
 
-class DummyExecuteLoading extends React.Component<any, null> {
+class DummyExecuteLoading extends React.Component<Partial<IExecuteProps>, null> {
     public render() {
         return this.props.children({ result: null, isLoading: true, error: null });
     }
 }
 
-class DummyExecuteError extends React.Component<any, null> {
+class DummyExecuteError extends React.Component<Partial<IExecuteProps>, null> {
     public render() {
         return this.props.children({
             result: null,
             isLoading: true,
-            error: { status: ErrorStates.BAD_REQUEST },
+            error: new RuntimeError(ErrorStates.BAD_REQUEST),
         });
     }
 }
@@ -61,7 +67,7 @@ describe("Kpi", () => {
     });
 
     it("should use default format specified in component if there is none in execution", () => {
-        class ExecuteComp extends React.Component<any, null> {
+        class ExecuteComp extends React.Component<Partial<IExecuteProps>, null> {
             public render() {
                 const result = oneMeasureOneDimensionResponse;
                 set(
@@ -70,7 +76,7 @@ describe("Kpi", () => {
                     null,
                 );
 
-                return this.props.children({ result });
+                return this.props.children({ result, isLoading: false, error: null });
             }
         }
         const wrapper = createComponent({ ExecuteComponent: ExecuteComp });

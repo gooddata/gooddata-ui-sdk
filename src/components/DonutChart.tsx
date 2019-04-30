@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { DonutChart as AfmDonutChart } from "./afm/DonutChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -37,7 +37,7 @@ export function DonutChart(props: IDonutChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IDonutChartProps, IDonutChartNonBucketProps>(props, [
+    const newProps: IDonutChartNonBucketProps = omit<IDonutChartProps, keyof IDonutChartBucketProps>(props, [
         "measures",
         "viewBy",
         "filters",

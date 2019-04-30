@@ -152,7 +152,7 @@ export function getYAxisConfiguration(chartOptions: IChartOptions, config: any, 
         return {};
     }
 
-    const labelsVisible: IDataLabelsVisible = get<IDataLabelsVisible>(chartConfig, "dataLabels.visible");
+    const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
     const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
     const yAxisWithStackLabel = yAxis.map((axis: any, index: number) => {

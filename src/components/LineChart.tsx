@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { LineChart as AfmLineChart } from "./afm/LineChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -44,11 +44,12 @@ export function LineChart(props: ILineChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<ILineChartProps, ILineChartNonBucketProps>(props, [
+    const newProps: ILineChartNonBucketProps = omit<ILineChartProps, keyof ILineChartBucketProps>(props, [
         "measures",
         "trendBy",
         "segmentBy",
         "filters",
+        "sortBy",
     ]);
 
     return (

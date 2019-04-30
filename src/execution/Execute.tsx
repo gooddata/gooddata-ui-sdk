@@ -43,10 +43,7 @@ export interface IExecuteState {
 
 export interface IExecuteChildrenProps {
     result: Execution.IExecutionResponses;
-    error: {
-        status: string;
-        response?: object;
-    };
+    error: RuntimeError;
     isLoading: boolean;
 }
 
@@ -158,7 +155,7 @@ export class Execute extends React.Component<IExecuteProps, IExecuteState> {
         });
 
         this.dataTable.onError(error => {
-            const newError = convertErrors(error);
+            const newError: RuntimeError = convertErrors(error);
 
             onError(newError);
 

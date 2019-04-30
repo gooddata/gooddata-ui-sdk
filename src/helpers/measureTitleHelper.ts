@@ -18,8 +18,12 @@ import isMeasure = VisualizationObject.isMeasure;
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 
 function getAllMeasures(mdObject: IVisualizationObjectContent): IMeasure[] {
-    const buckets = get<IBucket[]>(mdObject, "buckets", []);
-    const allBucketItems = flatMap<BucketItem>(buckets, bucket => bucket.items);
+    const buckets: IBucket[] = get<IVisualizationObjectContent, "buckets", IBucket[]>(
+        mdObject,
+        "buckets",
+        [],
+    );
+    const allBucketItems = flatMap<IBucket, BucketItem>(buckets, (bucket: IBucket) => bucket.items);
 
     return allBucketItems.reduce((measureItems, bucketItem) => {
         if (VisualizationObject.isMeasure(bucketItem)) {

@@ -1,5 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/typings";
+import * as React from "react";
+
 import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
 export { IDataSourceProviderProps };
@@ -22,4 +24,8 @@ function generateDefaultDimensions(afm: AFM.IAfm): AFM.IDimension[] {
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const Table = dataSourceProvider(SortableTable, generateDefaultDimensions, "Table");
+export const Table: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider(
+    SortableTable,
+    generateDefaultDimensions,
+    "Table",
+);

@@ -1,5 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationObject, VisualizationClass } from "@gooddata/typings";
+import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
+import IVisualization = VisualizationObject.IVisualization;
 
 export const dummyMeasureGroup = {
     items: [
@@ -51,7 +53,7 @@ export const measures: VisualizationObject.IMeasure[] = [
     },
 ];
 
-export const visualizationObjects: [{ visualizationObject: VisualizationObject.IVisualizationObject }] = [
+export const visualizationObjects: IVisualization[] = [
     {
         visualizationObject: {
             content: {
@@ -1140,7 +1142,7 @@ export const visualizationObjects: [{ visualizationObject: VisualizationObject.I
     },
 ];
 
-export const visualizationClasses: [{ visualizationClass: VisualizationClass.IVisualizationClass }] = [
+export const visualizationClasses: IVisualizationClassWrapped[] = [
     {
         visualizationClass: {
             content: {

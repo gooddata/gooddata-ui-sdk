@@ -12,7 +12,11 @@ function findBucketByLocalIdentifier(buckets: VisualizationObject.IBucket[], buc
 }
 
 export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem[] {
-    const bucketTotals = get(bucket, "totals", []);
+    const bucketTotals: VisualizationObject.IVisualizationTotal[] = get<
+        VisualizationObject.IBucket,
+        "totals",
+        VisualizationObject.IVisualizationTotal[]
+    >(bucket, "totals", []);
     return bucketTotals.map(
         (total: VisualizationObject.IVisualizationTotal): AFM.ITotalItem => {
             return {
@@ -36,11 +40,19 @@ export function getPivotTableDimensions(buckets: VisualizationObject.IBucket[]):
 
     const measures: VisualizationObject.IBucket = buckets.find(bucket => bucket.localIdentifier === MEASURES);
 
-    const rowAttributesItemIdentifiers = get(rowAttributes, "items", []).map(
-        (a: VisualizationObject.IVisualizationAttribute) => a.visualizationAttribute.localIdentifier,
+    const rowAttributesItemIdentifiers: string[] = get<
+        VisualizationObject.IBucket,
+        "items",
+        VisualizationObject.BucketItem[]
+    >(rowAttributes, "items", []).map(
+        (a: VisualizationObject.IVisualizationAttribute): string => a.visualizationAttribute.localIdentifier,
     );
 
-    const columnAttributesItemIdentifiers = get(columnAttributes, "items", []).map(
+    const columnAttributesItemIdentifiers: string[] = get<
+        VisualizationObject.IBucket,
+        "items",
+        VisualizationObject.BucketItem[]
+    >(columnAttributes, "items", []).map(
         (a: VisualizationObject.IVisualizationAttribute) => a.visualizationAttribute.localIdentifier,
     );
 
@@ -67,8 +79,12 @@ export function getTableDimensions(buckets: VisualizationObject.IBucket[]): AFM.
 
     const measures: VisualizationObject.IBucket = buckets.find(bucket => bucket.localIdentifier === MEASURES);
 
-    const attributesItemIdentifiers = get(attributes, "items", []).map(
-        (a: VisualizationObject.IVisualizationAttribute) => a.visualizationAttribute.localIdentifier,
+    const attributesItemIdentifiers: string[] = get<
+        VisualizationObject.IBucket,
+        "items",
+        VisualizationObject.BucketItem[]
+    >(attributes, "items", []).map(
+        (a: VisualizationObject.IVisualizationAttribute): string => a.visualizationAttribute.localIdentifier,
     );
 
     const measuresItemIdentifiers = measures && measures.items && measures.items.length ? [MEASUREGROUP] : [];

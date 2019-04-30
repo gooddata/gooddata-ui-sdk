@@ -1,5 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/typings";
+import * as React from "react";
+
 import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
 export { IDataSourceProviderProps };
@@ -15,7 +17,7 @@ function generateDefaultDimensions(): AFM.IDimension[] {
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const Headline = dataSourceProvider(
+export const Headline: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider(
     CoreHeadline,
     generateDefaultDimensions,
     "CoreHeadline",

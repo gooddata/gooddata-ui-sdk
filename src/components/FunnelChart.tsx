@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
-import { Subtract } from "utility-types";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
+import { Subtract } from "../typings/subtract";
 import { FunnelChart as AfmFunnelChart } from "./afm/FunnelChart";
 import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
@@ -42,11 +42,10 @@ export function FunnelChart(props: IFunnelChartProps): JSX.Element {
         },
     ];
 
-    const newProps = omit<IFunnelChartProps, IFunnelChartNonBucketProps>(props, [
-        "measures",
-        "viewBy",
-        "filters",
-    ]);
+    const newProps: IFunnelChartNonBucketProps = omit<IFunnelChartProps, keyof IFunnelChartBucketProps>(
+        props,
+        ["measures", "viewBy", "filters", "sortBy"],
+    );
 
     return (
         <AfmFunnelChart
