@@ -599,7 +599,11 @@ export const getGridIndex = (position: number, gridDistance: number) => {
 };
 
 export const cellRenderer = (params: ICellRendererParams) => {
-    const formattedValue = escape(params.formatValue(params.value));
+    const isRowTotal = params.data && params.data.type && params.data.type.rowTotal;
+    const formattedValue =
+        isRowTotal && !params.value
+            ? "" // row totals should be really empty (no "-") when they have no value (RAIL-1525)
+            : escape(params.formatValue(params.value));
     const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
     return `<span class="${className}">${formattedValue || ""}</span>`;
 };
