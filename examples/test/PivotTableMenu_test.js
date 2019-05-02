@@ -7,7 +7,7 @@ const totalValues = {
     sum: ["Sum", "", "", "$1,566,007", "$150,709"],
     max: ["Max", "", "", "$101,055", "$25,140"],
     nat: ["Rollup (Total)", "", "", "$406,007", "$150,709"],
-    empty: "–",
+    empty: "",
 };
 
 const getMeasureCell = column => {
