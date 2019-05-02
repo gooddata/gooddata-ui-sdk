@@ -26,7 +26,7 @@
     },
     "visualizations.of": {
         "value": "{page} of {pagesCount}",
-        "comment": "",
+        "comment": "Don't translate placeholders '{page}', '{pagesCount}'",
         "limit": 0
     },
     "visualizations.totals.dropdown.heading": {
@@ -36,97 +36,97 @@
     },
     "visualizations.totals.dropdown.title.sum": {
         "value": "Sum",
-        "comment": "",
+        "comment": "Total of type 'Sum'. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.avg": {
         "value": "Avg",
-        "comment": "",
+        "comment": "Total of type 'Avg'. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.min": {
         "value": "Min",
-        "comment": "",
+        "comment": "Total of type 'Min'. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.max": {
         "value": "Max",
-        "comment": "",
+        "comment": "Total of type 'Max'. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.nat": {
         "value": "Rollup (Total)",
-        "comment": "",
+        "comment": "Total of type 'Rollup' where 'Total' is hint and synonym. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.med": {
         "value": "Median",
-        "comment": "",
+        "comment": "Total of type 'Median'. Showed in menu before adding to table.",
         "limit": 0
     },
     "visualizations.totals.row.title.sum": {
         "value": "Sum",
-        "comment": "",
+        "comment": "Total of type 'Sum'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.totals.row.title.avg": {
         "value": "Avg",
-        "comment": "",
+        "comment": "Total of type 'Avg'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.totals.row.title.min": {
         "value": "Min",
-        "comment": "",
+        "comment": "Total of type 'Min'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.totals.row.title.max": {
         "value": "Max",
-        "comment": "",
+        "comment": "Total of type 'Max'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.totals.row.title.nat": {
         "value": "Total",
-        "comment": "",
+        "comment": "Total of type 'Rollup', but synonym 'Total' is used here since users are used to this more than 'Rollup'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.totals.row.title.med": {
         "value": "Median",
-        "comment": "",
+        "comment": "Total of type 'Median'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.headline.tertiary.title": {
         "value": "Versus",
-        "comment": "",
+        "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'.",
         "limit": 0
     },
     "visualization.numericValues.k": {
         "value": "k",
-        "comment": "",
+        "comment": "Character 'k' stands for metric prefix kilo (1.000).",
         "limit": 0
     },
     "visualization.numericValues.m": {
         "value": "M",
-        "comment": "",
+        "comment": "Character 'M' stands for metric prefix mega (1.000.000).",
         "limit": 0
     },
     "visualization.numericValues.g": {
         "value": "G",
-        "comment": "",
+        "comment": "Character 'G' stands for metric prefix giga (1.000.000.000).",
         "limit": 0
     },
     "visualization.numericValues.t": {
         "value": "T",
-        "comment": "",
+        "comment": "Character 'T' stands for metric prefix tera (1.000.000.000.000).",
         "limit": 0
     },
     "visualization.numericValues.p": {
         "value": "P",
-        "comment": "",
+        "comment": "Character 'P' stands for metric prefix peta (1.000.000.000.000.000).",
         "limit": 0
     },
     "visualization.numericValues.e": {
         "value": "E",
-        "comment": "",
+        "comment": "Character 'E' stands for metric prefix exa (1.000.000.000.000.000.000).",
         "limit": 0
     },
     "visualization.emptyValue": {
@@ -191,7 +191,7 @@
     },
     "gs.filter.loading": {
         "value": "Loading filter…",
-        "comment": "",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "gs.filter.error": {
@@ -201,7 +201,7 @@
     },
     "gs.list.loading": {
         "value": "Loading list…",
-        "comment": "",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "gs.list.clear": {
@@ -231,7 +231,7 @@
     },
     "gs.list.limitExceeded": {
         "value": "Sorry, you have exceeded the limit ({limit}).",
-        "comment": "",
+        "comment": "Don't translate placeholder '{limit}'.",
         "limit": 0
     },
     "gs.list.noItemsFound": {
@@ -256,27 +256,27 @@
     },
     "visualizations.measure.arithmetic.sum.title": {
         "value": "Sum of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Sum",
+        "comment": "Title of an arithmetic measure of type Sum. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.difference.title": {
         "value": "Difference of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Difference",
+        "comment": "Title of an arithmetic measure of type Difference. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.multiplication.title": {
         "value": "Product of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Product",
+        "comment": "Title of an arithmetic measure of type Product. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.ratio.title": {
         "value": "Ratio of {firstMeasureTitle} and {secondMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Ratio",
+        "comment": "Title of an arithmetic measure of type Ratio. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
         "limit": 0
     },
     "visualizations.measure.arithmetic.change.title": {
         "value": "Change from {secondMeasureTitle} to {firstMeasureTitle}",
-        "comment": "Title of an arithmetic measure of type Change",
+        "comment": "Title of an arithmetic measure of type Change. Don't translate placeholders '{firstMeasureTitle}', '{secondMeasureTitle}'.",
         "limit": 0
     },
     "visualizations.legend.text.top": {
@@ -301,7 +301,7 @@
     },
     "visualizations.legend.text.colon": {
         "value": ":",
-        "comment": "a colon stands right after legend. eg: 'Left:'",
+        "comment": "A colon character stands right after legend. eg: 'Left:'",
         "limit": 0
     },
     "visualizations.legend.text.column": {
@@ -321,7 +321,7 @@
     },
     "visualizations.legend.text.combo": {
         "value": "{0} ({1})",
-        "comment": "combine between chart type & y-axis position. eg: 'Column (Left)'",
+        "comment": "Combination of chart type & y-axis position. eg: 'Legend settings: Column (Left)' where 'Column' is '{0}' and '(Left)' is '({1})'. You can switch order of placeholders '{0}' and '({1})' for right-to-left languages if makes more sense.",
         "limit": 0
     },
     "visualizations.menu.aggregations": {
@@ -341,7 +341,7 @@
     },
     "visualizations.menu.aggregations.within-attribute": {
         "value": "within {attributeName}",
-        "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'",
+        "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'. Don't translate placeholder '{attributeName}'.",
         "limit": 50
     }
 }
