@@ -78,19 +78,19 @@ describe("getCategoriesForTwoAttributes", () => {
                 },
                 {
                     attributeHeaderItem: {
-                        uri: "/gdc/md/storybook/obj/4/elements?id=1",
+                        uri: "/gdc/md/storybook/obj/4/elements?id=2",
                         name: "Inside Sales",
                     },
                 },
                 {
                     attributeHeaderItem: {
-                        uri: "/gdc/md/storybook/obj/4/elements?id=1",
+                        uri: "/gdc/md/storybook/obj/4/elements?id=2",
                         name: "Inside Sales",
                     },
                 },
                 {
                     attributeHeaderItem: {
-                        uri: "/gdc/md/storybook/obj/4/elements?id=1",
+                        uri: "/gdc/md/storybook/obj/4/elements?id=3",
                         name: "Common Sales",
                     },
                 },
@@ -110,6 +110,71 @@ describe("getCategoriesForTwoAttributes", () => {
             {
                 name: "Common Sales",
                 categories: ["Lost"],
+            },
+        ]);
+    });
+
+    it("should return categories when attribute names have numerical values", () => {
+        const viewByAttribute: IUnwrappedAttributeHeadersWithItems = {
+            ...attributeHeader,
+            items: [
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/5/elements?id=1",
+                        name: "Jack",
+                    },
+                },
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/5/elements?id=2",
+                        name: "David",
+                    },
+                },
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/5/elements?id=3",
+                        name: "Ben",
+                    },
+                },
+            ],
+        };
+        const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = {
+            ...attributeHeader,
+            items: [
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/4/elements?id=3",
+                        name: "3",
+                    },
+                },
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/4/elements?id=2",
+                        name: "2",
+                    },
+                },
+                {
+                    attributeHeaderItem: {
+                        uri: "/gdc/md/storybook/obj/4/elements?id=1",
+                        name: "1",
+                    },
+                },
+            ],
+        };
+
+        const categories = getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute);
+        expect(categories).toEqual([
+            {
+                name: "3",
+                categories: ["Jack"],
+            },
+            {
+                name: "2",
+                categories: ["David"],
+            },
+            {
+                name: "1",
+                categories: ["Ben"],
             },
         ]);
     });
