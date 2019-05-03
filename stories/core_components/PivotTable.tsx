@@ -421,7 +421,7 @@ storiesOf("Core components/PivotTable", module)
         ];
 
         return screenshotWrap(
-            <div style={{ ...wrapperStyle, height: 250 }} className="s-table">
+            <div style={{ ...wrapperStyle, height: 230 }} className="s-table">
                 <PivotTable
                     projectId="storybook"
                     measures={measures}
