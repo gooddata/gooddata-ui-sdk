@@ -487,6 +487,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const isPinnedRow = cellClassParams.node.isRowPinned();
         const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeatedValue(attributeId, rowIndex);
         const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
+        const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
 
         return classNames(
             classList,
@@ -494,6 +495,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
             colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
             isRowTotal ? "gd-row-total" : null,
+            subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
         );

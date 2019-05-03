@@ -23,6 +23,7 @@ import {
     getRowNodeId,
     getGridIndex,
     cellRenderer,
+    getSubtotalStyles,
 } from "../agGrid";
 
 import * as fixtures from "../../../stories/test_data/fixtures";
@@ -400,6 +401,7 @@ describe("getRow", () => {
                 columnFields,
                 rowHeaders,
                 headerItems[0],
+                [],
                 intl,
             ),
         ).toEqual({
@@ -487,6 +489,7 @@ describe("getRow", () => {
                 columnFields,
                 rowHeaders,
                 headerItems[0],
+                [null, null, null, "even"],
                 intl,
             ),
         ).toEqual({
@@ -515,6 +518,7 @@ describe("getRow", () => {
                     },
                 },
             },
+            subtotalStyle: "even",
             m_0: "40500",
             m_1: "41142",
         });
@@ -879,5 +883,58 @@ describe("cellRenderer", () => {
         const value = cellRenderer(fakeParams);
 
         expect(value).toEqual('<span class="s-value">&lt;button&gt;xss&lt;/button&gt;</span>');
+    });
+});
+
+describe("getSubtotalStyles", () => {
+    it("should return empty array if no totals are present", () => {
+        const dimension: AFM.IDimension = {
+            itemIdentifiers: ["a1", "a2", "a3"],
+        };
+        const resultSubtotalStyles = getSubtotalStyles(dimension);
+        expect(resultSubtotalStyles).toEqual([]);
+    });
+    it("should return null on first attribute", () => {
+        const dimension: AFM.IDimension = {
+            itemIdentifiers: ["a1", "a2"],
+            totals: [
+                {
+                    attributeIdentifier: "a1",
+                    type: "sum",
+                    measureIdentifier: "m1",
+                },
+                {
+                    attributeIdentifier: "a2",
+                    type: "sum",
+                    measureIdentifier: "m1",
+                },
+            ],
+        };
+        const resultSubtotalStyles = getSubtotalStyles(dimension);
+        expect(resultSubtotalStyles).toEqual([null, "even"]);
+    });
+    it("should alternate subtotal style", () => {
+        const dimension: AFM.IDimension = {
+            itemIdentifiers: ["a1", "a2", "a3", "a4", "a5"],
+            totals: [
+                {
+                    attributeIdentifier: "a2",
+                    type: "sum",
+                    measureIdentifier: "m1",
+                },
+                {
+                    attributeIdentifier: "a4",
+                    type: "sum",
+                    measureIdentifier: "m1",
+                },
+                {
+                    attributeIdentifier: "a5",
+                    type: "sum",
+                    measureIdentifier: "m1",
+                },
+            ],
+        };
+        const resultSubtotalStyles = getSubtotalStyles(dimension);
+        expect(resultSubtotalStyles).toEqual([null, "even", null, "odd", "even"]);
     });
 });

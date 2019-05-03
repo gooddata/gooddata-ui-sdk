@@ -258,11 +258,13 @@ const getCell = (
     field: string;
     value: string;
     rowHeaderDataItem: Execution.IResultHeaderItem;
+    isSubtotal: boolean;
 } => {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
     const cell = {
         field: rowHeader.field,
         rowHeaderDataItem,
+        isSubtotal: false,
     };
 
     if (Execution.isAttributeHeaderItem(rowHeaderDataItem)) {
@@ -276,6 +278,7 @@ const getCell = (
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
         return {
             ...cell,
+            isSubtotal: true,
             value:
                 getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
                     ? intl.formatMessage({ id: `visualizations.totals.dropdown.title.${totalName}` })
@@ -295,6 +298,7 @@ export const getRow = (
     columnFields: string[],
     rowHeaders: IGridHeader[],
     rowHeaderData: Execution.IResultHeaderItem[][],
+    subtotalStyles: string[],
     intl: InjectedIntl,
 ): IGridRow => {
     const row: IGridRow = {
@@ -302,13 +306,16 @@ export const getRow = (
     };
 
     rowHeaders.forEach((rowHeader, rowHeaderIndex) => {
-        const { field, value, rowHeaderDataItem } = getCell(
+        const { isSubtotal, field, value, rowHeaderDataItem } = getCell(
             rowHeaderData,
             rowIndex,
             rowHeader,
             rowHeaderIndex,
             intl,
         );
+        if (isSubtotal && !row.subtotalStyle) {
+            row.subtotalStyle = subtotalStyles[rowHeaderIndex];
+        }
         row[field] = value;
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
     });
@@ -554,8 +561,17 @@ export const executionToAGGridAdapter = (
         data as Execution.DataValue[][],
         headerItems[0],
     );
+
     const rowData = minimalRowData.map((dataRow: Execution.DataValue[], dataRowIndex: number) =>
-        getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0], intl),
+        getRow(
+            dataRow,
+            dataRowIndex,
+            columnFields,
+            rowHeaders,
+            headerItems[0],
+            getSubtotalStyles(resultSpec.dimensions ? resultSpec.dimensions[0] : null),
+            intl,
+        ),
     );
 
     const columnKeys = [...rowFields, ...columnFields];
@@ -567,6 +583,27 @@ export const executionToAGGridAdapter = (
         rowTotals,
     };
 };
+
+export function getSubtotalStyles(dimension: AFM.IDimension): string[] {
+    if (!dimension || !dimension.totals) {
+        return [];
+    }
+
+    let even = false;
+    const subtotalStyles = dimension.itemIdentifiers.slice(1).map(attributeIdentifier => {
+        const hasSubtotal = dimension.totals.some(total => total.attributeIdentifier === attributeIdentifier);
+
+        if (hasSubtotal) {
+            even = !even;
+            return even ? "even" : "odd";
+        }
+
+        return null;
+    });
+
+    // Grand total (first) has no styles
+    return [null, ...subtotalStyles];
+}
 
 export const getParsedFields = (colId: string): string[][] => {
     // supported colIds are 'a_2009', 'a_2009_4-a_2071_12', 'a_2009_4-a_2071_12-m_3'

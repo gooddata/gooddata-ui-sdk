@@ -10,6 +10,8 @@ import PivotTableTotalsExample from "../components/PivotTableTotalsExample";
 import PivotTableTotalsExampleSRC from "!raw-loader!../components/PivotTableTotalsExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import PivotTableRowGroupingExample from "../components/PivotTableRowGroupingExample";
 import PivotTableRowGroupingExampleSRC from "!raw-loader!../components/PivotTableRowGroupingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import PivotTableSubtotalsExample from "../components/PivotTableSubtotalsExample";
+import PivotTableSubtotalsExampleSRC from "!raw-loader!../components/PivotTableSubtotalsExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const PivotTableDemo = () => (
     <div>
@@ -36,6 +38,12 @@ export const PivotTableDemo = () => (
         <ExampleWithSource
             for={() => <PivotTableRowGroupingExample />}
             source={PivotTableRowGroupingExampleSRC}
+        />
+
+        <h2 id="measures-row-attributes-and-column-attributes">Example of subtotals</h2>
+        <ExampleWithSource
+            for={() => <PivotTableSubtotalsExample />}
+            source={PivotTableSubtotalsExampleSRC}
         />
     </div>
 );
