@@ -2209,6 +2209,9 @@ const getBaseProjectSchema = (title, identifier) => {
             title: 'Line',
             url: 'local:line'
         }, {
+            title: 'Combo',
+            url: 'local:combo2'
+        }, {
             title: 'Pie',
             url: 'local:pie'
         }, {
@@ -2454,6 +2457,32 @@ const getBaseProjectSchema = (title, identifier) => {
                         displayForm: '5.df'
                     }]
                 }]
+            },
+            {
+                title: 'Combo chart',
+                identifier: '1011',
+                type: 'local:combo2',
+                buckets: [{
+                    localIdentifier: 'measures',
+                    items: [{
+                        localIdentifier: 'm1',
+                        identifier: '1'
+                    }]
+                }, {
+                    localIdentifier: 'secondary_measures',
+                    items: [{
+                        localIdentifier: 'm2',
+                        identifier: '2'
+                    }]
+                }, {
+                    localIdentifier: 'view',
+                    items: [{
+                        localIdentifier: 'a1',
+                        displayForm: 'attr.closed.year.df',
+                        title: 'Date'
+                    }]
+                }],
+                properties: "{\"controls\":{\"secondary_yaxis\":{\"measures\":[\"2\"]},\"primaryChartType\":\"column\",\"secondaryChartType\":\"line\"}}"
             },
         ]
     }

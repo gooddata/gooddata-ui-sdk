@@ -390,6 +390,7 @@ const LEGEND_TEXT_KEYS = {
     bar: ["bottom", "top"],
     area: ["left", "right"],
     combo: ["left", "right"],
+    combo2: ["left", "right"],
 };
 
 export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";

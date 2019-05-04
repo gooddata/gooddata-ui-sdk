@@ -63,7 +63,8 @@ export const isPieOrDonutChart = (type: string) => isPieChart(type) || isDonutCh
 export const isAreaChart = isEqual(VisualizationTypes.AREA);
 export const isBubbleChart = isEqual(VisualizationTypes.BUBBLE);
 export const isHeadline = isEqual(VisualizationTypes.HEADLINE);
-export const isComboChart = isEqual(VisualizationTypes.COMBO);
+export const isComboChart = (type: string) =>
+    isEqual(type, VisualizationTypes.COMBO) || isEqual(type, VisualizationTypes.COMBO2);
 export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
 export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);

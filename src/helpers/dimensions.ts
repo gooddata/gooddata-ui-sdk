@@ -392,6 +392,7 @@ export function generateDimensions(
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COMBO:
+        case VisualizationTypes.COMBO2:
         case VisualizationTypes.COLUMN: {
             return getBarDimensions(mdObject);
         }

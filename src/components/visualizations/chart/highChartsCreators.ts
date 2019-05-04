@@ -32,6 +32,7 @@ const chartConfigurationMap = {
     [VisualizationTypes.AREA]: getAreaConfiguration,
     [VisualizationTypes.SCATTER]: getScatterConfiguration,
     [VisualizationTypes.COMBO]: getComboConfiguration,
+    [VisualizationTypes.COMBO2]: getComboConfiguration,
     [VisualizationTypes.TREEMAP]: getTreemapConfiguration,
     [VisualizationTypes.DONUT]: getDonutConfiguration,
     [VisualizationTypes.FUNNEL]: getFunnelConfiguration,

@@ -380,6 +380,46 @@ storiesOf("URI components", module)
             />
         </div>
     ))
+    .add("Combo chart", () =>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={"/gdc/md/storybook/obj/1011"}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("Combo chart with identifier", () =>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    identifier="1011"
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("Combo chart with custom chart type", () =>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    identifier="1011"
+                    config={{
+                        primaryChartType: "line",
+                        secondaryChartType: "area",
+                    }}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                />
+            </div>,
+        ),
+    )
     .add("Multiple visualizations - sdk caching", () => (
         <div>
             <div style={{ width: 800, height: 400 }}>
