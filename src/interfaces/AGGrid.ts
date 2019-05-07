@@ -18,6 +18,7 @@ export interface IGridTotalsRow {
         count: number;
         headerKey: string;
     };
+    rowTotalActiveMeasures?: string[];
     [key: string]: any;
 }
 
