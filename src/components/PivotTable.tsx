@@ -30,6 +30,7 @@ export interface IPivotTableProps extends ICommonChartProps, IPivotTableBucketPr
     pageSize?: number;
     config?: IPivotTableConfig;
     groupRows?: boolean;
+    exportTitle?: string;
 }
 
 export const getBuckets = (props: IPivotTableBucketProps): VisualizationObject.IBucket[] => {
@@ -67,7 +68,7 @@ export class PivotTable extends React.Component<IPivotTableProps> {
     };
 
     public render() {
-        const { sortBy, filters } = this.props;
+        const { sortBy, filters, exportTitle } = this.props;
 
         const buckets: VisualizationObject.IBucket[] = getBuckets(this.props);
 
@@ -83,6 +84,8 @@ export class PivotTable extends React.Component<IPivotTableProps> {
             ["measures", "rows", "columns", "totals", "filters", "sortBy"],
         );
 
-        return <DataSourceProvider {...newProps} afm={afm} resultSpec={resultSpec} />;
+        return (
+            <DataSourceProvider {...newProps} afm={afm} resultSpec={resultSpec} exportTitle={exportTitle} />
+        );
     }
 }

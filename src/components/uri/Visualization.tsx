@@ -18,7 +18,7 @@ import { IntlWrapper } from "../core/base/IntlWrapper";
 import { BaseChart } from "../core/base/BaseChart";
 import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
 import { SortableTable } from "../core/SortableTable";
-import { PivotTable } from "../core/PivotTable";
+import { PivotTable } from "../PivotTable";
 import { Headline } from "../core/Headline";
 import { IEvents, OnLegendReady } from "../../interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
@@ -26,7 +26,7 @@ import { VisualizationTypes, VisType } from "../../constants/visualizationTypes"
 import { IDataSource } from "../../interfaces/DataSource";
 import { ISubject } from "../../helpers/async";
 import { getVisualizationTypeFromVisualizationClass } from "../../helpers/visualizationType";
-import MdObjectHelper from "../../helpers/MdObjectHelper";
+import MdObjectHelper, { mdObjectToPivotBucketProps } from "../../helpers/MdObjectHelper";
 import { fillMissingTitles } from "../../helpers/measureTitleHelper";
 import { LoadingComponent, ILoadingProps } from "../simple/LoadingComponent";
 import { ErrorComponent, IErrorProps } from "../simple/ErrorComponent";
@@ -38,33 +38,10 @@ import { isTreemap } from "../visualizations/utils/common";
 import { getColorMappingPredicate, getColorPaletteFromColors } from "../visualizations/utils/color";
 import { getCachedOrLoad } from "../../helpers/sdkCache";
 import { getFeatureFlags } from "../../helpers/featureFlags";
+import { mergeFiltersToAfm } from "../../helpers/afmHelper";
 export { Requireable };
 
-const { AfmUtils, ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
-
-// BC with TS 2.3
-function getDateFilter(filters: AFM.FilterItem[]): AFM.DateFilterItem {
-    for (const filter of filters) {
-        if (AfmUtils.isDateFilter(filter)) {
-            return filter;
-        }
-    }
-
-    return null;
-}
-
-// BC with TS 2.3
-function getAttributeFilters(filters: AFM.FilterItem[]): AFM.AttributeFilterItem[] {
-    const attributeFilters: AFM.AttributeFilterItem[] = [];
-
-    for (const filter of filters) {
-        if (AfmUtils.isAttributeFilter(filter)) {
-            attributeFilters.push(filter);
-        }
-    }
-
-    return attributeFilters;
-}
+const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
 
 export type VisualizationEnvironment = "none" | "dashboards";
 
@@ -305,6 +282,7 @@ export class VisualizationWrapped extends React.Component<
             LoadingComponent,
             ErrorComponent,
             onExportReady,
+            filters: filtersFromProps,
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
@@ -351,8 +329,6 @@ export class VisualizationWrapped extends React.Component<
 
         const commonProps = {
             projectId,
-            dataSource,
-            resultSpec,
             drillableItems,
             onFiredDrillEvent,
             onError,
@@ -365,19 +341,34 @@ export class VisualizationWrapped extends React.Component<
             onExportReady,
         };
 
+        const sourceProps = {
+            resultSpec,
+            dataSource,
+        };
+
         switch (type) {
             case VisualizationTypes.TABLE:
-                return <TableComponent {...commonProps} totals={totals} />;
-            case VisualizationTypes.PIVOT_TABLE:
-                return <PivotTableComponent {...commonProps} totals={totals} />;
+                return <TableComponent {...commonProps} {...sourceProps} totals={totals} />;
+            case VisualizationTypes.PIVOT_TABLE: {
+                const pivotBucketProps = mdObjectToPivotBucketProps(mdObject, filtersFromProps);
+                // we do not need to pass totals={totals} because BucketPivotTable deals with changes in totals itself
+                return <PivotTableComponent {...commonProps} {...pivotBucketProps} />;
+            }
             case VisualizationTypes.HEADLINE:
-                return <HeadlineComponent {...commonProps} />;
+                return <HeadlineComponent {...commonProps} {...sourceProps} />;
             default:
-                return <BaseChartComponent {...commonProps} onLegendReady={onLegendReady} type={type} />;
+                return (
+                    <BaseChartComponent
+                        {...commonProps}
+                        {...sourceProps}
+                        onLegendReady={onLegendReady}
+                        type={type}
+                    />
+                );
         }
     }
 
-    private async prepareDataSources(
+    public async prepareDataSources(
         projectId: string,
         identifier: string,
         filters: AFM.FilterItem[] = [],
@@ -395,13 +386,14 @@ export class VisualizationWrapped extends React.Component<
 
         const visualizationClass = await fetchVisualizationClass(this.sdk, visualizationClassUri);
         const processedVisualizationObject = fillMissingTitles(mdObject.content, locale);
-        const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
         const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
 
-        const dateFilter = getDateFilter(filters);
-        const attributeFilters = getAttributeFilters(filters);
-        const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
+        const { afm: afmWithoutMergedFilters, resultSpec: resultSpecSorting } = toAfmResultSpec(
+            processedVisualizationObject,
+        );
+
+        const afm = mergeFiltersToAfm(afmWithoutMergedFilters, filters);
 
         const featureFlags = await getFeatureFlags(this.sdk, projectId);
 
@@ -411,7 +403,7 @@ export class VisualizationWrapped extends React.Component<
         );
         // keep resultSpec creation in sync with AD
         const resultSpecWithDimensions = {
-            ...resultSpec,
+            ...resultSpecSorting,
             dimensions: generateDimensions(mdObject.content, visualizationType),
         };
         const treemapDefaultSorting = isTreemap(visualizationType)
@@ -419,17 +411,17 @@ export class VisualizationWrapped extends React.Component<
                   sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions),
               }
             : {};
-        const resultSpecWithDimensionsAndSorting = {
+        const resultSpec = {
             ...resultSpecWithDimensions,
             ...treemapDefaultSorting,
         };
 
-        const dataSource = await this.adapter.createDataSource(afmWithFilters);
+        const dataSource = await this.adapter.createDataSource(afm);
 
         return {
             type: visualizationType,
             dataSource,
-            resultSpec: resultSpecWithDimensionsAndSorting,
+            resultSpec,
             totals: mdObjectTotals,
             mdObject,
             featureFlags,

@@ -5,6 +5,7 @@ import {
     getMasterMeasureLocalIdentifier,
     findMeasureByLocalIdentifier,
     isDerivedMeasure,
+    mergeFiltersToAfm,
 } from "../afmHelper";
 
 describe("getMasterMeasureLocalIdentifier", () => {
@@ -385,5 +386,36 @@ describe("isDerivedMeasure", () => {
         const result = isDerivedMeasure(simpleMeasure);
 
         expect(result).toEqual(false);
+    });
+});
+describe("mergeFiltersToAfm", () => {
+    it("should add new filters and keep the original ones", () => {
+        const originalFilters = [
+            {
+                relativeDateFilter: {
+                    dataSet: { identifier: "123" },
+                    from: 0,
+                    to: 0,
+                    granularity: "GDC.time.year",
+                },
+            },
+        ];
+        const originalAfm: AFM.IAfm = {
+            filters: originalFilters,
+        };
+        const additionalFilters = [
+            {
+                relativeDateFilter: {
+                    dataSet: { identifier: "345" },
+                    from: 0,
+                    to: 0,
+                    granularity: "GDC.time.day",
+                },
+            },
+        ];
+        const result = mergeFiltersToAfm(originalAfm, additionalFilters);
+        expect(result).toEqual({
+            filters: [...additionalFilters, ...originalFilters],
+        });
     });
 });
