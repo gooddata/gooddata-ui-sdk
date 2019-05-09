@@ -4,7 +4,6 @@ import * as PropTypes from "prop-types";
 
 import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports
 export { Requireable };
-import { Fireworks } from "./Fireworks";
 
 export const LoadingPropTypes = {
     className: PropTypes.string,
@@ -16,10 +15,6 @@ export const LoadingPropTypes = {
     imageHeight: PropTypes.any,
     imageWidth: PropTypes.any,
 };
-
-export interface ILoadingState {
-    easterEggActivation: boolean[];
-}
 
 export interface ILoadingProps {
     className?: string;
@@ -38,7 +33,7 @@ const baseAnimationDuration = 1.4;
  * [LoadingComponent](http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html)
  * is a component that renders a default loading indicator
  */
-export class LoadingComponent extends React.Component<ILoadingProps, ILoadingState> {
+export class LoadingComponent extends React.Component<ILoadingProps, null> {
     public static defaultProps: Partial<ILoadingProps> = {
         className: "s-loading",
         color: "#94a1ad",
@@ -51,25 +46,6 @@ export class LoadingComponent extends React.Component<ILoadingProps, ILoadingSta
     };
 
     public static propTypes = LoadingPropTypes;
-
-    constructor(props: ILoadingProps) {
-        super(props);
-        this.state = {
-            easterEggActivation: [false, false, false],
-        };
-    }
-
-    public onClick = (index: number) => () => {
-        const easterEggActivation = [...this.state.easterEggActivation];
-        easterEggActivation[index] = true;
-        this.setState({ easterEggActivation });
-        const resetDuration = 11000;
-        if (this.state.easterEggActivation.every(isActive => isActive)) {
-            setTimeout(() => {
-                this.setState({ easterEggActivation: [false, false, false] });
-            }, resetDuration);
-        }
-    };
 
     public render() {
         const { inline, width, height, imageWidth, imageHeight, color, speed, className } = this.props;
@@ -119,7 +95,6 @@ export class LoadingComponent extends React.Component<ILoadingProps, ILoadingSta
                 // this is intentional. Typescript complains about exact matching of css string values to enum.
                 style={wrapperStyles as any}
             >
-                {this.state.easterEggActivation.every(isActive => isActive) && <Fireworks />}
                 <svg style={svgStyles} version="1.1" x="0px" y="0px" viewBox="0 0 36 8">
                     <style scoped={true}>{`
                         @keyframes GDC-pop {
@@ -134,13 +109,13 @@ export class LoadingComponent extends React.Component<ILoadingProps, ILoadingSta
                         }
                     `}</style>
                     <g style={dot1Styles}>
-                        <circle onClick={this.onClick(0)} cx="4" cy="4" r="4" />
+                        <circle cx="4" cy="4" r="4" />
                     </g>
                     <g style={dot2Styles}>
-                        <circle onClick={this.onClick(1)} cx="18" cy="4" r="4" />
+                        <circle cx="18" cy="4" r="4" />
                     </g>
                     <g style={dot3Styles}>
-                        <circle onClick={this.onClick(2)} cx="32" cy="4" r="4" />
+                        <circle cx="32" cy="4" r="4" />
                     </g>
                 </svg>
             </div>
