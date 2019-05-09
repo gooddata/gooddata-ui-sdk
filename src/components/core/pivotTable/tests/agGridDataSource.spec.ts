@@ -8,20 +8,19 @@ import { createIntlMock } from "../../../visualizations/utils/intlUtils";
 const intl = createIntlMock();
 
 describe("getGridDataSource", () => {
-    // tslint:disable-next-line:max-line-length
-    it("should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy", async () => {
+    function createMockedDataSource() {
         const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
         const getPage = jest.fn().mockReturnValue(Promise.resolve(pivotTableWithColumnAndRowAttributes));
-        const startRow = 0;
-        const endRow = 0;
         const successCallback = jest.fn();
         const cancelPagePromises = jest.fn();
         const onSuccess = jest.fn();
         const getGridApi = () => ({
             setPinnedBottomRowData: jest.fn(),
             getPinnedBottomRowCount: jest.fn(),
+            paginationProxy: {
+                bottomRowIndex: 32,
+            },
         });
-        const sortModel: any[] = [];
         const getExecution = () => pivotTableWithColumnAndRowAttributes;
         const groupingProvider = GroupingProviderFactory.createProvider(true);
 
@@ -36,10 +35,54 @@ describe("getGridDataSource", () => {
             () => groupingProvider,
             cancelPagePromises,
         );
-        await gridDataSource.getRows({ startRow, endRow, successCallback, sortModel } as any);
+
+        return {
+            gridDataSource,
+            getPage,
+            successCallback,
+            onSuccess,
+            cancelPagePromises,
+        };
+    }
+
+    // tslint:disable-next-line:max-line-length
+    it("should return AGGrid dataSource that calls getPage, successCallback, onSuccess, then cancelPagePromises on destroy", async () => {
+        const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
+        const {
+            getPage,
+            successCallback,
+            gridDataSource,
+            onSuccess,
+            cancelPagePromises,
+        } = createMockedDataSource();
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
         expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
         expect(successCallback.mock.calls[0]).toMatchSnapshot();
         expect(onSuccess.mock.calls[0]).toMatchSnapshot();
+
+        gridDataSource.destroy();
+        expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+    });
+
+    it("should return null from getRows promise result when startRow is out of total rows boundary", async () => {
+        const {
+            getPage,
+            successCallback,
+            gridDataSource,
+            onSuccess,
+            cancelPagePromises,
+        } = createMockedDataSource();
+        const getRowsResult = await gridDataSource.getRows({
+            startRow: 100,
+            endRow: 200,
+            successCallback,
+            sortModel: [],
+        } as any);
+        expect(getRowsResult).toEqual(null);
+        expect(getPage).not.toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
 
         gridDataSource.destroy();
         expect(cancelPagePromises).toHaveBeenCalledTimes(1);
