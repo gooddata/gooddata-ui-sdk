@@ -333,6 +333,8 @@ export const getRowTotals = (
     totals: Execution.DataValue[][][],
     columnKeys: string[],
     headers: Execution.IHeader[],
+    resultSpec: AFM.IResultSpec,
+    measureIds: string[],
     intl: InjectedIntl,
 ): IGridTotalsRow[] => {
     if (!totals) {
@@ -344,7 +346,7 @@ export const getRowTotals = (
         const measureKeys: string[] = [];
 
         // assort keys by type
-        columnKeys.filter((key: any) => {
+        columnKeys.forEach((key: any) => {
             const currentKey = key.split(FIELD_SEPARATOR).pop();
             const fieldType = currentKey.split(ID_SEPARATOR)[0];
             if (fieldType === FIELD_TYPE_ATTRIBUTE) {
@@ -370,6 +372,12 @@ export const getRowTotals = (
 
         const totalName = totalHeader.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
 
+        // create measure ids in the form of "m_index" for measures having the current type of total
+        // this makes it easier to match against in the cell renderer
+        const rowTotalActiveMeasures = resultSpec.dimensions[0].totals
+            .filter(t => t.type === totalName)
+            .map(t => `m_${measureIds.indexOf(t.measureIdentifier)}`);
+
         return {
             colSpan: {
                 count: attributeKeys.length,
@@ -379,6 +387,7 @@ export const getRowTotals = (
             [totalAttributeKey]: intl.formatMessage({
                 id: `visualizations.totals.dropdown.title.${totalName}`,
             }),
+            rowTotalActiveMeasures,
             type: {
                 [ROW_TOTAL]: true,
             },
@@ -449,7 +458,7 @@ export const getMeasureSortItemFieldAndDirection = (
     measureHeaderItems: Execution.IMeasureHeaderItem[],
 ): [string, string] => {
     const keys: string[] = [];
-    sortItem.measureSortItem.locators.map(locator => {
+    sortItem.measureSortItem.locators.forEach(locator => {
         if (AFM.isMeasureLocatorItem(locator)) {
             const measureSortHeaderIndex = measureHeaderItems.findIndex(
                 measureHeaderItem =>
@@ -575,7 +584,14 @@ export const executionToAGGridAdapter = (
     );
 
     const columnKeys = [...rowFields, ...columnFields];
-    const rowTotals = getRowTotals(totals, columnKeys, dimensions[0].headers, intl);
+    const rowTotals = getRowTotals(
+        totals,
+        columnKeys,
+        dimensions[0].headers,
+        resultSpec,
+        measureHeaderItems.map(mhi => mhi.measureHeaderItem.localIdentifier),
+        intl,
+    );
 
     return {
         columnDefs,
@@ -637,9 +653,18 @@ export const getGridIndex = (position: number, gridDistance: number) => {
 
 export const cellRenderer = (params: ICellRendererParams) => {
     const isRowTotal = params.data && params.data.type && params.data.type.rowTotal;
+
+    const isActiveRowTotal =
+        isRowTotal && // short circuit for non row totals
+        params.data &&
+        params.data.rowTotalActiveMeasures &&
+        params.data.rowTotalActiveMeasures.some((measureColId: string) =>
+            params.colDef.field.endsWith(measureColId),
+        );
+
     const formattedValue =
-        isRowTotal && !params.value
-            ? "" // row totals should be really empty (no "-") when they have no value (RAIL-1525)
+        isRowTotal && !isActiveRowTotal && !params.value
+            ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
             : escape(params.formatValue(params.value));
     const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
     return `<span class="${className}">${formattedValue || ""}</span>`;

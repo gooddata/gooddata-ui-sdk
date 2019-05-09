@@ -116,6 +116,8 @@ describe("getRowTotals", () => {
                 fixture.executionResult.totals,
                 [...rowFields, ...columnFields],
                 fixture.executionResponse.dimensions[0].headers,
+                fixture.executionRequest.resultSpec,
+                fixture.executionRequest.afm.measures.map((measure: AFM.IMeasure) => measure.localIdentifier),
                 intl,
             ),
         ).toEqual([
@@ -149,6 +151,7 @@ describe("getRowTotals", () => {
                     count: 3,
                     headerKey: "a_2211",
                 },
+                rowTotalActiveMeasures: ["m_0", "m_1"],
                 type: {
                     rowTotal: true,
                 },
@@ -183,6 +186,7 @@ describe("getRowTotals", () => {
                     count: 3,
                     headerKey: "a_2211",
                 },
+                rowTotalActiveMeasures: ["m_0"],
                 type: {
                     rowTotal: true,
                 },
@@ -202,6 +206,8 @@ describe("getRowTotals", () => {
                 fixture.executionResult.totals,
                 [...rowFields, ...columnFields],
                 fixture.executionResponse.dimensions[0].headers,
+                fixture.executionRequest.resultSpec,
+                fixture.executionRequest.afm.measures.map((measure: AFM.IMeasure) => measure.localIdentifier),
                 intl,
             ),
         ).toBe(null);
