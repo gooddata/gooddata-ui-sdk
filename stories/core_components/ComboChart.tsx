@@ -92,6 +92,29 @@ storiesOf("Core components/ComboChart", module)
             </div>,
         ),
     )
+    .add("dual axis with multiple primary measures, one secondary measure and NO attribute", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+                {[[COLUMN, LINE], [COLUMN, AREA], [LINE, AREA]].map((types, index) => (
+                    <div key={index}>
+                        <div className="storybook-title">{`${types[0]} - ${types[1]}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={[MEASURE_1, MEASURE_3]}
+                                secondaryMeasures={secondaryMeasure}
+                                config={{
+                                    primaryChartType: types[0],
+                                    secondaryChartType: types[1],
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
     .add("dual axis with different chart type and NO attribute", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
