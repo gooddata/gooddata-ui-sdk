@@ -102,6 +102,9 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
                                 "gd-aggregation-menu-item-inner",
                                 "s-menu-aggregation-inner",
                                 this.getSubtotalNameTestClass(attributeLocalIdentifier),
+                                {
+                                    "s-menu-aggregation-inner-selected": isSelected,
+                                },
                             )}
                         >
                             {attributeName}
