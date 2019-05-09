@@ -868,6 +868,7 @@ function getHoverStyles({ type }: any, config: any) {
             break;
 
         case VisualizationTypes.COMBO:
+        case VisualizationTypes.COMBO2:
             seriesMapFn = seriesOrig => {
                 const { type } = seriesOrig;
 
