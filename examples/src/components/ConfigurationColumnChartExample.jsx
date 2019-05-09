@@ -1,20 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { BarChart, Model } from "@gooddata/react-components";
+import { Visualization } from "@gooddata/react-components";
 
 import "@gooddata/react-components/styles/css/main.css";
 
-import {
-    totalSalesIdentifier,
-    locationResortIdentifier,
-    menuCategoryAttributeDFIdentifier,
-    projectId,
-} from "../utils/fixtures";
+import { columnsVisualizationIdentifier, projectId } from "../utils/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../utils/colors";
 
 const defaultProperties = {};
 
-export class BarChartDynamicExample extends Component {
+export class ConfigurationColumnChartExample extends Component {
     constructor(props) {
         super(props);
 
@@ -79,19 +74,9 @@ export class BarChartDynamicExample extends Component {
     render() {
         const { config } = this.state;
 
-        const amount = Model.measure(totalSalesIdentifier)
-            .format("#,##0")
-            .alias("$ Total Sales");
-
-        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("location_resort");
-
-        const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
-            menuCategoryAttributeDFIdentifier,
-        );
-
         return (
             <div>
-                <div style={{ height: 300 }} className="s-bar-chart">
+                <div style={{ height: 300 }} className="s-visualization-column">
                     <button className="s-change-palette" onClick={this.onPaletteChange}>
                         Change palette
                     </button>
@@ -104,11 +89,9 @@ export class BarChartDynamicExample extends Component {
                         Change separator
                     </button>
 
-                    <BarChart
+                    <Visualization
                         projectId={projectId}
-                        measures={[amount]}
-                        viewBy={locationResort}
-                        stackBy={menuCategory}
+                        identifier={columnsVisualizationIdentifier}
                         config={config}
                     />
                 </div>
@@ -117,4 +100,4 @@ export class BarChartDynamicExample extends Component {
     }
 }
 
-export default BarChartDynamicExample;
+export default ConfigurationColumnChartExample;

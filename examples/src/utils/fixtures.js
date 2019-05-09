@@ -43,6 +43,7 @@ export const treemapVisualizationIdentifier = "aajaObFleXdD";
 export const treemapVisualizationUri = `/gdc/md/${demoProjectId}/obj/9283`;
 export const heatmapVisualizationIdentifier = "abkaJfMYiiCU";
 export const heatmapVisualizationUri = `/gdc/md/${demoProjectId}/obj/9284`;
+export const columnsVisualizationIdentifier = "aabOspdLbbvs";
 export const columnVisualizationIdentifier = "acFJltTsifSQ";
 export const columnVisualizationUri = `/gdc/md/${demoProjectId}/obj/6862`;
 export const dateDatasetIdentifier = "date.dataset.dt";
