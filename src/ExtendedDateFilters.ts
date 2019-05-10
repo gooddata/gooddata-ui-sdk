@@ -33,14 +33,18 @@ export namespace ExtendedDateFilters {
         type: OptionType;
     }
 
-    export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
+    export interface IDateFilterPreset {
+        visible: boolean;
+    }
+
+    export interface IAbsoluteDateFilterPreset extends IDateFilterOption, IDateFilterPreset {
         name: string;
         type: AbsolutePresetType;
         from: DateString;
         to: DateString;
     }
 
-    export interface IRelativeDateFilterPreset extends IDateFilterOption {
+    export interface IRelativeDateFilterPreset extends IDateFilterOption, IDateFilterPreset {
         name?: string;
         type: RelativePresetType;
         granularity: DateFilterGranularity;
@@ -120,5 +124,24 @@ export namespace ExtendedDateFilters {
         type: 'absolute' | 'relative';
         optionLocalIdentifier: string;
         granularity: DateFilterGranularity;
+    }
+
+    /**
+     * Types for server-side filter configuration
+     */
+
+    export type DashboardDateFilterConfigMode = 'readonly' | 'hidden' | 'active';
+
+    export interface IDashboardAddedPresets {
+        absolutePresets?: IAbsoluteDateFilterPreset[];
+        relativePresets?: IRelativeDateFilterPreset[];
+    }
+
+    export interface IDashboardDateFilterConfig {
+        filterName: string;
+        mode: DashboardDateFilterConfigMode;
+        hideOptions?: GUID[];
+        hideGranularities?: DateFilterGranularity[];
+        addPresets?: IDashboardAddedPresets;
     }
 }

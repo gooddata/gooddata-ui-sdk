@@ -15,7 +15,8 @@ describe('ExtendedDateFilters', () => {
         localIdentifier: 'foo',
         name: 'bar',
         to: 0,
-        type: 'relativePreset'
+        type: 'relativePreset',
+        visible: true
     };
 
     const allTimeFilter: ExtendedDateFilters.IAllTimeDateFilter = {
