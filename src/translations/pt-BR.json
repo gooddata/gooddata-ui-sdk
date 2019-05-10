@@ -53,7 +53,7 @@
     "visualizations.measure.arithmetic.sum.title": "Soma de {firstMeasureTitle} com {secondMeasureTitle}",
     "visualizations.measure.arithmetic.difference.title": "Diferença entre {firstMeasureTitle} e {secondMeasureTitle}",
     "visualizations.measure.arithmetic.multiplication.title": "Produto de {firstMeasureTitle} e {secondMeasureTitle}",
-    "visualizations.measure.arithmetic.ratio.title": "Relação de {firstMeasureTitle} e {secondMeasureTitle}",
+    "visualizations.measure.arithmetic.ratio.title": "Rácio entre {firstMeasureTitle} e {secondMeasureTitle}",
     "visualizations.measure.arithmetic.change.title": "Alterar de {secondMeasureTitle} para {firstMeasureTitle}",
     "visualizations.legend.text.top": "Superior",
     "visualizations.legend.text.bottom": "Inferior",
