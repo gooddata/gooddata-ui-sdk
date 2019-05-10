@@ -27,6 +27,7 @@ export function getCategoriesForTwoAttributes(
     name: string;
     categories: string[];
 }> {
+    const keys: string[] = [];
     const { items: children } = viewByAttribute;
     const { items: parent } = viewByParentAttribute;
 
@@ -36,21 +37,33 @@ export function getCategoriesForTwoAttributes(
             parentAttr: Execution.IResultAttributeHeaderItem,
             index: number,
         ) => {
-            const key: string = get(parentAttr, "attributeHeaderItem.name", "");
+            const uri: string = get(parentAttr, "attributeHeaderItem.uri", "");
+            const name: string = get(parentAttr, "attributeHeaderItem.name", "");
             const value: string = get(children[index], "attributeHeaderItem.name", "");
 
-            const childCategories: string[] = result[key] || [];
+            const childCategories: string[] = get(result, `${uri}.categories`, []);
+
+            if (!childCategories.length) {
+                keys.push(uri);
+            }
 
             return {
                 ...result,
-                [key]: [...childCategories, value], // append value
+                [uri]: {
+                    name,
+                    categories: [...childCategories, value], // append value
+                },
             };
         },
         {},
     );
 
-    return Object.keys(combinedResult).map((name: string) => ({
-        name,
-        categories: combinedResult[name],
-    }));
+    return keys.map((key: string) => {
+        const { name, categories } = combinedResult[key];
+
+        return {
+            name,
+            categories,
+        };
+    });
 }
