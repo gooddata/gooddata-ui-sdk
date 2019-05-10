@@ -71,6 +71,16 @@ describe("agGridApiWrapper", () => {
         });
     });
 
+    describe("getPaginationBottomRowIndex", () => {
+        it("should return actual row index ", async () => {
+            const api = await renderGridReady();
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(typeof paginationBottomRowIndex).toEqual("number");
+        });
+    });
+
     describe("cell element", () => {
         describe("getCellElement", () => {
             it("should return table cell element", async () => {
