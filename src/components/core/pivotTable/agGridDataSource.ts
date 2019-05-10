@@ -8,6 +8,7 @@ import InjectedIntl = ReactIntl.InjectedIntl;
 import { executionToAGGridAdapter, ROW_ATTRIBUTE_COLUMN } from "../../../helpers/agGrid";
 import { IGridHeader, IGridTotalsRow } from "../../../interfaces/AGGrid";
 
+import ApiWrapper from "./agGridApiWrapper";
 import { IGetPage } from "../base/VisualizationLoadingHOC";
 import { IGroupingProvider } from "../pivotTable/GroupingProvider";
 import { getSortsFromModel } from "../PivotTable";
@@ -38,13 +39,17 @@ export const getDataSourceRowsGetter = (
         columnDefs: IGridHeader[],
         resultSpec: AFM.IResultSpec,
     ) => void,
-    getGridApi: () => any,
+    getGridApi: () => GridApi,
     intl: InjectedIntl,
     columnTotals: AFM.ITotalItem[],
     getGroupingProvider: () => IGroupingProvider,
 ) => {
     return (getRowsParams: IGetRowsParams) => {
         const { startRow, endRow, successCallback, sortModel } = getRowsParams;
+
+        if (startRow > ApiWrapper.getPaginationBottomRowIndex(getGridApi())) {
+            return Promise.resolve(null);
+        }
 
         const execution = getExecution();
         const groupingProvider = getGroupingProvider();

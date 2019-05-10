@@ -24,6 +24,10 @@ function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number
     }
 }
 
+function getPaginationBottomRowIndex(gridApi: GridApi): number {
+    return (gridApi as any).paginationProxy.bottomRowIndex;
+}
+
 function getPinnedTopRow(gridApi: GridApi): any | null {
     const pinnedTopRow = (gridApi as any).rowRenderer.floatingTopRowComps[0];
     return pinnedTopRow ? pinnedTopRow : null;
@@ -100,4 +104,5 @@ export default {
     addPinnedTopRowCellClass,
     removePinnedTopRowCellClass,
     setPinnedTopRowCellText,
+    getPaginationBottomRowIndex,
 };
