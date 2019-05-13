@@ -4,10 +4,11 @@ import * as PropTypes from "prop-types";
 import { IHeaderParams } from "ag-grid";
 import { AFM, Execution } from "@gooddata/typings";
 
-import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "../../../helpers/agGrid";
+import { getParsedFields } from "./agGridUtils";
 import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
+import { FIELD_TYPE_ATTRIBUTE, COLUMN_ATTRIBUTE_COLUMN } from "./agGridConst";
 
 export interface IColumnHeaderProps extends IHeaderParams {
     menu?: IMenu;

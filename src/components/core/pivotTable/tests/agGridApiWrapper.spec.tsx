@@ -5,7 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 
 import ApiWrapper from "../agGridApiWrapper";
 import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid";
-import { ICustomGridOptions } from "../../PivotTable";
+import { ICustomGridOptions } from "../agGridTypes";
 
 describe("agGridApiWrapper", () => {
     const firstAttributeColumnId = "a_123";

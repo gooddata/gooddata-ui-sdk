@@ -6,7 +6,7 @@ import intersection = require("lodash/intersection");
 import isEqual = require("lodash/isEqual");
 import sortBy = require("lodash/sortBy");
 
-import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../../../helpers/agGrid";
+import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
 import { AVAILABLE_TOTALS } from "../../visualizations/table/totals/utils";
 import { IColumnTotal } from "./AggregationsMenu";
 import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
