@@ -24,8 +24,14 @@ function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number
     }
 }
 
-function getPaginationBottomRowIndex(gridApi: GridApi): number {
-    return (gridApi as any).paginationProxy.bottomRowIndex;
+function getPaginationBottomRowIndex(gridApi: GridApi): number | null {
+    const paginationProxy = (gridApi as any).paginationProxy;
+    if (paginationProxy) {
+        const index = paginationProxy.bottomRowIndex;
+        return typeof index === "number" ? index : null;
+    }
+
+    return null;
 }
 
 function getPinnedTopRow(gridApi: GridApi): any | null {

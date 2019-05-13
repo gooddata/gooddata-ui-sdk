@@ -79,6 +79,33 @@ describe("agGridApiWrapper", () => {
 
             expect(typeof paginationBottomRowIndex).toEqual("number");
         });
+
+        it("should return null when GridApi is not providing paginationProxy attribute", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy = undefined;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(null);
+        });
+
+        it("should return null when GridApi is not providing bottomRowIndex attribute", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy.bottomRowIndex = undefined;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(null);
+        });
+
+        it("should return number when GridApi return 0 as bottomRowIndex", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy.bottomRowIndex = 0;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(0);
+        });
     });
 
     describe("cell element", () => {

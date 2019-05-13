@@ -30,6 +30,15 @@ export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) 
     return false;
 };
 
+const isInvalidGetRowsRequest = (startRow: number, gridApi: GridApi): boolean => {
+    const bottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(gridApi);
+    if (bottomRowIndex !== null) {
+        return startRow > bottomRowIndex;
+    }
+
+    return false;
+};
+
 export const getDataSourceRowsGetter = (
     resultSpec: AFM.IResultSpec,
     getPage: IGetPage,
@@ -45,9 +54,10 @@ export const getDataSourceRowsGetter = (
     getGroupingProvider: () => IGroupingProvider,
 ) => {
     return (getRowsParams: IGetRowsParams) => {
-        const { startRow, endRow, successCallback, sortModel } = getRowsParams;
+        const { startRow, endRow, successCallback, failCallback, sortModel } = getRowsParams;
 
-        if (startRow > ApiWrapper.getPaginationBottomRowIndex(getGridApi())) {
+        if (isInvalidGetRowsRequest(startRow, getGridApi())) {
+            failCallback();
             return Promise.resolve(null);
         }
 
