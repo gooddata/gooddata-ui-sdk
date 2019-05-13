@@ -175,7 +175,8 @@ $header-cell-resize-width: 20px;
     }
 
     .gd-cell-show-hidden {
-        color: initial;
+        color: inherit;
+        font-weight: normal;
     }
 
     .gd-table-row-separator {
