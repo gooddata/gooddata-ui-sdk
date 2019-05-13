@@ -9,7 +9,15 @@ export class VisualizationTable extends Component {
     render() {
         return (
             <div style={{ height: 300 }} className="s-visualization-table">
-                <Visualization projectId={projectId} identifier={tableVisualizationIdentifier} />
+                <Visualization
+                    projectId={projectId}
+                    identifier={tableVisualizationIdentifier}
+                    config={{
+                        menu: {
+                            aggregations: true,
+                        },
+                    }}
+                />
             </div>
         );
     }

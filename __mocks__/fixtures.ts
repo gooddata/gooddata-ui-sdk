@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, VisualizationClass } from "@gooddata/typings";
+import { VisualizationObject, VisualizationClass, AFM } from "@gooddata/typings";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
 import IVisualization = VisualizationObject.IVisualization;
 
@@ -52,6 +52,133 @@ export const measures: VisualizationObject.IMeasure[] = [
         },
     },
 ];
+
+export const pivotTableMDO: IVisualization = {
+    visualizationObject: {
+        content: {
+            visualizationClass: {
+                uri: "/gdc/md/myproject/obj/table",
+            },
+            buckets: [
+                {
+                    localIdentifier: "measures",
+                    items: [
+                        {
+                            measure: {
+                                localIdentifier: "m1",
+                                title: "# Accounts with AD Query",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            uri: "/gdc/md/myproject/obj/8172",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            measure: {
+                                localIdentifier: "m2",
+                                title: "Measure 2",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            uri: "/gdc/md/myproject/obj/8173", // made up uri
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                },
+                {
+                    localIdentifier: "attribute",
+                    items: [
+                        {
+                            visualizationAttribute: {
+                                localIdentifier: "a1",
+                                displayForm: {
+                                    uri: "/gdc/md/myproject/obj/851", // made up uri
+                                },
+                            },
+                        },
+                        {
+                            visualizationAttribute: {
+                                localIdentifier: "a2",
+                                displayForm: {
+                                    uri: "/gdc/md/myproject/obj/852", // made up uri
+                                },
+                            },
+                        },
+                    ],
+                    totals: [
+                        {
+                            measureIdentifier: "m1",
+                            type: "avg",
+                            alias: "average",
+                            attributeIdentifier: "a1",
+                        },
+                        {
+                            measureIdentifier: "m1",
+                            type: "nat",
+                            alias: "Native total",
+                            attributeIdentifier: "a2",
+                        },
+                    ],
+                },
+                {
+                    localIdentifier: "columns",
+                    items: [
+                        {
+                            visualizationAttribute: {
+                                localIdentifier: "a3",
+                                displayForm: {
+                                    uri: "/gdc/md/myproject/obj/853", // made up uri
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+            filters: [
+                {
+                    relativeDateFilter: {
+                        to: 0,
+                        from: -3,
+                        granularity: "GDC.time.quarter",
+                        dataSet: {
+                            uri: "/gdc/md/myproject/obj/921",
+                        },
+                    },
+                },
+            ],
+            properties: JSON.stringify({
+                sortItems: [
+                    {
+                        attributeSortItem: {
+                            direction: "asc",
+                            attributeIdentifier: "a1",
+                        },
+                    },
+                    // To make sure sortItems are typed even in stringify and to satisfy linter
+                ] as AFM.IAttributeSortItem[],
+            }),
+        },
+        meta: {
+            author: "/gdc/account/profile/johndoe",
+            uri: "/gdc/md/myproject/obj/2",
+            tags: "",
+            created: new Date("2015-05-23T09:24:41Z"),
+            identifier: "aa5CD0OcfSpg",
+            deprecated: false,
+            summary: "",
+            isProduction: true,
+            title: "Measure over time (table)",
+            category: "visualizationObject",
+            contributor: "/gdc/account/profile/johndoe",
+        },
+    },
+};
 
 export const visualizationObjects: IVisualization[] = [
     {
