@@ -6,7 +6,9 @@ describe('ExtendedDateFilters', () => {
         from: '2000-01-01',
         localIdentifier: 'foo',
         to: '2020-01-01',
-        type: 'absoluteForm'
+        type: 'absoluteForm',
+        name: 'Absolute Form',
+        visible: true
     };
 
     const relativeFilter: ExtendedDateFilters.IRelativeDateFilterPreset = {
@@ -21,7 +23,9 @@ describe('ExtendedDateFilters', () => {
 
     const allTimeFilter: ExtendedDateFilters.IAllTimeDateFilter = {
         localIdentifier: 'foo',
-        type: 'allTime'
+        type: 'allTime',
+        name: 'All time',
+        visible: true
     };
 
     describe('isAbsoluteDateFilterOption', () => {

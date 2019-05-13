@@ -1,4 +1,6 @@
 // (C) 2019 GoodData Corporation
+import { IObjectMeta } from './Meta';
+
 export namespace ExtendedDateFilters {
     // Generated unique identification string that is not subject to change during project copying.
     export type GUID = string;
@@ -30,22 +32,18 @@ export namespace ExtendedDateFilters {
 
     export interface IDateFilterOption {
         localIdentifier: GUID;
+        name: string;
         type: OptionType;
-    }
-
-    export interface IDateFilterPreset {
         visible: boolean;
     }
 
-    export interface IAbsoluteDateFilterPreset extends IDateFilterOption, IDateFilterPreset {
-        name: string;
+    export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
         type: AbsolutePresetType;
         from: DateString;
         to: DateString;
     }
 
-    export interface IRelativeDateFilterPreset extends IDateFilterOption, IDateFilterPreset {
-        name?: string;
+    export interface IRelativeDateFilterPreset extends IDateFilterOption {
         type: RelativePresetType;
         granularity: DateFilterGranularity;
         from: RelativeGranularityOffset;
@@ -65,7 +63,8 @@ export namespace ExtendedDateFilters {
 
     export interface IRelativeDateFilterForm extends IDateFilterOption {
         type: RelativeFormType;
-        granularity?: DateFilterGranularity;
+        selectedGranularity?: DateFilterGranularity;
+        availableGranularities: DateFilterGranularity[];
         from?: RelativeGranularityOffset;
         to?: RelativeGranularityOffset;
     }
@@ -130,11 +129,49 @@ export namespace ExtendedDateFilters {
      * Types for server-side filter configuration
      */
 
+    export interface IDateFilterBase {
+        localIdentifier: GUID;
+        name: string;
+        visible: boolean;
+    }
+
+    export type IDateFilterAllTime = IDateFilterBase;
+
+    export type IDateFilterAbsoluteForm = IDateFilterBase;
+
+    export interface IDateFilterRelativeForm extends IDateFilterBase {
+        granularities: DateFilterGranularity[];
+    }
+
+    export interface IDateFilterAbsolutePreset extends IDateFilterBase {
+        from: DateString;
+        to: DateString;
+    }
+
+    export interface IDateFilterRelativePreset extends IDateFilterBase {
+        from: number;
+        to: number;
+    }
+
+    export interface IDateFilterConfigContent {
+        selectedOption: GUID;
+        allTime?: IDateFilterAllTime;
+        absoluteForm?: IDateFilterAbsoluteForm;
+        relativeForm?: IDateFilterRelativeForm;
+        absolutePresets?: IDateFilterAbsolutePreset[];
+        relativePresets?: IDateFilterRelativePreset[];
+    }
+
+    export interface IDateFilterConfig {
+        meta: IObjectMeta;
+        content: IDateFilterConfigContent;
+    }
+
     export type DashboardDateFilterConfigMode = 'readonly' | 'hidden' | 'active';
 
     export interface IDashboardAddedPresets {
-        absolutePresets?: IAbsoluteDateFilterPreset[];
-        relativePresets?: IRelativeDateFilterPreset[];
+        absolutePresets?: IDateFilterAbsolutePreset[];
+        relativePresets?: IDateFilterRelativePreset[];
     }
 
     export interface IDashboardDateFilterConfig {
