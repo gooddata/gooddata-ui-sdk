@@ -67,7 +67,7 @@ export const getDataSourceRowsGetter = (
     intl: InjectedIntl,
     columnTotals: AFM.ITotalItem[],
     getGroupingProvider: () => IGroupingProvider,
-) => {
+): ((params: IGetRowsParams) => void) => {
     return (getRowsParams: IGetRowsParams) => {
         const { startRow, endRow, successCallback, failCallback, sortModel } = getRowsParams;
 
@@ -257,7 +257,70 @@ export const executionToAGGridAdapter = (
     };
 };
 
-export const getAGGridDataSource = (
+class GdToAgGridAdapter implements IDatasource {
+    // not needed; see IDatasource
+    public rowCount?: number;
+    private destroyed: boolean = false;
+    private onDestroy: () => void;
+    private getRowsImpl: (params: IGetRowsParams) => void;
+
+    public constructor(
+        resultSpec: AFM.IResultSpec,
+        getPage: IGetPage,
+        getExecution: () => Execution.IExecutionResponses,
+        onSuccess: (
+            execution: Execution.IExecutionResponses,
+            columnDefs: IGridHeader[],
+            resultSpec: AFM.IResultSpec,
+        ) => void,
+        getGridApi: () => any,
+        intl: InjectedIntl,
+        columnTotals: AFM.ITotalItem[],
+        getGroupingProvider: () => IGroupingProvider,
+        cancelPagePromises: () => void,
+    ) {
+        this.onDestroy = cancelPagePromises;
+        this.getRowsImpl = getDataSourceRowsGetter(
+            resultSpec,
+            getPage,
+            getExecution,
+            onSuccess,
+            getGridApi,
+            intl,
+            columnTotals,
+            getGroupingProvider,
+        );
+    }
+
+    public getRows(params: IGetRowsParams): void {
+        if (this.destroyed) {
+            return;
+        }
+
+        // NOTE: some of our tests rely on getRows() to return the actual promise
+        return this.getRowsImpl(params);
+    }
+
+    public destroy(): void {
+        this.destroyed = true;
+        this.onDestroy();
+    }
+}
+
+/**
+ * Factory function to create ag-grid data source backed by GoodData executeAFM.
+ *
+ * @param resultSpec
+ * @param getPage
+ * @param getExecution
+ * @param onSuccess
+ * @param getGridApi
+ * @param intl
+ * @param columnTotals
+ * @param getGroupingProvider
+ * @param cancelPagePromises
+ */
+export const createAgGridDataSource = (
     resultSpec: AFM.IResultSpec,
     getPage: IGetPage,
     getExecution: () => Execution.IExecutionResponses,
@@ -271,8 +334,8 @@ export const getAGGridDataSource = (
     columnTotals: AFM.ITotalItem[],
     getGroupingProvider: () => IGroupingProvider,
     cancelPagePromises: () => void,
-): IDatasource => ({
-    getRows: getDataSourceRowsGetter(
+): IDatasource => {
+    return new GdToAgGridAdapter(
         resultSpec,
         getPage,
         getExecution,
@@ -281,8 +344,6 @@ export const getAGGridDataSource = (
         intl,
         columnTotals,
         getGroupingProvider,
-    ),
-    destroy: () => {
-        cancelPagePromises();
-    },
-});
+        cancelPagePromises,
+    );
+};

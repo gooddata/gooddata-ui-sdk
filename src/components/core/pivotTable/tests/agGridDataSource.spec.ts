@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { IGridTotalsRow } from "../agGridTypes";
-import { areTotalsChanged, getAGGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
+import { areTotalsChanged, createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
 import { GroupingProviderFactory } from "../GroupingProvider";
 import { createIntlMock } from "../../../visualizations/utils/intlUtils";
 
@@ -27,7 +27,7 @@ describe("getGridDataSource", () => {
         const getExecution = () => pivotTableWithColumnAndRowAttributes;
         const groupingProvider = GroupingProviderFactory.createProvider(true);
 
-        const gridDataSource = getAGGridDataSource(
+        const gridDataSource = createAgGridDataSource(
             resultSpec,
             getPage,
             getExecution,
@@ -114,6 +114,26 @@ describe("getGridDataSource", () => {
 
         gridDataSource.destroy();
         expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+    });
+
+    it("should ignore getRowsRequest when called on destroyed data source", async () => {
+        const {
+            getPage,
+            successCallback,
+            gridDataSource,
+            onSuccess,
+            cancelPagePromises,
+        } = createMockedDataSource({
+            paginationProxy: {},
+        });
+
+        gridDataSource.destroy();
+        expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        expect(getPage).not.toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
     });
 
     describe("areTotalsChanged", () => {

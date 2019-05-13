@@ -62,7 +62,7 @@ import {
     getMeasureFormat,
 } from "./pivotTable/agGridUtils";
 import ApiWrapper from "./pivotTable/agGridApiWrapper";
-import { getAGGridDataSource } from "./pivotTable/agGridDataSource";
+import { createAgGridDataSource } from "./pivotTable/agGridDataSource";
 import {
     IGridCellEvent,
     IGridHeader,
@@ -386,7 +386,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             this.props.onDataSourceUpdateSuccess();
         };
 
-        this.agGridDataSource = getAGGridDataSource(
+        this.agGridDataSource = createAgGridDataSource(
             this.props.resultSpec,
             this.props.getPage,
             this.getExecution,
@@ -531,6 +531,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
         });
 
+        // this.invalidateDataSource();
         this.updateGrouping();
     };
 
