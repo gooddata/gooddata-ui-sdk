@@ -63,7 +63,7 @@ export namespace ExtendedDateFilters {
 
     export interface IRelativeDateFilterForm extends IDateFilterOption {
         type: RelativeFormType;
-        selectedGranularity?: DateFilterGranularity;
+        granularity?: DateFilterGranularity;
         availableGranularities: DateFilterGranularity[];
         from?: RelativeGranularityOffset;
         to?: RelativeGranularityOffset;
