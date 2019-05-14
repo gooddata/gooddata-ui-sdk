@@ -13,10 +13,8 @@ import {
 } from '../../../constants/visualizationTypes';
 import {
     IDrillEvent,
-    DrillEventContext,
     IDrillEventContextGroup,
     IDrillEventIntersectionElement,
-    IDrillEventContextPoint,
     IDrillEventContextTable,
     IDrillPoint
 } from '../../../interfaces/DrillEvents';
@@ -74,7 +72,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
     }
 }
 
-function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: IDrillEvent, target: EventTarget) {
+function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: EventTarget) {
     const returnValue = onFiredDrillEvent(data);
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
@@ -105,30 +103,23 @@ function composeDrillContextGroup(
     };
 }
 
-function composeDrillContextPoint(
-    { point }: IHighchartsChartDrilldownEvent,
-    chartType: ChartType
-): IDrillEventContextPoint {
-    const context: IDrillEventContextPoint = {
+function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: ChartType) {
+    const zProp = isNaN(point.z) ? {} : { z: point.z };
+    const valueProp = (isTreemap(chartType) || isHeatmap(chartType)) ? {
+        value: point.value ? point.value.toString() : ''
+    } : {};
+    const xyProp = isTreemap(chartType) ? {} : {
+        x: point.x,
+        y: point.y
+    };
+    return {
         type: chartType,
         element: getClickableElementNameByChartType(chartType),
-        intersection: point.drillIntersection
+        intersection: point.drillIntersection,
+        ...xyProp,
+        ...zProp,
+        ...valueProp
     };
-
-    if (!isTreemap(chartType)) {
-        context.x = point.x;
-        context.y = point.y;
-    }
-
-    if (!isNaN(point.z)) {
-        context.z = point.z;
-    }
-
-    if (isTreemap(chartType) || isHeatmap(chartType)) {
-        context.value = point.value ? point.value.toString() : '';
-    }
-
-    return context;
 }
 
 const chartClickDebounced = debounce((drillConfig: IDrillConfig, event: IHighchartsChartDrilldownEvent,
@@ -140,11 +131,11 @@ const chartClickDebounced = debounce((drillConfig: IDrillConfig, event: IHighcha
         usedChartType = get(event, ['point', 'series', 'options', 'type'], chartType);
     }
 
-    const drillContext: DrillEventContext = isGroupHighchartsDrillEvent(event)
+    const drillContext = isGroupHighchartsDrillEvent(event)
         ? composeDrillContextGroup(event, usedChartType)
         : composeDrillContextPoint(event, usedChartType);
 
-    const data: IDrillEvent = {
+    const data = {
         executionContext: afm,
         drillContext
     };

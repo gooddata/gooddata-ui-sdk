@@ -10,6 +10,19 @@ import { IMappingHeader } from './MappingHeader';
 
 export { DEFAULT_COLOR_PALETTE } from '../components/visualizations/utils/color';
 
+// reexport types to ensure backward compatibility (see BB-1519)
+export type IRGBColor = IColor;
+export {
+    GuidType,
+    RGBType,
+    IGuidColorItem,
+    IRGBColorItem,
+    IColorItem,
+    IColorMappingProperty,
+    IPropertiesControls,
+    IProperties
+} from '@gooddata/gooddata-js';
+
 export type IDataLabelsVisible = string | boolean;
 
 export interface IDataLabelsConfig {
