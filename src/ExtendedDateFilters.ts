@@ -151,6 +151,7 @@ export namespace ExtendedDateFilters {
     export interface IDateFilterRelativePreset extends IDateFilterBase {
         from: number;
         to: number;
+        granularity: DateFilterGranularity;
     }
 
     export interface IDateFilterConfigContent {
