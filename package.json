@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "@gooddata/eslint-config": "0.1.0",
-    "@gooddata/mock-js": "1.27.0",
+    "@gooddata/mock-js": "1.28.0",
     "@gooddata/test-storybook": "3.0.1",
     "@gooddata/tslint-config": "1.0.0",
     "@storybook/addon-actions": "3.4.10",
@@ -100,11 +100,11 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "11.9.0",
+    "@gooddata/gooddata-js": "11.10.0",
     "@gooddata/goodstrap": "60.5.1",
     "@gooddata/js-utils": "3.4.0",
     "@gooddata/numberjs": "^3.1.2",
-    "@gooddata/typings": "2.11.0",
+    "@gooddata/typings": "^2.13.2",
     "@types/highcharts": "4.2.56",
     "ag-grid": "^18.0.1",
     "ag-grid-react": "^18.0.0",
