@@ -8,10 +8,11 @@ import { createIntlMock } from "../../../visualizations/utils/intlUtils";
 const intl = createIntlMock();
 
 describe("getGridDataSource", () => {
-    function createMockedDataSource() {
+    function createMockedDataSource(customGridApiProps?: any) {
         const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
         const getPage = jest.fn().mockReturnValue(Promise.resolve(pivotTableWithColumnAndRowAttributes));
         const successCallback = jest.fn();
+        const failCallback = jest.fn();
         const cancelPagePromises = jest.fn();
         const onSuccess = jest.fn();
         const getGridApi = () => ({
@@ -20,6 +21,7 @@ describe("getGridDataSource", () => {
             paginationProxy: {
                 bottomRowIndex: 32,
             },
+            ...customGridApiProps,
         });
         const getExecution = () => pivotTableWithColumnAndRowAttributes;
         const groupingProvider = GroupingProviderFactory.createProvider(true);
@@ -39,6 +41,7 @@ describe("getGridDataSource", () => {
         return {
             gridDataSource,
             getPage,
+            failCallback,
             successCallback,
             onSuccess,
             cancelPagePromises,
@@ -70,6 +73,7 @@ describe("getGridDataSource", () => {
             getPage,
             successCallback,
             gridDataSource,
+            failCallback,
             onSuccess,
             cancelPagePromises,
         } = createMockedDataSource();
@@ -77,12 +81,35 @@ describe("getGridDataSource", () => {
             startRow: 100,
             endRow: 200,
             successCallback,
+            failCallback,
             sortModel: [],
         } as any);
         expect(getRowsResult).toEqual(null);
         expect(getPage).not.toHaveBeenCalled();
         expect(successCallback).not.toHaveBeenCalled();
         expect(onSuccess).not.toHaveBeenCalled();
+        expect(failCallback).toHaveBeenCalled();
+
+        gridDataSource.destroy();
+        expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+    });
+
+    it("should ignore getRowsRequest validation when gridApi is not providing expected data", async () => {
+        const resultSpec = pivotTableWithColumnAndRowAttributes.executionRequest.resultSpec;
+        const {
+            getPage,
+            successCallback,
+            gridDataSource,
+            onSuccess,
+            cancelPagePromises,
+        } = createMockedDataSource({
+            paginationProxy: {},
+        });
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        expect(getPage).toHaveBeenCalledWith(resultSpec, [0, undefined], [0, undefined]);
+        expect(successCallback).toHaveBeenCalled();
+        expect(onSuccess).toHaveBeenCalled();
 
         gridDataSource.destroy();
         expect(cancelPagePromises).toHaveBeenCalledTimes(1);
