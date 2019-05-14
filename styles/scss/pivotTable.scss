@@ -261,36 +261,32 @@ $header-cell-resize-width: 20px;
 
     &-menu {
         display: inline-flex;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
         flex: 0 0 auto;
+        overflow: hidden;
         border-top: 2px solid transparent;
         background-color: $gd-color-highlight-dimmed;
+        opacity: 0;
+        transition: width 200ms, opacity 100ms;
+        cursor: pointer;
 
         &:hover {
             background-color: darken($gd-color-highlight-dimmed, 3%);
         }
 
-        & > div {
-            cursor: pointer;
-            opacity: 0;
-            transition: width 200ms, opacity 100ms;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            & > .menu-icon {
-                width: 16px;
-                height: 16px;
-                background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg");
-            }
+        .menu-icon {
+            width: 16px;
+            height: 16px;
+            background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg");
         }
 
-        &--hide > div {
+        &--hide {
             width: 0;
             opacity: 0;
         }
 
-        &--show > div {
+        &--show {
             width: 32px;
             opacity: 1;
         }
