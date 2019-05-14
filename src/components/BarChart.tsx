@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
@@ -10,9 +10,9 @@ import { convertBucketsToAFM } from "../helpers/conversion";
 import { getStackingResultSpec } from "../helpers/resultSpec";
 import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
 import {
-    getSanitizedBucketsAndStackingConfig,
     getViewByTwoAttributes,
-    ISanitizedBucketsAndStackingConfig,
+    sanitizeConfig,
+    sanitizeComputeRatioOnMeasures,
 } from "../helpers/optionalStacking/common";
 
 export interface IBarChartBucketProps {
@@ -34,18 +34,22 @@ type IBarChartNonBucketProps = Subtract<IBarChartProps, IBarChartBucketProps>;
  * is a component with bucket props measures, viewBy, stackBy, filters
  */
 export function BarChart(props: IBarChartProps): JSX.Element {
+    const measures = sanitizeComputeRatioOnMeasures(props.measures);
+    const viewBy = getViewByTwoAttributes(props.viewBy); // could be one or two attributes
+    const stackBy = props.stackBy ? [props.stackBy] : [];
+
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || [],
+            items: measures,
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: getViewByTwoAttributes(props.viewBy), // could be one or two attributes
+            items: viewBy, // could be one or two attributes
         },
         {
             localIdentifier: STACK,
-            items: props.stackBy ? [props.stackBy] : [],
+            items: stackBy,
         },
     ];
 
@@ -56,19 +60,15 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-
-    const {
-        buckets: sanitizedBuckets,
-        config: sanitizedConfig,
-    }: ISanitizedBucketsAndStackingConfig = getSanitizedBucketsAndStackingConfig(buckets, newProps.config);
+    const sanitizedConfig = sanitizeConfig(measures, newProps.config, stackBy.length > 0);
 
     return (
         <AfmBarChart
             {...newProps}
             config={sanitizedConfig}
             projectId={props.projectId}
-            afm={convertBucketsToAFM(sanitizedBuckets, props.filters)}
-            resultSpec={getStackingResultSpec(sanitizedBuckets, props.sortBy)}
+            afm={convertBucketsToAFM(buckets, props.filters)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }

@@ -2,6 +2,7 @@
 import * as React from "react";
 import omit = require("lodash/omit");
 import set = require("lodash/set");
+import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
 import isArray = require("lodash/isArray");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
@@ -13,6 +14,8 @@ import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conver
 import { getResultSpec } from "../helpers/resultSpec";
 import { MEASURES, SECONDARY_MEASURES, VIEW } from "../constants/bucketNames";
 import { setMeasuresToSecondaryAxis } from "../helpers/dualAxis";
+import { sanitizeConfig, sanitizeComputeRatioOnMeasures } from "../helpers/optionalStacking/common";
+import { IChartConfig } from "../interfaces/Config";
 
 export interface IComboChartBucketProps {
     columnMeasures?: VisualizationInput.IMeasure[];
@@ -31,14 +34,42 @@ export interface IComboChartProps extends ICommonChartProps, IComboChartBucketPr
 type IComboChartNonBucketProps = Subtract<IComboChartProps, IComboChartBucketProps>;
 
 /**
- * [ComboChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/combo_chart_component.html)
+ * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
  * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
  */
 export function ComboChart(props: IComboChartProps): JSX.Element {
+    const comboProps = sanitizeComboProps(props);
+    const buckets = getBuckets(comboProps);
+    const config = getConfiguration(buckets, comboProps);
+
+    const newProps: IComboChartNonBucketProps = omit<IComboChartProps, keyof IComboChartBucketProps>(
+        comboProps,
+        [
+            "primaryMeasures",
+            "secondaryMeasures",
+            "columnMeasures",
+            "lineMeasures",
+            "viewBy",
+            "filters",
+            "sortBy",
+        ],
+    );
+
+    return (
+        <AfmComboChart
+            {...newProps}
+            config={config}
+            projectId={comboProps.projectId}
+            afm={convertBucketsToAFM(buckets, comboProps.filters)}
+            resultSpec={getResultSpec(buckets, comboProps.sortBy)}
+        />
+    );
+}
+
+function deprecateOldProps(props: IComboChartProps): IComboChartProps {
     const clonedProps = cloneDeep(props);
-    const { columnMeasures, lineMeasures, viewBy } = clonedProps;
+    const { columnMeasures, lineMeasures } = clonedProps;
     const isOldConfig = Boolean(columnMeasures || lineMeasures);
-    const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
 
     if (isOldConfig) {
         set(clonedProps, "primaryMeasures", columnMeasures);
@@ -51,9 +82,27 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
         );
     }
 
-    const { primaryMeasures = [], secondaryMeasures = [] } = clonedProps;
+    return clonedProps;
+}
 
-    const buckets: VisualizationObject.IBucket[] = [
+function sanitizeComboProps(props: IComboChartProps): IComboChartProps {
+    const newProps = deprecateOldProps(props);
+    const { primaryMeasures = [], secondaryMeasures = [] } = newProps;
+    const isDualAxis = get(props, "config.dualAxis", true);
+    const disableComputeRatio = !isDualAxis && primaryMeasures.length + secondaryMeasures.length > 1;
+
+    return {
+        ...newProps,
+        primaryMeasures: sanitizeComputeRatioOnMeasures(primaryMeasures, disableComputeRatio),
+        secondaryMeasures: sanitizeComputeRatioOnMeasures(secondaryMeasures, disableComputeRatio),
+    };
+}
+
+function getBuckets(props: IComboChartProps): VisualizationObject.IBucket[] {
+    const { primaryMeasures, secondaryMeasures, viewBy } = props;
+    const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
+
+    return [
         {
             localIdentifier: MEASURES,
             items: primaryMeasures,
@@ -67,30 +116,15 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
             items: categories,
         },
     ];
+}
 
-    const newProps: IComboChartNonBucketProps = omit<IComboChartProps, keyof IComboChartBucketProps>(
-        clonedProps,
-        [
-            "primaryMeasures",
-            "secondaryMeasures",
-            "columnMeasures",
-            "lineMeasures",
-            "viewBy",
-            "filters",
-            "sortBy",
-        ],
-    );
-    newProps.config = {
-        ...setMeasuresToSecondaryAxis(secondaryMeasures, newProps.config),
-        mdObject: convertBucketsToMdObject(buckets, props.filters, "local:combo"),
-    };
+function getConfiguration(buckets: VisualizationObject.IBucket[], props: IComboChartProps): IChartConfig {
+    const { primaryMeasures, secondaryMeasures, filters, config } = props;
+    const isDualAxis = get(props, "config.dualAxis", true);
+    const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures, ...secondaryMeasures];
 
-    return (
-        <AfmComboChart
-            {...newProps}
-            projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getResultSpec(buckets, props.sortBy)}
-        />
-    );
+    return sanitizeConfig(measuresOnPrimaryAxis, {
+        ...setMeasuresToSecondaryAxis(secondaryMeasures, config),
+        mdObject: convertBucketsToMdObject(buckets, filters, "local:combo"),
+    });
 }

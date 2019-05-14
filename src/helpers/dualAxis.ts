@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import { IChartConfig } from "../interfaces/Config";
 
 export function setMeasuresToSecondaryAxis(
-    measures: VisualizationObject.IMeasure[],
+    measures: VisualizationObject.BucketItem[],
     config: IChartConfig = {},
 ): IChartConfig {
     const isDualAxis = get(config, "dualAxis", true);
