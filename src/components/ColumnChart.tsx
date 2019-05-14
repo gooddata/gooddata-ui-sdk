@@ -9,7 +9,11 @@ import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM } from "../helpers/conversion";
 import { getStackingResultSpec } from "../helpers/resultSpec";
 import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
-import { getViewByTwoAttributes } from "../helpers/optionalStacking/common";
+import {
+    getSanitizedBucketsAndStackingConfig,
+    getViewByTwoAttributes,
+    ISanitizedBucketsAndStackingConfig,
+} from "../helpers/optionalStacking/common";
 
 export interface IColumnChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -50,12 +54,18 @@ export function ColumnChart(props: IColumnChartProps): JSX.Element {
         ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     );
 
+    const {
+        buckets: sanitizedBuckets,
+        config: sanitizedConfig,
+    }: ISanitizedBucketsAndStackingConfig = getSanitizedBucketsAndStackingConfig(buckets, newProps.config);
+
     return (
         <AfmColumnChart
             {...newProps}
+            config={sanitizedConfig}
             projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
+            afm={convertBucketsToAFM(sanitizedBuckets, props.filters)}
+            resultSpec={getStackingResultSpec(sanitizedBuckets, props.sortBy)}
         />
     );
 }

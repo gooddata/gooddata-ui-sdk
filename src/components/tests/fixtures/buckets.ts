@@ -3,6 +3,9 @@ import { VisualizationObject } from "@gooddata/typings";
 import { measure } from "../../../helpers/model";
 
 export const M1: VisualizationObject.IMeasure = measure("m1").localIdentifier("m1");
+export const M1WithRatio: VisualizationObject.IMeasure = measure("m1")
+    .localIdentifier("m1")
+    .ratio();
 
 export const M2: VisualizationObject.IMeasure = measure("m2").localIdentifier("m2");
 

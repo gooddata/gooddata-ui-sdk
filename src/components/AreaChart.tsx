@@ -11,6 +11,10 @@ import { convertBucketsToAFM } from "../helpers/conversion";
 import { getStackingResultSpec } from "../helpers/resultSpec";
 import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
 import { verifyBuckets, getBucketsProps, getConfigProps } from "../helpers/optionalStacking/areaChart";
+import {
+    getSanitizedBucketsAndStackingConfig,
+    ISanitizedBucketsAndStackingConfig,
+} from "../helpers/optionalStacking/common";
 
 export interface IAreaChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -63,12 +67,18 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         ...configProp,
     };
 
+    const {
+        buckets: sanitizedBuckets,
+        config: sanitizedConfig,
+    }: ISanitizedBucketsAndStackingConfig = getSanitizedBucketsAndStackingConfig(buckets, newProps.config);
+
     return (
         <AfmAreaChart
             {...newProps}
+            config={sanitizedConfig}
             projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
+            afm={convertBucketsToAFM(sanitizedBuckets, props.filters)}
+            resultSpec={getStackingResultSpec(sanitizedBuckets, props.sortBy)}
         />
     );
 }

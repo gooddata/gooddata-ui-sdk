@@ -1,11 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { shallow, ShallowWrapper } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
-import { VisualizationObject, AFM } from "@gooddata/typings";
+import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/typings";
 import { BarChart } from "../BarChart";
 import { BarChart as AfmBarChart } from "../afm/BarChart";
-import { M1 } from "./fixtures/buckets";
+import { M1, M1WithRatio } from "./fixtures/buckets";
+import { IChartConfig } from "../../interfaces/Config";
+
+function renderChart(
+    measures: VisualizationInput.AttributeOrMeasure[],
+    config?: IChartConfig,
+): ShallowWrapper {
+    return shallow(
+        <BarChart
+            config={config}
+            projectId="foo"
+            measures={measures}
+            sdk={factory({ domain: "example.com" })}
+        />,
+    );
+}
 
 describe("BarChart", () => {
     const measure: VisualizationObject.IMeasure = {
@@ -53,9 +68,7 @@ describe("BarChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <BarChart projectId="foo" measures={[M1]} sdk={factory({ domain: "example.com" })} />,
-        );
+        const wrapper = renderChart([M1]);
         expect(wrapper.find(AfmBarChart)).toHaveLength(1);
     });
 
@@ -127,5 +140,25 @@ describe("BarChart", () => {
         expect(wrapper.find(AfmBarChart)).toHaveLength(1);
         expect(wrapper.find(AfmBarChart).prop("afm")).toEqual(expectedAfm);
         expect(wrapper.find(AfmBarChart).prop("resultSpec")).toEqual(expectedResultSpec);
+    });
+
+    describe("Stacking", () => {
+        const config = { stackMeasures: true, stackMeasuresToPercent: true };
+
+        it("should reset stackMeasuresToPercent in case of one measure", () => {
+            const wrapper = renderChart([M1], config);
+            expect(wrapper.find(AfmBarChart).prop("config")).toEqual({
+                stackMeasures: true,
+                stackMeasuresToPercent: false,
+            });
+        });
+
+        it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
+            const wrapper = renderChart([M1WithRatio], config);
+            expect(wrapper.find(AfmBarChart).prop("config")).toEqual({
+                stackMeasures: false,
+                stackMeasuresToPercent: false,
+            });
+        });
     });
 });
