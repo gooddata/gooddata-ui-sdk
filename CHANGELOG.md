@@ -25,6 +25,14 @@ The REST API versions in the table are just for your information as the values a
 
 - Pivot table prop `groupRows` is true by default, thus grouping is enabled by default (BB-1385)
 
+## 6.3.2
+
+ May 9, 2019
+
+ ### Changed
+
+ - Fixed drilling context types that were changed in version 6.3.0 resulting in major change. Types are now backward compatible with pre 6.3.0 versions.
+
 ## 6.3.1
 
 April 29, 2019
