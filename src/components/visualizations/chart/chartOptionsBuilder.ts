@@ -142,6 +142,7 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
     VisualizationTypes.AREA,
+    VisualizationTypes.COMBO,
 ];
 
 export interface IChartOptions {
@@ -1773,6 +1774,7 @@ export function getChartOptions(
             type,
             xAxes,
             yAxes,
+            stacking,
             legendLayout: config.legendLayout || "horizontal",
             actions: {
                 tooltip: buildTooltipFactory(viewByAttribute, type, config),

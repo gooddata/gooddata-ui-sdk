@@ -354,7 +354,7 @@ function getArrowPositionForTail(defaultArrowPosition: number, point: any, chart
 
 function formatLabel(value: any, format: any, config: IChartConfig = {}) {
     // no labels for missing values
-    if (value === null) {
+    if (isNil(value)) {
         return null;
     }
 
@@ -372,15 +372,13 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
     const isSingleAxis = get(this, "series.chart.yAxis.length", 1) === 1;
     const isPrimaryAxis = !get(this, "series.yAxis.opposite", false);
 
-    if (isNil(this.percentage)) {
-        return "";
-    }
     // only format data labels to percentage for
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
-    if (isSingleAxis || isPrimaryAxis) {
+    if (this.percentage && (isSingleAxis || isPrimaryAxis)) {
         return percentFormatter(this.percentage);
     }
+
     return labelFormatter.call(this, config);
 }
 

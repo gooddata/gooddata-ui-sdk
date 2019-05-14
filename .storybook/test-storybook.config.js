@@ -34,6 +34,18 @@ const configuration = {
             },
             'should override primaryMeasures & secondaryMeasures': {
                 readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'stack primary measures': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'stack primary measures to percent': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'discard stacking measures for line chart and all measures on secondary axis': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'empty primary measure & discard stacking': {
+                readySelector: '.screenshot-ready-wrapper-done'
             }
         },
         'Core components/ColumnChart': {

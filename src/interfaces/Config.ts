@@ -79,6 +79,30 @@ export interface IChartConfig extends IMeasuresStackConfig {
     secondaryChartType?: VisualizationObject.VisualizationType;
 }
 
+export interface IStackLabels {
+    enabled?: boolean;
+}
+
+export interface IHighChartAxis {
+    AXIS_LINE_COLOR: string;
+    categories: string[];
+    opposite: boolean;
+    stackLabels: IStackLabels;
+    defaultFormat?: string;
+    gridLineColor?: string;
+    gridLineWidth?: number;
+}
+
+export interface IYAxisConfig {
+    yAxis?: IHighChartAxis[];
+}
+
+export interface IStackMeasuresConfig {
+    stackMeasuresToPercent?: boolean;
+    series?: ISeriesItem[];
+    yAxis?: IHighChartAxis[];
+}
+
 export interface IAxisConfig {
     visible?: boolean;
     labelsEnabled?: boolean;

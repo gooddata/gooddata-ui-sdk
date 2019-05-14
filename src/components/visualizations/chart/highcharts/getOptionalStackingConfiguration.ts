@@ -5,14 +5,22 @@ import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import { IAxis, IChartConfig, ISeriesItem, IDataLabelsVisible } from "../../../../interfaces/Config";
+import {
+    IAxis,
+    IChartConfig,
+    ISeriesItem,
+    IDataLabelsVisible,
+    IStackMeasuresConfig,
+    IHighChartAxis,
+    IYAxisConfig,
+} from "../../../../interfaces/Config";
 import {
     IChartOptions,
     isNegativeValueIncluded,
     supportedStackingAttributesChartTypes,
 } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelsVisibilityConfig } from "./customConfiguration";
-import { isBarChart, isColumnChart } from "../../utils/common";
+import { isBarChart, isColumnChart, isComboChart, isLineChart, isPrimaryYAxis } from "../../utils/common";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 
 export const NORMAL_STACK = "normal";
@@ -48,17 +56,28 @@ function handleStackMeasuresToPercent(stackMeasuresToPercent: boolean, seriesIte
         : seriesItem;
 }
 
-function handleDualAxis(isDualAxis: boolean, seriesItem: ISeriesItem): ISeriesItem {
-    if (!isDualAxis) {
+function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem): string {
+    const { yAxes, type } = chartOptions;
+    const { stacking, yAxis } = seriesItem;
+    const seriesChartType = seriesItem.type || type;
+    const defaultStackingValue = isComboChart(type) ? null : NORMAL_STACK;
+
+    return isPrimaryYAxis(yAxes[yAxis]) && !isLineChart(seriesChartType) ? stacking : defaultStackingValue;
+}
+
+function handleDualAxis(chartOptions: IChartOptions, seriesItem: ISeriesItem): ISeriesItem {
+    const { yAxes, type } = chartOptions;
+    const isDualAxis = yAxes.length === 2;
+
+    if (!isDualAxis && !isComboChart(type)) {
         return seriesItem;
     }
 
-    const { stacking, yAxis } = seriesItem;
-    const isFirstAxis = yAxis === 0;
+    const { stacking } = seriesItem;
 
     // highcharts stack config
     // percent stack is only applied to primary Y axis
-    const hcStackingConfig = stacking ? { stacking: isFirstAxis ? stacking : NORMAL_STACK } : {};
+    const hcStackingConfig = stacking ? { stacking: getStackingValue(chartOptions, seriesItem) } : {};
 
     return {
         ...seriesItem,
@@ -113,17 +132,17 @@ export function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesIte
 }
 
 function getSeriesConfiguration(
+    chartOptions: IChartOptions,
     config: any,
     stackMeasures: boolean,
     stackMeasuresToPercent: boolean,
-    isDualAxis: boolean,
-) {
+): { series: ISeriesItem[] } {
     const { series } = config;
 
     const handlers = [
         partial(handleStackMeasure, stackMeasures),
         partial(handleStackMeasuresToPercent, stackMeasuresToPercent),
-        partial(handleDualAxis, isDualAxis),
+        partial(handleDualAxis, chartOptions),
     ];
 
     // get series with stacking config
@@ -141,7 +160,11 @@ function hasNegativeValues(series: ISeriesItem[] = [], index: number) {
     return isNegativeValueIncluded(matchedSeries);
 }
 
-export function getYAxisConfiguration(chartOptions: IChartOptions, config: any, chartConfig: IChartConfig) {
+export function getYAxisConfiguration(
+    chartOptions: IChartOptions,
+    config: any,
+    chartConfig: IChartConfig,
+): IYAxisConfig {
     const { type } = chartOptions;
     const { yAxis, series } = config;
     const { stackMeasuresToPercent = false } = chartConfig;
@@ -155,7 +178,7 @@ export function getYAxisConfiguration(chartOptions: IChartOptions, config: any, 
     const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
     const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
-    const yAxisWithStackLabel = yAxis.map((axis: any, index: number) => {
+    const yAxisWithStackLabel = yAxis.map((axis: IHighChartAxis, index: number) => {
         // enable by default or follow dataLabels.visible config
         const stackLabelEnabled = isNil(dataLabelEnabled) || dataLabelEnabled;
 
@@ -184,19 +207,16 @@ export function getStackMeasuresConfiguration(
     chartOptions: IChartOptions,
     config: any,
     chartConfig: IChartConfig,
-) {
+): IStackMeasuresConfig {
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
 
     if (!stackMeasures && !stackMeasuresToPercent) {
         return {};
     }
 
-    const { yAxes } = chartOptions;
-    const isDualAxis = yAxes.length === 2;
-
     return {
         stackMeasuresToPercent, // this prop is used in 'dualAxesLabelFormatter.ts'
-        ...getSeriesConfiguration(config, stackMeasures, stackMeasuresToPercent, isDualAxis),
+        ...getSeriesConfiguration(chartOptions, config, stackMeasures, stackMeasuresToPercent),
         ...getYAxisConfiguration(chartOptions, config, chartConfig),
     };
 }
@@ -251,19 +271,21 @@ export function getShowInPercentConfiguration(
         return {};
     }
 
-    const { yAxes = [] } = chartOptions;
+    const { yAxes = [], type } = chartOptions;
     const percentageFormatter = partial(formatAsPercent, 1);
 
     // suppose that max number of y axes is 2
     // percentage format only supports primary axis
-    const yAxis = yAxes.map((_axis: any, index: number) => {
-        return index === 0
-            ? {
-                  labels: {
-                      formatter: percentageFormatter,
-                  },
-              }
-            : {};
+    const yAxis = yAxes.map((axis: IAxis, index: number) => {
+        if (index !== 0 || (isComboChart(type) && !isPrimaryYAxis(axis))) {
+            return {};
+        }
+
+        return {
+            labels: {
+                formatter: percentageFormatter,
+            },
+        };
     });
     return { yAxis };
 }

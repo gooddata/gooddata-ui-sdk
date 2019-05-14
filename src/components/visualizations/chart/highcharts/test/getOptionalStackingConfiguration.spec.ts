@@ -303,6 +303,126 @@ describe("getOptionalStackingConfiguration", () => {
             expect(result).not.toHaveProperty("yAxis.stackLabels");
         });
 
+        describe("Stack Measures in Combo chart", () => {
+            const chartOptions = {
+                type: VisualizationTypes.COMBO,
+                yAxes: [{ opposite: false }, { opposite: true }],
+            };
+
+            it.each([
+                ["stackMeasures", VisualizationTypes.COLUMN, NORMAL_STACK],
+                ["stackMeasures", VisualizationTypes.AREA, NORMAL_STACK],
+                ["stackMeasuresToPercent", VisualizationTypes.COLUMN, PERCENT_STACK],
+                ["stackMeasuresToPercent", VisualizationTypes.AREA, PERCENT_STACK],
+            ])(
+                "should return series with %s config if series type is %s",
+                (stackConfig: string, type: string, stackType: string) => {
+                    const config = {
+                        yAxis: [{}, {}],
+                        series: [
+                            {
+                                yAxis: 0,
+                                type,
+                            },
+                            {
+                                yAxis: 1,
+                                type: VisualizationTypes.LINE,
+                            },
+                        ],
+                    };
+                    const chartConfig = { [stackConfig]: true };
+                    const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                    expect(series).toEqual([
+                        {
+                            yAxis: 0,
+                            stack: 0,
+                            stacking: stackType,
+                            type,
+                        },
+                        {
+                            yAxis: 1,
+                            stack: null,
+                            stacking: null,
+                            type: VisualizationTypes.LINE,
+                        },
+                    ]);
+                },
+            );
+
+            it.each(["stackMeasures", "stackMeasuresToPercent"])(
+                "should NOT apply %s if series type is Line chart",
+                (stackConfig: string) => {
+                    const config = {
+                        yAxis: [{}, {}],
+                        series: [
+                            {
+                                yAxis: 0,
+                                type: VisualizationTypes.LINE,
+                            },
+                            {
+                                yAxis: 1,
+                                type: VisualizationTypes.AREA,
+                            },
+                        ],
+                    };
+                    const chartConfig = { [stackConfig]: true };
+                    const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                    expect(series).toEqual([
+                        {
+                            yAxis: 0,
+                            stack: 0,
+                            stacking: null,
+                            type: VisualizationTypes.LINE,
+                        },
+                        {
+                            yAxis: 1,
+                            stack: null,
+                            stacking: null,
+                            type: VisualizationTypes.AREA,
+                        },
+                    ]);
+                },
+            );
+
+            it.each([["stackMeasures", NORMAL_STACK], ["stackMeasuresToPercent", PERCENT_STACK]])(
+                "should NOT apply %s on secondary y-axis",
+                (stackConfig: string, stackType: string) => {
+                    const config = {
+                        yAxis: [{}, {}],
+                        series: [
+                            {
+                                yAxis: 0,
+                                type: VisualizationTypes.COLUMN,
+                            },
+                            {
+                                yAxis: 1,
+                                type: VisualizationTypes.AREA,
+                            },
+                        ],
+                    };
+                    const chartConfig = { [stackConfig]: true };
+                    const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                    expect(series).toEqual([
+                        {
+                            yAxis: 0,
+                            stack: 0,
+                            stacking: stackType,
+                            type: VisualizationTypes.COLUMN,
+                        },
+                        {
+                            yAxis: 1,
+                            stack: null,
+                            stacking: null,
+                            type: VisualizationTypes.AREA,
+                        },
+                    ]);
+                },
+            );
+        });
+
         describe("getYAxisConfiguration", () => {
             it("should return empty config with not column chart type", () => {
                 const chartOptions = { type: VisualizationTypes.BAR };
@@ -494,6 +614,23 @@ describe("getOptionalStackingConfiguration", () => {
             };
             const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
             expect(result.yAxis[0]).toHaveProperty("labels.formatter");
+        });
+
+        it("should NOT add formatter for secondary y-axis in combo chart", () => {
+            const chartOptions = {
+                type: VisualizationTypes.COMBO,
+                yAxes: [{ opposite: false }, { opposite: true }],
+                data: {
+                    series: Array(2).fill({ yAxis: 0 }),
+                },
+            };
+            const chartConfig = {
+                stackMeasuresToPercent: true,
+            };
+
+            const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            expect(result.yAxis[0]).toHaveProperty("labels.formatter");
+            expect(result.yAxis[1]).toEqual({});
         });
     });
 
