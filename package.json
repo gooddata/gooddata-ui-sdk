@@ -98,7 +98,7 @@
     "webpack-dev-server": "1.16.1"
   },
   "dependencies": {
-    "@gooddata/typings": "2.11.0",
+    "@gooddata/typings": "^2.13.2",
     "es6-promise": "3.0.2",
     "fetch-cookie": "0.7.0",
     "invariant": "2.2.2",

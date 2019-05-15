@@ -11,8 +11,13 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.10.0"></a>
+## 2019-05-15 Version [11.10.0](https://github.com/gooddata/gooddata-js/compare/v11.9.0...v11.10.0)
+
+- relax of @gooddata/typings dependency specification (add a ^)
+
 <a name="11.9.0"></a>
-## 2019-xx-yy Version [11.9.0](https://github.com/gooddata/gooddata-js/compare/v11.8.0...v11.9.0)
+## 2019-04-23 Version [11.9.0](https://github.com/gooddata/gooddata-js/compare/v11.8.0...v11.9.0)
 
 - internal upgrade to Typescript 3
 
