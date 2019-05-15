@@ -350,7 +350,15 @@ export class VisualizationWrapped extends React.Component<
             case VisualizationTypes.TABLE:
                 return <TableComponent {...commonProps} {...sourceProps} totals={totals} />;
             case VisualizationTypes.PIVOT_TABLE: {
-                const pivotBucketProps = mdObjectToPivotBucketProps(mdObject, filtersFromProps);
+                const processedVisualizationObject = {
+                    ...mdObject,
+                    content: fillMissingTitles(mdObject.content, locale),
+                };
+                this.exportTitle = get(processedVisualizationObject, "meta.title", "");
+                const pivotBucketProps = mdObjectToPivotBucketProps(
+                    processedVisualizationObject,
+                    filtersFromProps,
+                );
                 // we do not need to pass totals={totals} because BucketPivotTable deals with changes in totals itself
                 return <PivotTableComponent {...commonProps} {...pivotBucketProps} />;
             }
