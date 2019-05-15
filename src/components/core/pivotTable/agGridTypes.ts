@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { IMappingHeader } from "./MappingHeader";
-import { ColDef, CellEvent } from "ag-grid";
+import { AFM } from "@gooddata/typings";
+import { IMappingHeader } from "../../../interfaces/MappingHeader";
+import { ColDef, CellEvent, GridOptions } from "ag-grid";
 
 export interface IGridRow {
     headerItemMap: {
@@ -41,4 +42,24 @@ export interface IGridAdapterOptions {
     makeRowGroups?: boolean;
     addLoadingRenderer?: string;
     columnDefOptions?: IColumnDefOptions;
+}
+
+export interface IAgGridPage {
+    columnDefs: IGridHeader[];
+    rowData: IGridRow[];
+    rowTotals: IGridTotalsRow[];
+}
+
+export interface ISortModelItem {
+    colId: string;
+    sort: AFM.SortDirection;
+}
+
+export interface ICustomGridOptions extends GridOptions {
+    enableMenu?: boolean;
+}
+
+export interface ISortedByColumnIndexes {
+    attributes: number[];
+    all: number[];
 }

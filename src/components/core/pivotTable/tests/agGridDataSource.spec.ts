@@ -1,10 +1,11 @@
 // (C) 2019 GoodData Corporation
-import { IGridTotalsRow } from "../../../../interfaces/AGGrid";
-import { areTotalsChanged, getAGGridDataSource } from "../agGridDataSource";
-import { pivotTableWithColumnAndRowAttributes } from "../../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../../stories/test_data/fixtures";
+import { IGridTotalsRow } from "../agGridTypes";
+import { areTotalsChanged, createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
 import { GroupingProviderFactory } from "../GroupingProvider";
 import { createIntlMock } from "../../../visualizations/utils/intlUtils";
 
+const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();
 
 describe("getGridDataSource", () => {
@@ -26,7 +27,7 @@ describe("getGridDataSource", () => {
         const getExecution = () => pivotTableWithColumnAndRowAttributes;
         const groupingProvider = GroupingProviderFactory.createProvider(true);
 
-        const gridDataSource = getAGGridDataSource(
+        const gridDataSource = createAgGridDataSource(
             resultSpec,
             getPage,
             getExecution,
@@ -115,6 +116,26 @@ describe("getGridDataSource", () => {
         expect(cancelPagePromises).toHaveBeenCalledTimes(1);
     });
 
+    it("should ignore getRowsRequest when called on destroyed data source", async () => {
+        const {
+            getPage,
+            successCallback,
+            gridDataSource,
+            onSuccess,
+            cancelPagePromises,
+        } = createMockedDataSource({
+            paginationProxy: {},
+        });
+
+        gridDataSource.destroy();
+        expect(cancelPagePromises).toHaveBeenCalledTimes(1);
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        expect(getPage).not.toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
+    });
+
     describe("areTotalsChanged", () => {
         function mockGridApi(totals: any[] = []): any {
             return {
@@ -156,5 +177,32 @@ describe("getGridDataSource", () => {
                 expect(areTotalsChanged(gridApi, passedTotals)).toBe(expectedValue);
             },
         );
+    });
+});
+
+describe("executionToAGGridAdapter", () => {
+    it("should return grid data for executionResult", () => {
+        expect(
+            executionToAGGridAdapter(
+                {
+                    executionResponse: fixtures.pivotTableWithColumnAndRowAttributes.executionResponse,
+                    executionResult: fixtures.pivotTableWithColumnAndRowAttributes.executionResult,
+                },
+                {},
+                intl,
+            ),
+        ).toMatchSnapshot();
+    });
+    it("should return grid data for executionResult with rowGroups and loadingRenderer", () => {
+        expect(
+            executionToAGGridAdapter(
+                {
+                    executionResponse: fixtures.barChartWithStackByAndOnlyOneStack.executionResponse,
+                    executionResult: fixtures.barChartWithStackByAndOnlyOneStack.executionResult,
+                },
+                {},
+                intl,
+            ),
+        ).toMatchSnapshot();
     });
 });
