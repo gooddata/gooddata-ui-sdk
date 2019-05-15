@@ -7,7 +7,7 @@ import { getMappingHeaderName } from "../../../helpers/mappingHeader";
 import InjectedIntl = ReactIntl.InjectedIntl;
 
 import { getTreeLeaves, getSubtotalStyles } from "./agGridUtils";
-import { ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
+import { COLUMN_GROUPING_DELIMITER, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import {
     getMeasureSortItemFieldAndDirection,
     getSortsFromModel,
@@ -173,7 +173,7 @@ export const executionToAGGridAdapter = (
                               return getMappingHeaderName(header);
                           })
                           .filter((item: string) => item !== null)
-                          .join(" › "),
+                          .join(COLUMN_GROUPING_DELIMITER),
                       field: "columnGroupLabel",
                       children: columnHeaders,
                       drillItems: [],

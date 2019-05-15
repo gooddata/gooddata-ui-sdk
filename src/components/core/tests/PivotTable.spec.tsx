@@ -1,15 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import { oneAttributeOneMeasureSortByMeasureExecutionObject } from "../../../execution/fixtures/ExecuteAfm.fixtures";
 import { createIntlMock } from "../../visualizations/utils/intlUtils";
 import noop = require("lodash/noop");
 
-import { PivotTable, PivotTableInner, RowLoadingElement, IPivotTableInnerProps } from "../PivotTable";
+import { PivotTable, PivotTableInner, IPivotTableInnerProps } from "../PivotTable";
 import { oneMeasureDataSource, oneAttributeOneMeasureDataSource } from "../../tests/mocks";
-import { LoadingComponent } from "../../simple/LoadingComponent";
 import { getParsedFields } from "../pivotTable/agGridUtils";
-import { ICellRendererParams } from "ag-grid";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
 import * as stickyGroupHandler from "../pivotTable/stickyGroupHandler";
 import agGridApiWrapper from "../pivotTable/agGridApiWrapper";
@@ -41,28 +39,6 @@ describe("PivotTable", () => {
     it("should render PivotTableInner", () => {
         const wrapper = renderComponent();
         expect(wrapper.find(PivotTableInner)).toHaveLength(1);
-    });
-
-    describe("RowLoadingElement", () => {
-        it("should show LoadingComponent for empty cell", async () => {
-            const props: ICellRendererParams = {
-                node: {},
-                value: 123,
-                valueFormatted: noop,
-            } as any;
-            const wrapper = shallow(<RowLoadingElement {...props} />);
-            expect(wrapper.find(LoadingComponent)).toHaveLength(1);
-        });
-
-        it("should show formatted value for existing data", async () => {
-            const props: ICellRendererParams = {
-                node: { id: 1 },
-                value: Math.PI,
-                formatValue: (value: number) => value.toFixed(2),
-            } as any;
-            const wrapper = shallow(<RowLoadingElement {...props} />);
-            expect(wrapper.html()).toEqual('<span class="s-value s-loading-done">3.14</span>');
-        });
     });
 
     describe("groupRows for attribute columns", () => {

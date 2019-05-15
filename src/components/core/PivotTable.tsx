@@ -6,7 +6,6 @@ import {
     ColumnResizedEvent,
     GridApi,
     GridReadyEvent,
-    ICellRendererParams,
     IDatasource,
     SortChangedEvent,
 } from "ag-grid";
@@ -53,26 +52,35 @@ import {
     visualizationLoadingHOC,
 } from "./base/VisualizationLoadingHOC";
 import { getUpdatedColumnTotals } from "./pivotTable/aggregationsMenuHelper";
-import {
-    cellRenderer,
-    getRowNodeId,
-    getTreeLeaves,
-    indexOfTreeNode,
-    isMeasureColumnReadyToRender,
-    getMeasureFormat,
-} from "./pivotTable/agGridUtils";
 import ApiWrapper from "./pivotTable/agGridApiWrapper";
-import { createAgGridDataSource } from "./pivotTable/agGridDataSource";
 import {
+    COLUMN_ATTRIBUTE_COLUMN,
+    MEASURE_COLUMN,
+    ROW_ATTRIBUTE_COLUMN,
+    ROW_TOTAL,
+} from "./pivotTable/agGridConst";
+import { createAgGridDataSource } from "./pivotTable/agGridDataSource";
+import { getDrillIntersection, getDrillRowData } from "./pivotTable/agGridDrilling";
+import { getSortsFromModel, isSortedByFirstAttibute } from "./pivotTable/agGridSorting";
+import {
+    ICustomGridOptions,
     IGridCellEvent,
     IGridHeader,
     IGridRow,
     ISortModelItem,
-    ICustomGridOptions,
 } from "./pivotTable/agGridTypes";
+import {
+    cellRenderer,
+    getMeasureFormat,
+    getRowNodeId,
+    getTreeLeaves,
+    indexOfTreeNode,
+    isMeasureColumnReadyToRender,
+} from "./pivotTable/agGridUtils";
 import ColumnGroupHeader from "./pivotTable/ColumnGroupHeader";
 import ColumnHeader from "./pivotTable/ColumnHeader";
 import { GroupingProviderFactory, IGroupingProvider } from "./pivotTable/GroupingProvider";
+import { RowLoadingElement } from "./pivotTable/RowLoadingElement";
 import {
     initStickyHeaders,
     stickyRowExists,
@@ -87,14 +95,6 @@ import noop = require("lodash/noop");
 import sumBy = require("lodash/sumBy");
 
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
-import { isSortedByFirstAttibute, getSortsFromModel } from "./pivotTable/agGridSorting";
-import {
-    ROW_TOTAL,
-    ROW_ATTRIBUTE_COLUMN,
-    COLUMN_ATTRIBUTE_COLUMN,
-    MEASURE_COLUMN,
-} from "./pivotTable/agGridConst";
-import { getDrillIntersection, getDrillRowData } from "./pivotTable/agGridDrilling";
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -125,27 +125,6 @@ export type IPivotTableInnerProps = IPivotTableProps &
 const DEFAULT_ROW_HEIGHT = 28;
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
-
-/**
- * This component is passed to AG-Grid and will be used to render loading indicator on row-level
- *
- * @param props
- * @constructor
- */
-export const RowLoadingElement = (props: ICellRendererParams) => {
-    if (props.node.rowPinned === "top") {
-        return <span className={"gd-sticky-header-value"}>{props.formatValue(props.value)}</span>;
-    }
-
-    // rows that are still loading do not have node.id
-    // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
-    if (props.node.id !== undefined || props.node.rowPinned === "bottom") {
-        // props.value is always unformatted
-        // there is props.formattedValue, but this is null for row attributes for some reason
-        return <span className={"s-value s-loading-done"}>{props.formatValue(props.value)}</span>;
-    }
-    return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
-};
 
 /**
  * Pivot Table react component
@@ -531,7 +510,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
         });
 
-        // this.invalidateDataSource();
         this.updateGrouping();
     };
 

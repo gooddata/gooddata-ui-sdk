@@ -11,3 +11,4 @@ export const ID_SEPARATOR = "_";
 export const ID_SEPARATOR_PLACEHOLDER = "UNDERSCORE";
 export const DOT_PLACEHOLDER = "DOT";
 export const ROW_TOTAL = "rowTotal";
+export const COLUMN_GROUPING_DELIMITER = " › ";
