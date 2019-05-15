@@ -12,9 +12,7 @@ import { mergeFiltersToAfm } from "./afmHelper";
 function getTotals(
     mdObject: VisualizationObject.IVisualizationObject,
 ): VisualizationObject.IVisualizationTotal[] {
-    const attributes: VisualizationObject.IBucket = mdObject.content.buckets.find(
-        bucket => bucket.localIdentifier === ATTRIBUTE,
-    );
+    const attributes = mdObject.content.buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE);
     return get(attributes, "totals", []);
 }
 
@@ -70,13 +68,20 @@ export const mdObjectToPivotBucketProps = (
         (rowBucket && (rowBucket.items as VisualizationObject.IVisualizationAttribute[])) || [];
     const columns: IPivotTableBucketProps["columns"] =
         (columnBucket && (columnBucket.items as VisualizationObject.IVisualizationAttribute[])) || [];
-    const sortBy: IPivotTableBucketProps["sortBy"] = JSON.parse(mdObject.content.properties).sortItems || [];
-    const totals: IPivotTableBucketProps["totals"] = rowBucket.totals || [];
+    const sortBy: IPivotTableBucketProps["sortBy"] =
+        (mdObject &&
+            mdObject.content &&
+            mdObject.content.properties &&
+            JSON.parse(mdObject.content.properties).sortItems) ||
+        [];
+    const totals: IPivotTableBucketProps["totals"] = (rowBucket && rowBucket.totals) || [];
 
     const afmWithoutMergedFilters = DataLayer.toAfmResultSpec(mdObject.content).afm;
+    afmWithoutMergedFilters.filters = afmWithoutMergedFilters.filters || [];
+
     const afm = mergeFiltersToAfm(afmWithoutMergedFilters, filtersFromProps);
 
-    const filters: VisualizationInput.IFilter[] = afm.filters.filter(afmFilter => {
+    const filters: VisualizationInput.IFilter[] = (afm.filters || []).filter(afmFilter => {
         // Filter out expression filters which are not supported in bucket interface
         return AFM.isDateFilter(afmFilter) || AFM.isAttributeFilter(afmFilter);
     }) as AFM.FilterItem[];
