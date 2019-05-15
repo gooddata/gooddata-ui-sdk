@@ -8,6 +8,8 @@ import {
     HeadlineType,
     TableElementType,
     TableType,
+    VisElementType,
+    VisType,
 } from "../constants/visualizationTypes";
 import { TableRowForDrilling } from "./Table";
 import { OnFiredDrillEvent } from "./Events";
@@ -90,16 +92,26 @@ export interface IDrillEventContextGroup {
 }
 
 // Drill context for all visualization types
-export type DrillEventContext =
-    | IDrillEventContextTable
-    | IDrillEventContextHeadline
-    | IDrillEventContextPoint
-    | IDrillEventContextGroup;
+export interface IDrillEventContext {
+    type: VisType; // type of visualization
+    element: VisElementType; // type of visualization element drilled
+    x?: number; // chart x coordinate (if supported)
+    y?: number; // chart y coordinate (if supported)
+    z?: number; // chart z coordinate (if supported)
+    columnIndex?: number;
+    rowIndex?: number;
+    row?: any[]; // table row data of the drilled row
+    value?: string; // cell or element value drilled
+    // some drill headers that are relevant for current drill element
+    intersection: IDrillEventIntersectionElement[];
+    // A collection of chart series points (if available)
+    points?: IDrillPoint[];
+}
 
 // IDrillEvent is a parameter of the onFiredDrillEvent is callback
 export interface IDrillEvent {
     executionContext: AFM.IAfm;
-    drillContext: DrillEventContext;
+    drillContext: IDrillEventContext;
 }
 
 export interface IHighchartsParentTick {
