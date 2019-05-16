@@ -752,7 +752,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const rowCount = executionResult.paging.total[0];
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
-        const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
+
+        // add small room for error to avoid scrollbars that scroll one, two pixels
+        // increased in order to resolve issue BB-1509
+        const leeway = 2;
+
         const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
         const footerHeight = aggregationCount * DEFAULT_ROW_HEIGHT;
 
