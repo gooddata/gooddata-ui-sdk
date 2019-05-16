@@ -316,17 +316,24 @@ function handleInvalidMinMax(
     return null;
 }
 
-export function getTickPositioner() {
+function getYAxes(axes: any = []) {
+    return axes.filter((axis: any) => axis.coll === "yAxis");
+}
+
+function getSeriesTypes(chart: any) {
+    const defaultChartType = getChartType(chart);
+    return getYAxes(chart.axes).map((axis: any) => get(axis, ["series", 0, "type"], defaultChartType));
+}
+
+export function getTickPositioner(chart: any) {
     // persist tick amount on the axis has larger value, then apply it to opposite axis
     let tickAmount: number = 0;
     const minmax: IMinMaxInfo[] = [];
+    const seriesTypes = getSeriesTypes(chart);
 
     return function(min: number, max: number) {
-        const chart = this.chart;
         const currentAxisIndex = this.options.index;
-        const defaultChartType = getChartType(chart);
-        const seriesChartType = get(chart, `series.${currentAxisIndex}.type`);
-        const isLineChartType = isLineChart(seriesChartType) || isLineChart(defaultChartType);
+        const isLineChartType = isLineChart(seriesTypes[currentAxisIndex]);
 
         let tickPositions = handleInvalidMinMax(
             currentAxisIndex,
@@ -341,7 +348,7 @@ export function getTickPositioner() {
             return tickPositions;
         }
 
-        const yAxes = chart.axes.filter((axis: any) => axis.coll === "yAxis");
+        const yAxes = getYAxes(chart.axes);
         for (const yAxisIndex in yAxes) {
             if (yAxes.hasOwnProperty(yAxisIndex)) {
                 const axis = yAxes[yAxisIndex];
@@ -390,7 +397,7 @@ export function zeroAlignYAxis(Highcharts: any) {
             return;
         }
 
-        const tickPositioner = getTickPositioner();
+        const tickPositioner = getTickPositioner(chart);
         axes.filter(({ coll }: any) => coll === "yAxis").forEach((axis: any) =>
             axis.update(
                 {

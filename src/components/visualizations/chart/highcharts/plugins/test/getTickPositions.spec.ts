@@ -529,7 +529,13 @@ describe("get tick positions for dual axes chart", () => {
 
     describe("test generate tick positions with highchart", () => {
         const AXIS_PADDING = 0.05;
-        let getTickPositions = getTickPositioner();
+        const chart = {
+            options: {
+                chart: {
+                    type: "column",
+                },
+            },
+        };
 
         const getAxis = (
             index = 0,
@@ -553,11 +559,9 @@ describe("get tick positions for dual axes chart", () => {
             };
         };
 
-        beforeEach(() => {
-            getTickPositions = getTickPositioner();
-        });
-
         describe("test on single axis", () => {
+            const getTickPositions = getTickPositioner(chart);
+
             it("no tick position returns with empty min/max", () => {
                 const axis = getAxis();
                 const tickPosition = getTickPositions.call(axis);
@@ -597,23 +601,36 @@ describe("get tick positions for dual axes chart", () => {
                             type: "line",
                         },
                     },
+                    axes: [axis],
                 };
-                const tickPosition = getTickPositions.call(axis, axis.max, axis.max);
+                const tickPosition = getTickPositioner(axis.chart).call(axis, axis.max, axis.max);
                 expect(tickPosition.length).toEqual(1);
             });
 
             it("should generate one tick position if series type is 'line' and min === max", () => {
-                const axis = getAxis(0, 50, 50);
+                const axis = getAxis(1, 50, 50);
                 axis.chart = {
                     options: {
-                        index: 0,
+                        index: 1,
                         chart: {
                             type: "column",
                         },
                     },
-                    series: [{ type: "line" }],
+                    axes: [
+                        {
+                            coll: "xAxis",
+                        },
+                        {
+                            coll: "yAxis",
+                            series: [{ type: "column" }],
+                        },
+                        {
+                            coll: "yAxis",
+                            series: [{ type: "line" }],
+                        },
+                    ],
                 };
-                const tickPosition = getTickPositions.call(axis, axis.max, axis.max);
+                const tickPosition = getTickPositioner(axis.chart).call(axis, axis.max, axis.max);
                 expect(tickPosition.length).toEqual(1);
             });
         });
@@ -645,8 +662,16 @@ describe("get tick positions for dual axes chart", () => {
                     rightAxisInfo.userMax,
                 );
 
-                const chart = { axes: [leftAxis, rightAxis] };
-                leftAxis.chart = chart;
+                const chart = {
+                    options: {
+                        chart: {
+                            type: "column",
+                        },
+                    },
+                    axes: [leftAxis, rightAxis],
+                };
+
+                const getTickPositions = getTickPositioner(chart);
 
                 const leftTickPositions = getTickPositions.call(
                     leftAxis,
@@ -661,8 +686,6 @@ describe("get tick positions for dual axes chart", () => {
                     leftAxis.min = undefined;
                     leftAxis.max = undefined;
                 }
-
-                rightAxis.chart = chart;
 
                 const rightTickPositions = getTickPositions.call(
                     rightAxis,
