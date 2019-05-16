@@ -63,6 +63,7 @@ export const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid
 export const locationNameAttributeUri = `/gdc/md/${demoProjectId}/obj/2204`;
 export const locationNameDisplayFormIdentifier = "label.restaurantlocation.locationname";
 export const locationResortIdentifier = "label.restaurantlocation.locationresort";
+export const locationResortUri = `/gdc/md/${demoProjectId}/obj/2206`;
 export const locationStateAttributeIdentifier = "attr.restaurantlocation.locationstate";
 export const locationStateAttributeUri = `/gdc/md/${demoProjectId}/obj/2210`;
 export const locationStateAttributeCaliforniaUri = `/gdc/md/${demoProjectId}/obj/2210/elements?id=6340116`;
@@ -71,6 +72,8 @@ export const menuCategoryAttributeDFIdentifier = "label.menuitem.menucategory";
 export const menuItemNameAttributeDFIdentifier = "label.menuitem.menuitemname";
 export const yearDateDataSetAttributeIdentifier = "date.year";
 export const monthDateDataSetAttributeIdentifier = "date.month";
+export const monthOfYearDateIdentifier = "date.act81lMifn6q";
+export const yearDateIdentifier = "date.aag81lMifn6q";
 export const quarterDateIdentifier = "date.aam81lMifn6q";
 export const monthDateIdentifier = "date.abm81lMifn6q";
 export const monthDateIdentifierJanuary = `/gdc/md/${demoProjectId}/obj/2071/elements?id=1`;
