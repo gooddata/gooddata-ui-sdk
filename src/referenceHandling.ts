@@ -53,7 +53,12 @@ type ConversionFunction = (
     idGenerator: IdGenerator
 ) => IConversionResult;
 
-const createConverter = (conversionFunction: ConversionFunction) =>
+export type ReferenceConverter = (
+    mdObject: VisualizationObject.IVisualizationObject,
+    idGenerator?: IdGenerator
+) => VisualizationObject.IVisualizationObject;
+
+const createConverter = (conversionFunction: ConversionFunction): ReferenceConverter =>
     (
         mdObject: VisualizationObject.IVisualizationObject,
         idGenerator: IdGenerator = defaultIdGenerator

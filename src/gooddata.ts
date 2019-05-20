@@ -1,4 +1,4 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { cloneDeep } from 'lodash';
 import { XhrModule } from './xhr';
 import { UserModule } from './user';
@@ -12,6 +12,7 @@ import { AdminModule } from './admin';
 
 import { AttributesMapLoaderModule } from './utils/attributesMapLoader';
 import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
+import { convertReferencesToUris, ReferenceConverter } from './referenceHandling';
 
 /**
  * # JS SDK
@@ -40,8 +41,12 @@ export class SDK {
     public report: ReportModule;
     public catalogue: CatalogueModule;
     public admin: AdminModule;
-    public utils: any;
     public configStorage: IConfigStorage;
+    public utils: {
+        loadAttributesMap: any;
+        getAttributesDisplayForms: any;
+        convertReferencesToUris: ReferenceConverter
+    };
 
     constructor(private fetchMethod: typeof fetch, config = {}) {
         this.configStorage = sanitizeConfig(config); // must be plain object, SDK modules MUST use this storage
@@ -59,7 +64,8 @@ export class SDK {
         const attributesMapLoaderModule = new AttributesMapLoaderModule(this.md);
         this.utils = {
             loadAttributesMap: attributesMapLoaderModule.loadAttributesMap.bind(attributesMapLoaderModule),
-            getAttributesDisplayForms
+            getAttributesDisplayForms,
+            convertReferencesToUris
         };
     }
 
