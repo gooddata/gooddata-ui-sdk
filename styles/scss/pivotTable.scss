@@ -414,3 +414,7 @@ $header-cell-resize-width: 20px;
         }
     }
 }
+
+.ag-body-container {
+    margin-bottom: -4px; // -2px by default, -2px as a contrary to leeway constant defined in src/components/core/PivotTable.tsx
+}
