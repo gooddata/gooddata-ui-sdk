@@ -7,7 +7,7 @@ import "@gooddata/react-components/styles/css/main.css";
 import { employeeNameIdentifier, projectId } from "../utils/fixtures";
 
 export class AttributeFilterComponentExample extends Component {
-    onApply(params) {
+    onApply(...params) {
         // eslint-disable-next-line no-console
         console.log("AttributeFilterComponentExample onApply", ...params);
     }

@@ -6,6 +6,7 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
+const StatsPlugin = require('stats-webpack-plugin');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -42,26 +43,28 @@ module.exports = async (env) => {
 
     // see also production proxy at /examples/server/src/endpoints/proxy.js
     const proxy = {
-        '/gdc': {
-            target: backendUrl,
+        "/gdc": {
+            changeOrigin: true,
+            cookieDomainRewrite: "localhost",
             secure: false,
-            cookieDomainRewrite: '',
-            onProxyReq: (proxyReq) => {
-                console.log('proxy', '/gdc', proxyReq.path); // eslint-disable-line no-console
-                if (proxyReq.method === 'DELETE' && !proxyReq.getHeader('content-length')) {
-                    // Only set content-length to zero if not already specified
-                    proxyReq.setHeader('content-length', '0');
-                }
-
-                proxyReq.setHeader('host', backendUrl.split('/')[2]); // White labeled resources are based on host header
-                proxyReq.setHeader('referer', backendUrl);
-                proxyReq.setHeader('origin', null);
+            target: backendUrl,
+            headers: {
+                host: backendUrl,
+                origin: null
+            },
+            onProxyReq(proxyReq) {
+                proxyReq.setHeader('accept-encoding', 'identity')
             }
         },
         '/api': {
             target: 'http://localhost:3009',
             secure: false,
             onProxyReq: (req) => {
+                console.log('proxy', '/gdc', req.path); // eslint-disable-line no-console
+                if (req.method === 'DELETE' && !req.getHeader('content-length')) {
+                    // Only set content-length to zero if not already specified
+                    req.setHeader('content-length', '0');
+                }
                 // eslint-disable-next-line no-console
                 console.log(`Proxy ${req.path} to http://localhost:3009 (use: yarn examples-server)`);
             }
@@ -78,7 +81,7 @@ module.exports = async (env) => {
     };
 
     const plugins = [
-        new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'GoodData React Components'
         }),
@@ -108,8 +111,7 @@ module.exports = async (env) => {
                 booleans: true,
                 unused: true,
                 if_return: true,
-                join_vars: true,
-                warnings: false
+                join_vars: true
             }
         };
 
@@ -122,17 +124,8 @@ module.exports = async (env) => {
                 uglifyOptions,
                 parallel: true
             }),
-            new CompressionPlugin({
-                asset: '[file].gz',
-                algorithm: 'gzip'
-            }),
-            function collectStats() {
-                this.plugin('done', (stats) => {
-                    const filename = path.join(__dirname, 'dist', 'stats.json');
-                    const serializedStats = JSON.stringify(stats.toJson(), null, '\t');
-                    require('fs').writeFileSync(filename, serializedStats);
-                });
-            }
+            new CompressionPlugin(),
+            new StatsPlugin('stats.json'),
         );
     }
 
