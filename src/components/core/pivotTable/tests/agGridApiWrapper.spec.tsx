@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { AgGridReact } from "ag-grid-react";
 
 import ApiWrapper from "../agGridApiWrapper";
-import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid";
+import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid-community";
 import { ICustomGridOptions } from "../agGridTypes";
 
 describe("agGridApiWrapper", () => {

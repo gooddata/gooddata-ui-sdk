@@ -15,7 +15,7 @@ import { getAttributeElementIdFromAttributeElementUri } from "../../visualizatio
 import { createDrillIntersectionElement } from "../../visualizations/utils/drilldownEventing";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
-import { ColDef } from "ag-grid";
+import { ColDef } from "ag-grid-community";
 import { IGridHeader } from "./agGridTypes";
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/typings";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
-import { ColDef, CellEvent, GridOptions } from "ag-grid";
+import { ColDef, CellEvent, GridOptions } from "ag-grid-community";
 
 export interface IGridRow {
     headerItemMap: {

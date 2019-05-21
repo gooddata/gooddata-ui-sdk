@@ -8,9 +8,9 @@ import {
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
-} from "ag-grid";
+} from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { CellClassParams } from "ag-grid/dist/lib/entities/colDef";
+import { CellClassParams } from "ag-grid-community/dist/lib/entities/colDef";
 import * as classNames from "classnames";
 import * as CustomEvent from "custom-event";
 import * as invariant from "invariant";
@@ -545,9 +545,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     menu,
+                    enableSorting: true,
                     ...commonHeaderComponentParams,
                 },
                 minWidth: 50,
+                sortable: true,
+                resizable: true,
             },
             defaultColGroupDef: {
                 headerClass: this.getHeaderClass(null),
@@ -566,8 +569,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             suppressMovableColumns: true,
             suppressCellSelection: true,
             enableFilter: false,
-            enableColResize: true,
-            enableServerSideSorting: true,
 
             // infinite scrolling model
             rowModelType: "infinite",

@@ -11,7 +11,7 @@ import {
 import { assortDimensionHeaders, identifyResponseHeader } from "./agGridHeaders";
 import { ISortedByColumnIndexes, ISortModelItem } from "./agGridTypes";
 import invariant = require("invariant");
-import { ColDef } from "ag-grid";
+import { ColDef } from "ag-grid-community";
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
@@ -140,7 +140,8 @@ export function isSortedByFirstAttibute(columnDefs: ColDef[], resultSpec: AFM.IR
 
     const sortedByFirstAttribute =
         sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1;
-    const isSorted = sortedColumnIndexes.all.length > 0 || (resultSpec.sorts && resultSpec.sorts.length > 0);
+    const isSorted =
+        sortedColumnIndexes.all.length > 0 || (resultSpec && resultSpec.sorts && resultSpec.sorts.length > 0);
 
     return sortedByFirstAttribute || !isSorted;
 }

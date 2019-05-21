@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
 import isEqual = require("lodash/isEqual");
-import { IDatasource, IGetRowsParams, GridApi } from "ag-grid";
+import { IDatasource, IGetRowsParams, GridApi } from "ag-grid-community";
 import { getMappingHeaderName } from "../../../helpers/mappingHeader";
 
 import InjectedIntl = ReactIntl.InjectedIntl;
@@ -215,7 +215,7 @@ export const executionToAGGridAdapter = (
     // Add loading indicator to the first column
     if (addLoadingRenderer) {
         const leafColumnDefs = getTreeLeaves(columnDefs);
-        if (leafColumnDefs.length > 0) {
+        if (leafColumnDefs[0]) {
             leafColumnDefs[0].cellRenderer = addLoadingRenderer;
         }
     }

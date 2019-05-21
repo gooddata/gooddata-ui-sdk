@@ -3,7 +3,7 @@ import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
 import escape = require("lodash/escape");
 import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
-import { ICellRendererParams } from "ag-grid";
+import { ICellRendererParams } from "ag-grid-community";
 import {
     DOT_PLACEHOLDER,
     FIELD_SEPARATOR,
