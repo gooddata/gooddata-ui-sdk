@@ -17,13 +17,20 @@ The REST API versions in the table are just for your information as the values a
 
 ## 7.0.0
 
+[Migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_7.html) from version 6.3.2
+
 ### Added
 
-- The source code structure is formatted and validated by [Prettier](https://prettier.io/) (FET-130)
+- Combo chart component ([doc](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html))
+- Managing subtotals in pivot tables via a submenu
+- Formatting and validating the source code structure by [Prettier](https://prettier.io/)
 
 ### Changed
 
-- Pivot table prop `groupRows` is true by default, thus grouping is enabled by default (BB-1385)
+- The library now uses Typescript 3.3.4000.
+- The pivot table property `groupRows` is `true` by default, which means that grouping is now enabled by default.
+- Styling updates and various fixes have been applied to subtotals in the Pivot Table component.
+- The Legend icons of the line chart component and the area chart components are shown as circles instead of squares.
 
 ## 6.3.2
 
