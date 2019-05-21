@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { MenuAlignment } from '../MenuSharedTypes';
+import { MenuAlignment } from "../MenuSharedTypes";
 
 export interface IDimensions {
     width: number;
@@ -15,9 +15,9 @@ export interface ICoordinates {
 
 export interface IDimensionsAndCoordinates extends IDimensions, ICoordinates {}
 
-export type Dimension = 'width' | 'height';
+export type Dimension = "width" | "height";
 
-export type Direction = 'left' | 'right' | 'top' | 'bottom';
+export type Direction = "left" | "right" | "top" | "bottom";
 
 export interface IMenuPosition {
     left: number;
@@ -60,17 +60,17 @@ export function getElementDimensions(element: Element): IDimensions {
 }
 
 const reverseDirectionMap: { [key in Direction]: Direction } = {
-    left: 'right',
-    right: 'left',
-    top: 'bottom',
-    bottom: 'top'
+    left: "right",
+    right: "left",
+    top: "bottom",
+    bottom: "top",
 };
 
 const dimensionMap: { [key in Direction]: Dimension } = {
-    left: 'width',
-    right: 'width',
-    top: 'height',
-    bottom: 'height'
+    left: "width",
+    right: "width",
+    top: "height",
+    bottom: "height",
 };
 
 export interface IMenuPositionConfig {
@@ -87,10 +87,10 @@ export function calculateMenuPosition({
     toggler,
     viewport,
     menu,
-    alignment = ['right', 'bottom'],
+    alignment = ["right", "bottom"],
     spacing = 0,
     offset = 0,
-    topLevelMenu = true
+    topLevelMenu = true,
 }: IMenuPositionConfig): IMenuPosition {
     const sharedArguments = { toggler, viewport, menu, spacing, offset };
     const [directionPreferredPrimary, directionPrefferedSecondary] = alignment;
@@ -98,23 +98,29 @@ export function calculateMenuPosition({
     const [primaryCoordinateDirection, primaryCoordinate] = calculatePositionForDirection({
         ...sharedArguments,
         direction: directionPreferredPrimary,
-        isPrimaryDimension: true
+        isPrimaryDimension: true,
     });
     const [secondaryCoordinateDirection, secondaryCoordinate] = calculatePositionForDirection({
         ...sharedArguments,
         direction: directionPrefferedSecondary,
-        isPrimaryDimension: false
+        isPrimaryDimension: false,
     });
 
     const coordinates: Partial<ICoordinates> = {
         [primaryCoordinateDirection]: primaryCoordinate,
-        [secondaryCoordinateDirection]: secondaryCoordinate
+        [secondaryCoordinateDirection]: secondaryCoordinate,
     };
 
     // Convert from left/right+top/bottom coordinates to left+top coordinates
     const res: IMenuPosition = {
-        left: typeof coordinates.left === 'number' ? coordinates.left : toggler.width - menu.width - coordinates.right,
-        top: typeof coordinates.top === 'number' ? coordinates.top : toggler.height - menu.height - coordinates.bottom
+        left:
+            typeof coordinates.left === "number"
+                ? coordinates.left
+                : toggler.width - menu.width - coordinates.right,
+        top:
+            typeof coordinates.top === "number"
+                ? coordinates.top
+                : toggler.height - menu.height - coordinates.bottom,
     };
 
     // Returned coordinates are relative to toggler.
@@ -136,7 +142,7 @@ function calculatePositionForDirection({
     direction,
     spacing,
     offset,
-    isPrimaryDimension
+    isPrimaryDimension,
 }: {
     toggler: IDimensionsAndCoordinates;
     viewport: IDimensionsAndCoordinates;
@@ -152,7 +158,7 @@ function calculatePositionForDirection({
     const directionReverse = reverseDirectionMap[direction];
     const dimension = dimensionMap[direction];
 
-    const directionBottomRight = direction === 'bottom' || direction === 'right';
+    const directionBottomRight = direction === "bottom" || direction === "right";
     const directionBottomRightMultiplier = directionBottomRight ? 1 : -1;
 
     const secondaryDimensionAdjust = isPrimaryDimension ? 0 : toggler[dimension];
@@ -197,7 +203,8 @@ function calculatePositionForDirection({
         // eg.: direction = "right"
         //  menu left side is always placed to left side of viewport
         //  menu.left = viewport.left - menu.left
-        const distance = (viewport[directionReverse] - toggler[directionReverse]) * directionBottomRightMultiplier;
+        const distance =
+            (viewport[directionReverse] - toggler[directionReverse]) * directionBottomRightMultiplier;
         return [directionReverse, distance];
     }
 

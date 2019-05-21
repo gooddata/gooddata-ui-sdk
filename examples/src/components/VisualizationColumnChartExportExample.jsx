@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import React, { Component } from 'react';
-import '@gooddata/react-components/styles/css/main.css';
-import { Visualization } from '@gooddata/react-components';
-import ExampleWithExport from './utils/ExampleWithExport';
+import React, { Component } from "react";
+import "@gooddata/react-components/styles/css/main.css";
+import { Visualization } from "@gooddata/react-components";
+import ExampleWithExport from "./utils/ExampleWithExport";
 
-import { projectId, columnVisualizationIdentifier } from '../utils/fixtures';
+import { projectId, columnVisualizationIdentifier } from "../utils/fixtures";
 
 export class VisualizationColumnChartExportExample extends Component {
     render() {
@@ -19,7 +19,7 @@ export class VisualizationColumnChartExportExample extends Component {
                         />
                     </div>
                 )}
-            </ExampleWithExport >
+            </ExampleWithExport>
         );
     }
 }

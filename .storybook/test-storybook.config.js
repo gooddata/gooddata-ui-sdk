@@ -4,7 +4,7 @@ const configuration = {
             'readySelector': '.screenshot-target, .screenshot-wrapper .highcharts-container, ' +
                 '.screenshot-wrapper .s-headline-value, .screenshot-wrapper .viz-table-wrap, ' +
                 '.screenshot-wrapper .gdc-kpi, .screenshot-wrapper .gdc-kpi-error, ' +
-                '.screenshot-wrapper .s-error, .screenshot-wrapper .s-pivot-table .ag-body-container .s-value'
+                '.screenshot-wrapper .s-error, .screenshot-wrapper .s-pivot-table .ag-body .s-loading-done'
         },
         'Core components/AreaChart': {
             'data labels config': {
@@ -19,6 +19,20 @@ const configuration = {
                 readySelector: '.screenshot-ready-wrapper-done'
             },
             'with different legend positions': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            }
+        },
+        'Core components/ComboChart': {
+            'dual axis with different chart type and NO attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'dual axis with same chart type and NO attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'dual axis with same chart type and one attribute': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'should override primaryMeasures & secondaryMeasures': {
                 readySelector: '.screenshot-ready-wrapper-done'
             }
         },

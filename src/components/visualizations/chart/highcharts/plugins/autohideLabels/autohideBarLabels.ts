@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import sortBy = require('lodash/sortBy');
+import sortBy = require("lodash/sortBy");
 
 import {
     isStacked,
@@ -8,8 +8,8 @@ import {
     getShapeAttributes,
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
-    IAxisRangeForAxes
-} from '../../helpers';
+    IAxisRangeForAxes,
+} from "../../helpers";
 
 import {
     hideDataLabels,
@@ -18,39 +18,41 @@ import {
     getDataLabelAttributes,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-    getShapeVisiblePart
-} from '../../dataLabelsHelpers';
+    getShapeVisiblePart,
+} from "../../dataLabelsHelpers";
 
 const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRangeForAxes) => {
-    const intersectionFound = visiblePoints
-        .filter(hasDataLabel)
-        .some((point: any) => {
-            const { dataLabel, shapeArgs } = point;
+    const intersectionFound = visiblePoints.filter(hasDataLabel).some((point: any) => {
+        const { dataLabel, shapeArgs } = point;
 
-            if (dataLabel && shapeArgs) {
-                const dataLabelAttr = getDataLabelAttributes(point);
-                const shapeAttr = getShapeAttributes(point);
-                return dataLabelAttr.height + (2 * dataLabel.padding) > shapeAttr.height;
-            }
-            return false;
-        });
+        if (dataLabel && shapeArgs) {
+            const dataLabelAttr = getDataLabelAttributes(point);
+            const shapeAttr = getShapeAttributes(point);
+            return dataLabelAttr.height + 2 * dataLabel.padding > shapeAttr.height;
+        }
+        return false;
+    });
 
     if (intersectionFound) {
         hideDataLabels(visiblePoints);
     } else {
         visiblePoints.filter(hasDataLabel).forEach((point: any) => {
-            const { dataLabel, shapeArgs, series: { chart } } = point;
+            const {
+                dataLabel,
+                shapeArgs,
+                series: { chart },
+            } = point;
             if (dataLabel && shapeArgs) {
                 const dataLabelAttr = getDataLabelAttributes(point);
                 const shapeAttr = getShapeAttributes(point);
-                const labelWidth = dataLabelAttr.width + (2 * dataLabel.padding);
+                const labelWidth = dataLabelAttr.width + 2 * dataLabel.padding;
                 const shapeWidth = getShapeVisiblePart(shapeArgs, chart, shapeAttr.width);
 
                 const foundIntersection = labelWidth > shapeWidth;
                 // switch axis for bar chart
-                return foundIntersection ?
-                    hideDataLabel(point) :
-                    showStackLabelInAxisRange(point, axisRangeForAxes);
+                return foundIntersection
+                    ? hideDataLabel(point)
+                    : showStackLabelInAxisRange(point, axisRangeForAxes);
             }
             return null;
         });
@@ -60,7 +62,7 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
 const toggleNonStackedChartLabels = (
     points: any,
     axisRangeForAxes: IAxisRangeForAxes,
-    shouldCheckShapeIntersection: boolean = false
+    shouldCheckShapeIntersection: boolean = false,
 ) => {
     const sortedPoints = sortBy(points, (a, b) => {
         const firstLabelAttr = getDataLabelAttributes(a);
@@ -77,9 +79,11 @@ const toggleNonStackedChartLabels = (
             const firstShapeAttr = getShapeAttributes(firstPoint);
             const nextShapeAttr = getShapeAttributes(nextPoint);
 
-            return isIntersecting(firstDataLabelAttr, nextDataLabelAttr) ||
+            return (
+                isIntersecting(firstDataLabelAttr, nextDataLabelAttr) ||
                 isIntersecting(firstDataLabelAttr, nextShapeAttr) ||
-                isIntersecting(firstShapeAttr, nextDataLabelAttr);
+                isIntersecting(firstShapeAttr, nextDataLabelAttr)
+            );
         }
 
         return isIntersecting(firstDataLabelAttr, nextDataLabelAttr);
@@ -111,7 +115,8 @@ export const handleBarLabelsOutsideChart = (chart: any) => {
     visiblePoints.forEach((point: any) => {
         if (!isStacked(chart)) {
             showDataLabelInAxisRange(point, point.y, axisRangeForAxes);
-        } else { // fix for HCH bug for negative stack labels
+        } else {
+            // fix for HCH bug for negative stack labels
             showStackLabelInAxisRange(point, axisRangeForAxes);
         }
     });

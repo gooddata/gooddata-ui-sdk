@@ -1,77 +1,49 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
+import * as React from "react";
 import {
     SDK,
     factory as createSdk,
     DataLayer,
     ApiResponse,
     IPropertiesControls,
-    IFeatureFlags
-} from '@gooddata/gooddata-js';
-import get = require('lodash/get');
-import noop = require('lodash/noop');
-import isEqual = require('lodash/isEqual');
-import { AFM, VisualizationObject, VisualizationClass, Localization } from '@gooddata/typings';
-import { injectIntl, intlShape, InjectedIntlProps } from 'react-intl';
-import { IHeaderPredicate } from '../../interfaces/HeaderPredicate';
-import { IntlWrapper } from '../core/base/IntlWrapper';
-import { BaseChart } from '../core/base/BaseChart';
-import { IChartConfig, IColorPaletteItem } from '../../interfaces/Config';
-import { SortableTable } from '../core/SortableTable';
-import { PivotTable } from '../core/PivotTable';
-import { Headline } from '../core/Headline';
-import { IEvents, OnLegendReady } from '../../interfaces/Events';
-import { VisualizationPropType, Requireable } from '../../proptypes/Visualization';
-import { VisualizationTypes, VisType } from '../../constants/visualizationTypes';
-import { IDataSource } from '../../interfaces/DataSource';
-import { ISubject } from '../../helpers/async';
-import { getVisualizationTypeFromVisualizationClass } from '../../helpers/visualizationType';
-import MdObjectHelper from '../../helpers/MdObjectHelper';
-import { fillMissingTitles } from '../../helpers/measureTitleHelper';
-import { LoadingComponent, ILoadingProps } from '../simple/LoadingComponent';
-import { ErrorComponent, IErrorProps } from '../simple/ErrorComponent';
-import { IDrillableItem, generateDimensions, RuntimeError } from '../../';
-import { setTelemetryHeaders } from '../../helpers/utils';
-import { getDefaultTreemapSort } from '../../helpers/sorts';
-import { convertErrors, generateErrorMap, IErrorMap } from '../../helpers/errorHandlers';
-import { isTreemap } from '../visualizations/utils/common';
-import { getColorMappingPredicate, getColorPaletteFromColors } from '../visualizations/utils/color';
-import { getCachedOrLoad } from '../../helpers/sdkCache';
-import { getFeatureFlags } from '../../helpers/featureFlags';
+    IFeatureFlags,
+} from "@gooddata/gooddata-js";
+import get = require("lodash/get");
+import noop = require("lodash/noop");
+import isEqual = require("lodash/isEqual");
+import { AFM, VisualizationObject, VisualizationClass, Localization } from "@gooddata/typings";
+import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
+import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IntlWrapper } from "../core/base/IntlWrapper";
+import { BaseChart } from "../core/base/BaseChart";
+import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
+import { SortableTable } from "../core/SortableTable";
+import { PivotTable } from "../PivotTable";
+import { Headline } from "../core/Headline";
+import { IEvents, OnLegendReady } from "../../interfaces/Events";
+import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
+import { VisualizationTypes, VisType } from "../../constants/visualizationTypes";
+import { IDataSource } from "../../interfaces/DataSource";
+import { ISubject } from "../../helpers/async";
+import { getVisualizationTypeFromVisualizationClass } from "../../helpers/visualizationType";
+import MdObjectHelper, { mdObjectToPivotBucketProps } from "../../helpers/MdObjectHelper";
+import { fillMissingTitles } from "../../helpers/measureTitleHelper";
+import { LoadingComponent, ILoadingProps } from "../simple/LoadingComponent";
+import { ErrorComponent, IErrorProps } from "../simple/ErrorComponent";
+import { IDrillableItem, generateDimensions, RuntimeError } from "../../";
+import { setTelemetryHeaders } from "../../helpers/utils";
+import { getDefaultTreemapSort } from "../../helpers/sorts";
+import { convertErrors, generateErrorMap, IErrorMap } from "../../helpers/errorHandlers";
+import { isTreemap } from "../visualizations/utils/common";
+import { getColorMappingPredicate, getColorPaletteFromColors } from "../visualizations/utils/color";
+import { getCachedOrLoad } from "../../helpers/sdkCache";
+import { getFeatureFlags } from "../../helpers/featureFlags";
+import { mergeFiltersToAfm } from "../../helpers/afmHelper";
 export { Requireable };
 
-const {
-    AfmUtils,
-    ExecuteAfmAdapter,
-    toAfmResultSpec,
-    createSubject
-} = DataLayer;
+const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
 
-// BC with TS 2.3
-function getDateFilter(filters: AFM.FilterItem[]): AFM.DateFilterItem {
-    for (const filter of filters) {
-        if (AfmUtils.isDateFilter(filter)) {
-            return filter;
-        }
-    }
-
-    return null;
-}
-
-// BC with TS 2.3
-function getAttributeFilters(filters: AFM.FilterItem[]): AFM.AttributeFilterItem[] {
-    const attributeFilters: AFM.AttributeFilterItem[] = [];
-
-    for (const filter of filters) {
-        if (AfmUtils.isAttributeFilter(filter)) {
-            attributeFilters.push(filter);
-        }
-    }
-
-    return attributeFilters;
-}
-
-export type VisualizationEnvironment = 'none' | 'dashboards';
+export type VisualizationEnvironment = "none" | "dashboards";
 
 export interface IVisualizationProps extends IEvents {
     projectId: string;
@@ -83,8 +55,14 @@ export interface IVisualizationProps extends IEvents {
     filters?: AFM.FilterItem[];
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     uriResolver?: (sdk: SDK, projectId: string, uri?: string, identifier?: string) => Promise<string>;
-    fetchVisObject?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationObject.IVisualizationObject>;
-    fetchVisualizationClass?: (sdk: SDK, visualizationUri: string) => Promise<VisualizationClass.IVisualizationClass>;
+    fetchVisObject?: (
+        sdk: SDK,
+        visualizationUri: string,
+    ) => Promise<VisualizationObject.IVisualizationObject>;
+    fetchVisualizationClass?: (
+        sdk: SDK,
+        visualizationUri: string,
+    ) => Promise<VisualizationClass.IVisualizationClass>;
     getFeatureFlags?: (sdk: SDK, projectId: string) => Promise<IFeatureFlags>;
     BaseChartComponent?: any;
     TableComponent?: any;
@@ -122,31 +100,37 @@ function uriResolver(sdk: SDK, projectId: string, uri?: string, identifier?: str
     }
 
     if (!identifier) {
-        return Promise.reject('Neither uri or identifier specified');
+        return Promise.reject("Neither uri or identifier specified");
     }
 
     return sdk.md.getObjectUri(projectId, identifier);
 }
 
-function fetchVisObject(sdk: SDK, visualizationUri: string): Promise<VisualizationObject.IVisualizationObject> {
-    return sdk.md.getVisualization(visualizationUri).then(res => res.visualizationObject);
+function fetchVisObject(
+    sdk: SDK,
+    visualizationUri: string,
+): Promise<VisualizationObject.IVisualizationObject> {
+    return sdk.md.getVisualization(visualizationUri).then(res => res.visualizationObject);
 }
 
 function fetchVisualizationClass(
     sdk: SDK,
-    visualizationClassUri: string
+    visualizationClassUri: string,
 ): Promise<VisualizationClass.IVisualizationClass> {
     const apiCallIdentifier = `get.${visualizationClassUri}`;
     const loader = () => sdk.xhr.get(visualizationClassUri);
-    return getCachedOrLoad(apiCallIdentifier, loader)
-        .then((response: ApiResponse) => response.data.visualizationClass);
+    return getCachedOrLoad(apiCallIdentifier, loader).then(
+        (response: ApiResponse) => response.data.visualizationClass,
+    );
 }
 
-export class VisualizationWrapped
-    extends React.Component<IVisualizationProps & InjectedIntlProps, IVisualizationState> {
+export class VisualizationWrapped extends React.Component<
+    IVisualizationProps & InjectedIntlProps,
+    IVisualizationState
+> {
     public static propTypes = {
         ...VisualizationPropType,
-        intl: intlShape.isRequired
+        intl: intlShape.isRequired,
     };
 
     public static defaultProps: Partial<IVisualizationProps> = {
@@ -163,7 +147,7 @@ export class VisualizationWrapped
         HeadlineComponent: Headline,
         ErrorComponent,
         LoadingComponent,
-        onExportReady: noop
+        onExportReady: noop,
     };
 
     private visualizationUri: string;
@@ -192,11 +176,11 @@ export class VisualizationWrapped
             mdObject: null,
             colorPalette: null,
             colorPaletteEnabled: false,
-            featureFlags: {}
+            featureFlags: {},
         };
 
         this.sdk = props.sdk ? props.sdk.clone() : createSdk();
-        setTelemetryHeaders(this.sdk, 'Visualization', props);
+        setTelemetryHeaders(this.sdk, "Visualization", props);
 
         this.isUnmounted = false;
         this.visualizationUri = props.uri;
@@ -212,16 +196,18 @@ export class VisualizationWrapped
                     isLoading: false,
                     totals,
                     mdObject,
-                    featureFlags
+                    featureFlags,
                 });
-            }, (error) => {
+            },
+            error => {
                 const runtimeError = convertErrors(error);
                 this.setStateWithCheck({
                     isLoading: false,
-                    error: runtimeError
+                    error: runtimeError,
                 });
                 return props.onError(runtimeError);
-            });
+            },
+        );
     }
 
     public componentDidMount() {
@@ -230,13 +216,7 @@ export class VisualizationWrapped
         this.adapter = new ExecuteAfmAdapter(this.sdk, projectId);
         this.visualizationUri = uri;
 
-        this.subject.next(
-            this.prepareDataSources(
-                projectId,
-                identifier,
-                filters
-            )
-        );
+        this.subject.next(this.prepareDataSources(projectId, identifier, filters));
 
         this.getColorPalette();
     }
@@ -247,37 +227,38 @@ export class VisualizationWrapped
     }
 
     public shouldComponentUpdate(nextProps: IVisualizationProps, nextState: IVisualizationState) {
-        return this.hasChangedProps(nextProps)
-            || (this.state.isLoading !== nextState.isLoading)
-            || (!this.state.colorPalette && nextState.colorPalette !== null);
+        return (
+            this.hasChangedProps(nextProps) ||
+            this.state.isLoading !== nextState.isLoading ||
+            (!this.state.colorPalette && nextState.colorPalette !== null)
+        );
     }
 
-    public hasChangedProps(nextProps: IVisualizationProps, propKeys = Object.keys(VisualizationPropType)): boolean {
+    public hasChangedProps(
+        nextProps: IVisualizationProps,
+        propKeys = Object.keys(VisualizationPropType),
+    ): boolean {
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
     public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
         if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
-            setTelemetryHeaders(this.sdk, 'Visualization', nextProps);
+            setTelemetryHeaders(this.sdk, "Visualization", nextProps);
             this.getColorPalette();
         }
-        const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ['uri', 'projectId', 'identifier']);
-        const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ['filters']);
+        const hasInvalidResolvedUri = this.hasChangedProps(nextProps, ["uri", "projectId", "identifier"]);
+        const hasInvalidDatasource = hasInvalidResolvedUri || this.hasChangedProps(nextProps, ["filters"]);
         if (hasInvalidDatasource) {
             this.setStateWithCheck({
-                isLoading: true
+                isLoading: true,
             });
             if (hasInvalidResolvedUri) {
                 this.visualizationUri = nextProps.uri;
             }
 
             this.subject.next(
-                this.prepareDataSources(
-                    nextProps.projectId,
-                    nextProps.identifier,
-                    nextProps.filters
-                )
+                this.prepareDataSources(nextProps.projectId, nextProps.identifier, nextProps.filters),
             );
         }
     }
@@ -300,60 +281,54 @@ export class VisualizationWrapped
             HeadlineComponent,
             LoadingComponent,
             ErrorComponent,
-            onExportReady
+            onExportReady,
+            filters: filtersFromProps,
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading, mdObject, featureFlags } = this.state;
+        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
         const mdObjectContent = mdObject && mdObject.content;
-        const properties: IPropertiesControls | undefined = mdObjectContent
-            && mdObjectContent.properties
-            && JSON.parse(mdObjectContent.properties).controls;
+        const properties: IPropertiesControls | undefined =
+            mdObjectContent && mdObjectContent.properties && JSON.parse(mdObjectContent.properties).controls;
 
-        const colorPalette = baseConfig && baseConfig.colorPalette
-            ? baseConfig.colorPalette
-            : this.state.colorPalette;
+        const colorPalette =
+            baseConfig && baseConfig.colorPalette ? baseConfig.colorPalette : this.state.colorPalette;
 
-        const colorMapping = properties && properties.colorMapping
-            ? properties.colorMapping.map((mapping) => {
-                const predicate = getColorMappingPredicate(mapping.id);
-                return {
-                    predicate,
-                    color: mapping.color
-                };
-            })
-            : undefined;
+        const colorMapping =
+            properties && properties.colorMapping
+                ? properties.colorMapping.map(mapping => {
+                      const predicate = getColorMappingPredicate(mapping.id);
+                      return {
+                          predicate,
+                          color: mapping.color,
+                      };
+                  })
+                : undefined;
 
         const config = {
             ...properties,
             colorMapping,
             ...baseConfig,
             colorPalette,
-            mdObject: mdObjectContent
+            mdObject: mdObjectContent,
         };
 
         if (error) {
             const errorProps = this.errorMap[error.getMessage()];
 
-            return ErrorComponent
-                ? (
-                    <ErrorComponent
-                        code={error.getMessage()}
-                        message={intl.formatMessage({ id: 'visualization.ErrorMessageGeneric' })}
-                        description={intl.formatMessage({ id: 'visualization.ErrorDescriptionGeneric' })}
-                        {...errorProps}
-                    />
-                )
-                : null;
+            return ErrorComponent ? (
+                <ErrorComponent
+                    code={error.getMessage()}
+                    message={intl.formatMessage({ id: "visualization.ErrorMessageGeneric" })}
+                    description={intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" })}
+                    {...errorProps}
+                />
+            ) : null;
         }
         if (isLoading || !dataSource) {
-            return LoadingComponent
-                ? <LoadingComponent />
-                : null;
+            return LoadingComponent ? <LoadingComponent /> : null;
         }
 
         const commonProps = {
             projectId,
-            dataSource,
-            resultSpec,
             drillableItems,
             onFiredDrillEvent,
             onError,
@@ -363,39 +338,37 @@ export class VisualizationWrapped
             locale,
             config,
             exportTitle: this.exportTitle,
-            onExportReady
+            onExportReady,
         };
 
-        const {
-            enablePivotGrouping
-        } = featureFlags;
+        const sourceProps = {
+            resultSpec,
+            dataSource,
+        };
 
         switch (type) {
             case VisualizationTypes.TABLE:
-                return (
-                    <TableComponent
-                        {...commonProps}
-                        totals={totals}
-                    />
+                return <TableComponent {...commonProps} {...sourceProps} totals={totals} />;
+            case VisualizationTypes.PIVOT_TABLE: {
+                const processedVisualizationObject = {
+                    ...mdObject,
+                    content: fillMissingTitles(mdObject.content, locale),
+                };
+                this.exportTitle = get(processedVisualizationObject, "meta.title", "");
+                const pivotBucketProps = mdObjectToPivotBucketProps(
+                    processedVisualizationObject,
+                    filtersFromProps,
                 );
-            case VisualizationTypes.PIVOT_TABLE:
-                return (
-                    <PivotTableComponent
-                        {...commonProps}
-                        totals={totals}
-                        groupRows={enablePivotGrouping}
-                    />
-                );
+                // we do not need to pass totals={totals} because BucketPivotTable deals with changes in totals itself
+                return <PivotTableComponent {...commonProps} {...pivotBucketProps} />;
+            }
             case VisualizationTypes.HEADLINE:
-                return (
-                    <HeadlineComponent
-                        {...commonProps}
-                    />
-                );
+                return <HeadlineComponent {...commonProps} {...sourceProps} />;
             default:
                 return (
                     <BaseChartComponent
                         {...commonProps}
+                        {...sourceProps}
                         onLegendReady={onLegendReady}
                         type={type}
                     />
@@ -403,18 +376,12 @@ export class VisualizationWrapped
         }
     }
 
-    private async prepareDataSources(
+    public async prepareDataSources(
         projectId: string,
         identifier: string,
-        filters: AFM.FilterItem[] = []
+        filters: AFM.FilterItem[] = [],
     ): Promise<IVisualizationExecInfo> {
-        const {
-            uriResolver,
-            fetchVisObject,
-            fetchVisualizationClass,
-            locale,
-            getFeatureFlags
-        } = this.props;
+        const { uriResolver, fetchVisObject, fetchVisualizationClass, locale, getFeatureFlags } = this.props;
 
         const visualizationUri = await uriResolver(this.sdk, projectId, this.visualizationUri, identifier);
         this.visualizationUri = visualizationUri;
@@ -423,44 +390,49 @@ export class VisualizationWrapped
 
         const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
 
-        this.exportTitle = get(mdObject, 'meta.title', '');
+        this.exportTitle = get(mdObject, "meta.title", "");
 
         const visualizationClass = await fetchVisualizationClass(this.sdk, visualizationClassUri);
         const processedVisualizationObject = fillMissingTitles(mdObject.content, locale);
-        const { afm, resultSpec } = toAfmResultSpec(processedVisualizationObject);
 
         const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
 
-        const dateFilter = getDateFilter(filters);
-        const attributeFilters = getAttributeFilters(filters);
-        const afmWithFilters = AfmUtils.appendFilters(afm, attributeFilters, dateFilter);
+        const { afm: afmWithoutMergedFilters, resultSpec: resultSpecSorting } = toAfmResultSpec(
+            processedVisualizationObject,
+        );
+
+        const afm = mergeFiltersToAfm(afmWithoutMergedFilters, filters);
 
         const featureFlags = await getFeatureFlags(this.sdk, projectId);
 
-        const visualizationType: VisType =
-            await getVisualizationTypeFromVisualizationClass(visualizationClass, featureFlags);
+        const visualizationType: VisType = await getVisualizationTypeFromVisualizationClass(
+            visualizationClass,
+            featureFlags,
+        );
         // keep resultSpec creation in sync with AD
         const resultSpecWithDimensions = {
-            ...resultSpec,
-            dimensions: generateDimensions(mdObject.content, visualizationType)
+            ...resultSpecSorting,
+            dimensions: generateDimensions(mdObject.content, visualizationType),
         };
-        const treemapDefaultSorting = isTreemap(visualizationType) ? {
-            sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions)
-        } : {};
-        const resultSpecWithDimensionsAndSorting = {
+        const treemapDefaultSorting = isTreemap(visualizationType)
+            ? {
+                  sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions),
+              }
+            : {};
+        const resultSpec = {
             ...resultSpecWithDimensions,
-            ...treemapDefaultSorting
+            ...treemapDefaultSorting,
         };
 
-        const dataSource = await this.adapter.createDataSource(afmWithFilters);
+        const dataSource = await this.adapter.createDataSource(afm);
 
         return {
             type: visualizationType,
             dataSource,
-            resultSpec: resultSpecWithDimensionsAndSorting,
+            resultSpec,
             totals: mdObjectTotals,
             mdObject,
-            featureFlags
+            featureFlags,
         };
     }
 
@@ -484,7 +456,7 @@ export class VisualizationWrapped
                 return;
             } else if (this.hasColorsProp()) {
                 this.setStateWithCheck({
-                    colorPalette: getColorPaletteFromColors(this.props.config.colors)
+                    colorPalette: getColorPaletteFromColors(this.props.config.colors),
                 });
             } else {
                 const colorPalette = await this.getColorPaletteFromProject();

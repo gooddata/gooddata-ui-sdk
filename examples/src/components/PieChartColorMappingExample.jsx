@@ -1,69 +1,68 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { PieChart } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { PieChart } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty
-} from '../utils/fixtures';
-
+    franchiseFeesIdentifierOngoingRoyalty,
+} from "../utils/fixtures";
 
 export class PieChartColorMappingExample extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        return console.log('PieChartColorMappingExample onLoadingChanged', ...params);
+        return console.log("PieChartColorMappingExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        return console.log('PieChartColorMappingExample onError', ...params);
+        return console.log("PieChartColorMappingExample onError", ...params);
     }
 
     render() {
         const measures = [
             {
                 measure: {
-                    localIdentifier: 'franchiseFeesAdRoyaltyIdentifier',
+                    localIdentifier: "franchiseFeesAdRoyaltyIdentifier",
                     definition: {
                         measureDefinition: {
                             item: {
-                                identifier: franchiseFeesAdRoyaltyIdentifier
-                            }
-                        }
+                                identifier: franchiseFeesAdRoyaltyIdentifier,
+                            },
+                        },
                     },
-                    format: '#,##0'
-                }
+                    format: "#,##0",
+                },
             },
             {
                 measure: {
-                    localIdentifier: 'franchiseFeesInitialFranchiseFeeIdentifier',
+                    localIdentifier: "franchiseFeesInitialFranchiseFeeIdentifier",
                     definition: {
                         measureDefinition: {
                             item: {
-                                identifier: franchiseFeesInitialFranchiseFeeIdentifier
-                            }
-                        }
+                                identifier: franchiseFeesInitialFranchiseFeeIdentifier,
+                            },
+                        },
                     },
-                    format: '#,##0'
-                }
+                    format: "#,##0",
+                },
             },
             {
                 measure: {
-                    localIdentifier: 'franchiseFeesIdentifierOngoingRoyalty',
+                    localIdentifier: "franchiseFeesIdentifierOngoingRoyalty",
                     definition: {
                         measureDefinition: {
                             item: {
-                                identifier: franchiseFeesIdentifierOngoingRoyalty
-                            }
-                        }
+                                identifier: franchiseFeesIdentifierOngoingRoyalty,
+                            },
+                        },
                     },
-                    format: '#,##0'
-                }
-            }
+                    format: "#,##0",
+                },
+            },
         ];
 
         return (
@@ -74,31 +73,38 @@ export class PieChartColorMappingExample extends Component {
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                     config={{
-                        colorMapping: [{
-                            predicate: (headerItem) => {
-                                return headerItem.measureHeaderItem
-                                    ? headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier === 'franchiseFeesAdRoyaltyIdentifier')
-                                    : false;
+                        colorMapping: [
+                            {
+                                predicate: headerItem => {
+                                    return headerItem.measureHeaderItem
+                                        ? headerItem.measureHeaderItem &&
+                                              headerItem.measureHeaderItem.localIdentifier ===
+                                                  "franchiseFeesAdRoyaltyIdentifier"
+                                        : false;
+                                },
+                                color: {
+                                    type: "guid",
+                                    value: "5",
+                                },
                             },
-                            color: {
-                                type: 'guid',
-                                value: '5'
-                            }
-                        }, {
-                            predicate: (headerItem) => {
-                                return headerItem.measureHeaderItem
-                                    ? headerItem.measureHeaderItem && (headerItem.measureHeaderItem.localIdentifier === 'franchiseFeesIdentifierOngoingRoyalty')
-                                    : false;
+                            {
+                                predicate: headerItem => {
+                                    return headerItem.measureHeaderItem
+                                        ? headerItem.measureHeaderItem &&
+                                              headerItem.measureHeaderItem.localIdentifier ===
+                                                  "franchiseFeesIdentifierOngoingRoyalty"
+                                        : false;
+                                },
+                                color: {
+                                    type: "rgb",
+                                    value: {
+                                        r: 0,
+                                        g: 0,
+                                        b: 0,
+                                    },
+                                },
                             },
-                            color: {
-                                type: 'rgb',
-                                value: {
-                                    r: 0,
-                                    g: 0,
-                                    b: 0
-                                }
-                            }
-                        }]
+                        ],
                     }}
                 />
             </div>

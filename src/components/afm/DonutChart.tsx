@@ -1,24 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import * as React from "react";
 
-export {
-    IDataSourceProviderProps
-};
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { DonutChart as CoreDonutChart } from '../core/DonutChart';
-import { generateDefaultDimensionsForRoundChart } from '../../helpers/dimensions';
+export { IDataSourceProviderProps };
+
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { DonutChart as CoreDonutChart } from "../core/DonutChart";
+import { generateDefaultDimensionsForRoundChart } from "../../helpers/dimensions";
 
 /**
  * AFM DonutChart
  * is an internal component that accepts afm, resultSpec
  * @internal
  */
-export const DonutChart = dataSourceProvider<ICommonChartProps>(
-    CoreDonutChart,
-    generateDefaultDimensionsForRoundChart,
-    'DonutChart'
-);
+export const DonutChart: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider<
+    ICommonChartProps
+>(CoreDonutChart, generateDefaultDimensionsForRoundChart, "DonutChart");

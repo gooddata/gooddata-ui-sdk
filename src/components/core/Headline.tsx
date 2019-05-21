@@ -1,26 +1,25 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import HeadlineTransformation from '../visualizations/headline/HeadlineTransformation';
-import { IntlWrapper } from './base/IntlWrapper';
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps } from './base/TranslationsProvider';
-import { fixEmptyHeaderItems } from './base/utils/fixEmptyHeaderItems';
-import { HeadlinePropTypes, Requireable } from '../../proptypes/Headline';
-import { IDataSourceProviderInjectedProps } from '../afm/DataSourceProvider';
+import * as React from "react";
+import HeadlineTransformation from "../visualizations/headline/HeadlineTransformation";
+import { IntlWrapper } from "./base/IntlWrapper";
+import { IntlTranslationsProvider, ITranslationsComponentProps } from "./base/TranslationsProvider";
+import { fixEmptyHeaderItems } from "./base/utils/fixEmptyHeaderItems";
+import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
+import { IDataSourceProviderInjectedProps } from "../afm/DataSourceProvider";
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultProps
-} from './base/VisualizationLoadingHOC';
-import { BaseVisualization } from './base/BaseVisualization';
+    commonDefaultProps,
+} from "./base/VisualizationLoadingHOC";
+import { BaseVisualization } from "./base/BaseVisualization";
 
 export { Requireable };
 
-export class HeadlineStateless extends
-    BaseVisualization<ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps, {}> {
-
+export class HeadlineStateless extends BaseVisualization<
+    ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps,
+    {}
+> {
     public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultProps;
 
     public static propTypes = HeadlinePropTypes;
@@ -34,7 +33,7 @@ export class HeadlineStateless extends
             resultSpec,
             execution,
             onFiredDrillEvent,
-            config
+            config,
         } = this.props;
 
         return (
@@ -48,12 +47,13 @@ export class HeadlineStateless extends
                             config={config}
                             executionRequest={{
                                 afm: dataSource.getAfm(),
-                                resultSpec
+                                resultSpec,
                             }}
                             executionResponse={execution.executionResponse}
-                            executionResult={
-                                fixEmptyHeaderItems(execution.executionResult, props.emptyHeaderString)
-                            }
+                            executionResult={fixEmptyHeaderItems(
+                                execution.executionResult,
+                                props.emptyHeaderString,
+                            )}
                         />
                     )}
                 </IntlTranslationsProvider>

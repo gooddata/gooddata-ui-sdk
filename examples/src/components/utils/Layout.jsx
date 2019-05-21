@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 export const Layout = ({ sidebar, sidebarWidth, contentWidth, children }) => (
     <div className="wrapper">
@@ -34,13 +34,13 @@ Layout.propTypes = {
     sidebar: PropTypes.element,
     sidebarWidth: PropTypes.string,
     children: PropTypes.element,
-    contentWidth: PropTypes.string
+    contentWidth: PropTypes.string,
 };
 Layout.defaultProps = {
     sidebar: null,
-    sidebarWidth: '200px',
+    sidebarWidth: "200px",
     children: null,
-    contentWidth: 'auto'
+    contentWidth: "auto",
 };
 
 export default Layout;

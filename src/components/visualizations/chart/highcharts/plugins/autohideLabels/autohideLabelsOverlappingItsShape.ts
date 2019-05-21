@@ -1,20 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    getDataPoints,
-    getVisibleSeries
-} from '../../helpers';
+import { getDataPoints, getVisibleSeries } from "../../helpers";
 
 import {
     intersectsParentLabel,
     isLabelOverlappingItsShape,
     hideDataLabel,
-    showDataLabel
-} from '../../dataLabelsHelpers';
+    showDataLabel,
+} from "../../dataLabelsHelpers";
 
 function autohideLabelsOverlappingItsShape(
     chart: any,
     hideFunction: (point: any) => void = hideDataLabel,
-    showFunction: (point: any) => void = showDataLabel
+    showFunction: (point: any) => void = showDataLabel,
 ) {
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);

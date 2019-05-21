@@ -1,18 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export class SidebarItem extends Component {
     static propTypes = {
         label: PropTypes.string.isRequired,
         id: PropTypes.any.isRequired,
         isSelected: PropTypes.bool,
-        onClick: PropTypes.func.isRequired
+        onClick: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
-        isSelected: false
+        isSelected: false,
     };
 
     constructor(props) {
@@ -28,7 +28,7 @@ export class SidebarItem extends Component {
         const { label, isSelected } = this.props;
 
         return (
-            <li className="list-item-wrap" >
+            <li className="list-item-wrap">
                 <style jsx>{`
                     li {
                         margin: 0 -20px 0 -10px;
@@ -60,7 +60,7 @@ export class SidebarItem extends Component {
                         color: #000000;
                     }
                 `}</style>
-                <button onClick={this.onItemClick} className={`list-item ${isSelected ? 'selected' : ''}`}>
+                <button onClick={this.onItemClick} className={`list-item ${isSelected ? "selected" : ""}`}>
                     {label}
                 </button>
             </li>

@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
+import * as React from "react";
+import * as classNames from "classnames";
 import {
     IHeatmapLegendBox,
     IHeatmapLegendConfig,
     IHeatmapLegendLabel,
-    getHeatmapLegendConfiguration
-} from './helpers';
-import { TOP } from './PositionTypes';
-import { IHeatmapLegendItem } from '../../typings/legend';
+    getHeatmapLegendConfiguration,
+} from "./helpers";
+import { TOP } from "./PositionTypes";
+import { IHeatmapLegendItem } from "../../typings/legend";
 
 export interface IHeatmapLegendProps {
     series: IHeatmapLegendItem[];
@@ -23,10 +23,7 @@ function HeatmapLabels(labels: IHeatmapLegendLabel[]) {
         <div className="labels">
             {labels.map((item: IHeatmapLegendLabel) => {
                 return (
-                    <span
-                        key={item.key}
-                        style={item.style}
-                    >
+                    <span key={item.key} style={item.style}>
                         {item.label}
                     </span>
                 );
@@ -39,11 +36,9 @@ function HeatmapBoxes(boxes: IHeatmapLegendBox[]) {
     return (
         <div className="boxes">
             {boxes.map((box: IHeatmapLegendBox) => {
-                const classes = classNames('box', box.class);
+                const classes = classNames("box", box.class);
 
-                return (
-                    <span className={classes} key={box.key} style={box.style} />
-                );
+                return <span className={classes} key={box.key} style={box.style} />;
             })}
         </div>
     );
@@ -54,7 +49,11 @@ export default class HeatmapLegend extends React.PureComponent<IHeatmapLegendPro
         const { series, format, numericSymbols, isSmall, position } = this.props;
 
         const config: IHeatmapLegendConfig = getHeatmapLegendConfiguration(
-            series, format, numericSymbols, isSmall, position
+            series,
+            format,
+            numericSymbols,
+            isSmall,
+            position,
         );
         const classes = classNames(...config.classes);
 

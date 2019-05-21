@@ -1,20 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as cx from 'classnames';
+import * as React from "react";
+import * as cx from "classnames";
 
-import LegendList from './LegendList';
-import { calculateFluidLegend } from './helpers';
+import LegendList from "./LegendList";
+import { calculateFluidLegend } from "./helpers";
 
 export default class FluidLegend extends React.PureComponent<any, any> {
     public static defaultProps: any = {
-        containerWidth: null
+        containerWidth: null,
     };
 
     constructor(props: any) {
         super(props);
 
         this.state = {
-            showAll: false
+            showAll: false,
         };
 
         this.toggleShowAll = this.toggleShowAll.bind(this);
@@ -22,7 +22,7 @@ export default class FluidLegend extends React.PureComponent<any, any> {
 
     public toggleShowAll() {
         this.setState({
-            showAll: !this.state.showAll
+            showAll: !this.state.showAll,
         });
     }
 
@@ -34,19 +34,21 @@ export default class FluidLegend extends React.PureComponent<any, any> {
 
         return (
             <div className="series">
-                <LegendList chartType={chartType} series={pagedSeries} onItemClick={onItemClick} width={itemWidth}/>
+                <LegendList
+                    chartType={chartType}
+                    series={pagedSeries}
+                    onItemClick={onItemClick}
+                    width={itemWidth}
+                />
             </div>
         );
     }
 
     public renderPaging() {
-        const classes = cx('button-link',
-            'button-icon-only',
-            'paging-button', {
-                'icon-chevron-up': this.state.showAll,
-                'icon-chevron-down': !this.state.showAll
-            }
-        );
+        const classes = cx("button-link", "button-icon-only", "paging-button", {
+            "icon-chevron-up": this.state.showAll,
+            "icon-chevron-down": !this.state.showAll,
+        });
         return (
             <div className="paging">
                 <button className={classes} onClick={this.toggleShowAll} />
@@ -56,8 +58,10 @@ export default class FluidLegend extends React.PureComponent<any, any> {
 
     public render() {
         const { series, containerWidth } = this.props;
-        const { itemWidth, hasPaging, visibleItemsCount } =
-            calculateFluidLegend(series.length, containerWidth);
+        const { itemWidth, hasPaging, visibleItemsCount } = calculateFluidLegend(
+            series.length,
+            containerWidth,
+        );
         return (
             <div className="viz-legend fluid">
                 {this.renderSeries(itemWidth, visibleItemsCount)}

@@ -1,22 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
-import flatten = require('lodash/flatten');
-import get = require('lodash/get');
-import pick = require('lodash/pick');
-import map = require('lodash/map');
-import zip = require('lodash/zip');
-import unzip = require('lodash/unzip');
-import initial = require('lodash/initial');
-import tail = require('lodash/tail');
-import isEmpty = require('lodash/isEmpty');
-import maxBy = require('lodash/maxBy');
-import minBy = require('lodash/minBy');
-import min = require('lodash/min');
-import max = require('lodash/max');
-import isNil = require('lodash/isNil');
+import flatten = require("lodash/flatten");
+import get = require("lodash/get");
+import pick = require("lodash/pick");
+import map = require("lodash/map");
+import zip = require("lodash/zip");
+import unzip = require("lodash/unzip");
+import initial = require("lodash/initial");
+import tail = require("lodash/tail");
+import isEmpty = require("lodash/isEmpty");
+import maxBy = require("lodash/maxBy");
+import minBy = require("lodash/minBy");
+import min = require("lodash/min");
+import max = require("lodash/max");
+import isNil = require("lodash/isNil");
 
-import { VisualizationTypes, VisType } from '../../../../constants/visualizationTypes';
-import { isBarChart } from '../../utils/common';
-import { IChartConfig, ISeriesItem, ISeriesDataItem } from '../../../../interfaces/Config';
+import { VisualizationTypes, VisType } from "../../../../constants/visualizationTypes";
+import { isBarChart } from "../../utils/common";
+import { IChartConfig, ISeriesItem, ISeriesDataItem } from "../../../../interfaces/Config";
 
 export interface IRectByPoints {
     left: number;
@@ -42,10 +42,7 @@ export const rectanglesAreOverlapping = (r1: IRectByPoints, r2: IRectByPoints, p
     r1.bottom + padding > r2.top - padding;
 
 export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
-    r1.x < (r2.x + r2.width) &&
-    (r1.x + r1.width) > r2.x &&
-    r1.y < (r2.y + r2.height) &&
-    (r1.y + r1.height) > r2.y;
+    r1.x < r2.x + r2.width && r1.x + r1.width > r2.x && r1.y < r2.y + r2.height && r1.y + r1.height > r2.y;
 
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
 export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
@@ -53,16 +50,20 @@ export const getHiddenSeries = (chart: any) => chart.series && chart.series.filt
 export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
 export const getDataPointsOfVisibleSeries = (chart: any) => getDataPoints(getVisibleSeries(chart));
 
-export const getChartType = (chart: any): string => get<string>(chart, 'options.chart.type');
+export const getChartType = (chart: any): string => get(chart, "options.chart.type");
 export const isStacked = (chart: any) => {
     const chartType = getChartType(chart);
-    if (get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
-        chart.axes.some((axis: any) => !isEmpty(axis.stacks))) {
+    if (
+        get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
+        chart.axes.some((axis: any) => !isEmpty(axis.stacks))
+    ) {
         return true;
     }
 
-    if (get(chart, 'userOptions.plotOptions.series.stacking', false) &&
-        chart.axes.some((axis: any) => !isEmpty(axis.stacks))) {
+    if (
+        get(chart, "userOptions.plotOptions.series.stacking", false) &&
+        chart.axes.some((axis: any) => !isEmpty(axis.stacks))
+    ) {
         return true;
     }
 
@@ -73,7 +74,7 @@ export function getChartProperties(config: IChartConfig, type: VisType) {
     const isBarType = isBarChart(type);
     const chartProps: any = {
         xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },
-        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis }
+        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis },
     };
 
     const secondaryXAxisProps = isBarType ? { ...config.secondary_yaxis } : { ...config.secondary_xaxis };
@@ -98,7 +99,7 @@ export const getPointPositions = (point: any) => {
         label: labelRect,
         labelPadding: dataLabel.padding,
         show: () => dataLabel.show(),
-        hide: () => dataLabel.hide()
+        hide: () => dataLabel.hide(),
     };
 };
 
@@ -109,16 +110,16 @@ export function getShapeAttributes(point: any): IRectBySize {
     if (options.chart.type === VisualizationTypes.BAR) {
         return {
             x: Math.floor(plotSizeY - (shapeArgs.y - series.group.translateX) - shapeArgs.height),
-            y: Math.ceil((plotSizeX + series.group.translateY) - shapeArgs.x - shapeArgs.width),
+            y: Math.ceil(plotSizeX + series.group.translateY - shapeArgs.x - shapeArgs.width),
             width: shapeArgs.height,
-            height: shapeArgs.width
+            height: shapeArgs.width,
         };
     } else if (options.chart.type === VisualizationTypes.COLUMN) {
         return {
             x: shapeArgs.x + series.group.translateX,
             y: shapeArgs.y + series.group.translateY,
             width: shapeArgs.width,
-            height: shapeArgs.height
+            height: shapeArgs.height,
         };
     }
 
@@ -126,7 +127,7 @@ export function getShapeAttributes(point: any): IRectBySize {
         x: 0,
         y: 0,
         width: 0,
-        height: 0
+        height: 0,
     };
 }
 
@@ -138,23 +139,26 @@ function getExtremeOnAxis(min: number, max: number) {
 }
 
 export function shouldFollowPointerForDualAxes(chartOptions: any) {
-    const yAxes = get(chartOptions, 'yAxes', []);
+    const yAxes = get(chartOptions, "yAxes", []);
     if (yAxes.length <= 1) {
         return false;
     }
 
     const hasMinMaxValue = [
-        'yAxisProps.min', 'yAxisProps.max',
-        'secondary_yAxisProps.min', 'secondary_yAxisProps.max'].reduce((result, key: string) => {
-            const value = get(chartOptions, key, undefined);
-            return isEmpty(value) ? result : value;
-        }, undefined);
+        "yAxisProps.min",
+        "yAxisProps.max",
+        "secondary_yAxisProps.min",
+        "secondary_yAxisProps.max",
+    ].reduce((result, key: string) => {
+        const value = get(chartOptions, key, undefined);
+        return isEmpty(value) ? result : value;
+    }, undefined);
     return yAxes.length > 1 && hasMinMaxValue;
 }
 
 function isMinMaxLimitData(chartOptions: any, key: string) {
-    const yMin = parseFloat(get(chartOptions, `${key}.min`, ''));
-    const yMax = parseFloat(get(chartOptions, `${key}.max`, ''));
+    const yMin = parseFloat(get(chartOptions, `${key}.min`, ""));
+    const yMax = parseFloat(get(chartOptions, `${key}.max`, ""));
     if (isNaN(yMin) && isNaN(yMax)) {
         return false;
     }
@@ -162,15 +166,17 @@ function isMinMaxLimitData(chartOptions: any, key: string) {
     const { minDataValue, maxDataValue } = getDataExtremeDataValues(chartOptions);
     const { axisMin, axisMax } = getExtremeOnAxis(minDataValue, maxDataValue);
 
-    return !isNaN(yMax) && axisMax > yMax || !isNaN(yMin) && axisMin < yMin;
+    return (!isNaN(yMax) && axisMax > yMax) || (!isNaN(yMin) && axisMin < yMin);
 }
 
 export function shouldFollowPointer(chartOptions: any) {
     if (shouldFollowPointerForDualAxes(chartOptions)) {
         return true;
     }
-    return isMinMaxLimitData(chartOptions, 'yAxisProps') ||
-            isMinMaxLimitData(chartOptions, 'secondary_yAxisProps');
+    return (
+        isMinMaxLimitData(chartOptions, "yAxisProps") ||
+        isMinMaxLimitData(chartOptions, "secondary_yAxisProps")
+    );
 }
 
 function isSerieVisible(serie: ISeriesItem): boolean {
@@ -200,7 +206,7 @@ function getNonStackedMinValue(series: ISeriesItem[]): number {
 }
 
 function getDataExtremeDataValues(chartOptions: any) {
-    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const series = get(chartOptions, "data.series");
 
     const maxDataValue = chartOptions.hasStackByAttribute
         ? getStackedMaxValue(series)
@@ -214,12 +220,12 @@ function getDataExtremeDataValues(chartOptions: any) {
 }
 
 function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
-    const max = maxBy(serieData, (item: ISeriesDataItem) => item && item.y ? item.y : null);
+    const max = maxBy(serieData, (item: ISeriesDataItem) => (item && item.y ? item.y : null));
     return max ? max.y : Number.MIN_SAFE_INTEGER;
 }
 
 function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
-    const min = minBy(serieData, (item: ISeriesDataItem) => item && item.y ? item.y : null);
+    const min = minBy(serieData, (item: ISeriesDataItem) => (item && item.y ? item.y : null));
     return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 
@@ -237,10 +243,11 @@ export function getStackedMinValue(series: ISeriesItem[]) {
     return !isNil(minValue) ? minValue : Number.MAX_SAFE_INTEGER;
 }
 
-function getColumnExtremeValue(series: ISeriesItem[], extremeColumnGetter: (data: number[]) => number): number[] {
-    const seriesDataPerColumn = zip(...series
-        .filter(isSerieVisible)
-        .map(serie => serie.data));
+function getColumnExtremeValue(
+    series: ISeriesItem[],
+    extremeColumnGetter: (data: number[]) => number,
+): number[] {
+    const seriesDataPerColumn = zip(...series.filter(isSerieVisible).map(serie => serie.data));
 
     const seriesDataYValue = seriesDataPerColumn.map(data => data.map(x => x.y));
     return seriesDataYValue.map(extremeColumnGetter);
@@ -252,7 +259,7 @@ function getMaxFromPositiveNegativeStacks(data: number[]): number {
             return acc;
         }
 
-        if ((current < 0) || (acc < 0)) {
+        if (current < 0 || acc < 0) {
             return Math.max(acc, current);
         }
 
@@ -266,7 +273,7 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
             return acc;
         }
 
-        if ((current > 0) || (acc > 0)) {
+        if (current > 0 || acc > 0) {
             return Math.min(acc, current);
         }
 
@@ -274,19 +281,19 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-export function shouldStartOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'): boolean {
-    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ''));
-    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ''));
+export function shouldStartOnTick(chartOptions: any, axisPropsKey = "yAxisProps"): boolean {
+    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
+    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
 
-    if ((isNaN(min) && isNaN(max))) {
+    if (isNaN(min) && isNaN(max)) {
         return true;
     }
 
-    if ((!isNaN(min) && !isNaN(max))) {
+    if (!isNaN(min) && !isNaN(max)) {
         return min > max;
     }
 
-    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const series = get(chartOptions, "data.series");
     const minDataValue = chartOptions.hasStackByAttribute
         ? getStackedMinValue(series)
         : getNonStackedMinValue(series);
@@ -298,19 +305,19 @@ export function shouldStartOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'
 
     return false;
 }
-export function shouldEndOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'): boolean {
-    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ''));
-    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ''));
+export function shouldEndOnTick(chartOptions: any, axisPropsKey = "yAxisProps"): boolean {
+    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
+    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
 
-    if ((isNaN(min) && isNaN(max))) {
+    if (isNaN(min) && isNaN(max)) {
         return true;
     }
 
-    if ((!isNaN(min) && !isNaN(max))) {
+    if (!isNaN(min) && !isNaN(max)) {
         return min > max;
     }
 
-    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const series = get(chartOptions, "data.series");
     const maxDataValue = chartOptions.hasStackByAttribute
         ? getStackedMaxValue(series)
         : getNonStackedMaxValue(series);
@@ -324,15 +331,15 @@ export function shouldEndOnTick(chartOptions: any, axisPropsKey = 'yAxisProps'):
 }
 
 export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: any) {
-    const min = parseFloat(get(chartOptions, 'xAxisProps.min', ''));
+    const min = parseFloat(get(chartOptions, "xAxisProps.min", ""));
 
     return isNaN(min) ? true : false;
 }
 
 export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: any) {
-    const min = parseFloat(get(chartOptions, 'yAxisProps.min', ''));
+    const min = parseFloat(get(chartOptions, "yAxisProps.min", ""));
 
-    const series = get<ISeriesItem[]>(chartOptions, 'data.series');
+    const series = get(chartOptions, "data.series");
     const maxDataValue = getNonStackedMaxValue(series);
 
     return isNaN(min) || min > maxDataValue ? true : false;
@@ -349,14 +356,14 @@ export interface IAxisRangeForAxes {
 }
 
 export function getAxisRangeForAxes(chart: any): IAxisRangeForAxes {
-    const yAxis: any = get(chart, 'yAxis', []);
+    const yAxis: any = get(chart, "yAxis", []);
     return yAxis
-        .map((axis: any) => pick(axis, ['opposite', 'min', 'max']))
-        .map(({ opposite, min, max }: any) => ({ axis: opposite ? 'second' : 'first', min, max }))
+        .map((axis: any) => pick(axis, ["opposite", "min", "max"]))
+        .map(({ opposite, min, max }: any) => ({ axis: opposite ? "second" : "first", min, max }))
         .reduce((result: IAxisRangeForAxes, { axis, min, max }: any) => {
             result[axis] = {
                 minAxisValue: min,
-                maxAxisValue: max
+                maxAxisValue: max,
             };
             return result;
         }, {});

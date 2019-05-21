@@ -1,25 +1,25 @@
 // (C) 2007-2019 GoodData Corporation
-import range = require('lodash/range');
-import get = require('lodash/get');
-import head = require('lodash/head');
-import last = require('lodash/last');
-import isEmpty = require('lodash/isEmpty');
-import inRange = require('lodash/inRange');
+import range = require("lodash/range");
+import get = require("lodash/get");
+import head = require("lodash/head");
+import last = require("lodash/last");
+import isEmpty = require("lodash/isEmpty");
+import inRange = require("lodash/inRange");
 
-import { IHeatmapLegendItem } from '../../typings/legend';
-import { LEFT, RIGHT, TOP, BOTTOM } from './PositionTypes';
-import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from '../../utils/common';
-import { supportedDualAxesChartTypes } from '../chartOptionsBuilder';
-import { ISeriesItem } from '../../../../interfaces/Config';
-import { VisualizationTypes } from '../../../../constants/visualizationTypes';
+import { IHeatmapLegendItem } from "../../typings/legend";
+import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
+import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
+import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
+import { ISeriesItem } from "../../../../interfaces/Config";
+import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
 export const FLUID_PAGING_WIDTH = 30;
 export const LEGEND_PADDING = 12;
 export const ITEM_HEIGHT = 20;
-export const SKIPPED_LABEL_TEXT = '...';
-export const UTF_NON_BREAKING_SPACE = '\u00A0';
+export const SKIPPED_LABEL_TEXT = "...";
+export const UTF_NON_BREAKING_SPACE = "\u00A0";
 const STATIC_PAGING_HEIGHT = 44;
 
 export interface IHeatmapLegendBox {
@@ -27,7 +27,7 @@ export interface IHeatmapLegendBox {
     key: string;
     style: {
         backgroundColor: string;
-        border: string
+        border: string;
     };
 }
 
@@ -49,7 +49,7 @@ function getEmptyBlock(style: any, index: number) {
     return {
         key: `empty-${index}`,
         label: UTF_NON_BREAKING_SPACE,
-        style
+        style,
     };
 }
 
@@ -57,165 +57,165 @@ function getLabelStyle(width: number, textAlign: string) {
     return { width, textAlign };
 }
 
-const ALEFT = 'left';
-const ARIGHT = 'right';
-const ACENTER = 'center';
+const ALEFT = "left";
+const ARIGHT = "right";
+const ACENTER = "center";
 const DOTS_WIDTH = 10;
 
 function getSkippedLabelBlock(index: number) {
     return {
         key: `dots-${index}`,
         label: SKIPPED_LABEL_TEXT,
-        style: getLabelStyle(DOTS_WIDTH, ACENTER)
+        style: getLabelStyle(DOTS_WIDTH, ACENTER),
     };
 }
 
-const verticalHeatmapMiddleLabelStyle = { height: 30, textAlign: ALEFT, lineHeight: '30px' };
+const verticalHeatmapMiddleLabelStyle = { height: 30, textAlign: ALEFT, lineHeight: "30px" };
 
 export const verticalHeatmapConfig = [
-    { type: 'label', labelIndex: 0, style: { height: 15, textAlign: ALEFT, lineHeight: '11px' } },
-    { type: 'label', labelIndex: 1, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 2, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 3, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 4, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 5, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 6, style: verticalHeatmapMiddleLabelStyle },
-    { type: 'label', labelIndex: 7, style: { height: 15, textAlign: ALEFT, lineHeight: '20px' } }
+    { type: "label", labelIndex: 0, style: { height: 15, textAlign: ALEFT, lineHeight: "11px" } },
+    { type: "label", labelIndex: 1, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 2, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 3, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 4, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 5, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 6, style: verticalHeatmapMiddleLabelStyle },
+    { type: "label", labelIndex: 7, style: { height: 15, textAlign: ALEFT, lineHeight: "20px" } },
 ];
 
 const defaultHeatmapLegendLabelStyle = { width: 40, textAlign: ACENTER };
 
 export const heatmapLegendConfigMatrix = [
     [
-        { type: 'label', labelIndex: 0, style: { width: 175, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 7, style: { width: 175, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 175, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 175, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 145, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 145, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 145, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 145, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 95, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 95, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 95, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 95, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 55, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
-        { type: 'label', labelIndex: 7, style: { width: 55, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 55, textAlign: ALEFT } },
+        { type: "label", labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
+        { type: "label", labelIndex: 7, style: { width: 55, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 40 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 45, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "label", labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "space", style: { width: 40 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 45, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 30, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 1, style: defaultHeatmapLegendLabelStyle },
-        { type: 'space', style: { width: 10 } },
-        { type: 'label', labelIndex: 2, style: defaultHeatmapLegendLabelStyle },
-        { type: 'space', style: { width: 10 } },
-        { type: 'label', labelIndex: 3, style: defaultHeatmapLegendLabelStyle },
-        { type: 'space', style: { width: 10 } },
-        { type: 'label', labelIndex: 4, style: defaultHeatmapLegendLabelStyle },
-        { type: 'space', style: { width: 10 } },
-        { type: 'label', labelIndex: 5, style: defaultHeatmapLegendLabelStyle },
-        { type: 'space', style: { width: 10 } },
-        { type: 'label', labelIndex: 6, style: defaultHeatmapLegendLabelStyle },
-        { type: 'label', labelIndex: 7, style: { width: 30, textAlign: ARIGHT } }
-    ]
+        { type: "label", labelIndex: 0, style: { width: 30, textAlign: ALEFT } },
+        { type: "label", labelIndex: 1, style: defaultHeatmapLegendLabelStyle },
+        { type: "space", style: { width: 10 } },
+        { type: "label", labelIndex: 2, style: defaultHeatmapLegendLabelStyle },
+        { type: "space", style: { width: 10 } },
+        { type: "label", labelIndex: 3, style: defaultHeatmapLegendLabelStyle },
+        { type: "space", style: { width: 10 } },
+        { type: "label", labelIndex: 4, style: defaultHeatmapLegendLabelStyle },
+        { type: "space", style: { width: 10 } },
+        { type: "label", labelIndex: 5, style: defaultHeatmapLegendLabelStyle },
+        { type: "space", style: { width: 10 } },
+        { type: "label", labelIndex: 6, style: defaultHeatmapLegendLabelStyle },
+        { type: "label", labelIndex: 7, style: { width: 30, textAlign: ARIGHT } },
+    ],
 ];
 
 const defaultHeatmapSmallLegendStyle = { width: 40, textAlign: ACENTER };
 
 export const heatmapSmallLegendConfigMatrix = [
     [
-        { type: 'label', labelIndex: 0, style: { width: 138, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 7, style: { width: 138, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 138, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 138, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 115, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 26 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 115, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 115, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "space", style: { width: 26 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 115, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 75, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 30 } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 26 } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 30 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 75, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 75, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "space", style: { width: 30 } },
+        { type: "dots" },
+        { type: "space", style: { width: 26 } },
+        { type: "dots" },
+        { type: "space", style: { width: 30 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 75, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 26 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
-        { type: 'label', labelIndex: 7, style: { width: 45, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
+        { type: "label", labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "space", style: { width: 26 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
+        { type: "label", labelIndex: 7, style: { width: 45, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 35, textAlign: ALEFT } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'space', style: { width: 26 } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
-        { type: 'dots' },
-        { type: 'label', labelIndex: 7, style: { width: 35, textAlign: ARIGHT } }
+        { type: "label", labelIndex: 0, style: { width: 35, textAlign: ALEFT } },
+        { type: "dots" },
+        { type: "label", labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "space", style: { width: 26 } },
+        { type: "dots" },
+        { type: "label", labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
+        { type: "dots" },
+        { type: "label", labelIndex: 7, style: { width: 35, textAlign: ARIGHT } },
     ],
     [
-        { type: 'label', labelIndex: 0, style: { width: 20, textAlign: ALEFT } },
-        { type: 'label', labelIndex: 1, style: defaultHeatmapSmallLegendStyle },
-        { type: 'label', labelIndex: 2, style: defaultHeatmapSmallLegendStyle },
-        { type: 'label', labelIndex: 3, style: { width: 38, textAlign: ACENTER } },
-        { type: 'label', labelIndex: 4, style: { width: 38, textAlign: ACENTER } },
-        { type: 'label', labelIndex: 5, style: defaultHeatmapSmallLegendStyle },
-        { type: 'label', labelIndex: 6, style: defaultHeatmapSmallLegendStyle },
-        { type: 'label', labelIndex: 7, style: { width: 20, textAlign: ARIGHT } }
-    ]
+        { type: "label", labelIndex: 0, style: { width: 20, textAlign: ALEFT } },
+        { type: "label", labelIndex: 1, style: defaultHeatmapSmallLegendStyle },
+        { type: "label", labelIndex: 2, style: defaultHeatmapSmallLegendStyle },
+        { type: "label", labelIndex: 3, style: { width: 38, textAlign: ACENTER } },
+        { type: "label", labelIndex: 4, style: { width: 38, textAlign: ACENTER } },
+        { type: "label", labelIndex: 5, style: defaultHeatmapSmallLegendStyle },
+        { type: "label", labelIndex: 6, style: defaultHeatmapSmallLegendStyle },
+        { type: "label", labelIndex: 7, style: { width: 20, textAlign: ARIGHT } },
+    ],
 ];
 
 export function buildHeatmapLabelsConfig(labels: string[], config: any) {
     return config.map((element: any, index: number) => {
         switch (element.type) {
-            case 'label':
+            case "label":
                 return {
                     label: labels[element.labelIndex],
                     style: element.style,
-                    key: `${element.type}-${index}`
+                    key: `${element.type}-${index}`,
                 };
 
-            case 'space':
+            case "space":
                 return getEmptyBlock(element.style, index);
 
-            case 'dots':
+            case "dots":
                 return getSkippedLabelBlock(index);
         }
     });
@@ -249,8 +249,9 @@ function getHeatmapLegendLabelsConfiguration(legendLabels: string[], isSmall: bo
         } else if (maxLabelLength > labelLengths[4]) {
             shorteningLevel = 0;
         }
-        shorteningConfig = isSmall ?
-            heatmapSmallLegendConfigMatrix[shorteningLevel] : heatmapLegendConfigMatrix[shorteningLevel];
+        shorteningConfig = isSmall
+            ? heatmapSmallLegendConfigMatrix[shorteningLevel]
+            : heatmapLegendConfigMatrix[shorteningLevel];
     }
 
     return buildHeatmapLabelsConfig(legendLabels, shorteningConfig);
@@ -258,13 +259,13 @@ function getHeatmapLegendLabelsConfiguration(legendLabels: string[], isSmall: bo
 
 export function calculateFluidLegend(seriesCount: number, containerWidth: number) {
     // -1 because flex dimensions provide rounded number and the real width can be float
-    const realWidth = containerWidth - (2 * LEGEND_PADDING) - 1;
+    const realWidth = containerWidth - 2 * LEGEND_PADDING - 1;
 
     if (seriesCount <= 2) {
         return {
             hasPaging: false,
             itemWidth: realWidth / seriesCount,
-            visibleItemsCount: seriesCount
+            visibleItemsCount: seriesCount,
         };
     }
 
@@ -277,9 +278,7 @@ export function calculateFluidLegend(seriesCount: number, containerWidth: number
     // Recalculate with paging
     if (rowsCount > RESPONSIVE_VISIBLE_ROWS) {
         const legendWidthWithPaging = realWidth - FLUID_PAGING_WIDTH;
-        columnsCount = Math.floor(
-            legendWidthWithPaging / RESPONSIVE_ITEM_MIN_WIDTH
-        );
+        columnsCount = Math.floor(legendWidthWithPaging / RESPONSIVE_ITEM_MIN_WIDTH);
         itemWidth = legendWidthWithPaging / columnsCount;
         hasPaging = true;
     }
@@ -289,7 +288,7 @@ export function calculateFluidLegend(seriesCount: number, containerWidth: number
     return {
         itemWidth,
         hasPaging,
-        visibleItemsCount
+        visibleItemsCount,
     };
 }
 
@@ -303,25 +302,25 @@ export function calculateStaticLegend(seriesCount: number, containerHeight: numb
     if (visibleItemsCount >= seriesCount) {
         return {
             hasPaging: false,
-            visibleItemsCount
+            visibleItemsCount,
         };
     }
     return {
         hasPaging: true,
-        visibleItemsCount: getStaticVisibleItemsCount(containerHeight, true)
+        visibleItemsCount: getStaticVisibleItemsCount(containerHeight, true),
     };
 }
 
 function getHeatmapLegendLabels(series: IHeatmapLegendItem[], format: string, numericSymbols: string[]) {
-    const min = get(head(series), 'range.from', 0);
-    const max = get(last(series), 'range.to', 0);
+    const min = get(head(series), "range.from", 0);
+    const max = get(last(series), "range.to", 0);
     const diff = max - min;
 
-    return range(series.length + 1).map((index) => {
+    return range(series.length + 1).map(index => {
         let value;
 
         if (index === 0) {
-            value = get(series, '0.range.from', 0);
+            value = get(series, "0.range.from", 0);
         } else if (index === series.length) {
             value = get(series, `${index - 1}.range.to`, 0);
         } else {
@@ -337,26 +336,30 @@ const MIDDLE_LEGEND_BOX_INDEX = 3;
 function getHeatmapBoxes(series: IHeatmapLegendItem[]): IHeatmapLegendBox[] {
     const getBoxStyle = (item: IHeatmapLegendItem) => ({
         backgroundColor: item.color,
-        border: item.color === 'rgb(255,255,255)' ? '1px solid #ccc' : 'none'
+        border: item.color === "rgb(255,255,255)" ? "1px solid #ccc" : "none",
     });
 
     return series.map((item: IHeatmapLegendItem, index: number) => {
         const style = getBoxStyle(item);
-        const middle = index === MIDDLE_LEGEND_BOX_INDEX ? 'middle' : null;
+        const middle = index === MIDDLE_LEGEND_BOX_INDEX ? "middle" : null;
 
         return {
             class: middle,
             key: `item-${index}`,
-            style
+            style,
         };
     });
 }
 
 export function getHeatmapLegendConfiguration(
-    series: IHeatmapLegendItem[], format: string, numericSymbols: string[], isSmall: boolean, position: string
+    series: IHeatmapLegendItem[],
+    format: string,
+    numericSymbols: string[],
+    isSmall: boolean,
+    position: string,
 ): IHeatmapLegendConfig {
     const legendLabels = getHeatmapLegendLabels(series, format, numericSymbols);
-    const small = isSmall ? 'small' : null;
+    const small = isSmall ? "small" : null;
 
     let finalPosition;
 
@@ -367,7 +370,7 @@ export function getHeatmapLegendConfiguration(
         finalPosition = position || RIGHT;
     }
 
-    const classes = ['viz-legend', 'heatmap-legend', `position-${finalPosition}`, small];
+    const classes = ["viz-legend", "heatmap-legend", `position-${finalPosition}`, small];
 
     const isVertical = finalPosition === LEFT || finalPosition === RIGHT;
     const finalLabels = getHeatmapLegendLabelsConfiguration(legendLabels, isSmall, isVertical);
@@ -377,59 +380,68 @@ export function getHeatmapLegendConfiguration(
         classes,
         labels: finalLabels,
         boxes,
-        position: finalPosition
+        position: finalPosition,
     };
 }
 
 const LEGEND_TEXT_KEYS = {
-    column: ['left', 'right'],
-    line: ['left', 'right'],
-    bar: ['bottom', 'top'],
-    combo: ['left', 'right']
+    column: ["left", "right"],
+    line: ["left", "right"],
+    bar: ["bottom", "top"],
+    area: ["left", "right"],
+    combo: ["left", "right"],
+    combo2: ["left", "right"],
 };
 
-export const LEGEND_AXIS_INDICATOR = 'legendAxisIndicator';
-export const LEGEND_SEPARATOR = 'legendSeparator';
+export const LEGEND_AXIS_INDICATOR = "legendAxisIndicator";
+export const LEGEND_SEPARATOR = "legendSeparator";
 
 function separateLegendItems(series: any[]) {
-    return series.reduce((result: any, item: any) => {
-        // for now, it assumes that GDC chart only has 2 Y axes in maximum
-        // yAxis only takes 0 (left/bottom axis) or 1 (right/top axis)
-        const { yAxis } = item;
-        if (!yAxis) { // 0
-            result.itemsOnFirstAxis.push(item);
-        } else {
-            result.itemsOnSecondAxis.push(item);
-        }
-        return result;
-    }, {
-        itemsOnFirstAxis: [],
-        itemsOnSecondAxis: []
-    });
+    return series.reduce(
+        (result: any, item: any) => {
+            // for now, it assumes that GDC chart only has 2 Y axes in maximum
+            // yAxis only takes 0 (left/bottom axis) or 1 (right/top axis)
+            const { yAxis } = item;
+            if (!yAxis) {
+                // 0
+                result.itemsOnFirstAxis.push(item);
+            } else {
+                result.itemsOnSecondAxis.push(item);
+            }
+            return result;
+        },
+        {
+            itemsOnFirstAxis: [],
+            itemsOnSecondAxis: [],
+        },
+    );
 }
 
-export function groupSeriesItemsByType(series: ISeriesItem[]): {[key: string]: ISeriesItem[]} {
-    const primaryType = get(head(series), 'type');
+export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: ISeriesItem[] } {
+    const primaryType = get(head(series), "type");
 
-    return series.reduce((result: {[key: string]: ISeriesItem[]}, item: ISeriesItem) => {
-        if (primaryType === item.type) {
-            result.primaryItems.push(item);
-        } else {
-            result.secondaryItems.push(item);
-        }
+    return series.reduce(
+        (result: { [key: string]: ISeriesItem[] }, item: ISeriesItem) => {
+            if (primaryType === item.type) {
+                result.primaryItems.push(item);
+            } else {
+                result.secondaryItems.push(item);
+            }
 
-        return result;
-    }, {
-        primaryItems: [],
-        secondaryItems: []
-    });
+            return result;
+        },
+        {
+            primaryItems: [],
+            secondaryItems: [],
+        },
+    );
 }
 
 export function getComboChartSeries(series: ISeriesItem[]) {
     const { primaryItems, secondaryItems } = groupSeriesItemsByType(series);
     const primaryItem: ISeriesItem = head(primaryItems) || {};
     const secondaryItem: ISeriesItem = head(secondaryItems) || {};
-    const primaryType: string =  primaryItem.type || VisualizationTypes.COLUMN;
+    const primaryType: string = primaryItem.type || VisualizationTypes.COLUMN;
     const secondaryType: string = secondaryItem.type || VisualizationTypes.LINE;
     const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS.combo;
 
@@ -445,24 +457,35 @@ export function getComboChartSeries(series: ISeriesItem[]) {
             ...primaryItems,
             { type: LEGEND_SEPARATOR },
             { type: LEGEND_AXIS_INDICATOR, labelKey: secondaryType },
-            ...secondaryItems
+            ...secondaryItems,
         ];
     }
 
     return [
-        { type: LEGEND_AXIS_INDICATOR, labelKey: VisualizationTypes.COMBO, data: [primaryType, firstAxisKey] },
+        {
+            type: LEGEND_AXIS_INDICATOR,
+            labelKey: VisualizationTypes.COMBO,
+            data: [primaryType, firstAxisKey],
+        },
         ...primaryItems,
         { type: LEGEND_SEPARATOR },
-        { type: LEGEND_AXIS_INDICATOR, labelKey: VisualizationTypes.COMBO, data: [secondaryType, secondAxisKey] },
-        ...secondaryItems
+        {
+            type: LEGEND_AXIS_INDICATOR,
+            labelKey: VisualizationTypes.COMBO,
+            data: [secondaryType, secondAxisKey],
+        },
+        ...secondaryItems,
     ];
 }
 
 export function transformToDualAxesSeries(series: any[], chartType: string) {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 
-    if (!isOneOfTypes(chartType, supportedDualAxesChartTypes) ||
-        !itemsOnFirstAxis.length || !itemsOnSecondAxis.length) {
+    if (
+        !isOneOfTypes(chartType, supportedDualAxesChartTypes) ||
+        !itemsOnFirstAxis.length ||
+        !itemsOnSecondAxis.length
+    ) {
         return series;
     }
 
@@ -473,12 +496,12 @@ export function transformToDualAxesSeries(series: any[], chartType: string) {
         ...itemsOnFirstAxis,
         { type: LEGEND_SEPARATOR },
         { type: LEGEND_AXIS_INDICATOR, labelKey: secondAxisKey },
-        ...itemsOnSecondAxis
+        ...itemsOnSecondAxis,
     ];
 }
 
 export function isStackedChart(chartOptions: any) {
-    const seriesLength = get(chartOptions, 'data.series.length');
+    const seriesLength = get(chartOptions, "data.series.length");
     const { type, stacking, hasStackByAttribute } = chartOptions;
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;

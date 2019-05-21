@@ -1,26 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import MenuState from '../MenuState';
-import { OnOpenedChange } from '../MenuSharedTypes';
+import * as React from "react";
+import { mount } from "enzyme";
+import MenuState from "../MenuState";
+import { OnOpenedChange } from "../MenuSharedTypes";
 
-describe('Menu state', () => {
-    it('opened set to false by default', () => {
+describe("Menu state", () => {
+    it("opened set to false by default", () => {
         const wrapper = mount(<MenuState>{() => null}</MenuState>);
-        expect(wrapper.state('opened')).toBe(false);
+        expect(wrapper.state("opened")).toBe(false);
     });
 
-    it('opened set to true when opened is set to true', () => {
+    it("opened set to true when opened is set to true", () => {
         const wrapper = mount(<MenuState opened={true}>{() => null}</MenuState>);
-        expect(wrapper.state('opened')).toBe(true);
+        expect(wrapper.state("opened")).toBe(true);
     });
 
-    it('opened set to true when defaultOpened is set to true', () => {
+    it("opened set to true when defaultOpened is set to true", () => {
         const wrapper = mount(<MenuState defaultOpened={true}>{() => null}</MenuState>);
-        expect(wrapper.state('opened')).toBe(true);
+        expect(wrapper.state("opened")).toBe(true);
     });
 
-    it('opened state is propagated with uncontrolled component', () => {
+    it("opened state is propagated with uncontrolled component", () => {
         const fnOnOpenedChangeProp = jest.fn();
 
         let fnOnOpenedChange: OnOpenedChange;
@@ -29,29 +29,40 @@ describe('Menu state', () => {
             return null;
         });
 
-        const wrapper = mount(<MenuState onOpenedChange={fnOnOpenedChangeProp}>{fnMenuStateChildren}</MenuState>);
+        const wrapper = mount(
+            <MenuState onOpenedChange={fnOnOpenedChangeProp}>{fnMenuStateChildren}</MenuState>,
+        );
 
-        expect(wrapper.state('opened')).toBe(false);
+        expect(wrapper.state("opened")).toBe(false);
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(0);
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(1);
-        expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: false, onOpenedChange: expect.any(Function) });
+        expect(fnMenuStateChildren).toHaveBeenCalledWith({
+            opened: false,
+            onOpenedChange: expect.any(Function),
+        });
 
-        fnOnOpenedChange({ opened: true, source: 'TOGGLER_BUTTON_CLICK' });
+        fnOnOpenedChange({ opened: true, source: "TOGGLER_BUTTON_CLICK" });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(2);
-        expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: true, onOpenedChange: expect.any(Function) });
+        expect(fnMenuStateChildren).toHaveBeenCalledWith({
+            opened: true,
+            onOpenedChange: expect.any(Function),
+        });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(1);
-        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: true, source: 'TOGGLER_BUTTON_CLICK' });
+        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: true, source: "TOGGLER_BUTTON_CLICK" });
 
-        fnOnOpenedChange({ opened: false, source: 'TOGGLER_BUTTON_CLICK' });
+        fnOnOpenedChange({ opened: false, source: "TOGGLER_BUTTON_CLICK" });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(3);
-        expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: false, onOpenedChange: expect.any(Function) });
+        expect(fnMenuStateChildren).toHaveBeenCalledWith({
+            opened: false,
+            onOpenedChange: expect.any(Function),
+        });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(2);
-        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: false, source: 'TOGGLER_BUTTON_CLICK' });
+        expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: false, source: "TOGGLER_BUTTON_CLICK" });
     });
 
-    it('opened state is propagated with controlled component', () => {
+    it("opened state is propagated with controlled component", () => {
         const fnOnOpenedChangeProp = jest.fn();
 
         let fnOnOpenedChange: (opened: boolean) => void;
@@ -63,18 +74,24 @@ describe('Menu state', () => {
         const wrapper = mount(
             <MenuState opened={false} onOpenedChange={fnOnOpenedChangeProp}>
                 {fnMenuStateChildren}
-            </MenuState>
+            </MenuState>,
         );
 
-        expect(wrapper.state('opened')).toBe(false);
+        expect(wrapper.state("opened")).toBe(false);
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(1);
-        expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: false, onOpenedChange: expect.any(Function) });
+        expect(fnMenuStateChildren).toHaveBeenCalledWith({
+            opened: false,
+            onOpenedChange: expect.any(Function),
+        });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(0);
 
         wrapper.setProps({ opened: true });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(2);
-        expect(fnMenuStateChildren).toHaveBeenCalledWith({ opened: true, onOpenedChange: expect.any(Function) });
+        expect(fnMenuStateChildren).toHaveBeenCalledWith({
+            opened: true,
+            onOpenedChange: expect.any(Function),
+        });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(0);
 
         fnOnOpenedChange(false);

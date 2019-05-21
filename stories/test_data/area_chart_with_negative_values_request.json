@@ -51,14 +51,10 @@
         "resultSpec": {
             "dimensions": [
                 {
-                    "itemIdentifiers": [
-                        "yearCreatedAttribute"
-                    ]
+                    "itemIdentifiers": ["yearCreatedAttribute"]
                 },
                 {
-                    "itemIdentifiers": [
-                        "measureGroup"
-                    ]
+                    "itemIdentifiers": ["measureGroup"]
                 }
             ]
         }

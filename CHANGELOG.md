@@ -15,6 +15,23 @@ The REST API versions in the table are just for your information as the values a
 
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
 
+## 7.0.0
+
+[Migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_7.html) from version 6.3.2
+
+### Added
+
+- Combo chart component ([doc](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html))
+- Managing subtotals in pivot tables via a submenu
+- Formatting and validating the source code structure by [Prettier](https://prettier.io/)
+
+### Changed
+
+- The library now uses Typescript 3.3.4000.
+- The pivot table property `groupRows` is `true` by default, which means that grouping is now enabled by default.
+- Styling updates and various fixes have been applied to subtotals in the Pivot Table component.
+- The Legend icons of the line chart component and the area chart components are shown as circles instead of squares.
+
 ## 6.3.2
 
  May 9, 2019

@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
+import * as Highcharts from "highcharts";
+import { AFM } from "@gooddata/typings";
 import {
     ChartElementType,
     ChartType,
@@ -8,8 +9,10 @@ import {
     TableElementType,
     TableType,
     VisElementType,
-    VisType
-} from '../constants/visualizationTypes';
+    VisType,
+} from "../constants/visualizationTypes";
+import { TableRowForDrilling } from "./Table";
+import { OnFiredDrillEvent } from "./Events";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -20,9 +23,9 @@ export interface IDrillableItemIdentifier {
 }
 
 export type IDrillableItem =
-    IDrillableItemUri |
-    IDrillableItemIdentifier |
-    (IDrillableItemUri & IDrillableItemIdentifier);
+    | IDrillableItemUri
+    | IDrillableItemIdentifier
+    | (IDrillableItemUri & IDrillableItemIdentifier);
 
 export function isDrillableItemUri(item: IDrillableItem): item is IDrillableItemUri {
     return (item as IDrillableItemUri).uri !== undefined;
@@ -109,4 +112,41 @@ export interface IDrillEventContext {
 export interface IDrillEvent {
     executionContext: AFM.IAfm;
     drillContext: IDrillEventContext;
+}
+
+export interface IHighchartsParentTick {
+    leaves: number;
+    startAt: number;
+    label: any;
+}
+
+export interface IHighchartsCategoriesTree {
+    tick: IHighchartsParentTick;
+}
+
+export interface IHighchartsPointObject extends Highcharts.PointObject {
+    drillIntersection: IDrillEventIntersectionElement[];
+    z?: number; // is missing in HCH's interface
+    value?: number; // is missing in HCH's interface
+}
+
+export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
+    point?: IHighchartsPointObject;
+    points?: IHighchartsPointObject[];
+}
+
+export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
+    return !!event.points;
+}
+
+export interface ICellDrillEvent {
+    columnIndex: number;
+    rowIndex: number;
+    row: TableRowForDrilling;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+export interface IDrillConfig {
+    afm: AFM.IAfm;
+    onFiredDrillEvent: OnFiredDrillEvent;
 }

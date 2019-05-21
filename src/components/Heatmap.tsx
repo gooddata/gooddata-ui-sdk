@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
+import * as React from "react";
+import omit = require("lodash/omit");
+import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
-import { Heatmap as AfmHeatmap } from './afm/Heatmap';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { getResultSpec } from '../helpers/resultSpec';
-import { getHeatmapDimensionsFromBuckets } from '../helpers/dimensions';
-import { MEASURES, VIEW, STACK } from '../constants/bucketNames';
+import { Subtract } from "../typings/subtract";
+import { Heatmap as AfmHeatmap } from "./afm/Heatmap";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { getResultSpec } from "../helpers/resultSpec";
+import { getHeatmapDimensionsFromBuckets } from "../helpers/dimensions";
+import { MEASURES, VIEW, STACK } from "../constants/bucketNames";
 
 export interface IHeatmapBucketProps {
     measure: VisualizationInput.AttributeOrMeasure;
@@ -29,20 +29,25 @@ export function Heatmap(props: IHeatmapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: [props.measure] || []
+            items: [props.measure] || [],
         },
         {
             localIdentifier: VIEW,
-            items: props.rows ? [props.rows] : []
+            items: props.rows ? [props.rows] : [],
         },
         {
             localIdentifier: STACK,
-            items: props.columns ? [props.columns] : []
-        }
+            items: props.columns ? [props.columns] : [],
+        },
     ];
 
-    const newProps
-        = omit<IHeatmapProps, IHeatmapNonBucketProps>(props, ['measure', 'rows', 'columns', 'filters']);
+    const newProps: IHeatmapNonBucketProps = omit<IHeatmapProps, keyof IHeatmapBucketProps>(props, [
+        "measure",
+        "rows",
+        "columns",
+        "filters",
+        "sortBy",
+    ]);
 
     return (
         <AfmHeatmap

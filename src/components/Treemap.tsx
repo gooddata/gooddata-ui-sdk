@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
+import * as React from "react";
+import omit = require("lodash/omit");
+import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
-import { Treemap as AfmTreemap } from './afm/Treemap';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
-import { getTreemapDimensionsFromBuckets } from '../helpers/dimensions';
-import { getResultSpec } from '../helpers/resultSpec';
-import { MEASURES, VIEW, SEGMENT } from '../constants/bucketNames';
+import { Subtract } from "../typings/subtract";
+import { Treemap as AfmTreemap } from "./afm/Treemap";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
+import { getTreemapDimensionsFromBuckets } from "../helpers/dimensions";
+import { getResultSpec } from "../helpers/resultSpec";
+import { MEASURES, VIEW, SEGMENT } from "../constants/bucketNames";
 
 export interface ITreemapBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -32,25 +32,28 @@ export function Treemap(props: ITreemapProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: props.measures || [],
         },
         {
             localIdentifier: VIEW,
-            items: props.viewBy ? [props.viewBy] : []
+            items: props.viewBy ? [props.viewBy] : [],
         },
         {
             localIdentifier: SEGMENT,
-            items: props.segmentBy ? [props.segmentBy] : []
-        }
+            items: props.segmentBy ? [props.segmentBy] : [],
+        },
     ];
 
-    const newProps = omit<ITreemapProps, ITreemapNonBucketProps>(
-        props, ['measures', 'viewBy', 'segmentBy', 'filters']
-    );
+    const newProps: ITreemapNonBucketProps = omit<ITreemapProps, keyof ITreemapBucketProps>(props, [
+        "measures",
+        "viewBy",
+        "segmentBy",
+        "filters",
+    ]);
 
     newProps.config = {
         ...newProps.config,
-        mdObject: convertBucketsToMdObject(buckets, props.filters, 'local:treemap')
+        mdObject: convertBucketsToMdObject(buckets, props.filters, "local:treemap"),
     };
 
     return (

@@ -1,51 +1,50 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
+import { AFM, Execution } from "@gooddata/typings";
 import {
     findMeasureByLocalIdentifier,
     getMasterMeasureLocalIdentifier,
-    isDerivedMeasure
-} from '../helpers/afmHelper';
+    isDerivedMeasure,
+} from "../helpers/afmHelper";
 import {
     findMeasureHeaderByLocalIdentifier,
-    findMeasureGroupInDimensions
-} from '../helpers/executionResultHelper';
+    findMeasureGroupInDimensions,
+} from "../helpers/executionResultHelper";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderUri,
-    hasMappingHeaderLocalIdentifier
-} from '../helpers/mappingHeader';
-import {
-    IHeaderPredicate,
-    IHeaderPredicateContext
-} from '../interfaces/HeaderPredicate';
+    hasMappingHeaderLocalIdentifier,
+} from "../helpers/mappingHeader";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
 import {
     IMappingHeader,
     isMappingHeaderAttributeItem,
-    isMappingHeaderMeasureItem
-} from '../interfaces/MappingHeader';
+    isMappingHeaderMeasureItem,
+} from "../interfaces/MappingHeader";
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
     measures: AFM.IMeasure[],
     measureHeaders: Execution.IMeasureHeaderItem[],
     operandLocalIdentifier: string,
     predicate: IHeaderPredicate,
-    context: IHeaderPredicateContext
+    context: IHeaderPredicateContext,
 ): boolean {
-    const operandInAfm: AFM.IMeasure = measures.find(measure => measure.localIdentifier === operandLocalIdentifier);
-    const operandHeader: Execution.IMeasureHeaderItem =
-        measureHeaders.find(header => getMappingHeaderLocalIdentifier(header) === operandLocalIdentifier);
+    const operandInAfm: AFM.IMeasure = measures.find(
+        measure => measure.localIdentifier === operandLocalIdentifier,
+    );
+    const operandHeader: Execution.IMeasureHeaderItem = measureHeaders.find(
+        header => getMappingHeaderLocalIdentifier(header) === operandLocalIdentifier,
+    );
 
     if (AFM.isArithmeticMeasureDefinition(operandInAfm.definition)) {
-        return operandInAfm.definition.arithmeticMeasure.measureIdentifiers.some(
-            operandLocalIdentifier =>
-                arithmeticMeasureLocalIdentifierDeepMatch(
-                    measures,
-                    measureHeaders,
-                    operandLocalIdentifier,
-                    predicate,
-                    context
-                )
+        return operandInAfm.definition.arithmeticMeasure.measureIdentifiers.some(operandLocalIdentifier =>
+            arithmeticMeasureLocalIdentifierDeepMatch(
+                measures,
+                measureHeaders,
+                operandLocalIdentifier,
+                predicate,
+                context,
+            ),
         );
     }
 
@@ -79,7 +78,7 @@ function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
 
         const { afm, executionResponse } = context;
         const measureLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        const measureInAFM = afm.measures.find((measure) => {
+        const measureInAFM = afm.measures.find(measure => {
             return measure.localIdentifier === measureLocalIdentifier;
         });
 
@@ -88,8 +87,8 @@ function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
         }
 
         const arithmeticMeasureOperands =
-            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, afm)
-            || getMasterMeasureOperandIdentifiers(measureInAFM);
+            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, afm) ||
+            getMasterMeasureOperandIdentifiers(measureInAFM);
 
         if (!arithmeticMeasureOperands) {
             return false;
@@ -97,15 +96,14 @@ function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
 
         const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
 
-        return arithmeticMeasureOperands.some(
-            operandLocalIdentifier =>
-                arithmeticMeasureLocalIdentifierDeepMatch(
-                    afm.measures,
-                    measureGroup.items,
-                    operandLocalIdentifier,
-                    predicate,
-                    context
-                )
+        return arithmeticMeasureOperands.some(operandLocalIdentifier =>
+            arithmeticMeasureLocalIdentifierDeepMatch(
+                afm.measures,
+                measureGroup.items,
+                operandLocalIdentifier,
+                predicate,
+                context,
+            ),
         );
     };
 }
@@ -160,14 +158,17 @@ function matchAfmMeasureIdentifier(identifier: string, afmMeasure: AFM.IMeasure)
 function matchDerivedMeasureByMasterUri(
     uri: string,
     afmMeasure: AFM.IMeasure,
-    context: IHeaderPredicateContext
+    context: IHeaderPredicateContext,
 ): boolean {
     const { afm, executionResponse } = context;
     const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(afmMeasure);
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(executionResponse, masterMeasureLocalIdentifier);
+        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(
+            executionResponse,
+            masterMeasureLocalIdentifier,
+        );
         if (matchHeaderUri(uri, masterMeasureHeader)) {
             return true;
         }
@@ -181,14 +182,17 @@ function matchDerivedMeasureByMasterUri(
 function matchDerivedMeasureByMasterIdentifier(
     identifier: string,
     afmMeasure: AFM.IMeasure,
-    context: IHeaderPredicateContext
+    context: IHeaderPredicateContext,
 ): boolean {
     const { afm, executionResponse } = context;
     const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(afmMeasure);
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(executionResponse, masterMeasureLocalIdentifier);
+        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(
+            executionResponse,
+            masterMeasureLocalIdentifier,
+        );
         if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
             return true;
         }
@@ -249,15 +253,15 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
     };
 }
 
-export function attributeItemNameMatch(name: string): IHeaderPredicate  {
+export function attributeItemNameMatch(name: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         return isMappingHeaderAttributeItem(header)
-            ? header.attributeHeaderItem && (header.attributeHeaderItem.name === name)
+            ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
             : false;
     };
 }
 
-export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate  {
+export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
             return false;

@@ -1,21 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import { noop, pick } from 'lodash';
-import * as React from 'react';
-import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
-import { OnFiredDrillEvent } from '../../../interfaces/Events';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
-import { IMappingHeader } from '../../../interfaces/MappingHeader';
+import { AFM, Execution } from "@gooddata/typings";
+import { noop, pick } from "lodash";
+import * as React from "react";
+import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
+import { IDrillableItem } from "../../../interfaces/DrillEvents";
+import { OnFiredDrillEvent } from "../../../interfaces/Events";
+import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../../interfaces/MappingHeader";
 
-import { ISortInfo, ITableTransformationConfig, OnSortChangeWithItem, TableRow } from '../../../interfaces/Table';
+import {
+    ISortInfo,
+    ITableTransformationConfig,
+    OnSortChangeWithItem,
+    TableRow,
+} from "../../../interfaces/Table";
 
-import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
+import { IIndexedTotalItem, ITotalWithData } from "../../../interfaces/Totals";
 
-import { ITableProps, Table } from './Table';
+import { ITableProps, Table } from "./Table";
 
-import { getHeaders, getRows, getTotalsWithData, validateTableProportions } from './utils/dataTransformation';
-import { getSortInfo, getSortItem } from './utils/sort';
+import { getHeaders, getRows, getTotalsWithData, validateTableProportions } from "./utils/dataTransformation";
+import { getSortInfo, getSortItem } from "./utils/sort";
 
 export interface ITableTransformationProps {
     afterRender?: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
@@ -52,7 +57,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
         onFiredDrillEvent: () => true,
         onSortChange: noop,
         tableRenderer: renderDefaultTable,
-        onLastAddedTotalRowHighlightPeriodEnd: noop
+        onLastAddedTotalRowHighlightPeriodEnd: noop,
     };
 
     public render(): JSX.Element {
@@ -72,7 +77,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
             onTotalsEdit,
             afterRender,
             lastAddedTotalType,
-            onLastAddedTotalRowHighlightPeriodEnd
+            onLastAddedTotalRowHighlightPeriodEnd,
         } = this.props;
 
         const headers: IMappingHeader[] = getHeaders(executionResponse);
@@ -85,11 +90,18 @@ export class TableTransformation extends React.Component<ITableTransformationPro
 
         const sortItem = getSortItem(executionRequest);
 
-        const EMPTY_SORT_INFO: ISortInfo =  { sortBy: undefined, sortDir: undefined };
+        const EMPTY_SORT_INFO: ISortInfo = { sortBy: undefined, sortDir: undefined };
         const { sortBy, sortDir } = sortItem ? getSortInfo(sortItem, headers) : EMPTY_SORT_INFO;
 
         const tableProps: ITableProps = {
-            ...pick(config, ['rowsPerPage', 'onMore', 'onLess', 'sortInTooltip', 'stickyHeaderOffset', 'separators']),
+            ...pick(config, [
+                "rowsPerPage",
+                "onMore",
+                "onLess",
+                "sortInTooltip",
+                "stickyHeaderOffset",
+                "separators",
+            ]),
             afterRender,
             totalsWithData,
             totalsEditAllowed,
@@ -104,7 +116,7 @@ export class TableTransformation extends React.Component<ITableTransformationPro
             sortBy,
             sortDir,
             lastAddedTotalType,
-            onLastAddedTotalRowHighlightPeriodEnd
+            onLastAddedTotalRowHighlightPeriodEnd,
         };
 
         if (height) {

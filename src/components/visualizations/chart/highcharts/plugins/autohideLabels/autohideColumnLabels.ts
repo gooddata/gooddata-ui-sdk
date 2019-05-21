@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import map = require('lodash/map');
-import zip = require('lodash/zip');
-import values = require('lodash/values');
-import flatten = require('lodash/flatten');
-import identity = require('lodash/identity');
+import map = require("lodash/map");
+import zip = require("lodash/zip");
+import values = require("lodash/values");
+import flatten = require("lodash/flatten");
+import identity = require("lodash/identity");
 
 import {
     isStacked,
@@ -12,8 +12,8 @@ import {
     getShapeAttributes,
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
-    IAxisRangeForAxes
-} from '../../helpers';
+    IAxisRangeForAxes,
+} from "../../helpers";
 
 import {
     areLabelsStacked,
@@ -24,19 +24,20 @@ import {
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
     getShapeVisiblePart,
-    hasShape
-} from '../../dataLabelsHelpers';
+    hasShape,
+} from "../../dataLabelsHelpers";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
     axisRangeForAxes: IAxisRangeForAxes,
-    shouldCheckShapeIntersection: boolean = false) => {
+    shouldCheckShapeIntersection: boolean = false,
+) => {
     const foundIntersection = toNeighbors(
         // some data labels may not be rendered (too many points)
         visiblePoints.filter((point: any) => {
             return hasDataLabel(point) && hasShape(point);
-        })
-    ).some((pointPair) => {
+        }),
+    ).some(pointPair => {
         const [firstPoint, nextPoint]: any[] = pointPair || [];
         const firstDataLabelAttr = getDataLabelAttributes(firstPoint);
         const nextDataLabelAttr = getDataLabelAttributes(nextPoint);
@@ -45,9 +46,11 @@ const toggleNonStackedChartLabels = (
             const firstShapeAttr = getShapeAttributes(firstPoint);
             const nextShapeAttr = getShapeAttributes(nextPoint);
 
-            return isIntersecting(firstDataLabelAttr, nextDataLabelAttr) ||
+            return (
+                isIntersecting(firstDataLabelAttr, nextDataLabelAttr) ||
                 isIntersecting(firstDataLabelAttr, nextShapeAttr) ||
-                isIntersecting(firstShapeAttr, nextDataLabelAttr);
+                isIntersecting(firstShapeAttr, nextDataLabelAttr)
+            );
         }
 
         return isIntersecting(firstDataLabelAttr, nextDataLabelAttr);
@@ -62,15 +65,19 @@ const toggleNonStackedChartLabels = (
 
 const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRangeForAxes) => {
     const toggleLabel = (point: any) => {
-        const { dataLabel, shapeArgs, series: { chart } } = point;
+        const {
+            dataLabel,
+            shapeArgs,
+            series: { chart },
+        } = point;
         if (dataLabel && shapeArgs) {
             const labelHeight = dataLabel.height + (2 * dataLabel.padding || 0);
             const shapeHeight = getShapeVisiblePart(shapeArgs, chart, shapeArgs.height);
             const isOverlappingHeight = labelHeight > shapeHeight;
-            return isOverlappingHeight ?
-                hideDataLabel(point) :
-                // fix for HCH bug for negative stack labels
-                showStackLabelInAxisRange(point, axisRangeForAxes);
+            return isOverlappingHeight
+                ? hideDataLabel(point)
+                : // fix for HCH bug for negative stack labels
+                  showStackLabelInAxisRange(point, axisRangeForAxes);
         }
 
         return null;
@@ -79,7 +86,7 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
     const isOverlappingWidth = visiblePoints.filter(hasDataLabel).some((point: any) => {
         const { dataLabel } = point;
         if (dataLabel) {
-            const labelWidth = dataLabel.width + (2 * dataLabel.padding);
+            const labelWidth = dataLabel.width + 2 * dataLabel.padding;
             return labelWidth > point.shapeArgs.width;
         }
         return false;
@@ -93,7 +100,7 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
 };
 
 function areNeighborsOverlapping(neighbors: any[]) {
-    return neighbors.some((labelsPair) => {
+    return neighbors.some(labelsPair => {
         const [firstLabel, nextLabel]: any[] = labelsPair || [];
 
         if (firstLabel && nextLabel) {
@@ -110,6 +117,10 @@ function areNeighborsOverlapping(neighbors: any[]) {
     });
 }
 
+function findColumnKey(key: string): boolean {
+    return key.indexOf("column") === 0;
+}
+
 /**
  * Merge stack label points from axes to one
  * Primary axis:    [pointP1, pointP2, pointP3]
@@ -117,10 +128,15 @@ function areNeighborsOverlapping(neighbors: any[]) {
  * @param stacks
  * @return [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
-function getStackLabelPointsForDualAxis(stacks: any[]) {
+export function getStackLabelPointsForDualAxis(stacks: any[]) {
     return flatten(
         // 'column0' is primary axis and 'column1' is secondary axis
-        zip(...stacks.map((item: any, index: number) => values(item[`column${index}`])))
+        zip(
+            ...stacks.map((item: any) => {
+                const columnKey = Object.keys(item).find(findColumnKey);
+                return values(item[columnKey]);
+            }),
+        ),
     ).filter(identity);
 }
 
@@ -141,10 +157,10 @@ function toggleStackedLabelsForDualAxis() {
         const areOverlapping = areNeighborsOverlapping(neighbors);
 
         if (areOverlapping) {
-            this.userOptions.stackLabelsVisibility = 'hidden';
+            this.userOptions.stackLabelsVisibility = "hidden";
             stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.hide());
         } else {
-            this.userOptions.stackLabelsVisibility = 'visible';
+            this.userOptions.stackLabelsVisibility = "visible";
             stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.show());
         }
     }
@@ -155,16 +171,17 @@ function toggleStackedLabelsForSingleAxis() {
     const { stackTotalGroup, stacks }: any = yAxis[0] || {};
 
     if (stacks && stackTotalGroup) {
+        const columnKey = Object.keys(stacks).find(findColumnKey);
         // We need to use Lodash map, because we are iterating through an object
-        const labels = map(stacks.column, (point: any) => point.label);
+        const labels = map(stacks[columnKey], (point: any) => point.label);
         const neighbors = toNeighbors(labels);
         const areOverlapping = areNeighborsOverlapping(neighbors);
 
         if (areOverlapping) {
-            this.userOptions.stackLabelsVisibility = 'hidden';
+            this.userOptions.stackLabelsVisibility = "hidden";
             stackTotalGroup.hide();
         } else {
-            this.userOptions.stackLabelsVisibility = 'visible';
+            this.userOptions.stackLabelsVisibility = "visible";
             stackTotalGroup.show();
         }
     }

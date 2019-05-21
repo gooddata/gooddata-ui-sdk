@@ -1,36 +1,35 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { shallow } from 'enzyme';
-import HeatmapLegend, { IHeatmapLegendProps } from '../HeatmapLegend';
+import * as React from "react";
+import { shallow } from "enzyme";
+import HeatmapLegend, { IHeatmapLegendProps } from "../HeatmapLegend";
 
-describe('HeatmapLegend', () => {
-    const numericSymbols = [ 'k', 'M', 'G' ];
+describe("HeatmapLegend", () => {
+    const numericSymbols = ["k", "M", "G"];
     function renderLegend(props: IHeatmapLegendProps) {
-        return shallow(
-            <HeatmapLegend {...props}/>
-        );
+        return shallow(<HeatmapLegend {...props} />);
     }
 
-    it('should render legend', () => {
+    it("should render legend", () => {
         const series = [
             {
-                color: 'abc',
+                color: "abc",
                 legendIndex: 0,
                 range: {
                     from: 1,
-                    to: 2
-                }
-            }, {
-                color: 'def',
+                    to: 2,
+                },
+            },
+            {
+                color: "def",
                 legendIndex: 1,
                 range: {
                     from: 4,
-                    to: 5
-                }
-            }
+                    to: 5,
+                },
+            },
         ];
-        const wrapper = renderLegend({ series, numericSymbols, isSmall: false, position: 'top' });
+        const wrapper = renderLegend({ series, numericSymbols, isSmall: false, position: "top" });
 
-        expect(wrapper.find('.heatmap-legend').length).toEqual(1);
+        expect(wrapper.find(".heatmap-legend").length).toEqual(1);
     });
 });

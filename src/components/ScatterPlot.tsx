@@ -1,14 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
-import { ScatterPlot as AfmScatterPlot } from './afm/ScatterPlot';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM, convertBucketsToMdObject } from '../helpers/conversion';
-import { generateDefaultDimensionsForPointsCharts } from '../helpers/dimensions';
-import { getResultSpec } from '../helpers/resultSpec';
-import { MEASURES, SECONDARY_MEASURES, ATTRIBUTE } from '../constants/bucketNames';
+import * as React from "react";
+import omit = require("lodash/omit");
+import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
+
+import { Subtract } from "../typings/subtract";
+import { ScatterPlot as AfmScatterPlot } from "./afm/ScatterPlot";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
+import { generateDefaultDimensionsForPointsCharts } from "../helpers/dimensions";
+import { getResultSpec } from "../helpers/resultSpec";
+import { MEASURES, SECONDARY_MEASURES, ATTRIBUTE } from "../constants/bucketNames";
 
 export interface IScatterPlotBucketProps {
     xAxisMeasure?: VisualizationInput.IMeasure;
@@ -24,8 +25,8 @@ export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucket
 
 type IScatterPlotNonBucketProps = Subtract<IScatterPlotProps, IScatterPlotBucketProps>;
 
-const generateScatterDimensionsFromBuckets =
-    (buckets: VisualizationObject.IBucket[]) => generateDefaultDimensionsForPointsCharts(convertBucketsToAFM(buckets));
+const generateScatterDimensionsFromBuckets = (buckets: VisualizationObject.IBucket[]) =>
+    generateDefaultDimensionsForPointsCharts(convertBucketsToAFM(buckets));
 
 /**
  * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
@@ -35,25 +36,26 @@ export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.xAxisMeasure ? [props.xAxisMeasure] : []
+            items: props.xAxisMeasure ? [props.xAxisMeasure] : [],
         },
         {
             localIdentifier: SECONDARY_MEASURES,
-            items: props.yAxisMeasure ? [props.yAxisMeasure] : []
+            items: props.yAxisMeasure ? [props.yAxisMeasure] : [],
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.attribute ? [props.attribute] : []
-        }
+            items: props.attribute ? [props.attribute] : [],
+        },
     ];
 
-    const newProps
-        = omit<IScatterPlotProps, IScatterPlotNonBucketProps>(props,
-            ['xAxisMeasure', 'yAxisMeasure', 'attribute', 'filters']);
+    const newProps: IScatterPlotNonBucketProps = omit<IScatterPlotProps, keyof IScatterPlotBucketProps>(
+        props,
+        ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
+    );
 
     newProps.config = {
         ...newProps.config,
-        mdObject: convertBucketsToMdObject(buckets, props.filters, 'local:scatter')
+        mdObject: convertBucketsToMdObject(buckets, props.filters, "local:scatter"),
     };
 
     return (

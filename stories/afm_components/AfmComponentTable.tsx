@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Table } from '../../src/components/afm/Table';
+import { Table } from "../../src/components/afm/Table";
 import {
     AFM_TWO_MEASURES_ONE_ATTRIBUTE,
     AFM_TWO_MEASURES_ONE_ATTRIBUTE_TOTALS,
@@ -13,22 +13,22 @@ import {
     RESULT_SPEC_TWO_MEASURES_ONE_ATTRIBUTE_CITIES_TOTALS,
     AFM_ONE_RENAMED_MEASURE_ONE_RENAMED_ATTRIBUTE,
     AFM_FORMATTED_ARITHMETIC_MEASURE,
-    AFM_ONE_ATTRIBUTE
-} from '../data/afmComponentProps';
-import { onErrorHandler } from '../mocks';
-import '../../styles/css/charts.css';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    AFM_ONE_ATTRIBUTE,
+} from "../data/afmComponentProps";
+import { onErrorHandler } from "../mocks";
+import "../../styles/css/charts.css";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 
 function logTotalsChange(data: any) {
     if (data.properties && data.properties.totals) {
-        action('totals changed')(data.properties.totals);
+        action("totals changed")(data.properties.totals);
     }
 }
 
 const wrapperStyle = { width: 600, height: 300 };
 
-storiesOf('AFM components/Table', module)
-    .add('one attribute', () => (
+storiesOf("AFM components/Table", module)
+    .add("one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -38,10 +38,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('two measures, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("two measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -52,10 +52,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('renamed measure and renamed attribute', () => (
+            </div>,
+        ),
+    )
+    .add("renamed measure and renamed attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -65,10 +65,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with table totals', () => (
+            </div>,
+        ),
+    )
+    .add("with table totals", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -79,10 +79,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with table totals editable', () => (
+            </div>,
+        ),
+    )
+    .add("with table totals editable", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -95,19 +95,19 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('table with resizing', () => (
+            </div>,
+        ),
+    )
+    .add("table with resizing", () =>
         screenshotWrap(
             <div
                 style={{
                     width: 800,
                     height: 400,
                     padding: 10,
-                    border: 'solid 1px #000000',
-                    resize: 'both',
-                    overflow: 'auto'
+                    border: "solid 1px #000000",
+                    resize: "both",
+                    overflow: "auto",
                 }}
             >
                 <Table
@@ -120,10 +120,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -135,10 +135,10 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('arithmetic measure with formatting', () => (
+            </div>,
+        ),
+    )
+    .add("arithmetic measure with formatting", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Table
@@ -149,6 +149,6 @@ storiesOf('AFM components/Table', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

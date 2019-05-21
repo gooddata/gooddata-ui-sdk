@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import get = require('lodash/get');
-import set = require('lodash/set');
+import get = require("lodash/get");
+import set = require("lodash/set");
 interface ISdkCache {
     [apiCallId: string]: Promise<any>;
 }
@@ -34,9 +34,7 @@ export function clearSdkCache() {
  */
 export function getCachedOrLoad<T>(cacheKey: string, onCacheMiss: () => Promise<T>): Promise<T> {
     const sdkCache: ISdkCache = getSdkCache();
-    const cachedResponse = get<Promise<T>>(
-        sdkCache, cacheKey
-    );
+    const cachedResponse: Promise<T> = get<ISdkCache, keyof ISdkCache>(sdkCache, cacheKey);
     if (cachedResponse) {
         return cachedResponse;
     }

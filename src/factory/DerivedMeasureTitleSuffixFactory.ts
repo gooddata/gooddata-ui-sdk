@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization } from '@gooddata/typings';
-import IntlStore from '../helpers/IntlStore';
-import { OverTimeComparisonType, OverTimeComparisonTypes } from '..';
+import { Localization } from "@gooddata/typings";
+import IntlStore from "../helpers/IntlStore";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "..";
 
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.
@@ -10,7 +10,6 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from '..';
  * @internal
  */
 export default class DerivedMeasureTitleSuffixFactory {
-
     private readonly locale: Localization.ILocale;
 
     /**
@@ -31,15 +30,15 @@ export default class DerivedMeasureTitleSuffixFactory {
      */
     public getSuffix(overTimeComparisonType: OverTimeComparisonType): string {
         const localizationKey = this.getSuffixLocalizationKey(overTimeComparisonType);
-        return localizationKey === null ? '' : ` - ${this.translateKey(localizationKey)}`;
+        return localizationKey === null ? "" : ` - ${this.translateKey(localizationKey)}`;
     }
 
     private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): string {
         switch (overTimeComparisonType) {
             case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
-                return 'measure.title.suffix.same_period_year_ago';
+                return "measure.title.suffix.same_period_year_ago";
             case OverTimeComparisonTypes.PREVIOUS_PERIOD:
-                return 'measure.title.suffix.previous_period';
+                return "measure.title.suffix.previous_period";
             default:
                 return null;
         }

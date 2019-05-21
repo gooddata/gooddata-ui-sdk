@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import { AFM } from '@gooddata/typings';
+import get = require("lodash/get");
+import { AFM } from "@gooddata/typings";
 
-import { ASC, DESC } from '../constants/sort';
+import { ASC, DESC } from "../constants/sort";
 
 function getMeasureSortItems(identifier: string, direction: AFM.SortDirection): AFM.SortItem[] {
     return [
@@ -12,37 +12,30 @@ function getMeasureSortItems(identifier: string, direction: AFM.SortDirection): 
                 locators: [
                     {
                         measureLocatorItem: {
-                            measureIdentifier: identifier
-                        }
-                    }
-                ]
-            }
-        }
+                            measureIdentifier: identifier,
+                        },
+                    },
+                ],
+            },
+        },
     ];
 }
 
 function getAttributeSortItems(
     identifier: string,
     direction: AFM.SortDirection,
-    aggregation?: boolean
+    aggregation?: boolean,
 ): AFM.SortItem[] {
     if (!identifier) {
         return [];
     }
-    const base = {
-        attributeIdentifier: identifier,
-        direction
-    };
 
-    const enrichedAggregation = aggregation ? {
-        aggregation: 'sum'
-    } : {};
-
-    const attributeSortItem = {
+    const attributeSortItem: AFM.IAttributeSortItem = {
         attributeSortItem: {
-            ...base,
-            ...enrichedAggregation
-        }
+            attributeIdentifier: identifier,
+            direction,
+            ...(aggregation ? { aggregation: "sum" } : {}),
+        },
     };
 
     return [attributeSortItem];
@@ -55,18 +48,11 @@ function getAllMeasuresSorts(afm: AFM.IAfm): AFM.SortItem[] {
 }
 
 export function getDefaultTreemapSort(afm: AFM.IAfm, resultSpec: AFM.IResultSpec): AFM.SortItem[] {
-    const viewByAttributeIdentifier = get<string>(resultSpec, 'dimensions.0.itemIdentifiers.0');
-    const stackByAttributeIdentifier = get<string>(resultSpec, 'dimensions.0.itemIdentifiers.1');
+    const viewByAttributeIdentifier: string = get(resultSpec, "dimensions[0].itemIdentifiers[0]");
+    const stackByAttributeIdentifier: string = get(resultSpec, "dimensions[0].itemIdentifiers[1]");
 
     if (viewByAttributeIdentifier && stackByAttributeIdentifier) {
-        return [
-            ...getAttributeSortItems(
-                viewByAttributeIdentifier,
-                ASC,
-                false
-            ),
-            ...getAllMeasuresSorts(afm)
-        ];
+        return [...getAttributeSortItems(viewByAttributeIdentifier, ASC, false), ...getAllMeasuresSorts(afm)];
     }
 
     return [];

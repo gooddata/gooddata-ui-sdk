@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { GridApi } from 'ag-grid';
+import { GridApi } from "ag-grid";
 
 function getHeaderHeight(gridApi: GridApi): number {
     return (gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
@@ -7,9 +7,7 @@ function getHeaderHeight(gridApi: GridApi): number {
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
     const rowComp = (gridApi as any).rowRenderer.rowCompsByIndex[rowIndex];
-    return rowComp && rowComp.cellComps[attributeId]
-        ? rowComp.cellComps[attributeId].eGui
-        : null;
+    return rowComp && rowComp.cellComps[attributeId] ? rowComp.cellComps[attributeId].eGui : null;
 }
 
 function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string) {
@@ -26,6 +24,10 @@ function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number
     }
 }
 
+function getPaginationBottomRowIndex(gridApi: GridApi): number {
+    return (gridApi as any).paginationProxy.bottomRowIndex;
+}
+
 function getPinnedTopRow(gridApi: GridApi): any | null {
     const pinnedTopRow = (gridApi as any).rowRenderer.floatingTopRowComps[0];
     return pinnedTopRow ? pinnedTopRow : null;
@@ -33,9 +35,7 @@ function getPinnedTopRow(gridApi: GridApi): any | null {
 
 function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
     const pinnedTopRow = getPinnedTopRow(gridApi);
-    return pinnedTopRow
-        ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement
-        : null;
+    return pinnedTopRow ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement : null;
 }
 
 function addPinnedTopRowClass(gridApi: GridApi, className: string) {
@@ -53,24 +53,37 @@ function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyVa
     rowElement.style[propertyName] = propertyValue;
 }
 
-function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {
+function getPinnedTopRowCellElementWrapper(gridApi: GridApi, attributeId: string): HTMLElement | null {
     const pinnedTopRow = getPinnedTopRow(gridApi);
     return pinnedTopRow && pinnedTopRow.cellComps[attributeId]
         ? pinnedTopRow.cellComps[attributeId].eGui
         : null;
 }
 
+function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {
+    const pinnedTopRowCellElementWrapper = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
+    return pinnedTopRowCellElementWrapper ? pinnedTopRowCellElementWrapper.querySelector("span") : null;
+}
+
 function addPinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.add(className);
     }
 }
 
 function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.remove(className);
+    }
+}
+
+function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string) {
+    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
+
+    if (cellElement !== null) {
+        cellElement.innerText = text;
     }
 }
 
@@ -87,6 +100,9 @@ export default {
     setPinnedTopRowStyle,
     // pinned row cell element
     getPinnedTopRowCellElement,
+    getPinnedTopRowCellElementWrapper,
     addPinnedTopRowCellClass,
-    removePinnedTopRowCellClass
+    removePinnedTopRowCellClass,
+    setPinnedTopRowCellText,
+    getPaginationBottomRowIndex,
 };

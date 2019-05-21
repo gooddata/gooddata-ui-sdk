@@ -1,23 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from '@gooddata/typings';
-import * as invariant from 'invariant';
-import * as React from 'react';
-import noop = require('lodash/noop');
+import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
+import * as invariant from "invariant";
+import * as React from "react";
+import isEmpty = require("lodash/isEmpty");
+import noop = require("lodash/noop");
 
-import { convertDrillableItemsToPredicates } from '../../../helpers/headerPredicate';
-import { IChartConfig } from '../../../interfaces/Config';
-import { IDrillableItem } from '../../../interfaces/DrillEvents';
-import { OnFiredDrillEvent, OnLegendReady } from '../../../interfaces/Events';
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
-import { ILegendOptions } from '../typings/legend';
-import { getChartOptions, IChartOptions, validateData } from './chartOptionsBuilder';
-import { getHighchartsOptions } from './highChartsCreators';
+import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
+import { getSanitizedStackingConfig } from "../../../helpers/optionalStacking/common";
+import { IChartConfig } from "../../../interfaces/Config";
+import { IDrillableItem } from "../../../interfaces/DrillEvents";
+import { OnFiredDrillEvent, OnLegendReady } from "../../../interfaces/Events";
+import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { ILegendOptions } from "../typings/legend";
+import { getStackByAttribute } from "../../../helpers/stackByAttribute";
+import { getChartOptions, IChartOptions, validateData } from "./chartOptionsBuilder";
+import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
     IHighChartsRendererProps,
     renderChart as chartRenderer,
-    renderLegend as legendRenderer
-} from './HighChartsRenderer';
-import getLegend from './legend/legendBuilder';
+    renderLegend as legendRenderer,
+} from "./HighChartsRenderer";
+import getLegend from "./legend/legendBuilder";
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
@@ -55,7 +58,10 @@ export interface IChartTransformationState {
     hasNegativeValue: boolean;
 }
 
-export default class ChartTransformation extends React.Component<IChartTransformationProps, IChartTransformationState> {
+export default class ChartTransformation extends React.Component<
+    IChartTransformationProps,
+    IChartTransformationState
+> {
     public static defaultProps = {
         drillableItems: [] as IDrillableItem[],
         renderer: renderHighCharts,
@@ -65,7 +71,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
         pushData: noop,
         onLegendReady: noop,
         height: undefined as number,
-        width: undefined as number
+        width: undefined as number,
     };
 
     private chartOptions: IChartOptions;
@@ -86,13 +92,15 @@ export default class ChartTransformation extends React.Component<IChartTransform
             height,
             width,
             afterRender,
-            config,
             onFiredDrillEvent,
             onLegendReady,
-            locale
+            locale,
         } = this.props;
+
+        const chartConfig = this.getChartConfig(this.props);
+
         const drillConfig = { afm, onFiredDrillEvent };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig);
 
         return {
             chartOptions,
@@ -102,7 +110,7 @@ export default class ChartTransformation extends React.Component<IChartTransform
             afterRender,
             onLegendReady,
             locale,
-            legend: legendOptions
+            legend: legendOptions,
         };
     }
 
@@ -112,11 +120,12 @@ export default class ChartTransformation extends React.Component<IChartTransform
             executionRequest: { afm, resultSpec },
             executionResponse,
             executionResult: { data, headerItems },
-            config,
             onDataTooLarge,
             onNegativeValues,
-            pushData
+            pushData,
         } = props;
+
+        const chartConfig = this.getChartConfig(props);
 
         let multiDimensionalData = data;
         if (data[0].constructor !== Array) {
@@ -131,34 +140,36 @@ export default class ChartTransformation extends React.Component<IChartTransform
             executionResponse,
             multiDimensionalData as Execution.DataValue[][],
             headerItems,
-            config,
-            drillablePredicates
+            chartConfig,
+            drillablePredicates,
         );
-        const validationResult = validateData(config.limits, this.chartOptions);
+        const validationResult = validateData(chartConfig.limits, this.chartOptions);
 
         if (validationResult.dataTooLarge) {
             // always force onDataTooLarge error handling
-            invariant(onDataTooLarge, 'Visualization\'s onDataTooLarge callback is missing.');
+            invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
             onDataTooLarge(this.chartOptions);
         } else if (validationResult.hasNegativeValue) {
             // ignore hasNegativeValue if validation already fails on dataTooLarge
             // force onNegativeValues error handling only for pie chart.
             // hasNegativeValue can be true only for pie chart.
-            invariant(onNegativeValues,
-                '"onNegativeValues" callback required for pie chart transformation is missing.');
+            invariant(
+                onNegativeValues,
+                '"onNegativeValues" callback required for pie chart transformation is missing.',
+            );
             onNegativeValues(this.chartOptions);
         }
 
-        this.legendOptions = getLegend(config.legend, this.chartOptions);
+        this.legendOptions = getLegend(chartConfig.legend, this.chartOptions);
 
         pushData({
             propertiesMeta: {
-                legend_enabled: this.legendOptions.toggleEnabled
+                legend_enabled: this.legendOptions.toggleEnabled,
             },
             colors: {
                 colorAssignments: this.chartOptions.colorAssignments,
-                colorPalette: this.chartOptions.colorPalette
-            }
+                colorPalette: this.chartOptions.colorPalette,
+            },
         });
 
         this.setState(validationResult);
@@ -171,5 +182,29 @@ export default class ChartTransformation extends React.Component<IChartTransform
             return null;
         }
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
+    }
+
+    private getChartConfig(props: IChartTransformationProps): IChartConfig {
+        const {
+            executionRequest: { afm },
+            executionResponse,
+            executionResult: { headerItems },
+            config,
+        } = props;
+
+        const attributeHeaderItems = headerItems.map((dimension: Execution.IResultHeaderItem[][]) => {
+            return dimension.filter(
+                (attributeHeaders: Execution.IResultAttributeHeaderItem[]) =>
+                    attributeHeaders[0].attributeHeaderItem,
+            );
+        });
+
+        const stackByAttribute = getStackByAttribute(
+            config,
+            executionResponse.dimensions,
+            attributeHeaderItems,
+        );
+        const hasStackByAttribute = !isEmpty(stackByAttribute);
+        return getSanitizedStackingConfig(afm, config, hasStackByAttribute);
     }
 }

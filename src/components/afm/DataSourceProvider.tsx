@@ -1,19 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { SDK, factory as createSdk, DataLayer } from '@gooddata/gooddata-js';
-import * as PropTypes from 'prop-types';
+import * as React from "react";
+import { SDK, factory as createSdk, DataLayer } from "@gooddata/gooddata-js";
+import * as PropTypes from "prop-types";
 
-import isEqual = require('lodash/isEqual');
-import omit = require('lodash/omit');
-import { AFM, Execution } from '@gooddata/typings';
-import { AfmPropTypesShape, ResultSpecPropTypesShape } from '../visualizations/proptypes/execution';
+import isEqual = require("lodash/isEqual");
+import omit = require("lodash/omit");
+import { AFM, Execution } from "@gooddata/typings";
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../visualizations/proptypes/execution";
 
-import { IDataSource } from '../../interfaces/DataSource';
-import { ISubject } from '../../helpers/async';
-import { setTelemetryHeaders } from '../../helpers/utils';
-import { getNativeTotals } from '../visualizations/table/totals/utils';
+import { IDataSource } from "../../interfaces/DataSource";
+import { ISubject } from "../../helpers/async";
+import { setTelemetryHeaders } from "../../helpers/utils";
+import { getNativeTotals } from "../visualizations/table/totals/utils";
 
-export type IAdapterFactory = (sdk: SDK, projectId: string) => DataLayer.IAdapter<Execution.IExecutionResponses>;
+export type IAdapterFactory = (
+    sdk: SDK,
+    projectId: string,
+) => DataLayer.IAdapter<Execution.IExecutionResponses>;
 
 export interface IDataSourceProviderProps {
     afm: AFM.IAfm;
@@ -38,21 +41,24 @@ export interface IDataSourceProviderInjectedProps extends IDataSourceProviderSta
 export type IDataSourceInfoPromise = Promise<IDataSource>;
 export type IGenerateDefaultDimensionsFunction = (afm: AFM.IAfm) => AFM.IDimension[];
 
-function defaultAdapterFactory(sdk: SDK, projectId: string): DataLayer.IAdapter<Execution.IExecutionResponses> {
+function defaultAdapterFactory(
+    sdk: SDK,
+    projectId: string,
+): DataLayer.IAdapter<Execution.IExecutionResponses> {
     return new DataLayer.ExecuteAfmAdapter(sdk, projectId);
 }
 
 function addDefaultDimensions(
     afm: AFM.IAfm,
     resultSpec: AFM.IResultSpec,
-    generateDefaultDimensions: IGenerateDefaultDimensionsFunction
+    generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
 ): AFM.IResultSpec {
     return resultSpec && resultSpec.dimensions
         ? resultSpec
         : {
-            dimensions: generateDefaultDimensions(afm),
-            ...resultSpec
-        };
+              dimensions: generateDefaultDimensions(afm),
+              ...resultSpec,
+          };
 }
 
 /**
@@ -68,18 +74,18 @@ export function dataSourceProvider<T>(
     InnerComponent: React.ComponentType<T & IDataSourceProviderInjectedProps>,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
     componentName: string,
-    exportTitle?: string
+    exportTitle?: string,
 ): React.ComponentClass<IDataSourceProviderProps> {
-
-    return class WrappedComponent
-        extends React.Component<IDataSourceProviderProps, IDataSourceProviderState> {
-
-        public static displayName = componentName ? `${componentName}WithDataSource` : 'WrappedComponent';
+    return class WrappedComponent extends React.Component<
+        IDataSourceProviderProps,
+        IDataSourceProviderState
+    > {
+        public static displayName = componentName ? `${componentName}WithDataSource` : "WrappedComponent";
 
         public static propTypes = {
             projectId: PropTypes.string,
             afm: AfmPropTypesShape.isRequired,
-            resultSpec: ResultSpecPropTypesShape
+            resultSpec: ResultSpecPropTypesShape,
         };
 
         private adapter: DataLayer.IAdapter<Execution.IExecutionResponses>;
@@ -91,7 +97,7 @@ export function dataSourceProvider<T>(
 
             this.state = {
                 dataSource: null,
-                resultSpec: null
+                resultSpec: null,
             };
 
             const sdk = props.sdk || createSdk();
@@ -100,7 +106,7 @@ export function dataSourceProvider<T>(
 
             this.subject = DataLayer.createSubject<IDataSource>(
                 dataSource => this.setState({ dataSource }),
-                error => this.handleError(error)
+                error => this.handleError(error),
             );
 
             this.updateTotals = this.updateTotals.bind(this);
@@ -124,9 +130,9 @@ export function dataSourceProvider<T>(
             }
 
             if (
-                !isEqual(afm, this.props.afm)
-                || !isEqual(resultSpec, this.props.resultSpec)
-                || projectId !== this.props.projectId
+                !isEqual(afm, this.props.afm) ||
+                !isEqual(resultSpec, this.props.resultSpec) ||
+                projectId !== this.props.projectId
             ) {
                 this.prepareDataSource(afm);
             }
@@ -140,18 +146,20 @@ export function dataSourceProvider<T>(
         // to check if we need to reload datasource to get new native totals
         // @param nextTotals lists all requested totals
         public updateTotals(nextTotals: AFM.ITotalItem[]) {
-            const nativeTotals = getNativeTotals(nextTotals);
+            const nativeTotals = getNativeTotals(nextTotals, this.props.resultSpec);
             const afm: AFM.IAfm = this.state.dataSource.getAfm();
 
             const nativeTotalsRequested = nativeTotals.length > 0;
             const hasAfmNativeTotals = !!afm.nativeTotals;
-            const hasUnlistedNativeTotals = nativeTotals.some(total => !afm.nativeTotals || !afm.nativeTotals.find(
-                afmNativeTotal => isEqual(afmNativeTotal, total)
-            ));
+            const hasUnlistedNativeTotals = nativeTotals.some(
+                total =>
+                    !afm.nativeTotals ||
+                    !afm.nativeTotals.find(afmNativeTotal => isEqual(afmNativeTotal, total)),
+            );
             if (nativeTotalsRequested && (!hasAfmNativeTotals || hasUnlistedNativeTotals)) {
                 this.prepareDataSource({
                     ...afm,
-                    nativeTotals
+                    nativeTotals,
                 });
             }
         }
@@ -163,11 +171,12 @@ export function dataSourceProvider<T>(
             }
 
             // keep projectId in props for exporter
-            const props = omit<T & IDataSourceProviderInjectedProps, IDataSourceProviderProps>(
-                this.props,
-                ['afm', 'resultSpec', 'adapterFactory']
+            const props: any = omit(this.props, ["afm", "resultSpec", "adapterFactory"]);
+            const resultSpec = addDefaultDimensions(
+                this.props.afm,
+                this.props.resultSpec,
+                generateDefaultDimensions,
             );
-            const resultSpec = addDefaultDimensions(this.props.afm, this.props.resultSpec, generateDefaultDimensions);
             return (
                 <InnerComponent
                     {...props}

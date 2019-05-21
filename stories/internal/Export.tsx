@@ -1,21 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { IExportConfig, IExportResponse } from '@gooddata/gooddata-js';
-import ExportDialog from '@gooddata/goodstrap/lib/Dialog/ExportDialog';
-import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
+import * as React from "react";
+import { IExportConfig, IExportResponse } from "@gooddata/gooddata-js";
+import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
+import { action } from "@storybook/addon-actions";
+import { storiesOf } from "@storybook/react";
 
-import { BarChart, Headline, PivotTable, Table } from '../../src';
-import { Visualization } from '../../src/components/uri/Visualization';
-import { IExportFunction, OnExportReady } from '../../src/interfaces/Events';
+import { BarChart, Headline, PivotTable, Table } from "../../src";
+import { Visualization } from "../../src/components/uri/Visualization";
+import { IExportFunction, OnExportReady } from "../../src/interfaces/Events";
 
-import { onErrorHandler } from '../mocks';
-import {
-    ATTRIBUTE_1,
-    MEASURE_1,
-    MEASURE_1_WITH_ALIAS,
-    MEASURE_2
-} from '../data/componentProps';
+import { onErrorHandler } from "../mocks";
+import { ATTRIBUTE_1, MEASURE_1, MEASURE_1_WITH_ALIAS, MEASURE_2 } from "../data/componentProps";
 
 const WRAPPER_STYLE = { width: 800, height: 400 };
 const INNER_STYLE = { width: 800, height: 370 };
@@ -35,7 +30,7 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
     constructor(props: IWrapperComponentProps) {
         super(props);
         this.state = {
-            showExportDialog: false
+            showExportDialog: false,
         };
 
         this.onExportReady = this.onExportReady.bind(this);
@@ -60,12 +55,14 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
 
         return (
             <div style={WRAPPER_STYLE}>
-                <div style={INNER_STYLE}>
-                    {this.props.children(this.onExportReady)}
-                </div>
+                <div style={INNER_STYLE}>{this.props.children(this.onExportReady)}</div>
                 <div>
-                    <button style={BUTTON_STYLE} onClick={this.exportToCSV}>Export CSV</button>
-                    <button style={BUTTON_STYLE} onClick={this.exportToXLSX}>Export XLSX</button>
+                    <button style={BUTTON_STYLE} onClick={this.exportToCSV}>
+                        Export CSV
+                    </button>
+                    <button style={BUTTON_STYLE} onClick={this.exportToXLSX}>
+                        Export XLSX
+                    </button>
                     <button style={BUTTON_STYLE} onClick={this.exportWithCustomName}>
                         Export with custom name "CustomName"
                     </button>
@@ -79,7 +76,7 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
     }
 
     private onExportReady(exportResult: IExportFunction) {
-        action('onExportReady')('fired');
+        action("onExportReady")("fired");
         this.exportResult = exportResult;
     }
 
@@ -91,12 +88,10 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
                 submitButtonText="Export"
                 isPositive={true}
                 seleniumClass="s-dialog"
-
                 mergeHeaders={true}
                 mergeHeadersDisabled={false}
                 mergeHeadersText="Keep attribute cells merged"
                 mergeHeadersTitle="CELLS"
-
                 onCancel={this.hideExportDialog}
                 onSubmit={this.exportWithMergeHeaders}
             />
@@ -113,18 +108,18 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
 
     private exportToCSV() {
         const options = {};
-        action('Export CSV')(options);
+        action("Export CSV")(options);
         this.doExport(options);
     }
 
     private exportToXLSX() {
-        const options: IExportConfig = { format: 'xlsx' };
-        action('Export XLSX')(options);
+        const options: IExportConfig = { format: "xlsx" };
+        action("Export XLSX")(options);
         this.doExport(options);
     }
 
     private exportWithCustomName() {
-        const options = { title: 'CustomName' };
+        const options = { title: "CustomName" };
         action('Export with custom name "CustomName"')(options);
         this.doExport(options);
     }
@@ -132,27 +127,26 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
     private exportWithMergeHeaders() {
         this.hideExportDialog();
 
-        const options: IExportConfig = { format: 'xlsx', mergeHeaders: true };
-        action('Export with mergeHeaders')(options);
+        const options: IExportConfig = { format: "xlsx", mergeHeaders: true };
+        action("Export with mergeHeaders")(options);
         this.doExport(options);
     }
 
     private doExport(exportConfig: IExportConfig) {
-        this.exportResult(exportConfig)
-            .then(this.doExportSuccess, this.doExportError);
+        this.exportResult(exportConfig).then(this.doExportSuccess, this.doExportError);
     }
 
     private doExportSuccess(result: IExportResponse) {
-        return action('exportResult success')(result);
+        return action("exportResult success")(result);
     }
 
     private doExportError(error: Error) {
-        return action('exportResult error')(error);
+        return action("exportResult error")(error);
     }
 }
 
-storiesOf('Internal/Export', module)
-    .add('export chart data', () => (
+storiesOf("Internal/Export", module)
+    .add("export chart data", () => (
         <div style={WRAPPER_STYLE}>
             <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
@@ -169,7 +163,7 @@ storiesOf('Internal/Export', module)
             </WrapperComponent>
         </div>
     ))
-    .add('export table data', () => (
+    .add("export table data", () => (
         <div style={WRAPPER_STYLE}>
             <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
@@ -186,7 +180,7 @@ storiesOf('Internal/Export', module)
             </WrapperComponent>
         </div>
     ))
-    .add('export pivot table data', () => (
+    .add("export pivot table data", () => (
         <div style={WRAPPER_STYLE}>
             <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
@@ -203,13 +197,13 @@ storiesOf('Internal/Export', module)
             </WrapperComponent>
         </div>
     ))
-    .add('export visualization data', () => (
+    .add("export visualization data", () => (
         <div style={WRAPPER_STYLE}>
             <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
                     <Visualization
                         projectId="storybook"
-                        uri={'/gdc/md/storybook/obj/1003'}
+                        uri={"/gdc/md/storybook/obj/1003"}
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         locale="en-US"
@@ -220,7 +214,7 @@ storiesOf('Internal/Export', module)
             </WrapperComponent>
         </div>
     ))
-    .add('export headline data', () => (
+    .add("export headline data", () => (
         <div style={WRAPPER_STYLE}>
             <WrapperComponent>
                 {(onExportReady: OnExportReady) => (

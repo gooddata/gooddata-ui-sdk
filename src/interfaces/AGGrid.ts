@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { IMappingHeader } from './MappingHeader';
-import { ColDef, CellEvent } from 'ag-grid';
+import { IMappingHeader } from "./MappingHeader";
+import { ColDef, CellEvent } from "ag-grid";
 
 export interface IGridRow {
     headerItemMap: {
         [key: string]: IMappingHeader;
     };
+    subtotalStyle?: string;
     [key: string]: any;
 }
 
@@ -17,6 +18,7 @@ export interface IGridTotalsRow {
         count: number;
         headerKey: string;
     };
+    rowTotalActiveMeasures?: string[];
     [key: string]: any;
 }
 

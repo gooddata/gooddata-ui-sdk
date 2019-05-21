@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react';
-import PropTypes from 'prop-types';
-import SyntaxHighlighter from 'react-syntax-highlighter/prism';
-import { okaidia } from 'react-syntax-highlighter/styles/prism';
+import React from "react";
+import PropTypes from "prop-types";
+import SyntaxHighlighter from "react-syntax-highlighter/prism";
+import { okaidia } from "react-syntax-highlighter/styles/prism";
 
 export class ExampleWithSource extends React.Component {
     static propTypes = {
         source: PropTypes.string.isRequired,
-        for: PropTypes.func.isRequired
+        for: PropTypes.func.isRequired,
     };
 
     constructor() {
@@ -25,7 +25,7 @@ export class ExampleWithSource extends React.Component {
         const { hidden } = this.state;
         const Component = this.props.for;
 
-        const iconClassName = hidden ? 'icon-navigatedown' : 'icon-navigateup';
+        const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
 
         return (
             <div className="example-with-source">
@@ -53,11 +53,22 @@ export class ExampleWithSource extends React.Component {
                         overflow: auto;
                     }
                 `}</style>
-                <div className="example"><Component /></div>
+                <div className="example">
+                    <Component />
+                </div>
                 <div className="source">
-                    <button className={`button button-secondary button-dropdown icon-right ${iconClassName}`} onClick={this.toggle}>source code</button>
-                    {hidden ? '' : (
-                        <SyntaxHighlighter language="jsx" style={okaidia}>{this.props.source}</SyntaxHighlighter>
+                    <button
+                        className={`button button-secondary button-dropdown icon-right ${iconClassName}`}
+                        onClick={this.toggle}
+                    >
+                        source code
+                    </button>
+                    {hidden ? (
+                        ""
+                    ) : (
+                        <SyntaxHighlighter language="jsx" style={okaidia}>
+                            {this.props.source}
+                        </SyntaxHighlighter>
                     )}
                 </div>
             </div>

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import { range, unzip, isNumber } from 'lodash';
+import { range, unzip, isNumber } from "lodash";
 
 function generateRawData(fns: any, length: any) {
     const data = [(x: any) => ({ id: x, name: x.toString() }), ...fns].map((fn: any) => {
-        return range(1, length + 1).map((n) => {
+        return range(1, length + 1).map(n => {
             const res = fn(n);
 
             return isNumber(res) ? `${res}` : res;
@@ -19,11 +19,11 @@ export function createMock(type: any, fnsConfig: any, length: any) {
     const metricHeaders = fnsConfig.map((config: any, i: any) => {
         const n = i + 1;
         return {
-            type: 'metric',
+            type: "metric",
             id: n.toString(),
             uri: `/gdc/md/${n}`,
             title: config.title,
-            format: '#,##0.00'
+            format: "#,##0.00",
         };
     });
 
@@ -33,12 +33,12 @@ export function createMock(type: any, fnsConfig: any, length: any) {
             categories: [
                 {
                     category: {
-                        collection: 'attribute',
-                        displayForm: '/gdc/md/attr'
-                    }
-                }
-            ]
-        }
+                        collection: "attribute",
+                        displayForm: "/gdc/md/attr",
+                    },
+                },
+            ],
+        },
     };
 
     return {
@@ -46,16 +46,16 @@ export function createMock(type: any, fnsConfig: any, length: any) {
             rawData,
             headers: [
                 {
-                    type: 'attrLabel',
-                    id: 'attr',
-                    uri: '/gdc/md/attr',
-                    title: 'N'
+                    type: "attrLabel",
+                    id: "attr",
+                    uri: "/gdc/md/attr",
+                    title: "N",
                 },
-                ...metricHeaders
+                ...metricHeaders,
             ],
             isLoading: false,
-            isLoaded: true
+            isLoaded: true,
         },
-        config
+        config,
     };
 }

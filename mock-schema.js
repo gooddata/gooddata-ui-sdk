@@ -1,9 +1,18 @@
+// (C) 2007-2019 GoodData Corporation
+
 const heatmapAfmExecutions = [{
         execution: require('./stories/test_data/heat_map_with_58_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_58_rows_mock_result.json')
     }, {
         execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+    }];
+
+const pivotTableAfmExecutions = [
+    {
+        execution: require("./stories/test_data/pivot_table_with_subtotals_request.json"),
+        executionResponse: require("./stories/test_data/pivot_table_with_subtotals_response.json"),
+        executionResult: require("./stories/test_data/pivot_table_with_subtotals_result.json"),
     }];
 
 const getBaseProjectSchema = (title, identifier) => {
@@ -2184,7 +2193,8 @@ const getBaseProjectSchema = (title, identifier) => {
                     }
                 }
             },
-            ...heatmapAfmExecutions
+            ...heatmapAfmExecutions,
+            ...pivotTableAfmExecutions
         ],
         visualizationClasses: [{
             title: 'Table',
@@ -2198,6 +2208,9 @@ const getBaseProjectSchema = (title, identifier) => {
         }, {
             title: 'Line',
             url: 'local:line'
+        }, {
+            title: 'Combo',
+            url: 'local:combo2'
         }, {
             title: 'Pie',
             url: 'local:pie'
@@ -2445,6 +2458,32 @@ const getBaseProjectSchema = (title, identifier) => {
                     }]
                 }]
             },
+            {
+                title: 'Combo chart',
+                identifier: '1011',
+                type: 'local:combo2',
+                buckets: [{
+                    localIdentifier: 'measures',
+                    items: [{
+                        localIdentifier: 'm1',
+                        identifier: '1'
+                    }]
+                }, {
+                    localIdentifier: 'secondary_measures',
+                    items: [{
+                        localIdentifier: 'm2',
+                        identifier: '2'
+                    }]
+                }, {
+                    localIdentifier: 'view',
+                    items: [{
+                        localIdentifier: 'a1',
+                        displayForm: 'attr.closed.year.df',
+                        title: 'Date'
+                    }]
+                }],
+                properties: "{\"controls\":{\"secondary_yaxis\":{\"measures\":[\"2\"]},\"primaryChartType\":\"column\",\"secondaryChartType\":\"line\"}}"
+            },
         ]
     }
 };
@@ -2478,12 +2517,5 @@ module.exports = [
                 }
             ]
         },
-    },
-    {
-        ...getBaseProjectSchema('Storybook project pivot table grouping', 'pivot_grouping_storybook'),
-        featureFlags: {
-            enablePivot: true,
-            enablePivotGrouping: true
-        }
     },
 ];

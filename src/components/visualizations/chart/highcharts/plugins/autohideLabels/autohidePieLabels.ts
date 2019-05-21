@@ -1,13 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import fill = require('lodash/fill');
+import get = require("lodash/get");
+import fill = require("lodash/fill");
 
-import {
-    getVisibleSeries,
-    getDataPoints,
-    isIntersecting,
-    IRectBySize
-} from '../../helpers';
+import { getVisibleSeries, getDataPoints, isIntersecting, IRectBySize } from "../../helpers";
 
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour
@@ -22,7 +17,7 @@ const autohidePieLabels = (chart: any) => {
     const visibilityMap = fill(Array(visiblePoints.length), true);
 
     for (let i = 0; i < visiblePoints.length; i++) {
-        const actualLabel: IRectBySize = get<IRectBySize>(visiblePoints, `${i}.dataLabel`);
+        const actualLabel: IRectBySize = get(visiblePoints, `${i}.dataLabel`);
 
         // do nothing if label not found or already hidden
         if (!actualLabel || !visibilityMap[i]) {
@@ -30,7 +25,7 @@ const autohidePieLabels = (chart: any) => {
         }
 
         for (let neighborIdx = i + 1; neighborIdx < visiblePoints.length; neighborIdx++) {
-            const neighborLabel: IRectBySize = get<IRectBySize>(visiblePoints, `${neighborIdx}.dataLabel`);
+            const neighborLabel: IRectBySize = get(visiblePoints, `${neighborIdx}.dataLabel`);
             // do nothing if label not found or already hidden
             if (!neighborLabel || !visibilityMap[neighborIdx]) {
                 continue;

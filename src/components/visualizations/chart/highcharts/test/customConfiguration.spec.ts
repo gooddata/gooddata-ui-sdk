@@ -1,53 +1,62 @@
 // (C) 2007-2019 GoodData Corporation
-import get = require('lodash/get');
-import set = require('lodash/set');
-import noop = require('lodash/noop');
+import get = require("lodash/get");
+import set = require("lodash/set");
+import noop = require("lodash/noop");
 import {
     escapeCategories,
     formatOverlapping,
     formatOverlappingForParentAttribute,
     getCustomizedConfiguration,
-    percentageDataLabelFormatter
-} from '../customConfiguration';
-import { ISeriesDataItem } from '../../../../../interfaces/Config';
-import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
-import { immutableSet } from '../../../utils/common';
+    percentageDataLabelFormatter,
+} from "../customConfiguration";
+import { ISeriesDataItem } from "../../../../../interfaces/Config";
+import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { immutableSet } from "../../../utils/common";
+import {
+    supportedStackingAttributesChartTypes,
+    supportedTooltipFollowPointerChartTypes,
+} from "../../chartOptionsBuilder";
+import { AFM } from "@gooddata/typings";
+import { IDrillConfig } from "../../../../../interfaces/DrillEvents";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {
         series: [
             {
-                color: 'rgb(0, 0, 0)',
-                name: '<b>aaa</b>',
-                data: dataValues
-            }
-        ]
+                color: "rgb(0, 0, 0)",
+                name: "<b>aaa</b>",
+                data: dataValues,
+            },
+        ],
     };
 }
 
 const chartOptions = {
     type: VisualizationTypes.LINE,
-    yAxes: [{ title: 'atitle' }],
-    xAxes: [{ title: 'xtitle' }],
-    data: getData([{
-        name: '<b>bbb</b>',
-        y: 10
-    }, null])
+    yAxes: [{ title: "atitle" }],
+    xAxes: [{ title: "xtitle" }],
+    data: getData([
+        {
+            name: "<b>bbb</b>",
+            y: 10,
+        },
+        null,
+    ]),
 };
 
-describe('getCustomizedConfiguration', () => {
-    it('should escape series names', () => {
+describe("getCustomizedConfiguration", () => {
+    it("should escape series names", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        expect(result.series[0].name).toEqual('&lt;b&gt;aaa&lt;/b&gt;');
+        expect(result.series[0].name).toEqual("&lt;b&gt;aaa&lt;/b&gt;");
     });
 
-    it('should escape data items in series', () => {
+    it("should escape data items in series", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        expect(result.series[0].data[0].name).toEqual('&lt;b&gt;bbb&lt;/b&gt;');
+        expect(result.series[0].data[0].name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
     });
 
     it('should handle "%" format on axis and use label formatter', () => {
-        const chartOptionsWithFormat = immutableSet(chartOptions, 'yAxes[0].format', '0.00 %');
+        const chartOptionsWithFormat = immutableSet(chartOptions, "yAxes[0].format", "0.00 %");
         const resultWithoutFormat = getCustomizedConfiguration(chartOptions);
         const resultWithFormat = getCustomizedConfiguration(chartOptionsWithFormat);
 
@@ -55,77 +64,77 @@ describe('getCustomizedConfiguration', () => {
         expect(resultWithFormat.yAxis[0].labels.formatter).toBeDefined();
     });
 
-    it ('should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation', () => {
+    it("should set formatter for xAxis labels to prevent overlapping for bar chart with 90 rotation", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
-            type: 'bar',
+            type: "bar",
             xAxisProps: {
-                rotation: '90'
-            }
+                rotation: "90",
+            },
         });
 
         expect(result.xAxis[0].labels.formatter).toBe(formatOverlapping);
     });
 
-    it ('should set formatter for xAxis labels to prevent overlapping for stacking bar chart with 90 rotation', () => {
+    it("should set formatter for xAxis labels to prevent overlapping for stacking bar chart with 90 rotation", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
             isViewByTwoAttributes: true,
-            type: 'bar',
+            type: "bar",
             xAxisProps: {
-                rotation: '90'
-            }
+                rotation: "90",
+            },
         });
 
         expect(result.xAxis[0].labels.formatter).toBe(formatOverlappingForParentAttribute);
     });
 
-    it ('shouldn\'t set formatter for xAxis by default', () => {
+    it("shouldn't set formatter for xAxis by default", () => {
         const result = getCustomizedConfiguration(chartOptions);
 
         expect(result.xAxis[0].labels.formatter).toBeUndefined();
     });
 
-    it('should set connectNulls for stacked Area chart', () => {
+    it("should set connectNulls for stacked Area chart", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
             type: VisualizationTypes.AREA,
-            stacking: 'normal'
+            stacking: "normal",
         });
 
         expect(result.plotOptions.series.connectNulls).toBeTruthy();
     });
 
-    it('should NOT set connectNulls for NON stacked Area chart', () => {
+    it("should NOT set connectNulls for NON stacked Area chart", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
             type: VisualizationTypes.AREA,
-            stacking: null
+            stacking: null,
         });
 
         expect(result.plotOptions.series).toEqual({});
     });
 
-    it('should NOT set connectNulls for stacked Line chart', () => {
+    it("should NOT set connectNulls for stacked Line chart", () => {
         const result = getCustomizedConfiguration({
             ...chartOptions,
-            stacking: 'normal'
+            stacking: "normal",
         });
 
         expect(result.plotOptions.series.connectNulls).toBeUndefined();
     });
 
-    describe('getAxesConfiguration', () => {
-        it('should set Y axis configuration from properties', () => {
+    describe("getAxesConfiguration", () => {
+        it("should set Y axis configuration from properties", () => {
             const result = getCustomizedConfiguration({
-                    ...chartOptions,
-                    yAxisProps: {
-                        min: 20,
-                        max: 30,
-                        labelsEnabled: false,
-                        visible: false
-                    }
-                });
+                ...chartOptions,
+                yAxisProps: {
+                    min: 20,
+                    max: 30,
+                    labelsEnabled: false,
+                    visible: false,
+                },
+            });
 
             const expectedResult = {
                 ...result.yAxis[0],
@@ -133,25 +142,25 @@ describe('getCustomizedConfiguration', () => {
                 max: 30,
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: false
+                    enabled: false,
                 },
                 title: {
                     ...result.yAxis[0].title,
                     enabled: false,
-                    text: ''
-                }
+                    text: "",
+                },
             };
             expect(result.yAxis[0]).toEqual(expectedResult);
         });
 
-        it ('should set X axis configurations from properties', () => {
+        it("should set X axis configurations from properties", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
                     visible: false,
                     labelsEnabled: false,
-                    rotation: '60'
-                }
+                    rotation: "60",
+                },
             });
 
             const expectedResult = {
@@ -159,213 +168,213 @@ describe('getCustomizedConfiguration', () => {
                 title: {
                     ...result.xAxis[0].title,
                     enabled: false,
-                    text: ''
+                    text: "",
                 },
                 labels: {
                     ...result.xAxis[0].labels,
                     enabled: false,
-                    rotation: -60
-                }
+                    rotation: -60,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedResult);
         });
 
-        it('should enable axis label for scatter plot when x and y are not set', () => {
+        it("should enable axis label for scatter plot when x and y are not set", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
-                type: VisualizationTypes.SCATTER
+                type: VisualizationTypes.SCATTER,
             });
 
             const expectedXAxisResult = {
                 ...result.xAxis[0],
                 labels: {
                     ...result.xAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
             const expectedYAxisResult = {
                 ...result.yAxis[0],
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
         });
 
-        it('should disable xAxis labels when x axis is disabled in scatter', () => {
+        it("should disable xAxis labels when x axis is disabled in scatter", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
-                    visible: false
+                    visible: false,
                 },
-                type: VisualizationTypes.SCATTER
+                type: VisualizationTypes.SCATTER,
             });
 
             const expectedXAxisResult = {
                 ...result.xAxis[0],
                 labels: {
                     ...result.xAxis[0].labels,
-                    enabled: false
-                }
+                    enabled: false,
+                },
             };
             const expectedYAxisResult = {
                 ...result.yAxis[0],
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
         });
 
-        it('should disable labels when labels are disabled in bubble', () => {
+        it("should disable labels when labels are disabled in bubble", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
-                    labelsEnabled: false
+                    labelsEnabled: false,
                 },
-                type: VisualizationTypes.BUBBLE
+                type: VisualizationTypes.BUBBLE,
             });
 
             const expectedXAxisResult = {
                 ...result.xAxis[0],
                 labels: {
                     ...result.xAxis[0].labels,
-                    enabled: false
-                }
+                    enabled: false,
+                },
             };
             const expectedYAxisResult = {
                 ...result.yAxis[0],
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
         });
 
-        it('should enable labels for heatmap when categories are not empty', () => {
+        it("should enable labels for heatmap when categories are not empty", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 data: {
                     ...chartOptions.data,
-                    categories: ['c1', 'c2']
+                    categories: ["c1", "c2"],
                 },
-                type: VisualizationTypes.HEATMAP
+                type: VisualizationTypes.HEATMAP,
             });
 
             const expectedXAxisResult = {
                 ...result.xAxis[0],
                 labels: {
                     ...result.xAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
             const expectedYAxisResult = {
                 ...result.yAxis[0],
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: true
-                }
+                    enabled: true,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
         });
 
-        it('should disable lables for heatmap when categories are empty', () => {
+        it("should disable lables for heatmap when categories are empty", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 data: {
                     ...chartOptions.data,
-                    categories: []
+                    categories: [],
                 },
-                type: VisualizationTypes.HEATMAP
+                type: VisualizationTypes.HEATMAP,
             });
 
             const expectedXAxisResult = {
                 ...result.xAxis[0],
                 labels: {
                     ...result.xAxis[0].labels,
-                    enabled: false
-                }
+                    enabled: false,
+                },
             };
             const expectedYAxisResult = {
                 ...result.yAxis[0],
                 labels: {
                     ...result.yAxis[0].labels,
-                    enabled: false
-                }
+                    enabled: false,
+                },
             };
 
             expect(result.xAxis[0]).toEqual(expectedXAxisResult);
             expect(result.yAxis[0]).toEqual(expectedYAxisResult);
         });
 
-        it('should set extremes for y axis when x axis scale changed', () => {
+        it("should set extremes for y axis when x axis scale changed", () => {
             const result = getCustomizedConfiguration({
-                    ...chartOptions,
-                    xAxisProps: {
-                        min: 20,
-                        max: 30
-                    }
-                });
+                ...chartOptions,
+                xAxisProps: {
+                    min: 20,
+                    max: 30,
+                },
+            });
 
             const expectedPlotOptions = {
-                    getExtremesFromAll: true
+                getExtremesFromAll: true,
             };
             expect(result.plotOptions.series).toEqual(expectedPlotOptions);
         });
 
-        it('should set axis line width to 1 in scatter plot when axis is enabled', () => {
+        it("should set axis line width to 1 in scatter plot when axis is enabled", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
-                    visible: true
+                    visible: true,
                 },
                 xAxisProps: {
-                    visible: true
+                    visible: true,
                 },
-                type: VisualizationTypes.SCATTER
+                type: VisualizationTypes.SCATTER,
             });
 
             expect(result.xAxis[0].lineWidth).toEqual(1);
             expect(result.yAxis[0].lineWidth).toEqual(1);
         });
 
-        it('should not set axis line when in column and axis is enabled', () => {
+        it("should not set axis line when in column and axis is enabled", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
-                    visible: true
+                    visible: true,
                 },
                 xAxisProps: {
-                    visible: true
+                    visible: true,
                 },
-                type: VisualizationTypes.COLUMN
+                type: VisualizationTypes.COLUMN,
             });
 
             expect(result.xAxis[0].lineWidth).toBeUndefined();
             expect(result.yAxis[0].lineWidth).toBeUndefined();
         });
 
-        it('should set axis line width to 0 when axis is disabled', () => {
+        it("should set axis line width to 0 when axis is disabled", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
-                    visible: false
+                    visible: false,
                 },
                 xAxisProps: {
-                    visible: false
-                }
+                    visible: false,
+                },
             });
 
             expect(result.xAxis[0].lineWidth).toEqual(0);
@@ -373,350 +382,395 @@ describe('getCustomizedConfiguration', () => {
         });
     });
 
-    describe('gridline configuration', () => {
-        it('should set gridline width to 0 when grid is disabled', () => {
+    describe("gridline configuration", () => {
+        it("should set gridline width to 0 when grid is disabled", () => {
             const result = getCustomizedConfiguration({ ...chartOptions, grid: { enabled: false } });
             expect(result.yAxis[0].gridLineWidth).toEqual(0);
         });
 
-        it('should set gridline width on xAxis on 1 for Scatterplot when enabled', () => {
+        it("should set gridline width on xAxis on 1 for Scatterplot when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.SCATTER };
             const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(1);
         });
 
-        it('should set gridline width on xAxis on 1 for Bubblechart when enabled', () => {
+        it("should set gridline width on xAxis on 1 for Bubblechart when enabled", () => {
             const customConfig = { grid: { enabled: true }, type: VisualizationTypes.BUBBLE };
             const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(1);
         });
 
-        it('should set gridline width on xAxis on 0 for Scatterplot when disabled', () => {
+        it("should set gridline width on xAxis on 0 for Scatterplot when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.SCATTER };
             const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(0);
         });
 
-        it('should set gridline width on xAxis on 0 for Bubblechart when disabled', () => {
+        it("should set gridline width on xAxis on 0 for Bubblechart when disabled", () => {
             const customConfig = { grid: { enabled: false }, type: VisualizationTypes.BUBBLE };
             const result = getCustomizedConfiguration({ ...chartOptions, ...customConfig });
             expect(result.xAxis[0].gridLineWidth).toEqual(0);
         });
     });
 
-    describe('labels configuration', () => {
-        it('should set two levels labels for multi-level treemap', () => {
+    describe("labels configuration", () => {
+        it("should set two levels labels for multi-level treemap", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 type: VisualizationTypes.TREEMAP,
-                stacking: 'normal'
+                stacking: "normal",
             });
 
             const treemapConfig = result.plotOptions.treemap;
             expect(treemapConfig.levels.length).toEqual(2);
         });
 
-        it('should set one level labels for single-level treemap', () => {
+        it("should set one level labels for single-level treemap", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 type: VisualizationTypes.TREEMAP,
-                stacking: null
+                stacking: null,
             });
 
             const treemapConfig = result.plotOptions.treemap;
             expect(treemapConfig.levels.length).toEqual(1);
         });
 
-        it('should set global HCH dataLabels config according user config for treemap', () => {
+        it("should set global HCH dataLabels config according user config for treemap", () => {
             const result = getCustomizedConfiguration(
                 {
                     ...chartOptions,
                     type: VisualizationTypes.TREEMAP,
-                    stacking: null
+                    stacking: null,
                 },
                 {
                     dataLabels: {
-                        visible: true
-                    }
-                }
+                        visible: true,
+                    },
+                },
             );
 
             const treemapConfig = result.plotOptions.treemap;
             expect(treemapConfig.dataLabels).toEqual({
                 allowOverlap: true,
-                enabled: true
+                enabled: true,
             });
         });
 
-        describe('bubble dataLabels formatter', () => {
-            function setMinMax(obj: any, xAxisMin: number, xAxisMax: number, yAxisMin: number, yAxisMax: number) {
-                set(obj, 'series.xAxis.min', xAxisMin);
-                set(obj, 'series.xAxis.max', xAxisMax);
-                set(obj, 'series.yAxis.min', yAxisMin);
-                set(obj, 'series.yAxis.max', yAxisMax);
+        describe("bubble dataLabels formatter", () => {
+            function setMinMax(
+                obj: any,
+                xAxisMin: number,
+                xAxisMax: number,
+                yAxisMin: number,
+                yAxisMax: number,
+            ) {
+                set(obj, "series.xAxis.min", xAxisMin);
+                set(obj, "series.xAxis.max", xAxisMax);
+                set(obj, "series.yAxis.min", yAxisMin);
+                set(obj, "series.yAxis.max", yAxisMax);
             }
 
             function setPoint(obj: any, x: number, y: number, z: number) {
-                set(obj, 'x', x);
-                set(obj, 'y', y);
-                set(obj, 'point.z', z);
+                set(obj, "x", x);
+                set(obj, "y", y);
+                set(obj, "point.z", z);
             }
 
-            it('should draw label when bubble is inside chart area', () => {
+            it("should draw label when bubble is inside chart area", () => {
                 const result = getCustomizedConfiguration(
                     {
                         ...chartOptions,
-                        type: VisualizationTypes.BUBBLE
+                        type: VisualizationTypes.BUBBLE,
                     },
                     {
                         dataLabels: {
-                            visible: true
-                        }
-                    }
+                            visible: true,
+                        },
+                    },
                 );
 
                 setMinMax(result, 0, 10, 0, 10);
                 setPoint(result, 5, 10, 5);
 
-                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+                const bubbleFormatter = get(result, "plotOptions.bubble.dataLabels.formatter", noop).bind(
+                    result,
+                );
 
-                expect(bubbleFormatter()).toEqual('5');
+                expect(bubbleFormatter()).toEqual("5");
             });
 
-            it('should not draw dataLabel when label is outside chart area', () => {
+            it("should not draw dataLabel when label is outside chart area", () => {
                 const result = getCustomizedConfiguration(
                     {
                         ...chartOptions,
-                        type: VisualizationTypes.BUBBLE
+                        type: VisualizationTypes.BUBBLE,
                     },
                     {
                         dataLabels: {
-                            visible: true
-                        }
-                    }
+                            visible: true,
+                        },
+                    },
                 );
 
                 setMinMax(result, 0, 10, 0, 10);
                 setPoint(result, 5, 11, 5);
 
-                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+                const bubbleFormatter = get(result, "plotOptions.bubble.dataLabels.formatter", noop).bind(
+                    result,
+                );
 
                 expect(bubbleFormatter()).toEqual(null);
             });
 
-            it('should show data label when min and max are not defined', () => {
+            it("should show data label when min and max are not defined", () => {
                 const result = getCustomizedConfiguration(
                     {
                         ...chartOptions,
-                        type: VisualizationTypes.BUBBLE
+                        type: VisualizationTypes.BUBBLE,
                     },
                     {
                         dataLabels: {
-                            visible: true
-                        }
-                    }
+                            visible: true,
+                        },
+                    },
                 );
 
                 setPoint(result, 5, 11, 5);
 
-                const bubbleFormatter = get(result, 'plotOptions.bubble.dataLabels.formatter', noop).bind(result);
+                const bubbleFormatter = get(result, "plotOptions.bubble.dataLabels.formatter", noop).bind(
+                    result,
+                );
 
-                expect(bubbleFormatter()).toEqual('5');
+                expect(bubbleFormatter()).toEqual("5");
             });
         });
     });
 
-    describe('tooltip followPointer', () => {
-        it ('should follow pointer for bar chart when data max is above axis max', () => {
+    describe("tooltip followPointer", () => {
+        // convert [bar, column, combo] to [ [bar] , [column] , [combo] ]
+        const CHART_TYPES = supportedTooltipFollowPointerChartTypes.map(
+            (chartType: string): string[] => [chartType],
+        );
+
+        it.each(CHART_TYPES)(
+            "should follow pointer for %s chart when data max is above axis max",
+            (chartType: string) => {
+                const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    actions: { tooltip: true },
+                    data: getData([{ y: 100 }, { y: 101 }]),
+                    type: chartType,
+                    yAxisProps: {
+                        max: 50,
+                    },
+                });
+
+                expect(result.tooltip.followPointer).toBeTruthy();
+            },
+        );
+
+        it.each(CHART_TYPES)(
+            "should not follow pointer for %s chart when data max is below axis max",
+            (chartType: string) => {
+                const result = getCustomizedConfiguration({
+                    ...chartOptions,
+                    actions: { tooltip: true },
+                    data: getData([{ y: 0 }, { y: 1 }]),
+                    type: chartType,
+                    yAxisProps: {
+                        max: 50,
+                    },
+                });
+
+                expect(result.tooltip.followPointer).toBeFalsy();
+            },
+        );
+
+        it("should follow pointer for pie chart should be false by default", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 actions: { tooltip: true },
                 data: getData([{ y: 100 }, { y: 101 }]),
-                type: VisualizationTypes.COLUMN,
-                yAxisProps: {
-                    max: 50
-                }
-            });
-
-            expect(result.tooltip.followPointer).toBeTruthy();
-        });
-
-        it ('should not follow pointer for bar chart when data max is below axis max', () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                actions: { tooltip: true },
-                data: getData([{ y: 0 }, { y: 1 }]),
-                type: VisualizationTypes.COLUMN,
-                yAxisProps: {
-                    max: 50
-                }
-            });
-
-            expect(result.tooltip.followPointer).toBeFalsy();
-        });
-
-        it ('should follow pointer for pie chart should be false by default', () => {
-            const result = getCustomizedConfiguration({
-                ...chartOptions,
-                actions: { tooltip: true },
-                data: getData([{ y: 100 } , { y: 101 }]),
                 type: VisualizationTypes.PIE,
                 yAxisProps: {
-                    max: 50
-                }
+                    max: 50,
+                },
             });
 
             expect(result.tooltip.followPointer).toBeFalsy();
         });
     });
 
-    describe('format data labels', () => {
+    describe("format data labels", () => {
         const getDataLabelPoint = (opposite = false, axisNumber = 1) => ({
             y: 1000,
             percentage: 55.55,
             series: {
                 chart: {
-                    yAxis: Array(axisNumber).fill({})
+                    yAxis: Array(axisNumber).fill({}),
                 },
                 yAxis: {
-                    opposite
-                }
+                    opposite,
+                },
             },
             point: {
-                format: '#,##0.00'
-            }
+                format: "#,##0.00",
+            },
         });
 
-        it('should return number for not supported chart', () => {
+        it("should return number for not supported chart", () => {
             const chartOptions = { type: VisualizationTypes.LINE, yAxes: [{}] };
             const configuration = getCustomizedConfiguration(chartOptions);
-            const formatter = get(configuration, 'plotOptions.bar.dataLabels.formatter', noop);
+            const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
             const dataLabelPoint = getDataLabelPoint();
             const dataLabel = formatter.call(dataLabelPoint);
-            expect(dataLabel).toBe('1,000.00');
+            expect(dataLabel).toBe("1,000.00");
         });
 
         it.each([
-            ['should return number for single axis chart without \'Stack to 100%\'', 1],
-            ['should return number for dual axis chart without \'Stack to 100%\'', 2]
-        ])('%s', (_description: string, axisNumber: number) => {
+            ["should return number for single axis chart without 'Stack to 100%'", 1],
+            ["should return number for dual axis chart without 'Stack to 100%'", 2],
+        ])("%s", (_description: string, axisNumber: number) => {
             const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
             const configuration = getCustomizedConfiguration(chartOptions);
-            const formatter = get(configuration, 'plotOptions.bar.dataLabels.formatter', noop);
+            const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
             const dataLabelPoint = getDataLabelPoint(false, axisNumber);
             const dataLabel = formatter.call(dataLabelPoint);
-            expect(dataLabel).toBe('1,000.00');
+            expect(dataLabel).toBe("1,000.00");
         });
 
         it.each([
-            ['should return percentage for left single axis chart with \'Stack to 100%\'', false, 1, '55.55%'],
-            ['should return percentage for right single axis chart with \'Stack to 100%\'', true, 1, '55.55%'],
-            ['should return percentage for primary axis for dual chart with \'Stack to 100%\'', false, 2, '55.55%'],
-            ['should return number for secondary axis for dual chart with \'Stack to 100%\'', true, 2, '1,000.00']
-        ])('%s', (_description: string, opposite: boolean, axisNumber: number, expectation: string) => {
+            ["should return percentage for left single axis chart with 'Stack to 100%'", false, 1, "55.55%"],
+            ["should return percentage for right single axis chart with 'Stack to 100%'", true, 1, "55.55%"],
+            [
+                "should return percentage for primary axis for dual chart with 'Stack to 100%'",
+                false,
+                2,
+                "55.55%",
+            ],
+            [
+                "should return number for secondary axis for dual chart with 'Stack to 100%'",
+                true,
+                2,
+                "1,000.00",
+            ],
+        ])("%s", (_description: string, opposite: boolean, axisNumber: number, expectation: string) => {
             const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
             const config = { stackMeasuresToPercent: true };
             const configuration = getCustomizedConfiguration(chartOptions, config);
-            const formatter = get(configuration, 'plotOptions.bar.dataLabels.formatter', noop);
+            const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
             const dataLabelPoint = getDataLabelPoint(opposite, axisNumber);
             const dataLabel = formatter.call(dataLabelPoint);
             expect(dataLabel).toBe(expectation);
         });
 
-        describe('percentage data label formatter', () => {
-
-            it('should return empty data labels with undefined percentage', () => {
+        describe("percentage data label formatter", () => {
+            it("should return empty data labels with undefined percentage", () => {
                 const result = percentageDataLabelFormatter.call({});
-                expect(result).toBe('');
+                expect(result).toBe("");
             });
 
-            it('should format data labels to percentage for single axis chart implicitly', () => {
-                const dataLabel = {
-                    percentage: 55.55
-                };
-                const result = percentageDataLabelFormatter.call(dataLabel);
-                expect(result).toBe('55.55%');
-            });
-
-            it.each([
-                ['left', false],
-                ['right', true]
-            ])('should format data labels to percentage for %s single axis chart', (_: string, opposite: boolean) => {
+            it("should format data labels to percentage for single axis chart implicitly", () => {
                 const dataLabel = {
                     percentage: 55.55,
-                    series: {
-                        chart: {
-                            yAxis: [{}]
-                        },
-                        yAxis: {
-                            opposite
-                        }
-                    }
                 };
                 const result = percentageDataLabelFormatter.call(dataLabel);
-                expect(result).toBe('55.55%');
+                expect(result).toBe("55.55%");
             });
 
-            it.each([
-                ['', 'primary', false, '55.55%'],
-                [' not', 'secondary', true, '123']
-            ])('should %s format data labels to percentage for dual axis chart on %s axis', (
-                _negation: string,
-                _axis: string,
-                opposite: boolean,
-                expected: string
-            ) => {
-                const dataLabel = {
-                    percentage: 55.55,
-                    y: 123,
-                    series: {
-                        chart: {
-                            yAxis: [{}, {}]
+            it.each([["left", false], ["right", true]])(
+                "should format data labels to percentage for %s single axis chart",
+                (_: string, opposite: boolean) => {
+                    const dataLabel = {
+                        percentage: 55.55,
+                        series: {
+                            chart: {
+                                yAxis: [{}],
+                            },
+                            yAxis: {
+                                opposite,
+                            },
                         },
-                        yAxis: {
-                            opposite
-                        }
-                    }
-                };
-                const result = percentageDataLabelFormatter.call(dataLabel);
-                expect(result).toBe(expected);
-            });
+                    };
+                    const result = percentageDataLabelFormatter.call(dataLabel);
+                    expect(result).toBe("55.55%");
+                },
+            );
+
+            it.each([["", "primary", false, "55.55%"], [" not", "secondary", true, "123"]])(
+                "should %s format data labels to percentage for dual axis chart on %s axis",
+                (_negation: string, _axis: string, opposite: boolean, expected: string) => {
+                    const dataLabel = {
+                        percentage: 55.55,
+                        y: 123,
+                        series: {
+                            chart: {
+                                yAxis: [{}, {}],
+                            },
+                            yAxis: {
+                                opposite,
+                            },
+                        },
+                    };
+                    const result = percentageDataLabelFormatter.call(dataLabel);
+                    expect(result).toBe(expected);
+                },
+            );
+        });
+    });
+
+    describe("get X axis with drill config", () => {
+        const chartTypes = supportedStackingAttributesChartTypes.map((chartType: string) => [chartType]);
+
+        const afm: AFM.IAfm = {
+            attributes: [],
+            measures: [],
+            filters: [],
+        };
+        const drillConfig: IDrillConfig = {
+            afm,
+            onFiredDrillEvent: () => false,
+        };
+
+        it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
+            const result = getCustomizedConfiguration({ type: chartType }, {}, drillConfig);
+            expect(result.xAxis[0].drillConfig).toEqual(drillConfig);
+        });
+
+        it('should not set "drillConfig" to unsupported chart type', () => {
+            const result = getCustomizedConfiguration({ type: VisualizationTypes.COMBO }, {}, drillConfig);
+            expect(result.xAxis[0].drillConfig).toBeFalsy();
         });
     });
 });
 
-describe('escapeCategories', () => {
-    it('should escape string categories', () => {
-        const categories = escapeCategories(['cat1', '<cat2/>', '<cat3></cat3>']);
-        expect(categories).toEqual([
-            'cat1',
-            '&lt;cat2/&gt;',
-            '&lt;cat3&gt;&lt;/cat3&gt;'
-        ]);
+describe("escapeCategories", () => {
+    it("should escape string categories", () => {
+        const categories = escapeCategories(["cat1", "<cat2/>", "<cat3></cat3>"]);
+        expect(categories).toEqual(["cat1", "&lt;cat2/&gt;", "&lt;cat3&gt;&lt;/cat3&gt;"]);
     });
 
-    it('should escape object categories', () => {
-        const categories = escapeCategories([{
-            name: 'Status',
-            categories: ['cat1', '<cat2/>', '<cat3></cat3>']
-        }, {
-            name: '<span>Sales</span>',
-            categories: ['<div>sale1</div>', '<sale2/>', '<sale3></sale3>']
-        }]);
-        expect(categories).toEqual([{
-            name: 'Status',
-            categories: [
-                'cat1',
-                '&lt;cat2/&gt;',
-                '&lt;cat3&gt;&lt;/cat3&gt;'
-            ]
-        }, {
-            name: '&lt;span&gt;Sales&lt;/span&gt;',
-            categories: [
-                '&lt;div&gt;sale1&lt;/div&gt;',
-                '&lt;sale2/&gt;',
-                '&lt;sale3&gt;&lt;/sale3&gt;'
-            ]
-        }]);
+    it("should escape object categories", () => {
+        const categories = escapeCategories([
+            {
+                name: "Status",
+                categories: ["cat1", "<cat2/>", "<cat3></cat3>"],
+            },
+            {
+                name: "<span>Sales</span>",
+                categories: ["<div>sale1</div>", "<sale2/>", "<sale3></sale3>"],
+            },
+        ]);
+        expect(categories).toEqual([
+            {
+                name: "Status",
+                categories: ["cat1", "&lt;cat2/&gt;", "&lt;cat3&gt;&lt;/cat3&gt;"],
+            },
+            {
+                name: "&lt;span&gt;Sales&lt;/span&gt;",
+                categories: ["&lt;div&gt;sale1&lt;/div&gt;", "&lt;sale2/&gt;", "&lt;sale3&gt;&lt;/sale3&gt;"],
+            },
+        ]);
     });
 });

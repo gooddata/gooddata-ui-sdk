@@ -28,9 +28,7 @@
                         "displayForm": {
                             "uri": "/gdc/md/tce1r94inbj8t5z9dxnlojzrudpvybmf/obj/1252"
                         },
-                        "in": [
-                            "/gdc/md/tce1r94inbj8t5z9dxnlojzrudpvybmf/obj/1251/elements?id=169663"
-                        ]
+                        "in": ["/gdc/md/tce1r94inbj8t5z9dxnlojzrudpvybmf/obj/1251/elements?id=169663"]
                     }
                 }
             ]
@@ -38,14 +36,10 @@
         "resultSpec": {
             "dimensions": [
                 {
-                    "itemIdentifiers": [
-                        "17cb5f5555c54da782a4dc8c27fcfb78"
-                    ]
+                    "itemIdentifiers": ["17cb5f5555c54da782a4dc8c27fcfb78"]
                 },
                 {
-                    "itemIdentifiers": [
-                        "measureGroup"
-                    ]
+                    "itemIdentifiers": ["measureGroup"]
                 }
             ],
             "sorts": []

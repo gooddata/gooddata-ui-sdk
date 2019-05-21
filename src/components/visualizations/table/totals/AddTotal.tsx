@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { noop } from 'lodash';
+import * as React from "react";
+import * as classNames from "classnames";
+import { noop } from "lodash";
 
-import List from '@gooddata/goodstrap/lib/List/List';
-import Dropdown, { DropdownBody } from '@gooddata/goodstrap/lib/Dropdown/Dropdown';
-import { IMappingHeader } from '../../../../interfaces/MappingHeader';
+import List from "@gooddata/goodstrap/lib/List/List";
+import Dropdown, { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { IMappingHeader } from "../../../../interfaces/MappingHeader";
 
-import { TOTALS_TYPES_DROPDOWN_WIDTH } from '../TableVisualization';
-import { DropdownItem } from './DropdownItem';
-import { IAddTotalButtonProps, AddTotalButton } from './AddTotalButton';
-import { getAddTotalDropdownAlignPoints, shouldShowAddTotalButton } from './utils';
-import { IIndexedTotalItem } from '../../../../interfaces/Totals';
+import { TOTALS_TYPES_DROPDOWN_WIDTH } from "../TableVisualization";
+import { DropdownItem } from "./DropdownItem";
+import { IAddTotalButtonProps, AddTotalButton } from "./AddTotalButton";
+import { getAddTotalDropdownAlignPoints, shouldShowAddTotalButton } from "./utils";
+import { IIndexedTotalItem } from "../../../../interfaces/Totals";
 
 export interface IAddTotalProps {
     dataSource: object;
@@ -34,14 +34,14 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
         onDropdownOpenStateChanged: noop,
         onWrapperHover: noop,
         onButtonHover: noop,
-        onAddTotalsRow: noop
+        onAddTotalsRow: noop,
     };
 
     constructor(props: IAddTotalProps) {
         super(props);
 
         this.state = {
-            dropdownOpened: false
+            dropdownOpened: false,
         };
     }
 
@@ -60,19 +60,19 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
             onAddTotalsRow,
             onWrapperHover,
             onButtonHover,
-            addingMoreTotalsEnabled
+            addingMoreTotalsEnabled,
         } = this.props;
 
-        const isFirstColumn = (columnIndex === 0);
-        const isLastColumn = (columnIndex === headersCount - 1);
+        const isFirstColumn = columnIndex === 0;
+        const isLastColumn = columnIndex === headersCount - 1;
 
         const showAddTotalButton = shouldShowAddTotalButton(header, isFirstColumn, addingMoreTotalsEnabled);
         const dropdownAlignPoint = getAddTotalDropdownAlignPoints(isLastColumn);
 
-        const wrapperClassNames = classNames('indigo-totals-add-wrapper', {
-            'dropdown-active': this.state.dropdownOpened
+        const wrapperClassNames = classNames("indigo-totals-add-wrapper", {
+            "dropdown-active": this.state.dropdownOpened,
         });
-        const bodyClassName = classNames('indigo-totals-select-type-list');
+        const bodyClassName = classNames("indigo-totals-select-type-list");
 
         const wrapperEvents = {
             onMouseEnter: () => {
@@ -80,7 +80,7 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
             },
             onMouseLeave: () => {
                 onWrapperHover(columnIndex, false);
-            }
+            },
         };
 
         const addButtonProps: IAddTotalButtonProps = {
@@ -93,7 +93,7 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
             },
             onMouseLeave: () => {
                 onButtonHover(columnIndex, false);
-            }
+            },
         };
 
         const onOpenStateChanged = (opened: boolean) => this.onOpenStateChanged(columnIndex, opened);
@@ -121,7 +121,7 @@ export class AddTotal extends React.Component<IAddTotalProps, IAddTotalState> {
 
     public onOpenStateChanged(columnIndex: number, isOpened: boolean) {
         this.setState({
-            dropdownOpened: isOpened
+            dropdownOpened: isOpened,
         });
 
         this.props.onDropdownOpenStateChanged(columnIndex, isOpened);

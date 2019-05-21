@@ -1,46 +1,46 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationInput } from '@gooddata/typings';
-import { getQualifierObject } from './utils';
+import { VisualizationInput } from "@gooddata/typings";
+import { getQualifierObject } from "./utils";
 
 export function positiveAttributeFilter(
     qualifier: string,
     inValues: string[],
-    textFilter?: boolean
+    textFilter?: boolean,
 ): VisualizationInput.IPositiveAttributeFilter {
     return {
         positiveAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
             in: inValues,
-            textFilter
-        }
+            textFilter,
+        },
     };
 }
 
 export function negativeAttributeFilter(
     qualifier: string,
     notInValues: string[],
-    textFilter?: boolean
+    textFilter?: boolean,
 ): VisualizationInput.INegativeAttributeFilter {
     return {
         negativeAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
             notIn: notInValues,
-            textFilter
-        }
+            textFilter,
+        },
     };
 }
 
 export function absoluteDateFilter(
     dataSet: string,
     from?: string,
-    to?: string
+    to?: string,
 ): VisualizationInput.IAbsoluteDateFilter {
     return {
         absoluteDateFilter: {
             dataSet: getQualifierObject(dataSet),
             from,
-            to
-        }
+            to,
+        },
     };
 }
 
@@ -48,15 +48,15 @@ export function relativeDateFilter(
     dataSet: string,
     granularity: string,
     from?: number,
-    to?: number
+    to?: number,
 ): VisualizationInput.IRelativeDateFilter {
     return {
         relativeDateFilter: {
             dataSet: getQualifierObject(dataSet),
             granularity,
             from,
-            to
-        }
+            to,
+        },
     };
 }
 
@@ -76,8 +76,8 @@ export class AttributeFilterBuilder {
             positiveAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
                 in: values,
-                textFilter: true
-            }
+                textFilter: true,
+            },
         };
     }
 
@@ -92,8 +92,8 @@ export class AttributeFilterBuilder {
             negativeAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
                 notIn: values,
-                textFilter: true
-            }
+                textFilter: true,
+            },
         };
     }
 
@@ -108,8 +108,8 @@ export class AttributeFilterBuilder {
             positiveAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
                 in: uris,
-                textFilter: false
-            }
+                textFilter: false,
+            },
         };
     }
 
@@ -124,8 +124,8 @@ export class AttributeFilterBuilder {
             negativeAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
                 notIn: uris,
-                textFilter: false
-            }
+                textFilter: false,
+            },
         };
     }
 }

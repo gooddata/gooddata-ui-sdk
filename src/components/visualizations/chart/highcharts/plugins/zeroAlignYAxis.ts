@@ -8,15 +8,15 @@
  * Modified by binh.nguyen@gooddata.com to support min/max configuration
  */
 
-import get = require('lodash/get');
-import head = require('lodash/head');
-import last = require('lodash/last');
-import isNil = require('lodash/isNil');
-import partial = require('lodash/partial');
-import { getChartType } from '../helpers';
-import { isLineChart, isOneOfTypes } from '../../../utils/common';
-import { supportedDualAxesChartTypes } from '../../chartOptionsBuilder';
-import { dualAxesLabelFormatter } from './dualAxesLabelFormatter';
+import get = require("lodash/get");
+import head = require("lodash/head");
+import last = require("lodash/last");
+import isNil = require("lodash/isNil");
+import partial = require("lodash/partial");
+import { getChartType } from "../helpers";
+import { isLineChart, isOneOfTypes } from "../../../utils/common";
+import { supportedDualAxesChartTypes } from "../../chartOptionsBuilder";
+import { dualAxesLabelFormatter } from "./dualAxesLabelFormatter";
 
 export interface ICanon {
     min?: number;
@@ -82,7 +82,11 @@ export function createArrayFromRange(start: number, end: number, ticksNumber: nu
  * @param end
  * @param ticksNumber
  */
-export function createArrayFromRangeWithMiddleZero(start: number, end: number, ticksNumber: number): number[] {
+export function createArrayFromRangeWithMiddleZero(
+    start: number,
+    end: number,
+    ticksNumber: number,
+): number[] {
     const delta = Math.abs((end - start) / (ticksNumber - 1));
 
     const negatives = getRange(start, delta);
@@ -123,7 +127,7 @@ function getRange(targetNumber: number, delta: number): number[] {
 
 function minmaxCanon(minmax: IMinMaxInfo[]): ICanon[] {
     const canon: ICanon[] = [];
-    const extremes = ['min', 'max'];
+    const extremes = ["min", "max"];
 
     minmax.forEach((item: IMinMaxInfo, i: number) => {
         canon[i] = {};
@@ -148,17 +152,27 @@ function getMinMaxLookup(minmax: IMinMaxInfo[]): IMinMaxLookup {
     }, {});
 }
 
-function calculateMin(idx: number, minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex: number): number {
-    const fraction = !minmax[idx].max ?
-                        minmax[idx].min : // handle divide zero case
-                        minmax[idx].min / minmax[idx].max;
+function calculateMin(
+    idx: number,
+    minmax: IMinMaxInfo[],
+    minmaxLookup: IMinMaxLookup,
+    axisIndex: number,
+): number {
+    const fraction = !minmax[idx].max
+        ? minmax[idx].min // handle divide zero case
+        : minmax[idx].min / minmax[idx].max;
     return fraction * minmaxLookup[axisIndex].max;
 }
 
-function calculateMax(idx: number, minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex: number): number {
-    const fraction = !minmax[idx].min ?
-                    minmax[idx].max : // handle divide zero case
-                    minmax[idx].max / minmax[idx].min;
+function calculateMax(
+    idx: number,
+    minmax: IMinMaxInfo[],
+    minmaxLookup: IMinMaxLookup,
+    axisIndex: number,
+): number {
+    const fraction = !minmax[idx].min
+        ? minmax[idx].max // handle divide zero case
+        : minmax[idx].max / minmax[idx].min;
     return fraction * minmaxLookup[axisIndex].min;
 }
 
@@ -178,10 +192,13 @@ function calculateMax(idx: number, minmax: IMinMaxInfo[], minmaxLookup: IMinMaxL
  * @param calculateLimit
  * @param findExtreme
  */
-function getLimit(minmax: IMinMaxInfo[], minmaxLookup: IMinMaxLookup, axisIndex: number,
-                  getIndex: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
-                  calculateLimit: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
-                  findExtreme: (...params: any[]) => any // TODO: make the types more specific (FET-282)
+function getLimit(
+    minmax: IMinMaxInfo[],
+    minmaxLookup: IMinMaxLookup,
+    axisIndex: number,
+    getIndex: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+    calculateLimit: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
+    findExtreme: (...params: any[]) => any, // TODO: make the types more specific (FET-282)
 ): number {
     const isMinMaxConfig = isMinMaxConfigOnAnyAxis(minmax);
     if (isMinMaxConfig) {
@@ -200,28 +217,31 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
     let newMin = minmaxLookup[axisIndex].min;
     let newMax = minmaxLookup[axisIndex].max;
 
-    if (axesCanon[0].min <= 0 && axesCanon[0].max <= 0 &&
-        axesCanon[1].min <= 0 && axesCanon[1].max <= 0) {
+    if (axesCanon[0].min <= 0 && axesCanon[0].max <= 0 && axesCanon[1].min <= 0 && axesCanon[1].max <= 0) {
         // set 0 at top of chart
         // ['----', '-0--', '---0']
         newMax = Math.min(0, max);
-    } else if (axesCanon[0].min >= 0 && axesCanon[0].max >= 0 &&
-        axesCanon[1].min >= 0 && axesCanon[1].max >= 0) {
+    } else if (
+        axesCanon[0].min >= 0 &&
+        axesCanon[0].max >= 0 &&
+        axesCanon[1].min >= 0 &&
+        axesCanon[1].max >= 0
+    ) {
         // set 0 at bottom of chart
         // ['++++', '0+++', '++0+']
         newMin = Math.max(0, min);
     } else if (axesCanon[0].max === axesCanon[1].max) {
         newMin = getLimitPartial(
-                    (minmax: IMinMaxInfo[]) => (minmax[0].min <= minmax[1].min ? 0 : 1),
-                    calculateMin,
-                    (minOnAxes: number[]) => Math.min(minOnAxes[0], minOnAxes[1])
-                );
+            (minmax: IMinMaxInfo[]) => (minmax[0].min <= minmax[1].min ? 0 : 1),
+            calculateMin,
+            (minOnAxes: number[]) => Math.min(minOnAxes[0], minOnAxes[1]),
+        );
     } else if (axesCanon[0].min === axesCanon[1].min) {
         newMax = getLimitPartial(
-                    (minmax: IMinMaxInfo[]) => (minmax[0].max > minmax[1].max ? 0 : 1),
-                    calculateMax,
-                    (maxOnAxes: number[]) => Math.max(maxOnAxes[0], maxOnAxes[1])
-                );
+            (minmax: IMinMaxInfo[]) => (minmax[0].max > minmax[1].max ? 0 : 1),
+            calculateMax,
+            (maxOnAxes: number[]) => Math.max(maxOnAxes[0], maxOnAxes[1]),
+        );
     } else {
         // set 0 at center of chart
         // ['--++', '-0++', '--0+', '-00+', '++--', '++-0', '0+--', '0+-0']
@@ -234,7 +254,12 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
     return { min: newMin, max: newMax };
 }
 
-export function createTickPositions(min: number, max: number, minmax: IMinMaxInfo[], tickAmount: number): number[] {
+export function createTickPositions(
+    min: number,
+    max: number,
+    minmax: IMinMaxInfo[],
+    tickAmount: number,
+): number[] {
     if (isMinMaxCoverZero(min, max)) {
         if (isMinMaxConfig(minmax, 0) && isMinMaxConfig(minmax, 1)) {
             // disable zero-align y axis if both min/max are set to axes
@@ -258,9 +283,15 @@ export function getTickAmount(tickPosition: number[]): number {
     return length;
 }
 
-function handleInvalidMinMax(axisIndex: number, min: number, max: number,
-                             dataMin: number, dataMax: number,
-                             minmax: IMinMaxInfo[], isLineChartType: boolean) {
+function handleInvalidMinMax(
+    axisIndex: number,
+    min: number,
+    max: number,
+    dataMin: number,
+    dataMax: number,
+    minmax: IMinMaxInfo[],
+    isLineChartType: boolean,
+) {
     if (isNil(min) || isNil(max)) {
         // mark current axis invalid
         minmax[axisIndex] = null;
@@ -292,18 +323,25 @@ export function getTickPositioner() {
 
     return function(min: number, max: number) {
         const chart = this.chart;
-        const chartType = getChartType(chart);
-        const isLineChartType = isLineChart(chartType);
         const currentAxisIndex = this.options.index;
+        const defaultChartType = getChartType(chart);
+        const seriesChartType = get(chart, `series.${currentAxisIndex}.type`);
+        const isLineChartType = isLineChart(seriesChartType) || isLineChart(defaultChartType);
 
-        let tickPositions = handleInvalidMinMax(currentAxisIndex, min, max,
-                                                this.dataMin, this.dataMax,
-                                                minmax, isLineChartType);
+        let tickPositions = handleInvalidMinMax(
+            currentAxisIndex,
+            min,
+            max,
+            this.dataMin,
+            this.dataMax,
+            minmax,
+            isLineChartType,
+        );
         if (tickPositions) {
             return tickPositions;
         }
 
-        const yAxes = chart.axes.filter((axis: any) => axis.coll === 'yAxis');
+        const yAxes = chart.axes.filter((axis: any) => axis.coll === "yAxis");
         for (const yAxisIndex in yAxes) {
             if (yAxes.hasOwnProperty(yAxisIndex)) {
                 const axis = yAxes[yAxisIndex];
@@ -311,19 +349,20 @@ export function getTickPositioner() {
                     // this axis could be not initiated (undefined) or could be invalid (null)
                     const isOtherAxisInvalid = minmax[yAxisIndex] === null;
 
-                    const isRangeWithMiddleZero = isOtherAxisInvalid &&
+                    const isRangeWithMiddleZero =
+                        isOtherAxisInvalid &&
                         !isLineChartType && // line chart does not need middle zero
                         isMinMaxCoverZero(min, max);
-                    return isRangeWithMiddleZero ?
-                        createArrayFromRangeWithMiddleZero(min, max, this.tickAmount) :
-                        createArrayFromRange(min, max, this.tickAmount);
+                    return isRangeWithMiddleZero
+                        ? createArrayFromRangeWithMiddleZero(min, max, this.tickAmount)
+                        : createArrayFromRange(min, max, this.tickAmount);
                 }
                 minmax[yAxisIndex] = {
                     id: axis.options.index,
                     min: axis.min,
                     max: axis.max,
                     isSetMin: axis.userOptions.min !== undefined,
-                    isSetMax: axis.userOptions.max !== undefined
+                    isSetMax: axis.userOptions.max !== undefined,
                 };
             }
         }
@@ -345,19 +384,22 @@ export function zeroAlignYAxis(Highcharts: any) {
             return;
         }
 
-        const axes = get(chart, 'axes', []);
-        const multiple = (axes.length > 2 ? true : false); // 1 X axis and 2 Y axes
+        const axes = get(chart, "axes", []);
+        const multiple = axes.length > 2 ? true : false; // 1 X axis and 2 Y axes
         if (!multiple) {
             return;
         }
 
         const tickPositioner = getTickPositioner();
-        axes
-            .filter(({ coll }: any) => coll === 'yAxis')
-            .forEach((axis: any) => axis.update({
-                tickPositioner,
-                labels: { formatter: dualAxesLabelFormatter }
-            }, false));
+        axes.filter(({ coll }: any) => coll === "yAxis").forEach((axis: any) =>
+            axis.update(
+                {
+                    tickPositioner,
+                    labels: { formatter: dualAxesLabelFormatter },
+                },
+                false,
+            ),
+        );
 
         chart.redraw();
         axes[0].update();

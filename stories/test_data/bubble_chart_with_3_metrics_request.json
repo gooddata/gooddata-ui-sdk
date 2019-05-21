@@ -43,9 +43,7 @@
                     "itemIdentifiers": []
                 },
                 {
-                    "itemIdentifiers": [
-                        "measureGroup"
-                    ]
+                    "itemIdentifiers": ["measureGroup"]
                 }
             ],
             "sorts": []

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { OnOpenedChange, IOnOpenedChangeParams } from './MenuSharedTypes';
+import * as React from "react";
+import { OnOpenedChange, IOnOpenedChangeParams } from "./MenuSharedTypes";
 
 export interface IMenuStateConfig {
     opened?: boolean;
@@ -9,12 +9,7 @@ export interface IMenuStateConfig {
 }
 
 export interface IMenuStateProps extends IMenuStateConfig {
-    children: (
-        props: {
-            opened: boolean;
-            onOpenedChange: OnOpenedChange;
-        }
-    ) => React.ReactNode;
+    children: (props: { opened: boolean; onOpenedChange: OnOpenedChange }) => React.ReactNode;
 }
 
 export interface IMenuStateState {
@@ -23,27 +18,27 @@ export interface IMenuStateState {
 
 export default class MenuState extends React.Component<IMenuStateProps, IMenuStateState> {
     public static defaultProps = {
-        defaultOpened: false
+        defaultOpened: false,
     };
 
     constructor(props: IMenuStateProps) {
         super(props);
 
         this.state = {
-            opened: this.isControlled() ? this.props.opened : this.props.defaultOpened
+            opened: this.isControlled() ? this.props.opened : this.props.defaultOpened,
         };
     }
 
     public render() {
         return this.props.children({
             opened: this.isControlled() ? this.props.opened : this.state.opened,
-            onOpenedChange: this.onOpenedChange
+            onOpenedChange: this.onOpenedChange,
         });
     }
 
     private isControlled = (): boolean => {
-        return typeof this.props.opened === 'boolean';
-    }
+        return typeof this.props.opened === "boolean";
+    };
 
     private onOpenedChange = (openedChangeParams: IOnOpenedChangeParams) => {
         this.setState({ opened: openedChangeParams.opened }, () => {
@@ -51,5 +46,5 @@ export default class MenuState extends React.Component<IMenuStateProps, IMenuSta
                 this.props.onOpenedChange(openedChangeParams);
             }
         });
-    }
+    };
 }

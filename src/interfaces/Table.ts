@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import { ISeparators } from '@gooddata/numberjs';
+import { AFM } from "@gooddata/typings";
+import { ISeparators } from "@gooddata/numberjs";
 
 export interface IAttributeCell {
     uri: string;
@@ -12,7 +12,7 @@ export interface IAttributeCellForDrilling {
     name: string;
 }
 
-export type MeasureCell = string | null;
+export type MeasureCell = number | string | null;
 
 export type TableCell = IAttributeCell | MeasureCell;
 
@@ -22,9 +22,9 @@ export type TableRow = TableCell[];
 
 export type TableRowForDrilling = TableCellForDrilling[];
 
-export type Align = 'left' | 'right';
+export type Align = "left" | "right";
 
-export type SortDir = 'asc' | 'desc';
+export type SortDir = "asc" | "desc";
 
 export interface ISortInfo {
     sortBy: number;
@@ -44,13 +44,13 @@ export interface ISortObj {
 
 export interface IAlignPoint {
     align: string;
-    offset: { x: number, y: number };
+    offset: { x: number; y: number };
 }
 
 export interface ITableCellStyle {
     backgroundColor?: string;
     color?: string;
-    fontWeight?: React.CSSProperties['fontWeight'];
+    fontWeight?: React.CSSProperties["fontWeight"];
 }
 
 export interface ITableCellStyleAndFormattedValue {
@@ -92,9 +92,9 @@ export interface ITotalsDataSource {
     getObjectAt: (index: number) => ITotalTypeWithTitle;
 }
 
-export type OnSortChangeWithDir  = (dir: SortDir, e: any) => void;
+export type OnSortChangeWithDir = (dir: SortDir, e: any) => void;
 
-export type OnSortChangeWithItem  = (sortItem: AFM.SortItem) => void;
+export type OnSortChangeWithItem = (sortItem: AFM.SortItem) => void;
 
 export interface ITableTransformationConfig {
     rowsPerPage?: number;

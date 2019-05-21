@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-$gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
-@import './_settings.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/typo-mixins.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/Overlay.scss';
-@import '~@gooddata/goodstrap/lib/core/styles/Spinner.scss';
-@import '~@gooddata/goodstrap/lib/Button/styles/Button.scss';
-@import '~@gooddata/goodstrap/lib/List/styles/List.scss';
+@import "./_settings.scss";
+@import "~@gooddata/goodstrap/lib/core/styles/typo-mixins.scss";
+@import "~@gooddata/goodstrap/lib/core/styles/Overlay.scss";
+@import "~@gooddata/goodstrap/lib/core/styles/Spinner.scss";
+@import "~@gooddata/goodstrap/lib/Button/styles/Button.scss";
+@import "~@gooddata/goodstrap/lib/List/styles/List.scss";
 
 .gd-attribute-filter {
     display: inline-block;
@@ -36,5 +36,4 @@ $gdc-goodstrap-basepath: '~@gooddata/goodstrap/lib/';
         text-align: right;
         margin-top: 8px;
     }
-
 }

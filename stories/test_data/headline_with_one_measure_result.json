@@ -1,8 +1,6 @@
 {
     "executionResult": {
-        "data": [
-            "9011389.956"
-        ],
+        "data": ["9011389.956"],
         "headerItems": [
             [
                 [
@@ -16,15 +14,9 @@
             ]
         ],
         "paging": {
-            "count": [
-                1
-            ],
-            "offset": [
-                0
-            ],
-            "total": [
-                1
-            ]
+            "count": [1],
+            "offset": [0],
+            "total": [1]
         }
     }
 }

@@ -1,37 +1,32 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import cloneDeep = require('lodash/cloneDeep');
-import noop = require('lodash/noop');
-import { testUtils } from '@gooddata/js-utils';
-import { SDK, ApiResponseError } from '@gooddata/gooddata-js';
-import {
-    Table,
-    BaseChart,
-    LoadingComponent,
-    ErrorComponent
-} from '../../tests/mocks';
-import { visualizationObjects, visualizationClasses } from '../../../../__mocks__/fixtures';
+import * as React from "react";
+import { mount } from "enzyme";
+import cloneDeep = require("lodash/cloneDeep");
+import noop = require("lodash/noop");
+import { testUtils } from "@gooddata/js-utils";
+import { SDK, ApiResponseError } from "@gooddata/gooddata-js";
+import { Table, BaseChart, LoadingComponent, ErrorComponent } from "../../tests/mocks";
+import { visualizationObjects, visualizationClasses } from "../../../../__mocks__/fixtures";
 
-import { AFM, VisualizationObject, VisualizationClass } from '@gooddata/typings';
-import { Visualization, IntlVisualization, VisualizationWrapped } from '../Visualization';
-import { ErrorStates } from '../../../constants/errorStates';
-import { SortableTable } from '../../core/SortableTable';
-import { PivotTable } from '../../core/PivotTable';
-import { IntlWrapper } from '../../core/base/IntlWrapper';
-import { VisualizationTypes } from '../../../constants/visualizationTypes';
-import { RuntimeError } from '../../../errors/RuntimeError';
-import { createIntlMock } from '../../visualizations/utils/intlUtils';
-import * as HttpStatusCodes from 'http-status-codes';
-import { IColorPalette } from '../../../interfaces/Config';
-import { clearSdkCache } from '../../../helpers/sdkCache';
+import { AFM, VisualizationObject, VisualizationClass } from "@gooddata/typings";
+import { Visualization, IntlVisualization, VisualizationWrapped } from "../Visualization";
+import { ErrorStates } from "../../../constants/errorStates";
+import { SortableTable } from "../../core/SortableTable";
+import { PivotTable } from "../../core/PivotTable";
+import { IntlWrapper } from "../../core/base/IntlWrapper";
+import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { RuntimeError } from "../../../errors/RuntimeError";
+import { createIntlMock } from "../../visualizations/utils/intlUtils";
+import * as HttpStatusCodes from "http-status-codes";
+import { IColorPalette } from "../../../interfaces/Config";
+import { clearSdkCache } from "../../../helpers/sdkCache";
 
-const projectId = 'myproject';
+const projectId = "myproject";
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;
 const TABLE_URI = `/gdc/md/${projectId}/obj/2`;
 const TREEMAP_URI = `/gdc/md/${projectId}/obj/3`;
-const CHART_IDENTIFIER = 'chart';
-const TABLE_IDENTIFIER = 'table';
+const CHART_IDENTIFIER = "chart";
+const TABLE_IDENTIFIER = "table";
 
 const SLOW = 20;
 const FAST = 5;
@@ -42,20 +37,20 @@ const sdk = {
     execution: {
         getPartialExecutionResult: () => false,
         executeAfm: () => Promise.resolve(),
-        getExecutionResponse: () => Promise.resolve()
+        getExecutionResponse: () => Promise.resolve(),
     },
     config: {
         setJsPackage: () => false,
-        setRequestHeader: () => false
+        setRequestHeader: () => false,
     },
     project: {
-        getColorPaletteWithGuids: jest.fn(() => (Promise.resolve())),
-        getFeatureFlags: jest.fn(() => (Promise.resolve({})))
-    }
+        getColorPaletteWithGuids: jest.fn(() => Promise.resolve()),
+        getFeatureFlags: jest.fn(() => Promise.resolve({})),
+    },
 };
 
 function getResponse(response: string, delay: number): Promise<string> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         setTimeout(() => resolve(response), delay);
     });
 }
@@ -63,9 +58,13 @@ function getResponse(response: string, delay: number): Promise<string> {
 function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVisualizationObject> {
     const visObj = visualizationObjects.find(chart => chart.visualizationObject.meta.uri === uri);
     if (!visObj) {
-        throw new ApiResponseError(`Unknown uri ${uri}`, {
-            status: HttpStatusCodes.NOT_FOUND
-        }, {});
+        throw new ApiResponseError(
+            `Unknown uri ${uri}`,
+            {
+                status: HttpStatusCodes.NOT_FOUND,
+            },
+            {},
+        );
     }
 
     return Promise.resolve(visObj.visualizationObject);
@@ -73,9 +72,11 @@ function fetchVisObject(_sdk: SDK, uri: string): Promise<VisualizationObject.IVi
 
 function fetchVisualizationClass(
     _sdk: SDK,
-    visualizationClassUri: string
+    visualizationClassUri: string,
 ): Promise<VisualizationClass.IVisualizationClass> {
-    const visClass = visualizationClasses.find(vc => vc.visualizationClass.meta.uri === visualizationClassUri);
+    const visClass = visualizationClasses.find(
+        vc => vc.visualizationClass.meta.uri === visualizationClassUri,
+    );
 
     if (!visClass) {
         throw new Error(`Unknown uri ${visualizationClassUri}`);
@@ -97,11 +98,11 @@ function uriResolver(_sdk: SDK, _projectId: string, uri: string, identifier: str
         return getResponse(TREEMAP_URI, FAST);
     }
 
-    return Promise.reject('Unknown identifier');
+    return Promise.reject("Unknown identifier");
 }
 
-describe('Visualization', () => {
-    it('should construct and provide intl', () => {
+describe("Visualization", () => {
+    it("should construct and provide intl", () => {
         const props = {
             sdk,
             projectId,
@@ -109,12 +110,10 @@ describe('Visualization', () => {
             fetchVisualizationClass,
             uriResolver,
             BaseChartComponent: BaseChart,
-            identifier: CHART_IDENTIFIER
+            identifier: CHART_IDENTIFIER,
         };
 
-        const wrapper = mount(
-            <Visualization {...props as any} />
-        );
+        const wrapper = mount(<Visualization {...props as any} />);
 
         return testUtils.delay(FAST + 1).then(() => {
             expect(wrapper.find(IntlWrapper).length).toBe(1);
@@ -123,14 +122,14 @@ describe('Visualization', () => {
     });
 });
 
-describe('VisualizationWrapped', () => {
+describe("VisualizationWrapped", () => {
     afterEach(() => {
         clearSdkCache();
     });
 
     const intl = createIntlMock();
 
-    it('should render chart', () => {
+    it("should render chart", () => {
         const props = {
             sdk,
             projectId,
@@ -139,12 +138,10 @@ describe('VisualizationWrapped', () => {
             uriResolver,
             intl,
             BaseChartComponent: BaseChart,
-            identifier: CHART_IDENTIFIER
+            identifier: CHART_IDENTIFIER,
         };
 
-        const wrapper = mount(
-            <Visualization {...props as any} />
-        );
+        const wrapper = mount(<Visualization {...props as any} />);
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
@@ -152,7 +149,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should render SortableTable', () => {
+    it("should render SortableTable", () => {
         const props = {
             sdk,
             projectId,
@@ -160,65 +157,64 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             intl,
-            identifier: TABLE_IDENTIFIER
+            identifier: TABLE_IDENTIFIER,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         const expectedResultSpec: AFM.IResultSpec = {
             dimensions: [
                 {
-                    itemIdentifiers: ['a1'],
+                    itemIdentifiers: ["a1"],
                     totals: [
                         {
-                            attributeIdentifier: 'a1',
-                            measureIdentifier: 'm1',
-                            type: 'avg'
-                        }
-                    ]
+                            attributeIdentifier: "a1",
+                            measureIdentifier: "m1",
+                            type: "avg",
+                        },
+                    ],
                 },
                 {
-                    itemIdentifiers: ['measureGroup']
-                }
+                    itemIdentifiers: ["measureGroup"],
+                },
             ],
             sorts: [
                 {
                     attributeSortItem: {
-                        attributeIdentifier: 'a1', direction: 'asc'
-                    }
-                }
-            ]
+                        attributeIdentifier: "a1",
+                        direction: "asc",
+                    },
+                },
+            ],
         };
 
         const expectedTotals: VisualizationObject.IVisualizationTotal[] = [
             {
-                type: 'avg',
-                alias: 'average',
-                measureIdentifier: 'm1',
-                attributeIdentifier: 'a1'
-            }
+                type: "avg",
+                alias: "average",
+                measureIdentifier: "m1",
+                attributeIdentifier: "a1",
+            },
         ];
 
         return testUtils.delay(SLOW).then(() => {
             wrapper.update();
             expect(wrapper.find(SortableTable).length).toBe(1);
-            expect(wrapper.state('type')).toEqual(VisualizationTypes.TABLE);
-            expect(wrapper.state('dataSource')).not.toBeNull();
-            expect(wrapper.state('resultSpec')).toEqual(expectedResultSpec);
-            expect(wrapper.state('totals')).toEqual(expectedTotals);
+            expect(wrapper.state("type")).toEqual(VisualizationTypes.TABLE);
+            expect(wrapper.state("dataSource")).not.toBeNull();
+            expect(wrapper.state("resultSpec")).toEqual(expectedResultSpec);
+            expect(wrapper.state("totals")).toEqual(expectedTotals);
         });
     });
 
-    it('should render PivotTable if FF enablePivot is set', () => {
+    it("should render PivotTable if FF enablePivot is set", () => {
         const sdkWithEnablePivot = {
             ...sdk,
             clone: () => sdkWithEnablePivot,
             project: {
                 ...sdk.project,
-                getFeatureFlags: jest.fn(() => Promise.resolve({ enablePivot: true }))
-            }
+                getFeatureFlags: jest.fn(() => Promise.resolve({ enablePivot: true })),
+            },
         };
 
         const props = {
@@ -228,58 +224,57 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             intl,
-            identifier: TABLE_IDENTIFIER
+            identifier: TABLE_IDENTIFIER,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         const expectedResultSpec: AFM.IResultSpec = {
             dimensions: [
                 {
-                    itemIdentifiers: ['a1'],
+                    itemIdentifiers: ["a1"],
                     totals: [
                         {
-                            attributeIdentifier: 'a1',
-                            measureIdentifier: 'm1',
-                            type: 'avg'
-                        }
-                    ]
+                            attributeIdentifier: "a1",
+                            measureIdentifier: "m1",
+                            type: "avg",
+                        },
+                    ],
                 },
                 {
-                    itemIdentifiers: ['measureGroup']
-                }
+                    itemIdentifiers: ["measureGroup"],
+                },
             ],
             sorts: [
                 {
                     attributeSortItem: {
-                        attributeIdentifier: 'a1', direction: 'asc'
-                    }
-                }
-            ]
+                        attributeIdentifier: "a1",
+                        direction: "asc",
+                    },
+                },
+            ],
         };
 
         const expectedTotals: VisualizationObject.IVisualizationTotal[] = [
             {
-                type: 'avg',
-                alias: 'average',
-                measureIdentifier: 'm1',
-                attributeIdentifier: 'a1'
-            }
+                type: "avg",
+                alias: "average",
+                measureIdentifier: "m1",
+                attributeIdentifier: "a1",
+            },
         ];
 
         return testUtils.delay(SLOW).then(() => {
             wrapper.update();
             expect(wrapper.find(PivotTable).length).toBe(1);
-            expect(wrapper.state('type')).toEqual(VisualizationTypes.PIVOT_TABLE);
-            expect(wrapper.state('dataSource')).not.toBeNull();
-            expect(wrapper.state('resultSpec')).toEqual(expectedResultSpec);
-            expect(wrapper.state('totals')).toEqual(expectedTotals);
+            expect(wrapper.state("type")).toEqual(VisualizationTypes.PIVOT_TABLE);
+            expect(wrapper.state("dataSource")).not.toBeNull();
+            expect(wrapper.state("resultSpec")).toEqual(expectedResultSpec);
+            expect(wrapper.state("totals")).toEqual(expectedTotals);
         });
     });
 
-    it('should render with uri', () => {
+    it("should render with uri", () => {
         const props = {
             sdk,
             projectId,
@@ -288,12 +283,10 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             intl,
-            BaseChartComponent: BaseChart
+            BaseChartComponent: BaseChart,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
@@ -301,7 +294,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should trigger error in case of given uri is not valid', (done) => {
+    it("should trigger error in case of given uri is not valid", done => {
         const errorHandler = (error: RuntimeError) => {
             expect(error.getMessage()).toEqual(ErrorStates.NOT_FOUND);
             done();
@@ -310,18 +303,16 @@ describe('VisualizationWrapped', () => {
         const props = {
             sdk,
             projectId,
-            uri: '/invalid/url',
+            uri: "/invalid/url",
             fetchVisObject,
             onError: errorHandler,
-            intl
+            intl,
         };
 
-        mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        mount(<VisualizationWrapped {...props as any} />);
     });
 
-    it('should handle slow requests', () => {
+    it("should handle slow requests", () => {
         // Response from first request comes back later that from the second one
         const props = {
             sdk,
@@ -332,12 +323,10 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         wrapper.setProps({ identifier: TABLE_IDENTIFIER });
 
@@ -347,15 +336,14 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should handle set state on unmounted component', () => {
-
+    it("should handle set state on unmounted component", () => {
         const mutatedSdk = {
             ...sdk,
             clone: () => mutatedSdk,
             project: {
                 ...sdk.project,
-                getColorPaletteWithGuids: jest.fn()
-            }
+                getColorPaletteWithGuids: jest.fn(),
+            },
         };
 
         const props = {
@@ -367,14 +355,12 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
-        const spy = jest.spyOn(wrapper.instance(), 'setState');
+        const spy = jest.spyOn(wrapper.instance(), "setState");
         wrapper.setProps({ sdk: mutatedSdk });
         // Would throw an error if not handled properly
         wrapper.unmount();
@@ -385,7 +371,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass LoadingComponent and ErrorComponent to TableComponent', () => {
+    it("should pass LoadingComponent and ErrorComponent to TableComponent", () => {
         const props = {
             sdk,
             projectId,
@@ -397,12 +383,10 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
@@ -413,7 +397,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass LoadingComponent and ErrorComponent to BaseChart', () => {
+    it("should pass LoadingComponent and ErrorComponent to BaseChart", () => {
         const props = {
             sdk,
             projectId,
@@ -425,12 +409,10 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
@@ -441,9 +423,9 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass exportTitle, projectId and onExportReady to BaseChart', () => {
+    it("should pass exportTitle, projectId and onExportReady to BaseChart", () => {
         const exportTitle = visualizationObjects.find(
-            chart => chart.visualizationObject.meta.uri === CHART_URI
+            chart => chart.visualizationObject.meta.uri === CHART_URI,
         ).visualizationObject.meta.title;
         const onExportReady = noop;
         const props = {
@@ -458,12 +440,10 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             intl,
-            onExportReady
+            onExportReady,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any} />
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         return testUtils.delay(SLOW + 1).then(() => {
             wrapper.update();
@@ -475,7 +455,7 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should pass mdObject and properties to BaseChart', () => {
+    it("should pass mdObject and properties to BaseChart", () => {
         const props = {
             sdk,
             projectId,
@@ -487,22 +467,20 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         const mdObjectContent = visualizationObjects.find(
-            chart => chart.visualizationObject.meta.uri === CHART_URI
+            chart => chart.visualizationObject.meta.uri === CHART_URI,
         ).visualizationObject.content;
         const mdObjectProperties = JSON.parse(mdObjectContent.properties).controls;
 
         const expectedMdObject = {
             mdObject: mdObjectContent,
             ...mdObjectProperties,
-            colorPalette: null
+            colorPalette: null,
         };
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -513,11 +491,11 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    it('should override properties from mdObject by property config', () => {
+    it("should override properties from mdObject by property config", () => {
         const customConfig = {
             grid: {
-                enabled: false
-            }
+                enabled: false,
+            },
         };
 
         const props = {
@@ -532,21 +510,19 @@ describe('VisualizationWrapped', () => {
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any}/>
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         const mdObjectContent = visualizationObjects.find(
-            chart => chart.visualizationObject.meta.uri === CHART_URI
+            chart => chart.visualizationObject.meta.uri === CHART_URI,
         ).visualizationObject.content;
 
         const expectedMdObject = {
             mdObject: mdObjectContent,
             ...customConfig,
-            colorPalette: null as any
+            colorPalette: null as any,
         };
 
         return testUtils.delay(SLOW + 1).then(() => {
@@ -557,26 +533,27 @@ describe('VisualizationWrapped', () => {
         });
     });
 
-    describe('Color palette', () => {
+    describe("Color palette", () => {
         const expectedColorPalette: IColorPalette = [
             {
-                guid: '0',
+                guid: "0",
                 fill: {
                     r: 195,
                     g: 49,
-                    b: 73
-                }
-            }, {
-                guid: '1',
+                    b: 73,
+                },
+            },
+            {
+                guid: "1",
                 fill: {
                     r: 168,
                     g: 194,
-                    b: 86
-                }
-            }
+                    b: 86,
+                },
+            },
         ];
 
-        it('should render BaseChart with colors prop', () => {
+        it("should render BaseChart with colors prop", () => {
             const props = {
                 sdk,
                 projectId,
@@ -584,19 +561,17 @@ describe('VisualizationWrapped', () => {
                 BaseChartComponent: BaseChart,
                 TableComponent: Table,
                 config: {
-                    colors: ['rgb(195, 49, 73)', 'rgb(168, 194, 86)']
+                    colors: ["rgb(195, 49, 73)", "rgb(168, 194, 86)"],
                 },
                 LoadingComponent,
                 ErrorComponent,
                 fetchVisObject,
                 fetchVisualizationClass,
                 uriResolver,
-                intl
+                intl,
             };
 
-            const wrapper = mount(
-                <VisualizationWrapped {...props as any}/>
-            );
+            const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
             return testUtils.delay(SLOW + 1).then(() => {
                 wrapper.update();
@@ -605,14 +580,14 @@ describe('VisualizationWrapped', () => {
             });
         });
 
-        it('should render BaseChart with color palette prop', () => {
+        it("should render BaseChart with color palette prop", () => {
             const mutatedSdk = {
                 ...sdk,
                 clone: () => mutatedSdk,
                 project: {
                     ...sdk.project,
-                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette)
-                }
+                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => expectedColorPalette),
+                },
             };
 
             const props = {
@@ -622,19 +597,17 @@ describe('VisualizationWrapped', () => {
                 BaseChartComponent: BaseChart,
                 TableComponent: Table,
                 config: {
-                    colorPalette: expectedColorPalette
+                    colorPalette: expectedColorPalette,
                 },
                 LoadingComponent,
                 ErrorComponent,
                 fetchVisObject,
                 fetchVisualizationClass,
                 uriResolver,
-                intl
+                intl,
             };
 
-            const wrapper = mount(
-                <VisualizationWrapped {...props as any}/>
-            );
+            const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
             return testUtils.delay(SLOW + 1).then(() => {
                 wrapper.update();
@@ -644,14 +617,16 @@ describe('VisualizationWrapped', () => {
             });
         });
 
-        it('should get palette from sdk and render BaseChart with this palette when no colors/palette in props', () => {
+        it("should get palette from sdk and render BaseChart with this palette when no colors/palette in props", () => {
             const mutatedSdk = {
                 ...sdk,
                 clone: () => mutatedSdk,
                 project: {
                     ...sdk.project,
-                    getColorPaletteWithGuids: jest.fn().mockImplementation(() => Promise.resolve(expectedColorPalette))
-                }
+                    getColorPaletteWithGuids: jest
+                        .fn()
+                        .mockImplementation(() => Promise.resolve(expectedColorPalette)),
+                },
             };
 
             const props = {
@@ -664,12 +639,10 @@ describe('VisualizationWrapped', () => {
                 fetchVisObject,
                 fetchVisualizationClass,
                 uriResolver,
-                intl
+                intl,
             };
 
-            const wrapper = mount(
-                <VisualizationWrapped {...props as any}/>
-            );
+            const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
             return testUtils.delay(SLOW + 1).then(() => {
                 wrapper.update();
@@ -679,14 +652,14 @@ describe('VisualizationWrapped', () => {
             });
         });
 
-        it('should not call getColorPalette with unchanged SDK', () => {
+        it("should not call getColorPalette with unchanged SDK", () => {
             const mutatedSdk = {
                 ...sdk,
                 clone: () => cloneDeep(mutatedSdk),
                 project: {
                     ...sdk.project,
-                    getColorPaletteWithGuids: jest.fn(() => (Promise.resolve()))
-                }
+                    getColorPaletteWithGuids: jest.fn(() => Promise.resolve()),
+                },
             };
 
             const props = {
@@ -699,12 +672,10 @@ describe('VisualizationWrapped', () => {
                 fetchVisObject,
                 fetchVisualizationClass,
                 uriResolver,
-                intl
+                intl,
             };
 
-            const wrapper = mount(
-                <VisualizationWrapped {...props as any} />
-            );
+            const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
             return testUtils.delay(FAST + 1).then(() => {
                 wrapper.update();
@@ -712,17 +683,17 @@ describe('VisualizationWrapped', () => {
                 wrapper.setProps({
                     config: {
                         grid: {
-                            enabled: false
-                        }
+                            enabled: false,
+                        },
                     },
-                    sdk: mutatedSdk
+                    sdk: mutatedSdk,
                 });
                 expect(mutatedSdk.project.getColorPaletteWithGuids).toHaveBeenCalledTimes(1);
             });
         });
     });
 
-    it('should add default sorting to the Treemap', () => {
+    it("should add default sorting to the Treemap", () => {
         const props = {
             sdk,
             projectId,
@@ -731,12 +702,10 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             intl,
-            BaseChartComponent: BaseChart
+            BaseChartComponent: BaseChart,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any} />
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         return testUtils.delay(FAST + 1).then(() => {
             wrapper.update();
@@ -744,30 +713,40 @@ describe('VisualizationWrapped', () => {
             expect(BaseChartElement.props.resultSpec).toEqual({
                 dimensions: [
                     {
-                        itemIdentifiers: ['02b7736f6bef48b1849798e430d837df', 'bc5257e06a9342ec99854bd1a53f3262']
+                        itemIdentifiers: [
+                            "02b7736f6bef48b1849798e430d837df",
+                            "bc5257e06a9342ec99854bd1a53f3262",
+                        ],
                     },
                     {
-                        itemIdentifiers: ['measureGroup']
-                    }
+                        itemIdentifiers: ["measureGroup"],
+                    },
                 ],
                 sorts: [
                     {
-                        attributeSortItem: { attributeIdentifier: '02b7736f6bef48b1849798e430d837df', direction: 'asc' }
+                        attributeSortItem: {
+                            attributeIdentifier: "02b7736f6bef48b1849798e430d837df",
+                            direction: "asc",
+                        },
                     },
                     {
                         measureSortItem: {
-                            direction: 'desc',
+                            direction: "desc",
                             locators: [
-                                { measureLocatorItem: { measureIdentifier: 'b5a12d1bf094469d9b4e7d5d2bb87287' } }
-                            ]
-                        }
-                    }
-                ]
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: "b5a12d1bf094469d9b4e7d5d2bb87287",
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
             });
         });
     });
 
-    it('should call getFeatureFlags', async () => {
+    it("should call getFeatureFlags", async () => {
         const getFeatureFlags = jest.fn(() => Promise.resolve({}));
 
         const props = {
@@ -781,48 +760,13 @@ describe('VisualizationWrapped', () => {
             fetchVisualizationClass,
             uriResolver,
             getFeatureFlags,
-            intl
+            intl,
         };
 
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any} />
-        );
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
 
         await testUtils.delay(SLOW + 1);
         wrapper.update();
         expect(getFeatureFlags).toHaveBeenCalledTimes(1);
-    });
-
-    it('should pass feature flag enableGrouping to pivotTable', async () => {
-        const getFeatureFlags = jest.fn(() => Promise.resolve({ enablePivot: true, enablePivotGrouping: true }));
-        const pivotTableComponent = jest.fn().mockReturnValue('pivot');
-
-        const props = {
-            sdk,
-            projectId,
-            identifier: TABLE_IDENTIFIER,
-            BaseChartComponent: BaseChart,
-            LoadingComponent,
-            ErrorComponent,
-            PivotTableComponent: pivotTableComponent,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            getFeatureFlags,
-            intl
-        };
-
-        const wrapper = mount(
-            <VisualizationWrapped {...props as any} />
-        );
-
-        await testUtils.delay(SLOW + 1);
-        wrapper.update();
-        expect(pivotTableComponent).toBeCalledWith(
-            expect.objectContaining({
-                groupRows: true
-            }),
-            {}
-        );
     });
 });

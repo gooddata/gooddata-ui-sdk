@@ -1,29 +1,36 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { ComboChart, VisualizationTypes } from '../../src';
-import { onErrorHandler } from '../mocks';
+import { ComboChart, VisualizationTypes } from "../../src";
+import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
     MEASURE_1,
     MEASURE_2,
+    MEASURE_3,
+    MEASURE_4,
     ATTRIBUTE_1_SORT_ITEM,
     MEASURE_2_SORT_ITEM,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
-    ARITHMETIC_MEASURE_USING_ARITHMETIC
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
-import { CUSTOM_COLOR_PALETTE_CONFIG } from '../data/configProps';
+    ARITHMETIC_MEASURE_USING_ARITHMETIC,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
+import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
+import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
+import { COMBO_SUPPORTED_CHARTS } from "../../src/components/visualizations/chart/chartOptions/comboChartOptions";
 
 const wrapperStyle = { width: 800, height: 400 };
 const primaryMeasure = [MEASURE_1];
 const secondaryMeasure = [MEASURE_2];
+const columnMeasure = [MEASURE_3];
+const lineMeasure = [MEASURE_4];
 const arithmeticMeasures = [ARITHMETIC_MEASURE_SIMPLE_OPERANDS, ARITHMETIC_MEASURE_USING_ARITHMETIC];
+const { COLUMN, LINE, AREA } = VisualizationTypes;
 
-storiesOf('Core components/ComboChart', module)
-    .add('dual axis with one column measure, one line measure, one attribute', () => (
+storiesOf("Core components/ComboChart", module)
+    .add("dual axis with one column measure, one line measure, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -35,10 +42,10 @@ storiesOf('Core components/ComboChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('dual axis with one column measure, one area measure, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("dual axis with one column measure, one area measure, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -47,14 +54,14 @@ storiesOf('Core components/ComboChart', module)
                     secondaryMeasures={secondaryMeasure}
                     viewBy={ATTRIBUTE_1}
                     config={{
-                        secondaryChartType: VisualizationTypes.AREA
+                        secondaryChartType: AREA,
                     }}
                     onError={onErrorHandler}
                 />
-            </div>
-        )
-    ))
-    .add('dual axis with one line measure, one area measure, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("dual axis with one line measure, one area measure, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -63,15 +70,15 @@ storiesOf('Core components/ComboChart', module)
                     secondaryMeasures={secondaryMeasure}
                     viewBy={ATTRIBUTE_1}
                     config={{
-                        primaryChartType: VisualizationTypes.LINE,
-                        secondaryChartType: VisualizationTypes.AREA
+                        primaryChartType: LINE,
+                        secondaryChartType: AREA,
                     }}
                     onError={onErrorHandler}
                 />
-            </div>
-        )
-    ))
-    .add('single axis with one column measure, one line measures, one attribute', () => (
+            </div>,
+        ),
+    )
+    .add("single axis with one column measure, one line measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -82,26 +89,80 @@ storiesOf('Core components/ComboChart', module)
                     config={{ dualAxis: false }}
                     onError={onErrorHandler}
                 />
-            </div>
-        )
-    ))
-    .add('dual axis with same chart type', () => (
+            </div>,
+        ),
+    )
+    .add("dual axis with different chart type and NO attribute", () =>
         screenshotWrap(
-            <div style={wrapperStyle}>
-                <ComboChart
-                    projectId="storybook"
-                    primaryMeasures={primaryMeasure}
-                    secondaryMeasures={secondaryMeasure}
-                    viewBy={ATTRIBUTE_1}
-                    config={{
-                        secondaryChartType: VisualizationTypes.COLUMN
-                    }}
-                    onError={onErrorHandler}
-                />
-            </div>
-        )
-    ))
-    .add('empty secondary measures', () => (
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+                {[[COLUMN, LINE], [COLUMN, AREA], [LINE, AREA]].map((types, index) => (
+                    <div key={index}>
+                        <div className="storybook-title">{`${types[0]} - ${types[1]}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                config={{
+                                    primaryChartType: types[0],
+                                    secondaryChartType: types[1],
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("dual axis with same chart type and NO attribute", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(COMBO_SUPPORTED_CHARTS.length)}>
+                {COMBO_SUPPORTED_CHARTS.map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                config={{
+                                    primaryChartType: chartType,
+                                    secondaryChartType: chartType,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("dual axis with same chart type and one attribute", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(COMBO_SUPPORTED_CHARTS.length)}>
+                {COMBO_SUPPORTED_CHARTS.map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={primaryMeasure}
+                                secondaryMeasures={secondaryMeasure}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: chartType,
+                                    secondaryChartType: chartType,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("empty secondary measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -111,10 +172,10 @@ storiesOf('Core components/ComboChart', module)
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                 />
-            </div>
-        )
-    ))
-    .add('empty primary measures', () => (
+            </div>,
+        ),
+    )
+    .add("empty primary measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -124,10 +185,47 @@ storiesOf('Core components/ComboChart', module)
                     viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                 />
-            </div>
-        )
-    ))
-    .add('custom colors', () => (
+            </div>,
+        ),
+    )
+    .add("should override primaryMeasures & secondaryMeasures", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        columnMeasures={columnMeasure}
+                        lineMeasures={lineMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        columnMeasures={columnMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+                <div style={wrapperStyle} className="screenshot-container">
+                    <ComboChart
+                        projectId="storybook"
+                        lineMeasures={lineMeasure}
+                        primaryMeasures={primaryMeasure}
+                        secondaryMeasures={secondaryMeasure}
+                        viewBy={ATTRIBUTE_1}
+                        onError={onErrorHandler}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("custom colors", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -140,10 +238,10 @@ storiesOf('Core components/ComboChart', module)
                     ErrorComponent={null}
                     config={CUSTOM_COLOR_PALETTE_CONFIG}
                 />
-            </div>
-        )
-    ))
-    .add('sorted by attribute', () => (
+            </div>,
+        ),
+    )
+    .add("sorted by attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -156,10 +254,10 @@ storiesOf('Core components/ComboChart', module)
                     ErrorComponent={null}
                     sortBy={[ATTRIBUTE_1_SORT_ITEM]}
                 />
-            </div>
-        )
-    ))
-    .add('sorted by measure', () => (
+            </div>,
+        ),
+    )
+    .add("sorted by measure", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -172,10 +270,10 @@ storiesOf('Core components/ComboChart', module)
                     ErrorComponent={null}
                     sortBy={[MEASURE_2_SORT_ITEM]}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -188,10 +286,10 @@ storiesOf('Core components/ComboChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('arithmetic measures', () => (
+            </div>,
+        ),
+    )
+    .add("arithmetic measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <ComboChart
@@ -203,6 +301,6 @@ storiesOf('Core components/ComboChart', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

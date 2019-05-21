@@ -1,43 +1,41 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { mount } from 'enzyme';
-import noop = require('lodash/noop');
+import * as React from "react";
+import { mount } from "enzyme";
+import noop = require("lodash/noop");
 
-import { VisualizationTypes } from '../../../../../constants/visualizationTypes';
-import FluidLegend from '../FluidLegend';
-import LegendItem from '../LegendItem';
+import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import FluidLegend from "../FluidLegend";
+import LegendItem from "../LegendItem";
 
-describe('FluidLegend', () => {
+describe("FluidLegend", () => {
     function render(customProps: any = {}) {
         const props = {
             chartType: VisualizationTypes.BAR,
             series: [],
             onItemClick: noop,
             containerWidth: 500,
-            ...customProps
+            ...customProps,
         };
-        return mount(
-            <FluidLegend {...props} />
-        );
+        return mount(<FluidLegend {...props} />);
     }
 
-    it('should render items', () => {
+    it("should render items", () => {
         const series = [
             {
-                name: 'A',
-                color: '#333',
-                isVisible: true
+                name: "A",
+                color: "#333",
+                isVisible: true,
             },
             {
-                name: 'B',
-                color: '#333',
-                isVisible: true
+                name: "B",
+                color: "#333",
+                isVisible: true,
             },
             {
-                name: 'A',
-                color: '#333',
-                isVisible: true
-            }
+                name: "A",
+                color: "#333",
+                isVisible: true,
+            },
         ];
 
         const wrapper = render({ series });

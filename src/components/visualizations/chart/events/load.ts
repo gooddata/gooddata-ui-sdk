@@ -1,5 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
-import { ChartObject } from 'highcharts';
+// (C) 2007-2019 GoodData Corporation
+import { ChartObject } from "highcharts";
+import { setupDrilldown } from "./setupDrilldownToParentAttribute";
 
 // TODO: once Highcharts is upgraded to 7.0.1, 'yAxis.className' can be used to avoid registering 'load' event
 // We can add 'className' to 'yAxis' in 'chartOptionsBuilder.ts' and 'customConfiguration.ts'
@@ -9,10 +10,10 @@ import { ChartObject } from 'highcharts';
  * @param chart
  */
 function addClassToYAxis(chart: ChartObject): void {
-    const yAxis: any[] = chart && chart.yAxis || [];
+    const yAxis: any[] = (chart && chart.yAxis) || [];
 
     yAxis.forEach((axis: any) => {
-        const axisType: string = axis.opposite ? 'secondary' : 'primary';
+        const axisType: string = axis.opposite ? "secondary" : "primary";
         axis.axisGroup.addClass(`s-highcharts-${axisType}-yaxis`);
         axis.labelGroup.addClass(`s-highcharts-${axisType}-yaxis-labels`);
     });
@@ -20,4 +21,5 @@ function addClassToYAxis(chart: ChartObject): void {
 
 export default function handleChartLoad() {
     addClassToYAxis(this);
+    setupDrilldown(this);
 }

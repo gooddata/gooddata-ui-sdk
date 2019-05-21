@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import { BarChart, ColumnChart, PieChart, Model } from '@gooddata/react-components';
+import React, { Component } from "react";
+import { BarChart, ColumnChart, PieChart, Model } from "@gooddata/react-components";
 
-import '@gooddata/react-components/styles/css/main.css';
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     totalSalesIdentifier,
@@ -12,11 +12,11 @@ import {
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
-    projectId
-} from '../utils/fixtures';
+    projectId,
+} from "../utils/fixtures";
 
 const totalSales = Model.measure(totalSalesIdentifier)
-    .aggregation('sum')
+    .aggregation("sum")
     .localIdentifier(totalSalesIdentifier);
 
 const locationResort = Model.attribute(locationResortIdentifier);
@@ -26,18 +26,22 @@ const franchiseFeesMeasures = [
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty
-].map(identifier => Model.measure(identifier).aggregation('sum').localIdentifier(identifier));
+    franchiseFeesIdentifierOngoingRoyalty,
+].map(identifier =>
+    Model.measure(identifier)
+        .aggregation("sum")
+        .localIdentifier(identifier),
+);
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {
         // eslint-disable-next-line no-console
-        console.info('onLoadingChanged', ...params);
+        console.info("onLoadingChanged", ...params);
     }
 
     onError(...params) {
         // eslint-disable-next-line no-console
-        console.info('onLoadingChanged', ...params);
+        console.info("onLoadingChanged", ...params);
     }
 
     render() {
@@ -45,7 +49,10 @@ export class AggregationTest extends Component {
             <div>
                 <h1>Aggregation test</h1>
 
-                <p>This route is meant for testing requests with aggregation that sometimes fail during migration.</p>
+                <p>
+                    This route is meant for testing requests with aggregation that sometimes fail during
+                    migration.
+                </p>
 
                 <hr className="separator" />
 
@@ -85,7 +92,6 @@ export class AggregationTest extends Component {
                         onError={this.onError}
                     />
                 </div>
-
             </div>
         );
     }

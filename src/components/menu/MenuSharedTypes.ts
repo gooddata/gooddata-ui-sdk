@@ -1,20 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
 
-export type OpenAction = 'click' | 'hover';
+export type OpenAction = "click" | "hover";
 
 export type MenuAlignment =
-    | ['bottom', 'right']
-    | ['bottom', 'left']
-    | ['top', 'right']
-    | ['top', 'left']
-    | ['right', 'top']
-    | ['right', 'bottom']
-    | ['left', 'top']
-    | ['left', 'bottom'];
+    | ["bottom", "right"]
+    | ["bottom", "left"]
+    | ["top", "right"]
+    | ["top", "left"]
+    | ["right", "top"]
+    | ["right", "bottom"]
+    | ["left", "top"]
+    | ["left", "bottom"];
 
 export interface IOnOpenedChangeParams {
     opened: boolean;
-    source: 'TOGGLER_BUTTON_CLICK' | 'OUTSIDE_CLICK' | 'SCROLL' | 'CLOSE_MENU_RENDER_PROP' | 'HOVER_TIMEOUT';
+    source: "TOGGLER_BUTTON_CLICK" | "OUTSIDE_CLICK" | "SCROLL" | "CLOSE_MENU_RENDER_PROP" | "HOVER_TIMEOUT";
 }
 
 export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;

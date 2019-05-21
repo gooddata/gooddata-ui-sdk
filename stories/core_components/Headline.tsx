@@ -1,22 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { screenshotWrap } from '@gooddata/test-storybook';
+import * as React from "react";
+import { storiesOf } from "@storybook/react";
+import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Headline } from '../../src/index';
+import { Headline } from "../../src/index";
 import {
     MEASURE_1_WITH_ALIAS,
     MEASURE_2,
     MEASURE_1,
     MEASURE_1_POP,
-    MEASURE_1_PREVIOUS_PERIOD
-} from '../data/componentProps';
-import { GERMAN_SEPARATORS } from '../data/numberFormat';
+    MEASURE_1_PREVIOUS_PERIOD,
+} from "../data/componentProps";
+import { GERMAN_SEPARATORS } from "../data/numberFormat";
 
 const wrapperStyle = { width: 600, height: 300 };
 
-storiesOf('Core components/Headline', module)
-    .add('one measure with alias', () => (
+storiesOf("Core components/Headline", module)
+    .add("one measure with alias", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Headline
@@ -25,10 +25,10 @@ storiesOf('Core components/Headline', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('two measures', () => (
+            </div>,
+        ),
+    )
+    .add("two measures", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Headline
@@ -38,10 +38,10 @@ storiesOf('Core components/Headline', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('two measures with PoP', () => (
+            </div>,
+        ),
+    )
+    .add("two measures with PoP", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Headline
@@ -51,10 +51,10 @@ storiesOf('Core components/Headline', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('two measures with previous period', () => (
+            </div>,
+        ),
+    )
+    .add("two measures with previous period", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Headline
@@ -64,10 +64,10 @@ storiesOf('Core components/Headline', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ))
-    .add('with German number format', () => (
+            </div>,
+        ),
+    )
+    .add("with German number format", () =>
         screenshotWrap(
             <div style={wrapperStyle}>
                 <Headline
@@ -78,6 +78,6 @@ storiesOf('Core components/Headline', module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />
-            </div>
-        )
-    ));
+            </div>,
+        ),
+    );

@@ -1,42 +1,42 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from '@gooddata/typings';
+import { Execution } from "@gooddata/typings";
 
 export const executionRequest = {
     execution: {
         afm: {
             measures: [
                 {
-                    localIdentifier: 'm1',
-                    alias: 'Primary',
+                    localIdentifier: "m1",
+                    alias: "Primary",
                     definition: {
                         measure: {
                             item: {
-                                identifier: 'abc'
-                            }
-                        }
-                    }
+                                identifier: "abc",
+                            },
+                        },
+                    },
                 },
                 {
-                    localIdentifier: 'm2',
-                    alias: 'Secondary',
+                    localIdentifier: "m2",
+                    alias: "Secondary",
                     definition: {
                         measure: {
                             item: {
-                                identifier: 'def'
-                            }
-                        }
-                    }
-                }
-            ]
+                                identifier: "def",
+                            },
+                        },
+                    },
+                },
+            ],
         },
         resultSpec: {
             dimensions: [
                 {
-                    itemIdentifiers: ['measureGroup']
-                }
-            ]
-        }
-    }
+                    itemIdentifiers: ["measureGroup"],
+                },
+            ],
+        },
+    },
 };
 
 const executionResponse = {
@@ -48,64 +48,61 @@ const executionResponse = {
                         items: [
                             {
                                 measureHeaderItem: {
-                                    name: 'Primary',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'm1',
-                                    uri: 'urim1',
-                                    identifier: 'idm1'
-                                }
+                                    name: "Primary",
+                                    format: "#,##0.00",
+                                    localIdentifier: "m1",
+                                    uri: "urim1",
+                                    identifier: "idm1",
+                                },
                             },
                             {
                                 measureHeaderItem: {
-                                    name: 'Secondary',
-                                    format: '#,##0.00',
-                                    localIdentifier: 'm2',
-                                    uri: 'urim2',
-                                    identifier: 'idm2'
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
+                                    name: "Secondary",
+                                    format: "#,##0.00",
+                                    localIdentifier: "m2",
+                                    uri: "urim2",
+                                    identifier: "idm2",
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
     ],
     links: {
-        executionResult: 'abc'
-    }
+        executionResult: "abc",
+    },
 };
 
 const executionResult = {
-    data: [
-        '80406324.96',
-        '36219131.58'
-    ],
+    data: ["80406324.96", "36219131.58"],
     headerItems: [
         [
             [
                 {
                     measureHeaderItem: {
-                        name: 'Primary',
-                        order: 0
-                    }
+                        name: "Primary",
+                        order: 0,
+                    },
                 },
                 {
                     measureHeaderItem: {
-                        name: 'Secondary',
-                        order: 1
-                    }
-                }
-            ]
-        ]
+                        name: "Secondary",
+                        order: 1,
+                    },
+                },
+            ],
+        ],
     ],
     paging: {
         count: [2],
         offset: [0],
-        total: [2]
-    }
+        total: [2],
+    },
 };
 
 export const executionResponses: Execution.IExecutionResponses = {
     executionResponse,
-    executionResult
+    executionResult,
 };

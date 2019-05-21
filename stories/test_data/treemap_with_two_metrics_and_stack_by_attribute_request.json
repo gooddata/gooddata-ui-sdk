@@ -37,14 +37,10 @@
         "resultSpec": {
             "dimensions": [
                 {
-                    "itemIdentifiers": [
-                        "measureGroup"
-                    ]
+                    "itemIdentifiers": ["measureGroup"]
                 },
                 {
-                    "itemIdentifiers": [
-                        "departmentAttribute"
-                    ]
+                    "itemIdentifiers": ["departmentAttribute"]
                 }
             ]
         }

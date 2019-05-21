@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationObject, VisualizationInput } from '@gooddata/typings';
+import * as React from "react";
+import omit = require("lodash/omit");
+import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
-import { LineChart as AfmLineChart } from './afm/LineChart';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { getStackingResultSpec } from '../helpers/resultSpec';
-import { MEASURES, ATTRIBUTE, STACK } from '../constants/bucketNames';
+import { Subtract } from "../typings/subtract";
+import { LineChart as AfmLineChart } from "./afm/LineChart";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { getStackingResultSpec } from "../helpers/resultSpec";
+import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
 
 export interface ILineChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -32,20 +32,25 @@ export function LineChart(props: ILineChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: props.measures || [],
         },
         {
             localIdentifier: ATTRIBUTE,
-            items: props.trendBy ? [props.trendBy] : []
+            items: props.trendBy ? [props.trendBy] : [],
         },
         {
             localIdentifier: STACK,
-            items: props.segmentBy ? [props.segmentBy] : []
-        }
+            items: props.segmentBy ? [props.segmentBy] : [],
+        },
     ];
 
-    const newProps
-        = omit<ILineChartProps, ILineChartNonBucketProps>(props, ['measures', 'trendBy', 'segmentBy', 'filters']);
+    const newProps: ILineChartNonBucketProps = omit<ILineChartProps, keyof ILineChartBucketProps>(props, [
+        "measures",
+        "trendBy",
+        "segmentBy",
+        "filters",
+        "sortBy",
+    ]);
 
     return (
         <AfmLineChart

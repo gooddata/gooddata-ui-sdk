@@ -1,23 +1,23 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as classNames from 'classnames';
-import { injectIntl } from 'react-intl';
-import { debounce, isEqual, noop, pick, uniqueId } from 'lodash';
-import { Cell, CellProps, Column, Table, ColumnHeaderProps } from 'fixed-data-table-2';
-import { AFM, Execution } from '@gooddata/typings';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import * as classNames from "classnames";
+import { injectIntl } from "react-intl";
+import { debounce, isEqual, noop, pick, uniqueId } from "lodash";
+import { Cell, CellProps, Column, Table, ColumnHeaderProps } from "fixed-data-table-2";
+import { AFM, Execution } from "@gooddata/typings";
+import { ISeparators } from "@gooddata/numberjs";
+import "nodelist-foreach-polyfill";
 
-import 'nodelist-foreach-polyfill';
+import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { Subscription } from "rxjs/Subscription";
+import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
+import { getMappingHeaderLocalIdentifier, getMappingHeaderName } from "../../../helpers/mappingHeader";
+import { IMappingHeader, isMappingHeaderMeasureItem } from "../../../interfaces/MappingHeader";
 
-import Bubble from '@gooddata/goodstrap/lib/Bubble/Bubble';
-import BubbleHoverTrigger from '@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger';
-import { Subscription } from 'rxjs/Subscription';
-import { isSomeHeaderPredicateMatched } from '../../../helpers/headerPredicate';
-import { getMappingHeaderLocalIdentifier, getMappingHeaderName } from '../../../helpers/mappingHeader';
-import { IMappingHeader, isMappingHeaderMeasureItem } from '../../../interfaces/MappingHeader';
-
-import { IHeaderPredicate } from '../../../interfaces/HeaderPredicate';
-import { OnFiredDrillEvent } from '../../../interfaces/Events';
+import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { OnFiredDrillEvent } from "../../../interfaces/Events";
 import {
     Align,
     IAlignPoint,
@@ -27,26 +27,32 @@ import {
     OnSortChangeWithItem,
     SortDir,
     TableCell,
-    TableRow
-} from '../../../interfaces/Table';
-import { TableSortBubbleContent } from './TableSortBubbleContent';
-import { getColumnAlign } from './utils/column';
-import { subscribeEvents } from '../utils/common';
-import { getCellClassNames, getCellStyleAndFormattedValue } from '../../../helpers/tableCell';
+    TableRow,
+} from "../../../interfaces/Table";
+import { TableSortBubbleContent } from "./TableSortBubbleContent";
+import { getColumnAlign } from "./utils/column";
+import { subscribeEvents } from "../utils/common";
+import { getCellClassNames, getCellStyleAndFormattedValue } from "../../../helpers/tableCell";
+import { getIntersectionForDrilling, getBackwardCompatibleRowForDrilling } from "./utils/dataTransformation";
+import { cellClick } from "../utils/drilldownEventing";
+import { createSortItem, getHeaderSortClassName, getNextSortDir } from "./utils/sort";
 import {
-    getIntersectionForDrilling,
-    getBackwardCompatibleRowForDrilling} from './utils/dataTransformation';
-import { cellClick, IDrillConfig } from '../utils/drilldownEventing';
-import { createSortItem, getHeaderSortClassName, getNextSortDir } from './utils/sort';
-import { getFooterHeight, getFooterPositions, isFooterAtDefaultPosition, isFooterAtEdgePosition } from './utils/footer';
-import { updatePosition } from './utils/row';
+    getFooterHeight,
+    getFooterPositions,
+    isFooterAtDefaultPosition,
+    isFooterAtEdgePosition,
+} from "./utils/footer";
+import { updatePosition } from "./utils/row";
 import {
     calculateArrowPosition,
-    getHeaderClassNames, getHeaderPositions,
+    getHeaderClassNames,
+    getHeaderPositions,
     getTooltipAlignPoints,
-    getTooltipSortAlignPoints, isHeaderAtDefaultPosition, isHeaderAtEdgePosition
-} from './utils/header';
-import { RemoveRows } from './totals/RemoveRows';
+    getTooltipSortAlignPoints,
+    isHeaderAtDefaultPosition,
+    isHeaderAtEdgePosition,
+} from "./utils/header";
+import { RemoveRows } from "./totals/RemoveRows";
 import {
     toggleCellClass,
     resetRowClass,
@@ -57,12 +63,12 @@ import {
     removeMeasureIndex,
     getFirstMeasureIndex,
     getTotalsDefinition,
-    shouldShowTotals
-} from './totals/utils';
-import { TotalCell } from './totals/TotalCell';
+    shouldShowTotals,
+} from "./totals/utils";
+import { TotalCell } from "./totals/TotalCell";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
-import { IIndexedTotalItem, ITotalWithData } from '../../../interfaces/Totals';
-import { ISeparators } from '@gooddata/numberjs';
+import { IIndexedTotalItem, ITotalWithData } from "../../../interfaces/Totals";
+import { IDrillConfig } from "../../../interfaces/DrillEvents";
 
 const FULLSCREEN_TOOLTIP_VIEWPORT_THRESHOLD: number = 480;
 const MIN_COLUMN_WIDTH: number = 100;
@@ -82,18 +88,21 @@ export const RESIZE_DEBOUNCE: number = 60;
 
 const scrollEvents: IScrollEvent[] = [
     {
-        name: 'scroll',
-        debounce: SCROLL_DEBOUNCE
-    }, {
-        name: 'goodstrap.scrolled',
-        debounce: SCROLL_DEBOUNCE
-    }, {
-        name: 'resize',
-        debounce: RESIZE_DEBOUNCE
-    }, {
-        name: 'goodstrap.drag',
-        debounce: RESIZE_DEBOUNCE
-    }
+        name: "scroll",
+        debounce: SCROLL_DEBOUNCE,
+    },
+    {
+        name: "goodstrap.scrolled",
+        debounce: SCROLL_DEBOUNCE,
+    },
+    {
+        name: "resize",
+        debounce: RESIZE_DEBOUNCE,
+    },
+    {
+        name: "goodstrap.drag",
+        debounce: RESIZE_DEBOUNCE,
+    },
 ];
 
 /**
@@ -116,7 +125,7 @@ export interface IContainerProps {
 
 export interface ITableVisualizationProps {
     containerMaxHeight?: number;
-    afterRender?: () => void;
+    afterRender?: () => void;
     drillablePredicates?: IHeaderPredicate[];
     executionRequest: AFM.IExecution;
     executionResponse: Execution.IExecutionResponse;
@@ -140,16 +149,17 @@ export interface ITableVisualizationProps {
 export interface ITableVisualizationState {
     hintSortBy: number;
     sortBubble: {
-        index?: number,
-        visible: boolean
+        index?: number;
+        visible: boolean;
     };
     width: number;
     height: number;
 }
 
-export class TableVisualizationClass
-    extends React.Component<ITableVisualizationProps & InjectedIntlProps & IContainerProps, ITableVisualizationState> {
-
+export class TableVisualizationClass extends React.Component<
+    ITableVisualizationProps & InjectedIntlProps & IContainerProps,
+    ITableVisualizationState
+> {
     public static defaultProps: Partial<ITableVisualizationProps & IContainerProps> = {
         afterRender: noop,
         containerHeight: null,
@@ -168,7 +178,7 @@ export class TableVisualizationClass
         onTotalsEdit: noop,
         totalsWithData: [],
         lastAddedTotalType: null,
-        onLastAddedTotalRowHighlightPeriodEnd: noop
+        onLastAddedTotalRowHighlightPeriodEnd: noop,
     };
 
     private static fullscreenTooltipEnabled(): boolean {
@@ -205,10 +215,10 @@ export class TableVisualizationClass
         this.state = {
             hintSortBy: null,
             sortBubble: {
-                visible: false
+                visible: false,
             },
             width: 0,
-            height: 0
+            height: 0,
         };
 
         this.setRootRef = this.setRootRef.bind(this);
@@ -236,15 +246,17 @@ export class TableVisualizationClass
 
     public componentDidMount(): void {
         this.table = ReactDOM.findDOMNode(this.tableComponentRef) as HTMLElement;
-        this.tableInnerContainer = this.table.querySelector('.fixedDataTableLayout_rowsContainer');
-        const tableRows = this.table.querySelectorAll('.fixedDataTableRowLayout_rowWrapper') as NodeListOf<HTMLElement>;
+        this.tableInnerContainer = this.table.querySelector(".fixedDataTableLayout_rowsContainer");
+        const tableRows = this.table.querySelectorAll(".fixedDataTableRowLayout_rowWrapper") as NodeListOf<
+            HTMLElement
+        >;
 
         this.header = tableRows[0];
-        this.header.classList.add('table-header');
+        this.header.classList.add("table-header");
 
         if (this.hasFooterWithTotals()) {
             this.footer = tableRows[tableRows.length - 1];
-            this.footer.classList.add('table-footer');
+            this.footer.classList.add("table-footer");
         }
 
         if (TableVisualizationClass.isSticky(this.props.stickyHeaderOffset)) {
@@ -271,16 +283,17 @@ export class TableVisualizationClass
 
     public componentDidUpdate(prevProps: ITableVisualizationProps): void {
         if (!isEqual(prevProps.totalsWithData, this.props.totalsWithData)) {
-            const tableRows = this.table
-                .querySelectorAll('.fixedDataTableRowLayout_rowWrapper') as NodeListOf<HTMLElement>;
+            const tableRows = this.table.querySelectorAll(
+                ".fixedDataTableRowLayout_rowWrapper",
+            ) as NodeListOf<HTMLElement>;
 
             if (this.footer) {
-                this.footer.classList.remove('table-footer');
+                this.footer.classList.remove("table-footer");
             }
 
             if (this.hasFooterWithTotals()) {
                 this.footer = tableRows[tableRows.length - 1];
-                this.footer.classList.add('table-footer');
+                this.footer.classList.add("table-footer");
             }
         }
 
@@ -303,12 +316,14 @@ export class TableVisualizationClass
             containerMaxHeight,
             containerWidth,
             headers,
-            stickyHeaderOffset
+            stickyHeaderOffset,
         } = this.props;
 
         const height = TableVisualizationClass.getTableHeight(containerHeight, containerMaxHeight);
         const footerHeight = getFooterHeight(
-            totalsWithData, this.isTotalsEditAllowed(), shouldShowTotals(headers)
+            totalsWithData,
+            this.isTotalsEditAllowed(),
+            shouldShowTotals(headers),
         );
         const columnWidth: number = Math.max(containerWidth / headers.length, MIN_COLUMN_WIDTH);
         const isSticky: boolean = TableVisualizationClass.isSticky(stickyHeaderOffset);
@@ -375,13 +390,13 @@ export class TableVisualizationClass
         const { sortBy, sortDir } = this.props;
         const { hintSortBy } = this.state;
 
-        const dir: SortDir = (sortBy === index ? sortDir : null);
+        const dir: SortDir = sortBy === index ? sortDir : null;
         const nextDir: SortDir = getNextSortDir(header, dir);
 
         return {
             dir,
             nextDir,
-            sortDirClass: getHeaderSortClassName(hintSortBy === index ? nextDir : dir, dir)
+            sortDirClass: getHeaderSortClassName(hintSortBy === index ? nextDir : dir, dir),
         };
     }
 
@@ -398,23 +413,19 @@ export class TableVisualizationClass
     private getComponentClasses(): string {
         const { hasHiddenRows } = this.props;
 
-        return classNames(
-            'indigo-table-component',
-            {
-                'has-hidden-rows': hasHiddenRows,
-                'has-footer': this.hasFooterWithTotals(),
-                'has-footer-editable': this.isTotalsEditAllowed()
-            });
+        return classNames("indigo-table-component", {
+            "has-hidden-rows": hasHiddenRows,
+            "has-footer": this.hasFooterWithTotals(),
+            "has-footer-editable": this.isTotalsEditAllowed(),
+        });
     }
 
     private getContentClasses(): string {
         const { stickyHeaderOffset } = this.props;
 
-        return classNames(
-            'indigo-table-component-content',
-            {
-                'has-sticky-header': TableVisualizationClass.isSticky(stickyHeaderOffset)
-            });
+        return classNames("indigo-table-component-content", {
+            "has-sticky-header": TableVisualizationClass.isSticky(stickyHeaderOffset),
+        });
     }
 
     private unsetListeners(): void {
@@ -430,14 +441,14 @@ export class TableVisualizationClass
         if (this.addTotalDropdownOpened) {
             return;
         }
-        toggleCellClass(this.table, columnIndex, isHighlighted, 'indigo-table-cell-highlight');
+        toggleCellClass(this.table, columnIndex, isHighlighted, "indigo-table-cell-highlight");
     }
 
     private toggleFooterColumnHighlight(columnIndex: number, isHighlighted: boolean): void {
         if (this.addTotalDropdownOpened) {
             return;
         }
-        toggleCellClass(this.footer, columnIndex, isHighlighted, 'indigo-table-footer-cell-highlight');
+        toggleCellClass(this.footer, columnIndex, isHighlighted, "indigo-table-footer-cell-highlight");
     }
 
     private toggleColumnHighlight(columnIndex: number, isHighlighted: boolean): void {
@@ -451,9 +462,9 @@ export class TableVisualizationClass
         }
         resetRowClass(
             this.rootRef,
-            'indigo-totals-remove-row-highlight',
-            '.indigo-totals-remove > .indigo-totals-remove-row',
-            rowIndex
+            "indigo-totals-remove-row-highlight",
+            ".indigo-totals-remove > .indigo-totals-remove-row",
+            rowIndex,
         );
     }
 
@@ -469,7 +480,7 @@ export class TableVisualizationClass
             const rect: ClientRect = this.table.getBoundingClientRect();
 
             if (width !== rect.width || height !== rect.height) {
-                this.setState(pick<{ width: number, height: number }, ClientRect>(rect, 'width', 'height'));
+                this.setState(pick<ClientRect, "width" | "height">(rect, "width", "height"));
             }
         }
     }
@@ -489,7 +500,10 @@ export class TableVisualizationClass
             this.closeSortBubble();
         }
 
-        const isDefaultPosition: boolean = isHeaderAtDefaultPosition(stickyHeaderOffset, tableBoundingRect.top);
+        const isDefaultPosition: boolean = isHeaderAtDefaultPosition(
+            stickyHeaderOffset,
+            tableBoundingRect.top,
+        );
 
         const isEdgePosition: boolean = isHeaderAtEdgePosition(
             stickyHeaderOffset,
@@ -497,7 +511,7 @@ export class TableVisualizationClass
             totalsWithData,
             tableBoundingRect.bottom,
             totalsEditAllowed,
-            totalsAreVisible
+            totalsAreVisible,
         );
 
         const positions: IPositions = getHeaderPositions(
@@ -508,17 +522,11 @@ export class TableVisualizationClass
             totalsAreVisible,
             {
                 height: tableBoundingRect.height,
-                top: tableBoundingRect.top
-            }
+                top: tableBoundingRect.top,
+            },
         );
 
-        updatePosition(
-            this.header,
-            positions,
-            isDefaultPosition,
-            isEdgePosition,
-            isScrollingStopped
-        );
+        updatePosition(this.header, positions, isDefaultPosition, isEdgePosition, isScrollingStopped);
     }
 
     private scrollFooter(isScrollingStopped: boolean = false): void {
@@ -535,7 +543,7 @@ export class TableVisualizationClass
         const isDefaultPosition: boolean = isFooterAtDefaultPosition(
             hasHiddenRows,
             tableBoundingRect.bottom,
-            window.innerHeight
+            window.innerHeight,
         );
 
         const isEdgePosition: boolean = isFooterAtEdgePosition(
@@ -546,8 +554,8 @@ export class TableVisualizationClass
             totalsAreVisible,
             {
                 height: tableBoundingRect.height,
-                bottom: tableBoundingRect.bottom
-            }
+                bottom: tableBoundingRect.bottom,
+            },
         );
 
         const positions: IPositions = getFooterPositions(
@@ -558,17 +566,11 @@ export class TableVisualizationClass
             totalsAreVisible,
             {
                 height: tableBoundingRect.height,
-                bottom: tableBoundingRect.bottom
-            }
+                bottom: tableBoundingRect.bottom,
+            },
         );
 
-        updatePosition(
-            this.footer,
-            positions,
-            isDefaultPosition,
-            isEdgePosition,
-            isScrollingStopped
-        );
+        updatePosition(this.footer, positions, isDefaultPosition, isEdgePosition, isScrollingStopped);
 
         if (this.totalsRemoveComponentRef) {
             const wrapperRef = this.totalsRemoveComponentRef.getWrapperRef();
@@ -577,7 +579,7 @@ export class TableVisualizationClass
                 totalsWithData,
                 totalsAreVisible,
                 totalsEditAllowed,
-                wrapperRef
+                wrapperRef,
             );
         }
     }
@@ -595,8 +597,8 @@ export class TableVisualizationClass
     private closeSortBubble(): void {
         this.setState({
             sortBubble: {
-                visible: false
-            }
+                visible: false,
+            },
         });
     }
 
@@ -614,12 +616,7 @@ export class TableVisualizationClass
     private addTotalsRow(columnIndex: number, totalType: AFM.TotalType): void {
         const { totalsWithData, headers } = this.props;
         const totalsAddedRow = addTotalsRow(totalsWithData, totalType);
-        const totalsEnabledColumn = addMeasureIndex(
-            totalsAddedRow,
-            headers,
-            totalType,
-            columnIndex
-        );
+        const totalsEnabledColumn = addMeasureIndex(totalsAddedRow, headers, totalType, columnIndex);
 
         if (!isEqual(totalsEnabledColumn, totalsWithData)) {
             this.onTotalsEdit(totalsEnabledColumn);
@@ -633,24 +630,31 @@ export class TableVisualizationClass
     }
 
     private enableTotalColumn(columnIndex: number, totalType: AFM.TotalType): void {
-        const updatedTotals =
-            addMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
+        const updatedTotals = addMeasureIndex(
+            this.props.totalsWithData,
+            this.props.headers,
+            totalType,
+            columnIndex,
+        );
 
         this.onTotalsEdit(updatedTotals);
     }
 
     private disableTotalColumn(columnIndex: number, totalType: AFM.TotalType): void {
-        const updatedTotals =
-            removeMeasureIndex(this.props.totalsWithData, this.props.headers, totalType, columnIndex);
+        const updatedTotals = removeMeasureIndex(
+            this.props.totalsWithData,
+            this.props.headers,
+            totalType,
+            columnIndex,
+        );
 
         this.onTotalsEdit(updatedTotals);
     }
 
     private renderTooltipHeader(header: IMappingHeader, columnIndex: number, columnWidth: number) {
-
         const headerClasses: string = getHeaderClassNames(header);
         const headerName = getMappingHeaderName(header);
-        const bubbleClass: string = uniqueId('table-header-');
+        const bubbleClass: string = uniqueId("table-header-");
         const cellClasses: string = classNames(headerClasses, bubbleClass);
         const sort: ISortObj = this.getSortObj(header, columnIndex);
         const columnAlign: Align = getColumnAlign(header);
@@ -659,14 +663,14 @@ export class TableVisualizationClass
         const getArrowPositions: () => { left: string } = () => {
             return TableVisualizationClass.fullscreenTooltipEnabled()
                 ? calculateArrowPosition(
-                    {
-                        width: columnWidth,
-                        align: columnAlign,
-                        index: columnIndex
-                    },
-                    this.tableComponentRef.state.scrollX,
-                    this.tableWrapRef
-                )
+                      {
+                          width: columnWidth,
+                          align: columnAlign,
+                          index: columnIndex,
+                      },
+                      this.tableComponentRef.state.scrollX,
+                      this.tableWrapRef,
+                  )
                 : null;
         };
 
@@ -678,55 +682,52 @@ export class TableVisualizationClass
             this.setState({
                 sortBubble: {
                     visible: true,
-                    index: columnIndex
-                }
+                    index: columnIndex,
+                },
             });
         };
 
         return (props: ColumnHeaderProps) => (
             <span>
                 <Cell {...props} className={cellClasses} onClick={showSortBubble}>
-                    <span className="gd-table-header-title">
-                        {headerName}
-                    </span>
+                    <span className="gd-table-header-title">{headerName}</span>
                     <span className={sort.sortDirClass} />
                 </Cell>
-                {this.isBubbleVisible(columnIndex) &&
-                <Bubble
-                    closeOnOutsideClick={true}
-                    alignTo={`.${bubbleClass}`}
-                    className="gd-table-header-bubble bubble-light"
-                    overlayClassName="gd-table-header-bubble-overlay"
-                    alignPoints={sortingModalAlignPoints}
-                    arrowDirections={{
-                        'bl tr': 'top',
-                        'br tl': 'top',
-                        'tl br': 'bottom',
-                        'tr bl': 'bottom'
-                    }}
-                    arrowOffsets={{
-                        'bl tr': [14, 10],
-                        'br tl': [-14, 10],
-                        'tl br': [14, -10],
-                        'tr bl': [-14, -10]
-                    }}
-                    arrowStyle={getArrowPositions}
-                    onClose={this.closeSortBubble}
-                >
-                    <TableSortBubbleContent
-                        activeSortDir={sort.dir}
-                        title={headerName}
+                {this.isBubbleVisible(columnIndex) && (
+                    <Bubble
+                        closeOnOutsideClick={true}
+                        alignTo={`.${bubbleClass}`}
+                        className="gd-table-header-bubble bubble-light"
+                        overlayClassName="gd-table-header-bubble-overlay"
+                        alignPoints={sortingModalAlignPoints}
+                        arrowDirections={{
+                            "bl tr": "top",
+                            "br tl": "top",
+                            "tl br": "bottom",
+                            "tr bl": "bottom",
+                        }}
+                        arrowOffsets={{
+                            "bl tr": [14, 10],
+                            "br tl": [-14, 10],
+                            "tl br": [14, -10],
+                            "tr bl": [-14, -10],
+                        }}
+                        arrowStyle={getArrowPositions}
                         onClose={this.closeSortBubble}
-                        onSortChange={this.getSortFunc(header, sort)}
-                    />
-                </Bubble>
-                }
+                    >
+                        <TableSortBubbleContent
+                            activeSortDir={sort.dir}
+                            title={headerName}
+                            onClose={this.closeSortBubble}
+                            onSortChange={this.getSortFunc(header, sort)}
+                        />
+                    </Bubble>
+                )}
             </span>
         );
     }
 
     private renderDefaultHeader(header: IMappingHeader, columnIndex: number) {
-
         const headerClasses = getHeaderClassNames(header);
         const headerName = getMappingHeaderName(header);
         const onMouseEnter = this.getMouseOverFunc(columnIndex);
@@ -762,7 +763,7 @@ export class TableVisualizationClass
 
     private renderCell(
         headers: IMappingHeader[],
-        columnIndex: number
+        columnIndex: number,
     ): (cellProps: CellProps) => JSX.Element {
         const {
             executionRequest,
@@ -770,7 +771,7 @@ export class TableVisualizationClass
             drillablePredicates,
             onFiredDrillEvent,
             rows,
-            separators
+            separators,
         } = this.props;
         const afm = executionRequest.execution.afm;
         const header: IMappingHeader = headers[columnIndex];
@@ -784,38 +785,44 @@ export class TableVisualizationClass
             const classes: string = getCellClassNames(rowIndex, columnKey, drillable);
             const drillConfig: IDrillConfig = { afm, onFiredDrillEvent };
             const hoverable: boolean = isMappingHeaderMeasureItem(header) && this.isTotalsEditAllowed();
-            const { style, formattedValue } =
-                getCellStyleAndFormattedValue(header, cellContent, true, separators);
+            const { style, formattedValue } = getCellStyleAndFormattedValue(
+                header,
+                cellContent,
+                true,
+                separators,
+            );
 
             const cellPropsDrill: CellProps = drillable
                 ? {
-                    ...cellProps,
-                    onClick(e: React.MouseEvent<Cell>) {
-                        cellClick(
-                            drillConfig,
-                            {
-                                columnIndex: columnKey,
-                                rowIndex,
-                                row: getBackwardCompatibleRowForDrilling(row),
-                                intersection: [getIntersectionForDrilling(afm, header)]
-                            },
-                            e.target
-                        );
-                    }
-                }
+                      ...cellProps,
+                      onClick(e: React.MouseEvent<Cell>) {
+                          cellClick(
+                              drillConfig,
+                              {
+                                  columnIndex: columnKey,
+                                  rowIndex,
+                                  row: getBackwardCompatibleRowForDrilling(row),
+                                  intersection: [getIntersectionForDrilling(afm, header)],
+                              },
+                              e.target,
+                          );
+                      },
+                  }
                 : cellProps;
 
             const cellPropsHover: CellProps = hoverable
                 ? {
-                    ...cellPropsDrill,
-                    onMouseOver: () => this.toggleFooterColumnHighlight(columnIndex, true),
-                    onMouseLeave: () => this.toggleFooterColumnHighlight(columnIndex, false)
-                }
+                      ...cellPropsDrill,
+                      onMouseOver: () => this.toggleFooterColumnHighlight(columnIndex, true),
+                      onMouseLeave: () => this.toggleFooterColumnHighlight(columnIndex, false),
+                  }
                 : cellPropsDrill;
 
             return (
                 <Cell {...cellPropsHover} className={classNames(`col-${columnIndex}`)}>
-                    <span className={classes} style={style} title={formattedValue}>{formattedValue}</span>
+                    <span className={classes} style={style} title={formattedValue}>
+                        {formattedValue}
+                    </span>
                 </Cell>
             );
         };
@@ -874,13 +881,8 @@ export class TableVisualizationClass
         );
     }
 
-    private renderColumns(
-        headers: IMappingHeader[],
-        columnWidth: number
-    ): JSX.Element[] {
-        const renderHeader = this.props.sortInTooltip
-            ? this.renderTooltipHeader
-            : this.renderDefaultHeader;
+    private renderColumns(headers: IMappingHeader[], columnWidth: number): JSX.Element[] {
+        const renderHeader = this.props.sortInTooltip ? this.renderTooltipHeader : this.renderDefaultHeader;
 
         return headers.map((header: IMappingHeader, columnIndex: number) => (
             <Column
@@ -900,7 +902,7 @@ export class TableVisualizationClass
         return (
             <div
                 className="indigo-table-background-filler"
-                style={{ ...pick(this.state, 'width', 'height') }}
+                style={{ ...pick(this.state, "width", "height") }}
             />
         );
     }

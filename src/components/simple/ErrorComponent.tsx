@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { Requireable } from 'prop-types'; // tslint:disable-line:no-duplicate-imports
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports
 export { Requireable };
 
 export const ErrorPropTypes = {
@@ -10,7 +10,7 @@ export const ErrorPropTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
     width: PropTypes.any,
-    height: PropTypes.any
+    height: PropTypes.any,
 };
 
 export interface IErrorProps {
@@ -30,20 +30,20 @@ export interface IErrorProps {
  */
 export class ErrorComponent extends React.Component<IErrorProps, null> {
     public static defaultProps: Partial<IErrorProps> = {
-        icon: 'icon-warning',
-        className: 'Error s-error',
+        icon: "icon-warning",
+        className: "Error s-error",
         width: undefined,
-        height: '100%',
+        height: "100%",
         style: {
-            display: 'flex',
-            flex: '1 0 auto',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'normal',
-            lineHeight: 'normal',
-            fontFamily: 'avenir, Helvetica Neue, arial, sans-serif'
-        }
+            display: "flex",
+            flex: "1 0 auto",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            whiteSpace: "normal",
+            lineHeight: "normal",
+            fontFamily: "avenir, Helvetica Neue, arial, sans-serif",
+        },
     };
 
     public static propTypes = ErrorPropTypes;
@@ -54,38 +54,33 @@ export class ErrorComponent extends React.Component<IErrorProps, null> {
         const wrapperStyle = {
             ...style,
             width,
-            height
+            height,
         };
 
         return (
-            <div
-                className={className}
-                style={wrapperStyle}
-            >
+            <div className={className} style={wrapperStyle}>
                 <div
                     className="info-label"
                     style={{
-                        fontSize: '14px',
+                        fontSize: "14px",
                         fontWeight: 400,
-                        lineHeight: 'normal',
-                        color: '#94a1ad',
-                        textAlign: 'center'
+                        lineHeight: "normal",
+                        color: "#94a1ad",
+                        textAlign: "center",
                     }}
                 >
-                    {icon ? <div className={`info-label-icon ${icon}`} style={{ fontSize: '40px' }}/> : null}
+                    {icon ? <div className={`info-label-icon ${icon}`} style={{ fontSize: "40px" }} /> : null}
 
                     <div
                         style={{
                             fontWeight: 400,
-                            fontSize: '20px',
-                            textTransform: 'uppercase'
+                            fontSize: "20px",
+                            textTransform: "uppercase",
                         }}
                     >
                         {message}
                     </div>
-                    <div style={{ margin: '3px 0' }}>
-                        {description}
-                    </div>
+                    <div style={{ margin: "3px 0" }}>{description}</div>
                 </div>
             </div>
         );

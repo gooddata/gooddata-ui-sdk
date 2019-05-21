@@ -1,53 +1,28 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import debounce = require('lodash/debounce');
-import { AFM } from '@gooddata/typings';
-import * as CustomEvent from 'custom-event';
-import * as Highcharts from 'highcharts';
-import * as invariant from 'invariant';
+import get = require("lodash/get");
+import debounce = require("lodash/debounce");
+import * as CustomEvent from "custom-event";
+import * as invariant from "invariant";
 import {
     ChartElementType,
     ChartType,
     VisType,
-    VisualizationTypes
-} from '../../../constants/visualizationTypes';
+    VisualizationTypes,
+} from "../../../constants/visualizationTypes";
 import {
     IDrillEvent,
     IDrillEventContextGroup,
     IDrillEventIntersectionElement,
     IDrillEventContextTable,
-    IDrillPoint
-} from '../../../interfaces/DrillEvents';
-import { OnFiredDrillEvent } from '../../../interfaces/Events';
-import { TableRowForDrilling } from '../../../interfaces/Table';
-import { isComboChart, isHeatmap, isTreemap } from './common';
-
-export interface IHighchartsPointObject extends Highcharts.PointObject {
-    drillIntersection: IDrillEventIntersectionElement[];
-    z?: number; // is missing in HCH's interface
-    value?: number; // is missing in HCH's interface
-}
-
-export interface IHighchartsChartDrilldownEvent extends Highcharts.ChartDrilldownEvent {
-    point?: IHighchartsPointObject;
-    points?: IHighchartsPointObject[];
-}
-
-export function isGroupHighchartsDrillEvent(event: IHighchartsChartDrilldownEvent) {
-    return !!event.points;
-}
-
-export interface ICellDrillEvent {
-    columnIndex: number;
-    rowIndex: number;
-    row: TableRowForDrilling;
-    intersection: IDrillEventIntersectionElement[];
-}
-
-export interface IDrillConfig {
-    afm: AFM.IAfm;
-    onFiredDrillEvent: OnFiredDrillEvent;
-}
+    IDrillPoint,
+    IHighchartsChartDrilldownEvent,
+    IHighchartsPointObject,
+    IDrillConfig,
+    ICellDrillEvent,
+    isGroupHighchartsDrillEvent,
+} from "../../../interfaces/DrillEvents";
+import { OnFiredDrillEvent } from "../../../interfaces/Events";
+import { isComboChart, isHeatmap, isTreemap } from "./common";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {
@@ -55,17 +30,17 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
         case VisualizationTypes.AREA:
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.BUBBLE:
-            return 'point';
+            return "point";
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.BAR:
-            return 'bar';
+            return "bar";
         case VisualizationTypes.PIE:
         case VisualizationTypes.TREEMAP:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
-            return 'slice';
+            return "slice";
         case VisualizationTypes.HEATMAP:
-            return 'cell';
+            return "cell";
         default:
             invariant(false, `Unknown visualization type: ${type}`);
             return null;
@@ -77,9 +52,9 @@ function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: Even
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
     if (returnValue !== false) {
-        const event = new CustomEvent('drill', {
+        const event = new CustomEvent("drill", {
             detail: data,
-            bubbles: true
+            bubbles: true,
         });
         target.dispatchEvent(event);
     }
@@ -87,66 +62,79 @@ function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: Even
 
 function composeDrillContextGroup(
     { points }: IHighchartsChartDrilldownEvent,
-    chartType: ChartType
+    chartType: ChartType,
 ): IDrillEventContextGroup {
     const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
         return {
             x: point.x,
             y: point.y,
-            intersection: point.drillIntersection
+            intersection: point.drillIntersection,
         };
     });
     return {
         type: chartType,
-        element: 'label',
-        points: contextPoints
+        element: "label",
+        points: contextPoints,
     };
 }
 
 function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: ChartType) {
     const zProp = isNaN(point.z) ? {} : { z: point.z };
-    const valueProp = (isTreemap(chartType) || isHeatmap(chartType)) ? {
-        value: point.value ? point.value.toString() : ''
-    } : {};
-    const xyProp = isTreemap(chartType) ? {} : {
-        x: point.x,
-        y: point.y
-    };
+    const valueProp =
+        isTreemap(chartType) || isHeatmap(chartType)
+            ? {
+                  value: point.value ? point.value.toString() : "",
+              }
+            : {};
+    const xyProp = isTreemap(chartType)
+        ? {}
+        : {
+              x: point.x,
+              y: point.y,
+          };
     return {
         type: chartType,
         element: getClickableElementNameByChartType(chartType),
         intersection: point.drillIntersection,
         ...xyProp,
         ...zProp,
-        ...valueProp
+        ...valueProp,
     };
 }
 
-const chartClickDebounced = debounce((drillConfig: IDrillConfig, event: IHighchartsChartDrilldownEvent,
-                                      target: EventTarget, chartType: ChartType) => {
-    const { afm, onFiredDrillEvent } = drillConfig;
+const chartClickDebounced = debounce(
+    (
+        drillConfig: IDrillConfig,
+        event: IHighchartsChartDrilldownEvent,
+        target: EventTarget,
+        chartType: ChartType,
+    ) => {
+        const { afm, onFiredDrillEvent } = drillConfig;
 
-    let usedChartType = chartType;
-    if (isComboChart(chartType)) {
-        usedChartType = get(event, ['point', 'series', 'options', 'type'], chartType);
-    }
+        let usedChartType = chartType;
+        if (isComboChart(chartType)) {
+            usedChartType = get(event, ["point", "series", "options", "type"], chartType);
+        }
 
-    const drillContext = isGroupHighchartsDrillEvent(event)
-        ? composeDrillContextGroup(event, usedChartType)
-        : composeDrillContextPoint(event, usedChartType);
+        const drillContext = isGroupHighchartsDrillEvent(event)
+            ? composeDrillContextGroup(event, usedChartType)
+            : composeDrillContextPoint(event, usedChartType);
 
-    const data = {
-        executionContext: afm,
-        drillContext
-    };
+        const data = {
+            executionContext: afm,
+            drillContext,
+        };
 
-    fireEvent(onFiredDrillEvent, data, target);
-});
+        fireEvent(onFiredDrillEvent, data, target);
+    },
+);
 
-export function chartClick(drillConfig: IDrillConfig,
-                           event: IHighchartsChartDrilldownEvent,
-                           target: EventTarget,
-                           chartType: ChartType) {
+export function chartClick(
+    drillConfig: IDrillConfig,
+    event: IHighchartsChartDrilldownEvent,
+    target: EventTarget,
+    chartType: ChartType,
+) {
     chartClickDebounced(drillConfig, event, target, chartType);
 }
 
@@ -156,15 +144,15 @@ export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, tar
 
     const drillContext: IDrillEventContextTable = {
         type: VisualizationTypes.TABLE,
-        element: 'cell',
+        element: "cell",
         columnIndex,
         rowIndex,
         row,
-        intersection
+        intersection,
     };
     const data: IDrillEvent = {
         executionContext: afm,
-        drillContext
+        drillContext,
     };
 
     fireEvent(onFiredDrillEvent, data, target);
@@ -174,17 +162,17 @@ export function createDrillIntersectionElement(
     id: string,
     title: string,
     uri?: string,
-    identifier?: string
+    identifier?: string,
 ): IDrillEventIntersectionElement {
     const element: IDrillEventIntersectionElement = {
-        id: id || '',
-        title: title || ''
+        id: id || "",
+        title: title || "",
     };
 
     if (uri || identifier) {
         element.header = {
-            uri: uri || '',
-            identifier: identifier || ''
+            uri: uri || "",
+            identifier: identifier || "",
         };
     }
 

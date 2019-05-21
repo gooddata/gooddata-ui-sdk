@@ -1,22 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import * as classNames from 'classnames';
-import { colors2Object, ISeparators, numberFormat } from '@gooddata/numberjs';
+import * as classNames from "classnames";
+import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { styleVariables } from '../components/visualizations/styles/variables';
-import { isMappingHeaderMeasureItem, IMappingHeader } from '../interfaces/MappingHeader';
+import { styleVariables } from "../components/visualizations/styles/variables";
+import { isMappingHeaderMeasureItem, IMappingHeader } from "../interfaces/MappingHeader";
 
 import {
     isAttributeCell,
     ITableCellStyle,
     ITableCellStyleAndFormattedValue,
     MeasureCell,
-    TableCell
-} from '../interfaces/Table';
+    TableCell,
+} from "../interfaces/Table";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
-    const parsedNumber: string | number = cellContent === null
-        ? ''
-        : parseFloat(cellContent);
+    const parsedNumber: string | number =
+        cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
 
     return numberFormat(parsedNumber, format, undefined, separators);
 }
@@ -24,40 +23,38 @@ function getFormattedNumber(cellContent: MeasureCell, format: string, separators
 export function getCellClassNames(rowIndex: number, columnIndex: number, isDrillable: boolean): string {
     return classNames(
         {
-            'gd-cell-drillable': isDrillable
+            "gd-cell-drillable": isDrillable,
         },
-        'gd-cell',
+        "gd-cell",
         `s-cell-${rowIndex}-${columnIndex}`,
-        's-table-cell'
+        "s-table-cell",
     );
 }
 
 export function getMeasureCellFormattedValue(
     cellContent: MeasureCell,
     format: string,
-    separators: ISeparators
+    separators: ISeparators,
 ): string {
     const formattedNumber = getFormattedNumber(cellContent, format, separators);
     const { label } = colors2Object(formattedNumber);
 
-    return label === ''
-        ? '–'
-        : label;
+    return label === "" ? "–" : label;
 }
 
 export function getMeasureCellStyle(
     cellContent: MeasureCell,
     format: string,
     separators: ISeparators,
-    applyColor: boolean
+    applyColor: boolean,
 ): ITableCellStyle {
     const formattedNumber = getFormattedNumber(cellContent, format, separators);
     const { backgroundColor, color, label } = colors2Object(formattedNumber);
 
-    if (label === '') {
+    if (label === "") {
         return {
             color: styleVariables.gdColorStateBlank,
-            fontWeight: 'bold'
+            fontWeight: "bold",
         };
     }
 
@@ -67,7 +64,7 @@ export function getMeasureCellStyle(
 
     return {
         ...(color && { color }),
-        ...(backgroundColor && { backgroundColor })
+        ...(backgroundColor && { backgroundColor }),
     };
 }
 
@@ -75,19 +72,19 @@ export function getCellStyleAndFormattedValue(
     header: IMappingHeader,
     cellContent: TableCell,
     applyColor: boolean = true,
-    separators?: ISeparators
+    separators?: ISeparators,
 ): ITableCellStyleAndFormattedValue {
     if (isAttributeCell(cellContent)) {
         return {
             style: {},
-            formattedValue: cellContent.name
+            formattedValue: cellContent.name,
         };
     }
 
-    const measureFormat = isMappingHeaderMeasureItem(header) ? header.measureHeaderItem.format : '';
+    const measureFormat = isMappingHeaderMeasureItem(header) ? header.measureHeaderItem.format : "";
 
     return {
         style: getMeasureCellStyle(cellContent, measureFormat, separators, applyColor),
-        formattedValue: getMeasureCellFormattedValue(cellContent, measureFormat, separators)
+        formattedValue: getMeasureCellFormattedValue(cellContent, measureFormat, separators),
     };
 }

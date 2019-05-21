@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import { omit } from 'lodash';
-import { Subtract } from 'utility-types';
-import { VisualizationInput, VisualizationObject } from '@gooddata/typings';
+import * as React from "react";
+import omit = require("lodash/omit");
+import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
 
-import { DonutChart as AfmDonutChart } from './afm/DonutChart';
-import { ICommonChartProps } from './core/base/BaseChart';
-import { convertBucketsToAFM } from '../helpers/conversion';
-import { MEASURES, VIEW } from '../constants/bucketNames';
+import { Subtract } from "../typings/subtract";
+import { DonutChart as AfmDonutChart } from "./afm/DonutChart";
+import { ICommonChartProps } from "./core/base/BaseChart";
+import { convertBucketsToAFM } from "../helpers/conversion";
+import { MEASURES, VIEW } from "../constants/bucketNames";
 
 export interface IDonutChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -29,16 +29,19 @@ export function DonutChart(props: IDonutChartProps): JSX.Element {
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: props.measures || []
+            items: props.measures || [],
         },
         {
             localIdentifier: VIEW,
-            items: props.viewBy ? [props.viewBy] : []
-        }
+            items: props.viewBy ? [props.viewBy] : [],
+        },
     ];
 
-    const newProps
-        = omit<IDonutChartProps, IDonutChartNonBucketProps>(props, ['measures', 'viewBy', 'filters']);
+    const newProps: IDonutChartNonBucketProps = omit<IDonutChartProps, keyof IDonutChartBucketProps>(props, [
+        "measures",
+        "viewBy",
+        "filters",
+    ]);
 
     return (
         <AfmDonutChart

@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from 'react';
-import * as classNames from 'classnames';
-import { AFM, Execution } from '@gooddata/typings';
+import * as React from "react";
+import * as classNames from "classnames";
+import { AFM, Execution } from "@gooddata/typings";
 
-import { IMenu, IMenuAggregationClickConfig } from '../../../interfaces/PivotTable';
-import { IOnOpenedChangeParams } from '../../menu/MenuSharedTypes';
-import AggregationsMenu from './AggregationsMenu';
+import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IOnOpenedChangeParams } from "../../menu/MenuSharedTypes";
+import AggregationsMenu from "./AggregationsMenu";
 
-export type AlignPositions = 'left' | 'right' | 'center';
-export const ALIGN_LEFT = 'left';
-export const ALIGN_RIGHT = 'right';
+export type AlignPositions = "left" | "right" | "center";
+export const ALIGN_LEFT = "left";
+export const ALIGN_RIGHT = "right";
 
 export interface IHeaderCellProps {
     displayText: string;
@@ -39,29 +39,29 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         sortDirection: null,
         textAlign: ALIGN_LEFT,
         menuPosition: ALIGN_LEFT,
-        defaultSortDirection: 'desc',
+        defaultSortDirection: "desc",
         menu: null,
         enableSorting: false,
         onMenuAggregationClick: () => null,
-        onSortClick: () => null
+        onSortClick: () => null,
     };
 
     public state: IHeaderCellState = {
         isMenuOpen: false,
         isMenuButtonVisible: false,
-        currentSortDirection: null
+        currentSortDirection: null,
     };
 
     public componentDidMount() {
         this.setState({
-            currentSortDirection: this.props.sortDirection
+            currentSortDirection: this.props.sortDirection,
         });
     }
 
     public componentWillReceiveProps(nextProps: IHeaderCellProps) {
         if (nextProps.sortDirection !== this.props.sortDirection) {
             this.setState({
-                currentSortDirection: this.props.sortDirection
+                currentSortDirection: this.props.sortDirection,
             });
         }
     }
@@ -72,18 +72,18 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         return (
             <div
                 className={classNames(
-                    'gd-pivot-table-header',
+                    "gd-pivot-table-header",
                     {
-                        'gd-pivot-table-header--open': this.state.isMenuButtonVisible
+                        "gd-pivot-table-header--open": this.state.isMenuButtonVisible,
                     },
-                    className
+                    className,
                 )}
                 onMouseEnter={this.onMouseEnterHeaderCell}
                 onMouseLeave={this.onMouseLeaveHeaderCell}
             >
-                {menuPosition === 'left' && this.renderMenu()}
+                {menuPosition === "left" && this.renderMenu()}
                 {this.renderText()}
-                {menuPosition === 'right' && this.renderMenu()}
+                {menuPosition === "right" && this.renderMenu()}
             </div>
         );
     }
@@ -114,10 +114,10 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     private renderText() {
         const { displayText, textAlign, enableSorting } = this.props;
 
-        const classes = classNames('s-header-cell-label', 'gd-pivot-table-header-label', {
-            'gd-pivot-table-header-label--right': textAlign === 'right',
-            'gd-pivot-table-header-label--center': textAlign === 'center',
-            'gd-pivot-table-header-label--clickable': enableSorting
+        const classes = classNames("s-header-cell-label", "gd-pivot-table-header-label", {
+            "gd-pivot-table-header-label--right": textAlign === "right",
+            "gd-pivot-table-header-label--center": textAlign === "center",
+            "gd-pivot-table-header-label--clickable": enableSorting,
         });
 
         return (
@@ -127,7 +127,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 onMouseEnter={this.onMouseEnterHeaderCellText}
                 onMouseLeave={this.onMouseLeaveHeaderCellText}
             >
-                <span>{displayText ? displayText : ''}</span>
+                <span>{displayText ? displayText : ""}</span>
                 {this.renderSorting()}
             </div>
         );
@@ -137,54 +137,57 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         const { enableSorting } = this.props;
         const { currentSortDirection } = this.state;
 
-        const sortClasses = classNames('s-sort-direction-arrow', `s-sorted-${currentSortDirection}`, {
-            'gd-pivot-table-header-arrow-up': currentSortDirection === 'asc',
-            'gd-pivot-table-header-arrow-down': currentSortDirection === 'desc'
+        const sortClasses = classNames("s-sort-direction-arrow", `s-sorted-${currentSortDirection}`, {
+            "gd-pivot-table-header-arrow-up": currentSortDirection === "asc",
+            "gd-pivot-table-header-arrow-down": currentSortDirection === "desc",
         });
 
-        return currentSortDirection && enableSorting && (
-            <span className="gd-pivot-table-header-next-sort">
-                <span className={sortClasses} />
-            </span>
+        return (
+            currentSortDirection &&
+            enableSorting && (
+                <span className="gd-pivot-table-header-next-sort">
+                    <span className={sortClasses} />
+                </span>
+            )
         );
     }
 
     private onMouseEnterHeaderCell = () => {
         this.showMenuButton();
-    }
+    };
 
     private onMouseLeaveHeaderCell = () => {
         this.hideMenuButton();
-    }
+    };
 
     private onMouseEnterHeaderCellText = () => {
         if (this.props.enableSorting) {
             const { sortDirection } = this.props;
             if (sortDirection === null) {
                 return this.setState({
-                    currentSortDirection: this.props.defaultSortDirection
+                    currentSortDirection: this.props.defaultSortDirection,
                 });
-            } else if (sortDirection === 'asc') {
+            } else if (sortDirection === "asc") {
                 return this.setState({
-                    currentSortDirection: 'desc'
+                    currentSortDirection: "desc",
                 });
-            } else if (sortDirection === 'desc') {
+            } else if (sortDirection === "desc") {
                 return this.setState({
-                    currentSortDirection: 'asc'
+                    currentSortDirection: "asc",
                 });
             } else {
                 return this.setState({
-                    currentSortDirection: null
+                    currentSortDirection: null,
                 });
             }
         }
-    }
+    };
 
     private onMouseLeaveHeaderCellText = () => {
         this.setState({
-            currentSortDirection: this.props.sortDirection
+            currentSortDirection: this.props.sortDirection,
         });
-    }
+    };
 
     private onTextClick = () => {
         const { sortDirection, onSortClick, enableSorting, defaultSortDirection } = this.props;
@@ -195,18 +198,18 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         if (sortDirection === null) {
             const nextSortDirection = defaultSortDirection;
             this.setState({
-                currentSortDirection: nextSortDirection
+                currentSortDirection: nextSortDirection,
             });
             onSortClick(nextSortDirection);
             return;
         }
 
-        const nextSort = sortDirection === 'asc' ? 'desc' : 'asc';
+        const nextSort = sortDirection === "asc" ? "desc" : "asc";
         this.setState({
-            currentSortDirection: nextSort
+            currentSortDirection: nextSort,
         });
         onSortClick(nextSort);
-    }
+    };
 
     private showMenuButton = () => {
         if (this.state.isMenuOpen) {
@@ -214,9 +217,9 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         }
 
         this.setState({
-            isMenuButtonVisible: true
+            isMenuButtonVisible: true,
         });
-    }
+    };
 
     private hideMenuButton = () => {
         if (this.state.isMenuOpen) {
@@ -224,36 +227,36 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         }
 
         this.setState({
-            isMenuButtonVisible: false
+            isMenuButtonVisible: false,
         });
-    }
+    };
 
     private hideAndCloseMenu = () => {
         this.setState({
             isMenuButtonVisible: false,
-            isMenuOpen: false
+            isMenuOpen: false,
         });
-    }
+    };
 
     private menuItemClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         this.hideAndCloseMenu();
         if (this.props.onMenuAggregationClick) {
             this.props.onMenuAggregationClick(menuAggregationClickConfig);
         }
-    }
+    };
 
     private handleMenuOpenedChange = ({ opened, source }: IOnOpenedChangeParams) => {
         this.setState({
-            isMenuOpen: opened
+            isMenuOpen: opened,
         });
 
         // When source is 'TOGGLER_BUTTON_CLICK' we do not want to hide menu
         // button visibility. Because user is hovering over this button
         // so we do not want to hide it.
-        if (source === 'OUTSIDE_CLICK' || source === 'SCROLL') {
+        if (source === "OUTSIDE_CLICK" || source === "SCROLL") {
             this.setState({
-                isMenuButtonVisible: false
+                isMenuButtonVisible: false,
             });
         }
-    }
+    };
 }

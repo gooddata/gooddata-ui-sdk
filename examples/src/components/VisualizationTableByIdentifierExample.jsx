@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from 'react';
-import '@gooddata/react-components/styles/css/main.css';
-import { Visualization } from '@gooddata/react-components';
+import React, { Component } from "react";
+import "@gooddata/react-components/styles/css/main.css";
+import { Visualization } from "@gooddata/react-components";
 
-import { projectId, tableVisualizationIdentifier } from '../utils/fixtures';
+import { projectId, tableVisualizationIdentifier } from "../utils/fixtures";
 
 export class VisualizationTable extends Component {
     render() {
@@ -12,6 +12,11 @@ export class VisualizationTable extends Component {
                 <Visualization
                     projectId={projectId}
                     identifier={tableVisualizationIdentifier}
+                    config={{
+                        menu: {
+                            aggregations: true,
+                        },
+                    }}
                 />
             </div>
         );

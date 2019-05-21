@@ -1,15 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    dataSourceProvider,
-    IDataSourceProviderProps
-} from './DataSourceProvider';
+import * as React from "react";
 
-export {
-    IDataSourceProviderProps
-};
+import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvider";
 
-import { ICommonChartProps } from '../core/base/BaseChart';
-import { Heatmap as CoreHeatmap } from '../core/Heatmap';
-import { generateDefaultDimensions } from '../../helpers/dimensions';
+export { IDataSourceProviderProps };
 
-export const Heatmap = dataSourceProvider<ICommonChartProps>(CoreHeatmap, generateDefaultDimensions, 'Heatmap');
+import { ICommonChartProps } from "../core/base/BaseChart";
+import { Heatmap as CoreHeatmap } from "../core/Heatmap";
+import { generateDefaultDimensions } from "../../helpers/dimensions";
+
+export const Heatmap: React.ComponentClass<IDataSourceProviderProps> = dataSourceProvider<ICommonChartProps>(
+    CoreHeatmap,
+    generateDefaultDimensions,
+    "Heatmap",
+);
