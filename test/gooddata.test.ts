@@ -1,4 +1,4 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import 'isomorphic-fetch';
 import * as fetchMock from 'fetch-mock';
 import { factory } from '../src/gooddata';
@@ -69,5 +69,14 @@ describe('factory', () => {
                     expect(body).toEqual('hello from stg2');
                 })
         ]);
+    });
+
+    it('should export static utilities', () => {
+        const sdk = createSDK();
+
+        expect(sdk.utils).toMatchObject({
+            getAttributesDisplayForms: expect.any(Function),
+            convertReferencesToUris: expect.any(Function)
+        });
     });
 });
