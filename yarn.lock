@@ -1127,10 +1127,10 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@11.10.0":
-  version "11.10.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.10.0.tgz#559b0ccbbe26e467a3a73f4a1f0b6566b321c994"
-  integrity sha512-uiYDjxR/tjXML4kS0cqR8f7foPq6RYWdxroWSaTTDWyDeILAfJtbzwLJPzbuUiQXDg252dnzms3MpTbwg37xwg==
+"@gooddata/gooddata-js@11.11.0":
+  version "11.11.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.11.0.tgz#75e70b1dddc7c72e35beb6e9f979e56f1bc78828"
+  integrity sha512-a3izbpx/pA7klS0B/L1yH6SW/1B2r2jf/EanzD+BEJnG+cFU2hC9F50HC5t+vHcwBbbMVC/OLsEAyut9p9e7EQ==
   dependencies:
     "@gooddata/typings" "^2.13.2"
     es6-promise "3.0.2"
@@ -1145,10 +1145,10 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@60.5.1":
-  version "60.5.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.5.1.tgz#b7bcc97f1c774c7991be798a7e58851dd9302de4"
-  integrity sha512-WJHNgH2ysh+ArCBXYtAeqr8BGGoPTa54cU2fBdKAu2GOaiWZQA2Fk/7wUJKOJuqSwlbwXxkIJtjaIdQ6C4psfw==
+"@gooddata/goodstrap@60.6.0":
+  version "60.6.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.6.0.tgz#cc09f91578433d05ead0d93deaba1f4a60158992"
+  integrity sha512-AkQnWzBnu/G0kIzJOrAN5SR4L3x9jJ1zUTXGaek/mOkAc34gRBXEiOmVINJSBQ2po6jfaJN2JvwnjT6QEQtWSQ==
   dependencies:
     "@gooddata/js-utils" "3.4.0"
     classnames "2.2.6"
