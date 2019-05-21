@@ -180,28 +180,6 @@ describe("highChartCreators", () => {
         });
     });
 
-    describe("Heatmap configuration", () => {
-        const config = getHighchartsOptions(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.HEATMAP,
-                data: {
-                    ...chartOptions.data,
-                    categories: [],
-                },
-            },
-            {},
-        );
-
-        it("have no white grid line between each cell", () => {
-            expect(config.series[0].borderWidth).toBe(0);
-        });
-
-        it("defined empty data pattern", () => {
-            expect(config.defs.patterns[0].id).toEqual("empty-data-pattern");
-        });
-    });
-
     describe("Render event configuration", () => {
         const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, {});
 

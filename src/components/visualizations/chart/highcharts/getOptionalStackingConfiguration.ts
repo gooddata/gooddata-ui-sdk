@@ -13,12 +13,9 @@ import {
     IStackMeasuresConfig,
     IHighChartAxis,
     IYAxisConfig,
-} from "../../../../interfaces/Config";
-import {
     IChartOptions,
-    isNegativeValueIncluded,
-    supportedStackingAttributesChartTypes,
-} from "../chartOptionsBuilder";
+} from "../../../../interfaces/Config";
+import { isNegativeValueIncluded, supportedStackingAttributesChartTypes } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,

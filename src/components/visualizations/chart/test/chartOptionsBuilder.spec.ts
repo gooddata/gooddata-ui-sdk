@@ -2,6 +2,7 @@
 import range = require("lodash/range");
 import get = require("lodash/get");
 import set = require("lodash/set");
+import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
 import { findMeasureGroupInDimensions } from "../../../../helpers/executionResultHelper";
@@ -23,19 +24,15 @@ import {
     getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure,
-    IPoint,
-    IChartOptions,
     IValidationResult,
+    getHeatmapSeries,
 } from "../chartOptionsBuilder";
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
-
 import * as headerPredicateFactory from "../../../../factory/HeaderPredicateFactory";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
-
 import { PIE_CHART_LIMIT, STACK_BY_DIMENSION_INDEX } from "../constants";
-
-import { DEFAULT_COLOR_PALETTE, getLighterColor, getRgbString } from "../../utils/color";
+import { DEFAULT_COLOR_PALETTE, getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
     TreemapColorStrategy,
@@ -45,10 +42,8 @@ import {
     HeatmapColorStrategy,
     IColorStrategy,
 } from "../colorFactory";
-import { IChartConfig, IColorPaletteItem } from "../../../../interfaces/Config";
+import { IChartConfig, IColorPaletteItem, IPointData, IChartOptions } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-
-export { IPoint };
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
@@ -1561,6 +1556,51 @@ describe("chartOptionsBuilder", () => {
                 });
             });
         });
+
+        describe("in use case of heatmap", () => {
+            const dataSet = fixtures.heatmapEmptyCells;
+            const { measureGroup } = getMVS(dataSet);
+            const executionResultData: Execution.DataValue[][] = dataSet.executionResult.data;
+            const heatmapSeries = getHeatmapSeries(executionResultData, measureGroup);
+            const heatmapDataPoints = heatmapSeries[0].data;
+            const firstEmptyCellIndex = heatmapDataPoints.findIndex(point => isNil(point.value));
+
+            it("should return only one series", () => {
+                expect(heatmapSeries.length).toBe(1);
+            });
+
+            it("should have two data points at null value", () => {
+                const nullDataCount = executionResultData.reduce(
+                    (result, data) => {
+                        result.count += data.filter(isNil).length;
+                        return result;
+                    },
+                    { count: 0 },
+                ).count;
+                const nullPointCount = heatmapSeries[0].data.map(data => data.value).filter(isNil).length;
+                expect(nullPointCount).toBe(nullDataCount * 2);
+            });
+
+            it("should first empty point have gray border", () => {
+                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
+                    firstEmptyCellIndex
+                ];
+                expect(borderColor).toEqual(GRAY);
+                expect(borderWidth).toBe(1);
+                expect(pointPadding).toBe(undefined);
+                expect(color).toBe(TRANSPARENT);
+            });
+
+            it("should second empty point have stripes inside", () => {
+                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
+                    firstEmptyCellIndex + 1
+                ];
+                expect(borderColor).toBe(undefined);
+                expect(borderWidth).toBe(0);
+                expect(pointPadding).toBe(2);
+                expect(typeof color).not.toBe("string");
+            });
+        });
     });
 
     describe("getDrillIntersection", () => {
@@ -2509,7 +2549,7 @@ describe("chartOptionsBuilder", () => {
         const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
         const { measureGroup, stackByAttribute } = getMVS(dataSet);
 
-        const point: IPoint = {
+        const point: IPointData = {
             value: 300,
             name: "point name",
             x: 10,
@@ -2611,7 +2651,7 @@ describe("chartOptionsBuilder", () => {
     });
 
     describe("buildTooltipTreemapFactory", () => {
-        const point: IPoint = {
+        const point: IPointData = {
             parent: "1",
             category: {
                 name: "category",
