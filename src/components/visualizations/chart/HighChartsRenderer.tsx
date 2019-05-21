@@ -7,6 +7,7 @@ import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import partial = require("lodash/partial");
 import throttle = require("lodash/throttle");
+import isNil = require("lodash/isNil");
 import * as cx from "classnames";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
@@ -214,7 +215,7 @@ export default class HighChartsRenderer extends React.PureComponent<
                     legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
                 return {
                     ...item,
-                    visible,
+                    visible: isNil(item.visible) ? visible : item.visible,
                 };
             }),
         );

@@ -15,7 +15,7 @@ import {
     IYAxisConfig,
     IChartOptions,
 } from "../../../../interfaces/Config";
-import { isNegativeValueIncluded, supportedStackingAttributesChartTypes } from "../chartOptionsBuilder";
+import { supportedStackingAttributesChartTypes } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
@@ -175,18 +175,13 @@ function getSeriesConfiguration(
     };
 }
 
-function hasNegativeValues(series: ISeriesItem[] = [], index: number) {
-    const matchedSeries = series.filter((seriesItem: ISeriesItem) => seriesItem.yAxis === index);
-    return isNegativeValueIncluded(matchedSeries);
-}
-
 export function getYAxisConfiguration(
     chartOptions: IChartOptions,
     config: any,
     chartConfig: IChartConfig,
 ): IYAxisConfig {
     const type = getPrimaryChartType(chartOptions);
-    const { yAxis, series } = config;
+    const { yAxis } = config;
     const { stackMeasuresToPercent = false } = chartConfig;
 
     // only support column char
@@ -198,18 +193,16 @@ export function getYAxisConfiguration(
     const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
     const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
+    // enable by default or follow dataLabels.visible config
+    const stackLabelConfig = isNil(dataLabelEnabled) || dataLabelEnabled;
+
     const yAxisWithStackLabel = yAxis.map((axis: IHighChartAxis, index: number) => {
-        // enable by default or follow dataLabels.visible config
-        const stackLabelEnabled = isNil(dataLabelEnabled) || dataLabelEnabled;
-
-        // disable stack labels for primary Y axis when there are negative values and 'Stack to 100%' on
-        const shouldDisableStackLabels =
-            stackMeasuresToPercent && index === 0 && hasNegativeValues(series, index);
-
+        // disable stack labels for primary Y axis when there is 'Stack to 100%' on
+        const stackLabelEnabled = (index !== 0 || !stackMeasuresToPercent) && stackLabelConfig;
         return {
             ...axis,
             stackLabels: {
-                enabled: !shouldDisableStackLabels && stackLabelEnabled,
+                enabled: stackLabelEnabled,
             },
         };
     });
