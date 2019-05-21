@@ -18,6 +18,8 @@ If you prefer [npm](npmjs.com) run
 $ npm install --save @gooddata/react-components
 ```
 
+The public API is exposed via global `index.js`. Except for the styles, do not import any other file directly
+because they are not intended to be part of the public API.
 
 ## Contributing
 
