@@ -1,5 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
-import { getStackLabelPointsForDualAxis } from "../autohideColumnLabels";
+// (C) 2007-2019 GoodData Corporation
+import { getStackLabelPointsForDualAxis, isOverlappingWidth } from "../autohideColumnLabels";
+import { IDataPoint } from "../../../../../../../interfaces/Config";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {
@@ -30,5 +31,44 @@ describe("getStackLabelPointsForDualAxis", () => {
             stacks[0].column0[1],
             stacks[1].column1[1],
         ]);
+    });
+});
+
+describe("isOverlappingWidth", () => {
+    const visiblePointsWithoutShape: IDataPoint[] = [
+        {
+            dataLabel: {
+                width: 98,
+                padding: 2,
+            },
+        },
+    ];
+
+    it("should return true when point has datalabel width greater than shape width", () => {
+        const visiblePointsWithShape: IDataPoint[] = [
+            {
+                ...visiblePointsWithoutShape[0],
+                shapeArgs: {
+                    width: 100,
+                },
+            },
+        ];
+        expect(isOverlappingWidth(visiblePointsWithShape)).toEqual(true);
+    });
+
+    it("should return false when point has datalabel width less than shape width", () => {
+        const visiblePointsWithShape: IDataPoint[] = [
+            {
+                ...visiblePointsWithoutShape[0],
+                shapeArgs: {
+                    width: 105,
+                },
+            },
+        ];
+        expect(isOverlappingWidth(visiblePointsWithShape)).toEqual(false);
+    });
+
+    it("should return false when shapeArgs is undefined", () => {
+        expect(isOverlappingWidth(visiblePointsWithoutShape)).toEqual(false);
     });
 });

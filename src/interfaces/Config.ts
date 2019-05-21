@@ -14,6 +14,8 @@ export type IDataLabelsVisible = string | boolean;
 
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
+    width?: number;
+    padding?: number;
 }
 
 export interface IColorMapping {
@@ -140,4 +142,16 @@ export interface ISeriesItem {
     labelKey?: string;
     stack?: number;
     stacking?: string;
+}
+
+export interface IShapeArgsConfig {
+    width?: number;
+    heigth?: number;
+    x?: number;
+    y?: number;
+}
+
+export interface IDataPoint {
+    dataLabel?: IDataLabelsConfig;
+    shapeArgs?: IShapeArgsConfig;
 }

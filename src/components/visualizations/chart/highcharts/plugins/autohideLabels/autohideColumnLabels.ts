@@ -26,6 +26,7 @@ import {
     getShapeVisiblePart,
     hasShape,
 } from "../../dataLabelsHelpers";
+import { IDataPoint } from "../../../../../../interfaces/Config";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
@@ -83,21 +84,24 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
         return null;
     };
 
-    const isOverlappingWidth = visiblePoints.filter(hasDataLabel).some((point: any) => {
-        const { dataLabel } = point;
-        if (dataLabel) {
-            const labelWidth = dataLabel.width + 2 * dataLabel.padding;
-            return labelWidth > point.shapeArgs.width;
-        }
-        return false;
-    });
-
-    if (isOverlappingWidth) {
+    if (isOverlappingWidth(visiblePoints)) {
         hideDataLabels(visiblePoints);
     } else {
         visiblePoints.forEach(toggleLabel);
     }
 };
+
+export function isOverlappingWidth(visiblePoints: IDataPoint[]) {
+    return visiblePoints.filter(hasDataLabel).some((point: IDataPoint) => {
+        const { dataLabel, shapeArgs } = point;
+
+        if (dataLabel && shapeArgs) {
+            const labelWidth = dataLabel.width + 2 * dataLabel.padding;
+            return labelWidth > shapeArgs.width;
+        }
+        return false;
+    });
+}
 
 function areNeighborsOverlapping(neighbors: any[]) {
     return neighbors.some(labelsPair => {
