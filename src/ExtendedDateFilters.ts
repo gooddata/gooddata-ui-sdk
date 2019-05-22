@@ -77,19 +77,40 @@ export namespace ExtendedDateFilters {
         | IAbsoluteDateFilterForm
         | IAbsoluteDateFilterPreset;
 
-    export const isAbsoluteDateFilterOption = (option: DateFilterOption): option is AbsoluteDateFilterOption =>
+    export const isAllTimeDateFilter = (option: DateFilterOption): option is IAllTimeDateFilter =>
         option
-            ? option.type === 'absoluteForm' || option.type === 'absolutePreset'
+            ? option.type === 'allTime'
             : false;
+
+    export const isAbsoluteDateFilterForm = (option: DateFilterOption): option is IAbsoluteDateFilterForm =>
+        option
+            ? option.type === 'absoluteForm'
+            : false;
+
+    export const isAbsoluteDateFilterPreset = (option: DateFilterOption): option is IAbsoluteDateFilterPreset =>
+        option
+            ? option.type === 'absolutePreset'
+            : false;
+
+    export const isAbsoluteDateFilterOption = (option: DateFilterOption): option is AbsoluteDateFilterOption =>
+        isAbsoluteDateFilterForm(option) || isAbsoluteDateFilterPreset(option);
 
     export type RelativeDateFilterOption =
         | IRelativeDateFilterForm
         | IRelativeDateFilterPreset;
 
-    export const isRelativeDateFilterOption = (option: DateFilterOption): option is RelativeDateFilterOption =>
+    export const isRelativeDateFilterForm = (option: DateFilterOption): option is IRelativeDateFilterForm =>
         option
-            ? option.type === 'relativeForm' || option.type === 'relativePreset'
+            ? option.type === 'relativeForm'
             : false;
+
+    export const isRelativeDateFilterPreset = (option: DateFilterOption): option is IRelativeDateFilterPreset =>
+        option
+            ? option.type === 'relativePreset'
+            : false;
+
+    export const isRelativeDateFilterOption = (option: DateFilterOption): option is RelativeDateFilterOption =>
+        isRelativeDateFilterForm(option) || isRelativeDateFilterPreset(option);
 
     export type DateFilterOption =
         | IAllTimeDateFilter
