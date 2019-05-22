@@ -11,9 +11,10 @@ import getOptionalStackingConfiguration, {
     PERCENT_STACK,
     NORMAL_STACK,
 } from "../getOptionalStackingConfiguration";
-import { VisualizationTypes } from "../../../../..";
 import { IDrillConfig } from "../../../../../interfaces/DrillEvents";
 import { IChartConfig, ISeriesItem } from "../../../../../interfaces/Config";
+import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { BLACK_LABEL, WHITE_LABEL } from "../../../../../constants/label";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {
@@ -310,13 +311,13 @@ describe("getOptionalStackingConfiguration", () => {
             };
 
             it.each([
-                ["stackMeasures", VisualizationTypes.COLUMN, NORMAL_STACK],
-                ["stackMeasures", VisualizationTypes.AREA, NORMAL_STACK],
-                ["stackMeasuresToPercent", VisualizationTypes.COLUMN, PERCENT_STACK],
-                ["stackMeasuresToPercent", VisualizationTypes.AREA, PERCENT_STACK],
+                ["stackMeasures", VisualizationTypes.COLUMN, NORMAL_STACK, WHITE_LABEL],
+                ["stackMeasures", VisualizationTypes.AREA, NORMAL_STACK, BLACK_LABEL],
+                ["stackMeasuresToPercent", VisualizationTypes.COLUMN, PERCENT_STACK, WHITE_LABEL],
+                ["stackMeasuresToPercent", VisualizationTypes.AREA, PERCENT_STACK, BLACK_LABEL],
             ])(
                 "should return series with %s config if series type is %s",
-                (stackConfig: string, type: string, stackType: string) => {
+                (stackConfig: string, type: string, stackType: string, labelStyle: Highcharts.CSSObject) => {
                     const config = {
                         yAxis: [{}, {}],
                         series: [
@@ -339,12 +340,14 @@ describe("getOptionalStackingConfiguration", () => {
                             stack: 0,
                             stacking: stackType,
                             type,
+                            dataLabels: { style: labelStyle },
                         },
                         {
                             yAxis: 1,
                             stack: null,
                             stacking: null,
                             type: VisualizationTypes.LINE,
+                            dataLabels: { style: BLACK_LABEL },
                         },
                     ]);
                 },
@@ -375,12 +378,14 @@ describe("getOptionalStackingConfiguration", () => {
                             stack: 0,
                             stacking: null,
                             type: VisualizationTypes.LINE,
+                            dataLabels: { style: BLACK_LABEL },
                         },
                         {
                             yAxis: 1,
                             stack: null,
                             stacking: null,
                             type: VisualizationTypes.AREA,
+                            dataLabels: { style: BLACK_LABEL },
                         },
                     ]);
                 },
@@ -411,12 +416,14 @@ describe("getOptionalStackingConfiguration", () => {
                             stack: 0,
                             stacking: stackType,
                             type: VisualizationTypes.COLUMN,
+                            dataLabels: { style: WHITE_LABEL },
                         },
                         {
                             yAxis: 1,
                             stack: null,
                             stacking: null,
                             type: VisualizationTypes.AREA,
+                            dataLabels: { style: BLACK_LABEL },
                         },
                     ]);
                 },

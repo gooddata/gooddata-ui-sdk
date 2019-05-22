@@ -2,7 +2,7 @@
 import get = require("lodash/get");
 import head = require("lodash/head");
 import last = require("lodash/last");
-import { formatAsPercent, isInPercent } from "../customConfiguration";
+import { formatAsPercent, isInPercent } from "../dataLabelsHelpers";
 
 const DEFAULT_LIMIT_LENGTH = 4; // length of '0.00' is 4
 const DEFAULT_PADDING = 2;

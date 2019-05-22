@@ -24,7 +24,13 @@ import {
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
 import { IDataLabelsVisible, IChartConfig, IAxis } from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
-import { getShapeVisiblePart } from "../highcharts/dataLabelsHelpers";
+import {
+    formatAsPercent,
+    getLabelStyle,
+    getLabelsVisibilityConfig,
+    getShapeVisiblePart,
+    isInPercent,
+} from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
 import {
@@ -91,15 +97,6 @@ function getTitleConfiguration(chartOptions: IChartOptions) {
         yAxis,
         xAxis,
     };
-}
-
-export function formatAsPercent(unit: number = 100) {
-    const val = parseFloat((this.value * unit).toPrecision(14));
-    return `${val}%`;
-}
-
-export function isInPercent(format: string = "") {
-    return format.includes("%");
 }
 
 export function formatOverlappingForParentAttribute(category: any) {
@@ -533,54 +530,6 @@ function getTreemapLabelsConfiguration(
     }
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): any {
-    switch (visible) {
-        case "auto":
-            return {
-                enabled: true,
-                allowOverlap: false,
-            };
-        case true:
-            return {
-                enabled: true,
-                allowOverlap: true,
-            };
-        case false:
-            return {
-                enabled: false,
-            };
-        default:
-            // keep decision on each chart for `undefined`
-            return {};
-    }
-}
-
-// types with label inside sections have white labels
-const whiteDataLabelTypes = [
-    VisualizationTypes.PIE,
-    VisualizationTypes.DONUT,
-    VisualizationTypes.TREEMAP,
-    VisualizationTypes.BUBBLE,
-];
-
-function getLabelStyle(chartOptions: IChartOptions) {
-    const { stacking, type } = chartOptions;
-    const WHITE_LABEL = {
-        color: "#ffffff",
-        textShadow: "0 0 1px #000000",
-    };
-
-    const BLACK_LABEL = {
-        color: "#000000",
-        textShadow: "none",
-    };
-
-    if (isAreaChart(type)) {
-        return BLACK_LABEL;
-    }
-    return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
-}
-
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
 
@@ -588,7 +537,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
-    const style = getLabelStyle(chartOptions);
+    const style = getLabelStyle(type, stacking);
 
     const drilldown =
         stacking || isTreemap(type)
