@@ -2,8 +2,14 @@
 
 _common-build(){
     rm -rf dist
+
     mkdir dist
     cp -rf src/translations/ dist/translations/
+
+    mkdir dist/internal
+    cp -rf src/internal/assets dist/internal/
+    cp -rf src/internal/translations dist/internal/
+
     node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
 }
 

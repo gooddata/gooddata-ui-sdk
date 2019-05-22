@@ -1,0 +1,124 @@
+// (C) 2007-2019 GoodData Corporation
+@import "~@gooddata/goodstrap/src/core/styles/variables.scss";
+
+$color-picker-item-size: 20px;
+$color-picker-spacing: 5px;
+
+.gd-color-drop-down {
+    margin: $color-picker-spacing;
+}
+
+.gd-color-config-list-item {
+    &.is-active {
+        color: $is-focused-color;
+        background: $is-focused-background;
+    }
+
+    &.is-active,
+    &:hover {
+        .gd-color-config-item-sample::before {
+            opacity: 1;
+        }
+    }
+}
+
+.gd-color-config-item-sample {
+    flex: 0 0 auto;
+    width: $color-picker-item-size;
+    height: $color-picker-item-size;
+    margin-right: 10px;
+    text-align: center;
+    line-height: $color-picker-item-size;
+
+    &::before {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        color: $gd-color-white;
+        font-size: 16px;
+        transition: opacity 0.2s;
+    }
+}
+
+.gd-color-drop-down-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 160px;
+}
+
+.gd-color-drop-down-list-large {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+    width: 160px;
+    height: 138px;
+}
+
+.gd-color-list-item {
+    width: $color-picker-item-size;
+    height: $color-picker-item-size;
+    margin: $color-picker-spacing;
+    border: 1px solid transparent;
+    outline: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.gd-color-list-item-active {
+        border-color: $gd-color-white;
+        box-shadow: 0 0 1px 1px transparentize($gd-color-dark, 0.85);
+        transform: scale(1.1);
+    }
+}
+
+.gd-color-drop-down-custom-section {
+    position: relative;
+    display: flex;
+    margin: 0 $color-picker-spacing;
+    padding: 2 * $color-picker-spacing 0 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: $color-picker-spacing;
+        right: 0;
+        left: 0;
+        height: 0;
+        border-top: 1px solid $border-color;
+    }
+
+    .button-link {
+        width: 100%;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        text-decoration: none;
+    }
+}
+
+.gd-color-reset-colors-section {
+    overflow: hidden;
+    transition: all 0.4s;
+
+    @extend .gd-color-drop-down-custom-section;
+
+    &.disabled {
+        height: 0;
+        padding-top: 0;
+    }
+
+    .button-link {
+        font-size: 12px;
+    }
+}
+
+.gd-color-unsupported {
+    padding: 20px 10px;
+    font-size: 12.5px;
+    line-height: 15px;
+    text-align: center;
+    color: $gd-color-text-dimmed;
+}
