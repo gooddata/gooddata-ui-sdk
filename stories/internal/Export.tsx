@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { IExportConfig, IExportResponse } from "@gooddata/gooddata-js";
-import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
+import ExportDialog, { IExportDialogData } from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
+import { AFM } from "@gooddata/typings";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 
@@ -16,8 +17,21 @@ const WRAPPER_STYLE = { width: 800, height: 400 };
 const INNER_STYLE = { width: 800, height: 370 };
 const BUTTON_STYLE = { marginTop: 10, marginRight: 10 };
 
+const defaultFilters: AFM.IAbsoluteDateFilter[] = [
+    {
+        absoluteDateFilter: {
+            dataSet: {
+                uri: "/gdc/md/storybook/obj/123",
+            },
+            from: "2017-01-01",
+            to: "2017-12-31",
+        },
+    },
+];
+
 interface IWrapperComponentProps {
     children: (onExportReady: OnExportReady) => React.ReactChild;
+    filters?: AFM.IAbsoluteDateFilter[];
 }
 
 interface IWrapperComponentState {
@@ -25,6 +39,10 @@ interface IWrapperComponentState {
 }
 
 class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperComponentState> {
+    public static defaultProps: Partial<IWrapperComponentProps> = {
+        filters: [],
+    };
+
     private exportResult: IExportFunction;
 
     constructor(props: IWrapperComponentProps) {
@@ -32,17 +50,6 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
         this.state = {
             showExportDialog: false,
         };
-
-        this.onExportReady = this.onExportReady.bind(this);
-        this.exportToCSV = this.exportToCSV.bind(this);
-        this.exportToXLSX = this.exportToXLSX.bind(this);
-        this.exportWithCustomName = this.exportWithCustomName.bind(this);
-        this.exportWithMergeHeaders = this.exportWithMergeHeaders.bind(this);
-        this.doExport = this.doExport.bind(this);
-
-        this.hideExportDialog = this.hideExportDialog.bind(this);
-        this.exportWithDialog = this.exportWithDialog.bind(this);
-        this.getExportDialog = this.getExportDialog.bind(this);
     }
 
     public render() {
@@ -67,7 +74,7 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
                         Export with custom name "CustomName"
                     </button>
                     <button style={BUTTON_STYLE} onClick={this.exportWithDialog}>
-                        Export with mergeHeaders
+                        Export with Export Dialog
                     </button>
                 </div>
                 {exportDialog}
@@ -75,12 +82,12 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
         );
     }
 
-    private onExportReady(exportResult: IExportFunction) {
+    private onExportReady = (exportResult: IExportFunction) => {
         action("onExportReady")("fired");
         this.exportResult = exportResult;
-    }
+    };
 
-    private getExportDialog() {
+    private getExportDialog = () => {
         return (
             <ExportDialog
                 headline="Export to XLSX"
@@ -93,67 +100,74 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
                 mergeHeadersText="Keep attribute cells merged"
                 mergeHeadersTitle="CELLS"
                 onCancel={this.hideExportDialog}
-                onSubmit={this.exportWithMergeHeaders}
+                onSubmit={this.exportDialogSubmit}
             />
         );
-    }
+    };
 
-    private exportWithDialog() {
+    private exportWithDialog = () => {
         this.setState({ showExportDialog: true });
-    }
+    };
 
-    private hideExportDialog() {
+    private hideExportDialog = () => {
         this.setState({ showExportDialog: false });
-    }
+    };
 
-    private exportToCSV() {
+    private exportToCSV = () => {
         const options = {};
         action("Export CSV")(options);
         this.doExport(options);
-    }
+    };
 
-    private exportToXLSX() {
+    private exportToXLSX = () => {
         const options: IExportConfig = { format: "xlsx" };
         action("Export XLSX")(options);
         this.doExport(options);
-    }
+    };
 
-    private exportWithCustomName() {
+    private exportWithCustomName = () => {
         const options = { title: "CustomName" };
         action('Export with custom name "CustomName"')(options);
         this.doExport(options);
-    }
+    };
 
-    private exportWithMergeHeaders() {
+    private exportDialogSubmit = (data: IExportDialogData) => {
+        const { mergeHeaders, includeFilterContext } = data;
+
         this.hideExportDialog();
 
-        const options: IExportConfig = { format: "xlsx", mergeHeaders: true };
+        const options: IExportConfig = { format: "xlsx", mergeHeaders };
+        if (includeFilterContext) {
+            options.showFilters = this.props.filters;
+        }
+
         action("Export with mergeHeaders")(options);
         this.doExport(options);
-    }
+    };
 
-    private doExport(exportConfig: IExportConfig) {
+    private doExport = (exportConfig: IExportConfig) => {
         this.exportResult(exportConfig).then(this.doExportSuccess, this.doExportError);
-    }
+    };
 
-    private doExportSuccess(result: IExportResponse) {
+    private doExportSuccess = (result: IExportResponse) => {
         return action("exportResult success")(result);
-    }
+    };
 
-    private doExportError(error: Error) {
+    private doExportError = (error: Error) => {
         return action("exportResult error")(error);
-    }
+    };
 }
 
 storiesOf("Internal/Export", module)
     .add("export chart data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent>
+            <WrapperComponent filters={defaultFilters}>
                 {(onExportReady: OnExportReady) => (
                     <BarChart
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
                         viewBy={ATTRIBUTE_1}
+                        filters={defaultFilters}
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         LoadingComponent={null}
@@ -165,12 +179,13 @@ storiesOf("Internal/Export", module)
     ))
     .add("export table data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent>
+            <WrapperComponent filters={defaultFilters}>
                 {(onExportReady: OnExportReady) => (
                     <Table
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
                         attributes={[ATTRIBUTE_1]}
+                        filters={defaultFilters}
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         LoadingComponent={null}
@@ -182,12 +197,13 @@ storiesOf("Internal/Export", module)
     ))
     .add("export pivot table data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent>
+            <WrapperComponent filters={defaultFilters}>
                 {(onExportReady: OnExportReady) => (
                     <PivotTable
                         projectId="storybook"
                         measures={[MEASURE_1, MEASURE_2]}
                         rows={[ATTRIBUTE_1]}
+                        filters={defaultFilters}
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         LoadingComponent={null}
@@ -199,11 +215,12 @@ storiesOf("Internal/Export", module)
     ))
     .add("export visualization data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent>
+            <WrapperComponent filters={defaultFilters}>
                 {(onExportReady: OnExportReady) => (
                     <Visualization
                         projectId="storybook"
                         uri={"/gdc/md/storybook/obj/1003"}
+                        filters={defaultFilters}
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         locale="en-US"
@@ -216,12 +233,13 @@ storiesOf("Internal/Export", module)
     ))
     .add("export headline data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent>
+            <WrapperComponent filters={defaultFilters}>
                 {(onExportReady: OnExportReady) => (
                     <Headline
                         projectId="storybook"
                         primaryMeasure={MEASURE_1_WITH_ALIAS}
                         secondaryMeasure={MEASURE_2}
+                        filters={defaultFilters}
                         onExportReady={onExportReady}
                         LoadingComponent={null}
                         ErrorComponent={null}

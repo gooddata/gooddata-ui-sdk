@@ -1,7 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
-import assign from "lodash/assign";
 import get from "lodash/get";
 import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
 import PropTypes from "prop-types";
@@ -17,22 +16,14 @@ export class ExampleWithExport extends React.Component {
             errorMessage: null,
         };
 
-        this.onExportReady = this.onExportReady.bind(this);
-        this.exportToCSV = this.exportToCSV.bind(this);
-        this.exportToXLSX = this.exportToXLSX.bind(this);
-        this.exportWithCustomName = this.exportWithCustomName.bind(this);
-        this.exportWithDialog = this.exportWithDialog.bind(this);
-        this.exportWithMergeHeaders = this.exportWithMergeHeaders.bind(this);
         this.doExport = this.doExport.bind(this);
-        this.getExportDialog = this.getExportDialog.bind(this);
-        this.exportDialogCancel = this.exportDialogCancel.bind(this);
     }
 
-    onExportReady(exportResult) {
+    onExportReady = exportResult => {
         this.exportResult = exportResult;
-    }
+    };
 
-    getExportDialog() {
+    getExportDialog = () => {
         return (
             <ExportDialog
                 headline="Export to XLSX"
@@ -45,12 +36,12 @@ export class ExampleWithExport extends React.Component {
                 mergeHeadersText="Keep attribute cells merged"
                 mergeHeadersTitle="CELLS"
                 onCancel={this.exportDialogCancel}
-                onSubmit={this.exportWithMergeHeaders}
+                onSubmit={this.exportDialogSubmit}
             />
         );
-    }
+    };
 
-    downloadFile(uri) {
+    downloadFile = uri => {
         let anchor = document.getElementById(DOWNLOADER_ID);
         if (!anchor) {
             anchor = document.createElement("a");
@@ -60,32 +51,40 @@ export class ExampleWithExport extends React.Component {
         anchor.href = uri;
         anchor.download = uri;
         anchor.click();
-    }
+    };
 
-    exportDialogCancel() {
+    exportDialogCancel = () => {
         this.setState({ showExportDialog: false });
-    }
+    };
 
-    exportToCSV() {
+    exportToCSV = () => {
         this.doExport({});
-    }
+    };
 
-    exportToXLSX() {
+    exportToXLSX = () => {
         this.doExport({ format: "xlsx" });
-    }
+    };
 
-    exportWithCustomName() {
+    exportWithCustomName = () => {
         this.doExport({ title: "CustomName" });
-    }
+    };
 
-    exportWithDialog() {
+    exportWithDialog = () => {
         this.setState({ showExportDialog: true });
-    }
+    };
 
-    exportWithMergeHeaders(exportConfig) {
+    exportDialogSubmit = data => {
+        const { mergeHeaders, includeFilterContext } = data;
+
         this.setState({ showExportDialog: false });
-        this.doExport(assign({ format: "xlsx", title: "CustomName" }, exportConfig));
-    }
+
+        const exportConfig = { format: "xlsx", title: "CustomName", mergeHeaders };
+        if (includeFilterContext) {
+            exportConfig.showFilters = this.props.filters;
+        }
+
+        this.doExport(exportConfig);
+    };
 
     async doExport(exportConfig) {
         try {
@@ -140,6 +139,11 @@ export class ExampleWithExport extends React.Component {
 
 ExampleWithExport.propTypes = {
     children: PropTypes.func.isRequired,
+    filters: PropTypes.array,
+};
+
+ExampleWithExport.defaultProps = {
+    filters: [],
 };
 
 export default ExampleWithExport;

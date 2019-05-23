@@ -102,8 +102,8 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "11.11.0",
-    "@gooddata/goodstrap": "60.6.0",
+    "@gooddata/gooddata-js": "11.12.0",
+    "@gooddata/goodstrap": "60.7.0",
     "@gooddata/js-utils": "3.4.0",
     "@gooddata/numberjs": "^3.1.2",
     "@gooddata/typings": "^2.13.2",
