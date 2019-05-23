@@ -9,6 +9,7 @@ import {
     FIELD_TYPE_MEASURE,
     ID_SEPARATOR,
     ROW_TOTAL,
+    ROW_SUBTOTAL,
 } from "./agGridConst";
 import { IGridHeader, IGridRow, IGridTotalsRow } from "./agGridTypes";
 import invariant = require("invariant");
@@ -91,9 +92,14 @@ export const getRow = (
             rowHeaderIndex,
             intl,
         );
-        if (isSubtotal && !row.subtotalStyle) {
-            row.subtotalStyle = subtotalStyles[rowHeaderIndex];
+        if (isSubtotal) {
+            row.type = ROW_SUBTOTAL;
+
+            if (!row.subtotalStyle) {
+                row.subtotalStyle = subtotalStyles[rowHeaderIndex];
+            }
         }
+
         row[field] = value;
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
     });
@@ -166,9 +172,7 @@ export const getRowTotals = (
                 id: `visualizations.totals.dropdown.title.${totalName}`,
             }),
             rowTotalActiveMeasures,
-            type: {
-                [ROW_TOTAL]: true,
-            },
+            type: ROW_TOTAL,
         };
     });
 };

@@ -58,9 +58,7 @@ describe("getRowTotals", () => {
                     headerKey: "a_2211",
                 },
                 rowTotalActiveMeasures: ["m_0", "m_1"],
-                type: {
-                    rowTotal: true,
-                },
+                type: "rowTotal",
             },
             {
                 "a_2009_1-a_2071_1-m_0": "52200.219065",
@@ -93,9 +91,7 @@ describe("getRowTotals", () => {
                     headerKey: "a_2211",
                 },
                 rowTotalActiveMeasures: ["m_0"],
-                type: {
-                    rowTotal: true,
-                },
+                type: "rowTotal",
             },
         ]);
     });
@@ -256,6 +252,7 @@ describe("getRow", () => {
                 },
             },
             subtotalStyle: "even",
+            type: "rowSubtotal",
             m_0: "40500",
             m_1: "41142",
         });
