@@ -1,6 +1,7 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require('lodash/get');
 import { delay } from './utils/promise';
+import { ApiResponse, ApiResponseError } from './xhr';
 
 import { name as pkgName, version as pkgVersion } from '../package.json';
 
@@ -72,18 +73,18 @@ export const handlePolling = (
 };
 
 /**
- * Helper for polling using HEAD method
+ * Helper for polling with header status
  *
- * @param xhrHead xhr module
+ * @param xhrRequest xhr module
  * @param {String} uri
  * @param {Function} isPollingDone
  * @param {Object} options for polling (maxAttempts, pollStep)
  * @private
  */
 export const handleHeadPolling = (
-    xhrHead: any,
+    xhrRequest: any,
     uri: string,
-    isPollingDone: (headers: any) => boolean,
+    isPollingDone: (responseHeaders: Response, response: ApiResponse) => boolean,
     options: IPollingOptions = {}
 ) => {
     const {
@@ -92,19 +93,25 @@ export const handleHeadPolling = (
         pollStep = 5000
     } = options;
 
-    return xhrHead(uri)
+    return xhrRequest(uri)
         .then((response: any) => {
             if (attempts > maxAttempts) {
                 return Promise.reject(new Error('Export timeout!!!'));
             }
-            return isPollingDone(response.getHeaders()) ?
-                Promise.resolve({ uri }) :
-                delay(pollStep).then(() => {
-                    return handleHeadPolling(xhrHead, uri, isPollingDone, {
+            const responseHeaders = response.getHeaders();
+            if (isPollingDone(responseHeaders, response)) {
+                if (responseHeaders.status === 200) {
+                    return Promise.resolve({ uri });
+                }
+                return Promise.reject(new ApiResponseError(response.statusText, response, response.getData()));
+            } else {
+                return delay(pollStep).then(() =>
+                    handleHeadPolling(xhrRequest, uri, isPollingDone, {
                         ...options,
                         attempts: attempts + 1
-                    });
-                });
+                    })
+                );
+            }
         });
 };
 
