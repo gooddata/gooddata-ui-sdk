@@ -57,6 +57,12 @@ $header-cell-resize-width: 20px;
             border-right: none;
             border-left: none;
         }
+
+        &,
+        .ag-react-container {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     [row-index="0"] {
