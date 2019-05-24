@@ -1,9 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import invoke = require("lodash/invoke");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
+import { css } from "highcharts";
 import { chartClick } from "../../utils/drilldownEventing";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
@@ -19,6 +20,10 @@ export const MAX_POINT_WIDTH = 100;
 export const HOVER_BRIGHTNESS = 0.1;
 export const MINIMUM_HC_SAFE_BRIGHTNESS = Number.MIN_VALUE;
 
+function handleTooltipOffScreen(renderTo: Highcharts.HTMLDOMElement) {
+    // allow tooltip over the container wrapper
+    css(renderTo, { overflow: "visible" });
+}
 let previousChart: any = null;
 
 const BASE_TEMPLATE: any = {
@@ -97,6 +102,11 @@ const BASE_TEMPLATE: any = {
         animation: false,
         style: {
             fontFamily: 'Avenir, "Helvetica Neue", Arial, sans-serif',
+        },
+        events: {
+            afterGetContainer() {
+                handleTooltipOffScreen(this.renderTo);
+            },
         },
     },
 };

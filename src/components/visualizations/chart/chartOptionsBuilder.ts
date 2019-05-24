@@ -937,8 +937,9 @@ export function buildTooltipTreemapFactory(
     const { separators } = config;
 
     return (point: IPoint) => {
-        if (point.id !== undefined) {
-            // no tooltip for root points
+        // root point don't have parent property
+        // no tooltip for root points
+        if (point.parent === undefined) {
             return null;
         }
         const formattedValue = formatValueForTooltip(point.value, point.format, separators);

@@ -2612,6 +2612,7 @@ describe("chartOptionsBuilder", () => {
 
     describe("buildTooltipTreemapFactory", () => {
         const point: IPoint = {
+            parent: "1",
             category: {
                 name: "category",
             },
