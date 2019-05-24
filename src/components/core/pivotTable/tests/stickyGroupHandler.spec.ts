@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { stickyRowExists, updateStickyHeaders, updateStickyHeadersPosition } from "../stickyGroupHandler";
 import { IGroupingProvider } from "../GroupingProvider";
-import { GridApi } from "ag-grid";
+import { GridApi } from "ag-grid-community";
 
 describe("updateStickyHeaders", () => {
     function getFakeGridApi(fakeGetDisplayedRowAtIndex: any = jest.fn()): GridApi {

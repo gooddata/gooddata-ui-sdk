@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { GridApi } from "ag-grid";
+import { GridApi } from "ag-grid-community";
 
 function getHeaderHeight(gridApi: GridApi): number {
     return (gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
@@ -61,9 +61,15 @@ function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyVa
 
 function getPinnedTopRowCellElementWrapper(gridApi: GridApi, attributeId: string): HTMLElement | null {
     const pinnedTopRow = getPinnedTopRow(gridApi);
-    return pinnedTopRow && pinnedTopRow.cellComps[attributeId]
-        ? pinnedTopRow.cellComps[attributeId].eGui
-        : null;
+    if (!pinnedTopRow) {
+        return null;
+    }
+
+    const columnIndex = Object.keys(pinnedTopRow.cellComps).find((index: string) => {
+        return index.slice(0, attributeId.length) === attributeId && pinnedTopRow.cellComps[index] !== null;
+    });
+
+    return pinnedTopRow.cellComps[columnIndex] ? pinnedTopRow.cellComps[columnIndex].eGui : null;
 }
 
 function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTMLElement | null {

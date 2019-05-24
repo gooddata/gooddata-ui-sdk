@@ -1,14 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
-import { IHeaderParams } from "ag-grid/dist/lib/headerRendering/header/headerComp";
 
 import ColumnHeader from "../ColumnHeader";
 import HeaderCell from "../HeaderCell";
 
 const getColumnHeader = (props = {}, { type = "MEASURE_COLUMN", colGroupId = "a_1234" } = {}) => {
-    const extendedProps: IHeaderReactComp = {
+    const extendedProps: any = {
         column: {
             addEventListener: jest.fn(),
             getSort: jest.fn(),
@@ -31,7 +29,7 @@ const getColumnHeader = (props = {}, { type = "MEASURE_COLUMN", colGroupId = "a_
         ...props,
     };
 
-    return <ColumnHeader {...extendedProps as IHeaderParams} />;
+    return <ColumnHeader {...extendedProps} />;
 };
 
 describe("ColumnHeader renderer", () => {

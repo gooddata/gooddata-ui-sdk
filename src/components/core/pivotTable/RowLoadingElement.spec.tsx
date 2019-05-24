@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import * as React from "react";
 import { LoadingComponent } from "../../..";
 import { RowLoadingElement } from "./RowLoadingElement";
-import { ICellRendererParams } from "ag-grid";
+import { ICellRendererParams } from "ag-grid-community";
 import noop = require("lodash/noop");
 
 describe("RowLoadingElement", () => {

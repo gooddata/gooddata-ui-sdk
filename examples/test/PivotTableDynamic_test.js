@@ -24,6 +24,8 @@ const SORTING_PRESET_BY_MENU_CATOGORY_ASC = ".s-sorting-preset-byMenuCategory";
 const SORTING_PRESET_BY_LOCATION_STATE_DESC = ".s-sorting-preset-byLocationState";
 const GROUP_ROWS_PRESET_ENABLED = ".s-group-rows-preset-activeGrouping";
 const TOTALS_SUBTOTAL = ".s-total-preset-franchiseFeesMaxByLocationState";
+const TOTALS_PRESET_FRANCHISE_FEES_SUM = ".s-total-preset-franchiseFeesSum";
+const TOTALS_PRESET_FRANCHISE_FEES_AVG = ".s-total-preset-franchiseFeesAvg";
 const PINNED_TOP_ROW = ".ag-floating-top-container";
 
 const DRILLING_PRESET_MEASURE_FRANCHISE_FEES = ".s-drilling-preset-measure";
@@ -45,8 +47,9 @@ const CELL_9_0 = ".s-cell-9-0";
 const DRILLABLE_CELL_CLASSNAME = "gd-cell-drillable";
 const HIDDEN_CELL_CLASSNAME = "s-gd-cell-hide";
 
-const MENU_CATEGORY = "[col-id=a_2188] .s-header-cell-label";
-const FRANCHISE_FEES = "[col-id=a_2009_1-a_2071_1-m_0] .s-header-cell-label";
+const MENU_CATEGORY = ".s-table-measure-column-header-group-cell-2 .s-header-cell-label";
+const FRANCHISE_FEES =
+    ".s-table-measure-column-header-group-cell-0.s-table-measure-column-header-cell-0 .s-header-cell-label";
 
 async function checkRender(t, selector, cellSelector = ".ag-cell", checkClass, doClick = false) {
     const chart = Selector(selector);
@@ -269,4 +272,41 @@ test("should not render subtotals when sorted by other than the first attribute"
     await waitForPivotTableStopLoading(t);
 
     await checkCellValue(t, PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES, "Irving", ".s-cell-5-1");
+});
+
+test("should find classnames used for styling", async t => {
+    await t.click(Selector(BUCKET_PRESET_MEASURES_COLUMN_AND_ROW_ATTRIBUTES));
+    await t.click(Selector(SORTING_PRESET_NOSORT));
+    await t.click(Selector(GROUP_ROWS_PRESET_ENABLED));
+    await t.click(Selector(TOTALS_PRESET_FRANCHISE_FEES_SUM));
+    await t.click(Selector(TOTALS_PRESET_FRANCHISE_FEES_AVG));
+    await waitForPivotTableStopLoading(t);
+
+    const classnames = [
+        ".ag-root-wrapper",
+        ".ag-root",
+        ".ag-font-style",
+        ".ag-header-cell",
+        ".ag-header-group-cell",
+        ".ag-header-group-cell-with-group",
+        ".ag-header-cell-sortable",
+        ".ag-header",
+        ".ag-cell",
+        ".ag-cell .ag-react-container",
+        ".ag-header-cell-resize",
+        ".ag-header-row",
+        ".ag-header-row .ag-header-cell",
+        ".ag-header-row .ag-header-group-cell-with-group",
+        ".ag-floating-bottom",
+        ".ag-floating-top",
+        ".ag-floating-top .ag-row",
+        ".ag-floating-top .ag-row .ag-cell",
+    ];
+
+    /* eslint-disable no-await-in-loop */
+    for (let i = 0; i < classnames.length; i += 1) {
+        const element = await Selector(`.s-pivot-table ${classnames[i]}`);
+        await t.expect(element.exists).eql(true, `${classnames[i]} not found`);
+    }
+    /* eslint-enable no-await-in-loop */
 });

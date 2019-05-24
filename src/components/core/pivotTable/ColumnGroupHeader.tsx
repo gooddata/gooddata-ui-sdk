@@ -2,8 +2,7 @@
 import * as React from "react";
 
 import { AFM, Execution } from "@gooddata/typings";
-import { IHeaderGroupParams, ColGroupDef } from "ag-grid";
-import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
+import { IHeaderGroupParams, ColGroupDef } from "ag-grid-community";
 
 import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
 import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
@@ -20,7 +19,7 @@ export interface IColumnGroupDef extends ColGroupDef {
     field?: string;
 }
 
-export default class ColumnGroupHeader extends React.Component<IProps> implements IHeaderReactComp {
+export default class ColumnGroupHeader extends React.Component<IProps> {
     public render() {
         const { menu, intl } = this.props;
         const columnGroupDef = this.props.columnGroup.getColGroupDef() as IColumnGroupDef;

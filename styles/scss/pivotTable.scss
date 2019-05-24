@@ -2,7 +2,7 @@
 @import "~@gooddata/goodstrap/lib/core/styles/variables";
 @import "~@gooddata/goodstrap/lib/Button/styles/variables";
 
-$ag-icons-path: "~ag-grid/src/styles/balham-icons/";
+$ag-icons-path: "~ag-grid-community/src/styles/ag-theme-balham/icons/";
 
 $border-color: transparent;
 $font-size: 12px;
@@ -20,8 +20,8 @@ $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
 $header-cell-resize-width: 20px;
 
-@import "~ag-grid/src/styles/ag-grid";
-@import "~ag-grid/src/styles/ag-theme-balham";
+@import "~ag-grid-community/src/styles/ag-grid";
+@import "~ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham";
 
 .gd-table {
     .ag-root-wrapper {
@@ -127,8 +127,12 @@ $header-cell-resize-width: 20px;
         &::after {
             width: $header-cell-resize-width / 2;
             margin-right: $header-cell-resize-width / 2;
-            border-right-color: $gd-color-highlight;
+            border-right: 1px solid $gd-color-highlight;
             text-indent: $header-cell-resize-width / 2;
+            height: 16px;
+            content: "";
+            display: block;
+            box-sizing: content-box;
         }
     }
 
@@ -144,7 +148,7 @@ $header-cell-resize-width: 20px;
     }
 
     .gd-table-row {
-        border-bottom: none;
+        border: none;
     }
 
     .gd-row-total {
@@ -187,6 +191,43 @@ $header-cell-resize-width: 20px;
 
     .gd-table-row-separator {
         border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+    }
+
+    .ag-floating-top {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        display: none;
+        overflow: hidden !important;
+        border-bottom: none;
+
+        &.gd-visible-sticky-row {
+            display: inherit;
+        }
+
+        .ag-row {
+            background-color: transparent;
+
+            .ag-cell {
+                background-color: #fff;
+                border-top-color: white;
+
+                &.gd-hidden-sticky-column {
+                    border-top-color: transparent;
+                    background-color: transparent;
+                    color: transparent;
+                }
+
+                &.gd-measure-column,
+                &.gd-column-attribute-column {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .ag-floating-bottom {
+        border-top: none;
     }
 }
 
@@ -388,39 +429,4 @@ $header-cell-resize-width: 20px;
         color: $is-focused-color;
         background: $is-focused-background;
     }
-}
-
-.ag-floating-top {
-    position: absolute;
-    z-index: 1;
-    pointer-events: none;
-    display: none;
-
-    &.gd-visible-sticky-row {
-        display: inherit;
-    }
-
-    .ag-row {
-        background-color: transparent;
-
-        .ag-cell {
-            background-color: #fff;
-            border-top-color: white;
-
-            &.gd-hidden-sticky-column {
-                border-top-color: transparent;
-                background-color: transparent;
-                color: transparent;
-            }
-
-            &.gd-measure-column,
-            &.gd-column-attribute-column {
-                display: none;
-            }
-        }
-    }
-}
-
-.ag-body-container {
-    margin-bottom: -4px; // -2px by default, -2px as a contrary to leeway constant defined in src/components/core/PivotTable.tsx
 }
