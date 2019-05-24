@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import { noop, cloneDeep } from "lodash";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import { ColoredItemsList, IColoredItemsListProps } from "../ColoredItemsList";
+import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList";
 import { colorPalette } from "../../../../../mocks/testColorHelper";
 import { IntlWrapper, createIntl } from "../../../../../utils/intlProvider";
 import { inputItemsMock } from "./mock";
@@ -66,8 +66,8 @@ describe("ColoredItemsList", () => {
 
     it("should ignore searchString when no search field is visible", () => {
         const wrapper = createComponent();
-        const instance: any = wrapper.find(ColoredItemsList).instance();
-        instance.onSearch("abcd");
+        const onSearchFunc = wrapper.find(DropdownBody).prop("onSearch");
+        onSearchFunc("abcd");
         wrapper.update();
         const dropdown = wrapper.find(DropdownBody);
         expect(dropdown.props().searchString).toEqual("");
@@ -77,8 +77,8 @@ describe("ColoredItemsList", () => {
         const wrapper = createComponent({
             inputItems: inputItemsMock,
         });
-        const instance: any = wrapper.find(ColoredItemsList).instance();
-        instance.onSearch("abcd");
+        const onSearchFunc = wrapper.find(DropdownBody).prop("onSearch");
+        onSearchFunc("abcd");
         wrapper.update();
         const dropdown = wrapper.find(DropdownBody);
         expect(dropdown.props().searchString).toEqual("abcd");
