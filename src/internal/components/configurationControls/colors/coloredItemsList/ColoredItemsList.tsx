@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as CustomEvent from "custom-event";
-import { InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import * as ChartConfiguration from "../../../../../interfaces/Config";
 import { IColorItem } from "@gooddata/gooddata-js";
@@ -15,21 +15,22 @@ const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
-export interface IColoredItemsListProps {
+export interface IColoredItemsListOwnProps {
     colorPalette: ChartConfiguration.IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColorItem) => void;
     showCustomPicker?: boolean;
     disabled?: boolean;
     isLoading?: boolean;
-    intl?: InjectedIntl;
 }
 
 export interface IColoredItemsListState {
     searchString?: string;
 }
 
-export class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColoredItemsListState> {
+export type IColoredItemsListProps = IColoredItemsListOwnProps & InjectedIntlProps;
+
+class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColoredItemsListState> {
     public static defaultProps: Partial<IColoredItemsListProps> = {
         disabled: false,
         isLoading: false,
@@ -107,3 +108,5 @@ export class ColoredItemsList extends React.PureComponent<IColoredItemsListProps
         this.props.onSelect(selectedColorItem, color);
     };
 }
+
+export default injectIntl(ColoredItemsList);

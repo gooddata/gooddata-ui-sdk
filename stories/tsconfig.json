@@ -3,7 +3,6 @@
     "extends": "../tsconfig.json",
     "include": ["../src/typings.d.ts", "./*.ts", "./*.tsx"],
     "exclude": ["src/**/*.spec.ts"],
-    "files": [""],
     "compilerOptions": {
         "declaration": false
     }

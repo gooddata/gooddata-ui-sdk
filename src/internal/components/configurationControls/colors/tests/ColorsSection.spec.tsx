@@ -7,7 +7,7 @@ import * as ChartConfiguration from "../../../../../interfaces/Config";
 import { IColorItem } from "@gooddata/gooddata-js";
 
 import { createIntl } from "../../../../utils/intlProvider";
-import { ColoredItemsList } from "../coloredItemsList/ColoredItemsList";
+import ColoredItemsList from "../coloredItemsList/ColoredItemsList";
 import ColorsSection, { IColorsSectionProps, COLOR_MAPPING_CHANGED } from "../ColorsSection";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 

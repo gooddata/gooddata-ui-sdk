@@ -9,7 +9,7 @@ import Button from "@gooddata/goodstrap/lib/Button/Button";
 import * as classNames from "classnames";
 
 import ConfigSection from "../../configurationControls/ConfigSection";
-import { ColoredItemsList } from "./coloredItemsList/ColoredItemsList";
+import ColoredItemsList from "./coloredItemsList/ColoredItemsList";
 import { getTranslation } from "../../../utils/translations";
 import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization";
 import { IColoredItem, IColorConfiguration } from "../../../interfaces/Colors";
@@ -88,7 +88,7 @@ export default class ColorsSection extends React.Component<IColorsSectionProps> 
     }
 
     private renderColoredList() {
-        const { colors, showCustomPicker, controlsDisabled, isLoading, intl } = this.props;
+        const { colors, showCustomPicker, controlsDisabled, isLoading } = this.props;
 
         const inputItems = getColoredInputItems(colors);
         const colorPalette = colors && colors.colorPalette ? colors.colorPalette : [];
@@ -102,7 +102,6 @@ export default class ColorsSection extends React.Component<IColorsSectionProps> 
                     showCustomPicker={showCustomPicker}
                     disabled={controlsDisabled}
                     isLoading={isLoading}
-                    intl={intl}
                 />
                 {this.renderResetButton()}
             </div>

@@ -22,11 +22,7 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.svg$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.(eot|woff|ttf)$/,
+                test: /\.(svg|eot|woff|ttf)$/,
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]'
@@ -44,7 +40,7 @@ module.exports = {
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
-                            configFile: '../stories/tsconfig.json',
+                            configFile: path.join(__dirname, '../stories/tsconfig.json')
                         },
                     }
                 ]
