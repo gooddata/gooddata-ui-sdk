@@ -37,7 +37,6 @@ Example:
 
 -->
 
-- gdc-app-components:
 - gdc-analytical-designer:
 - gdc-dashboards:
 
