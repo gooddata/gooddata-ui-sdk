@@ -59,12 +59,12 @@ describe("sanitizeConfig", () => {
     it("should sanitized stacking config if buckets have one measure and no stackBy", () => {
         expect(sanitizeConfig([M1], config)).toEqual({
             stackMeasures: true,
-            stackMeasuresToPercent: false,
+            stackMeasuresToPercent: true,
         });
     });
 
     it("should sanitized stacking config if buckets have one measure and one stackBy", () => {
-        expect(sanitizeConfig([M1], config, true)).toEqual(config);
+        expect(sanitizeConfig([M1], config)).toEqual(config);
     });
 
     it("should sanitized stacking config if buckets have 1 measure and isComputeRatio", () => {
@@ -87,21 +87,20 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const hasStackByAttribute = false;
-        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config, hasStackByAttribute);
+        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config);
         expect(newConfig).toEqual(config);
     });
 
-    it("should sanitized stacking config if afm has one measure and no stackBy", () => {
+    it("should keep stacking config if afm has one measure and no stackBy", () => {
         const { afm } = fixtures.barChartWithViewByAttribute.executionRequest;
         const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config, false);
+        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config);
         expect(newConfig).toEqual({
             stackMeasures: true,
-            stackMeasuresToPercent: false,
+            stackMeasuresToPercent: true,
         });
     });
 
@@ -111,7 +110,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config, true);
+        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config);
         expect(newConfig).toEqual(config);
     });
 
@@ -121,8 +120,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const hasStackByAttribute = false;
-        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config, hasStackByAttribute);
+        const newConfig: IChartConfig = getSanitizedStackingConfigFromAfm(afm, config);
         expect(newConfig).toEqual({
             stackMeasures: false,
             stackMeasuresToPercent: false,

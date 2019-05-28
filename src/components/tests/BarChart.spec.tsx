@@ -145,11 +145,11 @@ describe("BarChart", () => {
     describe("Stacking", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
-        it("should reset stackMeasuresToPercent in case of one measure", () => {
+        it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M1], config);
             expect(wrapper.find(AfmBarChart).prop("config")).toEqual({
                 stackMeasures: true,
-                stackMeasuresToPercent: false,
+                stackMeasuresToPercent: true,
             });
         });
 

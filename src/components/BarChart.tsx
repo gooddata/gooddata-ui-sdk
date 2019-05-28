@@ -60,7 +60,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-    const sanitizedConfig = sanitizeConfig(measures, newProps.config, stackBy.length > 0);
+    const sanitizedConfig = sanitizeConfig(measures, newProps.config);
 
     return (
         <AfmBarChart

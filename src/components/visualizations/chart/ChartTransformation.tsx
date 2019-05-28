@@ -2,7 +2,6 @@
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
 import * as invariant from "invariant";
 import * as React from "react";
-import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
@@ -12,7 +11,6 @@ import { IDrillableItem } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../../interfaces/Events";
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
 import { ILegendOptions } from "../typings/legend";
-import { getStackByAttribute } from "../../../helpers/stackByAttribute";
 import { getChartOptions, IChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
@@ -187,24 +185,9 @@ export default class ChartTransformation extends React.Component<
     private getChartConfig(props: IChartTransformationProps): IChartConfig {
         const {
             executionRequest: { afm },
-            executionResponse,
-            executionResult: { headerItems },
             config,
         } = props;
 
-        const attributeHeaderItems = headerItems.map((dimension: Execution.IResultHeaderItem[][]) => {
-            return dimension.filter(
-                (attributeHeaders: Execution.IResultAttributeHeaderItem[]) =>
-                    attributeHeaders[0].attributeHeaderItem,
-            );
-        });
-
-        const stackByAttribute = getStackByAttribute(
-            config,
-            executionResponse.dimensions,
-            attributeHeaderItems,
-        );
-        const hasStackByAttribute = !isEmpty(stackByAttribute);
-        return getSanitizedStackingConfigFromAfm(afm, config, hasStackByAttribute);
+        return getSanitizedStackingConfigFromAfm(afm, config);
     }
 }
