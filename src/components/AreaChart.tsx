@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { omit } from "lodash";
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
@@ -11,10 +11,7 @@ import { convertBucketsToAFM } from "../helpers/conversion";
 import { getStackingResultSpec } from "../helpers/resultSpec";
 import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
 import { verifyBuckets, getBucketsProps, getConfigProps } from "../helpers/optionalStacking/areaChart";
-import {
-    getSanitizedBucketsAndStackingConfig,
-    ISanitizedBucketsAndStackingConfig,
-} from "../helpers/optionalStacking/common";
+import { sanitizeConfig, sanitizeComputeRatioOnMeasures } from "../helpers/optionalStacking/common";
 
 export interface IAreaChartBucketProps {
     measures: VisualizationInput.AttributeOrMeasure[];
@@ -38,12 +35,13 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
     verifyBuckets(props);
 
     const { measures, viewBy, stackBy } = getBucketsProps(props);
+    const sanitizedMeasures = sanitizeComputeRatioOnMeasures(measures);
     const configProp = getConfigProps(props);
 
     const buckets: VisualizationObject.IBucket[] = [
         {
             localIdentifier: MEASURES,
-            items: measures,
+            items: sanitizedMeasures,
         },
         {
             localIdentifier: ATTRIBUTE,
@@ -62,23 +60,22 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-    newProps.config = {
-        ...newProps.config,
-        ...configProp,
-    };
-
-    const {
-        buckets: sanitizedBuckets,
-        config: sanitizedConfig,
-    }: ISanitizedBucketsAndStackingConfig = getSanitizedBucketsAndStackingConfig(buckets, newProps.config);
+    const sanitizedConfig = sanitizeConfig(
+        measures,
+        {
+            ...newProps.config,
+            ...configProp,
+        },
+        stackBy.length > 0,
+    );
 
     return (
         <AfmAreaChart
             {...newProps}
             config={sanitizedConfig}
             projectId={props.projectId}
-            afm={convertBucketsToAFM(sanitizedBuckets, props.filters)}
-            resultSpec={getStackingResultSpec(sanitizedBuckets, props.sortBy)}
+            afm={convertBucketsToAFM(buckets, props.filters)}
+            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
         />
     );
 }
