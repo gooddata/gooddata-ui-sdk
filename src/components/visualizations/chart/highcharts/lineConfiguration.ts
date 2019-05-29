@@ -19,6 +19,9 @@ const LINE_TEMPLATE: any = {
                 hover: {
                     lineWidth: LINE_WIDTH + 1,
                 },
+                inactive: {
+                    opacity: 1,
+                },
             },
         },
         column: {
