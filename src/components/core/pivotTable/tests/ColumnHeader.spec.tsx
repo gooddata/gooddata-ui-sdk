@@ -10,9 +10,9 @@ const getColumnHeader = (props = {}, { type = "MEASURE_COLUMN", colGroupId = "a_
         column: {
             addEventListener: jest.fn(),
             getSort: jest.fn(),
-            getColId: jest.fn(() => colGroupId),
             getColDef: jest.fn(() => ({
                 type,
+                field: colGroupId,
             })),
         },
         columnGroup: {

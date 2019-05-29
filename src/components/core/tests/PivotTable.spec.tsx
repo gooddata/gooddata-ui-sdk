@@ -98,7 +98,7 @@ describe("PivotTable", () => {
 
         it("should return false if columnDefs are not empty", () => {
             const table = getTableInstance();
-            table.setState({ columnDefs: [{}] });
+            table.setState({ columnDefs: [{ field: "field_id" }] });
             expect(table.isTableHidden()).toEqual(false);
         });
     });
