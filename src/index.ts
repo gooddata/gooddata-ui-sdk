@@ -59,7 +59,6 @@ import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
 import { ICoreComponents } from "./interfaces/CoreComponents";
-import * as Internal from "./internal";
 
 /**
  * CoreComponents
@@ -139,5 +138,4 @@ export {
     IHeaderPredicate,
     HeaderPredicateFactory,
     MappingHeader,
-    Internal,
 };
