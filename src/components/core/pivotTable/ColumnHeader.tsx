@@ -86,7 +86,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 onSortClick={this.onSortRequested}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 menu={menu}
-                colId={column.getColId()}
+                colId={column.getColDef().field}
                 getColumnTotals={this.props.getColumnTotals}
                 getExecutionResponse={this.props.getExecutionResponse}
                 intl={this.props.intl}
@@ -95,7 +95,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     }
 
     private getFieldType() {
-        const colId = this.props.column.getColId();
+        const colId = this.props.column.getColDef().field;
         const fields = getParsedFields(colId);
         const [lastFieldType] = fields[fields.length - 1];
 

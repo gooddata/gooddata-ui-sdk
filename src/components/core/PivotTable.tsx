@@ -500,7 +500,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const sortModel: ISortModelItem[] = event.columnApi
             .getAllColumns()
             .filter(col => col.getSort() !== undefined && col.getSort() !== null)
-            .map(col => ({ colId: col.getColId(), sort: col.getSort() as AFM.SortDirection }));
+            .map(col => ({
+                colId: col.getColDef().field,
+                sort: col.getSort() as AFM.SortDirection,
+            }));
 
         const sortItems = getSortsFromModel(sortModel, execution);
 
