@@ -144,9 +144,7 @@ describe("getGridDataSource", () => {
             };
         }
         const totalSum = {
-            type: {
-                sum: true,
-            },
+            type: "rowTotal",
             colSpan: {
                 count: 1,
                 headerKey: "foo",

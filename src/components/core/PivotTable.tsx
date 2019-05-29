@@ -58,6 +58,7 @@ import {
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_TOTAL,
+    ROW_SUBTOTAL,
 } from "./pivotTable/agGridConst";
 import { createAgGridDataSource } from "./pivotTable/agGridDataSource";
 import { getDrillIntersection, getDrillRowData } from "./pivotTable/agGridDrilling";
@@ -422,8 +423,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
-        const type = get(cellEvent, ["colDef", "type"]);
-        if (type === ROW_TOTAL) {
+
+        const rowType = get(cellEvent, ["data", "type"], "");
+        const isRowTotal = rowType === ROW_TOTAL;
+        const isRowSubtotal = rowType === ROW_SUBTOTAL;
+
+        if (isRowTotal || isRowSubtotal) {
             return false;
         }
 
@@ -669,8 +674,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const afm: AFM.IAfm = dataSource.getAfm();
 
         let hasDrillableHeader = false;
-        const isRowTotal = get(cellClassParams, ["data", "type", ROW_TOTAL]);
-        if (drillablePredicates.length !== 0 && !isRowTotal) {
+
+        const rowType = get(cellClassParams, ["data", "type"], "");
+        const isRowTotal = rowType === ROW_TOTAL;
+        const isRowSubtotal = rowType === ROW_SUBTOTAL;
+
+        if (drillablePredicates.length !== 0 && !isRowTotal && !isRowSubtotal) {
             const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field]);
             const headers: IMappingHeader[] = rowDrillItem
                 ? [...colDef.drillItems, rowDrillItem]

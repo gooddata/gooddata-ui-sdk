@@ -12,9 +12,7 @@ export interface IGridRow {
 }
 
 export interface IGridTotalsRow {
-    type: {
-        [key: string]: boolean;
-    };
+    type: string;
     colSpan: {
         count: number;
         headerKey: string;

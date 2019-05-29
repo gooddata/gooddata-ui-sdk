@@ -10,6 +10,7 @@ import {
     FIELD_SEPARATOR_PLACEHOLDER,
     ID_SEPARATOR,
     ID_SEPARATOR_PLACEHOLDER,
+    ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
 
@@ -65,7 +66,7 @@ export const getGridIndex = (position: number, gridDistance: number) => {
 };
 
 export const cellRenderer = (params: ICellRendererParams) => {
-    const isRowTotal = params.data && params.data.type && params.data.type.rowTotal;
+    const isRowTotal = params.data && params.data.type && params.data.type === ROW_TOTAL;
 
     const isActiveRowTotal =
         isRowTotal && // short circuit for non row totals
