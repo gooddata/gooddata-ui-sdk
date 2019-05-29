@@ -3432,7 +3432,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
-                        const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
+                        const expectedDataClasses: Highcharts.ColorAxisDataClassesOptions[] = [];
                         const dataClasses = getHeatmapDataClasses(series, ({} as any) as IColorStrategy);
 
                         expect(dataClasses).toEqual(expectedDataClasses);

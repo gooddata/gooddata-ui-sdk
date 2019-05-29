@@ -6,6 +6,7 @@ import { renderHeatmapCells } from "./plugins/renderHeatmapCells";
 import { linearTickPositions } from "./plugins/linearTickPositions";
 import { zeroAlignYAxis } from "./plugins/zeroAlignYAxis";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper";
+import { getBubbleRadius } from "./plugins/getBubbleRadius";
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function(proceed: any) {
@@ -41,4 +42,5 @@ export function initChartPlugins(Highcharts: any) {
     linearTickPositions(Highcharts);
     zeroAlignYAxis(Highcharts);
     groupCategoriesWrapper(Highcharts);
+    getBubbleRadius(Highcharts);
 }

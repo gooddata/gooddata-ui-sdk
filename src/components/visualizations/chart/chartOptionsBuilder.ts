@@ -1491,7 +1491,7 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: any = [],
     colorStrategy: IColorStrategy,
-): Highcharts.ColorAxisDataClass[] {
+): Highcharts.ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         get(series, "0.data", []).map((item: any) => item.value),
         null,
@@ -1706,7 +1706,7 @@ export function getChartOptions(
 
     const gridEnabled = get(config, "grid.enabled", true);
     const stacking = getStackingConfig(stackByAttribute, config);
-    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
+    const measureGroup = findMeasureGroupInDimensions(dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 

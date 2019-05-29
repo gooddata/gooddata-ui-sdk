@@ -6,7 +6,7 @@ import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import isFunction = require("lodash/isFunction");
 import omitBy = require("lodash/omitBy");
-import { Highcharts } from "./chart/Chart";
+import * as Highcharts from "highcharts";
 import { IChartConfig } from "../../interfaces/Config";
 import { OnFiredDrillEvent } from "../../interfaces/Events";
 

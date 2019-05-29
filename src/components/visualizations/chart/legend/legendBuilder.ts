@@ -19,7 +19,11 @@ import { isStackedChart } from "./helpers";
 
 function isHeatmapWithMultipleValues(chartOptions: any) {
     const { type } = chartOptions;
-    const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, "colorAxis.dataClasses", []);
+    const dataClasses: Highcharts.ColorAxisDataClassesOptions[] = get(
+        chartOptions,
+        "colorAxis.dataClasses",
+        [],
+    );
 
     return isHeatmap(type) && dataClasses.length > 1;
 }
@@ -63,7 +67,11 @@ export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
     ];
 
     if (isHeatmap(type)) {
-        const dataClasses: Highcharts.ColorAxisDataClass[] = get(chartOptions, "colorAxis.dataClasses", []);
+        const dataClasses: Highcharts.ColorAxisDataClassesOptions[] = get(
+            chartOptions,
+            "colorAxis.dataClasses",
+            [],
+        );
         return dataClasses.map((dataClass, index) => {
             const { from, to } = dataClass;
             const color: string = dataClass.color as string; // wa are not using Gradient

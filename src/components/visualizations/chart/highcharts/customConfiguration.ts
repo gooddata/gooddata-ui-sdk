@@ -161,12 +161,13 @@ function hideOverlappedLabels(chartOptions: IChartOptions) {
 
 function getShowInPercentConfiguration(chartOptions: IChartOptions) {
     const { yAxes = [], xAxes = [] } = chartOptions;
+    const percentageFormatter = partial(formatAsPercent, 100);
 
     const xAxis = xAxes.map((axis: any) =>
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: formatAsPercent,
+                      formatter: percentageFormatter,
                   },
               }
             : {},
@@ -176,7 +177,7 @@ function getShowInPercentConfiguration(chartOptions: IChartOptions) {
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: formatAsPercent,
+                      formatter: percentageFormatter,
                   },
               }
             : {},
@@ -994,6 +995,8 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
             }
 
             const opposite = get(axis, "opposite", false);
+            const axisType: string = axis.opposite ? "secondary" : "primary";
+            const className: string = `s-highcharts-${axisType}-yaxis`;
             const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
 
             // For bar chart take x axis options
@@ -1035,6 +1038,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
                     },
                 },
                 opposite,
+                className,
                 ...maxProp,
                 ...minProp,
                 ...tickConfiguration,

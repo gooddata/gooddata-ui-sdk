@@ -6,9 +6,9 @@ import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
 import { chartClick } from "../../utils/drilldownEventing";
 import { styleVariables } from "../../styles/variables";
-import handleChartLoad from "../events/load";
 import { isOneOfTypes } from "../../utils/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
+import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 
@@ -56,6 +56,11 @@ const BASE_TEMPLATE: any = {
             animation: false,
             enableMouseTracking: true, // !Status.exportMode,
             turboThreshold: DEFAULT_CATEGORIES_LIMIT,
+            dataLabels: {
+                style: {
+                    textOutline: "none",
+                },
+            },
             events: {
                 legendItemClick() {
                     if (this.visible) {
@@ -97,23 +102,29 @@ const BASE_TEMPLATE: any = {
 };
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: any) {
-    set(configuration, "chart.events.drilldown", function chartDrilldownHandler(event: any) {
+    set(configuration, "chart.events.drilldown", function chartDrilldownHandler(
+        event: Highcharts.DrilldownEventObject,
+    ) {
         chartClick(drillConfig, event, this.container, chartOptions.type);
     });
 
     return configuration;
 }
 
-function registerLoadHandler(configuration: any, chartOptions: any) {
+export function handleChartLoad(): void {
+    setupDrilldown(this);
+}
+
+function registerRenderHandler(configuration: any, chartOptions: any) {
     if (isOneOfTypes(chartOptions.type, supportedDualAxesChartTypes)) {
-        set(configuration, "chart.events.load", handleChartLoad);
+        set(configuration, "chart.events.render", handleChartLoad);
     }
     return configuration;
 }
 
 export function getCommonConfiguration(chartOptions: any, drillConfig: any) {
     const commonConfiguration = cloneDeep(BASE_TEMPLATE);
-    const handlers = [registerDrilldownHandler, registerLoadHandler];
+    const handlers = [registerDrilldownHandler, registerRenderHandler];
 
     return handlers.reduce(
         (configuration, handler) => handler(configuration, chartOptions, drillConfig),
