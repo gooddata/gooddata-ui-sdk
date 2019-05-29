@@ -1,7 +1,8 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { IntlProvider, addLocaleData } from "react-intl";
 import { translations } from "@gooddata/js-utils";
+import { DEFAULT_LOCALE } from "../../../constants/localization";
 
 import * as deLocaleData from "react-intl/locale-data/de";
 import * as esLocaleData from "react-intl/locale-data/es";
@@ -45,7 +46,6 @@ export const messagesMap = {
     "zh-Hans": zhHans,
 };
 
-export const DEFAULT_LOCALE = "en-US";
 export interface IIntlWrapperProps {
     locale: string;
 }

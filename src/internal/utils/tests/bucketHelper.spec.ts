@@ -46,13 +46,14 @@ import {
 } from "../../interfaces/Visualization";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
-import { createIntl, DEFAULT_LOCALE } from "../intlProvider";
+import { createInternalIntl } from "../internalIntlProvider";
 
 import { VisualizationObject } from "@gooddata/typings";
 import { visualizationObjectMock } from "../../mocks/visualizationObjectMocks";
 import { OverTimeComparisonTypes } from "../../../interfaces/OverTimeComparison";
 import * as BucketNames from "../../../constants/bucketNames";
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { DEFAULT_LOCALE } from "../../../constants/localization";
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };
@@ -201,7 +202,7 @@ describe("Bucket title", () => {
 
     it("should set translated bucket titles for all buckets except filters when intl provided", () => {
         const visualizationType = VisualizationTypes.BAR;
-        const intl = createIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DEFAULT_LOCALE);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");
@@ -236,7 +237,7 @@ describe("Bucket title", () => {
 
     it("should not create bucket titles for disabled buckets", () => {
         const visualizationType = VisualizationTypes.PIE;
-        const intl = createIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DEFAULT_LOCALE);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");

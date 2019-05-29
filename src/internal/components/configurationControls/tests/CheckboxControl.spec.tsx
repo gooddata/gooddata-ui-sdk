@@ -2,9 +2,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import noop = require("lodash/noop");
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 
 import CheckboxControl, { ICheckboxControlProps } from "../CheckboxControl";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("CheckboxControl", () => {
     const defaultProps = {
@@ -12,7 +13,7 @@ describe("CheckboxControl", () => {
         labelText: "properties.canvas.gridline",
         properties: {},
         propertiesMeta: {},
-        intl: createIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DEFAULT_LOCALE),
         pushData: noop,
     };
 

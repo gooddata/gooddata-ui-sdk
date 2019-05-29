@@ -3,6 +3,7 @@ import * as React from "react";
 import { IntlProvider, InjectedIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 import { ILocale } from "../interfaces/Visualization";
+import { DEFAULT_LOCALE } from "../../constants/localization";
 
 import * as enUS from "../translations/en-US.json";
 import * as deDE from "../translations/de-DE.json";
@@ -26,19 +27,17 @@ export const messagesMap = {
     "zh-Hans": zhHans,
 };
 
-export const DEFAULT_LOCALE = "en-US";
-
-export function createIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
+export function createInternalIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
     const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
     return intlProvider.getChildContext().intl;
 }
 
-export interface IIntlWrapperProps {
-    locale: string;
+export interface IInternalIntlWrapperProps {
+    locale?: string;
 }
 
-export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
-    public static defaultProps: IIntlWrapperProps = {
+export class InternalIntlWrapper extends React.PureComponent<IInternalIntlWrapperProps> {
+    public static defaultProps: IInternalIntlWrapperProps = {
         locale: DEFAULT_LOCALE,
     };
     public render() {

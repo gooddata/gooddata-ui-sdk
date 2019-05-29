@@ -5,7 +5,7 @@ import { noop, cloneDeep } from "lodash";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { IColorItem } from "@gooddata/gooddata-js";
 import { colorPalette } from "../../../../../mocks/testColorHelper";
-import { IntlWrapper } from "../../../../../utils/intlProvider";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownProps, IconPosition } from "../ColorDropdown";
 import ColorPaletteItem from "../ColorPaletteItem";
 import ColorPalette from "../ColorPalette";
@@ -32,11 +32,11 @@ class MockItem extends React.PureComponent<IColoredItemContentProps> {
 function createComponent(customProps: Partial<IColorDropdownProps> = {}) {
     const props: IColorDropdownProps = { ...cloneDeep(defaultProps), ...customProps };
     return mount<IColorDropdownProps>(
-        <IntlWrapper locale="en-US">
+        <InternalIntlWrapper>
             <ColorDropdown {...props}>
                 <MockItem color={{ r: 255, g: 0, b: 0 }} text="sometext" />
             </ColorDropdown>
-        </IntlWrapper>,
+        </InternalIntlWrapper>,
     );
 }
 

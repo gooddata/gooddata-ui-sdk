@@ -33,7 +33,7 @@ import { sanitizeUnusedFilters, getAllItemsByType, getTotalsFromBucket } from ".
 import { createSorts, setSortItems, removeInvalidSort } from "../../../utils/sort";
 
 import { setTableUiConfig } from "../../../utils/uiConfigHelpers/tableUiConfigHelper";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { expandTotalsInResultSpec } from "../../../utils/executionObjectHelper";
 import { DEFAULT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
@@ -42,6 +42,7 @@ import { VisualizationEnvironment } from "../../../../components/uri/Visualizati
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { Table } from "../../../../components/core/Table";
 import { generateDimensions } from "../../../../helpers/dimensions";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 // removes sorts with other than specified number of locators (counts both measure and attribute locators)
 export const removeSortsWithInvalidLocatorCount = (
@@ -82,7 +83,7 @@ export class PluggableTable extends AbstractPluggableVisualization {
         this.environment = props.environment;
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
-        this.intl = createIntl(this.locale);
+        this.intl = createInternalIntl(this.locale);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
     }
 

@@ -3,12 +3,13 @@ import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("DataLabelsControl", () => {
     const defaultProps = {
         properties: {},
-        intl: createIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DEFAULT_LOCALE),
         pushData: noop,
         isDisabled: false,
     };

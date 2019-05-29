@@ -5,22 +5,22 @@ import { noop, cloneDeep } from "lodash";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList";
 import { colorPalette } from "../../../../../mocks/testColorHelper";
-import { IntlWrapper, createIntl } from "../../../../../utils/intlProvider";
+import { InternalIntlWrapper, createInternalIntl } from "../../../../../utils/internalIntlProvider";
 import { inputItemsMock } from "./mock";
 
 const defaultProps: IColoredItemsListProps = {
     colorPalette,
     inputItems: [],
     onSelect: noop,
-    intl: createIntl(),
+    intl: createInternalIntl(),
 };
 
 function createComponent(customProps: Partial<IColoredItemsListProps> = {}) {
     const props: IColoredItemsListProps = { ...cloneDeep(defaultProps), ...customProps };
     return mount<IColoredItemsListProps>(
-        <IntlWrapper locale="en-US">
+        <InternalIntlWrapper>
             <ColoredItemsList {...props} />
-        </IntlWrapper>,
+        </InternalIntlWrapper>,
     );
 }
 

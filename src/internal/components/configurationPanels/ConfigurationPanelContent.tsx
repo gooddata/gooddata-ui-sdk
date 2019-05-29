@@ -5,7 +5,6 @@ import noop = require("lodash/noop");
 import { ChartType } from "../../../constants/visualizationTypes";
 import { VisualizationObject } from "@gooddata/typings";
 
-import { IntlWrapper, DEFAULT_LOCALE } from "../../utils/intlProvider";
 import { hasMeasures } from "../../utils/mdObjectHelper";
 import { IVisualizationProperties, IFeatureFlags, IReferences } from "../../interfaces/Visualization";
 import { IColorConfiguration } from "../../interfaces/Colors";
@@ -47,11 +46,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     protected supportedPropertiesList: string[];
 
     public render() {
-        return (
-            <div key={`config-${this.props.type}`}>
-                <IntlWrapper locale={DEFAULT_LOCALE}>{this.renderConfigurationPanel()}</IntlWrapper>
-            </div>
-        );
+        return <div key={`config-${this.props.type}`}>{this.renderConfigurationPanel()}</div>;
     }
 
     protected abstract renderConfigurationPanel(): JSX.Element;

@@ -3,7 +3,8 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import noop = require("lodash/noop");
 import ConfigSection, { IConfigSectionProps } from "../ConfigSection";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("ConfigSection", () => {
     const defaultProps = {
@@ -11,7 +12,7 @@ describe("ConfigSection", () => {
         properties: {},
         propertiesMeta: {},
         title: "properties.legend.title",
-        intl: createIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DEFAULT_LOCALE),
         pushData: noop,
     };
 
