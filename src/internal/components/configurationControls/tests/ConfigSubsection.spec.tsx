@@ -2,7 +2,8 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import ConfigSubsection, { IConfigSubsectionProps } from "../ConfigSubsection";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("ConfigSubsection", () => {
     const defaultProps = {
@@ -10,7 +11,7 @@ describe("ConfigSubsection", () => {
         properties: {},
         propertiesMeta: {},
         title: "properties.legend.title",
-        intl: createIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DEFAULT_LOCALE),
     };
 
     function createComponent(customProps: Partial<IConfigSubsectionProps> = {}) {

@@ -11,13 +11,13 @@ import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { IVisConstruct, IBucket, ILocale, IVisProps, IFilters } from "../../../../interfaces/Visualization";
-import { DEFAULT_LOCALE } from "../../../../utils/intlProvider";
 import SpyInstance = jest.SpyInstance;
 import { VisualizationEnvironment } from "../../../../../components/uri/Visualization";
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { Table } from "../../../../../components/core/Table";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 import * as BucketNames from "../../../../../constants/bucketNames";
+import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 describe("removeSortsWithInvalidLocatorCount", () => {
     const validMeasureSort: AFM.IMeasureSortItem = {

@@ -2,13 +2,14 @@
 import { get } from "lodash";
 import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";
-import { createIntl, DEFAULT_LOCALE } from "../../intlProvider";
+import { createInternalIntl } from "../../internalIntlProvider";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("comboChartUiConfigHelper", () => {
     describe("setComboChartUiConfigDeprecated", () => {
-        const intl = createIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DEFAULT_LOCALE);
         const refPointMock = {
             ...referencePointMock.twoMeasureBucketsReferencePoint,
             uiConfig: COMBO_CHART_UICONFIG_DEPRECATED,

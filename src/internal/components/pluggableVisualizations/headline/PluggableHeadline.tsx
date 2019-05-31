@@ -38,7 +38,7 @@ import {
     getDefaultHeadlineUiConfig,
     getHeadlineUiConfig,
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,
@@ -55,6 +55,7 @@ import { Headline } from "../../../../components/core/Headline";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { generateDimensions } from "../../../../helpers/dimensions";
 import * as VisEvents from "../../../../interfaces/Events";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -72,7 +73,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
-        this.intl = createIntl(this.locale);
+        this.intl = createInternalIntl(this.locale);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
     }
 

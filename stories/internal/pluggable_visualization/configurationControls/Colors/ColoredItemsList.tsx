@@ -7,13 +7,13 @@ import "../../../../../styles/internal/css/config_panel.css";
 import * as ChartConfiguration from "../../../../../src/interfaces/Config";
 import * as MappingHeader from "../../../../../src/interfaces/MappingHeader";
 import { IColorItem, IColor } from "@gooddata/gooddata-js";
-import { IntlDecorator } from "../../../../utils/IntlDecorators";
 import { IColoredItem } from "../../../../../src/internal/interfaces/Colors";
 import ColoredItemsList, {
     IColoredItemsListOwnProps,
 } from "../../../../../src/internal/components/configurationControls/colors/coloredItemsList/ColoredItemsList";
 import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
 import { getLargePalette } from "../../../../../src/internal/mocks/testColorHelper";
+import { InternalIntlWrapper } from "../../../../../src/internal/utils/internalIntlProvider";
 
 export interface IColoredItem {
     colorItem: IColorItem;
@@ -442,46 +442,46 @@ class ColoredItemsListTest extends React.PureComponent<
 
 storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColoredItemsList", module)
     .add("ColoredItemsList with few items", () =>
-        IntlDecorator(
-            SmallScreenDecorator(
+        SmallScreenDecorator(
+            <InternalIntlWrapper>
                 <ColoredItemsList
                     colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
                     inputItems={inputItems}
                     onSelect={action("onSelect")}
-                />,
-            ),
+                />
+            </InternalIntlWrapper>,
         ),
     )
     .add("ColoredItemsList with a lot of items and search field", () =>
-        IntlDecorator(
-            SmallScreenDecorator(
+        SmallScreenDecorator(
+            <InternalIntlWrapper>
                 <ColoredItemsList
                     colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
                     inputItems={longInputItems}
                     onSelect={action("onSelect")}
-                />,
-            ),
+                />
+            </InternalIntlWrapper>,
         ),
     )
     .add("ColoredItemsList with a lot of items and search field and big pallet", () =>
-        IntlDecorator(
-            SmallScreenDecorator(
+        SmallScreenDecorator(
+            <InternalIntlWrapper>
                 <ColoredItemsList
                     colorPalette={getLargePalette()}
                     inputItems={longInputItems}
                     onSelect={action("onSelect")}
-                />,
-            ),
+                />
+            </InternalIntlWrapper>,
         ),
     )
     .add("ColoredItemsList with loading", () =>
-        IntlDecorator(
-            SmallScreenDecorator(
+        SmallScreenDecorator(
+            <InternalIntlWrapper>
                 <ColoredItemsListTest
                     colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
                     inputItems={inputItems}
                     onSelect={action("onSelect")}
-                />,
-            ),
+                />
+            </InternalIntlWrapper>,
         ),
     );

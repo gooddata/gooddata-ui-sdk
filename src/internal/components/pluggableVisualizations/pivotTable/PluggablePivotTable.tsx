@@ -41,7 +41,7 @@ import {
 } from "../../../utils/bucketHelper";
 
 import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
@@ -49,6 +49,7 @@ import { VisualizationEnvironment } from "../../../../components/uri/Visualizati
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { PivotTable } from "../../../../components/core/PivotTable";
 import { generateDimensions } from "../../../../helpers/dimensions";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 export const getColumnAttributes = (buckets: IBucket[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -344,7 +345,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
-        this.intl = createIntl(this.locale);
+        this.intl = createInternalIntl(this.locale);
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;

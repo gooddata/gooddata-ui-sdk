@@ -53,7 +53,7 @@ import {
     setBaseChartUiConfig,
     setBaseChartUiConfigRecommendations,
 } from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { createSorts, removeSort } from "../../../utils/sort";
 
 import { BaseChart } from "../../../../components/core/base/BaseChart";
@@ -71,6 +71,7 @@ import * as BucketNames from "../../../../constants/bucketNames";
 import { RuntimeError } from "../../../../errors/RuntimeError";
 import ColorUtils from "../../../../components/visualizations/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -106,7 +107,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.type = VisualizationTypes.COLUMN;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
-        this.intl = createIntl(this.locale);
+        this.intl = createInternalIntl(this.locale);
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.onError = props.callbacks.onError && this.onError.bind(this);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);

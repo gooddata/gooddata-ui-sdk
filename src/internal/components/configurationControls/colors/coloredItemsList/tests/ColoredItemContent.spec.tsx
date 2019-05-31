@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { cloneDeep } from "lodash";
 import { mount } from "enzyme";
-import { IntlWrapper } from "../../../../../utils/intlProvider";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import * as React from "react";
 import ColoredItemContent, { IColoredItemContentProps } from "../ColoredItemContent";
 
@@ -13,9 +13,9 @@ const defaultProps: IColoredItemContentProps = {
 function createComponent(customProps: Partial<IColoredItemContentProps> = {}) {
     const props: IColoredItemContentProps = { ...cloneDeep(defaultProps), ...customProps };
     return mount<IColoredItemContentProps>(
-        <IntlWrapper locale="en-US">
+        <InternalIntlWrapper>
             <ColoredItemContent {...props} />
-        </IntlWrapper>,
+        </InternalIntlWrapper>,
     );
 }
 

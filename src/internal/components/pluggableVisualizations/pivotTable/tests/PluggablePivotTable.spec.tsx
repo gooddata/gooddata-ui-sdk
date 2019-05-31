@@ -27,12 +27,12 @@ import {
     IBucketFilter,
     IBucketFilterElement,
 } from "../../../../interfaces/Visualization";
-import { DEFAULT_LOCALE } from "../../../../utils/intlProvider";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { PivotTable } from "../../../../../components/core/PivotTable";
+import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],

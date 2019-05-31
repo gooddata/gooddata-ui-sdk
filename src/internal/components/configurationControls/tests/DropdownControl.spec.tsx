@@ -4,13 +4,14 @@ import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import DropdownControl, { IDropdownControlProps } from "../DropdownControl";
-import { createIntl, DEFAULT_LOCALE } from "../../../utils/intlProvider";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("DropdownControl", () => {
     const defaultProps = {
         valuePath: "valuePath",
         labelText: "properties.legend.title",
-        intl: createIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DEFAULT_LOCALE),
         properties: {},
         pushData: noop,
     };

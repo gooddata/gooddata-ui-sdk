@@ -9,7 +9,7 @@ import { IColorItem } from "@gooddata/gooddata-js";
 import { ColoredItem } from "./ColoredItem";
 import { getSearchedItems } from "../../../../utils/colors";
 import { IColoredItem } from "../../../../interfaces/Colors";
-import { IntlWrapper } from "../../../../utils/intlProvider";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
@@ -54,7 +54,7 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
 
         return (
             <div ref={this.listRef}>
-                <IntlWrapper locale={this.props.intl.locale}>
+                <InternalIntlWrapper locale={this.props.intl.locale}>
                     <DropdownBody
                         width={DROPDOWN_BODY_WIDTH}
                         isSearchFieldVisible={this.isSearchFieldVisible()}
@@ -76,7 +76,7 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
                         disabled={this.props.disabled}
                         isLoading={this.props.isLoading}
                     />
-                </IntlWrapper>
+                </InternalIntlWrapper>
             </div>
         );
     }
