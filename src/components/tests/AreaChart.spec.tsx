@@ -32,12 +32,12 @@ describe("AreaChart", () => {
     describe("Stacking", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
-        it("should reset stackMeasuresToPercent in case of one measure", () => {
+        it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M1], config);
             expect(wrapper.find(AfmAreaChart).prop("config")).toEqual({
                 stacking: true,
                 stackMeasures: true,
-                stackMeasuresToPercent: false,
+                stackMeasuresToPercent: true,
             });
         });
 

@@ -46,7 +46,6 @@ export function sanitizeComputeRatioOnMeasures<T extends VisualizationObject.Buc
 export function sanitizeConfig(
     measures: VisualizationObject.BucketItem[] = [],
     config: IChartConfig = {},
-    hasStackByAttribute: boolean = false,
 ): IChartConfig {
     if (measures.length === 1) {
         const isComputeRatio = getComputeRatio(measures[0]);
@@ -55,7 +54,7 @@ export function sanitizeConfig(
         return {
             ...config,
             stackMeasures: stackMeasures && !isComputeRatio,
-            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio && hasStackByAttribute,
+            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio,
         };
     }
 
@@ -87,18 +86,14 @@ function setComputeRatio(bucketItem: VisualizationObject.BucketItem, value: bool
  * stackMeasures is applied only when there are [2 measures and more]
  * stackMeasuresToPercent is applied only when there are [1 measure + 1 stackBy] or [2 measures and up]
  */
-export function getSanitizedStackingConfigFromAfm(
-    afm: AFM.IAfm,
-    chartConfig: IChartConfig,
-    hasStackByAttribute: boolean,
-): IChartConfig {
+export function getSanitizedStackingConfigFromAfm(afm: AFM.IAfm, chartConfig: IChartConfig): IChartConfig {
     if (get(afm, ["measures", "length"]) === 1) {
         const { stackMeasures, stackMeasuresToPercent } = chartConfig;
         const isComputeRatio = get(afm, ["measures", "0", "definition", "measure", "computeRatio"], false);
         return {
             ...chartConfig,
             stackMeasures: stackMeasures && !isComputeRatio,
-            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio && hasStackByAttribute,
+            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio,
         };
     }
     return chartConfig;

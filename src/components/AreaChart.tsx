@@ -60,14 +60,10 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-    const sanitizedConfig = sanitizeConfig(
-        measures,
-        {
-            ...newProps.config,
-            ...configProp,
-        },
-        stackBy.length > 0,
-    );
+    const sanitizedConfig = sanitizeConfig(measures, {
+        ...newProps.config,
+        ...configProp,
+    });
 
     return (
         <AfmAreaChart

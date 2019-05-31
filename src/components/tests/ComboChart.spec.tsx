@@ -89,12 +89,12 @@ describe("ComboChart", () => {
             .localIdentifier("m5ratio")
             .ratio();
 
-        it("should reset stackMeasuresToPercent in case of one measure", () => {
+        it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M5], [], config);
             const configProps = wrapper.find(AfmComboChart).prop("config");
 
             expect(configProps.stackMeasures).toBeTruthy();
-            expect(configProps.stackMeasuresToPercent).toBeFalsy();
+            expect(configProps.stackMeasuresToPercent).toBeTruthy();
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
