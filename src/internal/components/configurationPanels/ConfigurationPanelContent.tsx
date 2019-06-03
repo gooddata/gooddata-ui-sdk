@@ -10,6 +10,7 @@ import { IVisualizationProperties, IFeatureFlags, IReferences } from "../../inte
 import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
+import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;
@@ -46,7 +47,11 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     protected supportedPropertiesList: string[];
 
     public render() {
-        return <div key={`config-${this.props.type}`}>{this.renderConfigurationPanel()}</div>;
+        return (
+            <div key={`config-${this.props.type}`}>
+                <InternalIntlWrapper>{this.renderConfigurationPanel()}</InternalIntlWrapper>
+            </div>
+        );
     }
 
     protected abstract renderConfigurationPanel(): JSX.Element;
