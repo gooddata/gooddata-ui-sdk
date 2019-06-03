@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as fixtures from "../../../../../stories/test_data/fixtures";
-import { IGridTotalsRow } from "../agGridTypes";
-import { areTotalsChanged, createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
+import { createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
 import { GroupingProviderFactory } from "../GroupingProvider";
 import { createIntlMock } from "../../../visualizations/utils/intlUtils";
 
@@ -136,45 +135,29 @@ describe("getGridDataSource", () => {
         expect(onSuccess).not.toHaveBeenCalled();
     });
 
-    describe("areTotalsChanged", () => {
-        function mockGridApi(totals: any[] = []): any {
-            return {
-                getPinnedBottomRowCount: () => totals.length,
-                getPinnedBottomRow: (i: number) => ({ data: totals[i] }),
-            };
-        }
-        const totalSum = {
-            type: "rowTotal",
-            colSpan: {
-                count: 1,
-                headerKey: "foo",
-            },
-        };
-        const emptyTotalRows: IGridTotalsRow[] = [];
-        const noTotalRows: IGridTotalsRow[] = null;
-        const oneTotalRows: IGridTotalsRow[] = [totalSum];
+    it("should call getPage only once when requesting the same page", async () => {
+        const { getPage, successCallback, gridDataSource, onSuccess } = createMockedDataSource();
 
-        it.each([
-            [true, "no", "one", noTotalRows, [totalSum]],
-            [false, "no", "no", noTotalRows, []],
-            [true, "empty", "one", emptyTotalRows, [totalSum]],
-            [false, "empty", "no", emptyTotalRows, []],
-            [true, "one", "no", oneTotalRows, []],
-            [false, "one", "one", oneTotalRows, [totalSum]],
-        ])(
-            "should return %s when %s total passed and %s total present in bottom pinned row",
-            (
-                expectedValue: boolean,
-                _passed: string,
-                _table: string,
-                passedTotals: any[],
-                tableTotals: any[],
-            ) => {
-                const gridApi = mockGridApi(tableTotals);
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        expect(getPage).toHaveBeenCalledTimes(1);
+        expect(successCallback).toHaveBeenCalledTimes(2);
+        expect(onSuccess).toHaveBeenCalledTimes(2);
+    });
 
-                expect(areTotalsChanged(gridApi, passedTotals)).toBe(expectedValue);
-            },
-        );
+    it("should call getPage only for unique request but not for the same page", async () => {
+        const { getPage, successCallback, gridDataSource, onSuccess } = createMockedDataSource();
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        await gridDataSource.getRows({ startRow: 0, endRow: 0, successCallback, sortModel: [] } as any);
+        expect(getPage).toHaveBeenCalledTimes(1);
+        expect(successCallback).toHaveBeenCalledTimes(2);
+        expect(onSuccess).toHaveBeenCalledTimes(2);
+
+        await gridDataSource.getRows({ startRow: 0, endRow: 2, successCallback, sortModel: [] } as any);
+        expect(getPage).toHaveBeenCalledTimes(2);
+        expect(successCallback).toHaveBeenCalledTimes(3);
+        expect(onSuccess).toHaveBeenCalledTimes(3);
     });
 });
 

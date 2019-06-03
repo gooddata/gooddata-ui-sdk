@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
-import isEqual = require("lodash/isEqual");
 import { IDatasource, IGetRowsParams, GridApi } from "ag-grid-community";
 import { getMappingHeaderName } from "../../../helpers/mappingHeader";
 
@@ -14,9 +13,8 @@ import {
     getAttributeSortItemFieldAndDirection,
     assignSorting,
 } from "./agGridSorting";
-import { IAgGridPage, IGridAdapterOptions, IGridHeader, IGridTotalsRow } from "./agGridTypes";
+import { IAgGridPage, IGridAdapterOptions, IGridHeader } from "./agGridTypes";
 
-import ApiWrapper from "./agGridApiWrapper";
 import { IGetPage } from "../base/VisualizationLoadingHOC";
 import { IGroupingProvider } from "../pivotTable/GroupingProvider";
 import {
@@ -27,32 +25,7 @@ import {
     getRowHeaders,
 } from "./agGridHeaders";
 import { getRow, getRowTotals } from "./agGridData";
-
-export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) => {
-    const currentTotalsCount = gridApi.getPinnedBottomRowCount();
-    const newTotalsCount = newTotals === null ? 0 : newTotals.length;
-
-    if (currentTotalsCount !== newTotalsCount) {
-        return true;
-    }
-
-    for (let i = 0; i < currentTotalsCount; i++) {
-        if (!isEqual(gridApi.getPinnedBottomRow(i).data, newTotals[i])) {
-            return true;
-        }
-    }
-
-    return false;
-};
-
-const isInvalidGetRowsRequest = (startRow: number, gridApi: GridApi): boolean => {
-    const bottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(gridApi);
-    if (bottomRowIndex !== null) {
-        return startRow > bottomRowIndex;
-    }
-
-    return false;
-};
+import { areTotalsChanged, isInvalidGetRowsRequest, wrapGetPageWithCaching } from "./agGridDataSourceUtils";
 
 export const getDataSourceRowsGetter = (
     resultSpec: AFM.IResultSpec,
@@ -282,7 +255,7 @@ class GdToAgGridAdapter implements IDatasource {
         this.onDestroy = cancelPagePromises;
         this.getRowsImpl = getDataSourceRowsGetter(
             resultSpec,
-            getPage,
+            wrapGetPageWithCaching(getPage),
             getExecution,
             onSuccess,
             getGridApi,
