@@ -23,7 +23,6 @@ import {
     IVisConstruct,
     IVisProps,
     ILocale,
-    IFeatureFlags,
     IVisualizationProperties,
     IBucketItem,
     IBucket,
@@ -244,89 +243,6 @@ export function addDefaultSort(
           ];
 }
 
-const isPreviousTotalGrandTotal = ({
-    rowAttributes,
-    previousTotals,
-    total,
-}: {
-    rowAttributes: IBucketItem[];
-    previousTotals: VisualizationObject.IVisualizationTotal[];
-    total: VisualizationObject.IVisualizationTotal;
-}): boolean => {
-    const matchedTotal = previousTotals.find(
-        previousTotal =>
-            previousTotal.type === total.type && previousTotal.measureIdentifier === total.measureIdentifier,
-    );
-    if (!matchedTotal) {
-        return false;
-    }
-
-    return rowAttributes.findIndex(a => a.localIdentifier === matchedTotal.attributeIdentifier) === 0;
-};
-
-export function updateTotals({
-    totals,
-    previousTotals,
-    measures,
-    rowAttributes,
-    previousRowAttributes,
-}: {
-    totals: VisualizationObject.IVisualizationTotal[];
-    previousTotals: VisualizationObject.IVisualizationTotal[];
-    measures: IBucketItem[];
-    rowAttributes: IBucketItem[];
-    previousRowAttributes?: IBucketItem[];
-}): VisualizationObject.IVisualizationTotal[] {
-    if (rowAttributes.length === 0) {
-        return [];
-    }
-
-    return totals
-        .filter(total => {
-            // Once measure is removed, we need to remove totals that are related to it
-            return measures.some(measure => measure.localIdentifier === total.measureIdentifier);
-        })
-        .reduce((newTotals, total) => {
-            const rowAttributeIndex = rowAttributes.findIndex(
-                a => a.localIdentifier === total.attributeIdentifier,
-            );
-            const isGrandTotal = rowAttributeIndex === 0;
-            if (isGrandTotal) {
-                return newTotals.concat(total);
-            }
-
-            // If row attributes change positions, we usually need to update totals because totals
-            // at the moment are grand totals on the first attribute row.
-            const currentTotalWasGrandTotal = previousRowAttributes
-                ? previousRowAttributes.findIndex(a => a.localIdentifier === total.attributeIdentifier) === 0
-                : false;
-            if (currentTotalWasGrandTotal) {
-                const updatedTotal = {
-                    ...total,
-                    attributeIdentifier: rowAttributes[0].localIdentifier,
-                };
-                return newTotals.concat(updatedTotal);
-            }
-
-            // Can happen when user presses undo.
-            const previousTotalWasGrandTotal = isPreviousTotalGrandTotal({
-                rowAttributes,
-                previousTotals,
-                total,
-            });
-            if (previousTotalWasGrandTotal) {
-                const updatedTotal = {
-                    ...total,
-                    attributeIdentifier: rowAttributes[0].localIdentifier,
-                };
-                return newTotals.concat(updatedTotal);
-            }
-
-            // In other cases we discard the total.
-            return newTotals;
-        }, []);
-}
-
 export class PluggablePivotTable extends AbstractPluggableVisualization {
     private projectId: string;
     private element: string;
@@ -335,7 +251,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private intl: InjectedIntl;
     private visualizationProperties: IVisualizationProperties;
     private locale: ILocale;
-    private featureFlags: IFeatureFlags;
     private environment: VisualizationEnvironment;
 
     constructor(props: IVisConstruct) {
@@ -346,7 +261,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
-        this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;
     }
@@ -387,21 +301,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     const columnAttributes = getColumnAttributes(buckets);
 
                     const totals = getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE);
-                    const previousTotals = previousReferencePoint
-                        ? getTotalsFromBucket(previousReferencePoint.buckets, BucketNames.ATTRIBUTE)
-                        : [];
-
-                    // TODO BB-1386 Remove updateTotals method (all the sanitization of totals is done in AD now)
-                    const isSubtotalsEnabled = this.featureFlags.enablePivotSubtotal === true;
-                    const totalsUpdated = isSubtotalsEnabled
-                        ? totals
-                        : updateTotals({
-                              totals,
-                              previousTotals,
-                              measures,
-                              rowAttributes,
-                              previousRowAttributes,
-                          });
 
                     referencePointDraft.buckets = removeDuplicateBucketItems([
                         {
@@ -414,7 +313,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                             // This is needed because at the beginning totals property is
                             // missing from buckets. If we would pass empty array or
                             // totals: undefined, reference points would differ.
-                            ...(totalsUpdated.length > 0 ? { totals: totalsUpdated } : null),
+                            ...(totals.length > 0 ? { totals } : null),
                         },
                         {
                             localIdentifier: BucketNames.COLUMNS,
@@ -502,7 +401,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     {
                         menu: {
                             aggregations: true,
-                            aggregationsSubMenu: this.featureFlags.enablePivotSubtotal,
+                            aggregationsSubMenu: true,
                         },
                     },
                     configUpdated,

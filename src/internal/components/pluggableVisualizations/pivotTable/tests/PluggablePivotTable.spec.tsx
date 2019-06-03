@@ -10,7 +10,6 @@ import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
     isSortItemVisible,
-    updateTotals,
 } from "../PluggablePivotTable";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
@@ -316,7 +315,12 @@ describe("PluggablePivotTable", () => {
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(PivotTable);
 
-            const defaultConfig = { menu: { aggregations: true } };
+            const defaultConfig = {
+                menu: {
+                    aggregations: true,
+                    aggregationsSubMenu: true,
+                },
+            };
             const props: any = createElementSpy.mock.calls[0][1];
             expect(props.afterRender).toEqual(defaultProps.callbacks.afterRender);
             expect(props.dataSource).toEqual(testMocks.dummyDataSource);
@@ -333,34 +337,6 @@ describe("PluggablePivotTable", () => {
             expect(props.resultSpec).toEqual(options.resultSpec);
             expect(props.ErrorComponent).toEqual(null);
             expect(props.LoadingComponent).toEqual(null);
-
-            spyOnCleanup(renderSpy, createElementSpy);
-        });
-
-        it("should render PivotTable with enabled subtotals", () => {
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enablePivotSubtotal: true,
-                },
-            });
-
-            const createElementSpy = spyOnFakeElement();
-            const renderSpy = spyOnRender();
-
-            const options = getDefaultOptions();
-            pivotTable.update(options, {}, testMocks.emptyMdObject);
-
-            expect(createElementSpy).toHaveBeenCalledTimes(1);
-            expect(createElementSpy.mock.calls[0][0]).toBe(PivotTable);
-
-            const props: any = createElementSpy.mock.calls[0][1];
-            expect(props.config).toEqual({
-                menu: {
-                    aggregations: true,
-                    aggregationsSubMenu: true,
-                },
-            });
 
             spyOnCleanup(renderSpy, createElementSpy);
         });
@@ -550,7 +526,7 @@ describe("PluggablePivotTable", () => {
                     totals: [
                         {
                             measureIdentifier: "m1",
-                            attributeIdentifier: "a1",
+                            attributeIdentifier: "a2",
                             type: "sum",
                             alias: "Sum",
                         },
@@ -567,50 +543,6 @@ describe("PluggablePivotTable", () => {
                 },
             ];
 
-            return pivotTable
-                .getExtendedReferencePoint(
-                    referencePointMocks.tableGrandAndSubtotalsReferencePoint,
-                    referencePointMocks.tableTotalsReferencePoint,
-                )
-                .then(extendedReferencePoint => {
-                    expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-                });
-        });
-
-        // TODO BB-1386 Remove this test
-        it("should return a new reference point with subtotals updated to grand totals", () => {
-            const pivotTable = createComponent();
-            const expectedBuckets: IBucket[] = [
-                {
-                    localIdentifier: "measures",
-                    items: cloneDeep(
-                        referencePointMocks.tableGrandAndSubtotalsReferencePoint.buckets[0].items,
-                    ),
-                },
-                {
-                    localIdentifier: "attribute",
-                    items: cloneDeep(
-                        referencePointMocks.tableGrandAndSubtotalsReferencePoint.buckets[1].items,
-                    ),
-                    totals: [
-                        {
-                            measureIdentifier: "m1",
-                            attributeIdentifier: "a1",
-                            type: "sum",
-                            alias: "Sum",
-                        },
-                        {
-                            measureIdentifier: "m2",
-                            attributeIdentifier: "a1",
-                            type: "nat",
-                        },
-                    ],
-                },
-                {
-                    localIdentifier: "columns",
-                    items: [],
-                },
-            ];
             return pivotTable
                 .getExtendedReferencePoint(
                     referencePointMocks.tableGrandAndSubtotalsReferencePoint,
@@ -622,13 +554,6 @@ describe("PluggablePivotTable", () => {
         });
 
         it("should return a new reference point without updating grand totals and subtotals", () => {
-            // TODO BB-1386 Remove custom properties parameter from createComponent method and leave test as it is
-            const pivotTable = createComponent({
-                ...defaultProps,
-                featureFlags: {
-                    enablePivotSubtotal: true,
-                },
-            });
             const expectedBuckets: IBucket[] = [
                 {
                     localIdentifier: "measures",
@@ -661,7 +586,7 @@ describe("PluggablePivotTable", () => {
                 },
             ];
 
-            return pivotTable
+            return createComponent()
                 .getExtendedReferencePoint(referencePointMocks.tableGrandAndSubtotalsReferencePoint)
                 .then(extendedReferencePoint => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
@@ -1157,166 +1082,6 @@ describe("isSortVisible", () => {
             ]);
             const expected = false;
             expect(actual).toEqual(expected);
-        });
-    });
-});
-
-// TODO BB-1386 remove all the tests as the tested method will be removed
-describe("updateTotals", () => {
-    describe("enablePivotSubtotal feature flag disabled", () => {
-        it("should return empty totals for initial state", () => {
-            expect(
-                updateTotals({
-                    totals: [],
-                    previousTotals: [],
-                    measures: [],
-                    rowAttributes: [],
-                    previousRowAttributes: undefined,
-                }),
-            ).toEqual([]);
-        });
-
-        it("should return empty totals for empty row attributes and measures", () => {
-            expect(
-                updateTotals({
-                    totals: [],
-                    previousTotals: [],
-                    measures: [],
-                    rowAttributes: [],
-                    previousRowAttributes: [],
-                }),
-            ).toEqual([]);
-        });
-
-        it("should return unchanged totals when we are adding one total", () => {
-            const updatedTotals = updateTotals({
-                totals: [
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                ],
-                previousTotals: [],
-                measures: [{ localIdentifier: "m1" }],
-                rowAttributes: [{ localIdentifier: "a1" }],
-                previousRowAttributes: [{ localIdentifier: "a1" }],
-            });
-            expect(updatedTotals).toEqual([
-                {
-                    attributeIdentifier: "a1",
-                    measureIdentifier: "m1",
-                    type: "sum",
-                },
-            ]);
-        });
-
-        it("should remove totals when we remove all row attributes", () => {
-            const updatedTotals = updateTotals({
-                totals: [
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "min",
-                    },
-                ],
-                previousTotals: [],
-                measures: [{ localIdentifier: "m1" }],
-                rowAttributes: [],
-                previousRowAttributes: [{ localIdentifier: "a1" }],
-            });
-            expect(updatedTotals).toEqual([]);
-        });
-
-        it("should remove relevant total when we remove measure related to it", () => {
-            const updatedTotals = updateTotals({
-                totals: [
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m2",
-                        type: "max",
-                    },
-                ],
-                previousTotals: [],
-                measures: [{ localIdentifier: "m2" }],
-                rowAttributes: [{ localIdentifier: "a1" }],
-                previousRowAttributes: [{ localIdentifier: "a1" }],
-            });
-            expect(updatedTotals).toEqual([
-                {
-                    attributeIdentifier: "a1",
-                    measureIdentifier: "m2",
-                    type: "max",
-                },
-            ]);
-        });
-
-        it(
-            "should update total's attributeIdentifier when we have two rows " +
-                "and we move first one to column",
-            () => {
-                const updatedTotals = updateTotals({
-                    totals: [
-                        {
-                            attributeIdentifier: "a1",
-                            measureIdentifier: "m1",
-                            type: "sum",
-                        },
-                    ],
-                    previousTotals: [],
-                    measures: [{ localIdentifier: "m1" }],
-                    rowAttributes: [{ localIdentifier: "a2" }],
-                    previousRowAttributes: [{ localIdentifier: "a1" }, { localIdentifier: "a2" }],
-                });
-                expect(updatedTotals).toEqual([
-                    {
-                        attributeIdentifier: "a2",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                ]);
-            },
-        );
-
-        it("should update total's attributeIdentifier when we move attribute from column to first position of row", () => {
-            // This can happen when we move first row attribute to column and then we pres undo.
-            // RAIL-1327
-            const updatedTotals = updateTotals({
-                totals: [
-                    {
-                        attributeIdentifier: "a1",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                ],
-                previousTotals: [
-                    {
-                        attributeIdentifier: "a2",
-                        measureIdentifier: "m1",
-                        type: "sum",
-                    },
-                ],
-                measures: [{ localIdentifier: "m1" }],
-                rowAttributes: [{ localIdentifier: "a2" }],
-                previousRowAttributes: [],
-            });
-            expect(updatedTotals).toEqual([
-                {
-                    attributeIdentifier: "a2",
-                    measureIdentifier: "m1",
-                    type: "sum",
-                },
-            ]);
         });
     });
 });
