@@ -15,6 +15,7 @@ import { IDrillConfig } from "../../../../../interfaces/DrillEvents";
 import { IChartConfig, ISeriesItem } from "../../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { BLACK_LABEL, WHITE_LABEL } from "../../../../../constants/label";
+import { IChartOptions } from "../../chartOptionsBuilder";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {
@@ -638,6 +639,23 @@ describe("getOptionalStackingConfiguration", () => {
             const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
             expect(result.yAxis[0]).toHaveProperty("labels.formatter");
             expect(result.yAxis[1]).toEqual({});
+        });
+
+        it("should NOT add formatter when primary y-axis is line chart type in combo chart", () => {
+            const chartOptions: IChartOptions = {
+                type: VisualizationTypes.COMBO,
+                yAxes: [{ opposite: false }],
+                data: {
+                    series: Array(2).fill({ yAxis: 0 }),
+                },
+            };
+            const chartConfig: IChartConfig = {
+                stackMeasuresToPercent: true,
+                primaryChartType: VisualizationTypes.LINE,
+            };
+
+            const result = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            expect(result).toEqual({});
         });
     });
 

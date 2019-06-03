@@ -11,11 +11,7 @@ import {
     IUiConfig,
 } from "../../../../interfaces/Visualization";
 import { AXIS } from "../../../../constants/axis";
-import {
-    UICONFIG_AXIS,
-    COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
-    COMBO_CHART_UICONFIG,
-} from "../../../../constants/uiConfig";
+import { UICONFIG_AXIS, COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING } from "../../../../constants/uiConfig";
 import {
     COMBO_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
@@ -276,42 +272,6 @@ describe("PluggableComboChart", () => {
         );
     });
 
-    describe("isOptionalStackingEnabled", () => {
-        it.each([
-            [true, VisualizationTypes.COLUMN, true],
-            [true, VisualizationTypes.LINE, false],
-            [true, VisualizationTypes.AREA, true],
-            [false, VisualizationTypes.COLUMN, false],
-            [false, VisualizationTypes.LINE, false],
-            [false, VisualizationTypes.AREA, false],
-        ])(
-            "should return stack measures by %s chart type is %s base on FF",
-            (
-                enableExtendedStacking: string,
-                chartType: VisualizationObject.VisualizationType,
-                expectedResult: boolean,
-            ) => {
-                const mockProps = {
-                    ...defaultProps,
-                    featureFlags: {
-                        enableExtendedStacking,
-                    },
-                    visualizationProperties: {
-                        properties: {
-                            controls: {
-                                primaryChartType: chartType,
-                            },
-                        },
-                    },
-                    pushData: jest.fn(),
-                };
-                const comboChart = createComponent(mockProps);
-
-                expect(comboChart.isOptionalStackingEnabled()).toEqual(expectedResult);
-            },
-        );
-    });
-
     describe("optional stacking", () => {
         const props = {
             ...defaultProps,
@@ -320,7 +280,11 @@ describe("PluggableComboChart", () => {
             },
         };
 
-        const COLUMN_AND_AREA = [VisualizationTypes.COLUMN, VisualizationTypes.AREA];
+        const COLUMN_AREA_LINE = [
+            VisualizationTypes.COLUMN,
+            VisualizationTypes.AREA,
+            VisualizationTypes.LINE,
+        ];
 
         const {
             oneMetricAndCategoryAndStackReferencePoint,
@@ -333,7 +297,12 @@ describe("PluggableComboChart", () => {
             [
                 VisualizationTypes.LINE,
                 {
-                    ...COMBO_CHART_UICONFIG,
+                    ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
+                    optionalStacking: {
+                        supported: true,
+                        disabled: true,
+                        stackMeasures: false,
+                    },
                 },
             ],
             [
@@ -342,6 +311,7 @@ describe("PluggableComboChart", () => {
                     ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
                     optionalStacking: {
                         supported: true,
+                        disabled: false,
                         stackMeasures: true,
                     },
                 },
@@ -370,39 +340,21 @@ describe("PluggableComboChart", () => {
         it.each([
             [
                 AXIS.PRIMARY,
-                COLUMN_AND_AREA,
+                COLUMN_AREA_LINE,
                 oneMetricAndCategoryAndStackReferencePoint,
                 [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY], ...OPTIONAL_STACKING_PROPERTIES],
             ],
             [
                 AXIS.SECONDARY,
-                COLUMN_AND_AREA,
+                COLUMN_AREA_LINE,
                 measuresOnSecondaryAxisAndAttributeReferencePoint,
                 [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY], ...OPTIONAL_STACKING_PROPERTIES],
             ],
             [
                 AXIS.DUAL,
-                COLUMN_AND_AREA,
+                COLUMN_AREA_LINE,
                 multipleMetricsAndCategoriesReferencePoint,
                 [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL], ...OPTIONAL_STACKING_PROPERTIES],
-            ],
-            [
-                AXIS.PRIMARY,
-                [VisualizationTypes.LINE],
-                oneMetricAndCategoryAndStackReferencePoint,
-                COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY],
-            ],
-            [
-                AXIS.SECONDARY,
-                [VisualizationTypes.LINE],
-                measuresOnSecondaryAxisAndAttributeReferencePoint,
-                COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
-            ],
-            [
-                AXIS.DUAL,
-                [VisualizationTypes.LINE],
-                multipleMetricsAndCategoriesReferencePoint,
-                COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
             ],
         ])(
             "should update supported properties list when axis is %s and chart type is/are %s",

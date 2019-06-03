@@ -164,6 +164,7 @@ export interface ICustomError {
 
 export interface IOptionalStacking {
     supported?: boolean;
+    disabled?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
 }

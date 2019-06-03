@@ -55,6 +55,7 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { isLineChart, isAreaChart } from "../../../../components/visualizations/utils/common";
 
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
@@ -78,10 +79,6 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public isOptionalStackingEnabled() {
-        return super.isOptionalStackingEnabled() && this.primaryChartType !== VisualizationTypes.LINE;
-    }
-
     public getSupportedPropertiesList() {
         const supportedPropertiesList = COMBO_CHART_SUPPORTED_PROPERTIES[this.axis] || [];
         return this.isOptionalStackingEnabled()
@@ -95,6 +92,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                 ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
                 optionalStacking: {
                     supported: true,
+                    disabled: isLineChart(this.primaryChartType),
                     stackMeasures: this.isStackMeasuresByDefault(),
                 },
             });
@@ -141,7 +139,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     public isStackMeasuresByDefault() {
-        return this.primaryChartType === VisualizationTypes.AREA;
+        return isAreaChart(this.primaryChartType);
     }
 
     protected configureBuckets(extReferencePoint: IExtendedReferencePoint): void {

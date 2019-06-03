@@ -6,6 +6,7 @@ import {
     formatValueInShallowRange,
 } from "../dualAxesLabelFormatter";
 import { ISeriesItem } from "../../../../../../interfaces/Config";
+import { VisualizationTypes } from "../../../../../../constants/visualizationTypes";
 
 describe("dual axes label format", () => {
     it("test remove decimal", () => {
@@ -201,5 +202,19 @@ describe("dual axes label format", () => {
                 expect(result).toEqual(expectedResult);
             },
         );
+
+        it("should not format to pecent when chart type is line", () => {
+            const dualAxesLabelData = { ...data };
+            dualAxesLabelData.axis.userOptions.defaultFormat = "#.###";
+            dualAxesLabelData.chart.userOptions.stackMeasuresToPercent = true;
+            dualAxesLabelData.axis.series = [
+                {
+                    type: VisualizationTypes.LINE,
+                },
+            ];
+
+            const result = dualAxesLabelFormatter.call(dualAxesLabelData);
+            expect(result).toEqual("49");
+        });
     });
 });
