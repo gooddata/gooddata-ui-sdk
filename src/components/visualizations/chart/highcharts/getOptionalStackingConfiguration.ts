@@ -19,8 +19,15 @@ import {
     isNegativeValueIncluded,
     supportedStackingAttributesChartTypes,
 } from "../chartOptionsBuilder";
-import { formatAsPercent, getLabelsVisibilityConfig } from "./customConfiguration";
-import { isBarChart, isColumnChart, isComboChart, isLineChart, isPrimaryYAxis } from "../../utils/common";
+import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
+import {
+    getPrimaryChartType,
+    isBarChart,
+    isColumnChart,
+    isComboChart,
+    isLineChart,
+    isPrimaryYAxis,
+} from "../../utils/common";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 
 export const NORMAL_STACK = "normal";
@@ -85,6 +92,21 @@ function handleDualAxis(chartOptions: IChartOptions, seriesItem: ISeriesItem): I
     };
 }
 
+function handleLabelStyle(chartOptions: IChartOptions, seriesItem: ISeriesItem): ISeriesItem {
+    if (!isComboChart(chartOptions.type)) {
+        return seriesItem;
+    }
+
+    const { type, stacking } = seriesItem;
+
+    return {
+        ...seriesItem,
+        dataLabels: {
+            style: getLabelStyle(type, stacking),
+        },
+    };
+}
+
 function countMeasuresInSeries(series: ISeriesItem[]): number[] {
     return series.reduce(
         (result: number[], seriesItem: ISeriesItem) => {
@@ -143,6 +165,7 @@ function getSeriesConfiguration(
         partial(handleStackMeasure, stackMeasures),
         partial(handleStackMeasuresToPercent, stackMeasuresToPercent),
         partial(handleDualAxis, chartOptions),
+        partial(handleLabelStyle, chartOptions),
     ];
 
     // get series with stacking config
@@ -165,7 +188,7 @@ export function getYAxisConfiguration(
     config: any,
     chartConfig: IChartConfig,
 ): IYAxisConfig {
-    const { type } = chartOptions;
+    const type = getPrimaryChartType(chartOptions);
     const { yAxis, series } = config;
     const { stackMeasuresToPercent = false } = chartConfig;
 

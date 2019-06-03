@@ -25,6 +25,7 @@ import {
     showStackLabelInAxisRange,
     getShapeVisiblePart,
     hasShape,
+    hasLabelInside,
 } from "../../dataLabelsHelpers";
 import { IDataPoint } from "../../../../../../interfaces/Config";
 
@@ -214,7 +215,7 @@ export const autohideColumnLabels = (chart: any) => {
 
     // stack chart labels is displayed inside column
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints, axisRangeForAxes);
+        toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes);
     } else {
         toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true);
     }

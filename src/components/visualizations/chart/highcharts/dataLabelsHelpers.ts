@@ -10,6 +10,9 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
+import { isAreaChart, isOneOfTypes } from "../../utils/common";
+import { IDataLabelsVisible } from "../../../../interfaces/Config";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../../constants/label";
 
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
@@ -34,6 +37,10 @@ export const areLabelsStacked = (chart: any) => isLabelsStackedFromYAxis(chart) 
 
 export const hasDataLabel = (point: any) => point.dataLabel;
 export const hasShape = (point: any) => point.shapeArgs;
+export const hasLabelInside = (point: any) => {
+    const verticalAlign = get(point, "dataLabel.alignOptions.verticalAlign", "");
+    return verticalAlign === "middle";
+};
 
 export const minimizeDataLabel = (point: any) => {
     const { dataLabel } = point;
@@ -148,4 +155,42 @@ export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number) {
     }
 
     return wholeSize;
+}
+
+export function getLabelStyle(type: string, stacking: string) {
+    if (isAreaChart(type)) {
+        return BLACK_LABEL;
+    }
+    return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
+}
+
+export function formatAsPercent(unit: number = 100): string {
+    const val = parseFloat((this.value * unit).toPrecision(14));
+    return `${val}%`;
+}
+
+export function isInPercent(format: string = ""): boolean {
+    return format.includes("%");
+}
+
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabels {
+    switch (visible) {
+        case "auto":
+            return {
+                enabled: true,
+                allowOverlap: false,
+            };
+        case true:
+            return {
+                enabled: true,
+                allowOverlap: true,
+            };
+        case false:
+            return {
+                enabled: false,
+            };
+        default:
+            // keep decision on each chart for `undefined`
+            return {};
+    }
 }

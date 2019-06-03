@@ -142,6 +142,7 @@ export interface ISeriesItem {
     labelKey?: string;
     stack?: number;
     stacking?: string;
+    dataLabels?: Highcharts.DataLabels;
 }
 
 export interface IShapeArgsConfig {

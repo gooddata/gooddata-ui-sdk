@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import setWith = require("lodash/setWith");
 import clone = require("lodash/clone");
+import get = require("lodash/get");
 import includes = require("lodash/includes");
 import { Observable } from "rxjs/Rx";
 import { numberFormat } from "@gooddata/numberjs";
 
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
-import { IAxis } from "../../../interfaces/Config";
+import { IAxis, ISeriesItem } from "../../../interfaces/Config";
+import { IChartOptions } from "../chart/chartOptionsBuilder";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
@@ -108,3 +110,10 @@ export function formatLegendLabel(
     formattingString += k + m + b + t;
     return sign + numberFormat(positiveValue, formattingString);
 }
+
+export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
+    const series = get(chartOptions, "data.series", []);
+    const targetSeries = series.find((item: ISeriesItem) => item.yAxis === 0);
+
+    return get(targetSeries, "type", chartOptions.type);
+};

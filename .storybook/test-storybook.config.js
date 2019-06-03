@@ -38,7 +38,10 @@ const configuration = {
             'should override primaryMeasures & secondaryMeasures': {
                 readySelector: '.screenshot-ready-wrapper-done'
             },
-            'stack primary measures': {
+            'stack primary measures with different chart type': {
+                readySelector: '.screenshot-ready-wrapper-done'
+            },
+            'stack primary measures with same chart type': {
                 readySelector: '.screenshot-ready-wrapper-done'
             },
             'stack primary measures to percent': {

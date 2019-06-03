@@ -248,7 +248,7 @@ storiesOf("Core components/ComboChart", module)
             </ScreenshotReadyWrapper>,
         ),
     )
-    .add("stack primary measures", () =>
+    .add("stack primary measures with different chart type", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
                 {[COLUMN, AREA].map(chartType => (
@@ -262,6 +262,31 @@ storiesOf("Core components/ComboChart", module)
                                 viewBy={ATTRIBUTE_1}
                                 config={{
                                     primaryChartType: chartType,
+                                    stackMeasures: true,
+                                }}
+                                onError={onErrorHandler}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("stack primary measures with same chart type", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                {[COLUMN, AREA].map(chartType => (
+                    <div key={chartType}>
+                        <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
+                        <div style={wrapperStyle} className="screenshot-container">
+                            <ComboChart
+                                projectId="storybook"
+                                primaryMeasures={[MEASURE_1, MEASURE_3]}
+                                secondaryMeasures={secondaryMeasure}
+                                viewBy={ATTRIBUTE_1}
+                                config={{
+                                    primaryChartType: chartType,
+                                    secondaryChartType: chartType,
                                     stackMeasures: true,
                                 }}
                                 onError={onErrorHandler}
