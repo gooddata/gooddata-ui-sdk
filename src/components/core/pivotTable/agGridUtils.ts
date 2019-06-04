@@ -10,6 +10,7 @@ import {
     ID_SEPARATOR,
     ID_SEPARATOR_PLACEHOLDER,
     ROW_TOTAL,
+    ROW_SUBTOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
 
@@ -65,10 +66,13 @@ export const getGridIndex = (position: number, gridDistance: number) => {
 };
 
 export const cellRenderer = (params: ICellRendererParams) => {
-    const isRowTotal = params.data && params.data.type && params.data.type === ROW_TOTAL;
+    const isRowTotalOrSubtotal =
+        params.data &&
+        params.data.type &&
+        (params.data.type === ROW_TOTAL || params.data.type === ROW_SUBTOTAL);
 
     const isActiveRowTotal =
-        isRowTotal && // short circuit for non row totals
+        isRowTotalOrSubtotal && // short circuit for non row totals
         params.data &&
         params.data.rowTotalActiveMeasures &&
         params.data.rowTotalActiveMeasures.some((measureColId: string) =>
@@ -76,7 +80,7 @@ export const cellRenderer = (params: ICellRendererParams) => {
         );
 
     const formattedValue =
-        isRowTotal && !isActiveRowTotal && !params.value
+        isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
             ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
             : params.formatValue(params.value);
     const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
