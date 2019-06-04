@@ -2652,9 +2652,11 @@ describe("chartOptionsBuilder", () => {
 
     describe("buildTooltipTreemapFactory", () => {
         const point: IPointData = {
-            parent: "1",
             category: {
                 name: "category",
+            },
+            node: {
+                isLeaf: true,
             },
             value: 300,
             name: "point name",

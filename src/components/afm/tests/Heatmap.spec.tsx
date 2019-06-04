@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
 
 import { Heatmap } from "../Heatmap";
@@ -17,8 +17,8 @@ describe("Heatmap", () => {
         ],
     };
 
-    it("should provide default resultSpec to core Heatmap with attributes", () => {
-        const wrapper = mount(
+    it("should provide default resultSpec to core Heatmap with attributes", async () => {
+        const wrapper = shallow(
             <Heatmap
                 projectId="prId"
                 afm={afmWithAttr}
@@ -27,7 +27,7 @@ describe("Heatmap", () => {
             />,
         );
 
-        return testUtils.delay().then(() => {
+        await testUtils.delay().then(() => {
             wrapper.update();
 
             const dimensions = wrapper.find(CoreHeatmap).props().resultSpec.dimensions;
