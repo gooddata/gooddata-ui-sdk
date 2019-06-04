@@ -1,5 +1,16 @@
-// (C) 2007-2014 GoodData Corporation
-import { getIn, queryString, thisPackage } from '../src/util';
+// (C) 2007-2019 GoodData Corporation
+import 'isomorphic-fetch';
+import * as fetchMock from 'fetch-mock';
+import { mockPollingRequestWithStatus } from './helpers/polling';
+import { IExportResponse } from '../src/interfaces';
+import {
+    getIn,
+    handleHeadPolling,
+    IPollingOptions,
+    queryString,
+    thisPackage
+} from '../src/util';
+import { ApiResponse, XhrModule } from '../src/xhr';
 
 describe('util', () => {
     const testObj = {
@@ -42,6 +53,61 @@ describe('util', () => {
             const pkgJson = require('../package.json');
 
             expect(thisPackage).toEqual({ name: pkgJson.name, version: pkgJson.version });
+        });
+    });
+
+    describe('handleHeadPolling', () => {
+        const URI = '/gdc/exporter/result/12345';
+        const failedTask   = { status: 400 };
+        const finishedTask = { status: 200, uri: URI };
+        const runningTask  = { status: 202, uri: URI };
+        const options: IPollingOptions = {
+            maxAttempts: 4,
+            pollStep: 1
+        };
+
+        const isPollingDone = (_responseHeaders: Response, response: ApiResponse): boolean => {
+            const taskState = response.getData().status;
+            return taskState === 200 || taskState >= 400;
+        };
+
+        const mockedXHR = () => {
+            const xhr = new XhrModule(fetch, {});
+            return xhr.get.bind(xhr);
+        };
+
+        afterEach(() => {
+            fetchMock.restore();
+        });
+
+        it('should return timeout error if maxAttempts are reached', async (done) => {
+            mockPollingRequestWithStatus(URI, runningTask, finishedTask);
+
+            await handleHeadPolling(mockedXHR(), URI, () => false, options)
+                .then(null, (error: Error) => {
+                    expect(error.message).toBe('Export timeout!!!');
+                    done();
+                });
+        });
+
+        it('should return error if the status is 400', async (done) => {
+            mockPollingRequestWithStatus(URI, runningTask, failedTask);
+
+            await handleHeadPolling(mockedXHR(), URI, isPollingDone, options)
+                .then(null, (error: Error) => {
+                    expect(error.message).toBe('Bad Request');
+                    done();
+                });
+        });
+
+        it('should return uri if the status is 200', async (done) => {
+            mockPollingRequestWithStatus(URI, runningTask, finishedTask);
+
+            await handleHeadPolling(mockedXHR(), URI, isPollingDone, options)
+                .then((result: IExportResponse) => {
+                    expect(result.uri).toEqual(URI);
+                    done();
+                });
         });
     });
 });

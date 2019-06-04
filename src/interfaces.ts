@@ -271,6 +271,7 @@ export interface IExportConfig {
     title?: string;
     format?: 'xlsx' | 'csv' | 'raw';
     mergeHeaders?: boolean;
+    showFilters?: AFM.CompatibilityFilter[];
 }
 
 export interface IExportResponse {
