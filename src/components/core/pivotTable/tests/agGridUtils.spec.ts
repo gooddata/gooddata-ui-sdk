@@ -4,14 +4,12 @@ import {
     sanitizeField,
     getRowNodeId,
     getGridIndex,
-    cellRenderer,
     indexOfTreeNode,
     getTreeLeaves,
     getSubtotalStyles,
 } from "../agGridUtils";
 import cloneDeep = require("lodash/cloneDeep");
 import { AFM } from "@gooddata/typings";
-import identity = require("lodash/identity");
 
 describe("getIdsFromUri", () => {
     it("should return array of attribute id and attribute value id", () => {
@@ -73,22 +71,6 @@ describe("getGridIndex", () => {
             expect(getGridIndex(scrollTop, gridDistance)).toEqual(expectedRowIndex);
         },
     );
-});
-
-describe("cellRenderer", () => {
-    it("should escape value", () => {
-        const fakeParams: any = {
-            formatValue: identity,
-            value: "<button>xss</button>",
-            node: {
-                rowPinned: false,
-            },
-        };
-
-        const value = cellRenderer(fakeParams);
-
-        expect(value).toEqual('<span class="s-value">&lt;button&gt;xss&lt;/button&gt;</span>');
-    });
 });
 
 describe("getSubtotalStyles", () => {

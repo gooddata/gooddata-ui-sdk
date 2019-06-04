@@ -28,6 +28,7 @@ import ArithmeticMeasure from "./ArithmeticMeasure";
 import Export from "./Export";
 import VisualizationByUri from "./VisualizationByUri";
 import VisualizationByIdentifier from "./VisualizationByIdentifier";
+import PivotTableXss from "./PivotTableXss";
 
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
@@ -125,6 +126,7 @@ export const hiddenPaths = [
     { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
+    { path: "/hidden/pivot-table-xss", title: "Pivot Table XSS", Component: PivotTableXss },
     { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
 ];
 

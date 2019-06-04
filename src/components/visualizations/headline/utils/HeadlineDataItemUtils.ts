@@ -1,9 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { colors2Object, ISeparators } from "@gooddata/numberjs";
 import isEmpty = require("lodash/isEmpty");
 import isNaN = require("lodash/isNaN");
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../../../interfaces/Headlines";
 import { IChartConfig } from "../../../../interfaces/Config";
+import { formatNumberEscaped } from "../../../../helpers/numberFormatting";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
@@ -17,7 +18,7 @@ function processStringForNumberJs(value: string | null, format: string) {
 
 function formatValueToLabelWithColors(value: string | null, format: string, separators?: ISeparators) {
     const processedValue = processStringForNumberJs(value, format);
-    const formattedValue = numberFormat(processedValue, format, undefined, separators);
+    const formattedValue = formatNumberEscaped(processedValue, format, undefined, separators);
     return colors2Object(formattedValue);
 }
 

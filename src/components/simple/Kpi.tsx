@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { SDK, DataLayer } from "@gooddata/gooddata-js";
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { colors2Object, ISeparators } from "@gooddata/numberjs";
 import noop = require("lodash/noop");
 import { AFM, Execution } from "@gooddata/typings";
 import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
@@ -13,6 +13,7 @@ import { IEvents } from "../../interfaces/Events";
 import { KpiPropTypes, Requireable } from "../../proptypes/Kpi";
 import { isEmptyResult } from "../../helpers/errorHandlers";
 import { IntlWrapper } from "../core/base/IntlWrapper";
+import { formatNumberEscaped } from "../../helpers/numberFormatting";
 
 export { Requireable };
 
@@ -147,7 +148,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
 
     private getFormattedResult(num: number | string, result: Execution.IExecutionResponses) {
         const format = this.props.format || getFormatFromExecution(result) || DEFAULT_FORMAT;
-        const formattedNumber = numberFormat(num, format, undefined, this.props.separators);
+        const formattedNumber = formatNumberEscaped(num, format, undefined, this.props.separators);
         const { label, color, backgroundColor } = colors2Object(formattedNumber);
         return color ? <span style={{ color, backgroundColor }}>{label}</span> : label;
     }

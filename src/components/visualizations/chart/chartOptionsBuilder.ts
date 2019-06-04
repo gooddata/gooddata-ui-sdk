@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { colors2Object, numberFormat } from "@gooddata/numberjs";
+import { colors2Object } from "@gooddata/numberjs";
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
 import { IColorPalette } from "@gooddata/gooddata-js";
 import * as Highcharts from "highcharts";
@@ -85,6 +85,7 @@ import { isDataOfReasonableSize } from "./highChartsCreators";
 import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
+import { formatNumberEscaped } from "../../../helpers/numberFormatting";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -899,7 +900,7 @@ export function generateTooltipHeatmapFn(
 ) {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
-        return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
+        return colors2Object(val === null ? "-" : formatNumberEscaped(val, format, undefined, separators));
     };
 
     return (point: IPoint) => {
