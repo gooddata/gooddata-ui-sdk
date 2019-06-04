@@ -288,6 +288,13 @@ export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject
         .buckets,
 };
 
+export const comboWithThreeMeasuresAndViewByAttribute = barChartWith3MetricsAndViewByAttribute;
+export const comboWithThreeMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
+    buckets: require("../test_data/combo_chart_with_three_measures_view_by_attribute_md_object.json").buckets,
+    visualizationClass: require("../test_data/combo_chart_with_three_measures_view_by_attribute_md_object.json")
+        .visualizationClass,
+};
+
 export const tableWithSorting: any = {
     executionRequest: require("../test_data/table_with_sort_request.json").execution,
     executionResponse: require("../test_data/table_with_sort_response.json").executionResponse,
