@@ -227,6 +227,7 @@ $header-cell-resize-width: 20px;
     }
 
     .ag-floating-bottom {
+        overflow: auto !important;
         border-top: none;
     }
 }
