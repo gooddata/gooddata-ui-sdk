@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import { AFM } from "@gooddata/typings";
 import { testUtils } from "@gooddata/js-utils";
 import {
@@ -26,16 +26,10 @@ describe("DataSourceProvider", () => {
         return [];
     }
     function createComponent(
-        component: any,
+        component: React.ComponentType<IDataSourceProviderInjectedProps>,
         props: IDataSourceProviderProps = defaultProps,
-        exportTitle?: string,
-    ) {
-        const WrappedComponent = dataSourceProvider(
-            component,
-            generateDefaultDimensions,
-            COMPONENT_NAME,
-            exportTitle,
-        );
+    ): ReactWrapper {
+        const WrappedComponent = dataSourceProvider(component, generateDefaultDimensions, COMPONENT_NAME);
 
         return mount(<WrappedComponent {...props} />);
     }
@@ -63,17 +57,6 @@ describe("DataSourceProvider", () => {
             expect(TableElement.props.exportTitle).toEqual(COMPONENT_NAME);
             expect(TableElement.props.projectId).toEqual(PROJECT_ID);
         });
-    });
-
-    it("should pass correct exportTitle to InnerComponent", async () => {
-        const customTitle = "CustomTitle";
-        const wrapper = createComponent(Table, undefined, customTitle);
-
-        await testUtils.delay();
-        wrapper.update();
-        expect(wrapper.find(Table).length).toBe(1);
-        const TableElement = wrapper.find(Table).get(0);
-        expect(TableElement.props.exportTitle).toEqual(customTitle);
     });
 
     it("should recreate dataSource when projects differ", () => {

@@ -107,6 +107,9 @@ const getMockReferencePoint = (
                 title: "Measures",
             },
         },
+        exportConfig: {
+            supported: true,
+        },
         openAsReport: {
             supported: false,
         },

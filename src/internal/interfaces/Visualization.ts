@@ -152,6 +152,10 @@ export interface IBucketsUiConfig {
     [localIdentifier: string]: IBucketUiConfig;
 }
 
+export interface IExportUiConfig {
+    supported?: boolean;
+}
+
 export interface IOpenAsReportUiConfig {
     supported?: boolean;
     warningMessage?: string;
@@ -172,6 +176,7 @@ export interface IOptionalStacking {
 export interface IUiConfig {
     buckets: IBucketsUiConfig;
     recommendations?: IRecommendations;
+    exportConfig?: IExportUiConfig;
     openAsReport?: IOpenAsReportUiConfig;
     customError?: ICustomError;
     supportedOverTimeComparisonTypes?: OverTimeComparisonType[];
