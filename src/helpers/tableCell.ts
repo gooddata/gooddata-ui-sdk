@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as classNames from "classnames";
-import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { colors2Object, ISeparators } from "@gooddata/numberjs";
 
 import { styleVariables } from "../components/visualizations/styles/variables";
 import { isMappingHeaderMeasureItem, IMappingHeader } from "../interfaces/MappingHeader";
@@ -12,12 +12,13 @@ import {
     MeasureCell,
     TableCell,
 } from "../interfaces/Table";
+import { formatNumberEscaped } from "./numberFormatting";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
     const parsedNumber: string | number =
         cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
 
-    return numberFormat(parsedNumber, format, undefined, separators);
+    return formatNumberEscaped(parsedNumber, format, undefined, separators);
 }
 
 export function getCellClassNames(rowIndex: number, columnIndex: number, isDrillable: boolean): string {

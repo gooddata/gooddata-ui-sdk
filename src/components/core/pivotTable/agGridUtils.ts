@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
-import escape = require("lodash/escape");
 import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
 import { ICellRendererParams } from "ag-grid-community";
 import {
@@ -79,7 +78,7 @@ export const cellRenderer = (params: ICellRendererParams) => {
     const formattedValue =
         isRowTotal && !isActiveRowTotal && !params.value
             ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
-            : escape(params.formatValue(params.value));
+            : params.formatValue(params.value);
     const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
     return `<span class="${className}">${formattedValue || ""}</span>`;
 };
