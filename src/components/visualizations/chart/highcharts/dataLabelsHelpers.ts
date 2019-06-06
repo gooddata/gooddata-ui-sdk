@@ -164,6 +164,10 @@ export function getLabelStyle(type: string, stacking: string) {
     return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
 }
 
+/**
+ * A callback function to format data label and `this` is required by Highchart
+ * Ref: https://api.highcharts.com/highcharts/yAxis.labels.formatter
+ */
 export function formatAsPercent(unit: number = 100): string {
     const val = parseFloat((this.value * unit).toPrecision(14));
     return `${val}%`;

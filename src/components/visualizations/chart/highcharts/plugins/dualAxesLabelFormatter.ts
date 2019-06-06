@@ -119,6 +119,10 @@ function formatLabel(value: number, tickPositions: number[]): number {
     return roundNumber(numberStr, min, max);
 }
 
+/**
+ * A callback function to format data label and `this` is required by Highchart
+ * Ref: https://api.highcharts.com/highcharts/yAxis.labels.formatter
+ */
 export function dualAxesLabelFormatter() {
     const tickPositions: number[] = get(this, "axis.tickPositions", []);
     this.value = formatLabel(this.value, tickPositions);
