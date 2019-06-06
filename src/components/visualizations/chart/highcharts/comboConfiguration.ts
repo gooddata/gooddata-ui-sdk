@@ -1,29 +1,50 @@
 // (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
-import isEqual = require("lodash/isEqual");
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
 import { IChartConfig } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { isLineChart } from "../../utils/common";
 
 const { COLUMN, LINE } = VisualizationTypes;
 
+function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
+    return {
+        primaryChartType: get(config, "primaryChartType", COLUMN),
+        secondaryChartType: get(config, "secondaryChartType", LINE),
+    };
+}
 export function getDefaultChartType(config?: IChartConfig) {
-    const primaryType = get(config, "primaryChartType", COLUMN);
-    const secondaryType = get(config, "secondaryChartType", LINE);
+    const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
 
-    if (isEqual(primaryType, secondaryType)) {
-        return primaryType;
+    if (primaryChartType === secondaryChartType) {
+        return primaryChartType;
     }
 
-    if (isEqual(primaryType, COLUMN) || isEqual(secondaryType, COLUMN)) {
+    if (primaryChartType === COLUMN || secondaryChartType === COLUMN) {
         return COLUMN;
     }
 
     return LINE;
 }
 
+function isLineLineCombo(config: IChartConfig): boolean {
+    const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
+    return isLineChart(primaryChartType) && isLineChart(secondaryChartType);
+}
+
 export function getComboConfiguration(config?: IChartConfig) {
+    const series = isLineLineCombo(config)
+        ? {
+              series: {
+                  states: {
+                      inactive: {
+                          opacity: 1,
+                      },
+                  },
+              },
+          }
+        : {};
     const COMBO_TEMPLATE = {
         chart: {
             type: getDefaultChartType(config),
@@ -71,6 +92,7 @@ export function getComboConfiguration(config?: IChartConfig) {
                     },
                 },
             },
+            ...series,
         },
     };
     return COMBO_TEMPLATE;
