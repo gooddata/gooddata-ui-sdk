@@ -399,4 +399,24 @@ storiesOf("Internal/Visualization", module)
                 />,
             ),
         );
+    })
+    .add("visualization combo chart with stacking configuration", () => {
+        return screenshotWrap(
+            wrap(
+                <Visualization
+                    {...fixtures.comboWithThreeMeasuresAndViewByAttribute}
+                    config={{
+                        type: "combo2",
+                        mdObject: fixtures.comboWithThreeMeasuresAndViewByAttributeMdObject,
+                        secondary_yaxis: {
+                            measures: ["expectedMetric"],
+                        },
+                        stackMeasures: true,
+                    }}
+                    onDataTooLarge={noop}
+                />,
+                800,
+                1200,
+            ),
+        );
     });

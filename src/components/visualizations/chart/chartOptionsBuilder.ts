@@ -144,6 +144,7 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.BAR,
     VisualizationTypes.AREA,
     VisualizationTypes.COMBO,
+    VisualizationTypes.COMBO2,
 ];
 
 export interface IChartOptions {
