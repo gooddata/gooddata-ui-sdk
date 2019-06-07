@@ -289,8 +289,8 @@ export function getShowInPercentConfiguration(
     _config: any,
     chartConfig: IChartConfig,
 ) {
-    const { stackMeasuresToPercent = false } = chartConfig;
-    if (!stackMeasuresToPercent) {
+    const { stackMeasuresToPercent = false, primaryChartType } = chartConfig;
+    if (!stackMeasuresToPercent || isLineChart(primaryChartType)) {
         return {};
     }
 

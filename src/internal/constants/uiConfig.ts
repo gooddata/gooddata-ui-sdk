@@ -554,6 +554,7 @@ export const COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING: IUiConfig = {
     supportedChartTypes: [VisualizationTypes.COLUMN, VisualizationTypes.LINE, VisualizationTypes.AREA],
     optionalStacking: {
         supported: true,
+        disabled: false,
         stackMeasures: false,
     },
 };

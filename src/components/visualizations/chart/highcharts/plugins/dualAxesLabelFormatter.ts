@@ -3,6 +3,8 @@ import get = require("lodash/get");
 import head = require("lodash/head");
 import last = require("lodash/last");
 import { formatAsPercent, isInPercent } from "../dataLabelsHelpers";
+import { ISeriesItem } from "../../../../../interfaces/Config";
+import { isLineChart } from "../../../utils/common";
 
 const DEFAULT_LIMIT_LENGTH = 4; // length of '0.00' is 4
 const DEFAULT_PADDING = 2;
@@ -128,8 +130,9 @@ export function dualAxesLabelFormatter() {
     this.value = formatLabel(this.value, tickPositions);
 
     const stackMeasuresToPercent = get(this, "chart.userOptions.stackMeasuresToPercent", false);
-    const seriesInAxis = get(this, "axis.series", []).length;
-    if (stackMeasuresToPercent && seriesInAxis > 0) {
+    const series = get(this, "axis.series", []);
+    const isLineChartType = series.some((seriesItem: ISeriesItem) => isLineChart(seriesItem.type));
+    if (stackMeasuresToPercent && series.length > 0 && !isLineChartType) {
         const opposite = get(this, "axis.opposite", false);
         if (opposite === false) {
             return formatAsPercent.call(this, 1);
