@@ -54,7 +54,6 @@ import {
 import { Headline } from "../../../../components/core/Headline";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { generateDimensions } from "../../../../helpers/dimensions";
-import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
@@ -74,7 +73,6 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
-        this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
     }
 
     public unmount() {
@@ -166,19 +164,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     onLoadingChanged={onLoadingChanged}
                     pushData={pushData}
                     onError={onError}
-                    onExportReady={this.onExportReady}
                     LoadingComponent={null}
                     ErrorComponent={null}
                 />,
                 document.querySelector(this.element),
             );
-        }
-    }
-
-    protected onExportReady(exportResult: VisEvents.IExportFunction) {
-        const { onExportReady } = this.callbacks;
-        if (onExportReady) {
-            onExportReady(exportResult);
         }
     }
 

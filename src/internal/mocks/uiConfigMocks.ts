@@ -13,7 +13,7 @@ import {
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../constants/bucket";
 
-import { IOpenAsReportUiConfig, IUiConfig } from "../interfaces/Visualization";
+import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../interfaces/Visualization";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
 
 const measuresBase = {
@@ -73,6 +73,14 @@ const allOverTimeComparisonTypes: OverTimeComparisonType[] = [
     OverTimeComparisonTypes.PREVIOUS_PERIOD,
 ];
 
+const disabledExportConfig: IExportUiConfig = {
+    supported: false,
+};
+
+const enabledExportConfig: IExportUiConfig = {
+    supported: true,
+};
+
 const disabledOpenAsReportConfig: IOpenAsReportUiConfig = {
     supported: false,
 };
@@ -89,6 +97,7 @@ export const defaultColumnRecommendations = {
         previousPeriod: false,
         trending: true,
     },
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
 };
@@ -118,12 +127,14 @@ const attributeBase = {
 const defaultUiConfigNoRecommendations = {
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
 };
 
 const defaultUiConfig = {
     ...defaultRecommendations,
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
 };
 
@@ -213,6 +224,7 @@ export const multipleMetricsAndCategoriesAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
 };
 
@@ -239,6 +251,7 @@ export const multipleMesuresAndCategoriesAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -321,6 +334,7 @@ export const scatterPlotUiConfig: IUiConfig = {
         },
     },
     recommendations: {},
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
 };
@@ -370,6 +384,7 @@ export const bubbleChartUiConfig: IUiConfig = {
         },
     },
     recommendations: {},
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
 };
@@ -549,6 +564,7 @@ export const oneMetricAndManyCategoriesBarUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -580,6 +596,7 @@ export const oneMetricAndOneStackBarUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -608,6 +625,7 @@ export const multipleMetricsAndCategoriesBarUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -686,6 +704,7 @@ export const oneMetricAndManyCategoriesAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
 };
 
@@ -715,6 +734,7 @@ export const oneMetricManyCategoriesAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -750,6 +770,7 @@ export const oneMetricAndOneCategoryAndOneStackAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -849,6 +870,7 @@ export const dateAsSecondCategoryAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
 };
 
@@ -879,6 +901,7 @@ export const dateAsThirdCategoryAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: enabledOpenAsReportConfig,
     optionalStacking: {
         supported: true,
@@ -981,6 +1004,7 @@ export const oneStackAndNoCategoriesAreaUiConfig: IUiConfig = {
     },
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
 };
 
@@ -1062,6 +1086,7 @@ export const oneMetricHeadlineUiConfig: IUiConfig = {
         },
     },
     ...defaultUiConfigNoRecommendations,
+    exportConfig: disabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
 };
@@ -1096,6 +1121,7 @@ export const defaultHeatmapUiConfig: IUiConfig = {
         },
     },
     recommendations: {},
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
 };
@@ -1125,6 +1151,7 @@ export const defaultPivotTableUiConfig: IUiConfig = {
         },
     },
     recommendations: {},
+    exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
 };

@@ -138,7 +138,6 @@ describe("PluggableHeadline", () => {
                 onLoadingChanged: defaultProps.callbacks.onLoadingChanged,
                 pushData: defaultProps.callbacks.pushData,
                 onError: defaultProps.callbacks.onError,
-                onExportReady: undefined,
                 ErrorComponent: null,
                 LoadingComponent: null,
             });

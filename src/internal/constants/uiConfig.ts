@@ -61,6 +61,14 @@ export const defaultFilters = {
     },
 };
 
+export const disabledExportConfig = {
+    exportConfig: { supported: false },
+};
+
+export const enabledExportConfig = {
+    exportConfig: { supported: true },
+};
+
 export const disabledOpenAsReportConfig = {
     openAsReport: { supported: false },
 };
@@ -73,6 +81,7 @@ export const defaultRootUiConfigProperties: Partial<IUiConfig> = {
     recommendations: {},
     supportedOverTimeComparisonTypes: [],
     ...disabledOpenAsReportConfig,
+    ...enabledExportConfig,
 };
 
 export const DEFAULT_SCATTERPLOT_UICONFIG: IUiConfig = {
@@ -434,6 +443,7 @@ export const DEFAULT_HEADLINE_UICONFIG: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
+    ...disabledExportConfig,
     supportedOverTimeComparisonTypes: [
         OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
         OverTimeComparisonTypes.PREVIOUS_PERIOD,
