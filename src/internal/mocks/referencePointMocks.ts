@@ -153,6 +153,11 @@ export const arithmeticMeasureItems: IBucketItem[] = [
     },
 ];
 
+export const masterMeasuresWithPercentage: IBucketItem[] = masterMeasureItems.map((measure: IBucketItem) => ({
+    ...measure,
+    showInPercent: true,
+}));
+
 export const dateFilterBucketAllTime: IFilters = {
     localIdentifier: "filters",
     items: [
@@ -462,6 +467,54 @@ export const samePeriodPreviousYearRefPoint: IReferencePoint = {
     filters: samePeriodPrevYearFiltersBucket,
 };
 
+export const measureWithDerivedAndPercentageRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [
+                masterMeasuresWithPercentage[0],
+                {
+                    ...derivedMeasureItems[0],
+                    showInPercent: true,
+                },
+            ],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: samePeriodPrevYearFiltersBucket,
+};
+
+export const multipleMeasuresWithPercentageRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasuresWithPercentage.slice(0, 2),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: samePeriodPrevYearFiltersBucket,
+};
+
+export const multipleSecondaryMeasuresWithPercentageRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasuresWithPercentage.slice(2, 4),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: samePeriodPrevYearFiltersBucket,
+};
+
 export const attributeInStackReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -597,6 +650,27 @@ export const multipleMetricBucketsAndCategoryReferencePoint: IReferencePoint = {
     },
     properties: {
         sortItems: [defaultSortItem],
+    },
+};
+
+export const multipleMetricBucketsWithPercentageRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasuresWithPercentage.slice(0, 2),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasuresWithPercentage.slice(2, 4),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeItems.slice(0, 1),
     },
 };
 

@@ -55,6 +55,7 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { getMasterMeasuresCount } from "../../../utils/bucketRules";
 import { isLineChart, isAreaChart } from "../../../../components/visualizations/utils/common";
 
 export class PluggableComboChart extends PluggableBaseChart {
@@ -126,7 +127,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.supportedPropertiesList = this.getSupportedPropertiesList();
 
         newReferencePoint = setComboChartUiConfig(newReferencePoint, this.intl, this.type);
-        newReferencePoint = configurePercent(newReferencePoint, this.axis !== AXIS.DUAL);
+        newReferencePoint = configurePercent(newReferencePoint, this.isPercentDisabled(newReferencePoint));
         newReferencePoint = configureOverTimeComparison(newReferencePoint);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
@@ -220,5 +221,21 @@ export class PluggableComboChart extends PluggableBaseChart {
         }
 
         return referencePoint.properties;
+    }
+
+    private isPercentDisabled(extReferencePoint: IExtendedReferencePoint): boolean {
+        if (this.axis === AXIS.DUAL) {
+            return false;
+        }
+
+        const buckets: IBucket[] = get(extReferencePoint, BUCKETS, []);
+        const primaryMasterMeasures: number = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
+        const secondaryMasterMeasures: number = getMasterMeasuresCount(
+            buckets,
+            BucketNames.SECONDARY_MEASURES,
+        );
+
+        // disable percent if there is more than one measure on primary/secondary y-axis
+        return primaryMasterMeasures + secondaryMasterMeasures > 1;
     }
 }
