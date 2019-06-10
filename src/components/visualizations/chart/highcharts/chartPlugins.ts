@@ -40,5 +40,6 @@ export function initChartPlugins(Highcharts: any) {
     linearTickPositions(Highcharts);
     zeroAlignYAxis(Highcharts);
     groupCategoriesWrapper(Highcharts);
+    // Set default size for bubbles in bubble chart where size value is not provided
     getBubbleRadius(Highcharts);
 }

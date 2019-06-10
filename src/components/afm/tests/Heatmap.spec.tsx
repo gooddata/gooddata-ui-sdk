@@ -27,14 +27,9 @@ describe("Heatmap", () => {
             />,
         );
 
-        await testUtils.delay().then(() => {
-            wrapper.update();
-
-            const dimensions = wrapper.find(CoreHeatmap).props().resultSpec.dimensions;
-            expect(dimensions).toEqual([
-                { itemIdentifiers: ["measureGroup"] },
-                { itemIdentifiers: ["heat"] },
-            ]);
-        });
+        await testUtils.delay();
+        wrapper.update();
+        const dimensions = wrapper.find(CoreHeatmap).props().resultSpec.dimensions;
+        expect(dimensions).toEqual([{ itemIdentifiers: ["measureGroup"] }, { itemIdentifiers: ["heat"] }]);
     });
 });

@@ -1,5 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import * as Highcharts from "highcharts";
 import { AFM } from "@gooddata/typings";
 import {
     ChartElementType,

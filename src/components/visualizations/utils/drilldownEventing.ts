@@ -118,7 +118,7 @@ const chartClickDebounced = debounce(
         let drillContext: IDrillEventContext;
 
         if (isGroupHighchartsDrillEvent(event)) {
-            const points: IHighchartsPointObject[] = event.points as IHighchartsPointObject[];
+            const points = event.points as IHighchartsPointObject[];
             drillContext = composeDrillContextGroup(points, usedChartType);
         } else {
             const point: IHighchartsPointObject = event.point as IHighchartsPointObject;

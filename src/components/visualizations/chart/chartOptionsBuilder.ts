@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object } from "@gooddata/numberjs";
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
-import * as Highcharts from "highcharts";
 import * as invariant from "invariant";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");

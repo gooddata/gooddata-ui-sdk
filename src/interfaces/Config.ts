@@ -2,7 +2,6 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/typings";
 import { IColorItem, IColor } from "@gooddata/gooddata-js";
-import * as Highcharts from "highcharts";
 import { PositionType } from "../components/visualizations/typings/legend";
 import { VisType } from "../constants/visualizationTypes";
 import { IDataLabelsConfig } from "../interfaces/Config";

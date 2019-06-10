@@ -2,7 +2,6 @@
 import pick = require("lodash/pick");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import * as Highcharts from "highcharts";
 import {
     isBubbleChart,
     isComboChart,
