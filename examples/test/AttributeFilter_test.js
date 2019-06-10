@@ -14,7 +14,7 @@ fixture("Attribute filter components")
     .beforeEach(loginUsingLoginForm(`${config.url}/attribute-filter-components`));
 
 test("Dropdown filter opens, clears, selects all and applies", async t => {
-    const dropdownButton = Selector(".button.s-employee_name");
+    const dropdownButton = Selector(".gd-button.s-employee_name");
 
     await t
         .click(dropdownButton)
@@ -38,7 +38,7 @@ test("Dropdown filter opens, clears, selects all and applies", async t => {
 });
 
 test("Positive, negative and error attribute filters", async t => {
-    const dropdownButton = Selector(".s-location_resort.button");
+    const dropdownButton = Selector(".s-location_resort.gd-button");
     const lineChart = Selector(".s-line-chart");
     const markers = Selector(".highcharts-markers path");
     const error = Selector(".s-error .info-label");

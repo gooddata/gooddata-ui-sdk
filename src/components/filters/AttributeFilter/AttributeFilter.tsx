@@ -29,7 +29,7 @@ export interface IAttributeFilterProps {
 
 const DefaultFilterLoading = injectIntl(({ intl }) => {
     return (
-        <button className="button button-secondary button-small icon-right icon disabled s-button-loading">
+        <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
             {intl.formatMessage({ id: "gs.filter.loading" })}
         </button>
     );

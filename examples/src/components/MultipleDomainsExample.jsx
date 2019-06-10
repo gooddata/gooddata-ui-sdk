@@ -105,7 +105,7 @@ export class MultipleDomainsExample extends Component {
                     </table>
 
                     <div style={{ position: "relative" }}>
-                        <input type="submit" className="button-action" value="Login to second SDK" />
+                        <input type="submit" className="gd-button-action" value="Login to second SDK" />
                         {sdk2LoginError ? (
                             <div className="gd-message error" style={{ top: "1em", left: "1em" }}>
                                 <div className="gd-message-text">{sdk2LoginError}</div>

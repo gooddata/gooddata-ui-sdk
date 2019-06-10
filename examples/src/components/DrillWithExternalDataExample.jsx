@@ -317,7 +317,7 @@ export class DrillWithExternalDataExample extends React.Component {
                                 {state.name}&nbsp;
                                 <button
                                     onClick={this.onStateClear}
-                                    className="button button-primary button-small button-icon-only icon-cross s-employee-heading-clear-state"
+                                    className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-employee-heading-clear-state"
                                 />
                             </span>
                         )}
@@ -326,7 +326,7 @@ export class DrillWithExternalDataExample extends React.Component {
                                 {location.name}&nbsp;
                                 <button
                                     onClick={this.onLocationClear}
-                                    className="button button-primary button-small button-icon-only icon-cross s-employee-heading-clear-location"
+                                    className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-employee-heading-clear-location"
                                 />
                             </span>
                         )}
@@ -341,7 +341,7 @@ export class DrillWithExternalDataExample extends React.Component {
                                 {state.name}&nbsp;
                                 <button
                                     onClick={this.onStateClear}
-                                    className="button button-primary button-small button-icon-only icon-cross s-sales-heading-clear-state"
+                                    className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-sales-heading-clear-state"
                                 />
                             </span>
                         )}
@@ -350,7 +350,7 @@ export class DrillWithExternalDataExample extends React.Component {
                                 {location.name}&nbsp;
                                 <button
                                     onClick={this.onLocationClear}
-                                    className="button button-primary button-small button-icon-only icon-cross s-sales-heading-clear-location"
+                                    className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-sales-heading-clear-location"
                                 />
                             </span>
                         )}

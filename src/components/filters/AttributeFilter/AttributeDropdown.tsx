@@ -364,14 +364,14 @@ export class AttributeDropdownWrapped extends React.PureComponent<
         return (
             <div className="gd-attribute-filter-actions">
                 <Button
-                    className="button-secondary button-small cancel-button"
+                    className="gd-button-secondary gd-button-small cancel-button"
                     onClick={this.onClose}
                     value={cancelText}
                     title={cancelText}
                 />
                 <Button
                     disabled={applyDisabled}
-                    className="button-action button-small s-apply"
+                    className="gd-button-action gd-button-small s-apply"
                     onClick={this.onApply}
                     value={applyText}
                     title={applyText}

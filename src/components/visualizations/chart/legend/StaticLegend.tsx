@@ -27,7 +27,7 @@ export default class StaticLegend extends React.PureComponent<any, any> {
     }
 
     public renderPagingButton(type: any, handler: any, disabled: any) {
-        const classes = cx("button-link", "button-icon-only", `icon-chevron-${type}`, "paging-button");
+        const classes = cx("gd-button-link", "gd-button-icon-only", `icon-chevron-${type}`, "paging-button");
         return <button className={classes} onClick={handler} disabled={disabled} />;
     }
 

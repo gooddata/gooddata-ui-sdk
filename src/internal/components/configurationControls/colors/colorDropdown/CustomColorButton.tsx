@@ -14,7 +14,7 @@ class CustomColorButton extends React.PureComponent<ICustomColorButtonProps & In
             <div className="gd-color-drop-down-custom-section">
                 <Button
                     value={getTranslation("gs.color-dropdown.custom-color", this.props.intl)}
-                    className="button-link gd-color-drop-down-custom-section-button s-custom-section-button"
+                    className="gd-button-link gd-color-drop-down-custom-section-button s-custom-section-button"
                     onClick={this.onClick}
                 />
             </div>

@@ -531,7 +531,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-bucket-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-bucket-preset-${key} ${
                                     bucketPresetKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onBucketPresetChange}
@@ -549,7 +549,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-drilling-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-drilling-preset-${key} ${
                                     filterPresetKeys[key] ? " is-active" : ""
                                 }`}
                                 onClick={this.onFilterPresetChange}
@@ -567,7 +567,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-drilling-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-drilling-preset-${key} ${
                                     drillingPresetKeys[key] ? " is-active" : ""
                                 }`}
                                 onClick={this.onDrillingPresetChange}
@@ -585,7 +585,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-sorting-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-sorting-preset-${key} ${
                                     sortingPresetKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onSortingPresetChange}
@@ -603,7 +603,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-total-preset-${key} ${
                                     totalPresetKeys[key] ? " is-active" : ""
                                 }`}
                                 onClick={this.onTotalPresetChange}
@@ -621,7 +621,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-total-preset-${key} ${
                                     menuPresetKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onMenuPresetChange}
@@ -639,7 +639,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-total-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-total-preset-${key} ${
                                     pivotTableSizeKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onPivotTableSizeChange}
@@ -657,7 +657,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-max-height-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-max-height-preset-${key} ${
                                     maxHeightPresetKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onMaxHeightPresetChange}
@@ -675,7 +675,7 @@ export class PivotTableDrillingExample extends Component {
                         return (
                             <ElementWithParam
                                 key={key}
-                                className={`preset-option button button-secondary s-group-rows-preset-${key} ${
+                                className={`preset-option gd-button gd-button-secondary s-group-rows-preset-${key} ${
                                     groupRowsKey === key ? " is-active" : ""
                                 }`}
                                 onClick={this.onGroupRowsPresetChange}
