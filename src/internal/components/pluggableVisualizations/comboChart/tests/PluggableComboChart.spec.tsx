@@ -11,7 +11,7 @@ import {
     IUiConfig,
 } from "../../../../interfaces/Visualization";
 import { AXIS } from "../../../../constants/axis";
-import { UICONFIG_AXIS, COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING } from "../../../../constants/uiConfig";
+import { UICONFIG_AXIS, COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
 import {
     COMBO_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
@@ -273,13 +273,6 @@ describe("PluggableComboChart", () => {
     });
 
     describe("optional stacking", () => {
-        const props = {
-            ...defaultProps,
-            featureFlags: {
-                enableExtendedStacking: true,
-            },
-        };
-
         const COLUMN_AREA_LINE = [
             VisualizationTypes.COLUMN,
             VisualizationTypes.AREA,
@@ -293,11 +286,11 @@ describe("PluggableComboChart", () => {
         } = referencePointMocks;
 
         it.each([
-            [VisualizationTypes.COLUMN, COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING],
+            [VisualizationTypes.COLUMN, COMBO_CHART_UICONFIG],
             [
                 VisualizationTypes.LINE,
                 {
-                    ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
+                    ...COMBO_CHART_UICONFIG,
                     optionalStacking: {
                         supported: true,
                         disabled: true,
@@ -308,7 +301,7 @@ describe("PluggableComboChart", () => {
             [
                 VisualizationTypes.AREA,
                 {
-                    ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
+                    ...COMBO_CHART_UICONFIG,
                     optionalStacking: {
                         supported: true,
                         disabled: false,
@@ -320,7 +313,7 @@ describe("PluggableComboChart", () => {
             "should return combo chart uiconfig by chart type is %s with optional stacking",
             async (chartType: VisualizationObject.VisualizationType, expectedUiConfig: IUiConfig) => {
                 const mockProps = {
-                    ...props,
+                    ...defaultProps,
                     visualizationProperties: {
                         properties: {
                             controls: {
@@ -366,7 +359,7 @@ describe("PluggableComboChart", () => {
             ) => {
                 supportedChartTypes.forEach(async (chartType: VisualizationObject.VisualizationType) => {
                     const mockProps = {
-                        ...props,
+                        ...defaultProps,
                         pushData: jest.fn(),
                     };
 

@@ -34,15 +34,8 @@ import {
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
 import { removeSort } from "../../../utils/sort";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import {
-    COMBO_CHART_SUPPORTED_PROPERTIES,
-    OPTIONAL_STACKING_PROPERTIES,
-} from "../../../constants/supportedProperties";
-import {
-    COMBO_CHART_UICONFIG,
-    UICONFIG_AXIS,
-    COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
-} from "../../../constants/uiConfig";
+import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { COMBO_CHART_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
 import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
@@ -71,34 +64,25 @@ export class PluggableComboChart extends PluggableBaseChart {
             VisualizationTypes.COLUMN,
         );
         this.supportedPropertiesList = this.getSupportedPropertiesList();
-        this.defaultControlsProperties = this.isOptionalStackingEnabled()
-            ? {
-                  stackMeasures: this.isStackMeasuresByDefault(),
-              }
-            : {};
+        this.defaultControlsProperties = {
+            stackMeasures: this.isStackMeasuresByDefault(),
+        };
         this.initializeProperties(props.visualizationProperties);
     }
 
     public getSupportedPropertiesList() {
-        const supportedPropertiesList = COMBO_CHART_SUPPORTED_PROPERTIES[this.axis] || [];
-        return this.isOptionalStackingEnabled()
-            ? [...supportedPropertiesList, ...OPTIONAL_STACKING_PROPERTIES]
-            : supportedPropertiesList;
+        return COMBO_CHART_SUPPORTED_PROPERTIES[this.axis] || [];
     }
 
     public getUiConfig(): IUiConfig {
-        if (this.isOptionalStackingEnabled()) {
-            return cloneDeep({
-                ...COMBO_CHART_UICONFIG_WITH_OPTIONAL_STACKING,
-                optionalStacking: {
-                    supported: true,
-                    disabled: isLineChart(this.primaryChartType),
-                    stackMeasures: this.isStackMeasuresByDefault(),
-                },
-            });
-        }
-
-        return cloneDeep(COMBO_CHART_UICONFIG);
+        return cloneDeep({
+            ...COMBO_CHART_UICONFIG,
+            optionalStacking: {
+                supported: true,
+                disabled: isLineChart(this.primaryChartType),
+                stackMeasures: this.isStackMeasuresByDefault(),
+            },
+        });
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -112,11 +96,9 @@ export class PluggableComboChart extends PluggableBaseChart {
             uiConfig: this.getUiConfig(),
         };
 
-        this.defaultControlsProperties = this.isOptionalStackingEnabled()
-            ? {
-                  stackMeasures: this.isStackMeasuresByDefault(),
-              }
-            : {};
+        this.defaultControlsProperties = {
+            stackMeasures: this.isStackMeasuresByDefault(),
+        };
 
         this.configureBuckets(newReferencePoint);
         newReferencePoint = setSecondaryMeasures(newReferencePoint, this.secondaryAxis);
