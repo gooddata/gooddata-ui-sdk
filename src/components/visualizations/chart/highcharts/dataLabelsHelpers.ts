@@ -177,7 +177,7 @@ export function isInPercent(format: string = ""): boolean {
     return format.includes("%");
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabelsOptionsObject {
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabels {
     switch (visible) {
         case "auto":
             return {

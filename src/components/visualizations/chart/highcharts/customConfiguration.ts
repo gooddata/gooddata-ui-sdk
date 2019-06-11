@@ -16,9 +16,13 @@ import pickBy = require("lodash/pickBy");
 import * as numberJS from "@gooddata/numberjs";
 
 import { styleVariables } from "../../styles/variables";
-import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
+import {
+    IChartOptions,
+    supportedDualAxesChartTypes,
+    supportedTooltipFollowPointerChartTypes,
+} from "../chartOptionsBuilder";
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
-import { IDataLabelsVisible, IChartConfig, IAxis, IChartOptions } from "../../../../interfaces/Config";
+import { IDataLabelsVisible, IChartConfig, IAxis } from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
 import {
     formatAsPercent,
@@ -157,13 +161,12 @@ function hideOverlappedLabels(chartOptions: IChartOptions) {
 
 function getShowInPercentConfiguration(chartOptions: IChartOptions) {
     const { yAxes = [], xAxes = [] } = chartOptions;
-    const percentageFormatter = partial(formatAsPercent, 100);
 
     const xAxis = xAxes.map((axis: any) =>
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: percentageFormatter,
+                      formatter: formatAsPercent,
                   },
               }
             : {},
@@ -173,7 +176,7 @@ function getShowInPercentConfiguration(chartOptions: IChartOptions) {
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: percentageFormatter,
+                      formatter: formatAsPercent,
                   },
               }
             : {},
@@ -991,8 +994,6 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
             }
 
             const opposite = get(axis, "opposite", false);
-            const axisType: string = axis.opposite ? "secondary" : "primary";
-            const className: string = `s-highcharts-${axisType}-yaxis`;
             const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
 
             // For bar chart take x axis options
@@ -1034,7 +1035,6 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
                     },
                 },
                 opposite,
-                className,
                 ...maxProp,
                 ...minProp,
                 ...tickConfiguration,
