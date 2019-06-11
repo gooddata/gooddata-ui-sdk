@@ -97,6 +97,17 @@ const MEASURE_3: AFM.IMeasure = {
     },
 };
 
+export const MEASURE_WITH_NULLS: AFM.IMeasure = {
+    localIdentifier: "m4",
+    definition: {
+        measure: {
+            item: {
+                uri: "/gdc/md/storybook/obj/9",
+            },
+        },
+    },
+};
+
 const ARITHMETIC_MEASURE_SIMPLE_OPERANDS: AFM.IMeasure = {
     localIdentifier: "arithmetic_measure_1",
     definition: {
@@ -219,6 +230,11 @@ export const AFM_HEATMAP_60ROWS: AFM.IAfm = {
             localIdentifier: "Popularity",
         },
     ],
+};
+
+export const AFM_HEATMAP_EMPTY_CELLS: AFM.IAfm = {
+    measures: [MEASURE_WITH_NULLS],
+    attributes: [ATTRIBUTE_POPULARITY, ATTRIBUTE_COLOURS],
 };
 
 export const AFM_ONE_MEASURE_TWO_ATTRIBUTES_ONE_RENAMED_ATTRIBUTE: AFM.IAfm = {

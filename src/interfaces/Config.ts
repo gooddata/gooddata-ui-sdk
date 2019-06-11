@@ -142,7 +142,7 @@ export interface ISeriesItem {
     labelKey?: string;
     stack?: number;
     stacking?: string;
-    dataLabels?: Highcharts.DataLabels;
+    dataLabels?: Highcharts.DataLabelsOptionsObject;
 }
 
 export interface IShapeArgsConfig {
@@ -152,7 +152,79 @@ export interface IShapeArgsConfig {
     y?: number;
 }
 
-export interface IDataPoint {
-    dataLabel?: IDataLabelsConfig;
-    shapeArgs?: IShapeArgsConfig;
+export interface IChartOptions {
+    type?: string;
+    stacking?: any;
+    hasStackByAttribute?: boolean;
+    hasViewByAttribute?: boolean;
+    isViewByTwoAttributes?: boolean;
+    legendLayout?: string;
+    xAxes?: any;
+    yAxes?: any;
+    data?: any;
+    actions?: any;
+    grid?: any;
+    xAxisProps?: any;
+    yAxisProps?: any;
+    secondary_xAxisProps?: any;
+    secondary_yAxisProps?: any;
+    title?: any;
+    colorAxis?: Highcharts.ColorAxisOptions;
+    colorAssignments?: IColorAssignment[];
+    colorPalette?: IColorPalette;
+}
+
+export interface IPatternOptionsObject {
+    path: Highcharts.SVGAttributes;
+    width: number;
+    height: number;
+}
+export interface IPatternObject {
+    pattern: IPatternOptionsObject;
+}
+
+export interface IPointData {
+    /**
+     * Custom properties set by custom data options.
+     */
+    [property: string]: any;
+    x?: number;
+    y?: number;
+    z?: number;
+    value?: number;
+    format?: string;
+    marker?: {
+        enabled: boolean;
+    };
+    name?: string;
+    color?: string | IPatternObject;
+    legendIndex?: number;
+    id?: string;
+    parent?: string;
+    drilldown?: boolean;
+    drillIntersection?: any;
+    borderWidth?: number;
+    borderColor?: string;
+    pointPadding?: number;
+    series?: ISeriesItem;
+    category?: ICategory;
+}
+
+export interface ICategoryParent {
+    name: string;
+}
+
+// since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
+export interface ICategory {
+    name: string;
+    parent?: ICategoryParent;
+}
+
+export interface ISeriesItemConfig {
+    color: string;
+    legendIndex: number;
+    data?: any;
+    name?: string;
+    yAxis?: number;
+    xAxis?: number;
 }

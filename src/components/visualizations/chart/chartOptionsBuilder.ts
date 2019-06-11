@@ -1,8 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object } from "@gooddata/numberjs";
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
-import { IColorPalette } from "@gooddata/gooddata-js";
-import * as Highcharts from "highcharts";
 import * as invariant from "invariant";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
@@ -16,6 +14,7 @@ import last = require("lodash/last");
 import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
+import isNil = require("lodash/isNil");
 
 import {
     MEASURES,
@@ -37,14 +36,18 @@ import {
     IAxis,
     IChartConfig,
     IChartLimits,
-    IColorAssignment,
     ISeriesDataItem,
     ISeriesItem,
+    IPointData,
+    IPatternObject,
+    IChartOptions,
+    ISeriesItemConfig,
+    ICategory,
 } from "../../../interfaces/Config";
 import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
-import { getLighterColor } from "../utils/color";
+import { getLighterColor, GRAY, WHITE, TRANSPARENT } from "../utils/color";
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -123,6 +126,19 @@ const unsupportedStackingTypes = [
     VisualizationTypes.BUBBLE,
 ];
 
+const nullColor: IPatternObject = {
+    pattern: {
+        path: {
+            d: "M 10 0 L 0 10 M 9 11 L 11 9 M 4 11 L 11 4 M -1 1 L 1 -1 M -1 6 L 6 -1",
+            stroke: GRAY,
+            strokeWidth: 1,
+            fill: WHITE,
+        },
+        width: 10,
+        height: 10,
+    },
+};
+
 export const supportedDualAxesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
@@ -147,28 +163,6 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COMBO2,
 ];
 
-export interface IChartOptions {
-    type?: string;
-    stacking?: any;
-    hasStackByAttribute?: boolean;
-    hasViewByAttribute?: boolean;
-    isViewByTwoAttributes?: boolean;
-    legendLayout?: string;
-    xAxes?: any;
-    yAxes?: any;
-    data?: any;
-    actions?: any;
-    grid?: any;
-    xAxisProps?: any;
-    yAxisProps?: any;
-    secondary_xAxisProps?: any;
-    secondary_yAxisProps?: any;
-    title?: any;
-    colorAxis?: Highcharts.ColorAxisOptions;
-    colorAssignments?: IColorAssignment[];
-    colorPalette?: IColorPalette;
-}
-
 export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["attributeHeader"] & {
     items: Execution.IResultAttributeHeaderItem[];
 };
@@ -178,7 +172,7 @@ export interface IValidationResult {
     hasNegativeValue: boolean;
 }
 
-export type ITooltipFactory = (point: IPoint, percentageValue?: number) => string;
+export type ITooltipFactory = (point: IPointData, percentageValue?: number) => string;
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series.some((seriesItem: ISeriesItem) =>
@@ -280,47 +274,6 @@ export function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number):
     return -1;
 }
 
-export interface IPointData {
-    y: number;
-    x?: number;
-    z?: number;
-    value?: number;
-    format: string;
-    marker: {
-        enabled: boolean;
-    };
-    name?: string;
-    color?: string;
-    legendIndex?: number;
-    id?: string;
-    parent?: string;
-    drilldown?: boolean;
-    drillIntersection?: any;
-}
-
-export interface ICategoryParent {
-    name: string;
-}
-
-// since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
-export interface ICategory {
-    name: string;
-    parent?: ICategoryParent;
-}
-
-export interface IPoint {
-    x?: number;
-    y: number;
-    z?: number;
-    value?: number;
-    series: ISeriesItem;
-    category?: ICategory;
-    format?: string;
-    name?: string;
-    id?: string;
-    parent?: string;
-}
-
 export function getSeriesItemData(
     seriesItem: string[],
     seriesIndex: number,
@@ -383,23 +336,31 @@ export function getSeriesItemData(
     });
 }
 
-export interface ISeriesItemConfig {
-    color: string;
-    legendIndex: number;
-    data?: any;
-    name?: string;
-    yAxis?: number;
-    xAxis?: number;
-}
-
 export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
 ) {
-    const data = [] as any;
-    executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
-        rowItem.forEach((columnItem: any, columnItemIndex: number) => {
-            data.push({ x: columnItemIndex, y: rowItemIndex, value: parseValue(columnItem) });
+    const data: IPointData[] = [];
+    executionResultData.forEach((rowItem: Execution.DataValue[], rowItemIndex: number) => {
+        rowItem.forEach((columnItem: Execution.DataValue, columnItemIndex: number) => {
+            const value: number = parseValue(String(columnItem));
+            const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
+            if (isNil(value)) {
+                data.push({
+                    ...pointData,
+                    borderWidth: 1,
+                    borderColor: GRAY,
+                    color: TRANSPARENT,
+                });
+                data.push({
+                    ...pointData,
+                    borderWidth: 0,
+                    pointPadding: 2,
+                    color: nullColor,
+                });
+            } else {
+                data.push(pointData);
+            }
         });
     });
 
@@ -627,11 +588,11 @@ export function getTreemapStackedSeriesDataWithMeasures(
                 showInLegend: false,
             });
         });
-        const sortedLeafs = unsortedLeafs.sort((a: IPoint, b: IPoint) => b.value - a.value);
+        const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
 
         data = [
             ...data,
-            ...sortedLeafs.map((leaf: IPoint, seriesItemIndex: number) => ({
+            ...sortedLeafs.map((leaf: IPointData, seriesItemIndex: number) => ({
                 ...leaf,
                 color: getLighterColor(
                     colorStrategy.getColorByIndex(seriesIndex),
@@ -773,7 +734,7 @@ const renderTooltipHTML = (textData: string[][]): string => {
         .join("\n")}</table>`;
 };
 
-function isPointOnOppositeAxis(point: IPoint): boolean {
+function isPointOnOppositeAxis(point: IPointData): boolean {
     return get(point, ["series", "yAxis", "opposite"], false);
 }
 
@@ -785,7 +746,7 @@ export function buildTooltipFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPoint, percentageValue?: number): string => {
+    return (point: IPointData, percentageValue?: number): string => {
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
             isDualChartWithRightAxis,
@@ -823,7 +784,7 @@ export function buildTooltipForTwoAttributesFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPoint, percentageValue?: number): string => {
+    return (point: IPointData, percentageValue?: number): string => {
         const category: ICategory = point.category;
 
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
@@ -861,7 +822,7 @@ export function generateTooltipXYFn(
 ) {
     const { separators } = config;
 
-    return (point: IPoint) => {
+    return (point: IPointData) => {
         const textData = [];
         const name = point.name ? point.name : point.series.name;
 
@@ -904,7 +865,7 @@ export function generateTooltipHeatmapFn(
         return colors2Object(val === null ? "-" : formatNumberEscaped(val, format, undefined, separators));
     };
 
-    return (point: IPoint) => {
+    return (point: IPointData) => {
         const formattedValue = customEscape(
             formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
         );
@@ -936,9 +897,9 @@ export function buildTooltipTreemapFactory(
 ): ITooltipFactory {
     const { separators } = config;
 
-    return (point: IPoint) => {
-        if (point.id !== undefined) {
-            // no tooltip for root points
+    return (point: IPointData) => {
+        // show tooltip for leaf node only
+        if (!point.node || point.node.isLeaf === false) {
             return null;
         }
         const formattedValue = formatValueForTooltip(point.value, point.format, separators);
@@ -1491,7 +1452,7 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: any = [],
     colorStrategy: IColorStrategy,
-): Highcharts.ColorAxisDataClass[] {
+): Highcharts.ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         get(series, "0.data", []).map((item: any) => item.value),
         null,
@@ -1706,7 +1667,7 @@ export function getChartOptions(
 
     const gridEnabled = get(config, "grid.enabled", true);
     const stacking = getStackingConfig(stackByAttribute, config);
-    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
+    const measureGroup = findMeasureGroupInDimensions(dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 

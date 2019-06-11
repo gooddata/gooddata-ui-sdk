@@ -13,7 +13,7 @@ const drillmodule = require("highcharts/modules/drilldown"); // tslint:disable-l
 const treemapModule = require("highcharts/modules/treemap"); // tslint:disable-line
 const funnelModule = require("highcharts/modules/funnel"); // tslint:disable-line
 const heatmap = require("highcharts/modules/heatmap"); // tslint:disable-line
-const patternFill = require("highcharts-pattern-fill"); // tslint:disable-line
+const patternFill = require("highcharts/modules/pattern-fill"); // tslint:disable-line
 const groupedCategories = require("highcharts-grouped-categories"); // tslint:disable-line
 
 drillmodule(Highcharts);
@@ -37,7 +37,7 @@ export default class Chart extends React.Component<IChartProps> {
         domProps: {},
     };
 
-    private chart: Highcharts.ChartObject;
+    private chart: Highcharts.Chart;
     private chartRef: HTMLElement;
 
     public constructor(props: IChartProps) {
@@ -69,7 +69,7 @@ export default class Chart extends React.Component<IChartProps> {
         this.chartRef = ref;
     }
 
-    public getChart(): Highcharts.ChartObject {
+    public getChart(): Highcharts.Chart {
         if (!this.chart) {
             throw new Error("getChart() should not be called before the component is mounted");
         }

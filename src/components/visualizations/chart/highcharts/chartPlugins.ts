@@ -2,10 +2,10 @@
 import autohideLabels from "./plugins/autohideLabels/autohideLabels";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors";
 import { applyPointHaloOptions } from "./plugins/pointHalo";
-import { renderHeatmapCells } from "./plugins/renderHeatmapCells";
 import { linearTickPositions } from "./plugins/linearTickPositions";
 import { zeroAlignYAxis } from "./plugins/zeroAlignYAxis";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper";
+import { getBubbleRadius } from "./plugins/getBubbleRadius";
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function(proceed: any) {
@@ -37,8 +37,9 @@ export function initChartPlugins(Highcharts: any) {
     autohideLabels(Highcharts);
     extendDataLabelColors(Highcharts);
     applyPointHaloOptions(Highcharts);
-    renderHeatmapCells(Highcharts);
     linearTickPositions(Highcharts);
     zeroAlignYAxis(Highcharts);
     groupCategoriesWrapper(Highcharts);
+    // Set default size for bubbles in bubble chart where size value is not provided
+    getBubbleRadius(Highcharts);
 }

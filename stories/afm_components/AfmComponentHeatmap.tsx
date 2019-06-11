@@ -11,6 +11,7 @@ import {
     AFM_ONE_MEASURE_TWO_ATTRIBUTES,
     AFM_HEATMAP_60ROWS,
     AFM_HEATMAP_58ROWS,
+    AFM_HEATMAP_EMPTY_CELLS,
 } from "../data/afmComponentProps";
 import { onErrorHandler } from "../mocks";
 import "../../styles/css/charts.css";
@@ -174,6 +175,27 @@ storiesOf("AFM components/Heatmap", module)
                             },
                             {
                                 itemIdentifiers: ["Popularity", "measureGroup"],
+                            },
+                        ],
+                    }}
+                />
+            </div>,
+        ),
+    )
+    .add("with null data point", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    afm={AFM_HEATMAP_EMPTY_CELLS}
+                    onError={onErrorHandler}
+                    resultSpec={{
+                        dimensions: [
+                            {
+                                itemIdentifiers: ["a2"],
+                            },
+                            {
+                                itemIdentifiers: ["a1", "measureGroup"],
                             },
                         ],
                     }}

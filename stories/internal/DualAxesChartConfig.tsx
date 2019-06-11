@@ -41,6 +41,10 @@ const renderSupportedCharts = (dataset: any, config?: IChartConfig, minmaxInfo =
                 },
                 ...config,
             };
+            const style = {
+                height: 600,
+                width: 600,
+            };
 
             if (type === VisualizationTypes.BAR) {
                 _config.xaxis = _config.yaxis;
@@ -52,10 +56,12 @@ const renderSupportedCharts = (dataset: any, config?: IChartConfig, minmaxInfo =
             }
 
             return wrap(
-                <div>
+                <div style={style}>
                     <MinMaxInfo {...minmaxInfo} />
                     <Visualization config={_config} {...dataset} />
                 </div>,
+                640,
+                620,
             );
         })}
     </div>

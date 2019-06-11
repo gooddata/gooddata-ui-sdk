@@ -582,6 +582,12 @@ export const heatmapMetricRowColumn: any = {
     executionResult: require("./heat_map_with_metric_row_column_result.json").executionResult,
 };
 
+export const heatmapEmptyCells: any = {
+    executionRequest: require("./heat_map_with_empty_cells_request.json").execution,
+    executionResponse: require("./heat_map_with_empty_cells_response.json").executionResponse,
+    executionResult: require("./heat_map_with_empty_cells_result.json").executionResult,
+};
+
 export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
     executionRequest: require("./pivot_table_with_2_metrics_4_attributes_subtotals_request.json").execution,
     executionResponse: require("./pivot_table_with_2_metrics_4_attributes_subtotals_response.json")
