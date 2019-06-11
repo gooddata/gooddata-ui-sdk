@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { getStackLabelPointsForDualAxis, isOverlappingWidth } from "../autohideColumnLabels";
-import { IPointData } from "../../../../../../../interfaces/Config";
+import { IDataPoint } from "../../../../../../../interfaces/Config";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {
@@ -35,9 +35,8 @@ describe("getStackLabelPointsForDualAxis", () => {
 });
 
 describe("isOverlappingWidth", () => {
-    const visiblePointsWithoutShape: IPointData[] = [
+    const visiblePointsWithoutShape: IDataPoint[] = [
         {
-            x: 0,
             dataLabel: {
                 width: 98,
                 padding: 2,
@@ -46,7 +45,7 @@ describe("isOverlappingWidth", () => {
     ];
 
     it("should return true when point has datalabel width greater than shape width", () => {
-        const visiblePointsWithShape: IPointData[] = [
+        const visiblePointsWithShape: IDataPoint[] = [
             {
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {
@@ -58,7 +57,7 @@ describe("isOverlappingWidth", () => {
     });
 
     it("should return false when point has datalabel width less than shape width", () => {
-        const visiblePointsWithShape: IPointData[] = [
+        const visiblePointsWithShape: IDataPoint[] = [
             {
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {

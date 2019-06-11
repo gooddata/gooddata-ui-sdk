@@ -15,12 +15,11 @@ import {
     IDrillEventIntersectionElement,
     IDrillEventContextTable,
     IDrillPoint,
+    IHighchartsChartDrilldownEvent,
     IHighchartsPointObject,
     IDrillConfig,
     ICellDrillEvent,
     isGroupHighchartsDrillEvent,
-    IDrillEventContextPoint,
-    IDrillEventContext,
 } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../../interfaces/Events";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
@@ -62,7 +61,7 @@ function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: Even
 }
 
 function composeDrillContextGroup(
-    points: IHighchartsPointObject[],
+    { points }: IHighchartsChartDrilldownEvent,
     chartType: ChartType,
 ): IDrillEventContextGroup {
     const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
@@ -79,10 +78,7 @@ function composeDrillContextGroup(
     };
 }
 
-function composeDrillContextPoint(
-    point: IHighchartsPointObject,
-    chartType: ChartType,
-): IDrillEventContextPoint {
+function composeDrillContextPoint({ point }: IHighchartsChartDrilldownEvent, chartType: ChartType) {
     const zProp = isNaN(point.z) ? {} : { z: point.z };
     const valueProp =
         isTreemap(chartType) || isHeatmap(chartType)
@@ -109,26 +105,22 @@ function composeDrillContextPoint(
 const chartClickDebounced = debounce(
     (
         drillConfig: IDrillConfig,
-        event: Highcharts.DrilldownEventObject,
+        event: IHighchartsChartDrilldownEvent,
         target: EventTarget,
         chartType: ChartType,
     ) => {
         const { afm, onFiredDrillEvent } = drillConfig;
-        let usedChartType = chartType;
-        let drillContext: IDrillEventContext;
 
-        if (isGroupHighchartsDrillEvent(event)) {
-            const points = event.points as IHighchartsPointObject[];
-            drillContext = composeDrillContextGroup(points, usedChartType);
-        } else {
-            const point: IHighchartsPointObject = event.point as IHighchartsPointObject;
-            if (isComboChart(chartType)) {
-                usedChartType = get(event, ["point", "series", "options", "type"], chartType);
-            }
-            drillContext = composeDrillContextPoint(point, usedChartType);
+        let usedChartType = chartType;
+        if (isComboChart(chartType)) {
+            usedChartType = get(event, ["point", "series", "options", "type"], chartType);
         }
 
-        const data: IDrillEvent = {
+        const drillContext = isGroupHighchartsDrillEvent(event)
+            ? composeDrillContextGroup(event, usedChartType)
+            : composeDrillContextPoint(event, usedChartType);
+
+        const data = {
             executionContext: afm,
             drillContext,
         };
@@ -139,47 +131,11 @@ const chartClickDebounced = debounce(
 
 export function chartClick(
     drillConfig: IDrillConfig,
-    event: Highcharts.DrilldownEventObject,
+    event: IHighchartsChartDrilldownEvent,
     target: EventTarget,
     chartType: ChartType,
 ) {
     chartClickDebounced(drillConfig, event, target, chartType);
-}
-
-const tickLabelClickDebounce = debounce(
-    (
-        drillConfig: IDrillConfig,
-        points: IHighchartsPointObject[],
-        target: EventTarget,
-        chartType: ChartType,
-    ): void => {
-        const { afm, onFiredDrillEvent } = drillConfig;
-        const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => ({
-            x: point.x,
-            y: point.y,
-            intersection: point.drillIntersection,
-        }));
-        const drillContext: IDrillEventContext = {
-            type: chartType,
-            element: "label",
-            points: contextPoints,
-        };
-        const data: IDrillEvent = {
-            executionContext: afm,
-            drillContext,
-        };
-
-        fireEvent(onFiredDrillEvent, data, target);
-    },
-);
-
-export function tickLabelClick(
-    drillConfig: IDrillConfig,
-    points: IHighchartsPointObject[],
-    target: EventTarget,
-    chartType: ChartType,
-) {
-    tickLabelClickDebounce(drillConfig, points, target, chartType);
 }
 
 export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {

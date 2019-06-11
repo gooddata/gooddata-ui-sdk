@@ -6,8 +6,9 @@ import includes = require("lodash/includes");
 import { Observable } from "rxjs/Rx";
 
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { IAxis, ISeriesItem } from "../../../interfaces/Config";
+import { IChartOptions } from "../chart/chartOptionsBuilder";
 import { formatNumberEscaped } from "../../../helpers/numberFormatting";
-import { IAxis, ISeriesItem, IChartOptions } from "../../../interfaces/Config";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp

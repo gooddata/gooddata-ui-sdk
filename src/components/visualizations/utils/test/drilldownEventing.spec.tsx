@@ -8,7 +8,7 @@ import {
     createDrillIntersectionElement,
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
+import { IHighchartsChartDrilldownEvent, IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
@@ -59,7 +59,7 @@ describe("Drilldown Eventing", () => {
             },
         ],
     };
-    const pointClickEventData = ({ point } as any) as Highcharts.DrilldownEventObject;
+    const pointClickEventData = ({ point } as any) as IHighchartsChartDrilldownEvent;
 
     it("should get clickable chart element name", () => {
         const fn = getClickableElementNameByChartType;
@@ -77,7 +77,7 @@ describe("Drilldown Eventing", () => {
     it("should call point drill context (non-group) when event.points given but null", () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
-        const pointClickEventDataWithNullPoints: Highcharts.DrilldownEventObject = {
+        const pointClickEventDataWithNullPoints: IHighchartsChartDrilldownEvent = {
             ...pointClickEventData,
             points: null,
         };
@@ -309,7 +309,7 @@ describe("Drilldown Eventing", () => {
         };
         const labelClickEventData = ({
             points: [clickedPoint],
-        } as any) as Highcharts.DrilldownEventObject;
+        } as any) as IHighchartsChartDrilldownEvent;
 
         chartClick(drillConfig, labelClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
 
@@ -485,7 +485,7 @@ describe("Drilldown Eventing", () => {
         it("should fire drill event (non-group) when point value is null and return empty string for value", () => {
             const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
             const target = { dispatchEvent: jest.fn() };
-            const pointClickEventDataWithPointNullValue: Highcharts.DrilldownEventObject = {
+            const pointClickEventDataWithPointNullValue: IHighchartsChartDrilldownEvent = {
                 ...pointClickEventData,
                 points: null,
             };

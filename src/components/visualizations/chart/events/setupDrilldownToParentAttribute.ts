@@ -2,11 +2,13 @@
 import get = require("lodash/get");
 import partial = require("lodash/partial");
 import { styleVariables } from "../../styles/variables";
-import { tickLabelClick } from "../../utils/drilldownEventing";
+import { chartClick } from "../../utils/drilldownEventing";
 import { ChartType } from "../../../../constants/visualizationTypes";
+import { ChartObject } from "highcharts";
 import {
     IDrillConfig,
     IHighchartsCategoriesTree,
+    IHighchartsChartDrilldownEvent,
     IHighchartsParentTick,
     IHighchartsPointObject,
 } from "../../../../interfaces/DrillEvents";
@@ -42,8 +44,12 @@ function setParentTickDrillable(
         label
             .addClass("highcharts-drilldown-axis-label")
             .css(drilldownStyle)
-            .on("click", () => {
-                tickLabelClick(drillConfig, ddPoints, target, chartType);
+            .on("click", (event: Event) => {
+                const drillEvent: IHighchartsChartDrilldownEvent = {
+                    ...event,
+                    points: ddPoints,
+                };
+                chartClick(drillConfig, drillEvent, target, chartType);
             });
     } else if (label && label.basicStyles) {
         label.styles = {}; // reset for full overwrite of styles
@@ -52,7 +58,7 @@ function setParentTickDrillable(
     }
 }
 
-export function setupDrilldown(chart: Highcharts.Chart) {
+export function setupDrilldown(chart: ChartObject) {
     const xAxes: any[] = (chart && chart.xAxis) || [];
     const axis = xAxes[0];
     if (!axis) {
