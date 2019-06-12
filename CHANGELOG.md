@@ -25,7 +25,7 @@ The REST API versions in the table are just for your information as the values a
 <a name="11.11.0"></a>
 ## 2019-05-21 Version [11.11.0](https://github.com/gooddata/gooddata-js/compare/v11.10.0...v11.11.0)
 
-- exported `convertReferencesToUris` utlity
+- exported `convertReferencesToUris` utility
 
 <a name="11.10.0"></a>
 ## 2019-05-15 Version [11.10.0](https://github.com/gooddata/gooddata-js/compare/v11.9.0...v11.10.0)
