@@ -1,6 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import assign = require("lodash/assign");
 import noop = require("lodash/noop");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
@@ -16,7 +15,7 @@ import {
 import { AFM, Execution } from "@gooddata/typings";
 
 import { ErrorStates } from "../../../constants/errorStates";
-import { IEvents, IExportFunction, ILoadingState } from "../../../interfaces/Events";
+import { IEvents, IExportFunction, IExtendedExportConfig, ILoadingState } from "../../../interfaces/Events";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";
 import { ISubject } from "../../../helpers/async";
 import { convertErrors, checkEmptyResult } from "../../../helpers/errorHandlers";
@@ -343,8 +342,8 @@ export function visualizationLoadingHOC<
         }
 
         private createExportFunction(execution: Execution.IExecutionResponses): IExportFunction {
-            return (exportConfig: IExportConfig): Promise<IExportResponse> => {
-                const { exportTitle, projectId } = this.props;
+            return (exportConfig: IExtendedExportConfig): Promise<IExportResponse> => {
+                const { dataSource, exportTitle, projectId } = this.props;
 
                 if (!execution) {
                     return Promise.reject(new Error("Unknown execution"));
@@ -354,18 +353,29 @@ export function visualizationLoadingHOC<
                     return Promise.reject(new Error("Unknown projectId"));
                 }
 
-                const title = exportTitle ? escapeFileName(exportTitle) : "Untitled";
+                const { format, includeFilterContext, mergeHeaders, title: customTitle } = exportConfig;
+
+                const title: string = escapeFileName(customTitle || exportTitle) || "Untitled";
+
+                const exportConfigRequest: IExportConfig = {
+                    format,
+                    mergeHeaders,
+                    title,
+                };
+                if (includeFilterContext) {
+                    exportConfigRequest.showFilters = dataSource.getAfm().filters;
+                }
 
                 return this.sdk.report.exportResult(
                     projectId,
                     get(execution, "executionResponse.links.executionResult"),
-                    assign({ title }, exportConfig),
+                    exportConfigRequest,
                 );
             };
         }
 
         private createExportErrorFunction(error: ApiResponseError | Error): IExportFunction {
-            return (_: IExportConfig): Promise<IExportResponse> => {
+            return (_exportConfig: IExtendedExportConfig): Promise<IExportResponse> => {
                 return Promise.reject(error);
             };
         }

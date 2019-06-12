@@ -10,6 +10,7 @@ import {
     oneMeasureDataSource,
     oneMeasurePagableOnlyDataSource,
     oneMeasureOneDimensionDataSource,
+    oneAttributeOneMeasureOneFilterDataSource,
     tooLargeDataSource,
     executionObjectWithTotalsDataSource,
     LoadingComponent,
@@ -26,10 +27,13 @@ import {
 } from "../VisualizationLoadingHOC";
 import { oneMeasureResponse } from "../../../../execution/fixtures/ExecuteAfm.fixtures";
 import { IDrillableItem } from "../../../../interfaces/DrillEvents";
-import { IExportFunction } from "../../../../interfaces/Events";
+import { IExportFunction, IExtendedExportConfig } from "../../../../interfaces/Events";
 import { IDataSourceProviderInjectedProps } from "../../../afm/DataSourceProvider";
 import { RuntimeError } from "../../../../errors/RuntimeError";
 import { ErrorStates } from "../../../../constants/errorStates";
+
+const CSV = "csv";
+const XLSX = "xlsx";
 
 export interface ITestInnerComponentProps extends ICommonVisualizationProps {
     customPropFooBar?: number;
@@ -176,7 +180,7 @@ describe("VisualizationLoadingHOC", () => {
     it("should show EmptyResultError when exporting NO DATA result", async done => {
         const onExportReady = async (exportResult: IExportFunction) => {
             try {
-                await exportResult({ format: "xlsx" });
+                await exportResult({ format: XLSX });
             } catch (error) {
                 expect(error.cause.name).toEqual("EmptyResultError");
                 expect(error).toEqual(new RuntimeError(ErrorStates.NO_DATA));
@@ -438,12 +442,14 @@ describe("VisualizationLoadingHOC", () => {
     describe("Exporter", () => {
         beforeAll(() => {
             sdk.clone = jest.fn(() => sdk);
-            sdk.report.exportResult = jest.fn((_, __, exportConfig: IExportConfig) => {
-                if (exportConfig.format === "xlsx") {
-                    return Promise.resolve({ uri: "/bar" });
-                }
-                return Promise.reject(new Error("Error!!!"));
-            });
+            sdk.report.exportResult = jest.fn(
+                (_projectId: string, _executionResult: string, exportConfig: IExportConfig) => {
+                    if (exportConfig.format === XLSX) {
+                        return Promise.resolve({ uri: "/bar" });
+                    }
+                    return Promise.reject(new Error("Error!!!"));
+                },
+            );
         });
 
         afterAll(() => {
@@ -452,7 +458,7 @@ describe("VisualizationLoadingHOC", () => {
 
         it("should return URI when call exportResult successfully", done => {
             const onExportReady = async (exportResult: IExportFunction) => {
-                const result = await exportResult({ format: "xlsx" });
+                const result = await exportResult({ format: XLSX });
                 expect(result.uri).toEqual("/bar");
                 done();
             };
@@ -465,7 +471,7 @@ describe("VisualizationLoadingHOC", () => {
         it("should return error when call exportResult fail", done => {
             const onExportReady = async (exportResult: IExportFunction) => {
                 try {
-                    await exportResult({ format: "csv" });
+                    await exportResult({ format: CSV });
                 } catch (error) {
                     expect(error.message).toEqual("Error!!!");
                     done();
@@ -477,11 +483,38 @@ describe("VisualizationLoadingHOC", () => {
             });
         });
 
+        it("should return the applied filters", done => {
+            const onExportReady = async (exportResult: IExportFunction) => {
+                const executionResult =
+                    "/gdc/app/projects/storybook/executionResults/59908ac5f1bf7a4fbbf78b08a7d034ed?dimensions=2";
+                const extendedExportConfig: IExtendedExportConfig = {
+                    format: XLSX,
+                    includeFilterContext: true,
+                    mergeHeaders: true,
+                };
+                const exportConfig: IExportConfig = {
+                    format: XLSX,
+                    mergeHeaders: true,
+                    showFilters: oneAttributeOneMeasureOneFilterDataSource.getAfm().filters,
+                    title: "Untitled",
+                };
+
+                await exportResult(extendedExportConfig);
+                expect(sdk.report.exportResult).toBeCalledWith(PROJECT_ID, executionResult, exportConfig);
+
+                done();
+            };
+            createComponent({
+                onExportReady,
+                dataSource: oneAttributeOneMeasureOneFilterDataSource,
+            });
+        });
+
         it("should return the default file name", done => {
             const onExportReady = async (exportResult: IExportFunction) => {
-                await exportResult({ format: "xlsx" });
+                await exportResult({ format: XLSX });
                 expect(sdk.report.exportResult).toBeCalledWith(PROJECT_ID, "foo", {
-                    format: "xlsx",
+                    format: XLSX,
                     title: "Untitled",
                 });
                 done();
@@ -494,9 +527,9 @@ describe("VisualizationLoadingHOC", () => {
 
         it("should return the file name passed", done => {
             const onExportReady = async (exportResult: IExportFunction) => {
-                await exportResult({ format: "xlsx" });
+                await exportResult({ format: XLSX });
                 expect(sdk.report.exportResult).toBeCalledWith(PROJECT_ID, "foo", {
-                    format: "xlsx",
+                    format: XLSX,
                     title: "CustomTitle",
                 });
                 done();
@@ -510,9 +543,9 @@ describe("VisualizationLoadingHOC", () => {
 
         it("should return the validated file name", done => {
             const onExportReady = async (exportResult: IExportFunction) => {
-                await exportResult({ format: "xlsx" });
+                await exportResult({ format: XLSX });
                 expect(sdk.report.exportResult).toBeCalledWith(PROJECT_ID, "foo", {
-                    format: "xlsx",
+                    format: XLSX,
                     title: "CustomTitle",
                 });
                 done();

@@ -71,7 +71,7 @@ export class TableExportExample extends Component {
         const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
-            <ExampleWithExport filters={filters}>
+            <ExampleWithExport>
                 {onExportReady => (
                     <div style={{ height: 300 }} className="s-table">
                         <Table

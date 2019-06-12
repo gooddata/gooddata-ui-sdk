@@ -78,10 +78,7 @@ export class ExampleWithExport extends React.Component {
 
         this.setState({ showExportDialog: false });
 
-        const exportConfig = { format: "xlsx", title: "CustomName", mergeHeaders };
-        if (includeFilterContext) {
-            exportConfig.showFilters = this.props.filters;
-        }
+        const exportConfig = { format: "xlsx", title: "CustomName", includeFilterContext, mergeHeaders };
 
         this.doExport(exportConfig);
     };
@@ -139,11 +136,6 @@ export class ExampleWithExport extends React.Component {
 
 ExampleWithExport.propTypes = {
     children: PropTypes.func.isRequired,
-    filters: PropTypes.array,
-};
-
-ExampleWithExport.defaultProps = {
-    filters: [],
 };
 
 export default ExampleWithExport;
