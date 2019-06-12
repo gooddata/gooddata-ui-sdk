@@ -3,60 +3,57 @@ export const displayForms = [
     {
         attributeDisplayForm: {
             content: {
-                formOf: '/gdc/md/mockProject/obj/1027'
+                formOf: "/gdc/md/mockProject/obj/1027",
             },
             meta: {
-                uri: '/gdc/md/mockProject/obj/1028'
-            }
-        }
+                uri: "/gdc/md/mockProject/obj/1028",
+            },
+        },
     },
     {
         attributeDisplayForm: {
             content: {
-                formOf: '/gdc/md/mockProject/obj/42'
+                formOf: "/gdc/md/mockProject/obj/42",
             },
             meta: {
-                uri: '/gdc/md/mockProject/obj/43'
-            }
-        }
-    }
+                uri: "/gdc/md/mockProject/obj/43",
+            },
+        },
+    },
 ];
 
-export const displayFormUris = [
-    '/gdc/md/mockProject/obj/1028',
-    '/gdc/md/mockProject/obj/43'
-];
+export const displayFormUris = ["/gdc/md/mockProject/obj/1028", "/gdc/md/mockProject/obj/43"];
 
 export const attributeObjects = [
     {
         attribute: {
             content: {},
             meta: {
-                uri: '/gdc/md/mockProject/obj/1027'
-            }
-        }
+                uri: "/gdc/md/mockProject/obj/1027",
+            },
+        },
     },
     {
         attribute: {
             content: {},
             meta: {
-                uri: '/gdc/md/mockProject/obj/42'
-            }
-        }
-    }
+                uri: "/gdc/md/mockProject/obj/42",
+            },
+        },
+    },
 ];
 
 export const attributesMap = {
-    '/gdc/md/mockProject/obj/1028': {
+    "/gdc/md/mockProject/obj/1028": {
         attribute: {
             content: {},
-            meta: { uri: '/gdc/md/mockProject/obj/1027' }
-        }
+            meta: { uri: "/gdc/md/mockProject/obj/1027" },
+        },
     },
-    '/gdc/md/mockProject/obj/43': {
+    "/gdc/md/mockProject/obj/43": {
         attribute: {
             content: {},
-            meta: { uri: '/gdc/md/mockProject/obj/42' }
-        }
-    }
+            meta: { uri: "/gdc/md/mockProject/obj/42" },
+        },
+    },
 };
