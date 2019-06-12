@@ -253,23 +253,27 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             </div>
         ) : null;
 
+        const style: React.CSSProperties = {
+            height: desiredHeight || "100%",
+            position: "relative",
+            overflow: "hidden",
+        };
+
         return (
-            <div
-                className="gd-table ag-theme-balham s-pivot-table"
-                style={{
-                    height: desiredHeight || "100%",
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-                ref={this.setContainerRef}
-            >
-                {tableLoadingOverlay}
-                <AgGridReact
-                    {...gridOptions}
-                    // To force Ag grid rerender because AFAIK there is no way
-                    // to tell Ag grid header cell to rerender
-                    key={this.state.agGridRerenderNumber}
-                />
+            <div className="gd-table-component" style={style}>
+                <div
+                    className="gd-table ag-theme-balham s-pivot-table"
+                    style={style}
+                    ref={this.setContainerRef}
+                >
+                    {tableLoadingOverlay}
+                    <AgGridReact
+                        {...gridOptions}
+                        // To force Ag grid rerender because AFAIK there is no way
+                        // to tell Ag grid header cell to rerender
+                        key={this.state.agGridRerenderNumber}
+                    />
+                </div>
             </div>
         );
     }
