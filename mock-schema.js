@@ -22,6 +22,13 @@ const pivotTableSubtotalsAfmExecutions = [
         executionResult: require("./stories/test_data/pivot_table_with_subtotals_2_measures_result.json"),
     }];
 
+const pivotTableGrandtotalSubtotalAfmExecutions = [
+    {
+        execution: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_request.json"),
+        executionResponse: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_response.json"),
+        executionResult: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_result.json"),
+    }];
+
 const getBaseProjectSchema = (title, identifier) => {
     return {
         project: {
@@ -2203,6 +2210,7 @@ const getBaseProjectSchema = (title, identifier) => {
             ...heatmapAfmExecutions,
             ...pivotTableAfmExecutions,
             ...pivotTableSubtotalsAfmExecutions,
+            ...pivotTableGrandtotalSubtotalAfmExecutions,
         ],
         visualizationClasses: [{
             title: 'Table',

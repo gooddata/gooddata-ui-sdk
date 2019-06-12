@@ -201,16 +201,9 @@ export const executionToAGGridAdapter = (
         headerItems[0],
     );
 
+    const subtotalStyles = getSubtotalStyles(resultSpec.dimensions ? resultSpec.dimensions[0] : null);
     const rowData = minimalRowData.map((dataRow: Execution.DataValue[], dataRowIndex: number) =>
-        getRow(
-            dataRow,
-            dataRowIndex,
-            columnFields,
-            rowHeaders,
-            headerItems[0],
-            getSubtotalStyles(resultSpec.dimensions ? resultSpec.dimensions[0] : null),
-            intl,
-        ),
+        getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0], subtotalStyles, intl),
     );
 
     const columnKeys = [...rowFields, ...columnFields];

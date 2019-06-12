@@ -154,12 +154,13 @@ export const getRowTotals = (
 
         const measureCells = zipObject(measureKeys, totalRow);
 
-        const totalName = totalHeader.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
+        const grandTotalName = totalHeader.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
+        const grandTotalAttributeIdentifier = totalHeader.attributeHeader.localIdentifier;
 
-        // create measure ids in the form of "m_index" for measures having the current type of total
+        // create measure ids in the form of "m_index" for measures having the current type of grand total
         // this makes it easier to match against in the cell renderer
         const rowTotalActiveMeasures = resultSpec.dimensions[0].totals
-            .filter(t => t.type === totalName)
+            .filter(t => t.type === grandTotalName && t.attributeIdentifier === grandTotalAttributeIdentifier)
             .map(t => `m_${measureIds.indexOf(t.measureIdentifier)}`);
 
         return {
@@ -169,7 +170,7 @@ export const getRowTotals = (
             },
             ...measureCells,
             [totalAttributeKey]: intl.formatMessage({
-                id: `visualizations.totals.dropdown.title.${totalName}`,
+                id: `visualizations.totals.dropdown.title.${grandTotalName}`,
             }),
             rowTotalActiveMeasures,
             type: ROW_TOTAL,
