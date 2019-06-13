@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require('lodash/get');
-import isEmpty = require('lodash/isEmpty');
-import isEqual = require('lodash/isEqual');
-import { AFM } from '@gooddata/typings';
+import get = require("lodash/get");
+import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
+import { AFM } from "@gooddata/typings";
 
-import { IAdapter } from './interfaces/Adapter';
-import { IDataSource } from './interfaces/DataSource';
-import { isAfmExecutable } from './utils/AfmUtils';
-import { createSubject, ISubject } from './utils/async';
-import { ApiResponseError } from '../xhr';
+import { IAdapter } from "./interfaces/Adapter";
+import { IDataSource } from "./interfaces/DataSource";
+import { isAfmExecutable } from "./utils/AfmUtils";
+import { createSubject, ISubject } from "./utils/async";
+import { ApiResponseError } from "../xhr";
 
 export type IDataSubscriber = (data: any) => void;
 export type IErrorSubscriber = (error: ApiResponseError) => void;
@@ -17,11 +17,11 @@ export class DataTable<T> {
     private static getDefaultDimensionsForTable(afm: AFM.IAfm): AFM.IDimension[] {
         return [
             {
-                itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier)
+                itemIdentifiers: (afm.attributes || []).map(a => a.localIdentifier),
             },
             {
-                itemIdentifiers: ['measureGroup']
-            }
+                itemIdentifiers: ["measureGroup"],
+            },
         ];
     }
 
@@ -41,7 +41,7 @@ export class DataTable<T> {
 
         this.subject = createSubject(
             result => this.dataSubscribers.forEach(handler => handler(result)),
-            error => this.errorSubscribers.forEach(handler => handler(error))
+            error => this.errorSubscribers.forEach(handler => handler(error)),
         );
     }
 
@@ -50,19 +50,21 @@ export class DataTable<T> {
             return;
         }
 
-        if (isEmpty(get(resultSpec, 'dimensions'))) {
+        if (isEmpty(get(resultSpec, "dimensions"))) {
             resultSpec.dimensions = DataTable.getDefaultDimensionsForTable(afm);
         }
 
         if (!isEqual(afm, this.afm)) {
             this.afm = afm;
-            this.adapter.createDataSource(afm)
-                .then((dataSource) => {
+            this.adapter.createDataSource(afm).then(
+                dataSource => {
                     this.dataSource = dataSource;
                     this.fetchData(resultSpec);
-                }, (error) => {
+                },
+                error => {
                     this.errorSubscribers.forEach(handler => handler(error));
-                });
+                },
+            );
         } else if (this.dataSource) {
             this.fetchData(resultSpec);
         }

@@ -1,8 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import {
-    normalizeAfm
-} from './AfmUtils';
+import { AFM } from "@gooddata/typings";
+import { normalizeAfm } from "./AfmUtils";
 
 /**
  * Attaches sorts into resultSpec
@@ -14,14 +12,14 @@ import {
  */
 export function applySorting(
     resultSpec: AFM.IResultSpec = {},
-    sortItems: AFM.SortItem[] = []
+    sortItems: AFM.SortItem[] = [],
 ): AFM.IResultSpec {
     if (sortItems.length === 0) {
         return resultSpec;
     }
     return {
         ...resultSpec,
-        sorts: sortItems
+        sorts: sortItems,
     };
 }
 
@@ -65,6 +63,8 @@ export function isSortValid(afm: AFM.IAfm, sortItem?: AFM.SortItem): boolean {
     }
     const sortIdentifier = getSortItemIdentifier(sortItem);
     const normalizedAfm = normalizeAfm(afm);
-    return normalizedAfm.measures.some(m => m.localIdentifier === sortIdentifier)
-        || normalizedAfm.attributes.some(a => a.localIdentifier === sortIdentifier);
+    return (
+        normalizedAfm.measures.some(m => m.localIdentifier === sortIdentifier) ||
+        normalizedAfm.attributes.some(a => a.localIdentifier === sortIdentifier)
+    );
 }

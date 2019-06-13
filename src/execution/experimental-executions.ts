@@ -1,6 +1,6 @@
 // (C) 2007-2014 GoodData Corporation
-import * as md5 from 'md5';
-import * as invariant from 'invariant';
+import * as md5 from "md5";
+import * as invariant from "invariant";
 import {
     cloneDeep,
     compact,
@@ -15,35 +15,34 @@ import {
     negate,
     partial,
     flatten,
-    set
-} from 'lodash';
+    set,
+} from "lodash";
 
-import { Rules } from '../utils/rules';
-import { sortDefinitions } from '../utils/definitions';
-import {
-    getMissingUrisInAttributesMap
-} from '../utils/attributesMapLoader';
+import { Rules } from "../utils/rules";
+import { sortDefinitions } from "../utils/definitions";
+import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader";
 import {
     getAttributes,
     getMeasures,
     getMeasureFilters,
     getDefinition,
     isAttributeMeasureFilter,
-    getAttributesDisplayForms
-} from '../utils/visualizationObjectHelper';
-import { IMeasure } from '../interfaces';
-import { XhrModule } from '../xhr';
+    getAttributesDisplayForms,
+} from "../utils/visualizationObjectHelper";
+import { IMeasure } from "../interfaces";
+import { XhrModule } from "../xhr";
 
 const notEmpty = negate<Array<string | null>>(isEmpty);
 
 function findHeaderForMappingFn(mapping: any, header: any) {
-    return ((mapping.element === header.id || mapping.element === header.uri) &&
-        header.measureIndex === undefined);
+    return (
+        (mapping.element === header.id || mapping.element === header.uri) && header.measureIndex === undefined
+    );
 }
 
 function wrapMeasureIndexesFromMappings(metricMappings: any[], headers: any[]) {
     if (metricMappings) {
-        metricMappings.forEach((mapping) => {
+        metricMappings.forEach(mapping => {
             const header = find(headers, partial(findHeaderForMappingFn, mapping));
             if (header) {
                 header.measureIndex = mapping.measureIndex;
@@ -57,8 +56,8 @@ function wrapMeasureIndexesFromMappings(metricMappings: any[], headers: any[]) {
 const emptyResult = {
     extendedTabularDataResult: {
         values: [],
-        warnings: []
-    }
+        warnings: [],
+    },
 };
 
 const MAX_TITLE_LENGTH = 1000;
@@ -66,7 +65,7 @@ const MAX_TITLE_LENGTH = 1000;
 function getMetricTitle(suffix: string, title: string) {
     const maxLength = MAX_TITLE_LENGTH - suffix.length;
     if (title && title.length > maxLength) {
-        if (title[title.length - 1] === ')') {
+        if (title[title.length - 1] === ")") {
             return `${title.substring(0, maxLength - 2)}…)${suffix}`;
         }
         return `${title.substring(0, maxLength - 1)}…${suffix}`;
@@ -74,79 +73,86 @@ function getMetricTitle(suffix: string, title: string) {
     return `${title}${suffix}`;
 }
 
-const getBaseMetricTitle = partial(getMetricTitle, '');
+const getBaseMetricTitle = partial(getMetricTitle, "");
 
-const CONTRIBUTION_METRIC_FORMAT = '#,##0.00%';
+const CONTRIBUTION_METRIC_FORMAT = "#,##0.00%";
 
 function getPoPDefinition(measure: IMeasure) {
-    return get(measure, ['definition', 'popMeasureDefinition'], {});
+    return get(measure, ["definition", "popMeasureDefinition"], {});
 }
 
 function getAggregation(measure: IMeasure) {
-    return get(getDefinition(measure), 'aggregation', '').toLowerCase();
+    return get(getDefinition(measure), "aggregation", "").toLowerCase();
 }
 
 function isEmptyFilter(metricFilter: any) {
-    if (get(metricFilter, 'positiveAttributeFilter')) {
-        return isEmpty(get(metricFilter, ['positiveAttributeFilter', 'in']));
+    if (get(metricFilter, "positiveAttributeFilter")) {
+        return isEmpty(get(metricFilter, ["positiveAttributeFilter", "in"]));
     }
-    if (get(metricFilter, 'negativeAttributeFilter')) {
-        return isEmpty(get(metricFilter, ['negativeAttributeFilter', 'notIn']));
+    if (get(metricFilter, "negativeAttributeFilter")) {
+        return isEmpty(get(metricFilter, ["negativeAttributeFilter", "notIn"]));
     }
-    if (get(metricFilter, 'absoluteDateFilter')) {
-        return get(metricFilter, ['absoluteDateFilter', 'from']) === undefined &&
-            get(metricFilter, ['absoluteDateFilter', 'to']) === undefined;
+    if (get(metricFilter, "absoluteDateFilter")) {
+        return (
+            get(metricFilter, ["absoluteDateFilter", "from"]) === undefined &&
+            get(metricFilter, ["absoluteDateFilter", "to"]) === undefined
+        );
     }
-    return get(metricFilter, ['relativeDateFilter', 'from']) === undefined &&
-        get(metricFilter, ['relativeDateFilter', 'to']) === undefined;
+    return (
+        get(metricFilter, ["relativeDateFilter", "from"]) === undefined &&
+        get(metricFilter, ["relativeDateFilter", "to"]) === undefined
+    );
 }
 
 function allFiltersEmpty(item: any) {
-    return every(
-        map(getMeasureFilters(item), f => isEmptyFilter(f))
-    );
+    return every(map(getMeasureFilters(item), f => isEmptyFilter(f)));
 }
 
 function isDerived(measure: any) {
     const aggregation = getAggregation(measure);
-    return (aggregation !== '' || !allFiltersEmpty(measure));
+    return aggregation !== "" || !allFiltersEmpty(measure);
 }
 
 function getAttrTypeFromMap(dfUri: string, attributesMap: any) {
-    return get(get(attributesMap, [dfUri], {}), ['attribute', 'content', 'type']);
+    return get(get(attributesMap, [dfUri], {}), ["attribute", "content", "type"]);
 }
 
 function getAttrUriFromMap(dfUri: string, attributesMap: any) {
-    return get(get(attributesMap, [dfUri], {}), ['attribute', 'meta', 'uri']);
+    return get(get(attributesMap, [dfUri], {}), ["attribute", "meta", "uri"]);
 }
 
 function isAttrFilterNegative(attributeFilter: any) {
-    return get(attributeFilter, 'negativeAttributeFilter') !== undefined;
+    return get(attributeFilter, "negativeAttributeFilter") !== undefined;
 }
 
 function getAttrFilterElements(attributeFilter: any) {
     const isNegative = isAttrFilterNegative(attributeFilter);
-    const pathToElements = isNegative ? ['negativeAttributeFilter', 'notIn'] : ['positiveAttributeFilter', 'in'];
+    const pathToElements = isNegative
+        ? ["negativeAttributeFilter", "notIn"]
+        : ["positiveAttributeFilter", "in"];
     return get(attributeFilter, pathToElements, []);
 }
 
 function getAttrFilterExpression(measureFilter: any, attributesMap: any) {
-    const isNegative = get(measureFilter, 'negativeAttributeFilter', false);
-    const detailPath = isNegative ? 'negativeAttributeFilter' : 'positiveAttributeFilter';
-    const attributeUri = getAttrUriFromMap(get(measureFilter, [detailPath, 'displayForm', 'uri']), attributesMap);
+    const isNegative = get(measureFilter, "negativeAttributeFilter", false);
+    const detailPath = isNegative ? "negativeAttributeFilter" : "positiveAttributeFilter";
+    const attributeUri = getAttrUriFromMap(
+        get(measureFilter, [detailPath, "displayForm", "uri"]),
+        attributesMap,
+    );
     const elements = getAttrFilterElements(measureFilter);
     if (isEmpty(elements)) {
         return null;
     }
     const elementsForQuery = map(elements, e => `[${e}]`);
-    const negative = isNegative ? 'NOT ' : '';
+    const negative = isNegative ? "NOT " : "";
 
-    return `[${attributeUri}] ${negative}IN (${elementsForQuery.join(',')})`;
+    return `[${attributeUri}] ${negative}IN (${elementsForQuery.join(",")})`;
 }
 
 function getDateFilterExpression() {
     // measure date filter was never supported
-    return '';
+    return "";
 }
 
 function getFilterExpression(attributesMap: any, measureFilter: any) {
@@ -158,26 +164,30 @@ function getFilterExpression(attributesMap: any, measureFilter: any) {
 
 function getGeneratedMetricExpression(item: any, attributesMap: any) {
     const aggregation = getAggregation(item).toUpperCase();
-    const objectUri = get(getDefinition(item), 'item.uri');
+    const objectUri = get(getDefinition(item), "item.uri");
     const where = filter(map(getMeasureFilters(item), partial(getFilterExpression, attributesMap)), e => !!e);
 
-    return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`
-    }${notEmpty(where) ? ` WHERE ${where.join(' AND ')}` : ''}`;
+    return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`}${
+        notEmpty(where) ? ` WHERE ${where.join(" AND ")}` : ""
+    }`;
 }
 
 function getPercentMetricExpression(category: any, attributesMap: any, measure: any) {
-    let metricExpressionWithoutFilters = `SELECT [${get(getDefinition(measure), 'item.uri')}]`;
+    let metricExpressionWithoutFilters = `SELECT [${get(getDefinition(measure), "item.uri")}]`;
 
     if (isDerived(measure)) {
         metricExpressionWithoutFilters = getGeneratedMetricExpression(
-            set(cloneDeep(measure), ['definition', 'measureDefinition', 'filters'], []),
-            attributesMap
+            set(cloneDeep(measure), ["definition", "measureDefinition", "filters"], []),
+            attributesMap,
         );
     }
 
-    const attributeUri = getAttrUriFromMap(get(category, 'displayForm.uri'), attributesMap);
-    const whereFilters = filter(map(getMeasureFilters(measure), partial(getFilterExpression, attributesMap)), e => !!e);
-    const whereExpression = notEmpty(whereFilters) ? ` WHERE ${whereFilters.join(' AND ')}` : '';
+    const attributeUri = getAttrUriFromMap(get(category, "displayForm.uri"), attributesMap);
+    const whereFilters = filter(
+        map(getMeasureFilters(measure), partial(getFilterExpression, attributesMap)),
+        e => !!e,
+    );
+    const whereExpression = notEmpty(whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
 
     // tslint:disable-next-line:max-line-length
     return `SELECT (${metricExpressionWithoutFilters}${whereExpression}) / (${metricExpressionWithoutFilters} BY ALL [${attributeUri}]${whereExpression})`;
@@ -193,12 +203,12 @@ function getGeneratedMetricHash(title: string, format: string, expression: strin
 
 function getMeasureType(measure: any) {
     const aggregation = getAggregation(measure);
-    if (aggregation === '') {
-        return 'metric';
-    } else if (aggregation === 'count') {
-        return 'attribute';
+    if (aggregation === "") {
+        return "metric";
+    } else if (aggregation === "count") {
+        return "attribute";
     }
-    return 'fact';
+    return "fact";
 }
 
 function getGeneratedMetricIdentifier(
@@ -206,60 +216,65 @@ function getGeneratedMetricIdentifier(
     aggregation: string,
     expressionCreator: (item: any, attributesMap: any) => string,
     hasher: any,
-    attributesMap: any
+    attributesMap: any,
 ) {
-    const [, , , prjId, , id] = get(getDefinition(item), 'item.uri', '').split('/');
+    const [, , , prjId, , id] = get(getDefinition(item), "item.uri", "").split("/");
     const identifier = `${prjId}_${id}`;
     const hash = hasher(expressionCreator(item, attributesMap));
     const hasNoFilters = isEmpty(getMeasureFilters(item));
     const type = getMeasureType(item);
 
-    const prefix = (hasNoFilters || allFiltersEmpty(item)) ? '' : '_filtered';
+    const prefix = hasNoFilters || allFiltersEmpty(item) ? "" : "_filtered";
 
     return `${type}_${identifier}.generated.${hash}${prefix}_${aggregation}`;
 }
 
 function isDateAttribute(attribute: any, attributesMap = {}) {
-    return getAttrTypeFromMap(get(attribute, ['displayForm', 'uri']), attributesMap) !== undefined;
+    return getAttrTypeFromMap(get(attribute, ["displayForm", "uri"]), attributesMap) !== undefined;
 }
 
 function getMeasureSorting(measure?: any, mdObj?: any) {
-    const sorting = get(mdObj, ['properties', 'sortItems'], []);
+    const sorting = get(mdObj, ["properties", "sortItems"], []);
     const matchedSorting = sorting.find((sortItem: any) => {
-        const measureSortItem = get(sortItem, ['measureSortItem']);
+        const measureSortItem = get(sortItem, ["measureSortItem"]);
         if (measureSortItem) {
             // only one item now, we support only 2d data
-            const identifier = get(measureSortItem, ['locators', 0, 'measureLocatorItem', 'measureIdentifier']);
-            return identifier === get(measure, 'localIdentifier');
+            const identifier = get(measureSortItem, [
+                "locators",
+                0,
+                "measureLocatorItem",
+                "measureIdentifier",
+            ]);
+            return identifier === get(measure, "localIdentifier");
         }
         return false;
     });
     if (matchedSorting) {
-        return get(matchedSorting, ['measureSortItem', 'direction'], null);
+        return get(matchedSorting, ["measureSortItem", "direction"], null);
     }
     return null;
 }
 
 function getCategorySorting(category: any, mdObj: any) {
-    const sorting = get(mdObj, ['properties', 'sortItems'], []);
+    const sorting = get(mdObj, ["properties", "sortItems"], []);
     const matchedSorting = sorting.find((sortItem: any) => {
-        const attributeSortItem = get(sortItem, ['attributeSortItem']);
+        const attributeSortItem = get(sortItem, ["attributeSortItem"]);
         if (attributeSortItem) {
-            const identifier = get(attributeSortItem, ['attributeIdentifier']);
-            return identifier === get(category, 'localIdentifier');
+            const identifier = get(attributeSortItem, ["attributeIdentifier"]);
+            return identifier === get(category, "localIdentifier");
         }
         return false;
     });
     if (matchedSorting) {
-        return get(matchedSorting, ['attributeSortItem', 'direction'], null);
+        return get(matchedSorting, ["attributeSortItem", "direction"], null);
     }
     return null;
 }
 
 const createPureMetric = (measure: any, mdObj: any, measureIndex: number) => ({
-    element: get(measure, ['definition', 'measureDefinition', 'item', 'uri']),
+    element: get(measure, ["definition", "measureDefinition", "item", "uri"]),
     sort: getMeasureSorting(measure, mdObj),
-    meta: { measureIndex }
+    meta: { measureIndex },
 });
 
 function createDerivedMetric(measure: any, mdObj: any, measureIndex: number, attributesMap: any) {
@@ -271,17 +286,18 @@ function createDerivedMetric(measure: any, mdObj: any, measureIndex: number, att
     const aggregation = getAggregation(measure);
     const element = getGeneratedMetricIdentifier(
         measure,
-        aggregation.length ? aggregation : 'base',
+        aggregation.length ? aggregation : "base",
         getGeneratedMetricExpression,
         hasher,
-        attributesMap);
+        attributesMap,
+    );
     const definition = {
         metricDefinition: {
             identifier: element,
             expression: getGeneratedMetricExpression(measure, attributesMap),
             title,
-            format
-        }
+            format,
+        },
     };
 
     return {
@@ -289,17 +305,23 @@ function createDerivedMetric(measure: any, mdObj: any, measureIndex: number, att
         definition,
         sort,
         meta: {
-            measureIndex
-        }
+            measureIndex,
+        },
     };
 }
 
 function createContributionMetric(measure: any, mdObj: any, measureIndex: number, attributesMap: any) {
     const attribute = first(getAttributes(mdObj));
     const getMetricExpression = partial(getPercentMetricExpression, attribute, attributesMap);
-    const title = getBaseMetricTitle(get(measure, 'title'));
+    const title = getBaseMetricTitle(get(measure, "title"));
     const hasher = partial(getGeneratedMetricHash, title, CONTRIBUTION_METRIC_FORMAT);
-    const identifier = getGeneratedMetricIdentifier(measure, 'percent', getMetricExpression, hasher, attributesMap);
+    const identifier = getGeneratedMetricIdentifier(
+        measure,
+        "percent",
+        getMetricExpression,
+        hasher,
+        attributesMap,
+    );
     return {
         element: identifier,
         definition: {
@@ -307,45 +329,50 @@ function createContributionMetric(measure: any, mdObj: any, measureIndex: number
                 identifier,
                 expression: getMetricExpression(measure),
                 title,
-                format: CONTRIBUTION_METRIC_FORMAT
-            }
+                format: CONTRIBUTION_METRIC_FORMAT,
+            },
         },
         sort: getMeasureSorting(measure, mdObj),
         meta: {
-            measureIndex
-        }
+            measureIndex,
+        },
     };
 }
 
 function getOriginalMeasureForPoP(popMeasure: any, mdObj: any) {
-    return getMeasures(mdObj).find((measure: any) =>
-        get(measure, 'localIdentifier') === get(getPoPDefinition(popMeasure), ['measureIdentifier'])
+    return getMeasures(mdObj).find(
+        (measure: any) =>
+            get(measure, "localIdentifier") === get(getPoPDefinition(popMeasure), ["measureIdentifier"]),
     );
 }
 
 function createPoPMetric(popMeasure: any, mdObj: any, measureIndex: number, attributesMap: any) {
-    const title = getBaseMetricTitle(get(popMeasure, 'title'));
-    const format = get(popMeasure, 'format');
+    const title = getBaseMetricTitle(get(popMeasure, "title"));
+    const format = get(popMeasure, "format");
     const hasher = partial(getGeneratedMetricHash, title, format);
 
-    const attributeUri = get(popMeasure, 'definition.popMeasureDefinition.popAttribute.uri');
+    const attributeUri = get(popMeasure, "definition.popMeasureDefinition.popAttribute.uri");
     const originalMeasure = getOriginalMeasureForPoP(popMeasure, mdObj);
 
-    const originalMeasureExpression = `[${get(getDefinition(originalMeasure), ['item', 'uri'])}]`;
+    const originalMeasureExpression = `[${get(getDefinition(originalMeasure), ["item", "uri"])}]`;
     let metricExpression = getPoPExpression(attributeUri, originalMeasureExpression);
 
     if (isDerived(originalMeasure)) {
         const generated = createDerivedMetric(originalMeasure, mdObj, measureIndex, attributesMap);
-        const generatedMeasureExpression = `(${get(generated, ['definition', 'metricDefinition', 'expression'])})`;
+        const generatedMeasureExpression = `(${get(generated, [
+            "definition",
+            "metricDefinition",
+            "expression",
+        ])})`;
         metricExpression = getPoPExpression(attributeUri, generatedMeasureExpression);
     }
 
     const identifier = getGeneratedMetricIdentifier(
         originalMeasure,
-        'pop',
+        "pop",
         () => metricExpression,
         hasher,
-        attributesMap
+        attributesMap,
     );
 
     return {
@@ -355,37 +382,41 @@ function createPoPMetric(popMeasure: any, mdObj: any, measureIndex: number, attr
                 identifier,
                 expression: metricExpression,
                 title,
-                format
-            }
+                format,
+            },
         },
         sort: getMeasureSorting(popMeasure, mdObj),
         meta: {
             measureIndex,
-            isPoP: true
-        }
+            isPoP: true,
+        },
     };
 }
 
 function createContributionPoPMetric(popMeasure: any, mdObj: any, measureIndex: number, attributesMap: any) {
-    const attributeUri = get(popMeasure, ['definition', 'popMeasureDefinition', 'popAttribute', 'uri']);
+    const attributeUri = get(popMeasure, ["definition", "popMeasureDefinition", "popAttribute", "uri"]);
 
     const originalMeasure = getOriginalMeasureForPoP(popMeasure, mdObj);
 
     const generated = createContributionMetric(originalMeasure, mdObj, measureIndex, attributesMap);
-    const title = getBaseMetricTitle(get(popMeasure, 'title'));
+    const title = getBaseMetricTitle(get(popMeasure, "title"));
 
     const format = CONTRIBUTION_METRIC_FORMAT;
     const hasher = partial(getGeneratedMetricHash, title, format);
 
-    const generatedMeasureExpression = `(${get(generated, ['definition', 'metricDefinition', 'expression'])})`;
+    const generatedMeasureExpression = `(${get(generated, [
+        "definition",
+        "metricDefinition",
+        "expression",
+    ])})`;
     const metricExpression = getPoPExpression(attributeUri, generatedMeasureExpression);
 
     const identifier = getGeneratedMetricIdentifier(
         originalMeasure,
-        'pop',
+        "pop",
         () => metricExpression,
         hasher,
-        attributesMap
+        attributesMap,
     );
 
     return {
@@ -395,30 +426,30 @@ function createContributionPoPMetric(popMeasure: any, mdObj: any, measureIndex: 
                 identifier,
                 expression: metricExpression,
                 title,
-                format
-            }
+                format,
+            },
         },
         sort: getMeasureSorting(),
         meta: {
             measureIndex,
-            isPoP: true
-        }
+            isPoP: true,
+        },
     };
 }
 
 function categoryToElement(attributesMap: any, mdObj: any, category: any) {
-    const element = getAttrUriFromMap(get(category, ['displayForm', 'uri']), attributesMap);
+    const element = getAttrUriFromMap(get(category, ["displayForm", "uri"]), attributesMap);
     return {
         element,
-        sort: getCategorySorting(category, mdObj)
+        sort: getCategorySorting(category, mdObj),
     };
 }
 
 function isPoP({ definition }: any) {
-    return get(definition, 'popMeasureDefinition') !== undefined;
+    return get(definition, "popMeasureDefinition") !== undefined;
 }
 function isContribution({ definition }: any) {
-    return get(definition, ['measureDefinition', 'computeRatio']);
+    return get(definition, ["measureDefinition", "computeRatio"]);
 }
 function isPoPContribution(popMeasure: any, mdObj: any) {
     if (isPoP(popMeasure)) {
@@ -428,35 +459,20 @@ function isPoPContribution(popMeasure: any, mdObj: any) {
     return false;
 }
 function isCalculatedMeasure({ definition }: any) {
-    return get(definition, ['measureDefinition', 'aggregation']) === undefined;
+    return get(definition, ["measureDefinition", "aggregation"]) === undefined;
 }
 
 const rules = new Rules();
 
-rules.addRule(
-    [isPoPContribution],
-    createContributionPoPMetric
-);
+rules.addRule([isPoPContribution], createContributionPoPMetric);
 
-rules.addRule(
-    [isPoP],
-    createPoPMetric
-);
+rules.addRule([isPoP], createPoPMetric);
 
-rules.addRule(
-    [isContribution],
-    createContributionMetric
-);
+rules.addRule([isContribution], createContributionMetric);
 
-rules.addRule(
-    [isDerived],
-    createDerivedMetric
-);
+rules.addRule([isDerived], createDerivedMetric);
 
-rules.addRule(
-    [isCalculatedMeasure],
-    createPureMetric
-);
+rules.addRule([isCalculatedMeasure], createPureMetric);
 
 function getMetricFactory(measure: any, mdObj: any) {
     const factory = rules.match(measure, mdObj);
@@ -470,18 +486,20 @@ function getExecutionDefinitionsAndColumns(mdObj: any, options: any, attributesM
     const measures = getMeasures(mdObj);
     let attributes = getAttributes(mdObj);
 
-    const metrics = flatten(map(measures, (measure, index) =>
-        getMetricFactory(measure, mdObj)(measure, mdObj, index, attributesMap))
+    const metrics = flatten(
+        map(measures, (measure, index) =>
+            getMetricFactory(measure, mdObj)(measure, mdObj, index, attributesMap),
+        ),
     );
     if (options.removeDateItems) {
         attributes = filter(attributes, attribute => !isDateAttribute(attribute, attributesMap));
     }
     attributes = map(attributes, partial(categoryToElement, attributesMap, mdObj));
 
-    const columns = compact(map([...attributes, ...metrics], 'element'));
+    const columns = compact(map([...attributes, ...metrics], "element"));
     return {
         columns,
-        definitions: sortDefinitions(compact(map(metrics, 'definition')))
+        definitions: sortDefinitions(compact(map(metrics, "definition"))),
     };
 }
 
@@ -514,51 +532,58 @@ export class ExperimentalExecutionsModule {
      * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
      */
     public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
-
-        if (process.env.NODE_ENV !== 'test') {
+        if (process.env.NODE_ENV !== "test") {
             // tslint:disable-next-line:no-console
-            console.warn('ExperimentalExecutionsModule is deprecated and is no longer being maintained. ' +
-                'Please migrate to the ExecuteAfmModule.');
+            console.warn(
+                "ExperimentalExecutionsModule is deprecated and is no longer being maintained. " +
+                    "Please migrate to the ExecuteAfmModule.",
+            );
         }
 
         const executedReport: any = {
-            isLoaded: false
+            isLoaded: false,
         };
 
         // Create request and result structures
         const request: any = {
-            execution: { columns }
+            execution: { columns },
         };
         // enrich configuration with supported properties such as
         // where clause with query-like filters
-        ['where', 'orderBy', 'definitions'].forEach((property) => {
+        ["where", "orderBy", "definitions"].forEach(property => {
             if (executionConfiguration[property]) {
                 request.execution[property] = executionConfiguration[property];
             }
         });
 
         // Execute request
-        return this.xhr.post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
-            ...settings,
-            body: JSON.stringify(request)
-        })
-            .then((r => r.getData()))
-            .then((response) => {
+        return this.xhr
+            .post(`/gdc/internal/projects/${projectId}/experimental/executions`, {
+                ...settings,
+                body: JSON.stringify(request),
+            })
+            .then(r => r.getData())
+            .then(response => {
                 executedReport.headers = wrapMeasureIndexesFromMappings(
-                    get(executionConfiguration, 'metricMappings'), get(response, ['executionResult', 'headers'], []));
+                    get(executionConfiguration, "metricMappings"),
+                    get(response, ["executionResult", "headers"], []),
+                );
 
                 // Start polling on url returned in the executionResult for tabularData
-                return this.loadExtendedDataResults(response.executionResult.extendedTabularDataResult, settings);
+                return this.loadExtendedDataResults(
+                    response.executionResult.extendedTabularDataResult,
+                    settings,
+                );
             })
             .then((r: any) => {
                 const { result, status } = r;
 
                 return {
                     ...executedReport,
-                    rawData: get(result, 'extendedTabularDataResult.values', []),
-                    warnings: get(result, 'extendedTabularDataResult.warnings', []),
+                    rawData: get(result, "extendedTabularDataResult.values", []),
+                    warnings: get(result, "extendedTabularDataResult.warnings", []),
                     isLoaded: true,
-                    isEmpty: status === 204
+                    isEmpty: status === 204,
                 };
             });
     }
@@ -573,54 +598,55 @@ export class ExperimentalExecutionsModule {
     }
 
     private getAttributesMap(options: any, displayFormUris: string[], projectId: string) {
-        const attributesMap = get(options, 'attributesMap', {});
+        const attributesMap = get(options, "attributesMap", {});
 
         const missingUris = getMissingUrisInAttributesMap(displayFormUris, attributesMap);
         return this.loadAttributesMap(projectId, missingUris).then((result: any) => {
             return {
                 ...attributesMap,
-                ...result
+                ...result,
             };
         });
     }
 
     private loadExtendedDataResults(uri: string, settings: any, prevResult = emptyResult) {
         return new Promise((resolve, reject) => {
-            this.xhr.ajax(uri, settings)
-                .then((r) => {
+            this.xhr
+                .ajax(uri, settings)
+                .then(r => {
                     const { response } = r;
 
                     if (response.status === 204) {
                         return {
                             status: response.status,
-                            result: ''
+                            result: "",
                         };
                     }
 
                     return {
                         status: response.status,
-                        result: r.getData()
+                        result: r.getData(),
                     };
                 })
                 .then(({ status, result }) => {
                     const values = [
-                        ...get(prevResult, 'extendedTabularDataResult.values', []),
-                        ...get(result, 'extendedTabularDataResult.values', [])
+                        ...get(prevResult, "extendedTabularDataResult.values", []),
+                        ...get(result, "extendedTabularDataResult.values", []),
                     ];
 
                     const warnings = [
-                        ...get(prevResult, 'extendedTabularDataResult.warnings', []),
-                        ...get(result, 'extendedTabularDataResult.warnings', [])
+                        ...get(prevResult, "extendedTabularDataResult.warnings", []),
+                        ...get(result, "extendedTabularDataResult.warnings", []),
                     ];
 
                     const updatedResult = merge({}, prevResult, {
                         extendedTabularDataResult: {
                             values,
-                            warnings
-                        }
+                            warnings,
+                        },
                     });
 
-                    const nextUri = get(result, 'extendedTabularDataResult.paging.next');
+                    const nextUri = get(result, "extendedTabularDataResult.paging.next");
                     if (nextUri) {
                         resolve(this.loadExtendedDataResults(nextUri, settings, updatedResult));
                     } else {

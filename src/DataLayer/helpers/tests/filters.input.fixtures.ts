@@ -1,62 +1,62 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import { Granularities } from '../../constants/granularities';
+import { AFM } from "@gooddata/typings";
+import { Granularities } from "../../constants/granularities";
 
 export const relativeDateFilter: AFM.IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: {
-            identifier: 'date filter'
+            identifier: "date filter",
         },
         from: 0,
         to: 0,
-        granularity: Granularities.MONTH
-    }
+        granularity: Granularities.MONTH,
+    },
 };
 
 export const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            identifier: 'date filter'
+            identifier: "date filter",
         },
-        from: 'from',
-        to: 'to'
-    }
+        from: "from",
+        to: "to",
+    },
 };
 
 export const positiveAttributeFilter: AFM.IPositiveAttributeFilter = {
     positiveAttributeFilter: {
         displayForm: {
-            identifier: 'positive filter'
+            identifier: "positive filter",
         },
-        in: ['uri1', 'uri2']
-    }
+        in: ["uri1", "uri2"],
+    },
 };
 
 export const positiveAttributeFilterEmpty: AFM.IPositiveAttributeFilter = {
     positiveAttributeFilter: {
         displayForm: {
-            identifier: 'empty positive filter'
+            identifier: "empty positive filter",
         },
-        in: []
-    }
+        in: [],
+    },
 };
 
 export const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
     negativeAttributeFilter: {
         displayForm: {
-            identifier: 'negative filter'
+            identifier: "negative filter",
         },
-        notIn: ['uri1', 'uri2']
-    }
+        notIn: ["uri1", "uri2"],
+    },
 };
 
 export const negativeAttributeFilterEmpty: AFM.INegativeAttributeFilter = {
     negativeAttributeFilter: {
         displayForm: {
-            identifier: 'empty negative filter'
+            identifier: "empty negative filter",
         },
-        notIn: []
-    }
+        notIn: [],
+    },
 };
 
 export const afm: AFM.IAfm = {
@@ -64,14 +64,14 @@ export const afm: AFM.IAfm = {
         {
             positiveAttributeFilter: {
                 displayForm: {
-                    identifier: 'filter'
+                    identifier: "filter",
                 },
-                in: ['1', '2', '3']
-            }
-        }
-    ]
+                in: ["1", "2", "3"],
+            },
+        },
+    ],
 };
 
 export const afmEmptyFilters: AFM.IAfm = {
-    filters: []
+    filters: [],
 };

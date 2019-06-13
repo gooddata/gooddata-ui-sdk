@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, VisualizationObject } from '@gooddata/typings';
+import { AFM, VisualizationObject } from "@gooddata/typings";
 import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
 import IVisualizationObjectRelativeDateFilter = VisualizationObject.IVisualizationObjectRelativeDateFilter;
 import IVisualizationObjectAbsoluteDateFilter = VisualizationObject.IVisualizationObjectAbsoluteDateFilter;
@@ -25,8 +25,8 @@ function convertAbsoluteDateFilter(filter: IVisualizationObjectAbsoluteDateFilte
         absoluteDateFilter: {
             dataSet: absoluteDateFilter.dataSet,
             from: String(absoluteDateFilter.from),
-            to: String(absoluteDateFilter.to)
-        }
+            to: String(absoluteDateFilter.to),
+        },
     };
 }
 
@@ -42,8 +42,8 @@ function convertRelativeDateFilter(filter: IVisualizationObjectRelativeDateFilte
             dataSet: relativeDateFilter.dataSet,
             granularity: relativeDateFilter.granularity,
             from: Number(relativeDateFilter.from),
-            to: Number(relativeDateFilter.to)
-        }
+            to: Number(relativeDateFilter.to),
+        },
     };
 }
 

@@ -1,29 +1,31 @@
 // (C) 2007-2018 GoodData Corporation
-import compact = require('lodash/compact');
-import flatMap = require('lodash/flatMap');
-import get = require('lodash/get');
-import { AFM, VisualizationObject } from '@gooddata/typings';
-import { convertVisualizationObjectFilter } from './FilterConverter';
-import MeasureConverter from './MeasureConverter';
+import compact = require("lodash/compact");
+import flatMap = require("lodash/flatMap");
+import get = require("lodash/get");
+import { AFM, VisualizationObject } from "@gooddata/typings";
+import { convertVisualizationObjectFilter } from "./FilterConverter";
+import MeasureConverter from "./MeasureConverter";
 
-function convertAttribute(attribute: VisualizationObject.IVisualizationAttribute, idx: number): AFM.IAttribute {
+function convertAttribute(
+    attribute: VisualizationObject.IVisualizationAttribute,
+    idx: number,
+): AFM.IAttribute {
     const alias = attribute.visualizationAttribute.alias;
     const aliasProp = alias ? { alias } : {};
     return {
         displayForm: attribute.visualizationAttribute.displayForm,
         localIdentifier: attribute.visualizationAttribute.localIdentifier || `a${idx + 1}`,
-        ...aliasProp
+        ...aliasProp,
     };
 }
 
-function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjectContent)
-    : AFM.IAfm {
-
+function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjectContent): AFM.IAfm {
     const attributes: AFM.IAttribute[] = getAttributes(visualizationObject.buckets).map(convertAttribute);
     const attrProp = attributes.length ? { attributes } : {};
 
-    const measures: AFM.IMeasure[] = getMeasures(visualizationObject.buckets)
-        .map(MeasureConverter.convertMeasure);
+    const measures: AFM.IMeasure[] = getMeasures(visualizationObject.buckets).map(
+        MeasureConverter.convertMeasure,
+    );
     const measuresProp = measures.length ? { measures } : {};
 
     const filters: AFM.CompatibilityFilter[] = visualizationObject.filters
@@ -38,13 +40,15 @@ function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjec
         ...measuresProp,
         ...attrProp,
         ...filtersProp,
-        ...nativeTotalsProp
+        ...nativeTotalsProp,
     };
 }
 
 function getMeasures(buckets: VisualizationObject.IBucket[]): VisualizationObject.IMeasure[] {
     return buckets.reduce((result: VisualizationObject.IMeasure[], bucket: VisualizationObject.IBucket) => {
-        const measureItems: VisualizationObject.IMeasure[] = bucket.items.filter(VisualizationObject.isMeasure);
+        const measureItems: VisualizationObject.IMeasure[] = bucket.items.filter(
+            VisualizationObject.isMeasure,
+        );
 
         return result.concat(measureItems);
     }, []);
@@ -52,40 +56,48 @@ function getMeasures(buckets: VisualizationObject.IBucket[]): VisualizationObjec
 
 function getNativeTotalAttributeIdentifiers(
     bucket: VisualizationObject.IBucket,
-    total: VisualizationObject.IVisualizationTotal
+    total: VisualizationObject.IVisualizationTotal,
 ): string[] {
     const attributes = bucket.items.filter(VisualizationObject.isAttribute);
 
-    const totalAttributeIndex = attributes
-        .findIndex(attribute => attribute.visualizationAttribute.localIdentifier === total.attributeIdentifier);
+    const totalAttributeIndex = attributes.findIndex(
+        attribute => attribute.visualizationAttribute.localIdentifier === total.attributeIdentifier,
+    );
 
     return attributes
         .slice(0, totalAttributeIndex)
         .map(attribute => attribute.visualizationAttribute.localIdentifier);
 }
 
-function convertNativeTotals(visObj: VisualizationObject.IVisualizationObjectContent): AFM.INativeTotalItem[] {
-    const nativeTotalsPerBucket = visObj.buckets.map((bucket) => {
+function convertNativeTotals(
+    visObj: VisualizationObject.IVisualizationObjectContent,
+): AFM.INativeTotalItem[] {
+    const nativeTotalsPerBucket = visObj.buckets.map(bucket => {
         const totals = bucket.totals || [];
-        const nativeTotals = totals.filter(total => total.type === 'nat');
+        const nativeTotals = totals.filter(total => total.type === "nat");
 
         return nativeTotals.map(total => ({
             measureIdentifier: total.measureIdentifier,
-            attributeIdentifiers: getNativeTotalAttributeIdentifiers(bucket, total)
+            attributeIdentifiers: getNativeTotalAttributeIdentifiers(bucket, total),
         }));
     });
 
     return flatMap(nativeTotalsPerBucket);
 }
 
-function getAttributes(buckets: VisualizationObject.IBucket[]): VisualizationObject.IVisualizationAttribute[] {
+function getAttributes(
+    buckets: VisualizationObject.IBucket[],
+): VisualizationObject.IVisualizationAttribute[] {
     return buckets.reduce(
         (result: VisualizationObject.IVisualizationAttribute[], bucket: VisualizationObject.IBucket) => {
-            const items: VisualizationObject.IVisualizationAttribute[] =
-                bucket.items.filter(VisualizationObject.isAttribute);
+            const items: VisualizationObject.IVisualizationAttribute[] = bucket.items.filter(
+                VisualizationObject.isAttribute,
+            );
 
             return result.concat(items);
-        }, []);
+        },
+        [],
+    );
 }
 
 function convertSorting(visObj: VisualizationObject.IVisualizationObjectContent): AFM.SortItem[] {
@@ -95,25 +107,23 @@ function convertSorting(visObj: VisualizationObject.IVisualizationObjectContent)
             properties = JSON.parse(visObj.properties);
         } catch {
             // tslint:disable-next-line:no-console
-            console.error('Properties contains invalid JSON string.');
+            console.error("Properties contains invalid JSON string.");
         }
 
-        const sorts: AFM.SortItem[] = get(properties, 'sortItems', []);
+        const sorts: AFM.SortItem[] = get(properties, "sortItems", []);
         return sorts ? sorts : [];
     }
 
     return [];
 }
 
-function convertResultSpec(
-    visObj: VisualizationObject.IVisualizationObjectContent
-): AFM.IResultSpec {
+function convertResultSpec(visObj: VisualizationObject.IVisualizationObjectContent): AFM.IResultSpec {
     const sorts = convertSorting(visObj);
     // Workaround because we can handle only 1 sort item for now
     const sortsProp = sorts.length ? { sorts: sorts.slice(0, 1) } : {};
 
     return {
-        ...sortsProp
+        ...sortsProp,
     };
 }
 
@@ -133,6 +143,6 @@ export function toAfmResultSpec(visObj: VisualizationObject.IVisualizationObject
     const afm = convertAFM(visObj);
     return {
         afm,
-        resultSpec: convertResultSpec(visObj)
+        resultSpec: convertResultSpec(visObj),
     };
 }

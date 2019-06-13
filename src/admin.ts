@@ -1,13 +1,13 @@
 // (C) 2007-2014 GoodData Corporation
-import { DataProductsModule } from './admin/dataProducts';
-import { DomainDataProductModule } from './admin/domainDataProducts';
-import { DomainsModule } from './admin/domains';
-import { DomainSegmentsModule } from './admin/domainSegments';
-import { ClientsModule } from './admin/clients';
-import { SegmentsModule } from './admin/segments';
-import { LogsModule } from './admin/logs';
-import { ContractsModule } from './admin/contracts';
-import { XhrModule } from './xhr';
+import { DataProductsModule } from "./admin/dataProducts";
+import { DomainDataProductModule } from "./admin/domainDataProducts";
+import { DomainsModule } from "./admin/domains";
+import { DomainSegmentsModule } from "./admin/domainSegments";
+import { ClientsModule } from "./admin/clients";
+import { SegmentsModule } from "./admin/segments";
+import { LogsModule } from "./admin/logs";
+import { ContractsModule } from "./admin/contracts";
+import { XhrModule } from "./xhr";
 
 /**
  * Network-UI support methods. Mostly private

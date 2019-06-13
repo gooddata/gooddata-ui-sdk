@@ -1,216 +1,211 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import { Granularities } from '../constants/granularities';
-import { INormalizedAFM, ALL_TIME_GRANULARITY } from '../utils/AfmUtils';
+import { AFM } from "@gooddata/typings";
+import { Granularities } from "../constants/granularities";
+import { INormalizedAFM, ALL_TIME_GRANULARITY } from "../utils/AfmUtils";
 
 export const absoluteDateFilter1: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            uri: '/gdc/md/project/obj/727'
+            uri: "/gdc/md/project/obj/727",
         },
-        from: '2014-01-01',
-        to: '2016-01-01'
-    }
+        from: "2014-01-01",
+        to: "2016-01-01",
+    },
 };
 
 export const absoluteDateFilter2: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            uri: '/gdc/md/project/obj/626'
+            uri: "/gdc/md/project/obj/626",
         },
-        from: '2017-01-01',
-        to: '2018-01-01'
-    }
+        from: "2017-01-01",
+        to: "2018-01-01",
+    },
 };
 
 export const relativeDateFilter: AFM.IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: {
-            uri: '/gdc/md/project/obj/727'
+            uri: "/gdc/md/project/obj/727",
         },
         from: -10,
         to: -9,
-        granularity: Granularities.YEAR
-    }
+        granularity: Granularities.YEAR,
+    },
 };
 
 export const allTimeDateFilter: AFM.IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: {
-            identifier: '/gdc/md/project/obj/727'
+            identifier: "/gdc/md/project/obj/727",
         },
         from: 0,
         to: 0,
-        granularity: ALL_TIME_GRANULARITY
-    }
+        granularity: ALL_TIME_GRANULARITY,
+    },
 };
 
 export const positiveAttributeFilter: AFM.IPositiveAttributeFilter = {
     positiveAttributeFilter: {
         displayForm: {
-            uri: '/gdc/md/project/obj/42'
+            uri: "/gdc/md/project/obj/42",
         },
-        in: ['/gdc/md/project/obj/42?val=1', '/gdc/md/project/obj/42?val=2']
-    }
+        in: ["/gdc/md/project/obj/42?val=1", "/gdc/md/project/obj/42?val=2"],
+    },
 };
 
 export const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
     negativeAttributeFilter: {
         displayForm: {
-            uri: '/gdc/md/project/obj/43'
+            uri: "/gdc/md/project/obj/43",
         },
-        notIn: ['/gdc/md/project/obj/43?val=1']
-    }
+        notIn: ["/gdc/md/project/obj/43?val=1"],
+    },
 };
 
 export const metricSum: AFM.IMeasure = {
-    localIdentifier: 'metric_sum',
+    localIdentifier: "metric_sum",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/md/measure/obj/1'
+                uri: "/gdc/md/measure/obj/1",
             },
-            aggregation: 'sum'
-        }
-    }
+            aggregation: "sum",
+        },
+    },
 };
 
 export const metricSum2: AFM.IMeasure = {
-    localIdentifier: 'metric_sum_2',
+    localIdentifier: "metric_sum_2",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/md/measure/obj/2'
+                uri: "/gdc/md/measure/obj/2",
             },
             filters: [relativeDateFilter],
-            aggregation: 'sum'
-        }
-    }
+            aggregation: "sum",
+        },
+    },
 };
 
 export const metricSum3: AFM.IMeasure = {
-    localIdentifier: 'metric_sum_3',
+    localIdentifier: "metric_sum_3",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/md/measure/obj/3'
+                uri: "/gdc/md/measure/obj/3",
             },
             filters: [absoluteDateFilter2],
-            aggregation: 'sum'
-        }
-    }
+            aggregation: "sum",
+        },
+    },
 };
 
 export const metricSum4: AFM.IMeasure = {
-    localIdentifier: 'metric_sum_4',
+    localIdentifier: "metric_sum_4",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/md/measure/obj/4'
+                uri: "/gdc/md/measure/obj/4",
             },
             filters: [absoluteDateFilter1],
-            aggregation: 'sum'
-        }
-    }
+            aggregation: "sum",
+        },
+    },
 };
 
 export const metricInPercent: AFM.IMeasure = {
-    localIdentifier: 'measure_in_percent',
+    localIdentifier: "measure_in_percent",
     definition: {
         measure: {
             item: {
-                uri: 'measure_identifier'
+                uri: "measure_identifier",
             },
             showInPercent: true,
-            filters: [
-                relativeDateFilter
-            ]
-        }
-    }
+            filters: [relativeDateFilter],
+        },
+    },
 };
 
 export const metricInPercentPop: AFM.IMeasure = {
-    localIdentifier: 'measure_pop',
+    localIdentifier: "measure_pop",
     definition: {
         popMeasure: {
-            measureIdentifier: 'measure_in_percent',
+            measureIdentifier: "measure_in_percent",
             popAttribute: {
-                identifier: 'attribute_display_form_identifier'
-            }
-        }
-    }
+                identifier: "attribute_display_form_identifier",
+            },
+        },
+    },
 };
 
 export const simpleMeasure: AFM.IMeasure = {
-    localIdentifier: 'm1',
+    localIdentifier: "m1",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/mock/measure'
-            }
-        }
-    }
+                uri: "/gdc/mock/measure",
+            },
+        },
+    },
 };
 
 export const popMeasure: AFM.IMeasure = {
-    localIdentifier: 'm1',
+    localIdentifier: "m1",
     definition: {
         popMeasure: {
-            measureIdentifier: 'm1',
+            measureIdentifier: "m1",
             popAttribute: {
-                uri: '/gdc/mock/measure'
-            }
-        }
-    }
+                uri: "/gdc/mock/measure",
+            },
+        },
+    },
 };
 
 export const previousPeriodMeasure: AFM.IMeasure = {
-    localIdentifier: 'm1',
+    localIdentifier: "m1",
     definition: {
         previousPeriodMeasure: {
-            measureIdentifier: 'm1',
-            dateDataSets: [{
-                dataSet: {
-                    uri: '/gdc/mock/date'
+            measureIdentifier: "m1",
+            dateDataSets: [
+                {
+                    dataSet: {
+                        uri: "/gdc/mock/date",
+                    },
+                    periodsAgo: 1,
                 },
-                periodsAgo: 1
-            }]
-        }
-    }
+            ],
+        },
+    },
 };
 
 export const arithmeticMeasure: AFM.IMeasure = {
-    localIdentifier: 'arithmetic_measure_1',
+    localIdentifier: "arithmetic_measure_1",
     definition: {
         arithmeticMeasure: {
-            measureIdentifiers: ['m1', 'm2'],
-            operator: 'sum'
-        }
-    }
+            measureIdentifiers: ["m1", "m2"],
+            operator: "sum",
+        },
+    },
 };
 
 export const simpleMeasureWithAttributeFilters: AFM.IMeasure = {
-    localIdentifier: 'm1',
+    localIdentifier: "m1",
     definition: {
         measure: {
             item: {
-                uri: '/gdc/mock/measure'
+                uri: "/gdc/mock/measure",
             },
-            filters: [positiveAttributeFilter, negativeAttributeFilter]
-        }
-    }
+            filters: [positiveAttributeFilter, negativeAttributeFilter],
+        },
+    },
 };
 
 export const afmWithMetricDateFilter: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum,
-        metricSum2
-    ],
-    filters: [
-        absoluteDateFilter1
-    ]
+    measures: [metricSum, metricSum2],
+    filters: [absoluteDateFilter1],
 };
 
 export const afmWithoutMetricDateFilters: INormalizedAFM = {
@@ -219,116 +214,87 @@ export const afmWithoutMetricDateFilters: INormalizedAFM = {
     measures: [
         metricSum,
         {
-            localIdentifier: 'metric4_sum',
+            localIdentifier: "metric4_sum",
             definition: {
                 measure: {
                     item: {
-                        uri: '/gdc/md/measure/obj/4'
+                        uri: "/gdc/md/measure/obj/4",
                     },
                     filters: [],
-                    aggregation: 'sum'
-                }
-            }
-        }, {
-            localIdentifier: 'metric5_sum',
+                    aggregation: "sum",
+                },
+            },
+        },
+        {
+            localIdentifier: "metric5_sum",
             definition: {
                 measure: {
                     item: {
-                        uri: '/gdc/md/measure/obj/5'
+                        uri: "/gdc/md/measure/obj/5",
                     },
                     filters: [],
-                    aggregation: 'sum'
-                }
-            }
-        }],
-    filters: [
-        absoluteDateFilter1
-    ]
+                    aggregation: "sum",
+                },
+            },
+        },
+    ],
+    filters: [absoluteDateFilter1],
 };
 
 export const afmWithoutGlobalFilters: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum
-    ],
-    filters: []
+    measures: [metricSum],
+    filters: [],
 };
 
 export const afmWithAbsoluteGlobalDateFilter: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum
-    ],
-    filters: [
-        absoluteDateFilter1
-    ]
+    measures: [metricSum],
+    filters: [absoluteDateFilter1],
 };
 
 export const afmWithRelativeGlobalDateFilter: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum
-    ],
-    filters: [
-        relativeDateFilter
-    ]
+    measures: [metricSum],
+    filters: [relativeDateFilter],
 };
 
 export const afmWithAttributeGlobalDateFilter: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum
-    ],
-    filters: [
-        positiveAttributeFilter
-    ]
+    measures: [metricSum],
+    filters: [positiveAttributeFilter],
 };
 
 export const afmWithAttributeAndDateGlobalFilters: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum
-    ],
-    filters: [
-        positiveAttributeFilter,
-        relativeDateFilter,
-        absoluteDateFilter1
-    ]
+    measures: [metricSum],
+    filters: [positiveAttributeFilter, relativeDateFilter, absoluteDateFilter1],
 };
 
 export const afmWithPopMeasure: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum,
-        popMeasure
-    ],
-    filters: []
+    measures: [metricSum, popMeasure],
+    filters: [],
 };
 
 export const afmWithPreviousPeriodMeasure: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum,
-        previousPeriodMeasure
-    ],
-    filters: []
+    measures: [metricSum, previousPeriodMeasure],
+    filters: [],
 };
 
 export const afmWithArithmeticMeasure: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        metricSum,
-        arithmeticMeasure
-    ],
-    filters: []
+    measures: [metricSum, arithmeticMeasure],
+    filters: [],
 };
 
 export const afmWithAllMetricTypesSomeWithFilters: INormalizedAFM = {
@@ -341,27 +307,21 @@ export const afmWithAllMetricTypesSomeWithFilters: INormalizedAFM = {
         simpleMeasureWithAttributeFilters,
         popMeasure,
         previousPeriodMeasure,
-        arithmeticMeasure
+        arithmeticMeasure,
     ],
-    filters: [
-        absoluteDateFilter1
-    ]
+    filters: [absoluteDateFilter1],
 };
 
 export const afmWWithMeasuresWithoutFilters: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        simpleMeasure
-    ],
-    filters: []
+    measures: [simpleMeasure],
+    filters: [],
 };
 
 export const afmWWithMeasuresWithAttributeFilters: INormalizedAFM = {
     attributes: [],
     nativeTotals: [],
-    measures: [
-        simpleMeasureWithAttributeFilters
-    ],
-    filters: []
+    measures: [simpleMeasureWithAttributeFilters],
+    filters: [],
 };

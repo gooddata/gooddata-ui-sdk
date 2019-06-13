@@ -1,11 +1,9 @@
 // (C) 2007-2017 GoodData Corporation
-import { XhrModule, ApiResponseError, ApiResponse } from './xhr';
-import { ProjectModule } from './project';
+import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
+import { ProjectModule } from "./project";
 
 export class UserModule {
-    constructor(private xhr: XhrModule) {
-
-    }
+    constructor(private xhr: XhrModule) {}
 
     /**
      * Find out whether a user is logged in
@@ -15,19 +13,22 @@ export class UserModule {
      */
     public isLoggedIn(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            this.xhr.get('/gdc/account/token').then((r) => {
-                if (r.response.ok) {
-                    resolve(true);
-                }
+            this.xhr.get("/gdc/account/token").then(
+                r => {
+                    if (r.response.ok) {
+                        resolve(true);
+                    }
 
-                resolve(false);
-            }, (err: any) => {
-                if (err.response.status === 401) {
                     resolve(false);
-                } else {
-                    reject(err);
-                }
-            });
+                },
+                (err: any) => {
+                    if (err.response.status === 401) {
+                        resolve(false);
+                    } else {
+                        reject(err);
+                    }
+                },
+            );
         });
     }
 
@@ -41,19 +42,22 @@ export class UserModule {
      *                   rejects if user not logged in
      */
     public isLoggedInProject(projectId: string) {
-        return this.getCurrentProfile().then((profile) => {
+        return this.getCurrentProfile().then(profile => {
             return new Promise((resolve, reject) => {
                 const projectModule = new ProjectModule(this.xhr);
 
-                projectModule.getProjects(profile.links.self.split('/')[4]).then((projects) => {
-                    if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                }, (err: ApiResponseError) => {
-                    reject(err);
-                });
+                projectModule.getProjects(profile.links.self.split("/")[4]).then(
+                    projects => {
+                        if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    },
+                    (err: ApiResponseError) => {
+                        reject(err);
+                    },
+                );
             });
         });
     }
@@ -68,17 +72,19 @@ export class UserModule {
      * @param {String} password
      */
     public login(username: string, password: string) {
-        return this.xhr.post('/gdc/account/login', {
-            body: JSON.stringify({
-                postUserLogin: {
-                    login: username,
-                    password,
-                    remember: 1,
-                    captcha: '',
-                    verifyCaptcha: ''
-                }
+        return this.xhr
+            .post("/gdc/account/login", {
+                body: JSON.stringify({
+                    postUserLogin: {
+                        login: username,
+                        password,
+                        remember: 1,
+                        captcha: "",
+                        verifyCaptcha: "",
+                    },
+                }),
             })
-        }).then((r => r.getData()));
+            .then(r => r.getData());
     }
 
     /**
@@ -91,18 +97,15 @@ export class UserModule {
      * @param {String} targetUrl
      */
     public loginSso(encryptedClaims: string, ssoProvider: string, targetUrl: string) {
-        return this.xhr.post(
-            '/gdc/account/customerlogin',
-            {
-                data: {
-                    pgpLoginRequest: {
-                        targetUrl,
-                        ssoProvider,
-                        encryptedClaims
-                    }
-                }
-            }
-        );
+        return this.xhr.post("/gdc/account/customerlogin", {
+            data: {
+                pgpLoginRequest: {
+                    targetUrl,
+                    ssoProvider,
+                    encryptedClaims,
+                },
+            },
+        });
     }
 
     /**
@@ -110,21 +113,22 @@ export class UserModule {
      * @method logout
      */
     public logout(): Promise<ApiResponse | void> {
-        return this.isLoggedIn().then((loggedIn: boolean): Promise<ApiResponse | void> => {
-            if (loggedIn) {
-                return this.xhr
-                    .get('/gdc/app/account/bootstrap')
-                    .then((result: any) => {
+        return this.isLoggedIn().then(
+            (loggedIn: boolean): Promise<ApiResponse | void> => {
+                if (loggedIn) {
+                    return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
                         const data = result.getData();
                         const userUri = data.bootstrapResource.accountSetting.links.self;
                         const userId = userUri.match(/([^\/]+)\/?$/)[1];
 
                         return this.xhr.del(`/gdc/account/login/${userId}`);
                     });
-            }
+                }
 
-            return Promise.resolve();
-        }, (err: ApiResponseError) => Promise.reject(err));
+                return Promise.resolve();
+            },
+            (err: ApiResponseError) => Promise.reject(err),
+        );
     }
 
     /**
@@ -133,8 +137,7 @@ export class UserModule {
      * @return {Promise} Resolves with account setting object
      */
     public getCurrentProfile() {
-        return this.xhr.get('/gdc/account/profile/current')
-            .then(r => r.getData().accountSetting);
+        return this.xhr.get("/gdc/account/profile/current").then(r => r.getData().accountSetting);
     }
 
     /**
@@ -143,9 +146,10 @@ export class UserModule {
      * @param {String} profileId - User profile identifier
      * @param {Object} profileSetting
      */
-    public updateProfileSettings(profileId: string, profileSetting: any): Promise<ApiResponse> { // TODO
+    public updateProfileSettings(profileId: string, profileSetting: any): Promise<ApiResponse> {
+        // TODO
         return this.xhr.put(`/gdc/account/profile/${profileId}/settings`, {
-            body: profileSetting
+            body: profileSetting,
         });
     }
 
@@ -154,18 +158,17 @@ export class UserModule {
      * @method getAccountInfo
      */
     public getAccountInfo() {
-        return this.xhr.get('/gdc/app/account/bootstrap')
-            .then((result: any) => {
-                const { bootstrapResource } = result.getData();
-                return {
-                    login: bootstrapResource.accountSetting.login,
-                    loginMD5: bootstrapResource.current.loginMD5,
-                    firstName: bootstrapResource.accountSetting.firstName,
-                    lastName: bootstrapResource.accountSetting.lastName,
-                    organizationName: bootstrapResource.settings.organizationName,
-                    profileUri: bootstrapResource.accountSetting.links.self
-                };
-            });
+        return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
+            const { bootstrapResource } = result.getData();
+            return {
+                login: bootstrapResource.accountSetting.login,
+                loginMD5: bootstrapResource.current.loginMD5,
+                firstName: bootstrapResource.accountSetting.firstName,
+                lastName: bootstrapResource.accountSetting.lastName,
+                organizationName: bootstrapResource.settings.organizationName,
+                profileUri: bootstrapResource.accountSetting.links.self,
+            };
+        });
     }
 
     /**
@@ -173,8 +176,9 @@ export class UserModule {
      * @method getFeatureFlags
      */
     public getFeatureFlags() {
-        return this.xhr.get('/gdc/app/account/bootstrap')
-            .then(((r: any) => r.getData()))
+        return this.xhr
+            .get("/gdc/app/account/bootstrap")
+            .then((r: any) => r.getData())
             .then((result: any) => result.bootstrapResource.current.featureFlags);
     }
 }

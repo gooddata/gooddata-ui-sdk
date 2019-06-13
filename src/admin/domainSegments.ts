@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { omit } from 'lodash';
+import { omit } from "lodash";
 
 import {
     interpolate,
@@ -9,35 +9,40 @@ import {
     CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLONE,
     CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_RENAME,
     CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_SYNC,
-    DEPLOY_SEGMENT
-} from './routes';
-import { XhrModule, ApiResponse } from '../xhr';
+    DEPLOY_SEGMENT,
+} from "./routes";
+import { XhrModule, ApiResponse } from "../xhr";
 
 export const transformDomainSegment = (item: any) => {
-    const { contractId, dataProductId, segmentId, domainId }: any =
-        parse(item.domainSegment.links.self, CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT);
+    const { contractId, dataProductId, segmentId, domainId }: any = parse(
+        item.domainSegment.links.self,
+        CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT,
+    );
 
     return {
         contractId,
         dataProductId,
         segmentId,
         domainId,
-        ...item.domainSegment
+        ...item.domainSegment,
     };
 };
 
 export class DomainSegmentsModule {
-    constructor(private xhr: XhrModule) {
-
-    }
+    constructor(private xhr: XhrModule) {}
 
     public getDomainSegments(contractId: string, dataProductId: string, segmentId: string, query: any) {
-        return this.xhr.get(interpolate(
-            CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENTS,
-            { contractId, dataProductId, segmentId },
-            query
-        ))
-            .then((result: any) => ({ items: result.getData().domainSegments.items.map(transformDomainSegment) }));
+        return this.xhr
+            .get(
+                interpolate(
+                    CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENTS,
+                    { contractId, dataProductId, segmentId },
+                    query,
+                ),
+            )
+            .then((result: any) => ({
+                items: result.getData().domainSegments.items.map(transformDomainSegment),
+            }));
     }
 
     public getDomainSegment(
@@ -45,13 +50,16 @@ export class DomainSegmentsModule {
         dataProductId: string,
         segmentId: string,
         domainId: string,
-        query: any
+        query: any,
     ) {
-        return this.xhr.get(interpolate(
-            CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT,
-            { contractId, dataProductId, segmentId, domainId },
-            query
-        ))
+        return this.xhr
+            .get(
+                interpolate(
+                    CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT,
+                    { contractId, dataProductId, segmentId, domainId },
+                    query,
+                ),
+            )
             .then((result: any) => transformDomainSegment(result.getData()));
     }
 
@@ -61,21 +69,23 @@ export class DomainSegmentsModule {
         segmentId: string,
         domainId: string,
         newSegmentId: string,
-        newDomainId: string
+        newDomainId: string,
     ): Promise<ApiResponse> {
         return this.xhr.post(
-            interpolate(
-                CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLONE,
-                { contractId, dataProductId, segmentId, domainId }
-            ),
+            interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLONE, {
+                contractId,
+                dataProductId,
+                segmentId,
+                domainId,
+            }),
             {
                 body: JSON.stringify({
                     cloneSegmentRequest: {
                         clonedSegmentId: newSegmentId,
-                        domain: newDomainId
-                    }
-                })
-            }
+                        domain: newDomainId,
+                    },
+                }),
+            },
         );
     }
 
@@ -83,12 +93,16 @@ export class DomainSegmentsModule {
         contractId: string,
         dataProductId: string,
         segmentId: string,
-        domainId: string
+        domainId: string,
     ): Promise<ApiResponse> {
         return this.xhr.del(
-            interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT,
-                { contractId, dataProductId, segmentId, domainId }
-            ));
+            interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT, {
+                contractId,
+                dataProductId,
+                segmentId,
+                domainId,
+            }),
+        );
     }
 
     public renameDomainSegment(
@@ -96,20 +110,22 @@ export class DomainSegmentsModule {
         dataProductId: string,
         segmentId: string,
         domainId: string,
-        newSegmentId: string
+        newSegmentId: string,
     ): Promise<ApiResponse> {
         return this.xhr.post(
-            interpolate(
-                CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_RENAME,
-                { contractId, dataProductId, segmentId, domainId }
-            ),
+            interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_RENAME, {
+                contractId,
+                dataProductId,
+                segmentId,
+                domainId,
+            }),
             {
                 body: JSON.stringify({
                     domainSegmentRename: {
-                        id: newSegmentId
-                    }
-                })
-            }
+                        id: newSegmentId,
+                    },
+                }),
+            },
         );
     }
 
@@ -117,12 +133,16 @@ export class DomainSegmentsModule {
         contractId: string,
         dataProductId: string,
         segmentId: string,
-        domainId: string
+        domainId: string,
     ): Promise<ApiResponse> {
-        return this.xhr.post(interpolate(
-            CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_SYNC,
-            { contractId, dataProductId, segmentId, domainId }
-        ));
+        return this.xhr.post(
+            interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_SYNC, {
+                contractId,
+                dataProductId,
+                segmentId,
+                domainId,
+            }),
+        );
     }
 
     public deployDomainSegment(
@@ -131,26 +151,30 @@ export class DomainSegmentsModule {
         segmentId: string,
         domainId: string,
         targetDomainId: string,
-        synchronize: boolean
+        synchronize: boolean,
     ): Promise<ApiResponse> {
         return this.xhr.post(
             interpolate(
                 DEPLOY_SEGMENT,
                 { contractId, dataProductId, segmentId, domainId },
-                synchronize && { synchronize }
+                synchronize && { synchronize },
             ),
-            { body: JSON.stringify({ deploySegmentRequest: { domain: targetDomainId } }) }
+            { body: JSON.stringify({ deploySegmentRequest: { domain: targetDomainId } }) },
         );
     }
 
     public updateDomainSegment(domainSegment: any) {
-        return this.xhr.put(interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT, domainSegment), {
-            body: JSON.stringify({
-                domainSegment: omit(
-                    domainSegment, ['contractId', 'dataProductId', 'segmentId', 'domainId']
-                )
+        return this.xhr
+            .put(interpolate(CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT, domainSegment), {
+                body: JSON.stringify({
+                    domainSegment: omit(domainSegment, [
+                        "contractId",
+                        "dataProductId",
+                        "segmentId",
+                        "domainId",
+                    ]),
+                }),
             })
-        })
             .then((result: any) => result.json())
             .then((result: any) => transformDomainSegment(result));
     }

@@ -1,9 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { difference, map } from 'lodash';
+import { difference, map } from "lodash";
 
 const IDENTIFIER_REGEX = /{\S+}/g;
 
-export interface IMetric { // TODO
+export interface IMetric {
+    // TODO
     metricDefinition: {
         expression: string;
         identifier: string;
@@ -11,8 +12,9 @@ export interface IMetric { // TODO
 }
 
 function getDependencies({ metricDefinition }: IMetric) {
-    return (metricDefinition.expression.match(IDENTIFIER_REGEX) || [])
-        .map((s: string) => s.substring(1, s.length - 1));
+    return (metricDefinition.expression.match(IDENTIFIER_REGEX) || []).map((s: string) =>
+        s.substring(1, s.length - 1),
+    );
 }
 
 function getIdentifier({ metricDefinition }: IMetric) {
@@ -20,7 +22,7 @@ function getIdentifier({ metricDefinition }: IMetric) {
 }
 
 function resolvedDependencies(resolved: any[], { dependencies }: any) {
-    const identifiers = map(resolved, 'identifier');
+    const identifiers = map(resolved, "identifier");
 
     return difference(dependencies, identifiers).length === 0;
 }
@@ -46,7 +48,7 @@ function sort(unresolved: any[]) {
         scan(resolved, unresolved);
 
         if (unresolved.length === lastLength) {
-            throw new Error('Metric defintions cannot be sorted due to missing dependencies.');
+            throw new Error("Metric defintions cannot be sorted due to missing dependencies.");
         }
     }
 
@@ -57,8 +59,8 @@ export function sortDefinitions(definitions: any[]) {
     const indexed = definitions.map((definition: any) => ({
         definition,
         identifier: getIdentifier(definition),
-        dependencies: getDependencies(definition)
+        dependencies: getDependencies(definition),
     }));
 
-    return map(sort(indexed), 'definition');
+    return map(sort(indexed), "definition");
 }

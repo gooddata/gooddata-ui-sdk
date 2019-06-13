@@ -1,8 +1,8 @@
 // (C) 2007-2017 GoodData Corporation
-import { getIn, handlePolling, getAllPagesByOffsetLimit } from './util';
-import { ITimezone, IColor, IColorPalette, IFeatureFlags } from './interfaces';
-import { IStyleSettingsResponse, IFeatureFlagsResponse } from './apiResponsesInterfaces';
-import { XhrModule, ApiResponse } from './xhr';
+import { getIn, handlePolling, getAllPagesByOffsetLimit } from "./util";
+import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
+import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
+import { XhrModule, ApiResponse } from "./xhr";
 
 const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },
@@ -22,24 +22,24 @@ const DEFAULT_PALETTE = [
     { r: 0xff, g: 0xd2, b: 0x89 },
     { r: 0xf1, g: 0x84, b: 0x80 },
     { r: 0xbf, g: 0x90, b: 0xc6 },
-    { r: 0xbf, g: 0xbf, b: 0xbf }
+    { r: 0xbf, g: 0xbf, b: 0xbf },
 ];
 
-const isProjectCreated = (project: any) => { // TODO
+const isProjectCreated = (project: any) => {
+    // TODO
     const projectState = project.content.state;
 
-    return projectState === 'ENABLED' ||
-        projectState === 'DELETED';
+    return projectState === "ENABLED" || projectState === "DELETED";
 };
 
 export interface IProjectConfigSettingItem {
     settingItem: {
-        key: string,
+        key: string;
         links: {
-            self: string
-        },
-        source: string,
-        value: string
+            self: string;
+        };
+        source: string;
+        value: string;
     };
 }
 export interface IProjectConfigResponse {
@@ -50,10 +50,10 @@ export interface IProjectConfigResponse {
 
 // Parses string values to boolean, number and string
 export const parseSettingItemValue = (value: string): boolean | number | string => {
-    if (value === 'true') {
+    if (value === "true") {
         return true;
     }
-    if (value === 'false') {
+    if (value === "false") {
         return false;
     }
     const nr = Number(value);
@@ -70,9 +70,7 @@ export const parseSettingItemValue = (value: string): boolean | number | string 
  * @module project
  */
 export class ProjectModule {
-    constructor(private xhr: XhrModule) {
-
-    }
+    constructor(private xhr: XhrModule) {}
 
     /**
      * Get current project id
@@ -81,7 +79,8 @@ export class ProjectModule {
      * @return {String} current project identifier
      */
     public getCurrentProjectId() {
-        return this.xhr.get('/gdc/app/account/bootstrap')
+        return this.xhr
+            .get("/gdc/app/account/bootstrap")
             .then(r => r.getData())
             .then((result: any) => {
                 const currentProject = result.bootstrapResource.current.project;
@@ -90,7 +89,7 @@ export class ProjectModule {
                     return null;
                 }
 
-                return result.bootstrapResource.current.project.links.self.split('/').pop();
+                return result.bootstrapResource.current.project.links.self.split("/").pop();
             });
     }
 
@@ -102,8 +101,11 @@ export class ProjectModule {
      * @return {Array} An Array of projects
      */
     public getProjects(profileId: string) {
-        return getAllPagesByOffsetLimit(this.xhr, `/gdc/account/profile/${profileId}/projects`, 'projects')
-            .then((result: any) => result.map((p: any) => p.project));
+        return getAllPagesByOffsetLimit(
+            this.xhr,
+            `/gdc/account/profile/${profileId}/projects`,
+            "projects",
+        ).then((result: any) => result.map((p: any) => p.project));
     }
 
     /**
@@ -114,9 +116,10 @@ export class ProjectModule {
      * @return {Array} An array of objects containing datasets metadata
      */
     public getDatasets(projectId: string) {
-        return this.xhr.get(`/gdc/md/${projectId}/query/datasets`)
+        return this.xhr
+            .get(`/gdc/md/${projectId}/query/datasets`)
             .then(r => r.getData())
-            .then(getIn('query.entries'));
+            .then(getIn("query.entries"));
     }
 
     /**
@@ -129,23 +132,27 @@ export class ProjectModule {
      * color palette
      */
     public getColorPalette(projectId: string) {
-        return this.xhr.get(`/gdc/projects/${projectId}/styleSettings`)
+        return this.xhr
+            .get(`/gdc/projects/${projectId}/styleSettings`)
             .then(r => r.getData())
-            .then((result: any) => {
-                return result.styleSettings.chartPalette.map((c: any) => {
-                    return {
-                        r: c.fill.r,
-                        g: c.fill.g,
-                        b: c.fill.b
-                    };
-                });
-            }, (err) => {
-                if (err.status === 200) {
-                    return DEFAULT_PALETTE;
-                }
+            .then(
+                (result: any) => {
+                    return result.styleSettings.chartPalette.map((c: any) => {
+                        return {
+                            r: c.fill.r,
+                            g: c.fill.g,
+                            b: c.fill.b,
+                        };
+                    });
+                },
+                err => {
+                    if (err.status === 200) {
+                        return DEFAULT_PALETTE;
+                    }
 
-                throw new Error(err.statusText);
-            });
+                    throw new Error(err.statusText);
+                },
+            );
     }
 
     /**
@@ -158,7 +165,8 @@ export class ProjectModule {
      * color palette with color guid or undefined
      */
     public getColorPaletteWithGuids(projectId: string): Promise<IColorPalette | undefined> {
-        return this.xhr.get(`/gdc/projects/${projectId}/styleSettings`)
+        return this.xhr
+            .get(`/gdc/projects/${projectId}/styleSettings`)
             .then((apiResponse: ApiResponse) => {
                 return apiResponse.getData();
             })
@@ -185,9 +193,9 @@ export class ProjectModule {
                 styleSettings: {
                     chartPalette: colors.map((fill, idx: number) => {
                         return { fill, guid: `guid${idx}` };
-                    })
-                }
-            }
+                    }),
+                },
+            },
         });
     }
 
@@ -206,8 +214,9 @@ export class ProjectModule {
     public getTimezone(projectId: string): Promise<ITimezone> {
         const bootstrapUrl = `/gdc/app/account/bootstrap?projectId=${projectId}`;
 
-        return this.xhr.get(bootstrapUrl)
-            .then((r => r.getData()))
+        return this.xhr
+            .get(bootstrapUrl)
+            .then(r => r.getData())
             .then((result: any) => {
                 return result.bootstrapResource.current.timezone;
             });
@@ -216,12 +225,14 @@ export class ProjectModule {
     public setTimezone(projectId: string, timezone: ITimezone) {
         const timezoneServiceUrl = `/gdc/md/${projectId}/service/timezone`;
         const data = {
-            service: { timezone }
+            service: { timezone },
         };
 
-        return this.xhr.post(timezoneServiceUrl, {
-            body: data
-        }).then((r => r.getData()));
+        return this.xhr
+            .post(timezoneServiceUrl, {
+                body: data,
+            })
+            .then(r => r.getData());
     }
 
     /**
@@ -239,33 +250,41 @@ export class ProjectModule {
         const {
             summary,
             projectTemplate,
-            driver = 'Pg',
-            environment = 'TESTING',
-            guidedNavigation = 1
+            driver = "Pg",
+            environment = "TESTING",
+            guidedNavigation = 1,
         } = options;
 
-        return this.xhr.post('/gdc/projects', {
-            body: JSON.stringify({
-                project: {
-                    content: {
-                        guidedNavigation,
-                        driver,
-                        authorizationToken,
-                        environment
+        return this.xhr
+            .post("/gdc/projects", {
+                body: JSON.stringify({
+                    project: {
+                        content: {
+                            guidedNavigation,
+                            driver,
+                            authorizationToken,
+                            environment,
+                        },
+                        meta: {
+                            title,
+                            summary,
+                            projectTemplate,
+                        },
                     },
-                    meta: {
-                        title,
-                        summary,
-                        projectTemplate
-                    }
-                }
+                }),
             })
-        })
-            .then((r => r.getData()))
+            .then(r => r.getData())
             .then((project: any) =>
-                handlePolling(this.xhr.get.bind(this.xhr), project.uri, (response: any) => { // TODO project response
-                    return isProjectCreated(response.project);
-                }, options));
+                handlePolling(
+                    this.xhr.get.bind(this.xhr),
+                    project.uri,
+                    (response: any) => {
+                        // TODO project response
+                        return isProjectCreated(response.project);
+                    },
+                    options,
+                ),
+            );
     }
 
     /**
@@ -286,7 +305,8 @@ export class ProjectModule {
      * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
      */
     public getFeatureFlags(projectId: string): Promise<IFeatureFlags> {
-        return this.xhr.get(`/gdc/app/projects/${projectId}/featureFlags`)
+        return this.xhr
+            .get(`/gdc/app/projects/${projectId}/featureFlags`)
             .then((apiResponse: ApiResponse) => {
                 return apiResponse.getData();
             })
@@ -305,7 +325,8 @@ export class ProjectModule {
      * @return {IProjectConfigSettingItem[]} An array of project config setting items
      */
     public getConfig(projectId: string): Promise<IProjectConfigSettingItem[]> {
-        return this.xhr.get(`/gdc/app/projects/${projectId}/config`)
+        return this.xhr
+            .get(`/gdc/app/projects/${projectId}/config`)
             .then((apiResponse: ApiResponse) => {
                 const projectConfig = apiResponse.getData();
                 return projectConfig;
@@ -326,16 +347,17 @@ export class ProjectModule {
      * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
      */
     public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
-        return this.getConfig(projectId)
-            .then((settingItems: IProjectConfigSettingItem[]) => {
-                const filteredSettingItems = source
-                    ? settingItems.filter(settingItem => settingItem.settingItem.source === source)
-                    : settingItems;
-                const featureFlags: IFeatureFlags = {};
-                filteredSettingItems.forEach((settingItem) => {
-                    featureFlags[settingItem.settingItem.key] = parseSettingItemValue(settingItem.settingItem.value);
-                });
-                return featureFlags;
+        return this.getConfig(projectId).then((settingItems: IProjectConfigSettingItem[]) => {
+            const filteredSettingItems = source
+                ? settingItems.filter(settingItem => settingItem.settingItem.source === source)
+                : settingItems;
+            const featureFlags: IFeatureFlags = {};
+            filteredSettingItems.forEach(settingItem => {
+                featureFlags[settingItem.settingItem.key] = parseSettingItemValue(
+                    settingItem.settingItem.value,
+                );
             });
+            return featureFlags;
+        });
     }
 }

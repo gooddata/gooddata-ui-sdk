@@ -1,30 +1,29 @@
 // (C) 2007-2018 GoodData Corporation
-import { SDK } from '../../gooddata';
-import { AFM, Execution } from '@gooddata/typings';
-import { IAdapter } from '..';
-import { IDataSource } from '../interfaces/DataSource';
-import { DataSource } from '../dataSources/DataSource';
-import { version as pkgVersion } from '../../../package.json';
+import { SDK } from "../../gooddata";
+import { AFM, Execution } from "@gooddata/typings";
+import { IAdapter } from "..";
+import { IDataSource } from "../interfaces/DataSource";
+import { DataSource } from "../dataSources/DataSource";
+import { version as pkgVersion } from "../../../package.json";
 
 export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses> {
     private sdk: SDK;
 
     constructor(sdk: SDK, private projectId: string) {
         this.sdk = sdk.clone();
-        this.sdk.config.setJsPackage('@gooddata/data-layer', pkgVersion);
+        this.sdk.config.setJsPackage("@gooddata/data-layer", pkgVersion);
     }
 
     public createDataSource(
         afm: AFM.IAfm,
-        fingerprint?: string
+        fingerprint?: string,
     ): Promise<IDataSource<Execution.IExecutionResponses>> {
-
         const execFactory = (resultSpec: AFM.IResultSpec) => {
             const execution: AFM.IExecution = {
                 execution: {
                     afm,
-                    resultSpec
-                }
+                    resultSpec,
+                },
             };
             return this.sdk.execution.executeAfm(this.projectId, execution);
         };
@@ -33,8 +32,8 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
             const execution: AFM.IExecution = {
                 execution: {
                     afm,
-                    resultSpec
-                }
+                    resultSpec,
+                },
             };
             return this.sdk.execution.getExecutionResponse(this.projectId, execution);
         };
@@ -46,7 +45,7 @@ export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses
             afm,
             fingerprint,
             responseFactory,
-            resultFactory
+            resultFactory,
         );
 
         return Promise.resolve(dataSource);

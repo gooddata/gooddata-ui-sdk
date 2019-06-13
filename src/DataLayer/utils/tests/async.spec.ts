@@ -1,16 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import { createSubject } from '../async';
+import { createSubject } from "../async";
 
 function delay(timeout = 0) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         setTimeout(() => {
             resolve();
         }, timeout);
     });
 }
 
-describe('createSubject', () => {
-    it('should keep stream opened after error', (done) => {
+describe("createSubject", () => {
+    it("should keep stream opened after error", done => {
         const error = jest.fn();
         let successCalls = 0;
         const subject = createSubject(() => {
@@ -22,11 +22,11 @@ describe('createSubject', () => {
             }
         }, error);
 
-        subject.next(Promise.resolve('a'));
+        subject.next(Promise.resolve("a"));
         delay().then(() => {
-            subject.next(Promise.reject('b'));
+            subject.next(Promise.reject("b"));
             return delay().then(() => {
-                subject.next(Promise.resolve('c'));
+                subject.next(Promise.resolve("c"));
             });
         });
     });

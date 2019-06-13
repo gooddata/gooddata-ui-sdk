@@ -1,17 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import * as invariant from 'invariant';
-import * as qs from 'qs';
-import { get, range } from 'lodash';
-import { Execution, AFM } from '@gooddata/typings';
+import * as invariant from "invariant";
+import * as qs from "qs";
+import { get, range } from "lodash";
+import { Execution, AFM } from "@gooddata/typings";
 
-import { XhrModule } from '../xhr';
-import { convertExecutionToJson } from './execute-afm.convert';
+import { XhrModule } from "../xhr";
+import { convertExecutionToJson } from "./execute-afm.convert";
 
 export const DEFAULT_LIMIT = 1000;
 
 export class ExecuteAfmModule {
-    constructor(private xhr: XhrModule) {
-    }
+    constructor(private xhr: XhrModule) {}
 
     /**
      * Execute AFM and fetch all data results
@@ -23,16 +22,17 @@ export class ExecuteAfmModule {
      * @returns {Promise<Execution.IExecutionResponses>} Structure with `executionResponse` and `executionResult` -
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L113
      */
-    public executeAfm(projectId: string, execution: AFM.IExecution)
-        : Promise<Execution.IExecutionResponses> {
-        validateNumOfDimensions(get(execution, 'execution.resultSpec.dimensions').length);
-        return this.getExecutionResponse(projectId, execution)
-            .then((executionResponse: Execution.IExecutionResponse) => {
-                return this.getExecutionResult(executionResponse.links.executionResult)
-                    .then((executionResult: Execution.IExecutionResult | null) => {
+    public executeAfm(projectId: string, execution: AFM.IExecution): Promise<Execution.IExecutionResponses> {
+        validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
+        return this.getExecutionResponse(projectId, execution).then(
+            (executionResponse: Execution.IExecutionResponse) => {
+                return this.getExecutionResult(executionResponse.links.executionResult).then(
+                    (executionResult: Execution.IExecutionResult | null) => {
                         return { executionResponse, executionResult };
-                    });
-            });
+                    },
+                );
+            },
+        );
     }
 
     /**
@@ -45,10 +45,13 @@ export class ExecuteAfmModule {
      * @returns {Promise<Execution.IExecutionResponse>} Promise with `executionResponse`
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L69
      */
-    public getExecutionResponse(projectId: string, execution: AFM.IExecution)
-        : Promise<Execution.IExecutionResponse> {
-        validateNumOfDimensions(get(execution, 'execution.resultSpec.dimensions').length);
-        return this.xhr.post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
+    public getExecutionResponse(
+        projectId: string,
+        execution: AFM.IExecution,
+    ): Promise<Execution.IExecutionResponse> {
+        validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
+        return this.xhr
+            .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
             .then(apiResponse => apiResponse.getData())
             .then(unwrapExecutionResponse);
     }
@@ -65,8 +68,11 @@ export class ExecuteAfmModule {
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
-    public getPartialExecutionResult(executionResultUri: string, limit: number[], offset: number[])
-        : Promise<Execution.IExecutionResult | null> {
+    public getPartialExecutionResult(
+        executionResultUri: string,
+        limit: number[],
+        offset: number[],
+    ): Promise<Execution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -84,8 +90,7 @@ export class ExecuteAfmModule {
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
-    public getExecutionResult(executionResultUri: string)
-        : Promise<Execution.IExecutionResult | null> {
+    public getExecutionResult(executionResultUri: string): Promise<Execution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -99,24 +104,23 @@ export class ExecuteAfmModule {
     private getPage(
         executionResultUri: string,
         limit: number[],
-        offset: number[]
+        offset: number[],
     ): Promise<Execution.IExecutionResult | null> {
-        return this.fetchExecutionResult(executionResultUri, limit, offset)
-            .then((executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
-                return executionResultWrapper
-                    ? unwrapExecutionResult(executionResultWrapper)
-                    : null;
-            });
+        return this.fetchExecutionResult(executionResultUri, limit, offset).then(
+            (executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+                return executionResultWrapper ? unwrapExecutionResult(executionResultWrapper) : null;
+            },
+        );
     }
 
     private getAllPages(
         executionResultUri: string,
         limit: number[],
         offset: number[],
-        prevExecutionResult?: Execution.IExecutionResult
+        prevExecutionResult?: Execution.IExecutionResult,
     ): Promise<Execution.IExecutionResult | null> {
-        return this.fetchExecutionResult(executionResultUri, limit, offset)
-            .then((executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+        return this.fetchExecutionResult(executionResultUri, limit, offset).then(
+            (executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
                 if (!executionResultWrapper) {
                     return null;
                 }
@@ -134,18 +138,20 @@ export class ExecuteAfmModule {
                 return nextPageExists(nextOffset, total)
                     ? this.getAllPages(executionResultUri, nextLimit, nextOffset, newExecutionResult)
                     : newExecutionResult;
-            });
+            },
+        );
     }
 
-    private fetchExecutionResult(executionResultUri: string, limit: number[], offset: number[])
-        : Promise<Execution.IExecutionResultWrapper | null> {
+    private fetchExecutionResult(
+        executionResultUri: string,
+        limit: number[],
+        offset: number[],
+    ): Promise<Execution.IExecutionResultWrapper | null> {
         const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
 
-        return this.xhr.get(uri).then(
-            apiResponse => apiResponse.response.status === 204
-                ? null
-                : apiResponse.getData()
-        );
+        return this.xhr
+            .get(uri)
+            .then(apiResponse => (apiResponse.response.status === 204 ? null : apiResponse.getData()));
     }
 }
 
@@ -153,20 +159,22 @@ function getExecutionResultUriQueryPart(executionResultUri: string): string {
     return executionResultUri.split(/\?(.+)/)[1];
 }
 
-function unwrapExecutionResponse(executionResponseWrapper: Execution.IExecutionResponseWrapper)
-    : Execution.IExecutionResponse {
+function unwrapExecutionResponse(
+    executionResponseWrapper: Execution.IExecutionResponseWrapper,
+): Execution.IExecutionResponse {
     return executionResponseWrapper.executionResponse;
 }
 
-function unwrapExecutionResult(executionResultWrapper: Execution.IExecutionResultWrapper)
-    : Execution.IExecutionResult {
+function unwrapExecutionResult(
+    executionResultWrapper: Execution.IExecutionResultWrapper,
+): Execution.IExecutionResult {
     return executionResultWrapper.executionResult;
 }
 
 function validateNumOfDimensions(numOfDimensions: number): void {
     invariant(
         numOfDimensions === 1 || numOfDimensions === 2,
-        `${numOfDimensions} dimensions are not allowed. Only 1 or 2 dimensions are supported.`
+        `${numOfDimensions} dimensions are not allowed. Only 1 or 2 dimensions are supported.`,
     );
 }
 
@@ -174,8 +182,8 @@ export function replaceLimitAndOffsetInUri(oldUri: string, limit: number[], offs
     const [uriPart, queryPart] = oldUri.split(/\?(.+)/);
     const query = {
         ...qs.parse(queryPart),
-        limit: limit.join(','),
-        offset: offset.join(',')
+        limit: limit.join(","),
+        offset: offset.join(","),
     };
 
     return uriPart + qs.stringify(query, { addQueryPrefix: true });
@@ -207,9 +215,8 @@ export function getNextLimit(limit: number[], nextOffset: number[], total: numbe
     const numOfDimensions = total.length;
     validateNumOfDimensions(numOfDimensions);
 
-    const getSingleNextLimit = (limit: number, nextOffset: number, total: number): number => nextOffset + limit > total
-        ? total - nextOffset
-        : limit;
+    const getSingleNextLimit = (limit: number, nextOffset: number, total: number): number =>
+        nextOffset + limit > total ? total - nextOffset : limit;
 
     // prevent set up lower limit than possible for 2nd dimension in the beginning of the next rows
     if (
@@ -217,10 +224,7 @@ export function getNextLimit(limit: number[], nextOffset: number[], total: numbe
         nextOffset[1] === 0 && // beginning of the next rows
         limit[0] < total[1] // limit from 1st dimension should be used in 2nd dimension
     ) {
-        return [
-            getSingleNextLimit(limit[0], nextOffset[0], total[0]),
-            limit[0]
-        ];
+        return [getSingleNextLimit(limit[0], nextOffset[0], total[0]), limit[0]];
     }
 
     return range(numOfDimensions).map((i: number) => getSingleNextLimit(limit[i], nextOffset[i], total[i]));
@@ -234,7 +238,7 @@ export function nextPageExists(nextOffset: number[], total: number[]): boolean {
 function mergeHeaderItemsForEachAttribute(
     dimension: number,
     headerItems: Execution.IResultHeaderItem[][][] | undefined,
-    result: Execution.IExecutionResult
+    result: Execution.IExecutionResult,
 ) {
     if (headerItems && result.headerItems) {
         for (let attrIdx = 0; attrIdx < headerItems[dimension].length; attrIdx += 1) {
@@ -246,7 +250,7 @@ function mergeHeaderItemsForEachAttribute(
 // works only for one or two dimensions
 export function mergePage(
     prevExecutionResult: Execution.IExecutionResult,
-    executionResult: Execution.IExecutionResult
+    executionResult: Execution.IExecutionResult,
 ): Execution.IExecutionResult {
     const result = prevExecutionResult;
     const { headerItems, data, paging } = executionResult;
@@ -254,7 +258,7 @@ export function mergePage(
     const mergeHeaderItems = (dimension: number) => {
         // for 1 dimension we already have the headers from first page
         const otherDimension = dimension === 0 ? 1 : 0;
-        const isEdge = (paging.offset[otherDimension] === 0);
+        const isEdge = paging.offset[otherDimension] === 0;
         if (isEdge) {
             mergeHeaderItemsForEachAttribute(dimension, headerItems, result);
         }
@@ -262,13 +266,15 @@ export function mergePage(
 
     // merge data
     const rowOffset = paging.offset[0];
-    if (result.data[rowOffset]) { // appending columns to existing rows
+    if (result.data[rowOffset]) {
+        // appending columns to existing rows
         for (let i = 0; i < data.length; i += 1) {
             const columns = data[i] as Execution.DataValue[];
             const resultData = result.data[i + rowOffset] as Execution.DataValue[];
             resultData.push(...columns);
         }
-    } else { // appending new rows
+    } else {
+        // appending new rows
         const resultData = result.data as Execution.DataValue[];
         const currentPageData = data as Execution.DataValue[];
         resultData.push(...currentPageData);
@@ -284,14 +290,12 @@ export function mergePage(
 
     // update page count
     if (paging.offset.length === 1) {
-        result.paging.count = [
-            get(result, 'headerItems[0][0]', []).length
-        ];
+        result.paging.count = [get(result, "headerItems[0][0]", []).length];
     }
     if (paging.offset.length === 2) {
         result.paging.count = [
-            get(result, 'headerItems[0][0]', []).length,
-            get(result, 'headerItems[1][0]', []).length
+            get(result, "headerItems[0][0]", []).length,
+            get(result, "headerItems[1][0]", []).length,
         ];
     }
 
