@@ -74,6 +74,7 @@ export function dataSourceProvider<T>(
     InnerComponent: React.ComponentType<T & IDataSourceProviderInjectedProps>,
     generateDefaultDimensions: IGenerateDefaultDimensionsFunction,
     componentName: string,
+    exportTitle?: string,
 ): React.ComponentClass<IDataSourceProviderProps> {
     return class WrappedComponent extends React.Component<
         IDataSourceProviderProps,
@@ -179,7 +180,7 @@ export function dataSourceProvider<T>(
             return (
                 <InnerComponent
                     {...props}
-                    exportTitle={componentName}
+                    exportTitle={exportTitle || componentName}
                     dataSource={dataSource}
                     updateTotals={this.updateTotals}
                     resultSpec={resultSpec}

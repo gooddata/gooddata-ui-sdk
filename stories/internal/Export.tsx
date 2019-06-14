@@ -6,12 +6,12 @@ import { AFM } from "@gooddata/typings";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 
-import { BarChart, PivotTable, Table } from "../../src";
+import { BarChart, Headline, PivotTable, Table } from "../../src";
 import { Visualization } from "../../src/components/uri/Visualization";
 import { IExportFunction, OnExportReady } from "../../src/interfaces/Events";
 
 import { onErrorHandler } from "../mocks";
-import { ATTRIBUTE_1, MEASURE_1, MEASURE_2 } from "../data/componentProps";
+import { ATTRIBUTE_1, MEASURE_1, MEASURE_1_WITH_ALIAS, MEASURE_2 } from "../data/componentProps";
 
 const WRAPPER_STYLE = { width: 800, height: 400 };
 const INNER_STYLE = { width: 800, height: 370 };
@@ -224,6 +224,23 @@ storiesOf("Internal/Export", module)
                         onExportReady={onExportReady}
                         onError={onErrorHandler}
                         locale="en-US"
+                        LoadingComponent={null}
+                        ErrorComponent={null}
+                    />
+                )}
+            </WrapperComponent>
+        </div>
+    ))
+    .add("export headline data", () => (
+        <div style={WRAPPER_STYLE}>
+            <WrapperComponent>
+                {(onExportReady: OnExportReady) => (
+                    <Headline
+                        projectId="storybook"
+                        primaryMeasure={MEASURE_1_WITH_ALIAS}
+                        secondaryMeasure={MEASURE_2}
+                        filters={defaultFilters}
+                        onExportReady={onExportReady}
                         LoadingComponent={null}
                         ErrorComponent={null}
                     />
