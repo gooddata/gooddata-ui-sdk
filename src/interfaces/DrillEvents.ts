@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { AFM } from "@gooddata/typings";
 import {
     ChartElementType,
@@ -68,6 +68,7 @@ export interface IDrillEventContextHeadline {
 export interface IDrillEventContextPoint {
     type: ChartType;
     element: ChartElementType;
+    elementChartType?: ChartType;
     x?: number;
     y?: number;
     z?: number;
@@ -80,6 +81,7 @@ export interface IDrillPoint {
     x: number;
     y: number;
     intersection: IDrillEventIntersectionElement[];
+    type?: ChartType;
 }
 
 // Drill context for chart element group (multiple series + click on axis value)

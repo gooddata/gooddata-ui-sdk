@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import debounce = require("lodash/debounce");
 import * as CustomEvent from "custom-event";
@@ -23,7 +23,8 @@ import {
     IDrillEventContext,
 } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../../interfaces/Events";
-import { isComboChart, isHeatmap, isTreemap } from "./common";
+import { isHeatmap, isTreemap } from "./common";
+import { getVisualizationType } from "../../../helpers/visualizationType";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {
@@ -66,12 +67,17 @@ function composeDrillContextGroup(
     chartType: ChartType,
 ): IDrillEventContextGroup {
     const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
+        const seriesType: ChartType = get(point, "series.type");
+        const customProps: Partial<IDrillPoint> = seriesType ? { type: seriesType } : {};
+
         return {
             x: point.x,
             y: point.y,
             intersection: point.drillIntersection,
+            ...customProps,
         };
     });
+
     return {
         type: chartType,
         element: "label",
@@ -96,13 +102,22 @@ function composeDrillContextPoint(
               x: point.x,
               y: point.y,
           };
+
+    const elementChartType: ChartType = get(point, "series.type");
+    const customProp: Partial<IDrillEventContextPoint> = elementChartType
+        ? {
+              elementChartType,
+          }
+        : {};
+
     return {
         type: chartType,
-        element: getClickableElementNameByChartType(chartType),
+        element: getClickableElementNameByChartType(elementChartType || chartType),
         intersection: point.drillIntersection,
         ...xyProp,
         ...zProp,
         ...valueProp,
+        ...customProp,
     };
 }
 
@@ -114,18 +129,15 @@ const chartClickDebounced = debounce(
         chartType: ChartType,
     ) => {
         const { afm, onFiredDrillEvent } = drillConfig;
-        let usedChartType = chartType;
+        const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
 
         if (isGroupHighchartsDrillEvent(event)) {
             const points = event.points as IHighchartsPointObject[];
-            drillContext = composeDrillContextGroup(points, usedChartType);
+            drillContext = composeDrillContextGroup(points, type);
         } else {
             const point: IHighchartsPointObject = event.point as IHighchartsPointObject;
-            if (isComboChart(chartType)) {
-                usedChartType = get(event, ["point", "series", "options", "type"], chartType);
-            }
-            drillContext = composeDrillContextPoint(point, usedChartType);
+            drillContext = composeDrillContextPoint(point, type);
         }
 
         const data: IDrillEvent = {
