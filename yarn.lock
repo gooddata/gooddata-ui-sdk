@@ -1145,10 +1145,10 @@
     rxjs "^5.5.6"
     uuid "3.2.1"
 
-"@gooddata/goodstrap@60.7.0":
-  version "60.7.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.7.0.tgz#bd4c61cec9165a318e11cc6437182b5fdc0ed2c2"
-  integrity sha512-/cS4tqMQ7vHgNdYJ4yiBC51vo4Z+HA9aSZIsvnP6pwvou2bT0xCKj9f7qxtFWB9T0UGXCVo5sLtGWXRImYIGKQ==
+"@gooddata/goodstrap@60.8.0":
+  version "60.8.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.8.0.tgz#ced710ed71fedb26eb8ee2c46a858753360b38f6"
+  integrity sha512-huT3G+LY0l9ZvNk1tVzO5QhnFHGfvsJUSSxQMMTjyH/42dOcjgAWEI6/hk1uF01sGobM50Q1w0v4tzUePR4ROw==
   dependencies:
     "@gooddata/js-utils" "^3.4.0"
     classnames "^2.2.6"
@@ -1164,7 +1164,7 @@
     moment-timezone "^0.5.23"
     prop-types "^15.6.0"
     querystringify "^2.1.0"
-    react-day-picker "^7.0.7"
+    react-day-picker "7.1.10"
     react-document-title "^2.0.3"
     react-intl "^2.4.0"
     react-native-listener "^1.0.2"
@@ -12092,12 +12092,12 @@ react-datepicker@1.1.0:
     react-onclickoutside "^6.7.1"
     react-popper "^0.7.4"
 
-react-day-picker@^7.0.7:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.3.0.tgz#59b6d4e19d274650c79dcf49fbcce2637313467d"
-  integrity sha512-t2kz0Zy4P5U4qwU5YhsBq2QGmypP8L/u+89TSnuD0h4dYKSEDQArFPWfin9gv8erV1ciR1Wzr485TMaYnI7FTw==
+react-day-picker@7.1.10:
+  version "7.1.10"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.1.10.tgz#c763b1acb141ce960e25654b7033c2207f0fc1c3"
+  integrity sha512-UoI3ktYU8oN0UTxX5ZbG02TZePHh4znUGT6/h4g+tLNM1O4GGCiafqyFEIp22HYb1sCPQ4UMyw6QFcxu+lFDVQ==
   dependencies:
-    prop-types "^15.6.2"
+    prop-types "^15.6.1"
 
 react-dev-utils@^7.0.0, react-dev-utils@^7.0.1:
   version "7.0.5"
