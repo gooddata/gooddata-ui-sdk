@@ -471,4 +471,42 @@ storiesOf("Core components/PivotTable", module)
                 />
             </div>,
         );
+    })
+    .add("grand total and subtotal - two measures, two row attributes", () => {
+        const measures = [
+            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1144").localIdentifier("m1"),
+            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1145").localIdentifier("m2"),
+        ];
+
+        const attributes = [
+            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1024").localIdentifier("a1"),
+            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1027").localIdentifier("a2"),
+        ];
+
+        const totals: VisualizationInput.ITotal[] = [
+            {
+                measureIdentifier: "m1",
+                type: "sum",
+                attributeIdentifier: "a1",
+            },
+            {
+                measureIdentifier: "m2",
+                type: "sum",
+                attributeIdentifier: "a2",
+            },
+        ];
+
+        return screenshotWrap(
+            <div style={{ ...wrapperStyle, height: 228 }} className="s-table">
+                <PivotTable
+                    projectId="storybook"
+                    measures={measures}
+                    rows={attributes}
+                    totals={totals}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        );
     });
