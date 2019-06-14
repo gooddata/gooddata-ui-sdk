@@ -4,7 +4,6 @@ import get = require("lodash/get");
 import { PluggableColumnChart } from "../PluggableColumnChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
-import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 
 describe("PluggableColumnChart", () => {
@@ -125,35 +124,6 @@ describe("PluggableColumnChart", () => {
             const axis = get(extendedReferencePoint, "uiConfig.axis");
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);
-        });
-
-        it("should update supported properties list base on axis type", async () => {
-            const mockProps = {
-                ...defaultProps,
-                pushData: jest.fn(),
-            };
-            const chart = createComponent(mockProps);
-
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
-            );
-            expect(get(chart, "supportedPropertiesList")).toEqual([
-                ...COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY],
-            ]);
-
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.measuresOnSecondaryAxisAndAttributeReferencePoint,
-            );
-            expect(get(chart, "supportedPropertiesList")).toEqual([
-                ...COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
-            ]);
-
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-            );
-            expect(get(chart, "supportedPropertiesList")).toEqual([
-                ...COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
-            ]);
         });
     });
 });

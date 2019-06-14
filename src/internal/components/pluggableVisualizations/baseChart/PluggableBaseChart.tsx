@@ -232,10 +232,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return stacks;
     }
 
-    protected isOptionalStackingEnabled() {
-        return !!this.featureFlags.enableExtendedStacking;
-    }
-
     protected renderVisualization(
         options: IVisProps,
         visualizationProperties: IVisualizationProperties,

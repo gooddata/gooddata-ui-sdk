@@ -692,7 +692,8 @@ export const oneMetricAndManyCategoriesAreaUiConfig: IUiConfig = {
         },
         view: {
             ...viewBase,
-            title: "View by",
+            allowsReordering: true,
+            itemsLimit: MAX_VIEW_COUNT,
         },
         stack: {
             ...stackBase,
@@ -705,7 +706,11 @@ export const oneMetricAndManyCategoriesAreaUiConfig: IUiConfig = {
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
     exportConfig: enabledExportConfig,
-    openAsReport: disabledOpenAsReportConfig,
+    openAsReport: enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: true,
+    },
 };
 
 export const oneMetricManyCategoriesAreaUiConfig: IUiConfig = {
@@ -992,7 +997,8 @@ export const oneStackAndNoCategoriesAreaUiConfig: IUiConfig = {
         },
         view: {
             ...viewBase,
-            title: "View by",
+            allowsReordering: true,
+            itemsLimit: MAX_VIEW_COUNT,
         },
         stack: {
             ...stackBase,
@@ -1005,7 +1011,11 @@ export const oneStackAndNoCategoriesAreaUiConfig: IUiConfig = {
     recommendations: {},
     supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
     exportConfig: enabledExportConfig,
-    openAsReport: disabledOpenAsReportConfig,
+    openAsReport: enabledOpenAsReportConfig,
+    optionalStacking: {
+        supported: true,
+        stackMeasures: true,
+    },
 };
 
 export const simpleStackedTableUiConfig: IUiConfig = {

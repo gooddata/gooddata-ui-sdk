@@ -47,117 +47,6 @@ describe("PluggableAreaChart", () => {
         document.clear();
     });
 
-    it("should reuse one measure, only one category and one category as stack", async () => {
-        const areaChart = createComponent();
-
-        const expectedBuckets: IBucket[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "stack",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[1].items.slice(
-                    1,
-                    2,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.filters.items.slice(0, 2),
-        };
-
-        const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
-        );
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricAndManyCategoriesAreaUiConfig,
-            properties: {},
-        });
-    });
-
-    it("should reuse all measures, only one category and no stacks", async () => {
-        const areaChart = createComponent();
-
-        const expectedBuckets: IBucket[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "stack",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
-        const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-        );
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.multipleMetricsAndCategoriesAreaUiConfig,
-            properties: {},
-        });
-    });
-
-    it("should return reference point with Date in categories even it was as second item", async () => {
-        const areaChart = createComponent();
-        const expectedBuckets: IBucket[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.dateAsSecondCategoryReferencePointWithoutStack.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.dateAsSecondCategoryReferencePointWithoutStack.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "stack",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
-        const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
-            referencePointMocks.dateAsSecondCategoryReferencePointWithoutStack,
-        );
-
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.dateAsSecondCategoryAreaUiConfig,
-            properties: {},
-        });
-    });
-
     it("should return reference point when no categories and only stacks", async () => {
         const areaChart = createComponent();
 
@@ -255,11 +144,6 @@ describe("PluggableAreaChart", () => {
     });
 
     describe("optional stacking", () => {
-        const props = {
-            ...defaultProps,
-            featureFlags: { enableExtendedStacking: true },
-        };
-
         const options: IVisProps = {
             dataSource: testMocks.dummyDataSource,
             resultSpec: testMocks.dummyBaseChartResultSpec,
@@ -293,7 +177,7 @@ describe("PluggableAreaChart", () => {
         it("should modify stack by default of area by config stackMeasures properties", async () => {
             const renderObject = require("react-dom");
             const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
 
             verifyStackMeasuresConfig(areaChart, null, spyOnRender);
             verifyStackMeasuresConfig(areaChart, true, spyOnRender);
@@ -304,7 +188,7 @@ describe("PluggableAreaChart", () => {
         it("should modify stackMeasures and stackMeasuresToPercent properties from true to false", async () => {
             const renderObject = require("react-dom");
             const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
 
             const visualizationProperties = {
                 properties: {
@@ -326,7 +210,7 @@ describe("PluggableAreaChart", () => {
         it("should reset custom controls properties", async () => {
             const renderObject = require("react-dom");
             const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
 
             const visualizationProperties = {
                 properties: {
@@ -350,7 +234,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should reuse one measure, only one category and one category as stack", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint;
 
             const expectedBuckets: IBucket[] = [
@@ -382,7 +266,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should reuse one measure, two categories and no category as stack", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesReferencePoint;
 
             const expectedBuckets: IBucket[] = [
@@ -414,7 +298,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should reuse all measures, only one category and no stacks", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
 
             const expectedBuckets: IBucket[] = [
@@ -446,7 +330,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should return reference point with Date in categories even it was as third item", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAsThirdCategoryReferencePointWithoutStack;
             const expectedBuckets: IBucket[] = [
                 {
@@ -481,7 +365,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("stackMeasures should be selected when select stackMeasuresToPercent", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.stackMeasuresToPercentReferencePoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
@@ -492,7 +376,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should keep date item as second view by item", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAsSecondViewByItemReferencePoint;
             const expectedBuckets: IBucket[] = [
                 {
@@ -514,7 +398,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should move date from stack by bucket to view by bucket", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAttributeOnStackBucketReferencePoint;
             const expectedBuckets: IBucket[] = [
                 {
@@ -536,7 +420,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should remove date from stack by bucket", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
             const expectedBuckets: IBucket[] = [
                 {
@@ -558,7 +442,7 @@ describe("PluggableAreaChart", () => {
         });
 
         it("should not move attribute from view by to stack by", async () => {
-            const areaChart = createComponent(props);
+            const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.twoMeasuresAndDateAsSecondViewByItemReferencePoint;
             const expectedBuckets: IBucket[] = [
                 {

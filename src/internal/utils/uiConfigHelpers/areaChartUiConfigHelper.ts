@@ -18,11 +18,6 @@ import * as areaMeasuresIcon from "../../assets/area/bucket-title-measures.svg";
 import * as areaViewIcon from "../../assets/area/bucket-title-view.svg";
 import * as areaStackIcon from "../../assets/area/bucket-title-stack.svg";
 
-const DEFAULT_WARNING = {
-    [BucketNames.MEASURES]: "dashboard.bucket.metric_stack_by_warning",
-    [BucketNames.STACK]: "dashboard.bucket.category_stack_by_warning",
-};
-
 function getWarningMessageIdForMeasuresBucket(categoriesCount: number) {
     return categoriesCount > 1
         ? "dashboard.bucket.metric_view_by_warning"
@@ -71,7 +66,6 @@ export function setAreaChartUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: InjectedIntl,
     visualizationType: string,
-    isOptionalStackingEnabled = false,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
     const buckets: IBucket[] = get(referencePointConfigured, BUCKETS, []);
@@ -79,16 +73,13 @@ export function setAreaChartUiConfig(
     const measuresCount = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
     const isStackEmpty = hasNoStacks(buckets);
     const canAddMeasuresItems = !measuresCount || (categoriesCount <= 1 && isStackEmpty);
-    const canAddViewItems =
-        !isOptionalStackingEnabled || !categoriesCount || (measuresCount <= 1 && isStackEmpty);
+    const canAddViewItems = !categoriesCount || (measuresCount <= 1 && isStackEmpty);
     const canAddStackItems = categoriesCount <= 1 && measuresCount <= 1;
-    const messageConfig = isOptionalStackingEnabled
-        ? {
-              [BucketNames.MEASURES]: getWarningMessageIdForMeasuresBucket(categoriesCount),
-              [BucketNames.VIEW]: getWarningMessageIdForViewByBucket(measuresCount),
-              [BucketNames.STACK]: getWarningMessageIdForStackByBucket(categoriesCount),
-          }
-        : DEFAULT_WARNING;
+    const messageConfig = {
+        [BucketNames.MEASURES]: getWarningMessageIdForMeasuresBucket(categoriesCount),
+        [BucketNames.VIEW]: getWarningMessageIdForViewByBucket(measuresCount),
+        [BucketNames.STACK]: getWarningMessageIdForStackByBucket(categoriesCount),
+    };
 
     set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
     set(
