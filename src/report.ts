@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, VisualizationObject } from '@gooddata/typings';
-import compact = require('lodash/compact');
-import { convertVisualizationObjectFilter } from './DataLayer/converters/FilterConverter';
-import { IExportConfig, IExportResponse } from './interfaces';
-import { handleHeadPolling, IPollingOptions } from './util';
-import { ApiResponseError, XhrModule, ApiResponse } from './xhr';
+import { AFM, VisualizationObject } from "@gooddata/typings";
+import compact = require("lodash/compact");
+import { convertVisualizationObjectFilter } from "./DataLayer/converters/FilterConverter";
+import { IExportConfig, IExportResponse } from "./interfaces";
+import { handleHeadPolling, IPollingOptions } from "./util";
+import { ApiResponseError, XhrModule, ApiResponse } from "./xhr";
 
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
 
@@ -18,8 +18,8 @@ interface IExportResultPayload {
 }
 
 // This code is returned from server, used for all languages
-const ERROR_RESTRICTED_CODE = 'Export to required format is not allowed for data flagged as restricted.';
-const ERROR_RESTRICTED_MESSAGE = 'You cannot export this insight because it contains restricted data.';
+const ERROR_RESTRICTED_CODE = "Export to required format is not allowed for data flagged as restricted.";
+const ERROR_RESTRICTED_MESSAGE = "You cannot export this insight because it contains restricted data.";
 
 /**
  * Functions for working with reports
@@ -48,8 +48,8 @@ export class ReportModule {
         projectId: string,
         executionResult: string,
         exportConfig: IExportConfig = {},
-        pollingOptions: IPollingOptions = {}): Promise<IExportResponse> {
-
+        pollingOptions: IPollingOptions = {},
+    ): Promise<IExportResponse> {
         const showFilters: AFM.CompatibilityFilter[] = exportConfig.showFilters
             ? compact(exportConfig.showFilters.map(this.convertFilter))
             : [];
@@ -59,15 +59,17 @@ export class ReportModule {
                 executionResult,
                 exportConfig: {
                     ...exportConfig,
-                    showFilters
-                }
-            }
+                    showFilters,
+                },
+            },
         };
 
-        return this.xhr.post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
+        return this.xhr
+            .post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
             .then((response: ApiResponse) => response.getData())
             .then((data: IExportResponse) =>
-                handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, this.isDataExported, pollingOptions))
+                handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, this.isDataExported, pollingOptions),
+            )
             .catch(this.handleExportResultError);
     }
 
@@ -80,7 +82,7 @@ export class ReportModule {
             return Promise.reject(new Error(ERROR_RESTRICTED_MESSAGE));
         }
         return Promise.reject(error);
-    }
+    };
 
     private isDataExported(responseHeaders: Response): boolean {
         const taskState = responseHeaders.status;

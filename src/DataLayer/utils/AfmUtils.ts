@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import flatMap = require('lodash/flatMap');
-import compact = require('lodash/compact');
-import { AFM } from '@gooddata/typings';
+import flatMap = require("lodash/flatMap");
+import compact = require("lodash/compact");
+import { AFM } from "@gooddata/typings";
 
-export const ALL_TIME_GRANULARITY = 'ALL_TIME_GRANULARITY';
+export const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 export interface INormalizedAFM {
     attributes: AFM.IAttribute[];
@@ -68,7 +68,7 @@ export function normalizeAfm(afm: AFM.IAfm): INormalizedAFM {
         attributes: afm.attributes || [],
         measures: afm.measures || [],
         filters: afm.filters || [],
-        nativeTotals: afm.nativeTotals || []
+        nativeTotals: afm.nativeTotals || [],
     };
 }
 
@@ -148,7 +148,7 @@ export function isDateFilter(filter: AFM.CompatibilityFilter): filter is AFM.Dat
  * @returns {boolean}
  */
 export function hasMetricDateFilters(normalizedAfm: INormalizedAFM): boolean {
-    return normalizedAfm.measures.some((measure) => {
+    return normalizedAfm.measures.some(measure => {
         if (isSimpleMeasure(measure)) {
             const filters = unwrapSimpleMeasure(measure).filters;
             return !!(filters && filters.some(AFM.isDateFilter));
@@ -238,7 +238,7 @@ export function getDateFilterDateDataSet(filter: AFM.DateFilterItem): AFM.ObjQua
     if (AFM.isAbsoluteDateFilter(filter)) {
         return filter.absoluteDateFilter.dataSet;
     }
-    throw new Error('Unsupported type of date filter');
+    throw new Error("Unsupported type of date filter");
 }
 
 /**
@@ -281,15 +281,16 @@ function isDateFilterAllTime(dateFilter: AFM.DateFilterItem): boolean {
 export function appendFilters(
     afm: AFM.IAfm,
     attributeFilters: AFM.AttributeFilterItem[],
-    dateFilter?: AFM.DateFilterItem
+    dateFilter?: AFM.DateFilterItem,
 ): AFM.IAfm {
-    const dateFilters: AFM.DateFilterItem[] = (dateFilter && !isDateFilterAllTime(dateFilter)) ? [dateFilter] : [];
+    const dateFilters: AFM.DateFilterItem[] =
+        dateFilter && !isDateFilterAllTime(dateFilter) ? [dateFilter] : [];
     const afmDateFilter = afm.filters ? afm.filters.filter(AFM.isDateFilter)[0] : null;
 
     // all-time selected, need to delete date filter from filters
     let afmFilters = afm.filters || [];
     if (dateFilter && isDateFilterAllTime(dateFilter)) {
-        afmFilters = afmFilters.filter((filter) => {
+        afmFilters = afmFilters.filter(filter => {
             if (AFM.isDateFilter(filter)) {
                 return !dateFiltersDataSetsMatch(filter, dateFilter);
             }
@@ -298,24 +299,20 @@ export function appendFilters(
     }
 
     if (
-        (afmDateFilter && dateFilter && !dateFiltersDataSetsMatch(afmDateFilter, dateFilter))
-        || (afmDateFilter && !dateFilter)
+        (afmDateFilter && dateFilter && !dateFiltersDataSetsMatch(afmDateFilter, dateFilter)) ||
+        (afmDateFilter && !dateFilter)
     ) {
         dateFilters.push(afmDateFilter);
     }
 
     const afmAttributeFilters = afmFilters.filter(filter => !AFM.isDateFilter(filter));
 
-    const filters = compact([
-        ...afmAttributeFilters,
-        ...attributeFilters,
-        ...dateFilters
-    ]);
+    const filters = compact([...afmAttributeFilters, ...attributeFilters, ...dateFilters]);
 
-    if (filters.length || afm.filters && afm.filters.length) {
+    if (filters.length || (afm.filters && afm.filters.length)) {
         return {
             ...afm,
-            filters
+            filters,
         };
     }
 

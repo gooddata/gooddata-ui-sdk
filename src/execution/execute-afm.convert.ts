@@ -1,31 +1,35 @@
 // (C) 2007-2019 GoodData Corporation
 
-import cloneDeep = require('lodash/cloneDeep');
-import { AFM, ExecuteAFM } from '@gooddata/typings';
+import cloneDeep = require("lodash/cloneDeep");
+import { AFM, ExecuteAFM } from "@gooddata/typings";
 
 function convertElementsArray(arr: string[], isText?: boolean): ExecuteAFM.AttributeElements {
     return isText ? { values: arr } : { uris: arr };
 }
 
-function convertPositiveAttributeFilter(filter: AFM.IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
+function convertPositiveAttributeFilter(
+    filter: AFM.IPositiveAttributeFilter,
+): ExecuteAFM.IPositiveAttributeFilter {
     const { positiveAttributeFilter: oldFilter } = filter;
 
     return {
         positiveAttributeFilter: {
             displayForm: oldFilter.displayForm,
-            in: convertElementsArray(oldFilter.in, oldFilter.textFilter)
-        }
+            in: convertElementsArray(oldFilter.in, oldFilter.textFilter),
+        },
     };
 }
 
-function convertNegativeAttributeFilter(filter: AFM.INegativeAttributeFilter): ExecuteAFM.INegativeAttributeFilter {
+function convertNegativeAttributeFilter(
+    filter: AFM.INegativeAttributeFilter,
+): ExecuteAFM.INegativeAttributeFilter {
     const { negativeAttributeFilter: oldFilter } = filter;
 
     return {
         negativeAttributeFilter: {
             displayForm: oldFilter.displayForm,
-            notIn: convertElementsArray(oldFilter.notIn, oldFilter.textFilter)
-        }
+            notIn: convertElementsArray(oldFilter.notIn, oldFilter.textFilter),
+        },
     };
 }
 
@@ -68,9 +72,9 @@ function convertMeasure(measure: AFM.IMeasure): ExecuteAFM.IMeasure {
             definition: {
                 measure: {
                     ...simpleMeasure,
-                    ...filtersProp
-                }
-            }
+                    ...filtersProp,
+                },
+            },
         };
     }
 
@@ -95,7 +99,7 @@ export function convertAfm(afm?: AFM.IAfm): ExecuteAFM.IAfm {
     const executeAFM: ExecuteAFM.IAfm = {
         ...afm,
         measures: convertMeasures(afm.measures),
-        filters: convertFilters(afm.filters)
+        filters: convertFilters(afm.filters),
     };
 
     return cloneDeep(executeAFM);
@@ -105,8 +109,8 @@ function convertExecution(execution: AFM.IExecution): ExecuteAFM.IExecution {
     return {
         execution: {
             afm: convertAfm(execution.execution.afm),
-            resultSpec: execution.execution.resultSpec
-        }
+            resultSpec: execution.execution.resultSpec,
+        },
     };
 }
 

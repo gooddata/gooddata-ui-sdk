@@ -1,24 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
-import compact = require('lodash/compact');
-import get = require('lodash/get');
-import { AFM, VisualizationObject } from '@gooddata/typings';
+import compact = require("lodash/compact");
+import get = require("lodash/get");
+import { AFM, VisualizationObject } from "@gooddata/typings";
 import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
 import IMeasure = VisualizationObject.IMeasure;
 import IMeasureDefinition = VisualizationObject.IMeasureDefinition;
 import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
 import IPoPMeasureDefinition = VisualizationObject.IPoPMeasureDefinition;
 import IPreviousPeriodMeasureDefinition = VisualizationObject.IPreviousPeriodMeasureDefinition;
-import { convertVisualizationObjectFilter } from './FilterConverter';
+import { convertVisualizationObjectFilter } from "./FilterConverter";
 
 const MeasureConverter = {
     convertMeasure,
-    getFormat
+    getFormat,
 };
 
 export default MeasureConverter;
 
 function convertMeasure(measure: IMeasure): AFM.IMeasure {
-    const { measure: { definition } } = measure;
+    const {
+        measure: { definition },
+    } = measure;
 
     const convertedDefinition = convertMeasureDefinition(definition);
 
@@ -32,7 +34,7 @@ function convertMeasure(measure: IMeasure): AFM.IMeasure {
         localIdentifier: measure.measure.localIdentifier,
         definition: convertedDefinition,
         ...aliasProp,
-        ...formatProp
+        ...formatProp,
     };
 }
 
@@ -46,7 +48,7 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): AFM.Measu
     } else if (VisualizationObject.isArithmeticMeasureDefinition(definition)) {
         return convertArithmeticMeasureDefinition(definition);
     } else {
-        throw Error('The measure definition is not supported: ' + JSON.stringify(definition));
+        throw Error("The measure definition is not supported: " + JSON.stringify(definition));
     }
 }
 
@@ -54,7 +56,8 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): AFM.ISi
     const { measureDefinition } = definition;
 
     const filters: AFM.FilterItem[] = measureDefinition.filters
-        ? compact(measureDefinition.filters.map(convertVisualizationObjectFilter)) : [];
+        ? compact(measureDefinition.filters.map(convertVisualizationObjectFilter))
+        : [];
     const filtersProp = filters.length ? { filters } : {};
 
     const aggregation = measureDefinition.aggregation;
@@ -68,8 +71,8 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): AFM.ISi
             item: measureDefinition.item,
             ...filtersProp,
             ...aggregationProp,
-            ...computeRatioProp
-        }
+            ...computeRatioProp,
+        },
     };
 }
 
@@ -78,43 +81,47 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): AFM.IPo
     return {
         popMeasure: {
             measureIdentifier: popMeasureDefinition.measureIdentifier,
-            popAttribute: popMeasureDefinition.popAttribute
-        }
+            popAttribute: popMeasureDefinition.popAttribute,
+        },
     };
 }
 
-function convertPreviousPeriodMeasureDefinition(definition: IPreviousPeriodMeasureDefinition)
-    : AFM.IPreviousPeriodMeasureDefinition {
+function convertPreviousPeriodMeasureDefinition(
+    definition: IPreviousPeriodMeasureDefinition,
+): AFM.IPreviousPeriodMeasureDefinition {
     const { previousPeriodMeasure } = definition;
     return {
         previousPeriodMeasure: {
             measureIdentifier: previousPeriodMeasure.measureIdentifier,
             dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => ({
                 dataSet: dateDataSet.dataSet,
-                periodsAgo: dateDataSet.periodsAgo
-            }))
-        }
+                periodsAgo: dateDataSet.periodsAgo,
+            })),
+        },
     };
 }
 
-function convertArithmeticMeasureDefinition(definition: IArithmeticMeasureDefinition)
-    : AFM.IArithmeticMeasureDefinition {
+function convertArithmeticMeasureDefinition(
+    definition: IArithmeticMeasureDefinition,
+): AFM.IArithmeticMeasureDefinition {
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {
             measureIdentifiers: arithmeticMeasure.measureIdentifiers.slice(),
-            operator: arithmeticMeasure.operator
-        }
+            operator: arithmeticMeasure.operator,
+        },
     };
 }
 
 function getFormat(measure: IMeasure): string | undefined {
-    const { measure: { definition } } = measure;
-    const measureFormat = get(measure.measure, 'format');
+    const {
+        measure: { definition },
+    } = measure;
+    const measureFormat = get(measure.measure, "format");
 
     if (VisualizationObject.isArithmeticMeasureDefinition(definition)) {
-        if (definition.arithmeticMeasure.operator === 'change') {
-            return '#,##0.00%';
+        if (definition.arithmeticMeasure.operator === "change") {
+            return "#,##0.00%";
         }
     }
 
@@ -129,8 +136,8 @@ function getPredefinedFormat(definition: IMeasureDefinition): string | null {
     const { measureDefinition } = definition;
     // should we prefer format defined on measure? If so, fix computeRatio format in AD
     return measureDefinition.computeRatio
-        ? '#,##0.00%'
-        : (measureDefinition.aggregation === 'count'
-            ? '#,##0'
-            : null);
+        ? "#,##0.00%"
+        : measureDefinition.aggregation === "count"
+        ? "#,##0"
+        : null;
 }

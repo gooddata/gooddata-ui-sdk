@@ -1,16 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import 'isomorphic-fetch';
-import * as fetchMock from 'fetch-mock';
-import { range } from 'lodash';
-import { AFM, Execution } from '@gooddata/typings';
+import "isomorphic-fetch";
+import * as fetchMock from "fetch-mock";
+import { range } from "lodash";
+import { AFM, Execution } from "@gooddata/typings";
 import {
     ExecuteAfmModule,
     getNextLimit,
     getNextOffset,
     mergePage,
-    replaceLimitAndOffsetInUri
-} from '../../src/execution/execute-afm';
-import { XhrModule } from '../../src/xhr';
+    replaceLimitAndOffsetInUri,
+} from "../../src/execution/execute-afm";
+import { XhrModule } from "../../src/xhr";
 
 const DEFAULT_TEST_LIMIT = 1000;
 
@@ -24,8 +24,8 @@ function createAttributeHeaderItem(name: string): Execution.IResultAttributeHead
     return {
         attributeHeaderItem: {
             name,
-            uri: `/gdc/md/projectId/obj/${name}`
-        }
+            uri: `/gdc/md/projectId/obj/${name}`,
+        },
     };
 }
 
@@ -33,56 +33,59 @@ function createMeasureHeaderItem(name: string, order: number): Execution.IResult
     return {
         measureHeaderItem: {
             name,
-            order
-        }
+            order,
+        },
     };
 }
 
 function getExecutionResult(): Execution.IExecutionResult {
     return {
-        data: [
-            [11, 12],
-            [51, 52]
-        ],
+        data: [[11, 12], [51, 52]],
         paging: {
             count: [2, 2],
             offset: [0, 0],
-            total: [2, 2]
+            total: [2, 2],
         },
         headerItems: [
             [
-                [{
-                    attributeHeaderItem: {
-                        name: 'A1',
-                        uri: '/gdc/md/obj/attr1'
-                    }
-                }, {
-                    attributeHeaderItem: {
-                        name: 'A2',
-                        uri: '/gdc/md/obj/attr2'
-                    }
-                }]
+                [
+                    {
+                        attributeHeaderItem: {
+                            name: "A1",
+                            uri: "/gdc/md/obj/attr1",
+                        },
+                    },
+                    {
+                        attributeHeaderItem: {
+                            name: "A2",
+                            uri: "/gdc/md/obj/attr2",
+                        },
+                    },
+                ],
             ],
             [
-                [{
-                    measureHeaderItem: {
-                        name: 'M1',
-                        order: 0
-                    }
-                }, {
-                    measureHeaderItem: {
-                        name: 'M2',
-                        order: 0
-                    }
-                }]
-            ]
-        ]
+                [
+                    {
+                        measureHeaderItem: {
+                            name: "M1",
+                            order: 0,
+                        },
+                    },
+                    {
+                        measureHeaderItem: {
+                            name: "M2",
+                            order: 0,
+                        },
+                    },
+                ],
+            ],
+        ],
     };
 }
 
 function getExecutionResultResponseBody(): string {
     const result: Execution.IExecutionResultWrapper = {
-        executionResult: getExecutionResult()
+        executionResult: getExecutionResult(),
     };
 
     return JSON.stringify(result);
@@ -95,9 +98,9 @@ function getExecution(numOfDimensions: number = 2): AFM.IExecution {
         execution: {
             afm: {},
             resultSpec: {
-                dimensions: Array(numOfDimensions).fill(dimension)
-            }
-        }
+                dimensions: Array(numOfDimensions).fill(dimension),
+            },
+        },
     };
 }
 
@@ -108,68 +111,66 @@ function getExecutionResponse(numOfDimensions: number = 2): Execution.IExecution
         dimensions: Array(numOfDimensions).fill(dimension),
         links: {
             // tslint:disable-next-line:max-line-length
-            executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=${numOfDimensions}&limit=overridden&offset=overridden`
-        }
+            executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=${numOfDimensions}&limit=overridden&offset=overridden`,
+        },
     };
 }
 
 function getPollingResponseBody(numOfDimensions: number = 2): string {
     const response: Execution.IExecutionResponseWrapper = {
-        executionResponse: getExecutionResponse(numOfDimensions)
+        executionResponse: getExecutionResponse(numOfDimensions),
     };
 
     return JSON.stringify(response);
 }
 
-const A1 = createAttributeHeaderItem('a1');
-const A2 = createAttributeHeaderItem('a2');
-const A3 = createAttributeHeaderItem('a3');
-const M1 = createMeasureHeaderItem('m1', 1);
-const M2 = createMeasureHeaderItem('m2', 2);
-const M3 = createMeasureHeaderItem('m3', 3);
+const A1 = createAttributeHeaderItem("a1");
+const A2 = createAttributeHeaderItem("a2");
+const A3 = createAttributeHeaderItem("a3");
+const M1 = createMeasureHeaderItem("m1", 1);
+const M2 = createMeasureHeaderItem("m2", 2);
+const M3 = createMeasureHeaderItem("m3", 3);
 
 const fakeExecutionResultsUri = `/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`; // tslint:disable-line:max-line-length
-const fakeExecuteAfmUri = '/gdc/app/projects/myFakeProjectId/executeAfm';
+const fakeExecuteAfmUri = "/gdc/app/projects/myFakeProjectId/executeAfm";
 
-describe('replaceLimitAndOffsetInUri', () => {
-    it('should return correct results for 1 dimension', () => {
+describe("replaceLimitAndOffsetInUri", () => {
+    it("should return correct results for 1 dimension", () => {
         // tslint:disable-next-line:max-line-length
         const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=${DEFAULT_TEST_LIMIT}&offset=0`;
         const limit = [5];
         const offset = [3];
 
-        expect(
-            replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
-            '/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=5&offset=3'
+        expect(replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
+            "/gdc/app/projects/projectId/executionResults/123?dimensions=1&limit=5&offset=3",
         );
     });
 
-    it('should return correct results for 2 dimensions', () => {
+    it("should return correct results for 2 dimensions", () => {
         // tslint:disable-next-line:max-line-length
         const oldUri = `/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=${DEFAULT_TEST_LIMIT}%2C${DEFAULT_TEST_LIMIT}&offset=0%2C0`;
         const limit = [12, 12];
         const offset = [3, 9];
 
-        expect(
-            replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
-            '/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=12%2C12&offset=3%2C9'
+        expect(replaceLimitAndOffsetInUri(oldUri, limit, offset)).toEqual(
+            "/gdc/app/projects/projectId/executionResults/123?dimensions=2&limit=12%2C12&offset=3%2C9",
         );
     });
 });
 
-describe('getNextOffset and getNextLimit', () => {
-    describe('1 dimension', () => {
-        it('should return correct values for total=[2]', () => {
+describe("getNextOffset and getNextLimit", () => {
+    describe("1 dimension", () => {
+        it("should return correct values for total=[2]", () => {
             expect(getNextOffset([5], [0], [2])).toEqual([5]);
             expect(getNextLimit([5], [5], [2])).toEqual([-3]);
         });
 
-        it('should return correct values for total=[5]', () => {
+        it("should return correct values for total=[5]", () => {
             expect(getNextOffset([5], [0], [5])).toEqual([5]);
             expect(getNextLimit([5], [5], [5])).toEqual([0]);
         });
 
-        it('should return correct values for total=[10]', () => {
+        it("should return correct values for total=[10]", () => {
             // rows 0 - 4
             expect(getNextOffset([5], [0], [10])).toEqual([5]);
             expect(getNextLimit([5], [5], [10])).toEqual([5]);
@@ -179,7 +180,7 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([5], [10], [10])).toEqual([0]);
         });
 
-        it('should return correct values for total=[12]', () => {
+        it("should return correct values for total=[12]", () => {
             // rows 0 - 4
             expect(getNextOffset([5], [0], [12])).toEqual([5]);
             expect(getNextLimit([5], [5], [12])).toEqual([5]);
@@ -194,8 +195,8 @@ describe('getNextOffset and getNextLimit', () => {
         });
     });
 
-    describe('2 dimensions', () => {
-        it('should return correct values for total=[10,12]', () => {
+    describe("2 dimensions", () => {
+        it("should return correct values for total=[10,12]", () => {
             // rows 0 - 4; all columns
             expect(getNextOffset([5, 5], [0, 0], [10, 12])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [10, 12])).toEqual([5, 5]);
@@ -217,7 +218,7 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([5, 2], [10, 0], [10, 12])).toEqual([0, 5]);
         });
 
-        it('should return correct values for total=[10,15]', () => {
+        it("should return correct values for total=[10,15]", () => {
             // rows 0 - 4; all columns
             expect(getNextOffset([5, 5], [0, 0], [10, 15])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [10, 15])).toEqual([5, 5]);
@@ -239,7 +240,7 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([5, 5], [10, 0], [10, 15])).toEqual([0, 5]);
         });
 
-        it('should return correct values for total=[12,19]', () => {
+        it("should return correct values for total=[12,19]", () => {
             // rows 0 - 4; all columns
             expect(getNextOffset([5, 5], [0, 0], [12, 19])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [12, 19])).toEqual([5, 5]);
@@ -280,7 +281,7 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([2, 4], [12, 0], [12, 19])).toEqual([0, 2]);
         });
 
-        it('should return correct values for total=[12,10]', () => {
+        it("should return correct values for total=[12,10]", () => {
             // rows 0 - 4; all columns
             expect(getNextOffset([5, 5], [0, 0], [12, 10])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [12, 10])).toEqual([5, 5]);
@@ -303,12 +304,14 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([2, 5], [12, 0], [12, 10])).toEqual([0, 2]);
         });
 
-        it('should return correct values for total=[2,1]', () => { // two dimensions with empty second dimension
+        it("should return correct values for total=[2,1]", () => {
+            // two dimensions with empty second dimension
             expect(getNextOffset([5, 5], [0, 0], [2, 1])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [2, 1])).toEqual([-3, 1]);
         });
 
-        it('should return correct values for total=[8,1]', () => { // two dimensions with empty second dimension
+        it("should return correct values for total=[8,1]", () => {
+            // two dimensions with empty second dimension
             // rows 0 - 4
             expect(getNextOffset([5, 5], [0, 0], [8, 1])).toEqual([5, 0]); // next rows
             expect(getNextLimit([5, 5], [5, 0], [8, 1])).toEqual([3, 1]);
@@ -318,12 +321,14 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([3, 1], [8, 0], [8, 1])).toEqual([0, 1]);
         });
 
-        it('should return correct values for total=[1,2]', () => { // two dimensions with empty first dimension
+        it("should return correct values for total=[1,2]", () => {
+            // two dimensions with empty first dimension
             expect(getNextOffset([5, 5], [0, 0], [1, 2])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [1, 2])).toEqual([-4, 2]);
         });
 
-        it('should return correct values for total=[1,8]', () => { // two dimensions with empty first dimension
+        it("should return correct values for total=[1,8]", () => {
+            // two dimensions with empty first dimension
             expect(getNextOffset([5, 5], [0, 0], [1, 8])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [1, 8])).toEqual([1, 3]);
 
@@ -331,17 +336,17 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([1, 3], [1, 0], [1, 8])).toEqual([0, 1]);
         });
 
-        it('should return correct values for total=[2,3]', () => {
+        it("should return correct values for total=[2,3]", () => {
             expect(getNextOffset([5, 5], [0, 0], [2, 3])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [2, 3])).toEqual([-3, 3]);
         });
 
-        it('should return correct values for total=[2,5]', () => {
+        it("should return correct values for total=[2,5]", () => {
             expect(getNextOffset([5, 5], [0, 0], [2, 5])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [2, 5])).toEqual([-3, 5]);
         });
 
-        it('should return correct values for total=[2,8]', () => {
+        it("should return correct values for total=[2,8]", () => {
             expect(getNextOffset([5, 5], [0, 0], [2, 8])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [2, 8])).toEqual([2, 3]);
 
@@ -349,12 +354,12 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([2, 3], [2, 0], [2, 8])).toEqual([0, 2]);
         });
 
-        it('should return correct values for total=[5,2]', () => {
+        it("should return correct values for total=[5,2]", () => {
             expect(getNextOffset([5, 5], [0, 0], [5, 2])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [5, 2])).toEqual([0, 2]);
         });
 
-        it('should return correct values for total=[8,2]', () => {
+        it("should return correct values for total=[8,2]", () => {
             // rows 0 - 4
             expect(getNextOffset([5, 5], [0, 0], [8, 2])).toEqual([5, 0]); // next rows
             expect(getNextLimit([5, 5], [5, 0], [8, 2])).toEqual([3, 2]);
@@ -364,12 +369,12 @@ describe('getNextOffset and getNextLimit', () => {
             expect(getNextLimit([3, 2], [8, 0], [8, 2])).toEqual([0, 2]);
         });
 
-        it('should return correct values for total=[5,5]', () => {
+        it("should return correct values for total=[5,5]", () => {
             expect(getNextOffset([5, 5], [0, 0], [5, 5])).toEqual([5, 0]);
             expect(getNextLimit([5, 5], [5, 0], [5, 5])).toEqual([0, 5]);
         });
 
-        it('should return correct values for total=[5,10]', () => {
+        it("should return correct values for total=[5,10]", () => {
             expect(getNextOffset([5, 5], [0, 0], [5, 10])).toEqual([0, 5]);
             expect(getNextLimit([5, 5], [0, 5], [5, 10])).toEqual([5, 5]);
 
@@ -379,554 +384,321 @@ describe('getNextOffset and getNextLimit', () => {
     });
 });
 
-describe('mergePage', () => {
-    describe('1 dimension', () => {
+describe("mergePage", () => {
+    describe("1 dimension", () => {
         function getExecutionResult(offset: number, total: number): Execution.IExecutionResult {
             return {
-                headerItems: [
-                    [
-                        [
-                            createMeasureHeaderItem(`m${offset + 1}`, offset + 1)
-                        ]
-                    ]
-                ],
-                data: [
-                    offset + 1
-                ],
+                headerItems: [[[createMeasureHeaderItem(`m${offset + 1}`, offset + 1)]]],
+                data: [offset + 1],
                 paging: {
                     count: [1],
                     offset: [offset],
-                    total: [total]
-                }
+                    total: [total],
+                },
             };
         }
 
-        it('should return correct result after merge 2 executionResults', () => {
-            expect(mergePage(
-                getExecutionResult(0, 2),
-                getExecutionResult(1, 2)
-            )).toEqual({
-                headerItems: [
-                    [
-                        [
-                            M1,
-                            M2
-                        ]
-                    ]
-                ],
-                data: [
-                    1,
-                    2
-                ],
+        it("should return correct result after merge 2 executionResults", () => {
+            expect(mergePage(getExecutionResult(0, 2), getExecutionResult(1, 2))).toEqual({
+                headerItems: [[[M1, M2]]],
+                data: [1, 2],
                 paging: {
                     count: [2],
                     offset: [0],
-                    total: [2]
-                }
+                    total: [2],
+                },
             });
         });
 
-        it('should return correct result after merge 3 executionResults', () => {
-            const prevExecutionResult = mergePage(
-                getExecutionResult(0, 3),
-                getExecutionResult(1, 3)
-            );
+        it("should return correct result after merge 3 executionResults", () => {
+            const prevExecutionResult = mergePage(getExecutionResult(0, 3), getExecutionResult(1, 3));
 
-            expect(mergePage(
-                prevExecutionResult,
-                getExecutionResult(2, 3)
-            )).toEqual({
-                headerItems: [
-                    [
-                        [
-                            M1,
-                            M2,
-                            M3
-                        ]
-                    ]
-                ],
-                data: [
-                    1,
-                    2,
-                    3
-                ],
+            expect(mergePage(prevExecutionResult, getExecutionResult(2, 3))).toEqual({
+                headerItems: [[[M1, M2, M3]]],
+                data: [1, 2, 3],
                 paging: {
                     count: [3],
                     offset: [0],
-                    total: [3]
-                }
+                    total: [3],
+                },
             });
         });
     });
 
-    describe('2 dimensions', () => {
-        it('should return correct result for 1 attribute (with 3 values) and 3 measures with limit=[2,2]', () => {
+    describe("2 dimensions", () => {
+        it("should return correct result for 1 attribute (with 3 values) and 3 measures with limit=[2,2]", () => {
             const pageWithOffset0x0: Execution.IExecutionResult = {
-                headerItems: [
-                    [
-                        [
-                            A1, A2
-                        ]
-                    ],
-                    [
-                        [
-                            M1, M2
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        11, 12
-                    ],
-                    [
-                        21, 22
-                    ]
-                ],
+                headerItems: [[[A1, A2]], [[M1, M2]]],
+                data: [[11, 12], [21, 22]],
                 paging: {
                     count: [2, 2],
                     offset: [0, 0],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             };
 
             const pageWithOffset0x2: Execution.IExecutionResult = {
-                headerItems: [
-                    [
-                        [
-                            A1, A2
-                        ]
-                    ],
-                    [
-                        [
-                            M3
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        13
-                    ],
-                    [
-                        23
-                    ]
-                ],
+                headerItems: [[[A1, A2]], [[M3]]],
+                data: [[13], [23]],
                 paging: {
                     count: [2, 1],
                     offset: [0, 2],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             };
 
             const pageWithOffset2x0 = {
-                headerItems: [
-                    [
-                        [
-                            A3
-                        ]
-                    ],
-                    [
-                        [
-                            M1, M2
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        31, 32
-                    ]
-                ],
+                headerItems: [[[A3]], [[M1, M2]]],
+                data: [[31, 32]],
                 paging: {
                     count: [1, 2],
                     offset: [2, 0],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             };
 
             const pageWithOffset2x2 = {
-                headerItems: [
-                    [
-                        [
-                            A3
-                        ]
-                    ],
-                    [
-                        [
-                            M3
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        33
-                    ]
-                ],
+                headerItems: [[[A3]], [[M3]]],
+                data: [[33]],
                 paging: {
                     count: [1, 1],
                     offset: [2, 2],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             };
 
             const mergedFirstTwoPages: Execution.IExecutionResult = mergePage(
                 pageWithOffset0x0,
-                pageWithOffset0x2
+                pageWithOffset0x2,
             );
 
             expect(mergedFirstTwoPages).toEqual({
-                headerItems: [
-                    [
-                        [
-                            A1, A2
-                        ]
-                    ],
-                    [
-                        [
-                            M1, M2, M3
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        11, 12, 13
-                    ],
-                    [
-                        21, 22, 23
-                    ]
-                ],
+                headerItems: [[[A1, A2]], [[M1, M2, M3]]],
+                data: [[11, 12, 13], [21, 22, 23]],
                 paging: {
                     count: [2, 3],
                     offset: [0, 0],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             });
 
-            const mergedFirstThreePages = mergePage(
-                mergedFirstTwoPages,
-                pageWithOffset2x0
-            );
+            const mergedFirstThreePages = mergePage(mergedFirstTwoPages, pageWithOffset2x0);
 
             expect(mergedFirstThreePages).toEqual({
-                headerItems: [
-                    [
-                        [
-                            A1, A2, A3
-                        ]
-                    ],
-                    [
-                        [
-                            M1, M2, M3
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        11, 12, 13
-                    ],
-                    [
-                        21, 22, 23
-                    ],
-                    [
-                        31, 32
-                    ]
-                ],
+                headerItems: [[[A1, A2, A3]], [[M1, M2, M3]]],
+                data: [[11, 12, 13], [21, 22, 23], [31, 32]],
                 paging: {
                     count: [3, 3],
                     offset: [0, 0],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             });
 
-            const mergedAllFourPages = mergePage(
-                mergedFirstThreePages,
-                pageWithOffset2x2
-            );
+            const mergedAllFourPages = mergePage(mergedFirstThreePages, pageWithOffset2x2);
 
             expect(mergedAllFourPages).toEqual({
-                headerItems: [
-                    [
-                        [
-                            A1, A2, A3
-                        ]
-                    ],
-                    [
-                        [
-                            M1, M2, M3
-                        ]
-                    ]
-                ],
-                data: [
-                    [
-                        11, 12, 13
-                    ],
-                    [
-                        21, 22, 23
-                    ],
-                    [
-                        31, 32, 33
-                    ]
-                ],
+                headerItems: [[[A1, A2, A3]], [[M1, M2, M3]]],
+                data: [[11, 12, 13], [21, 22, 23], [31, 32, 33]],
                 paging: {
                     count: [3, 3],
                     offset: [0, 0],
-                    total: [3, 3]
-                }
+                    total: [3, 3],
+                },
             });
         });
     });
 });
 
-describe('executeAfm', () => {
+describe("executeAfm", () => {
     beforeEach(() => {
         expect.hasAssertions();
         fetchMock.restore();
     });
 
-    it('should reject when /executeAfm fails', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            400
-        );
+    it("should reject when /executeAfm fails", () => {
+        fetchMock.mock(fakeExecuteAfmUri, 400);
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution()).catch((err) => {
-            expect(err).toBeInstanceOf(Error);
-            expect(err.response.status).toBe(400);
-        });
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
+            .catch(err => {
+                expect(err).toBeInstanceOf(Error);
+                expect(err.response.status).toBe(400);
+            });
     });
 
-    it('should reject when first polling fails', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should reject when first polling fails", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            400
-        );
+        fetchMock.mock(fakeExecutionResultsUri, 400);
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution()).catch((err) => {
-            expect(err).toBeInstanceOf(Error);
-            expect(err.response.status).toBe(400);
-        });
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
+            .catch(err => {
+                expect(err).toBeInstanceOf(Error);
+                expect(err.response.status).toBe(400);
+            });
     });
 
-    it('should resolve when first polling returns 204', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should resolve when first polling returns 204", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            204
-        );
+        fetchMock.mock(fakeExecutionResultsUri, 204);
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
             .then((responses: Execution.IExecutionResponses) => {
                 expect(responses).toEqual({
                     executionResponse: getExecutionResponse(),
-                    executionResult: null
+                    executionResult: null,
                 });
             });
     });
 
-    it('should reject when first polling returns 413', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should reject when first polling returns 413", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            413
-        );
+        fetchMock.mock(fakeExecutionResultsUri, 413);
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution()).catch((err) => {
-            expect(err).toBeInstanceOf(Error);
-            expect(err.response.status).toBe(413);
-        });
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
+            .catch(err => {
+                expect(err).toBeInstanceOf(Error);
+                expect(err.response.status).toBe(413);
+            });
     });
 
-    it('should resolve on first polling', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should resolve on first polling", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            { status: 200, body: getExecutionResultResponseBody() }
-        );
+        fetchMock.mock(fakeExecutionResultsUri, { status: 200, body: getExecutionResultResponseBody() });
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
             .then((responses: Execution.IExecutionResponses) => {
                 expect(responses).toEqual({
                     executionResponse: getExecutionResponse(),
-                    executionResult: getExecutionResult()
+                    executionResult: getExecutionResult(),
                 });
             });
     });
 
-    it('should throw error on second polling when num of dimensions is 3', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody(3) }
-        );
+    it("should throw error on second polling when num of dimensions is 3", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody(3) });
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
-            .catch((error) => {
-                expect(error.name).toEqual('Invariant Violation');
-                expect(error.message).toEqual('3 dimensions are not allowed. Only 1 or 2 dimensions are supported.');
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
+            .catch(error => {
+                expect(error.name).toEqual("Invariant Violation");
+                expect(error.message).toEqual(
+                    "3 dimensions are not allowed. Only 1 or 2 dimensions are supported.",
+                );
             });
     });
 
-    it('should resolve on second polling', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should resolve on second polling", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
         let pollingCounter = 0;
 
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            () => {
-                pollingCounter += 1;
-                return pollingCounter === 1
-                    ? {
-                        status: 202,
-                        headers: {
-                            Location: fakeExecutionResultsUri
-                        }
-                    }
-                    : {
-                        status: 200,
-                        body: getExecutionResultResponseBody()
-                    };
-            }
-        );
+        fetchMock.mock(fakeExecutionResultsUri, () => {
+            pollingCounter += 1;
+            return pollingCounter === 1
+                ? {
+                      status: 202,
+                      headers: {
+                          Location: fakeExecutionResultsUri,
+                      },
+                  }
+                : {
+                      status: 200,
+                      body: getExecutionResultResponseBody(),
+                  };
+        });
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
             .then((responses: Execution.IExecutionResponses) => {
                 expect(responses).toEqual({
                     executionResponse: getExecutionResponse(),
-                    executionResult: getExecutionResult()
+                    executionResult: getExecutionResult(),
                 });
             });
     });
 
-    it('should resolve with 2x2 pages', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should resolve with 2x2 pages", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
         const pagesByOffset: IPagesByOffset = {
-            '0,0': {
+            "0,0": {
                 executionResult: {
                     headerItems: [
-                        [
-                            [
-                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
-                            ]
-                        ],
-                        [
-                            [
-                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
-                            ]
-                        ]
+                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))]],
+                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))]],
                     ],
-                    data: Array(DEFAULT_TEST_LIMIT).fill(0).map(() => Array(DEFAULT_TEST_LIMIT).fill(0)),
+                    data: Array(DEFAULT_TEST_LIMIT)
+                        .fill(0)
+                        .map(() => Array(DEFAULT_TEST_LIMIT).fill(0)),
                     paging: {
                         count: [DEFAULT_TEST_LIMIT, DEFAULT_TEST_LIMIT],
                         offset: [0, 0],
-                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
             },
-            ['0,' + DEFAULT_TEST_LIMIT]: {
+            ["0," + DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
-                        [
-                            [
-                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))
-                            ]
-                        ],
-                        [
-                            [
-                                createMeasureHeaderItem('m' + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)
-                            ]
-                        ]
+                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))]],
+                        [[createMeasureHeaderItem("m" + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)]],
                     ],
                     data: Array(DEFAULT_TEST_LIMIT).fill([0]),
                     paging: {
                         count: [DEFAULT_TEST_LIMIT, 1],
                         offset: [0, DEFAULT_TEST_LIMIT],
-                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
             },
-            [DEFAULT_TEST_LIMIT + ',0']: {
+            [DEFAULT_TEST_LIMIT + ",0"]: {
                 executionResult: {
                     headerItems: [
-                        [
-                            [
-                                createAttributeHeaderItem('a' + (DEFAULT_TEST_LIMIT + 1))
-                            ]
-                        ],
-                        [
-                            [
-                                ...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))
-                            ]
-                        ]
+                        [[createAttributeHeaderItem("a" + (DEFAULT_TEST_LIMIT + 1))]],
+                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))]],
                     ],
-                    data: [
-                        Array(DEFAULT_TEST_LIMIT).fill(0)
-                    ],
+                    data: [Array(DEFAULT_TEST_LIMIT).fill(0)],
                     paging: {
                         count: [1, DEFAULT_TEST_LIMIT],
                         offset: [DEFAULT_TEST_LIMIT, 0],
-                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
             },
-            [DEFAULT_TEST_LIMIT + ',' + DEFAULT_TEST_LIMIT]: {
+            [DEFAULT_TEST_LIMIT + "," + DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
-                        [
-                            [
-                                createAttributeHeaderItem('a' + (DEFAULT_TEST_LIMIT + 1))
-                            ]
-                        ],
-                        [
-                            [
-                                createMeasureHeaderItem('m' + DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1)
-                            ]
-                        ]
+                        [[createAttributeHeaderItem("a" + (DEFAULT_TEST_LIMIT + 1))]],
+                        [[createMeasureHeaderItem("m" + DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1)]],
                     ],
-                    data: [
-                        [
-                            0
-                        ]
-                    ],
+                    data: [[0]],
                     paging: {
                         count: [1, 1],
                         offset: [DEFAULT_TEST_LIMIT, DEFAULT_TEST_LIMIT],
-                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
-            }
+                        total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
+            },
         };
 
         fetchMock.mock(
-            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=*%2C*&offset=*',
+            "glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=*%2C*&offset=*",
             (url: string): any => {
-                const offset = url.replace(/.*offset=/, '').replace('%2C', ',');
+                const offset = url.replace(/.*offset=/, "").replace("%2C", ",");
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
-            }
+            },
         );
 
-        return createExecuteAfm().executeAfm('myFakeProjectId', getExecution())
+        return createExecuteAfm()
+            .executeAfm("myFakeProjectId", getExecution())
             .then((responses: Execution.IExecutionResponses) => {
                 expect(responses).toEqual({
                     executionResponse: getExecutionResponse(),
@@ -934,31 +706,34 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i => createAttributeHeaderItem(`a${i}`))
-                                ]
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i =>
+                                        createAttributeHeaderItem(`a${i}`),
+                                    ),
+                                ],
                             ],
                             [
                                 [
-                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i => createMeasureHeaderItem(`m${i}`, i))
-                                ]
-                            ]
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i =>
+                                        createMeasureHeaderItem(`m${i}`, i),
+                                    ),
+                                ],
+                            ],
                         ],
-                        data: Array(DEFAULT_TEST_LIMIT + 1).fill(0).map(() => Array(DEFAULT_TEST_LIMIT + 1).fill(0)),
+                        data: Array(DEFAULT_TEST_LIMIT + 1)
+                            .fill(0)
+                            .map(() => Array(DEFAULT_TEST_LIMIT + 1).fill(0)),
                         paging: {
                             count: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
                             offset: [0, 0],
-                            total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1]
-                        }
-                    }
+                            total: [DEFAULT_TEST_LIMIT + 1, DEFAULT_TEST_LIMIT + 1],
+                        },
+                    },
                 });
             });
     });
 
-    it('should resolve for 1 dimension x 2 pages', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody(1) }
-        );
+    it("should resolve for 1 dimension x 2 pages", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody(1) });
 
         const pagesByOffset: IPagesByOffset = {
             0: {
@@ -966,59 +741,51 @@ describe('executeAfm', () => {
                     headerItems: [
                         [
                             [
-                                ...range(DEFAULT_TEST_LIMIT).map(
-                                    (i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1)
-                                )
-                            ]
-                        ]
+                                ...range(DEFAULT_TEST_LIMIT).map((i: number) =>
+                                    createMeasureHeaderItem(`m${i + 1}`, i + 1),
+                                ),
+                            ],
+                        ],
                     ],
                     data: range(1, DEFAULT_TEST_LIMIT + 1),
                     paging: {
                         count: [DEFAULT_TEST_LIMIT],
                         offset: [0],
-                        total: [DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
+                        total: [DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
             },
             [DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
-                        [
-                            [
-                                createMeasureHeaderItem('m' + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)
-                            ]
-                        ]
+                        [[createMeasureHeaderItem("m" + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)]],
                     ],
-                    data: [
-                        DEFAULT_TEST_LIMIT + 1
-                    ],
+                    data: [DEFAULT_TEST_LIMIT + 1],
                     paging: {
                         count: [1],
                         offset: [DEFAULT_TEST_LIMIT],
-                        total: [DEFAULT_TEST_LIMIT + 1]
-                    }
-                }
-            }
+                        total: [DEFAULT_TEST_LIMIT + 1],
+                    },
+                },
+            },
         };
 
         fetchMock.mock(
-            'glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=1&limit=*&offset=*',
-            (url) => {
-                const offset = url.replace(/.*offset=/, '');
+            "glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=1&limit=*&offset=*",
+            url => {
+                const offset = url.replace(/.*offset=/, "");
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
-            }
+            },
         );
 
         return createExecuteAfm()
-            .executeAfm('myFakeProjectId', {
+            .executeAfm("myFakeProjectId", {
                 execution: {
                     afm: {},
                     resultSpec: {
-                        dimensions: [
-                            { itemIdentifiers: ['m1'] }
-                        ]
-                    }
-                }
+                        dimensions: [{ itemIdentifiers: ["m1"] }],
+                    },
+                },
             })
             .then((responses: Execution.IExecutionResponses) => {
                 expect(responses).toEqual({
@@ -1027,74 +794,72 @@ describe('executeAfm', () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(DEFAULT_TEST_LIMIT + 1)
-                                        .map((i: number) => createMeasureHeaderItem(`m${i + 1}`, i + 1))
-                                ]
-                            ]
+                                    ...range(DEFAULT_TEST_LIMIT + 1).map((i: number) =>
+                                        createMeasureHeaderItem(`m${i + 1}`, i + 1),
+                                    ),
+                                ],
+                            ],
                         ],
                         data: range(1, DEFAULT_TEST_LIMIT + 2),
                         paging: {
                             count: [DEFAULT_TEST_LIMIT + 1],
                             offset: [0],
-                            total: [DEFAULT_TEST_LIMIT + 1]
-                        }
-                    }
+                            total: [DEFAULT_TEST_LIMIT + 1],
+                        },
+                    },
                 });
             });
     });
 });
 
-describe('getExecutionResponse', () => {
+describe("getExecutionResponse", () => {
     beforeEach(() => {
         expect.hasAssertions();
         fetchMock.restore();
     });
 
-    it('should return correct execution response', () => {
-        fetchMock.mock(
-            fakeExecuteAfmUri,
-            { status: 200, body: getPollingResponseBody() }
-        );
+    it("should return correct execution response", () => {
+        fetchMock.mock(fakeExecuteAfmUri, { status: 200, body: getPollingResponseBody() });
 
-        return createExecuteAfm().getExecutionResponse('myFakeProjectId', getExecution())
+        return createExecuteAfm()
+            .getExecutionResponse("myFakeProjectId", getExecution())
             .then((responses: Execution.IExecutionResponse) => {
                 expect(responses).toEqual(getExecutionResponse());
             });
     });
 });
 
-describe('getPartialExecutionResult', () => {
+describe("getPartialExecutionResult", () => {
     beforeEach(() => {
         expect.hasAssertions();
         fetchMock.restore();
     });
 
-    it('should return correct partial execution result', () => {
+    it("should return correct partial execution result", () => {
         fetchMock.mock(
-            '/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=2%2C2&offset=2%2C2',
-            { status: 200, body: getExecutionResultResponseBody() }
+            "/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=2&limit=2%2C2&offset=2%2C2",
+            { status: 200, body: getExecutionResultResponseBody() },
         );
 
-        return createExecuteAfm().getPartialExecutionResult(fakeExecutionResultsUri, [2, 2], [2, 2])
+        return createExecuteAfm()
+            .getPartialExecutionResult(fakeExecutionResultsUri, [2, 2], [2, 2])
             .then((responses: Execution.IExecutionResult | null) => {
                 expect(responses).toEqual(getExecutionResult());
             });
     });
 });
 
-describe('getExecutionResult', () => {
+describe("getExecutionResult", () => {
     beforeEach(() => {
         expect.hasAssertions();
         fetchMock.restore();
     });
 
-    it('should return correct execution result', () => {
-        fetchMock.mock(
-            fakeExecutionResultsUri,
-            { status: 200, body: getExecutionResultResponseBody() }
-        );
+    it("should return correct execution result", () => {
+        fetchMock.mock(fakeExecutionResultsUri, { status: 200, body: getExecutionResultResponseBody() });
 
-        return createExecuteAfm().getExecutionResult(fakeExecutionResultsUri)
+        return createExecuteAfm()
+            .getExecutionResult(fakeExecutionResultsUri)
             .then((responses: Execution.IExecutionResult | null) => {
                 expect(responses).toEqual(getExecutionResult());
             });

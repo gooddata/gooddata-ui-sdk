@@ -1,26 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
-import {
-    get,
-    set
-} from 'lodash';
-import { MetadataModule } from '../metadata';
+import { get, set } from "lodash";
+import { MetadataModule } from "../metadata";
 
 function getAttributeUris(displayForms: any[]) {
-    return displayForms.map(
-        (displayForm: any) => get(displayForm, ['attributeDisplayForm', 'content', 'formOf'])
+    return displayForms.map((displayForm: any) =>
+        get(displayForm, ["attributeDisplayForm", "content", "formOf"]),
     );
 }
 
 function createAttributesMap(displayForms: any[], attributes: any) {
     return displayForms.reduce((attributesMap: any, displayForm: any) => {
-        const dfUri = get(displayForm, ['attributeDisplayForm', 'meta', 'uri']);
-        const attribute = attributes.find((attr: any) =>
-            get(attr, ['attribute', 'meta', 'uri']) === get(displayForm, ['attributeDisplayForm', 'content', 'formOf'])
+        const dfUri = get(displayForm, ["attributeDisplayForm", "meta", "uri"]);
+        const attribute = attributes.find(
+            (attr: any) =>
+                get(attr, ["attribute", "meta", "uri"]) ===
+                get(displayForm, ["attributeDisplayForm", "content", "formOf"]),
         );
 
         return set(attributesMap, [dfUri], attribute);
-    },
-    {});
+    }, {});
 }
 
 export function getMissingUrisInAttributesMap(displayFormsUris: string[], attributesMap: any) {
@@ -29,9 +27,7 @@ export function getMissingUrisInAttributesMap(displayFormsUris: string[], attrib
 }
 
 export class AttributesMapLoaderModule {
-    constructor(private md: MetadataModule) {
-
-    }
+    constructor(private md: MetadataModule) {}
 
     public loadAttributesMap(projectId: string, attributeDisplayFormUris: string[]) {
         if (attributeDisplayFormUris.length === 0) {

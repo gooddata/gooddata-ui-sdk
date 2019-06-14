@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-export type SortDirection = 'asc' | 'desc';
+export type SortDirection = "asc" | "desc";
 
 export type EmbeddedFilter = IEmbeddedDateFilter | IEmbeddedListAttributeFilter;
 
-export type EmbeddedDateFilterType = 'relative' | 'absolute';
+export type EmbeddedDateFilterType = "relative" | "absolute";
 
 export interface IEmbeddedDateFilter {
     dateFilter: {
@@ -21,10 +21,10 @@ export interface IEmbeddedListAttributeFilter {
     listAttributeFilter: {
         attribute?: string;
         displayForm: string;
-        'default': {
+        default: {
             negativeSelection: boolean;
             attributeElements: string[];
-        }
+        };
     };
 }
 
@@ -32,7 +32,7 @@ export interface IMeasureSort {
     direction: SortDirection;
     sortByPoP?: boolean;
 }
-export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar';
+export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar";
 
 export interface IVisualizationStyle {
     visualizationStyle: {
@@ -41,15 +41,15 @@ export interface IVisualizationStyle {
             measure?: {
                 color: string;
                 periodOverPeriod: string;
-            }
+            };
 
-            stack?: any
-        }
+            stack?: any;
+        };
     };
 }
 
-export type MeasureType = 'metric' | 'fact' | 'attribute';
-export type MeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+export type MeasureType = "metric" | "fact" | "attribute";
+export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 export interface IMeasure {
     measure: {
@@ -68,7 +68,7 @@ export interface IMeasure {
     };
 }
 
-export type CategoryType = 'attribute' | 'date';
+export type CategoryType = "attribute" | "date";
 
 export interface ICategory {
     category: {
@@ -83,9 +83,9 @@ export interface ICategory {
     };
 }
 
-export type CategoryCollection = 'attribute' | 'stack' | 'view' | 'trend' | 'segment';
+export type CategoryCollection = "attribute" | "stack" | "view" | "trend" | "segment";
 
-export type VisualizationType = 'table' | 'line' | 'column' | 'bar' | 'pie' | 'doughnut' | 'combo';
+export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo";
 
 export interface IVisualizationObject {
     meta: IVisualizationObjectMeta;
@@ -107,7 +107,7 @@ export interface IBuckets {
     totals?: IVisualizationTotal[];
 }
 
-export type TotalType = 'sum' | 'max' | 'min' | 'avg' | 'med' | 'nat';
+export type TotalType = "sum" | "max" | "min" | "avg" | "med" | "nat";
 
 export interface IVisualizationTotal {
     total: {
@@ -149,6 +149,7 @@ export interface IVisualizationMetadataResult {
     metadata: IVisualizationObject;
 }
 
-export function isEmbeddedDateFilter(dateFilter: EmbeddedFilter): dateFilter is IEmbeddedDateFilter { // TODO unused
+export function isEmbeddedDateFilter(dateFilter: EmbeddedFilter): dateFilter is IEmbeddedDateFilter {
+    // TODO unused
     return (dateFilter as IEmbeddedDateFilter).dateFilter !== undefined;
 }

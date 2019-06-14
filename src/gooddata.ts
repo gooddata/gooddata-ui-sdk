@@ -1,18 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
-import { cloneDeep } from 'lodash';
-import { XhrModule } from './xhr';
-import { UserModule } from './user';
-import { MetadataModule } from './metadata';
-import { ExecutionModule } from './execution';
-import { ProjectModule } from './project';
-import { ReportModule } from './report';
-import { sanitizeConfig, IConfigStorage, ConfigModule } from './config';
-import { CatalogueModule } from './catalogue';
-import { AdminModule } from './admin';
+import { cloneDeep } from "lodash";
+import { XhrModule } from "./xhr";
+import { UserModule } from "./user";
+import { MetadataModule } from "./metadata";
+import { ExecutionModule } from "./execution";
+import { ProjectModule } from "./project";
+import { ReportModule } from "./report";
+import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
+import { CatalogueModule } from "./catalogue";
+import { AdminModule } from "./admin";
 
-import { AttributesMapLoaderModule } from './utils/attributesMapLoader';
-import { getAttributesDisplayForms } from './utils/visualizationObjectHelper';
-import { convertReferencesToUris, ReferenceConverter } from './referenceHandling';
+import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
+import { getAttributesDisplayForms } from "./utils/visualizationObjectHelper";
+import { convertReferencesToUris, ReferenceConverter } from "./referenceHandling";
 
 /**
  * # JS SDK
@@ -45,7 +45,7 @@ export class SDK {
     public utils: {
         loadAttributesMap: any;
         getAttributesDisplayForms: any;
-        convertReferencesToUris: ReferenceConverter
+        convertReferencesToUris: ReferenceConverter;
     };
 
     constructor(private fetchMethod: typeof fetch, config = {}) {
@@ -65,7 +65,7 @@ export class SDK {
         this.utils = {
             loadAttributesMap: attributesMapLoaderModule.loadAttributesMap.bind(attributesMapLoaderModule),
             getAttributesDisplayForms,
-            convertReferencesToUris
+            convertReferencesToUris,
         };
     }
 

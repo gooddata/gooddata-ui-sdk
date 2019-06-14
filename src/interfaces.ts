@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, AFM } from '@gooddata/typings';
+import { VisualizationObject, AFM } from "@gooddata/typings";
 
-export type SortDirection = 'asc' | 'desc';
+export type SortDirection = "asc" | "desc";
 
 export interface IAccountInfo {
     login: string;
@@ -58,7 +58,7 @@ export interface IEtlPullResponse {
     pull2Task: {
         links: {
             poll: string;
-        }
+        };
     };
 }
 
@@ -114,7 +114,7 @@ export interface IExecutionConfiguration {
 export interface IAttributeHeader {
     id: string;
     title: string;
-    type: 'attrLabel';
+    type: "attrLabel";
     uri: string;
 }
 
@@ -122,7 +122,7 @@ export interface IMetricHeader {
     format?: string;
     id: string;
     title: string;
-    type: 'metric';
+    type: "metric";
     uri?: string;
 }
 
@@ -155,7 +155,7 @@ export interface ISimpleExecutorResult {
 
 export type EmbeddedFilter = IEmbeddedDateFilter | IEmbeddedListAttributeFilter;
 
-export type EmbeddedDateFilterType = 'relative' | 'absolute';
+export type EmbeddedDateFilterType = "relative" | "absolute";
 
 export interface IEmbeddedDateFilter {
     dateFilter: {
@@ -173,10 +173,10 @@ export interface IEmbeddedListAttributeFilter {
     listAttributeFilter: {
         attribute: string;
         displayForm: string;
-        'default': {
+        default: {
             attributeElements: string[];
             negativeSelection: boolean;
-        }
+        };
     };
 }
 
@@ -185,7 +185,7 @@ export interface IMeasureSort {
     sortByPoP?: boolean;
 }
 
-export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar';
+export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar";
 
 export interface IVisualizationStyle {
     visualizationStyle: {
@@ -194,21 +194,21 @@ export interface IVisualizationStyle {
             measure?: {
                 color: string;
                 periodOverPeriod: string;
-            }
+            };
 
-            stack?: any
-        }
+            stack?: any;
+        };
     };
 }
 
-export type MeasureType = 'metric' | 'fact' | 'attribute';
-export type MeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+export type MeasureType = "metric" | "fact" | "attribute";
+export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 export interface IMeasure {
     measure: {
         aggregation?: MeasureAggregation;
         format?: string;
-        generatedId?: string
+        generatedId?: string;
         measureFilters: EmbeddedFilter[];
         objectUri: string;
         showInPercent: boolean;
@@ -252,7 +252,7 @@ export interface IXhrMockInBeforeSend {
 }
 
 export interface IXhrSettings {
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
+    method?: "GET" | "POST" | "PUT" | "DELETE" | "HEAD";
     body?: any;
     beforeSend?(xhr: IXhrMockInBeforeSend, url: string): void;
 
@@ -269,7 +269,7 @@ export interface IFeatureFlags {
 
 export interface IExportConfig {
     title?: string;
-    format?: 'xlsx' | 'csv' | 'raw';
+    format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
     showFilters?: AFM.CompatibilityFilter[];
 }
@@ -278,8 +278,8 @@ export interface IExportResponse {
     uri: string;
 }
 
-export type GuidType = 'guid';
-export type RGBType = 'rgb';
+export type GuidType = "guid";
+export type RGBType = "rgb";
 
 export interface IGuidColorItem {
     type: GuidType;

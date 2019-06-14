@@ -5,16 +5,16 @@ import {
     CONTRACT_DOMAIN,
     CONTRACT_DOMAINS,
     CONTRACT_DOMAIN_USERS,
-    CONTRACT_DOMAIN_PROJECTS
-} from './routes';
-import { XhrModule } from '../xhr';
+    CONTRACT_DOMAIN_PROJECTS,
+} from "./routes";
+import { XhrModule } from "../xhr";
 
 const transformDomain = (item: any) => {
     const { domainId, contractId }: any = parse(item.domain.links.self, CONTRACT_DOMAIN);
     return {
         id: domainId,
         contractId,
-        ...item.domain
+        ...item.domain,
     };
 };
 
@@ -24,25 +24,25 @@ const transformDomainUser = ({ user }: any) => {
         id: user.login,
         ...params,
         fullName: `${user.firstName} ${user.lastName}`,
-        ...user
+        ...user,
     };
 };
 
 export class DomainsModule {
-    constructor(private xhr: XhrModule) {
-
-    }
+    constructor(private xhr: XhrModule) {}
 
     public getDomain(contractId: string, domainId: string, query: string | null) {
         const uri = interpolate(CONTRACT_DOMAIN, { contractId, domainId }, query);
 
-        return this.xhr.get(uri)
+        return this.xhr
+            .get(uri)
             .then((r: any) => r.getData())
             .then(transformDomain);
     }
 
     public getDomains(contractId: string, query: string | null) {
-        return this.xhr.get(interpolate(CONTRACT_DOMAINS, { contractId }, query))
+        return this.xhr
+            .get(interpolate(CONTRACT_DOMAINS, { contractId }, query))
             .then(r => r.getData())
             .then((result: any) => ({ items: result.domains.items.map(transformDomain) })); // TODO: paging?
     }
@@ -52,14 +52,16 @@ export class DomainsModule {
             return Promise.resolve({ items: [], paging: {} });
         }
 
-        const uri = paging ?
-            paging.next : interpolate(CONTRACT_DOMAIN_USERS, { contractId, domainId }, query);
+        const uri = paging
+            ? paging.next
+            : interpolate(CONTRACT_DOMAIN_USERS, { contractId, domainId }, query);
 
-        return this.xhr.get(uri)
+        return this.xhr
+            .get(uri)
             .then(r => r.getData())
             .then((result: any) => ({
                 ...result.domainUsers,
-                items: result.domainUsers.items.map(transformDomainUser)
+                items: result.domainUsers.items.map(transformDomainUser),
             }));
     }
 
@@ -72,22 +74,22 @@ export class DomainsModule {
             }
             uri = paging.next;
         } else {
-            const queryObject = (state || query) ? {
-                ...(state ? { state } : undefined),
-                ...(query ? { prefixSearch: query } : undefined)
-            } : null;
-            uri = interpolate(
-                CONTRACT_DOMAIN_PROJECTS,
-                { contractId, domainId },
-                queryObject
-            );
+            const queryObject =
+                state || query
+                    ? {
+                          ...(state ? { state } : undefined),
+                          ...(query ? { prefixSearch: query } : undefined),
+                      }
+                    : null;
+            uri = interpolate(CONTRACT_DOMAIN_PROJECTS, { contractId, domainId }, queryObject);
         }
 
-        return this.xhr.get(uri)
+        return this.xhr
+            .get(uri)
             .then(r => r.getData())
             .then((result: any) => ({
                 ...result.domainProjects,
-                items: result.domainProjects.items.map((item: any) => item.project)
+                items: result.domainProjects.items.map((item: any) => item.project),
             }));
     }
 }

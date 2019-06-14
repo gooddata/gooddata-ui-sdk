@@ -1,5 +1,5 @@
 // (C) 2007-2014 GoodData Corporation
-import { set as _set, get as _get } from 'lodash';
+import { set as _set, get as _get } from "lodash";
 
 /**
  * Config module holds SDK configuration variables
@@ -13,21 +13,21 @@ import { set as _set, get as _get } from 'lodash';
  * @class config
  */
 
-const URL_REGEXP = '(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*';
+const URL_REGEXP = "(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*";
 
 export function sanitizeDomain(domain: string | null) {
     if (domain === null) {
         return undefined;
     }
 
-    const sanitizedDomain = domain || '';
+    const sanitizedDomain = domain || "";
     const link = sanitizedDomain.match(URL_REGEXP);
     if (!link) {
         throw new Error(`${domain} is not a valid url`);
     }
 
     // ensure https:// prefix and strip possible trailing /
-    return `https://${link[0].replace(/^https?:\/\/|\/$/g, '')}`;
+    return `https://${link[0].replace(/^https?:\/\/|\/$/g, "")}`;
 }
 
 /**
@@ -64,7 +64,7 @@ export interface IConfigStorage {
 export class ConfigModule {
     constructor(private configStorage: IConfigStorage) {
         if (arguments.length !== 1) {
-            throw new Error('Config module has to be called with exactly one argument.');
+            throw new Error("Config module has to be called with exactly one argument.");
         }
     }
 
@@ -99,7 +99,8 @@ export class ConfigModule {
      * @private
      */
     public setJsPackage(name: string, version: string) {
-        if (!this.configStorage.originPackage) { // only set the first (topmost) package
+        if (!this.configStorage.originPackage) {
+            // only set the first (topmost) package
             this.configStorage.originPackage = { name, version };
         }
     }
@@ -116,10 +117,10 @@ export class ConfigModule {
     }
 
     public setRequestHeader(key: string, value: string) {
-        _set(this.configStorage, ['xhrSettings', 'headers', key], value);
+        _set(this.configStorage, ["xhrSettings", "headers", key], value);
     }
 
     public getRequestHeader(key: string) {
-        return _get(this.configStorage, ['xhrSettings', 'headers', key]);
+        return _get(this.configStorage, ["xhrSettings", "headers", key]);
     }
 }

@@ -29,204 +29,206 @@ import {
     oneMeasureOneAttributeWithIdentifiers,
     reducedMultipleSorts,
     nativeSubTotals,
-    nativeSubtotalsInTwoDimensions
-} from './fixtures/Afm.fixtures';
+    nativeSubtotalsInTwoDimensions,
+} from "./fixtures/Afm.fixtures";
 
-import { charts, tables } from './fixtures/VisObj.fixtures';
-import { toAfmResultSpec } from '../toAfmResultSpec';
+import { charts, tables } from "./fixtures/VisObj.fixtures";
+import { toAfmResultSpec } from "../toAfmResultSpec";
 
-describe('toAfmResultSpec', () => {
-    it('should convert simple measures', () => {
+describe("toAfmResultSpec", () => {
+    it("should convert simple measures", () => {
         expect(toAfmResultSpec(charts.simpleMeasure)).toEqual({
-            ...simpleMeasure
+            ...simpleMeasure,
         });
     });
 
-    it('should convert simple measures with identifiers', () => {
+    it("should convert simple measures with identifiers", () => {
         expect(toAfmResultSpec(charts.simpleMeasureWithIdentifiers)).toEqual({
-            ...simpleMeasureWithIdentifiers
+            ...simpleMeasureWithIdentifiers,
         });
     });
 
-    it('should convert simple measure with format', () => {
+    it("should convert simple measure with format", () => {
         expect(toAfmResultSpec(charts.simpleMeasureWithFormat)).toEqual({
-            ...simpleMeasureWithFormat
+            ...simpleMeasureWithFormat,
         });
     });
 
-    it('should convert simple measure with text filter', () => {
+    it("should convert simple measure with text filter", () => {
         expect(toAfmResultSpec(charts.simpleMeasureWithTextFilter)).toEqual({
-            ...simpleMeasureWithTextFilter
+            ...simpleMeasureWithTextFilter,
         });
     });
 
-    it('should convert simple renamed measures', () => {
+    it("should convert simple renamed measures", () => {
         expect(toAfmResultSpec(charts.renamedMeasure)).toEqual({
-            ...renamedMeasure
+            ...renamedMeasure,
         });
     });
 
-    it('should convert filtered measures', () => {
+    it("should convert filtered measures", () => {
         expect(toAfmResultSpec(charts.filteredMeasure)).toEqual({
-            ...filteredMeasure
+            ...filteredMeasure,
         });
     });
 
-    it('should convert relative date filtered measures', () => {
+    it("should convert relative date filtered measures", () => {
         expect(toAfmResultSpec(charts.measureWithRelativeDate)).toEqual({
-            ...measureWithRelativeDate
+            ...measureWithRelativeDate,
         });
     });
 
-    it('should convert absolute date filtered measures', () => {
+    it("should convert absolute date filtered measures", () => {
         expect(toAfmResultSpec(charts.measureWithAbsoluteDate)).toEqual({
-            ...measureWithAbsoluteDate
+            ...measureWithAbsoluteDate,
         });
     });
 
-    it('should convert fact based measures', () => {
+    it("should convert fact based measures", () => {
         expect(toAfmResultSpec(charts.factBasedMeasure)).toEqual({
-            ...factBasedMeasure
+            ...factBasedMeasure,
         });
     });
 
-    it('should convert fact based renamed measures', () => {
+    it("should convert fact based renamed measures", () => {
         expect(toAfmResultSpec(charts.factBasedRenamedMeasure)).toEqual({
-            ...factBasedRenamedMeasure
+            ...factBasedRenamedMeasure,
         });
     });
 
-    it('should convert attribute based measures', () => {
+    it("should convert attribute based measures", () => {
         expect(toAfmResultSpec(charts.attributeBasedMeasure)).toEqual({
-            ...attributeBasedMeasure
+            ...attributeBasedMeasure,
         });
     });
 
-    it('should convert attribute based measures and add its default format #,##0', () => {
+    it("should convert attribute based measures and add its default format #,##0", () => {
         expect(toAfmResultSpec(charts.attributeBasedMeasureWithoutFormat)).toEqual({
-            ...attributeBasedMeasure
+            ...attributeBasedMeasure,
         });
     });
 
-    it('should convert attribute based renamed measures', () => {
+    it("should convert attribute based renamed measures", () => {
         expect(toAfmResultSpec(charts.attributeBasedRenamedMeasure)).toEqual({
-            ...attributeBasedRenamedMeasure
+            ...attributeBasedRenamedMeasure,
         });
     });
 
-    it('should convert measure with show in percent with attribute', () => {
+    it("should convert measure with show in percent with attribute", () => {
         expect(toAfmResultSpec(charts.showInPercent)).toEqual({
-            ...showInPercent
+            ...showInPercent,
         });
     });
 
-    it('should convert measure with show in percent and add its default format #,##0.00%', () => {
+    it("should convert measure with show in percent and add its default format #,##0.00%", () => {
         expect(toAfmResultSpec(charts.showInPercentWithoutFormat)).toEqual({
-            ...showInPercent
+            ...showInPercent,
         });
     });
 
-    it('should convert measure with show in percent with date', () => {
+    it("should convert measure with show in percent with date", () => {
         expect(toAfmResultSpec(charts.showInPercentWithDate)).toEqual({
-            ...showInPercentWithDate
+            ...showInPercentWithDate,
         });
     });
 
-    it('should convert measure with sorting', () => {
+    it("should convert measure with sorting", () => {
         expect(toAfmResultSpec(charts.measureWithSorting)).toEqual({
-            ...measureWithSorting
+            ...measureWithSorting,
         });
     });
 
-    it('should convert pop measure', () => {
+    it("should convert pop measure", () => {
         expect(toAfmResultSpec(charts.popMeasure)).toEqual({
-            ...popMeasure
+            ...popMeasure,
         });
     });
 
-    it('should convert pop measure with sorting', () => {
+    it("should convert pop measure with sorting", () => {
         expect(toAfmResultSpec(charts.popMeasureWithSorting)).toEqual({
-            ...popMeasureWithSorting
+            ...popMeasureWithSorting,
         });
     });
 
-    it('should convert category with sorting', () => {
+    it("should convert category with sorting", () => {
         expect(toAfmResultSpec(charts.categoryWithSorting)).toEqual({
-            ...categoryWithSorting
+            ...categoryWithSorting,
         });
     });
 
-    it('should convert attribute filter', () => {
+    it("should convert attribute filter", () => {
         expect(toAfmResultSpec(charts.attributeFilter)).toEqual({
-            ...attributeFilter
+            ...attributeFilter,
         });
     });
 
-    it('should convert attribute filter', () => {
+    it("should convert attribute filter", () => {
         expect(toAfmResultSpec(charts.attributeTextFilter)).toEqual({
-            ...attributeTextFilter
+            ...attributeTextFilter,
         });
     });
 
-    it('should convert date filter', () => {
+    it("should convert date filter", () => {
         expect(toAfmResultSpec(charts.dateFilter)).toEqual({
-            ...dateFilter
+            ...dateFilter,
         });
     });
 
-    it('should convert date filter with from/to as strings', () => {
+    it("should convert date filter with from/to as strings", () => {
         expect(toAfmResultSpec(charts.dateFilterWithStrings)).toEqual({
-            ...dateFilter
+            ...dateFilter,
         });
     });
 
-    it('should skip filter when date filter from/to is undefined for relative (alltime)', () => {
+    it("should skip filter when date filter from/to is undefined for relative (alltime)", () => {
         expect(toAfmResultSpec(charts.dateFilterWithUndefs)).toEqual({
-            ...dateFilterWithoutInterval
+            ...dateFilterWithoutInterval,
         });
     });
 
-    it('should convert stacking renamed attribute', () => {
+    it("should convert stacking renamed attribute", () => {
         expect(toAfmResultSpec(charts.stackingRenamedAttribute)).toEqual({
-            ...stackingRenamedAttribute
+            ...stackingRenamedAttribute,
         });
     });
 
-    it('should skip attribute filter with ALL', () => {
+    it("should skip attribute filter with ALL", () => {
         expect(toAfmResultSpec(charts.attributeFilterWithAll)).toEqual({
-            ...attributeFilterWithAll
+            ...attributeFilterWithAll,
         });
     });
 
-    it('should convert stacking attribute as normal attribute, conversion has no semantic for buckets', () => {
+    it("should convert stacking attribute as normal attribute, conversion has no semantic for buckets", () => {
         expect(toAfmResultSpec(charts.stackingAttribute)).toEqual({
-            ...stackingAttribute
+            ...stackingAttribute,
         });
     });
 
-    it('should convert table as generic chart, conversion has no semantic for buckets', () => {
+    it("should convert table as generic chart, conversion has no semantic for buckets", () => {
         expect(toAfmResultSpec(tables.oneMeasureOneAttribute)).toEqual({
-            ...oneMeasureOneAttribute
+            ...oneMeasureOneAttribute,
         });
     });
 
-    it('should convert table with identifiers', () => {
+    it("should convert table with identifiers", () => {
         expect(toAfmResultSpec(tables.oneMeasureOneAttributeWithIdentifiers)).toEqual({
-            ...oneMeasureOneAttributeWithIdentifiers
+            ...oneMeasureOneAttributeWithIdentifiers,
         });
     });
 
-    it('should convert only one sort item', () => {
+    it("should convert only one sort item", () => {
         expect(toAfmResultSpec(tables.multipleSorts)).toEqual({
-            ...reducedMultipleSorts
+            ...reducedMultipleSorts,
         });
     });
 
-    it('should convert native subtotals', () => {
+    it("should convert native subtotals", () => {
         expect(toAfmResultSpec(tables.twoAttributesAndNativeSubtotals)).toEqual(nativeSubTotals);
     });
 
-    it('should convert native subtotals from multiple dimensions', () => {
-        expect(toAfmResultSpec(tables.twoDimensionsAndNativeSubtotals)).toEqual(nativeSubtotalsInTwoDimensions);
+    it("should convert native subtotals from multiple dimensions", () => {
+        expect(toAfmResultSpec(tables.twoDimensionsAndNativeSubtotals)).toEqual(
+            nativeSubtotalsInTwoDimensions,
+        );
     });
 });

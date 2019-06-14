@@ -28,8 +28,10 @@
     "run-tslint": "tslint -p tsconfig.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-    "validate": "tsc --noEmit && yarn tslint",
-    "validate-ci": "tsc --noEmit && yarn tslint-ci"
+    "prettier-check": "prettier --check '{src,test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+    "prettier-write": "prettier --write '{src,test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+    "validate": "tsc --noEmit && yarn tslint && yarn prettier-check",
+    "validate-ci": "tsc --noEmit && yarn tslint-ci && yarn prettier-check"
   },
   "repository": {
     "type": "git",
@@ -72,6 +74,7 @@
     "@types/qs": "6.5.1",
     "@types/uuid": "3.4.4",
     "async": "2.1.5",
+    "eslint-config-prettier": "^4.3.0",
     "exports-loader": "0.6.3",
     "fast-levenshtein": "2.0.6",
     "fetch-mock": "5.12.2",
@@ -91,8 +94,10 @@
     "js-object-pretty-print": "0.2.0",
     "json-loader": "0.5.4",
     "lodash-webpack-plugin": "0.11.0",
+    "prettier": "^1.18.2",
     "ts-jest": "24.0.0",
     "ts-loader": "3.5.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "3.3.4000",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.1"

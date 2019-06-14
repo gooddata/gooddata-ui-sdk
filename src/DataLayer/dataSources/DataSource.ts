@@ -1,18 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import * as stringify from 'json-stable-stringify';
-import { IDataSource } from '../interfaces/DataSource';
-import { DEFAULT_LIMIT } from '../../execution/execute-afm';
+import { AFM, Execution } from "@gooddata/typings";
+import * as stringify from "json-stable-stringify";
+import { IDataSource } from "../interfaces/DataSource";
+import { DEFAULT_LIMIT } from "../../execution/execute-afm";
 
-export {
-    IDataSource
-};
+export { IDataSource };
 
 export type ExecFactory<T> = (resultSpec: AFM.IResultSpec) => Promise<T>;
 
 export class DataSource<T> implements IDataSource<T> {
     private executionPromises: {
-        [key: string]: Promise<Execution.IExecutionResponse>
+        [key: string]: Promise<Execution.IExecutionResponse>;
     };
 
     constructor(
@@ -20,8 +18,11 @@ export class DataSource<T> implements IDataSource<T> {
         private afm: AFM.IAfm,
         private fingerprint?: string,
         private responseFactory?: (resultSpec: AFM.IResultSpec) => Promise<Execution.IExecutionResponse>,
-        private resultFactory?: (executionResultUri: string, limit: number[], offset: number[]) =>
-            Promise<Execution.IExecutionResult | null>
+        private resultFactory?: (
+            executionResultUri: string,
+            limit: number[],
+            offset: number[],
+        ) => Promise<Execution.IExecutionResult | null>,
     ) {
         this.executionPromises = {};
     }
@@ -33,11 +34,11 @@ export class DataSource<T> implements IDataSource<T> {
     public getPage(
         resultSpec: AFM.IResultSpec,
         limit: number[] = [],
-        offset: number[] = []
+        offset: number[] = [],
     ): Promise<Execution.IExecutionResponses> {
         const resultSpecFingerprint = stringify(resultSpec);
         if (!this.responseFactory) {
-            throw new Error('Missing responseFactory!');
+            throw new Error("Missing responseFactory!");
         }
         if (!this.executionPromises[resultSpecFingerprint]) {
             this.executionPromises[resultSpecFingerprint] = this.responseFactory(resultSpec);
@@ -46,7 +47,7 @@ export class DataSource<T> implements IDataSource<T> {
         return this.executionPromises[resultSpecFingerprint].then(
             (executionResponse: Execution.IExecutionResponse) => {
                 if (!this.resultFactory) {
-                    throw new Error('Missing resultFactory!');
+                    throw new Error("Missing resultFactory!");
                 }
 
                 const safeOffset = offset.map((offsetItem = 0) => offsetItem);
@@ -55,7 +56,7 @@ export class DataSource<T> implements IDataSource<T> {
                     const safeLimitItem = Math.min(limitItem, DEFAULT_LIMIT);
                     if (safeLimitItem < limitItem) {
                         // tslint:disable-next-line:no-console
-                        console.warn('The maximum limit per page is ' + DEFAULT_LIMIT);
+                        console.warn("The maximum limit per page is " + DEFAULT_LIMIT);
                     }
                     return safeLimitItem;
                 });
@@ -63,14 +64,12 @@ export class DataSource<T> implements IDataSource<T> {
                 return this.resultFactory(
                     executionResponse.links.executionResult,
                     safeLimit,
-                    safeOffset
-                ).then(
-                        (executionResult: Execution.IExecutionResult | null) => ({
-                            executionResult,
-                            executionResponse
-                        })
-                    );
-            }
+                    safeOffset,
+                ).then((executionResult: Execution.IExecutionResult | null) => ({
+                    executionResult,
+                    executionResponse,
+                }));
+            },
         );
     }
 

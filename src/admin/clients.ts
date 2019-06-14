@@ -4,30 +4,31 @@ import {
     parse,
     CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT,
     CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS,
-    CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS
-} from './routes';
-import { XhrModule } from '../xhr';
+    CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS,
+} from "./routes";
+import { XhrModule } from "../xhr";
 
 export class ClientsModule {
-    constructor(private xhr: XhrModule) {
-
-    }
+    constructor(private xhr: XhrModule) {}
 
     public getClient(
         contractId: string,
         dataProductId: string,
         segmentId: string,
         domainId: string,
-        clientId: string
+        clientId: string,
     ) {
-        const query = { stats: 'user' };
+        const query = { stats: "user" };
         const uri = interpolate(
             CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT,
             { contractId, dataProductId, segmentId, domainId, clientId },
-            query
+            query,
         );
 
-        return this.xhr.get(uri).then((r: any) => r.getData()).then((result: any) => this.transformClient(result));
+        return this.xhr
+            .get(uri)
+            .then((r: any) => r.getData())
+            .then((result: any) => this.transformClient(result));
     }
 
     public getClients(
@@ -36,23 +37,24 @@ export class ClientsModule {
         segmentId: string,
         domainId: string,
         filter: any,
-        paging: any
+        paging: any,
     ) {
-        const query = filter ? { clientPrefix: filter, stats: 'user' } : { stats: 'user' };
-        const uri = paging ?
-            paging.next :
-            interpolate(
-                CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS,
-                { contractId, dataProductId, segmentId, domainId },
-                query
-            );
+        const query = filter ? { clientPrefix: filter, stats: "user" } : { stats: "user" };
+        const uri = paging
+            ? paging.next
+            : interpolate(
+                  CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS,
+                  { contractId, dataProductId, segmentId, domainId },
+                  query,
+              );
 
         if (uri) {
-            return this.xhr.get(uri)
+            return this.xhr
+                .get(uri)
                 .then((r: any) => r.getData())
                 .then((result: any) => ({
                     items: result.clients.items.map(this.transformClient),
-                    paging: result.clients.paging
+                    paging: result.clients.paging,
                 }));
         }
 
@@ -66,38 +68,41 @@ export class ClientsModule {
         segmentId: string,
         clientId: string,
         query: any,
-        paging: any
+        paging: any,
     ) {
         if (paging && !paging.next) {
             return Promise.resolve({ items: [], paging: {} });
         }
 
-        const uri = paging ?
-            paging.next :
-            interpolate(
-                CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS,
-                { contractId, dataProductId, domainId, segmentId, clientId },
-                query
-            );
+        const uri = paging
+            ? paging.next
+            : interpolate(
+                  CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS,
+                  { contractId, dataProductId, domainId, segmentId, clientId },
+                  query,
+              );
 
-        return this.xhr.get(uri)
-            .then(((r: any) => r.getData()))
+        return this.xhr
+            .get(uri)
+            .then((r: any) => r.getData())
             .then((result: any) => ({
                 ...result.clientUsers,
-                items: result.clientUsers.items.map(this.transformClientUser)
+                items: result.clientUsers.items.map(this.transformClientUser),
             }));
     }
 
     private transformClient(item: any) {
-        const { contractId, dataProductId, domainId, segmentId }: any =
-            parse(item.client.links.self, CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT);
+        const { contractId, dataProductId, domainId, segmentId }: any = parse(
+            item.client.links.self,
+            CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT,
+        );
 
         return {
             contractId,
             dataProductId,
             domainId,
             segmentId,
-            ...item.client
+            ...item.client,
         };
     }
 
@@ -106,7 +111,7 @@ export class ClientsModule {
             id: user.login,
             fullName: `${user.firstName} ${user.lastName}`,
             role: user.roles[0],
-            ...user
+            ...user,
         };
     }
 }

@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import identity = require('lodash/identity');
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
+import identity = require("lodash/identity");
+import { Subject } from "rxjs/Subject";
+import { Subscription } from "rxjs/Subscription";
+import "rxjs/add/operator/switchMap";
+import "rxjs/add/operator/catch";
 
 export { Subscription };
 
@@ -34,7 +34,7 @@ export interface ISubject<T> {
  */
 export function createSubject<T>(
     successHandler: StreamSuccessHandler<T>,
-    errorHandler: StreamErrorHandler
+    errorHandler: StreamErrorHandler,
 ): ISubject<Promise<T>> {
     const subject = new Subject<Promise<T>>();
     const subscription = subject
@@ -55,7 +55,7 @@ export function createSubject<T>(
         unsubscribe: () => {
             subscription.unsubscribe();
             subject.unsubscribe();
-        }
+        },
     };
     return wrapper;
 }

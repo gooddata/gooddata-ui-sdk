@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import cloneDeep = require('lodash/cloneDeep');
-import isEmpty = require('lodash/isEmpty');
-import { AFM } from '@gooddata/typings';
+import cloneDeep = require("lodash/cloneDeep");
+import isEmpty = require("lodash/isEmpty");
+import { AFM } from "@gooddata/typings";
 import isDateFilter = AFM.isDateFilter;
 import isNegativeAttributeFilter = AFM.isNegativeAttributeFilter;
 import isPositiveAttributeFilter = AFM.isPositiveAttributeFilter;
@@ -57,7 +57,6 @@ export function mergeFilters(afm: AFM.IAfm, filters: AFM.FilterItem[]): AFM.IAfm
 
     return {
         ...cloned,
-        filters: [...(cloned.filters || []), ...filters]
-            .filter(isNotEmptyFilter)
+        filters: [...(cloned.filters || []), ...filters].filter(isNotEmptyFilter),
     };
 }

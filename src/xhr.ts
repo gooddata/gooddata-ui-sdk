@@ -1,7 +1,7 @@
 // (C) 2007-2013 GoodData Corporation
-import { isPlainObject, isFunction, set as _set, defaults, merge, result } from 'lodash';
+import { isPlainObject, isFunction, set as _set, defaults, merge, result } from "lodash";
 
-import { thisPackage } from './util';
+import { thisPackage } from "./util";
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -17,8 +17,8 @@ import { thisPackage } from './util';
 
 const DEFAULT_POLL_DELAY = 1000;
 
-const REST_API_VERSION_HEADER = 'X-GDC-VERSION';
-const REST_API_DEPRECATED_VERSION_HEADER = 'X-GDC-DEPRECATED';
+const REST_API_VERSION_HEADER = "X-GDC-VERSION";
+const REST_API_DEPRECATED_VERSION_HEADER = "X-GDC-DEPRECATED";
 
 // The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
 const LATEST_REST_API_VERSION = 3;
@@ -26,8 +26,8 @@ const LATEST_REST_API_VERSION = 3;
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {
         setRequestHeader(key: string, value: string) {
-            _set(settings, ['headers', key], value);
-        }
+            _set(settings, ["headers", key], value);
+        },
     };
 
     if (isFunction(settings.beforeSend)) {
@@ -43,16 +43,19 @@ function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: an
         if (originalUrl.indexOf(domain) === -1) {
             url = domain + originalUrl;
         }
-        settings.mode = 'cors';
-        settings.credentials = 'include';
+        settings.mode = "cors";
+        settings.credentials = "include";
     }
 
     return { url, settings };
 }
 
-export function handlePolling(url: string, settings: any, sendRequest: (url: string, settings: any) => any)
-: Promise<ApiResponse> {
-    const pollingDelay: number = result(settings, 'pollDelay');
+export function handlePolling(
+    url: string,
+    settings: any,
+    sendRequest: (url: string, settings: any) => any,
+): Promise<ApiResponse> {
+    const pollingDelay: number = result(settings, "pollDelay");
 
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -68,8 +71,8 @@ export interface IPackageHeaders {
 
 export function originPackageHeaders({ name, version }: IPackageHeaders) {
     return {
-        'X-GDC-JS-PKG': name,
-        'X-GDC-JS-PKG-VERSION': version
+        "X-GDC-JS-PKG": name,
+        "X-GDC-JS-PKG-VERSION": version,
     };
 }
 
@@ -85,8 +88,7 @@ export class ApiResponseError extends ApiError {
     }
 }
 
-export class ApiNetworkError extends ApiError {
-}
+export class ApiNetworkError extends ApiError {}
 
 export class ApiResponse {
     public response: Response;
@@ -142,7 +144,11 @@ export class XhrModule {
     public async ajax(originalUrl: string, customSettings = {}): Promise<ApiResponse> {
         // TODO refactor to: getRequestParams(originalUrl, customSettings);
         const firstSettings = this.createRequestSettings(customSettings);
-        const { url, settings } = enrichSettingWithCustomDomain(originalUrl, firstSettings, this.configStorage.domain);
+        const { url, settings } = enrichSettingWithCustomDomain(
+            originalUrl,
+            firstSettings,
+            this.configStorage.domain,
+        );
 
         simulateBeforeSend(url, settings); // mutates `settings` param
 
@@ -163,8 +169,8 @@ export class XhrModule {
 
         if (response.status === 401) {
             // if 401 is in login-request, it means wrong user/password (we wont continue)
-            if (url.indexOf('/gdc/account/login') !== -1) {
-                throw new ApiResponseError('Unauthorized', response, responseBody);
+            if (url.indexOf("/gdc/account/login") !== -1) {
+                throw new ApiResponseError("Unauthorized", response, responseBody);
             }
             return this.handleUnauthorized(url, settings);
         }
@@ -179,10 +185,10 @@ export class XhrModule {
             const finalSettings = settings;
 
             // if the response is 202 and Location header is not empty, let's poll on the new Location
-            if (response.headers.has('Location')) {
-                finalUrl = response.headers.get('Location');
+            if (response.headers.has("Location")) {
+                finalUrl = response.headers.get("Location");
             }
-            finalSettings.method = 'GET';
+            finalSettings.method = "GET";
             delete finalSettings.data;
             delete finalSettings.body;
 
@@ -203,57 +209,57 @@ export class XhrModule {
      * Wrapper for xhr.ajax method GET
      */
     public get(url: string, settings?: any) {
-        return this.ajax(url, merge({ method: 'GET' }, settings));
+        return this.ajax(url, merge({ method: "GET" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method HEAD
      */
     public head(url: string, settings?: any) {
-        return this.ajax(url, merge({ method: 'HEAD' }, settings));
+        return this.ajax(url, merge({ method: "HEAD" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method POST
      */
     public post(url: string, settings?: any) {
-        return this.ajax(url, merge({ method: 'POST' }, settings));
+        return this.ajax(url, merge({ method: "POST" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method PUT
      */
     public put(url: string, settings: any) {
-        return this.ajax(url, merge({ method: 'PUT' }, settings));
+        return this.ajax(url, merge({ method: "PUT" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method DELETE
      */
     public del(url: string, settings?: any) {
-        return this.ajax(url, merge({ method: 'DELETE' }, settings));
+        return this.ajax(url, merge({ method: "DELETE" }, settings));
     }
 
     private createRequestSettings(customSettings: any) {
         const settings = merge(
             {
                 headers: {
-                    'Accept': 'application/json; charset=utf-8',
-                    'Content-Type': 'application/json',
+                    Accept: "application/json; charset=utf-8",
+                    "Content-Type": "application/json",
                     [REST_API_VERSION_HEADER]: LATEST_REST_API_VERSION,
-                    ...originPackageHeaders(this.configStorage.originPackage || thisPackage)
-                }
+                    ...originPackageHeaders(this.configStorage.originPackage || thisPackage),
+                },
             },
             this.configStorage.xhrSettings,
-            customSettings
+            customSettings,
         );
 
-        settings.pollDelay = (settings.pollDelay !== undefined) ? settings.pollDelay : DEFAULT_POLL_DELAY;
+        settings.pollDelay = settings.pollDelay !== undefined ? settings.pollDelay : DEFAULT_POLL_DELAY;
 
         // TODO jquery compat - add to warnings
-        settings.body = (settings.data) ? settings.data : settings.body;
-        settings.mode = 'same-origin';
-        settings.credentials = 'same-origin';
+        settings.body = settings.data ? settings.data : settings.body;
+        settings.mode = "same-origin";
+        settings.credentials = "same-origin";
 
         if (isPlainObject(settings.body)) {
             settings.body = JSON.stringify(settings.body);
@@ -263,17 +269,20 @@ export class XhrModule {
     }
 
     private continueAfterTokenRequest(url: string, settings: any) {
-        return this.tokenRequest.then(async (response: Response) => {
-            if (!response.ok) {
-                throw new ApiResponseError('Unauthorized', response, null);
-            }
-            this.tokenRequest = null;
+        return this.tokenRequest.then(
+            async (response: Response) => {
+                if (!response.ok) {
+                    throw new ApiResponseError("Unauthorized", response, null);
+                }
+                this.tokenRequest = null;
 
-            return this.ajax(url, settings);
-        }, (reason: any) => {
-            this.tokenRequest = null;
-            return reason;
-        });
+                return this.ajax(url, settings);
+            },
+            (reason: any) => {
+                this.tokenRequest = null;
+                return reason;
+            },
+        );
     }
 
     private async handleUnauthorized(originalUrl: string, originalSettings: any) {
@@ -284,9 +293,9 @@ export class XhrModule {
         }
 
         const { url, settings } = enrichSettingWithCustomDomain(
-            '/gdc/account/token',
+            "/gdc/account/token",
             this.createRequestSettings({}),
-            this.configStorage.domain
+            this.configStorage.domain,
         );
 
         this.tokenRequest = this.fetch(url, settings);
@@ -302,7 +311,7 @@ export class XhrModule {
         // unauthorized when retrieving token -> not logged
 
         if (response.status === 401) {
-            throw new ApiResponseError('Unauthorized', response, responseBody);
+            throw new ApiResponseError("Unauthorized", response, responseBody);
         }
 
         return this.ajax(originalUrl, originalSettings);
@@ -310,9 +319,11 @@ export class XhrModule {
 
     private logDeprecatedRestApiCall(deprecatedVersionDetails: string) {
         // tslint:disable-next-line:no-console
-        console.warn(`The REST API version ${LATEST_REST_API_VERSION} is deprecated (${deprecatedVersionDetails}). `
-            + 'Please migrate your application to use GoodData.UI SDK or @gooddata/gooddata-js package that '
-            + 'supports newer version of the API.');
+        console.warn(
+            `The REST API version ${LATEST_REST_API_VERSION} is deprecated (${deprecatedVersionDetails}). ` +
+                "Please migrate your application to use GoodData.UI SDK or @gooddata/gooddata-js package that " +
+                "supports newer version of the API.",
+        );
     }
 
     private isRestApiDeprecated(responseHeaders: any) {

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from '@gooddata/typings';
-import { IDataSource } from '../interfaces/DataSource';
+import { AFM, Execution } from "@gooddata/typings";
+import { IDataSource } from "../interfaces/DataSource";
 
 function getExecutionResponse(numOfDimensions: number = 2): Execution.IExecutionResponse {
     const dimension = { headers: [] };
@@ -8,50 +8,53 @@ function getExecutionResponse(numOfDimensions: number = 2): Execution.IExecution
     return {
         dimensions: Array(numOfDimensions).fill(dimension),
         links: {
-            executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overridden&dimensions=${numOfDimensions}` // tslint:disable-line:max-line-length
-        }
+            executionResult: `/gdc/app/projects/myFakeProjectId/executionResults/123?limit=overridden&dimensions=${numOfDimensions}`, // tslint:disable-line:max-line-length
+        },
     };
 }
 
 function getExecutionResult(): Execution.IExecutionResult {
     return {
-        data: [
-            [11, 12],
-            [51, 52]
-        ],
+        data: [[11, 12], [51, 52]],
         paging: {
             count: [2, 2],
             offset: [0, 0],
-            total: [2, 2]
+            total: [2, 2],
         },
         headerItems: [
             [
-                [{
-                    attributeHeaderItem: {
-                        name: 'A1',
-                        uri: '/gdc/md/obj/attr1'
-                    }
-                }, {
-                    attributeHeaderItem: {
-                        name: 'A2',
-                        uri: '/gdc/md/obj/attr2'
-                    }
-                }]
+                [
+                    {
+                        attributeHeaderItem: {
+                            name: "A1",
+                            uri: "/gdc/md/obj/attr1",
+                        },
+                    },
+                    {
+                        attributeHeaderItem: {
+                            name: "A2",
+                            uri: "/gdc/md/obj/attr2",
+                        },
+                    },
+                ],
             ],
             [
-                [{
-                    measureHeaderItem: {
-                        name: 'M1',
-                        order: 0
-                    }
-                }, {
-                    measureHeaderItem: {
-                        name: 'M2',
-                        order: 0
-                    }
-                }]
-            ]
-        ]
+                [
+                    {
+                        measureHeaderItem: {
+                            name: "M1",
+                            order: 0,
+                        },
+                    },
+                    {
+                        measureHeaderItem: {
+                            name: "M2",
+                            order: 0,
+                        },
+                    },
+                ],
+            ],
+        ],
     };
 }
 
@@ -73,28 +76,28 @@ export class DummyDataSource<T> implements IDataSource<T> {
             return Promise.resolve(this.data);
         }
 
-        return Promise.reject('DummyDataSource reject');
+        return Promise.reject("DummyDataSource reject");
     }
 
     public getPage(
         resultSpec: AFM.IResultSpec,
         _limit: number[],
-        _offset: number[]
+        _offset: number[],
     ): Promise<Execution.IExecutionResponses> {
         this.resultSpec = resultSpec;
 
         if (this.resolve) {
             return Promise.resolve({
                 executionResponse: getExecutionResponse(2),
-                executionResult: getExecutionResult()
+                executionResult: getExecutionResult(),
             });
         }
 
-        return Promise.reject('DummyDataSource reject');
+        return Promise.reject("DummyDataSource reject");
     }
 
     public getFingerprint() {
-        return '';
+        return "";
     }
 
     public getResultSpec() {

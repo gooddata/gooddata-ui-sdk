@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { queryString } from '../util';
+import { queryString } from "../util";
 
-export const ROOT = '/gdc/admin';
+export const ROOT = "/gdc/admin";
 
 export const CONTRACTS = `${ROOT}/contracts`;
 export const CONTRACT = `${CONTRACTS}/:contractId`;
@@ -18,22 +18,15 @@ export const CONTRACT_DATA_PRODUCT_SEGMENT_RENAME = `${CONTRACT_DATA_PRODUCT_SEG
 
 export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENTS = `${CONTRACT_DATA_PRODUCT_SEGMENT}/domainsegments`;
 export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENTS}/:domainId`;
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLONE =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/clone`;
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_RENAME =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/rename`;
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_SYNC =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/synchronizeClients`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLONE = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/clone`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_RENAME = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/rename`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_SYNC = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/synchronizeClients`;
 
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_LOG =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/activityLog`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_LOG = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/activityLog`;
 
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/clients`;
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS}/:clientId`;
-export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS =
-    `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT}/project/users`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT}/clients`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENTS}/:clientId`;
+export const CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT_USERS = `${CONTRACT_DATA_PRODUCT_DOMAIN_SEGMENT_CLIENT}/project/users`;
 
 export const CONTRACT_DOMAINS = `${CONTRACT}/domains`;
 export const CONTRACT_DOMAIN = `${CONTRACT_DOMAINS}/:domainId`;
@@ -50,21 +43,23 @@ export const DEPLOY_SEGMENT = `${CONTRACT_DOMAIN}/dataProducts/:dataProductId/se
 // parse params in route string accoring to template
 // returns params as plain object
 export const parse = (route: string, template: string) => {
-    let parsedRoute: string = '';
-    if (route.startsWith('http')) {
-        const routeMatch = route.match(/^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)([/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/);
-        parsedRoute = routeMatch ? routeMatch[5] : '';
+    let parsedRoute: string = "";
+    if (route.startsWith("http")) {
+        const routeMatch = route.match(
+            /^(https?:)\/\/(([^:/?#]*)(?::([0-9]+))?)([/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/,
+        );
+        parsedRoute = routeMatch ? routeMatch[5] : "";
     } else {
         parsedRoute = route;
     }
-    const values = parsedRoute.split('/');
-    const views = template.split('/');
+    const values = parsedRoute.split("/");
+    const views = template.split("/");
 
     return views.reduce((result, view, idx) => {
-        if (view[0] === ':') {
+        if (view[0] === ":") {
             return {
                 ...result,
-                [view.substr(1)]: values[idx]
+                [view.substr(1)]: values[idx],
             };
         }
         return result;
@@ -74,4 +69,7 @@ export const parse = (route: string, template: string) => {
 // interpolates specified parameters from params into
 // the specified route string and returns the result
 export const interpolate = (route: string, params: any, query: any = null) =>
-    route.split('/').map(view => (view[0] === ':' ? params[view.substr(1)] : view)).join('/') + queryString(query);
+    route
+        .split("/")
+        .map(view => (view[0] === ":" ? params[view.substr(1)] : view))
+        .join("/") + queryString(query);

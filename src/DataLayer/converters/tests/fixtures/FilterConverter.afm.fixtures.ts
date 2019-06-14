@@ -1,69 +1,63 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import { Granularities } from '../../../constants/granularities';
+import { AFM } from "@gooddata/typings";
+import { Granularities } from "../../../constants/granularities";
 
 export const absoluteDateFilter: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            uri: 'ds'
+            uri: "ds",
         },
-        from: '2016-01-01',
-        to: '2017-01-01'
-    }
+        from: "2016-01-01",
+        to: "2017-01-01",
+    },
 };
 
 export const absoluteDateFilterWithIdentifier: AFM.IAbsoluteDateFilter = {
     absoluteDateFilter: {
         dataSet: {
-            identifier: 'ds'
+            identifier: "ds",
         },
-        from: '2016-01-01',
-        to: '2017-01-01'
-    }
+        from: "2016-01-01",
+        to: "2017-01-01",
+    },
 };
 
 export const relativeDateFilter: AFM.IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: {
-            uri: 'ds'
+            uri: "ds",
         },
         granularity: Granularities.DATE,
         from: -10,
-        to: 0
-    }
+        to: 0,
+    },
 };
 
 export const relativeDateFilterWithIdentifier: AFM.IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: {
-            identifier: 'ds'
+            identifier: "ds",
         },
         granularity: Granularities.DATE,
         from: -10,
-        to: 0
-    }
+        to: 0,
+    },
 };
 
 export const positiveAttrFilter: AFM.IPositiveAttributeFilter = {
     positiveAttributeFilter: {
         displayForm: {
-            uri: 'df'
+            uri: "df",
         },
-        in: [
-            'a?id=1',
-            'a?id=2'
-        ]
-    }
+        in: ["a?id=1", "a?id=2"],
+    },
 };
 
 export const negativeAttrFilter: AFM.INegativeAttributeFilter = {
     negativeAttributeFilter: {
         displayForm: {
-            uri: 'df'
+            uri: "df",
         },
-        notIn: [
-            'a?id=1',
-            'a?id=2'
-        ]
-    }
+        notIn: ["a?id=1", "a?id=2"],
+    },
 };

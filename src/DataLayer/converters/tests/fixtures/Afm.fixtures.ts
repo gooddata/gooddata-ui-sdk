@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM } from '@gooddata/typings';
-import { Granularities } from '../../../constants/granularities';
+import { AFM } from "@gooddata/typings";
+import { Granularities } from "../../../constants/granularities";
 
 export interface IFixture {
     afm: AFM.IAfm;
@@ -10,451 +10,437 @@ export interface IFixture {
 export const empty: IFixture = {
     afm: {},
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
-export const METRIC_IDENTIFIER = 'metric.id';
-export const METRIC_URI = '/gdc/md/project/obj/metric.id';
-export const ATTRIBUTE_DISPLAY_FORM_URI = '/gdc/md/project/obj/1';
-export const ATTRIBUTE_DISPLAY_FORM_IDENTIFIER = '1';
-export const ATTRIBUTE_URI = '/gdc/md/project/obj/11';
-export const ATTRIBUTE_DISPLAY_FORM_URI_2 = '/gdc/md/project/obj/2';
-export const ATTRIBUTE_URI_2 = '/gdc/md/project/obj/22';
-export const DATE_DISPLAY_FORM_URI = '/gdc/md/project/obj/3';
-export const DATE_URI = '/gdc/md/project/33';
-export const DATE_DATA_SET_URI = '/gdc/md/project/333';
+export const METRIC_IDENTIFIER = "metric.id";
+export const METRIC_URI = "/gdc/md/project/obj/metric.id";
+export const ATTRIBUTE_DISPLAY_FORM_URI = "/gdc/md/project/obj/1";
+export const ATTRIBUTE_DISPLAY_FORM_IDENTIFIER = "1";
+export const ATTRIBUTE_URI = "/gdc/md/project/obj/11";
+export const ATTRIBUTE_DISPLAY_FORM_URI_2 = "/gdc/md/project/obj/2";
+export const ATTRIBUTE_URI_2 = "/gdc/md/project/obj/22";
+export const DATE_DISPLAY_FORM_URI = "/gdc/md/project/obj/3";
+export const DATE_URI = "/gdc/md/project/33";
+export const DATE_DATA_SET_URI = "/gdc/md/project/333";
 
 export const simpleMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const simpleMeasureWithFormat: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1',
-                format: 'GD #,##0.00000'
-            }
-        ]
+                alias: "Measure M1",
+                format: "GD #,##0.00000",
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const simpleMeasureWithIdentifiers: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            identifier: METRIC_IDENTIFIER
-                        }
-                    }
+                            identifier: METRIC_IDENTIFIER,
+                        },
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const simpleMeasureWithTextFilter: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
                         filters: [
                             {
                                 positiveAttributeFilter: {
-                                    displayForm: { identifier: 'foo' },
-                                    in: [ 'val1', 'val2' ],
-                                    textFilter: true
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        ]
+                                    displayForm: { identifier: "foo" },
+                                    in: ["val1", "val2"],
+                                    textFilter: true,
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const renamedMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Alias A1'
-            }
-        ]
+                alias: "Alias A1",
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const filteredMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
                         filters: [
                             {
                                 positiveAttributeFilter: {
                                     displayForm: {
-                                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                                     },
-                                    in: [
-                                        `${ATTRIBUTE_URI}?id=1`,
-                                        `${ATTRIBUTE_URI}?id=2`
-                                    ]
-                                }
-                            }
-                        ]
-                    }
+                                    in: [`${ATTRIBUTE_URI}?id=1`, `${ATTRIBUTE_URI}?id=2`],
+                                },
+                            },
+                        ],
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const measureWithRelativeDate: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
                         filters: [
                             {
                                 relativeDateFilter: {
                                     dataSet: {
-                                        uri: DATE_DATA_SET_URI
+                                        uri: DATE_DATA_SET_URI,
                                     },
                                     granularity: Granularities.DATE,
                                     from: -89,
-                                    to: 0
-                                }
+                                    to: 0,
+                                },
                             },
                             {
                                 positiveAttributeFilter: {
                                     displayForm: {
-                                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                                     },
-                                    in: [
-                                        `${ATTRIBUTE_URI}?id=1`,
-                                        `${ATTRIBUTE_URI}?id=2`
-                                    ]
-                                }
-                            }
-                        ]
-                    }
+                                    in: [`${ATTRIBUTE_URI}?id=1`, `${ATTRIBUTE_URI}?id=2`],
+                                },
+                            },
+                        ],
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const measureWithAbsoluteDate: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
                         filters: [
                             {
                                 absoluteDateFilter: {
                                     dataSet: {
-                                        uri: DATE_DATA_SET_URI
+                                        uri: DATE_DATA_SET_URI,
                                     },
-                                    from: '2016-01-01',
-                                    to: '2017-01-01'
-                                }
+                                    from: "2016-01-01",
+                                    to: "2017-01-01",
+                                },
                             },
                             {
                                 positiveAttributeFilter: {
                                     displayForm: {
-                                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                                     },
-                                    in: [
-                                        `${ATTRIBUTE_URI}?id=1`,
-                                        `${ATTRIBUTE_URI}?id=2`
-                                    ]
-                                }
-                            }
-                        ]
-                    }
+                                    in: [`${ATTRIBUTE_URI}?id=1`, `${ATTRIBUTE_URI}?id=2`],
+                                },
+                            },
+                        ],
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const popMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1_pop',
+                localIdentifier: "m1_pop",
                 definition: {
                     popMeasure: {
-                        measureIdentifier: 'm1',
+                        measureIdentifier: "m1",
                         popAttribute: {
-                            uri: ATTRIBUTE_URI
-                        }
-                    }
+                            uri: ATTRIBUTE_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1 - previous year'
+                alias: "Measure M1 - previous year",
             },
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1'
-            }
+                alias: "Measure M1",
+            },
         ],
         attributes: [
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
 
     resultSpec: {
         sorts: [
             {
                 measureSortItem: {
-                    direction: 'desc',
+                    direction: "desc",
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: 'm1'
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    }
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
 };
 
 export const popMeasureWithSorting: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1_pop',
+                localIdentifier: "m1_pop",
                 definition: {
                     popMeasure: {
-                        measureIdentifier: 'm1',
+                        measureIdentifier: "m1",
                         popAttribute: {
-                            uri: ATTRIBUTE_URI
-                        }
-                    }
+                            uri: ATTRIBUTE_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1 - previous year'
+                alias: "Measure M1 - previous year",
             },
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1'
-            }
+                alias: "Measure M1",
+            },
         ],
         attributes: [
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
 
     resultSpec: {
         sorts: [
             {
                 measureSortItem: {
-                    direction: 'desc',
+                    direction: "desc",
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: 'm1_pop'
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    }
+                                measureIdentifier: "m1_pop",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
 };
 
 export const showInPercent: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
-                format: '#,##0.00%',
+                localIdentifier: "m1",
+                format: "#,##0.00%",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
-                        computeRatio: true
-                    }
+                        computeRatio: true,
+                    },
                 },
-                alias: 'Measure M1'
-            }
+                alias: "Measure M1",
+            },
         ],
 
         attributes: [
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const showInPercentWithDate: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
-                format: '#,##0.00%',
+                localIdentifier: "m1",
+                format: "#,##0.00%",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
-                        computeRatio: true
-                    }
+                        computeRatio: true,
+                    },
                 },
-                alias: 'Measure M1'
-            }
+                alias: "Measure M1",
+            },
         ],
 
         attributes: [
             {
                 displayForm: {
-                    uri: DATE_DISPLAY_FORM_URI
+                    uri: DATE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const measureWithSorting: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Measure M1'
-            }
-        ]
+                alias: "Measure M1",
+            },
+        ],
     },
 
     resultSpec: {
         sorts: [
             {
                 measureSortItem: {
-                    direction: 'desc',
+                    direction: "desc",
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: 'm1'
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    }
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
 };
 
 export const categoryWithSorting: IFixture = {
@@ -462,203 +448,198 @@ export const categoryWithSorting: IFixture = {
         attributes: [
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
 
     resultSpec: {
         sorts: [
             {
                 attributeSortItem: {
-                    direction: 'desc',
-                    attributeIdentifier: 'a1'
-                }
-            }
-        ]
-    }
+                    direction: "desc",
+                    attributeIdentifier: "a1",
+                },
+            },
+        ],
+    },
 };
 
 export const factBasedMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: '/gdc/md/project/obj/fact.id'
+                            uri: "/gdc/md/project/obj/fact.id",
                         },
-                        aggregation: 'sum'
-                    }
-                }
-            }
-        ]
+                        aggregation: "sum",
+                    },
+                },
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const factBasedRenamedMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: '/gdc/md/project/obj/fact.id'
+                            uri: "/gdc/md/project/obj/fact.id",
                         },
-                        aggregation: 'sum'
-                    }
+                        aggregation: "sum",
+                    },
                 },
-                alias: 'Summary'
-            }
-        ]
+                alias: "Summary",
+            },
+        ],
     },
 
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const attributeBasedMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: ATTRIBUTE_DISPLAY_FORM_URI
+                            uri: ATTRIBUTE_DISPLAY_FORM_URI,
                         },
-                        aggregation: 'count'
-                    }
+                        aggregation: "count",
+                    },
                 },
-                format: '#,##0'
-            }
-        ]
+                format: "#,##0",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const attributeBasedRenamedMeasure: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: ATTRIBUTE_DISPLAY_FORM_URI
+                            uri: ATTRIBUTE_DISPLAY_FORM_URI,
                         },
-                        aggregation: 'count'
-                    }
+                        aggregation: "count",
+                    },
                 },
-                alias: 'Count',
-                format: '#,##0'
-            }
-        ]
+                alias: "Count",
+                format: "#,##0",
+            },
+        ],
     },
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const stackingAttribute: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
-                        aggregation: 'sum'
-                    }
+                        aggregation: "sum",
+                    },
                 },
-                alias: 'Sum of Bundle cost',
-                format: '#,##0.00'
-            }
+                alias: "Sum of Bundle cost",
+                format: "#,##0.00",
+            },
         ],
         attributes: [
             {
                 displayForm: {
-                    uri: DATE_DISPLAY_FORM_URI
+                    uri: DATE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
+                localIdentifier: "a1",
             },
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a2'
-            }
+                localIdentifier: "a2",
+            },
         ],
         filters: [
             {
                 relativeDateFilter: {
                     dataSet: {
-                        uri: DATE_DATA_SET_URI
+                        uri: DATE_DATA_SET_URI,
                     },
-                    granularity: 'GDC.time.quarter',
+                    granularity: "GDC.time.quarter",
                     from: -3,
-                    to: 0
-                }
+                    to: 0,
+                },
             },
             {
                 negativeAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                     },
-                    notIn: [
-                        `${ATTRIBUTE_URI}?id=1`
-                    ]
-                }
-            }
-        ]
+                    notIn: [`${ATTRIBUTE_URI}?id=1`],
+                },
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const stackingRenamedAttribute: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
-                        aggregation: 'sum'
-                    }
+                        aggregation: "sum",
+                    },
                 },
-                alias: 'My Metric Alias'
-            }
+                alias: "My Metric Alias",
+            },
         ],
         attributes: [
             {
-                alias: 'My Date Alias',
+                alias: "My Date Alias",
                 displayForm: {
-                    uri: DATE_DISPLAY_FORM_URI
+                    uri: DATE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
+                localIdentifier: "a1",
             },
             {
-                alias: 'My Attribute Alias',
+                alias: "My Attribute Alias",
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a2'
-            }
-        ]
+                localIdentifier: "a2",
+            },
+        ],
     },
 
-    resultSpec: {
-    }
+    resultSpec: {},
 };
 
 export const attributeFilter: IFixture = {
@@ -667,28 +648,22 @@ export const attributeFilter: IFixture = {
             {
                 positiveAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                     },
-                    in: [
-                        `${ATTRIBUTE_URI}?id=1`,
-                        `${ATTRIBUTE_URI}?id=2`,
-                        `${ATTRIBUTE_URI}?id=3`
-                    ]
-                }
+                    in: [`${ATTRIBUTE_URI}?id=1`, `${ATTRIBUTE_URI}?id=2`, `${ATTRIBUTE_URI}?id=3`],
+                },
             },
             {
                 positiveAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2,
                     },
-                    in: [
-                        `${ATTRIBUTE_URI_2}?id=a`
-                    ]
-                }
-            }
-        ]
+                    in: [`${ATTRIBUTE_URI_2}?id=a`],
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const attributeTextFilter: IFixture = {
@@ -697,30 +672,24 @@ export const attributeTextFilter: IFixture = {
             {
                 positiveAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI,
                     },
-                    in: [
-                        'val1',
-                        'val2',
-                        'val3'
-                    ],
-                    textFilter: true
-                }
+                    in: ["val1", "val2", "val3"],
+                    textFilter: true,
+                },
             },
             {
                 positiveAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2,
                     },
-                    in: [
-                        'valA'
-                    ],
-                    textFilter: true
-                }
-            }
-        ]
+                    in: ["valA"],
+                    textFilter: true,
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const attributeFilterWithAll: IFixture = {
@@ -729,16 +698,14 @@ export const attributeFilterWithAll: IFixture = {
             {
                 positiveAttributeFilter: {
                     displayForm: {
-                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2
+                        uri: ATTRIBUTE_DISPLAY_FORM_URI_2,
                     },
-                    in: [
-                        `${ATTRIBUTE_URI_2}?id=a`
-                    ]
-                }
-            }
-        ]
+                    in: [`${ATTRIBUTE_URI_2}?id=a`],
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const dateFilter: IFixture = {
@@ -747,219 +714,219 @@ export const dateFilter: IFixture = {
             {
                 relativeDateFilter: {
                     dataSet: {
-                        uri: DATE_DATA_SET_URI
+                        uri: DATE_DATA_SET_URI,
                     },
                     from: -89,
                     to: 0,
-                    granularity: Granularities.DATE
-                }
-            }
-        ]
+                    granularity: Granularities.DATE,
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const dateFilterWithoutInterval: IFixture = {
     afm: {},
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const attributeWithIdentifier: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            identifier: 'foo'
-                        }
-                    }
-                }
-            }
+                            identifier: "foo",
+                        },
+                    },
+                },
+            },
         ],
         attributes: [
             {
                 displayForm: {
-                    identifier: 'bar'
+                    identifier: "bar",
                 },
-                localIdentifier: 'a1'
-            }
-        ]
+                localIdentifier: "a1",
+            },
+        ],
     },
 
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const segmentedAndTrendedLineChart: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
+                            uri: METRIC_URI,
                         },
-                        aggregation: 'sum'
-                    }
+                        aggregation: "sum",
+                    },
                 },
-                alias: 'Sum of Bundle cost'
-            }
+                alias: "Sum of Bundle cost",
+            },
         ],
         attributes: [
             {
                 displayForm: {
-                    uri: DATE_DISPLAY_FORM_URI
+                    uri: DATE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a1'
+                localIdentifier: "a1",
             },
             {
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
                 },
-                localIdentifier: 'a2'
-            }
-        ]
+                localIdentifier: "a2",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const measuresOnlyPieChart: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Close BOP'
+                alias: "Close BOP",
             },
             {
-                localIdentifier: 'm2',
+                localIdentifier: "m2",
                 definition: {
                     measure: {
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Close EOP'
-            }
-        ]
+                alias: "Close EOP",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const oneMeasureOneAttribute: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Sum of Bundle cost',
-                format: '#,##0.00'
-            }
+                alias: "Sum of Bundle cost",
+                format: "#,##0.00",
+            },
         ],
         attributes: [
             {
-                localIdentifier: 'a1',
+                localIdentifier: "a1",
                 displayForm: {
-                    uri: ATTRIBUTE_DISPLAY_FORM_URI
-                }
-            }
-        ]
+                    uri: ATTRIBUTE_DISPLAY_FORM_URI,
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const oneMeasureOneAttributeWithIdentifiers: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            identifier: METRIC_IDENTIFIER
-                        }
-                    }
+                            identifier: METRIC_IDENTIFIER,
+                        },
+                    },
                 },
-                alias: 'Sum of Bundle cost',
-                format: '#,##0.00'
-            }
+                alias: "Sum of Bundle cost",
+                format: "#,##0.00",
+            },
         ],
         attributes: [
             {
-                localIdentifier: 'a1',
+                localIdentifier: "a1",
                 displayForm: {
-                    identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER
-                }
-            }
-        ]
+                    identifier: ATTRIBUTE_DISPLAY_FORM_IDENTIFIER,
+                },
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const reducedMultipleSorts: IFixture = {
     afm: {
         measures: [
             {
-                localIdentifier: 'm1',
+                localIdentifier: "m1",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Sum of Bundle cost',
-                format: '#,##0.00'
+                alias: "Sum of Bundle cost",
+                format: "#,##0.00",
             },
             {
-                localIdentifier: 'm2',
+                localIdentifier: "m2",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            uri: METRIC_URI
-                        }
-                    }
+                            uri: METRIC_URI,
+                        },
+                    },
                 },
-                alias: 'Sum of Bundle cost',
-                format: '#,##0.00'
-            }
-        ]
+                alias: "Sum of Bundle cost",
+                format: "#,##0.00",
+            },
+        ],
     },
     resultSpec: {
         sorts: [
             {
                 measureSortItem: {
-                    direction: 'desc',
+                    direction: "desc",
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: 'm1'
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    }
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
 };
 
 export const nativeSubTotals: IFixture = {
@@ -967,44 +934,44 @@ export const nativeSubTotals: IFixture = {
         attributes: [
             {
                 displayForm: {
-                    identifier: '1'
+                    identifier: "1",
                 },
-                localIdentifier: 'a1'
+                localIdentifier: "a1",
             },
             {
                 displayForm: {
-                    identifier: '2'
+                    identifier: "2",
                 },
-                localIdentifier: 'a2'
-            }
+                localIdentifier: "a2",
+            },
         ],
         measures: [
             {
-                alias: 'Sum of Bundle cost',
+                alias: "Sum of Bundle cost",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            identifier: 'metric.id'
-                        }
-                    }
+                            identifier: "metric.id",
+                        },
+                    },
                 },
-                format: '#,##0.00',
-                localIdentifier: 'm1'
-            }
+                format: "#,##0.00",
+                localIdentifier: "m1",
+            },
         ],
         nativeTotals: [
             {
                 attributeIdentifiers: [],
-                measureIdentifier: 'm1'
+                measureIdentifier: "m1",
             },
             {
-                attributeIdentifiers: ['a1'],
-                measureIdentifier: 'm1'
-            }
-        ]
+                attributeIdentifiers: ["a1"],
+                measureIdentifier: "m1",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
 
 export const nativeSubtotalsInTwoDimensions = {
@@ -1012,62 +979,62 @@ export const nativeSubtotalsInTwoDimensions = {
         attributes: [
             {
                 displayForm: {
-                    identifier: '1'
+                    identifier: "1",
                 },
-                localIdentifier: 'a1'
+                localIdentifier: "a1",
             },
             {
                 displayForm: {
-                    identifier: '2'
+                    identifier: "2",
                 },
-                localIdentifier: 'a2'
+                localIdentifier: "a2",
             },
             {
                 displayForm: {
-                    identifier: '1'
+                    identifier: "1",
                 },
-                localIdentifier: 'col1'
+                localIdentifier: "col1",
             },
             {
                 displayForm: {
-                    identifier: '2'
+                    identifier: "2",
                 },
-                localIdentifier: 'col2'
-            }
+                localIdentifier: "col2",
+            },
         ],
         measures: [
             {
-                alias: 'Sum of Bundle cost',
+                alias: "Sum of Bundle cost",
                 definition: {
                     measure: {
-                        aggregation: 'sum',
+                        aggregation: "sum",
                         item: {
-                            identifier: 'metric.id'
-                        }
-                    }
+                            identifier: "metric.id",
+                        },
+                    },
                 },
-                format: '#,##0.00',
-                localIdentifier: 'm1'
-            }
+                format: "#,##0.00",
+                localIdentifier: "m1",
+            },
         ],
         nativeTotals: [
             {
                 attributeIdentifiers: [],
-                measureIdentifier: 'm1'
+                measureIdentifier: "m1",
             },
             {
-                attributeIdentifiers: ['a1'],
-                measureIdentifier: 'm1'
+                attributeIdentifiers: ["a1"],
+                measureIdentifier: "m1",
             },
             {
                 attributeIdentifiers: [],
-                measureIdentifier: 'm1'
+                measureIdentifier: "m1",
             },
             {
-                attributeIdentifiers: ['col1'],
-                measureIdentifier: 'm1'
-            }
-        ]
+                attributeIdentifiers: ["col1"],
+                measureIdentifier: "m1",
+            },
+        ],
     },
-    resultSpec: {}
+    resultSpec: {},
 };
