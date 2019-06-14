@@ -1,5 +1,9 @@
-_Description of changes (if multi-commit, short global summary & context;
-if single-commit, feel free to leave empty)._
+<!--
+
+Description of changes (if multi-commit, short global summary & context;
+if single-commit, feel free to leave empty).
+
+-->
 
 ---
 

@@ -28,8 +28,8 @@
     "run-tslint": "tslint -p tsconfig.json",
     "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
     "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-    "prettier-check": "prettier --check '{src,test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
-    "prettier-write": "prettier --write '{src,test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
+    "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+    "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
     "validate": "tsc --noEmit && yarn tslint && yarn prettier-check",
     "validate-ci": "tsc --noEmit && yarn tslint-ci && yarn prettier-check"
   },
@@ -74,7 +74,6 @@
     "@types/qs": "6.5.1",
     "@types/uuid": "3.4.4",
     "async": "2.1.5",
-    "eslint-config-prettier": "^4.3.0",
     "exports-loader": "0.6.3",
     "fast-levenshtein": "2.0.6",
     "fetch-mock": "5.12.2",
