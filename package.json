@@ -23,7 +23,7 @@
     "@babel/runtime": "7.4.4",
     "@gooddata/eslint-config": "0.1.0",
     "@gooddata/mock-js": "1.28.0",
-    "@gooddata/test-storybook": "3.0.1",
+    "@gooddata/test-storybook": "3.1.1",
     "@gooddata/tslint-config": "1.0.0",
     "@storybook/addon-actions": "5.0.11",
     "@storybook/addon-options": "5.0.11",
