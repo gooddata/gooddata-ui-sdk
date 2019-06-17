@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { omit } from "lodash";
+import omit from "lodash/omit";
 
 import {
     interpolate,

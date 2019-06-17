@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 
 export function mockPollingRequest(uri: string, pendingResponse: any, finalResponse: any) {
     let counter = 0;

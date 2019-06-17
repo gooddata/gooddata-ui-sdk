@@ -1,5 +1,10 @@
 // (C) 2007-2013 GoodData Corporation
-import { isPlainObject, isFunction, set as _set, defaults, merge, result } from "lodash";
+import isPlainObject from "lodash/isPlainObject";
+import isFunction from "lodash/isFunction";
+import set from "lodash/set";
+import defaults from "lodash/defaults";
+import merge from "lodash/merge";
+import result from "lodash/result";
 
 import { thisPackage } from "./util";
 
@@ -26,7 +31,7 @@ const LATEST_REST_API_VERSION = 3;
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {
         setRequestHeader(key: string, value: string) {
-            _set(settings, ["headers", key], value);
+            set(settings, ["headers", key], value);
         },
     };
 

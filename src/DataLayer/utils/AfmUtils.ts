@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import flatMap = require("lodash/flatMap");
-import compact = require("lodash/compact");
+import flatMap from "lodash/flatMap";
+import compact from "lodash/compact";
 import { AFM } from "@gooddata/typings";
 
 export const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";

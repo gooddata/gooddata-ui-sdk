@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, VisualizationObject } from "@gooddata/typings";
-import compact = require("lodash/compact");
+import compact from "lodash/compact";
 import { convertVisualizationObjectFilter } from "./DataLayer/converters/FilterConverter";
 import { IExportConfig, IExportResponse } from "./interfaces";
 import { handleHeadPolling, IPollingOptions } from "./util";

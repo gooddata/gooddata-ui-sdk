@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
 import { MetadataModule } from "./metadata";

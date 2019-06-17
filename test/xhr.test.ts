@@ -1,6 +1,6 @@
 // (C) 2007-2017 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 
 import { handlePolling, originPackageHeaders, XhrModule } from "../src/xhr";
 import { ConfigModule } from "../src/config";

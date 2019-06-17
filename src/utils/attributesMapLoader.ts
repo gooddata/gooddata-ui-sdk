@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { get, set } from "lodash";
+import get from "lodash/get";
+import set from "lodash/set";
 import { MetadataModule } from "../metadata";
 
 function getAttributeUris(displayForms: any[]) {

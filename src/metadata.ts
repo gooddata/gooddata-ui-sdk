@@ -1,5 +1,9 @@
 // (C) 2007-2014 GoodData Corporation
-import { isPlainObject, get as _get, chunk, flatten, pick } from "lodash";
+import isPlainObject from "lodash/isPlainObject";
+import get from "lodash/get";
+import chunk from "lodash/chunk";
+import flatten from "lodash/flatten";
+import pick from "lodash/pick";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
@@ -62,7 +66,7 @@ export class MetadataModule {
                     return r.getData();
                 })
                 .then((result: any) =>
-                    _get(result, ["objects", "items"]).map((item: any) => {
+                    get(result, ["objects", "items"]).map((item: any) => {
                         if (item.visualizationObject) {
                             return {
                                 visualizationObject: convertReferencesToUris(item.visualizationObject),
@@ -654,7 +658,7 @@ export class MetadataModule {
                     ],
                 },
             })
-            .then((r: ApiResponse) => (r.response.ok ? _get(r.getData(), "elementLabelUri") : r.response));
+            .then((r: ApiResponse) => (r.response.ok ? get(r.getData(), "elementLabelUri") : r.response));
     }
 
     /**

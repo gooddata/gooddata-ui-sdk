@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { difference, map } from "lodash";
+import difference from "lodash/difference";
+import map from "lodash/map";
 
 const IDENTIFIER_REGEX = /{\S+}/g;
 

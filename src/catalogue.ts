@@ -1,5 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { get, find, omit, cloneDeep } from "lodash";
+import get from "lodash/get";
+import find from "lodash/find";
+import omit from "lodash/omit";
+import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 

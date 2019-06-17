@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as invariant from "invariant";
-import * as qs from "qs";
-import { get, range } from "lodash";
+import invariant from "invariant";
+import qs from "qs";
+import range from "lodash/range";
+import get from "lodash/get";
 import { Execution, AFM } from "@gooddata/typings";
 
 import { XhrModule } from "../xhr";

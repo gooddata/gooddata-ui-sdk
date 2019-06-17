@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import compact = require("lodash/compact");
-import flatMap = require("lodash/flatMap");
-import get = require("lodash/get");
+import compact from "lodash/compact";
+import flatMap from "lodash/flatMap";
+import get from "lodash/get";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import MeasureConverter from "./MeasureConverter";

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { AFM, ExecuteAFM } from "@gooddata/typings";
 
 function convertElementsArray(arr: string[], isText?: boolean): ExecuteAFM.AttributeElements {

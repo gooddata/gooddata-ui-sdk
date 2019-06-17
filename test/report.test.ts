@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 import { ReportModule } from "../src/report";
 import { XhrModule, ApiResponseError } from "../src/xhr";
 import { IExportConfig, IExportResponse } from "../src/interfaces";

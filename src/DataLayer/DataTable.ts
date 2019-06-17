@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require("lodash/get");
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 import { AFM } from "@gooddata/typings";
 
 import { IAdapter } from "./interfaces/Adapter";
