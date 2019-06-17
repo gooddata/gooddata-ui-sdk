@@ -23,6 +23,10 @@ const renderSupportedCharts = (config: IChartConfig = {}) => (
                 },
                 ...config,
             };
+            const style = {
+                height: 600,
+                width: 600,
+            };
 
             if (type === VisualizationTypes.BAR) {
                 newConfig.xaxis = config.yaxis;
@@ -34,9 +38,11 @@ const renderSupportedCharts = (config: IChartConfig = {}) => (
             }
 
             return wrap(
-                <div>
+                <div style={style}>
                     <Visualization config={newConfig} {...barChartWith4MetricsAndViewBy2Attribute} />
                 </div>,
+                610,
+                610,
             );
         })}
     </div>

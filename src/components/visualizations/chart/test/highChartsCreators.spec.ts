@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { getHighchartsOptions } from "../highChartsCreators";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import handleChartLoad from "../events/load";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
+import { handleChartLoad } from "../highcharts/commonConfiguration";
 
 const chartOptions = {
     data: {
@@ -180,42 +180,20 @@ describe("highChartCreators", () => {
         });
     });
 
-    describe("Heatmap configuration", () => {
-        const config = getHighchartsOptions(
-            {
-                ...chartOptions,
-                type: VisualizationTypes.HEATMAP,
-                data: {
-                    ...chartOptions.data,
-                    categories: [],
-                },
-            },
-            {},
-        );
-
-        it("have no white grid line between each cell", () => {
-            expect(config.series[0].borderWidth).toBe(0);
-        });
-
-        it("defined empty data pattern", () => {
-            expect(config.defs.patterns[0].id).toEqual("empty-data-pattern");
-        });
-    });
-
-    describe("Load event configuration", () => {
+    describe("Render event configuration", () => {
         const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, {});
 
-        it("should dual axis charts be registered load event", () => {
+        it("should dual axis charts be registered render event", () => {
             supportedDualAxesChartTypes.forEach((type: string) => {
                 const config = getConfig(type);
-                expect(config.chart.events.load).toBe(handleChartLoad);
+                expect(config.chart.events.render).toBe(handleChartLoad);
             });
         });
 
-        it("should other charts not be registered load event", () => {
+        it("should other charts not be registered render event", () => {
             // Bubble chart is an example, as long as it's not dual axis charts
             const config = getConfig(VisualizationTypes.BUBBLE);
-            expect(config.chart.events.load).toBeFalsy();
+            expect(config.chart.events.render).toBeFalsy();
         });
     });
 });

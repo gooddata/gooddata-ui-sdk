@@ -2,6 +2,7 @@
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
 import { loginUsingGreyPages } from "./utils/helpers";
+import { HIGHCHART_VERSION } from "./utils/constants";
 
 fixture("Visualization by identifier") // eslint-disable-line no-undef
     .page(config.url)
@@ -25,7 +26,7 @@ test("Chart visualization should render", async t => {
         .ok()
         .expect(chart.textContent)
         .eql(
-            "Created with Highcharts 4.2.5Month/Year (Date)$ Total Sales$2,707,184$2,625,617$2,579,553Jan 2016Feb 2016Mar 20160M1M2M3M",
+            `Created with Highcharts ${HIGHCHART_VERSION}Month/Year (Date)$ Total Sales$2,707,184$2,625,617$2,579,553Jan 2016Feb 2016Mar 201601M2M3M`,
         );
 });
 
