@@ -14,6 +14,7 @@ import {
     ATTRIBUTE_1_WITH_ALIAS,
     ATTRIBUTE_COUNTRY,
     ATTRIBUTE_POPULARITY,
+    MEASURE_WITH_NULLS,
 } from "../data/componentProps";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
@@ -363,6 +364,21 @@ storiesOf("Core components/Heatmap", module)
                             },
                         ],
                     }}
+                />
+            </div>,
+        ),
+    )
+    .add("Heatmap with null data point", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_WITH_NULLS}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
                 />
             </div>,
         ),

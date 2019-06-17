@@ -6,6 +6,9 @@ const heatmapAfmExecutions = [{
     }, {
         execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+    }, {
+        execution: require('./stories/test_data/heat_map_with_empty_cells_request.json'),
+        executionResult: require('./stories/test_data/heat_map_with_empty_cells_result.json')
     }];
 
 const pivotTableAfmExecutions = [

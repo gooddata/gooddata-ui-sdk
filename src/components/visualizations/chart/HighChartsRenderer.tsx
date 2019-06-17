@@ -19,7 +19,7 @@ import { IChartConfig } from "../../../interfaces/Config";
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
-    getChart(): Highcharts.ChartObject;
+    getChart(): Highcharts.Chart;
 }
 
 export interface IHighChartsRendererProps {

@@ -3,7 +3,7 @@ import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../../../helpers/executionResultHelper";
-import { getChartOptions, IChartOptions } from "../chartOptionsBuilder";
+import { getChartOptions } from "../chartOptionsBuilder";
 
 import {
     VIEW_BY_DIMENSION_INDEX,
@@ -14,6 +14,7 @@ import {
 
 import { IHeaderPredicate } from "../../../../interfaces/HeaderPredicate";
 import { barChartWithStackByAndViewByAttributes } from "../../../../../stories/test_data/fixtures";
+import { IChartOptions } from "../../../../interfaces/Config";
 
 export function generateChartOptions(
     dataSet: any = barChartWithStackByAndViewByAttributes,
