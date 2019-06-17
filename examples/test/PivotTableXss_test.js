@@ -8,6 +8,12 @@ fixture
     .beforeEach(loginUsingLoginForm(`${config.url}/hidden/pivot-table-xss`));
 
 test("should render items HTML escaped", async t => {
-    await checkCellValue(t, ".s-pivot-table-xss", "1,406,548 <img />", ".s-cell-0-1");
-    await checkCellValue(t, ".s-pivot-table-xss", "4,334,353 <img />", ".s-cell-0-1", ".ag-floating-bottom");
+    await checkCellValue(t, ".s-pivot-table-xss", "1,406,548 &lt;img /&gt;", ".s-cell-0-1");
+    await checkCellValue(
+        t,
+        ".s-pivot-table-xss",
+        "4,334,353 &lt;img /&gt;",
+        ".s-cell-0-1",
+        ".ag-floating-bottom",
+    );
 });

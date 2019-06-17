@@ -1,8 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
+import { ICellRendererParams } from "ag-grid-community";
+import escape = require("lodash/escape");
 import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
 import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
-import { ICellRendererParams } from "ag-grid-community";
 import {
     DOT_PLACEHOLDER,
     FIELD_SEPARATOR,
@@ -82,7 +83,7 @@ export const cellRenderer = (params: ICellRendererParams) => {
     const formattedValue =
         isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
             ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
-            : params.formatValue(params.value);
+            : escape(params.formatValue(params.value)); // we still need to escape here in case the HTML is in the value itself (RAIL-1623)
     const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
     return `<span class="${className}">${formattedValue || ""}</span>`;
 };
