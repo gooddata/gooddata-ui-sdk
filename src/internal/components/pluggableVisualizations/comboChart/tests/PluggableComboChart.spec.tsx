@@ -40,6 +40,11 @@ describe("PluggableComboChart", () => {
         chartType: VisualizationTypes.LINE,
     };
 
+    const getExtendedReferencePoint = (referencePoint: IReferencePoint) => {
+        const combo = createComponent();
+        return combo.getExtendedReferencePoint(referencePoint);
+    };
+
     function createComponent(props = defaultProps) {
         return new PluggableComboChart(props);
     }
@@ -51,11 +56,6 @@ describe("PluggableComboChart", () => {
     });
 
     describe("Buckets transformation", () => {
-        const getExtendedReferencePoint = (referencePoint: IReferencePoint) => {
-            const combo = createComponent();
-            return combo.getExtendedReferencePoint(referencePoint);
-        };
-
         it("should reuse all primary measures and secondary measures in reference point", async () => {
             const refPointMock = referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
@@ -374,5 +374,117 @@ describe("PluggableComboChart", () => {
                 });
             },
         );
+    });
+
+    describe("show in percent", () => {
+        it("should keep percentage config if there is only one master measure", async () => {
+            const refPointMock: IReferencePoint = referencePointMocks.measureWithDerivedAndPercentageRefPoint;
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint.buckets).toEqual([
+                {
+                    ...primaryMeasureBucketProps,
+                    items: [
+                        {
+                            ...referencePointMocks.masterMeasureItems[0],
+                            showOnSecondaryAxis: false,
+                            showInPercent: true,
+                        },
+                        {
+                            ...referencePointMocks.derivedMeasureItems[0],
+                            showOnSecondaryAxis: false,
+                            showInPercent: true,
+                        },
+                    ],
+                },
+                secondaryMeasureBucketProps,
+                refPointMock.buckets[1],
+            ]);
+        });
+
+        it("should ignore percentage config if there are multiple master measures on primary measure bucket", async () => {
+            const refPointMock: IReferencePoint = referencePointMocks.multipleMeasuresWithPercentageRefPoint;
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint.buckets).toEqual([
+                {
+                    ...primaryMeasureBucketProps,
+                    items: [
+                        {
+                            ...referencePointMocks.masterMeasuresWithPercentage[0],
+                            showOnSecondaryAxis: false,
+                            showInPercent: null,
+                        },
+                        {
+                            ...referencePointMocks.masterMeasuresWithPercentage[1],
+                            showOnSecondaryAxis: false,
+                            showInPercent: null,
+                        },
+                    ],
+                },
+                secondaryMeasureBucketProps,
+                refPointMock.buckets[1],
+            ]);
+        });
+
+        it("should ignore percentage config if there are multiple master measures on secondary measure bucket", async () => {
+            const refPointMock: IReferencePoint =
+                referencePointMocks.multipleSecondaryMeasuresWithPercentageRefPoint;
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint.buckets).toEqual([
+                primaryMeasureBucketProps,
+                {
+                    ...secondaryMeasureBucketProps,
+                    items: [
+                        {
+                            ...referencePointMocks.masterMeasuresWithPercentage[2],
+                            showInPercent: null,
+                        },
+                        {
+                            ...referencePointMocks.masterMeasuresWithPercentage[3],
+                            showInPercent: null,
+                        },
+                    ],
+                },
+                refPointMock.buckets[1],
+            ]);
+        });
+
+        it("should ignore percentage config if there is more than one master measure on each measure bucket", async () => {
+            const refPointMock: IReferencePoint =
+                referencePointMocks.multipleMetricBucketsWithPercentageRefPoint;
+            const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
+
+            expect(extRefPoint.buckets).toEqual([
+                {
+                    ...primaryMeasureBucketProps,
+                    items: [
+                        {
+                            ...referencePointMocks.masterMeasureItems[0],
+                            showOnSecondaryAxis: false,
+                        },
+                        {
+                            ...referencePointMocks.masterMeasureItems[1],
+                            showOnSecondaryAxis: false,
+                        },
+                    ],
+                },
+                {
+                    ...secondaryMeasureBucketProps,
+                    items: [
+                        {
+                            ...referencePointMocks.masterMeasureItems[2],
+                            showOnSecondaryAxis: true,
+                        },
+                        {
+                            ...referencePointMocks.masterMeasureItems[3],
+                            showOnSecondaryAxis: true,
+                        },
+                    ],
+                },
+                refPointMock.buckets[2],
+            ]);
+        });
     });
 });
