@@ -1127,7 +1127,7 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@11.14.0":
+"@gooddata/gooddata-js@^11.14.0":
   version "11.14.0"
   resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.14.0.tgz#3647681c9492a209ad2615ea75747ec776354e43"
   integrity sha512-28+fuwfCaUDc1lSt31hqk1otHoQvGeFPw0c1bUiwxjWdhU++ZG4IZoP0olUEI4pIWQwcCdVbgQzK55YRE3qPrw==
@@ -1145,7 +1145,7 @@
     rxjs "^5.5.6"
     uuid "^3.2.1"
 
-"@gooddata/goodstrap@60.8.0":
+"@gooddata/goodstrap@^60.8.0":
   version "60.8.0"
   resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-60.8.0.tgz#ced710ed71fedb26eb8ee2c46a858753360b38f6"
   integrity sha512-huT3G+LY0l9ZvNk1tVzO5QhnFHGfvsJUSSxQMMTjyH/42dOcjgAWEI6/hk1uF01sGobM50Q1w0v4tzUePR4ROw==
@@ -1175,7 +1175,7 @@
     rxjs "^5.5.6"
     tinycolor2 "^1.4.1"
 
-"@gooddata/js-utils@3.4.0", "@gooddata/js-utils@^3.4.0":
+"@gooddata/js-utils@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.4.0.tgz#2ea216bff64b889872aacb38eb7b7f82a638b925"
   integrity sha512-QkMVVtfhmsu0jGZFaG7Fi0ighZ3Ph9Dpgf4Uepv8XbY1pRtUDUr0JaV17RltGGud5nIQiOxJorEt4a7IJpb3YA==
@@ -12035,16 +12035,7 @@ react-dom-factories@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
   integrity sha1-63cFxNs2+1AbOqOP91lhaqD/luA=
 
-react-dom@16.5.2:
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    schedule "^0.5.0"
-
-react-dom@^16.8.1:
+react-dom@^16.5.2, react-dom@^16.8.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
@@ -12364,16 +12355,7 @@ react-transition-group@^2.2.1:
     loose-envify "^1.3.1"
     prop-types "^15.6.1"
 
-react@16.5.2:
-  version "16.5.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    schedule "^0.5.0"
-
-react@^16.8.1:
+react@^16.5.2, react@^16.8.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
@@ -13166,12 +13148,6 @@ sass-loader@6.0.6:
 sax@>=0.6.0, sax@^1.2.4, sax@~1.2.1, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
-
-schedule@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/schedule/-/schedule-0.5.0.tgz#c128fffa0b402488b08b55ae74bb9df55cc29cc8"
-  dependencies:
-    object-assign "^4.1.1"
 
 scheduler@^0.13.6:
   version "0.13.6"

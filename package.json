@@ -73,9 +73,9 @@
     "prettier": "1.16.4",
     "raf": "3.3.2",
     "raw-loader": "0.5.1",
-    "react": "16.5.2",
+    "react": "^16.5.2",
     "react-datepicker": "1.1.0",
-    "react-dom": "16.5.2",
+    "react-dom": "^16.5.2",
     "react-ga": "^2.5.2",
     "react-google-recaptcha": "^0.11.0",
     "react-helmet": "5.2.0",
@@ -102,9 +102,9 @@
     "yup": "^0.24.1"
   },
   "dependencies": {
-    "@gooddata/gooddata-js": "11.14.0",
-    "@gooddata/goodstrap": "60.8.0",
-    "@gooddata/js-utils": "3.4.0",
+    "@gooddata/gooddata-js": "^11.14.0",
+    "@gooddata/goodstrap": "^60.8.0",
+    "@gooddata/js-utils": "^3.4.0",
     "@gooddata/numberjs": "^3.1.2",
     "@gooddata/typings": "^2.13.2",
     "ag-grid-community": "20.0.0",
@@ -129,8 +129,8 @@
     "uuid": "3.2.1"
   },
   "peerDependencies": {
-    "react": "16.5.2",
-    "react-dom": "16.5.2"
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   },
   "config": {
     "eslint": "./examples/**/*.{js,jsx}",
@@ -138,7 +138,7 @@
   },
   "scripts": {
     "prepare?": "# Called before `npm publish` and on local `npm install`. Temporarily also for deleting obsolete node_modules. Ends with `true` to continue gracefully.",
-    "prepare": "cd examples/server && yarn install --pure-lockfile && cd ../..; rm -r examples/node_modules 2>/dev/null; true",
+    "prepare": "cd examples/server && yarn install --frozen-lockfile && cd ../..; rm -r examples/node_modules 2>/dev/null; true",
     "prepublishOnly": "yarn build",
     "build": "bash scripts/build.sh",
     "build-dev": "bash scripts/build.sh --dev",
