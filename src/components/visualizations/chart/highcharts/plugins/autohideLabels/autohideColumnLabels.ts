@@ -4,6 +4,7 @@ import zip = require("lodash/zip");
 import values = require("lodash/values");
 import flatten = require("lodash/flatten");
 import identity = require("lodash/identity");
+import isEmpty = require("lodash/isEmpty");
 
 import {
     isStacked,
@@ -27,7 +28,14 @@ import {
     hasShape,
     hasLabelInside,
 } from "../../dataLabelsHelpers";
-import { IPointData } from "../../../../../../interfaces/Config";
+import {
+    IPointData,
+    IAxisConfig,
+    ISeriesItem,
+    IStackItem,
+    IClientRect,
+    IDataLabelsConfig,
+} from "../../../../../../interfaces/Config";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
@@ -104,17 +112,17 @@ export function isOverlappingWidth(visiblePoints: IPointData[]) {
     });
 }
 
-function areNeighborsOverlapping(neighbors: any[]) {
+export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]) {
     return neighbors.some(labelsPair => {
-        const [firstLabel, nextLabel]: any[] = labelsPair || [];
+        const [firstLabel, nextLabel]: IDataLabelsConfig[] = labelsPair || [];
 
-        if (firstLabel && nextLabel) {
-            if (firstLabel.alignAttr && nextLabel.alignAttr) {
-                // We need to calculate this from getBBox, because FireFox does not
-                // provide clientWidth attribute
-                const firstLabelWidth = firstLabel.element.getBBox().width;
-                const firstLabelRight = firstLabel.alignAttr.x + firstLabelWidth;
-                const nextLabelLeft = nextLabel.alignAttr.x;
+        if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
+            const firstClientRect: IClientRect = firstLabel.element.getBoundingClientRect();
+            const nextClientRect: IClientRect = nextLabel.element.getBoundingClientRect();
+
+            if (firstClientRect && nextClientRect) {
+                const firstLabelRight = firstClientRect.right;
+                const nextLabelLeft = nextClientRect.left;
                 return firstLabelRight > nextLabelLeft;
             }
         }
@@ -145,28 +153,35 @@ export function getStackLabelPointsForDualAxis(stacks: any[]) {
     ).filter(identity);
 }
 
-function getStackTotalGroups(yAxis: any[]) {
-    return yAxis.map((axis: any) => axis.stackTotalGroup).filter(identity);
+export function getStackTotalGroups(yAxis: IAxisConfig[]): Highcharts.SVGAttributes[] {
+    return flatten(
+        yAxis.map((axis: IAxisConfig) => {
+            if (!isEmpty(axis.stacks)) {
+                return axis.stackTotalGroup;
+            }
+            return axis.series.map((serie: ISeriesItem) => serie.dataLabelsGroup);
+        }),
+    ).filter(identity);
 }
 
 function toggleStackedLabelsForDualAxis() {
     const { yAxis } = this;
 
     const stackTotalGroups = getStackTotalGroups(yAxis);
-    const stacks = yAxis.map((axis: any) => axis.stacks);
+    const stacks = getStackItems(yAxis);
 
     if (stacks && stackTotalGroups) {
         const points = getStackLabelPointsForDualAxis(stacks);
-        const labels = points.map((point: any) => point.label);
+        const labels = getLabelOrDataLabelForPoints(points);
         const neighbors = toNeighbors(labels);
         const areOverlapping = areNeighborsOverlapping(neighbors);
 
         if (areOverlapping) {
             this.userOptions.stackLabelsVisibility = "hidden";
-            stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.hide());
+            stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) => stackTotalGroup.hide());
         } else {
             this.userOptions.stackLabelsVisibility = "visible";
-            stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.show());
+            stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) => stackTotalGroup.show());
         }
     }
 }
@@ -239,3 +254,28 @@ export const handleColumnLabelsOutsideChart = (chart: any) => {
         }
     });
 };
+
+export function getLabelOrDataLabelForPoints(points: IPointData[]): IPointData[] {
+    return points
+        .map((point: IPointData) => {
+            return point.label || point.dataLabel;
+        })
+        .filter(identity);
+}
+
+export function getStackItems(yAxis: IAxisConfig[]): IStackItem[] {
+    return flatten(
+        yAxis.map((axis: IAxisConfig) => {
+            if (!isEmpty(axis.stacks)) {
+                return axis.stacks;
+            }
+            const series = axis.series;
+            const dataLabels: IStackItem[] = series.map((serie: ISeriesItem) => {
+                return {
+                    column: { ...serie.data },
+                };
+            });
+            return dataLabels;
+        }),
+    );
+}

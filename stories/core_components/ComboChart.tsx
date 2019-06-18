@@ -7,6 +7,7 @@ import { ComboChart, VisualizationTypes } from "../../src";
 import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
+    ATTRIBUTE_COUNTRY,
     MEASURE_1,
     MEASURE_2,
     MEASURE_3,
@@ -272,13 +273,19 @@ storiesOf("Core components/ComboChart", module)
             </ScreenshotReadyWrapper>,
         ),
     )
-    .add("stack primary measures with same chart type", () =>
+    .add("stack primary measures with same chart type and custom width style", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
                 {[COLUMN, AREA].map(chartType => (
                     <div key={chartType}>
                         <div className="storybook-title">{`${chartType} - ${chartType}`}</div>
-                        <div style={wrapperStyle} className="screenshot-container">
+                        <div
+                            style={{
+                                ...wrapperStyle,
+                                width: 1000,
+                            }}
+                            className="screenshot-container"
+                        >
                             <ComboChart
                                 projectId="storybook"
                                 primaryMeasures={[MEASURE_1, MEASURE_3]}
@@ -294,6 +301,29 @@ storiesOf("Core components/ComboChart", module)
                         </div>
                     </div>
                 ))}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("stack primary measures has many data with 1 VIEW BY and chart type is COLUMN", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                <div key={COLUMN}>
+                    <div className="storybook-title">{`${COLUMN} - ${COLUMN}`}</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <ComboChart
+                            projectId="storybook"
+                            primaryMeasures={[MEASURE_1, MEASURE_3]}
+                            secondaryMeasures={secondaryMeasure}
+                            viewBy={ATTRIBUTE_COUNTRY}
+                            config={{
+                                primaryChartType: COLUMN,
+                                secondaryChartType: COLUMN,
+                                stackMeasures: true,
+                            }}
+                            onError={onErrorHandler}
+                        />
+                    </div>
+                </div>
             </ScreenshotReadyWrapper>,
         ),
     )
