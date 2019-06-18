@@ -7,6 +7,7 @@ import { handleHeadPolling, IPollingOptions } from "./util";
 import { ApiResponseError, XhrModule, ApiResponse } from "./xhr";
 
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
+import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "./constants/errors";
 
 interface IResultExport {
     executionResult: string;
@@ -16,10 +17,6 @@ interface IResultExport {
 interface IExportResultPayload {
     resultExport: IResultExport;
 }
-
-// This code is returned from server, used for all languages
-const ERROR_RESTRICTED_CODE = "Export to required format is not allowed for data flagged as restricted.";
-const ERROR_RESTRICTED_MESSAGE = "You cannot export this insight because it contains restricted data.";
 
 /**
  * Functions for working with reports
@@ -79,7 +76,10 @@ export class ReportModule {
             error.response.status === 400 &&
             error.responseBody.indexOf(ERROR_RESTRICTED_CODE) !== -1
         ) {
-            return Promise.reject(new Error(ERROR_RESTRICTED_MESSAGE));
+            return Promise.reject({
+                ...error,
+                message: ERROR_RESTRICTED_MESSAGE,
+            });
         }
         return Promise.reject(error);
     };
