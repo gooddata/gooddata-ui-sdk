@@ -385,6 +385,54 @@ const oneAttributeOneMeasureExecutionObject: AFM.IExecution = {
     },
 };
 
+const oneAttributeOneMeasureOneFilterExecutionObject: AFM.IExecution = {
+    execution: {
+        afm: {
+            measures: [
+                {
+                    localIdentifier: "m1",
+                    definition: {
+                        measure: {
+                            item: {
+                                uri: "/gdc/md/storybook/obj/1",
+                            },
+                        },
+                    },
+                },
+            ],
+            attributes: [
+                {
+                    displayForm: {
+                        uri: "/gdc/md/storybook/obj/4.df",
+                    },
+                    localIdentifier: "a1",
+                },
+            ],
+            filters: [
+                {
+                    absoluteDateFilter: {
+                        dataSet: {
+                            uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
+                        },
+                        from: "2011-01-01",
+                        to: "2011-12-31",
+                    },
+                },
+            ],
+        },
+        resultSpec: {
+            dimensions: [
+                {
+                    itemIdentifiers: ["a1"],
+                },
+                {
+                    itemIdentifiers: ["measureGroup"],
+                },
+            ],
+        },
+    },
+};
+
 const oneAttributeOneMeasureSortByMeasureExecutionObject: AFM.IExecution = {
     execution: {
         afm: oneAttributeOneMeasureExecutionObject.execution.afm,
@@ -707,6 +755,7 @@ export {
     oneMeasureOneDimensionResponse,
     twoMeasuresOneDimensionResponse,
     oneAttributeOneMeasureExecutionObject,
+    oneAttributeOneMeasureOneFilterExecutionObject,
     oneAttributesOneMeasureResponse,
     oneAttributeOneMeasureSortByMeasureExecutionObject,
 };

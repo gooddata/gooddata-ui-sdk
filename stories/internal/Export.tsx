@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { IExportConfig, IExportResponse } from "@gooddata/gooddata-js";
+import { IExportResponse } from "@gooddata/gooddata-js";
 import ExportDialog, { IExportDialogData } from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
 import { AFM } from "@gooddata/typings";
 import { action } from "@storybook/addon-actions";
@@ -8,7 +8,7 @@ import { storiesOf } from "@storybook/react";
 
 import { BarChart, PivotTable, Table } from "../../src";
 import { Visualization } from "../../src/components/uri/Visualization";
-import { IExportFunction, OnExportReady } from "../../src/interfaces/Events";
+import { IExportFunction, IExtendedExportConfig, OnExportReady } from "../../src/interfaces/Events";
 
 import { onErrorHandler } from "../mocks";
 import { ATTRIBUTE_1, MEASURE_1, MEASURE_2 } from "../data/componentProps";
@@ -31,7 +31,6 @@ const defaultFilters: AFM.IAbsoluteDateFilter[] = [
 
 interface IWrapperComponentProps {
     children: (onExportReady: OnExportReady) => React.ReactChild;
-    filters?: AFM.IAbsoluteDateFilter[];
 }
 
 interface IWrapperComponentState {
@@ -39,10 +38,6 @@ interface IWrapperComponentState {
 }
 
 class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperComponentState> {
-    public static defaultProps: Partial<IWrapperComponentProps> = {
-        filters: [],
-    };
-
     private exportResult: IExportFunction;
 
     constructor(props: IWrapperComponentProps) {
@@ -120,7 +115,7 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
     };
 
     private exportToXLSX = () => {
-        const options: IExportConfig = { format: "xlsx" };
+        const options: IExtendedExportConfig = { format: "xlsx" };
         action("Export XLSX")(options);
         this.doExport(options);
     };
@@ -136,16 +131,13 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
 
         this.hideExportDialog();
 
-        const options: IExportConfig = { format: "xlsx", mergeHeaders };
-        if (includeFilterContext) {
-            options.showFilters = this.props.filters;
-        }
+        const options: IExtendedExportConfig = { format: "xlsx", includeFilterContext, mergeHeaders };
 
-        action("Export with mergeHeaders")(options);
+        action("Export with Export Dialog")(options);
         this.doExport(options);
     };
 
-    private doExport = (exportConfig: IExportConfig) => {
+    private doExport = (exportConfig: IExtendedExportConfig) => {
         this.exportResult(exportConfig).then(this.doExportSuccess, this.doExportError);
     };
 
@@ -161,7 +153,7 @@ class WrapperComponent extends React.Component<IWrapperComponentProps, IWrapperC
 storiesOf("Internal/Export", module)
     .add("export chart data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent filters={defaultFilters}>
+            <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
                     <BarChart
                         projectId="storybook"
@@ -179,7 +171,7 @@ storiesOf("Internal/Export", module)
     ))
     .add("export table data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent filters={defaultFilters}>
+            <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
                     <Table
                         projectId="storybook"
@@ -197,7 +189,7 @@ storiesOf("Internal/Export", module)
     ))
     .add("export pivot table data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent filters={defaultFilters}>
+            <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
                     <PivotTable
                         projectId="storybook"
@@ -215,7 +207,7 @@ storiesOf("Internal/Export", module)
     ))
     .add("export visualization data", () => (
         <div style={WRAPPER_STYLE}>
-            <WrapperComponent filters={defaultFilters}>
+            <WrapperComponent>
                 {(onExportReady: OnExportReady) => (
                     <Visualization
                         projectId="storybook"

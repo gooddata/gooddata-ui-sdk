@@ -14,6 +14,7 @@ import {
     emptyResponse,
     oneAttributesOneMeasureResponse,
     oneAttributeOneMeasureExecutionObject,
+    oneAttributeOneMeasureOneFilterExecutionObject,
 } from "../../execution/fixtures/ExecuteAfm.fixtures";
 
 export const initChartDataLoading = jest.fn(() =>
@@ -75,6 +76,13 @@ export const twoMeasuresOneDimensionDataSource: IDataSource = {
     getPage: () => Promise.resolve(twoMeasuresOneDimensionResponse),
     getAfm: () => twoMeasuresAfm,
     getFingerprint: () => JSON.stringify(twoMeasuresOneDimensionResponse),
+};
+
+export const oneAttributeOneMeasureOneFilterDataSource: IDataSource = {
+    getData: () => Promise.resolve(oneAttributesOneMeasureResponse),
+    getPage: () => Promise.resolve(oneAttributesOneMeasureResponse),
+    getAfm: () => oneAttributeOneMeasureOneFilterExecutionObject.execution.afm,
+    getFingerprint: () => JSON.stringify(oneAttributesOneMeasureResponse),
 };
 
 export const executionObjectWithTotalsDataSource: IDataSource = {
