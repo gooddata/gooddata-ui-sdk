@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     getIdsFromUri,
     sanitizeField,
@@ -7,8 +7,10 @@ import {
     indexOfTreeNode,
     getTreeLeaves,
     getSubtotalStyles,
+    cellRenderer,
 } from "../agGridUtils";
 import cloneDeep = require("lodash/cloneDeep");
+import identity = require("lodash/identity");
 import { AFM } from "@gooddata/typings";
 
 describe("getIdsFromUri", () => {
@@ -71,6 +73,22 @@ describe("getGridIndex", () => {
             expect(getGridIndex(scrollTop, gridDistance)).toEqual(expectedRowIndex);
         },
     );
+});
+
+describe("cellRenderer", () => {
+    it("should escape value that was not escaped using formatNumberEscaped", () => {
+        const fakeParams: any = {
+            formatValue: identity,
+            value: "<button>xss</button>",
+            node: {
+                rowPinned: false,
+            },
+        };
+
+        const value = cellRenderer(fakeParams);
+
+        expect(value).toEqual('<span class="s-value">&lt;button&gt;xss&lt;/button&gt;</span>');
+    });
 });
 
 describe("getSubtotalStyles", () => {
