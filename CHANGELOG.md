@@ -15,6 +15,38 @@ The REST API versions in the table are just for your information as the values a
 
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
 
+## 7.1.0
+
+### Added
+
+- Adding applied filters to exported XLSX file by using `includeFilterContext` property
+
+### Changed
+
+- The `IExportConfig` type is renamed to `IExtendedExportConfig` and moved into react-components
+```
+// old way
+
+import { IExportConfig } from '@gooddata/gooddata-js';
+
+const exportConfig: IExportConfig = {
+    format: XLSX,
+    mergeHeaders: true,
+    title: 'Custom Title'
+};
+
+// new way
+
+import { VisEvents } from '@gooddata/react-components';
+
+const exportConfig: VisEvents.IExtendedExportConfig = {
+    format: XLSX,
+    includeFilterContext: true,
+    mergeHeaders: true,
+    title: 'Custom Title'
+};
+```
+
 ## 7.0.0
 
 [Migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_7.html) from version 6.3.2
