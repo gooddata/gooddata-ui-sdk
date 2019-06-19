@@ -50,9 +50,8 @@ import {
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
-import { formatNumberEscaped } from "../../../../helpers/numberFormatting";
 
-const { stripColors }: any = numberJS;
+const { stripColors, numberFormat }: any = numberJS;
 
 const EMPTY_DATA: any = { categories: [], series: [] };
 
@@ -355,7 +354,7 @@ function formatLabel(value: any, format: any, config: IChartConfig = {}) {
 
     const stripped = stripColors(format || "");
     const { separators } = config;
-    return formatNumberEscaped(value, stripped, undefined, separators);
+    return escapeAngleBrackets(String(numberFormat(value, stripped, undefined, separators)));
 }
 
 function labelFormatter(config?: IChartConfig) {
