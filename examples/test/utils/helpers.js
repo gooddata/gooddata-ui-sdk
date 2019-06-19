@@ -2,25 +2,19 @@
 import { t as testController, Selector } from "testcafe";
 import { config } from "./config";
 
-async function getCell(t, tableSelector, cellSelector, wrapperSelector) {
-    const chart = Selector(tableSelector);
-    await t.expect(chart.exists).eql(true, `${tableSelector} not found`);
+async function getCell(t, selector, cellSelector) {
+    const chart = Selector(selector);
+    await t.expect(chart.exists).eql(true, `${selector} not found`);
     if (!cellSelector) {
         return null;
     }
-    const cell = await chart.find(`${wrapperSelector} ${cellSelector}`);
-    await t.expect(cell.exists).eql(true, `${cellSelector} not found in ${tableSelector}`);
+    const cell = await chart.find(`.ag-body-viewport ${cellSelector}`);
+    await t.expect(cell.exists).eql(true, `${cellSelector} not found in ${selector}`);
     return cell;
 }
 
-export async function checkCellValue(
-    t,
-    tableSelector,
-    cellValue,
-    cellSelector = ".ag-cell",
-    wrapperSelector = ".ag-body-viewport",
-) {
-    const cell = await getCell(t, tableSelector, cellSelector, wrapperSelector);
+export async function checkCellValue(t, selector, cellValue, cellSelector = ".ag-cell") {
+    const cell = await getCell(t, selector, cellSelector);
     if (cellValue) {
         await t
             .expect(cell.textContent)

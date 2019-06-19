@@ -17,7 +17,6 @@ function getFormattedNumber(cellContent: MeasureCell, format: string, separators
     const parsedNumber: string | number =
         cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
 
-    // we do not want to perform escaping here, everything is escaped in the cellRenderer function
     return numberFormat(parsedNumber, format, undefined, separators);
 }
 

@@ -76,7 +76,7 @@ describe("getGridIndex", () => {
 });
 
 describe("cellRenderer", () => {
-    it("should escape value that was not escaped using formatNumberEscaped", () => {
+    it("should escape value", () => {
         const fakeParams: any = {
             formatValue: identity,
             value: "<button>xss</button>",
