@@ -11,6 +11,16 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.14.1"></a>
+## 2019-06-19 Version [11.14.1](https://github.com/gooddata/gooddata-js/compare/v11.14.0...v11.14.1)
+
+- optimize lodash bundle size
+
+<a name="11.14.0"></a>
+## 2019-06-18 Version [11.14.0](https://github.com/gooddata/gooddata-js/compare/v11.13.0...v11.14.0)
+
+- improve error status for export feature
+
 <a name="11.13.0"></a>
 ## 2019-06-05 Version [11.13.0](https://github.com/gooddata/gooddata-js/compare/v11.12.0...v11.13.0)
 
