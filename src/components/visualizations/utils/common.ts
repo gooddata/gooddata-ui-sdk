@@ -4,11 +4,11 @@ import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import { Observable } from "rxjs/Rx";
+import { numberFormat } from "@gooddata/numberjs";
 
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
 import { IAxis, ISeriesItem } from "../../../interfaces/Config";
 import { IChartOptions } from "../chart/chartOptionsBuilder";
-import { formatNumberEscaped } from "../../../helpers/numberFormatting";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
@@ -89,7 +89,7 @@ export function formatLegendLabel(
     numericSymbols: string[],
 ): string {
     if (format && format.includes("%")) {
-        return formatNumberEscaped(value, "#,#0%");
+        return numberFormat(value, "#,#0%");
     }
 
     const sign = Math.sign(value) === -1 ? "-" : "";
@@ -108,7 +108,7 @@ export function formatLegendLabel(
     const b = `[<10000000000]#.#,,,${numericSymbols[2]};[<999500000000]#,,,${numericSymbols[2]};`;
     const t = `[<10000000000000]#.#,,,${numericSymbols[3]};[>=10000000000000]#,,,${numericSymbols[3]}`;
     formattingString += k + m + b + t;
-    return sign + formatNumberEscaped(positiveValue, formattingString);
+    return sign + numberFormat(positiveValue, formattingString);
 }
 
 export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
