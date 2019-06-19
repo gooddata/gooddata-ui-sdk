@@ -25,13 +25,15 @@ import {
 } from "../../../constants/bucketNames";
 import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
 
-import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../../helpers/executionResultHelper";
-import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
 import { unwrap } from "../../../helpers/utils";
+import { isBucketEmpty } from "../../../helpers/mdObjBucketHelper";
+import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
+import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
+
 import {
     IAxis,
     IChartConfig,
@@ -377,21 +379,15 @@ export function getHeatmapSeries(
     ];
 }
 
-function isBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent, bucketName: string) {
-    const bucket = get(mdObject, "buckets", []).find(bucket => bucket.localIdentifier === bucketName);
-
-    const bucketItems = get(bucket, "items", []);
-    return isEmpty(bucketItems);
-}
-
 export function getScatterPlotSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucketEmpty = isBucketEmpty(mdObject, MEASURES);
-    const secondaryMeasuresBucketEmpty = isBucketEmpty(mdObject, SECONDARY_MEASURES);
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
+    const primaryMeasuresBucketEmpty = isBucketEmpty(buckets, MEASURES);
+    const secondaryMeasuresBucketEmpty = isBucketEmpty(buckets, SECONDARY_MEASURES);
 
     const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const values = seriesItem.map((value: string) => {
@@ -1231,6 +1227,7 @@ function getXAxes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
         label: config.xLabel,
         format: config.xFormat,
@@ -1239,7 +1236,7 @@ function getXAxes(
     const firstMeasureGroupItem = measureGroupItems[0];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
+        const noPrimaryMeasures = isBucketEmpty(buckets, MEASURES);
         if (noPrimaryMeasures) {
             return [
                 {
@@ -1291,6 +1288,7 @@ function getYAxes(
     stackByAttribute: any,
 ): IAxis[] {
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
 
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
         label: config.yLabel,
@@ -1300,7 +1298,7 @@ function getYAxes(
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
+    const noPrimaryMeasures = isBucketEmpty(buckets, MEASURES);
 
     const { measures: secondaryAxisMeasures = [] as string[] } =
         (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
@@ -1525,8 +1523,10 @@ export function getTreemapAttributes(
         // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
         return getDefaultTreemapAttributes(dimensions, attributeHeaderItems);
     }
-    if (isBucketEmpty(mdObject, SEGMENT)) {
-        if (isBucketEmpty(mdObject, VIEW)) {
+
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
+    if (isBucketEmpty(buckets, SEGMENT)) {
+        if (isBucketEmpty(buckets, VIEW)) {
             return {
                 viewByAttribute: null,
                 stackByAttribute: null,
@@ -1540,7 +1540,7 @@ export function getTreemapAttributes(
             stackByAttribute: null,
         };
     }
-    if (isBucketEmpty(mdObject, VIEW)) {
+    if (isBucketEmpty(buckets, VIEW)) {
         return {
             viewByAttribute: null,
             stackByAttribute: findAttributeInDimension(
@@ -1620,6 +1620,7 @@ export function getChartOptions(
     );
 
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
     const { dimensions } = executionResponse;
     const isViewByTwoAttributes =
         attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
@@ -1763,7 +1764,7 @@ export function getChartOptions(
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null,
         ];
-        if (isBucketEmpty(mdObject, MEASURES)) {
+        if (isBucketEmpty(buckets, MEASURES)) {
             measures = [null, measureGroup.items[0] ? measureGroup.items[0] : null];
         }
 
@@ -1828,19 +1829,19 @@ export function getChartOptions(
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-        if (!isBucketEmpty(mdObject, MEASURES)) {
+        if (!isBucketEmpty(buckets, MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!isBucketEmpty(mdObject, SECONDARY_MEASURES)) {
+        if (!isBucketEmpty(buckets, SECONDARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!isBucketEmpty(mdObject, TERTIARY_MEASURES)) {
+        if (!isBucketEmpty(buckets, TERTIARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
