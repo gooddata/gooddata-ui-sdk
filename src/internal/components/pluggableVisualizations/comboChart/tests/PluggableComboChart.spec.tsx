@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 import get = require("lodash/get");
+import cloneDeep = require("lodash/cloneDeep");
 import { VisualizationObject } from "@gooddata/typings";
 import { PluggableComboChart } from "../PluggableComboChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
@@ -12,10 +13,7 @@ import {
 } from "../../../../interfaces/Visualization";
 import { AXIS } from "../../../../constants/axis";
 import { UICONFIG_AXIS, COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
-import {
-    COMBO_CHART_SUPPORTED_PROPERTIES,
-    OPTIONAL_STACKING_PROPERTIES,
-} from "../../../../constants/supportedProperties";
+import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 
@@ -311,7 +309,7 @@ describe("PluggableComboChart", () => {
             ],
         ])(
             "should return combo chart uiconfig by chart type is %s with optional stacking",
-            async (chartType: VisualizationObject.VisualizationType, expectedUiConfig: IUiConfig) => {
+            (chartType: VisualizationObject.VisualizationType, expectedUiConfig: IUiConfig) => {
                 const mockProps = {
                     ...defaultProps,
                     visualizationProperties: {
@@ -331,46 +329,31 @@ describe("PluggableComboChart", () => {
         );
 
         it.each([
-            [
-                AXIS.PRIMARY,
-                COLUMN_AREA_LINE,
-                oneMetricAndCategoryAndStackReferencePoint,
-                [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY], ...OPTIONAL_STACKING_PROPERTIES],
-            ],
-            [
-                AXIS.SECONDARY,
-                COLUMN_AREA_LINE,
-                measuresOnSecondaryAxisAndAttributeReferencePoint,
-                [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY], ...OPTIONAL_STACKING_PROPERTIES],
-            ],
-            [
-                AXIS.DUAL,
-                COLUMN_AREA_LINE,
-                multipleMetricsAndCategoriesReferencePoint,
-                [...COMBO_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL], ...OPTIONAL_STACKING_PROPERTIES],
-            ],
+            [AXIS.PRIMARY, oneMetricAndCategoryAndStackReferencePoint],
+            [AXIS.SECONDARY, measuresOnSecondaryAxisAndAttributeReferencePoint],
+            [AXIS.DUAL, multipleMetricsAndCategoriesReferencePoint],
         ])(
-            "should update supported properties list when axis is %s and chart type is/are %s",
-            (
-                axis: string,
-                supportedChartTypes: string[],
-                refPoint: IReferencePoint,
-                expectedStackProperties: string[],
-            ) => {
-                supportedChartTypes.forEach(async (chartType: VisualizationObject.VisualizationType) => {
-                    const mockProps = {
-                        ...defaultProps,
-                        pushData: jest.fn(),
-                    };
+            "should update supported properties list when axis is %s and chart type is column/line/area",
+            (axis: string, refPoint: IReferencePoint) => {
+                const comboChart = createComponent(defaultProps);
+                const clonedReferencePoint = cloneDeep(refPoint);
+                const refPoints: Array<Promise<IExtendedReferencePoint>> = COLUMN_AREA_LINE.map(
+                    (chartType: VisualizationObject.VisualizationType) => {
+                        clonedReferencePoint.buckets.forEach(
+                            (bucket: IBucket) => (bucket.chartType = chartType),
+                        );
+                        return comboChart.getExtendedReferencePoint(clonedReferencePoint);
+                    },
+                );
 
-                    const comboChart = createComponent(mockProps);
-                    refPoint.buckets.forEach((bucket: IBucket) => (bucket.chartType = chartType));
-
-                    const ext = await comboChart.getExtendedReferencePoint(refPoint);
-                    const axisType = get(ext, UICONFIG_AXIS, AXIS.PRIMARY);
-
-                    expect(axisType).toEqual(axis);
-                    expect(comboChart.getSupportedPropertiesList()).toEqual(expectedStackProperties);
+                return Promise.all(refPoints).then((extRefPoints: IExtendedReferencePoint[]) => {
+                    for (const extRefPoint of extRefPoints) {
+                        const axisType = get(extRefPoint, UICONFIG_AXIS, AXIS.PRIMARY);
+                        expect(axisType).toEqual(axis);
+                        expect(comboChart.getSupportedPropertiesList()).toEqual(
+                            COMBO_CHART_SUPPORTED_PROPERTIES[axis],
+                        );
+                    }
                 });
             },
         );
