@@ -17,7 +17,6 @@ function processStringForNumberJs(value: string | null, format: string) {
 
 function formatValueToLabelWithColors(value: string | null, format: string, separators?: ISeparators) {
     const processedValue = processStringForNumberJs(value, format);
-    // we do not want to perform escaping here, this value is used correctly in React so it gets escaped properly
     const formattedValue = numberFormat(processedValue, format, undefined, separators);
     return colors2Object(formattedValue);
 }

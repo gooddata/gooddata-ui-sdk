@@ -1,18 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
-import { colors2Object, INumberObject, ISeparators } from "@gooddata/numberjs";
+import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
 import isNil = require("lodash/isNil");
 import { customEscape, IPoint } from "./chartOptionsBuilder";
 import { percentFormatter } from "../../../helpers/utils";
-import { formatNumberEscaped } from "../../../helpers/numberFormatting";
 
 export function formatValueForTooltip(
     val: string | number,
     format: string,
     separators?: ISeparators,
 ): string {
-    const formattedObject: INumberObject = colors2Object(
-        formatNumberEscaped(val, format, undefined, separators),
-    );
+    const formattedObject: INumberObject = colors2Object(numberFormat(val, format, undefined, separators));
     return customEscape(formattedObject.label);
 }
 
