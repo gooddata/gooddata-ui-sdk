@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import * as invariant from "invariant";
-import { find, every } from "lodash";
+import invariant from "invariant";
+import find from "lodash/find";
+import every from "lodash/every";
 
 export type RulePredicate = (measureDefinition: any, mdObj: any) => boolean;
 

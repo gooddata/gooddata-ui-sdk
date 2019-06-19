@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import compact = require("lodash/compact");
-import get = require("lodash/get");
+import compact from "lodash/compact";
+import get from "lodash/get";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
 import IMeasure = VisualizationObject.IMeasure;

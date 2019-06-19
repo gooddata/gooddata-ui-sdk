@@ -1,6 +1,6 @@
 // (C) 2007-2014 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 import { DomainSegmentsModule } from "../../src/admin/domainSegments";
 import { XhrModule } from "../../src/xhr";
 

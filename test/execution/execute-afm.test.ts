@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 import { range } from "lodash";
 import { AFM, Execution } from "@gooddata/typings";
 import {

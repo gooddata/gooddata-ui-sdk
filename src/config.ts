@@ -1,5 +1,6 @@
 // (C) 2007-2014 GoodData Corporation
-import { set as _set, get as _get } from "lodash";
+import set from "lodash/set";
+import get from "lodash/get";
 
 /**
  * Config module holds SDK configuration variables
@@ -117,10 +118,10 @@ export class ConfigModule {
     }
 
     public setRequestHeader(key: string, value: string) {
-        _set(this.configStorage, ["xhrSettings", "headers", key], value);
+        set(this.configStorage, ["xhrSettings", "headers", key], value);
     }
 
     public getRequestHeader(key: string) {
-        return _get(this.configStorage, ["xhrSettings", "headers", key]);
+        return get(this.configStorage, ["xhrSettings", "headers", key]);
     }
 }

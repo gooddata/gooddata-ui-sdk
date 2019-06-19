@@ -1,22 +1,20 @@
 // (C) 2007-2014 GoodData Corporation
-import * as md5 from "md5";
-import * as invariant from "invariant";
-import {
-    cloneDeep,
-    compact,
-    filter,
-    first,
-    find,
-    map,
-    merge,
-    every,
-    get,
-    isEmpty,
-    negate,
-    partial,
-    flatten,
-    set,
-} from "lodash";
+import md5 from "md5";
+import invariant from "invariant";
+import cloneDeep from "lodash/cloneDeep";
+import compact from "lodash/compact";
+import filter from "lodash/filter";
+import first from "lodash/first";
+import find from "lodash/find";
+import map from "lodash/map";
+import merge from "lodash/merge";
+import every from "lodash/every";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import negate from "lodash/negate";
+import partial from "lodash/partial";
+import flatten from "lodash/flatten";
+import set from "lodash/set";
 
 import { Rules } from "../utils/rules";
 import { sortDefinitions } from "../utils/definitions";

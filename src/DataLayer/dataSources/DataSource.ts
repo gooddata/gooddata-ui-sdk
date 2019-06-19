@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
-import * as stringify from "json-stable-stringify";
+import stringify from "json-stable-stringify";
 import { IDataSource } from "../interfaces/DataSource";
 import { DEFAULT_LIMIT } from "../../execution/execute-afm";
 

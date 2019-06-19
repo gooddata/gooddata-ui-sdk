@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
-import * as fetchMock from "fetch-mock";
+import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./helpers/polling";
 import { IExportResponse } from "../src/interfaces";
 import { getIn, handleHeadPolling, IPollingOptions, queryString, thisPackage } from "../src/util";

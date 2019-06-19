@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationObject } from "@gooddata/typings";
-import isEmpty = require("lodash/isEmpty");
-import omit = require("lodash/omit");
-import isArray = require("lodash/isArray");
-import isObject = require("lodash/isObject");
-import isString = require("lodash/isString");
-import stringify = require("json-stable-stringify");
+import isEmpty from "lodash/isEmpty";
+import omit from "lodash/omit";
+import isArray from "lodash/isArray";
+import isObject from "lodash/isObject";
+import isString from "lodash/isString";
+import stringify from "json-stable-stringify";
 import { v4 as uuid } from "uuid";
 
 import { IProperties } from "./interfaces";

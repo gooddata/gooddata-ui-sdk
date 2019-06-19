@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { get } from "lodash";
+import get from "lodash/get";
 
 const BUCKETS = "buckets";
 
