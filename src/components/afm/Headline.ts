@@ -21,4 +21,5 @@ export const Headline: React.ComponentClass<IDataSourceProviderProps> = dataSour
     CoreHeadline,
     generateDefaultDimensions,
     "CoreHeadline",
+    "Headline",
 );
