@@ -1,5 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import { get, find, includes, sortBy, first } from "lodash";
+import get from "lodash/get";
+import find from "lodash/find";
+import includes from "lodash/includes";
+import sortBy from "lodash/sortBy";
+import first from "lodash/first";
 
 import { IMetricDefinition } from "../../src/interfaces";
 
