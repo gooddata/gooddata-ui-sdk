@@ -1,7 +1,8 @@
 // (C) 2007-2014 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { noop, range } from "lodash";
+import noop from "lodash/noop";
+import range from "lodash/range";
 import {
     ProjectModule,
     parseSettingItemValue,

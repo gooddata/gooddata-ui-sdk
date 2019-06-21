@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { isPlainObject } from "lodash";
+import isPlainObject from "lodash/isPlainObject";
 import { MockRequest } from "fetch-mock";
 
 /**

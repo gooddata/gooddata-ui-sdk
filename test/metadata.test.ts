@@ -3,7 +3,8 @@ import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { VisualizationObject } from "@gooddata/typings";
 
-import { range, find } from "lodash";
+import range from "lodash/range";
+import find from "lodash/find";
 import { mockPollingRequest } from "./helpers/polling";
 import { MetadataModule } from "../src/metadata";
 import { XhrModule } from "../src/xhr";

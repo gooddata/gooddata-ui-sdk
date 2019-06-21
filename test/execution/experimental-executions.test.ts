@@ -1,7 +1,9 @@
 // (C) 2007-2014 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { cloneDeep, range, get } from "lodash";
+import get from "lodash/get";
+import range from "lodash/range";
+import cloneDeep from "lodash/cloneDeep";
 
 import { expectColumns, expectMetricDefinition } from "../helpers/execution";
 import { ExperimentalExecutionsModule } from "../../src/execution/experimental-executions";

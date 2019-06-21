@@ -2,7 +2,8 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
-import { cloneDeep, get } from "lodash";
+import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import * as fixtures from "./fixtures/catalogue";
 import { CatalogueModule } from "../src/catalogue";
 import { XhrModule } from "../src/xhr";
