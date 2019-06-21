@@ -52,7 +52,7 @@ export interface IExecuteChildrenProps {
  * is a component that does execution based on afm and resultSpec props and passes the result to it's children function
  */
 export class Execute extends React.Component<IExecuteProps, IExecuteState> {
-    public static proptTypes = ExecutePropType;
+    public static propTypes = ExecutePropType;
     public static defaultProps: Partial<IExecuteProps> = {
         dataTableFactory,
         onError: noop,
