@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
@@ -6,9 +6,9 @@ import { AFM, Execution } from "@gooddata/typings";
 
 import { ITableProps, Table } from "./Table";
 import { TableControls } from "./TableControls";
-import { DEFAULT_HEADER_HEIGHT, DEFAULT_ROW_HEIGHT, DEFAULT_FOOTER_ROW_HEIGHT } from "./TableVisualization";
 import { OnSortChangeWithItem, TableRow } from "../../../interfaces/Table";
 import { ITotalWithData } from "../../../interfaces/Totals";
+import { DEFAULT_FOOTER_ROW_HEIGHT, DEFAULT_HEADER_HEIGHT, DEFAULT_ROW_HEIGHT } from "./constants/layout";
 
 const HEIGHT_PADDING: number = 20;
 const BOTTOM_BUTTONS_HEIGHT: number = 31;

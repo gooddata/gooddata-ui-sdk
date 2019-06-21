@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { Table } from "fixed-data-table-2";
@@ -10,7 +10,6 @@ import "jest";
 
 import {
     TableVisualization,
-    DEFAULT_FOOTER_ROW_HEIGHT,
     ITableVisualizationProps,
     ITableVisualizationState,
     IContainerProps,
@@ -36,6 +35,7 @@ import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import { ITotalWithData } from "../../../../interfaces/Totals";
 import { withIntl, wrapWithIntl } from "../../utils/intlUtils";
 import * as headerPredicateFactory from "../../../../factory/HeaderPredicateFactory";
+import { DEFAULT_FOOTER_ROW_HEIGHT } from "../constants/layout";
 
 function getInstanceFromWrapper(wrapper: ReactWrapper<any>, component: any): any {
     return wrapper

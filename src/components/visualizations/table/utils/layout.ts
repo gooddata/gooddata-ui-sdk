@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2019 GoodData Corporation
 import * as classNames from "classnames";
 import { clamp } from "lodash";
 import { string } from "@gooddata/js-utils";
@@ -6,18 +6,22 @@ import { IMappingHeader } from "../../../../interfaces/MappingHeader";
 import { getMappingHeaderLocalIdentifier } from "../../../../helpers/mappingHeader";
 
 import { getHiddenRowsOffset } from "./row";
-import { getFooterHeight } from "./footer";
-import { DEFAULT_ROW_HEIGHT, DEFAULT_HEADER_HEIGHT } from "../TableVisualization";
 import {
     Align,
     IAlignPoint,
     IHeaderTooltipArrowPosition,
+    IPositions,
     ITableColumnProperties,
     ITableDimensions,
-    IPositions,
 } from "../../../../interfaces/Table";
 import { ALIGN_LEFT } from "../constants/align";
 import { ITotalWithData } from "../../../../interfaces/Totals";
+import {
+    DEFAULT_FOOTER_ROW_HEIGHT,
+    DEFAULT_HEADER_HEIGHT,
+    DEFAULT_ROW_HEIGHT,
+    TOTALS_ADD_ROW_HEIGHT,
+} from "../constants/layout";
 
 const HEADER_PADDING: number = 8;
 const MOBILE_SORT_TOOLTIP_OFFSET: number = 20;
@@ -71,6 +75,69 @@ export function getHeaderOffset(hasHiddenRows: boolean): number {
 
 export function isHeaderAtDefaultPosition(stickyHeaderOffset: number, tableTop: number): boolean {
     return tableTop >= stickyHeaderOffset;
+}
+
+export function getFooterHeight(
+    totals: ITotalWithData[],
+    totalsEditAllowed: boolean,
+    totalsAreVisible: boolean,
+): number {
+    return (
+        (totalsAreVisible ? totals.length * DEFAULT_FOOTER_ROW_HEIGHT : 0) +
+        (totalsEditAllowed ? TOTALS_ADD_ROW_HEIGHT : 0)
+    );
+}
+
+export function isFooterAtDefaultPosition(
+    hasHiddenRows: boolean,
+    tableBottom: number,
+    windowHeight: number,
+): boolean {
+    const hiddenRowsOffset: number = getHiddenRowsOffset(hasHiddenRows);
+
+    return tableBottom - hiddenRowsOffset <= windowHeight;
+}
+
+export function isFooterAtEdgePosition(
+    hasHiddenRows: boolean,
+    totals: ITotalWithData[],
+    windowHeight: number,
+    totalsEditAllowed: boolean,
+    totalsAreVisible: boolean,
+    tableDimensions: ITableDimensions,
+): boolean {
+    const { height: tableHeight, bottom: tableBottom } = tableDimensions;
+
+    const footerHeight: number = getFooterHeight(totals, totalsEditAllowed, totalsAreVisible);
+    const headerOffset: number = getHeaderOffset(hasHiddenRows);
+
+    const footerHeightTranslate: number = tableHeight - footerHeight;
+
+    return tableBottom + headerOffset >= windowHeight + footerHeightTranslate;
+}
+
+export function getFooterPositions(
+    hasHiddenRows: boolean,
+    totals: ITotalWithData[],
+    windowHeight: number,
+    totalsEditAllowed: boolean,
+    totalsAreVisible: boolean,
+    tableDimensions: ITableDimensions,
+): IPositions {
+    const { height: tableHeight, bottom: tableBottom } = tableDimensions;
+
+    const footerHeight = getFooterHeight(totals, totalsEditAllowed, totalsAreVisible);
+    const hiddenRowsOffset = getHiddenRowsOffset(hasHiddenRows);
+    const headerOffset = getHeaderOffset(hasHiddenRows);
+
+    const footerHeightTranslate = tableHeight - footerHeight;
+
+    return {
+        defaultTop: -hiddenRowsOffset,
+        edgeTop: headerOffset - footerHeightTranslate,
+        fixedTop: windowHeight - footerHeightTranslate - footerHeight,
+        absoluteTop: windowHeight - tableBottom,
+    };
 }
 
 export function isHeaderAtEdgePosition(

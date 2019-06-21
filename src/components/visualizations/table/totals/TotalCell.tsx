@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
 import { uniqueId, noop } from "lodash";
@@ -8,7 +8,6 @@ import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/typings";
 import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../../interfaces/MappingHeader";
 
-import { DEFAULT_FOOTER_ROW_HEIGHT, TOTALS_ADD_ROW_HEIGHT } from "../TableVisualization";
 import { getCellStyleAndFormattedValue } from "../../../../helpers/tableCell";
 import {
     getTotalsDataSource,
@@ -18,6 +17,7 @@ import {
 } from "./utils";
 import { AddTotal } from "./AddTotal";
 import { ITotalWithData, IIndexedTotalItem } from "../../../../interfaces/Totals";
+import { DEFAULT_FOOTER_ROW_HEIGHT, TOTALS_ADD_ROW_HEIGHT } from "../constants/layout";
 
 export interface ITotalCellProps {
     totalsWithData: ITotalWithData[];

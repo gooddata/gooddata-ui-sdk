@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
-import { DEFAULT_ROW_HEIGHT } from "../TableVisualization";
+// (C) 2007-2019 GoodData Corporation
 import { IPositions } from "../../../../interfaces/Table";
+import { DEFAULT_ROW_HEIGHT } from "../constants/layout";
 
 function setPosition(element: HTMLElement, position: string, top: number, isSticking: boolean = false): void {
     const { style, classList } = element;
