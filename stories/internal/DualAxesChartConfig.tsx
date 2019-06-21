@@ -6,9 +6,10 @@ import * as dataSet from "../test_data/chart_with_2_metrics_and_view_by_attribut
 import { Visualization } from "../../src/components/visualizations/Visualization";
 import { wrap } from "../utils/wrap";
 import "../../styles/scss/charts.scss";
-import { IChartConfig, VisualizationTypes } from "../../src";
+import { ChartType, IChartConfig, VisualizationTypes } from "../../src";
 import { barChartWithoutAttributes } from "../test_data/fixtures";
 import { BASE_DUAL_AXIS_CHARTS } from "../data/dualAxis";
+import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
 
 const NOT_SET = "not set";
 const MinMaxInfo = ({
@@ -27,45 +28,49 @@ const MinMaxInfo = ({
     </div>
 );
 
-const renderSupportedCharts = (dataset: any, config?: IChartConfig, minmaxInfo = {}) => (
-    <div>
-        {BASE_DUAL_AXIS_CHARTS.map(type => {
-            const _config: IChartConfig = {
-                type,
-                legend: {
-                    enabled: true,
-                    position: "top",
-                },
-                secondary_yaxis: {
-                    measures: ["wonMetric"],
-                },
-                ...config,
-            };
-            const style = {
-                height: 600,
-                width: 600,
-            };
-
-            if (type === VisualizationTypes.BAR) {
-                _config.xaxis = _config.yaxis;
-                _config.secondary_xaxis = _config.secondary_yaxis;
-                _config.yaxis = _config.secondary_yaxis = undefined;
-                _config.dataLabels = {
-                    visible: false, // disable data label on bar chart to make test stable
+const renderSupportedCharts = (dataset: any, config?: IChartConfig, minmaxInfo = {}) =>
+    screenshotWrap(
+        <ScreenshotReadyWrapper resolver={createHighChartResolver(3)}>
+            {BASE_DUAL_AXIS_CHARTS.map((type: ChartType, index: number) => {
+                const chartConfig: IChartConfig = {
+                    type,
+                    legend: {
+                        enabled: true,
+                        position: "top",
+                    },
+                    secondary_yaxis: {
+                        measures: ["wonMetric"],
+                    },
+                    ...config,
                 };
-            }
+                const style = {
+                    height: 600,
+                    width: 600,
+                };
 
-            return wrap(
-                <div style={style}>
-                    <MinMaxInfo {...minmaxInfo} />
-                    <Visualization config={_config} {...dataset} />
-                </div>,
-                640,
-                620,
-            );
-        })}
-    </div>
-);
+                if (type === VisualizationTypes.BAR) {
+                    chartConfig.xaxis = chartConfig.yaxis;
+                    chartConfig.secondary_xaxis = chartConfig.secondary_yaxis;
+                    chartConfig.yaxis = chartConfig.secondary_yaxis = undefined;
+                    chartConfig.dataLabels = {
+                        visible: false, // disable data label on bar chart to make test stable
+                    };
+                }
+
+                return wrap(
+                    <div style={style}>
+                        <MinMaxInfo {...minmaxInfo} />
+                        <Visualization config={chartConfig} {...dataset} />
+                    </div>,
+                    640,
+                    620,
+                    undefined,
+                    undefined,
+                    index,
+                );
+            })}
+        </ScreenshotReadyWrapper>,
+    );
 
 const getMinMaxConfig: any = (
     minLeft = undefined as string,
@@ -217,25 +222,25 @@ storiesOf("Internal/DualAxesMinMaxConfig", module)
             return screenshotWrap(<div>{renderSupportedCharts(dataSet.mixDataset02, config, info)}</div>);
         },
     )
-    .add("Dataset with negative and positive on left axis, negative and +0 on right axis", () => {
+    .add("Dataset with negative and positive on left axis, negative and positive on right axis", () => {
         return screenshotWrap(<div>{renderSupportedCharts(dataSet.mixDataset01)}</div>);
     })
     .add(
-        "Dataset with negative and positive on left axis, negative and +0 on right axis with min and max settings",
+        "Dataset with negative and positive on left axis, negative and positive on right axis with min and max settings",
         () => {
             const { config, info } = getMinMaxConfig("-200", "200", "-10000", "5000");
             return screenshotWrap(<div>{renderSupportedCharts(dataSet.mixDataset01, config, info)}</div>);
         },
     )
     .add(
-        "Dataset with negative and positive on left axis, negative and +0 on right axis with positive min and max settings",
+        "Dataset with negative and positive on left axis, negative and positive on right axis with positive min and max settings",
         () => {
             const { config, info } = getMinMaxConfig("0", "200", "0", "5000");
             return screenshotWrap(<div>{renderSupportedCharts(dataSet.mixDataset01, config, info)}</div>);
         },
     )
     .add(
-        "Dataset with negative and positive on left axis, negative and +0 on right axis with negative min and max settings",
+        "Dataset with negative and positive on left axis, negative and positive on right axis with negative min and max settings",
         () => {
             const { config, info } = getMinMaxConfig("-100", "0", "-4500", "0");
             return screenshotWrap(<div>{renderSupportedCharts(dataSet.mixDataset01, config, info)}</div>);

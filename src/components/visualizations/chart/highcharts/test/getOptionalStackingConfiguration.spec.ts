@@ -214,9 +214,14 @@ describe("getOptionalStackingConfiguration", () => {
                         stacking: "normal",
                     },
                 ],
-                yAxis: Array(2).fill({
-                    stackLabels: { enabled: true },
-                }),
+                yAxis: [
+                    {
+                        stackLabels: { enabled: false },
+                    },
+                    {
+                        stackLabels: { enabled: true },
+                    },
+                ],
             });
         });
 
@@ -440,7 +445,7 @@ describe("getOptionalStackingConfiguration", () => {
                 expect(result).toEqual({});
             });
 
-            it('should disable stack labels when "stackMeasuresToPercent" is on and having negative value', () => {
+            it('should disable stack labels when "stackMeasuresToPercent" is on', () => {
                 const chartOptions = { type: VisualizationTypes.COLUMN };
                 const config = {
                     yAxis: [{}],
@@ -468,39 +473,6 @@ describe("getOptionalStackingConfiguration", () => {
                     yAxis: [
                         {
                             stackLabels: { enabled: false },
-                        },
-                    ],
-                });
-            });
-
-            it('should not disable stack labels when "stackMeasuresToPercent" is on and having positive value', () => {
-                const chartOptions = { type: VisualizationTypes.COLUMN };
-                const config = {
-                    yAxis: [{}],
-                    series: [
-                        {
-                            yAxis: 0,
-                            data: [
-                                {
-                                    y: 100,
-                                },
-                                {
-                                    y: 50,
-                                },
-                            ],
-                        },
-                    ],
-                };
-                const chartConfig = {
-                    stackMeasuresToPercent: true,
-                    dataLabels: { visible: true },
-                };
-
-                const result = getYAxisConfiguration(chartOptions, config, chartConfig);
-                expect(result).toEqual({
-                    yAxis: [
-                        {
-                            stackLabels: { enabled: true },
                         },
                     ],
                 });
