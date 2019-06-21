@@ -1,12 +1,11 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { createInternalIntl } from "../../../../utils/internalIntlProvider";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-import { IntlProvider } from "react-intl";
 
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import LabelRotationControl, { ILabelRotationControl } from "../LabelRotationControl";
 import DropdownControl from "../../DropdownControl";
 
@@ -15,16 +14,15 @@ const defaultProps: ILabelRotationControl = {
     configPanelDisabled: false,
     properties: {},
     axis: "xaxis",
-    intl: createInternalIntl(),
     pushData: noop,
 };
 
 function createComponent(customProps: Partial<ILabelRotationControl> = {}) {
     const props: ILabelRotationControl = { ...cloneDeep(defaultProps), ...customProps };
     return mount<ILabelRotationControl, null>(
-        <IntlProvider locale="en">
+        <InternalIntlWrapper>
             <LabelRotationControl {...props} />
-        </IntlProvider>,
+        </InternalIntlWrapper>,
     );
 }
 

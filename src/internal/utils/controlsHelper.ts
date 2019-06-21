@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
 import set = require("lodash/set");
+import { InjectedIntlProps } from "react-intl";
 import { getTranslation } from "./translations";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";
 
@@ -25,7 +26,7 @@ export function isInvalidOrMinMaxError(value: string, minNumberValue: number, ma
 export function maxInputValidateAndPushData(
     data: any,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps,
+    props: IMinMaxControlProps & InjectedIntlProps,
     setState: any,
     defaultState: IMinMaxControlState,
 ) {
@@ -83,7 +84,7 @@ export function maxInputValidateAndPushData(
 export function minInputValidateAndPushData(
     data: any,
     state: IMinMaxControlState,
-    props: IMinMaxControlProps,
+    props: IMinMaxControlProps & InjectedIntlProps,
     setState: any,
     defaultState: IMinMaxControlState,
 ) {

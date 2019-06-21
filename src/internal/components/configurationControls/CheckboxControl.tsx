@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
-import noop = require("lodash/noop");
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
@@ -11,22 +10,20 @@ export interface ICheckboxControlProps {
     valuePath: string;
     properties: IVisualizationProperties;
     labelText?: string;
-    intl?: InjectedIntl;
     checked?: boolean;
     disabled?: boolean;
     showDisabledMessage?: boolean;
     pushData(data: any): void;
 }
 
-export default class CheckboxControl extends React.Component<ICheckboxControlProps> {
+class CheckboxControl extends React.Component<ICheckboxControlProps & InjectedIntlProps> {
     public static defaultProps = {
         checked: false,
         disabled: false,
         showDisabledMessage: false,
-        intl: noop,
     };
 
-    constructor(props: ICheckboxControlProps) {
+    constructor(props: ICheckboxControlProps & InjectedIntlProps) {
         super(props);
 
         this.onValueChanged = this.onValueChanged.bind(this);
@@ -35,7 +32,7 @@ export default class CheckboxControl extends React.Component<ICheckboxControlPro
     public render() {
         const { checked, disabled, labelText, showDisabledMessage, intl } = this.props;
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} intl={intl}>
+            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
                 <label className="input-checkbox-label">
                     <input
                         checked={checked}
@@ -57,3 +54,5 @@ export default class CheckboxControl extends React.Component<ICheckboxControlPro
         pushData({ properties: newProperties });
     }
 }
+
+export default injectIntl(CheckboxControl);

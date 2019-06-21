@@ -17,7 +17,6 @@ const defaultProps: IColorDropdownProps = {
         type: "guid",
         value: "04",
     },
-    intl: null,
     colorPalette,
     showCustomPicker: false,
     onColorSelected: noop,

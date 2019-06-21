@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import get = require("lodash/get");
 import { AxisType } from "../../../interfaces/AxisType";
@@ -11,12 +11,11 @@ export interface ILabelSubsection {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
-    intl: InjectedIntl;
     properties: IVisualizationProperties;
     pushData: (data: any) => any;
 }
 
-export default class LabelSubsection extends React.PureComponent<ILabelSubsection, {}> {
+class LabelSubsection extends React.PureComponent<ILabelSubsection & InjectedIntlProps, {}> {
     public render() {
         const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
 
@@ -24,7 +23,6 @@ export default class LabelSubsection extends React.PureComponent<ILabelSubsectio
             <ConfigSubsection
                 title="properties.axis.labels"
                 valuePath={`${this.props.axis}.labelsEnabled`}
-                intl={this.props.intl}
                 properties={this.props.properties}
                 pushData={this.props.pushData}
                 canBeToggled={true}
@@ -36,7 +34,6 @@ export default class LabelSubsection extends React.PureComponent<ILabelSubsectio
                     disabled={this.props.disabled}
                     configPanelDisabled={this.props.configPanelDisabled}
                     axis={this.props.axis}
-                    intl={this.props.intl}
                     properties={this.props.properties}
                     pushData={this.props.pushData}
                 />
@@ -58,3 +55,5 @@ export default class LabelSubsection extends React.PureComponent<ILabelSubsectio
         };
     }
 }
+
+export default injectIntl(LabelSubsection);

@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
-import { getTranslation } from "../../utils/translations";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
@@ -18,7 +18,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
     protected renderConfigurationPanel() {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { properties, propertiesMeta, intl, pushData } = this.props;
+        const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -30,7 +30,6 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     <ConfigSection
                         id="canvas_section"
                         title="properties.canvas.title"
-                        intl={intl}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -38,14 +37,12 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                         <DataLabelsControl
                             pushData={pushData}
                             properties={properties}
-                            intl={intl}
                             isDisabled={controlsDisabled}
                             defaultValue={false}
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"
-                            intl={intl}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}
@@ -58,7 +55,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     arrowOffsets={{ "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] }}
                     alignPoints={[{ align: "tc bc" }]}
                 >
-                    {getTranslation("properties.config.not_applicable", intl)}
+                    <FormattedMessage id="properties.config.not_applicable" />
                 </Bubble>
             </BubbleHoverTrigger>
         );

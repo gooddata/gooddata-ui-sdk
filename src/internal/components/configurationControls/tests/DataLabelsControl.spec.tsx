@@ -3,20 +3,22 @@ import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import DataLabelsControl, { IDataLabelsControlProps } from "../DataLabelsControl";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 
 describe("DataLabelsControl", () => {
     const defaultProps = {
         properties: {},
-        intl: createInternalIntl(DEFAULT_LOCALE),
         pushData: noop,
         isDisabled: false,
     };
 
     function createComponent(customProps: Partial<IDataLabelsControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return mount<IDataLabelsControlProps, null>(<DataLabelsControl {...props} />);
+        return mount(
+            <InternalIntlWrapper>
+                <DataLabelsControl {...props} />
+            </InternalIntlWrapper>,
+        );
     }
 
     describe("Rendering", () => {

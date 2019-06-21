@@ -1,30 +1,28 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { createInternalIntl } from "../../../../utils/internalIntlProvider";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-import { IntlProvider } from "react-intl";
 import LabelSubsection, { ILabelSubsection } from "../LabelSubsection";
 import LabelRotationControl from "../LabelRotationControl";
 import ConfigSubsection from "../../../configurationControls/ConfigSubsection";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 const defaultProps: ILabelSubsection = {
     disabled: true,
     configPanelDisabled: false,
     properties: {},
     axis: "xaxis",
-    intl: createInternalIntl(),
     pushData: noop,
 };
 
 function createComponent(customProps: Partial<ILabelSubsection> = {}) {
     const props: ILabelSubsection = { ...cloneDeep(defaultProps), ...customProps };
     return mount<ILabelSubsection, null>(
-        <IntlProvider locale="en">
+        <InternalIntlWrapper>
             <LabelSubsection {...props} />
-        </IntlProvider>,
+        </InternalIntlWrapper>,
     );
 }
 

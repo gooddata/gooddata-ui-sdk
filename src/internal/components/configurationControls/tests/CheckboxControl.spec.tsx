@@ -1,11 +1,10 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import noop = require("lodash/noop");
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 
 import CheckboxControl, { ICheckboxControlProps } from "../CheckboxControl";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("CheckboxControl", () => {
     const defaultProps = {
@@ -13,15 +12,16 @@ describe("CheckboxControl", () => {
         labelText: "properties.canvas.gridline",
         properties: {},
         propertiesMeta: {},
-        intl: createInternalIntl(DEFAULT_LOCALE),
         pushData: noop,
     };
 
     function createComponent(customProps: Partial<ICheckboxControlProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return shallow<ICheckboxControlProps, null>(<CheckboxControl {...props} />, {
-            lifecycleExperimental: true,
-        });
+        return mount(
+            <InternalIntlWrapper>
+                <CheckboxControl {...props} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render checkbox control", () => {

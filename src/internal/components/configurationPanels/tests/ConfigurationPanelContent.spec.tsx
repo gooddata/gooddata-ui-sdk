@@ -4,6 +4,7 @@ import { shallow } from "enzyme";
 import ConfigurationPanelContent, {
     IConfigurationPanelContentProps,
 } from "../../configurationPanels/ConfigurationPanelContent";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 class DummyConfigurationPanel extends ConfigurationPanelContent {
     constructor(props: IConfigurationPanelContentProps) {
@@ -21,7 +22,11 @@ class DummyConfigurationPanel extends ConfigurationPanelContent {
 }
 
 describe("ConfigurationPanelContent", () => {
-    function createComponent(props: IConfigurationPanelContentProps = {}) {
+    function createComponent(
+        props: IConfigurationPanelContentProps = {
+            locale: DEFAULT_LOCALE,
+        },
+    ) {
         return shallow<IConfigurationPanelContentProps, null>(<DummyConfigurationPanel {...props} />, {
             lifecycleExperimental: true,
         });

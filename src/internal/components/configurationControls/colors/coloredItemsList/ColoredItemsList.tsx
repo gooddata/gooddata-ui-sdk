@@ -6,10 +6,9 @@ import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import * as ChartConfiguration from "../../../../../interfaces/Config";
 import { IColorItem } from "@gooddata/gooddata-js";
 
-import { ColoredItem } from "./ColoredItem";
+import ColoredItem from "./ColoredItem";
 import { getSearchedItems } from "../../../../utils/colors";
 import { IColoredItem } from "../../../../interfaces/Colors";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 const VISIBLE_ITEMS_COUNT = 5;
 const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
@@ -54,29 +53,26 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
 
         return (
             <div ref={this.listRef}>
-                <InternalIntlWrapper locale={this.props.intl.locale}>
-                    <DropdownBody
-                        width={DROPDOWN_BODY_WIDTH}
-                        isSearchFieldVisible={this.isSearchFieldVisible()}
-                        searchString={searchString}
-                        onSearch={this.onSearch}
-                        onScrollStart={this.onScroll}
-                        items={items}
-                        rowItem={
-                            <ColoredItem
-                                colorPalette={this.props.colorPalette}
-                                onSelect={this.onSelect}
-                                showCustomPicker={this.props.showCustomPicker}
-                                disabled={this.props.disabled}
-                                intl={this.props.intl}
-                            />
-                        }
-                        className="gd-colored-items-list"
-                        maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
-                        disabled={this.props.disabled}
-                        isLoading={this.props.isLoading}
-                    />
-                </InternalIntlWrapper>
+                <DropdownBody
+                    width={DROPDOWN_BODY_WIDTH}
+                    isSearchFieldVisible={this.isSearchFieldVisible()}
+                    searchString={searchString}
+                    onSearch={this.onSearch}
+                    onScrollStart={this.onScroll}
+                    items={items}
+                    rowItem={
+                        <ColoredItem
+                            colorPalette={this.props.colorPalette}
+                            onSelect={this.onSelect}
+                            showCustomPicker={this.props.showCustomPicker}
+                            disabled={this.props.disabled}
+                        />
+                    }
+                    className="gd-colored-items-list"
+                    maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
+                    disabled={this.props.disabled}
+                    isLoading={this.props.isLoading}
+                />
             </div>
         );
     }

@@ -129,12 +129,12 @@ export class PluggableAreaChart extends PluggableBaseChart {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel
+                    locale={this.locale}
                     colors={this.colors}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     mdObject={this.mdObject}
                     references={this.references}
-                    intl={this.intl}
                     pushData={this.handlePushData}
                     type={this.type}
                     isError={this.isError}

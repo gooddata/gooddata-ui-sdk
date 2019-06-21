@@ -112,7 +112,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
 
             render(
                 <UnsupportedConfigurationPanel
-                    intl={this.intl}
+                    locale={this.locale}
                     pushData={this.callbacks.pushData}
                     properties={properties}
                 />,

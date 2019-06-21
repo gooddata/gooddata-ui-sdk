@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 import DropdownControl from "./DropdownControl";
 
@@ -11,13 +11,12 @@ import { IVisualizationProperties } from "../../interfaces/Visualization";
 export interface IDataLabelsControlProps {
     pushData: (data: any) => any;
     properties: IVisualizationProperties;
-    intl: InjectedIntl;
     isDisabled: boolean;
     showDisabledMessage?: boolean;
     defaultValue?: string | boolean;
 }
 
-export default class DataLabelsControl extends React.Component<IDataLabelsControlProps> {
+class DataLabelsControl extends React.Component<IDataLabelsControlProps & InjectedIntlProps> {
     public static defaultProps = {
         defaultValue: "auto",
         showDisabledMessage: false,
@@ -32,7 +31,6 @@ export default class DataLabelsControl extends React.Component<IDataLabelsContro
                     value={dataLabels}
                     valuePath="dataLabels.visible"
                     labelText="properties.canvas.dataLabels"
-                    intl={intl}
                     disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}
@@ -43,3 +41,5 @@ export default class DataLabelsControl extends React.Component<IDataLabelsContro
         );
     }
 }
+
+export default injectIntl(DataLabelsControl);

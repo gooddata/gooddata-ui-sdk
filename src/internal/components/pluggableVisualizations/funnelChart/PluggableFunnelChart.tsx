@@ -34,7 +34,7 @@ export class PluggableFunnelChart extends PluggablePieChart {
 
             render(
                 <UnsupportedConfigurationPanel
-                    intl={this.intl}
+                    locale={this.locale}
                     pushData={this.callbacks.pushData}
                     properties={properties}
                 />,

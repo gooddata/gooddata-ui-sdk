@@ -2,7 +2,7 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import noop = require("lodash/noop");
-import ConfigSection, { IConfigSectionProps } from "../ConfigSection";
+import { ConfigSection, IConfigSectionProps } from "../ConfigSection";
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
 

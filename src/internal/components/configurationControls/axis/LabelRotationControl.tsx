@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 
 import DropdownControl from "../DropdownControl";
@@ -13,12 +13,11 @@ export interface ILabelRotationControl {
     disabled: boolean;
     configPanelDisabled: boolean;
     axis: AxisType;
-    intl: InjectedIntl;
     properties: IVisualizationProperties;
     pushData: (data: any) => any;
 }
 
-export default class LabelRotationControl extends React.PureComponent<ILabelRotationControl, {}> {
+class LabelRotationControl extends React.PureComponent<ILabelRotationControl & InjectedIntlProps, {}> {
     public render() {
         const { axisVisible, axisLabelsEnabled, axisRotation } = this.getControlProperties();
 
@@ -28,7 +27,6 @@ export default class LabelRotationControl extends React.PureComponent<ILabelRota
                 value={axisRotation}
                 valuePath={`${this.props.axis}.rotation`}
                 labelText="properties.axis.rotation"
-                intl={this.props.intl}
                 disabled={isDisabled}
                 showDisabledMessage={!this.props.configPanelDisabled && isDisabled}
                 properties={this.props.properties}
@@ -54,3 +52,5 @@ export default class LabelRotationControl extends React.PureComponent<ILabelRota
         };
     }
 }
+
+export default injectIntl(LabelRotationControl);
