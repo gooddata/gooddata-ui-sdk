@@ -42,8 +42,15 @@ import {
     HeatmapColorStrategy,
     IColorStrategy,
 } from "../colorFactory";
-import { IChartConfig, IColorPaletteItem, IPointData, IChartOptions } from "../../../../interfaces/Config";
+import {
+    IChartConfig,
+    IColorPaletteItem,
+    IPointData,
+    IChartOptions,
+    IMeasuresStackConfig,
+} from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
@@ -71,6 +78,8 @@ function getSeriesItemDataParameters(dataSet: any, seriesIndex: any) {
 }
 
 describe("chartOptionsBuilder", () => {
+    const { COLUMN, LINE, COMBO } = VisualizationTypes;
+
     const barChartWithStackByAndViewByAttributesOptions = generateChartOptions();
 
     const barChartWith3MetricsAndViewByAttributeOptions = generateChartOptions(
@@ -3110,26 +3119,26 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("in usecase of combo chart", () => {
-            it("should assign `line` type to second serie according mbObject", () => {
+            it("should assign `line` type to second series according mbObject", () => {
                 const chartOptions = generateChartOptions(fixtures.comboWithTwoMeasuresAndViewByAttribute, {
-                    type: "combo",
+                    type: COMBO,
                     mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                 });
 
-                expect(chartOptions.data.series[0].type).toBe("column");
-                expect(chartOptions.data.series[1].type).toBe("line");
+                expect(chartOptions.data.series[0].type).toBe(COLUMN);
+                expect(chartOptions.data.series[1].type).toBe(LINE);
             });
 
             it("should handle missing mbObject", () => {
                 const chartOptions = generateChartOptions(fixtures.comboWithTwoMeasuresAndViewByAttribute, {
-                    type: "combo",
+                    type: COMBO,
                 });
 
                 expect(chartOptions.data.series[0].type).toBeUndefined();
                 expect(chartOptions.data.series[1].type).toBeUndefined();
             });
 
-            it('should assign format from first measure whichs format includes a "%" sign', () => {
+            it('should assign format from first measure which format includes a "%" sign', () => {
                 const dataSet = fixtures.comboWithTwoMeasuresAndViewByAttribute;
                 const expectedPercentageFormat = "0.00 %";
                 const expectedNormalFormat = get(
@@ -3152,6 +3161,45 @@ describe("chartOptionsBuilder", () => {
                 // if measure format includes %
                 expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
+
+            it.each([[null, false], [NORMAL_STACK, true]])(
+                "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
+                (stackingValue: string, stackMeasures: boolean) => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                        {
+                            type: COMBO,
+                            stackMeasuresToPercent: true,
+                            mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                            stackMeasures,
+                        },
+                    );
+
+                    expect(chartOptions.stacking).toBe(stackingValue);
+                },
+            );
+
+            it.each([
+                [PERCENT_STACK, { stackMeasuresToPercent: true }],
+                [NORMAL_STACK, { stackMeasures: true }],
+            ])(
+                "should return %s when column+line chart is dual axis",
+                (stacking: string, stackingConfig: IMeasuresStackConfig) => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                        {
+                            type: COMBO,
+                            mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                            secondary_yaxis: {
+                                measures: ["wonMetric"],
+                            },
+                            ...stackingConfig,
+                        },
+                    );
+
+                    expect(chartOptions.stacking).toBe(stacking);
+                },
+            );
         });
 
         describe("generate Y axes", () => {
@@ -3739,7 +3787,7 @@ describe("chartOptionsBuilder", () => {
                     actions: { tooltip: tooltipFn },
                 } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute, {
                     stackMeasuresToPercent: true,
-                    type: VisualizationTypes.COLUMN,
+                    type: COLUMN,
                 });
 
                 const tooltip = tooltipFn(pointDataForTwoAttributes, 49.011);
@@ -3763,7 +3811,7 @@ describe("chartOptionsBuilder", () => {
                     const { stacking } = generateChartOptions(
                         fixtures.barChartWith3MetricsAndViewByAttribute,
                         {
-                            type: VisualizationTypes.COLUMN,
+                            type: COLUMN,
                             ...config,
                         },
                     );

@@ -460,4 +460,40 @@ storiesOf("Core components/ComboChart", module)
                 />
             </div>,
         ),
+    )
+    .add("column and line on left axis with 'Stack Measures' off and 'Stack to 100%' on", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ComboChart
+                    projectId="storybook"
+                    primaryMeasures={[MEASURE_1, MEASURE_2]}
+                    secondaryMeasures={[MEASURE_3]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    config={{
+                        dualAxis: false,
+                        stackMeasures: false,
+                        stackMeasuresToPercent: true,
+                    }}
+                />
+            </div>,
+        ),
+    )
+    .add("column and line on left axis with 'Stack Measures' on and 'Stack to 100%' on", () =>
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <ComboChart
+                    projectId="storybook"
+                    primaryMeasures={[MEASURE_1, MEASURE_2]}
+                    secondaryMeasures={[MEASURE_3]}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    config={{
+                        dualAxis: false,
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    }}
+                />
+            </div>,
+        ),
     );

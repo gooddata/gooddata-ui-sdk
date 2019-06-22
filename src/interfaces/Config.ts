@@ -103,7 +103,6 @@ export interface IYAxisConfig {
 }
 
 export interface IStackMeasuresConfig {
-    stackMeasuresToPercent?: boolean;
     series?: ISeriesItem[];
     yAxis?: IHighChartAxis[];
 }
