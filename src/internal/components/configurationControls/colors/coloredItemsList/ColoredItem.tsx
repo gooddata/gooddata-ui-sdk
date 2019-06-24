@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { IColorItem } from "@gooddata/gooddata-js";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
@@ -16,10 +16,9 @@ export interface IColoredItemProps {
     showCustomPicker?: boolean;
     isSelected?: boolean;
     disabled?: boolean;
-    intl: InjectedIntl;
 }
 
-export class ColoredItem extends React.PureComponent<IColoredItemProps> {
+class ColoredItem extends React.PureComponent<IColoredItemProps & InjectedIntlProps> {
     public static defaultProps = {
         showCustomPicker: false,
         disabled: false,
@@ -41,7 +40,6 @@ export class ColoredItem extends React.PureComponent<IColoredItemProps> {
                 colorPalette={this.props.colorPalette}
                 onColorSelected={this.onColorSelected}
                 showCustomPicker={this.props.showCustomPicker}
-                intl={this.props.intl}
             >
                 <ColoredItemContent text={text} color={coloredItem.color} />
             </ColorDropdown>
@@ -71,3 +69,5 @@ export class ColoredItem extends React.PureComponent<IColoredItemProps> {
         return text;
     }
 }
+
+export default injectIntl(ColoredItem);

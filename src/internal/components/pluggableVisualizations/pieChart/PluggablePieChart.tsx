@@ -104,10 +104,10 @@ export class PluggablePieChart extends PluggableBaseChart {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <PieChartConfigurationPanel
+                    locale={this.locale}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     mdObject={this.mdObject}
-                    intl={this.intl}
                     pushData={this.handlePushData}
                     colors={this.colors}
                     type={this.type}

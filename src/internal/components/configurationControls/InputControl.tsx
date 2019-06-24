@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
 import set = require("lodash/set");
 import cloneDeep = require("lodash/cloneDeep");
@@ -15,7 +15,6 @@ export interface IInputControlProps {
     labelText?: string;
     value?: string;
     placeholder?: string;
-    intl?: InjectedIntl;
     type?: string;
     max?: number;
     min?: number;
@@ -34,7 +33,10 @@ export interface IInputControlState {
 
 const MAX_NUMBER_LENGTH = 15;
 
-export default class InputControl extends React.Component<IInputControlProps, IInputControlState> {
+export class InputControl extends React.Component<
+    IInputControlProps & InjectedIntlProps,
+    IInputControlState
+> {
     public static defaultProps = {
         value: "",
         type: "text",
@@ -50,7 +52,7 @@ export default class InputControl extends React.Component<IInputControlProps, II
 
     private inputRef: HTMLElement;
 
-    constructor(props: IInputControlProps) {
+    constructor(props: IInputControlProps & InjectedIntlProps) {
         super(props);
 
         this.state = {
@@ -64,7 +66,7 @@ export default class InputControl extends React.Component<IInputControlProps, II
         this.triggerBlur = this.triggerBlur.bind(this);
     }
 
-    public componentWillReceiveProps(newProps: IInputControlProps) {
+    public componentWillReceiveProps(newProps: IInputControlProps & InjectedIntlProps) {
         if (newProps.value !== this.state.value) {
             this.setState({
                 value: newProps.value,
@@ -177,3 +179,5 @@ export default class InputControl extends React.Component<IInputControlProps, II
         }
     }
 }
+
+export default injectIntl(InputControl);

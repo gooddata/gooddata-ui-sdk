@@ -18,6 +18,6 @@ export default class UnsupportedConfigurationPanel extends ConfigurationPanelCon
     }
 
     protected renderConfigurationPanel() {
-        return <UnsupportedProperties intl={this.props.intl} />;
+        return <UnsupportedProperties />;
     }
 }

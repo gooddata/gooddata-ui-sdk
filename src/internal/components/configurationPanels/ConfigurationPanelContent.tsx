@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
 import noop = require("lodash/noop");
 import { ChartType } from "../../../constants/visualizationTypes";
 import { VisualizationObject } from "@gooddata/typings";
@@ -11,13 +10,14 @@ import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
+import { DEFAULT_LOCALE } from "../../../constants/localization";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;
     references?: IReferences;
     propertiesMeta?: any;
     colors?: IColorConfiguration;
-    intl?: InjectedIntl;
+    locale: string;
     type?: ChartType;
     isError?: boolean;
     isLoading?: boolean;
@@ -35,7 +35,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         references: null,
         propertiesMeta: null,
         colors: null,
-        intl: null,
+        locale: DEFAULT_LOCALE,
         isError: false,
         isLoading: false,
         mdObject: null,
@@ -49,7 +49,9 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     public render() {
         return (
             <div key={`config-${this.props.type}`}>
-                <InternalIntlWrapper>{this.renderConfigurationPanel()}</InternalIntlWrapper>
+                <InternalIntlWrapper locale={this.props.locale}>
+                    {this.renderConfigurationPanel()}
+                </InternalIntlWrapper>
             </div>
         );
     }
@@ -65,7 +67,6 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         const {
             properties,
             propertiesMeta,
-            intl,
             pushData,
             colors,
             featureFlags,
@@ -83,7 +84,6 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
                 references={references}
                 colors={colors}
                 controlsDisabled={controlsDisabled}
-                intl={intl}
                 pushData={pushData}
                 hasMeasures={hasMeasures(mdObject)}
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
@@ -93,7 +93,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     }
 
     protected renderLegendSection() {
-        const { properties, propertiesMeta, intl, pushData } = this.props;
+        const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -101,7 +101,6 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 controlsDisabled={controlsDisabled}
-                intl={intl}
                 pushData={pushData}
             />
         );

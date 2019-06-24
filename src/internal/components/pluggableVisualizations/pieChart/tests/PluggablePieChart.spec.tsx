@@ -5,9 +5,11 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
 import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 describe("PluggablePieChart", () => {
     const defaultProps = {
+        locale: DEFAULT_LOCALE,
         projectId: "PROJECTID",
         element: "body",
         configPanelElement: null as string,

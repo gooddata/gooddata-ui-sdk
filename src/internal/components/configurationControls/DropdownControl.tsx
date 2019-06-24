@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
-import noop = require("lodash/noop");
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import set = require("lodash/set");
 import Dropdown, { DropdownButton, DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -20,7 +19,6 @@ export interface IDropdownControlProps {
     valuePath: string;
     properties: IVisualizationProperties;
     labelText?: string;
-    intl?: InjectedIntl;
     value?: string;
     items?: IDropdownItem[];
     disabled?: boolean;
@@ -33,17 +31,16 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
 export const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
 
-export default class DropdownControl extends React.PureComponent<IDropdownControlProps> {
+class DropdownControl extends React.PureComponent<IDropdownControlProps & InjectedIntlProps> {
     public static defaultProps = {
         value: "",
-        items: [] as IDropdownItem,
+        items: [] as IDropdownItem[],
         disabled: false,
         width: 117,
-        intl: noop,
         showDisabledMessage: false,
     };
 
-    constructor(props: IDropdownControlProps) {
+    constructor(props: IDropdownControlProps & InjectedIntlProps) {
         super(props);
         this.onSelect = this.onSelect.bind(this);
     }
@@ -53,7 +50,7 @@ export default class DropdownControl extends React.PureComponent<IDropdownContro
         const selectedItem = this.getSelectedItem(value) || {};
 
         return (
-            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage} intl={intl}>
+            <DisabledBubbleMessage showDisabledMessage={showDisabledMessage}>
                 <div className="adi-properties-dropdown-container">
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <label className="adi-bucket-inputfield gd-input gd-input-small">
@@ -100,3 +97,5 @@ export default class DropdownControl extends React.PureComponent<IDropdownContro
         return undefined;
     }
 }
+
+export default injectIntl(DropdownControl);

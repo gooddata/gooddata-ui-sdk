@@ -125,11 +125,11 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BubbleChartConfigurationPanel
+                    locale={this.locale}
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     mdObject={this.mdObject}
-                    intl={this.intl}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}

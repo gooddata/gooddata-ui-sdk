@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import get = require("lodash/get");
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
@@ -12,7 +13,6 @@ import ConfigSection from "../configurationControls/ConfigSection";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
-import { getTranslation } from "../../utils/translations";
 import { hasAttribute } from "../../utils/mdObjectHelper";
 import {
     SHOW_DELAY_DEFAULT,
@@ -31,7 +31,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel() {
         const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
 
-        const { propertiesMeta, properties, intl, pushData } = this.props;
+        const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -42,7 +42,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         id="xaxis_section"
                         title="properties.xaxis.title"
                         valuePath="xaxis.visible"
-                        intl={intl}
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
                         toggleDisabled={controlsDisabled}
@@ -54,7 +53,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
                             axis={"xaxis"}
-                            intl={intl}
                             properties={properties}
                             pushData={pushData}
                         />
@@ -64,7 +62,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         id="yaxis_section"
                         title="properties.yaxis.title"
                         valuePath="yaxis.visible"
-                        intl={intl}
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
                         toggleDisabled={controlsDisabled}
@@ -76,7 +73,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
                             axis={"yaxis"}
-                            intl={intl}
                             properties={properties}
                             pushData={pushData}
                         />
@@ -85,7 +81,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     <ConfigSection
                         id="canvas_section"
                         title="properties.canvas.title"
-                        intl={intl}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -93,7 +88,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         <DataLabelsControl
                             pushData={pushData}
                             properties={properties}
-                            intl={intl}
                             isDisabled={this.areDataLabelsDisabled()}
                             defaultValue={false}
                             showDisabledMessage={this.isDataLabelsWarningShown()}
@@ -101,7 +95,6 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"
-                            intl={intl}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}
@@ -114,20 +107,19 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     arrowOffsets={{ "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] }}
                     alignPoints={[{ align: "tc bc" }]}
                 >
-                    {getTranslation("properties.config.not_applicable", intl)}
+                    <FormattedMessage id="properties.config.not_applicable" />
                 </Bubble>
             </BubbleHoverTrigger>
         );
     }
 
     private renderMinMax(basePath: string) {
-        const { pushData, properties, intl, propertiesMeta } = this.props;
+        const { pushData, properties, propertiesMeta } = this.props;
         return (
             <MinMaxControl
                 isDisabled={this.isControlDisabled()}
                 basePath={basePath}
                 pushData={pushData}
-                intl={intl}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
             />

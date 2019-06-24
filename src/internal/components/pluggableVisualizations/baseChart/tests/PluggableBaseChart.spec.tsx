@@ -12,6 +12,7 @@ import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartC
 import { VisualizationEnvironment } from "../../../../../components/uri/Visualization";
 import { ChartType, VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { BaseChart } from "../../../../../components/core/base/BaseChart";
+import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -96,6 +97,7 @@ describe("PluggableBaseChart", () => {
 
         return (
             <BaseChartConfigurationPanel
+                locale={DEFAULT_LOCALE}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 mdObject={mdObject}
@@ -291,7 +293,6 @@ describe("PluggableBaseChart", () => {
         // compare without intl and pushData
         expect({
             ...renderArguments.props,
-            intl: null,
             pushData: noop,
         }).toEqual(expectedConfigPanelElement.props);
     });

@@ -492,7 +492,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
             render(
                 <UnsupportedConfigurationPanel
-                    intl={this.intl}
+                    locale={this.locale}
                     pushData={this.callbacks.pushData}
                     properties={sanitizedProperties}
                 />,

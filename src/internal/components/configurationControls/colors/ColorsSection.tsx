@@ -3,7 +3,7 @@ import * as React from "react";
 import set = require("lodash/set");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
-import { InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { IColorItem } from "@gooddata/gooddata-js";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import * as classNames from "classnames";
@@ -18,7 +18,6 @@ import { getColoredInputItems, getProperties } from "../../../utils/colors";
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
     showCustomPicker: boolean;
-    intl: InjectedIntl;
     properties: IVisualizationProperties;
     propertiesMeta: any;
     references: IReferences;
@@ -30,14 +29,13 @@ export interface IColorsSectionProps {
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
-export default class ColorsSection extends React.Component<IColorsSectionProps> {
+class ColorsSection extends React.Component<IColorsSectionProps & InjectedIntlProps> {
     public render() {
-        const { intl, pushData, propertiesMeta } = this.props;
+        const { pushData, propertiesMeta } = this.props;
 
         return (
             <ConfigSection
                 title="properties.colors"
-                intl={intl}
                 pushData={pushData}
                 propertiesMeta={propertiesMeta}
                 id="colors_section"
@@ -140,3 +138,5 @@ export default class ColorsSection extends React.Component<IColorsSectionProps> 
         return this.isColoredListVisible() ? this.renderColoredList() : this.renderUnsupportedColoredList();
     }
 }
+
+export default injectIntl(ColorsSection);

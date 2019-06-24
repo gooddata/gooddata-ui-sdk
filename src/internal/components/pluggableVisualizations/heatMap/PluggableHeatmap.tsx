@@ -100,12 +100,12 @@ export class PluggableHeatmap extends PluggableBaseChart {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <HeatMapConfigurationPanel
+                    locale={this.locale}
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     mdObject={this.mdObject}
                     colors={this.colors}
-                    intl={this.intl}
                     pushData={this.handlePushData}
                     type={this.type}
                     isError={this.isError}

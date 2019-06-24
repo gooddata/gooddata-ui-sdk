@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import * as classNames from "classnames";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
@@ -9,10 +9,9 @@ import { getTranslation } from "../utils/translations";
 export interface IBubbleMessageProps {
     showDisabledMessage: boolean;
     className?: string;
-    intl?: InjectedIntl;
 }
 
-export default class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
+export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps & InjectedIntlProps> {
     public render() {
         const { className, children, intl } = this.props;
         return (
@@ -31,3 +30,5 @@ export default class DisabledBubbleMessage extends React.PureComponent<IBubbleMe
         });
     }
 }
+
+export default injectIntl(DisabledBubbleMessage);

@@ -2,6 +2,7 @@
 import * as React from "react";
 import get = require("lodash/get");
 import Message from "@gooddata/goodstrap/lib/Messages/Message";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import ConfigSubsection from "../configurationControls/ConfigSubsection";
 import InputControl from "../configurationControls/InputControl";
@@ -22,8 +23,8 @@ const defaultMinMaxControlState = {
     },
 };
 
-export default class MinMaxControl extends React.Component<IMinMaxControlProps, IMinMaxControlState> {
-    public static getDerivedStateFromProps(props: IMinMaxControlProps) {
+class MinMaxControl extends React.Component<IMinMaxControlProps & InjectedIntlProps, IMinMaxControlState> {
+    public static getDerivedStateFromProps(props: IMinMaxControlProps & InjectedIntlProps) {
         if (get(props, ["propertiesMeta", "undoApplied"], false)) {
             return defaultMinMaxControlState;
         }
@@ -31,7 +32,7 @@ export default class MinMaxControl extends React.Component<IMinMaxControlProps, 
         return null;
     }
 
-    constructor(props: IMinMaxControlProps) {
+    constructor(props: IMinMaxControlProps & InjectedIntlProps) {
         super(props);
         this.state = defaultMinMaxControlState;
     }
@@ -41,18 +42,17 @@ export default class MinMaxControl extends React.Component<IMinMaxControlProps, 
     }
 
     private renderMinMaxSection() {
-        const { properties, intl, basePath, isDisabled } = this.props;
+        const { properties, basePath, isDisabled } = this.props;
         const axisScaleMin = get(this.props, `properties.controls.${basePath}.min`, "");
         const axisScaleMax = get(this.props, `properties.controls.${basePath}.max`, "");
         const axisVisible = get(this.props, `properties.controls.${basePath}.visible`, true);
 
         return (
-            <ConfigSubsection title="properties.axis.scale" intl={intl}>
+            <ConfigSubsection title="properties.axis.scale">
                 <InputControl
                     valuePath={`${basePath}.min`}
                     labelText="properties.axis.min"
                     placeholder="properties.auto_placeholder"
-                    intl={intl}
                     type="number"
                     hasWarning={this.minScaleHasWarning()}
                     value={
@@ -70,7 +70,6 @@ export default class MinMaxControl extends React.Component<IMinMaxControlProps, 
                     valuePath={`${basePath}.max`}
                     labelText="properties.axis.max"
                     placeholder="properties.auto_placeholder"
-                    intl={intl}
                     type="number"
                     hasWarning={this.maxScaleHasWarning()}
                     value={
@@ -149,3 +148,5 @@ export default class MinMaxControl extends React.Component<IMinMaxControlProps, 
         );
     }
 }
+
+export default injectIntl(MinMaxControl);

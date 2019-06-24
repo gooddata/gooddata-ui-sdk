@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import ConfigSubsection, { IConfigSubsectionProps } from "../ConfigSubsection";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import DisabledBubbleMessage from "../../DisabledBubbleMessage";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 
 describe("ConfigSubsection", () => {
     const defaultProps = {
@@ -11,16 +11,16 @@ describe("ConfigSubsection", () => {
         properties: {},
         propertiesMeta: {},
         title: "properties.legend.title",
-        intl: createInternalIntl(DEFAULT_LOCALE),
     };
 
     function createComponent(customProps: Partial<IConfigSubsectionProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return shallow<IConfigSubsectionProps, null>(
-            <ConfigSubsection {...props}>
-                <div className="child" />
-            </ConfigSubsection>,
-            { lifecycleExperimental: true },
+        return mount(
+            <InternalIntlWrapper>
+                <ConfigSubsection {...props}>
+                    <div className="child" />
+                </ConfigSubsection>
+            </InternalIntlWrapper>,
         );
     }
 
@@ -42,7 +42,7 @@ describe("ConfigSubsection", () => {
         it('should render toggle switch when property "canBeToggled" is set on true', () => {
             const wrapper = createComponent({ canBeToggled: true });
 
-            expect(wrapper.find(".input-checkbox-toggle").length).toBe(1);
+            expect(wrapper.find(DisabledBubbleMessage).hasClass("input-checkbox-toggle")).toBe(true);
             expect(wrapper.find(".s-checkbox-toggle").props().disabled).toBeFalsy();
         });
 

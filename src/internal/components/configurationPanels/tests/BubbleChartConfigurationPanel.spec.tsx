@@ -4,9 +4,10 @@ import { shallow } from "enzyme";
 import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
+import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 describe("BubbleChartconfigurationPanel", () => {
-    function createComponent(props: IConfigurationPanelContentProps = {}) {
+    function createComponent(props: IConfigurationPanelContentProps) {
         return shallow<IConfigurationPanelContentProps, null>(<BubbleChartConfigurationPanel {...props} />, {
             lifecycleExperimental: true,
         });
@@ -33,6 +34,7 @@ describe("BubbleChartconfigurationPanel", () => {
             mdObject,
             isError: false,
             isLoading: false,
+            locale: DEFAULT_LOCALE,
         };
 
         const wrapper = createComponent(props);
@@ -61,6 +63,7 @@ describe("BubbleChartconfigurationPanel", () => {
             mdObject,
             isError: false,
             isLoading: false,
+            locale: DEFAULT_LOCALE,
         };
 
         const wrapper = createComponent(props);
@@ -89,6 +92,7 @@ describe("BubbleChartconfigurationPanel", () => {
             mdObject,
             isError: true,
             isLoading: false,
+            locale: DEFAULT_LOCALE,
         };
 
         const wrapper = createComponent(props);
@@ -117,6 +121,7 @@ describe("BubbleChartconfigurationPanel", () => {
             mdObject,
             isError: false,
             isLoading: true,
+            locale: DEFAULT_LOCALE,
         };
 
         const wrapper = createComponent(props);

@@ -94,8 +94,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected ignoreUndoRedo: boolean;
     protected axis: string;
     protected secondaryAxis: AxisType;
+    protected locale: ILocale;
     private environment: string;
-    private locale: ILocale;
     private element: string;
 
     constructor(props: IVisConstruct) {
@@ -318,11 +318,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BaseChartConfigurationPanel
+                    locale={this.locale}
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     mdObject={this.mdObject}
-                    intl={this.intl}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}

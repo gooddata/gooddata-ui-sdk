@@ -2,14 +2,18 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import noop = require("lodash/noop");
-import InputControl, { IInputControlProps } from "../InputControl";
+import { InputControl, IInputControlProps } from "../InputControl";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 
 describe("InputControl", () => {
     const defaultProps = {
         valuePath: "valuePath",
         properties: {},
+        intl: createInternalIntl(),
         propertiesMeta: {},
         pushData: noop,
+        placeholder: "properties.auto_placeholder",
+        labelText: "properties.canvas.gridline", // pick something what exists in the dictionary
     };
 
     function createComponent(customProps: Partial<IInputControlProps> = {}) {
@@ -36,8 +40,9 @@ describe("InputControl", () => {
     });
 
     it("should render label provided by props", () => {
-        const wrapper = createComponent({ labelText: "foo" });
-        expect(wrapper.find(".input-label-text").text()).toEqual("foo");
+        // pick something in the dictionary
+        const wrapper = createComponent({ labelText: "properties.canvas.title" });
+        expect(wrapper.find(".input-label-text").text()).toEqual("Canvas");
     });
 
     it("should render input control with given value", () => {

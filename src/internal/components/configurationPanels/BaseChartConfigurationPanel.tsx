@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import * as BucketNames from "../../../constants/bucketNames";
@@ -12,7 +13,6 @@ import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
-import { getTranslation } from "../../utils/translations";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
@@ -28,13 +28,12 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     protected renderCanvasSection() {
         const { gridEnabled } = this.getControlProperties();
 
-        const { properties, propertiesMeta, intl, pushData } = this.props;
+        const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
         return (
             <ConfigSection
                 id="canvas_section"
                 title="properties.canvas.title"
-                intl={intl}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -42,13 +41,11 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                 <DataLabelsControl
                     pushData={pushData}
                     properties={properties}
-                    intl={intl}
                     isDisabled={controlsDisabled}
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"
                     labelText="properties.canvas.gridline"
-                    intl={intl}
                     properties={properties}
                     checked={gridEnabled}
                     disabled={controlsDisabled}
@@ -61,7 +58,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     protected renderConfigurationPanel() {
         const { axes } = this.getControlProperties();
 
-        const { properties, propertiesMeta, intl } = this.props;
+        const { properties, propertiesMeta } = this.props;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -76,7 +73,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                     arrowOffsets={{ "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] }}
                     alignPoints={[{ align: "tc bc" }]}
                 >
-                    {getTranslation("properties.config.not_applicable", intl)}
+                    <FormattedMessage id="properties.config.not_applicable" />
                 </Bubble>
             </BubbleHoverTrigger>
         );
@@ -132,7 +129,6 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     ) {
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
-        const { intl } = this.props;
 
         return axes.map(axis => (
             <ConfigSection
@@ -140,7 +136,6 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                 id={`${axis.name}_section`}
                 title={axis.title}
                 subtitle={axis.subtitle}
-                intl={intl}
                 valuePath={`${axis.name}.visible`}
                 canBeToggled={true}
                 toggledOn={axis.visible}
@@ -153,7 +148,6 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                     disabled={controlsDisabled || (!axis.primary && !isViewedBy)}
                     configPanelDisabled={controlsDisabled}
                     axis={axis.name}
-                    intl={intl}
                     properties={properties}
                     pushData={this.props.pushData}
                 />
@@ -163,13 +157,12 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     }
 
     protected renderMinMax(basePath: string) {
-        const { pushData, properties, intl, propertiesMeta } = this.props;
+        const { pushData, properties, propertiesMeta } = this.props;
         return (
             <MinMaxControl
                 isDisabled={this.isControlDisabled()}
                 basePath={basePath}
                 pushData={pushData}
-                intl={intl}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
             />

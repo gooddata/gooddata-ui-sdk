@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
 import ConfigSection from "../ConfigSection";
 import LegendPositionControl from "./LegendPositionControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
@@ -10,13 +9,12 @@ export interface ILegendSection {
     controlsDisabled: boolean;
     properties: IVisualizationProperties;
     propertiesMeta: any;
-    intl: InjectedIntl;
     pushData: (data: any) => any;
 }
 
-export default class LegendSection extends React.PureComponent<ILegendSection, {}> {
+export class LegendSection extends React.PureComponent<ILegendSection, {}> {
     public render() {
-        const { controlsDisabled, properties, intl, pushData } = this.props;
+        const { controlsDisabled, properties, pushData } = this.props;
 
         const legendEnabled = get(this.props, "properties.controls.legend.enabled", true);
         const legendPosition = get(this.props, "properties.controls.legend.position", "auto");
@@ -31,7 +29,6 @@ export default class LegendSection extends React.PureComponent<ILegendSection, {
                 id="legend_section"
                 valuePath="legend.enabled"
                 title="properties.legend.title"
-                intl={intl}
                 propertiesMeta={this.props.propertiesMeta}
                 properties={properties}
                 canBeToggled={true}
@@ -44,7 +41,6 @@ export default class LegendSection extends React.PureComponent<ILegendSection, {
                     disabled={legendPositionControlDisabled}
                     value={legendPosition}
                     showDisabledMessage={showDisabledMessage}
-                    intl={intl}
                     properties={properties}
                     pushData={pushData}
                 />
@@ -52,3 +48,5 @@ export default class LegendSection extends React.PureComponent<ILegendSection, {
         );
     }
 }
+
+export default LegendSection;

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -10,7 +10,6 @@ import { getTranslation } from "../../utils/translations";
 export interface IConfigSubsectionProps {
     valuePath?: string;
     title: string;
-    intl?: InjectedIntl;
     canBeToggled?: boolean;
     toggleDisabled?: boolean;
     toggledOn?: boolean;
@@ -23,8 +22,8 @@ export interface IConfigSubsectionState {
     disabled: boolean;
 }
 
-export default class ConfigSubsection extends React.Component<
-    IConfigSubsectionProps,
+class ConfigSubsection extends React.Component<
+    IConfigSubsectionProps & InjectedIntlProps,
     IConfigSubsectionState
 > {
     public static defaultProps = {
@@ -33,11 +32,10 @@ export default class ConfigSubsection extends React.Component<
         toggleDisabled: false,
         toggledOn: true,
         pushData: noop,
-        intl: noop,
         showDisabledMessage: false,
     };
 
-    constructor(props: IConfigSubsectionProps) {
+    constructor(props: IConfigSubsectionProps & InjectedIntlProps) {
         super(props);
         this.toggleValue = this.toggleValue.bind(this);
     }
@@ -60,13 +58,12 @@ export default class ConfigSubsection extends React.Component<
 
     private renderToggleSwitch() {
         if (this.props.canBeToggled) {
-            const { toggledOn, toggleDisabled, showDisabledMessage, intl } = this.props;
+            const { toggledOn, toggleDisabled, showDisabledMessage } = this.props;
 
             return (
                 <DisabledBubbleMessage
                     className="input-checkbox-toggle"
                     showDisabledMessage={showDisabledMessage}
-                    intl={intl}
                 >
                     <label className="s-checkbox-toggle-label">
                         <input
@@ -95,3 +92,5 @@ export default class ConfigSubsection extends React.Component<
         }
     }
 }
+
+export default injectIntl(ConfigSubsection);
