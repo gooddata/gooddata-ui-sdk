@@ -4,7 +4,7 @@ import { extendDataLabelColors } from "./plugins/dataLabelsColors";
 import { applyPointHaloOptions } from "./plugins/pointHalo";
 import { linearTickPositions } from "./plugins/linearTickPositions";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper";
-import { getBubbleRadius } from "./plugins/getBubbleRadius";
+import { renderBubbles } from "./plugins/renderBubbles";
 import { adjustTickAmount } from "./plugins/adjustTickAmount";
 
 const extendRenderStackTotals = (Highcharts: any) => {
@@ -40,6 +40,6 @@ export function initChartPlugins(Highcharts: any) {
     linearTickPositions(Highcharts);
     groupCategoriesWrapper(Highcharts);
     adjustTickAmount(Highcharts);
-    // Set default size for bubbles in bubble chart where size value is not provided
-    getBubbleRadius(Highcharts);
+    // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
+    renderBubbles(Highcharts);
 }
