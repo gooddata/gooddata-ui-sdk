@@ -59,6 +59,7 @@ import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
 import { ICoreComponents } from "./interfaces/CoreComponents";
+import { BucketExecutor } from "./execution/BucketExecutor";
 
 /**
  * CoreComponents
@@ -92,6 +93,7 @@ export {
     ErrorStates,
     ErrorComponent,
     Execute,
+    BucketExecutor,
     generateDimensions,
     Headline,
     IBaseChartProps,
