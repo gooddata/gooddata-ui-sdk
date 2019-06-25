@@ -128,11 +128,12 @@ export function getDataLabelAttributes(point: any): IRectBySize {
 
 export function intersectsParentLabel(point: any, points: any) {
     const pointParent = parseInt(point.parent, 10);
-    if (isNaN(pointParent)) {
+    // Highchart 7 doesn't render dataLabel at points which have null value
+    const pointLabelShape = point.dataLabel;
+    if (isNaN(pointParent) || !pointLabelShape) {
         return false;
     }
 
-    const pointLabelShape = point.dataLabel;
     const parentPoint = points[pointParent];
     const parentLabelShape = parentPoint.dataLabel;
     return isIntersecting(pointLabelShape, parentLabelShape);

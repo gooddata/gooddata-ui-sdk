@@ -3,9 +3,46 @@ import get = require("lodash/get");
 import { IChartConfig } from "../../../../../interfaces/Config";
 import { getDefaultChartType, getComboConfiguration } from "../comboConfiguration";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { MEASURES, SECONDARY_MEASURES } from "../../../../../constants/bucketNames";
 
 describe("Combo Configuration", () => {
     const { COLUMN, LINE, AREA } = VisualizationTypes;
+    function getMdObject(bucketId: string) {
+        return {
+            buckets: [
+                {
+                    localIdentifier: bucketId,
+                    items: [
+                        {
+                            measure: {
+                                localIdentifier: "m1",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            uri: "",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            measure: {
+                                localIdentifier: "m2",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            uri: "",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+            visualizationClass: { uri: "" },
+        };
+    }
 
     describe("getDefaultChartType", () => {
         it.each([COLUMN, LINE, AREA])("should return '%s' when both y axes have same chart type", type => {
@@ -39,10 +76,34 @@ describe("Combo Configuration", () => {
         });
     });
 
-    it("should disable saturation on other line series in line_line combo chart?", () => {
+    it("should disable saturation on other series in combo which has line series on both axes", () => {
         const config: IChartConfig = {
             primaryChartType: LINE,
             secondaryChartType: LINE,
+        };
+        const {
+            plotOptions: { series: series },
+        } = getComboConfiguration(config);
+        expect(series.states.inactive.opacity).toBe(1);
+    });
+
+    it("should disable saturation on other series in combo which have line series on left axis only", () => {
+        const config: IChartConfig = {
+            primaryChartType: LINE,
+            secondaryChartType: COLUMN,
+            mdObject: getMdObject(MEASURES),
+        };
+        const {
+            plotOptions: { series: series },
+        } = getComboConfiguration(config);
+        expect(series.states.inactive.opacity).toBe(1);
+    });
+
+    it("should disable saturation on other series in combo which have line series on right axis only", () => {
+        const config: IChartConfig = {
+            primaryChartType: COLUMN,
+            secondaryChartType: LINE,
+            mdObject: getMdObject(SECONDARY_MEASURES),
         };
         const {
             plotOptions: { series: series },
@@ -54,6 +115,7 @@ describe("Combo Configuration", () => {
         const config: IChartConfig = {
             primaryChartType: LINE,
             secondaryChartType: AREA,
+            mdObject: getMdObject(SECONDARY_MEASURES),
         };
         const {
             plotOptions: { series: series },
@@ -64,7 +126,9 @@ describe("Combo Configuration", () => {
     it("should not disable saturation other series for default combo", () => {
         const {
             plotOptions: { series: series },
-        } = getComboConfiguration({});
+        } = getComboConfiguration({
+            mdObject: getMdObject(MEASURES),
+        });
         expect(get(series, "states.inactive.opacity")).not.toBe(1);
     });
 });

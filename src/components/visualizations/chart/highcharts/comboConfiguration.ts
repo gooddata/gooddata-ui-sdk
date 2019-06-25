@@ -1,10 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
+import { VisualizationObject } from "@gooddata/typings";
+
 import get = require("lodash/get");
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
 import { IChartConfig } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { isLineChart } from "../../utils/common";
+import { isBucketEmpty } from "../../../../helpers/mdObjBucketHelper";
+import { MEASURES, SECONDARY_MEASURES } from "../../../../constants/bucketNames";
 
 const { COLUMN, LINE } = VisualizationTypes;
 
@@ -28,13 +32,22 @@ export function getDefaultChartType(config?: IChartConfig) {
     return LINE;
 }
 
-function isLineLineCombo(config: IChartConfig): boolean {
+function isOnlyLineSeries(config: IChartConfig): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
-    return isLineChart(primaryChartType) && isLineChart(secondaryChartType);
+    const buckets: VisualizationObject.IBucket[] = get(config, "mdObject.buckets", []);
+    const isEmptyPrimaryMeasure = isBucketEmpty(buckets, MEASURES);
+    const isEmptySecondaryMeasure = isBucketEmpty(buckets, SECONDARY_MEASURES);
+    const isLineChartOnLeftAxis = isLineChart(primaryChartType);
+    const isLineChartOnRightAxis = isLineChart(secondaryChartType);
+    return (
+        (isLineChartOnLeftAxis && isLineChartOnRightAxis) ||
+        (isLineChartOnLeftAxis && isEmptySecondaryMeasure) ||
+        (isEmptyPrimaryMeasure && isLineChartOnRightAxis)
+    );
 }
 
 export function getComboConfiguration(config?: IChartConfig) {
-    const series = isLineLineCombo(config)
+    const series = isOnlyLineSeries(config)
         ? {
               series: {
                   states: {
