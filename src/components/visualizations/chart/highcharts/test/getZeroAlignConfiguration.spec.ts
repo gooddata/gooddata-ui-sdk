@@ -1,18 +1,24 @@
 // (C) 2019 GoodData Corporation
-import { getMinMaxInfo, getZeroAlignConfiguration } from "../getZeroAlignConfiguration";
+import {
+    convertNumberToPercent,
+    getMinMaxInfo,
+    getZeroAlignConfiguration,
+} from "../getZeroAlignConfiguration";
 import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
 import { ISeriesItem, IChartOptions } from "../../../../../interfaces/Config";
 
 describe("getZeroAlignConfiguration", () => {
+    const numberToYValue = (y: number | null) => ({ y });
+
     const SERIES: ISeriesItem[] = [
         {
             yAxis: 0,
-            data: [null, -250, -175, -30, 10, 50, 90, 150].map((num: number) => ({ y: num })),
+            data: [null, -250, -175, -30, 10, 50, 90, 150].map(numberToYValue),
         },
         {
             yAxis: 1,
-            data: [100, 500, 900, 1500, 2400, 1100, 350, null].map((num: number) => ({ y: num })),
+            data: [100, 500, 900, 1500, 2400, 1100, 350, null].map(numberToYValue),
         },
     ];
 
@@ -112,22 +118,22 @@ describe("getZeroAlignConfiguration", () => {
         const POSITIVE_CHART_SERIES: ISeriesItem[] = [
             {
                 yAxis: 0,
-                data: [250, 175, 30, 10, 50, 90, 150].map((num: number) => ({ y: num })),
+                data: [250, 175, 30, 10, 50, 90, 150].map(numberToYValue),
             },
             {
                 yAxis: 1,
-                data: [100, 500, 900, 1500, 2400, 1100, 350].map((num: number) => ({ y: num })),
+                data: [100, 500, 900, 1500, 2400, 1100, 350].map(numberToYValue),
             },
         ];
 
         const NEGATIVE_CHART_SERIES: ISeriesItem[] = [
             {
                 yAxis: 0,
-                data: [-250, -175, -30, -10, -50, -90, -150].map((num: number) => ({ y: num })),
+                data: [-250, -175, -30, -10, -50, -90, -150].map(numberToYValue),
             },
             {
                 yAxis: 1,
-                data: [-100, -500, -900, -1500, -2400, -1100, -350].map((num: number) => ({ y: num })),
+                data: [-100, -500, -900, -1500, -2400, -1100, -350].map(numberToYValue),
             },
         ];
 
@@ -209,27 +215,27 @@ describe("getZeroAlignConfiguration", () => {
         const SERIES: ISeriesItem[] = [
             {
                 yAxis: 0,
-                data: [400, 200, 800, -100, 1000, -200, 600].map((num: number) => ({ y: num })),
+                data: [400, 200, 800, -100, 1000, -200, 600].map(numberToYValue),
             },
             {
                 yAxis: 0,
-                data: [300, 900, 700, 800, -500, 300, -350].map((num: number) => ({ y: num })),
+                data: [300, 900, 700, 800, -500, 300, -350].map(numberToYValue),
             },
             {
                 yAxis: 0,
-                data: [100, 200, 300, 400, 500, 600, 700].map((num: number) => ({ y: num })),
+                data: [100, 200, 300, 400, 500, 600, 700].map(numberToYValue),
             },
             {
                 yAxis: 1,
-                data: [-250, -175, -30, 10, 50, 90, 150].map((num: number) => ({ y: num })),
+                data: [-250, -175, -30, 10, 50, 90, 150].map(numberToYValue),
             },
             {
                 yAxis: 1,
-                data: [-500, -400, -300, -200, -100, 0, 100].map((num: number) => ({ y: num })),
+                data: [-500, -400, -300, -200, -100, 0, 100].map(numberToYValue),
             },
             {
                 yAxis: 1,
-                data: [100, 500, 900, 1500, 2400, 1100, 350].map((num: number) => ({ y: num })),
+                data: [100, 500, 900, 1500, 2400, 1100, 350].map(numberToYValue),
             },
         ];
 
@@ -357,6 +363,130 @@ describe("getZeroAlignConfiguration", () => {
                         id: 1,
                         min: 200,
                         max: 2450,
+                        isSetMin: true,
+                        isSetMax: false,
+                    },
+                ]);
+            });
+        });
+
+        describe("with some null data points", () => {
+            const SERIES: ISeriesItem[] = [
+                {
+                    yAxis: 0,
+                    data: [null, null].map(numberToYValue),
+                },
+                {
+                    yAxis: 0,
+                    data: [null, null].map(numberToYValue),
+                },
+                {
+                    yAxis: 1,
+                    data: [250, null].map(numberToYValue),
+                },
+                {
+                    yAxis: 1,
+                    data: [250, 50].map(numberToYValue),
+                },
+            ];
+
+            it.each([
+                ["non-stack chart", null, 0, 250],
+                ["normal stack chart in total", NORMAL_STACK, 0, 500],
+                ["percent stack chart in total", PERCENT_STACK, 0, 100],
+            ])(
+                "should return min/max with %s",
+                (_description: string, stacking: string | null, min: number, max: number) => {
+                    const config = {
+                        yAxis: [{}, {}],
+                        series: SERIES,
+                    };
+                    const result = getMinMaxInfo(config, stacking, VisualizationTypes.COLUMN);
+                    expect(result).toEqual([
+                        {
+                            id: 0,
+                            min: 0,
+                            max: 0,
+                            isSetMin: false,
+                            isSetMax: false,
+                        },
+                        {
+                            id: 1,
+                            min,
+                            max,
+                            isSetMin: false,
+                            isSetMax: false,
+                        },
+                    ]);
+                },
+            );
+
+            it("should return user-input min/max with non-stack chart", () => {
+                const config = {
+                    yAxis: [{ min: 10, max: 100 }, { min: 100 }],
+                    series: SERIES,
+                };
+                const result = getMinMaxInfo(config, null, VisualizationTypes.COLUMN);
+                expect(result).toEqual([
+                    {
+                        id: 0,
+                        min: 10,
+                        max: 100,
+                        isSetMin: true,
+                        isSetMax: true,
+                    },
+                    {
+                        id: 1,
+                        min: 100,
+                        max: 250,
+                        isSetMin: true,
+                        isSetMax: false,
+                    },
+                ]);
+            });
+
+            it("should return user-input min/max with normal stack chart", () => {
+                const config = {
+                    yAxis: [{ min: 10, max: 100 }, { min: 100 }],
+                    series: SERIES,
+                };
+                const result = getMinMaxInfo(config, NORMAL_STACK, VisualizationTypes.COLUMN);
+                expect(result).toEqual([
+                    {
+                        id: 0,
+                        min: 10,
+                        max: 100,
+                        isSetMin: true,
+                        isSetMax: true,
+                    },
+                    {
+                        id: 1,
+                        min: 100,
+                        max: 500,
+                        isSetMin: true,
+                        isSetMax: false,
+                    },
+                ]);
+            });
+
+            it("should return user-input min/max with percent stack chart", () => {
+                const config = {
+                    yAxis: [{ min: 10, max: 80 }, { min: 20 }],
+                    series: SERIES,
+                };
+                const result = getMinMaxInfo(config, PERCENT_STACK, VisualizationTypes.COLUMN);
+                expect(result).toEqual([
+                    {
+                        id: 0,
+                        min: 10,
+                        max: 80,
+                        isSetMin: true,
+                        isSetMax: true,
+                    },
+                    {
+                        id: 1,
+                        min: 20,
+                        max: 100,
                         isSetMin: true,
                         isSetMax: false,
                     },
@@ -663,6 +793,20 @@ describe("getZeroAlignConfiguration", () => {
                     },
                 ],
             });
+        });
+    });
+
+    describe("convertNumberToPercent", () => {
+        it("should convert number to percent", () => {
+            const data: number[][] = [
+                [1, 2, 7],
+                [10, 40, null],
+                [10, 90, null],
+                [null, null, null],
+                [null, 20, null],
+            ];
+            const result = convertNumberToPercent(data);
+            expect(result).toEqual([[10, 20, 70], [20, 80], [10, 90], [], [100]]);
         });
     });
 });

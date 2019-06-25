@@ -14,6 +14,7 @@ import partial = require("lodash/partial");
 import isNil = require("lodash/isNil");
 import zip = require("lodash/zip");
 import sum = require("lodash/sum");
+import compact = require("lodash/compact");
 
 import { PERCENT_STACK } from "./getOptionalStackingConfiguration";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../../../interfaces/Config";
@@ -281,20 +282,21 @@ function getStackedDataMinMax(yData: number[][]): IMinMax {
  * Convert number to percent base on total of column
  * From
  *  [
- *      [1, [3, [4,
- *       4]  7] -6]
+ *      [1, [3, [4, [null,  [20,
+ *       4]  7] -6]  null],  null]
  *  ]
  * to
  *  [
- *      [20, [30, [40,
- *       80]  70] -60]
+ *      [20, [30, [40, [  , [100
+ *       80]  70] -60]  ]      ]
  *  ]
  * @param yData
  */
-function convertNumberToPercent(yData: number[][]): number[][] {
+export function convertNumberToPercent(yData: number[][]): number[][] {
     return yData.map((columns: number[]) => {
-        const total = sum(columns.map((num: number) => Math.abs(num)));
-        return columns.map((num: number) => (num / total) * 100);
+        const columnsWithoutNull = compact(columns); // remove null values
+        const total = sum(columnsWithoutNull.map((num: number) => Math.abs(num)));
+        return columnsWithoutNull.map((num: number) => (num / total) * 100);
     });
 }
 
@@ -323,7 +325,7 @@ function getDataMinMaxOnStackedChart(series: ISeriesItem[], stacking: string, op
 function getDataMinMax(series: ISeriesItem[], isLineChart: boolean): IMinMax {
     const { min, max } = series.reduce(
         (result: IMinMax, item: ISeriesItem): IMinMax => {
-            const yData = item.data.map((dataItem: ISeriesDataItem): number => dataItem.y);
+            const yData = getYDataInSeries(item);
             return {
                 min: Math.min(result.min, ...yData),
                 max: Math.max(result.max, ...yData),

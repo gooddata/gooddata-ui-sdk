@@ -53,6 +53,15 @@ export const barChartWith4MetricsAndViewBy2Attribute: any = {
         .executionResult,
 };
 
+export const barChartWith4MetricsAndViewBy2AttributeAndSomeNullDataPoint: any = {
+    executionRequest: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_request.json")
+        .execution,
+    executionResponse: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_with_some_null_datapoints_result.json")
+        .executionResult,
+};
+
 export const chartWithTwoAttributesAndSomeNullDatapoints: any = {
     executionRequest: require("../test_data/chart_with_2_attributes_and_null_datapoints_request.json")
         .execution,
