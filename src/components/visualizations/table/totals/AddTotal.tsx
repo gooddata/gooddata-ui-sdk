@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
 import { noop } from "lodash";
@@ -7,11 +7,11 @@ import List from "@gooddata/goodstrap/lib/List/List";
 import Dropdown, { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { IMappingHeader } from "../../../../interfaces/MappingHeader";
 
-import { TOTALS_TYPES_DROPDOWN_WIDTH } from "../TableVisualization";
 import { DropdownItem } from "./DropdownItem";
 import { IAddTotalButtonProps, AddTotalButton } from "./AddTotalButton";
 import { getAddTotalDropdownAlignPoints, shouldShowAddTotalButton } from "./utils";
 import { IIndexedTotalItem } from "../../../../interfaces/Totals";
+import { TOTALS_TYPES_DROPDOWN_WIDTH } from "../constants/layout";
 
 export interface IAddTotalProps {
     dataSource: object;
