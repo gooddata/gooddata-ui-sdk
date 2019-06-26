@@ -1,8 +1,8 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import { VisualizationClass } from "@gooddata/typings";
 import { IFeatureFlags } from "@gooddata/gooddata-js";
-import { VisualizationTypes, VisType } from "../constants/visualizationTypes";
+import { VisualizationTypes, VisType, ChartType } from "../constants/visualizationTypes";
 
 export function getVisualizationTypeFromUrl(url: string): VisType {
     // known types follow local:<type> pattern
@@ -25,6 +25,14 @@ export async function getVisualizationTypeFromVisualizationClass(
     if (type === "table") {
         const isPivotTableEnabled = featureFlags.enablePivot;
         return isPivotTableEnabled ? "pivotTable" : type;
+    }
+
+    return type;
+}
+
+export function getVisualizationType(type: ChartType): ChartType {
+    if (type === VisualizationTypes.COMBO2) {
+        return VisualizationTypes.COMBO;
     }
 
     return type;

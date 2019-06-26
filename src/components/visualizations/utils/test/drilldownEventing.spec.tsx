@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { AFM } from "@gooddata/typings";
 import {
@@ -8,7 +8,8 @@ import {
     createDrillIntersectionElement,
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
+import { SeriesChartTypes } from "../../../../constants/series";
+import { IDrillConfig, IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
@@ -504,6 +505,107 @@ describe("Drilldown Eventing", () => {
             const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
             expect(drillContext.value).toEqual("");
             expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        });
+    });
+
+    describe("Drilling in Combo chart", () => {
+        const columnPoint: IHighchartsPointObject = {
+            ...point,
+            series: { type: SeriesChartTypes.COLUMN },
+        } as any;
+
+        const linePoint: IHighchartsPointObject = {
+            ...point,
+            x: 2,
+            y: 3,
+            series: { type: SeriesChartTypes.LINE },
+            drillIntersection: [
+                {
+                    id: "id4",
+                    title: "title4",
+                    header: {
+                        identifier: "identifier4",
+                        uri: "uri4",
+                    },
+                },
+                {
+                    id: "id5",
+                    title: "title5",
+                    header: {
+                        identifier: "identifier5",
+                        uri: "uri5",
+                    },
+                },
+                {
+                    id: "id6",
+                    title: "title6",
+                    header: {
+                        identifier: "identifier6",
+                        uri: "uri6",
+                    },
+                },
+            ],
+        } as any;
+
+        it("should return chart type for each point", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: columnPoint,
+                points: [columnPoint, linePoint],
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillContext).toEqual({
+                type: VisualizationTypes.COMBO,
+                element: "label",
+                points: [
+                    {
+                        x: columnPoint.x,
+                        y: columnPoint.y,
+                        intersection: columnPoint.drillIntersection,
+                        type: SeriesChartTypes.COLUMN,
+                    },
+                    {
+                        x: linePoint.x,
+                        y: linePoint.y,
+                        intersection: linePoint.drillIntersection,
+                        type: SeriesChartTypes.LINE,
+                    },
+                ],
+            });
+        });
+
+        it("should fire event on cell click and fire correct data", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: linePoint,
+                points: null,
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+
+            jest.runAllTimers();
+
+            expect(target.dispatchEvent).toHaveBeenCalled();
+            expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
+                executionContext: afm,
+                drillContext: {
+                    type: VisualizationTypes.COMBO,
+                    element: "point",
+                    elementChartType: SeriesChartTypes.LINE,
+                    x: linePoint.x,
+                    y: linePoint.y,
+                    intersection: linePoint.drillIntersection,
+                },
+            });
         });
     });
 });
