@@ -1146,9 +1146,9 @@
     uuid "^3.2.1"
 
 "@gooddata/goodstrap@^61.0.0":
-  version "61.0.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-61.0.0.tgz#48b49619a08fe035b2768ee5823febb6277b15bf"
-  integrity sha512-PSvp5pm3V6+HHf+737uMYYA91RB2xeh0/bNPUz9T+2qQBb7CYBNo6CnT6xwneyv8uMsh/f/ixrHnBVEpGJISyg==
+  version "61.1.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-61.1.0.tgz#e6dc0566da02c81a9981a16d86dc6ba6dca80900"
+  integrity sha512-307rXksQROHaRRs7YNw+UcrxQtnP2aPqIwEbpYORTcKVHN57hwkSSDrp4XLZEJ7USDQfaOzuYUD1wt2q3EzvKw==
   dependencies:
     "@gooddata/js-utils" "^3.4.0"
     classnames "^2.2.6"
