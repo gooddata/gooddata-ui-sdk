@@ -607,5 +607,58 @@ describe("Drilldown Eventing", () => {
                 },
             });
         });
+
+        it("should NOT add chart type for each point if it is not Combo chart", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: columnPoint,
+                points: [columnPoint],
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COLUMN);
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillContext).toEqual({
+                type: VisualizationTypes.COLUMN,
+                element: "label",
+                points: [
+                    {
+                        x: columnPoint.x,
+                        y: columnPoint.y,
+                        intersection: columnPoint.drillIntersection,
+                    },
+                ],
+            });
+        });
+
+        it("should NOT add elementChartType on cell click if it is not Combo chart", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: linePoint,
+                points: null,
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.LINE);
+
+            jest.runAllTimers();
+
+            expect(target.dispatchEvent).toHaveBeenCalled();
+            expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
+                executionContext: afm,
+                drillContext: {
+                    type: VisualizationTypes.LINE,
+                    element: "point",
+                    x: linePoint.x,
+                    y: linePoint.y,
+                    intersection: linePoint.drillIntersection,
+                },
+            });
+        });
     });
 });

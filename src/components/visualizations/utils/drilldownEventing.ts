@@ -23,7 +23,7 @@ import {
     IDrillEventContext,
 } from "../../../interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../../interfaces/Events";
-import { isHeatmap, isTreemap } from "./common";
+import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { getVisualizationType } from "../../../helpers/visualizationType";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
@@ -67,8 +67,9 @@ function composeDrillContextGroup(
     chartType: ChartType,
 ): IDrillEventContextGroup {
     const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
-        const seriesType: ChartType = get(point, "series.type");
-        const customProps: Partial<IDrillPoint> = seriesType ? { type: seriesType } : {};
+        const customProps: Partial<IDrillPoint> = isComboChart(chartType)
+            ? { type: get(point, "series.type") }
+            : {};
 
         return {
             x: point.x,
@@ -103,8 +104,8 @@ function composeDrillContextPoint(
               y: point.y,
           };
 
-    const elementChartType: ChartType = get(point, "series.type");
-    const customProp: Partial<IDrillEventContextPoint> = elementChartType
+    const elementChartType: ChartType = get(point, "series.type", chartType);
+    const customProp: Partial<IDrillEventContextPoint> = isComboChart(chartType)
         ? {
               elementChartType,
           }
@@ -112,7 +113,7 @@ function composeDrillContextPoint(
 
     return {
         type: chartType,
-        element: getClickableElementNameByChartType(elementChartType || chartType),
+        element: getClickableElementNameByChartType(elementChartType),
         intersection: point.drillIntersection,
         ...xyProp,
         ...zProp,
