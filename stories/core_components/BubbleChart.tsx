@@ -193,6 +193,28 @@ storiesOf("Core components/BubbleChart", module)
             </div>,
         ),
     )
+    .add("with only max config on xaxis", () =>
+        // #SD-479
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            max: "500",
+                        },
+                    }}
+                />
+            </div>,
+        ),
+    )
     .add("with different legend positions", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>

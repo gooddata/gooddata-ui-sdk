@@ -10,8 +10,10 @@ import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
+import { IHighchartsAxisExtend } from "../../../../interfaces/HighchartsExtend";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
+const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
 export const DEFAULT_SERIES_LIMIT = 1000;
 export const DEFAULT_CATEGORIES_LIMIT = 365;
@@ -24,6 +26,15 @@ function handleTooltipOffScreen(renderTo: Highcharts.HTMLDOMElement) {
     // allow tooltip over the container wrapper
     css(renderTo, { overflow: "visible" });
 }
+
+function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
+    const range: number = axis.max - axis.min;
+    if (range < 0) {
+        // all data points is outside
+        axis.translationSlope = axis.transA = HIGHCHART_PLOT_LIMITED_RANGE;
+    }
+}
+
 let previousChart: any = null;
 
 const BASE_TEMPLATE: any = {
@@ -109,6 +120,15 @@ const BASE_TEMPLATE: any = {
             },
         },
     },
+    xAxis: [
+        {
+            events: {
+                afterSetAxisTranslation() {
+                    fixNumericalAxisOutOfMinMaxRange(this);
+                },
+            },
+        },
+    ],
 };
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: any) {
