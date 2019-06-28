@@ -7,6 +7,7 @@ export type IHighchartsAxis = Partial<Highcharts.Axis> &
 
 export interface IHighchartsAxisExtend extends IHighchartsAxis {
     transA?: number;
+    translationSlope?: number;
     options?: Highcharts.YAxisOptions;
     chart?: any;
 }
