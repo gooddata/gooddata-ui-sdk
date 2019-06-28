@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
-import { uniqueId, noop } from "lodash";
+import noop = require("lodash/noop");
+import uniqueId = require("lodash/uniqueId");
 import { Cell } from "fixed-data-table-2";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ISeparators } from "@gooddata/numberjs";

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { get } from "lodash";
+import get = require("lodash/get");
 import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";
 import { createInternalIntl } from "../../internalIntlProvider";

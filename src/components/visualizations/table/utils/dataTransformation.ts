@@ -1,7 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
 import * as invariant from "invariant";
-import { get, has, isEmpty, zip } from "lodash";
+import get = require("lodash/get");
+import has = require("lodash/has");
+import isEmpty = require("lodash/isEmpty");
+import zip = require("lodash/zip");
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,

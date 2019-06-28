@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { isObject } from "lodash";
+import isObject = require("lodash/isObject");
 import { SDK } from "@gooddata/gooddata-js";
 import isNil = require("lodash/isNil");
 import { name as pkgName, version as pkgVersion } from "../../package.json";

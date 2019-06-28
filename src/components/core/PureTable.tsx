@@ -3,7 +3,7 @@ import * as React from "react";
 import noop = require("lodash/noop");
 import difference = require("lodash/difference");
 import uniq = require("lodash/uniq");
-import { get } from "lodash";
+import get = require("lodash/get");
 import { AFM, VisualizationObject } from "@gooddata/typings";
 
 import { IntlWrapper } from "./base/IntlWrapper";

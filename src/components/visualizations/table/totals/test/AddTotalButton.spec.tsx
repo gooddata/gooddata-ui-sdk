@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { noop } from "lodash";
+import noop = require("lodash/noop");
 
 import { AddTotalButton, IAddTotalButtonProps } from "../AddTotalButton";
 

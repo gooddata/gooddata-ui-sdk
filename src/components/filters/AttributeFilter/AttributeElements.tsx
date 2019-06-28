@@ -4,7 +4,8 @@ import * as PropTypes from "prop-types";
 import { SDK, factory as createSdk, IValidElementsResponse, IElement } from "@gooddata/gooddata-js";
 import { IValidElementsOptions } from "@gooddata/gooddata-js/lib/metadata";
 import { AFM } from "@gooddata/typings";
-import { get, isEqual } from "lodash";
+import get = require("lodash/get");
+import isEqual = require("lodash/isEqual");
 import { getObjectIdFromUri, setTelemetryHeaders } from "../../../helpers/utils";
 import { ErrorStates } from "../../../index";
 
