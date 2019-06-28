@@ -18,7 +18,13 @@ import * as numberJS from "@gooddata/numberjs";
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
-import { IDataLabelsVisible, IChartConfig, IAxis, IChartOptions } from "../../../../interfaces/Config";
+import {
+    IDataLabelsVisible,
+    IChartConfig,
+    IAxis,
+    IChartOptions,
+    ISeriesItem,
+} from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
 import {
     formatAsPercent,
@@ -51,6 +57,7 @@ import {
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
+import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -550,9 +557,13 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
         defaultFormat: get(axis, "format"),
     }));
 
+    const series: ISeriesItem[] = get(chartOptions, "data.series", []);
+    const canStackInPercent = canComboChartBeStackedInPercent(series);
     const { stackMeasuresToPercent = false } = chartConfig || {};
+
     // only applied to bar, column, dual axis and area chart
-    const dataLabelFormatter = stackMeasuresToPercent ? percentageDataLabelFormatter : labelFormatter;
+    const dataLabelFormatter =
+        stackMeasuresToPercent && canStackInPercent ? percentageDataLabelFormatter : labelFormatter;
 
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),

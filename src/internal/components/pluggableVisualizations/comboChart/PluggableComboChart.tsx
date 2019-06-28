@@ -191,6 +191,9 @@ export class PluggableComboChart extends PluggableBaseChart {
         const primaryChartType = get(findBucket(buckets, BucketNames.MEASURES), "chartType");
         const secondaryChartType = get(findBucket(buckets, BucketNames.SECONDARY_MEASURES), "chartType");
 
+        const isDualAxis = get(referencePoint, "properties.controls.dualAxis", true);
+        const canStackInPercent = !(isDualAxis === false && isLineChart(secondaryChartType));
+
         if (primaryChartType || secondaryChartType) {
             return {
                 ...referencePoint.properties,
@@ -198,6 +201,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     ...get(referencePoint, PROPERTY_CONTROLS, {}),
                     primaryChartType,
                     secondaryChartType,
+                    canStackInPercent,
                 },
             };
         }

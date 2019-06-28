@@ -104,18 +104,14 @@ describe("getOptionalStackingConfiguration", () => {
             },
         );
 
-        it.each([
-            ["normal", { stackMeasures: true }, { stackMeasuresToPercent: false }],
-            ["percent", { stackMeasuresToPercent: true }, { stackMeasuresToPercent: true }],
-        ])(
+        it.each([[NORMAL_STACK, { stackMeasures: true }], [PERCENT_STACK, { stackMeasuresToPercent: true }]])(
             "should return series config with %s stacking",
-            (type: string, chartConfig: IChartConfig, expected: any) => {
+            (type: string, chartConfig: IChartConfig) => {
                 const chartOptions = { yAxes: [{}] };
                 const config = { series: Array(2).fill({ yAxis: 0 }) };
 
                 const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
                 expect(result).toEqual({
-                    ...expected,
                     series: Array(2).fill({
                         yAxis: 0,
                         stack: 0,
@@ -135,11 +131,10 @@ describe("getOptionalStackingConfiguration", () => {
 
             const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
             expect(result).toEqual({
-                stackMeasuresToPercent: true,
                 series: Array(2).fill({
                     yAxis: 0,
                     stack: 0,
-                    stacking: "percent",
+                    stacking: PERCENT_STACK,
                 }),
             });
         });
@@ -157,19 +152,18 @@ describe("getOptionalStackingConfiguration", () => {
 
             const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
             expect(result).toEqual({
-                stackMeasuresToPercent: false,
                 series: [
                     ...Array(2).fill({
                         yAxis: 0, // primary Y axis
                         stack: 0,
-                        stacking: "normal",
+                        stacking: NORMAL_STACK,
                     }),
                     ...Array(2).fill({
                         yAxis: 1, // secondary Y axis
-                        // stack is resetted for secondary Y axis
+                        // stack is reset for secondary Y axis
                         stack: null,
-                        // stacking on secondary Y axis is resetted when stackMeasures is false
-                        stacking: "normal",
+                        // stacking on secondary Y axis is reset when stackMeasures is false
+                        stacking: NORMAL_STACK,
                     }),
                 ],
                 yAxis: Array(2).fill({
@@ -198,20 +192,19 @@ describe("getOptionalStackingConfiguration", () => {
 
             const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
             expect(result).toEqual({
-                stackMeasuresToPercent: true,
                 series: [
                     {
                         yAxis: 0, // primary Y axis
                         // stack + stacking on primary Y axis is keep as is
                         stack: 0,
-                        stacking: "percent",
+                        stacking: PERCENT_STACK,
                     },
                     {
                         yAxis: 1, // secondary Y axis
                         // stack is resetted for secondary Y axis
                         stack: null,
                         // stacking on secondary Y axis is resetted to "normal"
-                        stacking: "normal",
+                        stacking: NORMAL_STACK,
                     },
                 ],
                 yAxis: [
@@ -245,20 +238,19 @@ describe("getOptionalStackingConfiguration", () => {
 
             const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
             expect(result).toEqual({
-                stackMeasuresToPercent: false,
                 series: [
                     {
                         yAxis: 0, // primary Y axis
                         // stack + stacking on primary Y axis is keep as is
                         stack: 0,
-                        stacking: "normal",
+                        stacking: NORMAL_STACK,
                     },
                     {
                         yAxis: 1, // secondary Y axis
                         // stack is resetted for secondary Y axis
                         stack: null,
                         // stacking on secondary Y axis is resetted when stackMeasuresToPercent is true
-                        stacking: "normal",
+                        stacking: NORMAL_STACK,
                     },
                 ],
                 yAxis: Array(2).fill({
@@ -433,6 +425,80 @@ describe("getOptionalStackingConfiguration", () => {
                     ]);
                 },
             );
+
+            it("should return series with no stack config", () => {
+                const chartOptions = {
+                    type: VisualizationTypes.COMBO,
+                    yAxes: [{}],
+                };
+                const config = {
+                    yAxis: [{}],
+                    series: [
+                        {
+                            yAxis: 0,
+                            type: VisualizationTypes.COLUMN,
+                        },
+                        {
+                            yAxis: 0,
+                            type: VisualizationTypes.LINE,
+                        },
+                    ],
+                };
+                const chartConfig = { stackMeasuresToPercent: true };
+                const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                expect(series).toEqual([
+                    {
+                        yAxis: 0,
+                        type: VisualizationTypes.COLUMN,
+                        dataLabels: { style: BLACK_LABEL },
+                    },
+                    {
+                        yAxis: 0,
+                        type: VisualizationTypes.LINE,
+                        dataLabels: { style: BLACK_LABEL },
+                    },
+                ]);
+            });
+
+            it("should return series with 'normal' stack config", () => {
+                const chartOptions = {
+                    type: VisualizationTypes.COMBO,
+                    yAxes: [{}],
+                };
+                const config = {
+                    yAxis: [{}],
+                    series: [
+                        {
+                            yAxis: 0,
+                            type: VisualizationTypes.COLUMN,
+                        },
+                        {
+                            yAxis: 0,
+                            type: VisualizationTypes.LINE,
+                        },
+                    ],
+                };
+                const chartConfig = { stackMeasures: true, stackMeasuresToPercent: true };
+                const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                expect(series).toEqual([
+                    {
+                        stack: 0,
+                        stacking: NORMAL_STACK,
+                        yAxis: 0,
+                        type: VisualizationTypes.COLUMN,
+                        dataLabels: { style: WHITE_LABEL },
+                    },
+                    {
+                        stack: 0,
+                        stacking: null,
+                        yAxis: 0,
+                        type: VisualizationTypes.LINE,
+                        dataLabels: { style: BLACK_LABEL },
+                    },
+                ]);
+            });
         });
 
         describe("getYAxisConfiguration", () => {

@@ -26,6 +26,7 @@ import {
     isPrimaryYAxis,
 } from "../../utils/common";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
+import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 
 export const NORMAL_STACK = "normal";
 export const PERCENT_STACK = "percent";
@@ -222,14 +223,19 @@ export function getStackMeasuresConfiguration(
     chartConfig: IChartConfig,
 ): IStackMeasuresConfig {
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
+    const canStackInPercent = canComboChartBeStackedInPercent(config.series);
 
     if (!stackMeasures && !stackMeasuresToPercent) {
         return {};
     }
 
     return {
-        stackMeasuresToPercent, // this prop is used in 'dualAxesLabelFormatter.ts'
-        ...getSeriesConfiguration(chartOptions, config, stackMeasures, stackMeasuresToPercent),
+        ...getSeriesConfiguration(
+            chartOptions,
+            config,
+            stackMeasures,
+            stackMeasuresToPercent && canStackInPercent,
+        ),
         ...getYAxisConfiguration(chartOptions, config, chartConfig),
     };
 }
@@ -276,11 +282,13 @@ export function setDrillConfigToXAxis(drillConfig: IDrillConfig) {
  */
 export function getShowInPercentConfiguration(
     chartOptions: IChartOptions,
-    _config: any,
+    config: any = {},
     chartConfig: IChartConfig,
 ) {
     const { stackMeasuresToPercent = false, primaryChartType } = chartConfig;
-    if (!stackMeasuresToPercent || isLineChart(primaryChartType)) {
+    const canStackInPercent = canComboChartBeStackedInPercent(config.series);
+
+    if (!canStackInPercent || !stackMeasuresToPercent || isLineChart(primaryChartType)) {
         return {};
     }
 

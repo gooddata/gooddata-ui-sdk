@@ -66,7 +66,11 @@ import {
     stringifyChartTypes,
 } from "../utils/common";
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
-import { getComboChartSeries } from "./chartOptions/comboChartOptions";
+import {
+    canComboChartBeStackedInPercent,
+    getComboChartSeries,
+    getComboChartStackingConfig,
+} from "./chartOptions/comboChartOptions";
 
 import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
@@ -1733,20 +1737,25 @@ export function getChartOptions(
     );
 
     if (isComboChart(type)) {
+        const comboSeries = getComboChartSeries(config, measureGroup, series);
+        const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
         return {
             type,
             xAxes,
             yAxes,
-            stacking,
+            stacking: getComboChartStackingConfig(config, comboSeries, stacking),
             legendLayout: config.legendLayout || "horizontal",
             actions: {
-                tooltip: buildTooltipFactory(viewByAttribute, type, config),
+                tooltip: buildTooltipFactory(viewByAttribute, type, {
+                    ...config,
+                    stackMeasuresToPercent: config.stackMeasuresToPercent && canStackInPercent,
+                }),
             },
             grid: {
                 enabled: gridEnabled,
             },
             data: {
-                series: getComboChartSeries(config, measureGroup, series),
+                series: comboSeries,
                 categories,
             },
             xAxisProps,
