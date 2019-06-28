@@ -47,6 +47,14 @@ const exportConfig: VisEvents.IExtendedExportConfig = {
 };
 ```
 
+## 7.0.1
+
+June 28, 2019
+
+### Fixed
+ 
+- Drill event intersection element id. Now item localIdentifier has correctly higher priority over measure/attribute id
+
 ## 7.0.0
 
 [Migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_7.html) from version 6.3.2
@@ -63,6 +71,14 @@ const exportConfig: VisEvents.IExtendedExportConfig = {
 - The pivot table property `groupRows` is `true` by default, which means that grouping is now enabled by default.
 - Styling updates and various fixes have been applied to subtotals in the Pivot Table component.
 - The Legend icons of the line chart component and the area chart components are shown as circles instead of squares.
+
+## 6.3.3
+
+June 28, 2019
+ 
+### Fixed
+ 
+- Drill event intersection element id. Now item localIdentifier has correctly higher priority over measure/attribute id
 
 ## 6.3.2
 

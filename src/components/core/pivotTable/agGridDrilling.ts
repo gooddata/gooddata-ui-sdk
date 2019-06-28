@@ -72,7 +72,7 @@ export const getDrillIntersection = (
         const headerUri = getMappingHeaderUri(drillItem) || "";
         const uri = (uriAndIdentifier && uriAndIdentifier.uri) || headerUri;
         const identifier = (uriAndIdentifier && uriAndIdentifier.identifier) || headerIdentifier;
-        const id = headerIdentifier || headerLocalIdentifier;
+        const id = headerLocalIdentifier || headerIdentifier;
 
         return createDrillIntersectionElement(id, getMappingHeaderName(drillItem), uri, identifier);
     });
