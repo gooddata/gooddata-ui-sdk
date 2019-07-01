@@ -14,7 +14,9 @@ function convertAttributeFilter(filter: VisualizationObjectAttributeFilter): AFM
     return filter;
 }
 
-function convertAbsoluteDateFilter(filter: IVisualizationObjectAbsoluteDateFilter): AFM.FilterItem | null {
+export function convertAbsoluteDateFilter(
+    filter: IVisualizationObjectAbsoluteDateFilter | AFM.IAbsoluteDateFilter,
+): AFM.FilterItem | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -30,7 +32,9 @@ function convertAbsoluteDateFilter(filter: IVisualizationObjectAbsoluteDateFilte
     };
 }
 
-function convertRelativeDateFilter(filter: IVisualizationObjectRelativeDateFilter): AFM.FilterItem | null {
+export function convertRelativeDateFilter(
+    filter: IVisualizationObjectRelativeDateFilter | AFM.IRelativeDateFilter,
+): AFM.FilterItem | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
