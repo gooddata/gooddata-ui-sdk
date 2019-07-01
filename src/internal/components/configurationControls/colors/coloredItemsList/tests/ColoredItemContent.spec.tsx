@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { cloneDeep } from "lodash";
+import cloneDeep = require("lodash/cloneDeep");
 import { mount } from "enzyme";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import * as React from "react";

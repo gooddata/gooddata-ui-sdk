@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { set, cloneDeep } from "lodash";
+import set = require("lodash/set");
+import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
 import { TableRow } from "../../../../../interfaces/Table";
 import { EXECUTION_REQUEST_AM, TABLE_HEADERS_AM } from "../../fixtures/arithmericMeasures";

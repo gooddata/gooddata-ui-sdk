@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
-import { noop } from "lodash";
+import noop = require("lodash/noop");
 import { VisualizationObject } from "@gooddata/typings";
 
 import Button from "@gooddata/goodstrap/lib/Button/Button";

@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { noop } from "lodash";
+import noop = require("lodash/noop");
 
 import { ASC, DESC } from "../../../constants/sort";
 import { OnSortChangeWithDir, SortDir } from "../../../interfaces/Table";

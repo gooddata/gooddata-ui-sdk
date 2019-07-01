@@ -1,6 +1,8 @@
 // (C) 2019 GoodData Corporation
 import sdk from "@gooddata/gooddata-js";
-import { uniq, includes, isArray } from "lodash";
+import uniq = require("lodash/uniq");
+import includes = require("lodash/includes");
+import isArray = require("lodash/isArray");
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import * as HeaderPredicateFactory from "../../factory/HeaderPredicateFactory";
 

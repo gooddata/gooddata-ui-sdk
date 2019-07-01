@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { omit } from "lodash";
+import omit = require("lodash/omit");
 import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
 
 import { Subtract } from "../typings/subtract";

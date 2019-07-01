@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
-import { noop, pick } from "lodash";
+import noop = require("lodash/noop");
+import pick = require("lodash/pick");
 import * as React from "react";
 import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";

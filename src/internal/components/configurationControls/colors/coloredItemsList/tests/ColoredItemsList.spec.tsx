@@ -1,7 +1,8 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { noop, cloneDeep } from "lodash";
+import noop = require("lodash/noop");
+import cloneDeep = require("lodash/cloneDeep");
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import ColoredItemsList, { IColoredItemsListProps } from "../ColoredItemsList";
 import { colorPalette } from "../../../../../mocks/testColorHelper";

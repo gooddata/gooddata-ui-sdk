@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as ChartConfiguration from "../../interfaces/Config";
-import { cloneDeep } from "lodash";
+import cloneDeep = require("lodash/cloneDeep");
 
 export function getLargePalette() {
     const largePalette = cloneDeep(ChartConfiguration.DEFAULT_COLOR_PALETTE);
