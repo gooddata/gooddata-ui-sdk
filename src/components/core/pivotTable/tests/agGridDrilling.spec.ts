@@ -143,7 +143,7 @@ describe("getDrillIntersection", () => {
                     identifier: "label.restaurantlocation.locationstate",
                     uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
                 },
-                id: "label.restaurantlocation.locationstate",
+                id: "state",
                 title: "Location State",
             },
             {
@@ -174,7 +174,7 @@ describe("getDrillIntersection", () => {
                     identifier: "date.aam81lMifn6q",
                     uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
                 },
-                id: "date.aam81lMifn6q",
+                id: "year",
                 title: "Quarter (Date)",
             },
             {
@@ -190,7 +190,7 @@ describe("getDrillIntersection", () => {
                     identifier: "date.abm81lMifn6q",
                     uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
                 },
-                id: "date.abm81lMifn6q",
+                id: "month",
                 title: "Month (Date)",
             },
             {
@@ -198,7 +198,7 @@ describe("getDrillIntersection", () => {
                     identifier: "aabHeqImaK0d",
                     uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
                 },
-                id: "aabHeqImaK0d",
+                id: "franchiseFeesAdRoyaltyIdentifier",
                 title: "$ Franchise Fees (Ad Royalty)",
             },
         ]);
