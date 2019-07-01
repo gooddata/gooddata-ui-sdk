@@ -1,10 +1,16 @@
 // (C) 2019 GoodData Corporation
 import {
     adjustTicks,
-    alignSecondaryAxis,
+    ALIGNED,
+    alignToBaseAxis,
     customAdjustTickAmount,
+    getDirection,
+    getYAxisScore,
+    MOVE_ZERO_LEFT,
+    MOVE_ZERO_RIGHT,
     preventDataCutOff,
     shouldBeHandledByHighcharts,
+    Y_AXIS_SCORE,
 } from "../adjustTickAmount";
 import { IHighchartsAxisExtend } from "../../../../../../interfaces/HighchartsExtend";
 import { VisualizationTypes } from "../../../../../../constants/visualizationTypes";
@@ -35,7 +41,7 @@ describe("adjustTickAmount - general", () => {
             },
         };
         // min/max are calculated in 'getZeroAlignConfiguration'
-        const leftAxis = {
+        const getLeftAxis = () => ({
             ...Y_AXIS,
             chart,
             tickAmount: 8,
@@ -46,8 +52,8 @@ describe("adjustTickAmount - general", () => {
             dataMax: 986,
             min: -986,
             max: 986,
-        };
-        const rightAxis = {
+        });
+        const getRightAxis = () => ({
             ...Y_AXIS,
             chart,
             tickAmount: 8,
@@ -58,35 +64,27 @@ describe("adjustTickAmount - general", () => {
             dataMax: -1239,
             min: -8895,
             max: 8895,
-        };
-
-        beforeAll(() => {
-            chart.axes = [leftAxis, rightAxis];
-            customAdjustTickAmount.call(leftAxis);
-            customAdjustTickAmount.call(rightAxis);
         });
 
         it.each([
-            ["left", leftAxis, [-900, -600, -300, 0, 300, 600, 900, 1200]], // reduced to 8 ticks
-            ["right", rightAxis, [-9000, -6000, -3000, 0, 3000, 6000, 9000, 12000]], // reduced to 8 ticks
+            ["left", getLeftAxis(), [-900, -600, -300, 0, 300, 600, 900, 1200]], // reduced to 8 ticks
+            ["right", getRightAxis(), [-12000, -9000, -6000, -3000, 0, 3000, 6000, 9000]], // reduced to 8 ticks
         ])(
             "should return %s tick positions aligned zero with opposite",
             (_side: string, axis: IHighchartsAxisExtend, expectation: number) => {
+                customAdjustTickAmount.call(axis);
                 expect(axis.tickPositions).toEqual(expectation);
             },
         );
 
-        it.each([["left", leftAxis, -900, 1200], ["right", rightAxis, -9000, 12000]])(
+        it.each([["left", getLeftAxis(), -900, 1200], ["right", getRightAxis(), -12000, 9000]])(
             "should min/max be updated on %s axis",
             (_side: string, axis: IHighchartsAxisExtend, min: number, max: number) => {
+                customAdjustTickAmount.call(axis);
                 expect(axis.min).toBe(min);
                 expect(axis.max).toBe(max);
             },
         );
-
-        it("should two axes be zero aligned", () => {
-            expect(leftAxis.tickPositions.indexOf(0)).toBe(rightAxis.tickPositions.indexOf(0));
-        });
     });
 
     describe("should adjust tick amount with user-input min/max", () => {
@@ -279,130 +277,132 @@ describe("adjustTickAmount - detail", () => {
         });
     });
 
-    describe("alignSecondaryAxis", () => {
-        it("should not handle primary axis", () => {
+    describe("alignToBaseAxis", () => {
+        it("should not handle base axis", () => {
             const leftAxis: IHighchartsAxisExtend = {
                 opposite: false,
+                tickPositions: [-2, -1, 0, 1, 2, 3],
+                chart: {},
             };
-            expect(alignSecondaryAxis(leftAxis)).toBeFalsy();
-        });
-
-        it("should not handle chart without primary axis", () => {
             const rightAxis: IHighchartsAxisExtend = {
                 opposite: true,
-                chart: {
-                    axes: [{}],
-                },
+                tickPositions: [-200, -100, 0, 100, 200, 300],
+                chart: {},
             };
-            expect(alignSecondaryAxis(rightAxis)).toBeFalsy();
+            expect(alignToBaseAxis(leftAxis, rightAxis)).toBeFalsy();
         });
 
         it("should do nothing with aligned axes", () => {
             const leftAxis: IHighchartsAxisExtend = {
                 opposite: false,
-                tickPositions: [-1, -2, 0, 1, 2, 3],
+                tickPositions: [-2, -1, 0, 1, 2, 3],
+                chart: {},
             };
             const rightAxis: IHighchartsAxisExtend = {
                 opposite: true,
                 tickPositions: [-200, -100, 0, 100, 200, 300],
-                chart: {
-                    axes: [leftAxis],
-                },
+                chart: {},
             };
-            alignSecondaryAxis(rightAxis);
+            alignToBaseAxis(leftAxis, rightAxis);
+
             expect(rightAxis.tickPositions).toEqual([-200, -100, 0, 100, 200, 300]);
         });
 
-        it("should zero move right", () => {
+        it("should zero move right on right axis", () => {
             const leftAxis: IHighchartsAxisExtend = {
                 coll: "yAxis",
                 opposite: false,
-                tickPositions: [-1, -2, 0, 1, 2, 3],
+                tickPositions: [-2, -1, 0, 1, 2, 3],
+                chart: {},
             };
             const rightAxis: IHighchartsAxisExtend = {
                 coll: "yAxis",
                 opposite: true,
                 tickInterval: 100,
                 tickPositions: [0, 100, 200, 300, 400, 500],
-                chart: {
-                    axes: [leftAxis],
-                },
+                chart: {},
             };
-            alignSecondaryAxis(rightAxis);
+            alignToBaseAxis(rightAxis, leftAxis);
+
             expect(rightAxis.tickPositions).toEqual([-200, -100, 0, 100, 200, 300]);
+            expect(leftAxis.tickPositions).toEqual([-2, -1, 0, 1, 2, 3]);
         });
 
-        it("should zero move left", () => {
-            const leftAxis = {
+        it("should zero move left on right axis", () => {
+            const leftAxis: IHighchartsAxisExtend = {
                 coll: "yAxis",
                 opposite: false,
-                tickPositions: [-1, -2, 0, 1, 2, 3],
+                tickPositions: [-2, -1, 0, 1, 2, 3],
+                chart: {},
             };
-            const rightAxis = {
+            const rightAxis: IHighchartsAxisExtend = {
                 coll: "yAxis",
                 opposite: true,
                 tickInterval: 100,
                 tickPositions: [-400, -300, -200, -100, 0, 100],
-                chart: {
-                    axes: [leftAxis],
-                },
+                chart: {},
             };
-            alignSecondaryAxis(rightAxis);
+            alignToBaseAxis(rightAxis, leftAxis);
+
             expect(rightAxis.tickPositions).toEqual([-200, -100, 0, 100, 200, 300]);
+            expect(leftAxis.tickPositions).toEqual([-2, -1, 0, 1, 2, 3]);
         });
     });
 
     describe("preventDataCutOff", () => {
         it("should not run with chart having user-input min/max", () => {
-            const rightAxis = {
+            const axis = {
                 opposite: true,
                 chart: {
                     userOptions: {
                         yAxis: [{ isUserMinMax: true }, { isUserMinMax: true }],
                     },
                 },
-                setTickPositions: jest.fn(),
             };
-            expect(preventDataCutOff(rightAxis)).toBeFalsy();
-            expect(rightAxis.setTickPositions).not.toHaveBeenCalled();
+            expect(preventDataCutOff(axis)).toBeFalsy();
         });
 
         it("should not run with non-cut-off chart", () => {
-            const rightAxis = {
+            const axis = {
                 opposite: true,
                 chart: {
                     userOptions: {
                         yAxis: [{ isUserMinMax: false }, { isUserMinMax: false }],
                     },
                 },
-                setTickPositions: jest.fn(),
                 min: 0,
                 max: 100,
                 dataMin: 10,
                 dataMax: 90,
             };
-            expect(preventDataCutOff(rightAxis)).toBeFalsy();
-            expect(rightAxis.setTickPositions).not.toHaveBeenCalled();
+            expect(preventDataCutOff(axis)).toBeFalsy();
         });
 
-        it("should double tick interval to zoom out secondary axis", () => {
-            const rightAxis = {
+        it("should double tick interval and tick positions to zoom out axis", () => {
+            const axis = {
                 opposite: true,
+                options: {
+                    startOnTick: true,
+                    endOnTick: true,
+                },
                 chart: {
                     userOptions: {
                         yAxis: [{ isUserMinMax: false }, { isUserMinMax: false }],
                     },
                 },
-                setTickPositions: jest.fn(),
                 min: 20,
                 max: 80,
                 dataMin: 10,
                 dataMax: 90,
                 tickInterval: 10,
+                tickPositions: [0, 10, 20, 30, 40],
             };
-            preventDataCutOff(rightAxis);
-            expect(rightAxis.setTickPositions).toHaveBeenCalledTimes(1);
-            expect(rightAxis.tickInterval).toBe(20);
+            preventDataCutOff(axis);
+
+            expect(axis.min).toBe(0);
+            expect(axis.max).toBe(80);
+            expect(axis.tickInterval).toBe(20);
+            expect(axis.tickPositions).toEqual([0, 20, 40, 60, 80]);
         });
     });
 
@@ -491,6 +491,52 @@ describe("adjustTickAmount - detail", () => {
                 },
             };
             expect(shouldBeHandledByHighcharts(yAxis)).toBeTruthy();
+        });
+    });
+
+    describe("getYAxisScore", () => {
+        it.each([
+            [Y_AXIS_SCORE.NO_DATA, 0, 0],
+            [Y_AXIS_SCORE.ONLY_NEGATIVE_OR_POSITIVE_DATA, 5, 10],
+            [Y_AXIS_SCORE.ONLY_NEGATIVE_OR_POSITIVE_DATA, -10, -5],
+            [Y_AXIS_SCORE.NEGATIVE_AND_POSITIVE_DATA, -10, 10],
+        ])("should score equal to %s", (score: number, dataMin: number, dataMax: number) => {
+            const axis: IHighchartsAxisExtend = {
+                dataMin,
+                dataMax,
+            };
+            expect(getYAxisScore(axis)).toBe(score);
+        });
+    });
+
+    describe("getDirection", () => {
+        it.each([["left", null, {}], ["right", {}, null]])(
+            "should return ALIGN when %s axis is null",
+            (_axisSide: string, primaryAxis: IHighchartsAxisExtend, secondaryAxis: IHighchartsAxisExtend) => {
+                expect(getDirection(primaryAxis, secondaryAxis)).toBe(ALIGNED);
+            },
+        );
+
+        it("should return ALIGN when both axes are empty", () => {
+            const axis: IHighchartsAxisExtend = { tickPositions: [] };
+            expect(getDirection(axis, axis)).toBe(ALIGNED);
+        });
+
+        it("should return ALIGN when both axes are aligned", () => {
+            const axis: IHighchartsAxisExtend = { tickPositions: [-2, -1, 0, 1, 2] };
+            expect(getDirection(axis, axis)).toBe(ALIGNED);
+        });
+
+        it("should return MOVE_ZERO_RIGHT", () => {
+            const primaryAxis: IHighchartsAxisExtend = { tickPositions: [-2, -1, 0, 1, 2] };
+            const secondaryAxis: IHighchartsAxisExtend = { tickPositions: [-1, 0, 1, 2, 3] };
+            expect(getDirection(primaryAxis, secondaryAxis)).toBe(MOVE_ZERO_RIGHT);
+        });
+
+        it("should return MOVE_ZERO_LEFT", () => {
+            const primaryAxis: IHighchartsAxisExtend = { tickPositions: [-2, -1, 0, 1, 2] };
+            const secondaryAxis: IHighchartsAxisExtend = { tickPositions: [-3, -2, -1, 0, 1] };
+            expect(getDirection(primaryAxis, secondaryAxis)).toBe(MOVE_ZERO_LEFT);
         });
     });
 });

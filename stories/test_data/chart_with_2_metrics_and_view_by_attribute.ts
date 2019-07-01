@@ -17,6 +17,11 @@ const oneNegativeSideData = [
     ["-7661", "-2233", "-1239", "-8895", "-4258"],
 ];
 
+const leftPositiveRightMixData = [
+    ["30744", "20744", "60962", "40978", "10246"],
+    ["-30873", "-30873", "1069127", "-41164", "-10291"],
+];
+
 const mixData01 = [["-198", "446", "-137", "986", "-656"], ["7661", "-2233", "1239", "-8895", "4258"]];
 
 const mixData02 = [["198", "-446", "137", "-986", "656"], ["-7661", "-2233", "-1239", "-8895", "-4258"]];
@@ -50,6 +55,14 @@ export const oneNegativeSideDataset: any = {
     executionResult: {
         ...executionResult,
         data: oneNegativeSideData,
+    },
+};
+
+export const leftPositiveRightMixDataset: any = {
+    ...template,
+    executionResult: {
+        ...executionResult,
+        data: leftPositiveRightMixData,
     },
 };
 
