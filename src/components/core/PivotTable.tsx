@@ -251,6 +251,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     overflow: "hidden",
                 }}
                 ref={this.setContainerRef}
+                onMouseDown={this.onMouseDown}
             >
                 {tableLoadingOverlay}
                 <AgGridReact
@@ -523,6 +524,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private onBodyScroll = (event: BodyScrollEvent) => {
         this.updateStickyRow(Math.max(event.top, 0), event.left);
+    };
+
+    private onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (event.target && this.isHeaderResizer(event.target as HTMLElement)) {
+            event.stopPropagation();
+        }
     };
 
     //
@@ -798,6 +805,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         if (this.state.desiredHeight !== desiredHeight) {
             this.setState({ desiredHeight });
         }
+    }
+
+    private isHeaderResizer(target: HTMLElement) {
+        return target.classList.contains("ag-header-cell-resize");
     }
 }
 
