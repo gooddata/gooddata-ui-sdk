@@ -33,7 +33,7 @@ function convertNegativeAttributeFilter(
     };
 }
 
-function convertFilter(filter: AFM.CompatibilityFilter): ExecuteAFM.CompatibilityFilter {
+export function convertFilter(filter: AFM.CompatibilityFilter): ExecuteAFM.CompatibilityFilter {
     if (AFM.isPositiveAttributeFilter(filter)) {
         return convertPositiveAttributeFilter(filter);
     } else if (AFM.isNegativeAttributeFilter(filter)) {

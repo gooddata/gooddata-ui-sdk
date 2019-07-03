@@ -267,10 +267,13 @@ export interface IFeatureFlags {
     [key: string]: number | boolean | string;
 }
 
-export interface IExportConfig {
+export interface IBaseExportConfig {
     title?: string;
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
+}
+
+export interface IExportConfig extends IBaseExportConfig {
     showFilters?: AFM.CompatibilityFilter[];
 }
 

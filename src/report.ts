@@ -1,17 +1,21 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, VisualizationObject } from "@gooddata/typings";
+import { AFM, ExecuteAFM } from "@gooddata/typings";
 import compact from "lodash/compact";
-import { convertVisualizationObjectFilter } from "./DataLayer/converters/FilterConverter";
-import { IExportConfig, IExportResponse } from "./interfaces";
+import isArray from "lodash/isArray";
+import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "./constants/errors";
+import { convertAbsoluteDateFilter, convertRelativeDateFilter } from "./DataLayer/converters/FilterConverter";
+import { convertFilter as convertAttributeFilter } from "./execution/execute-afm.convert";
+import { IBaseExportConfig, IExportConfig, IExportResponse } from "./interfaces";
 import { handleHeadPolling, IPollingOptions } from "./util";
 import { ApiResponseError, XhrModule, ApiResponse } from "./xhr";
 
-import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
-import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "./constants/errors";
+interface IExtendedExportConfig extends IBaseExportConfig {
+    showFilters?: ExecuteAFM.CompatibilityFilter[];
+}
 
 interface IResultExport {
     executionResult: string;
-    exportConfig: IExportConfig;
+    exportConfig: IExtendedExportConfig;
 }
 
 interface IExportResultPayload {
@@ -47,16 +51,15 @@ export class ReportModule {
         exportConfig: IExportConfig = {},
         pollingOptions: IPollingOptions = {},
     ): Promise<IExportResponse> {
-        const showFilters: AFM.CompatibilityFilter[] = exportConfig.showFilters
-            ? compact(exportConfig.showFilters.map(this.convertFilter))
-            : [];
+        const { showFilters } = exportConfig;
 
+        const sanitizedFilters = this.sanitizeFilters(showFilters);
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
                 exportConfig: {
                     ...exportConfig,
-                    showFilters,
+                    showFilters: sanitizedFilters,
                 },
             },
         };
@@ -93,9 +96,22 @@ export class ReportModule {
         return (error as ApiResponseError).response !== undefined;
     }
 
-    private convertFilter(filter: AFM.CompatibilityFilter): AFM.CompatibilityFilter | null {
-        if ((filter as AFM.IExpressionFilter).value === undefined) {
-            return convertVisualizationObjectFilter(filter as VisualizationObjectFilter);
+    private sanitizeFilters(
+        showFilters?: AFM.CompatibilityFilter[],
+    ): ExecuteAFM.CompatibilityFilter[] | undefined {
+        if (isArray(showFilters) && showFilters.length > 0) {
+            return compact(showFilters.map(this.sanitizeFilter));
+        }
+        return undefined;
+    }
+
+    private sanitizeFilter(filter: AFM.CompatibilityFilter): ExecuteAFM.CompatibilityFilter | null {
+        if (AFM.isAttributeFilter(filter)) {
+            return convertAttributeFilter(filter);
+        } else if (AFM.isAbsoluteDateFilter(filter)) {
+            return convertAbsoluteDateFilter(filter);
+        } else if (AFM.isRelativeDateFilter(filter)) {
+            return convertRelativeDateFilter(filter);
         }
         return filter;
     }
