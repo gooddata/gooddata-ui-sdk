@@ -123,3 +123,36 @@ test("should be able to change configuration of visualization chart and render t
         )
         .eql("rgb(168,194,86)");
 });
+
+test("should be able to change configuration of dual axis chart and render them", async t => {
+    const dualAxisBarChart = Selector(".s-visualization-dual-axis-bar");
+    const dualAxisColumnChart = Selector(".s-dual-axis-column-chart");
+    const primaryYAxisLabels = ".highcharts-axis-labels.s-highcharts-primary-yaxis text";
+    const secondaryYAxisLabels = ".highcharts-axis-labels.s-highcharts-secondary-yaxis text";
+
+    await t
+        .hover(dualAxisColumnChart)
+        .expect(dualAxisColumnChart.visible)
+        .ok()
+        .expect(dualAxisColumnChart.find(primaryYAxisLabels).nth(1).textContent)
+        .eql("-50M", "To set min scale value incorrectly")
+        .expect(dualAxisColumnChart.find(primaryYAxisLabels).nth(3).textContent)
+        .eql("100M", "To set max scale value incorrectly")
+        .expect(dualAxisColumnChart.find(secondaryYAxisLabels).nth(1).textContent)
+        .eql("-50M", "To set min scale value incorrectly")
+        .expect(dualAxisColumnChart.find(secondaryYAxisLabels).nth(3).textContent)
+        .eql("100M", "To set max scale value incorrectly");
+
+    await t
+        .hover(dualAxisBarChart)
+        .expect(dualAxisBarChart.visible)
+        .ok()
+        .expect(dualAxisBarChart.find(primaryYAxisLabels).nth(3).textContent)
+        .eql("-45M", "To set min scale value incorrectly")
+        .expect(dualAxisBarChart.find(primaryYAxisLabels).nth(11).textContent)
+        .eql("75M", "To set max scale value incorrectly")
+        .expect(dualAxisBarChart.find(secondaryYAxisLabels).nth(3).textContent)
+        .eql("-45M", "To set min scale value incorrectly")
+        .expect(dualAxisBarChart.find(secondaryYAxisLabels).nth(11).textContent)
+        .eql("75M", "To set max scale value incorrectly");
+});
